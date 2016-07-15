@@ -1,5 +1,6 @@
 {
-  "name": "react-getting-started",
+  "name": "create-react-app-scripts",
+  "version": "0.0.1",
   "scripts": {
     "start": "cross-env NODE_ENV=development node devServer.js",
     "build": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.prod.js"
