@@ -4,8 +4,11 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: 'source-map',
-  entry: './src/index.js',
+  devtool: 'eval',
+  entry: [
+    './src/index.js',
+    'webpack-dev-server/client?http://localhost:3000'
+  ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: path.join(__dirname, 'build'),
