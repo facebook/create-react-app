@@ -25,14 +25,26 @@ module.exports = {
     ],
     loaders: [
       {
+        test: /\.js$/,
+        include: path.resolve(__dirname, 'src'),
+        loader: 'babel'
+      },
+      {
         test: /\.css$/,
         include: path.resolve(__dirname, 'src'),
         loader: 'style!css!postcss'
       },
       {
-        test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
-        loader: 'babel'
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
+        test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
+        loader: 'file',
+      },
+      {
+        test: /\.(mp4|webm)$/,
+        loader: 'url?limit=10000'
       }
     ]
   },
