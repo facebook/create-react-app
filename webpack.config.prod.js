@@ -14,6 +14,13 @@ module.exports = {
     publicPath: '/'
   },
   module: {
+    preLoaders: [
+      {
+        test: /\.js$/,
+        loader: 'eslint-loader',
+        include: path.resolve(__dirname, 'src')
+      }
+    ],
     loaders: [
       {
         test: /\.css$/,
