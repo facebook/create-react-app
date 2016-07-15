@@ -3,6 +3,8 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+var relative = process.argv[2] === 'local' ? '.' : '../..';
+
 module.exports = {
   devtool: 'eval',
   entry: [
@@ -11,7 +13,7 @@ module.exports = {
   ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, relative, 'build'),
     filename: 'bundle.js',
     publicPath: '/'
   },
@@ -20,18 +22,18 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'eslint-loader',
-        include: path.resolve(__dirname, 'src')
+        include: path.resolve(__dirname, relative, 'src')
       }
     ],
     loaders: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, relative, 'src'),
         loader: 'babel'
       },
       {
         test: /\.css$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, relative, 'src'),
         loader: 'style!css!postcss'
       },
       {

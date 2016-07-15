@@ -4,7 +4,9 @@ var spawnSync = require('child_process').spawnSync;
 var webpack = require('webpack');
 var config = require('../webpack.config.prod');
 
-spawnSync('rm', ['-rf', 'build']);
+var relative = process.argv[2] === 'local' ? '.' : '../..';
+spawnSync('rm', ['-rf', relative + '/build']);
+
 webpack(config).run(function(err, stats) {
   if (err) {
     console.error(err);

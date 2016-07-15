@@ -3,11 +3,13 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+var relative = process.argv[2] === 'local' ? '.' : '../..';
+
 module.exports = {
   devtool: 'source-map',
   entry: './src/index.js',
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.resolve(__dirname, relative, 'build'),
     filename: '[name].[hash].js',
     // TODO: this wouldn't work for e.g. GH Pages.
     // Good news: we can infer it from package.json :-)
@@ -18,18 +20,18 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'eslint-loader',
-        include: path.resolve(__dirname, 'src')
+        include: path.resolve(__dirname, relative, 'src')
       }
     ],
     loaders: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, relative, 'src'),
         loader: 'babel'
       },
       {
         test: /\.css$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, relative, 'src'),
         loader: 'style!css!postcss'
       },
       {
