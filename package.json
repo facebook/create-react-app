@@ -1,0 +1,11 @@
+{
+  "name": "react-getting-started",
+  "dependencies": {
+    "autoprefixer": "^6.3.7",
+    "css-loader": "^0.23.1",
+    "postcss-loader": "^0.9.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
