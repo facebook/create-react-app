@@ -2,8 +2,8 @@
   "name": "create-react-app-scripts",
   "version": "0.0.1",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node devServer.js",
-    "build": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.prod.js"
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js"
   },
   "dependencies": {
     "autoprefixer": "^6.3.7",
@@ -15,7 +15,6 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-es2016": "^6.11.3",
     "babel-preset-react": "^6.11.1",
-    "cross-env": "^2.0.0",
     "css-loader": "^0.23.1",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
@@ -27,7 +26,6 @@
     "html-webpack-plugin": "^2.22.0",
     "json-loader": "^0.5.4",
     "postcss-loader": "^0.9.1",
-    "rimraf": "^2.5.3",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
