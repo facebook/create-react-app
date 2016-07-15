@@ -7,6 +7,7 @@ module.exports = function(hostPath, appName) {
   var selfPackage = require(selfPath + '/package.json');
 
   // Copy over devDependencies
+  hostPackage.dependencies = hostPackage.dependencies || {};
   for (var key in selfPackage.devDependencies) {
     hostPackage.dependencies[key] = selfPackage.devDependencies[key];
   }
