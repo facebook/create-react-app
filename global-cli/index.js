@@ -37,7 +37,6 @@
 
 var fs = require('fs');
 var path = require('path');
-var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
 var chalk = require('chalk');
 var semver = require('semver');
