@@ -100,7 +100,7 @@ function run(root, appName, version, verbose) {
   var args = [
     'install',
     verbose && '--verbose',
-    '--save',
+    '--save-dev',
     '--save-exact',
     getInstallPackage(version),
   ].filter(function(e) { return e; });
