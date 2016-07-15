@@ -115,6 +115,7 @@ function run(root, appName, version, verbose) {
       process.cwd(),
       'node_modules',
       'create-react-app-scripts',
+      'scripts',
       'init.js'
     );
     var init = require(scriptsPath);
