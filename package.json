@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "start": "node scripts/start.js local",
-    "build": "node scripts/build.js local"
+    "build": "node scripts/build.js local",
+    "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\""
   },
   "dependencies": {
     "autoprefixer": "^6.3.7",
