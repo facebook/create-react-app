@@ -1,89 +1,103 @@
+
 # Create React App
 
-A new blessed “getting started” experience for building SPAs in React that we can actually ship.
+Create React apps with no build configuration.
 
-## Goal
+* **One Dependency:** Once you create an app, there is just one build dependency. Internally we use Webpack, Babel, ESLint, and other amazing projects, but we manage their versions and provide a curated experience on top of them.
 
-Make it easy to get started with React.
+* **Zero Configuration:** There are no configuration files or command line options. Let us take care of configuring the build both for development and production so you can focus on creating an app.
 
-## Why This Won't Fail
+* **No Lock-In:** You can “graduate” to a custom setup at any time. Run a single command, and we will remove the tool and copy all the configuration and dependencies into your project, so you can pick up where we left off.
 
-* We hide a small curated set of tools behind a CLI with zero configuration. The scope is very limited: we intentionally offer the minimal tools we think are useful, and we don't allow any addons or feature creep.
-* We let you exit the "getting started" experience at any time. A single CLI command removes the dependency on React CLI and replaces it with real Webpack/ESLint/Babel configs and commands. You are on your own now.
-* We promote the hell out of it on in the docs. This is built by the team so people trust it.
+## Installation
 
-## Philosophy
+Install it once globally:
 
-### Zero Configuration
-
-This is a hard constraint. We are committed to having zero configuration in the project.
-
-If you use `create-react-app`, you should have `src/index.js`, your bundle will be compiled to `build/index.html`, and it will run at http://localhost:3000 in development. You can’t change this.
-
-It will have Babel, ESLint, Autprefixr and some other stuff we think it useful for getting started, but you won’t be exposed to it, and won’t be able to configure it. We curate the setup completely.
-
-### Exit Strategy
-
-You can say goodbye to `create-react-app` at any time. Type `npm run export-scripts`, and it will create the configs and replace the generated `scripts` in `package.json` with the equivalent "real thing" (e.g. `webpack-dev-server` and `webpack` calls). You're on your own now.
-
-This is why "zero configuration" can work as a constraint. We can punt on many real-world features (code splitting, Google Analytics, custom Babel plugins) because we let you leave the "getting started" experience any time.
-
-This makes Create React App a feasible way to get started with a "real" React project without learning the tools. Once you export, you can't go back.
-
-### One Dependency
-
-It works like `react-native-cli`. There is just one thing in your `devDependencies`, and it hides Babel, ESLint, and all the other stuff. But as I wrote above, you can `npm run exports-scripts` at any time.
-
-## How to use
-
-Install once:
-
-```bash
+```sh
 npm install -g create-react-app
 ```
 
-When creating a new app:
+## Usage
 
-```
+To create a new app, run:
+
+```sh
 create-react-app my-app
 cd my-app
-npm start
 ```
 
-Done!
+This will create a directory called `my-app` inside the current folder.  
 
-If you want to build it for production
+Inside that directory, we will generate the initial project structure and install the transient dependencies.  
+Once it’s finished, you can run some commands inside the project folder!
 
-```
-npm run build
-```
+### `npm start`
 
-and if you want to tweak it
+Runs the app in the development mode.  
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-```
-npm run exports-scripts # Beware, this is a one-way operation, can't go back!
-```
+The page will reload if you make edits.  
+You will also see any lint errors in the console.
 
-## How to develop it
+### `npm run build`
 
-You first need to
+Builds the app for production to the `build` folder.  
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-```
-npm install
-```
+The build is minified and the filenames include the hashes.  
+Your app is ready to be deployed!
 
-Once it is done, you can modify any file locally and do
+### `npm run graduate`
 
-```
-npm start
-npm run build
-```
+**Note: this is a one-way operation. Once you “graduate”, you can’t go back!**
 
-If you want to try out the end to end flow with the global cli
+If you aren’t satisfied with the defaults we provide, and want to change or extend your build configuration, you can graduate at any time. This command will remove the single build dependency we provided from your project.
+
+Instead, it will copy all the configuration files and the dependencies we have been using under the hood into your project so you have full control over them. All of the commands except `graduate` will still work, but we will point them to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever graduate. We intend to keep the curated feature set suitable for small and middle deployments, and you shouldn’t feel obliged to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Limitations
+
+We don’t currently intend to support advanced features such as server rendering, experimental Babel plugins, custom ESLint configuration, etc. Our goal is to provide a tool that bootstraps a minimal production-ready React project with a great developer experience and sane defaults. If you want an advanced feature, you can still use this tool, and later run `npm run graduate` to customize the experience (but then there’s no going back!)
+
+## What’s Inside?
+
+The tools used by Create React App are subject to change.  
+Currently we use:
+
+* [webpack](https://webpack.github.io/)
+* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* [Babel](http://babeljs.io/) with [preset-es2015](https://www.npmjs.com/package/babel-preset-es2015), [preset-es2016](https://www.npmjs.com/package/babel-preset-es2016) and [transform-rest-spread](https://babeljs.io/docs/plugins/transform-object-rest-spread/)
+* [Autoprefixer](https://github.com/postcss/autoprefixer)
+* [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
+* [style-loader](https://github.com/webpack/style-loader)
+* [ESLint](http://eslint.org/)
+* [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb)
+* and some more.
+
+We hide all of them behind our npm package so you don’t need to worry about upgrading them or solving conflicts.
+
+## You Don’t Have to Use This
+
+This is not the “one true way” to create React apps. You don’t need to port your project to use this if you’re happy with your setup. There are also many things we won’t provide (see “Limitations” above).
+
+Historically we’ve made it easy to gradually adopt React, but many people create new single-page React apps every day, and we’ve heard [loud and clear](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4) that this process can be error-prone and tedious, especially if this is your first JavaScript build stack.
+
+This project is our attempt to figure out a good way to start developing React apps. We don’t claim it’s the best possible stack, and there are intentional limitations, but we think you can ship a production app with it, and we’ll make it even better over time.
+
+We also want you to feel in control so you can “graduate” from this tool at any time (see instructions above!).
+
+## Contibuting
+
+Clone the repo and run `npm install`.
+
+Once it is done, you can modify any file locally and run `npm start` or `npm run build` just like in a generated project.  
+If you want to try out the end-to-end flow with the global CLI, you can do this too:
 
 ```
 npm run create-react-app my-app
 cd my-app
-npm run
 ```
 
+and then run `npm start` or `npm run build`.
