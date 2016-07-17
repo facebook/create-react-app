@@ -1,8 +1,8 @@
-body {
-  background-color: #f5fcff;
+.App {
+  padding: 0px 20px;
 }
 
-.App--logo {
+.App-logo {
   animation: spin infinite 20s linear;
   border-radius: 50%;
   vertical-align: middle;
