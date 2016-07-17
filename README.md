@@ -3,11 +3,11 @@
 
 Create React apps with no build configuration.
 
-* **One Dependency:** Once you create an app, there is just one build dependency. Internally we use Webpack, Babel, ESLint, and other amazing projects, but we manage their versions and provide a curated experience on top of them.
+* **One Dependency:** There is just one build dependency. It uses Webpack, Babel, ESLint, and other amazing projects, but provides a cohesive curated experience on top of them.
 
-* **Zero Configuration:** There are no configuration files or command line options. Let us take care of configuring the build both for development and production so you can focus on creating an app.
+* **Zero Configuration:** There are no configuration files or command line options. Configuring both development and production builds is handled for you so you can focus on writing code.
 
-* **No Lock-In:** You can “graduate” to a custom setup at any time. Run a single command, and we will remove the tool and copy all the configuration and dependencies into your project, so you can pick up where we left off.
+* **No Lock-In:** You can “graduate” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up where we left off.
 
 ## Installation
 
@@ -26,10 +26,10 @@ create-react-app my-app
 cd my-app
 ```
 
-This will create a directory called `my-app` inside the current folder.  
+It will create a directory called `my-app` inside the current folder.  
 
-Inside that directory, we will generate the initial project structure and install the transient dependencies.  
-Once it’s finished, you can run some commands inside the project folder!
+Inside that directory, it will generate the initial project structure and install the transient dependencies.  
+Once the installation is done, you can run some commands inside the project folder!
 
 ### `npm start`
 
@@ -51,15 +51,11 @@ Your app is ready to be deployed!
 
 **Note: this is a one-way operation. Once you “graduate”, you can’t go back!**
 
-If you aren’t satisfied with the defaults we provide, and want to change or extend your build configuration, you can graduate at any time. This command will remove the single build dependency we provided from your project.
+If you aren’t satisfied with the build tool and configuration choices, you can “graduate” at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the dependencies we have been using under the hood into your project so you have full control over them. All of the commands except `graduate` will still work, but we will point them to the copied scripts so you can tweak them. At this point you’re on your own.
+Instead, it will copy all the configuration files and the transient dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `graduate` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever graduate. We intend to keep the curated feature set suitable for small and middle deployments, and you shouldn’t feel obliged to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Limitations
-
-We don’t currently intend to support advanced features such as server rendering, experimental Babel plugins, custom ESLint configuration, etc. Our goal is to provide a tool that bootstraps a minimal production-ready React project with a great developer experience and sane defaults. If you want an advanced feature, you can still use this tool, and later run `npm run graduate` to customize the experience (but then there’s no going back!)
+You don’t have to ever graduate. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obliged to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## What’s Inside?
 
@@ -76,17 +72,23 @@ Currently we use:
 * [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb)
 * and some more.
 
-We hide all of them behind our npm package so you don’t need to worry about upgrading them or solving conflicts.
+All of them are transient dependencies of the provided npm package so you don’t need to worry about upgrading them or resolving conflicts.
+
+## Limitations
+
+Our goal is to provide a tool that bootstraps a minimal production-ready React project with a great developer experience and sane defaults.
+
+This is why many features such as server rendering, experimental Babel plugins, or custom ESLint configuration, are not supported. It is hard to add features that would work for everyone without adding configuration. Having no configuration is an explicit design decision of this project. Currently, even running tests is not supported, although this limitation is temporary.
+
+If you want an advanced feature, you can still use this tool, and later run `npm run graduate` (but then there’s no going back!)
 
 ## You Don’t Have to Use This
 
-This is not the “one true way” to create React apps. You don’t need to port your project to use this if you’re happy with your setup. There are also many things we won’t provide (see “Limitations” above).
+This is not the “one true way” to create React apps. You don’t need to port your project to use this if you’re happy with your setup.
 
-Historically we’ve made it easy to gradually adopt React, but many people create new single-page React apps every day, and we’ve heard [loud and clear](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4) that this process can be error-prone and tedious, especially if this is your first JavaScript build stack.
+Historically it has been easy to gradually adopt React, but many people create new single-page React apps from scratch every day. We’ve heard [loud and clear](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4) that this process can be error-prone and tedious, especially if this is your first JavaScript build stack.
 
-This project is our attempt to figure out a good way to start developing React apps. We don’t claim it’s the best possible stack, and there are intentional limitations, but we think you can ship a production app with it, and we’ll make it even better over time.
-
-We also want you to feel in control so you can “graduate” from this tool at any time (see instructions above!).
+This project is an attempt to figure out a good way to start developing React apps. We don’t claim it’s the best possible stack, and there are intentional limitations, but we think you can ship a production app with it, and with your help we’ll make it better over time.
 
 ## Contibuting
 
