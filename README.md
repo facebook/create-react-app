@@ -92,7 +92,7 @@ This project is an attempt to figure out a good way to start developing React ap
 
 ## Contibuting
 
-Clone the repo and run `npm install`.
+Clone the repo and run `npm install` in the root and the `global-cli` folder.
 
 Once it is done, you can modify any file locally and run `npm start` or `npm run build` just like in a generated project.  
 If you want to try out the end-to-end flow with the global CLI, you can do this too:
