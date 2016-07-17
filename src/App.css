@@ -1,5 +1,15 @@
-.App {
-  background: red;
-  width: 100px;
-  height: 100px;
+body {
+  background-color: #f5fcff;
+}
+
+.App--logo {
+  animation: spin infinite 20s linear;
+  border-radius: 50%;
+  vertical-align: middle;
+  width: 38px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
