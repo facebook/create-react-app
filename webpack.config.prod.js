@@ -73,10 +73,21 @@ module.exports = {
     return [autoprefixer];
   },
   plugins: [
-    // TODO: infer from package.json?
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve(__dirname, relative, 'index.html'),
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      }
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
     new webpack.optimize.OccurrenceOrderPlugin(),

@@ -73,7 +73,6 @@ module.exports = {
     return [autoprefixer];
   },
   plugins: [
-    // TODO: infer from package.json?
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve(__dirname, relative, 'index.html'),
