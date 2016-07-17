@@ -35,9 +35,10 @@ module.exports = function(hostPath, appName, verbose) {
     JSON.stringify(hostPackage, null, 2)
   );
 
-  // Move the src folder
+  // Move the files for the user
   // TODO: copying might be more correct?
   fs.renameSync(path.join(selfPath, 'src'), path.join(hostPath, 'src'));
+  fs.renameSync(path.join(selfPath, 'index.html'), path.join(hostPath, 'index.html'));
 
   // Run another npm install for react and react-dom
   // TODO: having to do two npm installs is bad, can we avoid it?

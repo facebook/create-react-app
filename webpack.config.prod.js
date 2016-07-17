@@ -76,7 +76,7 @@ module.exports = {
     // TODO: infer from package.json?
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, relative, 'src/index.html'),
+      template: path.resolve(__dirname, relative, 'index.html'),
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
