@@ -103,3 +103,11 @@ cd my-app
 ```
 
 and then run `npm start` or `npm run build`.
+
+## Acknowledgements
+
+We are grateful to the authors of existing related projects for their ideas and collaboration:
+
+* [enclave](https://github.com/eanplatter/enclave) by [@eanplatter](https://github.com/eanplatter)
+* [nwb](https://github.com/insin/nwb) by [@insin](https://github.com/insin)
+* [react-boilerplate](https://github.com/mxstbr/react-boilerplate) by [@mxstbr](https://github.com/mxstbr)
