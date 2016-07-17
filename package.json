@@ -6,6 +6,16 @@
     "build": "node scripts/build.js",
     "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\""
   },
+  "files": [
+    "LICENSE",
+    "PATENTS",
+    ".eslintrc",
+    "bin",
+    "scripts",
+    "src",
+    "webpack.config.dev.js",
+    "webpack.config.prod.js"
+  ],
   "bin": {
     "start-react-app": "./bin/start-react-app.js",
     "build-react-app": "./bin/build-react-app.js",
