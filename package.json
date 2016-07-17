@@ -17,7 +17,6 @@
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-plugin-transform-react-constant-elements": "^6.9.1",
-    "babel-plugin-transform-react-inline-elements": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-es2016": "^6.11.3",
     "babel-preset-react": "^6.11.1",

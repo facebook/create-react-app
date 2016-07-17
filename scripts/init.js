@@ -9,8 +9,9 @@
 
 var fs = require('fs');
 var path = require('path');
+var spawn = require('child_process').spawn;
 
-module.exports = function(hostPath, appName) {
+module.exports = function(hostPath, appName, verbose) {
   var selfPath = path.join(hostPath, 'node_modules', 'create-react-app-scripts');
 
   var hostPackage = require(path.join(hostPath, 'package.json'));
@@ -34,21 +35,34 @@ module.exports = function(hostPath, appName) {
     JSON.stringify(hostPackage, null, 2)
   );
 
-  // TODO: run npm install in hostPath, (not needed for npm 3 if we accept some hackery)
-
   // Move the src folder
+  // TODO: copying might be more correct?
   fs.renameSync(path.join(selfPath, 'src'), path.join(hostPath, 'src'));
 
-  console.log('Success! Created ' + appName + ' at ' + hostPath + '.');
-  console.log();
-  console.log('Inside that directory, you can run several commands:');
-  console.log('  * npm start: Starts the development server.');
-  console.log('  * npm run build: Builds the app for production.');
-  console.log('  * npm run graduate: Removes this tool. If you do this, you can’t go back!');
-  console.log();
-  console.log('We suggest that you begin by typing:');
-  console.log('  cd', appName);
-  console.log('  npm start');
-  console.log();
-  console.log('Happy hacking!');
+  // Run another npm install for react and react-dom
+  // TODO: having to do two npm installs is bad, can we avoid it?
+  var args = [
+    'install',
+    verbose && '--verbose'
+  ].filter(function(e) { return e; });
+  var proc = spawn('npm', args, {stdio: 'inherit'});
+  proc.on('close', function (code) {
+    if (code !== 0) {
+      console.error('`npm ' + args.join(' ') + '` failed');
+      return;
+    }
+
+    console.log('Success! Created ' + appName + ' at ' + hostPath + '.');
+    console.log();
+    console.log('Inside that directory, you can run several commands:');
+    console.log('  * npm start: Starts the development server.');
+    console.log('  * npm run build: Builds the app for production.');
+    console.log('  * npm run graduate: Removes this tool. If you do this, you can’t go back!');
+    console.log();
+    console.log('We suggest that you begin by typing:');
+    console.log('  cd', appName);
+    console.log('  npm start');
+    console.log();
+    console.log('Happy hacking!');
+  });
 };
