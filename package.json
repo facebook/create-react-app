@@ -13,6 +13,7 @@
     "bin",
     "scripts",
     "src",
+    "index.html",
     "webpack.config.dev.js",
     "webpack.config.prod.js"
   ],
