@@ -12,7 +12,9 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var relative = process.argv[2] === 'local' ? '.' : '../..';
+var isInNodeModules = 'node_modules' ===
+  path.basename(path.resolve(path.join(__dirname, '..')));
+var relative = isInNodeModules ? '../..' : '.';
 
 module.exports = {
   devtool: 'source-map',

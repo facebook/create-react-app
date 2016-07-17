@@ -8,12 +8,13 @@
  */
 
 var fs = require('fs');
+var path = require('path');
 
 module.exports = function(hostPath, appName) {
-  var selfPath = hostPath + '/node_modules/create-react-app-scripts';
+  var selfPath = path.join(hostPath, 'node_modules', 'create-react-app-scripts');
 
-  var hostPackage = require(hostPath + '/package.json');
-  var selfPackage = require(selfPath + '/package.json');
+  var hostPackage = require(path.join(hostPath, 'package.json'));
+  var selfPackage = require(path.join(selfPath, 'package.json'));
 
   // Copy over devDependencies
   hostPackage.dependencies = hostPackage.dependencies || {};
@@ -28,12 +29,15 @@ module.exports = function(hostPath, appName) {
       command + '-react-app';
   });
 
-  fs.writeFileSync(hostPath + '/package.json', JSON.stringify(hostPackage, null, 2));
+  fs.writeFileSync(
+    path.join(hostPath, 'package.json'),
+    JSON.stringify(hostPackage, null, 2)
+  );
 
   // TODO: run npm install in hostPath, (not needed for npm 3 if we accept some hackery)
 
   // Move the src folder
-  fs.renameSync(selfPath + '/src', hostPath + '/src');
+  fs.renameSync(path.join(selfPath, 'src'), path.join(hostPath, 'src'));
 
   console.log('Success! Created ' + appName + ' at ' + hostPath + '.');
   console.log();

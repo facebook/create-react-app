@@ -8,26 +8,28 @@
  */
 
 var fs = require('fs');
+var path = require('path');
 
 console.log('Extracting scripts...');
+console.log();
 
-var hostPath = __dirname;
-var selfPath = hostPath + '/node_modules/create-react-app-scripts';
+var selfPath = path.join(__dirname, '..');
+var hostPath = path.join(selfPath, '..', '..');
 
 var files = [
   'scripts',
-  '.webpack.config.dev.js',
-  '.webpack.config.prod.js',
+  'webpack.config.dev.js',
+  'webpack.config.prod.js',
   '.babelrc',
   '.eslintrc',
 ];
 
 // Ensure that the host folder is clean and we won't override any files
 files.forEach(function(file) {
-  if (fs.existsSync(hostPath + '/' + file)) {
+  if (fs.existsSync(path.join(hostPath, file))) {
     console.error(
-      '`' + file + '` already exists on your app folder, we cannot ' +
-      'continue as you would lose all the changes in that file.',
+      '`' + file + '` already exists in your app folder. We cannot ' +
+      'continue as you would lose all the changes in that file or directory. ' +
       'Please delete it (maybe make a copy for backup) and run this ' +
       'command again.'
     );
@@ -37,9 +39,38 @@ files.forEach(function(file) {
 
 // Move the files over
 files.forEach(function(file) {
-  fs.renameSync(selfPath + '/' + file, hostPath + '/' + file);
+  console.log('Moving ' + file + ' to ' + hostPath);
+  fs.renameSync(path.join(selfPath, file), path.join(hostPath, file));
 });
 
-var hostPackage = require(hostPath + '/package.json');
+// These are unnecessary after graduation
+fs.unlinkSync(path.join(hostPath, 'scripts', 'init.js'));
+fs.unlinkSync(path.join(hostPath, 'scripts', 'graduate.js'));
 
+console.log();
+
+var selfPackage = require(path.join(selfPath, 'package.json'));
+var hostPackage = require(path.join(hostPath, 'package.json'));
+
+console.log('Removing dependency: create-react-app-scripts');
+delete hostPackage.devDependencies['create-react-app-scripts'];
+
+Object.keys(selfPackage.dependencies).forEach(function (key) {
+  console.log('Adding dependency: ' + key);
+  hostPackage.devDependencies[key] = selfPackage.dependencies[key];
+});
+
+console.log('Updating scripts');
+Object.keys(hostPackage.scripts).forEach(function (key) {
+  hostPackage.scripts[key] = 'node ./scripts/' + key + '.js'
+});
+delete hostPackage.scripts['graduate'];
+
+console.log('Writing package.json...');
+fs.writeFileSync(
+  path.join(hostPath, 'package.json'),
+  JSON.stringify(hostPackage, null, 2)
+);
+
+console.log();
 console.log('Done!');

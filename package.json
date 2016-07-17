@@ -2,8 +2,8 @@
   "name": "create-react-app-scripts",
   "version": "0.0.1",
   "scripts": {
-    "start": "node scripts/start.js local",
-    "build": "node scripts/build.js local",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
     "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\""
   },
   "bin": {
