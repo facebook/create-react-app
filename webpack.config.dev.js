@@ -32,15 +32,20 @@ module.exports = {
     preLoaders: [
       {
         test: /\.js$/,
-        loader: 'eslint-loader',
-        include: path.resolve(__dirname, relative, 'src')
+        loader: 'eslint',
+        include: path.resolve(__dirname, relative, 'src'),
       }
     ],
     loaders: [
       {
         test: /\.js$/,
         include: path.resolve(__dirname, relative, 'src'),
-        loader: 'babel'
+        loader: 'babel',
+        query: {
+          cacheDirectory: true,
+          presets: ['es2015', 'es2016', 'react'],
+          plugins: ['transform-object-rest-spread']
+        }
       },
       {
         test: /\.css$/,
@@ -61,8 +66,11 @@ module.exports = {
       }
     ]
   },
-  postcss: function () {
-    return [ autoprefixer ];
+  eslint: {
+    configFile: path.join(__dirname, '.eslintrc')
+  },
+  postcss: function() {
+    return [autoprefixer];
   },
   plugins: [
     // TODO: infer from package.json?

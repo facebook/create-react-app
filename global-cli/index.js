@@ -121,7 +121,7 @@ function run(root, appName, version, verbose) {
       'init.js'
     );
     var init = require(scriptsPath);
-    init(root, appName);
+    init(root, appName, verbose);
   });
 }
 

@@ -20,8 +20,7 @@ var files = [
   'scripts',
   'webpack.config.dev.js',
   'webpack.config.prod.js',
-  '.babelrc',
-  '.eslintrc',
+  '.eslintrc'
 ];
 
 // Ensure that the host folder is clean and we won't override any files
