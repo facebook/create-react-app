@@ -43,6 +43,6 @@ new WebpackDevServer(webpack(config), {
     execSync('ps cax | grep "Google Chrome"');
     execSync('open -a "Google Chrome" http://localhost:3000/');
   } catch(e) {
-    // Do nothing if Chrome cannot be opened
+    // Do nothing if Chrome isn't opened or cannot be opened
   }
 });
