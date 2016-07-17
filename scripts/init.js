@@ -25,7 +25,7 @@ module.exports = function(hostPath, appName, verbose) {
 
   // Setup the script rules
   hostPackage.scripts = {};
-  ['start', 'build', 'graduate'].forEach(function(command) {
+  ['start', 'build', 'eject'].forEach(function(command) {
     hostPackage.scripts[command] =
       command + '-react-app';
   });
@@ -58,7 +58,7 @@ module.exports = function(hostPath, appName, verbose) {
     console.log('Inside that directory, you can run several commands:');
     console.log('  * npm start: Starts the development server.');
     console.log('  * npm run build: Builds the app for production.');
-    console.log('  * npm run graduate: Removes this tool. If you do this, you can’t go back!');
+    console.log('  * npm run eject: Removes this tool. If you do this, you can’t go back!');
     console.log();
     console.log('We suggest that you begin by typing:');
     console.log('  cd', appName);
