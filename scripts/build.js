@@ -10,14 +10,14 @@
 process.env.NODE_ENV = 'production';
 
 var path = require('path');
-var spawnSync = require('child_process').spawnSync;
+var rimrafSync = require('rimraf').sync;
 var webpack = require('webpack');
 var config = require('../webpack.config.prod');
 
 var isInNodeModules = 'node_modules' ===
   path.basename(path.resolve(path.join(__dirname, '..', '..')));
 var relative = isInNodeModules ? '../..' : '.';
-spawnSync('rm', ['-rf', relative + '/build']);
+rimrafSync(relative + '/build');
 
 webpack(config).run(function(err, stats) {
   if (err) {

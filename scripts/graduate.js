@@ -9,6 +9,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var rimrafSync = require('rimraf').sync;
 var spawnSync = require('child_process').spawnSync;
 
 console.log('Graduating...');
@@ -74,7 +75,7 @@ fs.writeFileSync(
 console.log();
 
 console.log('Running npm install...');
-spawnSync('rm', ['-rf', selfPath]);
+rimrafSync(selfPath);
 spawnSync('npm', ['install'], {stdio: 'inherit'});
 console.log();
 
