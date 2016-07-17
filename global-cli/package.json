@@ -1,6 +1,9 @@
 {
   "name": "create-react-app",
   "version": "1.0.0",
+  "files": [
+    "index.js"
+  ],
   "bin": {
     "create-react-app": "index.js"
   },
