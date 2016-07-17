@@ -23,9 +23,9 @@ module.exports = function(hostPath, appName) {
 
   // Setup the script rules
   hostPackage.scripts = {};
-  ['start', 'build'].forEach(function(command) {
+  ['start', 'build', 'graduate'].forEach(function(command) {
     hostPackage.scripts[command] =
-      'node node_modules/create-react-app-scripts/scripts/' + command + '.js';
+      command + '-react-app';
   });
 
   fs.writeFileSync(hostPath + '/package.json', JSON.stringify(hostPackage, null, 2));
@@ -35,5 +35,16 @@ module.exports = function(hostPath, appName) {
   // Move the src folder
   fs.renameSync(selfPath + '/src', hostPath + '/src');
 
-  console.log('Creating the app', appName, 'at', hostPath);
+  console.log('Success! Created ' + appName + ' at ' + hostPath + '.');
+  console.log();
+  console.log('Inside that directory, you can run several commands:');
+  console.log('  * npm start: Starts the development server.');
+  console.log('  * npm run build: Builds the app for production.');
+  console.log('  * npm run graduate: Removes this tool. If you do this, you can’t go back!');
+  console.log();
+  console.log('We suggest that you begin by typing:');
+  console.log('  cd', appName);
+  console.log('  npm start');
+  console.log();
+  console.log('Happy hacking!');
 };

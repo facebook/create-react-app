@@ -77,9 +77,9 @@ function createApp(name, verbose, version) {
   var appName = path.basename(root);
 
   console.log(
-    'This will walk you through creating a new React app in',
-    root
+    'Creating a new React app in ' + root + '.'
   );
+  console.log();
 
   fs.mkdirSync(root);
 
@@ -92,6 +92,8 @@ function createApp(name, verbose, version) {
   process.chdir(root);
 
   console.log('Installing create-react-app-scripts package from npm...');
+  console.log('This might take a while! ⌛');
+  console.log();
 
   run(root, appName, version, verbose);
 }

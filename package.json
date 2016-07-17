@@ -6,6 +6,11 @@
     "build": "node scripts/build.js local",
     "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\""
   },
+  "bin": {
+    "start-react-app": "./bin/start-react-app.js",
+    "build-react-app": "./bin/build-react-app.js",
+    "graduate-react-app": "./bin/graduate-react-app.js"
+  },
   "dependencies": {
     "autoprefixer": "^6.3.7",
     "babel-core": "^6.10.4",
