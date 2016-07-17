@@ -12,6 +12,7 @@ process.env.NODE_ENV = 'development';
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('../webpack.config.dev');
+var execSync = require('child_process').execSync;
 
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
@@ -37,4 +38,11 @@ new WebpackDevServer(webpack(config), {
     return console.log(err);
   }
   console.log('Listening at http://localhost:3000/');
+
+  try {
+    execSync('ps cax | grep "Google Chrome"');
+    execSync('open -a "Google Chrome" http://localhost:3000/');
+  } catch(e) {
+    // Do nothing if Chrome cannot be opened
+  }
 });
