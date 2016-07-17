@@ -41,6 +41,7 @@
     "html-webpack-plugin": "^2.22.0",
     "json-loader": "^0.5.4",
     "postcss-loader": "^0.9.1",
+    "semver": "^5.3.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
