@@ -9,7 +9,7 @@
 
 var fs = require('fs');
 var path = require('path');
-var spawn = require('child_process').spawn;
+var spawn = require('cross-spawn');
 
 module.exports = function(hostPath, appName, verbose) {
   var selfPath = path.join(hostPath, 'node_modules', 'create-react-app-scripts');
