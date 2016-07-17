@@ -60,7 +60,7 @@ You don’t have to ever graduate. The curated feature set is suitable for small
 ## What’s Inside?
 
 The tools used by Create React App are subject to change.  
-Currently we use:
+Currently it is a thin layer on top of many amazing community projects, such as:
 
 * [webpack](https://webpack.github.io/)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
@@ -70,7 +70,7 @@ Currently we use:
 * [style-loader](https://github.com/webpack/style-loader)
 * [ESLint](http://eslint.org/)
 * [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb)
-* and some more.
+* and more.
 
 All of them are transient dependencies of the provided npm package so you don’t need to worry about upgrading them or resolving conflicts.
 
