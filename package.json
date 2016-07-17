@@ -32,6 +32,7 @@
     "babel-preset-es2016": "^6.11.3",
     "babel-preset-react": "^6.11.1",
     "css-loader": "^0.23.1",
+    "cross-spawn": "^4.0.0",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-loader": "^1.4.1",
