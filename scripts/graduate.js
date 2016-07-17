@@ -9,8 +9,9 @@
 
 var fs = require('fs');
 var path = require('path');
+var spawnSync = require('child_process').spawnSync;
 
-console.log('Extracting scripts...');
+console.log('Graduating...');
 console.log();
 
 var selfPath = path.join(__dirname, '..');
@@ -65,11 +66,16 @@ Object.keys(hostPackage.scripts).forEach(function (key) {
 });
 delete hostPackage.scripts['graduate'];
 
-console.log('Writing package.json...');
+console.log('Writing package.json');
 fs.writeFileSync(
   path.join(hostPath, 'package.json'),
   JSON.stringify(hostPackage, null, 2)
 );
-
 console.log();
+
+console.log('Running npm install...');
+spawnSync('rm', ['-rf', selfPath]);
+spawnSync('npm', ['install'], {stdio: 'inherit'});
+console.log();
+
 console.log('Done!');
