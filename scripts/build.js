@@ -25,5 +25,12 @@ webpack(config).run(function(err, stats) {
     process.exit(1);
   }
 
-  console.log('Build successfully generated in the build/ folder');
+  console.log('Successfully generated a bundle in the build folder!');
+  console.log();
+  console.log('You can now serve it with any static server:');
+  console.log('  cd build');
+  console.log('  python -m SimpleHTTPServer 9000');
+  console.log('  open http://localhost:9000');
+  console.log();
+  console.log('It is optimized and ready to be deployed for production.');
 });
