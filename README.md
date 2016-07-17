@@ -7,7 +7,7 @@ Create React apps with no build configuration.
 
 * **Zero Configuration:** There are no configuration files or command line options. Configuring both development and production builds is handled for you so you can focus on writing code.
 
-* **No Lock-In:** You can “graduate” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up where we left off.
+* **No Lock-In:** You can “eject” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up where we left off.
 
 ## Installation
 
@@ -47,15 +47,15 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.  
 Your app is ready to be deployed!
 
-### `npm run graduate`
+### `npm run eject`
 
-**Note: this is a one-way operation. Once you “graduate”, you can’t go back!**
+**Note: this is a one-way operation. Once you “eject”, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can “graduate” at any time. This command will remove the single build dependency from your project.
+If you aren’t satisfied with the build tool and configuration choices, you can “eject” at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transient dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `graduate` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Instead, it will copy all the configuration files and the transient dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever graduate. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obliged to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+You don’t have to ever eject. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obliged to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## What’s Inside?
 
@@ -80,7 +80,7 @@ Our goal is to provide a tool that bootstraps a minimal production-ready React p
 
 This is why many features such as server rendering, experimental Babel plugins, or custom ESLint configuration, are not supported. It is hard to add features that would work for everyone without adding configuration. Having no configuration is an explicit design decision of this project. Currently, even running tests is not supported, although this limitation is temporary.
 
-If you want an advanced feature, you can still use this tool, and later run `npm run graduate` (but then there’s no going back!)
+If you want an advanced feature, you can still use this tool, and later run `npm run eject` (but then there’s no going back!)
 
 ## You Don’t Have to Use This
 
