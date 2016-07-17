@@ -37,7 +37,7 @@
 
 var fs = require('fs');
 var path = require('path');
-var spawn = require('child_process').spawn;
+var spawn = require('cross-spawn');
 var chalk = require('chalk');
 var semver = require('semver');
 var argv = require('minimist')(process.argv.slice(2));
