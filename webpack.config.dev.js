@@ -74,7 +74,10 @@ module.exports = {
   },
   plugins: [
     // TODO: infer from package.json?
-    new HtmlWebpackPlugin({ title: 'My React Project' }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: path.resolve(__dirname, relative, 'src/index.html'),
+    }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' })
   ]
 };
