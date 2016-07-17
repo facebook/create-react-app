@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 var fs = require('fs');
 
 module.exports = function(hostPath, appName) {
@@ -15,7 +24,8 @@ module.exports = function(hostPath, appName) {
   // Setup the script rules
   hostPackage.scripts = {};
   ['start', 'build'].forEach(function(command) {
-    hostPackage.scripts[command] = 'node node_modules/create-react-app-scripts/scripts/' + command + '.js';
+    hostPackage.scripts[command] =
+      'node node_modules/create-react-app-scripts/scripts/' + command + '.js';
   });
 
   fs.writeFileSync(hostPath + '/package.json', JSON.stringify(hostPackage, null, 2));

@@ -9,9 +9,9 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// /!\ DO NOT MODIFY THIS FILE /!\
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//   /!\ DO NOT MODIFY THIS FILE /!\
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 // create-react-app is installed globally on people's computers. This means
 // that it is extremely difficult to have them upgrade the version and
@@ -21,17 +21,17 @@
 // The only job of create-react-app is to init the repository and then
 // forward all the commands to the local version of create-react-app.
 //
-// If you need to add a new command, please add it to local-cli/.
+// If you need to add a new command, please add it to the scripts/ folder.
 //
 // The only reason to modify this file is to add more warnings and
-// troubleshooting information for the `react init` command.
+// troubleshooting information for the `create-react-app` command.
 //
 // Do not make breaking changes! We absolutely don't want to have to
 // tell people to update their global version of create-react-app.
 //
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// /!\ DO NOT MODIFY THIS FILE /!\
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//   /!\ DO NOT MODIFY THIS FILE /!\
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 'use strict';
 
@@ -40,18 +40,18 @@ var path = require('path');
 var spawn = require('child_process').spawn;
 var chalk = require('chalk');
 var semver = require('semver');
-/**
- * Used arguments:
- *   -v --version - to print current version of create-react-app and create-react-app-scripts dependency
- *   --verbose - to print logs while init
- *   --scripts-version <alternative create-react-app-scripts package> - override default (https://registry.npmjs.org/create-react-app-scripts@latest),
- *      package to install, examples:
- *     - "0.22.0-rc1" - A new app will be created using a specific version of React CLI from npm repo
- *     - "https://registry.npmjs.org/create-react-app-scripts/-/create-react-app-scripts-0.20.0.tgz" - a .tgz archive from any npm repo
- *     - "/Users/home/create-react-app/create-react-app-scripts-0.22.0.tgz" - for package prepared with `npm pack`, useful for e2e tests
- */
 var argv = require('minimist')(process.argv.slice(2));
 
+/**
+ * Arguments:
+ *   --version - to print current version
+ *   --verbose - to print logs while init
+ *   --scripts-version <alternative package>
+ *     Example of valid values:
+ *     - a specific npm version: "0.22.0-rc1"
+ *     - a .tgz archive from any npm repo: "https://registry.npmjs.org/create-react-app-scripts/-/create-react-app-scripts-0.20.0.tgz"
+ *     - a package prepared with `npm pack`: "/Users/home/vjeux/create-react-app/create-react-app-scripts-0.22.0.tgz"
+ */
 var commands = argv._;
 if (commands.length === 0) {
   console.error(
@@ -60,8 +60,8 @@ if (commands.length === 0) {
   process.exit(1);
 }
 
-if (argv.v || argv.version) {
-  console.log('create-react-app: ' + require('./package.json').version);
+if (argv.version) {
+  console.log('create-react-app version: ' + require('./package.json').version);
   process.exit();
 }
 
@@ -70,7 +70,7 @@ createApp(commands[0], argv.verbose, argv['scripts-version']);
 function createApp(name, verbose, version) {
   if (fs.existsSync(name)) {
     console.log('Directory `' + name + '` already exists. Aborting.');
-    process.exit();
+    process.exit(1);
   }
 
   var root = path.resolve(name);
@@ -146,11 +146,12 @@ function checkNodeVersion() {
   if (!packageJson.engines || !packageJson.engines.node) {
     return;
   }
+
   if (!semver.satisfies(process.version, packageJson.engines.node)) {
     console.error(
       chalk.red(
-        'You are currently running Node %s but React CLI requires %s. ' +
-        'Please use a supported version of Node.\n'
+        'You are currently running Node %s but create-react-app requires %s.' +
+        ' Please use a supported version of Node.\n'
       ),
       process.version,
       packageJson.engines.node
