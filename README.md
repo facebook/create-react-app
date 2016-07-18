@@ -23,7 +23,7 @@ npm install -g create-react-app
 
 ## Why Use This?
 
-**If you’re getting started** with React, use this tool to automate the build of your app. Get started with React, JSX, and ES6 in minutes. You don’t have to learn the configuration format of Babel, Webpack, and ESLint, or manage their versions. There is no configuration file, and this tool is the only build dependency in your `package.json`.
+**If you’re getting started** with React, use this tool to automate the build of your app. You can get an app running with React, JSX, and ES6 in minutes. You don’t have to learn the configuration format of Babel, Webpack, and ESLint, or manage their versions. There is no configuration file, and this tool is the only build dependency in your `package.json`.
 
 **The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. Currently, it doesn’t support testing either. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 
