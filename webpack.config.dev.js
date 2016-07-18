@@ -25,6 +25,7 @@ module.exports = {
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: path.join(__dirname, relative, 'build'),
+    pathinfo: true,
     filename: 'bundle.js',
     publicPath: '/'
   },
