@@ -1,5 +1,5 @@
 {
-  "name": "create-react-app-scripts",
+  "name": "react-scripts",
   "version": "0.0.1",
   "scripts": {
     "start": "node scripts/start.js",

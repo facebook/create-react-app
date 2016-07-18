@@ -12,7 +12,7 @@ var path = require('path');
 var spawn = require('cross-spawn');
 
 module.exports = function(hostPath, appName, verbose) {
-  var selfPath = path.join(hostPath, 'node_modules', 'create-react-app-scripts');
+  var selfPath = path.join(hostPath, 'node_modules', 'react-scripts');
 
   var hostPackage = require(path.join(hostPath, 'package.json'));
   var selfPackage = require(path.join(selfPath, 'package.json'));

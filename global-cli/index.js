@@ -49,8 +49,8 @@ var argv = require('minimist')(process.argv.slice(2));
  *   --scripts-version <alternative package>
  *     Example of valid values:
  *     - a specific npm version: "0.22.0-rc1"
- *     - a .tgz archive from any npm repo: "https://registry.npmjs.org/create-react-app-scripts/-/create-react-app-scripts-0.20.0.tgz"
- *     - a package prepared with `npm pack`: "/Users/home/vjeux/create-react-app/create-react-app-scripts-0.22.0.tgz"
+ *     - a .tgz archive from any npm repo: "https://registry.npmjs.org/react-scripts/-/react-scripts-0.20.0.tgz"
+ *     - a package prepared with `npm pack`: "/Users/home/vjeux/create-react-app/react-scripts-0.22.0.tgz"
  */
 var commands = argv._;
 if (commands.length === 0) {
@@ -91,7 +91,7 @@ function createApp(name, verbose, version) {
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(packageJson));
   process.chdir(root);
 
-  console.log('Installing create-react-app-scripts package from npm...');
+  console.log('Installing react-scripts package from npm...');
   console.log('This might take a while! ⌛');
   console.log();
 
@@ -116,7 +116,7 @@ function run(root, appName, version, verbose) {
     var scriptsPath = path.resolve(
       process.cwd(),
       'node_modules',
-      'create-react-app-scripts',
+      'react-scripts',
       'scripts',
       'init.js'
     );
@@ -126,7 +126,7 @@ function run(root, appName, version, verbose) {
 }
 
 function getInstallPackage(version) {
-  var packageToInstall = 'create-react-app-scripts';
+  var packageToInstall = 'react-scripts';
   var validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += '@' + validSemver;
@@ -141,7 +141,7 @@ function checkNodeVersion() {
   var packageJsonPath = path.resolve(
     process.cwd(),
     'node_modules',
-    'create-react-app-scripts',
+    'react-scripts',
     'package.json'
   );
   var packageJson = require(packageJsonPath);

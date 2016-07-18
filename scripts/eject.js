@@ -75,8 +75,8 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   var selfPackage = require(path.join(selfPath, 'package.json'));
   var hostPackage = require(path.join(hostPath, 'package.json'));
 
-  console.log('Removing dependency: create-react-app-scripts');
-  delete hostPackage.devDependencies['create-react-app-scripts'];
+  console.log('Removing dependency: react-scripts');
+  delete hostPackage.devDependencies['react-scripts'];
 
   Object.keys(selfPackage.dependencies).forEach(function (key) {
    console.log('Adding dependency: ' + key);
