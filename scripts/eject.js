@@ -24,8 +24,12 @@ var prompt = function(question, cb) {
   })
 }
 
-prompt('Are you sure you want to eject? This action is permanent. [Y/n]', function(answer) {
-  if (answer && answer !== 'Y' && answer !== 'yes') {
+prompt('Are you sure you want to eject? This action is permanent. [y/N]', function(answer) {
+  var shouldEject = answer && (
+    answer.toLowerCase() === 'y' ||
+    answer.toLowerCase() === 'yes'
+  );
+  if (!shouldEject) {
     console.log('Close one! Eject aported.');
     process.exit(1);
   }
@@ -94,8 +98,11 @@ prompt('Are you sure you want to eject? This action is permanent. [Y/n]', functi
   console.log('Running npm install...');
   rimrafSync(selfPath);
   spawnSync('npm', ['install'], {stdio: 'inherit'});
+  console.log('Ejected successfully!');
   console.log();
 
-  console.log('Done!');
+  console.log('Please consider sharing why you ejected in this survey:');
+  console.log('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1');
+  console.log();
 
 });
