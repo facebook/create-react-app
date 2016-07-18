@@ -9,6 +9,14 @@ Create React apps with no build configuration.
 
 * **No Lock-In:** You can “eject” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up right where you left off.
 
+## How to Use This
+
+**If you’re getting started** with React, use this tool to automate the build of your app. Get started with React, JSX, and ES6 in minutes. You don’t have to learn the configuration format of Babel, Webpack, and ESLint, or manage their versions. There is no configuration file, and this tool is the only build dependency in your `package.json`.
+
+**The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. Currently, it doesn’t support testing either. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
+
+**If you’re a power user** and are comfortable with configuring build dependencies yourself, you can use this tool as a boilerplate generator. When you “eject” to that mode, the tool moves all the configuration right into your project, and removes itself from the dependencies. This way you can customize everything in this setup but you won’t get the upstream updates of the curated set of plugins.
+
 ## Installation
 
 Install it once globally:
@@ -69,14 +77,6 @@ Currently it is a thin layer on top of many amazing community projects, such as:
 * and more.
 
 All of them are transient dependencies of the provided npm package so you don’t need to worry about upgrading them or resolving conflicts.
-
-## Limitations
-
-Our goal is to provide a tool that bootstraps a minimal production-ready React project with a great developer experience and sane defaults.
-
-This is why many features such as server rendering, experimental Babel plugins, or custom ESLint configuration, are not supported. It is hard to add features that would work for everyone without adding configuration. Having no configuration is an explicit design decision of this project. Currently, even running tests is not supported, although this limitation is temporary.
-
-If you want an advanced feature, you can still use this tool, and later run `npm run eject` (but then there’s no going back!)
 
 ## You Don’t Have to Use This
 
