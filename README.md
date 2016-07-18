@@ -42,23 +42,23 @@ cd my-app
 
 It will create a directory called `my-app` inside the current folder.
 
-Inside that directory, it will generate the initial project structure and install the transient dependencies.
+Inside that directory, it will generate the initial project structure and install the transient dependencies.<br>
 Once the installation is done, you can run some commands inside the project folder!
 
 ### `npm start`
 
-Runs the app in the development mode.
+Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.
+The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.
+Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.
+The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 ### `npm run eject`
