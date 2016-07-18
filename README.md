@@ -9,6 +9,18 @@ Create React apps with no build configuration.
 
 * **No Lock-In:** You can “eject” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up right where you left off.
 
+## Installation
+
+Install it once globally:
+
+```sh
+npm install -g create-react-app
+```
+
+**You’ll need to have Node >= 4 on your machine**. We recommend to use Node >= 5 and npm >= 3 for faster installation speed and better disk usage. You can use [n](https://github.com/tj/n) to easily switch the Node versions between different projects.
+
+**This tool doesn’t assume a Node backend**. The Node installation is only required for the build tools that rely on it locally, such as Webpack and Babel. The output folder includes an `index.html` and a minified `.js` bundle so you can host them anywhere you like.
+
 ## Why Use This?
 
 **If you’re getting started** with React, use this tool to automate the build of your app. Get started with React, JSX, and ES6 in minutes. You don’t have to learn the configuration format of Babel, Webpack, and ESLint, or manage their versions. There is no configuration file, and this tool is the only build dependency in your `package.json`.
@@ -18,21 +30,6 @@ Create React apps with no build configuration.
 **If you’re a power user** and are comfortable with configuring build dependencies yourself, you can use this tool as a boilerplate generator. When you “eject” from it, the tool moves all the configuration right into your project, and removes itself from the dependencies. This way you can customize everything in this setup but you won’t get the upstream updates of the curated set of plugins.
 
 **You don’t have to use this.** Historically it has been easy to [gradually adopt](https://www.youtube.com/watch?v=BF58ZJ1ZQxY) React. However many people create new single-page React apps from scratch every day. We’ve heard [loud](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4) and [clear](https://twitter.com/thomasfuchs/status/708675139253174273) that this process can be error-prone and tedious, especially if this is your first JavaScript build stack. This project is an attempt to figure out a good way to start developing React apps.
-
-## Installation
-
-Install it once globally:
-
-```sh
-npm install -g create-react-app
-```
-
->**Note:**
->
->**You need to have Node >= 4 running locally**. We recommend to use Node >= 5 and npm >= 3 for faster installation speed and better disk usage. You can use [n](https://github.com/tj/n) to easily switch the Node versions between different projects.
->
->**This tool doesn’t assume a Node backend**. The Node installation is only required for the build tools that rely on it locally, such as Webpack and Babel. The output folder includes an `index.html` and a minified `.js` bundle so you can host them anywhere you like.
-
 
 ## Usage
 
