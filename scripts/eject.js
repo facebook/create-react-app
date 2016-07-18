@@ -40,7 +40,8 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   var hostPath = path.join(selfPath, '..', '..');
 
   var files = [
-   'scripts',
+   path.join('scripts', 'build.js'),
+   path.join('scripts', 'start.js'),
    'webpack.config.dev.js',
    'webpack.config.prod.js',
    '.eslintrc'
@@ -59,15 +60,15 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
    }
   });
 
-  // Move the files over
+  // Copy the files over
+  fs.mkdirSync(path.join(hostPath, 'scripts'));
   files.forEach(function(file) {
-   console.log('Moving ' + file + ' to ' + hostPath);
-   fs.renameSync(path.join(selfPath, file), path.join(hostPath, file));
+   console.log('Copying ' + file + ' to ' + hostPath);
+   var content = fs.readFileSync(path.join(selfPath, file), 'utf8');
+   // Remove license header
+   content = content.replace(/\/\*[\s\S]+\*\//, '').trim() + '\n';
+   fs.writeFileSync(path.join(hostPath, file), content);
   });
-
-  // These are unnecessary after graduation
-  fs.unlinkSync(path.join(hostPath, 'scripts', 'init.js'));
-  fs.unlinkSync(path.join(hostPath, 'scripts', 'eject.js'));
 
   console.log();
 
@@ -84,7 +85,7 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
 
   console.log('Updating scripts');
   Object.keys(hostPackage.scripts).forEach(function (key) {
-   hostPackage.scripts[key] = 'node ./scripts/' + key + '.js'
+    hostPackage.scripts[key] = 'node ./scripts/' + key + '.js'
   });
   delete hostPackage.scripts['eject'];
 
