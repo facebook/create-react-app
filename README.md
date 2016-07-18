@@ -9,13 +9,15 @@ Create React apps with no build configuration.
 
 * **No Lock-In:** You can “eject” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up right where you left off.
 
-## How to Use This
+## Why Use This?
 
 **If you’re getting started** with React, use this tool to automate the build of your app. Get started with React, JSX, and ES6 in minutes. You don’t have to learn the configuration format of Babel, Webpack, and ESLint, or manage their versions. There is no configuration file, and this tool is the only build dependency in your `package.json`.
 
 **The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. Currently, it doesn’t support testing either. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 
-**If you’re a power user** and are comfortable with configuring build dependencies yourself, you can use this tool as a boilerplate generator. When you “eject” to that mode, the tool moves all the configuration right into your project, and removes itself from the dependencies. This way you can customize everything in this setup but you won’t get the upstream updates of the curated set of plugins.
+**If you’re a power user** and are comfortable with configuring build dependencies yourself, you can use this tool as a boilerplate generator. When you “eject” from it, the tool moves all the configuration right into your project, and removes itself from the dependencies. This way you can customize everything in this setup but you won’t get the upstream updates of the curated set of plugins.
+
+**You don’t have to use this.** Historically it has been easy to [gradually adopt](https://www.youtube.com/watch?v=BF58ZJ1ZQxY) React. However many people create new single-page React apps from scratch every day. We’ve heard [loud](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4) and [clear](https://twitter.com/thomasfuchs/status/708675139253174273) that this process can be error-prone and tedious, especially if this is your first JavaScript build stack. This project is an attempt to figure out a good way to start developing React apps.
 
 ## Installation
 
@@ -24,6 +26,13 @@ Install it once globally:
 ```sh
 npm install -g create-react-app
 ```
+
+>**Note:**
+>
+>**You need to have Node >= 4 running locally**. We recommend to use Node >= 5 and npm >= 3 for faster installation speed and better disk usage. You can use [n](https://github.com/tj/n) to easily switch the Node versions between different projects.
+>
+>**This tool doesn’t assume a Node backend**. The Node installation is only required for the build tools that rely on it locally, such as Webpack and Babel. The output folder includes an `index.html` and a minified `.js` bundle so you can host them anywhere you like.
+
 
 ## Usage
 
@@ -76,15 +85,7 @@ Currently it is a thin layer on top of many amazing community projects, such as:
 * [ESLint](http://eslint.org/) with [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb)
 * and more.
 
-All of them are transient dependencies of the provided npm package so you don’t need to worry about upgrading them or resolving conflicts.
-
-## You Don’t Have to Use This
-
-This is not the “one true way” to create React apps. You don’t need to port your project to use this if you’re happy with your setup.
-
-Historically it has been easy to gradually adopt React, but many people create new single-page React apps from scratch every day. We’ve heard [loud and clear](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4) that this process can be error-prone and tedious, especially if this is your first JavaScript build stack.
-
-This project is an attempt to figure out a good way to start developing React apps. We don’t claim it’s the best possible stack, and there are intentional limitations, but we think you can ship a production app with it, and with your help we’ll make it better over time.
+All of them are transient dependencies of the provided npm package.
 
 ## Contibuting
 
