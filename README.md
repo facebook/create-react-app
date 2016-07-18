@@ -17,7 +17,7 @@ Install it once globally:
 npm install -g create-react-app
 ```
 
-**You’ll need to have Node >= 4 on your machine**. We recommend to use Node >= 5 and npm >= 3 for faster installation speed and better disk usage. You can use [n](https://github.com/tj/n) to easily switch the Node versions between different projects.
+**You’ll need to have Node >= 4 on your machine**. We recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage. You can use [n](https://github.com/creationix/nvm#usage) to easily switch the Node versions between different projects.
 
 **This tool doesn’t assume a Node backend**. The Node installation is only required for the build tools that rely on it locally, such as Webpack and Babel. The output folder includes an `index.html` and a minified `.js` bundle so you can host them anywhere you like.
 
@@ -40,25 +40,25 @@ create-react-app my-app
 cd my-app
 ```
 
-It will create a directory called `my-app` inside the current folder.  
+It will create a directory called `my-app` inside the current folder.
 
-Inside that directory, it will generate the initial project structure and install the transient dependencies.  
+Inside that directory, it will generate the initial project structure and install the transient dependencies.
 Once the installation is done, you can run some commands inside the project folder!
 
 ### `npm start`
 
-Runs the app in the development mode.  
+Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.  
+The page will reload if you make edits.
 You will also see any lint errors in the console.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.  
+Builds the app for production to the `build` folder.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.  
+The build is minified and the filenames include the hashes.
 Your app is ready to be deployed!
 
 ### `npm run eject`
@@ -73,7 +73,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## What’s Inside?
 
-The tools used by Create React App are subject to change.  
+The tools used by Create React App are subject to change.
 Currently it is a thin layer on top of many amazing community projects, such as:
 
 * [webpack](https://webpack.github.io/) with [webpack-dev-server](https://github.com/webpack/webpack-dev-server), [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) and [style-loader](https://github.com/webpack/style-loader)
@@ -88,7 +88,7 @@ All of them are transient dependencies of the provided npm package.
 
 Clone the repo and run `npm install` in the root and the `global-cli` folder.
 
-Once it is done, you can modify any file locally and run `npm start` or `npm run build` just like in a generated project.  
+Once it is done, you can modify any file locally and run `npm start` or `npm run build` just like in a generated project.
 If you want to try out the end-to-end flow with the global CLI, you can do this too:
 
 ```
