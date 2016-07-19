@@ -13,8 +13,8 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var isInNodeModules = 'node_modules' ===
-  path.basename(path.resolve(path.join(__dirname, '..')));
-var relative = isInNodeModules ? '../..' : '.';
+  path.basename(path.resolve(path.join(__dirname, '..', '..')));
+var relative = isInNodeModules ? '../../..' : '..';
 
 module.exports = {
   devtool: 'source-map',
