@@ -37,7 +37,7 @@ module.exports = {
   settings: {
     'import/ignore': [
       'node_modules',
-      '\\.(json|css|jpg|png|gif|svg|eot|svg|ttf|woff|woff2|mp4|webm)$',
+      '\\.(json|css|jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$',
     ],
     'import/extensions': ['.js'],
     'import/resolver': {
@@ -54,7 +54,6 @@ module.exports = {
     'block-scoped-var': WARNING,
     'block-spacing': [WARNING, 'always'],
     'brace-style': [WARNING, '1tbs', { allowSingleLine: true }],
-    camelcase: [WARNING, { properties: 'never' }],
     'comma-spacing': [WARNING, { before: false, after: true }],
     'comma-style': [WARNING, 'last'],
     'computed-property-spacing': [WARNING, 'never'],
@@ -131,7 +130,6 @@ module.exports = {
       ],
       allowSamePrecedence: false
     }],
-    'no-mixed-spaces-and-tabs': WARNING,
     'no-multi-spaces': WARNING,
     'no-multi-str': ERROR,
     'no-multiple-empty-lines': [WARNING, { max: 2, maxEOF: 1 }],
@@ -190,14 +188,7 @@ module.exports = {
     'object-property-newline': [WARNING, {
       allowMultiplePropertiesPerLine: true,
     }],
-    'one-var': [WARNING, 'never'],
-    'one-var-declaration-per-line': [WARNING, 'always'],
     'operator-assignment': [ERROR, 'always'],
-    'prefer-arrow-callback': [WARNING, {
-      allowNamedFunctions: false,
-      allowUnboundThis: true,
-    }],
-    'prefer-rest-params': ERROR,
     radix: ERROR,
     'require-yield': ERROR,
     'rest-spread-spacing': [ERROR, 'never'],
@@ -234,11 +225,9 @@ module.exports = {
     'import/no-commonjs': WARNING,
     'import/no-duplicates': ERROR,
     'import/no-extraneous-dependencies': ERROR,
-    'import/no-mutable-exports': WARNING,
     'import/no-named-as-default': ERROR,
     'import/no-named-as-default-member': ERROR,
     'import/no-unresolved': [ERROR, { commonjs: true }],
-    'import/prefer-default-export': WARNING,
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/jsx-equals-spacing': [ERROR, 'never'],
@@ -246,7 +235,6 @@ module.exports = {
       eventHandlerPrefix: 'handle',
       eventHandlerPropPrefix: 'on',
     }],
-    'react/jsx-indent': [WARNING, 2],
     'react/jsx-key': WARNING,
     'react/jsx-no-duplicate-props': [ERROR, { ignoreCase: true }],
     'react/jsx-no-undef': ERROR,
