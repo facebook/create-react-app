@@ -49,6 +49,7 @@ module.exports = function(hostPath, appName, verbose) {
   copySync(path.join(selfPath, 'index.html'), path.join(hostPath, 'index.html'));
 
   // Run another npm install for react and react-dom
+  console.log('Installing react and react-dom from npm...');
   // TODO: having to do two npm installs is bad, can we avoid it?
   var args = [
     'install',
@@ -61,15 +62,23 @@ module.exports = function(hostPath, appName, verbose) {
       return;
     }
 
+    // Make sure to display the right way to cd
+    var cdpath;
+    if (path.join(process.cwd(), appName) == hostPath) {
+      cdpath = appName;
+    } else {
+      cdpath = hostPath;
+    }
+
     console.log('Success! Created ' + appName + ' at ' + hostPath + '.');
     console.log();
     console.log('Inside that directory, you can run several commands:');
     console.log('  * npm start: Starts the development server.');
-    console.log('  * npm run build: Builds the app for production.');
+    console.log('  * npm run build: Bundles the app into static files for production.');
     console.log('  * npm run eject: Removes this tool. If you do this, you can’t go back!');
     console.log();
     console.log('We suggest that you begin by typing:');
-    console.log('  cd', appName);
+    console.log('  cd', cdpath);
     console.log('  npm start');
     console.log();
     console.log('Happy hacking!');
