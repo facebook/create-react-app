@@ -9,13 +9,11 @@
   "files": [
     "LICENSE",
     "PATENTS",
-    ".eslintrc",
     "bin",
+    "config",
     "scripts",
     "src",
-    "index.html",
-    "webpack.config.dev.js",
-    "webpack.config.prod.js"
+    "index.html"
   ],
   "bin": {
     "start-react-app": "./bin/start-react-app.js",

@@ -40,11 +40,11 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   var hostPath = path.join(selfPath, '..', '..');
 
   var files = [
-   path.join('scripts', 'build.js'),
-   path.join('scripts', 'start.js'),
-   'webpack.config.dev.js',
-   'webpack.config.prod.js',
-   '.eslintrc'
+    path.join('config', '.eslintrc'),
+    path.join('config', 'webpack.config.dev.js'),
+    path.join('config', 'webpack.config.prod.js'),
+    path.join('scripts', 'build.js'),
+    path.join('scripts', 'start.js')
   ];
 
   // Ensure that the host folder is clean and we won't override any files
@@ -61,7 +61,9 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   });
 
   // Copy the files over
+  fs.mkdirSync(path.join(hostPath, 'config'));
   fs.mkdirSync(path.join(hostPath, 'scripts'));
+
   files.forEach(function(file) {
    console.log('Copying ' + file + ' to ' + hostPath);
    var content = fs.readFileSync(path.join(selfPath, file), 'utf8');
