@@ -40,7 +40,9 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   var hostPath = path.join(selfPath, '..', '..');
 
   var files = [
-    path.join('config', '.eslintrc'),
+    path.join('config', 'babel.dev.js'),
+    path.join('config', 'babel.prod.js'),
+    path.join('config', 'eslint.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
     path.join('scripts', 'build.js'),

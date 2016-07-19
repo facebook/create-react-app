@@ -86,7 +86,7 @@ Currently it is a thin layer on top of many amazing community projects, such as:
 * [webpack](https://webpack.github.io/) with [webpack-dev-server](https://github.com/webpack/webpack-dev-server), [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) and [style-loader](https://github.com/webpack/style-loader)
 * [Babel](http://babeljs.io/) with [preset-es2015](https://www.npmjs.com/package/babel-preset-es2015), [preset-es2016](https://www.npmjs.com/package/babel-preset-es2016), [preset-react](https://www.npmjs.com/package/babel-preset-react) and [transform-rest-spread](https://babeljs.io/docs/plugins/transform-object-rest-spread/)
 * [Autoprefixer](https://github.com/postcss/autoprefixer)
-* [ESLint](http://eslint.org/) with [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb)
+* [ESLint](http://eslint.org/)
 * and more.
 
 All of them are transient dependencies of the provided npm package.

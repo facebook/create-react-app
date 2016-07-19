@@ -19,8 +19,8 @@ var relative = isInNodeModules ? '../../..' : '..';
 module.exports = {
   devtool: 'eval',
   entry: [
-    './src/index.js',
-    'webpack-dev-server/client?http://localhost:3000'
+    'webpack-dev-server/client?http://localhost:3000',
+    './src/index.js'
   ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
@@ -42,11 +42,7 @@ module.exports = {
         test: /\.js$/,
         include: path.resolve(__dirname, relative, 'src'),
         loader: 'babel',
-        query: {
-          cacheDirectory: true,
-          presets: ['es2015', 'es2016', 'react'],
-          plugins: ['transform-object-rest-spread']
-        }
+        query: require('./babel.dev')
       },
       {
         test: /\.css$/,
@@ -68,7 +64,8 @@ module.exports = {
     ]
   },
   eslint: {
-    configFile: path.join(__dirname, '.eslintrc')
+    configFile: path.join(__dirname, 'eslint.js'),
+    useEslintrc: false
   },
   postcss: function() {
     return [autoprefixer];
