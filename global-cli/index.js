@@ -55,7 +55,7 @@ var argv = require('minimist')(process.argv.slice(2));
 var commands = argv._;
 if (commands.length === 0) {
   console.error(
-    'Usage: create-react-app <project-name> [--verbose]'
+    'Usage: create-react-app <project-directory> [--verbose]'
   );
   process.exit(1);
 }
@@ -69,7 +69,7 @@ createApp(commands[0], argv.verbose, argv['scripts-version']);
 
 function createApp(name, verbose, version) {
   if (fs.existsSync(name)) {
-    console.log('Directory `' + name + '` already exists. Aborting.');
+    console.log('The directory `' + name + '` already exists. Aborting.');
     process.exit(1);
   }
 
@@ -91,9 +91,8 @@ function createApp(name, verbose, version) {
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(packageJson));
   process.chdir(root);
 
-  console.log('Installing react-scripts package from npm...');
-  console.log('This might take a while! ⌛');
-  console.log();
+  console.log('Installing packages. This might take a couple minutes. ⌛');
+  console.log('Installing react-scripts from npm...');
 
   run(root, appName, version, verbose);
 }

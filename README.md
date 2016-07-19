@@ -19,11 +19,18 @@ npm install -g create-react-app
 
 **You’ll need to have Node >= 4 on your machine**. We recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage. You can use [n](https://github.com/creationix/nvm#usage) to easily switch the Node versions between different projects.
 
-**This tool doesn’t assume a Node backend**. The Node installation is only required for the build tools that rely on it locally, such as Webpack and Babel. The output folder includes an `index.html` and a minified `.js` bundle so you can host them anywhere you like.
+**This tool doesn’t assume a Node backend**. The Node installation is only required for the build tools that rely on it locally, such as Webpack and Babel. The output folder includes an `index.html`, a minified `.js` bundle, and bundled images and css, so you can host them anywhere you like.
 
 ## Why Use This?
 
-**If you’re getting started** with React, use this tool to automate the build of your app. You can get an app running with React, JSX, and ES6 in minutes. You don’t have to learn the configuration format of Babel, Webpack, and ESLint, or manage their versions. There is no configuration file, and this tool is the only build dependency in your `package.json`.
+**If you’re getting started** with React, use `create-react-app` to automate the build of your app. There is no configuration file, and `react-scripts` is the only extra build dependency in your `package.json`. Your environment will have everything you need to build a modern React app:
+
+* React, JSX, and ES6 support
+* Language extras beyond ES6 like the object spread operator
+* A dev server that lints for common errors
+* Import css and image files directly from JavaScript
+* Autoprefixed CSS, so you don't need `-webkit` prefixes
+* A `build` script to bundle js, css, and images for production, with sourcemaps
 
 **The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. Currently, it doesn’t support testing either. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 
@@ -84,7 +91,7 @@ Currently it is a thin layer on top of many amazing community projects, such as:
 
 All of them are transient dependencies of the provided npm package.
 
-## Contibuting
+## Contributing
 
 Clone the repo and run `npm install` in the root and the `global-cli` folder.
 
