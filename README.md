@@ -29,7 +29,7 @@ npm install -g create-react-app
 * Language extras beyond ES6 like the object spread operator
 * A dev server that lints for common errors
 * Import css and image files directly from JavaScript
-* Autoprefixed CSS, so you don't need `-webkit` prefixes
+* Autoprefixed CSS, so you don't need `-webkit` or other prefixes
 * A `build` script to bundle js, css, and images for production, with sourcemaps
 
 **The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. Currently, it doesn’t support testing either. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
