@@ -1,6 +1,8 @@
 {
   "name": "react-scripts",
   "version": "0.0.1",
+  "repository": "https://github.com/facebookincubator/create-react-app",
+  "license": "BSD-3-Clause",
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
