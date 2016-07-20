@@ -20,6 +20,7 @@ module.exports = {
   devtool: 'eval',
   entry: [
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
+    require.resolve('webpack/hot/dev-server'),
     './src/index.js'
   ],
   output: {
@@ -79,6 +80,8 @@ module.exports = {
       inject: true,
       template: path.resolve(__dirname, relative, 'index.html'),
     }),
-    new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' })
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
+    // Note: only CSS is currently hot reloaded
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
