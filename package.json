@@ -55,5 +55,31 @@
   "devDependencies": {
     "react": "^15.2.1",
     "react-dom": "^15.2.1"
-  }
+  },
+  "bundledDependencies": [
+    "autoprefixer",
+    "babel-core",
+    "babel-loader",
+    "babel-plugin-transform-object-rest-spread",
+    "babel-plugin-transform-react-constant-elements",
+    "babel-preset-es2015",
+    "babel-preset-es2016",
+    "babel-preset-react",
+    "cross-spawn",
+    "css-loader",
+    "eslint",
+    "eslint-loader",
+    "eslint-plugin-import",
+    "eslint-plugin-react",
+    "file-loader",
+    "html-webpack-plugin",
+    "json-loader",
+    "opn",
+    "postcss-loader",
+    "rimraf",
+    "style-loader",
+    "url-loader",
+    "webpack",
+    "webpack-dev-server"
+  ]
 }
