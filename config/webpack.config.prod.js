@@ -11,6 +11,7 @@ var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var isInNodeModules = 'node_modules' ===
   path.basename(path.resolve(path.join(__dirname, '..', '..')));
@@ -22,7 +23,8 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, relative, 'build'),
-    filename: '[name].[hash].js',
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].chunk.js',
     // TODO: this wouldn't work for e.g. GH Pages.
     // Good news: we can infer it from package.json :-)
     publicPath: '/'
@@ -49,7 +51,7 @@ module.exports = {
       {
         test: /\.css$/,
         include: path.resolve(__dirname, relative, 'src'),
-        loader: 'style!css!postcss'
+        loader: ExtractTextPlugin.extract('style', 'css!postcss')
       },
       {
         test: /\.json$/,
@@ -93,6 +95,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         screw_ie8: true,
@@ -105,6 +108,7 @@ module.exports = {
         comments: false,
         screw_ie8: true
       }
-    })
+    }),
+    new ExtractTextPlugin('[name].[contenthash].css')
   ]
 };
