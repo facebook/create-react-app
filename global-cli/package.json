@@ -1,6 +1,18 @@
 {
   "name": "create-react-app",
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "keywords": [
+    "react"
+  ],
+  "description": "Create React apps with no build configuration.",
+  "repository": "facebookincubator/create-react-app",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/facebookincubator/create-react-app/issues"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "files": [
     "index.js"
   ],
