@@ -15,7 +15,18 @@ var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 
-new WebpackDevServer(webpack(config), {
+var handleCompile;
+if (process.argv[2] === '--smoke-test') {
+  handleCompile = function (err, stats) {
+    if (err || stats.toJson().errors.length || stats.toJson().warnings.length) {
+      process.exit(1);
+    } else {
+      process.exit(0);
+    }
+  };
+}
+
+new WebpackDevServer(webpack(config, handleCompile), {
   publicPath: config.output.publicPath,
   historyApiFallback: true,
   stats: {
