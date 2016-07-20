@@ -19,8 +19,18 @@ set -x
 # npm pack the two directories to make sure they are valid npm modules
 initial_path=$PWD
 cd ..
+
+# A hacky way to avoid bundling dependencies.
+# Packing with them enabled takes too much memory, and Travis crashes.
+# End to end script is meant to run on Travis so it's not a big deal.
+# If you run it locally, you'll need to `git checkout -- package.json`.
+perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' package.json
+
+# Pack react-scripts
 npm install
 scripts_path=$PWD/`npm pack`
+
+# Pack CLI
 cd global-cli
 npm install
 cli_path=$PWD/`npm pack`
@@ -39,9 +49,23 @@ cd test-app
 # Test the build
 npm run build
 
+# Check for expected output
+test -e build/*.html || exit 1
+test -e build/*.js || exit 1
+
+# Test the server
+npm start -- --smoke-test
+
 # Eject and test the build
 echo yes | npm run eject
 npm run build
+
+# Check for expected output
+test -e build/*.html || exit 1
+test -e build/*.js || exit 1
+
+# Test the server
+npm start -- --smoke-test
 
 # Cleanup
 cd $initial_path

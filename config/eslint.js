@@ -16,6 +16,8 @@ var ERROR = 2; // rules that prevent common mistakes
 module.exports = {
   root: true,
 
+  parser: 'babel-eslint',
+
   plugins: ['react', 'import'],
 
   env: {
@@ -136,7 +138,7 @@ module.exports = {
     'no-native-reassign': ERROR,
     'no-negated-in-lhs': ERROR,
     'no-nested-ternary': WARNING,
-    'no-new': ERROR,
+    'no-new': WARNING,
     'no-new-func': ERROR,
     'no-new-object': ERROR,
     'no-new-symbol': ERROR,
@@ -171,7 +173,7 @@ module.exports = {
     'no-unsafe-finally': WARNING,
     'no-unused-expressions': ERROR,
     'no-unused-labels': ERROR,
-    'no-unused-vars': [ERROR, { vars: 'local', args: 'after-used' }],
+    'no-unused-vars': [ERROR, { vars: 'local', args: 'none' }],
     'no-use-before-define': [ERROR, 'nofunc'],
     'no-useless-computed-key': ERROR,
     'no-useless-concat': ERROR,

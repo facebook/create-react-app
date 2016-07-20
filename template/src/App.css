@@ -1,12 +1,21 @@
 .App {
-  padding: 0px 20px;
+  text-align: center;
 }
 
 .App-logo {
   animation: spin infinite 20s linear;
-  border-radius: 50%;
-  vertical-align: middle;
-  width: 38px;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
 }
 
 @keyframes spin {

@@ -17,6 +17,7 @@ var isInNodeModules = 'node_modules' ===
 var relative = isInNodeModules ? '../../..' : '..';
 
 module.exports = {
+  bail: true,
   devtool: 'source-map',
   entry: './src/index.js',
   output: {
@@ -25,6 +26,10 @@ module.exports = {
     // TODO: this wouldn't work for e.g. GH Pages.
     // Good news: we can infer it from package.json :-)
     publicPath: '/'
+  },
+  resolveLoader: {
+    root: path.join(__dirname, '..', 'node_modules'),
+    moduleTemplates: ['*-loader']
   },
   module: {
     preLoaders: [
