@@ -16,6 +16,8 @@ var ERROR = 2; // rules that prevent common mistakes
 module.exports = {
   root: true,
 
+  parser: 'babel-eslint',
+
   plugins: ['react', 'import'],
 
   env: {
