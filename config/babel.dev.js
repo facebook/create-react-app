@@ -9,6 +9,12 @@
 
 module.exports = {
   cacheDirectory: true,
-  presets: ['es2015', 'es2016', 'react'],
-  plugins: ['transform-object-rest-spread']
+  presets: [
+    'babel-preset-es2015',
+    'babel-preset-es2016',
+    'babel-preset-react'
+  ].map(require.resolve),
+  plugins: [
+    'babel-plugin-transform-object-rest-spread'
+  ].map(require.resolve)
 };

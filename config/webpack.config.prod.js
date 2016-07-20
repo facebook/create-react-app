@@ -27,6 +27,10 @@ module.exports = {
     // Good news: we can infer it from package.json :-)
     publicPath: '/'
   },
+  resolveLoader: {
+    root: path.join(__dirname, '..', 'node_modules'),
+    moduleTemplates: ['*-loader']
+  },
   module: {
     preLoaders: [
       {

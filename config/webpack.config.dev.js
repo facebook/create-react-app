@@ -19,7 +19,7 @@ var relative = isInNodeModules ? '../../..' : '..';
 module.exports = {
   devtool: 'eval',
   entry: [
-    'webpack-dev-server/client?http://localhost:3000',
+    require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
     './src/index.js'
   ],
   output: {
@@ -28,6 +28,10 @@ module.exports = {
     pathinfo: true,
     filename: 'bundle.js',
     publicPath: '/'
+  },
+  resolveLoader: {
+    root: path.join(__dirname, '..', 'node_modules'),
+    moduleTemplates: ['*-loader']
   },
   module: {
     preLoaders: [
