@@ -29,6 +29,7 @@ if (process.argv[2] === '--smoke-test') {
 new WebpackDevServer(webpack(config, handleCompile), {
   publicPath: config.output.publicPath,
   historyApiFallback: true,
+  hot: true, // Note: only CSS is currently hot reloaded
   stats: {
     hash: false,
     version: false,
