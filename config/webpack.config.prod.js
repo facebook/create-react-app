@@ -17,6 +17,7 @@ var isInNodeModules = 'node_modules' ===
 var relative = isInNodeModules ? '../../..' : '..';
 
 module.exports = {
+  bail: true,
   devtool: 'source-map',
   entry: './src/index.js',
   output: {
