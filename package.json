@@ -29,7 +29,10 @@
   "dependencies": {
     "autoprefixer": "^6.3.7",
     "babel-core": "^6.10.4",
+    "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
+    "babel-plugin-syntax-trailing-function-commas": "^6.8.0",
+    "babel-plugin-transform-class-properties": "^6.10.2",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-plugin-transform-react-constant-elements": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
@@ -59,7 +62,10 @@
   "bundledDependencies": [
     "autoprefixer",
     "babel-core",
+    "babel-eslint",
     "babel-loader",
+    "babel-plugin-syntax-trailing-function-commas",
+    "babel-plugin-transform-class-properties",
     "babel-plugin-transform-object-rest-spread",
     "babel-plugin-transform-react-constant-elements",
     "babel-preset-es2015",
