@@ -1,12 +1,27 @@
 .App {
-  padding: 0px 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .App-logo {
   animation: spin infinite 20s linear;
-  border-radius: 50%;
-  vertical-align: middle;
-  width: 38px;
+  height: 80px;
+}
+
+.App-header {
+  align-items: center;
+  background-color: #222;
+  color: #fff;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.App p {
+  flex: 7;
+  padding: 50px;
 }
 
 @keyframes spin {
