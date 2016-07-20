@@ -39,9 +39,17 @@ cd test-app
 # Test the build
 npm run build
 
+# Check for expected output
+test -e build/*.html || exit 1
+test -e build/*.js || exit 1
+
 # Eject and test the build
 echo yes | npm run eject
 npm run build
+
+# Check for expected output
+test -e build/*.html || exit 1
+test -e build/*.js || exit 1
 
 # Cleanup
 cd $initial_path
