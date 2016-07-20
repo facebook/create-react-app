@@ -19,9 +19,11 @@
   justify-content: center;
 }
 
-.App p {
+.App-intro {
   flex: 7;
+  font-size: large;
   padding: 50px;
+  text-align: center;
 }
 
 @keyframes spin {
