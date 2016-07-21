@@ -13,16 +13,25 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+// TODO: hide this behind a flag and eliminate dead code on eject.
+// This shouldn't be exposed to the user.
 var isInNodeModules = 'node_modules' ===
   path.basename(path.resolve(path.join(__dirname, '..', '..')));
-var relative = isInNodeModules ? '../../..' : '..';
+var relativePath = isInNodeModules ? '../../..' : '..';
+if (process.argv[2] === '--debug-template') {
+  relativePath = '../template';
+}
+var srcPath = path.resolve(__dirname, relativePath, 'src');
+var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
+var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
+var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
 
 module.exports = {
   bail: true,
   devtool: 'source-map',
-  entry: './src/index',
+  entry: path.join(srcPath, 'index'),
   output: {
-    path: path.resolve(__dirname, relative, 'build'),
+    path: buildPath,
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
     // TODO: this wouldn't work for e.g. GH Pages.
@@ -33,7 +42,7 @@ module.exports = {
     extensions: ['', '.js'],
   },
   resolveLoader: {
-    root: path.join(__dirname, '..', 'node_modules'),
+    root: nodeModulesPath,
     moduleTemplates: ['*-loader']
   },
   module: {
@@ -41,19 +50,19 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'eslint',
-        include: path.resolve(__dirname, relative, 'src')
+        include: srcPath
       }
     ],
     loaders: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, relative, 'src'),
+        include: srcPath,
         loader: 'babel',
         query: require('./babel.prod')
       },
       {
         test: /\.css$/,
-        include: path.resolve(__dirname, relative, 'src'),
+        include: srcPath,
         loader: ExtractTextPlugin.extract('style', 'css!postcss')
       },
       {
@@ -82,7 +91,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, relative, 'index.html'),
+      template: indexHtmlPath,
       minify: {
         removeComments: true,
         collapseWhitespace: true,

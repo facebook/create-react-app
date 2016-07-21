@@ -12,20 +12,29 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// TODO: hide this behind a flag and eliminate dead code on eject.
+// This shouldn't be exposed to the user.
 var isInNodeModules = 'node_modules' ===
   path.basename(path.resolve(path.join(__dirname, '..', '..')));
-var relative = isInNodeModules ? '../../..' : '..';
+var relativePath = isInNodeModules ? '../../..' : '..';
+if (process.argv[2] === '--debug-template') {
+  relativePath = '../template';
+}
+var srcPath = path.resolve(__dirname, relativePath, 'src');
+var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
+var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
+var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
 
 module.exports = {
   devtool: 'eval',
   entry: [
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
     require.resolve('webpack/hot/dev-server'),
-    './src/index'
+    path.join(srcPath, 'index')
   ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
-    path: path.join(__dirname, relative, 'build'),
+    path: buildPath,
     pathinfo: true,
     filename: 'bundle.js',
     publicPath: '/'
@@ -34,7 +43,7 @@ module.exports = {
     extensions: ['', '.js'],
   },
   resolveLoader: {
-    root: path.join(__dirname, '..', 'node_modules'),
+    root: nodeModulesPath,
     moduleTemplates: ['*-loader']
   },
   module: {
@@ -42,19 +51,19 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'eslint',
-        include: path.resolve(__dirname, relative, 'src'),
+        include: srcPath,
       }
     ],
     loaders: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, relative, 'src'),
+        include: srcPath,
         loader: 'babel',
         query: require('./babel.dev')
       },
       {
         test: /\.css$/,
-        include: path.resolve(__dirname, relative, 'src'),
+        include: srcPath,
         loader: 'style!css!postcss'
       },
       {
@@ -81,7 +90,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, relative, 'index.html'),
+      template: indexHtmlPath,
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded
