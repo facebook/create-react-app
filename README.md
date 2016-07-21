@@ -95,12 +95,12 @@ All of them are transient dependencies of the provided npm package.
 
 Some features are currently **not supported**:
 
-* Server rendering
-* Testing
-* Some experimental syntax extensions (e.g. decorators)
-* CSS Modules
-* LESS or Sass
-* Hot reloading of components
+* Server rendering.
+* Testing.
+* Some experimental syntax extensions (e.g. decorators).
+* CSS Modules.
+* LESS or Sass.
+* Hot reloading of components.
 
 Some of them might get added in the future if they are stable, are useful to majority of React apps, don’t conflict with existing tools, and don’t introduce additional configuration.
 
@@ -136,3 +136,6 @@ If you don’t agree with the choices made in this project, you might want to ex
 * [rackt-cli](https://github.com/mzabriskie/rackt-cli)
 * [budō](https://github.com/mattdesl/budo)
 * [rwb](https://github.com/petehunt/rwb)
+
+You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.  
+React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
