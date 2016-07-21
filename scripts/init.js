@@ -17,11 +17,11 @@ module.exports = function(hostPath, appName, verbose) {
   var hostPackage = require(path.join(hostPath, 'package.json'));
   var selfPackage = require(path.join(selfPath, 'package.json'));
 
-  // Copy over devDependencies
+  // Copy over some of the devDependencies
   hostPackage.dependencies = hostPackage.dependencies || {};
-  for (var key in selfPackage.devDependencies) {
+  ['react', 'react-dom'].forEach(function (key) {
     hostPackage.dependencies[key] = selfPackage.devDependencies[key];
-  }
+  });
 
   // Setup the script rules
   hostPackage.scripts = {};

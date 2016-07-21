@@ -51,15 +51,15 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
 
   // Ensure that the host folder is clean and we won't override any files
   files.forEach(function(file) {
-   if (fs.existsSync(path.join(hostPath, file))) {
-     console.error(
-       '`' + file + '` already exists in your app folder. We cannot ' +
-       'continue as you would lose all the changes in that file or directory. ' +
-       'Please delete it (maybe make a copy for backup) and run this ' +
-       'command again.'
-     );
-     process.exit(1);
-   }
+    if (fs.existsSync(path.join(hostPath, file))) {
+      console.error(
+        '`' + file + '` already exists in your app folder. We cannot ' +
+        'continue as you would lose all the changes in that file or directory. ' +
+        'Please delete it (maybe make a copy for backup) and run this ' +
+        'command again.'
+      );
+      process.exit(1);
+    }
   });
 
   // Copy the files over
@@ -67,11 +67,11 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   fs.mkdirSync(path.join(hostPath, 'scripts'));
 
   files.forEach(function(file) {
-   console.log('Copying ' + file + ' to ' + hostPath);
-   var content = fs.readFileSync(path.join(selfPath, file), 'utf8');
-   // Remove license header
-   content = content.replace(/^\/\*\*(\*(?!\/)|[^*])*\*\//, '').trim() + '\n';
-   fs.writeFileSync(path.join(hostPath, file), content);
+    console.log('Copying ' + file + ' to ' + hostPath);
+    var content = fs.readFileSync(path.join(selfPath, file), 'utf8');
+    // Remove license header
+    content = content.replace(/^\/\*\*(\*(?!\/)|[^*])*\*\//, '').trim() + '\n';
+    fs.writeFileSync(path.join(hostPath, file), content);
   });
   console.log();
 
@@ -82,8 +82,12 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   delete hostPackage.devDependencies['react-scripts'];
 
   Object.keys(selfPackage.dependencies).forEach(function (key) {
-   console.log('Adding dependency: ' + key);
-   hostPackage.devDependencies[key] = selfPackage.dependencies[key];
+    // For some reason optionalDependencies end up in dependencies after install
+    if (selfPackage.optionalDependencies[key]) {
+      return;
+    }
+    console.log('Adding dependency: ' + key);
+    hostPackage.devDependencies[key] = selfPackage.dependencies[key];
   });
 
   console.log('Updating scripts');
@@ -94,8 +98,8 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
 
   console.log('Writing package.json');
   fs.writeFileSync(
-   path.join(hostPath, 'package.json'),
-   JSON.stringify(hostPackage, null, 2)
+    path.join(hostPath, 'package.json'),
+    JSON.stringify(hostPackage, null, 2)
   );
   console.log();
 
