@@ -12,12 +12,16 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+function isInDebugMode() {
+  return process.argv.some(function (item) { return item.indexOf('--debug-template') > -1 });
+}
+
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
 var isInNodeModules = 'node_modules' ===
   path.basename(path.resolve(path.join(__dirname, '..', '..')));
 var relativePath = isInNodeModules ? '../../..' : '..';
-if (process.argv[2] === '--debug-template') {
+if (isInDebugMode()) {
   relativePath = '../template';
 }
 var srcPath = path.resolve(__dirname, relativePath, 'src');
