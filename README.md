@@ -25,12 +25,12 @@ npm install -g create-react-app
 
 **If you’re getting started** with React, use `create-react-app` to automate the build of your app. There is no configuration file, and `react-scripts` is the only extra build dependency in your `package.json`. Your environment will have everything you need to build a modern React app:
 
-* React, JSX, and ES6 support
-* Language extras beyond ES6 like the object spread operator
-* A dev server that lints for common errors
-* Import css and image files directly from JavaScript
-* Autoprefixed CSS, so you don't need `-webkit` or other prefixes
-* A `build` script to bundle js, css, and images for production, with sourcemaps
+* React, JSX, and ES6 support.
+* Language extras beyond ES6 like the object spread operator.
+* A dev server that lints for common errors.
+* Import CSS and image files directly from JavaScript.
+* Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
+* A `build` script to bundle JS, CSS, and images for production, with sourcemaps.
 
 **The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. Currently, it doesn’t support testing either. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 
