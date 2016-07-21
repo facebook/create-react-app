@@ -46,7 +46,8 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
     path.join('scripts', 'build.js'),
-    path.join('scripts', 'start.js')
+    path.join('scripts', 'start.js'),
+    path.join('scripts', 'openChrome.applescript')
   ];
 
   // Ensure that the host folder is clean and we won't override any files
@@ -68,9 +69,13 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
 
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + hostPath);
-    var content = fs.readFileSync(path.join(selfPath, file), 'utf8');
-    // Remove license header
-    content = content.replace(/^\/\*\*(\*(?!\/)|[^*])*\*\//, '').trim() + '\n';
+    content = fs
+      .readFileSync(path.join(selfPath, file), 'utf8')
+      // Remove license header from JS
+      .replace(/^\/\*\*(\*(?!\/)|[^*])*\*\//, '')
+      // Remove license header from AppleScript
+      .replace(/^--.*\n/gm, '')
+      .trim() + '\n';
     fs.writeFileSync(path.join(hostPath, file), content);
   });
   console.log();

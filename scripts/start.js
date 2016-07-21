@@ -9,6 +9,7 @@
 
 process.env.NODE_ENV = 'development';
 
+var path = require('path');
 var chalk = require('chalk');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
@@ -117,6 +118,27 @@ compiler.plugin('done', function (stats) {
   }
 });
 
+function openBrowser() {
+  if (process.platform === 'darwin') {
+    try {
+      // Try our best to reuse existing tab
+      // on OS X Google Chrome with AppleScript
+      execSync('ps cax | grep "Google Chrome"');
+      execSync(
+        'osascript ' +
+        path.resolve(__dirname, './openChrome.applescript') +
+        ' http://localhost:3000/'
+      );
+      return;
+    } catch (err) {
+      // Ignore errors.
+    }
+  }
+  // Fallback to opn
+  // (It will always open new tab)
+  opn('http://localhost:3000/');
+}
+
 new WebpackDevServer(compiler, {
   historyApiFallback: true,
   hot: true, // Note: only CSS is currently hot reloaded
@@ -128,5 +150,5 @@ new WebpackDevServer(compiler, {
   }
 
   console.log('Starting the development server...');
-  opn('http://localhost:3000/');
+  openBrowser();
 });
