@@ -91,7 +91,7 @@ function createApp(name, verbose, version) {
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(packageJson));
   process.chdir(root);
 
-  console.log('Installing packages. This might take a couple minutes. ⌛');
+  console.log('Installing packages. This might take a couple minutes.');
   console.log('Installing react-scripts from npm...');
 
   run(root, appName, version, verbose);
