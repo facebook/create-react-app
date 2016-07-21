@@ -52,7 +52,7 @@ function formatMessage(message) {
       'Module not found:'
     )
     // Internal stacks are generally useless so we strip them
-    .replace(/^\s*at\s.*\(.*:\d+:\d+\.*\).*\n/gm, '') // at ... (...:x:y)
+    .replace(/^\s*at\s.*:\d+:\d+[\s\)]*\n/gm, '') // at ... ...:x:y
     // Webpack loader names obscure CSS filenames
     .replace('./~/css-loader!./~/postcss-loader!', '');
 }
