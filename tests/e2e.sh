@@ -30,6 +30,16 @@ perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' package.json
 npm install
 scripts_path=$PWD/`npm pack`
 
+# Test local start command
+npm start -- --smoke-test
+
+# Test local build command
+npm run build
+
+# Check for expected output
+test -e build/*.html || exit 1
+test -e build/*.js || exit 1
+
 # Pack CLI
 cd global-cli
 npm install
