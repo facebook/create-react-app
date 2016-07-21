@@ -8,8 +8,8 @@
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "start": "node scripts/start.js --debug-template",
+    "build": "node scripts/build.js --debug-template",
     "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\""
   },
   "files": [
