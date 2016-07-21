@@ -18,8 +18,7 @@
     "bin",
     "config",
     "scripts",
-    "src",
-    "index.html"
+    "template"
   ],
   "bin": {
     "start-react-app": "./bin/start-react-app.js",
