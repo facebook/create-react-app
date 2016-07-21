@@ -33,6 +33,16 @@ scripts_path=$PWD/`npm pack`
 # lint
 ./node_modules/.bin/eslint --ignore-path .gitignore ./
 
+# Test local start command
+npm start -- --smoke-test
+
+# Test local build command
+npm run build
+
+# Check for expected output
+test -e build/*.html || exit 1
+test -e build/*.js || exit 1
+
 # Pack CLI
 cd global-cli
 npm install
