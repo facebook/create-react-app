@@ -70,7 +70,7 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
    console.log('Copying ' + file + ' to ' + hostPath);
    var content = fs.readFileSync(path.join(selfPath, file), 'utf8');
    // Remove license header
-   content = content.replace(/\/\*[\s\S]+\*\//, '').trim() + '\n';
+   content = content.replace(/^\/\*\*(\*(?!\/)|[^*])*\*\//, '').trim() + '\n';
    fs.writeFileSync(path.join(hostPath, file), content);
   });
 

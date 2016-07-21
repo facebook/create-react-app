@@ -20,7 +20,7 @@ var relative = isInNodeModules ? '../../..' : '..';
 module.exports = {
   bail: true,
   devtool: 'source-map',
-  entry: './src/index.js',
+  entry: './src/index',
   output: {
     path: path.resolve(__dirname, relative, 'build'),
     filename: '[name].[chunkhash].js',
@@ -28,6 +28,9 @@ module.exports = {
     // TODO: this wouldn't work for e.g. GH Pages.
     // Good news: we can infer it from package.json :-)
     publicPath: '/'
+  },
+  resolve: {
+    extensions: ['', '.js'],
   },
   resolveLoader: {
     root: path.join(__dirname, '..', 'node_modules'),

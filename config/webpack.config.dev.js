@@ -21,7 +21,7 @@ module.exports = {
   entry: [
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
     require.resolve('webpack/hot/dev-server'),
-    './src/index.js'
+    './src/index'
   ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
@@ -29,6 +29,9 @@ module.exports = {
     pathinfo: true,
     filename: 'bundle.js',
     publicPath: '/'
+  },
+  resolve: {
+    extensions: ['', '.js'],
   },
   resolveLoader: {
     root: path.join(__dirname, '..', 'node_modules'),
