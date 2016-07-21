@@ -57,14 +57,19 @@ function formatMessage(message) {
     .replace('./~/css-loader!./~/postcss-loader!', '');
 }
 
-var compiler = webpack(config, handleCompile);
-compiler.plugin('done', function (stats) {
-  // Clear the console and reset the cursor
+function clearConsole() {
   process.stdout.write('\x1B[2J\x1B[0f');
+}
 
+var compiler = webpack(config, handleCompile);
+compiler.plugin('invalid', function () {
+  clearConsole();
+  console.log('Compiling...');
+});
+compiler.plugin('done', function (stats) {
+  clearConsole();
   var hasErrors = stats.hasErrors();
   var hasWarnings = stats.hasWarnings();
-
   if (!hasErrors && !hasWarnings) {
     console.log(chalk.green('Compiled successfully!'));
     console.log();
