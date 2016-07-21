@@ -84,7 +84,7 @@ The tools used by Create React App are subject to change.
 Currently it is a thin layer on top of many amazing community projects, such as:
 
 * [webpack](https://webpack.github.io/) with [webpack-dev-server](https://github.com/webpack/webpack-dev-server), [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) and [style-loader](https://github.com/webpack/style-loader)
-* [Babel](http://babeljs.io/) with ES2016 and the extensions we use at Facebook (JSX, [object spread](https://github.com/sebmarkbage/ecmascript-rest-spread/commits/master), [class properties](https://github.com/jeffmo/es-class-public-fields))
+* [Babel](http://babeljs.io/) with ES2016 and the extensions used by Facebook (JSX, [object spread](https://github.com/sebmarkbage/ecmascript-rest-spread/commits/master), [class properties](https://github.com/jeffmo/es-class-public-fields))
 * [Autoprefixer](https://github.com/postcss/autoprefixer)
 * [ESLint](http://eslint.org/)
 * and more.
