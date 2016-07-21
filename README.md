@@ -109,6 +109,17 @@ and then run `npm start` or `npm run build`.
 
 We are grateful to the authors of existing related projects for their ideas and collaboration:
 
-* [enclave](https://github.com/eanplatter/enclave) by [@eanplatter](https://github.com/eanplatter)
-* [nwb](https://github.com/insin/nwb) by [@insin](https://github.com/insin)
-* [react-boilerplate](https://github.com/mxstbr/react-boilerplate) by [@mxstbr](https://github.com/mxstbr)
+* [@eanplatter](https://github.com/eanplatter)
+* [@insin](https://github.com/insin)
+* [@mxstbr](https://github.com/mxstbr)
+
+## Alternatives
+
+If you don’t agree with the choices made in this project, you might want to explore alternatives with different tradeoffs:
+
+* [enclave](https://github.com/eanplatter/enclave)
+* [nwb](https://github.com/insin/nwb)
+* [motion](https://github.com/motion/motion)
+* [rackt-cli](https://github.com/mzabriskie/rackt-cli)
+* [budō](https://github.com/mattdesl/budo)
+* [rwb](https://github.com/petehunt/rwb)
