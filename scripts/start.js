@@ -87,7 +87,7 @@ compiler.plugin('done', function (stats) {
   );
 
   if (hasErrors) {
-    console.log(chalk.red('There were errors compiling.'));
+    console.log(chalk.red('Failed to compile.'));
     console.log();
     if (formattedErrors.some(isLikelyASyntaxError)) {
       // If there are any syntax errors, show just them.
