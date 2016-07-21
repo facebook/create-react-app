@@ -7,4 +7,4 @@ cache:
   directories:
   - global-cli/node_modules
   - node_modules
-script: tests/e2e.sh
+script: tasks/e2e.sh

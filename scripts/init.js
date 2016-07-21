@@ -17,17 +17,16 @@ module.exports = function(hostPath, appName, verbose) {
   var hostPackage = require(path.join(hostPath, 'package.json'));
   var selfPackage = require(path.join(selfPath, 'package.json'));
 
-  // Copy over devDependencies
+  // Copy over some of the devDependencies
   hostPackage.dependencies = hostPackage.dependencies || {};
-  for (var key in selfPackage.devDependencies) {
+  ['react', 'react-dom'].forEach(function (key) {
     hostPackage.dependencies[key] = selfPackage.devDependencies[key];
-  }
+  });
 
   // Setup the script rules
   hostPackage.scripts = {};
   ['start', 'build', 'eject'].forEach(function(command) {
-    hostPackage.scripts[command] =
-      command + '-react-app';
+    hostPackage.scripts[command] = 'react-scripts ' + command;
   });
 
   fs.writeFileSync(
@@ -53,7 +52,7 @@ module.exports = function(hostPath, appName, verbose) {
     copySync(
       path.join(selfPath, 'template', filename),
       path.join(hostPath, filename)
-    );    
+    );
   });
 
   // Run another npm install for react and react-dom

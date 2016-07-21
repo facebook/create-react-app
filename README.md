@@ -25,12 +25,12 @@ npm install -g create-react-app
 
 **If you’re getting started** with React, use `create-react-app` to automate the build of your app. There is no configuration file, and `react-scripts` is the only extra build dependency in your `package.json`. Your environment will have everything you need to build a modern React app:
 
-* React, JSX, and ES6 support
-* Language extras beyond ES6 like the object spread operator
-* A dev server that lints for common errors
-* Import css and image files directly from JavaScript
-* Autoprefixed CSS, so you don't need `-webkit` or other prefixes
-* A `build` script to bundle js, css, and images for production, with sourcemaps
+* React, JSX, and ES6 support.
+* Language extras beyond ES6 like the object spread operator.
+* A dev server that lints for common errors.
+* Import CSS and image files directly from JavaScript.
+* Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
+* A `build` script to bundle JS, CSS, and images for production, with sourcemaps.
 
 **The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. Currently, it doesn’t support testing either. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 
@@ -84,12 +84,25 @@ The tools used by Create React App are subject to change.
 Currently it is a thin layer on top of many amazing community projects, such as:
 
 * [webpack](https://webpack.github.io/) with [webpack-dev-server](https://github.com/webpack/webpack-dev-server), [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) and [style-loader](https://github.com/webpack/style-loader)
-* [Babel](http://babeljs.io/) with [preset-es2015](https://www.npmjs.com/package/babel-preset-es2015), [preset-es2016](https://www.npmjs.com/package/babel-preset-es2016), [preset-react](https://www.npmjs.com/package/babel-preset-react) and [transform-rest-spread](https://babeljs.io/docs/plugins/transform-object-rest-spread/)
+* [Babel](http://babeljs.io/) with ES6 and extensions used by Facebook (JSX, [object spread](https://github.com/sebmarkbage/ecmascript-rest-spread/commits/master), [class properties](https://github.com/jeffmo/es-class-public-fields))
 * [Autoprefixer](https://github.com/postcss/autoprefixer)
 * [ESLint](http://eslint.org/)
 * and more.
 
 All of them are transient dependencies of the provided npm package.
+
+## Limitations
+
+Some features are currently **not supported**:
+
+* Server rendering.
+* Testing.
+* Some experimental syntax extensions (e.g. decorators).
+* CSS Modules.
+* LESS or Sass.
+* Hot reloading of components.
+
+Some of them might get added in the future if they are stable, are useful to majority of React apps, don’t conflict with existing tools, and don’t introduce additional configuration.
 
 ## Contributing
 
@@ -109,6 +122,20 @@ and then run `npm start` or `npm run build`.
 
 We are grateful to the authors of existing related projects for their ideas and collaboration:
 
-* [enclave](https://github.com/eanplatter/enclave) by [@eanplatter](https://github.com/eanplatter)
-* [nwb](https://github.com/insin/nwb) by [@insin](https://github.com/insin)
-* [react-boilerplate](https://github.com/mxstbr/react-boilerplate) by [@mxstbr](https://github.com/mxstbr)
+* [@eanplatter](https://github.com/eanplatter)
+* [@insin](https://github.com/insin)
+* [@mxstbr](https://github.com/mxstbr)
+
+## Alternatives
+
+If you don’t agree with the choices made in this project, you might want to explore alternatives with different tradeoffs:
+
+* [enclave](https://github.com/eanplatter/enclave)
+* [nwb](https://github.com/insin/nwb)
+* [motion](https://github.com/motion/motion)
+* [rackt-cli](https://github.com/mzabriskie/rackt-cli)
+* [budō](https://github.com/mattdesl/budo)
+* [rwb](https://github.com/petehunt/rwb)
+
+You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.  
+React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
