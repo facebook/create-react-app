@@ -21,9 +21,7 @@
     "template"
   ],
   "bin": {
-    "start-react-app": "./bin/start-react-app.js",
-    "build-react-app": "./bin/build-react-app.js",
-    "eject-react-app": "./bin/eject-react-app.js"
+    "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
     "autoprefixer": "6.3.7",
