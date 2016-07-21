@@ -11,7 +11,7 @@ var fs = require('fs');
 var path = require('path');
 var rl = require('readline');
 var rimrafSync = require('rimraf').sync;
-var spawnSync = require('child_process').spawnSync;
+var spawnSync = require('cross-spawn').sync;
 
 var prompt = function(question, cb) {
   var rlInterface = rl.createInterface({
