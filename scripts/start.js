@@ -37,27 +37,22 @@ function isLikelyASyntaxError(message) {
 // It would be easier if webpack provided a rich error object.
 
 function formatMessage(message) {
-  try {
-    return message
-      // Make some common errors shorter:
-      .replace(
-        // Babel syntax error
-        'Module build failed: SyntaxError:',
-        friendlySyntaxErrorLabel
-      )
-      .replace(
-        // Webpack file not found error
-        /Module not found: Error: Cannot resolve 'file' or 'directory'/,
-        'Module not found:'
-      )
-      // Internal stacks are generally useless so we strip them
-      .replace(/^\s*at\s.*\(.*:\d+:\d+\.*\).*\n/gm, '') // at ... (...:x:y)
-      // Webpack loader names obscure CSS filenames
-      .replace('./~/css-loader!./~/postcss-loader!', '');
-    } catch (err) {
-      // Shouldn't happen but be extra careful.
-      return message;
-    }
+  return message
+    // Make some common errors shorter:
+    .replace(
+      // Babel syntax error
+      'Module build failed: SyntaxError:',
+      friendlySyntaxErrorLabel
+    )
+    .replace(
+      // Webpack file not found error
+      /Module not found: Error: Cannot resolve 'file' or 'directory'/,
+      'Module not found:'
+    )
+    // Internal stacks are generally useless so we strip them
+    .replace(/^\s*at\s.*\(.*:\d+:\d+\.*\).*\n/gm, '') // at ... (...:x:y)
+    // Webpack loader names obscure CSS filenames
+    .replace('./~/css-loader!./~/postcss-loader!', '');
 }
 
 var compiler = webpack(config, handleCompile);
@@ -69,8 +64,10 @@ compiler.plugin('done', function (stats) {
   var hasWarnings = stats.hasWarnings();
 
   if (!hasErrors && !hasWarnings) {
-    console.log('Compiled successfully!');
-    console.log('View the app at http://localhost:3000/');
+    console.log(chalk.green('Compiled successfully!'));
+    console.log();
+    console.log('The app is running at http://localhost:3000/');
+    console.log();
     return;
   }
 
@@ -83,7 +80,7 @@ compiler.plugin('done', function (stats) {
   );
 
   if (hasErrors) {
-    console.log('Compilation failed due to errors.');
+    console.log(chalk.red('There were errors compiling.'));
     console.log();
     if (formattedErrors.some(isLikelyASyntaxError)) {
       // If there are any syntax errors, show just them.
@@ -100,7 +97,7 @@ compiler.plugin('done', function (stats) {
   }
 
   if (hasWarnings) {
-    console.log('Compiled with warnings.');
+    console.log(chalk.yellow('Compiled with warnings.'));
     console.log();
     formattedWarnings.forEach(message => {
       console.log(message);
