@@ -17,10 +17,14 @@ var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 
+function isSmokeTest() {
+  return process.argv.some(function (item) { return item.indexOf('--smoke-test') > -1 });
+}
+
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
 var handleCompile;
-if (process.argv[2] === '--smoke-test') {
+if (isSmokeTest()) {
   handleCompile = function (err, stats) {
     if (err || stats.hasErrors() || stats.hasWarnings()) {
       process.exit(1);
