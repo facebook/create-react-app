@@ -47,8 +47,9 @@ module.exports = function(hostPath, appName, verbose) {
     );
   });
   fs.readdirSync(path.join(selfPath, 'template')).forEach(function(filename) {
-    console.log('what even is this?', path.join(selfPath, 'template', filename))
-    if (fs.lstatSync(path.join(selfPath, 'template', filename)).isDirectory()) return
+    if (fs.lstatSync(path.join(selfPath, 'template', filename)).isDirectory()) {
+      return
+    }
     copySync(
       path.join(selfPath, 'template', filename),
       path.join(hostPath, filename)
