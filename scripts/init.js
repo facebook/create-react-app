@@ -26,8 +26,7 @@ module.exports = function(hostPath, appName, verbose) {
   // Setup the script rules
   hostPackage.scripts = {};
   ['start', 'build', 'eject'].forEach(function(command) {
-    hostPackage.scripts[command] =
-      command + '-react-app';
+    hostPackage.scripts[command] = 'react-scripts ' + command;
   });
 
   fs.writeFileSync(
@@ -53,7 +52,7 @@ module.exports = function(hostPath, appName, verbose) {
     copySync(
       path.join(selfPath, 'template', filename),
       path.join(hostPath, filename)
-    );    
+    );
   });
 
   // Run another npm install for react and react-dom
