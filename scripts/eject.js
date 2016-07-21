@@ -30,7 +30,7 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
     answer.toLowerCase() === 'yes'
   );
   if (!shouldEject) {
-    console.log('Close one! Eject aported.');
+    console.log('Close one! Eject aborted.');
     process.exit(1);
   }
 
