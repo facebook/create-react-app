@@ -16,6 +16,8 @@ var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 
+// TODO: hide this behind a flag and eliminate dead code on eject.
+// This shouldn't be exposed to the user.
 var handleCompile;
 if (process.argv[2] === '--smoke-test') {
   handleCompile = function (err, stats) {
