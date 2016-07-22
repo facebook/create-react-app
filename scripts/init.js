@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('cross-spawn');
 
@@ -35,25 +35,7 @@ module.exports = function(hostPath, appName, verbose) {
   );
 
   // Copy the files for the user
-  function copySync(src, dest) {
-    return fs.writeFileSync(dest, fs.readFileSync(src));
-  }
-  fs.mkdirSync(path.join(hostPath, 'src'));
-  fs.readdirSync(path.join(selfPath, 'template/src')).forEach(function(filename) {
-    copySync(
-      path.join(selfPath, 'template/src', filename),
-      path.join(hostPath, 'src', filename)
-    );
-  });
-  fs.readdirSync(path.join(selfPath, 'template')).forEach(function(filename) {
-    if (fs.lstatSync(path.join(selfPath, 'template', filename)).isDirectory()) {
-      return
-    }
-    copySync(
-      path.join(selfPath, 'template', filename),
-      path.join(hostPath, filename)
-    );
-  });
+  fs.copySync(path.join(selfPath, 'template'), hostPath);
 
   // Run another npm install for react and react-dom
   console.log('Installing react and react-dom from npm...');
@@ -71,7 +53,7 @@ module.exports = function(hostPath, appName, verbose) {
 
     // Make sure to display the right way to cd
     var cdpath;
-    if (path.join(process.cwd(), appName) == hostPath) {
+    if (path.join(process.cwd(), appName) === hostPath) {
       cdpath = appName;
     } else {
       cdpath = hostPath;
