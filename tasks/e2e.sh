@@ -37,8 +37,8 @@ npm start -- --smoke-test
 npm run build
 
 # Check for expected output
-test -e build/*.html || exit 1
-test -e build/*.js || exit 1
+test -e build/*.html
+test -e build/*.js
 
 # Pack CLI
 cd global-cli
@@ -60,8 +60,8 @@ cd test-app
 npm run build
 
 # Check for expected output
-test -e build/*.html || exit 1
-test -e build/*.js || exit 1
+test -e build/*.html
+test -e build/*.js
 
 # Test the server
 npm start -- --smoke-test
@@ -71,8 +71,8 @@ echo yes | npm run eject
 npm run build
 
 # Check for expected output
-test -e build/*.html || exit 1
-test -e build/*.js || exit 1
+test -e build/*.html
+test -e build/*.js
 
 # Test the server
 npm start -- --smoke-test
