@@ -31,7 +31,7 @@ npm install
 scripts_path=$PWD/`npm pack`
 
 # lint
-./node_modules/.bin/eslint --ignore-path .gitignore ./
+./node_modules/.bin/eslint --rulesdir config/rules --ignore-path .gitignore ./
 
 # Test local start command
 npm start -- --smoke-test
