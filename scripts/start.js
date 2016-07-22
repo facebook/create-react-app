@@ -17,8 +17,9 @@ var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 var portfinder = require('portfinder');
+var PORT = 3000;
 
-portfinder.basePort = 3000;
+portfinder.basePort = PORT;
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -80,7 +81,7 @@ compiler.plugin('done', function (stats) {
   if (!hasErrors && !hasWarnings) {
     console.log(chalk.green('Compiled successfully!'));
     console.log();
-    console.log('The app is running at http://localhost:3000/');
+    console.log('The app is running at http://localhost:' + PORT + '/');
     console.log();
     return;
   }
@@ -124,7 +125,7 @@ compiler.plugin('done', function (stats) {
   }
 });
 
-function openBrowser(port) {
+function openBrowser() {
   if (process.platform === 'darwin') {
     try {
       // Try our best to reuse existing tab
@@ -133,7 +134,7 @@ function openBrowser(port) {
       execSync(
         'osascript ' +
         path.resolve(__dirname, './openChrome.applescript') +
-        ' http://localhost:' + port + '/'
+        ' http://localhost:' + PORT + '/'
       );
       return;
     } catch (err) {
@@ -142,16 +143,18 @@ function openBrowser(port) {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn('http://localhost:' + port + '/');
+  opn('http://localhost:' + PORT + '/');
 }
 
-portfinder.getPort(function (err, port) {
+portfinder.getPort(function (err, chosenPort) {
+  PORT = chosenPort;
+
   new WebpackDevServer(compiler, {
     historyApiFallback: true,
     hot: true, // Note: only CSS is currently hot reloaded
     publicPath: config.output.publicPath,
     quiet: true
-  }).listen(port, 'localhost', function (err, result) {
+  }).listen(PORT, 'localhost', function (err, result) {
     if (err) {
       return console.log(err);
     }
@@ -159,6 +162,6 @@ portfinder.getPort(function (err, port) {
     clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    openBrowser(port);
+    openBrowser();
   });
 });
