@@ -69,7 +69,7 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
 
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + hostPath);
-    content = fs
+    var content = fs
       .readFileSync(path.join(selfPath, file), 'utf8')
       // Remove license header from JS
       .replace(/^\/\*\*(\*(?!\/)|[^*])*\*\//, '')
