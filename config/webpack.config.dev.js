@@ -67,6 +67,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        include: [srcPath, nodeModulesPath],
         loader: 'style!css!postcss'
       },
       {
