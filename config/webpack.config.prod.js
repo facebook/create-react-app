@@ -13,19 +13,19 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-// TODO: hide this behind a flag and eliminate dead code on eject.
-// This shouldn't be exposed to the user.
 var isInNodeModules = 'node_modules' ===
-  path.basename(path.resolve(path.join(__dirname, '..', '..')));
+    path.basename(path.resolve(path.join(__dirname, '..', '..')));
 var relativePath = isInNodeModules ? '../../..' : '..';
 if (process.argv[2] === '--debug-template') {
   relativePath = '../template';
 }
-var srcPath = path.resolve(__dirname, relativePath, 'src');
-var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
-var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
-var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
-var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
+
+var appPaths = require(path.join(__dirname, 'appPaths.js'))(relativePath);
+var srcPath = appPaths.srcPath;
+var nodeModulesPath = appPaths.nodeModulesPath;
+var indexHtmlPath = appPaths.indexHtmlPath;
+var faviconPath = appPaths.faviconPath;
+var buildPath = appPaths.buildPath;
 
 module.exports = {
   bail: true,
