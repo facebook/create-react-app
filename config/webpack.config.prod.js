@@ -62,12 +62,12 @@ module.exports = {
         query: require('./babel.prod')
       },
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         include: srcPath,
         // Disable autoprefixer in css-loader itself:
         // https://github.com/webpack/css-loader/issues/281
         // We already have it thanks to postcss.
-        loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss')
+        loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss!sass')
       },
       {
         test: /\.json$/,
