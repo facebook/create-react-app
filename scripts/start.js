@@ -16,6 +16,10 @@ var WebpackDevServer = require('webpack-dev-server');
 var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
+var detect = require('detect-port');
+var readline = require('readline');
+var port = 3000;
+process.env.PORT = port;
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -66,62 +70,89 @@ function clearConsole() {
 }
 
 var compiler = webpack(config, handleCompile);
-compiler.plugin('invalid', function () {
-  clearConsole();
-  console.log('Compiling...');
-});
-compiler.plugin('done', function (stats) {
-  clearConsole();
-  var hasErrors = stats.hasErrors();
-  var hasWarnings = stats.hasWarnings();
-  if (!hasErrors && !hasWarnings) {
-    console.log(chalk.green('Compiled successfully!'));
-    console.log();
-    console.log('The app is running at http://localhost:3000/');
-    console.log();
-    return;
+detect(port, function(error, _port) {
+
+  if (port !== _port) {
+    var rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    rl.question('Something is already running at http://localhost:' + port + '. Would you like to run the app at another port instead? [Y/n] ', function(answer){
+      if(answer === 'Y') {
+        port = _port;
+        config.entry = config.entry.map(function(c){ return c.replace(/(\d+)/g, port) }); // Replace the port in webpack config
+        compiler = webpack(config, handleCompile);
+        setupCompiler();
+        runDevServer();
+      }
+      rl.close();
+    });
+  } else {
+    runDevServer();
+    setupCompiler();
   }
+});
 
-  var json = stats.toJson();
-  var formattedErrors = json.errors.map(message =>
-    'Error in ' + formatMessage(message)
-  );
-  var formattedWarnings = json.warnings.map(message =>
-    'Warning in ' + formatMessage(message)
-  );
+function setupCompiler() {
+  compiler.plugin('invalid', function () {
+    clearConsole();
+    console.log('Compiling...');
+  });
 
-  if (hasErrors) {
-    console.log(chalk.red('Failed to compile.'));
-    console.log();
-    if (formattedErrors.some(isLikelyASyntaxError)) {
-      // If there are any syntax errors, show just them.
-      // This prevents a confusing ESLint parsing error
-      // preceding a much more useful Babel syntax error.
-      formattedErrors = formattedErrors.filter(isLikelyASyntaxError);
+  compiler.plugin('done', function (stats) {
+    clearConsole();
+    var hasErrors = stats.hasErrors();
+    var hasWarnings = stats.hasWarnings();
+    if (!hasErrors && !hasWarnings) {
+      console.log(chalk.green('Compiled successfully!'));
+      console.log();
+      console.log('The app is running at http://localhost:' + port + '/');
+      console.log();
+      return;
     }
-    formattedErrors.forEach(message => {
-      console.log(message);
+
+    var json = stats.toJson();
+    var formattedErrors = json.errors.map(message =>
+      'Error in ' + formatMessage(message)
+    );
+    var formattedWarnings = json.warnings.map(message =>
+      'Warning in ' + formatMessage(message)
+    );
+
+    if (hasErrors) {
+      console.log(chalk.red('Failed to compile.'));
       console.log();
-    });
-    // If errors exist, ignore warnings.
-    return;
-  }
+      if (formattedErrors.some(isLikelyASyntaxError)) {
+        // If there are any syntax errors, show just them.
+        // This prevents a confusing ESLint parsing error
+        // preceding a much more useful Babel syntax error.
+        formattedErrors = formattedErrors.filter(isLikelyASyntaxError);
+      }
+      formattedErrors.forEach(message => {
+        console.log(message);
+        console.log();
+      });
+      // If errors exist, ignore warnings.
+      return;
+    }
 
-  if (hasWarnings) {
-    console.log(chalk.yellow('Compiled with warnings.'));
-    console.log();
-    formattedWarnings.forEach(message => {
-      console.log(message);
+    if (hasWarnings) {
+      console.log(chalk.yellow('Compiled with warnings.'));
       console.log();
-    });
+      formattedWarnings.forEach(message => {
+        console.log(message);
+        console.log();
+      });
 
-    console.log('You may use special comments to disable some warnings.');
-    console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
-    console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
-  }
-});
+      console.log('You may use special comments to disable some warnings.');
+      console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
+      console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
+    }
+  });
+}
 
-function openBrowser() {
+function openBrowser(port) {
   if (process.platform === 'darwin') {
     try {
       // Try our best to reuse existing tab
@@ -130,7 +161,7 @@ function openBrowser() {
       execSync(
         'osascript ' +
         path.resolve(__dirname, './openChrome.applescript') +
-        ' http://localhost:3000/'
+        ' http://localhost:' + port + '/'
       );
       return;
     } catch (err) {
@@ -139,21 +170,23 @@ function openBrowser() {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn('http://localhost:3000/');
+  opn('http://localhost:' + port + '/');
 }
 
-new WebpackDevServer(compiler, {
-  historyApiFallback: true,
-  hot: true, // Note: only CSS is currently hot reloaded
-  publicPath: config.output.publicPath,
-  quiet: true
-}).listen(3000, 'localhost', function (err, result) {
-  if (err) {
-    return console.log(err);
-  }
+function runDevServer() {
+  new WebpackDevServer(compiler, {
+    historyApiFallback: true,
+    hot: true, // Note: only CSS is currently hot reloaded
+    publicPath: config.output.publicPath,
+    quiet: true
+  }).listen(port, 'localhost', function (err, result) {
+    if (err) {
+      return console.log(err);
+    }
 
-  clearConsole();
-  console.log(chalk.cyan('Starting the development server...'));
-  console.log();
-  openBrowser();
-});
+    clearConsole();
+    console.log(chalk.cyan('Starting the development server...'));
+    console.log();
+    openBrowser(port);
+  });
+}
