@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('cross-spawn');
 
@@ -35,39 +35,7 @@ module.exports = function(hostPath, appName, verbose) {
   );
 
   // Copy the files for the user
-  function copyFileSync(src, dest) {
-      var target = dest;
-      if (fs.existsSync(dest)) {
-          if (fs.lstatSync(dest).isDirectory()) {
-              target = path.join(dest, path.basename(src));
-          }
-      }
-      fs.writeFileSync(target, fs.readFileSync(src));
-  }
-
-  function copyFolderSync(src, dest) {
-      var files = [];
-      var targetFolder = path.join(dest, path.basename(src)).replace('/template', '');
-      if (!fs.existsSync(targetFolder)) {
-          fs.mkdirSync(targetFolder);
-      }
-      if (fs.lstatSync(src).isDirectory()) {
-          files = fs.readdirSync(src);
-          files.forEach(function (file) {
-              var currentSrc = path.join(src, file);
-              if (fs.lstatSync(currentSrc).isDirectory()) {
-                  copyFolderSync(currentSrc, targetFolder);
-              } else {
-                  copyFileSync(currentSrc, targetFolder);
-              }
-          } );
-      }
-  }
-
-  copyFolderSync(
-    path.join(selfPath, 'template'),
-    hostPath
-  )
+  fs.copySync(path.join(selfPath, 'template'), hostPath);
 
   // Run another npm install for react and react-dom
   console.log('Installing react and react-dom from npm...');
