@@ -16,6 +16,9 @@ var WebpackDevServer = require('webpack-dev-server');
 var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
+var portfinder = require('portfinder');
+
+portfinder.basePort = 3000;
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -121,7 +124,7 @@ compiler.plugin('done', function (stats) {
   }
 });
 
-function openBrowser() {
+function openBrowser(port) {
   if (process.platform === 'darwin') {
     try {
       // Try our best to reuse existing tab
@@ -130,7 +133,7 @@ function openBrowser() {
       execSync(
         'osascript ' +
         path.resolve(__dirname, './openChrome.applescript') +
-        ' http://localhost:3000/'
+        ' http://localhost:' + port + '/'
       );
       return;
     } catch (err) {
@@ -139,21 +142,23 @@ function openBrowser() {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn('http://localhost:3000/');
+  opn('http://localhost:' + port + '/');
 }
 
-new WebpackDevServer(compiler, {
-  historyApiFallback: true,
-  hot: true, // Note: only CSS is currently hot reloaded
-  publicPath: config.output.publicPath,
-  quiet: true
-}).listen(3000, 'localhost', function (err, result) {
-  if (err) {
-    return console.log(err);
-  }
+portfinder.getPort(function (err, port) {
+  new WebpackDevServer(compiler, {
+    historyApiFallback: true,
+    hot: true, // Note: only CSS is currently hot reloaded
+    publicPath: config.output.publicPath,
+    quiet: true
+  }).listen(port, 'localhost', function (err, result) {
+    if (err) {
+      return console.log(err);
+    }
 
-  clearConsole();
-  console.log(chalk.cyan('Starting the development server...'));
-  console.log();
-  openBrowser();
+    clearConsole();
+    console.log(chalk.cyan('Starting the development server...'));
+    console.log();
+    openBrowser(port);
+  });
 });
