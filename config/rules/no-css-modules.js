@@ -15,7 +15,7 @@ module.exports = {
           var specifiers = node.specifiers || [];
           var value = node.source && node.source.value;
 
-          if (value.indexOf('.css') !== -1 && specifiers.length) {
+          if (value && value.indexOf('.css') !== -1 && specifiers.length) {
             for (var i = 0; i < specifiers.length; i++) {
               var specifier = specifiers[i];
 
