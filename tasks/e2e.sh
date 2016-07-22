@@ -30,6 +30,9 @@ perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' package.json
 npm install
 scripts_path=$PWD/`npm pack`
 
+# lint
+./node_modules/.bin/eslint --ignore-path .gitignore ./
+
 # Pack CLI
 cd global-cli
 npm install
