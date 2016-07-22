@@ -126,7 +126,7 @@ Some features are currently **not supported**:
 * Testing.
 * Some experimental syntax extensions (e.g. decorators).
 * CSS Modules.
-* LESS or Sass.
+* LESS
 * Hot reloading of components.
 
 Some of them might get added in the future if they are stable, are useful to majority of React apps, don’t conflict with existing tools, and don’t introduce additional configuration.
