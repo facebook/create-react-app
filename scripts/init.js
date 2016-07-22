@@ -37,6 +37,13 @@ module.exports = function(hostPath, appName, verbose) {
   // Copy the files for the user
   fs.copySync(path.join(selfPath, 'template'), hostPath);
 
+  // Rename files
+  [
+    ['gitignore', '.gitignore'],
+  ].forEach(function(nameMap) {
+    fs.move(path.join(hostPath, nameMap[0]), path.join(hostPath, nameMap[1]), []);
+  });
+
   // Run another npm install for react and react-dom
   console.log('Installing react and react-dom from npm...');
   // TODO: having to do two npm installs is bad, can we avoid it?
