@@ -26,6 +26,7 @@ var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
 var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
 var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
 var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
+var publicPath = require('./package.json').homepage || '/';
 
 module.exports = {
   bail: true,
@@ -35,9 +36,7 @@ module.exports = {
     path: buildPath,
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
-    // TODO: this wouldn't work for e.g. GH Pages.
-    // Good news: we can infer it from package.json :-)
-    publicPath: '/'
+    publicPath: publicPath
   },
   resolve: {
     extensions: ['', '.js'],
