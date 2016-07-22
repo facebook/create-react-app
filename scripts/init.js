@@ -38,11 +38,7 @@ module.exports = function(hostPath, appName, verbose) {
   fs.copySync(path.join(selfPath, 'template'), hostPath);
 
   // Rename files
-  [
-    ['gitignore', '.gitignore'],
-  ].forEach(function(nameMap) {
-    fs.move(path.join(hostPath, nameMap[0]), path.join(hostPath, nameMap[1]), []);
-  });
+  fs.move(path.join(hostPath, 'gitignore'), path.join(hostPath, '.gitignore'), []);
 
   // Run another npm install for react and react-dom
   console.log('Installing react and react-dom from npm...');
