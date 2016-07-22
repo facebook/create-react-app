@@ -60,7 +60,7 @@ module.exports = {
     ],
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.js(|x)$/,
         include: srcPath,
         loader: 'babel',
         query: require('./babel.dev')
