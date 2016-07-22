@@ -82,7 +82,7 @@ Your app is ready to be deployed!
 
 ## How Do I?...
 
-The generated project will include a guide in its README.
+The generated project will include a guide in its README.<br>
 You can also read its latest version [here](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md).
 
 ## Philosophy
@@ -180,5 +180,5 @@ If you don’t agree with the choices made in this project, you might want to ex
 * [sagui](https://github.com/saguijs/sagui)
 * [roc](https://github.com/rocjs/roc)
 
-You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.
+You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
 React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
