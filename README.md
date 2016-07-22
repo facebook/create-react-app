@@ -41,8 +41,7 @@ create-react-app my-app
 cd my-app
 ```
 
-It will create a directory called `my-app` inside the current folder.
-
+It will create a directory called `my-app` inside the current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transient dependencies:
 
 ```
@@ -60,8 +59,7 @@ my-app/
     logo.svg
 ```
 
-No configuration or complicated folder structures, just the files you need to build your app.
-
+No configuration or complicated folder structures, just the files you need to build your app.<br>
 Once the installation is done, you can run some commands inside the project folder:
 
 ### `npm start`
