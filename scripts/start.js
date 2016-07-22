@@ -19,7 +19,6 @@ var opn = require('opn');
 var detect = require('detect-port');
 var readline = require('readline');
 var port = 3000;
-process.env.PORT = port;
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
