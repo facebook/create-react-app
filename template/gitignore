@@ -3,5 +3,8 @@
 # dependencies
 node_modules
 
+# production
+build
+
 # misc
 npm-debug.log
