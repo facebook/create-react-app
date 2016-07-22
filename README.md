@@ -13,9 +13,9 @@ npm start
 
 ```
 
-Then open http://localhost:3000/ to see your app.
+Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
-When you're ready to deploy to production, you can use `npm run build` to make a minified bundle ready for deployment.
+When you’re ready to deploy to production, create a minified bundle with `npm run build`.
 
 ## Getting Started
 
@@ -59,7 +59,7 @@ my-app/
     logo.svg
 ```
 
-No complicated folder structures, just the files you need to build your app.
+No configuration or complicated folder structures, just the files you need to build your app.
 
 Once the installation is done, you can run some commands inside the project folder:
 
@@ -102,7 +102,7 @@ Your app is ready to be deployed!
 
 **You don’t have to use this.** Historically it has been easy to [gradually adopt](https://www.youtube.com/watch?v=BF58ZJ1ZQxY) React. However many people create new single-page React apps from scratch every day. We’ve heard [loud](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4) and [clear](https://twitter.com/thomasfuchs/status/708675139253174273) that this process can be error-prone and tedious, especially if this is your first JavaScript build stack. This project is an attempt to figure out a good way to start developing React apps.
 
-### Graduating from create-react-app
+### No Lock-In
 
 **If you’re a power user** and are comfortable with configuring build dependencies yourself, you can use this tool as a boilerplate generator.
 
