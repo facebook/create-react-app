@@ -35,25 +35,39 @@ module.exports = function(hostPath, appName, verbose) {
   );
 
   // Copy the files for the user
-  function copySync(src, dest) {
-    return fs.writeFileSync(dest, fs.readFileSync(src));
+  function copyFileSync(src, dest) {
+      var target = dest;
+      if (fs.existsSync(dest)) {
+          if (fs.lstatSync(dest).isDirectory()) {
+              target = path.join(dest, path.basename(src));
+          }
+      }
+      fs.writeFileSync(target, fs.readFileSync(src));
   }
-  fs.mkdirSync(path.join(hostPath, 'src'));
-  fs.readdirSync(path.join(selfPath, 'template/src')).forEach(function(filename) {
-    copySync(
-      path.join(selfPath, 'template/src', filename),
-      path.join(hostPath, 'src', filename)
-    );
-  });
-  fs.readdirSync(path.join(selfPath, 'template')).forEach(function(filename) {
-    if (fs.lstatSync(path.join(selfPath, 'template', filename)).isDirectory()) {
-      return
-    }
-    copySync(
-      path.join(selfPath, 'template', filename),
-      path.join(hostPath, filename)
-    );
-  });
+
+  function copyFolderSync(src, dest) {
+      var files = [];
+      var targetFolder = path.join(dest, path.basename(src)).replace('/template', '');
+      if (!fs.existsSync(targetFolder)) {
+          fs.mkdirSync(targetFolder);
+      }
+      if (fs.lstatSync(src).isDirectory()) {
+          files = fs.readdirSync(src);
+          files.forEach(function (file) {
+              var currentSrc = path.join(src, file);
+              if (fs.lstatSync(currentSrc).isDirectory()) {
+                  copyFolderSync(currentSrc, targetFolder);
+              } else {
+                  copyFileSync(currentSrc, targetFolder);
+              }
+          } );
+      }
+  }
+
+  copyFolderSync(
+    path.join(selfPath, 'template'),
+    hostPath
+  )
 
   // Run another npm install for react and react-dom
   console.log('Installing react and react-dom from npm...');
@@ -71,7 +85,7 @@ module.exports = function(hostPath, appName, verbose) {
 
     // Make sure to display the right way to cd
     var cdpath;
-    if (path.join(process.cwd(), appName) == hostPath) {
+    if (path.join(process.cwd(), appName) === hostPath) {
       cdpath = appName;
     } else {
       cdpath = hostPath;
