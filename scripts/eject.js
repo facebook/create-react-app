@@ -42,6 +42,8 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   var files = [
     path.join('config', 'babel.dev.js'),
     path.join('config', 'babel.prod.js'),
+    path.join('config', 'flow', 'css.js.flow'),
+    path.join('config', 'flow', 'file.js.flow'),
     path.join('config', 'eslint.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
@@ -65,6 +67,7 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
 
   // Copy the files over
   fs.mkdirSync(path.join(hostPath, 'config'));
+  fs.mkdirSync(path.join(hostPath, 'config', 'flow'));
   fs.mkdirSync(path.join(hostPath, 'scripts'));
 
   files.forEach(function(file) {
