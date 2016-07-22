@@ -68,7 +68,10 @@ module.exports = {
       {
         test: /\.css$/,
         include: srcPath,
-        loader: 'style!css!postcss'
+        // We "disable" local classes by setting the "unique" classname to the original classname,
+        // making it global again.
+        // Ref: https://github.com/facebookincubator/create-react-app/issues/90
+        loader: 'style!css?localIdentName=[name]!postcss'
       },
       {
         test: /\.json$/,
