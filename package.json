@@ -4,6 +4,9 @@
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
+  "engines": {
+    "node": ">=4"
+  },
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
