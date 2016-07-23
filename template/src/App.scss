@@ -1,5 +1,13 @@
+$dark-gray: #222;
+
 .App {
   text-align: center;
+  .App-header {
+    background-color: $dark-gray;
+    height: 150px;
+    padding: 20px;
+    color: white;
+  }
 }
 
 .App-logo {
@@ -7,12 +15,7 @@
   height: 80px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
+
 
 .App-intro {
   font-size: large;
