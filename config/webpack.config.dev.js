@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+var PORT = process.env.PORT || 3000;
+
 var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
@@ -32,7 +34,7 @@ var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build
 module.exports = {
   devtool: 'eval',
   entry: [
-    require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
+    require.resolve('webpack-dev-server/client') + '?http://localhost:'+PORT,
     require.resolve('webpack/hot/dev-server'),
     path.join(srcPath, 'index')
   ],
