@@ -179,6 +179,7 @@ If you don’t agree with the choices made in this project, you might want to ex
 * [quik](https://github.com/satya164/quik)
 * [sagui](https://github.com/saguijs/sagui)
 * [roc](https://github.com/rocjs/roc)
+* [jumpsuit](https://github.com/jumpsuit/jumpsuit)
 
 You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
 React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
