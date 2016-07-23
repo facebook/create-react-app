@@ -46,6 +46,12 @@ module.exports = {
     root: nodeModulesPath,
     moduleTemplates: ['*-loader']
   },
+  target: 'electron-main',
+
+  node: {
+    __dirname: false,
+    __filename: false
+  },
   module: {
     preLoaders: [
       {
