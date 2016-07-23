@@ -63,7 +63,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: srcPath,
+        include: [srcPath, nodeModulesPath],
         // Disable autoprefixer in css-loader itself:
         // https://github.com/webpack/css-loader/issues/281
         // We already have it thanks to postcss.
