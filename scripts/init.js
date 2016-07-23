@@ -19,7 +19,7 @@ module.exports = function(hostPath, appName, verbose) {
 
   // Copy over some of the devDependencies
   hostPackage.dependencies = hostPackage.dependencies || {};
-  ['react', 'react-dom'].forEach(function (key) {
+  ['react', 'react-dom', 'electron-prebuilt'].forEach(function (key) {
     hostPackage.dependencies[key] = selfPackage.devDependencies[key];
   });
 
@@ -42,7 +42,7 @@ module.exports = function(hostPath, appName, verbose) {
   fs.move(path.join(hostPath, 'gitignore'), path.join(hostPath, '.gitignore'), []);
 
   // Run another npm install for react and react-dom
-  console.log('Installing react and react-dom from npm...');
+  console.log('Installing react, react-dom, and electron-prebuilt from npm...');
   // TODO: having to do two npm installs is bad, can we avoid it?
   var args = [
     'install',
