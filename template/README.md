@@ -264,7 +264,7 @@ suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
 ```
 
-Re-run flow, and you sholdn’t get any extra issues.
+Re-run flow, and you shouldn’t get any extra issues.
 
 If you later `eject`, you’ll need to replace `react-scripts` references with the `<PROJECT_ROOT>` placeholder, for example:
 

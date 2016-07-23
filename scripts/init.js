@@ -37,6 +37,10 @@ module.exports = function(hostPath, appName, verbose) {
   // Copy the files for the user
   fs.copySync(path.join(selfPath, 'template'), hostPath);
 
+  // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
+  // See: https://github.com/npm/npm/issues/1862
+  fs.move(path.join(hostPath, 'gitignore'), path.join(hostPath, '.gitignore'), []);
+
   // Run another npm install for react and react-dom
   console.log('Installing react and react-dom from npm...');
   // TODO: having to do two npm installs is bad, can we avoid it?

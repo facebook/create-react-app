@@ -112,6 +112,8 @@ function run(root, appName, version, verbose) {
       return;
     }
 
+    checkNodeVersion();
+
     var scriptsPath = path.resolve(
       process.cwd(),
       'node_modules',
@@ -157,5 +159,6 @@ function checkNodeVersion() {
       process.version,
       packageJson.engines.node
     );
+    process.exit(1);
   }
 }

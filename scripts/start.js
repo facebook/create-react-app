@@ -18,7 +18,7 @@ var execSync = require('child_process').execSync;
 var opn = require('opn');
 var detect = require('detect-port');
 var readline = require('readline');
-var port = 3000;
+var PORT = 3000;
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -69,18 +69,18 @@ function clearConsole() {
 }
 
 var compiler = webpack(config, handleCompile);
-detect(port, function(error, _port) {
+detect(PORT, function(error, _port) {
 
-  if (port !== _port) {
+  if (PORT !== _port) {
     var rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout
     });
 
-    rl.question('Something is already running at http://localhost:' + port + '. Would you like to run the app at another port instead? [Y/n] ', function(answer){
+    rl.question('Something is already running at http://localhost:' + PORT + '. Would you like to run the app at another port instead? [Y/n] ', function(answer){
       if(answer === 'Y') {
-        port = _port;
-        config.entry = config.entry.map(function(c){ return c.replace(/(\d+)/g, port) }); // Replace the port in webpack config
+        PORT = _port;
+        config.entry = config.entry.map(function(c){ return c.replace(/(\d+)/g, PORT) }); // Replace the port in webpack config
         compiler = webpack(config, handleCompile);
         setupCompiler();
         runDevServer();
@@ -106,7 +106,7 @@ function setupCompiler() {
     if (!hasErrors && !hasWarnings) {
       console.log(chalk.green('Compiled successfully!'));
       console.log();
-      console.log('The app is running at http://localhost:' + port + '/');
+      console.log('The app is running at http://localhost:' + PORT + '/');
       console.log();
       return;
     }
@@ -178,7 +178,7 @@ function runDevServer() {
     hot: true, // Note: only CSS is currently hot reloaded
     publicPath: config.output.publicPath,
     quiet: true
-  }).listen(port, 'localhost', function (err, result) {
+  }).listen(PORT, 'localhost', function (err, result) {
     if (err) {
       return console.log(err);
     }
@@ -186,6 +186,6 @@ function runDevServer() {
     clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    openBrowser(port);
+    openBrowser(PORT);
   });
 }
