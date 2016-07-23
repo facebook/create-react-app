@@ -23,6 +23,7 @@ var isInDebugMode = process.argv.some(arg =>
 if (isInDebugMode) {
   relativePath = '../template';
 }
+var projectRootPath = path.resolve(__dirname, relativePath);
 var srcPath = path.resolve(__dirname, relativePath, 'src');
 var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
 var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
@@ -100,5 +101,8 @@ module.exports = {
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded
     new webpack.HotModuleReplacementPlugin()
-  ]
+  ],
+  cliInfo: { // NOTE: these options are provided to the CLI tool but not webpack
+    projectRootPath: projectRootPath,
+  }
 };
