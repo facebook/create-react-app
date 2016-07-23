@@ -16,6 +16,10 @@ var WebpackDevServer = require('webpack-dev-server');
 var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
+var portfinder = require('portfinder');
+var PORT = 3000;
+
+portfinder.basePort = PORT;
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -77,7 +81,7 @@ compiler.plugin('done', function (stats) {
   if (!hasErrors && !hasWarnings) {
     console.log(chalk.green('Compiled successfully!'));
     console.log();
-    console.log('The app is running at http://localhost:3000/');
+    console.log('The app is running at http://localhost:' + PORT + '/');
     console.log();
     return;
   }
@@ -130,7 +134,7 @@ function openBrowser() {
       execSync(
         'osascript ' +
         path.resolve(__dirname, './openChrome.applescript') +
-        ' http://localhost:3000/'
+        ' http://localhost:' + PORT + '/'
       );
       return;
     } catch (err) {
@@ -139,21 +143,25 @@ function openBrowser() {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn('http://localhost:3000/');
+  opn('http://localhost:' + PORT + '/');
 }
 
-new WebpackDevServer(compiler, {
-  historyApiFallback: true,
-  hot: true, // Note: only CSS is currently hot reloaded
-  publicPath: config.output.publicPath,
-  quiet: true
-}).listen(3000, 'localhost', function (err, result) {
-  if (err) {
-    return console.log(err);
-  }
+portfinder.getPort(function (err, chosenPort) {
+  PORT = chosenPort;
 
-  clearConsole();
-  console.log(chalk.cyan('Starting the development server...'));
-  console.log();
-  openBrowser();
+  new WebpackDevServer(compiler, {
+    historyApiFallback: true,
+    hot: true, // Note: only CSS is currently hot reloaded
+    publicPath: config.output.publicPath,
+    quiet: true
+  }).listen(PORT, 'localhost', function (err, result) {
+    if (err) {
+      return console.log(err);
+    }
+
+    clearConsole();
+    console.log(chalk.cyan('Starting the development server...'));
+    console.log();
+    openBrowser();
+  });
 });

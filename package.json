@@ -51,6 +51,7 @@
     "html-webpack-plugin": "2.22.0",
     "json-loader": "0.5.4",
     "opn": "4.0.2",
+    "portfinder": "^1.0.5",
     "postcss-loader": "0.9.1",
     "rimraf": "2.5.3",
     "style-loader": "0.13.1",
