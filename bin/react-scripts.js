@@ -8,6 +8,11 @@ switch (script) {
 case 'build':
 case 'start':
 case 'eject':
+
+/* We create a new node process, that will fire of our commands as well as
+adding incoming arugments from the action.
+*/
+
   spawn(
     'node',
     [path.resolve(__dirname, '..', 'scripts', script)].concat(args),
