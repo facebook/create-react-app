@@ -8,6 +8,7 @@
  */
 
 var PORT = process.env.PORT || 3000;
+var HOST = process.env.HOST || 'localhost';
 
 var path = require('path');
 var autoprefixer = require('autoprefixer');
@@ -34,7 +35,7 @@ var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build
 module.exports = {
   devtool: 'eval',
   entry: [
-    require.resolve('webpack-dev-server/client') + '?http://localhost:'+PORT,
+    require.resolve('webpack-dev-server/client') + '?http://'+HOST+':'+PORT,
     require.resolve('webpack/hot/dev-server'),
     path.join(srcPath, 'index')
   ],

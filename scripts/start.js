@@ -9,6 +9,7 @@
 
 process.env.NODE_ENV = 'development';
 var PORT = process.env.PORT || 3000;
+var HOST = process.env.HOST || 'localhost';
 
 var path = require('path');
 var chalk = require('chalk');
@@ -78,7 +79,7 @@ compiler.plugin('done', function (stats) {
   if (!hasErrors && !hasWarnings) {
     console.log(chalk.green('Compiled successfully!'));
     console.log();
-    console.log('The app is running at http://localhost:'+PORT+'/');
+    console.log('The app is running at http://'+HOST+':'+PORT+'/');
     console.log();
     return;
   }
@@ -131,7 +132,7 @@ function openBrowser() {
       execSync(
         'osascript ' +
         path.resolve(__dirname, './openChrome.applescript') +
-        ' http://localhost:'+PORT+'/'
+        ' http://'+HOST+':'+PORT+'/'
       );
       return;
     } catch (err) {
@@ -140,7 +141,7 @@ function openBrowser() {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn('http://localhost:'+PORT+'/');
+  opn('http://'+HOST+':'+PORT+'/');
 }
 
 new WebpackDevServer(compiler, {
@@ -148,7 +149,7 @@ new WebpackDevServer(compiler, {
   hot: true, // Note: only CSS is currently hot reloaded
   publicPath: config.output.publicPath,
   quiet: true
-}).listen(PORT, 'localhost', function (err, result) {
+}).listen(PORT, HOST, function (err, result) {
   if (err) {
     return console.log(err);
   }
