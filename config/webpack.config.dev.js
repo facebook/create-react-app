@@ -33,7 +33,7 @@ module.exports = {
   devtool: 'eval',
   entry: [
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
-    require.resolve('webpack/hot/dev-server'),
+    require.resolve('webpack/hot/only-dev-server'),
     path.join(srcPath, 'index')
   ],
   output: {
@@ -59,6 +59,11 @@ module.exports = {
       }
     ],
     loaders: [
+      {
+        test: /\.js$/,
+        include: srcPath,
+        loader: 'react-hot'
+      },
       {
         test: /\.js$/,
         include: srcPath,
