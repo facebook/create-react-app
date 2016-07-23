@@ -26,7 +26,7 @@ var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
 var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
 var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
 var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
-var publicPath = require('./package.json').homepage || '/';
+var publicPath = require(path.resolve(__dirname, relativePath, 'package.json')).homepage || '/';
 
 module.exports = {
   bail: true,
