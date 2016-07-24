@@ -24,7 +24,7 @@ var PORT = 3000;
 // This shouldn't be exposed to the user.
 var handleCompile;
 var isSmokeTest = process.argv.some(function(arg) {
-  arg.indexOf('--smoke-test') > -1
+  return arg.indexOf('--smoke-test') > -1
 });
 
 if (isSmokeTest) {
@@ -117,10 +117,10 @@ function setupCompiler() {
 
     var json = stats.toJson();
     var formattedErrors = json.errors.map(function(message) {
-      'Error in ' + formatMessage(message)
+      return 'Error in ' + formatMessage(message)
     });
     var formattedWarnings = json.warnings.map(function(message) {
-      'Warning in ' + formatMessage(message)
+      return 'Warning in ' + formatMessage(message)
     });
 
     if (hasErrors) {
