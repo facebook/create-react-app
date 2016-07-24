@@ -54,15 +54,14 @@ var argv = require('minimist')(process.argv.slice(2));
  */
 var commands = argv._;
 if (commands.length === 0) {
+  if (argv.version) {
+    console.log('create-react-app version: ' + require('./package.json').version);
+    process.exit();
+  }
   console.error(
     'Usage: create-react-app <project-directory> [--verbose]'
   );
   process.exit(1);
-}
-
-if (argv.version) {
-  console.log('create-react-app version: ' + require('./package.json').version);
-  process.exit();
 }
 
 createApp(commands[0], argv.verbose, argv['scripts-version']);
