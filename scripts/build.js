@@ -33,8 +33,8 @@ webpack(config).run(function(err, stats) {
   var homepagePath = require(path.resolve(relative, 'package.json')).homepage;
   console.log('Successfully generated a bundle in the build folder!');
   if (homepagePath) {
-    console.log('You can now deploy and serve it from ' + homepagePath + '.');
-    console.log('For example, if you use GitHub pages:');
+    console.log('You can now deploy it to ' + homepagePath + '.');
+    console.log('For example, if you use GitHub Pages:');
     console.log();
     console.log('  git checkout -B gh-pages');
     console.log('  git add -f build');
