@@ -32,16 +32,26 @@ webpack(config).run(function(err, stats) {
   var openCommand = process.platform === 'win32' ? 'start' : 'open';
   var homepagePath = require(path.resolve(relative, 'package.json')).homepage;
   console.log('Successfully generated a bundle in the build folder!');
-  console.log();
   if (homepagePath) {
     console.log('You can now deploy and serve it from ' + homepagePath + '.');
+    console.log('For example, if you use GitHub pages:');
+    console.log();
+    console.log('  git checkout -B gh-pages');
+    console.log('  git add -f build');
+    console.log('  git commit -am "Rebuild website"');
+    console.log('  git push origin :gh-pages');
+    console.log('  git subtree push --prefix build origin gh-pages');
+    console.log('  git checkout -');
+    console.log();
   } else {
-    console.log('You can now serve it with any static server, for example:');
+    console.log('You can now serve it with any static server.');
+    console.log('For example:');
+    console.log();
     console.log('  cd build');
     console.log('  npm install -g http-server');
     console.log('  hs');
     console.log('  ' + openCommand + ' http://localhost:8080');
+    console.log();
   }
-  console.log();
   console.log('The bundle is optimized and ready to be deployed to production.');
 });
