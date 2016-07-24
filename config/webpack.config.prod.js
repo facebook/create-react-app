@@ -29,6 +29,10 @@ var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
 var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
 var homepagePath = require(path.resolve(__dirname, relativePath, 'package.json')).homepage;
 var publicPath = homepagePath ? url.parse(homepagePath).pathname : '/';
+if (!publicPath.endsWith('/')) {
+  // Prevents incorrect paths in file-loader
+  publicPath += '/';
+}
 
 module.exports = {
   bail: true,
