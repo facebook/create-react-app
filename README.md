@@ -146,17 +146,7 @@ All of them are transient dependencies of the provided npm package.
 
 ## Contributing
 
-Clone the repo and run `npm install` in the root and the `global-cli` folder.
-
-Once it is done, you can modify any file locally and run `npm start` or `npm run build` just like in a generated project.
-If you want to try out the end-to-end flow with the global CLI, you can do this too:
-
-```
-npm run create-react-app my-app
-cd my-app
-```
-
-and then run `npm start` or `npm run build`.
+We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
 ## Acknowledgements
 
