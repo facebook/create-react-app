@@ -106,7 +106,7 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
 
   // explicitly specify ESLint config path for editor plugins
   hostPackage.eslintConfig = {
-    extends: "./config/eslint.js",
+    extends: './config/eslint.js',
   };
 
   console.log('Writing package.json');

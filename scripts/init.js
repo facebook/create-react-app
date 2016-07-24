@@ -31,7 +31,7 @@ module.exports = function(hostPath, appName, verbose) {
 
   // explicitly specify ESLint config path for editor plugins
   hostPackage.eslintConfig = {
-    extends: "./node_modules/react-scripts/config/eslint.js",
+    extends: './node_modules/react-scripts/config/eslint.js',
   };
 
   fs.writeFileSync(
