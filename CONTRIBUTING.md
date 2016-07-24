@@ -22,6 +22,18 @@ Please **ask first** is somebody else is already working on this or the core dev
 
 Please also provide a **test plan**, i.e. specify how you verified what you added works.
 
+## Setting up a local copy of the repository
 
+Clone the repo and run `npm install` in the root and the `global-cli` folder.
+
+Once it is done, you can modify any file locally and run `npm start` or `npm run build` just like in a generated project.
+If you want to try out the end-to-end flow with the global CLI, you can do this too:
+
+```
+npm run create-react-app my-app
+cd my-app
+```
+
+and then run `npm start` or `npm run build`.
 
 *Many thanks to [h5bp](https://github.com/h5bp/html5-boilerplate/blob/master/CONTRIBUTING.md) for the inspiration with this contributing guide*
