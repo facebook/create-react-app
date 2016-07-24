@@ -27,7 +27,7 @@ var isSmokeTest = process.argv.some(arg =>
   arg.indexOf('--smoke-test') > -1
 );
 if (isSmokeTest) {
-  handleCompile = function (err, stats) {
+  handleCompile = (err, stats) => {
     if (err || stats.hasErrors() || stats.hasWarnings()) {
       process.exit(1);
     } else {
@@ -69,7 +69,7 @@ function clearConsole() {
 }
 
 var compiler = webpack(config, handleCompile);
-detect(PORT, function(error, _port) {
+detect(PORT, (error, _port) => {
 
   if (PORT !== _port) {
     var rl = readline.createInterface({
@@ -77,10 +77,11 @@ detect(PORT, function(error, _port) {
       output: process.stdout
     });
 
-    rl.question('Something is already running at http://localhost:' + PORT + '. Would you like to run the app at another port instead? [Y/n] ', function(answer){
+    rl.question('Something is already running at http://localhost:' + PORT + '. Would you like to run the app at another port instead? [Y/n] ', answer => {
       if(answer === 'Y') {
         PORT = _port;
-        config.entry = config.entry.map(function(c){ return c.replace(/(\d+)/g, PORT) }); // Replace the port in webpack config
+         // Replace the port in webpack config
+        config.entry = config.entry.map(c => c.replace(/(\d+)/g, PORT));
         compiler = webpack(config, handleCompile);
         setupCompiler();
         runDevServer();
@@ -94,12 +95,12 @@ detect(PORT, function(error, _port) {
 });
 
 function setupCompiler() {
-  compiler.plugin('invalid', function () {
+  compiler.plugin('invalid', () => {
     clearConsole();
     console.log('Compiling...');
   });
 
-  compiler.plugin('done', function (stats) {
+  compiler.plugin('done', stats => {
     clearConsole();
     var hasErrors = stats.hasErrors();
     var hasWarnings = stats.hasWarnings();
@@ -178,7 +179,7 @@ function runDevServer() {
     hot: true, // Note: only CSS is currently hot reloaded
     publicPath: config.output.publicPath,
     quiet: true
-  }).listen(PORT, 'localhost', function (err, result) {
+  }).listen(PORT, 'localhost', (err, result) => {
     if (err) {
       return console.log(err);
     }
