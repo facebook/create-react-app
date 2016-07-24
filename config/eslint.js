@@ -179,10 +179,6 @@ module.exports = {
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/jsx-equals-spacing': [WARNING, 'never'],
-    'react/jsx-handler-names': [WARNING, {
-      eventHandlerPrefix: 'handle',
-      eventHandlerPropPrefix: 'on',
-    }],
     'react/jsx-no-duplicate-props': [WARNING, { ignoreCase: true }],
     'react/jsx-no-undef': WARNING,
     'react/jsx-pascal-case': [WARNING, {
