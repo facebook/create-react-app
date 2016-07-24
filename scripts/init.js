@@ -29,6 +29,11 @@ module.exports = function(hostPath, appName, verbose) {
     hostPackage.scripts[command] = 'react-scripts ' + command;
   });
 
+  // explicitly specify ESLint config path for editor plugins
+  hostPackage.eslintConfig = {
+    extends: './node_modules/react-scripts/config/eslint.js',
+  };
+
   fs.writeFileSync(
     path.join(hostPath, 'package.json'),
     JSON.stringify(hostPackage, null, 2)
