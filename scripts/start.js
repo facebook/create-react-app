@@ -23,11 +23,12 @@ var PORT = 3000;
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
 var handleCompile;
-var isSmokeTest = process.argv.some(arg =>
+var isSmokeTest = process.argv.some(function(arg) {
   arg.indexOf('--smoke-test') > -1
-);
+});
+
 if (isSmokeTest) {
-  handleCompile = (err, stats) => {
+  handleCompile = function(err, stats) {
     if (err || stats.hasErrors() || stats.hasWarnings()) {
       process.exit(1);
     } else {
@@ -69,7 +70,7 @@ function clearConsole() {
 }
 
 var compiler = webpack(config, handleCompile);
-detect(PORT, (error, _port) => {
+detect(PORT, function(error, _port) {
 
   if (PORT !== _port) {
     var rl = readline.createInterface({
@@ -77,11 +78,13 @@ detect(PORT, (error, _port) => {
       output: process.stdout
     });
 
-    rl.question('Something is already running at http://localhost:' + PORT + '. Would you like to run the app at another port instead? [Y/n] ', answer => {
+    rl.question('Something is already running at http://localhost:' + PORT + '. Would you like to run the app at another port instead? [Y/n] ', function(answer) {
       if(answer === 'Y') {
         PORT = _port;
-         // Replace the port in webpack config
-        config.entry = config.entry.map(c => c.replace(/(\d+)/g, PORT));
+        // Replace the port in webpack config
+        config.entry = config.entry.map(function(c) {
+          return c.replace(/(\d+)/g, PORT)
+        });
         compiler = webpack(config, handleCompile);
         setupCompiler();
         runDevServer();
@@ -95,12 +98,12 @@ detect(PORT, (error, _port) => {
 });
 
 function setupCompiler() {
-  compiler.plugin('invalid', () => {
+  compiler.plugin('invalid', function() {
     clearConsole();
     console.log('Compiling...');
   });
 
-  compiler.plugin('done', stats => {
+  compiler.plugin('done', function(stats) {
     clearConsole();
     var hasErrors = stats.hasErrors();
     var hasWarnings = stats.hasWarnings();
@@ -113,12 +116,12 @@ function setupCompiler() {
     }
 
     var json = stats.toJson();
-    var formattedErrors = json.errors.map(message =>
+    var formattedErrors = json.errors.map(function(message) {
       'Error in ' + formatMessage(message)
-    );
-    var formattedWarnings = json.warnings.map(message =>
+    });
+    var formattedWarnings = json.warnings.map(function(message) {
       'Warning in ' + formatMessage(message)
-    );
+    });
 
     if (hasErrors) {
       console.log(chalk.red('Failed to compile.'));
@@ -129,7 +132,7 @@ function setupCompiler() {
         // preceding a much more useful Babel syntax error.
         formattedErrors = formattedErrors.filter(isLikelyASyntaxError);
       }
-      formattedErrors.forEach(message => {
+      formattedErrors.forEach(function(message) {
         console.log(message);
         console.log();
       });
@@ -140,7 +143,7 @@ function setupCompiler() {
     if (hasWarnings) {
       console.log(chalk.yellow('Compiled with warnings.'));
       console.log();
-      formattedWarnings.forEach(message => {
+      formattedWarnings.forEach(function(message) {
         console.log(message);
         console.log();
       });
@@ -179,7 +182,7 @@ function runDevServer() {
     hot: true, // Note: only CSS is currently hot reloaded
     publicPath: config.output.publicPath,
     quiet: true
-  }).listen(PORT, 'localhost', (err, result) => {
+  }).listen(PORT, 'localhost', function(err, result) {
     if (err) {
       return console.log(err);
     }
