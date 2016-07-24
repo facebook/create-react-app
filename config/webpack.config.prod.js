@@ -12,6 +12,7 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var url = require('url');
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -26,7 +27,8 @@ var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
 var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
 var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
 var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
-var publicPath = require(path.resolve(__dirname, relativePath, 'package.json')).homepage || '/';
+var homepagePath = require(path.resolve(__dirname, relativePath, 'package.json')).homepage;
+var publicPath = homepagePath ? url.parse(homepagePath).pathname : '/';
 
 module.exports = {
   bail: true,
