@@ -16,11 +16,13 @@ var config = require('../config/webpack.config.prod');
 
 var isInNodeModules = 'node_modules' ===
   path.basename(path.resolve(path.join(__dirname, '..', '..')));
-var relative = isInNodeModules ? '../..' : '.';
+var relative = isInNodeModules ? '../../..' : '..';
 if (process.argv[2] === '--debug-template') {
-  relative = './template';
+  relative = '../template';
 }
-rimrafSync(relative + '/build');
+var packageJsonPath = path.join(__dirname, relative, 'package.json');
+var buildPath = path.join(__dirname, relative, 'build');
+rimrafSync(buildPath);
 
 webpack(config).run(function(err, stats) {
   if (err) {
@@ -30,7 +32,7 @@ webpack(config).run(function(err, stats) {
   }
 
   var openCommand = process.platform === 'win32' ? 'start' : 'open';
-  var homepagePath = require(path.resolve(relative, 'package.json')).homepage;
+  var homepagePath = require(packageJsonPath).homepage;
   console.log('Successfully generated a bundle in the build folder!');
   if (homepagePath) {
     console.log('You can now deploy it to ' + homepagePath + '.');
