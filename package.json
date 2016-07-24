@@ -46,6 +46,7 @@
     "eslint-plugin-import": "1.10.3",
     "eslint-plugin-react": "5.2.2",
     "extract-text-webpack-plugin": "1.0.1",
+    "file-exists": "^1.0.0",
     "file-loader": "0.9.0",
     "fs-extra": "^0.30.0",
     "html-webpack-plugin": "2.22.0",

@@ -16,6 +16,7 @@ var WebpackDevServer = require('webpack-dev-server');
 var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
+var fileExists = require('file-exists');
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -121,6 +122,19 @@ compiler.plugin('done', function (stats) {
   }
 });
 
+function checkRequiredFiles() {
+  var indexHtmlPath = path.join(__dirname, '../index.html');
+  var faviconPath = path.join(__dirname, '../favicon.ico');
+  var indexJsPath = path.join(__dirname, '../src/index.js');
+
+  [indexHtmlPath, faviconPath, indexJsPath]
+    .forEach(function(requiredFile) {
+      if (!fileExists(requiredFile)) {
+        console.log(chalk.red('ERROR: ', requiredFile, ' is missing!'));
+      }
+    });
+}
+
 function openBrowser() {
   if (process.platform === 'darwin') {
     try {
@@ -154,6 +168,7 @@ new WebpackDevServer(compiler, {
 
   clearConsole();
   console.log(chalk.cyan('Starting the development server...'));
+  checkRequiredFiles();
   console.log();
   openBrowser();
 });
