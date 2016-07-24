@@ -18,7 +18,7 @@ We try not to make any controversial choices. If the community is split between 
 
 Good pull requests - patches, improvements, new features - are a fantastic help. They should remain focused in scope and avoid containing unrelated commits.
 
-Please **ask first** is somebody else is already working on this or the core developers think your feature is in-scope for `create-react-app`. Generally always have a related issue with discussions for whatever you are including.
+Please **ask first** if somebody else is already working on this or the core developers think your feature is in-scope for `create-react-app`. Generally always have a related issue with discussions for whatever you are including.
 
 Please also provide a **test plan**, i.e. specify how you verified what you added works.
 
