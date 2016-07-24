@@ -299,7 +299,7 @@ git subtree push --prefix build origin gh-pages
 git checkout -
 ```
 
-You may copy and paste them, or put them into a custom shell script. You may also customize for another hosting provider.
+You may copy and paste them, or put them into a custom shell script. You may also customize them for another hosting provider.
 
 ### Something Missing?
 
