@@ -46,7 +46,7 @@
     "eslint-plugin-import": "1.10.3",
     "eslint-plugin-jsx-a11y": "2.0.1",
     "eslint-plugin-react": "5.2.2",
-    "extract-text-webpack-plugin": "^2.0.0-beta.3",
+    "extract-text-webpack-plugin": "2.0.0-beta.3",
     "file-loader": "0.9.0",
     "fs-extra": "^0.30.0",
     "html-webpack-plugin": "2.22.0",
@@ -56,7 +56,7 @@
     "rimraf": "2.5.3",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
-    "webpack": "^2.1.0-beta.20",
+    "webpack": "2.1.0-beta.20",
     "webpack-dev-server": "1.14.1"
   },
   "devDependencies": {
