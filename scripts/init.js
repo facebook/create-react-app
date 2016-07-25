@@ -29,6 +29,11 @@ module.exports = function(hostPath, appName, verbose) {
     hostPackage.scripts[command] = 'react-scripts ' + command;
   });
 
+  // explicitly specify ESLint config path for editor plugins
+  hostPackage.eslintConfig = {
+    extends: './node_modules/react-scripts/config/eslint.js',
+  };
+
   fs.writeFileSync(
     path.join(hostPath, 'package.json'),
     JSON.stringify(hostPackage, null, 2)
@@ -64,13 +69,14 @@ module.exports = function(hostPath, appName, verbose) {
     }
 
     console.log('Success! Created ' + appName + ' at ' + hostPath + '.');
-    console.log();
     console.log('Inside that directory, you can run several commands:');
+    console.log();
     console.log('  * npm start: Starts the development server.');
     console.log('  * npm run build: Bundles the app into static files for production.');
     console.log('  * npm run eject: Removes this tool. If you do this, you can’t go back!');
     console.log();
     console.log('We suggest that you begin by typing:');
+    console.log();
     console.log('  cd', cdpath);
     console.log('  npm start');
     console.log();
