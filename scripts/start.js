@@ -17,6 +17,10 @@ var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 
+var devPort = 3000;
+var devDomain = 'localhost';
+var devUrl = 'http://' + devDomain + ':' + devPort;
+
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
 var handleCompile;
@@ -77,7 +81,7 @@ compiler.plugin('done', function (stats) {
   if (!hasErrors && !hasWarnings) {
     console.log(chalk.green('Compiled successfully!'));
     console.log();
-    console.log('The app is running at http://localhost:3000/');
+    console.log('The app is running at ' + devUrl);
     console.log();
     return;
   }
@@ -130,7 +134,7 @@ function openBrowser() {
       execSync(
         'osascript ' +
         path.resolve(__dirname, './openChrome.applescript') +
-        ' http://localhost:3000/'
+        ' ' + devUrl
       );
       return;
     } catch (err) {
@@ -139,7 +143,7 @@ function openBrowser() {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn('http://localhost:3000/');
+  opn(devUrl);
 }
 
 new WebpackDevServer(compiler, {
@@ -147,7 +151,7 @@ new WebpackDevServer(compiler, {
   hot: true, // Note: only CSS is currently hot reloaded
   publicPath: config.output.publicPath,
   quiet: true
-}).listen(3000, function (err, result) {
+}).listen(devPort, function (err, result) {
   if (err) {
     return console.log(err);
   }
