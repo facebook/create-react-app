@@ -23,6 +23,7 @@ if (process.argv[2] === '--debug-template') {
   relativePath = '../template';
 }
 var srcPath = path.resolve(__dirname, relativePath, 'src');
+var rootNodeModulesPath = path.resolve(__dirname, relativePath, 'node_modules');
 var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
 var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
 var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
@@ -68,7 +69,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: [srcPath, nodeModulesPath],
+        include: [srcPath, rootNodeModulesPath],
         // Disable autoprefixer in css-loader itself:
         // https://github.com/webpack/css-loader/issues/281
         // We already have it thanks to postcss.
