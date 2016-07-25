@@ -12,19 +12,30 @@ process.env.NODE_ENV = 'development';
 var path = require('path');
 var chalk = require('chalk');
 var webpack = require('webpack');
+var request = require('request');
+var UrlResolver = require('url');
+var SingleChild = require('single-child');
 var WebpackDevServer = require('webpack-dev-server');
-var config = require('../config/webpack.config.dev');
+var configClient = require('../config/webpack.config.dev');
+var configServer = require('../config/webpack.config.server.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 
+process.on('uncaughtException', err => console.error(err));
+
+const SERVER_PATH = 'http://localhost:3001';
+const MAX_PROXY_RETRIES = 3;
+
+let server = null;
+
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
-var handleCompile;
+var handleCompileClient;
 var isSmokeTest = process.argv.some(arg =>
   arg.indexOf('--smoke-test') > -1
 );
 if (isSmokeTest) {
-  handleCompile = function (err, stats) {
+  handleCompileClient = function (err, stats) {
     if (err || stats.hasErrors() || stats.hasWarnings()) {
       process.exit(1);
     } else {
@@ -61,16 +72,37 @@ function formatMessage(message) {
     .replace('./~/css-loader!./~/postcss-loader!', '');
 }
 
+function openBrowser() {
+  if (process.platform === 'darwin') {
+    try {
+      // Try our best to reuse existing tab
+      // on OS X Google Chrome with AppleScript
+      execSync('ps cax | grep "Google Chrome"');
+      execSync(
+        'osascript ' +
+        path.resolve(__dirname, './openChrome.applescript') +
+        ' http://localhost:3000/'
+      );
+      return;
+    } catch (err) {
+      // Ignore errors.
+    }
+  }
+  // Fallback to opn
+  // (It will always open new tab)
+  opn('http://localhost:3000/');
+}
+
 function clearConsole() {
   process.stdout.write('\x1B[2J\x1B[0f');
 }
 
-var compiler = webpack(config, handleCompile);
-compiler.plugin('invalid', function () {
+function webpackOnInvalid() {
   clearConsole();
-  console.log('Compiling...');
-});
-compiler.plugin('done', function (stats) {
+  console.log('Compiling...');  
+}
+
+function webpackOnDone(stats) {
   clearConsole();
   var hasErrors = stats.hasErrors();
   var hasWarnings = stats.hasWarnings();
@@ -119,35 +151,63 @@ compiler.plugin('done', function (stats) {
     console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
     console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
   }
-});
-
-function openBrowser() {
-  if (process.platform === 'darwin') {
-    try {
-      // Try our best to reuse existing tab
-      // on OS X Google Chrome with AppleScript
-      execSync('ps cax | grep "Google Chrome"');
-      execSync(
-        'osascript ' +
-        path.resolve(__dirname, './openChrome.applescript') +
-        ' http://localhost:3000/'
-      );
-      return;
-    } catch (err) {
-      // Ignore errors.
-    }
-  }
-  // Fallback to opn
-  // (It will always open new tab)
-  opn('http://localhost:3000/');
 }
 
-new WebpackDevServer(compiler, {
+function exponentialBackoff(step) {
+  return Math.pow(2, step);
+}
+
+const clientCompiler = webpack(configClient, handleCompileClient);
+clientCompiler.plugin('invalid', webpackOnInvalid);
+clientCompiler.plugin('done', webpackOnDone);
+
+// Here's the server compiler
+webpack(configServer, function(error, stats) {
+  webpackOnDone(stats);
+
+  if (!server) {
+    server = new SingleChild('node', ['build/server/server-dev.js'], {
+      stdio: [0, 1, 2]
+    });
+    server.start();
+  } else {
+    server.restart();
+  }
+});
+
+const devServer = new WebpackDevServer(clientCompiler, {
   historyApiFallback: true,
   hot: true, // Note: only CSS is currently hot reloaded
-  publicPath: config.output.publicPath,
+  publicPath: configClient.output.publicPath,
   quiet: true
-}).listen(3000, function (err, result) {
+});
+
+devServer.use('/', (req, res) => {
+  const url = UrlResolver.resolve(SERVER_PATH, req.url);
+
+  let retries = 0;
+  const proxyRequest = () => {
+    req
+      .pipe(request(url))
+      .on('error', error => {
+        if (retries <= MAX_PROXY_RETRIES) {
+          setTimeout(proxyRequest, exponentialBackoff(retries) * 1000)
+          retries++;
+        } else {
+          console.error(error);
+
+          res
+            .status(500)
+            .send('Proxy does not work');
+        }
+      })
+      .pipe(res);
+  }
+
+  proxyRequest();
+});
+
+devServer.listen(3000, function (err, result) {
   if (err) {
     return console.log(err);
   }
@@ -157,3 +217,5 @@ new WebpackDevServer(compiler, {
   console.log();
   openBrowser();
 });
+
+
