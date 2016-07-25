@@ -11,7 +11,7 @@ var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('cross-spawn');
 
-module.exports = function(hostPath, appName, verbose) {
+module.exports = function(hostPath, appName, verbose, originalDirectory) {
   var selfPath = path.join(hostPath, 'node_modules', 'react-scripts');
 
   var hostPackage = require(path.join(hostPath, 'package.json'));
@@ -60,9 +60,12 @@ module.exports = function(hostPath, appName, verbose) {
       return;
     }
 
-    // Make sure to display the right way to cd
+    // Display the most elegant way to cd.
+    // This needs to handle an undefined originalDirectory for
+    // backward compatibility with old global-cli's.
     var cdpath;
-    if (path.join(process.cwd(), appName) === hostPath) {
+    if (originalDirectory &&
+        path.join(originalDirectory, appName) === hostPath) {
       cdpath = appName;
     } else {
       cdpath = hostPath;
