@@ -18,7 +18,7 @@ var execSync = require('child_process').execSync;
 var opn = require('opn');
 var detect = require('detect-port');
 var readline = require('readline');
-var PORT = 3000;
+var DEFAULT_PORT = 3000;
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -69,32 +69,38 @@ function clearConsole() {
 }
 
 var compiler = webpack(config, handleCompile);
-detect(PORT, (error, _port) => {
 
-  if (PORT !== _port) {
-    var rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
+function promptForPort(suggestedPort) {
+  return new Promise((resolve, reject) => {
+    if (DEFAULT_PORT !== suggestedPort) {
+      var rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+      });
 
-    rl.question('Something is already running at http://localhost:' + PORT + '. Would you like to run the app at another port instead? [Y/n] ', (answer) => {
-      if(answer === 'Y') {
-        PORT = _port;
-        // Replace the port in webpack config
-        config.entry = config.entry.map(c => c.replace(/(\d+)/g, PORT));
-        compiler = webpack(config, handleCompile);
-        setupCompiler();
-        runDevServer();
-      }
-      rl.close();
-    });
-  } else {
-    runDevServer();
-    setupCompiler();
-  }
-});
+      var question = chalk.red('Something is already running at port ' + suggestedPort) +
+        '\nWould you like to run the app at another port instead? [Y/n] ';
 
-function setupCompiler() {
+      rl.question(question, answer => {
+        var shouldChangePort = (
+          answer.length === 0 ||
+          answer.match(/yes|y/i)
+        );
+
+        if (shouldChangePort) {
+          // Replace the port in webpack config
+          config.entry.map(c => c.replace(/(\d+)/g, suggestedPort));
+          resolve(suggestedPort);
+        }
+        rl.close();
+      });
+    } else {
+      resolve(DEFAULT_PORT);
+    }
+  });
+}
+
+function setupCompiler(port) {
   compiler.plugin('invalid', function() {
     clearConsole();
     console.log('Compiling...');
@@ -107,7 +113,7 @@ function setupCompiler() {
     if (!hasErrors && !hasWarnings) {
       console.log(chalk.green('Compiled successfully!'));
       console.log();
-      console.log('The app is running at http://localhost:' + PORT + '/');
+      console.log('The app is running at http://localhost:' + port + '/');
       console.log();
       return;
     }
@@ -173,13 +179,13 @@ function openBrowser(port) {
   opn('http://localhost:' + port + '/');
 }
 
-function runDevServer() {
+function runDevServer(port) {
   new WebpackDevServer(compiler, {
     historyApiFallback: true,
     hot: true, // Note: only CSS is currently hot reloaded
     publicPath: config.output.publicPath,
     quiet: true
-  }).listen(PORT, 'localhost', (err, result) => {
+  }).listen(port, (err, result) => {
     if (err) {
       return console.log(err);
     }
@@ -187,6 +193,13 @@ function runDevServer() {
     clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    openBrowser(PORT);
+    openBrowser(port);
   });
 }
+
+detect(DEFAULT_PORT)
+  .then(promptForPort)
+  .then(port => {
+    setupCompiler(port);
+    runDevServer(port);
+  });
