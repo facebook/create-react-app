@@ -88,15 +88,16 @@ function createApp(name, verbose, version) {
     private: true,
   };
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(packageJson));
+  var originalDirectory = process.cwd();
   process.chdir(root);
 
   console.log('Installing packages. This might take a couple minutes.');
   console.log('Installing react-scripts from npm...');
 
-  run(root, appName, version, verbose);
+  run(root, appName, version, verbose, originalDirectory);
 }
 
-function run(root, appName, version, verbose) {
+function run(root, appName, version, verbose, originalDirectory) {
   var args = [
     'install',
     verbose && '--verbose',
@@ -121,7 +122,7 @@ function run(root, appName, version, verbose) {
       'init.js'
     );
     var init = require(scriptsPath);
-    init(root, appName, verbose);
+    init(root, appName, verbose, originalDirectory);
   });
 }
 
