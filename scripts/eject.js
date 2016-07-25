@@ -12,6 +12,7 @@ var path = require('path');
 var rl = require('readline');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
+var paths = require('../config/paths');
 
 var prompt = function(question, cb) {
   var rlInterface = rl.createInterface({
@@ -37,14 +38,15 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   console.log('Ejecting...');
   console.log();
 
-  var selfPath = path.join(__dirname, '..');
-  var hostPath = path.join(selfPath, '..', '..');
+  var ownPath = path.join(__dirname, '..');
+  var appPath = path.join(ownPath, '..', '..');
   var files = [
     path.join('config', 'babel.dev.js'),
     path.join('config', 'babel.prod.js'),
     path.join('config', 'flow', 'css.js.flow'),
     path.join('config', 'flow', 'file.js.flow'),
     path.join('config', 'eslint.js'),
+    path.join('config', 'paths.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
     path.join('scripts', 'build.js'),
@@ -52,9 +54,9 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
     path.join('scripts', 'openChrome.applescript')
   ];
 
-  // Ensure that the host folder is clean and we won't override any files
+  // Ensure that the app folder is clean and we won't override any files
   files.forEach(function(file) {
-    if (fs.existsSync(path.join(hostPath, file))) {
+    if (fs.existsSync(path.join(appPath, file))) {
       console.error(
         '`' + file + '` already exists in your app folder. We cannot ' +
         'continue as you would lose all the changes in that file or directory. ' +
@@ -66,58 +68,58 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   });
 
   // Copy the files over
-  fs.mkdirSync(path.join(hostPath, 'config'));
-  fs.mkdirSync(path.join(hostPath, 'config', 'flow'));
-  fs.mkdirSync(path.join(hostPath, 'scripts'));
+  fs.mkdirSync(path.join(appPath, 'config'));
+  fs.mkdirSync(path.join(appPath, 'config', 'flow'));
+  fs.mkdirSync(path.join(appPath, 'scripts'));
 
   files.forEach(function(file) {
-    console.log('Copying ' + file + ' to ' + hostPath);
+    console.log('Copying ' + file + ' to ' + appPath);
     var content = fs
-      .readFileSync(path.join(selfPath, file), 'utf8')
+      .readFileSync(path.join(ownPath, file), 'utf8')
       // Remove license header from JS
       .replace(/^\/\*\*(\*(?!\/)|[^*])*\*\//, '')
       // Remove license header from AppleScript
       .replace(/^--.*\n/gm, '')
       .trim() + '\n';
-    fs.writeFileSync(path.join(hostPath, file), content);
+    fs.writeFileSync(path.join(appPath, file), content);
   });
   console.log();
 
-  var selfPackage = require(path.join(selfPath, 'package.json'));
-  var hostPackage = require(path.join(hostPath, 'package.json'));
+  var ownPackage = require(path.join(ownPath, 'package.json'));
+  var appPackage = require(path.join(appPath, 'package.json'));
 
   console.log('Removing dependency: react-scripts');
-  delete hostPackage.devDependencies['react-scripts'];
+  delete appPackage.devDependencies['react-scripts'];
 
-  Object.keys(selfPackage.dependencies).forEach(function (key) {
+  Object.keys(ownPackage.dependencies).forEach(function (key) {
     // For some reason optionalDependencies end up in dependencies after install
-    if (selfPackage.optionalDependencies[key]) {
+    if (ownPackage.optionalDependencies[key]) {
       return;
     }
     console.log('Adding dependency: ' + key);
-    hostPackage.devDependencies[key] = selfPackage.dependencies[key];
+    appPackage.devDependencies[key] = ownPackage.dependencies[key];
   });
 
   console.log('Updating scripts');
-  Object.keys(hostPackage.scripts).forEach(function (key) {
-    hostPackage.scripts[key] = 'node ./scripts/' + key + '.js'
+  Object.keys(appPackage.scripts).forEach(function (key) {
+    appPackage.scripts[key] = 'node ./scripts/' + key + '.js'
   });
-  delete hostPackage.scripts['eject'];
+  delete appPackage.scripts['eject'];
 
   // explicitly specify ESLint config path for editor plugins
-  hostPackage.eslintConfig = {
+  appPackage.eslintConfig = {
     extends: './config/eslint.js',
   };
 
   console.log('Writing package.json');
   fs.writeFileSync(
-    path.join(hostPath, 'package.json'),
-    JSON.stringify(hostPackage, null, 2)
+    path.join(appPath, 'package.json'),
+    JSON.stringify(appPackage, null, 2)
   );
   console.log();
 
   console.log('Running npm install...');
-  rimrafSync(selfPath);
+  rimrafSync(ownPath);
   spawnSync('npm', ['install'], {stdio: 'inherit'});
   console.log('Ejected successfully!');
   console.log();

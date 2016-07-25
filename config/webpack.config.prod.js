@@ -13,22 +13,9 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
+var paths = require('./paths');
 
-// TODO: hide this behind a flag and eliminate dead code on eject.
-// This shouldn't be exposed to the user.
-var isInNodeModules = 'node_modules' ===
-  path.basename(path.resolve(path.join(__dirname, '..', '..')));
-var relativePath = isInNodeModules ? '../../..' : '..';
-if (process.argv[2] === '--debug-template') {
-  relativePath = '../template';
-}
-var srcPath = path.resolve(__dirname, relativePath, 'src');
-var rootNodeModulesPath = path.resolve(__dirname, relativePath, 'node_modules');
-var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
-var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
-var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
-var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
-var homepagePath = require(path.resolve(__dirname, relativePath, 'package.json')).homepage;
+var homepagePath = require(paths.appPackageJson).homepage;
 var publicPath = homepagePath ? url.parse(homepagePath).pathname : '/';
 if (!publicPath.endsWith('/')) {
   // Prevents incorrect paths in file-loader
@@ -38,9 +25,9 @@ if (!publicPath.endsWith('/')) {
 module.exports = {
   bail: true,
   devtool: 'source-map',
-  entry: path.join(srcPath, 'index'),
+  entry: path.join(paths.appSrc, 'index'),
   output: {
-    path: buildPath,
+    path: paths.appBuild,
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
     publicPath: publicPath
@@ -49,7 +36,7 @@ module.exports = {
     extensions: ['', '.js'],
   },
   resolveLoader: {
-    root: nodeModulesPath,
+    root: paths.ownNodeModules,
     moduleTemplates: ['*-loader']
   },
   module: {
@@ -57,19 +44,19 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'eslint',
-        include: srcPath
+        include: paths.appSrc
       }
     ],
     loaders: [
       {
         test: /\.js$/,
-        include: srcPath,
+        include: paths.appSrc,
         loader: 'babel',
         query: require('./babel.prod')
       },
       {
         test: /\.css$/,
-        include: [srcPath, rootNodeModulesPath],
+        include: [paths.appSrc, paths.appNodeModules],
         // Disable autoprefixer in css-loader itself:
         // https://github.com/webpack/css-loader/issues/281
         // We already have it thanks to postcss.
@@ -77,14 +64,17 @@ module.exports = {
       },
       {
         test: /\.json$/,
+        include: [paths.appSrc, paths.appNodeModules],
         loader: 'json'
       },
       {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
+        include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
       },
       {
         test: /\.(mp4|webm)$/,
+        include: [paths.appSrc, paths.appNodeModules],
         loader: 'url?limit=10000'
       }
     ]
@@ -101,8 +91,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
-      template: indexHtmlPath,
-      favicon: faviconPath,
+      template: paths.appHtml,
+      favicon: paths.appFavicon,
       minify: {
         removeComments: true,
         collapseWhitespace: true,

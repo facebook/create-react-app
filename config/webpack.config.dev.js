@@ -11,35 +11,18 @@ var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-
-// TODO: hide this behind a flag and eliminate dead code on eject.
-// This shouldn't be exposed to the user.
-var isInNodeModules = 'node_modules' ===
-  path.basename(path.resolve(path.join(__dirname, '..', '..')));
-var relativePath = isInNodeModules ? '../../..' : '..';
-var isInDebugMode = process.argv.some(arg =>
-  arg.indexOf('--debug-template') > -1
-);
-if (isInDebugMode) {
-  relativePath = '../template';
-}
-var srcPath = path.resolve(__dirname, relativePath, 'src');
-var rootNodeModulesPath = path.resolve(__dirname, relativePath, 'node_modules');
-var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
-var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
-var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
-var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
+var paths = require('./paths');
 
 module.exports = {
   devtool: 'eval',
   entry: [
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
     require.resolve('webpack/hot/dev-server'),
-    path.join(srcPath, 'index')
+    path.join(paths.appSrc, 'index')
   ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
-    path: buildPath,
+    path: paths.appBuild,
     pathinfo: true,
     filename: 'bundle.js',
     publicPath: '/'
@@ -48,7 +31,7 @@ module.exports = {
     extensions: ['', '.js'],
   },
   resolveLoader: {
-    root: nodeModulesPath,
+    root: paths.ownNodeModules,
     moduleTemplates: ['*-loader']
   },
   module: {
@@ -56,31 +39,34 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'eslint',
-        include: srcPath,
+        include: paths.appSrc,
       }
     ],
     loaders: [
       {
         test: /\.js$/,
-        include: srcPath,
+        include: paths.appSrc,
         loader: 'babel',
         query: require('./babel.dev')
       },
       {
         test: /\.css$/,
-        include: [srcPath, rootNodeModulesPath],
+        include: [paths.appSrc, paths.appNodeModules],
         loader: 'style!css!postcss'
       },
       {
         test: /\.json$/,
+        include: [paths.appSrc, paths.appNodeModules],
         loader: 'json'
       },
       {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
+        include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
       },
       {
         test: /\.(mp4|webm)$/,
+        include: [paths.appSrc, paths.appNodeModules],
         loader: 'url?limit=10000'
       }
     ]
@@ -95,8 +81,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
-      template: indexHtmlPath,
-      favicon: faviconPath,
+      template: paths.appHtml,
+      favicon: paths.appFavicon,
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded

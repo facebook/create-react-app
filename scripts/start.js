@@ -20,9 +20,7 @@ var opn = require('opn');
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
 var handleCompile;
-var isSmokeTest = process.argv.some(arg =>
-  arg.indexOf('--smoke-test') > -1
-);
+var isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
 if (isSmokeTest) {
   handleCompile = function (err, stats) {
     if (err || stats.hasErrors() || stats.hasWarnings()) {
