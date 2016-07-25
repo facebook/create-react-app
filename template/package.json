@@ -7,10 +7,12 @@
   },
   "dependencies": {
     "react": "^15.2.1",
-    "react-dom": "^15.2.1"
+    "react-dom": "^15.2.1",
+    "express": "^4.13.4"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:production": "node build/server/server.js",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   }

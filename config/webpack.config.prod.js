@@ -10,7 +10,6 @@
 var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
 
@@ -25,9 +24,7 @@ if (process.argv[2] === '--debug-template') {
 var srcPath = path.resolve(__dirname, relativePath, 'src');
 var rootNodeModulesPath = path.resolve(__dirname, relativePath, 'node_modules');
 var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
-var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
-var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
-var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
+var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build/client');
 var homepagePath = require(path.resolve(__dirname, relativePath, 'package.json')).homepage;
 var publicPath = homepagePath ? url.parse(homepagePath).pathname : '/';
 if (!publicPath.endsWith('/')) {
@@ -38,7 +35,7 @@ if (!publicPath.endsWith('/')) {
 module.exports = {
   bail: true,
   devtool: 'source-map',
-  entry: path.join(srcPath, 'index'),
+  entry: path.join(srcPath, 'client/index'),
   output: {
     path: buildPath,
     filename: '[name].[chunkhash].js',
@@ -99,23 +96,6 @@ module.exports = {
     return [autoprefixer];
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: indexHtmlPath,
-      favicon: faviconPath,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true
-      }
-    }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
@@ -132,6 +112,13 @@ module.exports = {
         screw_ie8: true
       }
     }),
-    new ExtractTextPlugin('[name].[contenthash].css')
+    new ExtractTextPlugin('[name].[contenthash].css'),
+    function() {
+      this.plugin('done', function(stats) {
+        require('fs').writeFileSync(
+          path.join(buildPath, 'stats.json'),
+          JSON.stringify(stats.toJson().assetsByChunkName));
+      });
+    }
   ]
 };
