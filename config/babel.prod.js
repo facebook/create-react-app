@@ -10,7 +10,6 @@
 module.exports = {
   presets: [
     'babel-preset-es2015-webpack',
-    'babel-preset-es2016',
     'babel-preset-react'
   ].map(require.resolve),
   plugins: [
