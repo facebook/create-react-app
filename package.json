@@ -51,6 +51,7 @@
     "fs-extra": "^0.30.0",
     "html-webpack-plugin": "2.22.0",
     "json-loader": "0.5.4",
+    "npm-install-webpack-plugin": "^4.0.4",
     "opn": "4.0.2",
     "postcss-loader": "0.9.1",
     "rimraf": "2.5.3",
