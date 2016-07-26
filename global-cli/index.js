@@ -93,6 +93,7 @@ function createApp(name, verbose, version) {
 
   console.log('Installing packages. This might take a couple minutes.');
   console.log('Installing react-scripts from npm...');
+  console.log();
 
   run(root, appName, version, verbose, originalDirectory);
 }

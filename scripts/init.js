@@ -48,6 +48,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
 
   // Run another npm install for react and react-dom
   console.log('Installing react and react-dom from npm...');
+  console.log();
   // TODO: having to do two npm installs is bad, can we avoid it?
   var args = [
     'install',
@@ -71,6 +72,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
       cdpath = appPath;
     }
 
+    console.log();
     console.log('Success! Created ' + appName + ' at ' + appPath + '.');
     console.log('Inside that directory, you can run several commands:');
     console.log();
