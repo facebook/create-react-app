@@ -49,7 +49,7 @@ module.exports = {
     extensions: ['', '.js'],
   },
   resolveLoader: {
-    root: nodeModulesPath,
+    modules: nodeModulesPath,
     moduleTemplates: ['*-loader']
   },
   module: {
