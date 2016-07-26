@@ -28,8 +28,8 @@ module.exports = {
   entry: path.join(paths.appSrc, 'index'),
   output: {
     path: paths.appBuild,
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].chunk.js',
+    filename: '[name].[chunkhash:8].js',
+    chunkFilename: '[name].[chunkhash:8].chunk.js',
     publicPath: publicPath
   },
   resolve: {
@@ -71,6 +71,9 @@ module.exports = {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
+        query: {
+          name: '[name].[hash:8].[ext]'
+        }
       },
       {
         test: /\.(mp4|webm)$/,
@@ -122,6 +125,6 @@ module.exports = {
         screw_ie8: true
       }
     }),
-    new ExtractTextPlugin('[name].[contenthash].css')
+    new ExtractTextPlugin('[name].[contenthash:8].css')
   ]
 };
