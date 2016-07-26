@@ -54,6 +54,7 @@
     "opn": "4.0.2",
     "postcss-loader": "0.9.1",
     "rimraf": "2.5.3",
+    "semver": "^5.3.0",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": "1.13.1",
