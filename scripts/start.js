@@ -17,9 +17,10 @@ var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 
-// TODO: hide this behind a flag and eliminate dead code on eject.
+// hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
 var handleCompile;
+// Dead code on eject: start
 var isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
 if (isSmokeTest) {
   handleCompile = function (err, stats) {
@@ -30,6 +31,7 @@ if (isSmokeTest) {
     }
   };
 }
+// Dead code on eject: end
 
 var friendlySyntaxErrorLabel = 'Syntax error:';
 

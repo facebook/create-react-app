@@ -80,6 +80,8 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
       .replace(/^\/\*\*(\*(?!\/)|[^*])*\*\//, '')
       // Remove license header from AppleScript
       .replace(/^--.*\n/gm, '')
+      // Remove dead code on eject
+      .replace(/\/\/ Dead code on eject: start([\s\S]*?)\/\/ Dead code on eject: end/g, '')
       .trim() + '\n';
     fs.writeFileSync(path.join(appPath, file), content);
   });

@@ -12,6 +12,11 @@
 
 var path = require('path');
 
+function resolve(relativePath) {
+  return path.resolve(__dirname, relativePath);
+}
+
+// Dead code on eject: start
 // True when used as a dependency, false after ejecting
 var isInNodeModules = (
   'node_modules' ===
@@ -22,10 +27,6 @@ var isInNodeModules = (
 var isInCreateReactAppSource = (
   process.argv.some(arg => arg.indexOf('--debug-template') > -1)
 );
-
-function resolve(relativePath) {
-  return path.resolve(__dirname, relativePath);
-}
 
 if (isInCreateReactAppSource) {
   // create-react-app development: we're in ./config/
@@ -52,6 +53,8 @@ if (isInCreateReactAppSource) {
   };
 } else {
   // after eject: we're in ./config/
+// Dead code on eject: end
+// Dead code on eject: start
   module.exports = {
     appBuild: resolve('../build'),
     appHtml: resolve('../index.html'),
@@ -61,4 +64,5 @@ if (isInCreateReactAppSource) {
     appNodeModules: resolve('../node_modules'),
     ownNodeModules: resolve('../node_modules')
   };
+// Dead code on eject: end
 }
