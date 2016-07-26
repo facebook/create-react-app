@@ -54,7 +54,6 @@ if (isInCreateReactAppSource) {
 } else {
   // after eject: we're in ./config/
 // Dead code on eject: end
-// Dead code on eject: start
   module.exports = {
     appBuild: resolve('../build'),
     appHtml: resolve('../index.html'),
@@ -64,5 +63,6 @@ if (isInCreateReactAppSource) {
     appNodeModules: resolve('../node_modules'),
     ownNodeModules: resolve('../node_modules')
   };
-// Dead code on eject: end
+// Dead code on eject: start
 }
+// Dead code on eject: end
