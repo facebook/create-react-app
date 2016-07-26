@@ -35,7 +35,7 @@
     "babel-plugin-transform-class-properties": "6.10.2",
     "babel-plugin-transform-object-rest-spread": "6.8.0",
     "babel-plugin-transform-react-constant-elements": "6.9.1",
-    "babel-preset-es2015": "6.9.0",
+    "babel-preset-es2015-webpack": "^6.4.2",
     "babel-preset-es2016": "6.11.3",
     "babel-preset-react": "6.11.1",
     "chalk": "1.1.3",
@@ -46,7 +46,7 @@
     "eslint-plugin-import": "1.10.3",
     "eslint-plugin-jsx-a11y": "2.0.1",
     "eslint-plugin-react": "5.2.2",
-    "extract-text-webpack-plugin": "1.0.1",
+    "extract-text-webpack-plugin": "2.0.0-beta.3",
     "file-loader": "0.9.0",
     "fs-extra": "^0.30.0",
     "html-webpack-plugin": "2.22.0",
@@ -56,7 +56,7 @@
     "rimraf": "2.5.3",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
-    "webpack": "1.13.1",
+    "webpack": "2.1.0-beta.20",
     "webpack-dev-server": "1.14.1"
   },
   "devDependencies": {
