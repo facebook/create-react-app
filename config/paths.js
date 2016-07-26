@@ -35,6 +35,7 @@ if (isInCreateReactAppSource) {
     appFavicon: resolve('../template/favicon.ico'),
     appPackageJson: resolve('../package.json'),
     appSrc: resolve('../template/src'),
+    appStatic: resolve('../template/static'),
     appNodeModules: resolve('../node_modules'),
     ownNodeModules: resolve('../node_modules')
   };
@@ -46,6 +47,7 @@ if (isInCreateReactAppSource) {
     appFavicon: resolve('../../../favicon.ico'),
     appPackageJson: resolve('../../../package.json'),
     appSrc: resolve('../../../src'),
+    appStatic: resolve('../../../static'),
     appNodeModules: resolve('../..'),
     // this is empty with npm3 but node resolution searches higher anyway:
     ownNodeModules: resolve('../node_modules')
@@ -58,6 +60,7 @@ if (isInCreateReactAppSource) {
     appFavicon: resolve('../favicon.ico'),
     appPackageJson: resolve('../package.json'),
     appSrc: resolve('../src'),
+    appStatic: resolve('../static'),
     appNodeModules: resolve('../node_modules'),
     ownNodeModules: resolve('../node_modules')
   };
