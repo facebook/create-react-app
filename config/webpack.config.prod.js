@@ -12,7 +12,8 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var ManifestPlugin = require('webpack-manifest-plugin');
+var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+var InlineManifestPlugin = require('inline-manifest-webpack-plugin');
 var WebpackMd5HashPlugin = require('webpack-md5-hash');
 var url = require('url');
 var paths = require('./paths');
@@ -98,11 +99,19 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'react',
-      minChunks: Infinity
+      names: ['react', 'manifest']
     }),
     new WebpackMd5HashPlugin(),
-    new ManifestPlugin(),
+    new ChunkManifestPlugin(),
+    new InlineManifestPlugin(),
+    function injectManifestIntoHTML() {
+      this.plugin('compilation', (compilation) => {
+        compilation.plugin('html-webpack-plugin-before-html-processing', (data, cb) => {
+          data.html = data.html.replace('</body>', 'window.webpackManifest = ' + data.assets.webpackManifest + '</body>');
+          cb()
+        })
+      })
+    },
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
