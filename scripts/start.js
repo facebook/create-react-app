@@ -17,8 +17,9 @@ var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 var detect = require('detect-port');
-var readline = require('readline');
+var prompt = require('./utilities/prompt');
 var DEFAULT_PORT = 3000;
+var compiler;
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -68,39 +69,12 @@ function clearConsole() {
   process.stdout.write('\x1B[2J\x1B[0f');
 }
 
-var compiler = webpack(config, handleCompile);
-
-function promptForPort(suggestedPort) {
-  return new Promise((resolve, reject) => {
-    if (DEFAULT_PORT !== suggestedPort) {
-      var rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-      });
-
-      var question = chalk.red('Something is already running at port ' + DEFAULT_PORT) +
-        '\nWould you like to run the app at another port instead? [Y/n] ';
-
-      rl.question(question, answer => {
-        var shouldChangePort = (
-          answer.length === 0 ||
-          answer.match(/yes|y/i)
-        );
-
-        if (shouldChangePort) {
-          // Replace the port in webpack config
-          config.entry.map(c => c.replace(/(\d+)/g, suggestedPort));
-          resolve(suggestedPort);
-        }
-        rl.close();
-      });
-    } else {
-      resolve(DEFAULT_PORT);
-    }
-  });
-}
-
 function setupCompiler(port) {
+  var copyConfig = Object.assign({}, config, {
+    entry: config.entry.map(c => c.replace(/(\d+)/g, port))
+  });
+
+  compiler = webpack(copyConfig, handleCompile);
   compiler.plugin('invalid', function() {
     clearConsole();
     console.log('Compiling...');
@@ -197,9 +171,27 @@ function runDevServer(port) {
   });
 }
 
-detect(DEFAULT_PORT)
-  .then(promptForPort)
-  .then(port => {
-    setupCompiler(port);
-    runDevServer(port);
-  });
+function run(port) {
+  setupCompiler(port);
+  runDevServer(port);
+}
+
+detect(DEFAULT_PORT).then(port => {
+
+  if (port !== DEFAULT_PORT) {
+    var question = chalk.red('Something is already running at port ' + DEFAULT_PORT) +
+      '\nWould you like to run the app at another port instead? [y/N]';
+
+    prompt(question, answer => {
+      var shouldChangePort = (
+        answer.length === 0 ||
+        answer.match(/^yes|y$/i)
+      );
+      if (shouldChangePort) {
+        run(port);
+      }
+    });
+  } else {
+    run(port);
+  }
+});
