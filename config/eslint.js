@@ -69,6 +69,7 @@ module.exports = {
     'no-cond-assign': [WARNING, 'always'],
     'no-const-assign': WARNING,
     'no-control-regex': WARNING,
+    'no-css-modules': WARNING,
     'no-delete-var': WARNING,
     'no-dupe-args': WARNING,
     'no-dupe-class-members': WARNING,
