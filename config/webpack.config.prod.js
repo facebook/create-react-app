@@ -12,6 +12,9 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+var InlineManifestPlugin = require('inline-manifest-webpack-plugin');
+var WebpackMd5HashPlugin = require('webpack-md5-hash');
 var url = require('url');
 var paths = require('./paths');
 
@@ -25,7 +28,10 @@ if (!publicPath.endsWith('/')) {
 module.exports = {
   bail: true,
   devtool: 'source-map',
-  entry: path.join(paths.appSrc, 'index'),
+  entry: {
+    bundle: path.join(paths.appSrc, 'index'),
+    react: ['react', 'react-dom']
+  },
   output: {
     path: paths.appBuild,
     filename: '[name].[chunkhash:8].js',
@@ -92,6 +98,20 @@ module.exports = {
     return [autoprefixer];
   },
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['react', 'manifest']
+    }),
+    new WebpackMd5HashPlugin(),
+    new ChunkManifestPlugin(),
+    new InlineManifestPlugin(),
+    function injectManifestIntoHTML() {
+      this.plugin('compilation', (compilation) => {
+        compilation.plugin('html-webpack-plugin-before-html-processing', (data, cb) => {
+          data.html = data.html.replace('</body>', 'window.webpackManifest = ' + data.assets.webpackManifest + '</body>');
+          cb()
+        })
+      })
+    },
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,

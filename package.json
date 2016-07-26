@@ -50,6 +50,7 @@
     "file-loader": "0.9.0",
     "fs-extra": "0.30.0",
     "html-webpack-plugin": "2.22.0",
+    "inline-manifest-webpack-plugin": "^3.0.1",
     "json-loader": "0.5.4",
     "opn": "4.0.2",
     "postcss-loader": "0.9.1",
@@ -57,7 +58,9 @@
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": "1.13.1",
-    "webpack-dev-server": "1.14.1"
+    "webpack-dev-server": "1.14.1",
+    "webpack-manifest-plugin": "1.0.1",
+    "webpack-md5-hash": "0.0.5"
   },
   "devDependencies": {
     "bundle-deps": "1.0.0",
