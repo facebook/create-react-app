@@ -6,5 +6,8 @@ node_modules
 # production
 build
 
+# test
+tmp
+
 # misc
 npm-debug.log

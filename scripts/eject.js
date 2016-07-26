@@ -12,7 +12,6 @@ var path = require('path');
 var rl = require('readline');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
-var paths = require('../config/paths');
 
 var prompt = function(question, cb) {
   var rlInterface = rl.createInterface({
@@ -47,11 +46,14 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
     path.join('config', 'flow', 'file.js.flow'),
     path.join('config', 'eslint.js'),
     path.join('config', 'paths.js'),
+    path.join('config', 'tests.webpack.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
+    path.join('config', 'webpack.config.test.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
-    path.join('scripts', 'openChrome.applescript')
+    path.join('scripts', 'openChrome.applescript'),
+    path.join('scripts', 'test.js'),
   ];
 
   // Ensure that the app folder is clean and we won't override any files
