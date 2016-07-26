@@ -78,7 +78,7 @@ function promptForPort(suggestedPort) {
         output: process.stdout
       });
 
-      var question = chalk.red('Something is already running at port ' + suggestedPort) +
+      var question = chalk.red('Something is already running at port ' + DEFAULT_PORT) +
         '\nWould you like to run the app at another port instead? [Y/n] ';
 
       rl.question(question, answer => {
