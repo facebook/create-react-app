@@ -9,20 +9,12 @@
 
 process.env.NODE_ENV = 'production';
 
-var path = require('path');
 var rimrafSync = require('rimraf').sync;
 var webpack = require('webpack');
 var config = require('../config/webpack.config.prod');
+var paths = require('../config/paths');
 
-var isInNodeModules = 'node_modules' ===
-  path.basename(path.resolve(path.join(__dirname, '..', '..')));
-var relative = isInNodeModules ? '../../..' : '..';
-if (process.argv[2] === '--debug-template') {
-  relative = '../template';
-}
-var packageJsonPath = path.join(__dirname, relative, 'package.json');
-var buildPath = path.join(__dirname, relative, 'build');
-rimrafSync(buildPath);
+rimrafSync(paths.appBuild);
 
 webpack(config).run(function(err, stats) {
   if (err) {
@@ -32,7 +24,7 @@ webpack(config).run(function(err, stats) {
   }
 
   var openCommand = process.platform === 'win32' ? 'start' : 'open';
-  var homepagePath = require(packageJsonPath).homepage;
+  var homepagePath = require(paths.appPackageJson).homepage;
   console.log('Successfully generated a bundle in the build folder!');
   if (homepagePath) {
     console.log('You can now deploy it to ' + homepagePath + '.');

@@ -42,7 +42,7 @@ cd my-app
 ```
 
 It will create a directory called `my-app` inside the current folder.<br>
-Inside that directory, it will generate the initial project structure and install the transient dependencies:
+Inside that directory, it will generate the initial project structure and install the transitive dependencies:
 
 ```
 my-app/
@@ -112,7 +112,7 @@ You can also read its latest version [here](https://github.com/facebookincubator
 
 **If you’re a power user** and you aren’t happy with the default configuration, you can “eject” from the tool and use it as a boilerplate generator.
 
-Running `npm run eject` copies all the configuration files and the transient dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. Commands like `npm start` and `npm run build` will still work, but they will point to the copied scripts so you can tweak them. At this point, you’re on your own.
+Running `npm run eject` copies all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. Commands like `npm start` and `npm run build` will still work, but they will point to the copied scripts so you can tweak them. At this point, you’re on your own.
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -142,7 +142,7 @@ Currently it is a thin layer on top of many amazing community projects, such as:
 * [ESLint](http://eslint.org/)
 * and more.
 
-All of them are transient dependencies of the provided npm package.
+All of them are transitive dependencies of the provided npm package.
 
 ## Contributing
 
