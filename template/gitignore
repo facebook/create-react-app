@@ -6,6 +6,9 @@ node_modules
 # production
 build
 
+# test
+tmp
+
 # misc
 .DS_Store
 npm-debug.log

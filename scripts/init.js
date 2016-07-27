@@ -23,9 +23,15 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     appPackage.dependencies[key] = ownPackage.devDependencies[key];
   });
 
+  // copy over chai and enzyme so the example test works
+  appPackage.devDependencies = appPackage.devDependencies || {};
+  ['chai', 'enzyme', 'react-addons-test-utils'].forEach(function (key) {
+    appPackage.devDependencies[key] = ownPackage.dependencies[key];
+  });
+
   // Setup the script rules
   appPackage.scripts = {};
-  ['start', 'build', 'eject'].forEach(function(command) {
+  ['start', 'build', 'eject', 'test'].forEach(function(command) {
     appPackage.scripts[command] = 'react-scripts ' + command;
   });
 

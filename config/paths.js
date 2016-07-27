@@ -31,34 +31,40 @@ if (isInCreateReactAppSource) {
   // create-react-app development: we're in ./config/
   module.exports = {
     appBuild: resolve('../build'),
+    appTmp: resolve('../tmp'),
     appHtml: resolve('../template/index.html'),
     appFavicon: resolve('../template/favicon.ico'),
     appPackageJson: resolve('../package.json'),
     appSrc: resolve('../template/src'),
     appNodeModules: resolve('../node_modules'),
-    ownNodeModules: resolve('../node_modules')
+    ownNodeModules: resolve('../node_modules'),
+    testEntry: resolve('tests.webpack.debug.js')
   };
 } else if (isInNodeModules) {
   // before eject: we're in ./node_modules/react-scripts/config/
   module.exports = {
     appBuild: resolve('../../../build'),
+    appTmp: resolve('../../../tmp'),
     appHtml: resolve('../../../index.html'),
     appFavicon: resolve('../../../favicon.ico'),
     appPackageJson: resolve('../../../package.json'),
     appSrc: resolve('../../../src'),
     appNodeModules: resolve('../..'),
     // this is empty with npm3 but node resolution searches higher anyway:
-    ownNodeModules: resolve('../node_modules')
+    ownNodeModules: resolve('../node_modules'),
+    testEntry: resolve('tests.webpack.preeject.js')
   };
 } else {
   // after eject: we're in ./config/
   module.exports = {
     appBuild: resolve('../build'),
+    appTmp: resolve('../tmp'),
     appHtml: resolve('../index.html'),
     appFavicon: resolve('../favicon.ico'),
     appPackageJson: resolve('../package.json'),
     appSrc: resolve('../src'),
     appNodeModules: resolve('../node_modules'),
-    ownNodeModules: resolve('../node_modules')
+    ownNodeModules: resolve('../node_modules'),
+    testEntry: resolve('tests.webpack.js')
   };
 }
