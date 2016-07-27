@@ -44,9 +44,9 @@ webpack(config).run(function(err, stats) {
     console.log('For example:');
     console.log();
     console.log('  cd build');
-    console.log('  npm install -g http-server');
-    console.log('  hs');
-    console.log('  ' + openCommand + ' http://localhost:8080');
+    console.log('  npm install -g st');
+    console.log('  st -p 8000 -i index.html');
+    console.log('  ' + openCommand + ' http://localhost:8000');
     console.log();
   }
   console.log('The bundle is optimized and ready to be deployed to production.');
