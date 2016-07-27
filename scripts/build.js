@@ -10,6 +10,7 @@
 process.env.NODE_ENV = 'production';
 
 var fs = require('fs');
+var filesize = require('filesize');
 var gzipSize = require('gzip-size');
 var rimrafSync = require('rimraf').sync;
 var webpack = require('webpack');
@@ -25,7 +26,7 @@ function logBuildSize(assets, extension) {
     var asset = assets[i];
     if (asset.name.endsWith('.' + extension)) {
       var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
-      console.log('Size (gzipped) of ' + asset.name + ': ' + gzipSize.sync(fileContents));
+      console.log('Size (gzipped) of ' + asset.name + ': ' + filesize(gzipSize.sync(fileContents)));
     }
   }
 }
