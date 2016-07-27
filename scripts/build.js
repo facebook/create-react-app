@@ -43,10 +43,9 @@ webpack(config).run(function(err, stats) {
     console.log('You can now serve it with any static server.');
     console.log('For example:');
     console.log();
-    console.log('  cd build');
-    console.log('  npm install -g st');
-    console.log('  st -p 8000 -i index.html');
-    console.log('  ' + openCommand + ' http://localhost:8000');
+    console.log('  npm install -g pushstate-server');
+    console.log('  pushstate-server build');
+    console.log('  ' + openCommand + ' http://localhost:9000');
     console.log();
   }
   console.log('The bundle is optimized and ready to be deployed to production.');
