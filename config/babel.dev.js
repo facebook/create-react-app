@@ -18,5 +18,6 @@ module.exports = {
     'babel-plugin-syntax-trailing-function-commas',
     'babel-plugin-transform-class-properties',
     'babel-plugin-transform-object-rest-spread'
-  ].map(require.resolve)
+  ].map(require.resolve),
+  babelrc: false
 };
