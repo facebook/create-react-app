@@ -70,6 +70,14 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## How To...
 
+### Install a Dependency
+
+The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
+
+```
+npm install --save <library-name>
+```
+
 ### Import a Component
 
 This project setup supports ES6 modules thanks to Babel.  
