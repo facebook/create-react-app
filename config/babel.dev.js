@@ -21,8 +21,9 @@ module.exports = {
     'babel-plugin-transform-object-rest-spread'
   ].map(require.resolve).concat([
     [require.resolve('babel-plugin-transform-runtime'), {
-      regenerator: true,
-      polyfill: false
+      helpers: false,
+      polyfill: false,
+      regenerator: true
     }]
   ])
 };
