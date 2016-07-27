@@ -16,6 +16,10 @@ var WebpackDevServer = require('webpack-dev-server');
 var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
+var detect = require('detect-port');
+var prompt = require('./utilities/prompt');
+var DEFAULT_PORT = 3000;
+var compiler;
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -63,63 +67,70 @@ function clearConsole() {
   process.stdout.write('\x1B[2J\x1B[0f');
 }
 
-var compiler = webpack(config, handleCompile);
-compiler.plugin('invalid', function () {
-  clearConsole();
-  console.log('Compiling...');
-});
-compiler.plugin('done', function (stats) {
-  clearConsole();
-  var hasErrors = stats.hasErrors();
-  var hasWarnings = stats.hasWarnings();
-  if (!hasErrors && !hasWarnings) {
-    console.log(chalk.green('Compiled successfully!'));
-    console.log();
-    console.log('The app is running at http://localhost:3000/');
-    console.log();
-    return;
-  }
+function setupCompiler(port) {
+  var copyConfig = Object.assign({}, config, {
+    entry: config.entry.map(c => c.replace(/(\d+)/g, port))
+  });
 
-  var json = stats.toJson();
-  var formattedErrors = json.errors.map(message =>
-    'Error in ' + formatMessage(message)
-  );
-  var formattedWarnings = json.warnings.map(message =>
-    'Warning in ' + formatMessage(message)
-  );
+  compiler = webpack(copyConfig, handleCompile);
+  compiler.plugin('invalid', function() {
+    clearConsole();
+    console.log('Compiling...');
+  });
 
-  if (hasErrors) {
-    console.log(chalk.red('Failed to compile.'));
-    console.log();
-    if (formattedErrors.some(isLikelyASyntaxError)) {
-      // If there are any syntax errors, show just them.
-      // This prevents a confusing ESLint parsing error
-      // preceding a much more useful Babel syntax error.
-      formattedErrors = formattedErrors.filter(isLikelyASyntaxError);
+  compiler.plugin('done', function(stats) {
+    clearConsole();
+    var hasErrors = stats.hasErrors();
+    var hasWarnings = stats.hasWarnings();
+    if (!hasErrors && !hasWarnings) {
+      console.log(chalk.green('Compiled successfully!'));
+      console.log();
+      console.log('The app is running at http://localhost:' + port + '/');
+      console.log();
+      return;
     }
-    formattedErrors.forEach(message => {
-      console.log(message);
+
+    var json = stats.toJson();
+    var formattedErrors = json.errors.map(message =>
+      'Error in ' + formatMessage(message)
+    );
+    var formattedWarnings = json.warnings.map(message =>
+      'Warning in ' + formatMessage(message)
+    );
+
+    if (hasErrors) {
+      console.log(chalk.red('Failed to compile.'));
       console.log();
-    });
-    // If errors exist, ignore warnings.
-    return;
-  }
+      if (formattedErrors.some(isLikelyASyntaxError)) {
+        // If there are any syntax errors, show just them.
+        // This prevents a confusing ESLint parsing error
+        // preceding a much more useful Babel syntax error.
+        formattedErrors = formattedErrors.filter(isLikelyASyntaxError);
+      }
+      formattedErrors.forEach(message => {
+        console.log(message);
+        console.log();
+      });
+      // If errors exist, ignore warnings.
+      return;
+    }
 
-  if (hasWarnings) {
-    console.log(chalk.yellow('Compiled with warnings.'));
-    console.log();
-    formattedWarnings.forEach(message => {
-      console.log(message);
+    if (hasWarnings) {
+      console.log(chalk.yellow('Compiled with warnings.'));
       console.log();
-    });
+      formattedWarnings.forEach(message => {
+        console.log(message);
+        console.log();
+      });
 
-    console.log('You may use special comments to disable some warnings.');
-    console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
-    console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
-  }
-});
+      console.log('You may use special comments to disable some warnings.');
+      console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
+      console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
+    }
+  });
+}
 
-function openBrowser() {
+function openBrowser(port) {
   if (process.platform === 'darwin') {
     try {
       // Try our best to reuse existing tab
@@ -128,7 +139,7 @@ function openBrowser() {
       execSync(
         'osascript ' +
         path.resolve(__dirname, './openChrome.applescript') +
-        ' http://localhost:3000/'
+        ' http://localhost:' + port + '/'
       );
       return;
     } catch (err) {
@@ -137,21 +148,48 @@ function openBrowser() {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn('http://localhost:3000/');
+  opn('http://localhost:' + port + '/');
 }
 
-new WebpackDevServer(compiler, {
-  historyApiFallback: true,
-  hot: true, // Note: only CSS is currently hot reloaded
-  publicPath: config.output.publicPath,
-  quiet: true
-}).listen(3000, function (err, result) {
-  if (err) {
-    return console.log(err);
-  }
+function runDevServer(port) {
+  new WebpackDevServer(compiler, {
+    historyApiFallback: true,
+    hot: true, // Note: only CSS is currently hot reloaded
+    publicPath: config.output.publicPath,
+    quiet: true
+  }).listen(port, (err, result) => {
+    if (err) {
+      return console.log(err);
+    }
 
-  clearConsole();
-  console.log(chalk.cyan('Starting the development server...'));
-  console.log();
-  openBrowser();
+    clearConsole();
+    console.log(chalk.cyan('Starting the development server...'));
+    console.log();
+    openBrowser(port);
+  });
+}
+
+function run(port) {
+  setupCompiler(port);
+  runDevServer(port);
+}
+
+detect(DEFAULT_PORT).then(port => {
+
+  if (port !== DEFAULT_PORT) {
+    var question = chalk.red('Something is already running at port ' + DEFAULT_PORT) +
+      '\nWould you like to run the app at another port instead? [y/N]';
+
+    prompt(question, answer => {
+      var shouldChangePort = (
+        answer.length === 0 ||
+        answer.match(/^yes|y$/i)
+      );
+      if (shouldChangePort) {
+        run(port);
+      }
+    });
+  } else {
+    run(port);
+  }
 });

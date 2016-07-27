@@ -9,21 +9,10 @@
 
 var fs = require('fs');
 var path = require('path');
-var rl = require('readline');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
+var prompt = require('./utilities/prompt');
 var paths = require('../config/paths');
-
-var prompt = function(question, cb) {
-  var rlInterface = rl.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  rlInterface.question(question + '\n', function(answer) {
-    rlInterface.close();
-    cb(answer);
-  })
-}
 
 prompt('Are you sure you want to eject? This action is permanent. [y/N]', function(answer) {
   var shouldEject = answer && (
