@@ -51,6 +51,7 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
     path.join('scripts', 'build.js'),
+    path.join('scripts', 'run.js'),
     path.join('scripts', 'start.js'),
     path.join('scripts', 'openChrome.applescript')
   ];
