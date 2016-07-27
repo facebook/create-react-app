@@ -13,7 +13,8 @@
   "scripts": {
     "start": "node scripts/start.js --debug-template",
     "build": "node scripts/build.js --debug-template",
-    "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\""
+    "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\"",
+    "test": "tasks/e2e.sh"
   },
   "files": [
     "LICENSE",
