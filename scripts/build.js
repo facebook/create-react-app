@@ -9,7 +9,8 @@
 
 process.env.NODE_ENV = 'production';
 
-var filesize = require('filesize');
+var fs = require('fs');
+var gzipSize = require('gzip-size');
 var rimrafSync = require('rimraf').sync;
 var webpack = require('webpack');
 var config = require('../config/webpack.config.prod');
@@ -22,8 +23,9 @@ rimrafSync(paths.appBuild + '/*');
 function logBuildSize(assets, extension) {
   for (var i = 0; i < assets.length; i++) {
     var asset = assets[i];
-    if (asset['name'].endsWith(extension)) {
-      console.log('Size of ' + asset['name'] + ': ' + filesize(asset['size']));
+    if (asset.name.endsWith('.' + extension)) {
+      var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
+      console.log('Size (gzipped) of ' + asset.name + ': ' + gzipSize.sync(fileContents));
     }
   }
 }
@@ -59,8 +61,8 @@ webpack(config).run(function(err, stats) {
     console.log('  ' + openCommand + ' http://localhost:8080');
     console.log();
     var assets = stats.toJson()['assets'];
-    logBuildSize(assets, '.js');
-    logBuildSize(assets, '.css');
+    logBuildSize(assets, 'js');
+    logBuildSize(assets, 'css');
   }
   console.log('The bundle is optimized and ready to be deployed to production.');
 });
