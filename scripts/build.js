@@ -32,11 +32,12 @@ webpack(config).run(function(err, stats) {
     console.log('You can now deploy it to ' + homepagePath + '.');
     console.log('For example, if you use GitHub Pages:');
     console.log();
+    console.log('  git commit -am "Save local changes"');
     console.log('  git checkout -B gh-pages');
     console.log('  git add -f build');
     console.log('  git commit -am "Rebuild website"');
-    console.log('  git push origin :gh-pages');
-    console.log('  git subtree push --prefix build origin gh-pages');
+    console.log('  git filter-branch -f --prune-empty --subdirectory-filter build');
+    console.log('  git push -f origin gh-pages');
     console.log('  git checkout -');
     console.log();
   } else {
