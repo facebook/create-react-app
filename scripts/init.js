@@ -25,7 +25,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
 
   // Setup the script rules
   appPackage.scripts = {};
-  ['start', 'build', 'eject'].forEach(function(command) {
+  ['start', 'build', 'eject', 'run'].forEach(function(command) {
     appPackage.scripts[command] = 'react-scripts ' + command;
   });
 
