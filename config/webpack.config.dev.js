@@ -29,7 +29,7 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['', '.js', '.json'],
   },
   resolveLoader: {
     root: paths.ownNodeModules,
