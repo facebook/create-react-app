@@ -8,10 +8,29 @@
 # Start in tests/ even if run from root directory
 cd "$(dirname "$0")"
 
-# Exit the script on any command with non 0 return code
-# We assume that all the commands in the pipeline set their return code
-# properly and that we do not need to validate that the output is correct
-set -e
+function cleanup {
+  echo 'Cleaning up.'
+  cd $initial_path
+  rm -rf $temp_cli_path $temp_app_path
+}
+
+function handle_error {
+  echo "$(basename $0): \033[31mERROR!\033[m An error was encountered executing \033[36mline $1\033[m."
+  handle_exit
+  exit 1
+}
+
+function handle_exit {
+  cleanup
+  echo 'Exiting.'
+  exit
+}
+
+# Exit the script with a helpful error message when any error is encountered
+trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
+
+# Cleanup before exit on any termination signal
+trap 'set +x; handle_exit' SIGQUIT SIGTERM SIGINT SIGKILL SIGHUP
 
 # Echo every command being executed
 set -x
@@ -81,5 +100,4 @@ test -e build/*.js
 npm start -- --smoke-test
 
 # Cleanup
-cd $initial_path
-rm -rf $temp_cli_path $temp_app_path
+cleanup
