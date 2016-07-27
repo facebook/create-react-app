@@ -47,6 +47,7 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
     path.join('config', 'flow', 'file.js.flow'),
     path.join('config', 'eslint.js'),
     path.join('config', 'paths.js'),
+    path.join('config', 'polyfills.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
     path.join('scripts', 'build.js'),
