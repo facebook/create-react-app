@@ -8,6 +8,7 @@
  */
 
 module.exports = {
+  babelrc: false,
   presets: [
     'babel-preset-es2015',
     'babel-preset-es2016',
@@ -17,7 +18,12 @@ module.exports = {
     'babel-plugin-syntax-trailing-function-commas',
     'babel-plugin-transform-class-properties',
     'babel-plugin-transform-object-rest-spread',
-    'babel-plugin-transform-react-constant-elements'
-  ].map(require.resolve),
-  babelrc: false
+    'babel-plugin-transform-react-constant-elements',
+  ].map(require.resolve).concat([
+    [require.resolve('babel-plugin-transform-runtime'), {
+      helpers: false,
+      polyfill: false,
+      regenerator: true
+    }]
+  ])
 };
