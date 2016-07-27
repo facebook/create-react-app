@@ -9,27 +9,14 @@
 
 var fs = require('fs');
 var path = require('path');
-var rl = require('readline');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
-var paths = require('../config/paths');
+var prompt = require('./utils/prompt');
 
-var prompt = function(question, cb) {
-  var rlInterface = rl.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  rlInterface.question(question + '\n', function(answer) {
-    rlInterface.close();
-    cb(answer);
-  })
-}
-
-prompt('Are you sure you want to eject? This action is permanent. [y/N]', function(answer) {
-  var shouldEject = answer && (
-    answer.toLowerCase() === 'y' ||
-    answer.toLowerCase() === 'yes'
-  );
+prompt(
+  'Are you sure you want to eject? This action is permanent.',
+  false
+).then(shouldEject => {
   if (!shouldEject) {
     console.log('Close one! Eject aborted.');
     process.exit(1);
@@ -52,7 +39,8 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
     path.join('config', 'webpack.config.prod.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
-    path.join('scripts', 'openChrome.applescript')
+    path.join('scripts', 'utils', 'chrome.applescript'),
+    path.join('scripts', 'utils', 'prompt.js')
   ];
 
   // Ensure that the app folder is clean and we won't override any files
@@ -72,6 +60,7 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   fs.mkdirSync(path.join(appPath, 'config'));
   fs.mkdirSync(path.join(appPath, 'config', 'flow'));
   fs.mkdirSync(path.join(appPath, 'scripts'));
+  fs.mkdirSync(path.join(appPath, 'scripts', 'utils'));
 
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + appPath);

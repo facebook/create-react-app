@@ -16,7 +16,7 @@ var paths = require('./paths');
 module.exports = {
   devtool: 'eval',
   entry: [
-    require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
+    require.resolve('webpack-dev-server/client'),
     require.resolve('webpack/hot/dev-server'),
     require.resolve('./polyfills'),
     path.join(paths.appSrc, 'index')
