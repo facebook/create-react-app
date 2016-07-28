@@ -54,8 +54,8 @@
     "opn": "4.0.2",
     "process-bootstrap": "^1.0.0",
     "promise": "7.1.1",
-    "pundle": "^1.0.2",
-    "pundle-dev": "^1.0.2",
+    "pundle": "^1.1.0",
+    "pundle-dev": "^1.1.0",
     "rimraf": "2.5.4",
     "whatwg-fetch": "1.0.0"
   },
