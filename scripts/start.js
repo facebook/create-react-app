@@ -66,7 +66,7 @@ function formatMessage(message) {
 }
 
 function clearConsole() {
-  process.stdout.write('\x1B[2J\x1B[0f');
+  process.stdout.write('\x1bc');
 }
 
 function setupCompiler(port) {
