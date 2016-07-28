@@ -25,9 +25,10 @@ module.exports = {
   plugins: ['react'/*, 'import'*/, 'jsx-a11y'],
 
   env: {
-    es6: true,
+    browser: true,
     commonjs: true,
-    browser: true
+    es6: true,
+    node: true
   },
 
   parserOptions: {
