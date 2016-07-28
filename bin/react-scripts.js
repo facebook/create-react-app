@@ -7,11 +7,12 @@ switch (script) {
 case 'build':
 case 'start':
 case 'eject':
-  spawn(
+  var results = spawn(
     'node',
     [require.resolve('../scripts/' + script)].concat(args),
     {stdio: 'inherit'}
   );
+  process.exit(results.status);
   break;
 default:
   console.log('Unknown script "' + script + '".');
