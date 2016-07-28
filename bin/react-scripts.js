@@ -7,6 +7,7 @@ switch (script) {
 case 'build':
 case 'start':
 case 'eject':
+case 'run':
   spawn(
     'node',
     [require.resolve('../scripts/' + script)].concat(args),

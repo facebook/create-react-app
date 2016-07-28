@@ -38,6 +38,7 @@ prompt(
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
     path.join('scripts', 'build.js'),
+    path.join('scripts', 'run.js'),
     path.join('scripts', 'start.js'),
     path.join('scripts', 'utils', 'chrome.applescript'),
     path.join('scripts', 'utils', 'prompt.js')
