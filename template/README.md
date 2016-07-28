@@ -38,6 +38,10 @@ You need to **put any JS and CSS files inside `src`**, or Webpack won’t see th
 You can, however, create more top-level directories.  
 They will not be included in the production build so you can use them for things like documentation.
 
+>**Known Issue:**
+>
+>You may encounter an issue where changing a file inside `src` doesn’t trigger a recompilation. Most likely this happens because the path in your filesystem differs in its casing from the path you imported. For example, if a file is called `App.js` but you are importing `app.js`, the watcher might not recognize changes to it. We are [considering](https://github.com/facebookincubator/create-react-app/issues/240) enforcing some checks to prevent this. If this doesn’t help, check out the page on [troubleshooting watching](https://webpack.github.io/docs/troubleshooting.html#watching).
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -203,7 +207,7 @@ Here is an example:
 import React from 'react';
 import logo from './logo.png'; // Tell Webpack this JS file uses this image
 
-console.log(logo); // /84287d09b8053c6fa598893b8910786a.png
+console.log(logo); // /logo.84287d09.png
 
 function Header() {
   // Import result is the URL of your image
@@ -231,7 +235,12 @@ Please be advised that this is also a custom feature of Webpack.
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
-Some editors, including Sublime Text and Atom, provide plugins for ESLint. You would need to install such a plugin first. Once you install and enable an ESLint plugin for your editor, make sure `package.json` of your project ends with this block:
+Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
+
+They are not required for linting. You should still the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
+
+You would need to install an ESLint plugin for your editor first.  
+Then make sure `package.json` of your project ends with this block:
 
 ```js
 {
@@ -242,14 +251,16 @@ Some editors, including Sublime Text and Atom, provide plugins for ESLint. You w
 }
 ```
 
-Projects generated with `react-scripts@0.2.0` and higher should already have it.
-
-There are two limitations:
-
-* This only works with npm >= 3 because of [an ESLint issue](https://github.com/eslint/eslint/issues/3458).
-* You can’t delete these lines. We don’t like configuration as much as you do, and [are looking for better solutions](https://github.com/facebookincubator/create-react-app/issues/215).
-
+Projects generated with `react-scripts@0.2.0` and higher should already have it.  
 If you don’t need ESLint integration with your editor, you can safely delete those three lines from your `package.json`.
+
+Finally, you will need to install some packages *globally*:
+
+```sh
+npm install -g eslint babel-eslint eslint-plugin-react eslint-plugin-import eslint-plugin-jsx-a11y
+```
+
+We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
 
 ### Add Flow
 
