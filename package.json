@@ -17,7 +17,6 @@
     "test": "tasks/e2e.sh"
   },
   "files": [
-    "LICENSE",
     "PATENTS",
     "bin",
     "config",
