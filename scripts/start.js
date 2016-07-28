@@ -11,26 +11,24 @@ process.env.NODE_ENV = 'development';
 
 require('process-bootstrap')('react-app', 'REACT-APP')
 
-const Path = require('path')
-const debug = require('debug')
-const Server = require('pundle-dev')
-const debugInfo = debug('REACT-APP:Info')
-const debugError = debug('REACT-APP:Error')
+var Path = require('path');
+var debug = require('debug');
+var Server = require('pundle-dev');
+var debugInfo = debug('REACT-APP:Info');
+var debugError = debug('REACT-APP:Error');
 
-const port = process.env.PORT || 3000
+var port = process.env.PORT || 3000;
 
-const server = new Server({
+var server = new Server({
   pundle: {
-    entry: ['index.js'],
+    entry: [require.resolve('../config/polyfills'), 'index.js'],
     rootDirectory: Path.normalize(Path.join(__dirname, '../template/src')),
     pathType: 'filePath',
     moduleDirectories: ['node_modules'],
   },
   server: {
-    port,
-    error(error) {
-      debugError(error)
-    },
+    port: port,
+    error: debugError,
     ready() {
       debugInfo('Ready')
     },
@@ -54,4 +52,4 @@ server.pundle.loadPlugins([
   }],
 ]).then(function() {
   return server.activate()
-}).catch((e) => console.log('error', e))
+}).catch(debugError)
