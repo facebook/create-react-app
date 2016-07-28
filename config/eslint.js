@@ -22,7 +22,7 @@ module.exports = {
   parser: 'babel-eslint',
 
   // import plugin is termporarily disabled, scroll below to see why
-  plugins: [/*'import', */'flow-vars', 'jsx-a11y', 'react'],
+  plugins: [/*'import', */'flowtype', 'jsx-a11y', 'react'],
 
   env: {
     browser: true,
@@ -197,8 +197,9 @@ module.exports = {
     'jsx-a11y/img-redundant-alt': 'warn',
     'jsx-a11y/no-access-key': 'warn',
 
-    // https://github.com/zertosh/eslint-plugin-flow-vars
-    'flow-vars/define-flow-type': 'warn',
-    'flow-vars/use-flow-type': 'warn'
+    // https://github.com/gajus/eslint-plugin-flowtype
+    'flowtype/define-flow-type': 'warn',
+    'flowtype/require-valid-file-annotation': 'warn',
+    'flowtype/use-flow-type': 'warn'
   }
 };
