@@ -10,34 +10,50 @@
 process.env.NODE_ENV = 'production';
 
 var fs = require('fs');
-var filesize = require('filesize');
-var gzipSize = require('gzip-size');
+var path = require('path');
+var mkdirp = require('mkdirp')
+var Pundle = require('pundle')
 var rimrafSync = require('rimraf').sync;
-var webpack = require('webpack');
-var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 
 // Remove all content but keep the directory so that
 // if you're in it, you don't end up in Trash
 rimrafSync(paths.appBuild + '/*');
 
-function logBuildSize(assets, extension) {
-  for (var i = 0; i < assets.length; i++) {
-    var asset = assets[i];
-    if (asset.name.endsWith('.' + extension)) {
-      var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
-      console.log('Size (gzipped) of ' + asset.name + ': ' + filesize(gzipSize.sync(fileContents)));
-    }
-  }
-}
+var pundle = new Pundle({
+  entry: [require.resolve('../config/polyfills'), 'index.js'],
+  rootDirectory: path.normalize(path.join(__dirname, '../template/src')),
+  pathType: 'filePath',
+  moduleDirectories: ['node_modules'],
+})
 
-webpack(config).run(function(err, stats) {
-  if (err) {
-    console.error('Failed to create a production build. Reason:');
-    console.error(err.message || err);
-    process.exit(1);
-  }
-
+pundle.loadPlugins([
+  [require.resolve('babel-pundle'), {
+    config: require('../config/babel.prod'),
+  }],
+]).then(function() {
+  return pundle.compile()
+}).then(function() {
+  return new Promise(function(resolve, reject) {
+    mkdirp(paths.appBuild, function(error) {
+      if (error) {
+        reject(error)
+      } else {
+        resolve()
+      }
+    })
+  })
+}).then(function() {
+  return new Promise(function(resolve, reject) {
+    fs.writeFile(path.join(paths.appBuild, 'bundle.js'), pundle.generate().contents, function(error) {
+      if (error) {
+        reject(error)
+      } else {
+        resolve()
+      }
+    })
+  })
+}).then(function() {
   var openCommand = process.platform === 'win32' ? 'start' : 'open';
   var homepagePath = require(paths.appPackageJson).homepage;
   console.log('Successfully generated a bundle in the build folder!');
@@ -61,9 +77,10 @@ webpack(config).run(function(err, stats) {
     console.log('  pushstate-server build');
     console.log('  ' + openCommand + ' http://localhost:9000');
     console.log();
-    var assets = stats.toJson()['assets'];
-    logBuildSize(assets, 'js');
-    logBuildSize(assets, 'css');
   }
   console.log('The bundle is optimized and ready to be deployed to production.');
-});
+}, function(err) {
+  console.error('Failed to create a production build. Reason:');
+  console.error(err.message || err);
+  process.exitCode = 1
+})
