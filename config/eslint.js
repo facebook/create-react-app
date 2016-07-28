@@ -22,7 +22,7 @@ module.exports = {
   parser: 'babel-eslint',
 
   // import plugin is termporarily disabled, scroll below to see why
-  plugins: ['react'/*, 'import'*/, 'jsx-a11y'],
+  plugins: [/*'import', */'flow-vars', 'jsx-a11y', 'react'],
 
   env: {
     browser: true,
@@ -195,6 +195,10 @@ module.exports = {
     'jsx-a11y/aria-role': 'warn',
     'jsx-a11y/img-has-alt': 'warn',
     'jsx-a11y/img-redundant-alt': 'warn',
-    'jsx-a11y/no-access-key': 'warn'
+    'jsx-a11y/no-access-key': 'warn',
+
+    // https://github.com/zertosh/eslint-plugin-flow-vars
+    'flow-vars/define-flow-type': 'warn',
+    'flow-vars/use-flow-type': 'warn'
   }
 };
