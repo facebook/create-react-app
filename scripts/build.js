@@ -88,6 +88,9 @@ webpack(config).run(function(err, stats) {
     console.log('  pushstate-server build');
     console.log('  ' + openCommand + ' http://localhost:9000');
     console.log();
+    console.log(chalk.dim('The project was built assuming it is hosted at the root.'));
+    console.log(chalk.dim('Set the "homepage" field in package.json to override this.'));
+    console.log(chalk.dim('For example, "homepage": "http://user.github.io/project".'));
   }
   console.log();
 });
