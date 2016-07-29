@@ -16,7 +16,7 @@ var paths = require('./paths');
 module.exports = {
   devtool: 'eval',
   entry: [
-    require.resolve('webpack-dev-server/client'),
+    require.resolve('webpack-dev-server/client') + '?/',
     require.resolve('webpack/hot/dev-server'),
     require.resolve('./polyfills'),
     path.join(paths.appSrc, 'index')
@@ -25,7 +25,7 @@ module.exports = {
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: paths.appBuild,
     pathinfo: true,
-    filename: 'bundle.js',
+    filename: 'static/js/bundle.js',
     publicPath: '/'
   },
   resolve: {
@@ -75,11 +75,18 @@ module.exports = {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
+        query: {
+          name: 'static/media/[name].[ext]'
+        }
       },
       {
         test: /\.(mp4|webm)$/,
         include: [paths.appSrc, paths.appNodeModules],
-        loader: 'url?limit=10000'
+        loader: 'url',
+        query: {
+          limit: 10000,
+          name: 'static/media/[name].[ext]'
+        }
       }
     ]
   },
