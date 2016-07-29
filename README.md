@@ -172,6 +172,7 @@ If you don’t agree with the choices made in this project, you might want to ex
 * [roc](https://github.com/rocjs/roc)
 * [aik](https://github.com/d4rkr00t/aik)
 * [react-app](https://github.com/kriasoft/react-app)
+* [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
 
 You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
 React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
