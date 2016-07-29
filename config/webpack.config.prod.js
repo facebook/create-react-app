@@ -31,8 +31,8 @@ module.exports = {
   ],
   output: {
     path: paths.appBuild,
-    filename: '[name].[chunkhash:8].js',
-    chunkFilename: '[name].[chunkhash:8].chunk.js',
+    filename: 'static/js/[name].[chunkhash:8].js',
+    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     publicPath: publicPath
   },
   resolve: {
@@ -86,13 +86,17 @@ module.exports = {
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
         query: {
-          name: '[name].[hash:8].[ext]'
+          name: 'static/media/[name].[hash:8].[ext]'
         }
       },
       {
         test: /\.(mp4|webm)$/,
         include: [paths.appSrc, paths.appNodeModules],
-        loader: 'url?limit=10000'
+        loader: 'url',
+        query: {
+          limit: 10000,
+          name: 'static/media/[name].[hash:8].[ext]'
+        }
       }
     ]
   },
@@ -139,6 +143,6 @@ module.exports = {
         screw_ie8: true
       }
     }),
-    new ExtractTextPlugin('[name].[contenthash:8].css')
+    new ExtractTextPlugin('static/css/[name].[contenthash:8].css')
   ]
 };

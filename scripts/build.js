@@ -40,16 +40,28 @@ webpack(config).run(function(err, stats) {
     .filter(asset => /\.(js|css)$/.test(asset.name))
     .map(asset => {
       var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
+      var size = gzipSize(fileContents);
       return {
-        name: asset.name,
-        size: gzipSize(fileContents)
+        folder: path.join('build', path.dirname(asset.name)),
+        name: path.basename(asset.name),
+        size: size,
+        sizeLabel: filesize(size)
       };
     });
   assets.sort((a, b) => b.size - a.size);
+
+  var longestSizeLabelLength = Math.max.apply(null,
+    assets.map(a => a.sizeLabel.length)
+  );
   assets.forEach(asset => {
+    var sizeLabel = asset.sizeLabel;
+    if (sizeLabel.length < longestSizeLabelLength) {
+      var rightPadding = ' '.repeat(longestSizeLabelLength - sizeLabel.length);
+      sizeLabel += rightPadding;
+    }
     console.log(
-      '  ' + chalk.dim('build' + path.sep) + chalk.cyan(asset.name) + ': ' +
-      chalk.green(filesize(asset.size))
+      '  ' + chalk.green(sizeLabel) +
+      '  ' + chalk.dim(asset.folder + path.sep) + chalk.cyan(asset.name)
     );
   });
   console.log();

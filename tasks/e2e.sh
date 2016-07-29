@@ -61,7 +61,9 @@ npm run build
 
 # Check for expected output
 test -e build/*.html
-test -e build/*.js
+test -e build/static/js/*.js
+test -e build/static/css/*.css
+test -e build/static/media/*.svg
 
 # Pack CLI
 cd global-cli
@@ -84,7 +86,9 @@ npm run build
 
 # Check for expected output
 test -e build/*.html
-test -e build/*.js
+test -e build/static/js/*.js
+test -e build/static/css/*.css
+test -e build/static/media/*.svg
 
 # Test the server
 npm start -- --smoke-test
@@ -95,7 +99,9 @@ npm run build
 
 # Check for expected output
 test -e build/*.html
-test -e build/*.js
+test -e build/static/js/*.js
+test -e build/static/css/*.css
+test -e build/static/media/*.svg
 
 # Test the server
 npm start -- --smoke-test
