@@ -11,10 +11,11 @@
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
   "scripts": {
-    "start": "node scripts/start.js --debug-template",
     "build": "node scripts/build.js --debug-template",
     "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\"",
-    "test": "tasks/e2e.sh"
+    "e2e": "tasks/e2e.sh",
+    "start": "node scripts/start.js --debug-template",
+    "test": "node scripts/test.js --debug-template"
   },
   "files": [
     "PATENTS",
@@ -30,6 +31,7 @@
     "autoprefixer": "6.3.7",
     "babel-core": "6.11.4",
     "babel-eslint": "6.1.2",
+    "babel-jest": "14.1.0",
     "babel-loader": "6.2.4",
     "babel-plugin-syntax-trailing-function-commas": "6.8.0",
     "babel-plugin-transform-class-properties": "6.11.5",
@@ -57,6 +59,7 @@
     "fs-extra": "0.30.0",
     "gzip-size": "3.0.0",
     "html-webpack-plugin": "2.22.0",
+    "jest": "14.1.0",
     "json-loader": "0.5.4",
     "opn": "4.0.2",
     "postcss-loader": "0.9.1",
@@ -70,8 +73,9 @@
   },
   "devDependencies": {
     "bundle-deps": "1.0.0",
-    "react": "^15.2.1",
-    "react-dom": "^15.2.1"
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "react-test-renderer": "^15.3.0"
   },
   "optionalDependencies": {
     "fsevents": "1.0.14"

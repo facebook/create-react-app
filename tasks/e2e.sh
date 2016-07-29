@@ -11,6 +11,7 @@ cd "$(dirname "$0")"
 function cleanup {
   echo 'Cleaning up.'
   cd $initial_path
+  rm ../template/src/__tests__/__snapshots__/App-test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
@@ -38,6 +39,7 @@ set -x
 
 # npm pack the two directories to make sure they are valid npm modules
 initial_path=$PWD
+
 cd ..
 
 # A hacky way to avoid bundling dependencies.
@@ -65,6 +67,10 @@ test -e build/static/js/*.js
 test -e build/static/css/*.css
 test -e build/static/media/*.svg
 
+# Run tests
+npm run test
+test -e template/src/__tests__/__snapshots__/App-test.js.snap
+
 # Pack CLI
 cd global-cli
 npm install
@@ -90,6 +96,10 @@ test -e build/static/js/*.js
 test -e build/static/css/*.css
 test -e build/static/media/*.svg
 
+# Run tests
+npm run test
+test -e src/__tests__/__snapshots__/App-test.js.snap
+
 # Test the server
 npm start -- --smoke-test
 
@@ -102,6 +112,10 @@ test -e build/*.html
 test -e build/static/js/*.js
 test -e build/static/css/*.css
 test -e build/static/media/*.svg
+
+# Run tests
+npm run test
+test -e src/__tests__/__snapshots__/App-test.js.snap
 
 # Test the server
 npm start -- --smoke-test
