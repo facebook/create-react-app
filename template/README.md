@@ -346,6 +346,8 @@ git checkout -
 
 You may copy and paste them, or put them into a custom shell script. You may also customize them for another hosting provider.
 
+Note that if you add a router your app won't work with GitHub Pages becasue it doesn't natively support single page apps with frontend routing (unless it's the ugly hashtag kind). There is a simple workaround for this by adding a `404.html` file with a redirect script, see [Single Page Apps for GitHub Pages](https://github.com/rafrex/spa-github-pages).
+
 ### Something Missing?
 
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/template/README.md)
