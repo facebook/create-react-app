@@ -16,13 +16,14 @@ function cleanup {
 
 function handle_error {
   echo "$(basename $0): \033[31mERROR!\033[m An error was encountered executing \033[36mline $1\033[m."
-  handle_exit
+  cleanup
+  echo 'Exiting with error.'
   exit 1
 }
 
 function handle_exit {
   cleanup
-  echo 'Exiting.'
+  echo 'Exiting without error.'
   exit
 }
 
