@@ -23,7 +23,7 @@ var isInCreateReactAppSource = (
   process.argv.some(arg => arg.indexOf('--debug-template') > -1)
 );
 
-function resolveLib(relativePath) {
+function resolveOwn(relativePath) {
   return path.resolve(__dirname, relativePath);
 }
 
@@ -34,13 +34,13 @@ function resolveApp(relativePath) {
 if (isInCreateReactAppSource) {
   // create-react-app development: we're in ./config/
   module.exports = {
-    appBuild: resolveLib('../build'),
-    appHtml: resolveLib('../template/index.html'),
-    appFavicon: resolveLib('../template/favicon.ico'),
-    appPackageJson: resolveLib('../package.json'),
-    appSrc: resolveLib('../template/src'),
-    appNodeModules: resolveLib('../node_modules'),
-    ownNodeModules: resolveLib('../node_modules')
+    appBuild: resolveOwn('../build'),
+    appHtml: resolveOwn('../template/index.html'),
+    appFavicon: resolveOwn('../template/favicon.ico'),
+    appPackageJson: resolveOwn('../package.json'),
+    appSrc: resolveOwn('../template/src'),
+    appNodeModules: resolveOwn('../node_modules'),
+    ownNodeModules: resolveOwn('../node_modules')
   };
 } else if (!isEjected) {
   // before eject: we're in ./node_modules/react-scripts/config/
@@ -52,7 +52,7 @@ if (isInCreateReactAppSource) {
     appSrc: resolveApp('src'),
     appNodeModules: resolveApp('node_modules'),
     // this is empty with npm3 but node resolution searches higher anyway:
-    ownNodeModules: resolveLib('../node_modules')
+    ownNodeModules: resolveOwn('../node_modules')
   };
 } else {
   // after eject: we're in ./config/
