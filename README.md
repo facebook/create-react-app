@@ -51,6 +51,7 @@ my-app/
   favicon.ico
   node_modules/
   package.json
+  .gitignore
   src/
     App.css
     App.js
