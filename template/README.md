@@ -38,6 +38,10 @@ You need to **put any JS and CSS files inside `src`**, or Webpack won’t see th
 You can, however, create more top-level directories.  
 They will not be included in the production build so you can use them for things like documentation.
 
+>**Known Issue:**
+>
+>You may encounter an issue where changing a file inside `src` doesn’t trigger a recompilation. Most likely this happens because the path in your filesystem differs in its casing from the path you imported. For example, if a file is called `App.js` but you are importing `app.js`, the watcher might not recognize changes to it. We are [considering](https://github.com/facebookincubator/create-react-app/issues/240) enforcing some checks to prevent this. If this doesn’t help, check out the page on [troubleshooting watching](https://webpack.github.io/docs/troubleshooting.html#watching).
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -70,6 +74,14 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## How To...
 
+### Install a Dependency
+
+The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
+
+```
+npm install --save <library-name>
+```
+
 ### Import a Component
 
 This project setup supports ES6 modules thanks to Babel.  
@@ -99,7 +111,7 @@ import Button from './Button'; // Import a component from another file
 
 class DangerButton extends Component {
   render() {
-    return <Button color='red' />;
+    return <Button color="red" />;
   }
 }
 
@@ -139,7 +151,7 @@ import './Button.css'; // Tell Webpack that Button.js uses these styles
 class Button extends Component {
   render() {
     // You can use them as regular CSS styles
-    return <div className='Button' />;
+    return <div className="Button" />;
   }
 }
 ```
@@ -195,7 +207,7 @@ Here is an example:
 import React from 'react';
 import logo from './logo.png'; // Tell Webpack this JS file uses this image
 
-console.log(logo); // /84287d09b8053c6fa598893b8910786a.png
+console.log(logo); // /logo.84287d09.png
 
 function Header() {
   // Import result is the URL of your image
@@ -223,7 +235,12 @@ Please be advised that this is also a custom feature of Webpack.
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
-Some editors, including Sublime Text and Atom, provide plugins for ESLint. You would need to install such a plugin first. Once you install and enable an ESLint plugin for your editor, make sure `package.json` of your project ends with this block:
+Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
+
+They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
+
+You would need to install an ESLint plugin for your editor first.  
+Then make sure `package.json` of your project ends with this block:
 
 ```js
 {
@@ -234,14 +251,16 @@ Some editors, including Sublime Text and Atom, provide plugins for ESLint. You w
 }
 ```
 
-Projects generated with `react-scripts@0.2.0` and higher should already have it.
-
-There are two limitations:
-
-* This only works with npm >= 3 because of [an ESLint issue](https://github.com/eslint/eslint/issues/3458).
-* You can’t delete these lines. We don’t like configuration as much as you do, and [are looking for better solutions](https://github.com/facebookincubator/create-react-app/issues/215).
-
+Projects generated with `react-scripts@0.2.0` and higher should already have it.  
 If you don’t need ESLint integration with your editor, you can safely delete those three lines from your `package.json`.
+
+Finally, you will need to install some packages *globally*:
+
+```sh
+npm install -g eslint babel-eslint eslint-plugin-react eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-flowtype
+```
+
+We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
 
 ### Add Flow
 
@@ -299,7 +318,9 @@ module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|svg\|ttf\|woff\|woff2\|mp4\|w
 
 We will consider integrating more tightly with Flow in the future so that you don’t have to do this.
 
-### Deploy to GitHub Pages
+### Deploy
+
+#### GitHub Pages
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
@@ -326,6 +347,14 @@ git checkout -
 ```
 
 You may copy and paste them, or put them into a custom shell script. You may also customize them for another hosting provider.
+
+Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is becasue when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
+* You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
+* Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
+
+#### Heroku
+
+Use the [Heroku Buildpack for create-react-app](https://github.com/mars/create-react-app-buildpack).
 
 ### Something Missing?
 

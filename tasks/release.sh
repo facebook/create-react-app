@@ -30,6 +30,12 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1;
 fi
 
+# Update deps
+rm -rf node_modules
+rm -rf ~/.npm
+npm cache clear
+npm install
+
 # Force dedupe
 npm dedupe
 
