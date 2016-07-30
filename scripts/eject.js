@@ -104,6 +104,12 @@ prompt('Are you sure you want to eject? This action is permanent. [y/N]', functi
   });
   delete hostPackage.scripts['eject'];
 
+  // explicitly specify ESLint config path for editor plugins
+  hostPackage.eslintConfig = {
+    extends: './config/eslint.js',
+    rulesdir: './config/rules',
+  };
+
   console.log('Writing package.json');
   fs.writeFileSync(
     path.join(hostPath, 'package.json'),
