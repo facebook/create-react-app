@@ -82,7 +82,7 @@ module.exports = {
         loader: 'json'
       },
       {
-        test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
+        test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
         query: {
@@ -90,7 +90,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(mp4|webm)$/,
+        test: /\.(mp4|webm)(\?.*)?$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'url',
         query: {
