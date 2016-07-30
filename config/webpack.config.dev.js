@@ -81,7 +81,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(mp4|webm)$/,
+        test: /\.(mp4|webm)(\?.*)?$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'url',
         query: {
