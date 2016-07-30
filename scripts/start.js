@@ -155,7 +155,10 @@ function runDevServer(port) {
     historyApiFallback: true,
     hot: true, // Note: only CSS is currently hot reloaded
     publicPath: config.output.publicPath,
-    quiet: true
+    quiet: true,
+    watchOptions: {
+      ignored: /node_modules/
+    }
   }).listen(port, (err, result) => {
     if (err) {
       return console.log(err);
