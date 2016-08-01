@@ -7,11 +7,12 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+var createJestConfig = require('./utils/create-jest-config');
 var fs = require('fs');
 var path = require('path');
+var prompt = require('./utils/prompt');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
-var prompt = require('./utils/prompt');
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
@@ -37,6 +38,9 @@ prompt(
     path.join('config', 'polyfills.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
+    path.join('config', 'jest', 'CSSStub.js'),
+    path.join('config', 'jest', 'FileStub.js'),
+    path.join('config', 'jest', 'transform.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
     path.join('scripts', 'utils', 'chrome.applescript'),
@@ -59,6 +63,7 @@ prompt(
   // Copy the files over
   fs.mkdirSync(path.join(appPath, 'config'));
   fs.mkdirSync(path.join(appPath, 'config', 'flow'));
+  fs.mkdirSync(path.join(appPath, 'config', 'jest'));
   fs.mkdirSync(path.join(appPath, 'scripts'));
   fs.mkdirSync(path.join(appPath, 'scripts', 'utils'));
 
@@ -95,6 +100,11 @@ prompt(
     appPackage.scripts[key] = 'node ./scripts/' + key + '.js'
   });
   delete appPackage.scripts['eject'];
+
+  appPackage.scripts.test = 'jest';
+  appPackage.jest = createJestConfig(
+    filePath => path.join('<rootDir>', filePath)
+  );
 
   // explicitly specify ESLint config path for editor plugins
   appPackage.eslintConfig = {
