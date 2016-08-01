@@ -1,6 +1,26 @@
 Below you will find some information on how to perform common tasks.  
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md).
 
+## Table of Contents
+
+- [Sending Feedback](#sending-feedback)
+- [Folder Structure](#folder-structure)
+- [Available Scripts](#available-scripts)
+	- [npm start](#npm-start)
+	- [npm run build](#npm-run-build)
+	- [npm run eject](#npm-run-eject)
+- [How To...](#how-to)
+	- [Install a Dependency](#install-a-dependency)
+	- [Import a Component](#import-a-component)
+	- [Add a Stylesheet](#add-a-stylesheet)
+	- [Post-Process CSS](#post-process-css)
+	- [Add Images and Fonts](#add-images-and-fonts)
+	- [Install React Bootstrap](#install-react-bootstrap)
+	- [Display Lint Output in the Editor](#display-lint-output-in-the-editor)
+	- [Add Flow](#add-flow)
+	- [Deploy](#deploy)
+	- [Something Missing?](#something-missing)
+
 ## Sending Feedback
 
 We are always open to [your feedback](https://github.com/facebookincubator/create-react-app/issues).
@@ -89,7 +109,7 @@ While you can still use `require()` and `module.exports`, we encourage you to us
 
 For example:
 
-### `Button.js`
+#### `Button.js`
 
 ```js
 import React, { Component } from 'react';
@@ -103,7 +123,7 @@ class Button extends Component {
 export default Button; // Don’t forget to use export default!
 ```
 
-### `DangerButton.js`
+#### `DangerButton.js`
 
 ```js
 import React, { Component } from 'react';
@@ -259,7 +279,7 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [App.js](https://github.com/manavsehgal/react-eshop/blob/master/src/App.js) redone using React Bootstrap.
 
-### Display Lint Output in the Editor
+### Display Lint Output in the Editor
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
