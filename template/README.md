@@ -82,13 +82,15 @@ The generated project includes React and ReactDOM as dependencies. It also inclu
 npm install --save <library-name>
 ```
 
-### Install React Bootstrap Dependency
+### Install React Bootstrap
 
-**Step 1.** Install React Bootstrap and Bootstrap from NPM.
+React Bootstrap is not a dependency for using React however it is a popular alternative for integrating Bootstrap with React apps. It can be integrated with Create React App workflow using following three steps.
+
+**Step 1.** Install React Bootstrap and Bootstrap from NPM. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well.
 
 ```
 npm install react-bootstrap --save
-npm install bootstrap --save
+npm install bootstrap@3 --save
 ```
 
 **Step 2.** Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```index.js``` file.
