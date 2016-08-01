@@ -40,6 +40,7 @@ prompt(
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
     path.join('scripts', 'utils', 'chrome.applescript'),
+    path.join('scripts', 'utils', 'detectPort.js'),
     path.join('scripts', 'utils', 'prompt.js')
   ];
 
