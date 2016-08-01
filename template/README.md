@@ -82,6 +82,32 @@ The generated project includes React and ReactDOM as dependencies. It also inclu
 npm install --save <library-name>
 ```
 
+### Install React Bootstrap Dependency
+
+**Step 1.** Install React Bootstrap and Bootstrap from NPM.
+
+```
+npm install react-bootstrap --save
+npm install bootstrap --save
+```
+
+**Step 2.** Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```index.js``` file.
+
+```
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+```
+
+**Step 3.** Import required React Bootstrap components within ```App.js``` file or your custom component file.
+
+```
+import React, { Component } from 'react';
+import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+``` 
+
+Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [App.js](https://github.com/manavsehgal/react-eshop/blob/master/src/App.js) redone using React Bootstrap.
+
 ### Import a Component
 
 This project setup supports ES6 modules thanks to Babel.  
