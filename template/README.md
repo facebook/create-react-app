@@ -82,34 +82,6 @@ The generated project includes React and ReactDOM as dependencies. It also inclu
 npm install --save <library-name>
 ```
 
-### Install React Bootstrap
-
-React Bootstrap is not a dependency for using React however it is a popular alternative for integrating Bootstrap with React apps. It can be integrated with Create React App workflow using following three steps.
-
-**Step 1.** Install React Bootstrap and Bootstrap from NPM. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well.
-
-```
-npm install react-bootstrap --save
-npm install bootstrap@3 --save
-```
-
-**Step 2.** Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```index.js``` file.
-
-```
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
-```
-
-**Step 3.** Import required React Bootstrap components within ```App.js``` file or your custom component file.
-
-```
-import React, { Component } from 'react';
-import { Navbar, Jumbotron, Button } from 'react-bootstrap';
-``` 
-
-Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [App.js](https://github.com/manavsehgal/react-eshop/blob/master/src/App.js) redone using React Bootstrap.
-
 ### Import a Component
 
 This project setup supports ES6 modules thanks to Babel.  
@@ -258,6 +230,34 @@ Webpack finds all relative module references in CSS (they start with `./`) and r
 Please be advised that this is also a custom feature of Webpack.
 
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images). However it may not be portable to some other environments, such as Node.js and Browserify. If you prefer to reference static assets in a more traditional way outside the module system, please let us know [in this issue](https://github.com/facebookincubator/create-react-app/issues/28), and we will consider support for this.
+
+### Install React Bootstrap
+
+React Bootstrap is not a dependency for using React however it is a popular alternative for integrating Bootstrap with React apps. It can be integrated with Create React App workflow using following three steps.
+
+**Step 1.** Install React Bootstrap and Bootstrap from NPM. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well.
+
+```
+npm install react-bootstrap --save
+npm install bootstrap@3 --save
+```
+
+**Step 2.** Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```index.js``` file.
+
+```
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+```
+
+**Step 3.** Import required React Bootstrap components within ```App.js``` file or your custom component file.
+
+```
+import React, { Component } from 'react';
+import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+``` 
+
+Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [App.js](https://github.com/manavsehgal/react-eshop/blob/master/src/App.js) redone using React Bootstrap.
 
 ### Display Lint Output in the Editor
 
