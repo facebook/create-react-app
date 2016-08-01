@@ -233,7 +233,7 @@ Please be advised that this is also a custom feature of Webpack.
 
 ### Install React Bootstrap
 
-React Bootstrap is not a dependency for using React however it is a popular alternative for integrating Bootstrap with React apps. It can be integrated with Create React App workflow using following three steps.
+You don’t have to use React Bootstrap together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
 
 **Step 1.** Install React Bootstrap and Bootstrap from NPM. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well.
 
@@ -250,7 +250,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 ```
 
-**Step 3.** Import required React Bootstrap components within ```App.js``` file or your custom component file.
+**Step 3.** Import required React Bootstrap components within ```App.js``` file or your custom component files.
 
 ```
 import React, { Component } from 'react';
