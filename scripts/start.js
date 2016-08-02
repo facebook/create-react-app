@@ -84,8 +84,14 @@ function setupCompiler(port) {
     if (!hasErrors && !hasWarnings) {
       console.log(chalk.green('Compiled successfully!'));
       console.log();
-      console.log('The app is running at http://localhost:' + port + '/');
+      console.log('The app is running at:');
       console.log();
+      console.log('  ' + chalk.cyan('http://localhost:' + port + '/'));
+      console.log();
+      console.log('Note that the development build is not optimized.');
+      console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
+      console.log();
+
       return;
     }
 
