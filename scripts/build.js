@@ -14,32 +14,51 @@ var fs = require('fs');
 var path = require('path');
 var filesize = require('filesize');
 var gzipSize = require('gzip-size').sync;
+var MemoryFS = require('memory-fs');
+var mkdirpSync = require('mkdirp').sync;
 var rimrafSync = require('rimraf').sync;
 var webpack = require('webpack');
 var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 
-// Remove all content but keep the directory so that
-// if you're in it, you don't end up in Trash
-rimrafSync(paths.appBuild + '/*');
-
 console.log('Creating an optimized production build...');
 
-var oldAssets;
-var compiler = webpack(config, function(err, stats) {
-  oldAssets = stats.toJson().assets
-    .filter(asset => /\.(js|css)$/.test(asset.name))
-    .map(asset => {
-      var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
-      var size = gzipSize(fileContents);
-      return {
-        name: path.basename(asset.name),
-        size: size
-      };
-    });
-});
+var memFs = new MemoryFS();
+var compiler = webpack(config);
+compiler.outputFileSystem = memFs;
 
 compiler.run(function(err, stats) {
+  var statsAssets = stats.toJson().assets;
+
+  // Read old assets from the file system
+  var oldAssets = statsAssets
+    .filter(asset => /\.(js|css)$/.test(asset.name))
+    .map(asset => {
+      try {
+        var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
+        var size = gzipSize(fileContents);
+        return {
+          fullName: asset.name,
+          size: size
+        };
+      } catch (e) {
+        return {};
+      }
+    });
+
+  // Remove all content but keep the directory so that
+  // if you're in it, you don't end up in Trash
+  rimrafSync(paths.appBuild + '/*');
+
+  // Write new assets to the file system
+  statsAssets
+    .map(asset => {
+      var fileFullPath = paths.appBuild + '/' + asset.name;
+      var fileContents = memFs.readFileSync(fileFullPath);
+      mkdirpSync(path.dirname(fileFullPath));
+      fs.writeFileSync(fileFullPath, fileContents);
+    });
+
   if (err) {
     console.error('Failed to create a production build. Reason:');
     console.error(err.message || err);
@@ -51,7 +70,7 @@ compiler.run(function(err, stats) {
 
   console.log('File sizes after gzip:');
   console.log();
-  var assets = stats.toJson().assets
+  var assets = statsAssets
     .filter(asset => /\.(js|css)$/.test(asset.name))
     .map(asset => {
       var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
@@ -60,7 +79,7 @@ compiler.run(function(err, stats) {
 
       for (var i = oldAssets.length - 1; i >= 0; --i) {
         var oldAsset = oldAssets[i];
-        if (oldAsset.name === asset.name) {
+        if (oldAsset.fullName === asset.name) {
           var sizeDiff = asset.size - oldAsset.size;
           if (sizeDiff !== 0) {
             sizeDiffLabel = ' (' +

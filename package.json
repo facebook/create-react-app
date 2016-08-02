@@ -62,6 +62,8 @@
     "html-webpack-plugin": "2.22.0",
     "jest": "14.1.0",
     "json-loader": "0.5.4",
+    "memory-fs": "^0.3.0",
+    "mkdirp": "^0.5.1",
     "opn": "4.0.2",
     "postcss-loader": "0.9.1",
     "promise": "7.1.1",
