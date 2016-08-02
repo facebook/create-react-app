@@ -24,7 +24,22 @@ var paths = require('../config/paths');
 rimrafSync(paths.appBuild + '/*');
 
 console.log('Creating an optimized production build...');
-webpack(config).run(function(err, stats) {
+
+var oldAssets;
+var compiler = webpack(config, function(err, stats) {
+  oldAssets = stats.toJson().assets
+    .filter(asset => /\.(js|css)$/.test(asset.name))
+    .map(asset => {
+      var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
+      var size = gzipSize(fileContents);
+      return {
+        name: path.basename(asset.name),
+        size: size
+      };
+    });
+});
+
+compiler.run(function(err, stats) {
   if (err) {
     console.error('Failed to create a production build. Reason:');
     console.error(err.message || err);
@@ -41,11 +56,27 @@ webpack(config).run(function(err, stats) {
     .map(asset => {
       var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
       var size = gzipSize(fileContents);
+      var sizeDiffLabel = '';
+
+      for (var i = oldAssets.length - 1; i >= 0; --i) {
+        var oldAsset = oldAssets[i];
+        if (oldAsset.name === asset.name) {
+          var sizeDiff = asset.size - oldAsset.size;
+          if (sizeDiff !== 0) {
+            sizeDiffLabel = ' (' +
+              (sizeDiff < 0 ? '-' : '+') +
+              filesize(Math.abs(sizeDiff)) +
+              ')';
+          }
+          break;
+        }
+      }
+
       return {
         folder: path.join('build', path.dirname(asset.name)),
         name: path.basename(asset.name),
         size: size,
-        sizeLabel: filesize(size)
+        sizeLabel: filesize(size) + sizeDiffLabel
       };
     });
   assets.sort((a, b) => b.size - a.size);
