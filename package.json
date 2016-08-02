@@ -34,6 +34,7 @@
     "babel-jest": "14.1.0",
     "babel-loader": "6.2.4",
     "babel-plugin-syntax-trailing-function-commas": "6.8.0",
+    "babel-plugin-transform-async-to-generator": "6.8.0",
     "babel-plugin-transform-class-properties": "6.11.5",
     "babel-plugin-transform-object-rest-spread": "6.8.0",
     "babel-plugin-transform-react-constant-elements": "6.9.1",
