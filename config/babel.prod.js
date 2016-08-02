@@ -21,6 +21,8 @@ module.exports = {
   plugins: [
     // function x(a, b, c,) { }
     require.resolve('babel-plugin-syntax-trailing-function-commas'),
+    // await fetch()
+    require.resolve('babel-plugin-transform-async-to-generator'),
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
     // { ...todo, completed: true }
