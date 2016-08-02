@@ -10,20 +10,19 @@
 module.exports = {
   babelrc: false,
   presets: [
-    'babel-preset-es2015',
-    'babel-preset-es2016',
-    'babel-preset-react'
-  ].map(require.resolve),
+    require.resolve('babel-preset-es2015'),
+    require.resolve('babel-preset-es2016'),
+    require.resolve('babel-preset-react')
+  ],
   plugins: [
-    'babel-plugin-syntax-trailing-function-commas',
-    'babel-plugin-transform-class-properties',
-    'babel-plugin-transform-object-rest-spread',
-    'babel-plugin-transform-react-constant-elements',
-  ].map(require.resolve).concat([
+    require.resolve('babel-plugin-syntax-trailing-function-commas'),
+    require.resolve('babel-plugin-transform-class-properties'),
+    require.resolve('babel-plugin-transform-object-rest-spread'),
+    require.resolve('babel-plugin-transform-react-constant-elements'),
     [require.resolve('babel-plugin-transform-runtime'), {
       helpers: false,
       polyfill: false,
       regenerator: true
     }]
-  ])
+  ]
 };
