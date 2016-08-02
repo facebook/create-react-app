@@ -80,7 +80,7 @@ compiler.run(function(err, stats) {
       for (var i = oldAssets.length - 1; i >= 0; --i) {
         var oldAsset = oldAssets[i];
         if (oldAsset.fullName === asset.name) {
-          var sizeDiff = asset.size - oldAsset.size;
+          var sizeDiff = size - oldAsset.size;
           if (sizeDiff !== 0) {
             sizeDiffLabel = ' (' +
               (sizeDiff < 0 ? '-' : '+') +
