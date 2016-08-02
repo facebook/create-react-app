@@ -136,9 +136,8 @@ function openBrowser(port) {
       // on OS X Google Chrome with AppleScript
       execSync('ps cax | grep "Google Chrome"');
       execSync(
-        'osascript ' +
-        path.resolve(__dirname, './utils/chrome.applescript') +
-        ' http://localhost:' + port + '/'
+        'osascript chrome.applescript http://localhost:' + port + '/',
+        {cwd: path.join(__dirname, 'utils'), stdio: 'ignore'}
       );
       return;
     } catch (err) {
