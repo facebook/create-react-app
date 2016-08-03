@@ -12,6 +12,7 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+var WatchMissingNodeModulesPlugin = require('../scripts/utils/WatchMissingNodeModulesPlugin');
 var paths = require('./paths');
 
 module.exports = {
@@ -107,6 +108,7 @@ module.exports = {
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded
     new webpack.HotModuleReplacementPlugin(),
-    new CaseSensitivePathsPlugin()
+    new CaseSensitivePathsPlugin(),
+    new WatchMissingNodeModulesPlugin(paths.appNodeModules)
   ]
 };
