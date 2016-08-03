@@ -264,20 +264,18 @@ npm install bootstrap@3 --save
 
 **Step 2.** Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```index.js``` file.
 
-```
-import './index.css';
+```js
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 ```
 
 **Step 3.** Import required React Bootstrap components within ```App.js``` file or your custom component files.
 
-```
-import React, { Component } from 'react';
+```js
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 ``` 
 
-Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [App.js](https://github.com/manavsehgal/react-eshop/blob/master/src/App.js) redone using React Bootstrap.
+Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://github.com/manavsehgal/react-eshop/blob/master/src/App.js) redone using React Bootstrap.
 
 ### Display Lint Output in the Editor
 
