@@ -18,7 +18,9 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Images and Fonts](#adding-images-and-fonts)
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
+- [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
+- [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Deployment](#deployment)
   - [Now](#now)
   - [Heroku](#heroku)
@@ -178,6 +180,7 @@ export default Button; // Don’t forget to use export default!
 ```
 
 ### `DangerButton.js`
+
 
 ```js
 import React, { Component } from 'react';
@@ -370,7 +373,7 @@ esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable
 
 module.name_mapper='^\(.*\)\.css$' -> 'react-scripts/config/flow/css'
-module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|otf\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> 'react-scripts/config/flow/file'
+module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|otf\|webp\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> 'react-scripts/config/flow/file'
 
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
@@ -382,16 +385,132 @@ If you later `eject`, you’ll need to replace `react-scripts` references with t
 
 ```ini
 module.name_mapper='^\(.*\)\.css$' -> '<PROJECT_ROOT>/config/flow/css'
-module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|otf\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> '<PROJECT_ROOT>/config/flow/file'
+module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|otf\|webp\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> '<PROJECT_ROOT>/config/flow/file'
 ```
 
 We will consider integrating more tightly with Flow in the future so that you don’t have to do this.
+
+## Adding Custom Environment Variables
+
+>Note: this feature is available with `react-scripts@0.2.3` and higher.
+
+Your project can consume variables declared in your environment as if they were declared locally in your JS files. By
+default you will have `NODE_ENV` defined for you, and any other environment variables starting with
+`REACT_APP_`. These environment variables will be defined for you on `process.env`. For example, having an environment
+variable named `REACT_APP_SECRET_CODE` will be exposed in your JS as `process.env.REACT_APP_SECRET_CODE`, in addition
+to `process.env.NODE_ENV`.
+
+These environment variables can be useful for displaying information conditionally based on where the project is
+deployed or consuming sensitive data that lives outside of version control.
+
+First, you need to have environment variables defined, which can vary between OSes. For example, let's say you wanted to
+consume a secret defined in the environment inside a `<form>`:
+
+```jsx
+render() {
+  return (
+    <div>
+      <small>You are running this application in <b>{process.env.NODE_ENV}</b> mode.</small>
+      <form>
+        <input type="hidden" defaultValue={process.env.REACT_APP_SECRET_CODE} />
+      </form>
+    </div>
+  );
+}
+```
+
+The above form is looking for a variable called `REACT_APP_SECRET_CODE` from the environment. In order to consume this
+value, we need to have it defined in the environment:
+
+### Windows (cmd.exe)
+
+```cmd
+set REACT_APP_SECRET_CODE=abcdef&&npm start
+```
+
+(Note: the lack of whitespace is intentional.)
+
+### Linux, OS X (Bash)
+
+```bash
+REACT_APP_SECRET_CODE=abcdef npm start
+```
+
+> Note: Defining environment variables in this manner is temporary for the life of the shell session. Setting
+permanent environment variables is outside the scope of these docs.
+
+With our environment variable defined, we start the app and consume the values. Remember that the `NODE_ENV`
+variable will be set for you automatically. When you load the app in the browser and inspect the `<input>`, you will see
+its value set to `abcdef`, and the bold text will show the environment provided when using `npm start`:
+
+```html
+<div>
+  <small>You are running this application in <b>development</b> mode.</small>
+  <form>
+    <input type="hidden" value="abcdef" />
+  </form>
+</div>
+```
+
+Having access to the `NODE_ENV` is also useful for performing actions conditionally:
+
+```js
+if (process.env.NODE_ENV !== 'production') {
+  analytics.disable();
+}
+```
 
 ## Integrating with a Node Backend
 
 Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/) for instructions on integrating an app with a Node backend running on another port, and using `fetch()` to access it. You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo).
 
+## Proxying API Requests in Development
+
+>Note: this feature is available with `react-scripts@0.2.3` and higher.
+
+People often serve the front-end React app from the same host and port as their backend implementation.  
+For example, a production setup might look like this after the app is deployed:
+
+```
+/             - static server returns index.html with React app
+/todos        - static server returns index.html with React app
+/api/todos    - server handles any /api/* requests using the backend implementation
+```
+
+Such setup is **not** required. However, if you **do** have a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
+
+To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field to your `package.json`, for example:
+
+```js
+  "proxy": "http://localhost:4000",
+```
+
+This way, when you `fetch('/api/todos')` in development, the development server will recognize that it’s not a static asset, and will proxy your request to `http://localhost:4000/api/todos` as a fallback.
+
+Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
+
+```
+Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+```
+
+Keep in mind that `proxy` only has effect in development (with `npm start`), and it is up to you to ensure that URLs like `/api/todos` point to the right thing in production. You don’t have to use the `/api` prefix. Any unrecognized request will be redirected to the specified `proxy`.
+
+Currently the `proxy` option only handles HTTP requests, and it won’t proxy WebSocket connections.  
+If the `proxy` option is **not** flexible enough for you, alternatively you can:
+
+* Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
+* Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+
 ## Deployment
+
+By default, Create React App produces a build assuming your app is hosted at the server root.  
+To override this, specify the `homepage` in your `package.json`, for example:
+
+```js
+  "homepage": "http://mywebsite.com/relativepath",
+```
+
+This will let Create React App correctly infer the root path to use in the generated HTML file.
 
 ### Now
 
@@ -399,7 +518,8 @@ See [this example](https://github.com/xkawi/create-react-app-now) for a zero-con
 
 ### Heroku
 
-Use the [Heroku Buildpack for create-react-app](https://github.com/mars/create-react-app-buildpack).
+Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).  
+You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
 
 ### Surge
 
@@ -426,16 +546,14 @@ Note that in order to support routers that use html5 `pushState` API, you may wa
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
-First, open your `package.json` and add a `homepage` field.
-It could look like this:
+Open your `package.json` and add a `homepage` field:
 
 ```js
-{
-  "name": "my-app",
   "homepage": "http://myusername.github.io/my-app",
-  // ...
-}
 ```
+
+**The above step is important!**  
+Create React App uses the `homepage` field to determine the root URL in the built HTML file.
 
 Now, whenever you run `npm run build`, you will see a cheat sheet with a sequence of commands to deploy to GitHub pages:
 
@@ -451,7 +569,7 @@ git checkout -
 
 You may copy and paste them, or put them into a custom shell script. You may also customize them for another hosting provider.
 
-Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is becasue when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
+Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
 

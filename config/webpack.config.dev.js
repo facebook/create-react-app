@@ -14,6 +14,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var WatchMissingNodeModulesPlugin = require('../scripts/utils/WatchMissingNodeModulesPlugin');
 var paths = require('./paths');
+var env = require('./env');
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -170,9 +171,9 @@ module.exports = {
       template: paths.appHtml,
       favicon: paths.appFavicon,
     }),
-    // Makes the environment available to the JS code, for example:
+    // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `env.js`.
-    new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
+    new webpack.DefinePlugin(env),
     // Note: only CSS is currently hot reloaded
     // This is necessary to emit hot updates (currently CSS only):
     new webpack.HotModuleReplacementPlugin(),

@@ -14,6 +14,13 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
 var paths = require('./paths');
+var env = require('./env');
+
+// Assert this just to be safe.
+// Development builds of React are slow and not intended for production.
+if (env['process.env.NODE_ENV'] !== '"production"') {
+  throw new Error('Production builds must have NODE_ENV=production.');
+}
 
 // We use "homepage" field to infer "public path" at which the app is served.
 // Webpack needs to know it to put the right <script> hrefs into HTML even in
@@ -188,11 +195,11 @@ module.exports = {
         minifyURLs: true
       }
     }),
-    // Makes the environment available to the JS code, for example:
+    // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
-    new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
+    new webpack.DefinePlugin(env),
     // This helps ensure the builds are consistent if source hasn't changed:
     new webpack.optimize.OccurrenceOrderPlugin(),
     // Try to dedupe duplicated modules, if any:
