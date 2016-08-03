@@ -44,7 +44,8 @@ prompt(
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
     path.join('scripts', 'utils', 'chrome.applescript'),
-    path.join('scripts', 'utils', 'prompt.js')
+    path.join('scripts', 'utils', 'prompt.js'),
+    path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js')
   ];
 
   // Ensure that the app folder is clean and we won't override any files
