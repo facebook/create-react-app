@@ -9,14 +9,14 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm start](#npm-start)
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
-- [How To...](#how-to)
+- [How To](#how-to)
+  - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
   - [Installing a Dependency](#installing-a-dependency)
   - [Importing a Component](#importing-a-component)
   - [Adding a Stylesheet](#adding-a-stylesheet)
   - [Post-Processing CSS](#post-processing-css)
   - [Adding Images and Fonts](#adding-images-and-fonts)
-  - [Installing React Bootstrap](#installing-react-bootstrap)
-  - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
+  - [Adding Bootstrap](#adding-bootstrap)
   - [Adding Flow](#adding-flow)
   - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Deploying](#deploying)
@@ -89,7 +89,46 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## How To...
+## How To
+
+### Displaying Lint Output in the Editor
+
+>Note: this feature is available with `react-scripts@0.2.0` and higher.
+
+Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
+
+They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
+
+You would need to install an ESLint plugin for your editor first.
+
+>**A note for Atom `linter-eslint` users**
+
+>If you are using the Atom `linter-eslint` plugin, make sure that **Use global ESLint installation** option is checked:
+
+><img src="http://i.imgur.com/yVNNHJM.png" width="300">
+
+Then make sure `package.json` of your project ends with this block:
+
+```js
+{
+  // ...
+  "eslintConfig": {
+    "extends": "./node_modules/react-scripts/config/eslint.js"
+  }
+}
+```
+
+Projects generated with `react-scripts@0.2.0` and higher should already have it.  
+If you don’t need ESLint integration with your editor, you can safely delete those three lines from your `package.json`.
+
+Finally, you will need to install some packages *globally*:
+
+```sh
+npm install -g eslint babel-eslint eslint-plugin-react eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-flowtype
+```
+
+We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
+
 
 ### Installing a Dependency
 
@@ -248,9 +287,9 @@ Please be advised that this is also a custom feature of Webpack.
 
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images). However it may not be portable to some other environments, such as Node.js and Browserify. If you prefer to reference static assets in a more traditional way outside the module system, please let us know [in this issue](https://github.com/facebookincubator/create-react-app/issues/28), and we will consider support for this.
 
-### Installing React Bootstrap
+### Adding Bootstrap
 
-You don’t have to use React Bootstrap together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
+You don’t have to use [React Bootstrap](https://react-bootstrap.github.io) together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
 
 **Step 1.** Install React Bootstrap and Bootstrap from NPM. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well.
 
@@ -273,44 +312,6 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 ```
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
-
-### Displaying Lint Output in the Editor
-
->Note: this feature is available with `react-scripts@0.2.0` and higher.
-
-Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
-
-They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
-
-You would need to install an ESLint plugin for your editor first.
-
->**A note for Atom `linter-eslint` users**
-
->If you are using the Atom `linter-eslint` plugin, make sure that **Use global ESLint installation** option is checked:
-
-><img src="http://i.imgur.com/yVNNHJM.png" width="300">
-
-Then make sure `package.json` of your project ends with this block:
-
-```js
-{
-  // ...
-  "eslintConfig": {
-    "extends": "./node_modules/react-scripts/config/eslint.js"
-  }
-}
-```
-
-Projects generated with `react-scripts@0.2.0` and higher should already have it.  
-If you don’t need ESLint integration with your editor, you can safely delete those three lines from your `package.json`.
-
-Finally, you will need to install some packages *globally*:
-
-```sh
-npm install -g eslint babel-eslint eslint-plugin-react eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-flowtype
-```
-
-We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
 
 ### Adding Flow
 
