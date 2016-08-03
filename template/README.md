@@ -6,20 +6,21 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Sending Feedback](#sending-feedback)
 - [Folder Structure](#folder-structure)
 - [Available Scripts](#available-scripts)
-	- [npm start](#npm-start)
-	- [npm run build](#npm-run-build)
-	- [npm run eject](#npm-run-eject)
+  - [npm start](#npm-start)
+  - [npm run build](#npm-run-build)
+  - [npm run eject](#npm-run-eject)
 - [How To...](#how-to)
-	- [Install a Dependency](#install-a-dependency)
-	- [Import a Component](#import-a-component)
-	- [Add a Stylesheet](#add-a-stylesheet)
-	- [Post-Process CSS](#post-process-css)
-	- [Add Images and Fonts](#add-images-and-fonts)
-	- [Install React Bootstrap](#install-react-bootstrap)
-	- [Display Lint Output in the Editor](#display-lint-output-in-the-editor)
-	- [Add Flow](#add-flow)
-	- [Deploy](#deploy)
-	- [Something Missing?](#something-missing)
+  - [Installing a Dependency](#installing-a-dependency)
+  - [Importing a Component](#importing-a-component)
+  - [Adding a Stylesheet](#adding-a-stylesheet)
+  - [Post-Processing CSS](#post-processing-css)
+  - [Adding Images and Fonts](#adding-images-and-fonts)
+  - [Installing React Bootstrap](#installing-react-bootstrap)
+  - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
+  - [Adding Flow](#adding-flow)
+  - [Adding Custom Environment Variables](#adding-custom-environment-variables)
+  - [Deploying](#deploying)
+  - [Something Missing?](#something-missing)
 
 ## Sending Feedback
 
@@ -94,7 +95,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## How To...
 
-### Install a Dependency
+### Installing a Dependency
 
 The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
 
@@ -102,7 +103,7 @@ The generated project includes React and ReactDOM as dependencies. It also inclu
 npm install --save <library-name>
 ```
 
-### Import a Component
+### Importing a Component
 
 This project setup supports ES6 modules thanks to Babel.  
 While you can still use `require()` and `module.exports`, we encourage you to use [`import` and `export`](http://exploringjs.com/es6/ch_modules.html) instead.
@@ -150,7 +151,7 @@ Learn more about ES6 modules:
 * [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
 * [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
 
-### Add a Stylesheet
+### Adding a Stylesheet
 
 This project setup uses [Webpack](https://webpack.github.io/) for handling all assets. Webpack offers a custom way of “extending” the concept of `import` beyond JavaScript. To express that a JavaScript file depends on a CSS file, you need to **import the CSS from the JavaScript file**:
 
@@ -182,7 +183,7 @@ In development, expressing dependencies this way allows your styles to be reload
 
 If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
 
-### Post-Process CSS
+### Post-Processing CSS
 
 This project setup minifies your CSS and adds vendor prefixes to it automatically through [Autoprefixer](https://github.com/postcss/autoprefixer) so you don’t need to worry about it.
 
@@ -215,7 +216,7 @@ becomes this:
 
 There is currently no support for preprocessors such as Less, or for sharing variables across CSS files.
 
-### Add Images and Fonts
+### Adding Images and Fonts
 
 With Webpack, using static assets like images and fonts works similarly to CSS.
 
@@ -251,7 +252,7 @@ Please be advised that this is also a custom feature of Webpack.
 
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images). However it may not be portable to some other environments, such as Node.js and Browserify. If you prefer to reference static assets in a more traditional way outside the module system, please let us know [in this issue](https://github.com/facebookincubator/create-react-app/issues/28), and we will consider support for this.
 
-### Install React Bootstrap
+### Installing React Bootstrap
 
 You don’t have to use React Bootstrap together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
 
@@ -277,7 +278,7 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
 
-### Display Lint Output in the Editor
+### Displaying Lint Output in the Editor
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
@@ -315,7 +316,7 @@ npm install -g eslint babel-eslint eslint-plugin-react eslint-plugin-import esli
 
 We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
 
-### Add Flow
+### Adding Flow
 
 Flow typing is currently [not supported out of the box](https://github.com/facebookincubator/create-react-app/issues/72) with the default `.flowconfig` generated by Flow. If you run it, you might get errors like this:
 
@@ -371,7 +372,71 @@ module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|svg\|ttf\|woff\|woff2\|mp4\|w
 
 We will consider integrating more tightly with Flow in the future so that you don’t have to do this.
 
-### Deploy
+### Adding Custom Environment Variables
+
+> Note: this feature is available with `react-scripts@0.3.0` and higher.
+
+Your project can consume variables declared in your environment as if they were declared locally in your JS files. By
+default you will have `NODE_ENV` defined for you, and any other environment variables starting with
+`REACT_APP_`. These environment variables will be defined for you on `process.env`. For example, having an environment
+variable named `REACT_APP_SECRET_CODE` will be exposed in your JS as `process.env.REACT_APP_SECRET_CODE`, in addition
+to `process.env.NODE_ENV`.
+
+These environment variables can be useful for displaying information conditionally based on where the project is
+deployed or consuming sensitive data that lives outside of version control.
+
+First, you need to have environment variables defined, which can vary between OSes. For example, let's say you wanted to
+consume a secret defined in the environment inside a `<form>`:
+
+```jsx
+<h6>Hello, Admin!<h6>
+
+<small>You are running this application in <strong>{process.env.NODE_ENV}</strong> mode.</small>
+
+<form>
+  <input type="hidden" defaultValue={process.env.REACT_APP_SECRET_CODE} />
+</form>
+```
+
+The above form is looking for a variable called `REACT_APP_SECRET_CODE` from the environment. In order to consume this
+value, we need to have it defined in the environment:
+
+#### Windows Cmd
+
+```cmd
+set REACT_APP_SECRET_CODE=abcdef && npm start
+```
+
+#### Bash/Unix shells
+
+```bash
+REACT_APP_SECRET_CODE=abcdef npm start
+```
+
+> Note: Defining environment variables in this manner is temporary for the life of the shell session. Setting
+permanent environment variables is outside the scope of these docs.
+
+With our environment variable defined, we start the app and consume the values. Remember that the `NODE_ENV`
+variable will be set for you automatically. When you load the app in the browser and inspect the `<input>`, you will see
+its value set to `abcdef`, and the bold text will show the environment provided when using `npm start`:
+
+```html
+<h6>Hello, Admin!</h6>
+<small>You are running this application in <strong>development</strong> mode.</small>
+<form>
+  <input type="hidden" value="abcdef" />
+</form>
+```
+
+Having access to the `NODE_ENV` is also useful for performing actions conditionally:
+
+```js
+if (process.env.NODE_ENV !== 'production') {
+  analytics.disable();
+}
+```
+
+### Deploying
 
 #### GitHub Pages
 
