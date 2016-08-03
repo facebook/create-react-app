@@ -66,6 +66,7 @@
     "opn": "4.0.2",
     "postcss-loader": "0.9.1",
     "promise": "7.1.1",
+    "recursive-readdir": "^2.0.0",
     "rimraf": "2.5.4",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
