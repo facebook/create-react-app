@@ -273,7 +273,7 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 
 ```js
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
-``` 
+```
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
 
@@ -285,7 +285,14 @@ Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plug
 
 They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
 
-You would need to install an ESLint plugin for your editor first.  
+You would need to install an ESLint plugin for your editor first.
+
+>**A note for Atom `linter-eslint` users**
+
+>If you are using the Atom `linter-eslint` plugin, make sure that **Use global ESLint installation** option is checked:
+
+><img src="https://i.imgsafe.org/24b793bcf2.png" width="300">
+
 Then make sure `package.json` of your project ends with this block:
 
 ```js
