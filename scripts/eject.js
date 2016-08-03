@@ -35,6 +35,7 @@ prompt(
     path.join('config', 'flow', 'file.js.flow'),
     path.join('config', 'eslint.js'),
     path.join('config', 'paths.js'),
+    path.join('config', 'env.js'),
     path.join('config', 'polyfills.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
