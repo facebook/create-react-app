@@ -59,10 +59,6 @@ You need to **put any JS and CSS files inside `src`**, or Webpack won’t see th
 You can, however, create more top-level directories.  
 They will not be included in the production build so you can use them for things like documentation.
 
->**Known Issue:**
->
->You may encounter an issue where changing a file inside `src` doesn’t trigger a recompilation. Most likely this happens because the path in your filesystem differs in its casing from the path you imported. For example, if a file is called `App.js` but you are importing `app.js`, the watcher might not recognize changes to it. We are [considering](https://github.com/facebookincubator/create-react-app/issues/240) enforcing some checks to prevent this. If this doesn’t help, check out the page on [troubleshooting watching](https://webpack.github.io/docs/troubleshooting.html#watching).
-
 ## Available Scripts
 
 In the project directory, you can run:
