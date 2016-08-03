@@ -291,7 +291,7 @@ You would need to install an ESLint plugin for your editor first.
 
 >If you are using the Atom `linter-eslint` plugin, make sure that **Use global ESLint installation** option is checked:
 
-><img src="https://i.imgsafe.org/24b793bcf2.png" width="300">
+><img src="http://i.imgur.com/yVNNHJM.png" width="300">
 
 Then make sure `package.json` of your project ends with this block:
 
