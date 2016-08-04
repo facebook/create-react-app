@@ -118,7 +118,11 @@ function build(previousSizeMap) {
     var publicPath = config.output.publicPath;
     if (homepagePath && homepagePath.indexOf('.github.io/') !== -1) {
       // "homepage": "http://user.github.io/project"
-      console.log('You can now deploy them to ' + chalk.green(homepagePath) + ':');
+      console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.');
+      console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
+      console.log();
+      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
+      console.log('To publish it at ' + chalk.green(homepagePath) + ', run:');
       console.log();
       console.log('  ' + chalk.blue('git') + chalk.cyan(' commit -am ') + chalk.yellow('"Save local changes"'));
       console.log('  ' + chalk.blue('git') + chalk.cyan(' checkout -B gh-pages'));
@@ -128,32 +132,35 @@ function build(previousSizeMap) {
       console.log('  ' + chalk.blue('git') + chalk.cyan(' push -f origin gh-pages'));
       console.log('  ' + chalk.blue('git') + chalk.cyan(' checkout -'));
       console.log();
-      console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.');
-      console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
     } else if (publicPath !== '/') {
       // "homepage": "http://mywebsite.com/project"
       console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.');
       console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
+      console.log();
+      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
+      console.log();
     } else {
       // no homepage or "homepage": "http://mywebsite.com"
-      console.log('You can now deploy them or serve them with a static server:');
-      console.log();
-      console.log('  ' + chalk.blue('npm') +  chalk.cyan(' install -g pushstate-server'));
-      console.log('  ' + chalk.blue('pushstate-server') + chalk.cyan(' build'));
-      console.log('  ' + chalk.blue(openCommand) + chalk.cyan(' http://localhost:9000'));
-      console.log();
       console.log('The project was built assuming it is hosted at the server root.');
       if (homepagePath) {
         // "homepage": "http://mywebsite.com"
         console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
+        console.log();
       } else {
         // no homepage
         console.log('To override this, specify the ' + chalk.green('homepage') + ' in your '  + chalk.cyan('package.json') + '.');
         console.log('For example, add this to build it for GitHub Pages:')
         console.log();
         console.log('  ' + chalk.green('"homepage"') + chalk.cyan(': ') + chalk.green('"http://myname.github.io/myapp"') + chalk.cyan(','));
+        console.log();
       }
+      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
+      console.log('You may also serve it locally with a static server:')
+      console.log();
+      console.log('  ' + chalk.blue('npm') +  chalk.cyan(' install -g pushstate-server'));
+      console.log('  ' + chalk.blue('pushstate-server') + chalk.cyan(' build'));
+      console.log('  ' + chalk.blue(openCommand) + chalk.cyan(' http://localhost:9000'));
+      console.log();
     }
-    console.log();
   });
 }
