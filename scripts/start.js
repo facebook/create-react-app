@@ -13,11 +13,14 @@ var path = require('path');
 var chalk = require('chalk');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
+var historyApiFallback = require('connect-history-api-fallback');
+var httpProxyMiddleware = require('http-proxy-middleware');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 var detect = require('detect-port');
 var prompt = require('./utils/prompt');
 var config = require('../config/webpack.config.dev');
+var paths = require('../config/paths');
 
 // Tools like Cloud9 rely on this
 var DEFAULT_PORT = process.env.PORT || 3000;
@@ -155,16 +158,63 @@ function openBrowser(port) {
   opn('http://localhost:' + port + '/');
 }
 
+function addMiddleware(devServer) {
+  // `proxy` lets you to specify a fallback server during development.
+  // Every unrecognized request will be forwarded to it.
+  var proxy = require(paths.appPackageJson).proxy;
+  devServer.use(historyApiFallback({
+    // For single page apps, we generally want to fallback to /index.html.
+    // However we also want to respect `proxy` for API calls.
+    // So if `proxy` is specified, we need to decide which fallback to use.
+    // We use a heuristic: if request `accept`s text/html, we pick /index.html.
+    // Modern browsers include text/html into `accept` header when navigating.
+    // However API calls like `fetch()` won’t generally won’t accept text/html.
+    // If this heuristic doesn’t work well for you, don’t use `proxy`.
+    htmlAcceptHeaders: proxy ?
+      ['text/html'] :
+      ['text/html', '*/*']
+  }));
+  if (proxy) {
+    if (typeof proxy !== 'string') {
+      console.log(chalk.red('When specified, "proxy" in package.json must be a string.'));
+      console.log(chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".'));
+      console.log(chalk.red('Either remove "proxy" from package.json, or make it a string.'));
+      process.exit(1);
+    }
+
+    // Otherwise, if proxy is specified, we will let it handle any request.
+    // There are a few exceptions which we won't send to the proxy:
+    // - /index.html (served as HTML5 history API fallback)
+    // - /*.hot-update.json (WebpackDevServer uses this too for hot reloading)
+    // - /sockjs-node/* (WebpackDevServer uses this for hot reloading)
+    var mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
+    devServer.use(mayProxy,
+      // Pass the scope regex both to Express and to the middleware for proxying
+      // of both HTTP and WebSockets to work without false positives.
+      httpProxyMiddleware(pathname => mayProxy.test(pathname), {
+        target: proxy,
+        logLevel: 'silent',
+        secure: false,
+        changeOrigin: true
+      })
+    );
+  }
+  // Finally, by now we have certainly resolved the URL.
+  // It may be /index.html, so let the dev server try serving it again.
+  devServer.use(devServer.middleware);
+}
+
 function runDevServer(port) {
-  new WebpackDevServer(compiler, {
-    historyApiFallback: true,
+  var devServer = new WebpackDevServer(compiler, {
     hot: true, // Note: only CSS is currently hot reloaded
     publicPath: config.output.publicPath,
     quiet: true,
     watchOptions: {
       ignored: /node_modules/
     }
-  }).listen(port, (err, result) => {
+  });
+  addMiddleware(devServer);
+  devServer.listen(port, (err, result) => {
     if (err) {
       return console.log(err);
     }
