@@ -12,6 +12,7 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+var CheckFilenamePlugin = require('check-filename-webpack-plugin');
 var WatchMissingNodeModulesPlugin = require('../scripts/utils/WatchMissingNodeModulesPlugin');
 var paths = require('./paths');
 var env = require('./env');
@@ -119,6 +120,12 @@ module.exports = {
     // Note: only CSS is currently hot reloaded
     new webpack.HotModuleReplacementPlugin(),
     new CaseSensitivePathsPlugin(),
+    new CheckFilenamePlugin({
+      regex: /\.jsx$/,
+      error: function(filename) {
+        return 'Module load aborted: .jsx extensions are not allowed, use .js extensions only. See create-react-app/issues/290 for more info.\n\tFor: ' + filename;
+      }
+    }),
     new WatchMissingNodeModulesPlugin(paths.appNodeModules)
   ]
 };
