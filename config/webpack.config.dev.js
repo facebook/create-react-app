@@ -12,8 +12,8 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-var paths = require('./paths');
 var CheckJSXFile = require('warning-require-jsx-file');
+var paths = require('./paths');
 
 module.exports = {
   devtool: 'eval',
