@@ -37,6 +37,7 @@ module.exports = {
     publicPath: publicPath
   },
   resolve: {
+    root: paths.appSrc,
     extensions: ['', '.js', '.json'],
     alias: {
       // This `alias` section can be safely removed after ejection.
