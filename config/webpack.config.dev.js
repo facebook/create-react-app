@@ -55,6 +55,11 @@ module.exports = {
         test: /\.js$/,
         loader: 'eslint',
         include: paths.appSrc,
+      },
+      {
+        test: /\.js$/,
+        loader: 'flowtype',
+        include: paths.appSrc,
       }
     ],
     loaders: [
