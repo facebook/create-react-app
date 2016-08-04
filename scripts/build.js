@@ -19,6 +19,7 @@ var webpack = require('webpack');
 var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 var recursive = require('recursive-readdir');
+var stripAnsi = require('strip-ansi');
 
 function removeFileNameHash(fileName) {
   return fileName.replace(paths.appBuild, '')
@@ -28,13 +29,17 @@ function removeFileNameHash(fileName) {
 }
 
 function sizeDifference(currentSize, previousSize) {
-  if (previousSize === undefined) { return ''; }
+  var FIFTY_KILOBYTES = 1024 * 50;
   var difference = currentSize - previousSize;
-  var fileSize = filesize(difference);
-  if (difference > 0) {
+  var fileSize = !Number.isNaN(difference) ? filesize(difference) : 0;
+  if (difference >= FIFTY_KILOBYTES) {
     return chalk.red('+' + fileSize);
-  } else if (difference <= 0){
-    return chalk.green((difference === 0 ? '+' : '') + fileSize);
+  } else if (difference < FIFTY_KILOBYTES && difference > 0) {
+    return chalk.yellow('+' + fileSize);
+  } else if (difference < 0) {
+    return chalk.green(fileSize);
+  } else {
+    return '';
   }
 }
 
@@ -86,16 +91,17 @@ function build(previousSizeMap) {
     assets.sort((a, b) => b.size - a.size);
 
     var longestSizeLabelLength = Math.max.apply(null,
-      assets.map(a => a.sizeLabel.length)
+      assets.map(a => stripAnsi(a.sizeLabel).length)
     );
     assets.forEach(asset => {
       var sizeLabel = asset.sizeLabel;
-      if (sizeLabel.length < longestSizeLabelLength) {
-        var rightPadding = ' '.repeat(longestSizeLabelLength - sizeLabel.length);
+	  var sizeLength = stripAnsi(sizeLabel).length;
+      if (sizeLength < longestSizeLabelLength) {
+        var rightPadding = ' '.repeat(longestSizeLabelLength - sizeLength);
         sizeLabel += rightPadding;
       }
       console.log(
-        '  ' + chalk.yellow(sizeLabel) +
+        '  ' + sizeLabel +
         '  ' + chalk.dim(asset.folder + path.sep) + chalk.cyan(asset.name)
       );
     });
