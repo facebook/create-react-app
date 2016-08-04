@@ -22,7 +22,7 @@ var prompt = require('./utils/prompt');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
 
-// Tools like Cloud9 rely on this
+// Tools like Cloud9 rely on this.
 var DEFAULT_PORT = process.env.PORT || 3000;
 var compiler;
 
@@ -40,15 +40,13 @@ if (isSmokeTest) {
   };
 }
 
+// Some custom utilities to prettify Webpack output.
+// This is a little hacky.
+// It would be easier if webpack provided a rich error object.
 var friendlySyntaxErrorLabel = 'Syntax error:';
-
 function isLikelyASyntaxError(message) {
   return message.indexOf(friendlySyntaxErrorLabel) !== -1;
 }
-
-// This is a little hacky.
-// It would be easier if webpack provided a rich error object.
-
 function formatMessage(message) {
   return message
     // Make some common errors shorter:
@@ -69,17 +67,27 @@ function formatMessage(message) {
 }
 
 function clearConsole() {
+  // This seems to work best on Windows and other systems.
+  // The intention is to clear the output so you can focus on most recent build.
   process.stdout.write('\x1bc');
 }
 
 function setupCompiler(port) {
+  // "Compiler" is a low-level interface to Webpack.
+  // It lets us listen to some events and provide our own custom messages.
   compiler = webpack(config, handleCompile);
 
+  // "invalid" event fires when you have changed a file, and Webpack is
+  // recompiling a bundle. WebpackDevServer takes care to pause serving the
+  // bundle, so if you refresh, it'll wait instead of serving the old one.
+  // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
   compiler.plugin('invalid', function() {
     clearConsole();
     console.log('Compiling...');
   });
 
+  // "done" event fires when Webpack has finished recompiling the bundle.
+  // Whether or not you have warnings or errors, you will get this event.
   compiler.plugin('done', function(stats) {
     clearConsole();
     var hasErrors = stats.hasErrors();
@@ -94,10 +102,12 @@ function setupCompiler(port) {
       console.log('Note that the development build is not optimized.');
       console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
       console.log();
-
       return;
     }
 
+    // We have switched off the default Webpack output in WebpackDevServer
+    // options so we are going to "massage" the warnings and errors and present
+    // them in a readable focused way.
     var json = stats.toJson();
     var formattedErrors = json.errors.map(message =>
       'Error in ' + formatMessage(message)
@@ -105,7 +115,6 @@ function setupCompiler(port) {
     var formattedWarnings = json.warnings.map(message =>
       'Warning in ' + formatMessage(message)
     );
-
     if (hasErrors) {
       console.log(chalk.red('Failed to compile.'));
       console.log();
@@ -122,7 +131,6 @@ function setupCompiler(port) {
       // If errors exist, ignore warnings.
       return;
     }
-
     if (hasWarnings) {
       console.log(chalk.yellow('Compiled with warnings.'));
       console.log();
@@ -130,7 +138,7 @@ function setupCompiler(port) {
         console.log(message);
         console.log();
       });
-
+      // Teach some ESLint tricks.
       console.log('You may use special comments to disable some warnings.');
       console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
       console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
@@ -207,14 +215,29 @@ function addMiddleware(devServer) {
 
 function runDevServer(port) {
   var devServer = new WebpackDevServer(compiler, {
-    hot: true, // Note: only CSS is currently hot reloaded
+    // Enable hot reloading server. It will provide /sockjs-node/ endpoint
+    // for the WebpackDevServer client so it can learn when the files were
+    // updated. The WebpackDevServer client is included as an entry point
+    // in the Webpack development configuration. Note that only changes
+    // to CSS are currently hot reloaded. JS changes will refresh the browser.
+    hot: true,
+    // It is important to tell WebpackDevServer to use the same "root" path
+    // as we specified in the config. In development, we always serve from /.
     publicPath: config.output.publicPath,
+    // WebpackDevServer is noisy by default so we emit custom message instead
+    // by listening to the compiler events with `compiler.plugin` calls above.
     quiet: true,
+    // Reportedly, this avoids CPU overload on some systems.
+    // https://github.com/facebookincubator/create-react-app/issues/293
     watchOptions: {
       ignored: /node_modules/
     }
   });
+
+  // Our custom middleware proxies requests to /index.html or a remote API.
   addMiddleware(devServer);
+
+  // Launch WebpackDevServer.
   devServer.listen(port, (err, result) => {
     if (err) {
       return console.log(err);
@@ -232,6 +255,8 @@ function run(port) {
   runDevServer(port);
 }
 
+// We attempt to use the default port but if it is busy, we offer the user to
+// run on a different port. `detect()` Promise resolves to the next free port.
 detect(DEFAULT_PORT).then(port => {
   if (port === DEFAULT_PORT) {
     run(port);
