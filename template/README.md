@@ -20,6 +20,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
+- [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Deployment](#deployment)
   - [Now](#now)
   - [Heroku](#heroku)
@@ -462,7 +463,53 @@ if (process.env.NODE_ENV !== 'production') {
 
 Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/) for instructions on integrating an app with a Node backend running on another port, and using `fetch()` to access it. You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo).
 
+## Proxying API Requests in Development
+
+>Note: this feature is available with `react-scripts@0.3.0` and higher.
+
+People often serve the front-end React app from the same host and port as their backend implementation.  
+For example, a production setup might look like this after the app is deployed:
+
+```
+/             - static server returns index.html with React app
+/todos        - static server returns index.html with React app
+/api/todos    - server handles any /api/* requests using the backend implementation
+```
+
+Such setup is **not** required. However, if you **do** have a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
+
+To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field to your `package.json`, for example:
+
+```js
+  "proxy": "http://localhost:4000",
+```
+
+This way, when you `fetch('/api/todos')` in development, the development server will recognize that it’s not a static asset, and will proxy your request to `http://localhost:4000/api/todos` as a fallback.
+
+Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
+
+```
+Fetch API cannot load http://localhost:400/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+```
+
+Keep in mind that `proxy` only has effect in development (with `npm start`), and it is up to you to ensure that URLs like `/api/todos` point to the right thing in production. You don’t have to use the `/api` prefix. Any unrecognized request will be redirected to the specified `proxy`.
+
+Currently the `proxy` option only handles HTTP requests, and it won’t proxy WebSocket connections.  
+If the `proxy` option is **not** flexible enough for you, alternatively you can:
+
+* Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
+* Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+
 ## Deployment
+
+By default, Create React App produces a build assuming your app is hosted at the server root.  
+To override this, specify the `homepage` in your `package.json`, for example:
+
+```js
+  "homepage": "http://mywebsite.com/relativepath",
+```
+
+This will let Create React App correctly infer the root path to use in the generated HTML file.
 
 ### Now
 
@@ -476,15 +523,10 @@ Use the [Heroku Buildpack for create-react-app](https://github.com/mars/create-r
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
-First, open your `package.json` and add a `homepage` field.
-It could look like this:
+Open your `package.json` and add a `homepage` field:
 
 ```js
-{
-  "name": "my-app",
   "homepage": "http://myusername.github.io/my-app",
-  // ...
-}
 ```
 
 Now, whenever you run `npm run build`, you will see a cheat sheet with a sequence of commands to deploy to GitHub pages:
