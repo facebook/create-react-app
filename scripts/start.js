@@ -187,6 +187,7 @@ function addMiddleware(devServer) {
     // - /index.html (served as HTML5 history API fallback)
     // - /*.hot-update.json (WebpackDevServer uses this too for hot reloading)
     // - /sockjs-node/* (WebpackDevServer uses this for hot reloading)
+    // Tip: use https://www.debuggex.com/ to visualize the regex
     var mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
     devServer.use(mayProxy,
       // Pass the scope regex both to Express and to the middleware for proxying

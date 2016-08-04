@@ -9,7 +9,7 @@
 
 process.env.NODE_ENV = 'test';
 
-const createJestConfig = require('./utils/create-jest-config');
+const createJestConfig = require('./utils/createJestConfig');
 const jest = require('jest');
 const path = require('path');
 const paths = require('../config/paths');
