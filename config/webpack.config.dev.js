@@ -108,7 +108,7 @@ module.exports = {
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded
     new webpack.HotModuleReplacementPlugin(),
-    new CaseSensitivePathsPlugin(),
-    new CheckJSXFile()
+    new CheckJSXFile(),
+    new CaseSensitivePathsPlugin()
   ]
 };
