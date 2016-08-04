@@ -22,7 +22,7 @@ module.exports = {
     // function x(a, b, c,) { }
     require.resolve('babel-plugin-syntax-trailing-function-commas'),
     // await fetch()
-    require.resolve('babel-plugin-syntax-async-functions'),
+    require.resolve('fast-async'),
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
     // { ...todo, completed: true }
