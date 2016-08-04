@@ -46,6 +46,7 @@
     "babel-runtime": "6.11.6",
     "case-sensitive-paths-webpack-plugin": "1.1.2",
     "chalk": "1.1.3",
+    "check-filename-webpack-plugin": "^1.0.0",
     "connect-history-api-fallback": "1.2.0",
     "cross-spawn": "4.0.0",
     "css-loader": "0.23.1",
