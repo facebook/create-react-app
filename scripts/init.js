@@ -33,6 +33,8 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     appPackage.scripts[command] = 'react-scripts ' + command;
   });
 
+  appPackage.scripts['phoenix'] = 'rm -rf node_modules && npm install';
+
   // explicitly specify ESLint config path for editor plugins
   appPackage.eslintConfig = {
     extends: './node_modules/react-scripts/config/eslint.js',
