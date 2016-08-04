@@ -20,7 +20,10 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
-- [Deploying](#deploying)
+- [Deployment](#deployment)
+  - [Now](#now)
+  - [Heroku](#heroku)
+  - [GitHub Pages](#github-pages)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -459,7 +462,15 @@ if (process.env.NODE_ENV !== 'production') {
 
 Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/) for instructions on integrating an app with a Node backend running on another port, and using `fetch()` to access it. You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo).
 
-## Deploying
+## Deployment
+
+### Now
+
+See [this example](https://github.com/xkawi/create-react-app-now) for a zero-configuration single-command deployment with [now](https://zeit.co/now).
+
+### Heroku
+
+Use the [Heroku Buildpack for create-react-app](https://github.com/mars/create-react-app-buildpack).
 
 ### GitHub Pages
 
@@ -479,11 +490,12 @@ It could look like this:
 Now, whenever you run `npm run build`, you will see a cheat sheet with a sequence of commands to deploy to GitHub pages:
 
 ```sh
+git commit -am "Save local changes"
 git checkout -B gh-pages
 git add -f build
 git commit -am "Rebuild website"
-git push origin :gh-pages
-git subtree push --prefix build origin gh-pages
+git filter-branch -f --prune-empty --subdirectory-filter build
+git push -f origin gh-pages
 git checkout -
 ```
 
@@ -492,10 +504,6 @@ You may copy and paste them, or put them into a custom shell script. You may als
 Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is becasue when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
-
-### Heroku
-
-Use the [Heroku Buildpack for create-react-app](https://github.com/mars/create-react-app-buildpack).
 
 ## Something Missing?
 
