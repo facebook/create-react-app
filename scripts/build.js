@@ -22,13 +22,12 @@ var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
 
 function removeFileNameHash(fileName) {
-  return fileName.replace(paths.appBuild, '')
-    .replace(/\/?(.*)(\.\w+)(\.js|\.css)/, function(match, p1, p2, p3) {
-      return p1 + p3;
-    });
+  return fileName
+    .replace(paths.appBuild, '')
+    .replace(/\/?(.*)(\.\w+)(\.js|\.css)/, (match, p1, p2, p3) => p1 + p3);
 }
 
-function sizeDifference(currentSize, previousSize) {
+function getDifferentLabel(currentSize, previousSize) {
   var FIFTY_KILOBYTES = 1024 * 50;
   var difference = currentSize - previousSize;
   var fileSize = !Number.isNaN(difference) ? filesize(difference) : 0;
@@ -43,15 +42,17 @@ function sizeDifference(currentSize, previousSize) {
   }
 }
 
-recursive(paths.appBuild, function (err, fileNames) {
+recursive(paths.appBuild, (err, fileNames) => {
   fileNames = fileNames || [];
-  var previousSizeMap = fileNames.filter(fileName => /\.(js|css)$/.test(fileName))
+
+  var previousSizeMap = fileNames
+    .filter(fileName => /\.(js|css)$/.test(fileName))
     .reduce((memo, fileName) => {
       var contents = fs.readFileSync(fileName);
       var key = removeFileNameHash(fileName);
       memo[key] = gzipSize(contents);
       return memo;
-    }, {} );
+    }, {});
 
   // Remove all content but keep the directory so that
   // if you're in it, you don't end up in Trash
@@ -62,7 +63,7 @@ recursive(paths.appBuild, function (err, fileNames) {
 
 function build(previousSizeMap) {
   console.log('Creating an optimized production build...');
-  webpack(config).run(function(err, stats) {
+  webpack(config).run((err, stats) => {
     if (err) {
       console.error('Failed to create a production build. Reason:');
       console.error(err.message || err);
@@ -80,7 +81,7 @@ function build(previousSizeMap) {
         var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
         var size = gzipSize(fileContents);
         var previousSize = previousSizeMap[removeFileNameHash(asset.name)];
-        var difference = sizeDifference(size, previousSize);
+        var difference = getDifferentLabel(size, previousSize);
         return {
           folder: path.join('build', path.dirname(asset.name)),
           name: path.basename(asset.name),
