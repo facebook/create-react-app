@@ -9,19 +9,18 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm start](#npm-start)
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
-- [Recipes](#recipes)
-  - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
-  - [Installing a Dependency](#installing-a-dependency)
-  - [Importing a Component](#importing-a-component)
-  - [Adding a Stylesheet](#adding-a-stylesheet)
-  - [Post-Processing CSS](#post-processing-css)
-  - [Adding Images and Fonts](#adding-images-and-fonts)
-  - [Adding Bootstrap](#adding-bootstrap)
-  - [Adding Flow](#adding-flow)
-  - [Adding Custom Environment Variables](#adding-custom-environment-variables)
-  - [Integrating with a Node Backend](#integrating-with-a-node-backend)
-  - [Deploying](#deploying)
-  - [Something Missing?](#something-missing)
+- [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
+- [Installing a Dependency](#installing-a-dependency)
+- [Importing a Component](#importing-a-component)
+- [Adding a Stylesheet](#adding-a-stylesheet)
+- [Post-Processing CSS](#post-processing-css)
+- [Adding Images and Fonts](#adding-images-and-fonts)
+- [Adding Bootstrap](#adding-bootstrap)
+- [Adding Flow](#adding-flow)
+- [Adding Custom Environment Variables](#adding-custom-environment-variables)
+- [Integrating with a Node Backend](#integrating-with-a-node-backend)
+- [Deploying](#deploying)
+- [Something Missing?](#something-missing)
 
 ## Sending Feedback
 
@@ -90,9 +89,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Recipes
-
-### Displaying Lint Output in the Editor
+## Displaying Lint Output in the Editor
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
@@ -130,7 +127,7 @@ npm install -g eslint babel-eslint eslint-plugin-react eslint-plugin-import esli
 
 We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
 
-### Installing a Dependency
+## Installing a Dependency
 
 The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
 
@@ -138,14 +135,14 @@ The generated project includes React and ReactDOM as dependencies. It also inclu
 npm install --save <library-name>
 ```
 
-### Importing a Component
+## Importing a Component
 
 This project setup supports ES6 modules thanks to Babel.  
 While you can still use `require()` and `module.exports`, we encourage you to use [`import` and `export`](http://exploringjs.com/es6/ch_modules.html) instead.
 
 For example:
 
-#### `Button.js`
+### `Button.js`
 
 ```js
 import React, { Component } from 'react';
@@ -159,7 +156,8 @@ class Button extends Component {
 export default Button; // Don’t forget to use export default!
 ```
 
-#### `DangerButton.js`
+### `DangerButton.js`
+
 
 ```js
 import React, { Component } from 'react';
@@ -186,11 +184,11 @@ Learn more about ES6 modules:
 * [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
 * [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
 
-### Adding a Stylesheet
+## Adding a Stylesheet
 
 This project setup uses [Webpack](https://webpack.github.io/) for handling all assets. Webpack offers a custom way of “extending” the concept of `import` beyond JavaScript. To express that a JavaScript file depends on a CSS file, you need to **import the CSS from the JavaScript file**:
 
-#### `Button.css`
+### `Button.css`
 
 ```css
 .Button {
@@ -198,7 +196,7 @@ This project setup uses [Webpack](https://webpack.github.io/) for handling all a
 }
 ```
 
-#### `Button.js`
+### `Button.js`
 
 ```js
 import React, { Component } from 'react';
@@ -218,7 +216,7 @@ In development, expressing dependencies this way allows your styles to be reload
 
 If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
 
-### Post-Processing CSS
+## Post-Processing CSS
 
 This project setup minifies your CSS and adds vendor prefixes to it automatically through [Autoprefixer](https://github.com/postcss/autoprefixer) so you don’t need to worry about it.
 
@@ -251,7 +249,7 @@ becomes this:
 
 There is currently no support for preprocessors such as Less, or for sharing variables across CSS files.
 
-### Adding Images and Fonts
+## Adding Images and Fonts
 
 With Webpack, using static assets like images and fonts works similarly to CSS.
 
@@ -287,25 +285,25 @@ Please be advised that this is also a custom feature of Webpack.
 
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images). However it may not be portable to some other environments, such as Node.js and Browserify. If you prefer to reference static assets in a more traditional way outside the module system, please let us know [in this issue](https://github.com/facebookincubator/create-react-app/issues/28), and we will consider support for this.
 
-### Adding Bootstrap
+## Adding Bootstrap
 
 You don’t have to use [React Bootstrap](https://react-bootstrap.github.io) together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
 
-**Step 1.** Install React Bootstrap and Bootstrap from NPM. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well.
+Install React Bootstrap and Bootstrap from NPM. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well:
 
 ```
 npm install react-bootstrap --save
 npm install bootstrap@3 --save
 ```
 
-**Step 2.** Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```index.js``` file.
+Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```src/index.js``` file:
 
 ```js
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 ```
 
-**Step 3.** Import required React Bootstrap components within ```App.js``` file or your custom component files.
+Import required React Bootstrap components within ```src/App.js``` file or your custom component files:
 
 ```js
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
@@ -313,7 +311,7 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
 
-### Adding Flow
+## Adding Flow
 
 Flow typing is currently [not supported out of the box](https://github.com/facebookincubator/create-react-app/issues/72) with the default `.flowconfig` generated by Flow. If you run it, you might get errors like this:
 
@@ -369,7 +367,7 @@ module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|svg\|ttf\|woff\|woff2\|mp4\|w
 
 We will consider integrating more tightly with Flow in the future so that you don’t have to do this.
 
-### Adding Custom Environment Variables
+## Adding Custom Environment Variables
 
 > Note: this feature is available with `react-scripts@0.3.0` and higher.
 
@@ -401,13 +399,15 @@ render() {
 The above form is looking for a variable called `REACT_APP_SECRET_CODE` from the environment. In order to consume this
 value, we need to have it defined in the environment:
 
-#### Windows Cmd
+### Windows (cmd.exe)
 
 ```cmd
-set REACT_APP_SECRET_CODE=abcdef && npm start
+set REACT_APP_SECRET_CODE=abcdef&&npm start
 ```
 
-#### Bash/Unix shells
+(Note: the lack of whitespace is intentional.)
+
+### Linux, OS X (Bash)
 
 ```bash
 REACT_APP_SECRET_CODE=abcdef npm start
@@ -437,13 +437,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 ```
 
-### Integrating with a Node Backend
+## Integrating with a Node Backend
 
 Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/) for instructions on integrating an app with a Node backend running on another port, and using `fetch()` to access it. You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo).
 
-### Deploying
+## Deploying
 
-#### GitHub Pages
+### GitHub Pages
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
@@ -475,10 +475,10 @@ Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` hi
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
 
-#### Heroku
+### Heroku
 
 Use the [Heroku Buildpack for create-react-app](https://github.com/mars/create-react-app-buildpack).
 
-### Something Missing?
+## Something Missing?
 
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/template/README.md)
