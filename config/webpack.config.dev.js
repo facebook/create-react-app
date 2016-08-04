@@ -33,7 +33,7 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: ['', '.js', '.json'],
+    extensions: ['', '.js', '.json', '.jsx'],
     alias: {
       // This `alias` section can be safely removed after ejection.
       // We do this because `babel-runtime` may be inside `react-scripts`,
