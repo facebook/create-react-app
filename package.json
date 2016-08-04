@@ -28,7 +28,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "autoprefixer": "6.3.7",
+    "autoprefixer": "6.4.0",
     "babel-core": "6.11.4",
     "babel-eslint": "6.1.2",
     "babel-jest": "14.1.0",
@@ -50,7 +50,7 @@
     "cross-spawn": "4.0.0",
     "css-loader": "0.23.1",
     "detect-port": "1.0.0",
-    "eslint": "3.1.1",
+    "eslint": "3.2.2",
     "eslint-loader": "1.4.1",
     "eslint-plugin-flowtype": "2.4.0",
     "eslint-plugin-import": "1.12.0",
