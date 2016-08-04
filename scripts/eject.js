@@ -105,6 +105,7 @@ prompt(
 
   appPackage.scripts.test = 'jest';
   appPackage.jest = createJestConfig(
+    appPackage.jest,
     filePath => path.join('<rootDir>', filePath)
   );
 

@@ -14,6 +14,7 @@ const jest = require('jest');
 const path = require('path');
 const paths = require('../config/paths');
 
+const appJestConfig = require(paths.appPackageJson).jest;
 const argv = process.argv.slice(2);
 
 const index = argv.indexOf('--debug-template');
@@ -22,6 +23,7 @@ if (index !== -1) {
 }
 
 argv.push('--config', JSON.stringify(createJestConfig(
+  appJestConfig,
   relativePath => path.resolve(__dirname, '..', relativePath),
   path.resolve(paths.appSrc, '..')
 )));
