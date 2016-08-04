@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "0.2.1",
+  "version": "0.3.0-alpha",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
