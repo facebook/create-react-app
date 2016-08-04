@@ -7,8 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-module.exports = (resolve, rootDir) => {
-  const config = {
+module.exports = (appConfig, resolve, rootDir) => {
+  const ownConfig = {
     automock: false,
     moduleNameMapper: {
       '^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$': resolve('config/jest/FileStub.js'),
@@ -21,6 +21,22 @@ module.exports = (resolve, rootDir) => {
     ],
     testEnvironment: 'node'
   };
+
+  if (appConfig) {
+    // Merge user config into the default config.
+    if (appConfig.setupFiles) {
+      appConfig.setupFiles = ownConfig.setupFiles.concat(appConfig.setupFiles);
+    }
+    if (appConfig.moduleNameMapper) {
+      appConfig.moduleNameMapper = Object.assign(
+        {},
+        ownConfig.moduleNameMapper,
+        appConfig.moduleNameMapper
+      );
+    }
+  }
+
+  const config = Object.assign(ownConfig, appConfig);
   if (rootDir) {
     config.rootDir = rootDir;
   }

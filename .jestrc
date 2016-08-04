@@ -1,0 +1,5 @@
+{
+  "automock": false,
+  "rootDir": "./scripts",
+  "testEnvironment": "node"
+}

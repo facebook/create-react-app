@@ -1,0 +1,33 @@
+exports[`create-jest-config creates a config object 1`] = `
+Object {
+  "automock": false,
+  "moduleNameMapper": Object {
+    "^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$": "<rootDir>/config/jest/FileStub.js",
+    "^[./a-zA-Z0-9$_-]+\\.css$": "<rootDir>/config/jest/CSSStub.js"
+  },
+  "persistModuleRegistryBetweenSpecs": true,
+  "scriptPreprocessor": "<rootDir>/config/jest/transform.js",
+  "setupFiles": Array [
+    "<rootDir>/config/polyfills.js"
+  ],
+  "testEnvironment": "node"
+}
+`;
+
+exports[`create-jest-config merges \`setupFiles\` and \`moduleNameMapper\` options 1`] = `
+Object {
+  "automock": false,
+  "moduleNameMapper": Object {
+    "^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$": "config/jest/FileStub.js",
+    "^[./a-zA-Z0-9$_-]+\\.css$": "config/jest/CSSStub.js",
+    "b": "c"
+  },
+  "persistModuleRegistryBetweenSpecs": true,
+  "scriptPreprocessor": "config/jest/transform.js",
+  "setupFiles": Array [
+    "config/polyfills.js",
+    "a"
+  ],
+  "testEnvironment": "node"
+}
+`;

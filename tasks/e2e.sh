@@ -48,8 +48,12 @@ cd ..
 # If you run it locally, you'll need to `git checkout -- package.json`.
 perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' package.json
 
-# Pack react-scripts
 npm install
+
+# Run tests
+npm run test-scripts
+
+# Pack react-scripts
 scripts_path=$PWD/`npm pack`
 
 # lint
