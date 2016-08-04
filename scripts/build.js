@@ -7,6 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+// Do this as the first thing so that any code reading it knows the right env.
 process.env.NODE_ENV = 'production';
 
 var chalk = require('chalk');
@@ -21,12 +22,16 @@ var paths = require('../config/paths');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
 
+// Input: /User/dan/app/build/static/js/main.82be8.js
+// Output: /static/js/main.js
 function removeFileNameHash(fileName) {
   return fileName
     .replace(paths.appBuild, '')
     .replace(/\/?(.*)(\.\w+)(\.js|\.css)/, (match, p1, p2, p3) => p1 + p3);
 }
 
+// Input: 1024, 2048
+// Output: "(+1 KB)"
 function getDifferenceLabel(currentSize, previousSize) {
   var FIFTY_KILOBYTES = 1024 * 50;
   var difference = currentSize - previousSize;
@@ -62,6 +67,7 @@ recursive(paths.appBuild, (err, fileNames) => {
   build(previousSizeMap);
 });
 
+// Print a detailed summary of build files.
 function printFileSizes(stats, previousSizeMap) {
   var assets = stats.toJson().assets
     .filter(asset => /\.(js|css)$/.test(asset.name))
@@ -78,7 +84,6 @@ function printFileSizes(stats, previousSizeMap) {
       };
     });
   assets.sort((a, b) => b.size - a.size);
-
   var longestSizeLabelLength = Math.max.apply(null,
     assets.map(a => stripAnsi(a.sizeLabel).length)
   );
@@ -96,6 +101,7 @@ function printFileSizes(stats, previousSizeMap) {
   });
 }
 
+// Create the production build and print the deployment instructions.
 function build(previousSizeMap) {
   console.log('Creating an optimized production build...');
   webpack(config).run((err, stats) => {
