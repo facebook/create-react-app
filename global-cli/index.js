@@ -101,12 +101,26 @@ function createApp(name, verbose, version) {
   run(root, appName, version, verbose, originalDirectory);
 }
 
+function getNpmVersion() {
+  return spawn.sync(
+    'npm',
+    ['--version'],
+    {encoding: 'utf8'}
+  ).stdout;
+}
+
+function npmSupportsOffline() {
+  var version = getNpmVersion();
+  return semver.gt(version, '3.9.0');
+}
+
 function run(root, appName, version, verbose, originalDirectory) {
   var args = [
     'install',
     verbose && '--verbose',
     '--save-dev',
     '--save-exact',
+    npmSupportsOffline() && '--cache-min=Infinity',
     getInstallPackage(version),
   ].filter(function(e) { return e; });
   var proc = spawn('npm', args, {stdio: 'inherit'});
