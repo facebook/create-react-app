@@ -19,7 +19,9 @@ module.exports = (resolve, rootDir) => {
     setupFiles: [
       resolve('config/polyfills.js')
     ],
-    testEnvironment: 'node'
+    setupTestFrameworkScriptFile: resolve('config/jest/environment.js'),
+    testEnvironment: 'node',
+    verbose: true
   };
   if (rootDir) {
     config.rootDir = rootDir;
