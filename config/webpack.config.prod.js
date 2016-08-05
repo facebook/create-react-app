@@ -125,7 +125,7 @@ module.exports = {
       {
         test: /\.styl/,
         include: [paths.appSrc, paths.appNodeModules],
-        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'stylus')
+        loader: ExtractTextPlugin.extract('style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!stylus')
       },
       {
         // JSON is not enabled by default in Webpack but both Node and Browserify
