@@ -115,7 +115,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
-Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
+Some editors, including [Emacs](http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html), Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
 
 They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
 
