@@ -181,19 +181,18 @@ module.exports = {
     // a plugin that prints an error when you attempt to do this.
     // See https://github.com/facebookincubator/create-react-app/issues/240
     new CaseSensitivePathsPlugin(),
-<<<<<<< HEAD
+    // Warn on using .jsx files, prefer using .js only.
+    // See https://github.com/facebookincubator/create-react-app/issues/290
     new CheckFilenamePlugin({
       regex: /\.jsx$/,
       error: function(filename) {
         return 'Module load aborted: .jsx extensions are not allowed, use .js extensions only. See create-react-app/issues/290 for more info.\n\tFor: ' + filename;
       }
     }),
-=======
     // If you require a missing module and then `npm install` it, you still have
     // to restart the development server for Webpack to discover it. This plugin
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
->>>>>>> master
     new WatchMissingNodeModulesPlugin(paths.appNodeModules)
   ]
 };
