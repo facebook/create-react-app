@@ -10,6 +10,7 @@
 var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
+var poststylus = require('poststylus');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var WatchMissingNodeModulesPlugin = require('../scripts/utils/WatchMissingNodeModulesPlugin');
@@ -106,13 +107,20 @@ module.exports = {
       },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
+      // "modules" use css models.
       // "style" loader turns CSS into JS modules that inject <style> tags.
       // In production, we use a plugin to extract that CSS to a file, but
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
         include: [paths.appSrc, paths.appNodeModules],
-        loader: 'style!css!postcss'
+        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss'
+      },
+      // "stylus" loader for stylus. Use like css loader.
+      {
+        test: /\.styl/,
+        include: [paths.appSrc, paths.appNodeModules],
+        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!stylus'
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
@@ -162,6 +170,12 @@ module.exports = {
         ]
       }),
     ];
+  },
+  // We use PostCSS for stylus
+  stylus: {
+    use: [
+      poststylus([ 'autoprefixer', 'rucksack-css' ])
+    ]
   },
   plugins: [
     // Generates an `index.html` file with the <script> injected.

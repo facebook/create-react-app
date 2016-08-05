@@ -29,6 +29,14 @@ module.exports = {
     require.resolve('babel-plugin-transform-object-rest-spread'),
     // function* () { yield 42; yield 43; }
     require.resolve('babel-plugin-transform-regenerator'),
+    // obj::method
+    require.resolve('babel-plugin-transform-function-bind'),
+    // @decorator
+    require.resolve('babel-plugin-transform-decorators-legacy'),
+    // do {}
+    require.resolve('babel-plugin-transform-do-expressions'),
+    // let n = { x, y, ...z }
+    require.resolve('babel-plugin-transform-object-rest-spread'),
     // Polyfills the runtime needed for async/await and generators
     [require.resolve('babel-plugin-transform-runtime'), {
       helpers: false,

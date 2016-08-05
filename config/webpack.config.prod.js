@@ -10,6 +10,7 @@
 var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
+var poststylus = require('poststylus');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
@@ -120,6 +121,12 @@ module.exports = {
         loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss')
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
+      // stylus loader
+      {
+        test: /\.styl/,
+        include: [paths.appSrc, paths.appNodeModules],
+        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'stylus')
+      },
       {
         // JSON is not enabled by default in Webpack but both Node and Browserify
         // allow it implicitly so we also enable it.
@@ -169,6 +176,11 @@ module.exports = {
         ]
       }),
     ];
+  },
+  stylus: {
+    use: [
+      poststylus([ 'autoprefixer', 'rucksack-css' ])
+    ]
   },
   plugins: [
     // Generates an `index.html` file with the <script> injected.
