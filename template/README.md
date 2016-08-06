@@ -22,6 +22,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Deployment](#deployment)
+  - [Netlify](#netlify)
   - [Now](#now)
   - [Heroku](#heroku)
   - [GitHub Pages](#github-pages)
@@ -510,6 +511,39 @@ To override this, specify the `homepage` in your `package.json`, for example:
 ```
 
 This will let Create React App correctly infer the root path to use in the generated HTML file.
+
+## Netlify
+
+**To do a manual deploy to Netlify's CDN:**
+
+```sh
+npm install netlify-cli
+netlify deploy
+```
+
+Choose `build` as the path to deploy.
+
+**To setup continuous delivery**
+
+With this setup Netlify will build and deploy when you push to git or open a pull request:
+
+1. [Start a new netlify project](https://app.netlify.com/signup)
+2. Pick your Git hosting provider and select your create-react-app project
+3. Set the `Dir` to `build` and `Build command` to `npm build`
+
+**Support for client site routing:**
+
+To support `pushState` add a `src/_redirects` file with the following rewrite rule:
+
+```
+/*  /index.html  200
+```
+
+Then add this import statement to `src/index.js`:
+
+```js
+import "file?name=_redirects!./_redirects";
+```
 
 ### Now
 
