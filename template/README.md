@@ -528,8 +528,8 @@ Choose `build` as the path to deploy.
 With this setup Netlify will build and deploy when you push to git or open a pull request:
 
 1. [Start a new netlify project](https://app.netlify.com/signup)
-2. Pick your Git hosting provider and select your create-react-app project
-3. Set the `Dir` to `build` and `Build command` to `npm build`
+2. Pick your Git hosting service and select your create-react-app repository
+3. Click `Build your site`
 
 **Support for client site routing:**
 
