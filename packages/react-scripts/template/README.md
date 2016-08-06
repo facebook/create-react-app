@@ -46,6 +46,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [GitHub Pages](#github-pages)
   - [Heroku](#heroku)
   - [Modulus](#modulus)
+  - [Netlify](#netlify)
   - [Now](#now)
   - [Surge](#surge)
 - [Something Missing?](#something-missing)
@@ -910,6 +911,35 @@ You can find instructions in [Deploying React with Zero Configuration](https://b
 ### Modulus
 
 See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modulus) on how to deploy your react app to Modulus.
+
+## Netlify
+
+**To do a manual deploy to Netlify's CDN:**
+
+```sh
+npm install netlify-cli
+netlify deploy
+```
+
+Choose `build` as the path to deploy.
+
+**To setup continuous delivery:**
+
+With this setup Netlify will build and deploy when you push to git or open a pull request:
+
+1. [Start a new netlify project](https://app.netlify.com/signup)
+2. Pick your Git hosting service and select your repository
+3. Click `Build your site`
+
+**Support for client site routing:**
+
+To support `pushState`, make sure to create a `public/_redirects` file with the following rewrite rules:
+
+```
+/*  /index.html  200
+```
+
+When you build the project, Create React App will place the `public` folder contents into the build output.
 
 ### Now
 
