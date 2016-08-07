@@ -71,10 +71,7 @@ function createApp(name, verbose, version) {
   var root = path.resolve(name);
   if (!pathExists.sync(name)) {
     fs.mkdirSync(root);
-  }
-  // Check if GitHub boilerplate compatible
-  // https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-237875655
-  else if (!isGitHubBoilerplate(root)) {
+  } else if (!isGitHubBoilerplate(root)) {
     console.log('The directory `' + name + '` contains file(s) that could conflict. Aborting.');
     process.exit(1);
   }
@@ -170,12 +167,14 @@ function checkNodeVersion() {
   }
 }
 
+// Check if GitHub boilerplate compatible
+// https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-237875655
 function isGitHubBoilerplate(root) {
   var validFiles = [
     '.DS_Store', 'Thumbs.db', '.git', '.gitignore', 'README.md', 'LICENSE'
   ];
   return fs.readdirSync(root)
-    .every(function (file) {
+    .every(function(file) {
       return validFiles.indexOf(file) >= 0;
     });
 }

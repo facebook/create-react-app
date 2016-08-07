@@ -59,13 +59,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     if (err) {
       // Append if there's already a `.gitignore` file there
       if (err.code === 'EEXIST') {
-        fs.readFile(path.join(appPath, 'gitignore'), (err, data) => {
-          if (err) throw err;
-          fs.appendFileSync(path.join(appPath, '.gitignore'), data);
-          fs.unlinkSync(path.join(appPath, 'gitignore'));
-        });
-      }
-      else {
+        var data = fs.readFileSync(path.join(appPath, 'gitignore'));
+        fs.appendFileSync(path.join(appPath, '.gitignore'), data);
+        fs.unlinkSync(path.join(appPath, 'gitignore'));
+      } else {
         throw err;
       }
     }
