@@ -61,7 +61,7 @@ module.exports = {
   },
   resolve: {
     // These are the reasonable defaults supported by the Node ecosystem.
-    extensions: ['.js', '.json', ''],
+    extensions: ['.js', '.jsx', '.json', ''],
     alias: {
       // This `alias` section can be safely removed after ejection.
       // We do this because `babel-runtime` may be inside `react-scripts`,
@@ -86,7 +86,7 @@ module.exports = {
     // It's important to do this before Babel processes the JS.
     preLoaders: [
       {
-        test: /\.js$/,
+        test: /\.(js)x?$/,
         loader: 'eslint',
         include: paths.appSrc
       }
@@ -94,7 +94,7 @@ module.exports = {
     loaders: [
       // Process JS with Babel.
       {
-        test: /\.js$/,
+        test: /\.(js)x?$/,
         include: paths.appSrc,
         loader: 'babel',
         query: require('./babel.prod')
