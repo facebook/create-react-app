@@ -3,3 +3,4 @@ build
 .DS_Store
 *.tgz
 my-app*
+template/src/__tests__/__snapshots__/

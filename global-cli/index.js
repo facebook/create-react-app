@@ -87,7 +87,10 @@ function createApp(name, verbose, version) {
     version: '0.0.1',
     private: true,
   };
-  fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(packageJson));
+  fs.writeFileSync(
+    path.join(root, 'package.json'),
+    JSON.stringify(packageJson, null, 2)
+  );
   var originalDirectory = process.cwd();
   process.chdir(root);
 
