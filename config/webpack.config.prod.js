@@ -60,6 +60,7 @@ module.exports = {
     publicPath: publicPath
   },
   resolve: {
+    root: paths.appSrc,
     // These are the reasonable defaults supported by the Node ecosystem.
     extensions: ['.js', '.json', ''],
     alias: {
