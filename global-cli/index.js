@@ -41,6 +41,7 @@ var spawn = require('cross-spawn');
 var chalk = require('chalk');
 var semver = require('semver');
 var argv = require('minimist')(process.argv.slice(2));
+var pathExists = require('path-exists');
 
 /**
  * Arguments:
@@ -67,20 +68,19 @@ if (commands.length === 0) {
 createApp(commands[0], argv.verbose, argv['scripts-version']);
 
 function createApp(name, verbose, version) {
-  if (fs.existsSync(name)) {
-    console.log('The directory `' + name + '` already exists. Aborting.');
+  var root = path.resolve(name);
+  if (!pathExists.sync(name)) {
+    fs.mkdirSync(root);
+  } else if (!isGitHubBoilerplate(root)) {
+    console.log('The directory `' + name + '` contains file(s) that could conflict. Aborting.');
     process.exit(1);
   }
 
-  var root = path.resolve(name);
   var appName = path.basename(root);
-
   console.log(
     'Creating a new React app in ' + root + '.'
   );
   console.log();
-
-  fs.mkdirSync(root);
 
   var packageJson = {
     name: appName,
@@ -165,4 +165,16 @@ function checkNodeVersion() {
     );
     process.exit(1);
   }
+}
+
+// Check if GitHub boilerplate compatible
+// https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-237875655
+function isGitHubBoilerplate(root) {
+  var validFiles = [
+    '.DS_Store', 'Thumbs.db', '.git', '.gitignore', 'README.md', 'LICENSE'
+  ];
+  return fs.readdirSync(root)
+    .every(function(file) {
+      return validFiles.indexOf(file) >= 0;
+    });
 }
