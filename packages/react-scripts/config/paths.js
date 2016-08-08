@@ -24,6 +24,7 @@ var isInCreateReactAppSource = (
 );
 
 function resolveOwn(relativePath) {
+  console.log(path.resolve(__dirname, relativePath));
   return path.resolve(__dirname, relativePath);
 }
 
@@ -34,11 +35,11 @@ function resolveApp(relativePath) {
 if (isInCreateReactAppSource) {
   // create-react-app development: we're in ./config/
   module.exports = {
-    appBuild: resolveOwn('../build'),
-    appHtml: resolveOwn('../template/index.html'),
-    appFavicon: resolveOwn('../template/favicon.ico'),
+    appBuild: resolveOwn('../scripts/build'),
+    appHtml: resolveOwn('../../../template/index.html'),
+    appFavicon: resolveOwn('../../../template/favicon.ico'),
     appPackageJson: resolveOwn('../package.json'),
-    appSrc: resolveOwn('../template/src'),
+    appSrc: resolveOwn('../../../template/src'),
     appNodeModules: resolveOwn('../node_modules'),
     ownNodeModules: resolveOwn('../node_modules')
   };
