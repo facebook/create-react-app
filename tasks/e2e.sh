@@ -73,7 +73,7 @@ npm run test
 test -e template/src/__tests__/__snapshots__/App-test.js.snap
 
 # Pack CLI
-cd global-cli
+cd packages/react-scripts
 npm install
 cli_path=$PWD/`npm pack`
 
