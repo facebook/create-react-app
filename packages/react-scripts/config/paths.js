@@ -24,7 +24,6 @@ var isInCreateReactAppSource = (
 );
 
 function resolveOwn(relativePath) {
-  console.log(path.resolve(__dirname, relativePath));
   return path.resolve(__dirname, relativePath);
 }
 
