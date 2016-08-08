@@ -20,6 +20,12 @@ module.exports = (resolve, rootDir) => {
       resolve('config/polyfills.js')
     ],
     setupTestFrameworkScriptFile: resolve('config/jest/environment.js'),
+    testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/build/'],
+    // Allow three popular conventions:
+    // **/__tests__/*.js
+    // **/*.test.js
+    // **/*.spec.js
+    testRegex: '(__tests__/.*|\\.(test|spec))\\.js$',
     testEnvironment: 'node',
     verbose: true
   };
