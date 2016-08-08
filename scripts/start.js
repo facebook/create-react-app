@@ -108,7 +108,9 @@ function setupCompiler(port) {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
-    var json = stats.toJson();
+    // We use stats.toJson({}, true) to make output more compact and readable:
+    // https://github.com/facebookincubator/create-react-app/issues/401#issuecomment-238291901
+    var json = stats.toJson({}, true);
     var formattedErrors = json.errors.map(message =>
       'Error in ' + formatMessage(message)
     );
