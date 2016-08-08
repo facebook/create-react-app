@@ -24,6 +24,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Deployment](#deployment)
   - [Now](#now)
   - [Heroku](#heroku)
+  - [Surge](#surge)
   - [GitHub Pages](#github-pages)
 - [Something Missing?](#something-missing)
 
@@ -518,6 +519,27 @@ See [this example](https://github.com/xkawi/create-react-app-now) for a zero-con
 ### Heroku
 
 Use the [Heroku Buildpack for create-react-app](https://github.com/mars/create-react-app-buildpack).
+
+### Surge
+
+Install the Surge CLI if you haven't already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account. You just need to specify the *build* folder and your custom domain, and you are done.
+
+```sh
+              email: email@domain.com
+           password: ********
+       project path: /path/to/project/build
+               size: 7 files, 1.8 MB
+             domain: create-react-app.surge.sh
+             upload: [====================] 100%, eta: 0.0s
+   propagate on CDN: [====================] 100%
+               plan: Free
+              users: email@domain.com
+         IP Address: X.X.X.X
+
+    Success! Project is published and running at create-react-app.surge.sh
+```
+
+Note that in order to support routers that use html5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
 
 ### GitHub Pages
 
