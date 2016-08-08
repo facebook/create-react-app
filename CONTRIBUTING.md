@@ -26,7 +26,7 @@ Please also provide a **test plan**, i.e. specify how you verified what you adde
 
 1. Clone the repo with `git clone https://github.com/facebookincubator/create-react-app`
 
-2. Run `npm install` in the root `create-react-app` folder **and** the `create-react-app/global-cli` folder
+2. Run `npm install` in the root `packages/create-react-app` folder **and** the `packages/react-scripts` folder
 
 Once it is done, you can modify any file locally and run `npm start` or `npm run build` just like in a generated project.
 
