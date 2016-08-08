@@ -130,13 +130,13 @@ function build(previousSizeMap) {
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
       console.log('To publish it at ' + chalk.green(homepagePath) + ', run:');
       console.log();
-      console.log('  ' + chalk.blue('git') + chalk.cyan(' commit -am ') + chalk.yellow('"Save local changes"'));
-      console.log('  ' + chalk.blue('git') + chalk.cyan(' checkout -B gh-pages'));
-      console.log('  ' + chalk.blue('git') + chalk.cyan(' add -f build'));
-      console.log('  ' + chalk.blue('git') + chalk.cyan(' commit -am ' + chalk.yellow('"Rebuild website"')));
-      console.log('  ' + chalk.blue('git') + chalk.cyan(' filter-branch -f --prune-empty --subdirectory-filter build'));
-      console.log('  ' + chalk.blue('git') + chalk.cyan(' push -f origin gh-pages'));
-      console.log('  ' + chalk.blue('git') + chalk.cyan(' checkout -'));
+      console.log('  ' + chalk.cyan('git') + ' commit -am ' + chalk.yellow('"Save local changes"'));
+      console.log('  ' + chalk.cyan('git') + ' checkout -B gh-pages');
+      console.log('  ' + chalk.cyan('git') + ' add -f build');
+      console.log('  ' + chalk.cyan('git') + ' commit -am ' + chalk.yellow('"Rebuild website"'));
+      console.log('  ' + chalk.cyan('git') + ' filter-branch -f --prune-empty --subdirectory-filter build');
+      console.log('  ' + chalk.cyan('git') + ' push -f origin gh-pages');
+      console.log('  ' + chalk.cyan('git') + ' checkout -');
       console.log();
     } else if (publicPath !== '/') {
       // "homepage": "http://mywebsite.com/project"
@@ -163,9 +163,9 @@ function build(previousSizeMap) {
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
       console.log('You may also serve it locally with a static server:')
       console.log();
-      console.log('  ' + chalk.blue('npm') +  chalk.cyan(' install -g pushstate-server'));
-      console.log('  ' + chalk.blue('pushstate-server') + chalk.cyan(' build'));
-      console.log('  ' + chalk.blue(openCommand) + chalk.cyan(' http://localhost:9000'));
+      console.log('  ' + chalk.cyan('npm') +  ' install -g pushstate-server');
+      console.log('  ' + chalk.cyan('pushstate-server') + ' build');
+      console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:9000');
       console.log();
     }
   });
