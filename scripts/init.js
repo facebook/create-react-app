@@ -10,6 +10,8 @@
 var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('cross-spawn');
+var pathExists = require('path-exists');
+var chalk = require('chalk');
 
 module.exports = function(appPath, appName, verbose, originalDirectory) {
   var ownPath = path.join(appPath, 'node_modules', 'react-scripts');
@@ -43,12 +45,28 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     JSON.stringify(appPackage, null, 2)
   );
 
+  var readmeExists = pathExists.sync(path.join(appPath, 'README.md'));
+  if (readmeExists) {
+    fs.renameSync(path.join(appPath, 'README.md'), path.join(appPath, 'README.old.md'));
+  }
+
   // Copy the files for the user
   fs.copySync(path.join(ownPath, 'template'), appPath);
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862
-  fs.move(path.join(appPath, 'gitignore'), path.join(appPath, '.gitignore'), []);
+  fs.move(path.join(appPath, 'gitignore'), path.join(appPath, '.gitignore'), [], function (err) {
+    if (err) {
+      // Append if there's already a `.gitignore` file there
+      if (err.code === 'EEXIST') {
+        var data = fs.readFileSync(path.join(appPath, 'gitignore'));
+        fs.appendFileSync(path.join(appPath, '.gitignore'), data);
+        fs.unlinkSync(path.join(appPath, 'gitignore'));
+      } else {
+        throw err;
+      }
+    }
+  });
 
   // Run another npm install for react and react-dom
   console.log('Installing react and react-dom from npm...');
@@ -88,6 +106,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     console.log();
     console.log('  cd', cdpath);
     console.log('  npm start');
+    if (readmeExists) {
+      console.log();
+      console.log(chalk.yellow('You had a `README.md` file, we renamed it to `README.old.md`'));
+    }
     console.log();
     console.log('Happy hacking!');
   });
