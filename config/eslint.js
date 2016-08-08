@@ -58,7 +58,7 @@ module.exports = {
   rules: {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',
-    'brace-style': ['warm', 'stroustrup', { allowSingleLine: true }],
+    'brace-style': [2, 'stroustrup', { allowSingleLine: true }],
     'default-case': ['warn', { commentPattern: '^no default$' }],
     'dot-location': ['warn', 'property'],
     eqeqeq: ['warn', 'allow-null'],
@@ -143,7 +143,7 @@ module.exports = {
       ignoreExport: false,
     }],
     'no-with': 'warn',
-    "no-var": 'warm',
+    'no-var': 2,
     'no-whitespace-before-property': 'warn',
     'operator-assignment': ['warn', 'always'],
     radix: 'warn',
