@@ -50,6 +50,7 @@ cd ..
 perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' package.json
 
 # Pack react-scripts
+cd packages/react-scripts
 npm install
 scripts_path=$PWD/`npm pack`
 
@@ -73,7 +74,7 @@ npm run test
 test -e template/src/__tests__/__snapshots__/App-test.js.snap
 
 # Pack CLI
-cd packages/react-scripts
+cd packages/create-react-app
 npm install
 cli_path=$PWD/`npm pack`
 
