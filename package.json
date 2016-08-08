@@ -65,6 +65,7 @@
     "http-proxy-middleware": "0.17.0",
     "jest": "14.1.0",
     "json-loader": "0.5.4",
+    "object-assign": "4.1.0",
     "opn": "4.0.2",
     "path-exists": "3.0.0",
     "postcss-loader": "0.9.1",
