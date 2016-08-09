@@ -14,6 +14,7 @@ npm start
 ```
 
 Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
+
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
 
 <img src='https://camo.githubusercontent.com/506a5a0a33aebed2bf0d24d3999af7f582b31808/687474703a2f2f692e696d6775722e636f6d2f616d794e66434e2e706e67' width='600' alt='npm start'>
@@ -101,6 +102,7 @@ You can also read its latest version [here](https://github.com/facebookincubator
 * React, JSX, and ES6 support.
 * Language extras beyond ES6 like the object spread operator.
 * A dev server that lints for common errors.
+* Jest test runner with support for component snapshot testing.
 * Import CSS and image files directly from JavaScript.
 * Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
 * A `build` script to bundle JS, CSS, and images for production, with sourcemaps.
@@ -124,7 +126,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 Some features are currently **not supported**:
 
 * Server rendering.
-* Testing.
 * Some experimental syntax extensions (e.g. decorators).
 * CSS Modules.
 * LESS or Sass.
