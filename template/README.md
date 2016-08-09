@@ -82,6 +82,8 @@ You need to **put any JS and CSS files inside `src`**, or Webpack won’t see th
 You can, however, create more top-level directories.  
 They will not be included in the production build so you can use them for things like documentation.
 
+> NOTE: Only use `.js` file extensions for all JavaScript files inside `src`, including any React components. `.jsx` is explicitly not allowed, and an error will be thrown during compilation. See [create-react-app/issues/290](https://github.com/facebookincubator/create-react-app/issues/290) for more info.
+
 ## Available Scripts
 
 In the project directory, you can run:

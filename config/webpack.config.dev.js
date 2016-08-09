@@ -12,6 +12,7 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+var CheckFilenamePlugin = require('check-filename-webpack-plugin');
 var WatchMissingNodeModulesPlugin = require('../scripts/utils/WatchMissingNodeModulesPlugin');
 var paths = require('./paths');
 var env = require('./env');
@@ -66,7 +67,8 @@ module.exports = {
   },
   resolve: {
     // These are the reasonable defaults supported by the Node ecosystem.
-    extensions: ['.js', '.json', ''],
+    // We also include .jsx extension in order to warn with CheckFilenamePlugin.
+    extensions: ['.jsx', '.js', '.json', ''],
     alias: {
       // This `alias` section can be safely removed after ejection.
       // We do this because `babel-runtime` may be inside `react-scripts`,
@@ -180,6 +182,14 @@ module.exports = {
     // a plugin that prints an error when you attempt to do this.
     // See https://github.com/facebookincubator/create-react-app/issues/240
     new CaseSensitivePathsPlugin(),
+    // Warn on using .jsx files, prefer using .js only.
+    // See https://github.com/facebookincubator/create-react-app/issues/290
+    new CheckFilenamePlugin({
+      regex: /\.jsx$/,
+      error: function(filename) {
+        return 'Module load aborted: .jsx extensions are not allowed, use .js extensions only. See create-react-app/issues/290 for more info.\n\tFor: ' + filename;
+      }
+    }),
     // If you require a missing module and then `npm install` it, you still have
     // to restart the development server for Webpack to discover it. This plugin
     // makes the discovery automatic so you don't have to restart.
