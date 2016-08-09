@@ -2,6 +2,8 @@
 
 Create React apps with no build configuration.
 
+_Cut the CRApp, Create React App!_
+
 ## tl;dr
 
 ```sh
