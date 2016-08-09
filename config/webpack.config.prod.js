@@ -71,7 +71,8 @@ module.exports = {
       // if we don't have a good solution, we should just make `babel-runtime`
       // a dependency in generated projects.
       // See https://github.com/facebookincubator/create-react-app/issues/255
-      'babel-runtime/regenerator': require.resolve('babel-runtime/regenerator')
+      'babel-runtime/regenerator': require.resolve('babel-runtime/regenerator'),
+      'react-native': 'react-native-web'
     }
   },
   // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
