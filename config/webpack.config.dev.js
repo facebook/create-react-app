@@ -13,6 +13,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var WatchMissingNodeModulesPlugin = require('../scripts/utils/WatchMissingNodeModulesPlugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var paths = require('./paths');
 var env = require('./env');
 
@@ -171,6 +172,10 @@ module.exports = {
       template: paths.appHtml,
       favicon: paths.appFavicon,
     }),
+    // Copy the static folder as-is to the build folder
+    new CopyWebpackPlugin([
+      { from: paths.appStatic, to: 'static' }
+    ]),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `env.js`.
     new webpack.DefinePlugin(env),

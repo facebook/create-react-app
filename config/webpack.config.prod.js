@@ -11,6 +11,7 @@ var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
 var paths = require('./paths');
@@ -204,6 +205,10 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     // Try to dedupe duplicated modules, if any:
     new webpack.optimize.DedupePlugin(),
+    // Copy the static folder as-is to the build folder
+    new CopyWebpackPlugin([
+      { from: paths.appStatic, to: 'static' }
+    ]),
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
