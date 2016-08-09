@@ -533,16 +533,10 @@ With this setup Netlify will build and deploy when you push to git or open a pul
 
 **Support for client site routing:**
 
-To support `pushState` add a `src/_redirects` file with the following rewrite rule:
+To support `pushState`, make sure to create a `build/_redirects` file with the following rewrite rules:
 
 ```
 /*  /index.html  200
-```
-
-Then add this import statement to `src/index.js`:
-
-```js
-import "file?name=_redirects!./_redirects";
 ```
 
 ### Now
