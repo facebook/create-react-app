@@ -7,4 +7,4 @@ cache:
   directories:
   - packages/create-react-app/node_modules
   - packages/react-scripts/node_modules
-script: tasks/e2e.sh
+script: packages/react-scripts/tasks/e2e.sh
