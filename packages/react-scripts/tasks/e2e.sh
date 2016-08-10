@@ -47,10 +47,9 @@ cd ..
 # Packing with them enabled takes too much memory, and Travis crashes.
 # End to end script is meant to run on Travis so it's not a big deal.
 # If you run it locally, you'll need to `git checkout -- package.json`.
-perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' packages/react-scripts/package.json
+perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' package.json
 
 # Pack react-scripts
-cd packages/react-scripts
 npm install
 scripts_path=$PWD/`npm pack`
 
