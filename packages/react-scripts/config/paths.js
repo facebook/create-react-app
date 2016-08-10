@@ -32,13 +32,13 @@ function resolveApp(relativePath) {
 }
 
 if (isInCreateReactAppSource) {
-  // create-react-app development: we're in ./config/
+  // create-react-app development: we're in ./packages/react-scripts/config
   module.exports = {
     appBuild: resolveOwn('../scripts/build'),
-    appHtml: resolveOwn('../../../template/index.html'),
-    appFavicon: resolveOwn('../../../template/favicon.ico'),
+    appHtml: resolveOwn('../template/index.html'),
+    appFavicon: resolveOwn('../template/favicon.ico'),
     appPackageJson: resolveOwn('../package.json'),
-    appSrc: resolveOwn('../../../template/src'),
+    appSrc: resolveOwn('../template/src'),
     appNodeModules: resolveOwn('../node_modules'),
     ownNodeModules: resolveOwn('../node_modules')
   };
