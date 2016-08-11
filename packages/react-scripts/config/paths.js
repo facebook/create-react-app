@@ -32,9 +32,9 @@ function resolveApp(relativePath) {
 }
 
 if (isInCreateReactAppSource) {
-  // create-react-app development: we're in ./config/
+  // create-react-app development: we're in ./config/packages/react-scripts
   module.exports = {
-    appBuild: resolveOwn('../build'),
+    appBuild: resolveOwn('../../../build'),
     appHtml: resolveOwn('../template/index.html'),
     appPackageJson: resolveOwn('../package.json'),
     appSrc: resolveOwn('../template/src'),

@@ -13,16 +13,14 @@
   "scripts": {
     "build": "node scripts/build.js --debug-template",
     "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\"",
-    "e2e": "tasks/e2e.sh",
+    "e2e": "../../tasks/e2e.sh",
     "start": "node scripts/start.js --debug-template",
     "test": "node scripts/test.js --debug-template"
   },
   "files": [
-    "PATENTS",
     "bin",
     "config",
-    "scripts",
-    "template"
+    "scripts"
   ],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
