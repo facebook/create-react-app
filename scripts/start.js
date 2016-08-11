@@ -173,6 +173,8 @@ function addMiddleware(devServer) {
   // Every unrecognized request will be forwarded to it.
   var proxy = require(paths.appPackageJson).proxy;
   devServer.use(historyApiFallback({
+    // Allow paths with dots in them to be loaded, reference issue #387
+    disableDotRule: true,
     // For single page apps, we generally want to fallback to /index.html.
     // However we also want to respect `proxy` for API calls.
     // So if `proxy` is specified, we need to decide which fallback to use.
