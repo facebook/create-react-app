@@ -137,10 +137,20 @@ module.exports = {
         // "file" loader makes sure those assets end up in the `build` folder.
         // When you `import` an asset, you get its filename.
         test: /\.(ico|jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
+        exclude: /\/favicon.ico$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
+        }
+      },
+      // A special case for favicon.ico to place it into build root directory.
+      {
+        test: /\/favicon.ico$/,
+        include: [paths.appSrc],
+        loader: 'file',
+        query: {
+          name: 'favicon.ico?[hash:8]'
         }
       },
       // "url" loader works just like "file" loader but it also embeds

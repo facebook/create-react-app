@@ -67,7 +67,7 @@ test -e build/*.html
 test -e build/static/js/*.js
 test -e build/static/css/*.css
 test -e build/static/media/*.svg
-test -e build/static/media/*.ico
+test -e build/favicon.ico
 
 # Run tests
 npm run test
@@ -97,7 +97,7 @@ test -e build/*.html
 test -e build/static/js/*.js
 test -e build/static/css/*.css
 test -e build/static/media/*.svg
-test -e build/static/media/*.ico
+test -e build/favicon.ico
 
 # Run tests
 npm run test
@@ -115,7 +115,7 @@ test -e build/*.html
 test -e build/static/js/*.js
 test -e build/static/css/*.css
 test -e build/static/media/*.svg
-test -e build/static/media/*.ico
+test -e build/favicon.ico
 
 # Run tests
 npm run test
