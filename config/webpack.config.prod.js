@@ -126,21 +126,31 @@ module.exports = {
         loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss')
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
+      // JSON is not enabled by default in Webpack but both Node and Browserify
+      // allow it implicitly so we also enable it.
       {
-        // JSON is not enabled by default in Webpack but both Node and Browserify
-        // allow it implicitly so we also enable it.
         test: /\.json$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'json'
       },
+      // "file" loader makes sure those assets end up in the `build` folder.
+      // When you `import` an asset, you get its filename.
       {
-        // "file" loader makes sure those assets end up in the `build` folder.
-        // When you `import` an asset, you get its filename.
-        test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
+        test: /\.(ico|jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
+        exclude: /\/favicon.ico$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
+        }
+      },
+      // A special case for favicon.ico to place it into build root directory.
+      {
+        test: /\/favicon.ico$/,
+        include: [paths.appSrc],
+        loader: 'file',
+        query: {
+          name: 'favicon.ico?[hash:8]'
         }
       },
       // "url" loader works just like "file" loader but it also embeds
@@ -152,6 +162,15 @@ module.exports = {
         query: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
+        }
+      },
+      // "html" loader is used to process template page (index.html) to resolve
+      // resources linked with <link href="./relative/path"> HTML tags.
+      {
+        test: /\.html$/,
+        loader: 'html',
+        query: {
+          attrs: ['link:href'],
         }
       }
     ]
@@ -181,7 +200,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
-      favicon: paths.appFavicon,
       minify: {
         removeComments: true,
         collapseWhitespace: true,
