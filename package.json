@@ -61,6 +61,7 @@
     "filesize": "3.3.0",
     "fs-extra": "0.30.0",
     "gzip-size": "3.0.0",
+    "html-loader": "0.4.3",
     "html-webpack-plugin": "2.22.0",
     "http-proxy-middleware": "0.17.0",
     "jest": "14.1.0",
