@@ -157,7 +157,7 @@ module.exports = {
       // "html" loader is used to process template page (index.html) to resolve
       // resources linked with <link href="./relative/path"> HTML tags.
       {
-        test: /\.html/,
+        test: /\.html$/,
         loader: 'html',
         query: {
           attrs: ['link:href'],
