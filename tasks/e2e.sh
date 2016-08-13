@@ -12,7 +12,7 @@ cd "$(dirname "$0")"
 function cleanup {
   echo 'Cleaning up.'
   cd $initial_path
-  rm ../template/src/__tests__/__snapshots__/App-test.js.snap
+  rm ../packages/react-scripts/template/src/__tests__/__snapshots__/App-test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
