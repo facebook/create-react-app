@@ -136,9 +136,6 @@ module.exports = {
       // "file" loader makes sure those assets end up in the `build` folder.
       // When you `import` an asset, you get its filename.
       {
-<<<<<<< HEAD
-        // "file" loader makes sure those assets end up in the `build` folder.
-        // When you `import` an asset, you get its filename.
         test: /\.(ico|jpg|png|gif|eot|otf|svg|ttf|woff|woff2)(\?.*)?$/,
         exclude: /\/favicon.ico$/,
         include: [paths.appSrc, paths.appNodeModules],
