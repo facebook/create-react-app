@@ -76,7 +76,8 @@ module.exports = {
       // if we don't have a good solution, we should just make `babel-runtime`
       // a dependency in generated projects.
       // See https://github.com/facebookincubator/create-react-app/issues/255
-      'babel-runtime/regenerator': require.resolve('babel-runtime/regenerator')
+      'babel-runtime/regenerator': require.resolve('babel-runtime/regenerator'),
+      'react-native': 'react-native-web'
     }
   },
   // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
@@ -125,11 +126,21 @@ module.exports = {
       // When you `import` an asset, you get its (virtual) filename.
       // In production, they would get copied to the `build` folder.
       {
-        test: /\.(jpg|png|gif|eot|otf|svg|ttf|woff|woff2)(\?.*)?$/,
+        test: /\.(ico|jpg|png|gif|eot|otf|svg|ttf|woff|woff2)(\?.*)?$/,
         include: [paths.appSrc, paths.appNodeModules],
+        exclude: /\/favicon.ico$/,
         loader: 'file',
         query: {
           name: 'static/media/[name].[ext]'
+        }
+      },
+      // A special case for favicon.ico to place it into build root directory.
+      {
+        test: /\/favicon.ico$/,
+        include: [paths.appSrc],
+        loader: 'file',
+        query: {
+          name: 'favicon.ico?[hash:8]'
         }
       },
       // "url" loader works just like "file" loader but it also embeds
@@ -141,6 +152,15 @@ module.exports = {
         query: {
           limit: 10000,
           name: 'static/media/[name].[ext]'
+        }
+      },
+      // "html" loader is used to process template page (index.html) to resolve
+      // resources linked with <link href="./relative/path"> HTML tags.
+      {
+        test: /\.html$/,
+        loader: 'html',
+        query: {
+          attrs: ['link:href'],
         }
       }
     ]
@@ -168,7 +188,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
-      favicon: paths.appFavicon,
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `env.js`.
