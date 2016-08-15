@@ -17,8 +17,8 @@ set -e
 # Echo every command being executed
 set -x
 
-# Go to root
-cd ..
+# Go to packages/react-scripts
+cd ../packages/react-scripts
 
 # You can only release with npm >= 3
 if [ $(npm -v | head -c 1) -lt 3 ]; then

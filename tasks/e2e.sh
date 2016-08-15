@@ -12,7 +12,7 @@ cd "$(dirname "$0")"
 function cleanup {
   echo 'Cleaning up.'
   cd $initial_path
-  rm ../template/src/__tests__/__snapshots__/App-test.js.snap
+  rm ../packages/react-scripts/template/src/__tests__/__snapshots__/App-test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
@@ -41,7 +41,8 @@ set -x
 # npm pack the two directories to make sure they are valid npm modules
 initial_path=$PWD
 
-cd ..
+# Switch to the packages/react-scripts directory
+cd ../packages/react-scripts
 
 # A hacky way to avoid bundling dependencies.
 # Packing with them enabled takes too much memory, and Travis crashes.
@@ -62,6 +63,9 @@ npm start -- --smoke-test
 # Test local build command
 npm run build
 
+# Jump to the root directory
+cd ../..
+
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/*.js
@@ -69,12 +73,15 @@ test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
+# Jump to the packages/react-scripts dir to run tests
+cd packages/react-scripts
+
 # Run tests
 npm run test
 test -e template/src/__tests__/__snapshots__/App-test.js.snap
 
-# Pack CLI
-cd global-cli
+# Pack CLI, in packages/create-react-app
+cd ../create-react-app
 npm install
 cli_path=$PWD/`npm pack`
 
