@@ -129,7 +129,7 @@ module.exports = {
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
         query: {
-          name: 'static/media/[name].[ext]'
+          name: 'static/media/[name].[hash:8].[ext]'
         }
       },
       // "url" loader works just like "file" loader but it also embeds
@@ -140,7 +140,7 @@ module.exports = {
         loader: 'url',
         query: {
           limit: 10000,
-          name: 'static/media/[name].[ext]'
+          name: 'static/media/[name].[hash:8].[ext]'
         }
       }
     ]
