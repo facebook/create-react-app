@@ -13,6 +13,8 @@ var path = require('path');
 var chalk = require('chalk');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
+var Dashboard = require('webpack-dashboard');
+var DashboardPlugin = require('webpack-dashboard/plugin');
 var historyApiFallback = require('connect-history-api-fallback');
 var httpProxyMiddleware = require('http-proxy-middleware');
 var execSync = require('child_process').execSync;
@@ -25,6 +27,9 @@ var paths = require('../config/paths');
 // Tools like Cloud9 rely on this.
 var DEFAULT_PORT = process.env.PORT || 3000;
 var compiler;
+
+// Creates a new dashboard
+var dashboard = new Dashboard();
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
@@ -66,13 +71,11 @@ function formatMessage(message) {
     .replace('./~/css-loader!./~/postcss-loader!', '');
 }
 
-function clearConsole() {
-  // This seems to work best on Windows and other systems.
-  // The intention is to clear the output so you can focus on most recent build.
-  process.stdout.write('\x1bc');
-}
-
 function setupCompiler(port) {
+  // Configures the webpack-dashboard instance
+  // and adds the dashboard plugin
+  config.plugins.push(new DashboardPlugin(dashboard.setData));
+
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   compiler = webpack(config, handleCompile);
@@ -82,26 +85,24 @@ function setupCompiler(port) {
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
   compiler.plugin('invalid', function() {
-    clearConsole();
-    console.log('Compiling...');
+    dashboard.logText.setContent('Compiling...');
   });
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
   compiler.plugin('done', function(stats) {
-    clearConsole();
     var hasErrors = stats.hasErrors();
     var hasWarnings = stats.hasWarnings();
     if (!hasErrors && !hasWarnings) {
-      console.log(chalk.green('Compiled successfully!'));
-      console.log();
-      console.log('The app is running at:');
-      console.log();
-      console.log('  ' + chalk.cyan('http://localhost:' + port + '/'));
-      console.log();
-      console.log('Note that the development build is not optimized.');
-      console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
-      console.log();
+      dashboard.logText.setContent(chalk.green('Compiled successfully!'));
+      dashboard.logText.setContent();
+      dashboard.logText.setContent('The app is running at:');
+      dashboard.logText.setContent();
+      dashboard.logText.setContent('  ' + chalk.cyan('http://localhost:' + port + '/'));
+      dashboard.logText.setContent();
+      dashboard.logText.setContent('Note that the development build is not optimized.');
+      dashboard.logText.setContent('To create a production build, use ' + chalk.cyan('npm run build') + '.');
+      dashboard.logText.setContent();
       return;
     }
 
@@ -118,8 +119,8 @@ function setupCompiler(port) {
       'Warning in ' + formatMessage(message)
     );
     if (hasErrors) {
-      console.log(chalk.red('Failed to compile.'));
-      console.log();
+      dashboard.logText.setContent(chalk.red('Failed to compile.'));
+      dashboard.logText.setContent();
       if (formattedErrors.some(isLikelyASyntaxError)) {
         // If there are any syntax errors, show just them.
         // This prevents a confusing ESLint parsing error
@@ -127,23 +128,23 @@ function setupCompiler(port) {
         formattedErrors = formattedErrors.filter(isLikelyASyntaxError);
       }
       formattedErrors.forEach(message => {
-        console.log(message);
-        console.log();
+        dashboard.logText.setContent(message);
+        dashboard.logText.setContent();
       });
       // If errors exist, ignore warnings.
       return;
     }
     if (hasWarnings) {
-      console.log(chalk.yellow('Compiled with warnings.'));
-      console.log();
+      dashboard.logText.setContent(chalk.yellow('Compiled with warnings.'));
+      dashboard.logText.setContent();
       formattedWarnings.forEach(message => {
-        console.log(message);
-        console.log();
+        dashboard.logText.setContent(message);
+        dashboard.logText.setContent();
       });
       // Teach some ESLint tricks.
-      console.log('You may use special comments to disable some warnings.');
-      console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
-      console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
+      dashboard.logText.setContent('You may use special comments to disable some warnings.');
+      dashboard.logText.setContent('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
+      dashboard.logText.setContent('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
     }
   });
 }
@@ -188,9 +189,9 @@ function addMiddleware(devServer) {
   }));
   if (proxy) {
     if (typeof proxy !== 'string') {
-      console.log(chalk.red('When specified, "proxy" in package.json must be a string.'));
-      console.log(chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".'));
-      console.log(chalk.red('Either remove "proxy" from package.json, or make it a string.'));
+      dashboard.logText.setContent(chalk.red('When specified, "proxy" in package.json must be a string.'));
+      dashboard.logText.setContent(chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".'));
+      dashboard.logText.setContent(chalk.red('Either remove "proxy" from package.json, or make it a string.'));
       process.exit(1);
     }
 
@@ -244,12 +245,11 @@ function runDevServer(port) {
   // Launch WebpackDevServer.
   devServer.listen(port, (err, result) => {
     if (err) {
-      return console.log(err);
+      return dashboard.logText.setContent(err);
     }
 
-    clearConsole();
-    console.log(chalk.cyan('Starting the development server...'));
-    console.log();
+    dashboard.logText.setContent(chalk.cyan('Starting the development server...'));
+    dashboard.logText.setContent();
     openBrowser(port);
   });
 }
@@ -267,7 +267,6 @@ detect(DEFAULT_PORT).then(port => {
     return;
   }
 
-  clearConsole();
   var question =
     chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.') +
     '\n\nWould you like to run the app on another port instead?';
