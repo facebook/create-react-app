@@ -131,7 +131,7 @@ module.exports = {
         exclude: /\/favicon.ico$/,
         loader: 'file',
         query: {
-          name: 'static/media/[name].[ext]'
+          name: 'static/media/[name].[hash:8].[ext]'
         }
       },
       // A special case for favicon.ico to place it into build root directory.
@@ -151,7 +151,7 @@ module.exports = {
         loader: 'url',
         query: {
           limit: 10000,
-          name: 'static/media/[name].[ext]'
+          name: 'static/media/[name].[hash:8].[ext]'
         }
       },
       // "html" loader is used to process template page (index.html) to resolve
