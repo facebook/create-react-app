@@ -16,6 +16,7 @@ var WebpackDevServer = require('webpack-dev-server');
 var historyApiFallback = require('connect-history-api-fallback');
 var httpProxyMiddleware = require('http-proxy-middleware');
 var execSync = require('child_process').execSync;
+var exec = require('child_process').exec;
 var opn = require('opn');
 var detect = require('detect-port');
 var prompt = require('./utils/prompt');
@@ -70,6 +71,20 @@ function clearConsole() {
   // This seems to work best on Windows and other systems.
   // The intention is to clear the output so you can focus on most recent build.
   process.stdout.write('\x1bc');
+}
+
+function getExistingProcesses(port) {
+  //determine if another process running on the desired port
+  return new Promise(function (resolve, reject) {
+    var command = 'lsof -P | grep TCP | grep :' + port + ' | cut -d \' \' -f 1';
+    exec(command, function (error, stdout, stderr) {
+      if (error) {
+        reject(error);
+      }
+
+      resolve(stdout);
+    });
+  });
 }
 
 function setupCompiler(port) {
@@ -259,6 +274,7 @@ function run(port) {
   runDevServer(port);
 }
 
+
 // We attempt to use the default port but if it is busy, we offer the user to
 // run on a different port. `detect()` Promise resolves to the next free port.
 detect(DEFAULT_PORT).then(port => {
@@ -268,13 +284,24 @@ detect(DEFAULT_PORT).then(port => {
   }
 
   clearConsole();
-  var question =
-    chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.') +
-    '\n\nWould you like to run the app on another port instead?';
 
-  prompt(question, true).then(shouldChangePort => {
-    if (shouldChangePort) {
-      run(port);
-    }
-  });
+
+  getExistingProcesses(DEFAULT_PORT)
+    .then(res => chalk.yellow(
+      `Something is already running on port ${DEFAULT_PORT}:
+
+      The existing process is: ${res}
+
+      Would you like to run the app on another port instead?
+      `
+    ))
+    .then(question => prompt(question, true))
+    .then((shouldChangePort) => {
+      if (shouldChangePort) {
+        run(port);
+      }
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
 });
