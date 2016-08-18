@@ -373,7 +373,7 @@ esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable
 
 module.name_mapper='^\(.*\)\.css$' -> 'react-scripts/config/flow/css'
-module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> 'react-scripts/config/flow/file'
+module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|otf\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> 'react-scripts/config/flow/file'
 
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
@@ -385,7 +385,7 @@ If you later `eject`, you’ll need to replace `react-scripts` references with t
 
 ```ini
 module.name_mapper='^\(.*\)\.css$' -> '<PROJECT_ROOT>/config/flow/css'
-module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> '<PROJECT_ROOT>/config/flow/file'
+module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|otf\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> '<PROJECT_ROOT>/config/flow/file'
 ```
 
 We will consider integrating more tightly with Flow in the future so that you don’t have to do this.
