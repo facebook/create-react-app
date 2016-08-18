@@ -30,7 +30,9 @@ function indentLines(lines, spaces){
     return lines.join('\n'+ Array(spaces).join(' '))
   return lines;
 }
-Object.keys(types).map(function(type){
+
+for(var i=0; i<types.length; i++){
+  var type = types[i];
   var _specs = types[type];
 
   template[type] = function(content, override){
@@ -44,7 +46,7 @@ Object.keys(types).map(function(type){
                 +" " + indentLines(content, blk.length+2)
       } else {
 
-        if(content.type=='title'){
+        if(content.type === 'title'){
           blk = block(content.name);
           line = chalk[specs.blockColor[0]][specs.blockColor[1]](blk)
                   + " " + chalk[specs.titleColor](indentLines(content.message, blk.length+2));
@@ -60,6 +62,6 @@ Object.keys(types).map(function(type){
     }
     return line;
   }
-})
+}
 
 module.exports = template;

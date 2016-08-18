@@ -41,7 +41,6 @@ cli.addCustomMethod('displayHeader', function(){
 
 cli.addCustomMethod('buildInfo', function(stats){
 
-  'use strict';
   var buildInfo = [];
   try {
     var packageData = require(process.cwd() + '/package.json');
@@ -65,7 +64,7 @@ cli.addCustomMethod('displayWarnings', function(title, messages){
   var processDir = path.join(process.cwd(),'../')
   messages.forEach(message=>{
     var messageString = formatMessage(message)
-                          .replace(new RegExp(rx,''), '\033[0m')
+                          .replace(new RegExp(rx,''), '\\033[0m')
                           .replace(new RegExp(processDir), './');
     cli.warning('Warning in '+ messageString);
   })
