@@ -45,7 +45,8 @@ cli.addCustomMethod('buildInfo', function(stats){
   var buildInfo = [];
   try {
     var packageData = require(process.cwd() + '/package.json');
-    buildInfo.push('Package name: '+packageData.name)
+    buildInfo.push('Name: '+packageData.name)
+    buildInfo.push('Version: '+packageData.version)
   } catch (e) {
     // There was no package.json
     return;
@@ -53,7 +54,7 @@ cli.addCustomMethod('buildInfo', function(stats){
 
   buildInfo.push('Compiling time: '+ ((stats.endTime-stats.startTime)/ 1000).toFixed(2)+'ms')
   buildInfo.push('HASH: '+ stats.hash+'\n')
-  cli.info(buildInfo)
+  cli.info({type:'title', name:'PKG', message:buildInfo})
 })
 cli.addCustomMethod('displayWarnings', function(title, messages){
   if(!messages.length) return;
