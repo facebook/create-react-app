@@ -78,13 +78,11 @@ cli.addCustomMethod('displayWarnings', function(title, messages){
 cli.addCustomMethod('displayErrors', function(title, messages){
   if(!messages.length) return;
   cli.error({type:'title', name:'ERROR', message: title});
-  var isSyntaxError = false;
   if (messages.some(isLikelyASyntaxError)) {
     // If there are any syntax errors, show just them.
     // This prevents a confusing ESLint parsing error
     // preceding a much more useful Babel syntax error.
     messages = messages.filter(isLikelyASyntaxError);
-    isSyntaxError = true;
   }
 
   var rx = path.join(__dirname,'../../')+'[^:]*: ';
@@ -94,11 +92,8 @@ cli.addCustomMethod('displayErrors', function(title, messages){
     var messageString = formatMessage(message)
                           .replace(new RegExp(rx,''), '   ')
                           .replace(new RegExp(processDir), './');
-    // if(isSyntaxError){
-      cli.error(messageString);
-    // } else {
-      // cli.error('Error in ' + messageString);
-    // }
+
+    cli.error(messageString);
 
   });
 

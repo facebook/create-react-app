@@ -79,7 +79,7 @@
     "webpack": "1.13.1",
     "webpack-dev-server": "1.14.1",
     "whatwg-fetch": "1.0.0",
-    "pretty-cli": "0.0.13"
+    "pretty-cli": "0.0.14"
   },
   "devDependencies": {
     "bundle-deps": "1.0.0",
