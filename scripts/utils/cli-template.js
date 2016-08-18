@@ -30,11 +30,8 @@ function indentLines(lines, spaces){
     return lines.join('\n'+ Array(spaces).join(' '))
   return lines;
 }
-
-for(var i=0; i<types.length; i++){
-  var type = types[i];
+Object.keys(types).map(function(type){
   var _specs = types[type];
-
   template[type] = function(content, override){
     var line, specs={};
     Object.assign(specs, _specs, override)
@@ -62,6 +59,7 @@ for(var i=0; i<types.length; i++){
     }
     return line;
   }
-}
+  return type;
+});
 
 module.exports = template;
