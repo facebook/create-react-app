@@ -16,16 +16,17 @@ function cleanup {
   rm -rf $temp_cli_path $temp_app_path
 }
 
+# error messages are redirected to stderr
 function handle_error {
-  echo "$(basename $0): \033[31mERROR!\033[m An error was encountered executing \033[36mline $1\033[m."
+  echo "$(basename $0): \033[31mERROR!\033[m An error was encountered executing \033[36mline $1\033[m." 1>&2;
   cleanup
-  echo 'Exiting with error.'
+  echo 'Exiting with error.' 1>&2;
   exit 1
 }
 
 function handle_exit {
   cleanup
-  echo 'Exiting without error.'
+  echo 'Exiting without error.' 1>&2;
   exit
 }
 
@@ -38,7 +39,7 @@ trap 'set +x; handle_exit' SIGQUIT SIGTERM SIGINT SIGKILL SIGHUP
 # Echo every command being executed
 set -x
 
-# npm pack the two directories to make sure they are valid npm modules
+# `tasks/clean_pack.sh` the two directories to make sure they are valid npm modules
 initial_path=$PWD
 
 cd ..
@@ -51,7 +52,7 @@ perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' package.json
 
 # Pack react-scripts
 npm install
-scripts_path=$PWD/`npm pack`
+scripts_path=$PWD/`tasks/clean_pack.sh`
 
 # lint
 ./node_modules/.bin/eslint --ignore-path .gitignore ./
