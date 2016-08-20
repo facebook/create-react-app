@@ -1,4 +1,3 @@
-#!/bin/bash
 # Copyright (c) 2015-present, Facebook, Inc.
 # All rights reserved.
 #
@@ -29,6 +28,27 @@ function handle_exit {
   exit
 }
 
+function build_check {
+  local test_snap_path="$1"
+
+  # Test the build command
+  npm run build
+
+  # Check for expected output
+  test -e build/*.html
+  test -e build/static/js/*.js
+  test -e build/static/css/*.css
+  test -e build/static/media/*.svg
+  test -e build/favicon.ico
+
+  # Run Jest tests
+  npm run test
+  test -e $test_snap_path
+
+  # Test the server
+  npm start -- --smoke-test
+}
+
 # Exit the script with a helpful error message when any error is encountered
 trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 
@@ -55,23 +75,8 @@ scripts_path=$PWD/`npm pack`
 
 # lint
 ./node_modules/.bin/eslint --ignore-path .gitignore ./
-
-# Test local start command
-npm start -- --smoke-test
-
-# Test local build command
-npm run build
-
-# Check for expected output
-test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/static/media/*.svg
-test -e build/favicon.ico
-
-# Run tests
-npm run test
-test -e template/src/__tests__/__snapshots__/App-test.js.snap
+# Test the build
+build_check "template/src/__tests__/__snapshots__/App-test.js.snap"
 
 # Pack CLI
 cd global-cli
@@ -90,39 +95,12 @@ node "$temp_cli_path"/node_modules/create-react-app/index.js --scripts-version=$
 cd test-app
 
 # Test the build
-npm run build
-
-# Check for expected output
-test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/static/media/*.svg
-test -e build/favicon.ico
-
-# Run tests
-npm run test
-test -e src/__tests__/__snapshots__/App-test.js.snap
-
-# Test the server
-npm start -- --smoke-test
+build_check "src/__tests__/__snapshots__/App-test.js.snap"
 
 # Eject and test the build
 echo yes | npm run eject
-npm run build
-
-# Check for expected output
-test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/static/media/*.svg
-test -e build/favicon.ico
-
-# Run tests
-npm run test
-test -e src/__tests__/__snapshots__/App-test.js.snap
-
-# Test the server
-npm start -- --smoke-test
+# Test the build
+build_check "src/__tests__/__snapshots__/App-test.js.snap"
 
 # Cleanup
 cleanup
