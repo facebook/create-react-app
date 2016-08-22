@@ -518,7 +518,8 @@ See [this example](https://github.com/xkawi/create-react-app-now) for a zero-con
 
 ### Heroku
 
-Use the [Heroku Buildpack for create-react-app](https://github.com/mars/create-react-app-buildpack).
+Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).  
+You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
 
 ### Surge
 
