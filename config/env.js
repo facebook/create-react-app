@@ -14,6 +14,7 @@
 
 var REACT_APP = /^REACT_APP_/i;
 var NODE_ENV = JSON.stringify(process.env.NODE_ENV || 'development');
+var NODE_PATH = process.env.NODE_PATH || '';
 
 module.exports = Object
   .keys(process.env)
@@ -22,5 +23,6 @@ module.exports = Object
     env['process.env.' + key] = JSON.stringify(process.env[key]);
     return env;
   }, {
-    'process.env.NODE_ENV': NODE_ENV
+    'process.env.NODE_ENV': NODE_ENV,
+    'process.env.NODE_PATH': NODE_PATH
   });
