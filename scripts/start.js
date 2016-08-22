@@ -94,6 +94,51 @@ function setupCompiler(port) {
     var hasWarnings = stats.hasWarnings();
     if (!hasErrors && !hasWarnings) {
       console.log(chalk.green('Compiled successfully!'));
+    }
+    else {
+      // We have switched off the default Webpack output in WebpackDevServer
+      // options so we are going to "massage" the warnings and errors and present
+      // them in a readable focused way.
+      // We use stats.toJson({}, true) to make output more compact and readable:
+      // https://github.com/facebookincubator/create-react-app/issues/401#issuecomment-238291901
+      var json = stats.toJson({}, true);
+      var formattedErrors = json.errors.map(message =>
+        'Error in ' + formatMessage(message)
+      );
+      var formattedWarnings = json.warnings.map(message =>
+        'Warning in ' + formatMessage(message)
+      );
+      if (hasErrors) {
+        console.log(chalk.red('Failed to compile.'));
+        console.log();
+        if (formattedErrors.some(isLikelyASyntaxError)) {
+          // If there are any syntax errors, show just them.
+          // This prevents a confusing ESLint parsing error
+          // preceding a much more useful Babel syntax error.
+          formattedErrors = formattedErrors.filter(isLikelyASyntaxError);
+        }
+        formattedErrors.forEach(message => {
+          console.log(message);
+          console.log();
+        });
+        // If errors exist, ignore warnings.
+        return;
+      }
+      if (hasWarnings) {
+        console.log(chalk.yellow('Compiled with warnings.'));
+        console.log();
+        formattedWarnings.forEach(message => {
+          console.log(message);
+          console.log();
+        });
+        // Teach some ESLint tricks.
+        console.log('You may use special comments to disable some warnings.');
+        console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
+        console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
+      }
+    }
+
+    if (!hasErrors) {
       console.log();
       console.log('The app is running at:');
       console.log();
@@ -102,48 +147,6 @@ function setupCompiler(port) {
       console.log('Note that the development build is not optimized.');
       console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
       console.log();
-      return;
-    }
-
-    // We have switched off the default Webpack output in WebpackDevServer
-    // options so we are going to "massage" the warnings and errors and present
-    // them in a readable focused way.
-    // We use stats.toJson({}, true) to make output more compact and readable:
-    // https://github.com/facebookincubator/create-react-app/issues/401#issuecomment-238291901
-    var json = stats.toJson({}, true);
-    var formattedErrors = json.errors.map(message =>
-      'Error in ' + formatMessage(message)
-    );
-    var formattedWarnings = json.warnings.map(message =>
-      'Warning in ' + formatMessage(message)
-    );
-    if (hasErrors) {
-      console.log(chalk.red('Failed to compile.'));
-      console.log();
-      if (formattedErrors.some(isLikelyASyntaxError)) {
-        // If there are any syntax errors, show just them.
-        // This prevents a confusing ESLint parsing error
-        // preceding a much more useful Babel syntax error.
-        formattedErrors = formattedErrors.filter(isLikelyASyntaxError);
-      }
-      formattedErrors.forEach(message => {
-        console.log(message);
-        console.log();
-      });
-      // If errors exist, ignore warnings.
-      return;
-    }
-    if (hasWarnings) {
-      console.log(chalk.yellow('Compiled with warnings.'));
-      console.log();
-      formattedWarnings.forEach(message => {
-        console.log(message);
-        console.log();
-      });
-      // Teach some ESLint tricks.
-      console.log('You may use special comments to disable some warnings.');
-      console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
-      console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
     }
   });
 }
