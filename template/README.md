@@ -1,6 +1,26 @@
 Below you will find some information on how to perform common tasks.  
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md).
 
+## Table of Contents
+
+- [Sending Feedback](#sending-feedback)
+- [Folder Structure](#folder-structure)
+- [Available Scripts](#available-scripts)
+  - [npm start](#npm-start)
+  - [npm run build](#npm-run-build)
+  - [npm run eject](#npm-run-eject)
+- [How To...](#how-to)
+  - [Installing a Dependency](#installing-a-dependency)
+  - [Importing a Component](#importing-a-component)
+  - [Adding a Stylesheet](#adding-a-stylesheet)
+  - [Post-Processing CSS](#post-processing-css)
+  - [Adding Images and Fonts](#adding-images-and-fonts)
+  - [Installing React Bootstrap](#installing-react-bootstrap)
+  - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
+  - [Adding Flow](#adding-flow)
+  - [Deploying](#deploying)
+  - [Something Missing?](#something-missing)
+
 ## Sending Feedback
 
 We are always open to [your feedback](https://github.com/facebookincubator/create-react-app/issues).
@@ -74,7 +94,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## How To...
 
-### Install a Dependency
+### Installing a Dependency
 
 The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
 
@@ -82,7 +102,7 @@ The generated project includes React and ReactDOM as dependencies. It also inclu
 npm install --save <library-name>
 ```
 
-### Import a Component
+### Importing a Component
 
 This project setup supports ES6 modules thanks to Babel.  
 While you can still use `require()` and `module.exports`, we encourage you to use [`import` and `export`](http://exploringjs.com/es6/ch_modules.html) instead.
@@ -130,7 +150,7 @@ Learn more about ES6 modules:
 * [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
 * [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
 
-### Add a Stylesheet
+### Adding a Stylesheet
 
 This project setup uses [Webpack](https://webpack.github.io/) for handling all assets. Webpack offers a custom way of “extending” the concept of `import` beyond JavaScript. To express that a JavaScript file depends on a CSS file, you need to **import the CSS from the JavaScript file**:
 
@@ -162,7 +182,7 @@ In development, expressing dependencies this way allows your styles to be reload
 
 If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
 
-### Post-Process CSS
+### Post-Processing CSS
 
 This project setup minifies your CSS and adds vendor prefixes to it automatically through [Autoprefixer](https://github.com/postcss/autoprefixer) so you don’t need to worry about it.
 
@@ -195,7 +215,7 @@ becomes this:
 
 There is currently no support for preprocessors such as Less, or for sharing variables across CSS files.
 
-### Add Images and Fonts
+### Adding Images and Fonts
 
 With Webpack, using static assets like images and fonts works similarly to CSS.
 
@@ -231,7 +251,7 @@ Please be advised that this is also a custom feature of Webpack.
 
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images). However it may not be portable to some other environments, such as Node.js and Browserify. If you prefer to reference static assets in a more traditional way outside the module system, please let us know [in this issue](https://github.com/facebookincubator/create-react-app/issues/28), and we will consider support for this.
 
-### Install React Bootstrap
+### Installing React Bootstrap
 
 You don’t have to use React Bootstrap together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
 
@@ -257,7 +277,7 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
 
-### Display Lint Output in the Editor
+### Displaying Lint Output in the Editor
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
@@ -295,7 +315,7 @@ npm install -g eslint babel-eslint eslint-plugin-react eslint-plugin-import esli
 
 We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
 
-### Add Flow
+### Adding Flow
 
 Flow typing is currently [not supported out of the box](https://github.com/facebookincubator/create-react-app/issues/72) with the default `.flowconfig` generated by Flow. If you run it, you might get errors like this:
 
@@ -351,7 +371,7 @@ module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|svg\|ttf\|woff\|woff2\|mp4\|w
 
 We will consider integrating more tightly with Flow in the future so that you don’t have to do this.
 
-### Deploy
+### Deploying
 
 #### GitHub Pages
 
