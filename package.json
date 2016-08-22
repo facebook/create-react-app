@@ -73,8 +73,8 @@
   },
   "devDependencies": {
     "bundle-deps": "1.0.0",
-    "react": "^15.2.1",
-    "react-dom": "^15.2.1"
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1"
   },
   "optionalDependencies": {
     "fsevents": "1.0.14"
