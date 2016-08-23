@@ -10,6 +10,7 @@
 var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('cross-spawn');
+var spawnSync = require('cross-spawn').sync;
 var pathExists = require('path-exists');
 var chalk = require('chalk');
 
@@ -23,7 +24,17 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   appPackage.dependencies = appPackage.dependencies || {};
   appPackage.devDependencies = appPackage.devDependencies || {};
   ['react', 'react-dom'].forEach(function (key) {
-    appPackage.dependencies[key] = ownPackage.devDependencies[key];
+    var args = [
+      'view',
+      key,
+      'version',
+      verbose && '--verbose'
+    ].filter(function(e) { return e; });
+    var result = spawnSync('npm', args, {encoding: 'utf8'});
+
+    appPackage.dependencies[key] = result.status === 0 ?
+      '^' + result.stdout.trim() :
+      ownPackage.devDependencies[key];
   });
   ['react-test-renderer'].forEach(function (key) {
     appPackage.devDependencies[key] = ownPackage.devDependencies[key];
