@@ -126,17 +126,17 @@ module.exports = {
         loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss')
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
+      // JSON is not enabled by default in Webpack but both Node and Browserify
+      // allow it implicitly so we also enable it.
       {
-        // JSON is not enabled by default in Webpack but both Node and Browserify
-        // allow it implicitly so we also enable it.
         test: /\.json$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'json'
       },
+      // "file" loader makes sure those assets end up in the `build` folder.
+      // When you `import` an asset, you get its filename.
       {
-        // "file" loader makes sure those assets end up in the `build` folder.
-        // When you `import` an asset, you get its filename.
-        test: /\.(jpg|png|gif|eot|otf|svg|ttf|woff|woff2)(\?.*)?$/,
+        test: /\.(jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
         include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
         query: {
