@@ -552,6 +552,9 @@ Open your `package.json` and add a `homepage` field:
   "homepage": "http://myusername.github.io/my-app",
 ```
 
+**The above step is important!**  
+Create React App uses the `homepage` field to determine the root URL in the built HTML file.
+
 Now, whenever you run `npm run build`, you will see a cheat sheet with a sequence of commands to deploy to GitHub pages:
 
 ```sh
