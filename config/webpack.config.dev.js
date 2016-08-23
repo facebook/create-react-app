@@ -67,7 +67,7 @@ module.exports = {
   resolve: {
     // This allows you to set a root for where webpack should look for modules.
     // This enables you to use absolute imports from the root.
-    root: path.resolve(process.env.NODE_PATH || ''),
+    root: paths.nodePath,
     // These are the reasonable defaults supported by the Node ecosystem.
     extensions: ['.js', '.json', ''],
     alias: {
