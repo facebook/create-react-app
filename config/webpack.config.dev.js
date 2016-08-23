@@ -67,9 +67,11 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    // This allows you to set a root for where webpack should look for modules.
-    // This enables you to use absolute imports from the root.
-    root: path.resolve(process.env.NODE_PATH || ''),
+    // This allows you to set a root for where Webpack should look for modules.
+    // It must be an absolute path or an array of absolute paths.
+    // This lets you use absolute paths in imports inside large monorepos:
+    // https://github.com/facebookincubator/create-react-app/issues/253.
+    root: paths.nodePaths,
     // These are the reasonable defaults supported by the Node ecosystem.
     extensions: ['.js', '.json', ''],
     alias: {

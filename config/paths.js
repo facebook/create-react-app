@@ -11,6 +11,18 @@
 
 var path = require('path');
 
+// We support resolving modules according to NODE_PATH.
+// This lets you use absolute paths in imports inside large monorepos:
+// https://github.com/facebookincubator/create-react-app/issues/253.
+// It works just like NODE_PATH in Node:
+// https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders
+// We will export `nodePaths` as an array of absolute paths.
+// It will then be used by Webpack (and potentially other tools).
+var nodePaths = (process.env.NODE_PATH || '')
+  .split(process.platform === 'win32' ? ';' : ':')
+  .filter(Boolean)
+  .map(p => path.resolve(p));
+
 function resolveApp(relativePath) {
   return path.resolve(relativePath);
 }
@@ -22,13 +34,15 @@ module.exports = {
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appNodeModules: resolveApp('node_modules'),
-  ownNodeModules: resolveApp('node_modules')
+  ownNodeModules: resolveApp('node_modules'),
+  nodePaths: nodePaths
 };
 
 // @remove-on-eject-begin
 function resolveOwn(relativePath) {
   return path.resolve(__dirname, relativePath);
 }
+
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
   appBuild: resolveApp('build'),
@@ -37,7 +51,8 @@ module.exports = {
   appSrc: resolveApp('src'),
   appNodeModules: resolveApp('node_modules'),
   // this is empty with npm3 but node resolution searches higher anyway:
-  ownNodeModules: resolveOwn('../node_modules')
+  ownNodeModules: resolveOwn('../node_modules'),
+  nodePaths: nodePaths
 };
 // @remove-on-eject-end
 
@@ -48,6 +63,7 @@ module.exports = {
   appPackageJson: resolveOwn('../package.json'),
   appSrc: resolveOwn('../template/src'),
   appNodeModules: resolveOwn('../node_modules'),
-  ownNodeModules: resolveOwn('../node_modules')
+  ownNodeModules: resolveOwn('../node_modules'),
+  nodePaths: nodePaths
 };
 // @remove-on-publish-end
