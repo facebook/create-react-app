@@ -71,6 +71,7 @@
     "path-exists": "3.0.0",
     "postcss-loader": "0.9.1",
     "promise": "7.1.1",
+    "react-router": "^2.7.0",
     "recursive-readdir": "2.0.0",
     "rimraf": "2.5.4",
     "strip-ansi": "3.0.1",
