@@ -10,7 +10,7 @@
 var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('cross-spawn');
-var spawnSync = require('cross-spawn').sync;
+var spawnSync = spawn.sync;
 var pathExists = require('path-exists');
 var chalk = require('chalk');
 
@@ -18,27 +18,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   var ownPath = path.join(appPath, 'node_modules', 'react-scripts');
 
   var appPackage = require(path.join(appPath, 'package.json'));
-  var ownPackage = require(path.join(ownPath, 'package.json'));
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
   appPackage.devDependencies = appPackage.devDependencies || {};
-  ['react', 'react-dom'].forEach(function (key) {
-    var args = [
-      'view',
-      key,
-      'version',
-      verbose && '--verbose'
-    ].filter(function(e) { return e; });
-    var result = spawnSync('npm', args, {encoding: 'utf8'});
-
-    appPackage.dependencies[key] = result.status === 0 ?
-      '^' + result.stdout.trim() :
-      ownPackage.devDependencies[key];
-  });
-  ['react-test-renderer'].forEach(function (key) {
-    appPackage.devDependencies[key] = ownPackage.devDependencies[key];
-  });
 
   // Setup the script rules
   appPackage.scripts = {};
@@ -79,21 +62,28 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     }
   });
 
-  // Run another npm install for react and react-dom
+  // Run npm installs for react and react-dom
   console.log('Installing react and react-dom from npm...');
   console.log();
   // TODO: having to do two npm installs is bad, can we avoid it?
-  var args = [
-    'install',
-    verbose && '--verbose'
-  ].filter(function(e) { return e; });
-  var proc = spawn('npm', args, {stdio: 'inherit'});
-  proc.on('close', function (code) {
-    if (code !== 0) {
-      console.error('`npm ' + args.join(' ') + '` failed');
-      return;
-    }
 
+  var installFailed;
+  ['react', 'react-dom', 'react-test-renderer'].forEach(function (pkg) {
+    var args = [
+      'install',
+      pkg,
+      pkg === 'react-test-renderer' ? '--save-dev' : '--save',
+      verbose && '--verbose'
+    ].filter(function(e) { return e; });
+    var result = spawnSync('npm', args, {stdio: 'inherit'});
+
+    if (result.status !== 0) {
+      console.error('`npm ' + args.join(' ') + '` failed');
+      installFailed = true;
+    }
+  });
+
+  if (!installFailed) {
     // Display the most elegant way to cd.
     // This needs to handle an undefined originalDirectory for
     // backward compatibility with old global-cli's.
@@ -123,5 +113,5 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     }
     console.log();
     console.log('Happy hacking!');
-  });
+  }
 };
