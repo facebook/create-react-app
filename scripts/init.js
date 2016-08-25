@@ -10,7 +10,6 @@
 var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('cross-spawn');
-var spawnSync = spawn.sync;
 var pathExists = require('path-exists');
 var chalk = require('chalk');
 
@@ -62,28 +61,25 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     }
   });
 
-  // Run npm installs for react and react-dom
+  // Run another npm install for react and react-dom
   console.log('Installing react and react-dom from npm...');
   console.log();
   // TODO: having to do two npm installs is bad, can we avoid it?
-
-  var installFailed;
-  ['react', 'react-dom', 'react-test-renderer'].forEach(function (pkg) {
-    var args = [
-      'install',
-      pkg,
-      pkg === 'react-test-renderer' ? '--save-dev' : '--save',
-      verbose && '--verbose'
-    ].filter(function(e) { return e; });
-    var result = spawnSync('npm', args, {stdio: 'inherit'});
-
-    if (result.status !== 0) {
+  var args = [
+    'install',
+    'react',
+    'react-dom',
+    'react-test-renderer',
+    '--save',
+    verbose && '--verbose'
+  ].filter(function(e) { return e; });
+  var proc = spawn('npm', args, {stdio: 'inherit'})
+  proc.on('close', function (code) {
+    if (code !== 0) {
       console.error('`npm ' + args.join(' ') + '` failed');
-      installFailed = true;
+      return;
     }
-  });
 
-  if (!installFailed) {
     // Display the most elegant way to cd.
     // This needs to handle an undefined originalDirectory for
     // backward compatibility with old global-cli's.
@@ -114,4 +110,4 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     console.log();
     console.log('Happy hacking!');
   }
-};
+});
