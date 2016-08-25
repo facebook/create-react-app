@@ -110,4 +110,4 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     console.log();
     console.log('Happy hacking!');
   });
-}
+};
