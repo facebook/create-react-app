@@ -11,24 +11,21 @@ module.exports = {
   // Don't try to find .babelrc because we want to force this configuration.
   babelrc: false,
   presets: [
-    // let, const, destructuring, classes, modules
-    require.resolve('babel-preset-es2015'),
-    // exponentiation
-    require.resolve('babel-preset-es2016'),
+    // Latest stable ECMAScript features
+    require.resolve('babel-preset-latest'),
     // JSX, Flow
     require.resolve('babel-preset-react')
   ],
   plugins: [
-    // function x(a, b, c,) { }
-    require.resolve('babel-plugin-syntax-trailing-function-commas'),
-    // await fetch()
-    require.resolve('babel-plugin-syntax-async-functions'),
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
     // { ...todo, completed: true }
     require.resolve('babel-plugin-transform-object-rest-spread'),
     // function* () { yield 42; yield 43; }
-    require.resolve('babel-plugin-transform-regenerator'),
+    [require.resolve('babel-plugin-transform-regenerator'), {
+      // Async functions are converted to generators by babel-preset-latest
+      async: false
+    }],
     // Polyfills the runtime needed for async/await and generators
     [require.resolve('babel-plugin-transform-runtime'), {
       helpers: false,
