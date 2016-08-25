@@ -14,16 +14,12 @@ module.exports = {
   // It enables caching results in OS temporary directory for faster rebuilds.
   cacheDirectory: true,
   presets: [
-    // let, const, destructuring, classes, modules
-    require.resolve('babel-preset-es2015'),
-    // exponentiation
-    require.resolve('babel-preset-es2016'),
+    // Latest stable ECMAScript features
+    require.resolve('babel-preset-latest'),
     // JSX, Flow
     require.resolve('babel-preset-react')
   ],
   plugins: [
-    // function x(a, b, c,) { }
-    require.resolve('babel-plugin-syntax-trailing-function-commas'),
     // await fetch()
     require.resolve('babel-plugin-syntax-async-functions'),
     // class { handleClick = () => { } }
