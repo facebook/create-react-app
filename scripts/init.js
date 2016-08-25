@@ -73,7 +73,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     '--save',
     verbose && '--verbose'
   ].filter(function(e) { return e; });
-  var proc = spawn('npm', args, {stdio: 'inherit'})
+  var proc = spawn('npm', args, {stdio: 'inherit'});
   proc.on('close', function (code) {
     if (code !== 0) {
       console.error('`npm ' + args.join(' ') + '` failed');
@@ -109,5 +109,5 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     }
     console.log();
     console.log('Happy hacking!');
-  }
-});
+  });
+}
