@@ -22,7 +22,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
   appPackage.devDependencies = appPackage.devDependencies || {};
-  ['react', 'react-dom'].forEach(function (key) {
+  ['react', 'react-dom', 'react-router'].forEach(function (key) {
     appPackage.dependencies[key] = ownPackage.devDependencies[key];
   });
   ['react-test-renderer'].forEach(function (key) {
