@@ -17,17 +17,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   var ownPath = path.join(appPath, 'node_modules', 'react-scripts');
 
   var appPackage = require(path.join(appPath, 'package.json'));
-  var ownPackage = require(path.join(ownPath, 'package.json'));
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
   appPackage.devDependencies = appPackage.devDependencies || {};
-  ['react', 'react-dom'].forEach(function (key) {
-    appPackage.dependencies[key] = ownPackage.devDependencies[key];
-  });
-  ['react-test-renderer'].forEach(function (key) {
-    appPackage.devDependencies[key] = ownPackage.devDependencies[key];
-  });
 
   // Setup the script rules
   appPackage.scripts = {};
@@ -74,6 +67,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   // TODO: having to do two npm installs is bad, can we avoid it?
   var args = [
     'install',
+    'react',
+    'react-dom',
+    'react-test-renderer',
+    '--save',
     verbose && '--verbose'
   ].filter(function(e) { return e; });
   var proc = spawn('npm', args, {stdio: 'inherit'});
