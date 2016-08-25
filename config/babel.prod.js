@@ -17,8 +17,6 @@ module.exports = {
     require.resolve('babel-preset-react')
   ],
   plugins: [
-    // await fetch()
-    require.resolve('babel-plugin-syntax-async-functions'),
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
     // { ...todo, completed: true }
