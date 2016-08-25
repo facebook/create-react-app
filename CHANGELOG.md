@@ -1,3 +1,21 @@
+## 0.2.3 (August 25, 2016)
+
+### Build Dependency (`react-scripts`)
+
+* You can now [proxy requests to an API server](https://github.com/facebookincubator/create-react-app/blob/ef94b0561d5afb9b50b905fa5cd3f94e965c69c0/template/README.md#proxying-api-requests-in-development) without worrying about CORS. ([@gaearon](https://github.com/gaearon) in [#282](https://github.com/facebookincubator/create-react-app/pull/282))
+* You can now [pass custom environment variables](https://github.com/facebookincubator/create-react-app/blob/ef94b0561d5afb9b50b905fa5cd3f94e965c69c0/template/README.md#adding-custom-environment-variables) to your application. ([@eliperelman](https://github.com/eliperelman) in [#342](https://github.com/facebookincubator/create-react-app/pull/342))
+* You can now [use `async` and `await`](https://ponyfoo.com/articles/understanding-javascript-async-await) syntax. ([@gaearon](https://github.com/gaearon) in [#327](https://github.com/facebookincubator/create-react-app/pull/327), [@fson](https://github.com/fson) in [#332](https://github.com/facebookincubator/create-react-app/pull/332))
+* Paths with period in them now load successfully on the development server. ([@mxstbr](https://github.com/mxstbr) in [#422](https://github.com/facebookincubator/create-react-app/pull/422))
+* Images with `.webp` extension are now supported. ([@gafemoyano](https://github.com/gafemoyano) in [#458](https://github.com/facebookincubator/create-react-app/pull/458))
+* The most recent version of React is now added to `package.json`. ([@wdhorton](https://github.com/wdhorton) in [#477](https://github.com/facebookincubator/create-react-app/pull/477))
+* Babel configuration is simplified. ([@kripod](https://github.com/kripod) in [#490](https://github.com/facebookincubator/create-react-app/pull/490))
+
+### Migrating from 0.2.2 to 0.2.3
+
+Update `react-scripts` to point to `0.2.3` in your `package.json` and run `npm install`. You shouldn’t need to do anything else.
+
+Newly created projects will use `0.2.3` automatically. You **don’t** need to update the global `create-react-app` CLI itself. It stays at `0.2.0` for now because it doesn’t have any changes.
+
 ## 0.2.2 (August 22, 2016)
 
 ### Build Dependency (`react-scripts`)
