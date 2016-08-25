@@ -392,7 +392,8 @@ We will consider integrating more tightly with Flow in the future so that you do
 
 ## Adding Custom Environment Variables
 
-> Note: this feature is available with `react-scripts@0.3.0` and higher.
+**Note: this feature will be available with `react-scripts@0.3.0` and higher.**  
+**It is not released yet, but it will be a part of a future release.**
 
 Your project can consume variables declared in your environment as if they were declared locally in your JS files. By
 default you will have `NODE_ENV` defined for you, and any other environment variables starting with
@@ -466,7 +467,8 @@ Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-r
 
 ## Proxying API Requests in Development
 
->Note: this feature is available with `react-scripts@0.3.0` and higher.
+**Note: this feature will be available with `react-scripts@0.3.0` and higher.**  
+**It is not released yet, but it will be a part of a future release.**
 
 People often serve the front-end React app from the same host and port as their backend implementation.  
 For example, a production setup might look like this after the app is deployed:
