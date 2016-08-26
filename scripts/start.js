@@ -206,7 +206,7 @@ function addMiddleware(devServer) {
       // of both HTTP and WebSockets to work without false positives.
       httpProxyMiddleware(pathname => mayProxy.test(pathname), {
         target: proxy,
-        logLevel: 'silent',
+        logLevel: 'error',
         secure: false,
         changeOrigin: true
       })
