@@ -62,6 +62,7 @@ module.exports = {
     // containing code from all our entry points, and the Webpack runtime.
     filename: 'static/js/bundle.js',
     // In development, we always serve from the root. This makes config easier.
+    contentBase: "./src",
     publicPath: '/'
   },
   resolve: {
