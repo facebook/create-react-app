@@ -9,6 +9,8 @@
 
 module.exports = (resolve, rootDir) => {
   const config = {
+    // allow Jest to load TypeScript modules
+    moduleFileExtensions: ['js', 'json', 'ts', 'tsx'],
     automock: false,
     moduleNameMapper: {
       '^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm)$': resolve('config/jest/FileStub.js'),

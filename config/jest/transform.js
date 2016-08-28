@@ -8,5 +8,23 @@
 
 const babelDev = require('../babel.dev');
 const babelJest = require('babel-jest');
+const tsc = require('typescript');
+const babelTransformer = babelJest.createTransformer(babelDev);
 
-module.exports = babelJest.createTransformer(babelDev);
+// transpile the source with TypeScript, if needed, and then with Babel
+module.exports = {
+  process(src, path) {
+    if (path.endsWith('.ts') || path.endsWith('.tsx')) {
+      src = tsc.transpile(
+        src,
+        {
+          module: tsc.ModuleKind.CommonJS,
+          jsx: tsc.JsxEmit.React,
+        },
+        path,
+        []
+      );
+    }
+    return babelTransformer.process(src, path);
+  },
+};
