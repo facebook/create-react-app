@@ -61,7 +61,8 @@ module.exports = {
   },
   resolve: {
     // These are the reasonable defaults supported by the Node ecosystem.
-    extensions: ['.js', '.json', ''],
+    // We support also TypeScript ts and tsx which will be compiled later
+    extensions: ['.ts', '.tsx', '.js', '.json', ''],
     alias: {
       // This `alias` section can be safely removed after ejection.
       // We do this because `babel-runtime` may be inside `react-scripts`,
@@ -84,15 +85,27 @@ module.exports = {
   },
   module: {
     // First, run the linter.
-    // It's important to do this before Babel processes the JS.
+    // It's important to do this before Babel or TypeScript processes the JS/TS.
     preLoaders: [
       {
         test: /\.js$/,
         loader: 'eslint',
         include: paths.appSrc
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'tslint',
+        include: paths.appSrc
       }
     ],
     loaders: [
+      // Process TS with TypeScript and then with Babel
+      {
+        test: /\.tsx?$/,
+        include: paths.appSrc,
+        loader: 'awesome-typescript',
+        query: require('./typescript.prod')
+      },
       // Process JS with Babel.
       {
         test: /\.js$/,

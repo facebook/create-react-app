@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "jsx": "react"
+    },
+    "include": [
+        "src"
+    ],
+    "files": [
+        "./typings/index.d.ts"
+    ]
+}

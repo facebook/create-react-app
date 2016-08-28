@@ -1,0 +1,10 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/cantide5ga/typed-react/42692d400db3c333394ec75bce9f6d09b5a0a769/typings.json",
+    "raw": "registry:npm/react#15.0.1+20160601175240",
+    "main": "react.d.ts",
+    "name": "react",
+    "type": "typings"
+  }
+}

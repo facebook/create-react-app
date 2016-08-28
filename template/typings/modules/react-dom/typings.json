@@ -1,0 +1,22 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/cantide5ga/typed-react-dom/d498c5a1056d26babef04b56139628be1f59a357/typings.json",
+    "raw": "registry:npm/react-dom#15.0.1+20160826174104",
+    "main": "react-dom.d.ts",
+    "files": [
+      "server.d.ts"
+    ],
+    "dependencies": {
+      "react": {
+        "src": "https://raw.githubusercontent.com/cantide5ga/typed-react/42692d400db3c333394ec75bce9f6d09b5a0a769/typings.json",
+        "raw": "github:cantide5ga/typed-react#42692d400db3c333394ec75bce9f6d09b5a0a769",
+        "main": "react.d.ts",
+        "name": "react",
+        "type": "typings"
+      }
+    },
+    "name": "react-dom",
+    "type": "typings"
+  }
+}
