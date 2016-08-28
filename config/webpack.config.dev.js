@@ -112,14 +112,12 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        include: [paths.appSrc, paths.appNodeModules],
         loader: 'style!css!postcss'
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
       {
         test: /\.json$/,
-        include: [paths.appSrc, paths.appNodeModules],
         loader: 'json'
       },
       // "file" loader makes sure those assets get served by WebpackDevServer.
@@ -127,7 +125,6 @@ module.exports = {
       // In production, they would get copied to the `build` folder.
       {
         test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
-        include: [paths.appSrc, paths.appNodeModules],
         exclude: /\/favicon.ico$/,
         loader: 'file',
         query: {
@@ -147,7 +144,6 @@ module.exports = {
       // assets smaller than specified size as data URLs to avoid requests.
       {
         test: /\.(mp4|webm)(\?.*)?$/,
-        include: [paths.appSrc, paths.appNodeModules],
         loader: 'url',
         query: {
           limit: 10000,
