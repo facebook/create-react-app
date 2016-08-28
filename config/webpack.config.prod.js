@@ -114,7 +114,6 @@ module.exports = {
       // in the main CSS file.
       {
         test: /\.css$/,
-        include: [paths.appSrc, paths.appNodeModules],
         // "?-autoprefixer" disables autoprefixer in css-loader itself:
         // https://github.com/webpack/css-loader/issues/281
         // We already have it thanks to postcss. We only pass this flag in
@@ -130,7 +129,6 @@ module.exports = {
       // allow it implicitly so we also enable it.
       {
         test: /\.json$/,
-        include: [paths.appSrc, paths.appNodeModules],
         loader: 'json'
       },
       // "file" loader makes sure those assets end up in the `build` folder.
@@ -138,7 +136,6 @@ module.exports = {
       {
         test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
         exclude: /\/favicon.ico$/,
-        include: [paths.appSrc, paths.appNodeModules],
         loader: 'file',
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
@@ -157,7 +154,6 @@ module.exports = {
       // assets smaller than specified size as data URLs to avoid requests.
       {
         test: /\.(mp4|webm)(\?.*)?$/,
-        include: [paths.appSrc, paths.appNodeModules],
         loader: 'url',
         query: {
           limit: 10000,
