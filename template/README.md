@@ -15,7 +15,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Importing a Component](#importing-a-component)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
-- [Adding Images and Fonts](#adding-images-and-fonts)
+- [Serving Static Files - HTML, Images, and Fonts](#serving-static-files-html-images-and-fonts)
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
@@ -272,8 +272,14 @@ becomes this:
 
 There is currently no support for preprocessors such as Less, or for sharing variables across CSS files.
 
-## Adding Images and Fonts
+## Serving Static Files - HTML, Images, and Fonts
 
+The React App serves static files from the top level directory of the project:
+```
+/                  - static server returns index.html with React app
+/static            - static server returns /static/index.html with React app
+/static/page.html  - static server returns /static/page.html with React app
+```
 With Webpack, using static assets like images and fonts works similarly to CSS.
 
 You can **`import` an image right in a JavaScript module**. This tells Webpack to include that image in the bundle. Unlike CSS imports, importing an image or a font gives you a string value. This value is the final image path you can reference in your code.
