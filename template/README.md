@@ -15,7 +15,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Importing a Component](#importing-a-component)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
-- [Serving Static Files - HTML, Images, and Fonts](#serving-static-files-html-images-and-fonts)
+- [Serving Static Files - HTML, Images, and Fonts](#serving-static-files---html-images-and-fonts)
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
