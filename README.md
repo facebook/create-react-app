@@ -174,6 +174,7 @@ If you don’t agree with the choices made in this project, you might want to ex
 * [react-app](https://github.com/kriasoft/react-app)
 * [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
 * [mozilla-neo](https://github.com/mozilla/neo)
+* [tarec](https://github.com/geowarin/tarec)
 
 You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
 React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
