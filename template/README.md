@@ -21,6 +21,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
+- [Adding `<meta>` Tags](#adding-meta-tags)
 - [Deployment](#deployment)
   - [Now](#now)
   - [Heroku](#heroku)
@@ -500,6 +501,24 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
 * Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+
+## Adding `<meta>` Tags
+
+You can edit the generated `index.html` and add any tags you’d like to it. However, since Create React App doesn’t support server rendering, you might be wondering how to make `<meta>` tags dynamic and reflect the current URL.
+
+To solve this, we recommend to add placeholders into the HTML, like this:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta property="og:title" content="$OG_TITLE">
+    <meta property="og:description" content="$OG_DESCRIPTION">
+```
+
+Then, on the server, regardless of the backend you use, you can read `index.html` into memory and replace `$OG_TITLE`, `$OG_DESCRIPTION`, and any other placeholders with values depending on the current URL. Just make sure to sanitize and escape the interpolated values so that they are safe to embed into HTML!
+
+If you use a Node server, you can even share the route matching logic between the client and the server. However duplicating it also works fine in simple cases.
 
 ## Deployment
 
