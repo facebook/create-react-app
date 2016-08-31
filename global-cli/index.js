@@ -171,7 +171,7 @@ function checkNodeVersion() {
 // https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-237875655
 function isGitHubBoilerplate(root) {
   var validFiles = [
-    '.DS_Store', 'Thumbs.db', '.git', '.gitignore', 'README.md', 'LICENSE'
+    '.DS_Store', 'Thumbs.db', '.git', '.gitignore', '.idea', 'README.md', 'LICENSE'
   ];
   return fs.readdirSync(root)
     .every(function(file) {
