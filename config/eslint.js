@@ -115,7 +115,6 @@ module.exports = {
       'LabeledStatement',
       'WithStatement',
     ],
-    'no-return-assign': 'warn',
     'no-script-url': 'warn',
     'no-self-assign': 'warn',
     'no-self-compare': 'warn',
