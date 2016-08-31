@@ -2,6 +2,9 @@
 
 Create React apps with no build configuration.
 
+* [Getting Started](#getting-started)
+* [Guide](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md)
+
 ## tl;dr
 
 ```sh
