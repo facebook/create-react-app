@@ -26,7 +26,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   appPackage.scripts = {
     'start': 'react-scripts start',
     'build': 'react-scripts build',
-    'test': 'react-scripts test --watch',
+    'test': 'react-scripts test --watch --env=jsdom',
     'eject': 'react-scripts eject'
   };
 
