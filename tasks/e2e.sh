@@ -100,8 +100,9 @@ test -e build/static/media/*.svg
 test -e build/favicon.ico
 
 # Run tests
-npm run test
-test -e src/__tests__/__snapshots__/App-test.js.snap
+npm test --smoke-test
+# Uncomment when snapshot testing is enabled by default:
+# test -e src/__tests__/__snapshots__/App-test.js.snap
 
 # Test the server
 npm start -- --smoke-test
@@ -118,8 +119,9 @@ test -e build/static/media/*.svg
 test -e build/favicon.ico
 
 # Run tests
-npm run test
-test -e src/__tests__/__snapshots__/App-test.js.snap
+npm test -- --smoke-test
+# Uncomment when snapshot testing is enabled by default:
+# test -e src/__tests__/__snapshots__/App-test.js.snap
 
 # Test the server
 npm start -- --smoke-test
