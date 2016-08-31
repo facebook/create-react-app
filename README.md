@@ -2,6 +2,9 @@
 
 Create React apps with no build configuration.
 
+* [Getting Started](#getting-started) – How to create a new app.
+* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md) – How to develop apps bootstrapped with Create React App.
+
 ## tl;dr
 
 ```sh
@@ -81,7 +84,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
-## How Do I…?
+## User Guide
 
 The generated project will include a guide in its README.<br>
 You can also read its latest version [here](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md).
