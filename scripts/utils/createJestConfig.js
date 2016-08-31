@@ -14,15 +14,8 @@ module.exports = (resolve, rootDir) => {
       '^[./a-zA-Z0-9$_-]+\\.css$': resolve('config/jest/CSSStub.js')
     },
     scriptPreprocessor: resolve('config/jest/transform.js'),
-    setupFiles: [
-      resolve('config/polyfills.js')
-    ],
-    testPathIgnorePatterns: [
-      '<rootDir>/node_modules/',
-      '<rootDir>/build/',
-      // GitHub pages now use this directory so assume it's the build:
-      '<rootDir>/docs/'
-    ],
+    setupFiles: [resolve('config/polyfills.js')],
+    testPathIgnorePatterns: ['<rootDir>/(build|docs|node_modules)/'],
     testEnvironment: 'node'
   };
   if (rootDir) {

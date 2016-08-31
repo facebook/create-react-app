@@ -71,7 +71,6 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     'install',
     'react',
     'react-dom',
-    'react-test-renderer',
     '--save',
     verbose && '--verbose'
   ].filter(function(e) { return e; });
