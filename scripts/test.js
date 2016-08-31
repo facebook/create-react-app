@@ -19,6 +19,11 @@ const argv = process.argv.slice(2);
 const index = argv.indexOf('--debug-template');
 if (index !== -1) {
   argv.splice(index, 1);
+  // When running end-to-end test, disable the watcher
+  var watchIndex = argv.indexOf('--watch');
+  if (watchIndex !== -1) {
+    argv.splice(watchIndex, 1);
+  }
 }
 
 argv.push('--config', JSON.stringify(createJestConfig(
