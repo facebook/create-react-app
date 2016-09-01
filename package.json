@@ -15,7 +15,7 @@
     "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\"",
     "e2e": "tasks/e2e.sh",
     "start": "node scripts/start.js --debug-template",
-    "test": "node scripts/test.js --debug-template"
+    "test": "node scripts/test.js --debug-template --watch --env=jsdom"
   },
   "files": [
     "PATENTS",
@@ -31,7 +31,7 @@
     "autoprefixer": "6.4.0",
     "babel-core": "6.14.0",
     "babel-eslint": "6.1.2",
-    "babel-jest": "14.1.0",
+    "babel-jest": "15.0.0",
     "babel-loader": "6.2.5",
     "babel-plugin-transform-class-properties": "6.11.5",
     "babel-plugin-transform-object-rest-spread": "6.8.0",
@@ -61,7 +61,7 @@
     "html-loader": "0.4.3",
     "html-webpack-plugin": "2.22.0",
     "http-proxy-middleware": "0.17.0",
-    "jest": "14.1.0",
+    "jest": "15.0.1",
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
     "opn": "4.0.2",
@@ -80,8 +80,7 @@
   "devDependencies": {
     "bundle-deps": "1.0.0",
     "react": "^15.3.0",
-    "react-dom": "^15.3.0",
-    "react-test-renderer": "^15.3.0"
+    "react-dom": "^15.3.0"
   },
   "optionalDependencies": {
     "fsevents": "1.0.14"
