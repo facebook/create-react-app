@@ -580,9 +580,9 @@ Jest will always run all tests on a [continuous integration](#continuous-integra
 
 ### Writing Tests
 
-To create tests, add `it()` blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping but this it not required.
+To create tests, add `it()` blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping but this is neither required nor recommended.
 
-Jest provides a built-in `expect()` global for making assertions. A basic test could look like this:
+Jest provides a built-in `expect()` global function for making assertions. A basic test could look like this:
 
 ```js
 import sum from './sum';
@@ -593,13 +593,14 @@ it('sums numbers', () => {
 });
 ```
 
-All `expect().to*` matchers supported by Jest are [extensively documented here](http://facebook.github.io/jest/docs/api.html#expect-value). You can [use `jest.fn()` and `expect(fn).toBeCalled()`](http://facebook.github.io/jest/docs/api.html#tobecalled) to create “spies” or mock functions.
+All `expect()` matchers supported by Jest are [extensively documented here](http://facebook.github.io/jest/docs/api.html#expect-value).  
+You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](http://facebook.github.io/jest/docs/api.html#tobecalled) to create “spies” or mock functions.
 
 ### Testing Components
 
-Generally we recommend to test complex logic instead of testing component output. In most components apps component output changes too often to be useful in testing.
+There is a broad spectrum of component testing techniques. They range from a “smoke test” verifying that a component renders without throwing, to shallow rendering and testing some of the output, to full rendering and testing component lifecycle and state changes.
 
-Often, a “smoke test” that just mounts a component and makes sure that it didn’t throw during rendering gives the most value with the least effort. You can find a test like this called `App.test.js` in your `src` folder by default:
+Different projects choose different testing tradeoffs based on how often components change, and how much logic they contain. If you haven’t decided on a testing strategy yet, we recommend that you start with creating simple smoke tests for your components:
 
 ```js
 import React from 'react';
@@ -612,7 +613,11 @@ it('renders without crashing', () => {
 });
 ```
 
-If you’d like to test components individually without child components affecting them, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/):
+This test mounts a component and makes sure that it didn’t throw during rendering. Tests like this provide a lot value with very little effort so they are great as a starting point, and this is the test you will find in `src/App.test.js`.
+
+When you encounter bugs caused by changing components, you will gain a deeper insight into which parts of them are worth testing in your application. This might be a good time to introduce more specific tests asserting specific expected output or behavior.
+
+If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). You can write a smoke test with it too:
 
 ```sh
 npm install --save-dev enzyme react-addons-test-utils
@@ -628,7 +633,11 @@ it('renders without crashing', () => {
 });
 ```
 
-You can read the [Enzyme documentation](http://airbnb.io/enzyme/) for more testing techniques. Enzyme documentation uses Chai and Sinon for assertions but you don’t have to use them because Jest provides built-in `expect()` and `jest.fn()` for spies. Here is an example from Enzyme documentation, rewritten to use Jest matchers:
+Unlike the previous smoke test using `ReactDOM.render()`, this test only renders `<App>` and doesn’t go deeper. For example, even if `<App>` itself renders a `<Button>` that throws, this test will pass. Shallow rendering is great for isolated unit tests, but you may still want to create some full rendering tests to ensure the components integrate correctly. Enzyme supports [full rendering with `mount()`](http://airbnb.io/enzyme/docs/api/mount.html), and you can also use it for testing state changes and component lifecyle.
+
+You can read the [Enzyme documentation](http://airbnb.io/enzyme/) for more testing techniques. Enzyme documentation uses Chai and Sinon for assertions but you don’t have to use them because Jest provides built-in `expect()` and `jest.fn()` for spies.
+
+Here is an example from Enzyme documentation that asserts specific output, rewritten to use Jest matchers:
 
 ```js
 import React from 'react';
@@ -637,8 +646,9 @@ import App from './App';
 
 it('renders welcome message', () => {
   const wrapper = shallow(<App />);
-  // expect(wrapper.contains(<h2>Welcome to React</h2>)).to.equal(true);
-  expect(wrapper.contains(<h2>Welcome to React</h2>)).toEqual(true);
+  const welcome = <h2>Welcome to React</h2>;
+  // expect(wrapper.contains(welcome)).to.equal(true);
+  expect(wrapper.contains(welcome)).toEqual(true);
 });
 ```
 
