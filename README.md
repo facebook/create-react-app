@@ -58,6 +58,7 @@ my-app/
   src/
     App.css
     App.js
+    App.test.js
     index.css
     index.js
     logo.svg
@@ -75,6 +76,13 @@ The page will reload if you make edits.<br>
 You will see the build errors and lint warnings in the console.
 
 <img src='https://camo.githubusercontent.com/41678b3254cf583d3186c365528553c7ada53c6e/687474703a2f2f692e696d6775722e636f6d2f466e4c566677362e706e67' width='600' alt='Build errors'>
+
+### `npm test`
+
+Runs the test watcher in an interactive mode.  
+By default, runs tests related to files changes since the last commit.
+
+[Read more about testing.](template/README.md#running-tests)
 
 ### `npm run build`
 
@@ -108,7 +116,7 @@ You can also read its latest version [here](https://github.com/facebookincubator
 * Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
 * A `build` script to bundle JS, CSS, and images for production, with sourcemaps.
 
-**The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. Currently, it doesn’t support testing either. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
+**The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 
 **You don’t have to use this.** Historically it has been easy to [gradually adopt](https://www.youtube.com/watch?v=BF58ZJ1ZQxY) React. However many people create new single-page React apps from scratch every day. We’ve heard [loud](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4) and [clear](https://twitter.com/thomasfuchs/status/708675139253174273) that this process can be error-prone and tedious, especially if this is your first JavaScript build stack. This project is an attempt to figure out a good way to start developing React apps.
 
@@ -127,7 +135,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 Some features are currently **not supported**:
 
 * Server rendering.
-* Testing.
 * Some experimental syntax extensions (e.g. decorators).
 * CSS Modules.
 * LESS or Sass.
@@ -144,7 +151,8 @@ Currently it is a thin layer on top of many amazing community projects, such as:
 * [Babel](http://babeljs.io/) with ES6 and extensions used by Facebook (JSX, [object spread](https://github.com/sebmarkbage/ecmascript-rest-spread/commits/master), [class properties](https://github.com/jeffmo/es-class-public-fields))
 * [Autoprefixer](https://github.com/postcss/autoprefixer)
 * [ESLint](http://eslint.org/)
-* and more.
+* [Jest](http://facebook.github.io/jest)
+* and others.
 
 All of them are transitive dependencies of the provided npm package.
 
