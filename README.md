@@ -151,7 +151,7 @@ Currently it is a thin layer on top of many amazing community projects, such as:
 * [Babel](http://babeljs.io/) with ES6 and extensions used by Facebook (JSX, [object spread](https://github.com/sebmarkbage/ecmascript-rest-spread/commits/master), [class properties](https://github.com/jeffmo/es-class-public-fields))
 * [Autoprefixer](https://github.com/postcss/autoprefixer)
 * [ESLint](http://eslint.org/)
-* [Jest](http://facebook.github.io/jest) (it’s [not bad anymore!](http://facebook.github.io/jest/blog/2016/09/01/jest-15.html))
+* [Jest](http://facebook.github.io/jest)
 * and others.
 
 All of them are transitive dependencies of the provided npm package.
