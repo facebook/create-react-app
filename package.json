@@ -15,7 +15,7 @@
     "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`npm pack`\"",
     "e2e": "tasks/e2e.sh",
     "start": "node scripts/start.js --debug-template",
-    "test": "node scripts/test.js --debug-template --watch --env=jsdom"
+    "test": "node scripts/test.js --debug-template --env=jsdom"
   },
   "files": [
     "PATENTS",

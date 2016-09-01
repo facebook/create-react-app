@@ -67,8 +67,8 @@ test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
-# Run tests, overriding watch option to disable it
-npm test -- --watch=no
+# Run tests with CI flag
+CI=true npm test
 # Uncomment when snapshot testing is enabled by default:
 # test -e template/src/__snapshots__/App.test.js.snap
 
@@ -101,8 +101,8 @@ test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
-# Run tests, overriding watch option to disable it
-npm test -- --watch=no
+# Run tests with CI flag
+CI=true npm test
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 
@@ -120,7 +120,8 @@ test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
-# Run tests, overriding watch option to disable it
+# Run tests, overring the watch option to disable it
+# TODO: make CI flag respected after ejecting as well
 npm test -- --watch=no
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
