@@ -101,7 +101,7 @@ prompt(
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
-      .replace(/react-scripts test/g, 'jest')
+      .replace(/react-scripts test/g, 'jest --watch')
       .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
   });
 
