@@ -121,6 +121,7 @@ module.exports = {
     'no-sequences': 'warn',
     'no-shadow-restricted-names': 'warn',
     'no-sparse-arrays': 'warn',
+    'no-template-curly-in-string': 'warn',
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
     'no-undef': 'warn',
