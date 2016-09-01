@@ -23,6 +23,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
+- [Using Promises](#using-promises)
+- [AJAX Requests](#ajax-requests)
 - [Adding `<meta>` Tags](#adding-meta-tags)
 - [Deployment](#deployment)
   - [Now](#now)
@@ -503,6 +505,32 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
 * Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+
+## Using Promises
+
+This project includes a [Promise polyfill](https://github.com/then/promise) which provides a full implementation of Promises/A+.
+
+A Promise represents the eventual result of an asynchronous operation, you can find more information about Promises [here](https://www.promisejs.org/) and [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
+
+## AJAX Requests
+
+This project includes a [fetch polyfill](https://github.com/github/fetch), which makes it easier to make web requests.
+
+The `fetch` function allows to easily makes AJAX requests. It takes in a url or a Request as an input and returns a Promise that resolves to a Response object. You can find more information about `fetch`  [here](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+
+While you can still use `new XMLHttpRequest`, we encourage you to use `fetch`.
+
+You can make a GET request like this:
+```javascript
+  fetch('/todos.json') // Make the request
+  .then(function(response) {
+    return response.json(); // Parse the JSON response (optional)
+  }).then(function(todos) {
+    console.log('Todos', todos); // Handle success
+  }).catch(function(error) {
+    console.log('Error', error); // Handle error
+  });
+```
 
 ## Adding `<meta>` Tags
 
