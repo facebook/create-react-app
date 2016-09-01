@@ -22,6 +22,11 @@ if (debugTemplateIndex !== -1) {
   argv.splice(debugTemplateIndex, 1);
 }
 
+// Watch unless on CI
+if (!process.env.CI) {
+  argv.push('--watch');
+}
+
 argv.push('--config', JSON.stringify(createJestConfig(
   relativePath => path.resolve(__dirname, '..', relativePath),
   path.resolve(paths.appSrc, '..')
