@@ -32,6 +32,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Writing Tests](#writing-tests)
   - [Testing Components](#testing-components)
   - [Using Third Party Assertion Libraries](#using-third-party-assertion-libraries)
+  - [Coverage Reporting](#coverage-reporting)
   - [Continuous Integration](#continuous-integration)
   - [Disabling jsdom](#disabling-jsdom)
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
@@ -540,7 +541,8 @@ If you use a Node server, you can even share the route matching logic between th
 
 ## Running Tests
 
->Note: this feature is available with `react-scripts@0.3.0` and higher.
+>Note: this feature is available with `react-scripts@0.3.0` and higher.  
+>[Read the migration guide to learn how to enable it in older projects!](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030)
 
 Create React App uses [Jest](https://facebook.github.io/jest/) as its test runner. To prepare for this integration, we did a [major revamp](https://facebook.github.io/jest/blog/2016/09/01/jest-15.html) of Jest so if you heard bad things about it, give it another try.
 
@@ -667,6 +669,15 @@ import { expect } from 'chai';
 ```
 
 and then use them in your tests like you normally do.
+
+### Coverage Reporting
+
+Jest has an integrated coverage reporter that works well with ES6 and requires no configuration.  
+Run `npm test -- --coverage` (note extra `--` in the middle) to include a coverage report like this:
+
+![coverage report](http://i.imgur.com/5bFhnTS.png)
+
+Note that tests run much slower with coverage so it is recommended to run it separately from your normal workflow.
 
 ### Continuous Integration
 
