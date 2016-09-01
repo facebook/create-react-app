@@ -22,18 +22,6 @@ if (debugTemplateIndex !== -1) {
   argv.splice(debugTemplateIndex, 1);
 }
 
-// Don't pass this option to Jest either
-const smokeTestIndex = argv.indexOf('--smoke-test');
-if (smokeTestIndex !== -1) {
-  argv.splice(smokeTestIndex, 1);
-
-  // When running end-to-end test, disable watching
-  const watchIndex = argv.indexOf('--watch');
-  if (watchIndex !== -1) {
-    argv.splice(watchIndex, 1);
-  }
-}
-
 argv.push('--config', JSON.stringify(createJestConfig(
   relativePath => path.resolve(__dirname, '..', relativePath),
   path.resolve(paths.appSrc, '..')
