@@ -41,7 +41,6 @@ prompt(
     path.join('config', 'webpack.config.prod.js'),
     path.join('config', 'jest', 'CSSStub.js'),
     path.join('config', 'jest', 'FileStub.js'),
-    path.join('config', 'jest', 'environment.js'),
     path.join('config', 'jest', 'transform.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
@@ -99,17 +98,19 @@ prompt(
   });
 
   console.log('Updating scripts');
-  Object.keys(appPackage.scripts).forEach(function (key) {
-    appPackage.scripts[key] = 'node ./scripts/' + key + '.js'
-  });
   delete appPackage.scripts['eject'];
+  Object.keys(appPackage.scripts).forEach(function (key) {
+    appPackage.scripts[key] = appPackage.scripts[key]
+      .replace(/react-scripts test/g, 'jest')
+      .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
+  });
 
-  appPackage.scripts.test = 'jest';
+  // Add Jest config
   appPackage.jest = createJestConfig(
     filePath => path.join('<rootDir>', filePath)
   );
 
-  // explicitly specify ESLint config path for editor plugins
+  // Explicitly specify ESLint config path for editor plugins
   appPackage.eslintConfig = {
     extends: './config/eslint.js',
   };

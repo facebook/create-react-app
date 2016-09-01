@@ -12,7 +12,8 @@ cd "$(dirname "$0")"
 function cleanup {
   echo 'Cleaning up.'
   cd $initial_path
-  rm ../template/src/__tests__/__snapshots__/App-test.js.snap
+  # Uncomment when snapshot testing is enabled by default:
+  # rm ../template/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
@@ -53,11 +54,8 @@ perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' package.json
 npm install
 scripts_path=$PWD/`npm pack`
 
-# lint
+# Lint
 ./node_modules/.bin/eslint --ignore-path .gitignore ./
-
-# Test local start command
-npm start -- --smoke-test
 
 # Test local build command
 npm run build
@@ -69,9 +67,13 @@ test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
-# Run tests
-npm run test
-test -e template/src/__tests__/__snapshots__/App-test.js.snap
+# Run tests, overriding watch option to disable it
+npm test -- --watch=no
+# Uncomment when snapshot testing is enabled by default:
+# test -e template/src/__snapshots__/App.test.js.snap
+
+# Test local start command
+npm start -- --smoke-test
 
 # Pack CLI
 cd global-cli
@@ -99,9 +101,10 @@ test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
-# Run tests
-npm run test
-test -e src/__tests__/__snapshots__/App-test.js.snap
+# Run tests, overriding watch option to disable it
+npm test -- --watch=no
+# Uncomment when snapshot testing is enabled by default:
+# test -e src/__snapshots__/App.test.js.snap
 
 # Test the server
 npm start -- --smoke-test
@@ -117,9 +120,10 @@ test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
-# Run tests
-npm run test
-test -e src/__tests__/__snapshots__/App-test.js.snap
+# Run tests, overriding watch option to disable it
+npm test -- --watch=no
+# Uncomment when snapshot testing is enabled by default:
+# test -e src/__snapshots__/App.test.js.snap
 
 # Test the server
 npm start -- --smoke-test
