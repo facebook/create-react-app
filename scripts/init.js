@@ -23,10 +23,12 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   appPackage.devDependencies = appPackage.devDependencies || {};
 
   // Setup the script rules
-  appPackage.scripts = {};
-  ['start', 'build', 'eject', 'test'].forEach(function(command) {
-    appPackage.scripts[command] = 'react-scripts ' + command;
-  });
+  appPackage.scripts = {
+    'start': 'react-scripts start',
+    'build': 'react-scripts build',
+    'test': 'react-scripts test --watch --env=jsdom',
+    'eject': 'react-scripts eject'
+  };
 
   // explicitly specify ESLint config path for editor plugins
   appPackage.eslintConfig = {
@@ -69,7 +71,6 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     'install',
     'react',
     'react-dom',
-    'react-test-renderer',
     '--save',
     verbose && '--verbose'
   ].filter(function(e) { return e; });
