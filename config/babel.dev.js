@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+var path = require('path');
+
 module.exports = {
   // Don't try to find .babelrc because we want to force this configuration.
   babelrc: false,
@@ -33,7 +35,10 @@ module.exports = {
     [require.resolve('babel-plugin-transform-runtime'), {
       helpers: false,
       polyfill: false,
-      regenerator: true
+      regenerator: true,
+      // Resolve the Babel runtime relative to the config.
+      // You can safely remove this after ejecting:
+      moduleName: path.dirname(require.resolve('babel-runtime/package'))
     }]
   ]
 };
