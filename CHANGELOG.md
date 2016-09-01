@@ -1,3 +1,45 @@
+## 0.3.0 (September 1, 2016)
+
+### Build Dependency (`react-scripts`)
+
+* Testing is [now supported](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#running-tests)! ([Jest project contributors](https://github.com/facebook/jest/pulls?q=is%3Apr+is%3Aclosed), [@cpojer](https://github.com/cpojer) in [#250](https://github.com/facebookincubator/create-react-app/pull/250), [@gaearon](https://github.com/gaearon) in [#378](https://github.com/facebookincubator/create-react-app/pull/378), [#530](https://github.com/facebookincubator/create-react-app/pull/530), [#533](https://github.com/facebookincubator/create-react-app/pull/533))
+* Static files such as CSS, images, and fonts, can now exist outside `src` directory. ([@fson](https://github.com/fson) in [#504](https://github.com/facebookincubator/create-react-app/pull/504))
+* Local paths in `<link href>` in `index.html` will now be correctly resolved, so deleting `favicon.ico` is not an error anymore. ([@andreypopp](https://github.com/andreypopp) in [#428](https://github.com/facebookincubator/create-react-app/pull/428))
+* Removed an annoying lint rule that warned for `<div ref={node => this.node = node}>`. ([@mrscobbler](https://github.com/mrscobbler) in [#529](https://github.com/facebookincubator/create-react-app/pull/529))
+* Temporarily disabled `react-constant-elements` Babel transform because of its bugs. ([@gaearon](https://github.com/gaearon) in [#534](https://github.com/facebookincubator/create-react-app/pull/534))
+* Fixed a permission issue with Docker. ([@gaearon](https://github.com/gaearon) in [73c940](https://github.com/facebookincubator/create-react-app/commit/73c940a73205d761230f8d6bf81ecfd460ba28a9))
+* Fixed an issue with generator syntax in Jest that occurred in an alpha release. ([@gaearon](https://github.com/gaearon) in [#535](https://github.com/facebookincubator/create-react-app/pull/535))
+
+### Global CLI (`create-react-app`)
+
+* You can now create a project in a folder that already contains an `.idea` folder, which is necessary for future WebStorm integration. ([@denofevil](https://github.com/denofevil) in [#522](https://github.com/facebookincubator/create-react-app/pull/522))
+
+### Migrating from 0.2.3 to 0.3.0
+
+You may optionally update the global command (it’s not required):
+
+```
+npm install -g create-react-app@0.3.0
+```
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.3.0
+```
+
+Since 0.3.0 added a test runner, we recommend that you add it to the `scripts` section of your `package.json` like this:
+
+```js
+  // ...
+  "scripts": {
+    // ...
+    "test": "react-scripts test --env=jsdom"
+  }
+```
+
+[Then read the testing guide to learn more about using it!](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#running-tests)
+
 ## 0.2.3 (August 25, 2016)
 
 ### Build Dependency (`react-scripts`)
@@ -35,7 +77,6 @@ Newly created projects will use `0.2.3` automatically. You **don’t** need to u
 Update `react-scripts` to point to `0.2.2` in your `package.json` and run `npm install`. You shouldn’t need to do anything else.
 
 Newly created projects will use `0.2.2` automatically. You **don’t** need to update the global `create-react-app` CLI itself. It stays at `0.2.0` for now because it doesn’t have any changes.
-
 
 ## 0.2.1 (August 1, 2016)
 
