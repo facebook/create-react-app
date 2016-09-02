@@ -32,6 +32,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Writing Tests](#writing-tests)
   - [Testing Components](#testing-components)
   - [Using Third Party Assertion Libraries](#using-third-party-assertion-libraries)
+  - [Initializing Test Environment](#initializing-test-environment)
   - [Focusing and Excluding Tests](#focusing-and-excluding-tests)
   - [Coverage Reporting](#coverage-reporting)
   - [Continuous Integration](#continuous-integration)
@@ -673,6 +674,24 @@ import { expect } from 'chai';
 ```
 
 and then use them in your tests like you normally do.
+
+### Initializing Test Environment
+
+>Note: this feature is available with `react-scripts@0.4.0` and higher.
+
+If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
+
+For example:
+
+#### `src/setupTests.js`
+```js
+const localStorageMock = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  clear: jest.fn()
+};
+global.localStorage = localStorageMock
+```
 
 ### Focusing and Excluding Tests
 
