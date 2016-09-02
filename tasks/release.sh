@@ -31,24 +31,19 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1;
 fi
 
-# create a temporary clean folder that contains production only code
-#   do not overwrite any files in the current folder
+# Create a temporary clean folder that contains production only code.
+# Do not overwrite any files in the current folder.
 clean_path=`mktemp -d clean_XXXX`
 
-# copy files to folder .clean-pack
-#   `npm publish` looks package.json, if it has a files field, only pack listed files
-#   follwoing folders, although not listed in the files field, are not copied
-#   - .git : contains lot of small files
-#   - $clean_path : the destination folder
-#   - node_modules : contains lots of small files
-#   - build : .gitignored folder used in local development
+# Copy some of the project files to the temporary folder.
+# Exclude folders that definitely won’t be part of the package from processing.
+# We will strip the dev-only code there, and then copy files back.
 rsync -av --exclude='.git' --exclude=$clean_path\
-          --exclude='node_modules' --exclude='build'\
-     './' '$clean_path'  >/dev/null
+  --exclude='node_modules' --exclude='build'\
+  './' '$clean_path'  >/dev/null
 
+# Now remove all the code relevant to development of Create React App.
 cd $clean_path
-
-# remove dev-only code
 files="$(find -L . -name "*.js" -type f)"
 for file in $files; do
   sed -i.bak '/\/\/ @remove-on-publish-begin/,/\/\/ @remove-on-publish-end/d' $file

@@ -5,14 +5,15 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-# In success case, the only output to stdout is the packagename,
-#   which might be used by the caller of `tasks/clean_pack.sh`
+# This script cleans up the code from blocks only used during local development.
+# We call this as part of the `release.sh` script.
+# On success, the only output to stdout is the package name.
 
 # Start even if run from root directory
 cd "$(dirname "$0")"
 
-# print error messages to stderr
-# the cleanup function is optionally defined in caller script
+# Print error messages to stderr.
+# The calling script may then handle them.
 function handle_error {
   echo "$(basename $0): \033[31mERROR!\033[m An error was encountered executing \033[36mline $1\033[m." 1>&2;
   cleanup
@@ -28,8 +29,8 @@ function handle_exit {
 
 function cleanup {
   cd $initial_path
-  # remove Jest snap test file from local dev project if exists
-  rm ../template/src/__tests__/__snapshots__/App-test.js.snap
+  # Uncomment when snapshot testing is enabled by default:
+  # rm ../template/src/__snapshots__/App.test.js.snap
   rm -rf ../$clean_path
 }
 
@@ -39,29 +40,23 @@ trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 # Cleanup before exit on any termination signal
 trap 'set +x; handle_exit' SIGQUIT SIGTERM SIGINT SIGKILL SIGHUP
 
-# `tasks/clean_pack.sh` the two directories to make sure they are valid npm modules
-initial_path=$PWD
-
 # Go to root
+initial_path=$PWD
 cd ..
-# create a temporary clean folder that contains production only code
-#   do not overwrite any files in the current folder
+
+# Create a temporary clean folder that contains production-only code.
+# Do not overwrite any files in the current folder.
 clean_path=`mktemp -d clean_XXXX`
 
-# copy files to folder .clean-pack
-#   `npm publish` looks package.json, if it has a files field, only pack listed files
-#   follwoing folders, although not listed in the files field, are not copied
-#   - .git : contains lot of small files
-#   - $clean_path : the destination folder
-#   - node_modules : contains lots of small files
-#   - build : .gitignored folder used in local development
+# Copy some of the project files to the temporary folder.
+# Exclude folders that definitely won’t be part of the package from processing.
+# We will strip the dev-only code there, and then copy files back.
 rsync -av --exclude='.git' --exclude=$clean_path\
-          --exclude='node_modules' --exclude='build'\
-     './' $clean_path  >/dev/null
+  --exclude='node_modules' --exclude='build'\
+  './' $clean_path  >/dev/null
 
+# Now remove all the code relevant to development of Create React App.
 cd $clean_path
-
-# remove dev-only code
 files="$(find -L . -name "*.js" -type f)"
 for file in $files; do
   sed -i.bak '/\/\/ @remove-on-publish-begin/,/\/\/ @remove-on-publish-end/d' $file
@@ -71,8 +66,10 @@ done
 # Pack!
 packname=`npm pack`
 
-# copy package to current folder
+# Now we can copy the package back.
 cd ..
 cp -f $clean_path/$packname ./
 cleanup
+
+# Output the package name so `release.sh` can pick it up.
 echo $packname

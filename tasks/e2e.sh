@@ -81,7 +81,8 @@ cd global-cli
 npm install
 cli_path=$PWD/`npm pack`
 
-# Install the cli in a temporary location ( http://unix.stackexchange.com/a/84980 )
+# Install the CLI in a temporary location
+# http://unix.stackexchange.com/a/84980
 temp_cli_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_cli_path'`
 cd $temp_cli_path
 npm install $cli_path
