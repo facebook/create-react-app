@@ -24,7 +24,9 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
-- [Adding `<meta>` Tags](#adding-meta-tags)
+- [Adding `<link>` and `<meta>` Tags](#adding-link-and-meta-tags)
+  - [Referring to Static Assets from `<link href>`](#referring-to-static-assets-from-link-href)
+  - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
   - [Command Line Interface](#command-line-interface)
@@ -526,11 +528,59 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
 * Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
 
-## Adding `<meta>` Tags
+## Adding `<link>` and `<meta>` Tags
 
-You can edit the generated `index.html` and add any tags you’d like to it. However, since Create React App doesn’t support server rendering, you might be wondering how to make `<meta>` tags dynamic and reflect the current URL.
+You can edit the generated `index.html` and add any tags you’d like to it.
 
-To solve this, we recommend to add placeholders into the HTML, like this:
+### Referring to Static Assets from `<link href>`
+
+>Note: this feature is available with `react-scripts@0.3.0` and higher.
+
+Sometimes, you might want to refer to static assets from `index.html`. Create React App intentionally does not support serving static assets from a folder because it is too easy to forget to arrange cache invalidation for their filenames. Instead, we recommend that all assets are [handled as part of build process with `import`s](#adding-images-and-fonts).
+
+However, you can’t `import` anything from an HTML file. This is why Create React App automatically treats any `<link href>` attributes that start with `./` as a hint that this file needs to be included in the build process. For example, you can use paths like this in `index.html`:
+
+```html
+<link rel="shortcut icon" href="./src/favicon.ico">
+<link rel="icon" href="./src/favicon/favicon-16.png" sizes="16x16" type="image/png">
+<link rel="icon" href="./src/favicon/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="./src/favicon/favicon-64.png" sizes="64x64" type="image/png">
+```
+
+Webpack will parse those `<link href>` attributes and replace them with real paths.  
+In production, they will become:
+
+```html
+<link rel="shortcut icon" href="/favicon.ico?fd73a6eb">
+<link rel="icon" href="/static/media/favicon-16.06a6e0a8.png" sizes="16x16" type="image/png">
+<link rel="icon" href="/static/media/favicon-32.eb28da34.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/static/media/favicon-64.91cb3479.png" sizes="64x64" type="image/png">
+```
+
+For this to work, **make sure to specify paths relatively** so don’t forget the `./`:
+
+```html
+<!-- Will be resolved by Webpack on build to the real file. -->
+<!-- Use this in most cases: -->
+<link rel="icon" href="./src/favicon/favicon-32.png" sizes="32x32" type="image/png">
+<!-- See the ./ here: ^^^ -->
+
+<!-- Will actually request http://yourserver.com/src/favicon/favicon-32.png. -->
+<!-- Only use this if you know this file will appear on your server and is *not* part of your build: -->
+<link rel="icon" href="/src/favicon/favicon-32.png" sizes="32x32" type="image/png">
+```
+
+Files starting with `./` in `<link href>` attribute will be copied to the `static` folder inside your `build` output, and HTML will reference them instead. Webpack will throw a compilation error if any of these files was accidentally deleted or misspelled.
+
+Their names will also contain the content hashes to make sure the browser cache is busted when the file changes. The only file that is handled specially is `favicon.ico` which, if present and referenced from HTML, will be always placed at the root so that browsers can find it even when requesting files from the server (such as PDF documents).
+
+Currently, only `<link href>` attributes are treated this way. If you need similar support for other HTML tags and attributes, please file an issue describing your use case.
+
+If you need to use an asset from code rather than from HTML, please read [Adding Images and Fonts](#adding-images-and-fonts).
+
+### Generating Dynamic `<meta>` Tags on the Server
+
+Since Create React App doesn’t support server rendering, you might be wondering how to make `<meta>` tags dynamic and reflect the current URL. To solve this, we recommend to add placeholders into the HTML, like this:
 
 ```html
 <!doctype html>
