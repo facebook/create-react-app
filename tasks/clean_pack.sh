@@ -9,7 +9,7 @@
 # We call this as part of the `release.sh` script.
 # On success, the only output to stdout is the package name.
 
-# Start even if run from root directory
+# Start in /tasks even if run from root directory
 cd "$(dirname "$0")"
 
 # Print error messages to stderr.
@@ -46,7 +46,7 @@ cd ..
 
 # Create a temporary clean folder that contains production-only code.
 # Do not overwrite any files in the current folder.
-clean_path=`mktemp -d clean_XXXX`
+clean_path=`mktemp -d 2>/dev/null || mktemp -d -t 'clean_path'`
 
 # Copy some of the project files to the temporary folder.
 # Exclude folders that definitely won’t be part of the package from processing.

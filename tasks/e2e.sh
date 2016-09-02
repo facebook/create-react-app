@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-# Start in tests/ even if run from root directory
+# Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
 function cleanup {

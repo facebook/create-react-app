@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-# Start in tests/ even if run from root directory
+# Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
 # Exit the script on any command with non 0 return code
@@ -19,6 +19,7 @@ set -x
 
 # Go to root
 cd ..
+root_path=$PWD
 
 # You can only release with npm >= 3
 if [ $(npm -v | head -c 1) -lt 3 ]; then
@@ -33,14 +34,14 @@ fi
 
 # Create a temporary clean folder that contains production only code.
 # Do not overwrite any files in the current folder.
-clean_path=`mktemp -d clean_XXXX`
+clean_path=`mktemp -d 2>/dev/null || mktemp -d -t 'clean_path'`
 
 # Copy some of the project files to the temporary folder.
 # Exclude folders that definitely won’t be part of the package from processing.
 # We will strip the dev-only code there, and then copy files back.
 rsync -av --exclude='.git' --exclude=$clean_path\
   --exclude='node_modules' --exclude='build'\
-  './' '$clean_path'  >/dev/null
+  './' $clean_path  >/dev/null
 
 # Now remove all the code relevant to development of Create React App.
 cd $clean_path
@@ -64,7 +65,7 @@ npm dedupe
 rm -rf node_modules/fsevents
 
 # This modifies $clean_path/package.json to copy all dependencies to bundledDependencies
-node ./node_modules/.bin/bundle-deps
+node $root_path/node_modules/.bin/bundle-deps
 
 # Go!
 npm publish "$@"
