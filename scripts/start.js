@@ -74,7 +74,7 @@ function clearConsole() {
   process.stdout.write('\x1bc');
 }
 
-function setupCompiler(port) {
+function setupCompiler(port, protocol) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   compiler = webpack(config, handleCompile);
@@ -99,7 +99,7 @@ function setupCompiler(port) {
       console.log();
       console.log('The app is running at:');
       console.log();
-      console.log('  ' + chalk.cyan('http://localhost:' + port + '/'));
+      console.log('  ' + chalk.cyan(protocol + '://localhost:' + port + '/'));
       console.log();
       console.log('Note that the development build is not optimized.');
       console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
@@ -150,14 +150,14 @@ function setupCompiler(port) {
   });
 }
 
-function openBrowser(port) {
+function openBrowser(port, protocol) {
   if (process.platform === 'darwin') {
     try {
       // Try our best to reuse existing tab
       // on OS X Google Chrome with AppleScript
       execSync('ps cax | grep "Google Chrome"');
       execSync(
-        'osascript chrome.applescript http://localhost:' + port + '/',
+        'osascript chrome.applescript ' + protocol + '://localhost:' + port + '/',
         {cwd: path.join(__dirname, 'utils'), stdio: 'ignore'}
       );
       return;
@@ -167,7 +167,7 @@ function openBrowser(port) {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn('http://localhost:' + port + '/');
+  opn(protocol + '://localhost:' + port + '/');
 }
 
 function addMiddleware(devServer) {
@@ -219,7 +219,7 @@ function addMiddleware(devServer) {
   devServer.use(devServer.middleware);
 }
 
-function runDevServer(port) {
+function runDevServer(port, protocol) {
   var devServer = new WebpackDevServer(compiler, {
     // By default WebpackDevServer also serves files from the current directory.
     // This might be useful in legacy apps. However we already encourage people
@@ -254,7 +254,9 @@ function runDevServer(port) {
     // https://github.com/facebookincubator/create-react-app/issues/293
     watchOptions: {
       ignored: /node_modules/
-    }
+    },
+    // Enable HTTPS if the HTTPS environment variable is set to 'true'
+    https: protocol === "https" ? true : false
   });
 
   // Our custom middleware proxies requests to /index.html or a remote API.
@@ -269,13 +271,14 @@ function runDevServer(port) {
     clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    openBrowser(port);
+    openBrowser(port, protocol);
   });
 }
 
 function run(port) {
-  setupCompiler(port);
-  runDevServer(port);
+  var protocol = process.env.HTTPS === 'true' ? "https" : "http";
+  setupCompiler(port, protocol);
+  runDevServer(port, protocol);
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to
