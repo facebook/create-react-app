@@ -19,9 +19,9 @@ Instead of letting the user specify the entry filename, we always assume it to b
 
 ### Heuristics
 
-Normally, `npm start` runs on port `3000`, and this is not explicitly configurable. However some environments like cloud IDEs want the programs to run on a specific port to server their output. We want to play well with different environments, so Create React App reads `PORT` environment variable and prefers it when it is specified. The trick is that we know cloud IDEs already specify it automatically so there is no need for the user to do anything. Create React App relies on heuristics to do the right thing depending on environment.
+Normally, `npm start` runs on port `3000`, and this is not explicitly configurable. However some environments like cloud IDEs want the programs to run on a specific port to serve their output. We want to play well with different environments, so Create React App reads `PORT` environment variable and prefers it when it is specified. The trick is that we know cloud IDEs already specify it automatically so there is no need for the user to do anything. Create React App relies on heuristics to do the right thing depending on environment.
 
-Another example of this is how `npm test` normally launches the watcher, but if `CI` environment variable is set, it will run tests once. We know that popular CI environments set this variable so the user doesn’t need to do anything. It just works.
+Another example of this is how `npm test` normally launches the watcher, but if the `CI` environment variable is set, it will run tests once. We know that popular CI environments set this variable so the user doesn’t need to do anything. It just works.
 
 ### Interactivity
 
