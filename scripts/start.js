@@ -221,6 +221,23 @@ function addMiddleware(devServer) {
 
 function runDevServer(port) {
   var devServer = new WebpackDevServer(compiler, {
+    // By default WebpackDevServer also serves files from the current directory.
+    // This might be useful in legacy apps. However we already encourage people
+    // to use Webpack for importing assets in the code, so we don't need to
+    // additionally serve files by their filenames. Otherwise, even if it
+    // works in development, those files will be missing in production, unless
+    // we explicitly copy them. But even if we copy the all the files into
+    // the build output (which doesn't seem to be wise because it may contain
+    // private information such as files with API keys, for example), we would
+    // still have a problem. Since the filenames would be the same every time,
+    // browsers would cache their content, and updating file content would not
+    // work correctly. This is easily solved by importing assets through Webpack
+    // because if it can then append content hashes to filenames in production,
+    // just like it does for JS and CSS. And because we configured "html" loader
+    // to be used for HTML files, even <link href="./src/something.png"> would
+    // get resolved correctly by Webpack and handled both in development and
+    // in production without actually serving it by that path.
+    contentBase: [],
     // Enable hot reloading server. It will provide /sockjs-node/ endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
