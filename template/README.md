@@ -38,6 +38,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Disabling jsdom](#disabling-jsdom)
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
 - [Deployment](#deployment)
+  - [Netlify](#netlify)
   - [Now](#now)
   - [Modulus](#modulus)
   - [Heroku](#heroku)
@@ -751,6 +752,33 @@ To override this, specify the `homepage` in your `package.json`, for example:
 ```
 
 This will let Create React App correctly infer the root path to use in the generated HTML file.
+
+## Netlify
+
+**To do a manual deploy to Netlify's CDN:**
+
+```sh
+npm install netlify-cli
+netlify deploy
+```
+
+Choose `build` as the path to deploy.
+
+**To setup continuous delivery**
+
+With this setup Netlify will build and deploy when you push to git or open a pull request:
+
+1. [Start a new netlify project](https://app.netlify.com/signup)
+2. Pick your Git hosting service and select your create-react-app repository
+3. Click `Build your site`
+
+**Support for client site routing:**
+
+To support `pushState`, make sure to create a `build/_redirects` file with the following rewrite rules:
+
+```
+/*  /index.html  200
+```
 
 ### Now
 
