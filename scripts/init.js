@@ -100,6 +100,9 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     console.log(chalk.cyan('npm start'));
     console.log('  Starts the development server.');
     console.log();
+    console.log(chalk.cyan('npm test'));
+    console.log('  Starts the test runner.');
+    console.log();
     console.log(chalk.cyan('npm run build'));
     console.log('  Bundles the app into static files for production.');
     console.log();
