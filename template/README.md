@@ -38,11 +38,12 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Disabling jsdom](#disabling-jsdom)
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
 - [Deployment](#deployment)
-  - [Now](#now)
-  - [Modulus](#modulus)
-  - [Heroku](#heroku)
-  - [Surge](#surge)
+  - [Building for Relative Paths](#building-for-relative-paths)
   - [GitHub Pages](#github-pages)
+  - [Heroku](#heroku)
+  - [Modulus](#modulus)
+  - [Now](#now)
+  - [Surge](#surge)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -80,6 +81,7 @@ my-app/
   src/
     App.css
     App.js
+    App.test.js
     index.css
     index.js
     logo.svg
@@ -743,6 +745,8 @@ This feature is experimental and still [has major usage issues](https://github.c
 
 ## Deployment
 
+## Building for Relative Paths
+
 By default, Create React App produces a build assuming your app is hosted at the server root.  
 To override this, specify the `homepage` in your `package.json`, for example:
 
@@ -751,40 +755,6 @@ To override this, specify the `homepage` in your `package.json`, for example:
 ```
 
 This will let Create React App correctly infer the root path to use in the generated HTML file.
-
-### Now
-
-See [this example](https://github.com/xkawi/create-react-app-now) for a zero-configuration single-command deployment with [now](https://zeit.co/now).
-
-### Modulus
-
-See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modulus) on how to deploy your react app to Modulus.
-
-### Heroku
-
-Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).  
-You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
-
-### Surge
-
-Install the Surge CLI if you haven't already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account. You just need to specify the *build* folder and your custom domain, and you are done.
-
-```sh
-              email: email@domain.com
-           password: ********
-       project path: /path/to/project/build
-               size: 7 files, 1.8 MB
-             domain: create-react-app.surge.sh
-             upload: [====================] 100%, eta: 0.0s
-   propagate on CDN: [====================] 100%
-               plan: Free
-              users: email@domain.com
-         IP Address: X.X.X.X
-
-    Success! Project is published and running at create-react-app.surge.sh
-```
-
-Note that in order to support routers that use html5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
 
 ### GitHub Pages
 
@@ -816,6 +786,40 @@ You may copy and paste them, or put them into a custom shell script. You may als
 Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
+
+### Heroku
+
+Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).  
+You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
+
+### Modulus
+
+See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modulus) on how to deploy your react app to Modulus.
+
+### Now
+
+See [this example](https://github.com/xkawi/create-react-app-now) for a zero-configuration single-command deployment with [now](https://zeit.co/now).
+
+### Surge
+
+Install the Surge CLI if you haven't already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account. You just need to specify the *build* folder and your custom domain, and you are done.
+
+```sh
+              email: email@domain.com
+           password: ********
+       project path: /path/to/project/build
+               size: 7 files, 1.8 MB
+             domain: create-react-app.surge.sh
+             upload: [====================] 100%, eta: 0.0s
+   propagate on CDN: [====================] 100%
+               plan: Free
+              users: email@domain.com
+         IP Address: X.X.X.X
+
+    Success! Project is published and running at create-react-app.surge.sh
+```
+
+Note that in order to support routers that use html5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
 
 ## Something Missing?
 
