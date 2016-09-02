@@ -24,6 +24,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
+- [Using HTTPS in Development](#using-https-in-development)
 - [Adding `<meta>` Tags](#adding-meta-tags)
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
@@ -525,6 +526,28 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
 * Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+
+## Using HTTPS in Development
+
+You may require the dev server to serve pages over HTTPS. One particular case where this could be useful is when using [the "proxy" feature](#proxying-api-requests-in-development) to proxy requests to an API server when that API server is itself serving HTTPS.
+
+To do this, set the `HTTPS` environment variable to `true`, then start the dev server as usual with `npm start`:
+
+#### Windows (cmd.exe)
+
+```cmd
+set HTTPS=true&&npm start
+```
+
+(Note: the lack of whitespace is intentional.)
+
+#### Linux, OS X (Bash)
+
+```bash
+HTTPS=true npm start
+```
+
+Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
 
 ## Adding `<meta>` Tags
 
