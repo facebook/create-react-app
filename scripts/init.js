@@ -97,6 +97,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     console.log('Inside that directory, you can run several commands:');
     console.log();
     console.log('  * npm start: Starts the development server.');
+    console.log('  * npm test: Starts the test runner.');
     console.log('  * npm run build: Bundles the app into static files for production.');
     console.log('  * npm run eject: Removes this tool. If you do this, you can’t go back!');
     console.log();
