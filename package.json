@@ -11,11 +11,11 @@
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
   "scripts": {
-    "build": "node scripts/build.js --debug-template",
+    "build": "node scripts/build.js",
     "create-react-app": "node global-cli/index.js --scripts-version \"$PWD/`tasks/clean_pack.sh`\"",
     "e2e": "tasks/e2e.sh",
-    "start": "node scripts/start.js --debug-template",
-    "test": "node scripts/test.js --debug-template --env=jsdom"
+    "start": "node scripts/start.js",
+    "test": "node scripts/test.js --env=jsdom"
   },
   "files": [
     "PATENTS",
