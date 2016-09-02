@@ -61,7 +61,7 @@
     "html-loader": "0.4.3",
     "html-webpack-plugin": "2.22.0",
     "http-proxy-middleware": "0.17.1",
-    "jest": "15.1.0",
+    "jest": "15.1.1",
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
     "opn": "4.0.2",
