@@ -11,7 +11,7 @@ Following these guidelines helps to communicate that you respect the time of the
 As much as possible, we try to avoid adding configuration and flags. The purpose of this tool is to provide the best experience for people getting started with React, and this will always be our first priority. This means that sometimes we [sacrifice additional functionality](https://gettingreal.37signals.com/ch05_Half_Not_Half_Assed.php) (such as server rendering) because it is too hard to solve it in a way that wouldn’t require any configuration.
 
 We prefer **convention, heuristics, or interactivity** over configuration.  
-Here’s a few examples of how them in action.
+Here’s a few examples of them in action.
 
 ### Convention
 
