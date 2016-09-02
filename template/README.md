@@ -32,6 +32,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Writing Tests](#writing-tests)
   - [Testing Components](#testing-components)
   - [Using Third Party Assertion Libraries](#using-third-party-assertion-libraries)
+  - [Focusing and Excluding Tests](#focusing-and-excluding-tests)
   - [Coverage Reporting](#coverage-reporting)
   - [Continuous Integration](#continuous-integration)
   - [Disabling jsdom](#disabling-jsdom)
@@ -669,6 +670,11 @@ import { expect } from 'chai';
 ```
 
 and then use them in your tests like you normally do.
+
+### Focusing and Excluding Tests
+
+You can replace `it()` with `xit()` to temporarily exclude a test from being executed.  
+Similarly, `fit()` lets you focus on a specific test without running any other tests.
 
 ### Coverage Reporting
 
