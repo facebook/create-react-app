@@ -11,6 +11,7 @@
 // and use those instead. This way we don't need to branch here.
 
 var path = require('path');
+var os = require('os');
 
 // True after ejecting, false when used as a dependency
 var isEjected = (
@@ -31,6 +32,16 @@ function resolveApp(relativePath) {
   return path.resolve(relativePath);
 }
 
+function resolveNodePath(paths) {
+  if (paths === '') {
+    return []
+  }
+  var separator = os.platform() === 'win32' ? ';' : ':';
+  return paths.split(separator).map(p => path.resolve(p));
+}
+
+var nodePath = resolveNodePath(process.env.NODE_PATH || '');
+
 if (isInCreateReactAppSource) {
   // create-react-app development: we're in ./config/
   module.exports = {
@@ -39,7 +50,8 @@ if (isInCreateReactAppSource) {
     appPackageJson: resolveOwn('../package.json'),
     appSrc: resolveOwn('../template/src'),
     appNodeModules: resolveOwn('../node_modules'),
-    ownNodeModules: resolveOwn('../node_modules')
+    ownNodeModules: resolveOwn('../node_modules'),
+    nodePath: nodePath
   };
 } else if (!isEjected) {
   // before eject: we're in ./node_modules/react-scripts/config/
@@ -50,7 +62,8 @@ if (isInCreateReactAppSource) {
     appSrc: resolveApp('src'),
     appNodeModules: resolveApp('node_modules'),
     // this is empty with npm3 but node resolution searches higher anyway:
-    ownNodeModules: resolveOwn('../node_modules')
+    ownNodeModules: resolveOwn('../node_modules'),
+    nodePath: nodePath
   };
 } else {
   // after eject: we're in ./config/
@@ -60,6 +73,7 @@ if (isInCreateReactAppSource) {
     appPackageJson: resolveApp('package.json'),
     appSrc: resolveApp('src'),
     appNodeModules: resolveApp('node_modules'),
-    ownNodeModules: resolveApp('node_modules')
+    ownNodeModules: resolveApp('node_modules'),
+    nodePath: nodePath
   };
 }
