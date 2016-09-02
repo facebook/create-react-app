@@ -1,3 +1,17 @@
+## 0.3.1 (September 2, 2016)
+
+### Build Dependency (`react-scripts`)
+
+* Bumps Jest dependency to fix a few issues discovered yesterday. ([@cpojer](https://github.com/cpojer) in [facebook/jest#1580](https://github.com/facebook/jest/pull/1580), [@insin](https://github.com/insin) in [facebook/jest#1574](https://github.com/facebook/jest/pull/1574))
+
+### Migrating from 0.3.0 to 0.3.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.3.1
+```
+
 ## 0.3.0 (September 1, 2016)
 
 ### Build Dependency (`react-scripts`)
