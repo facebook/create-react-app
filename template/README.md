@@ -39,6 +39,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
 - [Deployment](#deployment)
   - [Now](#now)
+  - [Modulus](#modulus)
   - [Heroku](#heroku)
   - [Surge](#surge)
   - [GitHub Pages](#github-pages)
@@ -754,6 +755,10 @@ This will let Create React App correctly infer the root path to use in the gener
 ### Now
 
 See [this example](https://github.com/xkawi/create-react-app-now) for a zero-configuration single-command deployment with [now](https://zeit.co/now).
+
+### Modulus
+
+See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modulus) on how to deploy your react app to Modulus.
 
 ### Heroku
 
