@@ -73,10 +73,10 @@ prompt(
     console.log('Copying ' + file + ' to ' + appPath);
     var content = fs
       .readFileSync(path.join(ownPath, file), 'utf8')
-      // Remove license header from JS
-      .replace(/^\/\*\*(\*(?!\/)|[^*])*\*\//, '')
-      // Remove license header from AppleScript
-      .replace(/^--.*\n/gm, '')
+      // Remove dead code from .js files on eject
+      .replace(/\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/mg, '')
+      // Remove dead code from .applescript files on eject
+      .replace(/-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/mg, '')
       .trim() + '\n';
     fs.writeFileSync(path.join(appPath, file), content);
   });
