@@ -69,7 +69,9 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/253
     fallback: paths.nodePaths,
     // These are the reasonable defaults supported by the Node ecosystem.
-    // We also include JSX as a common component filename extension.
+    // We also include JSX as a common component filename extension to support
+    // some tools, although we do not recommend using it, see:
+    // https://github.com/facebookincubator/create-react-app/issues/290
     extensions: ['.js', '.json', '.jsx', ''],
     alias: {
       // Support React Native Web
