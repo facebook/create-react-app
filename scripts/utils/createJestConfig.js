@@ -27,7 +27,8 @@ module.exports = (resolve, rootDir) => {
     scriptPreprocessor: resolve('config/jest/transform.js'),
     setupFiles: setupFiles,
     testPathIgnorePatterns: ['<rootDir>/(build|docs|node_modules)/'],
-    testEnvironment: 'node'
+    testEnvironment: 'node',
+    testRegex: '(/__tests__/.*|\\.(test|spec))\\.(js|jsx)$',
   };
   if (rootDir) {
     config.rootDir = rootDir;
