@@ -22,6 +22,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
+- [Can I Use Decorators?](#can-i-use-decorators)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Using HTTPS in Development](#using-https-in-development)
@@ -456,6 +457,23 @@ if (process.env.NODE_ENV !== 'production') {
   analytics.disable();
 }
 ```
+
+## Can I Use Decorators?
+
+Many popular libraries use [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841) in their documentation.  
+Create React App doesn’t support decorator syntax at the moment because:
+
+* It is an experimental proposal and is subject to change.
+* The current specification version is not officially supported by Babel.
+* If the specification changes, we won’t be able to write a codemod because we don’t use them internally at Facebook.
+
+However in many cases you can rewrite decorator-based code without decorators just as fine.  
+Please refer to these two threads for reference:
+
+* [#214](https://github.com/facebookincubator/create-react-app/issues/214)
+* [#411](https://github.com/facebookincubator/create-react-app/issues/411)
+
+Create React App will add decorator support when the specification advances to a stable stage.
 
 ## Integrating with a Node Backend
 
