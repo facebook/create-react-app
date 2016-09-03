@@ -1,3 +1,18 @@
+## 0.4.1 (September 3, 2016)
+
+### Build Dependency (`react-scripts`)
+
+* We now support (but [don’t recommend](https://github.com/facebookincubator/create-react-app/issues/87#issuecomment-234627904)) `.jsx` file extension. ([@tizmagik](https://github.com/tizmagik) in [#563](https://github.com/facebookincubator/create-react-app/pull/563))
+* Proxy request errors are now printed to the console. ([@cloudmu](https://github.com/cloudmu) in [#502](https://github.com/facebookincubator/create-react-app/pull/502))
+
+### Migrating from 0.4.0 to 0.4.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.4.1
+```
+
 ## 0.4.0 (September 2, 2016)
 
 ### Build Dependency (`react-scripts`)
