@@ -6,6 +6,13 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
+# ******************************************************************************
+# This releases an update to the `react-scripts` package.
+# Don't use `npm publish` for it.
+# Read the release instructions:
+# https://github.com/facebookincubator/create-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
+# ******************************************************************************
+
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
