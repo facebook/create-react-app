@@ -12,7 +12,7 @@
 Inside any created project that has not been ejected, run:
 
 ```
-npm install --save-dev --save-exact react-scripts@0.3.1
+npm install --save-dev --save-exact react-scripts@0.4.0
 ```
 
 ### Breaking Change in 0.4.0
