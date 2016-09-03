@@ -601,7 +601,7 @@ Their names will also contain the content hashes to make sure the browser cache 
 
 Currently, only `<link href>` attributes are treated this way. If you need similar support for other HTML tags and attributes, please file an issue describing your use case.
 
-If you need to use an asset from code rather than from HTML, please read [Adding Images and Fonts](#adding-images-and-fonts).
+If you need to use an asset from code rather than from HTML, please read [Adding Images and Fonts](#adding-images-and-fonts). For example, to integrate a library like [`react-mdl`](https://github.com/tleunen/react-mdl) that depends on global scripts and styles, [`import` them from JavaScript](https://github.com/tleunen/react-mdl/pull/388).
 
 ### Generating Dynamic `<meta>` Tags on the Server
 
