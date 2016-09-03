@@ -6,6 +6,11 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
+# ******************************************************************************
+# This is an end-to-end test intended to run on CI.
+# You can also run it locally but it's slow.
+# ******************************************************************************
+
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
@@ -14,7 +19,7 @@ function cleanup {
   cd $root_path
   # Uncomment when snapshot testing is enabled by default:
   # rm ./template/src/__snapshots__/App.test.js.snap
-  rm -rf $temp_cli_path $temp_app_path
+  rm -rf $temp_cli_path $temp_app_path $clean_path
 }
 
 # Error messages are redirected to stderr
@@ -101,10 +106,6 @@ for file in $files; do
   sed -i.bak '/\/\/ @remove-on-publish-begin/,/\/\/ @remove-on-publish-end/d' $file
   rm $file.bak
 done
-
-# A hacky way to avoid bundling dependencies.
-# Packing with them enabled takes too much memory, and Travis crashes.
-perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' package.json
 
 # Finally, pack react-scripts
 npm install
