@@ -376,47 +376,16 @@ node_modules/fbjs/lib/Deferred.js.flow:60
 node_modules/fbjs/lib/shallowEqual.js.flow:29
  29:     return x !== 0 || 1 / (x: $FlowIssue) === 1 / (y: $FlowIssue);
                                    ^^^^^^^^^^ identifier `$FlowIssue`. Could not resolve name
-
-src/App.js:3
-  3: import logo from './logo.svg';
-                      ^^^^^^^^^^^^ ./logo.svg. Required module not found
-
-src/App.js:4
-  4: import './App.css';
-            ^^^^^^^^^^^ ./App.css. Required module not found
-
-src/index.js:5
-  5: import './index.css';
-            ^^^^^^^^^^^^^ ./index.css. Required module not found
 ```
 
 To fix this, change your `.flowconfig` to look like this:
 
 ```ini
-[libs]
-./node_modules/fbjs/flow/lib
-
-[options]
-esproposal.class_static_fields=enable
-esproposal.class_instance_fields=enable
-
-module.name_mapper='^\(.*\)\.css$' -> 'react-scripts/config/flow/css'
-module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|otf\|webp\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> 'react-scripts/config/flow/file'
-
-suppress_type=$FlowIssue
-suppress_type=$FlowFixMe
+[ignore]
+<PROJECT_ROOT>/node_modules/fbjs/.*
 ```
 
 Re-run flow, and you shouldn’t get any extra issues.
-
-If you later `eject`, you’ll need to replace `react-scripts` references with the `<PROJECT_ROOT>` placeholder, for example:
-
-```ini
-module.name_mapper='^\(.*\)\.css$' -> '<PROJECT_ROOT>/config/flow/css'
-module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|otf\|webp\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> '<PROJECT_ROOT>/config/flow/file'
-```
-
-We will consider integrating more tightly with Flow in the future so that you don’t have to do this.
 
 ## Adding Custom Environment Variables
 
