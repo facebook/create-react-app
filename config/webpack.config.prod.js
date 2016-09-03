@@ -130,7 +130,17 @@ module.exports = {
       // allow it implicitly so we also enable it.
       {
         test: /\.json$/,
+        exclude: /\/manifest.json$/,
         loader: 'json'
+      },
+      // A special case for manifest.json to place it into build root directory.
+      {
+        test: /\/manifest.json$/,
+        include: [paths.appSrc],
+        loader: 'file',
+        query: {
+          name: 'manifest.json?[hash:8]'
+        }
       },
       // "file" loader makes sure those assets end up in the `build` folder.
       // When you `import` an asset, you get its filename.
