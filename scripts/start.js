@@ -190,7 +190,11 @@ function onProxyError(proxy) {
 function addMiddleware(devServer) {
   // `proxy` lets you to specify a fallback server during development.
   // Every unrecognized request will be forwarded to it.
-  var proxy = require(paths.appPackageJson).proxy;
+  var pkg = require(paths.appPackageJson);
+
+  var proxy = pkg.proxy;
+  var proxyPaths = pkg.proxyPaths;
+
   devServer.use(historyApiFallback({
     // Allow paths with dots in them to be loaded, reference issue #387
     disableDotRule: true,
@@ -203,7 +207,12 @@ function addMiddleware(devServer) {
     // If this heuristic doesn’t work well for you, don’t use `proxy`.
     htmlAcceptHeaders: proxy ?
       ['text/html'] :
-      ['text/html', '*/*']
+      ['text/html', '*/*'],
+    // Pass `proxyPaths` directly to the proxy.
+    rewrites: proxyPaths && proxyPaths.map(path => ({
+      from: new RegExp(path),
+      to: context => context.parsedUrl.pathname,
+    }))
   }));
   if (proxy) {
     if (typeof proxy !== 'string') {

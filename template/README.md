@@ -523,6 +523,14 @@ Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-
 
 Keep in mind that `proxy` only has effect in development (with `npm start`), and it is up to you to ensure that URLs like `/api/todos` point to the right thing in production. You don’t have to use the `/api` prefix. Any unrecognized request without a `text/html` accept header will be redirected to the specified `proxy`.
 
+By default, the development server will only attempt to send requests **without** a `text/html` accept header to the proxy. To pass html requests to the proxy, add a `proxyPaths` field to your `package.json`. For example:
+
+```js
+  "proxyPaths": [
+    "^/auth",
+  ],
+```
+
 Currently the `proxy` option only handles HTTP requests, and it won’t proxy WebSocket connections.  
 If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
