@@ -1,3 +1,4 @@
+// @remove-on-eject-begin
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -6,6 +7,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+// @remove-on-eject-end
 
 process.env.NODE_ENV = 'development';
 
@@ -25,10 +27,10 @@ var paths = require('../config/paths');
 // Tools like Cloud9 rely on this.
 var DEFAULT_PORT = process.env.PORT || 3000;
 var compiler;
-
-// TODO: hide this behind a flag and eliminate dead code on eject.
-// This shouldn't be exposed to the user.
 var handleCompile;
+
+// You can safely remove this after ejecting.
+// We only use this block for testing of Create React App itself:
 var isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
 if (isSmokeTest) {
   handleCompile = function (err, stats) {
@@ -72,7 +74,7 @@ function clearConsole() {
   process.stdout.write('\x1bc');
 }
 
-function setupCompiler(port) {
+function setupCompiler(port, protocol) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   compiler = webpack(config, handleCompile);
@@ -97,7 +99,7 @@ function setupCompiler(port) {
       console.log();
       console.log('The app is running at:');
       console.log();
-      console.log('  ' + chalk.cyan('http://localhost:' + port + '/'));
+      console.log('  ' + chalk.cyan(protocol + '://localhost:' + port + '/'));
       console.log();
       console.log('Note that the development build is not optimized.');
       console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
@@ -148,14 +150,14 @@ function setupCompiler(port) {
   });
 }
 
-function openBrowser(port) {
+function openBrowser(port, protocol) {
   if (process.platform === 'darwin') {
     try {
       // Try our best to reuse existing tab
       // on OS X Google Chrome with AppleScript
       execSync('ps cax | grep "Google Chrome"');
       execSync(
-        'osascript chrome.applescript http://localhost:' + port + '/',
+        'osascript chrome.applescript ' + protocol + '://localhost:' + port + '/',
         {cwd: path.join(__dirname, 'utils'), stdio: 'ignore'}
       );
       return;
@@ -165,7 +167,7 @@ function openBrowser(port) {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn('http://localhost:' + port + '/');
+  opn(protocol + '://localhost:' + port + '/');
 }
 
 function addMiddleware(devServer) {
@@ -217,8 +219,25 @@ function addMiddleware(devServer) {
   devServer.use(devServer.middleware);
 }
 
-function runDevServer(port) {
+function runDevServer(port, protocol) {
   var devServer = new WebpackDevServer(compiler, {
+    // By default WebpackDevServer also serves files from the current directory.
+    // This might be useful in legacy apps. However we already encourage people
+    // to use Webpack for importing assets in the code, so we don't need to
+    // additionally serve files by their filenames. Otherwise, even if it
+    // works in development, those files will be missing in production, unless
+    // we explicitly copy them. But even if we copy the all the files into
+    // the build output (which doesn't seem to be wise because it may contain
+    // private information such as files with API keys, for example), we would
+    // still have a problem. Since the filenames would be the same every time,
+    // browsers would cache their content, and updating file content would not
+    // work correctly. This is easily solved by importing assets through Webpack
+    // because if it can then append content hashes to filenames in production,
+    // just like it does for JS and CSS. And because we configured "html" loader
+    // to be used for HTML files, even <link href="./src/something.png"> would
+    // get resolved correctly by Webpack and handled both in development and
+    // in production without actually serving it by that path.
+    contentBase: [],
     // Enable hot reloading server. It will provide /sockjs-node/ endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
@@ -235,7 +254,9 @@ function runDevServer(port) {
     // https://github.com/facebookincubator/create-react-app/issues/293
     watchOptions: {
       ignored: /node_modules/
-    }
+    },
+    // Enable HTTPS if the HTTPS environment variable is set to 'true'
+    https: protocol === "https" ? true : false
   });
 
   // Our custom middleware proxies requests to /index.html or a remote API.
@@ -250,13 +271,14 @@ function runDevServer(port) {
     clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    openBrowser(port);
+    openBrowser(port, protocol);
   });
 }
 
 function run(port) {
-  setupCompiler(port);
-  runDevServer(port);
+  var protocol = process.env.HTTPS === 'true' ? "https" : "http";
+  setupCompiler(port, protocol);
+  runDevServer(port, protocol);
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to

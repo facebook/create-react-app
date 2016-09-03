@@ -1,3 +1,4 @@
+// @remove-on-eject-begin
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -6,6 +7,9 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+// @remove-on-eject-end
+
+var path = require('path');
 
 module.exports = {
   // Don't try to find .babelrc because we want to force this configuration.
@@ -33,7 +37,10 @@ module.exports = {
     [require.resolve('babel-plugin-transform-runtime'), {
       helpers: false,
       polyfill: false,
-      regenerator: true
+      regenerator: true,
+      // Resolve the Babel runtime relative to the config.
+      // You can safely remove this after ejecting:
+      moduleName: path.dirname(require.resolve('babel-runtime/package'))
     }]
   ]
 };

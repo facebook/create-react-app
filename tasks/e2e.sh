@@ -6,26 +6,28 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-# Start in tests/ even if run from root directory
+# Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
 function cleanup {
   echo 'Cleaning up.'
   cd $initial_path
-  rm ../template/src/__tests__/__snapshots__/App-test.js.snap
+  # Uncomment when snapshot testing is enabled by default:
+  # rm ../template/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
+# error messages are redirected to stderr
 function handle_error {
-  echo "$(basename $0): \033[31mERROR!\033[m An error was encountered executing \033[36mline $1\033[m."
+  echo "$(basename $0): \033[31mERROR!\033[m An error was encountered executing \033[36mline $1\033[m." 1>&2;
   cleanup
-  echo 'Exiting with error.'
+  echo 'Exiting with error.' 1>&2;
   exit 1
 }
 
 function handle_exit {
   cleanup
-  echo 'Exiting without error.'
+  echo 'Exiting without error.' 1>&2;
   exit
 }
 
@@ -38,7 +40,7 @@ trap 'set +x; handle_exit' SIGQUIT SIGTERM SIGINT SIGKILL SIGHUP
 # Echo every command being executed
 set -x
 
-# npm pack the two directories to make sure they are valid npm modules
+# `tasks/clean_pack.sh` the two directories to make sure they are valid npm modules
 initial_path=$PWD
 
 cd ..
@@ -51,13 +53,10 @@ perl -i -p0e 's/bundledDependencies.*?]/bundledDependencies": []/s' package.json
 
 # Pack react-scripts
 npm install
-scripts_path=$PWD/`npm pack`
+scripts_path=$PWD/`tasks/clean_pack.sh`
 
-# lint
+# Lint
 ./node_modules/.bin/eslint --ignore-path .gitignore ./
-
-# Test local start command
-npm start -- --smoke-test
 
 # Test local build command
 npm run build
@@ -69,16 +68,21 @@ test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
-# Run tests
-npm run test
-test -e template/src/__tests__/__snapshots__/App-test.js.snap
+# Run tests with CI flag
+CI=true npm test
+# Uncomment when snapshot testing is enabled by default:
+# test -e template/src/__snapshots__/App.test.js.snap
+
+# Test local start command
+npm start -- --smoke-test
 
 # Pack CLI
 cd global-cli
 npm install
 cli_path=$PWD/`npm pack`
 
-# Install the cli in a temporary location ( http://unix.stackexchange.com/a/84980 )
+# Install the CLI in a temporary location
+# http://unix.stackexchange.com/a/84980
 temp_cli_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_cli_path'`
 cd $temp_cli_path
 npm install $cli_path
@@ -99,9 +103,10 @@ test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
-# Run tests
-npm run test
-test -e src/__tests__/__snapshots__/App-test.js.snap
+# Run tests with CI flag
+CI=true npm test
+# Uncomment when snapshot testing is enabled by default:
+# test -e src/__snapshots__/App.test.js.snap
 
 # Test the server
 npm start -- --smoke-test
@@ -117,9 +122,11 @@ test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
-# Run tests
-npm run test
-test -e src/__tests__/__snapshots__/App-test.js.snap
+# Run tests, overring the watch option to disable it
+# TODO: make CI flag respected after ejecting as well
+npm test -- --watch=no
+# Uncomment when snapshot testing is enabled by default:
+# test -e src/__snapshots__/App.test.js.snap
 
 # Test the server
 npm start -- --smoke-test
