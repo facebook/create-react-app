@@ -16,6 +16,9 @@
   "bin": {
     "create-react-app": "./index.js"
   },
+  "engines": {
+    "node" : ">=6"
+  },
   "dependencies": {
     "chalk": "^1.1.1",
     "cross-spawn": "^4.0.0",
