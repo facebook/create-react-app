@@ -145,7 +145,7 @@ module.exports = {
       // When you `import` an asset, you get its filename.
       {
         test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
-        exclude: /\/favicon.ico$/,
+        exclude: /\/favicon\.ico$/,
         loader: 'file',
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
@@ -153,7 +153,7 @@ module.exports = {
       },
       // A special case for favicon.ico to place it into build root directory.
       {
-        test: /\/favicon.ico$/,
+        test: /\/favicon\.ico$/,
         include: [paths.appSrc],
         loader: 'file',
         query: {
