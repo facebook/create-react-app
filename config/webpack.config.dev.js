@@ -119,13 +119,12 @@ module.exports = {
       // allow it implicitly so we also enable it.
       {
         test: /\.json$/,
-        exclude: /\/manifest.json$/,
+        exclude: /\/manifest\.json$/,
         loader: 'json'
       },
       // A special case for manifest.json to place it into build root directory.
       {
-        test: /\/manifest.json$/,
-        include: [paths.appSrc],
+        test: /\/manifest\.json$/,
         loader: 'file',
         query: {
           name: 'manifest.json?[hash:8]'
