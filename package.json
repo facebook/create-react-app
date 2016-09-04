@@ -5,7 +5,7 @@
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
@@ -26,9 +26,6 @@
   ],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
-  },
-  "engines": {
-    "node" : ">=6"
   },
   "dependencies": {
     "autoprefixer": "6.4.0",
