@@ -480,7 +480,7 @@ Create React App will add decorator support when the specification advances to a
 
 This project includes a [fetch polyfill](https://github.com/github/fetch), which makes it easier to make web requests.
 
-The `fetch` function allows to easily makes AJAX requests. It takes in a URL as an input and returns a `Promise` that resolves to a `Response` object. You can find more information about `fetch` [here](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+The global `fetch` function allows to easily makes AJAX requests. It takes in a URL as an input and returns a `Promise` that resolves to a `Response` object. You can find more information about `fetch` [here](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
 
 
 __About Promises:__ This project also includes a [Promise polyfill](https://github.com/then/promise) which provides a full implementation of Promises/A+. A Promise represents the eventual result of an asynchronous operation, you can find more information about Promises [here](https://www.promisejs.org/) and [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
@@ -488,7 +488,10 @@ __About Promises:__ This project also includes a [Promise polyfill](https://gith
 You can make a GET request like this:
 ```javascript
 class MyComponent extends Component {
-  state = {}
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   componentDidMount() {
     this.fetchGists();
@@ -510,7 +513,10 @@ class MyComponent extends Component {
 You can also use the `async/await` syntax to fetch data. [Here](https://zeit.co/blog/async-and-await) is an introduction to it.
 ```javascript
 class MyComponent extends Component {
-  state = {}
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   componentDidMount() {
     this.fetchGists();
