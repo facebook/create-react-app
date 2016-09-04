@@ -1,3 +1,4 @@
+// @remove-on-eject-begin
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -6,6 +7,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+// @remove-on-eject-end
 
 var path = require('path');
 var autoprefixer = require('autoprefixer');
@@ -65,19 +67,21 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
+    // This allows you to set a fallback for where Webpack should look for modules.
+    // We read `NODE_PATH` environment variable in `paths.js` and pass paths here.
+    // We use `fallback` instead of `root` because we want `node_modules` to "win"
+    // if there any conflicts. This matches Node resolution mechanism.
+    // https://github.com/facebookincubator/create-react-app/issues/253
+    fallback: paths.nodePaths,
     // These are the reasonable defaults supported by the Node ecosystem.
+    // We also include JSX as a common component filename extension to support
+    // some tools, although we do not recommend using it, see:
+    // https://github.com/facebookincubator/create-react-app/issues/290
     // We support also TypeScript ts and tsx which will be compiled later
-    extensions: ['.ts', '.tsx', '.js', '.json', ''],
+    extensions: ['.ts', '.tsx', '.js', '.json', '.jsx', ''],
     alias: {
-      // This `alias` section can be safely removed after ejection.
-      // We do this because `babel-runtime` may be inside `react-scripts`,
-      // so when `babel-plugin-transform-runtime` imports it, it will not be
-      // available to the app directly. This is a temporary solution that lets
-      // us ship support for generators. However it is far from ideal, and
-      // if we don't have a good solution, we should just make `babel-runtime`
-      // a dependency in generated projects.
-      // See https://github.com/facebookincubator/create-react-app/issues/255
-      'babel-runtime/regenerator': require.resolve('babel-runtime/regenerator'),
+      // Support React Native Web
+      // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web'
     }
   },
@@ -93,7 +97,7 @@ module.exports = {
     // It's important to do this before Babel or TypeScript processes the JS/TS.
     preLoaders: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         loader: 'eslint',
         include: paths.appSrc,
       },
@@ -113,7 +117,7 @@ module.exports = {
       },
       // Process JS with Babel.
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         include: paths.appSrc,
         loader: 'babel',
         query: require('./babel.dev')
@@ -125,14 +129,12 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        include: [paths.appSrc, paths.appNodeModules],
         loader: 'style!css!postcss'
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
       {
         test: /\.json$/,
-        include: [paths.appSrc, paths.appNodeModules],
         loader: 'json'
       },
       // "file" loader makes sure those assets get served by WebpackDevServer.
@@ -140,7 +142,6 @@ module.exports = {
       // In production, they would get copied to the `build` folder.
       {
         test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
-        include: [paths.appSrc, paths.appNodeModules],
         exclude: /\/favicon.ico$/,
         loader: 'file',
         query: {
@@ -160,7 +161,6 @@ module.exports = {
       // assets smaller than specified size as data URLs to avoid requests.
       {
         test: /\.(mp4|webm)(\?.*)?$/,
-        include: [paths.appSrc, paths.appNodeModules],
         loader: 'url',
         query: {
           limit: 10000,

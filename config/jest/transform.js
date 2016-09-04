@@ -1,3 +1,4 @@
+// @remove-on-eject-begin
 /**
  * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
  *
@@ -5,6 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+// @remove-on-eject-end
 
 const babelDev = require('../babel.dev');
 const babelJest = require('babel-jest');
