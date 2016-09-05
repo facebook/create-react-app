@@ -184,6 +184,15 @@ function onProxyError(proxy) {
       chalk.cyan(err.code) + ').'
     );
     console.log();
+
+    // And immediately send the proper error response to the client.
+    // Otherwise, the request will eventually timeout with ERR_EMPTY_RESPONSE on the client side.
+    if (res.writeHead && !res.headersSent) {
+        res.writeHead(500);
+    }
+    res.end('Proxy error: Could not proxy request ' + req.url + ' from ' + 
+      host + ' to ' + proxy + ' (' + err.code + ').'
+    );
   }
 }
 
