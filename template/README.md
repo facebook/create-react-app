@@ -487,55 +487,91 @@ __About Promises:__ This project also includes a [Promise polyfill](https://gith
 
 You can make a GET request like this:
 ```javascript
-class MyComponent extends Component {
+import React, { Component, PropTypes } from 'react';
+
+const { string } = PropTypes;
+
+class RepoList extends Component {
+  static propTypes = {
+    user: string.isRequired,
+  }
+
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = { repos: [] };
   }
 
   componentDidMount() {
-    this.fetchGists();
+    this.fetchRepos(this.props.user);
   }
 
-  fetchGists() {
-    fetch('https://api.github.com/users/octocat/gists')
+  fetchRepos(user) {
+    fetch(`https://api.github.com/users/${user}/repos`)
       .then((response) => response.json())
-      .then((gists) => this.setState({ gists }))
+      .then((repos) => this.setState({ repos }))
       .catch((error) => console.log('Error', error));
   }
 
   render() {
-    return <UserGists gists={this.state.gists} />;
+    return (
+      <ul>
+        {this.state.repos.map((repo) => (
+          <li key={repo.full_name}>
+            <a href={repo.html_url}>{repo.full_name}</a>
+          </li>
+        ))}
+      </ul>
+    );
   }
 }
+
+export default RepoList;
 ```
 
 You can also use the `async/await` syntax to fetch data. [Here](https://zeit.co/blog/async-and-await) is an introduction to it.
 ```javascript
-class MyComponent extends Component {
+import React, { Component, PropTypes } from 'react';
+
+const { string } = PropTypes;
+
+class RepoList extends Component {
+  static propTypes = {
+    user: string.isRequired,
+  }
+
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = { repos: [] };
   }
 
   componentDidMount() {
-    this.fetchGists();
+    this.fetchRepos(this.props.user);
   }
 
-  async fetchGists() {
+  async fetchRepos(user) {
     try {
-      const response = await fetch('https://api.github.com/users/octocat/gists');
-      const gists = await response.json();
-      this.setState({ gists });
+      const response = await fetch(`https://api.github.com/users/${user}/repos`);
+      const repos = await response.json();
+      this.setState({ repos });
     } catch(error) {
       console.log('Error', error);
     }
   }
 
   render() {
-    return <UserGists gists={this.state.gists} />;
+    return (
+      <ul>
+        {this.state.repos.map((repo) => (
+          <li key={repo.full_name}>
+            <a href={repo.html_url}>{repo.full_name}</a>
+          </li>
+        ))}
+      </ul>
+    );
   }
 }
+
+export default RepoList;
 ```
 
 ## Integrating with a Node Backend
