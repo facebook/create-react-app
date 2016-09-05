@@ -22,6 +22,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
+- [Can I Use Decorators?](#can-i-use-decorators)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Using HTTPS in Development](#using-https-in-development)
@@ -376,47 +377,16 @@ node_modules/fbjs/lib/Deferred.js.flow:60
 node_modules/fbjs/lib/shallowEqual.js.flow:29
  29:     return x !== 0 || 1 / (x: $FlowIssue) === 1 / (y: $FlowIssue);
                                    ^^^^^^^^^^ identifier `$FlowIssue`. Could not resolve name
-
-src/App.js:3
-  3: import logo from './logo.svg';
-                      ^^^^^^^^^^^^ ./logo.svg. Required module not found
-
-src/App.js:4
-  4: import './App.css';
-            ^^^^^^^^^^^ ./App.css. Required module not found
-
-src/index.js:5
-  5: import './index.css';
-            ^^^^^^^^^^^^^ ./index.css. Required module not found
 ```
 
 To fix this, change your `.flowconfig` to look like this:
 
 ```ini
-[libs]
-./node_modules/fbjs/flow/lib
-
-[options]
-esproposal.class_static_fields=enable
-esproposal.class_instance_fields=enable
-
-module.name_mapper='^\(.*\)\.css$' -> 'react-scripts/config/flow/css'
-module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|otf\|webp\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> 'react-scripts/config/flow/file'
-
-suppress_type=$FlowIssue
-suppress_type=$FlowFixMe
+[ignore]
+<PROJECT_ROOT>/node_modules/fbjs/.*
 ```
 
 Re-run flow, and you shouldn’t get any extra issues.
-
-If you later `eject`, you’ll need to replace `react-scripts` references with the `<PROJECT_ROOT>` placeholder, for example:
-
-```ini
-module.name_mapper='^\(.*\)\.css$' -> '<PROJECT_ROOT>/config/flow/css'
-module.name_mapper='^\(.*\)\.\(jpg\|png\|gif\|eot\|otf\|webp\|svg\|ttf\|woff\|woff2\|mp4\|webm\)$' -> '<PROJECT_ROOT>/config/flow/file'
-```
-
-We will consider integrating more tightly with Flow in the future so that you don’t have to do this.
 
 ## Adding Custom Environment Variables
 
@@ -487,6 +457,23 @@ if (process.env.NODE_ENV !== 'production') {
   analytics.disable();
 }
 ```
+
+## Can I Use Decorators?
+
+Many popular libraries use [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841) in their documentation.  
+Create React App doesn’t support decorator syntax at the moment because:
+
+* It is an experimental proposal and is subject to change.
+* The current specification version is not officially supported by Babel.
+* If the specification changes, we won’t be able to write a codemod because we don’t use them internally at Facebook.
+
+However in many cases you can rewrite decorator-based code without decorators just as fine.  
+Please refer to these two threads for reference:
+
+* [#214](https://github.com/facebookincubator/create-react-app/issues/214)
+* [#411](https://github.com/facebookincubator/create-react-app/issues/411)
+
+Create React App will add decorator support when the specification advances to a stable stage.
 
 ## Integrating with a Node Backend
 
@@ -601,7 +588,7 @@ Their names will also contain the content hashes to make sure the browser cache 
 
 Currently, only `<link href>` attributes are treated this way. If you need similar support for other HTML tags and attributes, please file an issue describing your use case.
 
-If you need to use an asset from code rather than from HTML, please read [Adding Images and Fonts](#adding-images-and-fonts).
+If you need to use an asset from code rather than from HTML, please read [Adding Images and Fonts](#adding-images-and-fonts). For example, to integrate a library like [`react-mdl`](https://github.com/tleunen/react-mdl) that depends on global scripts and styles, [`import` them from JavaScript](https://github.com/tleunen/react-mdl/pull/388).
 
 ### Generating Dynamic `<meta>` Tags on the Server
 

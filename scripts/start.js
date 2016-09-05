@@ -175,8 +175,6 @@ function openBrowser(port, protocol) {
 function onProxyError(proxy) {
   return function(err, req, res){
     var host = req.headers && req.headers.host;
-
-    // Log the error to the deveopment console.
     console.log(
       chalk.red('Proxy error:') + ' Could not proxy request ' + chalk.cyan(req.url) +
       ' from ' + chalk.cyan(host) + ' to ' + chalk.cyan(proxy) + '.'
