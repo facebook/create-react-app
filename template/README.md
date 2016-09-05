@@ -487,15 +487,9 @@ __About Promises:__ This project also includes a [Promise polyfill](https://gith
 
 You can make a GET request like this:
 ```javascript
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
-const { string } = PropTypes;
-
-class RepoList extends Component {
-  static propTypes = {
-    user: string.isRequired,
-  }
-
+class App extends Component {
   constructor(props) {
     super(props)
     this.state = { repos: [] };
@@ -525,20 +519,14 @@ class RepoList extends Component {
   }
 }
 
-export default RepoList;
+export default App;
 ```
 
 You can also use the `async/await` syntax to fetch data. [Here](https://zeit.co/blog/async-and-await) is an introduction to it.
 ```javascript
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
-const { string } = PropTypes;
-
-class RepoList extends Component {
-  static propTypes = {
-    user: string.isRequired,
-  }
-
+class App extends Component {
   constructor(props) {
     super(props)
     this.state = { repos: [] };
@@ -571,7 +559,7 @@ class RepoList extends Component {
   }
 }
 
-export default RepoList;
+export default App;
 ```
 
 ## Integrating with a Node Backend
