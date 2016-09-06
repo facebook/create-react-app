@@ -7,6 +7,9 @@
   "description": "Create React apps with no build configuration.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
+  "engines": {
+    "node": ">=4"
+  },
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
