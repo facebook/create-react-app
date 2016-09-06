@@ -99,7 +99,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     console.log('  * npm start: Starts the development server.');
     console.log('  * npm test: Starts the test runner.');
     console.log('  * npm run build: Bundles the app into static files for production.');
-    console.log('  * npm run eject: Removes this tool. If you do this, you can’t go back!');
+    console.log('  * npm run eject: Removes this tool and copies build dependencies, configs, and scripts into the app directory. If you do this, you can’t go back!');
     console.log();
     console.log('We suggest that you begin by typing:');
     console.log();
