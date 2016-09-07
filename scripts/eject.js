@@ -13,6 +13,8 @@ var path = require('path');
 var prompt = require('./utils/prompt');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
+var babelDevConfig = require('../config/babel.dev.js')(false);
+var babelProdConfig = require('../config/babel.prod.js')(false);
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
@@ -69,6 +71,25 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'scripts'));
   fs.mkdirSync(path.join(appPath, 'scripts', 'utils'));
 
+  // Create .babelrc from dev and prod configs before dead code is removed
+  var babelrc = {
+    env: {
+      development: {
+        presets: babelDevConfig.presets,
+        plugins: babelDevConfig.plugins
+      },
+      production: {
+        presets: babelProdConfig.presets,
+        plugins: babelProdConfig.plugins
+      }
+    }
+  };
+  
+  fs.writeFileSync(
+    path.join(appPath, 'config', '.babelrc'),
+    JSON.stringify(babelrc, null, 2)
+  );
+
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + appPath);
     var content = fs
@@ -113,6 +134,11 @@ prompt(
   // Explicitly specify ESLint config path for editor plugins
   appPackage.eslintConfig = {
     extends: './config/eslint.js',
+  };
+
+  // Explicitly specify .babelrc config path
+  appPackage.babel = {
+    extends: './config/.babelrc'
   };
 
   console.log('Writing package.json');
