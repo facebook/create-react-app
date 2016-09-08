@@ -23,10 +23,12 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   appPackage.devDependencies = appPackage.devDependencies || {};
 
   // Setup the script rules
-  appPackage.scripts = {};
-  ['start', 'build', 'eject', 'test'].forEach(function(command) {
-    appPackage.scripts[command] = 'react-scripts ' + command;
-  });
+  appPackage.scripts = {
+    'start': 'react-scripts start',
+    'build': 'react-scripts build',
+    'test': 'react-scripts test --env=jsdom',
+    'eject': 'react-scripts eject'
+  };
 
   // explicitly specify ESLint config path for editor plugins
   appPackage.eslintConfig = {
@@ -69,7 +71,6 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     'install',
     'react',
     'react-dom',
-    'react-test-renderer',
     '--save',
     verbose && '--verbose'
   ].filter(function(e) { return e; });
@@ -96,6 +97,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     console.log('Inside that directory, you can run several commands:');
     console.log();
     console.log('  * npm start: Starts the development server.');
+    console.log('  * npm test: Starts the test runner.');
     console.log('  * npm run build: Bundles the app into static files for production.');
     console.log('  * npm run eject: Removes this tool. If you do this, you can’t go back!');
     console.log();

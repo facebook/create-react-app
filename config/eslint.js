@@ -1,3 +1,4 @@
+// @remove-on-eject-begin
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -6,6 +7,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+// @remove-on-eject-end
 
 // Inspired by https://github.com/airbnb/javascript but less opinionated.
 
@@ -21,7 +23,7 @@ module.exports = {
 
   parser: 'babel-eslint',
 
-  // import plugin is termporarily disabled, scroll below to see why
+  // import plugin is temporarily disabled, scroll below to see why
   plugins: [/*'import', */'flowtype', 'jsx-a11y', 'react'],
 
   env: {
@@ -115,13 +117,13 @@ module.exports = {
       'LabeledStatement',
       'WithStatement',
     ],
-    'no-return-assign': 'warn',
     'no-script-url': 'warn',
     'no-self-assign': 'warn',
     'no-self-compare': 'warn',
     'no-sequences': 'warn',
     'no-shadow-restricted-names': 'warn',
     'no-sparse-arrays': 'warn',
+    'no-template-curly-in-string': 'warn',
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
     'no-undef': 'warn',

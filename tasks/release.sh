@@ -6,7 +6,14 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-# Start in tests/ even if run from root directory
+# ******************************************************************************
+# This releases an update to the `react-scripts` package.
+# Don't use `npm publish` for it.
+# Read the release instructions:
+# https://github.com/facebookincubator/create-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
+# ******************************************************************************
+
+# Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
 # Exit the script on any command with non 0 return code
@@ -19,6 +26,7 @@ set -x
 
 # Go to root
 cd ..
+root_path=$PWD
 
 # You can only release with npm >= 3
 if [ $(npm -v | head -c 1) -lt 3 ]; then
@@ -30,6 +38,25 @@ if [ -n "$(git status --porcelain)" ]; then
   echo "Your git status is not clean. Aborting.";
   exit 1;
 fi
+
+# Create a temporary clean folder that contains production only code.
+# Do not overwrite any files in the current folder.
+clean_path=`mktemp -d 2>/dev/null || mktemp -d -t 'clean_path'`
+
+# Copy some of the project files to the temporary folder.
+# Exclude folders that definitely won’t be part of the package from processing.
+# We will strip the dev-only code there, and publish from it.
+rsync -av --exclude='.git' --exclude=$clean_path\
+  --exclude='node_modules' --exclude='build'\
+  './' $clean_path  >/dev/null
+cd $clean_path
+
+# Now remove all the code relevant to development of Create React App.
+files="$(find -L . -name "*.js" -type f)"
+for file in $files; do
+  sed -i.bak '/\/\/ @remove-on-publish-begin/,/\/\/ @remove-on-publish-end/d' $file
+  rm $file.bak
+done
 
 # Update deps
 rm -rf node_modules
@@ -44,12 +71,12 @@ npm dedupe
 # Since it's in optionalDependencies, it will attempt install outside bundle
 rm -rf node_modules/fsevents
 
-# This modifies package.json to copy all dependencies to bundledDependencies
-# We will revert package.json back after release to avoid doing it every time
-node ./node_modules/.bin/bundle-deps
+# This modifies $clean_path/package.json to copy all dependencies to bundledDependencies
+node $root_path/node_modules/.bin/bundle-deps
 
 # Go!
 npm publish "$@"
 
-# Discard changes to package.json
-git checkout -- .
+# cleanup
+cd ..
+rm -rf $clean_path

@@ -41,7 +41,6 @@ prompt(
     path.join('config', 'webpack.config.prod.js'),
     path.join('config', 'jest', 'CSSStub.js'),
     path.join('config', 'jest', 'FileStub.js'),
-    path.join('config', 'jest', 'environment.js'),
     path.join('config', 'jest', 'transform.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
@@ -74,10 +73,10 @@ prompt(
     console.log('Copying ' + file + ' to ' + appPath);
     var content = fs
       .readFileSync(path.join(ownPath, file), 'utf8')
-      // Remove license header from JS
-      .replace(/^\/\*\*(\*(?!\/)|[^*])*\*\//, '')
-      // Remove license header from AppleScript
-      .replace(/^--.*\n/gm, '')
+      // Remove dead code from .js files on eject
+      .replace(/\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/mg, '')
+      // Remove dead code from .applescript files on eject
+      .replace(/-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/mg, '')
       .trim() + '\n';
     fs.writeFileSync(path.join(appPath, file), content);
   });
@@ -99,17 +98,19 @@ prompt(
   });
 
   console.log('Updating scripts');
-  Object.keys(appPackage.scripts).forEach(function (key) {
-    appPackage.scripts[key] = 'node ./scripts/' + key + '.js'
-  });
   delete appPackage.scripts['eject'];
+  Object.keys(appPackage.scripts).forEach(function (key) {
+    appPackage.scripts[key] = appPackage.scripts[key]
+      .replace(/react-scripts test/g, 'jest --watch')
+      .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
+  });
 
-  appPackage.scripts.test = 'jest';
+  // Add Jest config
   appPackage.jest = createJestConfig(
     filePath => path.join('<rootDir>', filePath)
   );
 
-  // explicitly specify ESLint config path for editor plugins
+  // Explicitly specify ESLint config path for editor plugins
   appPackage.eslintConfig = {
     extends: './config/eslint.js',
   };

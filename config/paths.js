@@ -1,3 +1,4 @@
+// @remove-on-eject-begin
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -6,60 +7,70 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-
-// TODO: we can split this file into several files (pre-eject, post-eject, test)
-// and use those instead. This way we don't need to branch here.
+// @remove-on-eject-end
 
 var path = require('path');
 
-// True after ejecting, false when used as a dependency
-var isEjected = (
-  path.resolve(path.join(__dirname, '..')) ===
-  path.resolve(process.cwd())
-);
+// We support resolving modules according to `NODE_PATH`.
+// This lets you use absolute paths in imports inside large monorepos:
+// https://github.com/facebookincubator/create-react-app/issues/253.
 
-// Are we developing create-react-app locally?
-var isInCreateReactAppSource = (
-  process.argv.some(arg => arg.indexOf('--debug-template') > -1)
-);
+// It works similar to `NODE_PATH` in Node itself:
+// https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders
 
-function resolveOwn(relativePath) {
-  return path.resolve(__dirname, relativePath);
-}
+// We will export `nodePaths` as an array of absolute paths.
+// It will then be used by Webpack configs.
+// Jest doesn’t need this because it already handles `NODE_PATH` out of the box.
+
+var nodePaths = (process.env.NODE_PATH || '')
+  .split(process.platform === 'win32' ? ';' : ':')
+  .filter(Boolean)
+  .map(p => path.resolve(p));
 
 function resolveApp(relativePath) {
   return path.resolve(relativePath);
 }
 
-if (isInCreateReactAppSource) {
-  // create-react-app development: we're in ./config/
-  module.exports = {
-    appBuild: resolveOwn('../build'),
-    appHtml: resolveOwn('../template/index.html'),
-    appPackageJson: resolveOwn('../package.json'),
-    appSrc: resolveOwn('../template/src'),
-    appNodeModules: resolveOwn('../node_modules'),
-    ownNodeModules: resolveOwn('../node_modules')
-  };
-} else if (!isEjected) {
-  // before eject: we're in ./node_modules/react-scripts/config/
-  module.exports = {
-    appBuild: resolveApp('build'),
-    appHtml: resolveApp('index.html'),
-    appPackageJson: resolveApp('package.json'),
-    appSrc: resolveApp('src'),
-    appNodeModules: resolveApp('node_modules'),
-    // this is empty with npm3 but node resolution searches higher anyway:
-    ownNodeModules: resolveOwn('../node_modules')
-  };
-} else {
-  // after eject: we're in ./config/
-  module.exports = {
-    appBuild: resolveApp('build'),
-    appHtml: resolveApp('index.html'),
-    appPackageJson: resolveApp('package.json'),
-    appSrc: resolveApp('src'),
-    appNodeModules: resolveApp('node_modules'),
-    ownNodeModules: resolveApp('node_modules')
-  };
+// config after eject: we're in ./config/
+module.exports = {
+  appBuild: resolveApp('build'),
+  appHtml: resolveApp('index.html'),
+  appPackageJson: resolveApp('package.json'),
+  appSrc: resolveApp('src'),
+  testsSetup: resolveApp('src/setupTests.js'),
+  appNodeModules: resolveApp('node_modules'),
+  ownNodeModules: resolveApp('node_modules'),
+  nodePaths: nodePaths
+};
+
+// @remove-on-eject-begin
+function resolveOwn(relativePath) {
+  return path.resolve(__dirname, relativePath);
 }
+
+// config before eject: we're in ./node_modules/react-scripts/config/
+module.exports = {
+  appBuild: resolveApp('build'),
+  appHtml: resolveApp('index.html'),
+  appPackageJson: resolveApp('package.json'),
+  appSrc: resolveApp('src'),
+  testsSetup: resolveApp('src/setupTests.js'),
+  appNodeModules: resolveApp('node_modules'),
+  // this is empty with npm3 but node resolution searches higher anyway:
+  ownNodeModules: resolveOwn('../node_modules'),
+  nodePaths: nodePaths
+};
+// @remove-on-eject-end
+
+// @remove-on-publish-begin
+module.exports = {
+  appBuild: resolveOwn('../build'),
+  appHtml: resolveOwn('../template/index.html'),
+  appPackageJson: resolveOwn('../package.json'),
+  appSrc: resolveOwn('../template/src'),
+  testsSetup: resolveOwn('../template/src/setupTests.js'),
+  appNodeModules: resolveOwn('../node_modules'),
+  ownNodeModules: resolveOwn('../node_modules'),
+  nodePaths: nodePaths
+};
+// @remove-on-publish-end

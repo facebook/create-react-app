@@ -1,3 +1,4 @@
+// @remove-on-eject-begin
 /**
  * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
  *
@@ -7,5 +8,6 @@
  *
  * @flow
  */
+// @remove-on-eject-end
 
 module.exports = {};
