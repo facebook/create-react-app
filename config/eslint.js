@@ -190,7 +190,6 @@ module.exports = {
     'react/no-deprecated': 'warn',
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
-    'react/react-in-jsx-scope': 'warn',
     'react/require-render-return': 'warn',
 
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
