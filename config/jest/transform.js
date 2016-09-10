@@ -8,7 +8,7 @@
  */
 // @remove-on-eject-end
 
-const babelDev = require('../babel.dev');
+const babelDev = require('../babel.dev')(true);
 const babelJest = require('babel-jest');
 
 module.exports = babelJest.createTransformer(babelDev);
