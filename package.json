@@ -56,6 +56,7 @@
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.9.0",
     "filesize": "3.3.0",
+    "find-cache-dir": "^0.1.1",
     "fs-extra": "0.30.0",
     "gzip-size": "3.0.0",
     "html-loader": "0.4.3",
