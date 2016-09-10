@@ -7,6 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+var chalk = require('chalk');
 var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('cross-spawn');
@@ -80,14 +81,20 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     console.log('Success! Created ' + appName + ' at ' + appPath + '.');
     console.log('Inside that directory, you can run several commands:');
     console.log();
-    console.log('  * npm start: Starts the development server.');
-    console.log('  * npm run build: Bundles the app into static files for production.');
-    console.log('  * npm run eject: Removes this tool and copies build dependencies, configs, and scripts into the app directory. If you do this, you can’t go back!');
+    console.log(chalk.cyan('npm start'));
+    console.log('  Starts the development server.');
+    console.log();
+    console.log(chalk.cyan('npm run build'));
+    console.log('  Bundles the app into static files for production.');
+    console.log();
+    console.log(chalk.cyan('npm run eject'));
+    console.log('  Removes this tool and copies build dependencies, configs, and scripts into the app directory.')
+    console.log('  If you do this, you can’t go back!');
     console.log();
     console.log('We suggest that you begin by typing:');
     console.log();
     console.log('  cd', cdpath);
-    console.log('  npm start');
+    console.log('  ' + chalk.cyan('npm start'));
     console.log();
     console.log('Happy hacking!');
   });
