@@ -16,9 +16,9 @@ module.exports = {
   // Don't try to find .babelrc because we want to force this configuration.
   babelrc: false,
   // This is a feature of `babel-loader` for webpack (not Babel itself).
-  // It enables caching results in ./node_modules/.cache/create-react-app/
+  // It enables caching results in ./node_modules/.cache/react-scripts/
   // directory for faster rebuilds.
-  cacheDirectory: findCacheDir({ name: 'create-react-app' }),
+  cacheDirectory: findCacheDir({ name: 'react-scripts' }),
   presets: [
     // Latest stable ECMAScript features
     require.resolve('babel-preset-latest'),
