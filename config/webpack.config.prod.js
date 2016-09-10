@@ -133,13 +133,22 @@ module.exports = {
       // allow it implicitly so we also enable it.
       {
         test: /\.json$/,
+        exclude: /\/manifest\.json$/,
         loader: 'json'
+      },
+      // A special case for manifest.json to place it into build root directory.
+      {
+        test: /\/manifest\.json$/,
+        loader: 'file',
+        query: {
+          name: 'manifest.json?[hash:8]'
+        }
       },
       // "file" loader makes sure those assets end up in the `build` folder.
       // When you `import` an asset, you get its filename.
       {
         test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
-        exclude: /\/favicon.ico$/,
+        exclude: /\/favicon\.ico$/,
         loader: 'file',
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
@@ -147,7 +156,7 @@ module.exports = {
       },
       // A special case for favicon.ico to place it into build root directory.
       {
-        test: /\/favicon.ico$/,
+        test: /\/favicon\.ico$/,
         include: [paths.appSrc],
         loader: 'file',
         query: {
