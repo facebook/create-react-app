@@ -71,7 +71,6 @@ function createApp(name, verbose, version) {
   var root = path.resolve(name);
   var appName = path.basename(root);
 
-  // NPM is whining about installing packages with names equal to appName.
   checkAppName(appName);
 
   if (!pathExists.sync(name)) {
