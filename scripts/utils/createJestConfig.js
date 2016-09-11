@@ -21,7 +21,7 @@ module.exports = (resolve, rootDir) => {
   const config = {
     moduleFileExtensions: ['jsx', 'js', 'json'],
     moduleNameMapper: {
-      '^.+\\.(jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm)$': resolve('config/jest/FileStub.js'),
+      '^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm)$': resolve('config/jest/FileStub.js'),
       '^.+\\.css$': resolve('config/jest/CSSStub.js')
     },
     scriptPreprocessor: resolve('config/jest/transform.js'),
