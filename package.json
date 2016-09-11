@@ -41,7 +41,7 @@
     "babel-preset-latest": "6.14.0",
     "babel-preset-react": "6.11.1",
     "babel-runtime": "6.11.6",
-    "case-sensitive-paths-webpack-plugin": "1.1.3",
+    "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
     "connect-history-api-fallback": "1.3.0",
     "cross-spawn": "4.0.0",
