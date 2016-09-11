@@ -183,9 +183,7 @@ function checkAppName(appName) {
         'The name of your app ' + chalk.red.bold('MUST NOT') + ' match any of the following:\n\n' +
 
         chalk.cyan(
-          allDependencies.map(function(depName) {
-            return '  ' + depName;
-          }).join('\n')
+          allDependencies.map(depName => `  ${depName}`).join('\n')
         )
       )
     );
