@@ -179,11 +179,14 @@ function checkAppName(appName) {
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
-        'The name of your app ' + chalk.red.bold('MUST NOT') + ' match any of the following:\n\n' +
+        `Can't use "${appName}" as the app name because a dependency with the same name exists.\n\n` +
+        `Following names ${chalk.red.bold('must not')} be used:\n\n`
+      )
 
-        chalk.cyan(
-          allDependencies.map(depName => `  ${depName}`).join('\n')
-        )
+      +
+
+      chalk.cyan(
+        allDependencies.map(depName => `  ${depName}`).join('\n')
       )
     );
     process.exit(1);
