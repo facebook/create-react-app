@@ -172,9 +172,9 @@ function checkNodeVersion() {
 
 function checkAppName(appName) {
   // TODO: there should be a single place that holds the dependencies
-  var dependencies = ['react', 'react-dom']
-  var devDependencies = ['react-scripts']
-  var allDependencies = dependencies.concat(devDependencies).sort()
+  var dependencies = ['react', 'react-dom'];
+  var devDependencies = ['react-scripts'];
+  var allDependencies = dependencies.concat(devDependencies).sort();
 
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
