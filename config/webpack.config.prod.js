@@ -138,7 +138,7 @@ module.exports = {
       // "file" loader makes sure those assets end up in the `build` folder.
       // When you `import` an asset, you get its filename.
       {
-        test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
         exclude: /\/favicon.ico$/,
         loader: 'file',
         query: {
