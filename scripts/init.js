@@ -88,7 +88,8 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     console.log('  Bundles the app into static files for production.');
     console.log();
     console.log(chalk.cyan('npm run eject'));
-    console.log('  Removes this tool and copies build dependencies, configs, and scripts into the app directory.')
+    console.log('  Removes this tool and copies build dependencies, configs,')
+    console.log('  and scripts into the app directory.')
     console.log('  If you do this, you can’t go back!');
     console.log();
     console.log('We suggest that you begin by typing:');
