@@ -91,6 +91,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     console.log('  Removes this tool and copies build dependencies, configs,')
     console.log('  and scripts into the app directory.')
     console.log('  If you do this, you can’t go back!');
+    // ...
     console.log();
     console.log('We suggest that you begin by typing:');
     console.log();
