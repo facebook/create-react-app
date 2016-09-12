@@ -33,6 +33,8 @@ prompt(
   var files = [
     path.join('config', 'flow', 'css.js.flow'),
     path.join('config', 'flow', 'file.js.flow'),
+    // .babelrc is generated from the dev and prod configs
+    path.join('config', '.babelrc'),
     path.join('config', 'eslint.js'),
     path.join('config', 'paths.js'),
     path.join('config', 'env.js'),
@@ -48,6 +50,29 @@ prompt(
     path.join('scripts', 'utils', 'prompt.js'),
     path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js')
   ];
+
+  // Create .babelrc from dev and prod configs before copying
+  var babelrc = {
+    env: {
+      test: {
+        presets: babelDevConfig.presets,
+        plugins: babelDevConfig.plugins
+      },
+      development: {
+        presets: babelDevConfig.presets,
+        plugins: babelDevConfig.plugins
+      },
+      production: {
+        presets: babelProdConfig.presets,
+        plugins: babelProdConfig.plugins
+      }
+    }
+  };
+
+  fs.writeFileSync(
+    path.join(ownPath, 'config', '.babelrc'),
+    JSON.stringify(babelrc, null, 2)
+  );
 
   // Ensure that the app folder is clean and we won't override any files
   files.forEach(function(file) {
@@ -69,28 +94,6 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'scripts'));
   fs.mkdirSync(path.join(appPath, 'scripts', 'utils'));
 
-  // Create .babelrc from dev and prod configs before dead code is removed
-  var babelrc = {
-    env: {
-      test: {
-        presets: babelDevConfig.presets,
-        plugins: babelDevConfig.plugins
-      },
-      development: {
-        presets: babelDevConfig.presets,
-        plugins: babelDevConfig.plugins
-      },
-      production: {
-        presets: babelProdConfig.presets,
-        plugins: babelProdConfig.plugins
-      }
-    }
-  };
-
-  fs.writeFileSync(
-    path.join(appPath, 'config', '.babelrc'),
-    JSON.stringify(babelrc, null, 2)
-  );
 
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + appPath);
