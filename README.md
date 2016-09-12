@@ -94,8 +94,29 @@ Your app is ready to be deployed!
 
 ## User Guide
 
-The generated project will include a guide in its README.<br>
-You can also read its latest version [here](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md).
+The [User Guide](template/README.md) includes information on different topics, such as:
+
+- [Updating to New Releases](template/README.md#updating-to-new-releases)
+- [Folder Structure](template/README.md#folder-structure)
+- [Available Scripts](template/README.md#available-scripts)
+- [Displaying Lint Output in the Editor](template/README.md#displaying-lint-output-in-the-editor)
+- [Installing a Dependency](template/README.md#installing-a-dependency)
+- [Importing a Component](template/README.md#importing-a-component)
+- [Adding a Stylesheet](template/README.md#adding-a-stylesheet)
+- [Post-Processing CSS](template/README.md#post-processing-css)
+- [Adding Images and Fonts](template/README.md#adding-images-and-fonts)
+- [Adding Bootstrap](template/README.md#adding-bootstrap)
+- [Adding Flow](template/README.md#adding-flow)
+- [Adding Custom Environment Variables](template/README.md#adding-custom-environment-variables)
+- [Can I Use Decorators?](template/README.md#can-i-use-decorators)
+- [Integrating with a Node Backend](template/README.md#integrating-with-a-node-backend)
+- [Proxying API Requests in Development](template/README.md#proxying-api-requests-in-development)
+- [Using HTTPS in Development](template/README.md#using-https-in-development)
+- [Adding `<link>` and `<meta>` Tags](template/README.md#adding-link-and-meta-tags)
+- [Running Tests](template/README.md#running-tests)
+- [Deployment](template/README.md#deployment)
+
+A copy of the user guide will be created as `README.md` in your project folder.
 
 ## Philosophy
 
