@@ -74,6 +74,10 @@ prompt(
   // Create .babelrc from dev and prod configs before dead code is removed
   var babelrc = {
     env: {
+      test: {
+        presets: babelDevConfig.presets,
+        plugins: babelDevConfig.plugins
+      },
       development: {
         presets: babelDevConfig.presets,
         plugins: babelDevConfig.plugins
@@ -84,7 +88,7 @@ prompt(
       }
     }
   };
-  
+
   fs.writeFileSync(
     path.join(appPath, 'config', '.babelrc'),
     JSON.stringify(babelrc, null, 2)
