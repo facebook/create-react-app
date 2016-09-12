@@ -8,27 +8,12 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 // @remove-on-eject-end
-
-
-// After eject
-module.exports = function () {
-  return {
-    // This is a feature of `babel-loader` for webpack (not Babel itself).
-    // It enables caching results in OS temporary directory for faster rebuilds.
-    cacheDirectory: true
-  };
-}
-
-// @remove-on-eject-begin
 var path = require('path');
-// Before eject
+
 module.exports = function (resolvePaths) {
   return {
     // Don't try to find .babelrc because we want to force this configuration.
     babelrc: false,
-    // This is a feature of `babel-loader` for webpack (not Babel itself).
-    // It enables caching results in OS temporary directory for faster rebuilds.
-    cacheDirectory: true,
     presets: [
       // Latest stable ECMAScript features
       'babel-preset-latest',
@@ -71,4 +56,3 @@ module.exports = function (resolvePaths) {
     })
   }
 };
-// @remove-on-eject-end

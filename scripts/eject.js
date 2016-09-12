@@ -31,8 +31,6 @@ prompt(
   var ownPath = path.join(__dirname, '..');
   var appPath = path.join(ownPath, '..', '..');
   var files = [
-    path.join('config', 'babel.dev.js'),
-    path.join('config', 'babel.prod.js'),
     path.join('config', 'flow', 'css.js.flow'),
     path.join('config', 'flow', 'file.js.flow'),
     path.join('config', 'eslint.js'),

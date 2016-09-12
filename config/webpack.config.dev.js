@@ -107,7 +107,16 @@ module.exports = {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
         loader: 'babel',
-        query: require('./babel.dev')(true)
+        query: Object.assign({},
+          // @remove-on-eject-begin
+          require('./babel.dev')(true),
+          // @remove-on-eject-end
+          {
+            // This is a feature of `babel-loader` for webpack (not Babel itself).
+            // It enables caching results in OS temporary directory for faster rebuilds.
+            cacheDirectory: true
+          }
+        )
       },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.

@@ -8,18 +8,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 // @remove-on-eject-end
-
-
-// After eject
-// Config is empty as .babelrc now exists.
-// Export an empty object as webpack.config.prod.js expects to find one.
-module.exports = function () {
-  return {};
-};
-
-// @remove-on-eject-begin
 var path = require('path');
-// Before eject
+
 module.exports = function (resolvePaths) {
   return {
     // Don't try to find .babelrc because we want to force this configuration.
@@ -72,4 +62,3 @@ module.exports = function (resolvePaths) {
     })
   };
 };
-// @remove-on-eject-end
