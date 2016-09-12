@@ -208,7 +208,7 @@ function addMiddleware(devServer) {
     // So if `proxy` is specified, we need to decide which fallback to use.
     // We use a heuristic: if request `accept`s text/html, we pick /index.html.
     // Modern browsers include text/html into `accept` header when navigating.
-    // However API calls like `fetch()` won’t generally won’t accept text/html.
+    // However API calls like `fetch()` won’t generally accept text/html.
     // If this heuristic doesn’t work well for you, don’t use `proxy`.
     htmlAcceptHeaders: proxy ?
       ['text/html'] :
