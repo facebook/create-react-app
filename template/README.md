@@ -858,7 +858,7 @@ You can use the following sequence of commands to clear out the old docs folder,
 git commit -am "Save local changes"
 rm -rf docs/
 mv build/ docs/
-git add  docs
+git add docs -A
 git commit -am "Rebuild website"
 git push  origin master
 ```

@@ -135,7 +135,7 @@ function build(previousSizeMap) {
       console.log('  ' + chalk.cyan('git') + ' commit -am ' + chalk.yellow('"Save local changes"'));
       console.log('  ' + chalk.cyan('rm') + ' -rf docs/');
       console.log('  ' + chalk.cyan('mv') + ' build/ docs/');
-      console.log('  ' + chalk.cyan('git') + ' add docs');
+      console.log('  ' + chalk.cyan('git') + ' add docs -A');
       console.log('  ' + chalk.cyan('git') + ' commit -am ' + chalk.yellow('"Rebuild website"'));
       console.log('  ' + chalk.cyan('git') + ' push origin master');
       console.log();
