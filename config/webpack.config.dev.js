@@ -18,6 +18,25 @@ var WatchMissingNodeModulesPlugin = require('../scripts/utils/WatchMissingNodeMo
 var paths = require('./paths');
 var env = require('./env');
 
+// We use "homepage" field to infer "public path" at which the app is served.
+// You may also use the environment variable CDN_URL to set the homepage to an absolute url
+// this is useful if you are storing your bundle/assets on a different domain
+// Webpack needs to know it to put the right <script> hrefs into HTML even in
+// single-page apps that may serve index.html for nested URLs like /todos/42.
+// We can't use a relative path in HTML because we don't want to load something
+// like /todos/42/static/js/bundle.7289d.js. We have to know the root.
+
+var publicPath;
+if (process.env.CDN_URL) {
+  publicPath = process.env.CDN_URL;
+} else {
+  var homepagePath = require(paths.appPackageJson).homepage;
+  publicPath = homepagePath ? url.parse(homepagePath).pathname : '';
+}
+if (!publicPath.endsWith('/')) {
+  publicPath += '/';
+}
+
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
@@ -64,7 +83,7 @@ module.exports = {
     // containing code from all our entry points, and the Webpack runtime.
     filename: 'static/js/bundle.js',
     // In development, we always serve from the root. This makes config easier.
-    publicPath: '/'
+    publicPath: publicPath 
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.

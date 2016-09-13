@@ -124,10 +124,21 @@ function build(previousSizeMap) {
     var openCommand = process.platform === 'win32' ? 'start' : 'open';
     var homepagePath = require(paths.appPackageJson).homepage;
     var publicPath = config.output.publicPath;
-    if (homepagePath && homepagePath.indexOf('.github.io/') !== -1) {
+    if (process.env.CDN_URL) {
+      // "homepage": "http://mywebsite.com/project"
+      console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.');
+      console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
+      console.log();
+      console.log('Alternatively, you may change the absolute URL for all files by setting a CDN_URL environment variable');
+      console.log();
+      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
+      console.log();
+    } else if (homepagePath && homepagePath.indexOf('.github.io/') !== -1) {
       // "homepage": "http://user.github.io/project"
       console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.');
       console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
+      console.log();
+      console.log('Alternatively, you may change the absolute URL for all files by setting a CDN_URL environment variable');
       console.log();
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
       console.log('To publish it at ' + chalk.green(homepagePath) + ', run:');
@@ -145,6 +156,8 @@ function build(previousSizeMap) {
       console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.');
       console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
       console.log();
+      console.log('Alternatively, you may change the absolute URL for all files by setting a CDN_URL environment variable');
+      console.log();
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
       console.log();
     } else {
@@ -154,9 +167,14 @@ function build(previousSizeMap) {
         // "homepage": "http://mywebsite.com"
         console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
         console.log();
+        console.log('Alternatively, you may change the absolute URL for all files by setting a CDN_URL environment variable');
+        console.log();
       } else {
         // no homepage
         console.log('To override this, specify the ' + chalk.green('homepage') + ' in your '  + chalk.cyan('package.json') + '.');
+        console.log();
+        console.log('Alternatively, you may change the absolute URL for all files by setting a CDN_URL environment variable');
+        console.log();
         console.log('For example, add this to build it for GitHub Pages:')
         console.log();
         console.log('  ' + chalk.green('"homepage"') + chalk.cyan(': ') + chalk.green('"http://myname.github.io/myapp"') + chalk.cyan(','));

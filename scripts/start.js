@@ -101,6 +101,12 @@ function setupCompiler(port, protocol) {
       console.log();
       console.log('  ' + chalk.cyan(protocol + '://localhost:' + port + '/'));
       console.log();
+      if (process.env.CDN_URL) {
+        console.log('with an *absolute* file path of ' + config.output.publicPath);
+      } else {
+        console.log('using relative paths');
+      }
+      console.log();
       console.log('Note that the development build is not optimized.');
       console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
       console.log();
