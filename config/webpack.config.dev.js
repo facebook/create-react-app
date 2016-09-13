@@ -17,6 +17,7 @@ var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var WatchMissingNodeModulesPlugin = require('../scripts/utils/WatchMissingNodeModulesPlugin');
 var paths = require('./paths');
 var env = require('./env');
+var findCacheDir = require('find-cache-dir');
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -113,8 +114,9 @@ module.exports = {
           // @remove-on-eject-end
           {
             // This is a feature of `babel-loader` for webpack (not Babel itself).
-            // It enables caching results in OS temporary directory for faster rebuilds.
-            cacheDirectory: true
+            // It enables caching results in ./node_modules/.cache/react-scripts/
+            // directory for faster rebuilds.
+            cacheDirectory: findCacheDir({ name: 'react-scripts' })
           }
         )
       },
@@ -137,7 +139,7 @@ module.exports = {
       // When you `import` an asset, you get its (virtual) filename.
       // In production, they would get copied to the `build` folder.
       {
-        test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
         exclude: /\/favicon.ico$/,
         loader: 'file',
         query: {

@@ -69,6 +69,10 @@ createApp(commands[0], argv.verbose, argv['scripts-version']);
 
 function createApp(name, verbose, version) {
   var root = path.resolve(name);
+  var appName = path.basename(root);
+
+  checkAppName(appName);
+
   if (!pathExists.sync(name)) {
     fs.mkdirSync(root);
   } else if (!isSafeToCreateProjectIn(root)) {
@@ -76,7 +80,6 @@ function createApp(name, verbose, version) {
     process.exit(1);
   }
 
-  var appName = path.basename(root);
   console.log(
     'Creating a new React app in ' + root + '.'
   );
@@ -162,6 +165,29 @@ function checkNodeVersion() {
       ),
       process.version,
       packageJson.engines.node
+    );
+    process.exit(1);
+  }
+}
+
+function checkAppName(appName) {
+  // TODO: there should be a single place that holds the dependencies
+  var dependencies = ['react', 'react-dom'];
+  var devDependencies = ['react-scripts'];
+  var allDependencies = dependencies.concat(devDependencies).sort();
+
+  if (allDependencies.indexOf(appName) >= 0) {
+    console.error(
+      chalk.red(
+        `Can't use "${appName}" as the app name because a dependency with the same name exists.\n\n` +
+        `Following names ${chalk.red.bold('must not')} be used:\n\n`
+      )
+
+      +
+
+      chalk.cyan(
+        allDependencies.map(depName => `  ${depName}`).join('\n')
+      )
     );
     process.exit(1);
   }
