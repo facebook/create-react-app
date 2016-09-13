@@ -133,6 +133,7 @@ module.exports = {
     'no-unused-labels': 'warn',
     'no-unused-vars': ['warn', {
       vars: 'local',
+      varsIgnorePattern: '^_',
       args: 'none'
     }],
     'no-use-before-define': ['warn', 'nofunc'],
