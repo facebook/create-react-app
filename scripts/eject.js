@@ -33,8 +33,6 @@ prompt(
   var files = [
     path.join('config', 'flow', 'css.js.flow'),
     path.join('config', 'flow', 'file.js.flow'),
-    // .babelrc is generated from the dev and prod configs
-    path.join('config', '.babelrc'),
     path.join('config', 'eslint.js'),
     path.join('config', 'paths.js'),
     path.join('config', 'env.js'),
@@ -51,29 +49,6 @@ prompt(
     path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js')
   ];
 
-  // Create .babelrc from dev and prod configs before copying
-  var babelrc = {
-    env: {
-      test: {
-        presets: babelDevConfig.presets,
-        plugins: babelDevConfig.plugins
-      },
-      development: {
-        presets: babelDevConfig.presets,
-        plugins: babelDevConfig.plugins
-      },
-      production: {
-        presets: babelProdConfig.presets,
-        plugins: babelProdConfig.plugins
-      }
-    }
-  };
-
-  fs.writeFileSync(
-    path.join(ownPath, 'config', '.babelrc'),
-    JSON.stringify(babelrc, null, 2)
-  );
-
   // Ensure that the app folder is clean and we won't override any files
   files.forEach(function(file) {
     if (fs.existsSync(path.join(appPath, file))) {
@@ -86,6 +61,17 @@ prompt(
       process.exit(1);
     }
   });
+
+  // Ensure a .babelrc file doesn't exist in the app config folder
+  if (fs.existsSync(path.join(appPath, 'config', '.babelrc'))) {
+    console.error(
+      'config/.babelrc already exists in your app folder. We cannot ' +
+      'continue as you would lose all the changes in that file ' +
+      'Please delete it (maybe make a copy for backup) and run this ' +
+      'command again. You might have to manually merge your configs.'
+    );
+    process.exit(1);
+  }
 
   // Copy the files over
   fs.mkdirSync(path.join(appPath, 'config'));
@@ -106,6 +92,31 @@ prompt(
       .trim() + '\n';
     fs.writeFileSync(path.join(appPath, file), content);
   });
+  console.log();
+
+  // Create .babelrc from dev and prod configs
+  var babelrc = {
+    env: {
+      test: {
+        presets: babelDevConfig.presets,
+        plugins: babelDevConfig.plugins
+      },
+      development: {
+        presets: babelDevConfig.presets,
+        plugins: babelDevConfig.plugins
+      },
+      production: {
+        presets: babelProdConfig.presets,
+        plugins: babelProdConfig.plugins
+      }
+    }
+  };
+
+  console.log('Writing config/.babelrc to ' + appPath );
+  fs.writeFileSync(
+    path.join(appPath, 'config', '.babelrc'),
+    JSON.stringify(babelrc, null, 2)
+  );
   console.log();
 
   var ownPackage = require(path.join(ownPath, 'package.json'));
