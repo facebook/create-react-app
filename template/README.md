@@ -13,7 +13,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
-  - [npm run fetchRelaySchema](#fetch-relay-schema)
+  - [npm run fetchRelaySchema](#npm-run-fetchrelayschema)
 - [Relay & GraphQL Support](#relay-support)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
 - [Installing a Dependency](#installing-a-dependency)
@@ -147,7 +147,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 See documentation on [Relay Support](#relay-support) before running this command.
 
-Fetches schema from an [introspection](http://graphql.org/learn/introspection/) query to your graphQL server.  This query will require your `GRAPHQL_URL=<someGraphQLURL>` env variable to be set.
+Fetches schema from an [introspection](http://graphql.org/learn/introspection/) query and writes it to a `schema.json` file in the root directory of your create-react-app application.
 
 ## Relay Support
 
