@@ -30,11 +30,6 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     'eject': 'react-scripts eject'
   };
 
-  // explicitly specify ESLint config path for editor plugins
-  appPackage.eslintConfig = {
-    extends: './node_modules/react-scripts/config/eslint.js',
-  };
-
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)

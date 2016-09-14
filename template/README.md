@@ -157,7 +157,7 @@ You would need to install an ESLint plugin for your editor first.
 
 ><img src="http://i.imgur.com/yVNNHJM.png" width="300">
 
-Then make sure `package.json` of your project ends with this block:
+Then add this block to the `package.json` file of your project:
 
 ```js
 {
@@ -167,9 +167,6 @@ Then make sure `package.json` of your project ends with this block:
   }
 }
 ```
-
-Projects generated with `react-scripts@0.2.0` and higher should already have it.  
-If you don’t need ESLint integration with your editor, you can safely delete those three lines from your `package.json`.
 
 Finally, you will need to install some packages *globally*:
 
