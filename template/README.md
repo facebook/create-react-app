@@ -145,7 +145,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ### `npm run fetchRelaySchema`
 
-See documentation on [Relay Support](#relay-support) before running this command.
+**Note: see documentation on [Relay Support](#relay-support) before running this command.**
 
 Fetches schema from an [introspection](http://graphql.org/learn/introspection/) query and writes it to a `schema.json` file in the root directory of your create-react-app application.
 
