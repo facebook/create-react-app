@@ -13,6 +13,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
+  - [npm run fetchRelaySchema](#fetch-relay-schema)
+- [Relay & GraphQL Support](#relay-support)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
@@ -140,6 +142,26 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+### `npm run fetchRelaySchema`
+
+See documentation on [Relay Support](#relay-support) before running this command.
+
+Fetches schema from an [introspection](http://graphql.org/learn/introspection/) query to your graphQL server.  This query will require your `GRAPHQL_URL=<someGraphQLURL>` env variable to be set.
+
+## Relay Support
+
+You can create a [Relay](https://facebook.github.io/relay/) application with create-react-app.  You will need a GraphQL server<sup>1</sup> to connect to and an environment variable that points to its location.  The environment variable needs to be named `GRAPHQL_URL`.
+
+<sup>1</sup>[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) enabled, most likely.
+
+Assuming you have set your environment variable, created your react application, and are in the root directory of your newly created `create-react-app` application run the following commands:
+
+    `npm install react-relay --save`
+    `npm run fetchRelaySchema`
+    `npm start`
+
+For development, any changes made to the GraphQL schema can be updated locally by running `npm run fetchRelaySchema`
 
 ## Displaying Lint Output in the Editor
 

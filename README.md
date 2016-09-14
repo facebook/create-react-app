@@ -99,6 +99,8 @@ The [User Guide](https://github.com/facebookincubator/create-react-app/blob/mast
 - [Updating to New Releases](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#updating-to-new-releases)
 - [Folder Structure](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#folder-structure)
 - [Available Scripts](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#available-scripts)
+- [Relay
+Support](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#relay-support) 
 - [Displaying Lint Output in the Editor](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#displaying-lint-output-in-the-editor)
 - [Installing a Dependency](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#installing-a-dependency)
 - [Importing a Component](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#importing-a-component)
