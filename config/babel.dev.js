@@ -11,6 +11,7 @@
 
 var path = require('path');
 var findCacheDir = require('find-cache-dir');
+var relaySetup = require('./relay/setup');
 
 module.exports = {
   // Don't try to find .babelrc because we want to force this configuration.
@@ -46,3 +47,10 @@ module.exports = {
     }]
   ]
 };
+
+// optional relay support https://facebook.github.io/relay
+if (relaySetup.relayIsEnabled()) {
+    
+    // relay QL babel transform needs to run before react https://facebook.github.io/relay/docs/guides-babel-plugin.html#react-native-configuration
+    module.exports.plugins.unshift(require.resolve('./relay/babelRelayPlugin'));
+}

@@ -47,3 +47,9 @@ module.exports = {
     // require.resolve('babel-plugin-transform-react-constant-elements')
   ]
 };
+
+// optional relay support https://facebook.github.io/relay
+if (relaySetup.relayIsEnabled()) {
+    // relay QL babel transform needs to run before react https://facebook.github.io/relay/docs/guides-babel-plugin.html#react-native-configuration
+    module.exports.plugins.unshift(require.resolve('./relay/babelRelayPlugin'));
+}
