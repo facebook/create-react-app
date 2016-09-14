@@ -10,6 +10,7 @@
 // @remove-on-eject-end
 
 var path = require('path');
+var fs = require('fs');
 
 // We support resolving modules according to `NODE_PATH`.
 // This lets you use absolute paths in imports inside large monorepos:
@@ -28,7 +29,7 @@ var nodePaths = (process.env.NODE_PATH || '')
   .map(p => path.resolve(p));
 
 function resolveApp(relativePath) {
-  return path.resolve(relativePath);
+  return path.resolve(fs.realpathSync(process.cwd()), relativePath);
 }
 
 // config after eject: we're in ./config/
