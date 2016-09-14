@@ -33,6 +33,7 @@ function resolveApp(relativePath) {
 
 // config after eject: we're in ./config/
 module.exports = {
+  appRoot: resolveApp('.'),
   appBuild: resolveApp('build'),
   appHtml: resolveApp('index.html'),
   appPackageJson: resolveApp('package.json'),
@@ -50,6 +51,7 @@ function resolveOwn(relativePath) {
 
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
+  appRoot: resolveApp('.'),
   appBuild: resolveApp('build'),
   appHtml: resolveApp('index.html'),
   appPackageJson: resolveApp('package.json'),
@@ -64,6 +66,7 @@ module.exports = {
 
 // @remove-on-publish-begin
 module.exports = {
+  appRoot: resolveApp('..'),
   appBuild: resolveOwn('../build'),
   appHtml: resolveOwn('../template/index.html'),
   appPackageJson: resolveOwn('../package.json'),

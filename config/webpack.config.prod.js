@@ -17,6 +17,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
 var paths = require('./paths');
 var env = require('./env');
+var appName = require(paths.appPackageJson).name;
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -76,7 +77,8 @@ module.exports = {
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-      'react-native': 'react-native-web'
+      'react-native': 'react-native-web',
+      [appName]: paths.appRoot
     }
   },
   // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
