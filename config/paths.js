@@ -38,7 +38,7 @@ module.exports = {
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
-  relaySchema: resolveApp('src/schema.json'),
+  relaySchema: resolveApp('schema.json'),
   appNodeModules: resolveApp('node_modules'),
   ownNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths
@@ -56,7 +56,7 @@ module.exports = {
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
-  relaySchema: resolveApp('src/schema.json'),
+  relaySchema: resolveApp('schema.json'),
   appNodeModules: resolveApp('node_modules'),
   // this is empty with npm3 but node resolution searches higher anyway:
   ownNodeModules: resolveOwn('../node_modules'),
@@ -71,6 +71,7 @@ module.exports = {
   appPackageJson: resolveOwn('../package.json'),
   appSrc: resolveOwn('../template/src'),
   testsSetup: resolveOwn('../template/src/setupTests.js'),
+  relaySchema: resolveOwn('../schema.json'),
   appNodeModules: resolveOwn('../node_modules'),
   ownNodeModules: resolveOwn('../node_modules'),
   nodePaths: nodePaths

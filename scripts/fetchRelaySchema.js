@@ -20,18 +20,17 @@ fetch(`${SERVER}`, {
   body: JSON.stringify({'query': introspectionQuery}),
 })
 .then(res => res.json()).then(schemaJSON => {
-    console.log(`${paths.appSrc}/schema.json`)
     fs.writeFileSync(
-    `${paths.appSrc}/schema.json`,
+    `${paths.relaySchema}`,
     JSON.stringify(schemaJSON, null, 2)
     );
 
   // Save user readable type system shorthand of schema
-  var graphQLSchema = buildClientSchema(schemaJSON.data);
-  fs.writeFileSync(
-    `${paths.appSrc}/schema.graphql`,
-    printSchema(graphQLSchema)
-    );
+  // var graphQLSchema = buildClientSchema(schemaJSON.data);
+  // fs.writeFileSync(
+  //   `${paths.relaySchema}/schema.graphql`,
+  //   printSchema(graphQLSchema)
+  //   );
 })
 .catch((err)=>{
     console.log(err)

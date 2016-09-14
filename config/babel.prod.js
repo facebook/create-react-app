@@ -10,6 +10,7 @@
 // @remove-on-eject-end
 
 var path = require('path');
+var relaySetup = require('./relay/setup');
 
 module.exports = {
   // Don't try to find .babelrc because we want to force this configuration.

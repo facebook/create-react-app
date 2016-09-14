@@ -4,3 +4,4 @@ build
 *.tgz
 my-app*
 template/src/__tests__/__snapshots__/
+schema.*
