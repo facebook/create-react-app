@@ -34,7 +34,7 @@ function resolveApp(relativePath) {
 // config after eject: we're in ./config/
 module.exports = {
   appBuild: resolveApp('build'),
-  appFavico: resolveOwn('src/favicon.ico'),
+  appFavico: resolveApp('src/favicon.ico'),
   appHtml: resolveApp('index.html'),
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
