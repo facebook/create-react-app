@@ -38,7 +38,9 @@ var nodePaths = (process.env.NODE_PATH || '')
 // config after eject: we're in ./config/
 module.exports = {
   appBuild: resolveApp('build'),
+  appFavico: resolveOwn('src/favicon.ico'),
   appHtml: resolveApp('index.html'),
+  appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
@@ -55,7 +57,9 @@ function resolveOwn(relativePath) {
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
   appBuild: resolveApp('build'),
+  appFavico: resolveApp('src/favicon.ico'),
   appHtml: resolveApp('index.html'),
+  appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
@@ -69,7 +73,9 @@ module.exports = {
 // @remove-on-publish-begin
 module.exports = {
   appBuild: resolveOwn('../build'),
+  appFavico: resolveOwn('../template/src/favicon.ico'),
   appHtml: resolveOwn('../template/index.html'),
+  appIndexJs: resolveOwn('../template/src/index.js'),
   appPackageJson: resolveOwn('../package.json'),
   appSrc: resolveOwn('../template/src'),
   testsSetup: resolveOwn('../template/src/setupTests.js'),
