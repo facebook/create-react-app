@@ -11,6 +11,7 @@
 
 process.env.NODE_ENV = 'development';
 
+var fs = require('fs');
 var path = require('path');
 var chalk = require('chalk');
 var webpack = require('webpack');
@@ -170,6 +171,20 @@ function openBrowser(port, protocol) {
   opn(protocol + '://localhost:' + port + '/');
 }
 
+function checkRequiredFiles() {
+  var filesPathToCheck = [paths.appHtml, paths.appIndexJs];
+  filesPathToCheck.forEach(function(filePath) {
+    try {
+      fs.accessSync(filePath, fs.F_OK);
+    } catch (err) {
+      var fileName = path.basename(filePath);
+      console.log(
+        chalk.red(`Cannot find ${fileName} in ${filePath} directory`)
+      );
+      process.exit(1);
+    }
+  });
+}
 // We need to provide a custom onError function for httpProxyMiddleware.
 // It allows us to log custom error messages on the console.
 function onProxyError(proxy) {
@@ -180,7 +195,7 @@ function onProxyError(proxy) {
       ' from ' + chalk.cyan(host) + ' to ' + chalk.cyan(proxy) + '.'
     );
     console.log(
-      'See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (' + 
+      'See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (' +
       chalk.cyan(err.code) + ').'
     );
     console.log();
@@ -190,7 +205,7 @@ function onProxyError(proxy) {
     if (res.writeHead && !res.headersSent) {
         res.writeHead(500);
     }
-    res.end('Proxy error: Could not proxy request ' + req.url + ' from ' + 
+    res.end('Proxy error: Could not proxy request ' + req.url + ' from ' +
       host + ' to ' + proxy + ' (' + err.code + ').'
     );
   }
@@ -304,6 +319,7 @@ function runDevServer(port, protocol) {
 
 function run(port) {
   var protocol = process.env.HTTPS === 'true' ? "https" : "http";
+  checkRequiredFiles();
   setupCompiler(port, protocol);
   runDevServer(port, protocol);
 }
