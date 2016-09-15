@@ -14,7 +14,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
   - [npm run fetchRelaySchema](#npm-run-fetchrelayschema)
-- [Relay](#relay-support)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
@@ -51,6 +50,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Modulus](#modulus)
   - [Now](#now)
   - [Surge](#surge)
+- [Relay & GraphQL Support](#relay-support)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
