@@ -39,6 +39,7 @@ var nodePaths = (process.env.NODE_PATH || '')
 module.exports = {
   appBuild: resolveApp('build'),
   appHtml: resolveApp('index.html'),
+  appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
@@ -56,6 +57,7 @@ function resolveOwn(relativePath) {
 module.exports = {
   appBuild: resolveApp('build'),
   appHtml: resolveApp('index.html'),
+  appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
@@ -70,6 +72,7 @@ module.exports = {
 module.exports = {
   appBuild: resolveOwn('../build'),
   appHtml: resolveOwn('../template/index.html'),
+  appIndexJs: resolveOwn('../template/src/index.js'),
   appPackageJson: resolveOwn('../package.json'),
   appSrc: resolveOwn('../template/src'),
   testsSetup: resolveOwn('../template/src/setupTests.js'),
