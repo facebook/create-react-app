@@ -14,7 +14,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
   - [npm run fetchRelaySchema](#npm-run-fetchrelayschema)
-- [Relay & GraphQL Support](#relay-support)
+- [Relay](#relay-support)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
@@ -151,17 +151,102 @@ Fetches schema from an [introspection](http://graphql.org/learn/introspection/) 
 
 ## Relay Support
 
-You can create a [Relay](https://facebook.github.io/relay/) application with create-react-app.  You will need a GraphQL server<sup>1</sup> to connect to and an environment variable that points to its location.  The environment variable needs to be named `GRAPHQL_URL`.
+You can create a [Relay](https://facebook.github.io/relay/) application with create-react-app.  You will need a standalone GraphQL server ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) enabled, most likely) for your create-react-app to connect to. The steps for setting up the standalone GraphQL server are outside the scope of these docs.
 
-<sup>1</sup>[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) enabled, most likely.
+To enable Relay in your create-react-app, create an app with create-react-app as you would normally:
 
-Assuming you have set your environment variable, created your react application, and are in the root directory of your newly created `create-react-app` application run the following commands:
+```cmd
+create-react-app my-app
+cd my-app
+```
 
-    `npm install react-relay --save`
-    `npm run fetchRelaySchema`
-    `npm start`
+Then inside `my-app` and define an environment variable `REACT_APP_GRAPHQL_URL` with a value is the URL to your graphql server (`REACT_APP_GRAPHQL_URL=http://localhost:3001/graphql` for example). See [environment variables](#adding-custom-environment-variables) for more information.
 
-For development, any changes made to the GraphQL schema can be updated locally by running `npm run fetchRelaySchema`
+With your REACT_APP_GRAPHQL_URL environment variable set, run the following commands in the `my-app` directory:
+
+```cmd
+npm install react-relay --save
+npm run fetchRelaySchema
+npm start
+```
+
+This will install the necessary packages for Relay support and configure the `babel-relay-plugin` for you. Woo!
+
+Next, add Relay to `my-app/src/index.js`. Setting the `DefaultNetworkLayer` is important. Here is an example:
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
+import Relay from 'react-relay';
+import { applyRouterMiddleware, Router, Route, /*Link,*/ browserHistory } from 'react-router';
+import useRelay from 'react-router-relay';
+
+
+const ViewerQueries = {
+  viewer: () => Relay.QL`query { viewer }`
+};
+
+Relay.injectNetworkLayer(
+    new Relay.DefaultNetworkLayer(process.env.REACT_APP_GRAPHQL_URL)
+);
+
+ReactDOM.render(
+  <Router
+    history={browserHistory}
+    render={applyRouterMiddleware(useRelay)}
+    environment={Relay.Store}
+  >
+    <Route
+      path="/"
+      component={App}
+      queries={ViewerQueries}
+    >
+    </Route>
+  </Router>,
+  document.getElementById('root')
+);
+```
+
+Next, add Components and Relay containers to your app. Here is an example of `my-app/src/App.js`.
+
+```js
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import Relay from 'react-relay';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <div className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h2>Welcome to React</h2>
+        </div>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+        <p>This came from Relay {this.props.viewer.id}</p>
+      </div>
+    );
+  }
+}
+
+export default Relay.createContainer(App, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on User {
+          id
+      }
+    `,
+  },
+});
+```
+
+>Note: Each time your the schema changes in your GrapQL server, you need to update your local copy of the schema by running `npm run fetchRelaySchema`
+
 
 ## Displaying Lint Output in the Editor
 
