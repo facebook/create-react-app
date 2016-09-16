@@ -42,6 +42,8 @@ if (isSmokeTest) {
   };
 }
 
+var shouldOpenBrowser = !process.argv.some(arg => arg.indexOf('--no-open-browser') > -1)
+
 // Some custom utilities to prettify Webpack output.
 // This is a little hacky.
 // It would be easier if webpack provided a rich error object.
@@ -298,7 +300,9 @@ function runDevServer(port, protocol) {
     clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    openBrowser(port, protocol);
+    if (shouldOpenBrowser) {
+      openBrowser(port, protocol);
+    }
   });
 }
 
