@@ -41,7 +41,6 @@ var spawn = require('cross-spawn');
 var chalk = require('chalk');
 var semver = require('semver');
 var argv = require('minimist')(process.argv.slice(2));
-var pathExists = require('path-exists');
 
 /**
  * Arguments:
@@ -73,7 +72,7 @@ function createApp(name, verbose, version) {
 
   checkAppName(appName);
 
-  if (!pathExists.sync(name)) {
+  if (!pathExistsSync(name)) {
     fs.mkdirSync(root);
   } else if (!isSafeToCreateProjectIn(root)) {
     console.log('The directory `' + name + '` contains file(s) that could conflict. Aborting.');
@@ -204,4 +203,17 @@ function isSafeToCreateProjectIn(root) {
     .every(function(file) {
       return validFiles.indexOf(file) >= 0;
     });
+}
+
+// This is an ES5 version of https://github.com/sindresorhus/path-exists.
+// The reason it exists is so that the CLI doesn't break before being able to
+// warn the user they're using an unsupported version of Node.
+// See https://github.com/facebookincubator/create-react-app/issues/570
+function pathExistsSync(fp) {
+  try {
+    fs.accessSync(fp);
+    return true;
+  } catch (err) {
+    return false;
+  }
 }
