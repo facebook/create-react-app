@@ -23,6 +23,7 @@ var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
+var plugins = require('./utils/plugins');
 
 // Input: /User/dan/app/build/static/js/main.82be8.js
 // Output: /static/js/main.js
@@ -51,23 +52,31 @@ function getDifferenceLabel(currentSize, previousSize) {
 
 // First, read the current file sizes in build directory.
 // This lets us display how much they changed later.
-recursive(paths.appBuild, (err, fileNames) => {
-  var previousSizeMap = (fileNames || [])
-    .filter(fileName => /\.(js|css)$/.test(fileName))
-    .reduce((memo, fileName) => {
-      var contents = fs.readFileSync(fileName);
-      var key = removeFileNameHash(fileName);
-      memo[key] = gzipSize(contents);
-      return memo;
-    }, {});
+plugins.build()
+    .then(() => {
+        recursive(paths.appBuild, (err, fileNames) => {
+          var previousSizeMap = (fileNames || [])
+            .filter(fileName => /\.(js|css)$/.test(fileName))
+            .reduce((memo, fileName) => {
+              var contents = fs.readFileSync(fileName);
+              var key = removeFileNameHash(fileName);
+              memo[key] = gzipSize(contents);
+              return memo;
+            }, {});
 
-  // Remove all content but keep the directory so that
-  // if you're in it, you don't end up in Trash
-  rimrafSync(paths.appBuild + '/*');
+          // Remove all content but keep the directory so that
+          // if you're in it, you don't end up in Trash
+          rimrafSync(paths.appBuild + '/*');
 
-  // Start the webpack build
-  build(previousSizeMap);
-});
+          // Start the webpack build
+          build(previousSizeMap);
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        console.log();
+        process.exit(1)
+    });
 
 // Print a detailed summary of build files.
 function printFileSizes(stats, previousSizeMap) {

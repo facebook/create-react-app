@@ -149,105 +149,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 Fetches schema from an [introspection](http://graphql.org/learn/introspection/) query and writes it to a `schema.json` file in the root directory of your create-react-app application.
 
-## Relay Support
-
-You can create a [Relay](https://facebook.github.io/relay/) application with create-react-app.  You will need a standalone GraphQL server ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) enabled, most likely) for your create-react-app to connect to. The steps for setting up the standalone GraphQL server are outside the scope of these docs.
-
-To enable Relay in your create-react-app, create an app with create-react-app as you would normally:
-
-```cmd
-create-react-app my-app
-cd my-app
-```
-
-Then inside `my-app` and define an environment variable `REACT_APP_GRAPHQL_URL` with a value is the URL to your graphql server (`REACT_APP_GRAPHQL_URL=http://localhost:3001/graphql` for example). See [environment variables](#adding-custom-environment-variables) for more information.
-
-With your REACT_APP_GRAPHQL_URL environment variable set, run the following commands in the `my-app` directory:
-
-```cmd
-npm install react-relay --save
-npm run fetchRelaySchema
-npm start
-```
-
-This will install the necessary packages for Relay support and configure the `babel-relay-plugin` for you. Woo!
-
-Next, add Relay to `my-app/src/index.js`. Setting the `DefaultNetworkLayer` is important. Here is an example:
-
-```js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
-import Relay from 'react-relay';
-import { applyRouterMiddleware, Router, Route, /*Link,*/ browserHistory } from 'react-router';
-import useRelay from 'react-router-relay';
-
-
-const ViewerQueries = {
-  viewer: () => Relay.QL`query { viewer }`
-};
-
-Relay.injectNetworkLayer(
-    new Relay.DefaultNetworkLayer(process.env.REACT_APP_GRAPHQL_URL)
-);
-
-ReactDOM.render(
-  <Router
-    history={browserHistory}
-    render={applyRouterMiddleware(useRelay)}
-    environment={Relay.Store}
-  >
-    <Route
-      path="/"
-      component={App}
-      queries={ViewerQueries}
-    >
-    </Route>
-  </Router>,
-  document.getElementById('root')
-);
-```
-
-Next, add Components and Relay containers to your app. Here is an example of `my-app/src/App.js`.
-
-```js
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Relay from 'react-relay';
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>This came from Relay {this.props.viewer.id}</p>
-      </div>
-    );
-  }
-}
-
-export default Relay.createContainer(App, {
-  fragments: {
-    viewer: () => Relay.QL`
-      fragment on User {
-          id
-      }
-    `,
-  },
-});
-```
-
->Note: Each time your the schema changes in your GrapQL server, you need to update your local copy of the schema by running `npm run fetchRelaySchema`
-
-
 ## Displaying Lint Output in the Editor
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
@@ -1005,6 +906,101 @@ Install the Surge CLI if you haven't already by running `npm install -g surge`. 
 ```
 
 Note that in order to support routers that use html5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
+
+## Relay Support
+
+You can create a [Relay](https://facebook.github.io/relay/) application with create-react-app.  You will need a standalone GraphQL server ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) enabled, most likely) for your create-react-app to connect to. The steps for setting up the standalone GraphQL server are outside the scope of these docs.
+
+To enable Relay in your create-react-app, install `react-relay`
+
+```cmd
+npm install react-relay --save
+```
+
+Then define an environment variable `REACT_APP_GRAPHQL_URL` with a value that is the URL to your graphql server (for example `REACT_APP_GRAPHQL_URL=http://localhost:3001/graphql`). See [environment variables](#adding-custom-environment-variables) for more information.
+
+With your REACT_APP_GRAPHQL_URL environment variable defined, start your app. This could be as simple as:
+
+```cmd
+REACT_APP_GRAPHQL_URL=http://localhost:3001/graphql npm start
+```
+
+This will configure the `babel-relay-plugin` for you and fetch your graphql schema. Woo!
+
+Next, add Relay to `my-app/src/index.js`. Setting the `DefaultNetworkLayer` is important. Here is an example:
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
+import Relay from 'react-relay';
+import { applyRouterMiddleware, Router, Route, /*Link,*/ browserHistory } from 'react-router';
+import useRelay from 'react-router-relay';
+
+
+const ViewerQueries = {
+  viewer: () => Relay.QL`query { viewer }`
+};
+
+Relay.injectNetworkLayer(
+    new Relay.DefaultNetworkLayer(process.env.REACT_APP_GRAPHQL_URL)
+);
+
+ReactDOM.render(
+  <Router
+    history={browserHistory}
+    render={applyRouterMiddleware(useRelay)}
+    environment={Relay.Store}
+  >
+    <Route
+      path="/"
+      component={App}
+      queries={ViewerQueries}
+    >
+    </Route>
+  </Router>,
+  document.getElementById('root')
+);
+```
+
+Next, add Components and Relay containers to your app. Here is an example of `my-app/src/App.js`.
+
+```js
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import Relay from 'react-relay';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <div className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h2>Welcome to React</h2>
+        </div>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+        <p>This came from Relay {this.props.viewer.id}</p>
+      </div>
+    );
+  }
+}
+
+export default Relay.createContainer(App, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on User {
+          id
+      }
+    `,
+  },
+});
+```
+
+>Note: Each time your the schema on your remote graphql server changes, you need to restart your local development server with `npm start`. This will fetch the latest version of your graphql schema so `babel-relay-plugin` can transform Relay.QL queries in your components.
 
 ## Something Missing?
 

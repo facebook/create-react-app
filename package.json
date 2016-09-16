@@ -23,7 +23,8 @@
     "bin",
     "config",
     "scripts",
-    "template"
+    "template",
+    "plugins"
   ],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
@@ -73,7 +74,6 @@
     "path-exists": "3.0.0",
     "postcss-loader": "0.11.1",
     "promise": "7.1.1",
-    "react-relay": "0.9.3",
     "recursive-readdir": "2.0.0",
     "rimraf": "2.5.4",
     "strip-ansi": "3.0.1",

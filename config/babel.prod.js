@@ -10,7 +10,7 @@
 // @remove-on-eject-end
 
 var path = require('path');
-var relaySetup = require('./relay/setup');
+var relayPlugin = require('../plugins/relay');
 
 module.exports = {
   // Don't try to find .babelrc because we want to force this configuration.
@@ -50,7 +50,7 @@ module.exports = {
 };
 
 // optional relay support https://facebook.github.io/relay
-if (relaySetup.relayIsEnabled()) {
+if (relayPlugin.isEnabled()) {
     // relay QL babel transform needs to run before react https://facebook.github.io/relay/docs/guides-babel-plugin.html#react-native-configuration
-    module.exports.plugins.unshift(require.resolve('./relay/babelRelayPlugin'));
+    module.exports.plugins.unshift(require.resolve('../plugins/relay/babelRelayPlugin'));
 }

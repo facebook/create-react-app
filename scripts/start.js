@@ -23,6 +23,7 @@ var detect = require('detect-port');
 var prompt = require('./utils/prompt');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+var plugins = require('./utils/plugins');
 
 // Tools like Cloud9 rely on this.
 var DEFAULT_PORT = process.env.PORT || 3000;
@@ -180,7 +181,7 @@ function onProxyError(proxy) {
       ' from ' + chalk.cyan(host) + ' to ' + chalk.cyan(proxy) + '.'
     );
     console.log(
-      'See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (' + 
+      'See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (' +
       chalk.cyan(err.code) + ').'
     );
     console.log();
@@ -190,7 +191,7 @@ function onProxyError(proxy) {
     if (res.writeHead && !res.headersSent) {
         res.writeHead(500);
     }
-    res.end('Proxy error: Could not proxy request ' + req.url + ' from ' + 
+    res.end('Proxy error: Could not proxy request ' + req.url + ' from ' +
       host + ' to ' + proxy + ' (' + err.code + ').'
     );
   }
@@ -304,8 +305,16 @@ function runDevServer(port, protocol) {
 
 function run(port) {
   var protocol = process.env.HTTPS === 'true' ? "https" : "http";
-  setupCompiler(port, protocol);
-  runDevServer(port, protocol);
+  plugins.start()
+    .then(() => {
+        setupCompiler(port, protocol);
+        runDevServer(port, protocol);
+    })
+    .catch((err) => {
+        console.error(err);
+        console.log();
+        process.exit(1)
+    });
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to

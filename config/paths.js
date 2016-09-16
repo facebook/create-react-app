@@ -41,6 +41,7 @@ module.exports = {
   relaySchema: resolveApp('schema.json'),
   appNodeModules: resolveApp('node_modules'),
   ownNodeModules: resolveApp('node_modules'),
+  plugins: resolveApp('plugins'),
   nodePaths: nodePaths
 };
 
@@ -60,6 +61,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   // this is empty with npm3 but node resolution searches higher anyway:
   ownNodeModules: resolveOwn('../node_modules'),
+  plugins: resolveApp('plugins'),
   nodePaths: nodePaths
 };
 // @remove-on-eject-end
@@ -74,6 +76,7 @@ module.exports = {
   relaySchema: resolveOwn('../schema.json'),
   appNodeModules: resolveOwn('../node_modules'),
   ownNodeModules: resolveOwn('../node_modules'),
+  plugins: resolveOwn('../plugins'),
   nodePaths: nodePaths
 };
 // @remove-on-publish-end

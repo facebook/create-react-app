@@ -46,7 +46,9 @@ prompt(
     path.join('scripts', 'start.js'),
     path.join('scripts', 'utils', 'chrome.applescript'),
     path.join('scripts', 'utils', 'prompt.js'),
-    path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js')
+    path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js'),
+    path.join('plugins', 'relay', 'index.js'),
+    path.join('plugins', 'relay', 'babelRelayPlugin.js')
   ];
 
   // Ensure that the app folder is clean and we won't override any files
@@ -68,6 +70,8 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'config', 'jest'));
   fs.mkdirSync(path.join(appPath, 'scripts'));
   fs.mkdirSync(path.join(appPath, 'scripts', 'utils'));
+  fs.mkdirSync(path.join(appPath, 'plugins'));
+  fs.mkdirSync(path.join(appPath, 'plugins', 'relay'));
 
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + appPath);
