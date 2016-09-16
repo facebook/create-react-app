@@ -131,7 +131,11 @@ module.exports = {
     'no-unreachable': 'warn',
     'no-unused-expressions': 'warn',
     'no-unused-labels': 'warn',
-    'no-unused-vars': ['warn', { vars: 'local', args: 'none' }],
+    'no-unused-vars': ['warn', {
+      vars: 'local',
+      varsIgnorePattern: '^_',
+      args: 'none'
+    }],
     'no-use-before-define': ['warn', 'nofunc'],
     'no-useless-computed-key': 'warn',
     'no-useless-concat': 'warn',
