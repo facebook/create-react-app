@@ -847,16 +847,17 @@ Open your `package.json` and add a `homepage` field:
 **The above step is important!**  
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
 
-Now, whenever you run `npm run build`, you will see a cheat sheet with a sequence of commands to deploy to GitHub pages:
+To host your app using the `/docs` folder you just need to move the `build` folder to a new `docs` folder, check in the new `docs` folder and set the GitHub Pages Source to the `master branch /docs folder` setting. [Read more here](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/#publishing-your-github-pages-site-from-a-docs-folder-on-your-master-branch) about setting up the GitHub settings.
+
+You can use the following sequence of commands to clear out the old docs folder, move the build to the docs folder, and then check it in to the master branch:
 
 ```sh
 git commit -am "Save local changes"
-git checkout -B gh-pages
-git add -f build
+rm -rf docs/
+mv build/ docs/
+git add docs -A
 git commit -am "Rebuild website"
-git filter-branch -f --prune-empty --subdirectory-filter build
-git push -f origin gh-pages
-git checkout -
+git push  origin master
 ```
 
 You may copy and paste them, or put them into a custom shell script. You may also customize them for another hosting provider.

@@ -130,15 +130,14 @@ function build(previousSizeMap) {
       console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
       console.log();
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
-      console.log('To publish it at ' + chalk.green(homepagePath) + ', run:');
+      console.log('To publish it at ' + chalk.green(homepagePath) + ' using the docs/ folder, run:');
       console.log();
       console.log('  ' + chalk.cyan('git') + ' commit -am ' + chalk.yellow('"Save local changes"'));
-      console.log('  ' + chalk.cyan('git') + ' checkout -B gh-pages');
-      console.log('  ' + chalk.cyan('git') + ' add -f build');
+      console.log('  ' + chalk.cyan('rm') + ' -rf docs/');
+      console.log('  ' + chalk.cyan('mv') + ' build/ docs/');
+      console.log('  ' + chalk.cyan('git') + ' add docs -A');
       console.log('  ' + chalk.cyan('git') + ' commit -am ' + chalk.yellow('"Rebuild website"'));
-      console.log('  ' + chalk.cyan('git') + ' filter-branch -f --prune-empty --subdirectory-filter build');
-      console.log('  ' + chalk.cyan('git') + ' push -f origin gh-pages');
-      console.log('  ' + chalk.cyan('git') + ' checkout -');
+      console.log('  ' + chalk.cyan('git') + ' push origin master');
       console.log();
     } else if (publicPath !== '/') {
       // "homepage": "http://mywebsite.com/project"
