@@ -11,7 +11,6 @@
 
 process.env.NODE_ENV = 'development';
 
-var fs = require('fs');
 var path = require('path');
 var chalk = require('chalk');
 var webpack = require('webpack');
@@ -21,6 +20,7 @@ var httpProxyMiddleware = require('http-proxy-middleware');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 var detect = require('detect-port');
+var checkRequiredFiles = require('./utils/checkRequiredFiles');
 var prompt = require('./utils/prompt');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
@@ -171,20 +171,6 @@ function openBrowser(port, protocol) {
   opn(protocol + '://localhost:' + port + '/');
 }
 
-function checkRequiredFiles() {
-  var filesPathToCheck = [paths.appHtml, paths.appIndexJs];
-  filesPathToCheck.forEach(function(filePath) {
-    try {
-      fs.accessSync(filePath, fs.F_OK);
-    } catch (err) {
-      var fileName = path.basename(filePath);
-      console.log(
-        chalk.red(`Cannot find ${fileName} in ${filePath} directory`)
-      );
-      process.exit(1);
-    }
-  });
-}
 // We need to provide a custom onError function for httpProxyMiddleware.
 // It allows us to log custom error messages on the console.
 function onProxyError(proxy) {
