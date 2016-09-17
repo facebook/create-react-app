@@ -19,6 +19,7 @@ var filesize = require('filesize');
 var gzipSize = require('gzip-size').sync;
 var rimrafSync = require('rimraf').sync;
 var webpack = require('webpack');
+var logCompileProblems = require('./utils/logCompileProblems');
 var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 var recursive = require('recursive-readdir');
@@ -110,6 +111,11 @@ function build(previousSizeMap) {
     if (err) {
       console.error('Failed to create a production build. Reason:');
       console.error(err.message || err);
+      process.exit(1);
+    }
+
+    if (stats.hasErrors() || stats.hasWarnings()) {
+      logCompileProblems(stats);
       process.exit(1);
     }
 
