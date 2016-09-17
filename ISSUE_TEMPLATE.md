@@ -6,27 +6,34 @@ What are you reporting?
 
 ### Expected behavior
 
-Tell us what you think should happen
+Tell us what you think should happen.
 
 ### Actual behavior
 
-Tell us what actually happens
+Tell us what actually happens.
 
 ### Environment
 
-1. `create-react-app`: version
-2. Node: version
-3. NPM: version
-4. Operating system:
-5. Browser & version:
+Run these commands in the project folder and fill in their results:
 
-### Reproducible demo
+1. `npm ls react-scripts` (if you haven’t ejected): 
+2. `node -v`: 
+3. `npm -v`:
 
-Please take the time to create a new CRA app that reproduces the issue.
-Alternatively, you could copy your app that experiences the problem and start removing things until you're left with the minimal reproducible demo.
+Then, specify:
+
+1. Operating system:
+2. Browser and version:
+
+### Reproducible Demo
+
+Please take the time to create a new app that reproduces the issue.
+
+Alternatively, you could copy your app that experiences the problem and start removing things until you’re left with the minimal reproducible demo.
+
 (Accidentially, you might get to the root of your problem during that process.)
 
 Push to GitHub and paste the link here.
 
-By doing this, you're helping the CRA contributors a big time!
+By doing this, you're helping the Create React App contributors a big time!
 Demonstrable issues gets fixed faster.
