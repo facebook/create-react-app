@@ -17,6 +17,7 @@ var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var WatchMissingNodeModulesPlugin = require('../scripts/utils/WatchMissingNodeModulesPlugin');
 var paths = require('./paths');
 var env = require('./env');
+var findCacheDir = require('find-cache-dir');
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -107,7 +108,17 @@ module.exports = {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
         loader: 'babel',
-        query: require('./babel.dev')
+        query: Object.assign({},
+          // @remove-on-eject-begin
+          require('./babel.dev')(true),
+          // @remove-on-eject-end
+          {
+            // This is a feature of `babel-loader` for webpack (not Babel itself).
+            // It enables caching results in ./node_modules/.cache/react-scripts/
+            // directory for faster rebuilds.
+            cacheDirectory: findCacheDir({ name: 'react-scripts' })
+          }
+        )
       },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.

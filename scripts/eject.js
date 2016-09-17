@@ -13,6 +13,8 @@ var path = require('path');
 var prompt = require('./utils/prompt');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
+var babelDevConfig = require('../config/babel.dev.js')(false);
+var babelProdConfig = require('../config/babel.prod.js')(false);
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
@@ -29,8 +31,6 @@ prompt(
   var ownPath = path.join(__dirname, '..');
   var appPath = path.join(ownPath, '..', '..');
   var files = [
-    path.join('config', 'babel.dev.js'),
-    path.join('config', 'babel.prod.js'),
     path.join('config', 'flow', 'css.js.flow'),
     path.join('config', 'flow', 'file.js.flow'),
     path.join('config', 'eslint.js'),
@@ -62,12 +62,24 @@ prompt(
     }
   });
 
+  // Ensure a .babelrc file doesn't exist in the app config folder
+  if (fs.existsSync(path.join(appPath, 'config', '.babelrc'))) {
+    console.error(
+      'config/.babelrc already exists in your app folder. We cannot ' +
+      'continue as you would lose all the changes in that file ' +
+      'Please delete it (maybe make a copy for backup) and run this ' +
+      'command again. You might have to manually merge your configs.'
+    );
+    process.exit(1);
+  }
+
   // Copy the files over
   fs.mkdirSync(path.join(appPath, 'config'));
   fs.mkdirSync(path.join(appPath, 'config', 'flow'));
   fs.mkdirSync(path.join(appPath, 'config', 'jest'));
   fs.mkdirSync(path.join(appPath, 'scripts'));
   fs.mkdirSync(path.join(appPath, 'scripts', 'utils'));
+
 
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + appPath);
@@ -80,6 +92,31 @@ prompt(
       .trim() + '\n';
     fs.writeFileSync(path.join(appPath, file), content);
   });
+  console.log();
+
+  // Create .babelrc from dev and prod configs
+  var babelrc = {
+    env: {
+      test: {
+        presets: babelDevConfig.presets,
+        plugins: babelDevConfig.plugins
+      },
+      development: {
+        presets: babelDevConfig.presets,
+        plugins: babelDevConfig.plugins
+      },
+      production: {
+        presets: babelProdConfig.presets,
+        plugins: babelProdConfig.plugins
+      }
+    }
+  };
+
+  console.log('Writing config/.babelrc to ' + appPath );
+  fs.writeFileSync(
+    path.join(appPath, 'config', '.babelrc'),
+    JSON.stringify(babelrc, null, 2)
+  );
   console.log();
 
   var ownPackage = require(path.join(ownPath, 'package.json'));
@@ -113,6 +150,11 @@ prompt(
   // Explicitly specify ESLint config path for editor plugins
   appPackage.eslintConfig = {
     extends: './config/eslint.js',
+  };
+
+  // Explicitly specify .babelrc config path
+  appPackage.babel = {
+    extends: './config/.babelrc'
   };
 
   console.log('Writing package.json');
