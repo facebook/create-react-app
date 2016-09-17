@@ -253,7 +253,7 @@ function runDevServer(port, protocol) {
     // to use Webpack for importing assets in the code, so we don't need to
     // additionally serve files by their filenames. Otherwise, even if it
     // works in development, those files will be missing in production, unless
-    // we explicitly copy them. But even if we copy the all the files into
+    // we explicitly copy them. But even if we copy all the files into
     // the build output (which doesn't seem to be wise because it may contain
     // private information such as files with API keys, for example), we would
     // still have a problem. Since the filenames would be the same every time,
