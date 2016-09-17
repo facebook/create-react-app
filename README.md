@@ -51,7 +51,6 @@ Inside that directory, it will generate the initial project structure and instal
 my-app/
   README.md
   index.html
-  favicon.ico
   node_modules/
   package.json
   .gitignore
@@ -59,6 +58,7 @@ my-app/
     App.css
     App.js
     App.test.js
+    favicon.ico
     index.css
     index.js
     logo.svg
