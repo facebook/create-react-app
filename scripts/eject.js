@@ -44,6 +44,7 @@ prompt(
     path.join('config', 'jest', 'transform.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
+    path.join('scripts', 'utils', 'checkRequiredFiles.js'),
     path.join('scripts', 'utils', 'chrome.applescript'),
     path.join('scripts', 'utils', 'prompt.js'),
     path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js')
