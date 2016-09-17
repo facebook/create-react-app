@@ -49,10 +49,15 @@ module.exports = {
     // We ship a few polyfills by default.
     require.resolve('./polyfills'),
     // Finally, this is your app's code:
-    path.join(paths.appSrc, 'index')
+    path.join(paths.appSrc, 'index'),
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
+    
+    // Not sure if this is the correct place for this, or what the documentation would need
+    // however, this fixes the reload issue. Also not sure what it might break, so I welcome
+    // feedback if this is a useful update
+    path.join(paths.appHtml)
   ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
