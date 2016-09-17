@@ -174,15 +174,15 @@ function openBrowser(port, protocol) {
 function checkRequiredFiles() {
   var filesPathToCheck = [paths.appHtml, paths.appIndexJs, paths.appFavico];
   filesPathToCheck.forEach(function(filePath) {
-    fs.access(filePath, fs.constants.F_OK, function(err) {
-      if(err) {
-        var fileName = path.basename(filePath);
-        console.log(
-          chalk.red(`Cannot find ${fileName} in ${filePath} directory`)
-        );
-        process.exit(1);
-      }
-    });
+    try {
+      fs.accessSync(filePath, fs.F_OK);
+    } catch (err) {
+      var fileName = path.basename(filePath);
+      console.log(
+        chalk.red(`Cannot find ${fileName} in ${filePath} directory`)
+      );
+      process.exit(1);
+    }
   });
 }
 // We need to provide a custom onError function for httpProxyMiddleware.
