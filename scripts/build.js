@@ -21,8 +21,11 @@ var rimrafSync = require('rimraf').sync;
 var webpack = require('webpack');
 var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
+var checkRequiredFiles = require('./utils/checkRequiredFiles');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
+
+checkRequiredFiles();
 
 // Input: /User/dan/app/build/static/js/main.82be8.js
 // Output: /static/js/main.js
