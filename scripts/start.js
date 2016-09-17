@@ -172,7 +172,7 @@ function openBrowser(port, protocol) {
 }
 
 function checkRequiredFiles() {
-  var filesPathToCheck = [paths.appHtml, paths.appIndexJs, paths.appFavico];
+  var filesPathToCheck = [paths.appHtml, paths.appIndexJs];
   filesPathToCheck.forEach(function(filePath) {
     try {
       fs.accessSync(filePath, fs.F_OK);
