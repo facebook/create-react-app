@@ -1,3 +1,42 @@
+## 0.4.2 (September 18, 2016)
+
+### Build Dependency (`react-scripts`)
+
+* Lint output in editor is now opt-in because, due to [this ESLint issue](https://github.com/eslint/eslint/issues/3458), it is broken by default in Atom. ([@fson](https://github.com/fson) in [#649](https://github.com/facebookincubator/create-react-app/pull/649))
+* Fixes an issue causing compile errors when project folder is inside a symlink. ([@motiz88](https://github.com/motiz88) in [#648](https://github.com/facebookincubator/create-react-app/pull/648))
+* You can now import `jpeg`, `wav`, `mp3`, `m4a`, `aac`, and `oga`. ([@mareksuscak](https://github.com/mareksuscak) in [#624](https://github.com/facebookincubator/create-react-app/pull/624), [@danharper](https://github.com/danharper) in [#665](https://github.com/facebookincubator/create-react-app/pull/665))
+* Fixes false positives caused by the case sensitive import warning on Windows. ([@Urthen](https://github.com/Urthen) in [#593](https://github.com/facebookincubator/create-react-app/pull/593))
+* With Docker, `*.json.gzip` files are no longer created in the project folder. ([@thangngoc89](https://github.com/thangngoc89) in [#620](https://github.com/facebookincubator/create-react-app/pull/620))
+* Proxy network errors now abort requests instead of hanging. ([@cloudmu](https://github.com/cloudmu) in [#588](https://github.com/facebookincubator/create-react-app/pull/588))
+* Connection to the development server does not get interrupted in HTTPS mode. ([@dceddia](https://github.com/dceddia) in [#652](https://github.com/facebookincubator/create-react-app/pull/652))
+* Unsupported Node versions now print a warning. ([@fson](https://github.com/fson) in [#575](https://github.com/facebookincubator/create-react-app/pull/575))
+* Importing assets with special characters like `@` now works with tests. ([@fson](https://github.com/fson) in [#584](https://github.com/facebookincubator/create-react-app/pull/584))
+* Undefined variable lint rule is promoted from a warning to an error. ([@gaearon](https://github.com/gaearon) in [#669](https://github.com/facebookincubator/create-react-app/pull/669))
+* Variables starting with underscore no longer trigger the “unused variable” rule. ([@valscion](https://github.com/valscion) in [#640](https://github.com/facebookincubator/create-react-app/pull/640))
+* We now print a friendly error when required files are missing. ([@vnctaing](https://github.com/vnctaing) in [#653](https://github.com/facebookincubator/create-react-app/pull/653))
+* The output after creating a project is better formatted. ([@btnwtn](https://github.com/btnwtn) in [#629](https://github.com/facebookincubator/create-react-app/pull/629))
+* Development server logs are less noisy. ([@gaearon](https://github.com/gaearon) in [122068](https://github.com/facebookincubator/create-react-app/commit/1220683276dd9eb2f2719aece7f40bf2ffb397b4))
+
+### Global CLI (`create-react-app`)
+
+* It now runs on early Node versions to print a friendly warning instead of crashing. ([@sotojuan](https://github.com/sotojuan) in [fc3ab4](https://github.com/facebookincubator/create-react-app/commit/fc3ab46d2a54f142f9287ce7de9ab2fc2514487d))
+* We now print a friendly message when you create a project with invalid name. ([@mareksuscak](https://github.com/mareksuscak) in [#628](https://github.com/facebookincubator/create-react-app/pull/628))
+* Passing a custom fork of `react-scripts` to `create-react-app` with `--scripts-version` works again. ([@yesmeck](https://github.com/yesmeck) in [#632](https://github.com/facebookincubator/create-react-app/pull/632))
+
+### Migrating from 0.4.1 to 0.4.2
+
+You may optionally update the global command (it’s not required):
+
+```
+npm install -g create-react-app@0.4.2
+```
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.4.2
+```
+
 ## 0.4.1 (September 3, 2016)
 
 ### Build Dependency (`react-scripts`)
