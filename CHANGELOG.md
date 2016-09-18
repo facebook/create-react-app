@@ -1,3 +1,24 @@
+## 0.4.2 (September 18, 2016)
+
+### Build Dependency (`react-scripts`)
+
+
+### Global CLI (`create-react-app`)
+
+### Migrating from 0.4.1 to 0.4.2
+
+You may optionally update the global command (it’s not required):
+
+```
+npm install -g create-react-app@0.4.2
+```
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.4.2
+```
+
 ## 0.4.1 (September 3, 2016)
 
 ### Build Dependency (`react-scripts`)
