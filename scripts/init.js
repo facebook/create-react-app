@@ -12,6 +12,7 @@ var path = require('path');
 var spawn = require('cross-spawn');
 var pathExists = require('path-exists');
 var chalk = require('chalk');
+var glob = require('glob');
 
 module.exports = function(appPath, appName, verbose, originalDirectory) {
   var ownPath = path.join(appPath, 'node_modules', 'react-scripts');
@@ -42,6 +43,13 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
 
   // Copy the files for the user
   fs.copySync(path.join(ownPath, 'template'), appPath);
+
+  // Rewrite the root path
+  glob.sync(path.join(appPath, 'src/**/*.{js,css,html,md,svg}')).forEach(function (file) {
+    const templateStr = fs.readFileSync(file, {encoding: 'utf8'})
+    const str = templateStr.replace(/__ROOT__/g, appPackage.name)
+    fs.writeFileSync(file, str)
+  })
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862

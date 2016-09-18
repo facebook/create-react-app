@@ -17,6 +17,7 @@ var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var WatchMissingNodeModulesPlugin = require('../scripts/utils/WatchMissingNodeModulesPlugin');
 var paths = require('./paths');
 var env = require('./env');
+var appName = require(paths.appPackageJson).name;
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -81,7 +82,8 @@ module.exports = {
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-      'react-native': 'react-native-web'
+      'react-native': 'react-native-web',
+      [appName]: paths.appRoot
     }
   },
   // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
