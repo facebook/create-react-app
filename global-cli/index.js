@@ -29,6 +29,9 @@
 // Do not make breaking changes! We absolutely don't want to have to
 // tell people to update their global version of create-react-app.
 //
+// Also be careful with new language features.
+// This file must work on Node 0.10+.
+//
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //   /!\ DO NOT MODIFY THIS FILE /!\
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -190,15 +193,15 @@ function checkAppName(appName) {
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
-        `Can't use "${appName}" as the app name because a dependency with the same name exists.\n\n` +
-        `Following names ${chalk.red.bold('must not')} be used:\n\n`
-      )
-
-      +
-
+        'We cannot create a project called `' + appName + '` because a dependency with the same name exists.\n' +
+        'Due to the way npm works, the following names are not allowed:\n\n'
+      ) +
       chalk.cyan(
-        allDependencies.map(depName => `  ${depName}`).join('\n')
-      )
+        allDependencies.map(function(depName) {
+          return '  ' + depName;
+        }).join('\n')
+      ) +
+      chalk.red('\n\nPlease choose a different project name.')
     );
     process.exit(1);
   }
