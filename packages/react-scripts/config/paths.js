@@ -70,7 +70,7 @@ module.exports = {
 
 // @remove-on-publish-begin
 module.exports = {
-  appBuild: resolveOwn('../build'),
+  appBuild: resolveOwn('../../../build'),
   appHtml: resolveOwn('../template/index.html'),
   appIndexJs: resolveOwn('../template/src/index.js'),
   appPackageJson: resolveOwn('../package.json'),

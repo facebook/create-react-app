@@ -85,7 +85,7 @@ scripts_path=$clean_path/`npm pack`
 
 # Go back to the root directory and run the command from here
 cd $root_path
-node global-cli/index.js --scripts-version=$scripts_path "$@"
+node packages/create-react-app/index.js --scripts-version=$scripts_path "$@"
 
 # Cleanup
 cleanup
