@@ -19,7 +19,9 @@ module.exports = (resolve, rootDir) => {
   }
 
   const config = {
-    moduleFileExtensions: ['jsx', 'js', 'json'],
+    // allow Jest to load TypeScript modules
+    moduleFileExtensions: ['jsx', 'js', 'json', 'ts', 'tsx'],
+    automock: false,
     moduleNameMapper: {
       '^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
       '^.+\\.css$': resolve('config/jest/CSSStub.js')

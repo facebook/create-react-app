@@ -1,0 +1,7 @@
+{
+  "name": "create-react-app",
+  "dependencies": {
+    "react": "registry:npm/react#15.0.1+20160601175240",
+    "react-dom": "registry:npm/react-dom#15.0.1+20160826174104"
+  }
+}

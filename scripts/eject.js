@@ -37,6 +37,8 @@ prompt(
     path.join('config', 'paths.js'),
     path.join('config', 'env.js'),
     path.join('config', 'polyfills.js'),
+    path.join('config', 'typescript.dev.js'),
+    path.join('config', 'typescript.prod.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
     path.join('config', 'jest', 'CSSStub.js'),
