@@ -204,7 +204,8 @@ function addMiddleware(devServer) {
   // Every unrecognized request will be forwarded to it.
   var proxy = require(paths.appPackageJson).proxy;
   devServer.use(historyApiFallback({
-    // Allow paths with dots in them to be loaded, reference issue #387
+    // Paths with dots should still use the history fallback.
+    // See https://github.com/facebookincubator/create-react-app/issues/387.
     disableDotRule: true,
     // For single page apps, we generally want to fallback to /index.html.
     // However we also want to respect `proxy` for API calls.
