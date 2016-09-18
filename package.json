@@ -28,7 +28,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "autoprefixer": "6.4.0",
+    "autoprefixer": "6.4.1",
     "babel-core": "6.14.0",
     "babel-eslint": "6.1.2",
     "babel-jest": "15.0.0",
@@ -47,11 +47,11 @@
     "cross-spawn": "4.0.0",
     "css-loader": "0.24.0",
     "detect-port": "1.0.0",
-    "eslint": "3.4.0",
+    "eslint": "3.5.0",
     "eslint-loader": "1.5.0",
-    "eslint-plugin-flowtype": "2.11.4",
+    "eslint-plugin-flowtype": "2.18.1",
     "eslint-plugin-import": "1.12.0",
-    "eslint-plugin-jsx-a11y": "2.2.1",
+    "eslint-plugin-jsx-a11y": "2.2.2",
     "eslint-plugin-react": "5.2.2",
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.9.0",
@@ -75,7 +75,7 @@
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": "1.13.2",
-    "webpack-dev-server": "1.16.0",
+    "webpack-dev-server": "1.16.1",
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {
