@@ -67,7 +67,7 @@
     "object-assign": "4.1.0",
     "opn": "4.0.2",
     "path-exists": "3.0.0",
-    "postcss-loader": "0.11.1",
+    "postcss-loader": "0.13.0",
     "promise": "7.1.1",
     "recursive-readdir": "2.0.0",
     "rimraf": "2.5.4",
