@@ -69,10 +69,12 @@ function formatMessage(message) {
     .replace('./~/css-loader!./~/postcss-loader!', '');
 }
 
+var isFirstClear = true;
 function clearConsole() {
-  // This seems to work best on Windows and other systems.
-  // The intention is to clear the output so you can focus on most recent build.
-  process.stdout.write('\x1bc');
+  // On first run, clear completely so it doesn't show half screen on Windows.
+  // On next runs, use a different sequence that properly scrolls back.
+  process.stdout.write(isFirstClear ? '\x1bc' : '\x1b[2J\x1b[0f');
+  isFirstClear = false;
 }
 
 function setupCompiler(port, protocol) {
