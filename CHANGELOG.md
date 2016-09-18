@@ -1,3 +1,20 @@
+## 0.4.3 (September 18, 2016)
+
+This is a hotfix release for a broken package.  
+It contained no changes to the code.
+
+### Build Dependency (`react-scripts`)
+
+* Fixes a packaging issue that affected npm 2. ([#676](https://github.com/facebookincubator/create-react-app/issues/676))
+
+### Migrating from 0.4.2 to 0.4.3
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.4.3
+```
+
 ## 0.4.2 (September 18, 2016)
 
 ### Build Dependency (`react-scripts`)
