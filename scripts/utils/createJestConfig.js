@@ -15,7 +15,9 @@ const paths = require('../../config/paths');
 module.exports = (resolve, rootDir) => {
   const setupFiles = [resolve('config/polyfills.js')];
   if (pathExists.sync(paths.testsSetup)) {
-    setupFiles.push(paths.testsSetup);
+    // Use this instead of `paths.testsSetup` to avoid putting
+    // an absolute filename into configuration after ejecting.
+    setupFiles.push('<rootDir>/src/setupTests.js');
   }
 
   const config = {
