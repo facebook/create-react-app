@@ -251,6 +251,9 @@ function addMiddleware(devServer) {
 
 function runDevServer(port, protocol) {
   var devServer = new WebpackDevServer(compiler, {
+    // Silence WebpackDevServer's own logs since they're generally not useful.
+    // It will still show compile warnings and errors with this setting.
+    clientLogLevel: 'none',
     // By default WebpackDevServer also serves files from the current directory.
     // This might be useful in legacy apps. However we already encourage people
     // to use Webpack for importing assets in the code, so we don't need to
