@@ -45,7 +45,7 @@ Please also provide a **test plan**, i.e. specify how you verified that your add
 
 1. Clone the repo with `git clone https://github.com/facebookincubator/create-react-app`
 
-2. Run `npm install` in the root `create-react-app` folder **and** the `create-react-app/global-cli` folder
+2. Run `npm install` in the root `create-react-app` folder.
 
 Once it is done, you can modify any file locally and run `npm start`, `npm test` or `npm run build` just like in a generated project.
 
@@ -62,16 +62,15 @@ and then run `npm start` or `npm run build`.
 
 1. Tag all merged PRs that go into the release with the relevant milestone.
 2. Close the milestone.
-3. In most releases, only `react-scripts` needs to be released. If you don’t have any changes to the `global-cli` folder, you don’t need to bump its version or publish it.
-4. Note that files in `global-cli` should be modified with extreme caution. Since it’s a global CLI, any version of `create-react-app` (global CLI) including very old ones should work with the latest version of `react-scripts`.
+3. In most releases, only `react-scripts` needs to be released. If you don’t have any changes to the `packages/create-react-app` folder, you don’t need to bump its version or publish it (the publish script will publish only changed packages).
+4. Note that files in `packages/create-react-app` should be modified with extreme caution. Since it’s a global CLI, any version of `create-react-app` (global CLI) including very old ones should work with the latest version of `react-scripts`.
 5. Add an entry to `CHANGELOG.md` detailing what has changed with links to PRs and their authors. Use previous entries for inspiration. Group changes to `react-scripts` and `create-react-app` separately in the notes, for example like in `0.2.0` release notes.
 6. Make sure to include “Migrating from ...” instructions for the previous release. Often you can copy and paste them.
 7. After merging the changelog update, create a GitHub Release with the same text. See previous Releases for inspiration.
-8. If you are releasing updates to the `create-react-app` CLI (likely not), go to `global-cli`, bump the version in `package.json` and run `npm publish` in that folder.
-9. If you are releasing updates to `react-scripts` (most likely!), bump the version in `package.json`. **Do not run `npm publish`. Instead, run `sh tasks/release.sh`.**
-10. Wait for a long time, and it will get published. Don’t worry that it’s stuck. It will bundle dependencies into a single tarball before publishing for faster installs.
+8. **Do not run `npm publish`. Instead, run `npm run publish`.**
+9. Wait for a long time, and it will get published. Don’t worry that it’s stuck. It will bundle dependencies into a single tarball before publishing for faster installs. In the end the publish script will prompt for versions before publishing the packages.
 
-Make sure to test the released version! If you want to be extra careful, you can publish a prerelease by running `sh tasks/release.sh --tag next` instead of `sh tasks/release.sh`.
+Make sure to test the released version! If you want to be extra careful, you can publish a prerelease by running `npm run publish -- --tag next` instead of `npm run publish`.
 
 ------------
 

@@ -46,7 +46,7 @@ clean_path=`mktemp -d 2>/dev/null || mktemp -d -t 'clean_path'`
 # Copy some of the project files to the temporary folder.
 # Exclude folders that definitely won’t be part of the package from processing.
 # We will strip the dev-only code there, and publish from it.
-rsync -av --exclude='.git' --exclude=$clean_path\
+rsync -av --exclude=$clean_path\
   --exclude='node_modules' --exclude='build'\
   './' $clean_path  >/dev/null
 cd $clean_path
@@ -64,6 +64,7 @@ rm -rf ~/.npm
 npm cache clear
 npm install
 
+cd packages/react-scripts
 # Force dedupe
 npm dedupe
 
@@ -72,10 +73,12 @@ npm dedupe
 rm -rf node_modules/fsevents
 
 # This modifies $clean_path/package.json to copy all dependencies to bundledDependencies
-node $root_path/node_modules/.bin/bundle-deps
+node ./node_modules/.bin/bundle-deps
+
+cd $clean_path
 
 # Go!
-npm publish "$@"
+./node_modules/.bin/lerna publish --independent "$@"
 
 # cleanup
 cd ..
