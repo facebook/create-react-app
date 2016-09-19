@@ -36,6 +36,10 @@ function handle_exit {
   exit
 }
 
+function create_react_app {
+  node "$temp_cli_path"/node_modules/create-react-app/index.js $*
+}
+
 # Exit the script with a helpful error message when any error is encountered
 trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 
@@ -124,7 +128,7 @@ npm install $cli_path
 # Install the app in a temporary location
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 cd $temp_app_path
-node "$temp_cli_path"/node_modules/create-react-app/index.js --scripts-version=$scripts_path test-app
+create_react_app --scripts-version=$scripts_path test-app
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -177,6 +181,42 @@ npm test -- --watch=no
 
 # Test the server
 npm start -- --smoke-test
+
+
+# ******************************************************************************
+# Test --scripts-version is a version number
+# ******************************************************************************
+
+cd $temp_app_path
+create_react_app --scripts-version=0.4.0 test-app-version-number
+cd test-app-version-number
+
+# Check corresponding scripts version is installed.
+test -e node_modules/react-scripts
+grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+
+# ******************************************************************************
+# Test --scripts-version is a tarball url
+# ******************************************************************************
+
+cd $temp_app_path
+create_react_app --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-0.4.0.tgz test-app-tarball-url
+cd test-app-tarball-url
+
+# Check corresponding scripts version is installed.
+test -e node_modules/react-scripts
+grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+
+# ******************************************************************************
+# Test --scripts-version is a custom fork of react-scripts
+# ******************************************************************************
+
+cd $temp_app_path
+create_react_app --scripts-version=react-scripts-fork test-app-fork
+cd test-app-fork
+
+# Check corresponding scripts version is installed.
+test -e node_modules/react-scripts-fork
 
 # Cleanup
 cleanup
