@@ -18,7 +18,7 @@ function cleanup {
   echo 'Cleaning up.'
   cd $root_path
   # Uncomment when snapshot testing is enabled by default:
-  # rm ./template/src/__snapshots__/App.test.js.snap
+  # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path $clean_path
 }
 
@@ -34,6 +34,10 @@ function handle_exit {
   cleanup
   echo 'Exiting without error.' 1>&2;
   exit
+}
+
+function create_react_app {
+  node "$temp_cli_path"/node_modules/create-react-app/index.js $*
 }
 
 # Exit the script with a helpful error message when any error is encountered
@@ -81,8 +85,7 @@ npm start -- --smoke-test
 # ******************************************************************************
 
 # Pack CLI (it doesn't need cleaning)
-cd global-cli
-npm install
+cd $root_path/packages/create-react-app
 cli_path=$PWD/`npm pack`
 
 # Packing react-scripts takes more work because we want to clean it up first.
@@ -90,10 +93,10 @@ cli_path=$PWD/`npm pack`
 # Do not overwrite any files in the current folder.
 clean_path=`mktemp -d 2>/dev/null || mktemp -d -t 'clean_path'`
 
-# Copy some of the project files to the temporary folder.
+# Copy some of the react-scripts project files to the temporary folder.
 # Exclude folders that definitely won’t be part of the package from processing.
 # We will strip the dev-only code there, `npm pack`, and copy the package back.
-cd $root_path
+cd $root_path/packages/react-scripts
 rsync -av --exclude='.git' --exclude=$clean_path\
   --exclude='node_modules' --exclude='build'\
   './' $clean_path  >/dev/null
@@ -124,7 +127,7 @@ npm install $cli_path
 # Install the app in a temporary location
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 cd $temp_app_path
-node "$temp_cli_path"/node_modules/create-react-app/index.js --scripts-version=$scripts_path test-app
+create_react_app --scripts-version=$scripts_path test-app
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -177,6 +180,42 @@ npm test -- --watch=no
 
 # Test the server
 npm start -- --smoke-test
+
+
+# ******************************************************************************
+# Test --scripts-version with a version number
+# ******************************************************************************
+
+cd $temp_app_path
+create_react_app --scripts-version=0.4.0 test-app-version-number
+cd test-app-version-number
+
+# Check corresponding scripts version is installed.
+test -e node_modules/react-scripts
+grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+
+# ******************************************************************************
+# Test --scripts-version with a tarball url
+# ******************************************************************************
+
+cd $temp_app_path
+create_react_app --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-0.4.0.tgz test-app-tarball-url
+cd test-app-tarball-url
+
+# Check corresponding scripts version is installed.
+test -e node_modules/react-scripts
+grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+
+# ******************************************************************************
+# Test --scripts-version with a custom fork of react-scripts
+# ******************************************************************************
+
+cd $temp_app_path
+create_react_app --scripts-version=react-scripts-fork test-app-fork
+cd test-app-fork
+
+# Check corresponding scripts version is installed.
+test -e node_modules/react-scripts-fork
 
 # Cleanup
 cleanup

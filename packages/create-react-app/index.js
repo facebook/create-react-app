@@ -29,6 +29,9 @@
 // Do not make breaking changes! We absolutely don't want to have to
 // tell people to update their global version of create-react-app.
 //
+// Also be careful with new language features.
+// This file must work on Node 0.10+.
+//
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //   /!\ DO NOT MODIFY THIS FILE /!\
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -104,12 +107,14 @@ function createApp(name, verbose, version) {
 }
 
 function run(root, appName, version, verbose, originalDirectory) {
+  var installPackage = getInstallPackage(version);
+  var packageName = getPackageName(installPackage);
   var args = [
     'install',
     verbose && '--verbose',
     '--save-dev',
     '--save-exact',
-    getInstallPackage(version),
+    installPackage,
   ].filter(function(e) { return e; });
   var proc = spawn('npm', args, {stdio: 'inherit'});
   proc.on('close', function (code) {
@@ -118,12 +123,12 @@ function run(root, appName, version, verbose, originalDirectory) {
       return;
     }
 
-    checkNodeVersion();
+    checkNodeVersion(packageName);
 
     var scriptsPath = path.resolve(
       process.cwd(),
       'node_modules',
-      'react-scripts',
+      packageName,
       'scripts',
       'init.js'
     );
@@ -144,11 +149,21 @@ function getInstallPackage(version) {
   return packageToInstall;
 }
 
-function checkNodeVersion() {
+// Extract package name from tarball url or path.
+function getPackageName(installPackage) {
+  if (~installPackage.indexOf('.tgz')) {
+    return installPackage.match(/^.+\/(.+)-.+\.tgz$/)[1];
+  } else if (~installPackage.indexOf('@')) {
+    return installPackage.split('@')[0];
+  }
+  return installPackage;
+}
+
+function checkNodeVersion(packageName) {
   var packageJsonPath = path.resolve(
     process.cwd(),
     'node_modules',
-    'react-scripts',
+    packageName,
     'package.json'
   );
   var packageJson = require(packageJsonPath);
@@ -178,15 +193,15 @@ function checkAppName(appName) {
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
-        `Can't use "${appName}" as the app name because a dependency with the same name exists.\n\n` +
-        `Following names ${chalk.red.bold('must not')} be used:\n\n`
-      )
-
-      +
-
+        'We cannot create a project called `' + appName + '` because a dependency with the same name exists.\n' +
+        'Due to the way npm works, the following names are not allowed:\n\n'
+      ) +
       chalk.cyan(
-        allDependencies.map(depName => `  ${depName}`).join('\n')
-      )
+        allDependencies.map(function(depName) {
+          return '  ' + depName;
+        }).join('\n')
+      ) +
+      chalk.red('\n\nPlease choose a different project name.')
     );
     process.exit(1);
   }
