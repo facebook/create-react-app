@@ -193,23 +193,24 @@ We are grateful to the authors of existing related projects for their ideas and 
 
 ## Alternatives
 
-If you don’t agree with the choices made in this project, you might want to explore alternatives with different tradeoffs:
+If you don’t agree with the choices made in this project, you might want to explore alternatives with different tradeoffs.  
+Some of the more popular and actively maintained ones are:
+
+* [insin/nwb](https://github.com/insin/nwb)
+* [mozilla/neo](https://github.com/mozilla/neo)
+* [NYTimes/kyt](https://github.com/NYTimes/kyt)
+
+Notable alternatives also include:
 
 * [enclave](https://github.com/eanplatter/enclave)
-* [nwb](https://github.com/insin/nwb)
 * [motion](https://github.com/motion/motion)
-* [rackt-cli](https://github.com/mzabriskie/rackt-cli)
-* [budō](https://github.com/mattdesl/budo)
-* [rwb](https://github.com/petehunt/rwb)
 * [quik](https://github.com/satya164/quik)
 * [sagui](https://github.com/saguijs/sagui)
 * [roc](https://github.com/rocjs/roc)
 * [aik](https://github.com/d4rkr00t/aik)
 * [react-app](https://github.com/kriasoft/react-app)
 * [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
-* [mozilla-neo](https://github.com/mozilla/neo)
 * [tarec](https://github.com/geowarin/tarec)
-* [kyt](https://github.com/NYTimes/kyt)
 
 You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
 React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
