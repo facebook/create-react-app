@@ -58,10 +58,10 @@ root_path=$PWD
 # Do not overwrite any files in the current folder.
 clean_path=`mktemp -d 2>/dev/null || mktemp -d -t 'clean_path'`
 
-# Copy some of the project files to the temporary folder.
+# Copy some of the react-scripts project files to the temporary folder.
 # Exclude folders that definitely won’t be part of the package from processing.
 # We will strip the dev-only code there, `npm pack`, and copy the package back.
-cd $root_path
+cd $root_path/packages/react-scripts
 rsync -av --exclude='.git' --exclude=$clean_path\
   --exclude='node_modules' --exclude='build'\
   './' $clean_path  >/dev/null
@@ -76,7 +76,7 @@ for file in $files; do
 done
 
 # Finally, pack react-scripts
-cp -rf $root_path/node_modules $clean_path
+cp -rf $root_path/packages/react-scripts/node_modules $clean_path
 scripts_path=$clean_path/`npm pack`
 
 # ******************************************************************************
