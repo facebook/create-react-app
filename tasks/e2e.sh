@@ -18,7 +18,7 @@ function cleanup {
   echo 'Cleaning up.'
   cd $root_path
   # Uncomment when snapshot testing is enabled by default:
-  # rm ./template/src/__snapshots__/App.test.js.snap
+  # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path $clean_path
 }
 
@@ -85,8 +85,7 @@ npm start -- --smoke-test
 # ******************************************************************************
 
 # Pack CLI (it doesn't need cleaning)
-cd global-cli
-npm install
+cd packages/create-react-app
 cli_path=$PWD/`npm pack`
 
 # Packing react-scripts takes more work because we want to clean it up first.
