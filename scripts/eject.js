@@ -46,6 +46,7 @@ prompt(
     path.join('scripts', 'start.js'),
     path.join('scripts', 'utils', 'chrome.applescript'),
     path.join('scripts', 'utils', 'prompt.js'),
+    path.join('scripts', 'utils', 'plugins.js'),
     path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js'),
     path.join('plugins', 'relay', 'index.js'),
     path.join('plugins', 'relay', 'babelRelayPlugin.js')
