@@ -10,6 +10,7 @@
     "test": "node packages/react-scripts/scripts/test.js --env=jsdom"
   },
   "devDependencies": {
+    "babel-eslint": "6.1.2",
     "eslint": "3.5.0",
     "eslint-plugin-flowtype": "2.18.1",
     "eslint-plugin-import": "1.12.0",
