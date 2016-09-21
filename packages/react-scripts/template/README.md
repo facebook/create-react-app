@@ -320,6 +320,8 @@ function Header() {
 export default function Header;
 ```
 
+This is currently required for local images. This ensures that when the project is built, webpack will correctly move the images into the build folder, and provide us with correct paths.
+
 This works in CSS too:
 
 ```css
