@@ -1,10 +1,10 @@
 # eslint-config-react-app
 
-This package includes the shareable ESLint configuration used by Create React App.
+This package includes the shareable ESLint configuration used by [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Installation
 
-*The easiest way to use this configuration is with *[Create React App](https://github.com/facebookincubator/create-react-app)*, which includes it by default – you **don't need to install it separately in Create React App projects.***
+*The easiest way to use this configuration is with [Create React App](https://github.com/facebookincubator/create-react-app), which includes it by default – you* **don't need to install it separately in Create React App projects.**
 
 If you want to use this ESLint configuration in a project not built with Create React App, you can install it with following steps.
 
