@@ -434,7 +434,8 @@ REACT_APP_SECRET_CODE=abcdef npm start
 ```
 
 > Note: Defining environment variables in this manner is temporary for the life of the shell session. Setting
-permanent environment variables is outside the scope of these docs.
+permanent environment variables in development can be done in a `.env` file in the root of your project.
+[dotenv](https://github.com/motdotla/dotenv) takes care of loading these for you.
 
 With our environment variable defined, we start the app and consume the values. Remember that the `NODE_ENV`
 variable will be set for you automatically. When you load the app in the browser and inspect the `<input>`, you will see
