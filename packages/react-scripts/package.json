@@ -41,7 +41,7 @@
     "css-loader": "0.24.0",
     "detect-port": "1.0.0",
     "eslint": "3.5.0",
-    "eslint-config-react-app": "0.1.0",
+    "eslint-config-react-app": "0.2.0",
     "eslint-loader": "1.5.0",
     "eslint-plugin-flowtype": "2.18.1",
     "eslint-plugin-import": "1.12.0",
