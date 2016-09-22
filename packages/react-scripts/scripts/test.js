@@ -24,7 +24,8 @@ if (!process.env.CI) {
 
 argv.push('--config', JSON.stringify(createJestConfig(
   relativePath => path.resolve(__dirname, '..', relativePath),
-  path.resolve(paths.appSrc, '..')
+  path.resolve(paths.appSrc, '..'),
+  false
 )));
 
 jest.run(argv);

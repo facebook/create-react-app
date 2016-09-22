@@ -29,9 +29,8 @@ prompt(
   var ownPath = path.join(__dirname, '..');
   var appPath = path.join(ownPath, '..', '..');
   var files = [
+    '.babelrc',
     '.eslintrc',
-    path.join('config', 'babel.dev.js'),
-    path.join('config', 'babel.prod.js'),
     path.join('config', 'flow', 'css.js.flow'),
     path.join('config', 'flow', 'file.js.flow'),
     path.join('config', 'paths.js'),
@@ -41,7 +40,6 @@ prompt(
     path.join('config', 'webpack.config.prod.js'),
     path.join('config', 'jest', 'CSSStub.js'),
     path.join('config', 'jest', 'FileStub.js'),
-    path.join('config', 'jest', 'transform.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
     path.join('scripts', 'utils', 'checkRequiredFiles.js'),
@@ -110,7 +108,9 @@ prompt(
 
   // Add Jest config
   appPackage.jest = createJestConfig(
-    filePath => path.join('<rootDir>', filePath)
+    filePath => path.join('<rootDir>', filePath),
+    null,
+    true
   );
 
   console.log('Writing package.json');
