@@ -127,7 +127,14 @@ function build(previousSizeMap) {
     var openCommand = process.platform === 'win32' ? 'start' : 'open';
     var homepagePath = require(paths.appPackageJson).homepage;
     var publicPath = config.output.publicPath;
-    if (homepagePath && homepagePath.indexOf('.github.io/') !== -1) {
+    if (process.env.CDN_URL) {
+      // CDN_URL: "http://cdn.com/project"
+      console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.');
+      console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
+      console.log();
+      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
+      console.log();
+    } else if (homepagePath && homepagePath.indexOf('.github.io/') !== -1) {
       // "homepage": "http://user.github.io/project"
       console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.');
       console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
