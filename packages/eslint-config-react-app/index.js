@@ -192,7 +192,6 @@ module.exports = {
     'react/no-danger-with-children': 'warn',
     'react/no-deprecated': 'warn',
     'react/no-direct-mutation-state': 'warn',
-    'react/no-find-dom-node': 'warn',
     'react/no-is-mounted': 'warn',
     'react/react-in-jsx-scope': 'warn',
     'react/require-render-return': 'warn',
