@@ -117,7 +117,7 @@ $root_path/node_modules/.bin/lerna bootstrap
 
 cd $clean_path/packages/react-scripts
 
-# This modifies $clean_path/package.json to copy all dependencies to bundledDependencies
+# This modifies package.json to copy all dependencies to bundledDependencies
 node ./node_modules/.bin/bundle-deps
 
 # Finally, pack react-scripts
