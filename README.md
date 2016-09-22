@@ -3,7 +3,7 @@
 Create React apps with no build configuration.
 
 * [Getting Started](#getting-started) – How to create a new app.
-* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md) – How to develop apps bootstrapped with Create React App.
+* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
 
 ## tl;dr
 
@@ -31,7 +31,9 @@ Install it once globally:
 npm install -g create-react-app
 ```
 
-**You’ll need to have Node >= 4 on your machine**. We recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage. You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects.
+**You’ll need to have Node >= 4 on your machine**.
+
+**We strongly recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage.** You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects.
 
 **This tool doesn’t assume a Node backend**. The Node installation is only required for the build tools that rely on it locally, such as Webpack and Babel.
 
@@ -51,7 +53,6 @@ Inside that directory, it will generate the initial project structure and instal
 my-app/
   README.md
   index.html
-  favicon.ico
   node_modules/
   package.json
   .gitignore
@@ -59,6 +60,7 @@ my-app/
     App.css
     App.js
     App.test.js
+    favicon.ico
     index.css
     index.js
     logo.svg
@@ -82,7 +84,7 @@ You will see the build errors and lint warnings in the console.
 Runs the test watcher in an interactive mode.  
 By default, runs tests related to files changes since the last commit.
 
-[Read more about testing.](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#running-tests)
+[Read more about testing.](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
 
 ### `npm run build`
 
@@ -94,27 +96,27 @@ Your app is ready to be deployed!
 
 ## User Guide
 
-The [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md) includes information on different topics, such as:
+The [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) includes information on different topics, such as:
 
-- [Updating to New Releases](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#updating-to-new-releases)
-- [Folder Structure](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#folder-structure)
-- [Available Scripts](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#available-scripts)
-- [Displaying Lint Output in the Editor](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#displaying-lint-output-in-the-editor)
-- [Installing a Dependency](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#installing-a-dependency)
-- [Importing a Component](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#importing-a-component)
-- [Adding a Stylesheet](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#adding-a-stylesheet)
-- [Post-Processing CSS](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#post-processing-css)
-- [Adding Images and Fonts](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#adding-images-and-fonts)
-- [Adding Bootstrap](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#adding-bootstrap)
-- [Adding Flow](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#adding-flow)
-- [Adding Custom Environment Variables](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#adding-custom-environment-variables)
-- [Can I Use Decorators?](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#can-i-use-decorators)
-- [Integrating with a Node Backend](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#integrating-with-a-node-backend)
-- [Proxying API Requests in Development](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#proxying-api-requests-in-development)
-- [Using HTTPS in Development](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#using-https-in-development)
-- [Adding `<link>` and `<meta>` Tags](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#adding-link-and-meta-tags)
-- [Running Tests](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#running-tests)
-- [Deployment](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md#deployment)
+- [Updating to New Releases](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases)
+- [Folder Structure](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#folder-structure)
+- [Available Scripts](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#available-scripts)
+- [Displaying Lint Output in the Editor](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#displaying-lint-output-in-the-editor)
+- [Installing a Dependency](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#installing-a-dependency)
+- [Importing a Component](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#importing-a-component)
+- [Adding a Stylesheet](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet)
+- [Post-Processing CSS](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#post-processing-css)
+- [Adding Images and Fonts](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-images-and-fonts)
+- [Adding Bootstrap](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-bootstrap)
+- [Adding Flow](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-flow)
+- [Adding Custom Environment Variables](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)
+- [Can I Use Decorators?](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#can-i-use-decorators)
+- [Integrating with a Node Backend](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#integrating-with-a-node-backend)
+- [Proxying API Requests in Development](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#proxying-api-requests-in-development)
+- [Using HTTPS in Development](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-https-in-development)
+- [Adding `<link>` and `<meta>` Tags](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-link-and-meta-tags)
+- [Running Tests](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
+- [Deployment](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment)
 
 A copy of the user guide will be created as `README.md` in your project folder.
 
@@ -191,23 +193,24 @@ We are grateful to the authors of existing related projects for their ideas and 
 
 ## Alternatives
 
-If you don’t agree with the choices made in this project, you might want to explore alternatives with different tradeoffs:
+If you don’t agree with the choices made in this project, you might want to explore alternatives with different tradeoffs.  
+Some of the more popular and actively maintained ones are:
+
+* [insin/nwb](https://github.com/insin/nwb)
+* [mozilla/neo](https://github.com/mozilla/neo)
+* [NYTimes/kyt](https://github.com/NYTimes/kyt)
+
+Notable alternatives also include:
 
 * [enclave](https://github.com/eanplatter/enclave)
-* [nwb](https://github.com/insin/nwb)
 * [motion](https://github.com/motion/motion)
-* [rackt-cli](https://github.com/mzabriskie/rackt-cli)
-* [budō](https://github.com/mattdesl/budo)
-* [rwb](https://github.com/petehunt/rwb)
 * [quik](https://github.com/satya164/quik)
 * [sagui](https://github.com/saguijs/sagui)
 * [roc](https://github.com/rocjs/roc)
 * [aik](https://github.com/d4rkr00t/aik)
 * [react-app](https://github.com/kriasoft/react-app)
 * [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
-* [mozilla-neo](https://github.com/mozilla/neo)
 * [tarec](https://github.com/geowarin/tarec)
-* [kyt](https://github.com/NYTimes/kyt)
 
 You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
 React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.

@@ -15,13 +15,15 @@ const paths = require('../../config/paths');
 module.exports = (resolve, rootDir) => {
   const setupFiles = [resolve('config/polyfills.js')];
   if (pathExists.sync(paths.testsSetup)) {
-    setupFiles.push(paths.testsSetup);
+    // Use this instead of `paths.testsSetup` to avoid putting
+    // an absolute filename into configuration after ejecting.
+    setupFiles.push('<rootDir>/src/setupTests.js');
   }
 
   const config = {
     moduleFileExtensions: ['jsx', 'js', 'json'],
     moduleNameMapper: {
-      '^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm)$': resolve('config/jest/FileStub.js'),
+      '^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
       '^.+\\.css$': resolve('config/jest/CSSStub.js')
     },
     scriptPreprocessor: resolve('config/jest/transform.js'),

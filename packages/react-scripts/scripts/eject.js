@@ -29,11 +29,11 @@ prompt(
   var ownPath = path.join(__dirname, '..');
   var appPath = path.join(ownPath, '..', '..');
   var files = [
+    '.eslintrc',
     path.join('config', 'babel.dev.js'),
     path.join('config', 'babel.prod.js'),
     path.join('config', 'flow', 'css.js.flow'),
     path.join('config', 'flow', 'file.js.flow'),
-    path.join('config', 'eslint.js'),
     path.join('config', 'paths.js'),
     path.join('config', 'env.js'),
     path.join('config', 'polyfills.js'),
@@ -44,6 +44,7 @@ prompt(
     path.join('config', 'jest', 'transform.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
+    path.join('scripts', 'utils', 'checkRequiredFiles.js'),
     path.join('scripts', 'utils', 'chrome.applescript'),
     path.join('scripts', 'utils', 'prompt.js'),
     path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js')
@@ -109,11 +110,6 @@ prompt(
   appPackage.jest = createJestConfig(
     filePath => path.join('<rootDir>', filePath)
   );
-
-  // Explicitly specify ESLint config path for editor plugins
-  appPackage.eslintConfig = {
-    extends: './config/eslint.js',
-  };
 
   console.log('Writing package.json');
   fs.writeFileSync(

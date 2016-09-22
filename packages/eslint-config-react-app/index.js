@@ -1,4 +1,3 @@
-// @remove-on-eject-begin
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -7,7 +6,6 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-// @remove-on-eject-end
 
 // Inspired by https://github.com/airbnb/javascript but less opinionated.
 
@@ -47,7 +45,7 @@ module.exports = {
   settings: {
     'import/ignore': [
       'node_modules',
-      '\\.(json|css|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm)$',
+      '\\.(json|css|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$',
     ],
     'import/extensions': ['.js'],
     'import/resolver': {
@@ -126,12 +124,16 @@ module.exports = {
     'no-template-curly-in-string': 'warn',
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
-    'no-undef': 'warn',
+    'no-undef': 'error',
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': 'warn',
     'no-unused-labels': 'warn',
-    'no-unused-vars': ['warn', { vars: 'local', args: 'none' }],
+    'no-unused-vars': ['warn', {
+      vars: 'local',
+      varsIgnorePattern: '^_',
+      args: 'none'
+    }],
     'no-use-before-define': ['warn', 'nofunc'],
     'no-useless-computed-key': 'warn',
     'no-useless-concat': 'warn',
@@ -187,11 +189,13 @@ module.exports = {
     }],
     'react/jsx-uses-react': 'warn',
     'react/jsx-uses-vars': 'warn',
+    'react/no-danger-with-children': 'warn',
     'react/no-deprecated': 'warn',
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
     'react/react-in-jsx-scope': 'warn',
     'react/require-render-return': 'warn',
+    'react/style-prop-object': 'warn',
 
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
     'jsx-a11y/aria-role': 'warn',

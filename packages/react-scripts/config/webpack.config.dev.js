@@ -49,7 +49,7 @@ module.exports = {
     // We ship a few polyfills by default.
     require.resolve('./polyfills'),
     // Finally, this is your app's code:
-    path.join(paths.appSrc, 'index')
+    paths.appIndexJs
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
@@ -147,7 +147,7 @@ module.exports = {
       // "url" loader works just like "file" loader but it also embeds
       // assets smaller than specified size as data URLs to avoid requests.
       {
-        test: /\.(mp4|webm)(\?.*)?$/,
+        test: /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
         loader: 'url',
         query: {
           limit: 10000,
@@ -165,11 +165,13 @@ module.exports = {
       }
     ]
   },
+  // @remove-on-eject-begin
   // Point ESLint to our predefined config.
   eslint: {
-    configFile: path.join(__dirname, 'eslint.js'),
+    configFile: path.join(__dirname, '../.eslintrc'),
     useEslintrc: false
   },
+  // @remove-on-eject-end
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
@@ -203,5 +205,12 @@ module.exports = {
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(paths.appNodeModules)
-  ]
+  ],
+  // Some libraries import Node modules but don't use them in the browser.
+  // Tell Webpack to provide empty mocks for them so importing them works.
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  }
 };

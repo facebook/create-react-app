@@ -10,6 +10,14 @@
 // @remove-on-eject-end
 
 var path = require('path');
+var fs = require('fs');
+
+// Make sure any symlinks in the project folder are resolved:
+// https://github.com/facebookincubator/create-react-app/issues/637
+var appDirectory = fs.realpathSync(process.cwd());
+function resolveApp(relativePath) {
+  return path.resolve(appDirectory, relativePath);
+}
 
 // We support resolving modules according to `NODE_PATH`.
 // This lets you use absolute paths in imports inside large monorepos:
@@ -25,16 +33,13 @@ var path = require('path');
 var nodePaths = (process.env.NODE_PATH || '')
   .split(process.platform === 'win32' ? ';' : ':')
   .filter(Boolean)
-  .map(p => path.resolve(p));
-
-function resolveApp(relativePath) {
-  return path.resolve(relativePath);
-}
+  .map(resolveApp);
 
 // config after eject: we're in ./config/
 module.exports = {
   appBuild: resolveApp('build'),
   appHtml: resolveApp('index.html'),
+  appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
@@ -52,6 +57,7 @@ function resolveOwn(relativePath) {
 module.exports = {
   appBuild: resolveApp('build'),
   appHtml: resolveApp('index.html'),
+  appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
@@ -64,8 +70,9 @@ module.exports = {
 
 // @remove-on-publish-begin
 module.exports = {
-  appBuild: resolveOwn('../build'),
+  appBuild: resolveOwn('../../../build'),
   appHtml: resolveOwn('../template/index.html'),
+  appIndexJs: resolveOwn('../template/src/index.js'),
   appPackageJson: resolveOwn('../package.json'),
   appSrc: resolveOwn('../template/src'),
   testsSetup: resolveOwn('../template/src/setupTests.js'),
