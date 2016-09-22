@@ -46,6 +46,8 @@ prompt(
     path.join('scripts', 'start.js'),
     path.join('scripts', 'utils', 'checkRequiredFiles.js'),
     path.join('scripts', 'utils', 'chrome.applescript'),
+    path.join('scripts', 'utils', 'getClientEnvironment.js'),
+    path.join('scripts', 'utils', 'InterpolateHtmlPlugin.js'),
     path.join('scripts', 'utils', 'prompt.js'),
     path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js')
   ];

@@ -8,6 +8,7 @@
  */
 
 process.env.NODE_ENV = 'test';
+process.env.PUBLIC_URL = '';
 
 const createJestConfig = require('./utils/createJestConfig');
 const jest = require('jest');

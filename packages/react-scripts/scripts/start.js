@@ -255,23 +255,21 @@ function runDevServer(port, protocol) {
     // Silence WebpackDevServer's own logs since they're generally not useful.
     // It will still show compile warnings and errors with this setting.
     clientLogLevel: 'none',
-    // By default WebpackDevServer also serves files from the current directory.
-    // This might be useful in legacy apps. However we already encourage people
-    // to use Webpack for importing assets in the code, so we don't need to
-    // additionally serve files by their filenames. Otherwise, even if it
-    // works in development, those files will be missing in production, unless
-    // we explicitly copy them. But even if we copy all the files into
-    // the build output (which doesn't seem to be wise because it may contain
-    // private information such as files with API keys, for example), we would
-    // still have a problem. Since the filenames would be the same every time,
-    // browsers would cache their content, and updating file content would not
-    // work correctly. This is easily solved by importing assets through Webpack
-    // because if it can then append content hashes to filenames in production,
-    // just like it does for JS and CSS. And because we configured "html" loader
-    // to be used for HTML files, even <link href="./src/something.png"> would
-    // get resolved correctly by Webpack and handled both in development and
-    // in production without actually serving it by that path.
-    contentBase: [],
+    // By default WebpackDevServer serves physical files from current directory
+    // in addition to all the virtual build products that it serves from memory.
+    // This is confusing because those files won’t automatically be available in
+    // production build folder unless we copy them. However, copying the whole
+    // project directory is dangerous because we may expose sensitive files.
+    // Instead, we establish a convention that only files in `public` directory
+    // get served. Our build script will copy `public` into the `build` folder.
+    // In `index.html`, you can get URL of `public` folder with %PUBLIC_PATH%:
+    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    // In JavaScript code, you can access it with `process.env.PUBLIC_URL`.
+    // Note that we only recommend to use `public` folder as an escape hatch
+    // for files like `favicon.ico`, `manifest.json`, and libraries that are
+    // for some reason broken when imported through Webpack. If you just want to
+    // use an image, put it in `src` and `import` it from JavaScript instead.
+    contentBase: paths.appPublic,
     // Enable hot reloading server. It will provide /sockjs-node/ endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point

@@ -13,7 +13,7 @@
 process.env.NODE_ENV = 'production';
 
 var chalk = require('chalk');
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
 var filesize = require('filesize');
 var gzipSize = require('gzip-size').sync;
@@ -70,6 +70,9 @@ recursive(paths.appBuild, (err, fileNames) => {
 
   // Start the webpack build
   build(previousSizeMap);
+
+  // Merge with the public folder
+  copyPublicFolder();
 });
 
 // Print a detailed summary of build files.
@@ -173,5 +176,12 @@ function build(previousSizeMap) {
       console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:9000');
       console.log();
     }
+  });
+}
+
+function copyPublicFolder() {
+  fs.copySync(paths.appPublic, paths.appBuild, {
+    dereference: true,
+    filter: file => file !== paths.appHtml
   });
 }
