@@ -16,12 +16,18 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
 var paths = require('./paths');
-var env = require('./env');
+var InterpolateHtmlPlugin = require('../scripts/utils/InterpolateHtmlPlugin');
+var getClientEnvironment = require('../scripts/utils/getClientEnvironment');
 
-// Assert this just to be safe.
-// Development builds of React are slow and not intended for production.
-if (env['process.env.NODE_ENV'] !== '"production"') {
-  throw new Error('Production builds must have NODE_ENV=production.');
+function ensureSlash(path, needsSlash) {
+  var hasSlash = path.endsWith('/');
+  if (hasSlash && !needsSlash) {
+    return path.substr(path, path.length - 1);
+  } else if (!hasSlash && needsSlash) {
+    return path + '/';
+  } else {
+    return path;
+  }
 }
 
 // We use "homepage" field to infer "public path" at which the app is served.
@@ -30,10 +36,21 @@ if (env['process.env.NODE_ENV'] !== '"production"') {
 // We can't use a relative path in HTML because we don't want to load something
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
 var homepagePath = require(paths.appPackageJson).homepage;
-var publicPath = homepagePath ? url.parse(homepagePath).pathname : '/';
-if (!publicPath.endsWith('/')) {
-  // If we don't do this, file assets will get incorrect paths.
-  publicPath += '/';
+var homepagePathname = homepagePath ? url.parse(homepagePath).pathname : '/';
+// Webpack uses `publicPath` to determine where the app is being served from.
+// It requires a trailing slash, or the file assets will get an incorrect path.
+var publicPath = ensureSlash(homepagePathname, true);
+// `publicUrl` is just like `publicPath`, but we will provide it to our app
+// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
+// Omit trailing shlash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
+var publicUrl = ensureSlash(homepagePathname, false);
+// Get enrivonment variables to inject into our app.
+var env = getClientEnvironment(publicUrl);
+
+// Assert this just to be safe.
+// Development builds of React are slow and not intended for production.
+if (env['process.env.NODE_ENV'] !== '"production"') {
+  throw new Error('Production builds must have NODE_ENV=production.');
 }
 
 // This is the production configuration.
@@ -139,19 +156,9 @@ module.exports = {
       // When you `import` an asset, you get its filename.
       {
         test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
-        exclude: /\/favicon.ico$/,
         loader: 'file',
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
-        }
-      },
-      // A special case for favicon.ico to place it into build root directory.
-      {
-        test: /\/favicon.ico$/,
-        include: [paths.appSrc],
-        loader: 'file',
-        query: {
-          name: 'favicon.ico?[hash:8]'
         }
       },
       // "url" loader works just like "file" loader but it also embeds
@@ -162,15 +169,6 @@ module.exports = {
         query: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
-        }
-      },
-      // "html" loader is used to process template page (index.html) to resolve
-      // resources linked with <link href="./relative/path"> HTML tags.
-      {
-        test: /\.html$/,
-        loader: 'html',
-        query: {
-          attrs: ['link:href'],
         }
       }
     ]
@@ -198,6 +196,13 @@ module.exports = {
     ];
   },
   plugins: [
+    // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
+    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    // In production, it will be an empty string unless you specify "homepage"
+    // in `package.json`, in which case it will be the pathname of that URL.
+    new InterpolateHtmlPlugin({
+      PUBLIC_URL: publicUrl
+    }),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
@@ -216,7 +221,7 @@ module.exports = {
       }
     }),
     // Makes some environment variables available to the JS code, for example:
-    // if (process.env.NODE_ENV === 'production') { ... }. See `env.js`.
+    // if (process.env.NODE_ENV === 'production') { ... }.
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env),
