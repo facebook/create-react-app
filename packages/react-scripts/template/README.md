@@ -29,6 +29,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding `<link>` and `<meta>` Tags](#adding-link-and-meta-tags)
   - [Referring to Static Assets from `<link href>`](#referring-to-static-assets-from-link-href)
   - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
+- [Relay & GraphQL Support](#relay-support)
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
   - [Command Line Interface](#command-line-interface)
@@ -604,6 +605,101 @@ Since Create React App doesn’t support server rendering, you might be wonderin
 Then, on the server, regardless of the backend you use, you can read `index.html` into memory and replace `$OG_TITLE`, `$OG_DESCRIPTION`, and any other placeholders with values depending on the current URL. Just make sure to sanitize and escape the interpolated values so that they are safe to embed into HTML!
 
 If you use a Node server, you can even share the route matching logic between the client and the server. However duplicating it also works fine in simple cases.
+
+## Relay Support
+
+You can create a [Relay](https://facebook.github.io/relay/) application with create-react-app.  You will need a standalone GraphQL server ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) enabled, most likely) for your create-react-app to connect to. The steps for setting up the standalone GraphQL server are outside the scope of these docs.
+
+To enable Relay in your create-react-app, install `react-relay`
+
+```cmd
+npm install react-relay --save
+```
+
+Then define an environment variable `REACT_APP_GRAPHQL_URL` with a value that is the URL to your graphql server (for example `REACT_APP_GRAPHQL_URL=http://localhost:3001/graphql`). See [environment variables](#adding-custom-environment-variables) for more information.
+
+With your REACT_APP_GRAPHQL_URL environment variable defined, start your app. This could be as simple as:
+
+```cmd
+REACT_APP_GRAPHQL_URL=http://localhost:3001/graphql npm start
+```
+
+This will configure the `babel-relay-plugin` for you and fetch your graphql schema. Woo!
+
+Next, add Relay to `my-app/src/index.js`. Setting the `DefaultNetworkLayer` to point to REACT_APP_GRAPHQL_URL is important. Here is an example. Note for this example you also need to `npm install react-router react-router-relay`:
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
+import Relay from 'react-relay';
+import { applyRouterMiddleware, Router, Route, /*Link,*/ browserHistory } from 'react-router';
+import useRelay from 'react-router-relay';
+
+
+const ViewerQueries = {
+  viewer: () => Relay.QL`query { viewer }`
+};
+
+Relay.injectNetworkLayer(
+    new Relay.DefaultNetworkLayer(process.env.REACT_APP_GRAPHQL_URL)
+);
+
+ReactDOM.render(
+  <Router
+    history={browserHistory}
+    render={applyRouterMiddleware(useRelay)}
+    environment={Relay.Store}
+  >
+    <Route
+      path="/"
+      component={App}
+      queries={ViewerQueries}
+    >
+    </Route>
+  </Router>,
+  document.getElementById('root')
+);
+```
+
+Next, add Components and Relay containers to your app. Here is an example of `my-app/src/App.js`.
+
+```js
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import Relay from 'react-relay';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <div className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h2>Welcome to React</h2>
+        </div>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+        <p>This came from Relay {this.props.viewer.id}</p>
+      </div>
+    );
+  }
+}
+
+export default Relay.createContainer(App, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on User {
+          id
+      }
+    `,
+  },
+});
+```
+
+>Note: Each time your the schema on your remote graphql server changes, you need to restart your local development server with `npm start`. This will fetch the latest version of your graphql schema so `babel-relay-plugin` can transform Relay.QL queries in your components.
 
 ## Running Tests
 

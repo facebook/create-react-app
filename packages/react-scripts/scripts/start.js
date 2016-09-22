@@ -24,6 +24,7 @@ var checkRequiredFiles = require('./utils/checkRequiredFiles');
 var prompt = require('./utils/prompt');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+var plugins = require('./utils/plugins');
 
 // Tools like Cloud9 rely on this.
 var DEFAULT_PORT = process.env.PORT || 3000;
@@ -311,9 +312,17 @@ function runDevServer(port, protocol) {
 
 function run(port) {
   var protocol = process.env.HTTPS === 'true' ? "https" : "http";
-  checkRequiredFiles();
-  setupCompiler(port, protocol);
-  runDevServer(port, protocol);
+  plugins.start()
+    .then(() => {
+        checkRequiredFiles();
+        setupCompiler(port, protocol);
+        runDevServer(port, protocol);
+    })
+    .catch((err) => {
+        console.error(err);
+        console.log();
+        process.exit(1)
+    });
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to

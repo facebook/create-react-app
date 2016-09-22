@@ -117,6 +117,7 @@ The [User Guide](https://github.com/facebookincubator/create-react-app/blob/mast
 - [Adding `<link>` and `<meta>` Tags](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-link-and-meta-tags)
 - [Running Tests](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
 - [Deployment](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment)
+- [Relay and GraphQl Support](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#relay-support)
 
 A copy of the user guide will be created as `README.md` in your project folder.
 
