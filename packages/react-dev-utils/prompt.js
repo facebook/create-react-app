@@ -1,4 +1,3 @@
-// @remove-on-eject-begin
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -7,14 +6,13 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-// @remove-on-eject-end
 
 var rl = require('readline');
 
 // Convention: "no" should be the conservative choice.
 // If you mistype the answer, we'll always take it as a "no".
 // You can control the behavior on <Enter> with `isYesDefault`.
-module.exports = function (question, isYesDefault) {
+function prompt(question, isYesDefault) {
   if (typeof isYesDefault !== 'boolean') {
     throw new Error('Provide explicit boolean isYesDefault as second argument.');
   }
@@ -40,3 +38,5 @@ module.exports = function (question, isYesDefault) {
     });
   });
 };
+
+module.exports = prompt;
