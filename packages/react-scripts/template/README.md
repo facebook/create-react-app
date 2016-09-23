@@ -400,8 +400,8 @@ to `process.env.NODE_ENV`.
 These environment variables can be useful for displaying information conditionally based on where the project is
 deployed or consuming sensitive data that lives outside of version control.
 
-First, you need to have environment variables defined, which can vary between OSes. For example, let's say you wanted to
-consume a secret defined in the environment inside a `<form>`:
+First, you need to have environment variables defined. For example, let’s say you wanted to consume a secret defined
+in the environment inside a `<form>`:
 
 ```jsx
 render() {
@@ -416,29 +416,9 @@ render() {
 }
 ```
 
-The above form is looking for a variable called `REACT_APP_SECRET_CODE` from the environment. In order to consume this
-value, we need to have it defined in the environment:
+During the build, `process.env.REACT_APP_SECRET_CODE` will be replaced with the current value of the `REACT_APP_SECRET_CODE` environment variable. Remember that the `NODE_ENV` variable will be set for you automatically.
 
-#### Windows (cmd.exe)
-
-```cmd
-set REACT_APP_SECRET_CODE=abcdef&&npm start
-```
-
-(Note: the lack of whitespace is intentional.)
-
-#### Linux, OS X (Bash)
-
-```bash
-REACT_APP_SECRET_CODE=abcdef npm start
-```
-
-> Note: Defining environment variables in this manner is temporary for the life of the shell session. Setting
-permanent environment variables is outside the scope of these docs.
-
-With our environment variable defined, we start the app and consume the values. Remember that the `NODE_ENV`
-variable will be set for you automatically. When you load the app in the browser and inspect the `<input>`, you will see
-its value set to `abcdef`, and the bold text will show the environment provided when using `npm start`:
+When you load the app in the browser and inspect the `<input>`, you will see its value set to `abcdef`, and the bold text will show the environment provided when using `npm start`:
 
 ```html
 <div>
@@ -456,6 +436,45 @@ if (process.env.NODE_ENV !== 'production') {
   analytics.disable();
 }
 ```
+
+The above form is looking for a variable called `REACT_APP_SECRET_CODE` from the environment. In order to consume this
+value, we need to have it defined in the environment. This can be done using two ways: either in your shell or in
+a `.env` file.
+
+### Adding Temporary Environment Variables In Your Shell
+
+Defining environment variables can vary between OSes. It's also important to know that this manner is temporary for the
+life of the shell session.
+
+#### Windows (cmd.exe)
+
+```cmd
+set REACT_APP_SECRET_CODE=abcdef&&npm start
+```
+
+(Note: the lack of whitespace is intentional.)
+
+#### Linux, OS X (Bash)
+
+```bash
+REACT_APP_SECRET_CODE=abcdef npm start
+```
+
+### Adding Development Environment Variables In `.env`
+
+>Note: this feature is available with `react-scripts@0.5.0` and higher.
+
+To define permanent environment vairables, create a file called `.env` in the root of your project:
+
+```
+REACT_APP_SECRET_CODE=abcdef
+```
+
+These variables will act as the defaults if the machine does not explicitly set them.  
+Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
+
+>Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
+these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
 
 ## Can I Use Decorators?
 
