@@ -7,10 +7,10 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var createJestConfig = require('./utils/createJestConfig');
+var createJestConfig = require('../utils/createJestConfig');
 var fs = require('fs');
 var path = require('path');
-var prompt = require('./utils/prompt');
+var prompt = require('react-dev-utils/prompt');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
 
@@ -31,6 +31,7 @@ prompt(
   var files = [
     '.babelrc',
     '.eslintrc',
+    path.join('config', 'env.js'),
     path.join('config', 'paths.js'),
     path.join('config', 'polyfills.js'),
     path.join('config', 'webpack.config.dev.js'),
@@ -39,13 +40,7 @@ prompt(
     path.join('config', 'jest', 'FileStub.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
-    path.join('scripts', 'test.js'),
-    path.join('scripts', 'utils', 'checkRequiredFiles.js'),
-    path.join('scripts', 'utils', 'chrome.applescript'),
-    path.join('scripts', 'utils', 'getClientEnvironment.js'),
-    path.join('scripts', 'utils', 'InterpolateHtmlPlugin.js'),
-    path.join('scripts', 'utils', 'prompt.js'),
-    path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js')
+    path.join('scripts', 'test.js')
   ];
 
   // Ensure that the app folder is clean and we won't override any files
@@ -65,7 +60,6 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'config'));
   fs.mkdirSync(path.join(appPath, 'config', 'jest'));
   fs.mkdirSync(path.join(appPath, 'scripts'));
-  fs.mkdirSync(path.join(appPath, 'scripts', 'utils'));
 
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + appPath);
