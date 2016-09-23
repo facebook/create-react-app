@@ -791,7 +791,27 @@ Note that tests run much slower with coverage so it is recommended to run it sep
 
 By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`. Popular CI servers already set it by default but you can do this yourself too:
 
-#### Windows (cmd.exe)
+### On CI servers
+#### Travis CI
+
+1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your Github repository with Travis.  You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
+1. Add a `.travis.yml` file to your git repository.
+```
+language: node_js
+node_js:
+  - 4
+  - 6
+cache:
+  directories:
+  - node_modules
+script
+  - npm test
+```
+1. Trigger your first build with a git push.
+1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
+
+### On your own environment
+##### Windows (cmd.exe)
 
 ```cmd
 set CI=true&&npm test
@@ -799,7 +819,7 @@ set CI=true&&npm test
 
 (Note: the lack of whitespace is intentional.)
 
-#### Linux, OS X (Bash)
+##### Linux, OS X (Bash)
 
 ```bash
 CI=true npm test
