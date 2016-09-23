@@ -400,7 +400,7 @@ to `process.env.NODE_ENV`.
 These environment variables can be useful for displaying information conditionally based on where the project is
 deployed or consuming sensitive data that lives outside of version control.
 
-First, you need to have environment variables defined. For example, let's say you wanted to consume a secret defined
+First, you need to have environment variables defined. For example, let’s say you wanted to consume a secret defined
 in the environment inside a `<form>`:
 
 ```jsx
@@ -416,9 +416,9 @@ render() {
 }
 ```
 
-With our environment variable defined, we start the app and consume the values. Remember that the `NODE_ENV`
-variable will be set for you automatically. When you load the app in the browser and inspect the `<input>`, you will see
-its value set to `abcdef`, and the bold text will show the environment provided when using `npm start`:
+During the build, `process.env.REACT_APP_SECRET_CODE` will be replaced with the current value of the `REACT_APP_SECRET_CODE` environment variable. Remember that the `NODE_ENV` variable will be set for you automatically.
+
+When you load the app in the browser and inspect the `<input>`, you will see its value set to `abcdef`, and the bold text will show the environment provided when using `npm start`:
 
 ```html
 <div>
@@ -464,16 +464,17 @@ REACT_APP_SECRET_CODE=abcdef npm start
 
 >Note: this feature is available with `react-scripts@0.5.0` and higher.
 
-Defining permanent environment variables in development can be done in a `.env` file in the root of your project.
-[dotenv](https://github.com/motdotla/dotenv) takes care of loading these for you.
+To define permanent environment vairables, create a file called `.env` in the root of your project:
 
-```bash
-echo "REACT_APP_SECRET_CODE=abcsdef" >> .env
-npm start
+```
+REACT_APP_SECRET_CODE=abcdef
 ```
 
->Note: if you are defining environment variables for development your CI and/or hosting platform will most likely need
-these defined as well. Consult their documentation how to do this.  Eg. [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars)
+These variables will act as the defaults if the machine does not explicitly set them.  
+Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
+
+>Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
+these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
 
 ## Can I Use Decorators?
 
