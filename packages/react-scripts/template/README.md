@@ -19,6 +19,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
 - [Adding Images and Fonts](#adding-images-and-fonts)
+- [Using the `public` Folder](#using-the-public-folder)
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
@@ -26,9 +27,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Using HTTPS in Development](#using-https-in-development)
-- [Adding `<link>` and `<meta>` Tags](#adding-link-and-meta-tags)
-  - [Referring to Static Assets from `<link href>`](#referring-to-static-assets-from-link-href)
-  - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
+- [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
   - [Command Line Interface](#command-line-interface)
@@ -79,14 +78,15 @@ After creation, your project should look like this:
 ```
 my-app/
   README.md
-  index.html
   node_modules/
   package.json
+  public/
+    index.html
+    favicon.ico
   src/
     App.css
     App.js
     App.test.js
-    favicon.ico
     index.css
     index.js
     logo.svg
@@ -94,14 +94,16 @@ my-app/
 
 For the project to build, **these files must exist with exact filenames**:
 
-* `index.html` is the page template;
-* `src/favicon.ico` is the icon you see in the browser tab;
+* `public/index.html` is the page template;
 * `src/index.js` is the JavaScript entry point.
 
 You can delete or rename the other files.
 
 You may create subdirectories inside `src`. For faster rebuilds, only files inside `src` are processed by Webpack.  
 You need to **put any JS and CSS files inside `src`**, or Webpack won’t see them.
+
+Only files inside `public` can be used from `public/index.html`.  
+Read instructions below for using assets from JavaScript and HTML.
 
 You can, however, create more top-level directories.  
 They will not be included in the production build so you can use them for things like documentation.
@@ -320,7 +322,7 @@ function Header() {
 export default function Header;
 ```
 
-This is currently required for local images. This ensures that when the project is built, webpack will correctly move the images into the build folder, and provide us with correct paths.
+This ensures that when the project is built, webpack will correctly move the images into the build folder, and provide us with correct paths.
 
 This works in CSS too:
 
@@ -334,7 +336,51 @@ Webpack finds all relative module references in CSS (they start with `./`) and r
 
 Please be advised that this is also a custom feature of Webpack.
 
-**It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images). However it may not be portable to some other environments, such as Node.js and Browserify. If you prefer to reference static assets in a more traditional way outside the module system, please let us know [in this issue](https://github.com/facebookincubator/create-react-app/issues/28), and we will consider support for this.
+**It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).  
+An alternative way of handling static assets is described in the next section.
+
+## Using the `public` Folder
+
+>Note: this feature is available with `react-scripts@0.5.0` and higher.
+
+Normally we encourage you to `import` assets in JavaScript files as described above. This mechanism provides a number of benefits:
+
+* Scripts and stylesheets get minified and bundled together to avoid extra network requests.
+* Missing files cause compilation errors instead of 404 errors for your users.
+* Result filenames include content hashes so you don’t need to worry about browsers caching their old versions.
+
+However there is an **escape hatch** that you can use to add an asset outside of the module system.
+
+If you put a file into the `public` folder, it will **not** be processed by Webpack. Instead it will be copied into the build folder untouched.   To reference assets in the `public` folder, you need to use a special variable called `PUBLIC_URL`.
+
+Inside `index.html`, you can use it like this:
+
+```html
+<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+```
+
+Only files inside the `public` folder will be accessible by `%PUBLIC_URL%` prefix. If you need to use a file from `src` or `node_modules`, you’ll have to copy it there to explicitly specify your intention to make this file a part of the build.
+
+When you run `npm run build`, Create React App will substitute `%PUBLIC_URL%` with a correct absolute path so your project works even if you use client-side routing or host it at a non-root URL. 
+
+In JavaScript code, you can use `process.env.PUBLIC_URL` for similar purposes:
+
+```js
+render() {
+  // Note: this is an escape hatch and should be used sparingly!
+  // Normally we recommend using `import` for getting asset URLs
+  // as described in “Adding Images and Fonts” above this section.
+  return <img src={process.env.PUBLIC_URL + '/img/logo.png'} />;
+}
+```
+
+Keep in mind the downsides of this approach:
+
+* None of the files in `public` folder get post-processed or minified.
+* Missing files will not be called at compilation time, and will cause 404 errors for your users.
+* Result filenames won’t include content hashes so you’ll need to add query arguments or rename them every time they change.
+
+However, it can be handy for referencing assets like [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest) from HTML, or including small scripts like [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
 
 ## Adding Bootstrap
 
@@ -558,57 +604,7 @@ HTTPS=true npm start
 
 Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
 
-## Adding `<link>` and `<meta>` Tags
-
-You can edit the generated `index.html` and add any tags you’d like to it.
-
-### Referring to Static Assets from `<link href>`
-
->Note: this feature is available with `react-scripts@0.3.0` and higher.
-
-Sometimes, you might want to refer to static assets from `index.html`. Create React App intentionally does not support serving static assets from a folder because it is too easy to forget to arrange cache invalidation for their filenames. Instead, we recommend that all assets are [handled as part of build process with `import`s](#adding-images-and-fonts).
-
-However, you can’t `import` anything from an HTML file. This is why Create React App automatically treats any `<link href>` attributes that start with `./` as a hint that this file needs to be included in the build process. For example, you can use paths like this in `index.html`:
-
-```html
-<link rel="shortcut icon" href="./src/favicon.ico">
-<link rel="icon" href="./src/favicon/favicon-16.png" sizes="16x16" type="image/png">
-<link rel="icon" href="./src/favicon/favicon-32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="./src/favicon/favicon-64.png" sizes="64x64" type="image/png">
-```
-
-Webpack will parse those `<link href>` attributes and replace them with real paths.  
-In production, they will become:
-
-```html
-<link rel="shortcut icon" href="/favicon.ico?fd73a6eb">
-<link rel="icon" href="/static/media/favicon-16.06a6e0a8.png" sizes="16x16" type="image/png">
-<link rel="icon" href="/static/media/favicon-32.eb28da34.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/static/media/favicon-64.91cb3479.png" sizes="64x64" type="image/png">
-```
-
-For this to work, **make sure to specify paths relatively** so don’t forget the `./`:
-
-```html
-<!-- Will be resolved by Webpack on build to the real file. -->
-<!-- Use this in most cases: -->
-<link rel="icon" href="./src/favicon/favicon-32.png" sizes="32x32" type="image/png">
-<!-- See the ./ here: ^^^ -->
-
-<!-- Will actually request http://yourserver.com/src/favicon/favicon-32.png. -->
-<!-- Only use this if you know this file will appear on your server and is *not* part of your build: -->
-<link rel="icon" href="/src/favicon/favicon-32.png" sizes="32x32" type="image/png">
-```
-
-Files starting with `./` in `<link href>` attribute will be copied to the `static` folder inside your `build` output, and HTML will reference them instead. Webpack will throw a compilation error if any of these files was accidentally deleted or misspelled.
-
-Their names will also contain the content hashes to make sure the browser cache is busted when the file changes. The only file that is handled specially is `favicon.ico` which, if present and referenced from HTML, will be always placed at the root so that browsers can find it even when requesting files from the server (such as PDF documents).
-
-Currently, only `<link href>` attributes are treated this way. If you need similar support for other HTML tags and attributes, please file an issue describing your use case.
-
-If you need to use an asset from code rather than from HTML, please read [Adding Images and Fonts](#adding-images-and-fonts). For example, to integrate a library like [`react-mdl`](https://github.com/tleunen/react-mdl) that depends on global scripts and styles, [`import` them from JavaScript](https://github.com/tleunen/react-mdl/pull/388).
-
-### Generating Dynamic `<meta>` Tags on the Server
+## Generating Dynamic `<meta>` Tags on the Server
 
 Since Create React App doesn’t support server rendering, you might be wondering how to make `<meta>` tags dynamic and reflect the current URL. To solve this, we recommend to add placeholders into the HTML, like this:
 
@@ -616,11 +612,11 @@ Since Create React App doesn’t support server rendering, you might be wonderin
 <!doctype html>
 <html lang="en">
   <head>
-    <meta property="og:title" content="$OG_TITLE">
-    <meta property="og:description" content="$OG_DESCRIPTION">
+    <meta property="og:title" content="%OG_TITLE%">
+    <meta property="og:description" content="%OG_DESCRIPTION%">
 ```
 
-Then, on the server, regardless of the backend you use, you can read `index.html` into memory and replace `$OG_TITLE`, `$OG_DESCRIPTION`, and any other placeholders with values depending on the current URL. Just make sure to sanitize and escape the interpolated values so that they are safe to embed into HTML!
+Then, on the server, regardless of the backend you use, you can read `index.html` into memory and replace `%OG_TITLE%`, `%OG_DESCRIPTION%`, and any other placeholders with values depending on the current URL. Just make sure to sanitize and escape the interpolated values so that they are safe to embed into HTML!
 
 If you use a Node server, you can even share the route matching logic between the client and the server. However duplicating it also works fine in simple cases.
 
