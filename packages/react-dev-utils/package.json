@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "chalk": "1.1.3",
+    "escape-string-regexp": "1.0.5",
     "opn": "4.0.2"
   },
   "peerDependencies": {
