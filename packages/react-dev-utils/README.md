@@ -157,7 +157,7 @@ if (openBrowser('http://localhost:3000')) {
 }
 ```
 
-#### `prompt`
+#### `prompt(message: string, isYesDefault: boolean): Promise<boolean>`
 
 This function displays a console prompt to the user.
 
@@ -169,7 +169,7 @@ You can control the behavior on `<Enter>` with `isYesDefault`.
 var prompt = require('react-dev-utils/prompt');
 prompt(
   'Are you sure you want to eat all the candy?',
-  false
+  /* isYesDefault */ false
 ).then(shouldEat => {
   if (shouldEat) {
     console.log('You have successfully consumed all the candy.');
