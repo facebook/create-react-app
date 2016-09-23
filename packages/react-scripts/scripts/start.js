@@ -173,7 +173,7 @@ function openBrowser(port, protocol) {
   try {
     opn(protocol + '://localhost:' + port + '/');
   } catch (err) {
-    console.log('Unable to automatically open ' +protocol + '://localhost:' + port + '/ because ', err)
+    // Ignore errors.
   }
 }
 
