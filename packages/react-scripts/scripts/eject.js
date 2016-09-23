@@ -95,7 +95,7 @@ prompt(
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
       .replace(
-        new RegExp(ownPackageName + ' (\w+)', 'g'),
+        new RegExp(ownPackageName + ' (\\w+)', 'g'),
         'node scripts/$1.js'
       );
   });
