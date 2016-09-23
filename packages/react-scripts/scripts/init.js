@@ -14,8 +14,8 @@ var pathExists = require('path-exists');
 var chalk = require('chalk');
 
 module.exports = function(appPath, appName, verbose, originalDirectory) {
-  var ownPath = path.join(appPath, 'node_modules', 'react-scripts');
-
+  var ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
+  var ownPath = path.join(appPath, 'node_modules', ownPackageName);
   var appPackage = require(path.join(appPath, 'package.json'));
 
   // Copy over some of the devDependencies
@@ -24,10 +24,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
 
   // Setup the script rules
   appPackage.scripts = {
-    'start': 'react-scripts start',
-    'build': 'react-scripts build',
-    'test': 'react-scripts test --env=jsdom',
-    'eject': 'react-scripts eject'
+    'start': ownPackageName + ' start',
+    'build': ownPackageName + ' build',
+    'test': ownPackageName + ' test --env=jsdom',
+    'eject': ownPackageName + ' eject'
   };
 
   fs.writeFileSync(
