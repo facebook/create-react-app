@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -57,7 +57,7 @@
     "path-exists": "2.1.0",
     "postcss-loader": "0.13.0",
     "promise": "7.1.1",
-    "react-dev-utils": "^0.1.0",
+    "react-dev-utils": "^0.1.1",
     "recursive-readdir": "2.0.0",
     "rimraf": "2.5.4",
     "strip-ansi": "3.0.1",
