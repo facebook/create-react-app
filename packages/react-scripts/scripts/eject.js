@@ -62,7 +62,6 @@ prompt(
 
   // Copy the files over
   fs.mkdirSync(path.join(appPath, 'config'));
-  fs.mkdirSync(path.join(appPath, 'config', 'flow'));
   fs.mkdirSync(path.join(appPath, 'config', 'jest'));
   fs.mkdirSync(path.join(appPath, 'scripts'));
   fs.mkdirSync(path.join(appPath, 'scripts', 'utils'));
