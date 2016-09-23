@@ -28,7 +28,7 @@
     "babel-eslint": "6.1.2",
     "babel-jest": "15.0.0",
     "babel-loader": "6.2.5",
-    "babel-preset-react-app": "0.1.0",
+    "babel-preset-react-app": "0.2.0",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
     "connect-history-api-fallback": "1.3.0",
