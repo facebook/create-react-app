@@ -34,6 +34,7 @@
     "cross-spawn": "4.0.0",
     "css-loader": "0.24.0",
     "detect-port": "1.0.0",
+    "dotenv": "2.0.0",
     "eslint": "3.5.0",
     "eslint-config-react-app": "0.2.0",
     "eslint-loader": "1.5.0",
