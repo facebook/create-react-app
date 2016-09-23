@@ -1,3 +1,21 @@
+## 0.5.1 (September 23, 2016)
+
+### Build Dependency (`react-scripts`)
+
+* Updates `react-dev-utils` dependency
+
+### Utilities (`react-dev-utils`)
+
+* Fixes `%PUBLIC_URL%` replacement to work when specified multiple times. ([@fson](https://github.com/fson) in [#731](https://github.com/facebookincubator/create-react-app/pull/731))
+
+### Migrating from 0.5.0 to 0.5.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.5.1
+```
+
 ## 0.5.0 (September 23, 2016)
 
 ### Build Dependency (`react-scripts`)
