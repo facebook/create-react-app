@@ -17,19 +17,24 @@ process.env.NODE_ENV = 'development';
 // https://github.com/motdotla/dotenv
 require('dotenv').config({silent: true});
 
-var path = require('path');
 var chalk = require('chalk');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var historyApiFallback = require('connect-history-api-fallback');
 var httpProxyMiddleware = require('http-proxy-middleware');
-var execSync = require('child_process').execSync;
-var opn = require('opn');
 var detect = require('detect-port');
-var checkRequiredFiles = require('./utils/checkRequiredFiles');
-var prompt = require('./utils/prompt');
+var clearConsole = require('react-dev-utils/clearConsole');
+var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+var openBrowser = require('react-dev-utils/openBrowser');
+var prompt = require('react-dev-utils/prompt');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+
+// Warn and crash if required files are missing
+if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+  process.exit(1);
+}
 
 // Tools like Cloud9 rely on this.
 var DEFAULT_PORT = process.env.PORT || 3000;
@@ -47,40 +52,6 @@ if (isSmokeTest) {
       process.exit(0);
     }
   };
-}
-
-// Some custom utilities to prettify Webpack output.
-// This is a little hacky.
-// It would be easier if webpack provided a rich error object.
-var friendlySyntaxErrorLabel = 'Syntax error:';
-function isLikelyASyntaxError(message) {
-  return message.indexOf(friendlySyntaxErrorLabel) !== -1;
-}
-function formatMessage(message) {
-  return message
-    // Make some common errors shorter:
-    .replace(
-      // Babel syntax error
-      'Module build failed: SyntaxError:',
-      friendlySyntaxErrorLabel
-    )
-    .replace(
-      // Webpack file not found error
-      /Module not found: Error: Cannot resolve 'file' or 'directory'/,
-      'Module not found:'
-    )
-    // Internal stacks are generally useless so we strip them
-    .replace(/^\s*at\s.*:\d+:\d+[\s\)]*\n/gm, '') // at ... ...:x:y
-    // Webpack loader names obscure CSS filenames
-    .replace('./~/css-loader!./~/postcss-loader!', '');
-}
-
-var isFirstClear = true;
-function clearConsole() {
-  // On first run, clear completely so it doesn't show half screen on Windows.
-  // On next runs, use a different sequence that properly scrolls back.
-  process.stdout.write(isFirstClear ? '\x1bc' : '\x1b[2J\x1b[0f');
-  isFirstClear = false;
 }
 
 function setupCompiler(host, port, protocol) {
@@ -101,9 +72,12 @@ function setupCompiler(host, port, protocol) {
   // Whether or not you have warnings or errors, you will get this event.
   compiler.plugin('done', function(stats) {
     clearConsole();
-    var hasErrors = stats.hasErrors();
-    var hasWarnings = stats.hasWarnings();
-    if (!hasErrors && !hasWarnings) {
+
+    // We have switched off the default Webpack output in WebpackDevServer
+    // options so we are going to "massage" the warnings and errors and present
+    // them in a readable focused way.
+    var messages = formatWebpackMessages(stats);
+    if (!messages.errors.length && !messages.warnings.length) {
       console.log(chalk.green('Compiled successfully!'));
       console.log();
       console.log('The app is running at:');
@@ -113,41 +87,24 @@ function setupCompiler(host, port, protocol) {
       console.log('Note that the development build is not optimized.');
       console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
       console.log();
-      return;
     }
 
-    // We have switched off the default Webpack output in WebpackDevServer
-    // options so we are going to "massage" the warnings and errors and present
-    // them in a readable focused way.
-    // We use stats.toJson({}, true) to make output more compact and readable:
-    // https://github.com/facebookincubator/create-react-app/issues/401#issuecomment-238291901
-    var json = stats.toJson({}, true);
-    var formattedErrors = json.errors.map(message =>
-      'Error in ' + formatMessage(message)
-    );
-    var formattedWarnings = json.warnings.map(message =>
-      'Warning in ' + formatMessage(message)
-    );
-    if (hasErrors) {
+    // If errors exist, only show errors.
+    if (messages.errors.length) {
       console.log(chalk.red('Failed to compile.'));
       console.log();
-      if (formattedErrors.some(isLikelyASyntaxError)) {
-        // If there are any syntax errors, show just them.
-        // This prevents a confusing ESLint parsing error
-        // preceding a much more useful Babel syntax error.
-        formattedErrors = formattedErrors.filter(isLikelyASyntaxError);
-      }
-      formattedErrors.forEach(message => {
+      messages.errors.forEach(message => {
         console.log(message);
         console.log();
       });
-      // If errors exist, ignore warnings.
       return;
     }
-    if (hasWarnings) {
+
+    // Show warnings if no errors were found.
+    if (messages.warnings.length) {
       console.log(chalk.yellow('Compiled with warnings.'));
       console.log();
-      formattedWarnings.forEach(message => {
+      messages.warnings.forEach(message => {
         console.log(message);
         console.log();
       });
@@ -157,30 +114,6 @@ function setupCompiler(host, port, protocol) {
       console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
     }
   });
-}
-
-function openBrowser(host, port, protocol) {
-  if (process.platform === 'darwin') {
-    try {
-      // Try our best to reuse existing tab
-      // on OS X Google Chrome with AppleScript
-      execSync('ps cax | grep "Google Chrome"');
-      execSync(
-        'osascript chrome.applescript ' + protocol + '://' + host + ':' + port + '/',
-        {cwd: path.join(__dirname, 'utils'), stdio: 'ignore'}
-      );
-      return;
-    } catch (err) {
-      // Ignore errors.
-    }
-  }
-  // Fallback to opn
-  // (It will always open new tab)
-  try {
-    opn(protocol + '://' + host + ':' + port + '/');
-  } catch (err) {
-    // Ignore errors.
-  }
 }
 
 // We need to provide a custom onError function for httpProxyMiddleware.
@@ -314,14 +247,13 @@ function runDevServer(host, port, protocol) {
     clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    openBrowser(host, port, protocol);
+    openBrowser(protocol + '://' + host + ':' + port + '/');
   });
 }
 
 function run(port) {
   var protocol = process.env.HTTPS === 'true' ? "https" : "http";
   var host = process.env.HOST || 'localhost';
-  checkRequiredFiles();
   setupCompiler(host, port, protocol);
   runDevServer(host, port, protocol);
 }

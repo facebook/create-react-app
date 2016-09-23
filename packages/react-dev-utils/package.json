@@ -1,0 +1,30 @@
+{
+  "name": "react-dev-utils",
+  "version": "0.1.0",
+  "description": "Webpack utilities used by Create React App",
+  "repository": "facebookincubator/create-react-app",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/facebookincubator/create-react-app/issues"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "files": [
+    "clearConsole.js",
+    "checkRequiredFiles.js",
+    "formatWebpackMessages.js",
+    "InterpolateHtmlPlugin.js",
+    "openChrome.applescript",
+    "openBrowser.js",
+    "prompt.js",
+    "WatchMissingNodeModulesPlugin.js"
+  ],
+  "dependencies": {
+    "chalk": "1.1.3",
+    "opn": "4.0.2"
+  },
+  "peerDependencies": {
+    "webpack": "^1.13.2"
+  }
+}

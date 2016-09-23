@@ -16,7 +16,8 @@
     "bin",
     "config",
     "scripts",
-    "template"
+    "template",
+    "utils"
   ],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
@@ -53,10 +54,10 @@
     "jest": "15.1.1",
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
-    "opn": "4.0.2",
     "path-exists": "2.1.0",
     "postcss-loader": "0.13.0",
     "promise": "7.1.1",
+    "react-dev-utils": "0.1.0",
     "recursive-readdir": "2.0.0",
     "rimraf": "2.5.4",
     "strip-ansi": "3.0.1",
