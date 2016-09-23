@@ -77,7 +77,7 @@ prompt(
   var ownPackage = require(path.join(ownPath, 'package.json'));
   var appPackage = require(path.join(appPath, 'package.json'));
 
-  var ownPackageName = require(path.join(__dirname, '..', 'package'.json)).name;
+  var ownPackageName = ownPackage.name;
   console.log('Removing dependency: ' + ownPackageName);
   delete appPackage.devDependencies[ownPackageName];
 
