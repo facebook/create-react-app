@@ -83,7 +83,7 @@ function clearConsole() {
   isFirstClear = false;
 }
 
-function setupCompiler(port, protocol) {
+function setupCompiler(host, port, protocol) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   compiler = webpack(config, handleCompile);
@@ -108,7 +108,7 @@ function setupCompiler(port, protocol) {
       console.log();
       console.log('The app is running at:');
       console.log();
-      console.log('  ' + chalk.cyan(protocol + '://localhost:' + port + '/'));
+      console.log('  ' + chalk.cyan(protocol + '://' + host + ':' + port + '/'));
       console.log();
       console.log('Note that the development build is not optimized.');
       console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
@@ -159,14 +159,14 @@ function setupCompiler(port, protocol) {
   });
 }
 
-function openBrowser(port, protocol) {
+function openBrowser(host, port, protocol) {
   if (process.platform === 'darwin') {
     try {
       // Try our best to reuse existing tab
       // on OS X Google Chrome with AppleScript
       execSync('ps cax | grep "Google Chrome"');
       execSync(
-        'osascript chrome.applescript ' + protocol + '://localhost:' + port + '/',
+        'osascript chrome.applescript ' + protocol + '://' + host + ':' + port + '/',
         {cwd: path.join(__dirname, 'utils'), stdio: 'ignore'}
       );
       return;
@@ -177,7 +177,7 @@ function openBrowser(port, protocol) {
   // Fallback to opn
   // (It will always open new tab)
   try {
-    opn(protocol + '://localhost:' + port + '/');
+    opn(protocol + '://' + host + ':' + port + '/');
   } catch (err) {
     // Ignore errors.
   }
@@ -260,7 +260,7 @@ function addMiddleware(devServer) {
   devServer.use(devServer.middleware);
 }
 
-function runDevServer(port, protocol) {
+function runDevServer(host, port, protocol) {
   var devServer = new WebpackDevServer(compiler, {
     // Silence WebpackDevServer's own logs since they're generally not useful.
     // It will still show compile warnings and errors with this setting.
@@ -298,7 +298,8 @@ function runDevServer(port, protocol) {
       ignored: /node_modules/
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === "https" ? true : false
+    https: protocol === "https" ? true : false,
+    host: host
   });
 
   // Our custom middleware proxies requests to /index.html or a remote API.
@@ -313,15 +314,16 @@ function runDevServer(port, protocol) {
     clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    openBrowser(port, protocol);
+    openBrowser(host, port, protocol);
   });
 }
 
 function run(port) {
   var protocol = process.env.HTTPS === 'true' ? "https" : "http";
+  var host = process.env.HOST || 'localhost';
   checkRequiredFiles();
-  setupCompiler(port, protocol);
-  runDevServer(port, protocol);
+  setupCompiler(host, port, protocol);
+  runDevServer(host, port, protocol);
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to
