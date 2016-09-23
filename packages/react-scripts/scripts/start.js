@@ -231,7 +231,7 @@ function runDevServer(host, port, protocol) {
       ignored: /node_modules/
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === "https" ? true : false,
+    https: protocol === "https",
     host: host
   });
 
