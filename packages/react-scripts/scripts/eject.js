@@ -39,6 +39,7 @@ prompt(
     path.join('config', 'jest', 'FileStub.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
+    path.join('scripts', 'test.js'),
     path.join('scripts', 'utils', 'checkRequiredFiles.js'),
     path.join('scripts', 'utils', 'chrome.applescript'),
     path.join('scripts', 'utils', 'getClientEnvironment.js'),
@@ -98,7 +99,6 @@ prompt(
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
-      .replace(/react-scripts test/g, 'jest --watch')
       .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
   });
 

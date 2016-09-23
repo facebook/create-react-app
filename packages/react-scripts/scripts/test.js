@@ -1,3 +1,4 @@
+// @remove-on-eject-begin
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -6,6 +7,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+// @remove-on-eject-end
 
 process.env.NODE_ENV = 'test';
 process.env.PUBLIC_URL = '';
@@ -16,7 +18,6 @@ process.env.PUBLIC_URL = '';
 // https://github.com/motdotla/dotenv
 require('dotenv').config({silent: true});
 
-const createJestConfig = require('./utils/createJestConfig');
 const jest = require('jest');
 const path = require('path');
 const paths = require('../config/paths');
@@ -28,10 +29,14 @@ if (!process.env.CI) {
   argv.push('--watch');
 }
 
+// @remove-on-eject-begin
+// This is not necessary after eject because we embed config into package.json.
+const createJestConfig = require('./utils/createJestConfig');
 argv.push('--config', JSON.stringify(createJestConfig(
   relativePath => path.resolve(__dirname, '..', relativePath),
   path.resolve(paths.appSrc, '..'),
   false
 )));
+// @remove-on-eject-end
 
 jest.run(argv);
