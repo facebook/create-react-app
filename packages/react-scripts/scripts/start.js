@@ -170,7 +170,11 @@ function openBrowser(port, protocol) {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn(protocol + '://localhost:' + port + '/');
+  try {
+    opn(protocol + '://localhost:' + port + '/');
+  } catch (err) {
+    // Ignore errors.
+  }
 }
 
 // We need to provide a custom onError function for httpProxyMiddleware.
