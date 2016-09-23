@@ -60,7 +60,6 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'config'));
   fs.mkdirSync(path.join(appPath, 'config', 'jest'));
   fs.mkdirSync(path.join(appPath, 'scripts'));
-  fs.mkdirSync(path.join(appPath, 'scripts', 'utils'));
 
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + appPath);
