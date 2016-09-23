@@ -17,6 +17,6 @@
     "eslint-plugin-import": "1.12.0",
     "eslint-plugin-jsx-a11y": "2.2.2",
     "eslint-plugin-react": "6.3.0",
-    "lerna": "2.0.0-beta.28"
+    "lerna": "2.0.0-beta.29"
   }
 }
