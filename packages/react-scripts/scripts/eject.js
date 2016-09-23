@@ -77,8 +77,9 @@ prompt(
   var ownPackage = require(path.join(ownPath, 'package.json'));
   var appPackage = require(path.join(appPath, 'package.json'));
 
-  console.log('Removing dependency: react-scripts');
-  delete appPackage.devDependencies['react-scripts'];
+  var ownPackageName = ownPackage.name;
+  console.log('Removing dependency: ' + ownPackageName);
+  delete appPackage.devDependencies[ownPackageName];
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
     // For some reason optionalDependencies end up in dependencies after install
@@ -93,7 +94,10 @@ prompt(
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
-      .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
+      .replace(
+        new RegExp(ownPackageName + ' (\w+)', 'g'),
+        'node scripts/$1.js'
+      );
   });
 
   // Add Jest config
