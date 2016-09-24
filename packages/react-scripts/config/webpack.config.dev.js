@@ -19,6 +19,7 @@ var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
+var getCustomConfig = require('./get-custom-config');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -29,6 +30,8 @@ var publicPath = '/';
 var publicUrl = '';
 // Get enrivonment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
+//Get custom configuration for injecting plugins, presets and loaders
+var customConfig = getCustomConfig(env, false);
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -123,7 +126,8 @@ module.exports = {
         query: {
           // @remove-on-eject-begin
           babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          presets: [require.resolve('babel-preset-react-app')].concat(customConfig.presets),
+          plugins: [].concat(customConfig.plugins),
           // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/react-scripts/
@@ -141,7 +145,7 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        loader: 'style!css!postcss'
+        loader: customConfig.others.CSS_MODULES ? customConfig.others.CSS_MODULES.dev : 'style!css!postcss'
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
@@ -169,7 +173,7 @@ module.exports = {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
-    ]
+    ].concat(customConfig.loaders)
   },
   // @remove-on-eject-begin
   // Point ESLint to our predefined config.

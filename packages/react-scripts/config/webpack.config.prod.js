@@ -18,6 +18,7 @@ var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
+var getCustomConfig = require('./get-custom-config');
 
 function ensureSlash(path, needsSlash) {
   var hasSlash = path.endsWith('/');
@@ -46,6 +47,10 @@ var publicPath = ensureSlash(homepagePathname, true);
 var publicUrl = ensureSlash(homepagePathname, false);
 // Get enrivonment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
+//Get custom configuration for injecting plugins, presets and loaders
+var customConfig = getCustomConfig(env);
+
+console.log('customConfig', customConfig);
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -123,7 +128,8 @@ module.exports = {
         // @remove-on-eject-begin
         query: {
           babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          presets: [require.resolve('babel-preset-react-app')].concat(customConfig.presets),
+          plugins: [].concat(customConfig.plugins),
         },
         // @remove-on-eject-end
       },
@@ -149,9 +155,10 @@ module.exports = {
         // Webpack 1.x uses Uglify plugin as a signal to minify *all* the assets
         // including CSS. This is confusing and will be removed in Webpack 2:
         // https://github.com/webpack/webpack/issues/283
-        loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss')
+        loader: ExtractTextPlugin.extract(customConfig.others.CSS_MODULES ? 'style!css?modules&-autoprefixer&importLoaders=1!postcss' : 'style!css?-autoprefixer!postcss')
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
+
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
       {
@@ -177,7 +184,7 @@ module.exports = {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
-    ]
+    ].concat(customConfig.loaders)
   },
   // @remove-on-eject-begin
   // Point ESLint to our predefined config.
@@ -189,7 +196,7 @@ module.exports = {
   },
   // @remove-on-eject-end
   // We use PostCSS for autoprefixing only.
-  postcss: function() {
+  postcss: function () {
     return [
       autoprefixer({
         browsers: [
