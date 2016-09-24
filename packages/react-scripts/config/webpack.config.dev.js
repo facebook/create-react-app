@@ -17,6 +17,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+var WarnAboutLoaderDisablingPlugin = require('react-dev-utils/WarnAboutLoaderDisablingPlugin');
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 
@@ -217,6 +218,10 @@ module.exports = {
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(paths.appNodeModules)
+    // This warns about using Webpack Special Loader syntax, which makes it
+    // very coupled to Webpack and might break in the future.
+    // See https://github.com/facebookincubator/create-react-app/issues/733
+    new WarnAboutLoaderDisablingPlugin()
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

@@ -97,6 +97,9 @@ module.exports = {
   // ...
   plugins: [
     // ...
+    // This warns about using Webpack Special Loader syntax, which makes it
+    // very coupled to Webpack and might break in the future.
+    // See https://github.com/facebookincubator/create-react-app/issues/733
     new WarnAboutLoaderDisablingPlugin()
   ],
   // ...
