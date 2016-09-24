@@ -50,8 +50,6 @@ var env = getClientEnvironment(publicUrl);
 //Get custom configuration for injecting plugins, presets and loaders
 var customConfig = getCustomConfig(env);
 
-console.log('customConfig', customConfig);
-
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
 if (env['process.env.NODE_ENV'] !== '"production"') {
