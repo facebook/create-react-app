@@ -7,16 +7,33 @@ function getCustomConfig(env) {
     .reduce(function (finalConfig, customizerKey) {
       var customizer = customizers[customizerKey];
       if (env && env['process.env.REACT_APP_' + customizerKey]) {
-        if (customizer.array) {
-          finalConfig[customizer.array].push(customizer.module ? require.resolve(customizer.module) : customizer.loader);
-        }
-        else {
-          finalConfig.others[customizerKey] = customizer.config;
+        switch (customizer.type) {
+          case 'preset': {
+            finalConfig.presets.push(require.resolve(customizer.module));
+            break;
+          }
+          case 'babelPlugin': {
+            finalConfig.babelPlugins.push(require.resolve(customizer.module));
+            break;
+          }
+          case 'plugin': {
+            finalConfig.plugins.push(customizer.getPlugin());
+            break;
+          }
+          case 'loader': {
+            finalConfig.loaders.push(customizer.loader);
+            break;
+          }
+          case 'config': {
+            finalConfig.others[customizerKey] = customizer.config;
+            break;
+          }
         }
       }
       return finalConfig;
     }, {
       presets: [],
+      babelPlugins: [],
       plugins: [],
       loaders: [],
       others: {}

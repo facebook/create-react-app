@@ -70,6 +70,7 @@
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": "1.13.2",
+    "webpack-dashboard": "^0.1.8",
     "webpack-dev-server": "1.16.1",
     "whatwg-fetch": "1.0.0"
   },
