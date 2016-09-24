@@ -1,11 +1,17 @@
 var customizers = require('./customizers');
 
-function getCustomConfig(env) {
+function getCustomConfig(env, prod) {
+  var prod = prod || false;
   var env = env || {};
   var result = Object
     .keys(customizers)
     .reduce(function (finalConfig, customizerKey) {
       var customizer = customizers[customizerKey];
+
+      if(customizer.prod === false && prod === true){
+        return finalConfig;
+      };
+
       if (env && env['process.env.REACT_APP_' + customizerKey]) {
         switch (customizer.type) {
           case 'preset': {

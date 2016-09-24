@@ -30,6 +30,7 @@ module.exports = {
   },
   'WEBPACK_DASHBOARD': {
     type: 'plugin',
+    prod: false,
     getPlugin: function getPlugin() {
       var DashboardPlugin = require('webpack-dashboard/plugin');
       var Dashboard = require('webpack-dashboard');

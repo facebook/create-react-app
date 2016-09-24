@@ -48,7 +48,7 @@ var publicUrl = ensureSlash(homepagePathname, false);
 // Get enrivonment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
 //Get custom configuration for injecting plugins, presets and loaders
-var customConfig = getCustomConfig(env);
+var customConfig = getCustomConfig(env, true);
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
