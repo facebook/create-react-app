@@ -1,17 +1,31 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
-import './App.css';
 
+//styles
+import './App.less';
+import './App.scss';
+import styles from './Modules.css';
+
+//mobx
+import {observer} from 'mobx-react';
+
+@observer
 class App extends Component {
   render() {
+
+    const {app} = this.props.store;
+
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <img src={logo} className="App-logo" alt="logo"/>
+          <h2 className="App-title">{app.title} </h2>
+          <button className="App-button" onClick={::app.changeRandomTitle}>
+            change me
+          </button>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+        <p className={styles.appIntro}>
+          To get started, edit <code className={styles.code}>src/App.js</code> and save to reload.
         </p>
       </div>
     );
