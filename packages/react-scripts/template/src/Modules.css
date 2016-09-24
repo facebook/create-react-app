@@ -1,10 +1,21 @@
-.app-intro {
-    animation: App-logo-spin infinite 20s linear;
-    height: 80px;
+.appIntro {
+    font-size: large;
 }
 
 .code {
     color: red;
     font-weight: bold;
     justify-content: center;
+}
+
+.description {
+    padding: 20px;
+}
+
+.warning {
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 100;
+    color: #e68484;
 }

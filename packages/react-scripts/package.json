@@ -1,6 +1,6 @@
 {
   "name": "custom-react-scripts",
-  "version": "0.5.1",
+  "version": "0.0.1",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -76,8 +76,6 @@
   },
   "devDependencies": {
     "bundle-deps": "1.0.0",
-    "mobx": "^2.5.1",
-    "mobx-react": "^3.5.6",
     "react": "^15.3.0",
     "react-dom": "^15.3.0"
   },
