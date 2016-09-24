@@ -1,3 +1,13 @@
+/**
+ * This is a good place to put styles related to the <App /> component.
+ * We recommend that, when possible, a component CSS file only includes styles
+ * that are used by that specific component. This is why all class names start
+ * with "App" in this example. Instead of defining nested selectors for child
+ * components, we recommend passing all relevant information as props (such as
+ * <Button color="red" size="large" />) in React. Then you can have <Button />
+ * use its own Button.css file without coupling their styles together.
+ */
+
 .App {
   text-align: center;
 }

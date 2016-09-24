@@ -1,3 +1,8 @@
+/**
+ * This is a good place to put styles that apply to the whole page.
+ * We recommend to put component-specific styles into separate files.
+ */
+
 body {
   margin: 0;
   padding: 0;
