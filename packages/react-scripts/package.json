@@ -39,7 +39,7 @@
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "node-sass": "^3.10.0",
-    "sass-loader": "^4.0.2"
+    "sass-loader": "^4.0.2",
     "detect-port": "1.0.0",
     "dotenv": "2.0.0",
     "eslint": "3.5.0",
