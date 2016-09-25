@@ -94,9 +94,8 @@ prompt(
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
-      .replace(
-        new RegExp(/react-scripts (\w+)/g, 'node scripts/$1.js'
-      ));
+      .replace(/react-scripts (\w+)/g, 'node scripts/$1.js'
+      );
   });
 
   // Add Jest config
