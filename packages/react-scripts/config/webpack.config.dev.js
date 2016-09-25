@@ -43,22 +43,18 @@ module.exports = {
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
   entry: [
-    // Include WebpackDevServer client. It connects to WebpackDevServer via
-    // sockets and waits for recompile notifications. When WebpackDevServer
-    // recompiles, it sends a message to the client by socket. If only CSS
-    // was changed, the app reload just the CSS. Otherwise, it will refresh.
-    // The "?/" bit at the end tells the client to look for the socket at
-    // the root path, i.e. /sockjs-node/. Otherwise visiting a client-side
-    // route like /todos/42 would make it wrongly request /todos/42/sockjs-node.
-    // The socket server is a part of WebpackDevServer which we are using.
-    // The /sockjs-node/ path I'm referring to is hardcoded in WebpackDevServer.
-    require.resolve('webpack-dev-server/client') + '?/',
-    // Include Webpack hot module replacement runtime. Webpack is pretty
-    // low-level so we need to put all the pieces together. The runtime listens
-    // to the events received by the client above, and applies updates (such as
-    // new CSS) to the running application.
-    require.resolve('webpack/hot/dev-server'),
-    // We ship a few polyfills by default.
+    // Include an alternative client for WebpackDevServer. A client's job is to
+    // connect to WebpackDevServer by a socket and get notified about changes.
+    // When you save a file, the client will either apply hot updates (in case
+    // of CSS changes), or refresh the page (in case of JS changes). When you
+    // make a syntax error, this client will display a syntax error overlay.
+    // Note: instead of the default WebpackDevServer client, we use a custom one
+    // to bring better experience for Create React App users. You can replace
+    // the line below with these two lines if you prefer the stock client:
+    // require.resolve('webpack-dev-server/client') + '?/',
+    // require.resolve('webpack/hot/dev-server'),
+    require.resolve('react-dev-utils/webpackHotDevClient'),
+    // We ship a few polyfills by default:
     require.resolve('./polyfills'),
     // Finally, this is your app's code:
     paths.appIndexJs
