@@ -1,3 +1,24 @@
+### Disclaimer:
+> This is **not** a complete fork of ```create-react-app```. But this is the [only way](https://github.com/facebookincubator/create-react-app/issues/682#issuecomment-249364974) to publish a custom version of ```react-scripts```.
+
+# ☢ custom-react-scripts ☢
+> Adds support for custom ```create-react-app``` config without ejecting the app.
+
+**Features:**
+* Decorators
+* babel-preset-stage-0
+* LESS
+* SASS
+* CSS modules
+* webpack-dashboard
+
+
+The complete [README is here](https://github.com/kitze/create-react-app/tree/master/packages/react-scripts).
+
+
+# Original readme below 👇
+-
+
 # Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
 
 Create React apps with no build configuration.
