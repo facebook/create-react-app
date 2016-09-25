@@ -31,7 +31,7 @@ var publicUrl = '';
 // Get enrivonment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
 //Get custom configuration for injecting plugins, presets and loaders
-var customConfig = getCustomConfig(env, false);
+var customConfig = getCustomConfig(false);
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -145,7 +145,7 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        loader: customConfig.others.CSS_MODULES ? customConfig.others.CSS_MODULES.dev : 'style!css!postcss'
+        loader: customConfig.values.CSS_MODULES ? customConfig.values.CSS_MODULES.dev : 'style!css!postcss'
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
