@@ -16,7 +16,7 @@ class App extends Component {
         </div>
 
         <div className={styles.description}>
-          <p> If you want to enable certain features just modify the .env file in the root directory of this
+          <p> If you want to enable certain features just modify the <b>.env</b> file in the root directory of this
               project.
           </p>
 
