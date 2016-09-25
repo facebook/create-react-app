@@ -122,6 +122,10 @@ The [User Guide](https://github.com/facebookincubator/create-react-app/blob/mast
 
 A copy of the user guide will be created as `README.md` in your project folder.
 
+## How to Update to New Versions?
+
+Please refer to the [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases) for this and other information.
+
 ## Philosophy
 
 * **One Dependency:** There is just one build dependency. It uses Webpack, Babel, ESLint, and other amazing projects, but provides a cohesive curated experience on top of them.
