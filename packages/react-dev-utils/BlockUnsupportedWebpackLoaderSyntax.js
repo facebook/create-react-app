@@ -7,26 +7,25 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-// This Webpack plugin warns the user when using special webpack syntax
+// This Webpack plugin forbids usage of special webpack syntax
 // to disable loaders (https://webpack.github.io/docs/loaders.html#loader-order)
 // This makes it very coupled to webpack and might break in the future.
 // See https://github.com/facebookincubator/create-react-app/issues/733.
 
 'use strict';
 
-var chalk = require('chalk');
-
-class WarnAboutLoaderDisablingPlugin {
+class BlockUnsupportedWebpackLoaderSyntax {
   apply(compiler) {
     compiler.plugin('normal-module-factory', (normalModuleFactory) => {
       normalModuleFactory.plugin('before-resolve', (data, callback) => {
+        let error = null;
         if (data.request.match(/^-?!!?/)) {
-          chalk.yellow(`Warning: You are requesting '${data.request}'. Special Webpack Loaders syntax is not officially supported and makes you code very coupled to Webpack, which might break in the future, we recommend that you remove it. See `https://github.com/facebookincubator/create-react-app/issues/733`);
+          error = `You are requesting '${data.request}'. Special Webpack Loaders syntax is not officially supported and makes you code very coupled to Webpack, which might break in the future, we recommend that you remove it. See https://github.com/facebookincubator/create-react-app/issues/733`;
         }
-        callback(null, data);
-      })
+        callback(error, data);
+      });
     });
   }
 }
 
-module.exports = WarnAboutLoaderDisablingPlugin;
+module.exports = BlockUnsupportedWebpackLoaderSyntax;
