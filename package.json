@@ -7,7 +7,9 @@
     "postinstall": "lerna bootstrap",
     "publish": "tasks/release.sh",
     "start": "node packages/react-scripts/scripts/start.js",
-    "test": "node packages/react-scripts/scripts/test.js --env=jsdom"
+    "test": "node packages/react-scripts/scripts/test.js --env=jsdom",
+    "deploy": "surge build/ custom-create-react-app.surge.sh",
+    "bnd":  "npm run build && npm run deploy"
   },
   "devDependencies": {
     "babel-eslint": "6.1.2",
