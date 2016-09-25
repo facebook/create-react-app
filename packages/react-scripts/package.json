@@ -20,7 +20,7 @@
     "utils"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "custom-react-scripts": "./bin/custom-react-scripts.js"
   },
   "dependencies": {
     "autoprefixer": "6.4.1",
