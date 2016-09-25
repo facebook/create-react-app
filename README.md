@@ -1,5 +1,4 @@
 # ☢ custom-react-scripts ☢
-#### Support for custom create-react-app config without ejecting the app
 
 ### ⚠️ Disclaimer:
 > This is **not** a fork of ```create-react-app```. It's just a fork of ```react-scripts``` with simple babel/webpack modifications that can toggle extra features.

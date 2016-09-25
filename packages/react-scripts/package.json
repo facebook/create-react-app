@@ -1,7 +1,7 @@
 {
   "name": "custom-react-scripts",
   "version": "0.0.6",
-  "description": "Allow custom configurations for create-react-app",
+  "description": "Allow custom config for create-react-app without ejecting",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
