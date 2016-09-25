@@ -46,13 +46,13 @@ function showErrorOverlay(message) {
     document.getElementById(iframeID) ||
     document.createElement('iframe');
   iframe.id = iframeID;
-  iframe.style.position = 'absolute';
+  iframe.style.position = 'fixed';
   iframe.style.left = 0;
   iframe.style.top = 0;
   iframe.style.right = 0;
   iframe.style.bottom = 0;
-  iframe.style.width = '100%';
-  iframe.style.height = '100%';
+  iframe.style.width = '100vw';
+  iframe.style.height = '100vh';
   iframe.style.border = 'none';
   iframe.style.zIndex = 9999999999;
   document.body.appendChild(iframe);
@@ -63,20 +63,20 @@ function showErrorOverlay(message) {
     iframe.contentDocument.getElementById(overlayID) ||
     iframe.contentDocument.createElement('div');
   overlay.id = overlayID;
-  overlay.style.position = 'absolute';
+  overlay.style.position = 'fixed';
   overlay.style.left = 0;
   overlay.style.top = 0;
   overlay.style.right = 0;
   overlay.style.bottom = 0;
-  overlay.style.width = '100%';
-  overlay.style.height = '100%';
+  overlay.style.width = '100vw';
+  overlay.style.height = '100vh';
   overlay.style.backgroundColor = 'black';
   overlay.style.color = '#E8E8E8';
   overlay.style.fontFamily = 'Menlo, Consolas, monospace';
   overlay.style.fontSize = 'large';
   overlay.style.padding = '2rem';
   overlay.style.lineHeight = '1.2';
-  overlay.style.whiteSpace = 'pre';
+  overlay.style.whiteSpace = 'pre-wrap';
   overlay.style.overflow = 'auto';
 
   // Make it look similar to our terminal.
