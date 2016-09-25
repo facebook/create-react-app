@@ -1,7 +1,7 @@
 {
   "name": "custom-react-scripts",
-  "version": "0.0.5",
-  "description": "Configuration and scripts for Create React App.",
+  "version": "0.0.6",
+  "description": "Allow custom configurations for create-react-app",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
