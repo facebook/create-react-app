@@ -1,3 +1,21 @@
+## 0.6.0 (September 25, 2016)
+
+### Build Dependency (`react-scripts`)
+
+* Adds an overlay for syntax errors in development. ([@gaearon](https://github.com/gaearon) in [#744](https://github.com/facebookincubator/create-react-app/pull/744))
+
+### Utilities (`react-dev-utils`)
+
+* Adds an alternative WebpackDevServer client that displays the error overlay. ([@gaearon](https://github.com/gaearon) in [#744](https://github.com/facebookincubator/create-react-app/pull/744))
+
+### Migrating from 0.5.1 to 0.6.0
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.6.0
+```
+
 ## 0.5.1 (September 23, 2016)
 
 ### Build Dependency (`react-scripts`)
