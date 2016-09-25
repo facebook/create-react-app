@@ -52,10 +52,11 @@ So instead of [searching npm](https://www.npmjs.com/search?q=react-scripts) for 
 ### How does it work?
 The CRA team recently [added support](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-development-environment-variables-in-env) for an ```.env``` file in the root of the generated CRA project.
 
+From the original readme:
 > To define permanent environment vairables, create a file called .env in the root of your project:
->```REACT_APP_SECRET_CODE=abcdef```
+> REACT_APP_SECRET_CODE=abcdef
 
-I just added support for extra environment variables that actually add certain plugins, babel plugins, presets, and loaders to the webpack and babel config of ```react-scripts```.
+I just added support for extra environment variables that actually turn on certain plugins, babel plugins, presets, and loaders in the webpack and babel configs of ```react-scripts```.
 
 ### Future plans
 
