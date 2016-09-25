@@ -62,11 +62,20 @@ class App extends Component {
               <code>REACT_APP_WEBPACK_DASHBOARD=true</code>
               <span>- Enable webpack-dashboard ⚠️ (this will turn off the original create-react-app message logs)</span>
             </li>
+          </ul>
+
+          <b> Others </b>
+          <ul className="configs style-configs">
             <li>
-              <code>REACT_APP_DECORATORS=true</code>
-              <span>- Enable usage of decorators</span>
+              <code>PORT=3015</code>
+              <span>- change default port (supported in CRA by default)</span>
+            </li>
+            <li>
+              <code>OPEN_BROWSER=false</code>
+              <span>- don't open browser after running webpack server</span>
             </li>
           </ul>
+
         </div>
       </div>
     )

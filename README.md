@@ -30,7 +30,6 @@ The generated project comes with SASS, LESS, and CSS modules support by default,
 
 #### Webpack
 - ```REACT_APP_WEBPACK_DASHBOARD=true``` - enable webpack-dashboard
-- ```REACT_APP_DECORATORS=true``` - enable decorators support
 
 #### Babel
 - ```REACT_APP_BABEL_STAGE_0=true``` - enable stage-0 Babel preset
@@ -38,6 +37,10 @@ The generated project comes with SASS, LESS, and CSS modules support by default,
 
 > ⚠️ Please note that the Babel features are highly experimental (especially stage-0) and still not a part of the ES specification.
 > Use them at your own risk of breaking backwards compatibility if they don't make the final version of the spec.
+
+#### Others
+- ```PORT=3015``` - change default port (supported in CRA by default)
+- ```OPEN_BROWSER=false``` - don't open browser after running webpack server
 
 ### 🤔 Why?
 The ```create-react-app``` app doesn't allow user configuration and modifications for few reasons:
