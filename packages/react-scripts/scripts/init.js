@@ -24,10 +24,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
 
   // Setup the script rules
   appPackage.scripts = {
-    'start': ownPackageName + ' start',
-    'build': ownPackageName + ' build',
-    'test': ownPackageName + ' test --env=jsdom',
-    'eject': ownPackageName + ' eject'
+    'start': 'react-scripts start',
+    'build': 'react-scripts build',
+    'test': 'react-scripts test --env=jsdom',
+    'eject': 'react-scripts eject'
   };
 
   fs.writeFileSync(
