@@ -12,7 +12,6 @@
 // https://github.com/webpack/webpack/blob/webpack-1/hot/dev-server.js
 
 // It only supports their simplest configuration (hot updates on same server).
-// It also assumes hot module replacement is enabled.
 // It makes some opinionated choices on top, like adding a syntax error overlay
 // that looks similar to our console output. The error overlay is inspired by:
 // https://github.com/glenjamin/webpack-hot-middleware
@@ -201,6 +200,12 @@ function canApplyUpdates() {
 
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates(onHotUpdateSuccess) {
+  if (!module.hot) {
+    // HotModuleReplacementPlugin is not in Webpack configuration.
+    window.location.reload();
+    return;
+  }
+
   if (!isUpdateAvailable() || !canApplyUpdates()) {
     return;
   }
