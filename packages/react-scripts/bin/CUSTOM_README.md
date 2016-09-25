@@ -60,7 +60,3 @@ I just added support for extra environment variables that actually add certain p
 ### Future plans
 
 I will put all of my efforts into supporting this fork to be always on par with features with the newest ```create-react-app``` and ```react-scripts``` versions.
-
--
-### Original readme below 👇
--

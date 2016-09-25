@@ -224,7 +224,7 @@ function runDevServer(host, port, protocol) {
     publicPath: config.output.publicPath,
     // WebpackDevServer is noisy by default so we emit custom message instead
     // by listening to the compiler events with `compiler.plugin` calls above.
-    quiet: true,
+    quiet: false,
     // Reportedly, this avoids CPU overload on some systems.
     // https://github.com/facebookincubator/create-react-app/issues/293
     watchOptions: {
@@ -244,7 +244,6 @@ function runDevServer(host, port, protocol) {
       return console.log(err);
     }
 
-    clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
     openBrowser(protocol + '://' + host + ':' + port + '/');
@@ -266,7 +265,6 @@ detect(DEFAULT_PORT).then(port => {
     return;
   }
 
-  clearConsole();
   var question =
     chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.') +
     '\n\nWould you like to run the app on another port instead?';
