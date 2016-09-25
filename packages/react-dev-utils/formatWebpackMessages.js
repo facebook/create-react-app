@@ -7,50 +7,115 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+// WARNING: this code is untranspiled and is used in browser too.
+// Please make sure any changes are in ES5 or contribute a Babel compile step.
+
 // Some custom utilities to prettify Webpack output.
-// This is a little hacky.
-// It would be easier if webpack provided a rich error object.
+// This is quite hacky and hopefully won't be needed when Webpack fixes this.
+// https://github.com/webpack/webpack/issues/2878
+
 var friendlySyntaxErrorLabel = 'Syntax error:';
+
 function isLikelyASyntaxError(message) {
   return message.indexOf(friendlySyntaxErrorLabel) !== -1;
 }
+
+// Cleans up webpack error messages.
 function formatMessage(message) {
-  return message
-    // Make some common errors shorter:
-    .replace(
-      // Babel syntax error
+  var lines = message.split('\n');
+
+  // line #0 is filename
+  // line #1 is the main error message
+  if (!lines[0] || !lines[1]) {
+    return message;
+  }
+
+  // Remove webpack-specific loader notation from filename.
+  // Before:
+  // ./~/css-loader!./~/postcss-loader!./src/App.css
+  // After:
+  // ./src/App.css
+  if (lines[0].lastIndexOf('!') !== -1) {
+    lines[0] = lines[0].substr(lines[0].lastIndexOf('!') + 1);
+  }
+
+  // Cleans up verbose "module not found" messages for files and packages.
+  if (lines[1].indexOf('Module not found: ') === 0) {
+    lines = [
+      lines[0],
+      // Clean up message because "Module not found: " is descriptive enough.
+      lines[1].replace(
+        'Cannot resolve \'file\' or \'directory\' ', ''
+      ).replace(
+        'Cannot resolve module ', ''
+      ).replace(
+        'Error: ', ''
+      ),
+      // Skip all irrelevant lines.
+      // (For some reason they only appear on the client in browser.)
+      '',
+      lines[lines.length - 1] // error location is the last line
+    ]
+  }
+
+  // Cleans up syntax error messages.
+  if (lines[1].indexOf('Module build failed: ') === 0) {
+    // For some reason, on the client messages appear duplicated:
+    // https://github.com/webpack/webpack/issues/3008
+    // This won't happen in Node but since we share this helpers,
+    // we will dedupe them right here. We will ignore all lines
+    // after the original error message text is repeated the second time.
+    var errorText = lines[1].substr('Module build failed: '.length);
+    var cleanedLines = [];
+    var hasReachedDuplicateMessage = false;
+    // Gather lines until we reach the beginning of duplicate message.
+    lines.forEach(function(line, index) {
+      if (
+        // First time it occurs is fine.
+        index !== 1 &&
+        // line.endsWith(errorText)
+        line.length >= errorText.length &&
+        line.indexOf(errorText) === line.length - errorText.length
+      ) {
+        // We see the same error message for the second time!
+        // Filter out repeated error message and everything after it.
+        hasReachedDuplicateMessage = true;
+      }
+      if (
+        !hasReachedDuplicateMessage ||
+        // Print last line anyway because it contains the source location
+        index === lines.length - 1
+      ) {
+        // This line is OK to appear in the output.
+        cleanedLines.push(line);
+      }
+    });
+    // We are clean now!
+    lines = cleanedLines;
+    // Finally, brush up the error message a little.
+    lines[1] = lines[1].replace(
       'Module build failed: SyntaxError:',
       friendlySyntaxErrorLabel
-    )
-    .replace(
-      // Webpack file not found error
-      /Module not found: Error: Cannot resolve 'file' or 'directory'/,
-      'Module not found:'
-    )
-    // Internal stacks are generally useless so we strip them
-    .replace(/^\s*at\s.*:\d+:\d+[\s\)]*\n/gm, '') // at ... ...:x:y
-    // Webpack loader names obscure CSS filenames
-    .replace('./~/css-loader!./~/postcss-loader!', '');
+    );
+  }
+
+  // Reassemble the message.
+  message = lines.join('\n');
+  // Internal stacks are generally useless so we strip them
+  message = message.replace(
+    /^\s*at\s.*:\d+:\d+[\s\)]*\n/gm, ''
+  ); // at ... ...:x:y
+
+  return message;
 }
 
-function formatWebpackMessages(stats) {
-  var hasErrors = stats.hasErrors();
-  var hasWarnings = stats.hasWarnings();
-  if (!hasErrors && !hasWarnings) {
-    return {
-      errors: [],
-      warnings: []
-    };
-  }
-  // We use stats.toJson({}, true) to make output more compact and readable:
-  // https://github.com/facebookincubator/create-react-app/issues/401#issuecomment-238291901
-  var json = stats.toJson({}, true);
-  var formattedErrors = json.errors.map(message =>
-    'Error in ' + formatMessage(message)
-  );
-  var formattedWarnings = json.warnings.map(message =>
-    'Warning in ' + formatMessage(message)
-  );
+function formatWebpackMessages(json) {
+  var formattedErrors = json.errors.map(function(message) {
+    return 'Error in ' + formatMessage(message)
+  });
+  var formattedWarnings = json.warnings.map(function(message) {
+    return 'Warning in ' + formatMessage(message)
+  });
   var result = {
     errors: formattedErrors,
     warnings: formattedWarnings

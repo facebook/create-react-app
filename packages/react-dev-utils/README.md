@@ -178,3 +178,25 @@ prompt(
   }
 });
 ```
+
+#### `webpackHotDevClient.js`
+
+This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.
+
+It currently supports only Webpack 1.x.
+
+```js
+// Webpack development config
+module.exports = {
+  // ...
+  entry: [
+    // You can replace the line below with these two lines if you prefer the
+    // stock client:
+    // require.resolve('webpack-dev-server/client') + '?/',
+    // require.resolve('webpack/hot/dev-server'),
+    'react-dev-utils/webpackHotDevClient',
+    'src/index'
+  ],
+  // ...
+}
+```
