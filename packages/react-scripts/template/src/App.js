@@ -12,11 +12,18 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo"/>
-          <h2 className="App-title"> ☢ Customizable create-react-app ☢ </h2>
+          <h2 className="App-title"> ☢ custom-react-scripts ☢ </h2>
+          <div className="App-subtitle"> allow custom config for create-react-app without ejecting</div>
         </div>
 
         <div className={styles.description}>
-          <p> If you want to enable certain features just modify the <b>.env</b> file in the root directory of this
+
+          <div className={styles.command}>
+            <code>create-react-app my-app --scripts-version custom-react-scripts</code>
+          </div>
+
+          <p> If you want to enable/disable certain features just modify the <b>.env</b> file in the root directory of
+              the
               project.
           </p>
 
@@ -60,7 +67,7 @@ class App extends Component {
           <ul className="configs babel-configs">
             <li>
               <code>REACT_APP_WEBPACK_DASHBOARD=true</code>
-              <span>- Enable webpack-dashboard ⚠️ (this will turn off the original create-react-app message logs)</span>
+              <span>- Enable webpack-dashboard ⚠️ <span className={styles.experimental}>(experimental)</span> </span>
             </li>
           </ul>
 
@@ -76,6 +83,11 @@ class App extends Component {
             </li>
           </ul>
 
+          <br/>
+          <br/>
+          <a target="_blank" className={styles.readmeLink} href="https://github.com/kitze/create-react-app/tree/master/packages/react-scripts">
+            Link to full README.md
+          </a>
         </div>
       </div>
     )
