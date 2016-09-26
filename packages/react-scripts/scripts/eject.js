@@ -13,13 +13,16 @@ var path = require('path');
 var prompt = require('react-dev-utils/prompt');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
+var chalk = require('chalk');
+var green = chalk.green;
+var yellowUnderline = chalk.yellow.underline
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
   false
 ).then(shouldEject => {
   if (!shouldEject) {
-    console.log('Close one! Eject aborted.');
+    console.log(green('Close one! Eject aborted.'));
     process.exit(1);
   }
 
@@ -62,7 +65,7 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'scripts'));
 
   files.forEach(function(file) {
-    console.log('Copying ' + file + ' to ' + appPath);
+    console.log(green('Copying ') + yellowUnderline(file) + ' to ' + yellowUnderline(appPath));
     var content = fs
       .readFileSync(path.join(ownPath, file), 'utf8')
       // Remove dead code from .js files on eject
@@ -78,7 +81,7 @@ prompt(
   var appPackage = require(path.join(appPath, 'package.json'));
 
   var ownPackageName = ownPackage.name;
-  console.log('Removing dependency: ' + ownPackageName);
+  console.log('Removing dependency: ' + yellowUnderline(ownPackageName));
   delete appPackage.devDependencies[ownPackageName];
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
@@ -86,7 +89,7 @@ prompt(
     if (ownPackage.optionalDependencies[key]) {
       return;
     }
-    console.log('Adding dependency: ' + key);
+    console.log(green('\tAdding dependency: ') + yellowUnderline(key));
     appPackage.devDependencies[key] = ownPackage.dependencies[key];
   });
 
@@ -107,20 +110,20 @@ prompt(
     true
   );
 
-  console.log('Writing package.json');
+  console.log(green('Writing ') + yellowUnderline('package.json'));
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
   );
   console.log();
 
-  console.log('Running npm install...');
+  console.log(green('Running ') + yellowUnderline('npm install...'));
   rimrafSync(ownPath);
   spawnSync('npm', ['install'], {stdio: 'inherit'});
-  console.log('Ejected successfully!');
+  console.log(green('Ejected successfully!'));
   console.log();
 
-  console.log('Please consider sharing why you ejected in this survey:');
-  console.log('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1');
-  console.log();
-});
+  console.log(green('Please consider sharing why you ejected in this survey:'));
+  console.log('\t' + yellowUnderline('http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
+  console.log()
+})
