@@ -7,10 +7,10 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var createJestConfig = require('./utils/createJestConfig');
+var createJestConfig = require('../utils/createJestConfig');
 var fs = require('fs');
 var path = require('path');
-var prompt = require('./utils/prompt');
+var prompt = require('react-dev-utils/prompt');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
 
@@ -29,25 +29,18 @@ prompt(
   var ownPath = path.join(__dirname, '..');
   var appPath = path.join(ownPath, '..', '..');
   var files = [
-    path.join('config', 'babel.dev.js'),
-    path.join('config', 'babel.prod.js'),
-    path.join('config', 'flow', 'css.js.flow'),
-    path.join('config', 'flow', 'file.js.flow'),
-    path.join('config', 'eslint.js'),
-    path.join('config', 'paths.js'),
+    '.babelrc',
+    '.eslintrc',
     path.join('config', 'env.js'),
+    path.join('config', 'paths.js'),
     path.join('config', 'polyfills.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
     path.join('config', 'jest', 'CSSStub.js'),
     path.join('config', 'jest', 'FileStub.js'),
-    path.join('config', 'jest', 'transform.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
-    path.join('scripts', 'utils', 'checkRequiredFiles.js'),
-    path.join('scripts', 'utils', 'chrome.applescript'),
-    path.join('scripts', 'utils', 'prompt.js'),
-    path.join('scripts', 'utils', 'WatchMissingNodeModulesPlugin.js')
+    path.join('scripts', 'test.js')
   ];
 
   // Ensure that the app folder is clean and we won't override any files
@@ -65,10 +58,8 @@ prompt(
 
   // Copy the files over
   fs.mkdirSync(path.join(appPath, 'config'));
-  fs.mkdirSync(path.join(appPath, 'config', 'flow'));
   fs.mkdirSync(path.join(appPath, 'config', 'jest'));
   fs.mkdirSync(path.join(appPath, 'scripts'));
-  fs.mkdirSync(path.join(appPath, 'scripts', 'utils'));
 
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + appPath);
@@ -86,8 +77,9 @@ prompt(
   var ownPackage = require(path.join(ownPath, 'package.json'));
   var appPackage = require(path.join(appPath, 'package.json'));
 
-  console.log('Removing dependency: react-scripts');
-  delete appPackage.devDependencies['react-scripts'];
+  var ownPackageName = ownPackage.name;
+  console.log('Removing dependency: ' + ownPackageName);
+  delete appPackage.devDependencies[ownPackageName];
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
     // For some reason optionalDependencies end up in dependencies after install
@@ -102,19 +94,15 @@ prompt(
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
-      .replace(/react-scripts test/g, 'jest --watch')
       .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
   });
 
   // Add Jest config
   appPackage.jest = createJestConfig(
-    filePath => path.join('<rootDir>', filePath)
+    filePath => path.join('<rootDir>', filePath),
+    null,
+    true
   );
-
-  // Explicitly specify ESLint config path for editor plugins
-  appPackage.eslintConfig = {
-    extends: './config/eslint.js',
-  };
 
   console.log('Writing package.json');
   fs.writeFileSync(

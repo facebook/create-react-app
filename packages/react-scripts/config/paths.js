@@ -38,7 +38,8 @@ var nodePaths = (process.env.NODE_PATH || '')
 // config after eject: we're in ./config/
 module.exports = {
   appBuild: resolveApp('build'),
-  appHtml: resolveApp('index.html'),
+  appPublic: resolveApp('public'),
+  appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
@@ -56,7 +57,8 @@ function resolveOwn(relativePath) {
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
   appBuild: resolveApp('build'),
-  appHtml: resolveApp('index.html'),
+  appPublic: resolveApp('public'),
+  appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
@@ -71,7 +73,8 @@ module.exports = {
 // @remove-on-publish-begin
 module.exports = {
   appBuild: resolveOwn('../../../build'),
-  appHtml: resolveOwn('../template/index.html'),
+  appPublic: resolveOwn('../template/public'),
+  appHtml: resolveOwn('../template/public/index.html'),
   appIndexJs: resolveOwn('../template/src/index.js'),
   appPackageJson: resolveOwn('../package.json'),
   appSrc: resolveOwn('../template/src'),

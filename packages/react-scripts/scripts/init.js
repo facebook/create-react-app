@@ -14,8 +14,8 @@ var pathExists = require('path-exists');
 var chalk = require('chalk');
 
 module.exports = function(appPath, appName, verbose, originalDirectory) {
-  var ownPath = path.join(appPath, 'node_modules', 'react-scripts');
-
+  var ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
+  var ownPath = path.join(appPath, 'node_modules', ownPackageName);
   var appPackage = require(path.join(appPath, 'package.json'));
 
   // Copy over some of the devDependencies
@@ -88,7 +88,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     }
 
     console.log();
-    console.log('Success! Created ' + appName + ' at ' + appPath + '.');
+    console.log('Success! Created ' + appName + ' at ' + appPath);
     console.log('Inside that directory, you can run several commands:');
     console.log();
     console.log(chalk.cyan('  npm start'));
