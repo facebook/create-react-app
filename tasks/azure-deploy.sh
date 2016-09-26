@@ -31,6 +31,7 @@ SCRIPT_DIR="${SCRIPT_DIR%/*}"
 ARTIFACTS=$SCRIPT_DIR/../artifacts
 KUDU_SYNC_CMD=${KUDU_SYNC_CMD//\"}
 
+
 if [[ ! -n "$DEPLOYMENT_SOURCE" ]]; then
   DEPLOYMENT_SOURCE=$SCRIPT_DIR
 fi
@@ -48,6 +49,8 @@ if [[ ! -n "$DEPLOYMENT_TARGET" ]]; then
 else
   KUDU_SERVICE=true
 fi
+
+WEB_CONFIG=$DEPLOYMENT_SOURCE/template/Web.config
 
 if [[ ! -n "$KUDU_SYNC_CMD" ]]; then
   # Install kudu sync
@@ -121,20 +124,15 @@ if [ -e "$DEPLOYMENT_SOURCE/package.json" ]; then
   cd - > /dev/null
 fi
 
-if [ -e "$DEPLOYMENT_SOURCE/server.js" ]; then
-  echo Copying server.js over to the build folder
-  cp server.js package.json build/
-  exitWithMessageOnError "Unable to copy server.js over to build"
+if [ -e "$WEB_CONFIG" ]; then
+  echo Copying $WEB_CONFIG over to the build folder
+  cp $WEB_CONFIG build/
+  exitWithMessageOnError "Unable to copy $WEB_CONFIG over to build"
 fi
 
 if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
   echo Syncing Files
   "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE/build" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
-  exitWithMessageOnError "Kudu Sync failed"
-  cd "$DEPLOYMENT_TARGET"
-  echo Installing website npm dependencies
-  eval $NPM_CMD install
-  cd "$DEPLOYMENT_SOURCE"
   exitWithMessageOnError "Kudu Sync failed"
 fi
 
