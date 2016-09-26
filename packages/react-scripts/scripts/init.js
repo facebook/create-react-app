@@ -88,7 +88,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     }
 
     console.log();
-    console.log('Success! Created ' + appName + ' at ' + appPath + '.');
+    console.log('Success! Created ' + appName + ' at ' + appPath);
     console.log('Inside that directory, you can run several commands:');
     console.log();
     console.log(chalk.cyan('  npm start'));
