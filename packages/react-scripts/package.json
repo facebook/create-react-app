@@ -1,6 +1,6 @@
 {
   "name": "custom-react-scripts",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Allow custom config for create-react-app without ejecting",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -20,7 +20,7 @@
     "utils"
   ],
   "bin": {
-    "custom-react-scripts": "./bin/custom-react-scripts.js"
+    "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
     "autoprefixer": "6.4.1",
