@@ -64,12 +64,12 @@ prompt(
   files.forEach(function(file) {
     console.log('Copying ' + file + ' to ' + appPath);
     var content = fs
-      .readFileSync(path.join(ownPath, file), 'utf8')
-      // Remove dead code from .js files on eject
-      .replace(/\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/mg, '')
-      // Remove dead code from .applescript files on eject
-      .replace(/-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/mg, '')
-      .trim() + '\n';
+        .readFileSync(path.join(ownPath, file), 'utf8')
+        // Remove dead code from .js files on eject
+        .replace(/\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/mg, '')
+        // Remove dead code from .applescript files on eject
+        .replace(/-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/mg, '')
+        .trim() + '\n';
     fs.writeFileSync(path.join(appPath, file), content);
   });
   console.log();
@@ -94,10 +94,7 @@ prompt(
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
-      .replace(
-        new RegExp(ownPackageName + ' (\\w+)', 'g'),
-        'node scripts/$1.js'
-      );
+      .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
   });
 
   // Add Jest config
