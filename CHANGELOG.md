@@ -1,3 +1,7 @@
+### Azure Deployment Integration
+
+* Added Azure / Kudu deployment scripts which is triggered by kudus continuous deployment Github webhook. 
+
 ## 0.6.0 (September 25, 2016)
 
 ### Build Dependency (`react-scripts`)
