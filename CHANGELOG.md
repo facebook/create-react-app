@@ -1,3 +1,21 @@
+## 0.6.1 (September 27, 2016)
+
+### Build Dependency (`react-scripts`)
+
+* Babel and ESLint configuration is now placed into `package.json` after ejecting. ([@montogeek](https://github.com/montogeek) in [#773](https://github.com/facebookincubator/create-react-app/pull/773))
+
+### Utilities (`react-dev-utils`)
+
+* Fixes the syntax error overlay padding. ([@fson](https://github.com/fson) in [#758](https://github.com/facebookincubator/create-react-app/pull/758))
+
+### Migrating from 0.6.0 to 0.6.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.6.1
+```
+
 ## 0.6.0 (September 25, 2016)
 
 ### Build Dependency (`react-scripts`)
