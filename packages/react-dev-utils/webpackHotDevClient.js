@@ -60,6 +60,7 @@ function addOverlayDivTo(iframe) {
   var div =  iframe.contentDocument.createElement('div');
   div.id = 'react-dev-utils-webpack-hot-dev-client-overlay-div';
   div.style.position = 'fixed';
+  div.style.boxSizing = 'border-box';
   div.style.left = 0;
   div.style.top = 0;
   div.style.right = 0;

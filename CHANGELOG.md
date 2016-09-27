@@ -16,6 +16,8 @@ Inside any created project that has not been ejected, run:
 npm install --save-dev --save-exact react-scripts@0.6.0
 ```
 
+**Note: If the project fails to start, remove `node_modules`, ensure `react-scripts` is `0.6.0` in your `package.json`, and run `npm install` again. There seems to be an [npm bug](https://github.com/npm/npm/issues/14073) affecting this update.**
+
 ## 0.5.1 (September 23, 2016)
 
 ### Build Dependency (`react-scripts`)
