@@ -48,6 +48,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Modulus](#modulus)
   - [Now](#now)
   - [Surge](#surge)
+- [Fork instead of eject](#fork-instead-of-eject)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -935,6 +936,50 @@ Install the Surge CLI if you haven't already by running `npm install -g surge`. 
 ```
 
 Note that in order to support routers that use html5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
+
+## Fork instead of eject
+
+If you want to customize the default configuration slightly (e.g. add CSS Modules, SASS, decorators…), while still having all future updates and a one dependency, you can fork this repo and create your own configuration of `react-scripts` and use it with `create-react-app`.
+
+### Instruction
+
+1: Fork [create-react-app repo](https://github.com/facebookincubator/create-react-app).
+
+2: Change the name of `react-scripts` package to your new one, and also reset its version.
+```js
+// /packages/react-scripts/package.json
+{
+  "name": "my-react-scripts-fork",
+  "version": "0.0.1",
+  …
+}
+```
+
+3: Make your changes inside `react-scripts` package. For example, add CSS Modules:
+```js
+// /packages/react-scripts/config/webpack.config.dev.js
+…
+{
+  test: /\.css$/,
+  loader: 'style!css?modules=1!postcss'
+},
+…
+```
+
+4: [Publish](https://docs.npmjs.com/getting-started/publishing-npm-packages) your customized `react-scripts` package to npm. Remember to cd into `/packages/react-scripts/` before you publish.
+```sh
+$ cd packages/react-scripts
+$ npm publish
+```
+
+5: Now you can use your customized setup with `create react app`:
+```sh
+$ create-react-app my-app --scripts-version my-react-scripts-fork
+```
+
+### Note
+- [create-react-app](https://github.com/facebookincubator/create-react-app) is a [monorepo](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) that contains `react-scripts` package. This is the heart of CRA, with all configurations and scripts. You only need to change and publish this package, not the whole repo.
+- It is recommended to [keep your fork synced](https://help.github.com/articles/fork-a-repo/#keep-your-fork-synced) with the upstream updates. [Backstroke](https://github.com/1egoman/backstroke) is a bot to help you with this.
 
 ## Something Missing?
 
