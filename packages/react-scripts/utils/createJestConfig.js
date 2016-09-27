@@ -1,4 +1,3 @@
-// @remove-on-eject-begin
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -7,12 +6,13 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-// @remove-on-eject-end
+
+// Note: this file does not exist after ejecting.
 
 const pathExists = require('path-exists');
-const paths = require('../../config/paths');
+const paths = require('../config/paths');
 
-module.exports = (resolve, rootDir) => {
+module.exports = (resolve, rootDir, isEjecting) => {
   const setupFiles = [resolve('config/polyfills.js')];
   if (pathExists.sync(paths.testsSetup)) {
     // Use this instead of `paths.testsSetup` to avoid putting
@@ -26,7 +26,6 @@ module.exports = (resolve, rootDir) => {
       '^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
       '^.+\\.css$': resolve('config/jest/CSSStub.js')
     },
-    scriptPreprocessor: resolve('config/jest/transform.js'),
     setupFiles: setupFiles,
     testPathIgnorePatterns: ['<rootDir>/(build|docs|node_modules)/'],
     testEnvironment: 'node',
@@ -34,6 +33,11 @@ module.exports = (resolve, rootDir) => {
   };
   if (rootDir) {
     config.rootDir = rootDir;
+  }
+  if (!isEjecting) {
+    // This is unnecessary after ejecting because Jest
+    // will just use .babelrc in the project folder.
+    config.scriptPreprocessor = resolve('config/jest/transform.js');
   }
   return config;
 };

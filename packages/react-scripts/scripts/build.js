@@ -12,8 +12,14 @@
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.NODE_ENV = 'production';
 
+// Load environment variables from .env file. Surpress warnings using silent
+// if this file is missing. dotenv will never modify any environment variables
+// that have already been set.
+// https://github.com/motdotla/dotenv
+require('dotenv').config({silent: true});
+
 var chalk = require('chalk');
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
 var filesize = require('filesize');
 var gzipSize = require('gzip-size').sync;
@@ -21,11 +27,14 @@ var rimrafSync = require('rimraf').sync;
 var webpack = require('webpack');
 var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
-var checkRequiredFiles = require('./utils/checkRequiredFiles');
+var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
 
-checkRequiredFiles();
+// Warn and crash if required files are missing
+if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+  process.exit(1);
+}
 
 // Input: /User/dan/app/build/static/js/main.82be8.js
 // Output: /static/js/main.js
@@ -70,6 +79,9 @@ recursive(paths.appBuild, (err, fileNames) => {
 
   // Start the webpack build
   build(previousSizeMap);
+
+  // Merge with the public folder
+  copyPublicFolder();
 });
 
 // Print a detailed summary of build files.
@@ -173,5 +185,12 @@ function build(previousSizeMap) {
       console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:9000');
       console.log();
     }
+  });
+}
+
+function copyPublicFolder() {
+  fs.copySync(paths.appPublic, paths.appBuild, {
+    dereference: true,
+    filter: file => file !== paths.appHtml
   });
 }
