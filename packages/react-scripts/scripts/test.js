@@ -30,11 +30,23 @@ if (!process.env.CI) {
 // This is not necessary after eject because we embed config into package.json.
 const createJestConfig = require('../utils/createJestConfig');
 const path = require('path');
-const paths = require('../config/paths');
-argv.push('--config', JSON.stringify(createJestConfig(
-  relativePath => path.resolve(__dirname, '..', relativePath),
-  path.resolve(paths.appSrc, '..'),
-  false
-)));
 // @remove-on-eject-end
-jest.run(argv);
+
+function execute (paths) {
+  // @remove-on-eject-begin
+  argv.push('--config', JSON.stringify(createJestConfig(
+    relativePath => path.resolve(__dirname, '..', relativePath),
+    path.resolve(paths.appSrc, '..'),
+    false
+  )));
+  // @remove-on-eject-end
+  jest.run(argv);
+}
+
+// If the scripts will be called directly execute it otherwise export the execute function
+if (require.main === module) {
+    const paths = require('../config/paths');
+    execute(paths);
+} else {
+    module.exports = execute;
+}
