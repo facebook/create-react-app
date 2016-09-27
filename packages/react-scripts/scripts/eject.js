@@ -17,6 +17,7 @@ var chalk = require('chalk');
 var green = chalk.green;
 var cyan = chalk.cyan;
 var red = chalk.red;
+var yellow = chalk.yellow;
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
@@ -65,7 +66,7 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'scripts'));
 
   console.log();
-  console.log(cyan('Copying files'));
+  console.log(cyan('Copying files...'));
   files.forEach(function(file) {
     console.log(cyan('  Copying ') + file+ ' to ' + appPath);
     var content = fs
@@ -81,9 +82,9 @@ prompt(
 
   var ownPackage = require(path.join(ownPath, 'package.json'));
   var appPackage = require(path.join(appPath, 'package.json'));
-  console.log(cyan('Managing dependencies'));
+  console.log(cyan('Updating dependencies...'));
   var ownPackageName = ownPackage.name;
-  console.log(red('  Removing dependency: ') + ownPackageName);
+  console.log(yellow('  Removing dependency: ') + ownPackageName);
   delete appPackage.devDependencies[ownPackageName];
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
@@ -95,7 +96,7 @@ prompt(
     appPackage.devDependencies[key] = ownPackage.dependencies[key];
   });
   console.log();
-  console.log(cyan('Updating scripts'));
+  console.log(cyan('Updating scripts...'));
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
@@ -113,7 +114,7 @@ prompt(
   );
 
   console.log();
-  console.log(cyan('Writing ') + 'package.json');
+  console.log(cyan('Writing ') + 'package.json...');
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
