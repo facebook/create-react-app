@@ -29,8 +29,6 @@ prompt(
   var ownPath = path.join(__dirname, '..');
   var appPath = path.join(ownPath, '..', '..');
   var files = [
-    '.babelrc',
-    '.eslintrc',
     path.join('config', 'env.js'),
     path.join('config', 'paths.js'),
     path.join('config', 'polyfills.js'),
@@ -76,6 +74,8 @@ prompt(
 
   var ownPackage = require(path.join(ownPath, 'package.json'));
   var appPackage = require(path.join(appPath, 'package.json'));
+  var babelConfig = JSON.parse(fs.readFileSync(path.join(ownPath, '.babelrc'), 'utf8'));
+  var eslintConfig = JSON.parse(fs.readFileSync(path.join(ownPath, '.eslintrc'), 'utf8'));
 
   var ownPackageName = ownPackage.name;
   console.log('Removing dependency: ' + ownPackageName);
@@ -103,6 +103,12 @@ prompt(
     null,
     true
   );
+
+  // Add Babel config
+  appPackage.babel = babelConfig;
+
+  // Add ESlint config
+  appPackage.eslintConfig = eslintConfig;
 
   console.log('Writing package.json');
   fs.writeFileSync(
