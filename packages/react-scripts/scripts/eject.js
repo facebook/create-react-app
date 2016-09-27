@@ -15,19 +15,19 @@ var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
 var chalk = require('chalk');
 var green = chalk.green;
-var yellowUnderline = chalk.yellow.underline
+var cyan = chalk.cyan;
+var red = chalk.red;
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
   false
 ).then(shouldEject => {
   if (!shouldEject) {
-    console.log(green('Close one! Eject aborted.'));
+    console.log(cyan('Close one! Eject aborted.'));
     process.exit(1);
   }
 
   console.log('Ejecting...');
-  console.log();
 
   var ownPath = path.join(__dirname, '..');
   var appPath = path.join(ownPath, '..', '..');
@@ -64,8 +64,10 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'config', 'jest'));
   fs.mkdirSync(path.join(appPath, 'scripts'));
 
+  console.log();
+  console.log(cyan('Adding necessary files'));
   files.forEach(function(file) {
-    console.log(green('Copying ') + yellowUnderline(file) + ' to ' + yellowUnderline(appPath));
+    console.log(cyan('  Copying ') + file+ ' to ' + appPath);
     var content = fs
       .readFileSync(path.join(ownPath, file), 'utf8')
       // Remove dead code from .js files on eject
@@ -79,9 +81,9 @@ prompt(
 
   var ownPackage = require(path.join(ownPath, 'package.json'));
   var appPackage = require(path.join(appPath, 'package.json'));
-
+  console.log(cyan('Managing dependencies'));
   var ownPackageName = ownPackage.name;
-  console.log('Removing dependency: ' + yellowUnderline(ownPackageName));
+  console.log(red('  Removing dependency: ') + ownPackageName);
   delete appPackage.devDependencies[ownPackageName];
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
@@ -89,11 +91,11 @@ prompt(
     if (ownPackage.optionalDependencies[key]) {
       return;
     }
-    console.log(green('\tAdding dependency: ') + yellowUnderline(key));
+    console.log(cyan('  Adding dependency: ') + key);
     appPackage.devDependencies[key] = ownPackage.dependencies[key];
   });
-
-  console.log('Updating scripts');
+  console.log();
+  console.log(cyan('Updating scripts'));
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
@@ -110,20 +112,21 @@ prompt(
     true
   );
 
-  console.log(green('Writing ') + yellowUnderline('package.json'));
+  console.log();
+  console.log(cyan('Writing ') + 'package.json');
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
   );
   console.log();
 
-  console.log(green('Running ') + yellowUnderline('npm install...'));
+  console.log(cyan('Running npm install...'));
   rimrafSync(ownPath);
   spawnSync('npm', ['install'], {stdio: 'inherit'});
   console.log(green('Ejected successfully!'));
   console.log();
 
   console.log(green('Please consider sharing why you ejected in this survey:'));
-  console.log('\t' + yellowUnderline('http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
+  console.log(green('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
   console.log()
 })
