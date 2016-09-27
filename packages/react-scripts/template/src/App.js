@@ -63,14 +63,6 @@ class App extends Component {
             </li>
           </ul>
 
-          <b> Webpack </b>
-          <ul className="configs babel-configs">
-            <li>
-              <code>REACT_APP_WEBPACK_DASHBOARD=true</code>
-              <span>- Enable webpack-dashboard ⚠️ <span className={styles.experimental}>(experimental)</span> </span>
-            </li>
-          </ul>
-
           <b> Others </b>
           <ul className="configs style-configs">
             <li>

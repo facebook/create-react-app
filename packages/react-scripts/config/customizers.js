@@ -29,15 +29,6 @@ module.exports = {
       }
     }
   },
-  'WEBPACK_DASHBOARD': {
-    toArray: 'plugins',
-    prod: false,
-    get: function () {
-      var DashboardPlugin = require('webpack-dashboard/plugin');
-      var Dashboard = require('webpack-dashboard');
-      return new DashboardPlugin(new Dashboard().setData)
-    }
-  },
   'CSS_MODULES': {
     config: {
       dev: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss',

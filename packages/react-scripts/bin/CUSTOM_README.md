@@ -9,7 +9,6 @@
 * LESS
 * SASS
 * CSS modules
-* webpack-dashboard
 
 **the features are optional and can be turned on/off individually*
 
@@ -26,9 +25,6 @@ The generated project comes with SASS, LESS, and CSS modules support by default,
 - ```REACT_APP_SASS=true``` - enable SASS support
 - ```REACT_APP_LESS=true``` - enable LESS support
 - ```REACT_APP_CSS_MODULES``` - enable CSS modules
-
-#### Webpack
-- ```REACT_APP_WEBPACK_DASHBOARD=true``` - enable webpack-dashboard
 
 #### Babel
 - ```REACT_APP_BABEL_STAGE_0=true``` - enable stage-0 Babel preset
