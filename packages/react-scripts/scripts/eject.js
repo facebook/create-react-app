@@ -16,8 +16,6 @@ var spawnSync = require('cross-spawn').sync;
 var chalk = require('chalk');
 var green = chalk.green;
 var cyan = chalk.cyan;
-var red = chalk.red;
-var yellow = chalk.yellow;
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
