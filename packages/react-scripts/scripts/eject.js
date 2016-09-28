@@ -66,8 +66,9 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'scripts'));
 
   console.log();
+  console.log('Copying files to ' + cyan(appPath));
   files.forEach(function(file) {
-    console.log(cyan('  Copying ') + file+ ' to ' + appPath);
+    console.log('  Copying ' + cyan(file));
     var content = fs
       .readFileSync(path.join(ownPath, file), 'utf8')
       // Remove dead code from .js files on eject
