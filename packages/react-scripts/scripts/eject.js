@@ -92,7 +92,7 @@ prompt(
     if (ownPackage.optionalDependencies[key]) {
       return;
     }
-    console.log(cyan('  Adding dependency: ') + key);
+    console.log('  Adding dependency: ' + cyan(key));
     appPackage.devDependencies[key] = ownPackage.dependencies[key];
   });
   console.log();
