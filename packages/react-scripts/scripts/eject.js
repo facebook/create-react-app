@@ -104,6 +104,7 @@ prompt(
         new RegExp(ownPackageName + ' (\\w+)', 'g'),
         'node scripts/$1.js'
       );
+    console.log('  Replacing react-scripts ' + cyan(key) + ' with ' + cyan(appPackage.scripts[key]));
   });
 
   // Add Jest config
