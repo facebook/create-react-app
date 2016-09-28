@@ -66,7 +66,6 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'scripts'));
 
   console.log();
-  console.log(cyan('Copying files...'));
   files.forEach(function(file) {
     console.log(cyan('  Copying ') + file+ ' to ' + appPath);
     var content = fs
