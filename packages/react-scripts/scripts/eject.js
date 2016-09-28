@@ -84,7 +84,7 @@ prompt(
   var appPackage = require(path.join(appPath, 'package.json'));
   console.log(cyan('Updating dependencies...'));
   var ownPackageName = ownPackage.name;
-  console.log(yellow('  Removing dependency: ') + ownPackageName);
+  console.log('  Removing dependency: ' + cyan(ownPackageName));
   delete appPackage.devDependencies[ownPackageName];
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
