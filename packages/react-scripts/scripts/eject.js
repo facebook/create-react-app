@@ -107,7 +107,7 @@ prompt(
 
   console.log();
   // Add Jest config
-  console.log(cyan('Updaing Jest config...'))
+  console.log(cyan('Updating Jest config...'))
   appPackage.jest = createJestConfig(
     filePath => path.join('<rootDir>', filePath),
     null,
