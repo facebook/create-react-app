@@ -105,7 +105,9 @@ prompt(
     console.log('  Replacing react-scripts ' + cyan(key) + ' with ' + cyan(appPackage.scripts[key]));
   });
 
+  console.log();
   // Add Jest config
+  console.log(cyan('Updaing Jest config...'))
   appPackage.jest = createJestConfig(
     filePath => path.join('<rootDir>', filePath),
     null,
