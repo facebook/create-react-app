@@ -966,11 +966,11 @@ If you want to customize the default configuration slightly (e.g. add CSS Module
 …
 ```
 
-4: [Publish](https://docs.npmjs.com/getting-started/publishing-npm-packages) your customized `react-scripts` package to npm. Remember to cd into `/packages/react-scripts/` before you publish.
+4: Publish your customized `react-scripts` package with `create-react-app`'s npm script `npm run publish`.
 ```sh
-$ cd packages/react-scripts
-$ npm publish
+$ npm run publish
 ```
+It is a long process. At the end, you will be asked to update the version.
 
 5: Now you can use your customized setup with `create react app`:
 ```sh
