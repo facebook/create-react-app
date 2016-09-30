@@ -947,9 +947,9 @@ Pros:
 Cons:
 - You need to maintain your fork, [make sure it is synced](https://help.github.com/articles/fork-a-repo/#keep-your-fork-synced) with the upstream to have all updates. [Backstroke](https://github.com/1egoman/backstroke) is a bot that can help you with this.
 
-Fork repository [`create-react-app`](https://github.com/facebookincubator/create-react-app) repository.
+First, fork repository [`create-react-app`](https://github.com/facebookincubator/create-react-app) repository.
 
-Change the name of `react-scripts` package to the name you chose for your fork, and also reset its version. It is recommended to use [scoped package](https://docs.npmjs.com/misc/scope), ie: `@yourcompany/react-scripts`.
+Next, change the name of `react-scripts` package to the name you chose for your fork, and also reset its version. It is recommended to use [scoped package](https://docs.npmjs.com/misc/scope), ie: `@yourcompany/react-scripts`.
 ### /packages/react-scripts/package.json
 ```js
 {
@@ -959,7 +959,7 @@ Change the name of `react-scripts` package to the name you chose for your fork, 
 }
 ```
 
-Make your changes inside `react-scripts` package. For example, add CSS Modules:
+Now make your changes inside `react-scripts` package. For example, add CSS Modules:
 ### /packages/react-scripts/config/webpack.config.dev.js
 ```js
 …
@@ -970,7 +970,7 @@ Make your changes inside `react-scripts` package. For example, add CSS Modules:
 …
 ```
 
-Publish your fork by running `npm run publish` in the root of the forked repository.
+Then, publish your fork by running `npm run publish` in the root of the forked repository.
 ```sh
 $ npm run publish
 ```
