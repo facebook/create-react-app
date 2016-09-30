@@ -947,19 +947,19 @@ Pros:
 Cons:
 - You need to maintain your fork, [make sure it is synced](https://help.github.com/articles/fork-a-repo/#keep-your-fork-synced) with the upstream to have all updates. [Backstroke](https://github.com/1egoman/backstroke) is a bot that can help you with this.
 
-1. Fork repository [`create-react-app`](https://github.com/facebookincubator/create-react-app) repository.
+Fork repository [`create-react-app`](https://github.com/facebookincubator/create-react-app) repository.
 
-2. Change the name of `react-scripts` package to the name you chose for your fork, and also reset its version.
+Change the name of `react-scripts` package to the name you chose for your fork, and also reset its version. It is recommended to use [scoped package](https://docs.npmjs.com/misc/scope), ie: `@yourcompany/react-scripts`.
 ### /packages/react-scripts/package.json
 ```js
 {
-  "name": "my-react-scripts-fork",
+  "name": "@yourcompany/react-scripts",
   "version": "0.0.1",
   …
 }
 ```
 
-3. Make your changes inside `react-scripts` package. For example, add CSS Modules:
+Make your changes inside `react-scripts` package. For example, add CSS Modules:
 ### /packages/react-scripts/config/webpack.config.dev.js
 ```js
 …
@@ -970,15 +970,15 @@ Cons:
 …
 ```
 
-4. Publish your fork by running `npm run publish` in the root of the forked repository.
+Publish your fork by running `npm run publish` in the root of the forked repository.
 ```sh
 $ npm run publish
 ```
 It is a long process. At the end, you will be asked to update the version.
 
-5. Now you can use your customized setup with `create react app`:
+Now you can use your customized setup with `create react app`:
 ```sh
-$ create-react-app my-app --scripts-version my-react-scripts-fork
+$ create-react-app my-app --scripts-version @yourcompany/react-scripts
 ```
 
 ### Note
