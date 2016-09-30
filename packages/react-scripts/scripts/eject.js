@@ -122,8 +122,6 @@ prompt(
   console.log(cyan('Updating ESLint config...'));
   appPackage.eslintConfig = eslintConfig;
 
-  console.log();
-  console.log(cyan('Writing ') + 'package.json...');
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
