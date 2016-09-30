@@ -48,7 +48,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Modulus](#modulus)
   - [Now](#now)
   - [Surge](#surge)
-- [Fork instead of eject](#fork-instead-of-eject)
+- [Forking as Alternative to Ejecting](#Forking as Alternative to Ejecting)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -937,17 +937,21 @@ Install the Surge CLI if you haven't already by running `npm install -g surge`. 
 
 Note that in order to support routers that use html5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
 
-## Fork instead of eject
+## Forking as Alternative to Ejecting
+You can fork `react-scripts`, publish your fork, and then use it with Create React App.
 
-If you want to customize the default configuration slightly (e.g. add CSS Modules, SASS, decorators…), while still having all future updates and a one dependency, you can fork this repo and create your own configuration of `react-scripts` and use it with `create-react-app`.
+Pros:
+- You can customize your setup (eg: add CSS Modules, PostCSS plugins, decorators, etc…)
+- You still have all Create React App features and updates
 
-### Instruction
+Cons:
+- You need to maintain your fork, [make sure it is synced](https://help.github.com/articles/fork-a-repo/#keep-your-fork-synced) with the upstream to have all updates. [Backstroke](https://github.com/1egoman/backstroke) is a bot that can help you with this.
 
-1: Fork [create-react-app repo](https://github.com/facebookincubator/create-react-app).
+1. Fork repository [`create-react-app`](https://github.com/facebookincubator/create-react-app) repository.
 
-2: Change the name of `react-scripts` package to your new one, and also reset its version.
+2. Change the name of `react-scripts` package to the name you chose for your fork, and also reset its version.
+### /packages/react-scripts/package.json
 ```js
-// /packages/react-scripts/package.json
 {
   "name": "my-react-scripts-fork",
   "version": "0.0.1",
@@ -955,9 +959,9 @@ If you want to customize the default configuration slightly (e.g. add CSS Module
 }
 ```
 
-3: Make your changes inside `react-scripts` package. For example, add CSS Modules:
+3. Make your changes inside `react-scripts` package. For example, add CSS Modules:
+### /packages/react-scripts/config/webpack.config.dev.js
 ```js
-// /packages/react-scripts/config/webpack.config.dev.js
 …
 {
   test: /\.css$/,
@@ -966,20 +970,19 @@ If you want to customize the default configuration slightly (e.g. add CSS Module
 …
 ```
 
-4: Publish your customized `react-scripts` package with `create-react-app`'s npm script `npm run publish`.
+4. Publish your fork by running `npm run publish` in the root of the forked repository.
 ```sh
 $ npm run publish
 ```
 It is a long process. At the end, you will be asked to update the version.
 
-5: Now you can use your customized setup with `create react app`:
+5. Now you can use your customized setup with `create react app`:
 ```sh
 $ create-react-app my-app --scripts-version my-react-scripts-fork
 ```
 
 ### Note
-- [create-react-app](https://github.com/facebookincubator/create-react-app) is a [monorepo](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) that contains `react-scripts` package. This is the heart of CRA, with all configurations and scripts. You only need to change and publish this package, not the whole repo.
-- It is recommended to [keep your fork synced](https://help.github.com/articles/fork-a-repo/#keep-your-fork-synced) with the upstream updates. [Backstroke](https://github.com/1egoman/backstroke) is a bot to help you with this.
+- [Create React App](https://github.com/facebookincubator/create-react-app) is a [monorepo](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) that contains `react-scripts` package. This is the heart of Create React App, with all configurations and scripts. You only need to change and publish this package, not the whole repo.
 
 ## Something Missing?
 
