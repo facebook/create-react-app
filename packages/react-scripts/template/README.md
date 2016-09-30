@@ -895,7 +895,7 @@ For more information, have a look at following links:
 * Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
 * [GitHub Repo](https://github.com/kadirahq/react-storybook)
 * [Documentation](https://getstorybook.io/docs)
-* Snapshot Testing with React Storybook
+* [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
 
 ## Deployment
 
