@@ -100,7 +100,7 @@ prompt(
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
       .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
-    console.log('  Replacing ' + cyan('"react-scripts ' +  key + '"') + ' with "' + cyan(appPackage.scripts[key]) +'"');
+    console.log('  Replacing ' + cyan('\"react-scripts ' +  key + '\"') + ' with ' + cyan('\"' + appPackage.scripts[key]+'\"'));
   });
 
   console.log();
