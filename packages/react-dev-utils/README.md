@@ -110,7 +110,7 @@ clearConsole();
 console.log('Just cleared the screen!');
 ```
 
-#### `formatWebpackMessages(stats: WebpackStats): {errors: Array<string>, warnings: Array<string>}`
+#### `formatWebpackMessages({errors: Array<string>, warnings: Array<string>}): {errors: Array<string>, warnings: Array<string>}`
 
 Extracts and prettifies warning and error messages from webpack [stats](https://github.com/webpack/docs/wiki/node.js-api#stats) object.
 
@@ -125,7 +125,8 @@ compiler.plugin('invalid', function() {
 });
 
 compiler.plugin('done', function(stats) {
-  var messages = formatWebpackMessages(stats);
+  var rawMessages = stats.toJson({}, true);
+  var messages = formatWebpackMessages(rawMessages);
   if (!messages.errors.length && !messages.warnings.length) {
     console.log('Compiled successfully!');
   }

@@ -24,10 +24,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
 
   // Setup the script rules
   appPackage.scripts = {
-    'start': ownPackageName + ' start',
-    'build': ownPackageName + ' build',
-    'test': ownPackageName + ' test --env=jsdom',
-    'eject': ownPackageName + ' eject'
+    'start': 'react-scripts start',
+    'build': 'react-scripts build',
+    'test': 'react-scripts test --env=jsdom',
+    'eject': 'react-scripts eject'
   };
 
   fs.writeFileSync(
@@ -88,7 +88,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     }
 
     console.log();
-    console.log('Success! Created ' + appName + ' at ' + appPath + '.');
+    console.log('Success! Created ' + appName + ' at ' + appPath);
     console.log('Inside that directory, you can run several commands:');
     console.log();
     console.log(chalk.cyan('  npm start'));
