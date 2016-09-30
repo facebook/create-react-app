@@ -48,7 +48,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Modulus](#modulus)
   - [Now](#now)
   - [Surge](#surge)
-- [Forking as Alternative to Ejecting](#Forking as Alternative to Ejecting)
+- [Forking as Alternative to Ejecting](#forking-as-alternative-to-ejecting)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
