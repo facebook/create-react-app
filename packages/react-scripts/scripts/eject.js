@@ -104,8 +104,9 @@ prompt(
   });
 
   console.log();
+  console.log(cyan('Adding configuration to ') + 'package.json' + cyan('...'));
   // Add Jest config
-  console.log(cyan('Updating Jest config...'))
+  console.log('  Adding ' + cyan('Jest') + ' configuration')
   appPackage.jest = createJestConfig(
     filePath => path.join('<rootDir>', filePath),
     null,
@@ -113,13 +114,12 @@ prompt(
   );
 
   // Add Babel config
-  console.log();
-  console.log(cyan('Updating Babel config...'));
+
+  console.log('  Adding ' + cyan('Babel') + ' preset');
   appPackage.babel = babelConfig;
 
   // Add ESlint config
-  console.log();
-  console.log(cyan('Updating ESLint config...'));
+  console.log('  Adding ' + cyan('ESLint') +' configuration');
   appPackage.eslintConfig = eslintConfig;
 
   fs.writeFileSync(
