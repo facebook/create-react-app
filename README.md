@@ -167,7 +167,7 @@ Some features are currently **not supported**:
 * Some experimental syntax extensions (e.g. decorators).
 * CSS Modules.
 * LESS or Sass.
-* Hot reloading. Full page reload is triggered when you change a file.
+* Hot reloading(full page reload is triggered when you change a js file, css is hot-reloaded).
 
 Some of them might get added in the future if they are stable, are useful to majority of React apps, don’t conflict with existing tools, and don’t introduce additional configuration.
 
