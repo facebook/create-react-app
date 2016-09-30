@@ -43,6 +43,7 @@ module.exports = {
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  appPackages: resolveApp('packages'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   ownNodeModules: resolveApp('node_modules'),
@@ -62,6 +63,7 @@ module.exports = {
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  appPackages: resolveApp('packages'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   // this is empty with npm3 but node resolution searches higher anyway:
@@ -78,6 +80,7 @@ module.exports = {
   appIndexJs: resolveOwn('../template/src/index.js'),
   appPackageJson: resolveOwn('../package.json'),
   appSrc: resolveOwn('../template/src'),
+  appPackages: resolveOwn('../template/packages'),
   testsSetup: resolveOwn('../template/src/setupTests.js'),
   appNodeModules: resolveOwn('../node_modules'),
   ownNodeModules: resolveOwn('../node_modules'),
