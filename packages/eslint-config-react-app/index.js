@@ -21,8 +21,7 @@ module.exports = {
 
   parser: 'babel-eslint',
 
-  // import plugin is temporarily disabled, scroll below to see why
-  plugins: [/*'import', */'flowtype', 'jsx-a11y', 'react'],
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
 
   env: {
     browser: true,
@@ -170,6 +169,9 @@ module.exports = {
     // This is probably fixable with a patch to eslint-loader.
     // When file A is saved, we want to invalidate all files that import it
     // *and* that currently have lint errors. This should fix the problem.
+    // (As an exception, import/no-webpack-loader-syntax can be enabled already
+    // because it doesn't depend on whether the file exists, so this issue
+    // doesn't apply to it.)
 
     // 'import/default': 'warn',
     // 'import/export': 'warn',
@@ -181,6 +183,9 @@ module.exports = {
     // 'import/no-named-as-default': 'warn',
     // 'import/no-named-as-default-member': 'warn',
     // 'import/no-unresolved': ['warn', { commonjs: true }],
+    // We don't support configuring Webpack using import source strings, so this
+    // is always an error.
+    'import/no-webpack-loader-syntax': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/jsx-equals-spacing': ['warn', 'never'],
