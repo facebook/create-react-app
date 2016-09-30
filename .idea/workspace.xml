@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d1e76177-15c6-4bb7-9d14-048601b02c5f" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/template/public/favicon.ico" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.eslintrc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/create-react-app.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/create_react_app_node_modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ISSUE_TEMPLATE.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lerna.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/babel-preset-react-app/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/babel-preset-react-app/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/babel-preset-react-app/package.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/create-react-app/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/create-react-app/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/create-react-app/package.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/eslint-config-react-app/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/eslint-config-react-app/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/eslint-config-react-app/package.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/InterpolateHtmlPlugin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/WatchMissingNodeModulesPlugin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/checkRequiredFiles.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/clearConsole.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/formatWebpackMessages.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/openBrowser.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/openChrome.applescript" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/package.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/prompt.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-dev-utils/webpackHotDevClient.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/.babelrc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/.eslintrc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/bin/react-scripts.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/config/env.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/config/jest/CSSStub.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/config/jest/FileStub.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/config/jest/transform.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/config/paths.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/config/polyfills.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/config/webpack.config.dev.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/config/webpack.config.prod.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/package.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/scripts/build.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/scripts/eject.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/scripts/init.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/scripts/start.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/scripts/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/template/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/template/gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/template/public/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/template/src/App.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/template/src/App.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/template/src/App.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/template/src/index.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/template/src/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/template/src/logo.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/react-scripts/utils/createJestConfig.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tasks/bundle-own-deps.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tasks/cra.sh" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.eslintrc.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/react-scripts.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/babel.dev.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/babel.prod.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/env.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/eslint.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/flow/css.js.flow" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/flow/file.js.flow" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/jest/CSSStub.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/jest/FileStub.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/jest/environment.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/jest/transform.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/paths.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/polyfills.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/webpack.config.dev.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/webpack.config.prod.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/global-cli/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/global-cli/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/build.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/eject.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/init.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/start.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/test.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/utils/WatchMissingNodeModulesPlugin.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/utils/chrome.applescript" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/utils/createJestConfig.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/utils/prompt.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/template/favicon.ico" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/template/gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/template/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/template/src/App.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/template/src/App.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/template/src/__tests__/App-test.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/template/src/index.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/template/src/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/template/src/logo.svg" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CHANGELOG.md" afterPath="$PROJECT_DIR$/CHANGELOG.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/CONTRIBUTING.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tasks/e2e.sh" afterPath="$PROJECT_DIR$/tasks/e2e.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tasks/release.sh" afterPath="$PROJECT_DIR$/tasks/release.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/README.md" afterPath="$PROJECT_DIR$/template/README.md" />
+    </list>
+    <ignored path="create-react-app.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="create-react-app" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="19" column="36" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/config/babel.dev.js" />
+        <option value="$PROJECT_DIR$/config/babel.prod.js" />
+        <option value="$PROJECT_DIR$/config/webpack.config.prod.js" />
+        <option value="$PROJECT_DIR$/config/webpack.config.dev.js" />
+        <option value="$PROJECT_DIR$/config/eslint.js" />
+        <option value="$PROJECT_DIR$/packages/react-scripts/config/webpack.config.prod.js" />
+        <option value="$PROJECT_DIR$/packages/react-scripts/config/webpack.config.dev.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="create-react-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="create-react-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="create-react-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="nodejs_interpreter_path" value="$USER_HOME$/.nvm/versions/node/v4.2.2/bin/node" />
+    <property name="js-jscs-nodeInterpreter" value="$USER_HOME$/.nvm/versions/node/v4.2.2/bin/node" />
+    <property name="SearchEverywhereHistoryKey" value="config/babel.prod.js&#9;FILE&#9;file:///Users/A-Gambit/work/create-react-app/config/babel.prod.js&#10;packages/react-scripts/config/webpack.config.dev.js&#9;FILE&#9;file:///Users/A-Gambit/work/create-react-app/packages/react-scripts/config/webpack.config.dev.js&#10;packages/react-scripts/config/webpack.config.prod.js&#9;FILE&#9;file:///Users/A-Gambit/work/create-react-app/packages/react-scripts/config/webpack.config.prod.js" />
+    <property name="FullScreen" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d1e76177-15c6-4bb7-9d14-048601b02c5f" name="Default" comment="" />
+      <created>1470388252225</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1470388252225</updated>
+      <workItem from="1470388253519" duration="2313000" />
+      <workItem from="1470393242072" duration="522000" />
+      <workItem from="1470429112479" duration="484000" />
+      <workItem from="1470432126968" duration="186000" />
+      <workItem from="1470432511054" duration="704000" />
+      <workItem from="1470646069778" duration="661000" />
+      <workItem from="1470647402554" duration="279000" />
+      <workItem from="1470691346543" duration="1000" />
+      <workItem from="1470694023334" duration="1000" />
+      <workItem from="1475248843550" duration="933000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="6084000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45646766" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/config/eslint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/eslint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/eslint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/eslint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/webpack.config.dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/webpack.config.prod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2085">
+          <caret line="139" column="22" selection-start-line="139" selection-start-column="22" selection-end-line="139" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/webpack.config.dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/webpack.config.prod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/webpack.config.prod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/src/__tests__/App-test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/babel.dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="41" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/react-scripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/build.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="29" column="39" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/webpack.config.prod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="139" column="22" selection-start-line="139" selection-start-column="22" selection-end-line="139" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/webpack.config.dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="139" column="21" selection-start-line="139" selection-start-column="21" selection-end-line="139" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/eslint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="57" column="10" selection-start-line="57" selection-start-column="10" selection-end-line="57" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/react-scripts/config/webpack.config.prod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="272" column="3" selection-start-line="272" selection-start-column="3" selection-end-line="272" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/react-scripts/config/webpack.config.dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="163" column="9" selection-start-line="163" selection-start-column="9" selection-end-line="163" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/babel-preset-react-app/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/babel.prod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="38" column="65" selection-start-line="38" selection-start-column="65" selection-end-line="38" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="19" column="36" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
