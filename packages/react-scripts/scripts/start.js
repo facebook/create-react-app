@@ -18,6 +18,7 @@ process.env.NODE_ENV = 'development';
 require('dotenv').config({silent: true});
 
 var chalk = require('chalk');
+var execSync = require('child_process').execSync;
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var historyApiFallback = require('connect-history-api-fallback');
@@ -258,6 +259,17 @@ function run(port) {
   runDevServer(host, port, protocol);
 }
 
+function getProcessNameOnPort(port) {
+  var command = 'ps -o command -p "$(lsof -i:' + port + ' -P -t)" | sed -n 2p | tr -d "\n"';
+  var execOptions = { encoding: 'utf8' };
+
+  try {
+    return execSync(command, execOptions);
+  } catch(e) {
+    return null;
+  }
+}
+
 // We attempt to use the default port but if it is busy, we offer the user to
 // run on a different port. `detect()` Promise resolves to the next free port.
 detect(DEFAULT_PORT).then(port => {
@@ -267,8 +279,11 @@ detect(DEFAULT_PORT).then(port => {
   }
 
   clearConsole();
+  var existingProcess = getProcessNameOnPort(DEFAULT_PORT);
   var question =
-    chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.') +
+    chalk.yellow('Something ' +
+      ((existingProcess) ? '(probably: ' + existingProcess +') ' : '') +
+      'is already running on port ' + DEFAULT_PORT + '.') +
     '\n\nWould you like to run the app on another port instead?';
 
   prompt(question, true).then(shouldChangePort => {
