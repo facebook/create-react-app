@@ -106,7 +106,7 @@ function ensureOverlayDivExists(onOverlayDivReady) {
     lastOnOverlayDivReady(overlayDiv);
   });
 
-  // Zalgo alert: onIframeLoad() will be called either synchronouly
+  // Zalgo alert: onIframeLoad() will be called either synchronously
   // or asynchronously depending on the browser.
   // We delay adding it so `overlayIframe` is set when `onIframeLoad` fires.
   document.body.appendChild(overlayIframe);
