@@ -1,4 +1,4 @@
-If you are reporting a bug, please fill in below. Otherwise feel to remove this template entirely.
+If you are reporting a bug, please fill in below. Otherwise feel free to remove this template entirely.
 
 ### Description
 
@@ -31,7 +31,7 @@ Please take the time to create a new app that reproduces the issue.
 
 Alternatively, you could copy your app that experiences the problem and start removing things until you’re left with the minimal reproducible demo.
 
-(Accidentially, you might get to the root of your problem during that process.)
+(Accidentally, you might get to the root of your problem during that process.)
 
 Push to GitHub and paste the link here.
 
