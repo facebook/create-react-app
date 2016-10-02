@@ -193,7 +193,7 @@ module.exports = {
     'react/no-deprecated': 'warn',
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
-    'react/react-in-jsx-scope': 'warn',
+    'react/react-in-jsx-scope': 'error',
     'react/require-render-return': 'warn',
     'react/style-prop-object': 'warn',
 
