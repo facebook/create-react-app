@@ -35,6 +35,12 @@ module.exports = {
         test: /\.less$/,
         loader: "style!css!postcss!less"
       }
+    },
+    getProd: function () {
+      return {
+        test: /\.less/,
+        loader: ExtractTextPlugin.extract('style', 'css!postcss!less')
+      }
     }
   },
   'CSS_MODULES': {
