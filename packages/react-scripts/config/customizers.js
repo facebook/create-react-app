@@ -1,28 +1,36 @@
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 module.exports = {
   'BABEL_STAGE_0': {
     toArray: 'presets',
-    get: function () {
+    getDev: function () {
       return require.resolve('babel-preset-stage-0')
     }
   },
   'DECORATORS': {
     toArray: 'babelPlugins',
-    get: function () {
+    getDev: function () {
       return require.resolve('babel-plugin-transform-decorators-legacy')
     }
   },
   'SASS': {
     toArray: 'loaders',
-    get: function () {
+    getDev: function () {
       return {
         test: /\.scss$/,
         loader: "style!css!postcss!sass"
+      }
+    },
+    getProd: function () {
+      return {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
       }
     }
   },
   'LESS': {
     toArray: 'loaders',
-    get: function () {
+    getDev: function () {
       return {
         test: /\.less$/,
         loader: "style!css!postcss!less"

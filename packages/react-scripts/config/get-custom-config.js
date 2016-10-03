@@ -14,7 +14,8 @@ function getCustomConfig(prod) {
       var envValue = process.env['REACT_APP_' + customizerKey];
       if (env && envValue && envValue !== 'false') {
         if (customizer.toArray) {
-          finalConfig[customizer.toArray].push(customizer.get());
+          var getCustomizer = (prod ? customizer.getProd : customizer.getDev) || customizer.getDev;
+          finalConfig[customizer.toArray].push(getCustomizer());
         }
         finalConfig.values[customizerKey] = customizer.config || true;
       }
