@@ -17,7 +17,7 @@ function openBrowser(url) {
       // on OS X Google Chrome with AppleScript
       execSync('ps cax | grep "Google Chrome"');
       execSync(
-        'osascript chrome.applescript ' + url,
+        'osascript openChrome.applescript ' + url,
         {cwd: __dirname, stdio: 'ignore'}
       );
       return true;
