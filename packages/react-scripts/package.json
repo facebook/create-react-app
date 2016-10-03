@@ -1,6 +1,6 @@
 {
   "name": "custom-react-scripts",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Allow custom config for create-react-app without ejecting",
   "repository": "kitze/create-react-app",
   "license": "BSD-3-Clause",
