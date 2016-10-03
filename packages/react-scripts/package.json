@@ -63,7 +63,7 @@
     "path-exists": "2.1.0",
     "postcss-loader": "0.13.0",
     "promise": "7.1.1",
-    "react-dev-utils": "^0.2.0",
+    "react-dev-utils": "^0.2.1",
     "recursive-readdir": "2.1.0",
     "rimraf": "2.5.4",
     "strip-ansi": "3.0.1",

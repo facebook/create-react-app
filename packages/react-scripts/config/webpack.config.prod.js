@@ -45,14 +45,14 @@ var publicPath = ensureSlash(homepagePathname, true);
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing shlash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 var publicUrl = ensureSlash(homepagePathname, false);
-// Get enrivonment variables to inject into our app.
+// Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
 //Get custom configuration for injecting plugins, presets and loaders
 var customConfig = getCustomConfig(true);
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
-if (env['process.env.NODE_ENV'] !== '"production"') {
+if (env['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
 

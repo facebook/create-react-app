@@ -13,24 +13,24 @@ var path = require('path');
 var prompt = require('react-dev-utils/prompt');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
+var chalk = require('chalk');
+var green = chalk.green;
+var cyan = chalk.cyan;
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
   false
 ).then(shouldEject => {
   if (!shouldEject) {
-    console.log('Close one! Eject aborted.');
+    console.log(cyan('Close one! Eject aborted.'));
     process.exit(1);
   }
 
   console.log('Ejecting...');
-  console.log();
 
   var ownPath = path.join(__dirname, '..');
   var appPath = path.join(ownPath, '..', '..');
   var files = [
-    '.babelrc',
-    '.eslintrc',
     path.join('config', 'env.js'),
     path.join('config', 'paths.js'),
     path.join('config', 'polyfills.js'),
@@ -61,8 +61,10 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'config', 'jest'));
   fs.mkdirSync(path.join(appPath, 'scripts'));
 
+  console.log();
+  console.log('Copying files to ' + cyan(appPath));
   files.forEach(function(file) {
-    console.log('Copying ' + file + ' to ' + appPath);
+    console.log('  Copying ' + cyan(file));
     var content = fs
         .readFileSync(path.join(ownPath, file), 'utf8')
         // Remove dead code from .js files on eject
@@ -76,9 +78,12 @@ prompt(
 
   var ownPackage = require(path.join(ownPath, 'package.json'));
   var appPackage = require(path.join(appPath, 'package.json'));
+  var babelConfig = JSON.parse(fs.readFileSync(path.join(ownPath, '.babelrc'), 'utf8'));
+  var eslintConfig = JSON.parse(fs.readFileSync(path.join(ownPath, '.eslintrc'), 'utf8'));
 
+  console.log(cyan('Updating dependencies...'));
   var ownPackageName = ownPackage.name;
-  console.log('Removing dependency: ' + ownPackageName);
+  console.log('  Removing dependency: ' + cyan(ownPackageName));
   delete appPackage.devDependencies[ownPackageName];
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
@@ -86,38 +91,55 @@ prompt(
     if (ownPackage.optionalDependencies[key]) {
       return;
     }
-    console.log('Adding dependency: ' + key);
+    console.log('  Adding dependency: ' + cyan(key));
     appPackage.devDependencies[key] = ownPackage.dependencies[key];
   });
-
-  console.log('Updating scripts');
+  console.log();
+  console.log(cyan('Updating scripts...'));
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
       .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
+    console.log(
+      '  Replacing ' +
+      cyan('\"react-scripts ' +  key + '\"') +
+      ' with ' +
+      cyan('\"' + appPackage.scripts[key] + '\"')
+    );
   });
 
+  console.log();
+  console.log(cyan('Adding configuration to ') + 'package.json' + cyan('...'));
   // Add Jest config
+  console.log('  Adding ' + cyan('Jest') + ' configuration');
   appPackage.jest = createJestConfig(
     filePath => path.join('<rootDir>', filePath),
     null,
     true
   );
 
-  console.log('Writing package.json');
+  // Add Babel config
+
+  console.log('  Adding ' + cyan('Babel') + ' preset');
+  appPackage.babel = babelConfig;
+
+  // Add ESlint config
+  console.log('  Adding ' + cyan('ESLint') +' configuration');
+  appPackage.eslintConfig = eslintConfig;
+
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
   );
   console.log();
 
-  console.log('Running npm install...');
+  console.log(cyan('Running npm install...'));
   rimrafSync(ownPath);
   spawnSync('npm', ['install'], {stdio: 'inherit'});
-  console.log('Ejected successfully!');
+  console.log(green('Ejected successfully!'));
   console.log();
 
-  console.log('Please consider sharing why you ejected in this survey:');
-  console.log('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1');
-  console.log();
-});
+  console.log(green('Please consider sharing why you ejected in this survey:'));
+  console.log(green('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
+  console.log()
+})

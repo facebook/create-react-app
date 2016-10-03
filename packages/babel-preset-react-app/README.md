@@ -12,7 +12,7 @@ The easiest way to use this configuration is with [Create React App](https://git
 
 ## Usage Outside of Create React App
 
-If you want to use this ESLint configuration in a project not built with Create React App, you can install it with following steps.
+If you want to use this Babel preset in a project not built with Create React App, you can install it with following steps.
 
 First, [install Babel](https://babeljs.io/docs/setup/).
 
