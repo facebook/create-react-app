@@ -62,9 +62,9 @@ prompt(
   fs.mkdirSync(path.join(appPath, 'scripts'));
 
   console.log();
-  console.log('Copying files to ' + cyan(appPath));
+  console.log(cyan('Copying files into ' + appPath));
   files.forEach(function(file) {
-    console.log('  Copying ' + cyan(file));
+    console.log('  Adding ' + cyan(file) + ' to the project');
     var content = fs
       .readFileSync(path.join(ownPath, file), 'utf8')
       // Remove dead code from .js files on eject
@@ -81,9 +81,9 @@ prompt(
   var babelConfig = JSON.parse(fs.readFileSync(path.join(ownPath, '.babelrc'), 'utf8'));
   var eslintConfig = JSON.parse(fs.readFileSync(path.join(ownPath, '.eslintrc'), 'utf8'));
 
-  console.log(cyan('Updating dependencies...'));
+  console.log(cyan('Updating the dependencies'));
   var ownPackageName = ownPackage.name;
-  console.log('  Removing dependency: ' + cyan(ownPackageName));
+  console.log('  Removing ' + cyan(ownPackageName) + ' from devDependencies');
   delete appPackage.devDependencies[ownPackageName];
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
@@ -91,25 +91,25 @@ prompt(
     if (ownPackage.optionalDependencies[key]) {
       return;
     }
-    console.log('  Adding dependency: ' + cyan(key));
+    console.log('  Adding ' + cyan(key) + ' to devDependencies');
     appPackage.devDependencies[key] = ownPackage.dependencies[key];
   });
   console.log();
-  console.log(cyan('Updating scripts...'));
+  console.log(cyan('Updating the scripts'));
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
     appPackage.scripts[key] = appPackage.scripts[key]
       .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
     console.log(
       '  Replacing ' +
-      cyan('\"react-scripts ' +  key + '\"') +
+      cyan('"react-scripts ' + key + '"') +
       ' with ' +
-      cyan('\"' + appPackage.scripts[key] + '\"')
+      cyan('"node scripts/' + key + '.js"')
     );
   });
 
   console.log();
-  console.log(cyan('Adding configuration to ') + 'package.json' + cyan('...'));
+  console.log(cyan('Configuring package.json'));
   // Add Jest config
   console.log('  Adding ' + cyan('Jest') + ' configuration');
   appPackage.jest = createJestConfig(
