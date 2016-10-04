@@ -31,7 +31,9 @@ prompt(
   var ownPath = path.join(__dirname, '..');
   var appPath = path.join(ownPath, '..', '..');
   var files = [
+    path.join('config', 'customizers.js'),
     path.join('config', 'env.js'),
+    path.join('config', 'get-custom-config.js'),
     path.join('config', 'paths.js'),
     path.join('config', 'polyfills.js'),
     path.join('config', 'webpack.config.dev.js'),
