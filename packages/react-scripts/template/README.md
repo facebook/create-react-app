@@ -885,19 +885,29 @@ Open your `package.json` and add a `homepage` field:
 **The above step is important!**<br>
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
 
-Now, whenever you run `npm run build`, you will see a cheat sheet with a sequence of commands to deploy to GitHub pages:
+Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub pages:
+
+To publish it at [http://myusername.github.io/my-app](http://myusername.github.io/my-app), run:
 
 ```sh
-git commit -am "Save local changes"
-git checkout -B gh-pages
-git add -f build
-git commit -am "Rebuild website"
-git filter-branch -f --prune-empty --subdirectory-filter build
-git push -f origin gh-pages
-git checkout -
+npm install --save-dev gh-pages
 ```
 
-You may copy and paste them, or put them into a custom shell script. You may also customize them for another hosting provider.
+Add the following script in your `package.json`:
+
+```js
+  // ...
+  "scripts": {
+    // ...
+    "deploy": "gh-pages -d build"
+  }
+```
+
+Then run:
+
+```sh
+npm run deploy
+```
 
 Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
