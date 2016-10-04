@@ -17,13 +17,13 @@ module.exports = {
     toArray: 'loaders',
     getDev: function () {
       return {
-        test: /\.scss$/,
+        test: /(\.scss|\.sass)$/,
         loader: "style!css!postcss!sass"
       }
     },
     getProd: function () {
       return {
-        test: /\.scss$/,
+        test: /(\.scss|\.sass)$/,
         loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
       }
     }
