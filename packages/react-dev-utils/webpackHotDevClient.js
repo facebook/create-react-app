@@ -272,8 +272,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
     return;
   }
 
-  // https://webpack.github.io/docs/hot-module-replacement.html#check
-  module.hot.check(/* autoApply */true, function(err, updatedModules) {
+  function handleApplyUpdates(err, updatedModules) {
     if (err || !updatedModules) {
       window.location.reload();
       return;
@@ -288,5 +287,20 @@ function tryApplyUpdates(onHotUpdateSuccess) {
       // While we were updating, there was a new update! Do it again.
       tryApplyUpdates();
     }
-  });
+  }
+
+  // https://webpack.github.io/docs/hot-module-replacement.html#check
+  var result = module.hot.check(/* autoApply */true, handleApplyUpdates);
+
+  // // Webpack 2 returns a Promise instead of invoking a callback
+  if (result && result.then) {
+    result.then(
+      function(updatedModules) {
+        handleApplyUpdates(null, updatedModules);
+      },
+      function(err) {
+        handleApplyUpdates(err, null);
+      }
+    );
+  }
 };
