@@ -885,7 +885,7 @@ Open your `package.json` and add a `homepage` field:
 **The above step is important!**<br>
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
 
-Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub pages:
+Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub pages.
 
 To publish it at [http://myusername.github.io/my-app](http://myusername.github.io/my-app), run:
 
@@ -941,7 +941,7 @@ With this setup Netlify will build and deploy when you push to git or open a pul
 2. Pick your Git hosting service and select your repository
 3. Click `Build your site`
 
-**Support for client site routing:**
+**Support for client-side routing:**
 
 To support `pushState`, make sure to create a `public/_redirects` file with the following rewrite rules:
 
