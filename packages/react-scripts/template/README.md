@@ -887,22 +887,26 @@ Create React App uses the `homepage` field to determine the root URL in the buil
 
 Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub pages:
 
+To publish it at [http://myusername.github.io/my-app](http://myusername.github.io/my-app), run:
+
 ```sh
-To publish it at http://myname.github.io/myapp, run:
+npm install --save-dev gh-pages
+```
 
-  npm install --save-dev gh-pages
+Add the following script in your `package.json`:
 
-Add the following script in your package.json.
-
+```js
+  // ...
+  "scripts": {
     // ...
-    "scripts": {
-      // ...
-      "deploy": "gh-pages -d build"
-    }
+    "deploy": "gh-pages -d build"
+  }
+```
 
 Then run:
 
-  npm run deploy
+```sh
+npm run deploy
 ```
 
 Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
