@@ -260,11 +260,18 @@ function run(port) {
 }
 
 function getProcessNameOnPort(port) {
-  var command = 'ps -o command -p "$(lsof -i:' + port + ' -P -t)" | sed -n 2p | tr -d "\n"';
   var execOptions = { encoding: 'utf8' };
+  var processesCommand = 'lsof -i:' + port + ' -P -t'
 
   try {
-    return execSync(command, execOptions);
+    var processIds = execSync(processesCommand, execOptions).match(/(\S+)/g);
+
+    var namedProcesses = processIds.map(function(processId) {
+      var command = 'ps -o command -p ' + processId + ' | sed -n 2p | tr -d "\n"';
+      return execSync(command, execOptions);
+    });
+
+    return namedProcesses.join(',\n  ');
   } catch(e) {
     return null;
   }
