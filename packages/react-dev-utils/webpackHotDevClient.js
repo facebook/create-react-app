@@ -123,6 +123,18 @@ function showErrorOverlay(message) {
   });
 }
 
+function destoryOverlay() {  
+  if(!overlayDiv) {
+    //linting from previous linting was successful
+    return;
+  }
+
+  document.body.removeChild(overlayIframe);
+  overlayDiv = null;
+  overlayIframe = null;
+  lastOnOverlayDivReady = null;
+}
+
 // Connect to WebpackDevServer via a socket.
 var connection = new SockJS(url.format({
   protocol: window.location.protocol,
@@ -156,6 +168,7 @@ function clearOutdatedErrors() {
 // Successful compilation.
 function handleSuccess() {
   clearOutdatedErrors();
+  destoryOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
@@ -170,6 +183,7 @@ function handleSuccess() {
 // Compilation with warnings (e.g. ESLint).
 function handleWarnings(warnings) {
   clearOutdatedErrors();
+  destoryOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
