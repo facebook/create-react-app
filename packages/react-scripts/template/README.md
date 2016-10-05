@@ -861,30 +861,30 @@ This feature is experimental and still [has major usage issues](https://github.c
 
 ## Developing UI Components with React Storybook
 
-Usually, in our app, we have a lot of UI components, and they've different states. 
+Usually, in an app, you have a lot of UI components, and each of them has many different states. 
 For an example, a simple button component could have following states:
 
-* With a text label
-* With some emoji
-* With disabled mode
+* With a text label.
+* With an emoji.
+* In the disabled mode.
 
-Usually, it's hard to see these states without running a sample app or some examples.
+Usually, it’s hard to see these states without running a sample app or some examples.
 
-That's where you could get some help from the third party tool [React Storybook](https://github.com/kadirahq/react-storybook). With that, you can manage these different states and develop them without running your app. You can also deploy your Storybook as a static app.
+That’s where you could get some help from the third party tool [React Storybook](https://github.com/kadirahq/react-storybook). With it, you can manage these different states and develop components in isolation from the app.
 
-That means, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
 
 ![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
 
-**Here's how to setup your app with Storybook:**
+**Here’s how to setup your app with Storybook:**
 
-First, install the following NPM module globally:
+First, install the following npm package globally:
 
 ```sh
 npm install -g getstorybook
 ```
 
-Then, apply following command inside your app:
+Then, run the following command inside your app’s directory:
 
 ```sh
 getstorybook
@@ -892,7 +892,7 @@ getstorybook
 
 After that, follow the instructions on the screen.
 
-For more information, have a look at following links:
+Learn more about React Storybook:
 
 * Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
 * [GitHub Repo](https://github.com/kadirahq/react-storybook)
