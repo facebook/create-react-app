@@ -34,6 +34,11 @@ module.exports = {
       regenerator: true,
       // Resolve the Babel runtime relative to the config.
       moduleName: path.dirname(require.resolve('babel-runtime/package'))
+    }],
+    // resolve imports beginning with ~ as /src/{import}
+    [require.resolve('babel-root-import'), {
+      'rootPathPrefix': '~',
+      'rootPathSuffix': 'src'
     }]
   ]
 };
