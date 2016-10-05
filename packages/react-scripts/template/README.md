@@ -868,7 +868,9 @@ For an example, a simple button component could have following states:
 * With some emoji
 * With disabled mode
 
-With React Storybook, you can manage these different states (or stories) and develop them without running your app. You can also deploy your Storybook as a static app.
+Usually, it's hard to see these states without running a sample app or some examples.
+
+That's where you could get some help from the third party tool [React Storybook](https://github.com/kadirahq/react-storybook). With that, you can manage these different states and develop them without running your app. You can also deploy your Storybook as a static app.
 
 That means, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
 
