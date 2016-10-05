@@ -870,11 +870,11 @@ For an example, a simple button component could have following states:
 
 Usually, it’s hard to see these states without running a sample app or some examples.
 
-That’s where you could get some help from the third party tool [React Storybook](https://github.com/kadirahq/react-storybook). With it, you can manage these different states and develop components in isolation from the app.
-
-You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+That’s where you could get some help from [React Storybook](https://github.com/kadirahq/react-storybook). **It is a third party tool that lets you develop components and see all their states in isolation from your app**.
 
 ![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
+
+You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
 
 **Here’s how to setup your app with Storybook:**
 
