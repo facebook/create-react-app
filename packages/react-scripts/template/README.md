@@ -41,7 +41,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Continuous Integration](#continuous-integration)
   - [Disabling jsdom](#disabling-jsdom)
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
-- [Turbo Charge Component Development with React Storybook](#turbo-charge-component-development-with-react-storybook)
+- [Developing UI Components with React Storybook](#developing-ui-components-with-react-storybook)
 - [Deployment](#deployment)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [GitHub Pages](#github-pages)
@@ -859,7 +859,7 @@ Snapshot testing is a new feature of Jest that automatically generates text snap
 
 This feature is experimental and still [has major usage issues](https://github.com/facebookincubator/create-react-app/issues/372) so we only encourage you to use it if you like experimental technology. We intend to gradually improve it over time and eventually offer it as the default solution for testing React components, but this will take time. [Read more about snapshot testing.](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
 
-## Turbo Charge Component Development with React Storybook
+## Developing UI Components with React Storybook
 
 Usually, in our app, we have a lot of UI components, and they've different states. 
 For an example, a simple button component could have following states:
