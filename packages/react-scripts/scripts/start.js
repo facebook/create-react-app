@@ -267,8 +267,8 @@ function getProcessNameOnPort(port) {
 
     var processCommandsAndDirectories = processIds.map(function(processId) {
       var processCommand = execSync('ps -o command -p ' + processId + ' | sed -n 2p', execOptions);
-      var processDirectory = execSync('lsof -p '+ processId + ' | grep cwd | awk \'{print "  in " $9}\'', execOptions);
-      return chalk.blue(processCommand) + chalk.cyan(processDirectory);
+      var processDirectory = execSync('lsof -p '+ processId + ' | grep cwd | awk \'{print $9}\'', execOptions);
+      return chalk.cyan(processCommand) + chalk.blue('  in ') + chalk.cyan(processDirectory);
     });
 
     return processCommandsAndDirectories.join('\n  ');
