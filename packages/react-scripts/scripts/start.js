@@ -261,17 +261,17 @@ function run(port) {
 
 function getProcessNameOnPort(port) {
   var execOptions = { encoding: 'utf8' };
-  var processesCommand = 'lsof -i:' + port + ' -P -t'
 
   try {
-    var processIds = execSync(processesCommand, execOptions).match(/(\S+)/g);
+    var processIds = execSync('lsof -i:' + port + ' -P -t', execOptions).match(/(\S+)/g);
 
-    var namedProcesses = processIds.map(function(processId) {
-      var command = 'ps -o command -p ' + processId + ' | sed -n 2p | tr -d "\n"';
-      return execSync(command, execOptions);
+    var processCommandsAndDirectories = processIds.map(function(processId) {
+      var processCommand = execSync('ps -o command -p ' + processId + ' | sed -n 2p', execOptions);
+      var processDirectory = execSync('lsof -p '+ processId + ' | grep cwd | awk \'{print "  in " $9}\'', execOptions);
+      return chalk.blue(processCommand) + chalk.cyan(processDirectory);
     });
 
-    return namedProcesses.join(',\n  ');
+    return processCommandsAndDirectories.join('\n  ');
   } catch(e) {
     return null;
   }
@@ -289,7 +289,7 @@ detect(DEFAULT_PORT).then(port => {
   var existingProcess = getProcessNameOnPort(DEFAULT_PORT);
   var question =
     chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.' +
-      ((existingProcess) ? ' Probably:\n  ' + chalk.cyan(existingProcess) : '')) +
+      ((existingProcess) ? ' Probably:\n  ' + existingProcess : '')) +
       '\n\nWould you like to run the app on another port instead?';
 
   prompt(question, true).then(shouldChangePort => {
