@@ -259,7 +259,7 @@ function run(port) {
   runDevServer(host, port, protocol);
 }
 
-function getProcessNameOnPort(port) {
+function getProcessForPort(port) {
   var execOptions = { encoding: 'utf8' };
 
   try {
@@ -286,7 +286,7 @@ detect(DEFAULT_PORT).then(port => {
   }
 
   clearConsole();
-  var existingProcess = getProcessNameOnPort(DEFAULT_PORT);
+  var existingProcess = getProcessForPort(DEFAULT_PORT);
   var question =
     chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.' +
       ((existingProcess) ? ' Probably:\n  ' + existingProcess : '')) +
