@@ -43,6 +43,21 @@ module.exports = {
       }
     }
   },
+  'STYLUS': {
+    toArray: 'loaders',
+    getDev: function () {
+      return {
+        test: /\.styl/,
+        loader: 'style!css!postcss!stylus'
+      }
+    },
+    getProd: function () {
+      return {
+        test: /\.styl/,
+        loader: ExtractTextPlugin.extract('style', 'css!postcss!stylus')
+      }
+    }
+  },
   'CSS_MODULES': {
     config: {
       dev: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss',

@@ -4,6 +4,7 @@ import logo from './logo.svg';
 //styles
 import './App.less';
 import './App.scss';
+import './App.styl';
 import styles from './Modules.css';
 
 class App extends Component {
@@ -36,6 +37,10 @@ class App extends Component {
             <li>
               <code>REACT_APP_LESS=true</code>
               <span>- Enable LESS</span>
+            </li>
+            <li>
+              <code>REACT_APP_STYLUS=true</code>
+              <span>- Enable Stylus</span>
             </li>
             <li>
               <code>REACT_APP_CSS_MODULES=true</code>
