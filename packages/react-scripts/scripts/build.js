@@ -128,6 +128,13 @@ function build(previousSizeMap) {
       process.exit(1);
     }
 
+    // Webpack may swallow uglify errors even with bail:true
+    if (stats.compilation.errors.length) {
+      console.error(chalk.red('Error(s) occurred during the production build:'));
+      stats.compilation.errors.forEach(err => console.error(chalk.red(err.message || err)));
+      process.exit(1);
+    }
+
     console.log(chalk.green('Compiled successfully.'));
     console.log();
 
