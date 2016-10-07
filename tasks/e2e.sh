@@ -142,8 +142,14 @@ npm start -- --smoke-test
 # Finally, let's check that everything still works after ejecting.
 # ******************************************************************************
 
-# Eject
+# Eject...
 echo yes | npm run eject
+
+# ...but still link to the local packages
+npm link $root_path/packages/babel-preset-react-app
+npm link $root_path/packages/eslint-config-react-app
+npm link $root_path/packages/react-dev-utils
+npm link $root_path/packages/react-scripts
 
 # Test the build
 npm run build
