@@ -56,12 +56,20 @@ $root_path/node_modules/.bin/lerna bootstrap
 
 cd packages/react-scripts
 
+# Save package.json because we're going to touch it
+cp package.json package.json.orig
+
 # Like bundle-deps, this script modifies packages/react-scripts/package.json,
 # copying own dependencies (those in the `packages` dir) to bundledDependencies
 node $root_path/tasks/bundle-own-deps.js
 
 # Finally, pack react-scripts
 scripts_path=$root_path/packages/react-scripts/`npm pack`
+
+# Restore package.json
+rm package.json
+mv package.json.orig package.json
+
 
 # ******************************************************************************
 # Now that we have packed them, call the global CLI.
