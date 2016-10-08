@@ -17,6 +17,7 @@
     "config",
     "scripts",
     "template",
+    "kitchensink",
     "utils"
   ],
   "bin": {
