@@ -95,9 +95,9 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-createApp(projectName, program.verbose, program.scriptsVersion);
+createApp(projectName, program.verbose, program.scriptsVersion, argv['from-template']);
 
-function createApp(name, verbose, version) {
+function createApp(name, verbose, version, templatePath) {
   var root = path.resolve(name);
   var appName = path.basename(root);
 
@@ -130,7 +130,7 @@ function createApp(name, verbose, version) {
   console.log('Installing ' + chalk.cyan('react-scripts') + '...');
   console.log();
 
-  run(root, appName, version, verbose, originalDirectory);
+  run(root, appName, version, verbose, originalDirectory, templatePath);
 }
 
 function shouldUseYarn() {
@@ -163,7 +163,7 @@ function install(packageToInstall, verbose, callback) {
   });
 }
 
-function run(root, appName, version, verbose, originalDirectory) {
+function run(root, appName, version, verbose, originalDirectory, templatePath) {
   var packageToInstall = getInstallPackage(version);
   var packageName = getPackageName(packageToInstall);
 
@@ -183,7 +183,7 @@ function run(root, appName, version, verbose, originalDirectory) {
       'init.js'
     );
     var init = require(scriptsPath);
-    init(root, appName, verbose, originalDirectory);
+    init(root, appName, verbose, originalDirectory, templatePath);
   });
 }
 

@@ -12,7 +12,7 @@ var path = require('path');
 var spawn = require('cross-spawn');
 var chalk = require('chalk');
 
-module.exports = function(appPath, appName, verbose, originalDirectory) {
+module.exports = function(appPath, appName, verbose, originalDirectory, templatePath) {
   var ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
   var ownPath = path.join(appPath, 'node_modules', ownPackageName);
   var appPackage = require(path.join(appPath, 'package.json'));
@@ -41,7 +41,17 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   }
 
   // Copy the files for the user
-  fs.copySync(path.join(ownPath, 'template'), appPath);
+  if (!templatePath) {
+    fs.copySync(path.join(ownPath, 'template'), appPath);
+  } else {
+    var templateExists = pathExists.sync(path.join(ownPath, templatePath));
+    if (templateExists) {
+      fs.copySync(path.join(ownPath, templatePath), appPath);
+    } else {
+      console.error('Could not locate supplied template path: ' + templatePath);
+      return;
+    }
+  }
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862
