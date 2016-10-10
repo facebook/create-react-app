@@ -57,9 +57,10 @@ if (env === 'development' || env === 'test') {
 if (env === 'test') {
   module.exports = {
     presets: [
+      // ES features necessary for user's Node version
       [require('babel-preset-env').default, {
-        "targets": {
-          "node": parseFloat(process.versions.node),
+        targets: {
+          node: parseFloat(process.versions.node),
         },
       }],
       // JSX, Flow
@@ -67,8 +68,7 @@ if (env === 'test') {
     ],
     plugins: plugins
   };
-}
-else {
+} else {
   module.exports = {
     presets: [
       // Latest stable ECMAScript features
