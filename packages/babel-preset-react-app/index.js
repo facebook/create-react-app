@@ -59,7 +59,7 @@ if (env === 'test') {
     presets: [
       [require('babel-preset-env').default, {
         "targets": {
-        "node": parseInt(process.versions.node),
+          "node": parseFloat(process.versions.node),
         },
       }],
       // JSX, Flow
