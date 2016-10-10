@@ -123,7 +123,7 @@ function showErrorOverlay(message) {
   });
 }
 
-function destoryOverlay() {  
+function destroyOverlay() {  
   if(!overlayDiv) {
     //linting from previous linting was successful
     return;
@@ -168,7 +168,7 @@ function clearOutdatedErrors() {
 // Successful compilation.
 function handleSuccess() {
   clearOutdatedErrors();
-  destoryOverlay();
+  destroyOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
@@ -183,7 +183,7 @@ function handleSuccess() {
 // Compilation with warnings (e.g. ESLint).
 function handleWarnings(warnings) {
   clearOutdatedErrors();
-  destoryOverlay();
+  destroyOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
