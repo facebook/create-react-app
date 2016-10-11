@@ -123,6 +123,19 @@ function showErrorOverlay(message) {
   });
 }
 
+function destroyErrorOverlay() {  
+  if (!overlayDiv) {
+    // It is not there in the first place.
+    return;
+  }
+
+  // Clean up and reset internal state.
+  document.body.removeChild(overlayIframe);
+  overlayDiv = null;
+  overlayIframe = null;
+  lastOnOverlayDivReady = null;
+}
+
 // Connect to WebpackDevServer via a socket.
 var connection = new SockJS(url.format({
   protocol: window.location.protocol,
@@ -156,6 +169,7 @@ function clearOutdatedErrors() {
 // Successful compilation.
 function handleSuccess() {
   clearOutdatedErrors();
+  destroyErrorOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
@@ -170,6 +184,7 @@ function handleSuccess() {
 // Compilation with warnings (e.g. ESLint).
 function handleWarnings(warnings) {
   clearOutdatedErrors();
+  destroyErrorOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
