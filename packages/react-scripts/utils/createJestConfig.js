@@ -27,7 +27,6 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupTestFrameworkScriptFile: setupTestsFile,
     testPathIgnorePatterns: ['<rootDir>/(build|docs|node_modules)/'],
     testEnvironment: 'node',
-    testRegex: '(/__tests__/.*|\\.(test|spec))\\.(js|jsx)$',
   };
   if (rootDir) {
     config.rootDir = rootDir;
