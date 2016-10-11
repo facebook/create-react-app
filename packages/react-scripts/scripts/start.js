@@ -259,6 +259,10 @@ function run(port) {
   runDevServer(host, port, protocol);
 }
 
+function isProcessAReactApp(processCommand) {
+  return /^node .*react-scripts\/scripts\/start\.js\s?$/.test(processCommand);
+}
+
 function getProcessForPort(port) {
   var execOptions = { encoding: 'utf8' };
 
@@ -267,6 +271,9 @@ function getProcessForPort(port) {
 
     var processCommandsAndDirectories = processIds.map(function(processId) {
       var processCommand = execSync('ps -o command -p ' + processId + ' | sed -n 2p', execOptions);
+      if (isProcessAReactApp(processCommand)) {
+        processCommand = 'create-react-app\n';
+      }
       var processDirectory = execSync('lsof -p '+ processId + ' | grep cwd | awk \'{print $9}\'', execOptions);
       return chalk.cyan(processCommand) + chalk.blue('  in ') + chalk.cyan(processDirectory);
     });
