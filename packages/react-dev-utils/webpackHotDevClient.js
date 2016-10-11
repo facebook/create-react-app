@@ -123,12 +123,13 @@ function showErrorOverlay(message) {
   });
 }
 
-function destroyOverlay() {  
-  if(!overlayDiv) {
-    //linting from previous linting was successful
+function destroyErrorOverlay() {  
+  if (!overlayDiv) {
+    // It is not there in the first place.
     return;
   }
 
+  // Clean up and reset internal state.
   document.body.removeChild(overlayIframe);
   overlayDiv = null;
   overlayIframe = null;
@@ -168,7 +169,7 @@ function clearOutdatedErrors() {
 // Successful compilation.
 function handleSuccess() {
   clearOutdatedErrors();
-  destroyOverlay();
+  destroyErrorOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
@@ -183,7 +184,7 @@ function handleSuccess() {
 // Compilation with warnings (e.g. ESLint).
 function handleWarnings(warnings) {
   clearOutdatedErrors();
-  destroyOverlay();
+  destroyErrorOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
