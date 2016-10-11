@@ -152,10 +152,11 @@ function getInstallPackage(version) {
 
 // Extract package name from tarball url or path.
 function getPackageName(installPackage) {
-  if (~installPackage.indexOf('.tgz')) {
+  if (installPackage.indexOf('.tgz') > -1) {
     return installPackage.match(/^.+\/(.+)-.+\.tgz$/)[1];
-  } else if (~installPackage.indexOf('@')) {
-    return installPackage.split('@')[0];
+  } else if (installPackage.indexOf('@') > 0) {
+    // Do not match @scope/ when stripping off @version or @tag
+    return installPackage.charAt(0) + installPackage.substr(1).split('@')[0];
   }
   return installPackage;
 }
