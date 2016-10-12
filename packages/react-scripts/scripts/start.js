@@ -18,7 +18,6 @@ process.env.NODE_ENV = 'development';
 require('dotenv').config({silent: true});
 
 var chalk = require('chalk');
-var execSync = require('child_process').execSync;
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var historyApiFallback = require('connect-history-api-fallback');
@@ -27,6 +26,7 @@ var detect = require('detect-port');
 var clearConsole = require('react-dev-utils/clearConsole');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+var getProcessForPort = require('react-dev-utils/getProcessForPort');
 var openBrowser = require('react-dev-utils/openBrowser');
 var prompt = require('react-dev-utils/prompt');
 var config = require('../config/webpack.config.dev');
@@ -257,31 +257,6 @@ function run(port) {
   var host = process.env.HOST || 'localhost';
   setupCompiler(host, port, protocol);
   runDevServer(host, port, protocol);
-}
-
-function isProcessAReactApp(processCommand) {
-  return /^node .*react-scripts\/scripts\/start\.js\s?$/.test(processCommand);
-}
-
-function getProcessForPort(port) {
-  var execOptions = { encoding: 'utf8' };
-
-  try {
-    var processIds = execSync('lsof -i:' + port + ' -P -t', execOptions).match(/(\S+)/g);
-
-    var processCommandsAndDirectories = processIds.map(function(processId) {
-      var processCommand = execSync('ps -o command -p ' + processId + ' | sed -n 2p', execOptions);
-      if (isProcessAReactApp(processCommand)) {
-        processCommand = 'create-react-app\n';
-      }
-      var processDirectory = execSync('lsof -p '+ processId + ' | grep cwd | awk \'{print $9}\'', execOptions);
-      return chalk.cyan(processCommand) + chalk.blue('  in ') + chalk.cyan(processDirectory);
-    });
-
-    return processCommandsAndDirectories.join('\n  ');
-  } catch(e) {
-    return null;
-  }
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to
