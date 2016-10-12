@@ -53,7 +53,6 @@ Jest 16 includes [improvements to snapshot testing and changes to the snapshot f
 ```
 npm test -- -u
 ```
-(Or press `u` in Jest watch mode.)
 
 ## 0.6.1 (September 27, 2016)
 
