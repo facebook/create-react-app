@@ -154,8 +154,8 @@ function getInstallPackage(version) {
 function getPackageName(installPackage) {
   if (installPackage.indexOf('.tgz') > -1) {
     // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
-    // However, This function returns package name only wihout semver version.
-    return installPackage.match(/^.+\/(.+)-\d+.+\.tgz$/)[1];
+    // However, this function returns package name only wihout semver version.
+    return installPackage.match(/^.+\/(.+?)(?:-\d+.+)?\.tgz$/)[1];
   } else if (installPackage.indexOf('@') > 0) {
     // Do not match @scope/ when stripping off @version or @tag
     return installPackage.charAt(0) + installPackage.substr(1).split('@')[0];
