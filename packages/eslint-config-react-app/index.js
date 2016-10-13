@@ -9,7 +9,7 @@
 
 // Inspired by https://github.com/airbnb/javascript but less opinionated.
 
-// We use eslint-loader so even warnings are very visibile.
+// We use eslint-loader so even warnings are very visible.
 // This is why we only use "WARNING" level for potential errors,
 // and we don't use "ERROR" level at all.
 
@@ -127,7 +127,10 @@ module.exports = {
     'no-undef': 'error',
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
-    'no-unused-expressions': 'warn',
+    'no-unused-expressions': ['warn', {
+      'allowShortCircuit': true,
+      'allowTernary': true
+    }],
     'no-unused-labels': 'warn',
     'no-unused-vars': ['warn', {
       vars: 'local',
@@ -193,7 +196,7 @@ module.exports = {
     'react/no-deprecated': 'warn',
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
-    'react/react-in-jsx-scope': 'warn',
+    'react/react-in-jsx-scope': 'error',
     'react/require-render-return': 'warn',
     'react/style-prop-object': 'warn',
 
