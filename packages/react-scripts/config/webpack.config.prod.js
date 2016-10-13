@@ -90,7 +90,7 @@ module.exports = {
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
     // https://github.com/facebookincubator/create-react-app/issues/290
-    extensions: ['.js', '.json', '.jsx', ''],
+    extensions: ['.js', '.json', '.jsx', '.es6', ''],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -110,7 +110,7 @@ module.exports = {
     // It's important to do this before Babel processes the JS.
     preLoaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|es6)$/,
         loader: 'eslint',
         include: paths.appSrc
       }
@@ -118,13 +118,13 @@ module.exports = {
     loaders: [
       // Process JS with Babel.
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|es6)$/,
         include: paths.appSrc,
         loader: 'babel',
         // @remove-on-eject-begin
         query: {
           babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          presets: [require.resolve('babel-preset-trunkclub')],
         },
         // @remove-on-eject-end
       },
@@ -141,7 +141,7 @@ module.exports = {
       // use the "style" loader inside the async code so CSS from them won't be
       // in the main CSS file.
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         // "?-autoprefixer" disables autoprefixer in css-loader itself:
         // https://github.com/webpack/css-loader/issues/281
         // We already have it thanks to postcss. We only pass this flag in
@@ -150,7 +150,7 @@ module.exports = {
         // Webpack 1.x uses Uglify plugin as a signal to minify *all* the assets
         // including CSS. This is confusing and will be removed in Webpack 2:
         // https://github.com/webpack/webpack/issues/283
-        loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss')
+        loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss!sass')
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify

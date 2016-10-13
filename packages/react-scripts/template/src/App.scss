@@ -1,3 +1,5 @@
+$color-background: #222;
+
 .App {
   text-align: center;
 }
@@ -8,7 +10,7 @@
 }
 
 .App-header {
-  background-color: #222;
+  background-color: $color-background;
   height: 150px;
   padding: 20px;
   color: white;
