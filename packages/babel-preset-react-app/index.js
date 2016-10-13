@@ -15,7 +15,8 @@ const plugins = [
     require.resolve('babel-plugin-transform-class-properties'),
     // { ...todo, completed: true }
     [require.resolve('babel-plugin-transform-object-rest-spread'), {
-      // Use Object.assign directly, instead of extends helper
+      // Use Object.assign directly, instead of extends helper. Note that this
+      // assumes Object.assign is available/polyfilled.
       useBuiltIns: true
     }],
     // function* () { yield 42; yield 43; }
