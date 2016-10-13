@@ -412,7 +412,7 @@ Now you are ready to use the imported React Bootstrap components within your com
 
 ## Adding React Router
 
-React Router is a popular solution for adding routing capabilities to your single-page applications. If your app needs routing, you can configure React Router to work with Create React app by following these steps:
+React Router is a popular solution for adding routing capabilities to your single-page applications. If your app needs routing, you can configure React Router to work with Create React App by following these steps:
 
 Install React Router v4 from NPM. _note: we are installing a pre-release version of React Router as of the time of this writing, but it functions very well for many needs._
 
