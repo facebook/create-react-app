@@ -14,7 +14,10 @@ const plugins = [
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
     // { ...todo, completed: true }
-    require.resolve('babel-plugin-transform-object-rest-spread'),
+    [require.resolve('babel-plugin-transform-object-rest-spread'), {
+      // Use Object.assign directly, instead of extends helper
+      useBuiltIns: true
+    }],
     // function* () { yield 42; yield 43; }
     [require.resolve('babel-plugin-transform-regenerator'), {
       // Async functions are converted to generators by babel-preset-latest
