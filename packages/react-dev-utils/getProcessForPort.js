@@ -1,5 +1,6 @@
 var chalk = require('chalk');
 var execSync = require('child_process').execSync;
+var path = require('path');
 
 var execOptions = { encoding: 'utf8' };
 
@@ -11,9 +12,27 @@ function getProcessIdsOnPort(port) {
   return execSync('lsof -i:' + port + ' -P -t', execOptions).match(/(\S+)/g);
 }
 
-function getProcessCommandById(processId) {
+function getPackageNameInDirectory(directory) {
+  var packagePath = path.join(directory.trim(), 'package.json');
+
+  try {
+    return require(packagePath).name;
+  } catch(e) {
+    return null;
+  }
+
+}
+
+function getProcessCommand(processId, processDirectory) {
   var command = execSync('ps -o command -p ' + processId + ' | sed -n 2p', execOptions);
-  return (isProcessAReactApp(command)) ? 'create-react-app\n' : command;
+
+  if (isProcessAReactApp(command)) {
+    const packageName = getPackageNameInDirectory(processDirectory);
+    return (packageName) ? packageName + '\n' : command;
+  } else {
+    return command;
+  }
+
 }
 
 function getDirectoryOfProcessById(processId) {
@@ -25,8 +44,8 @@ function getProcessForPort(port) {
     var processIds = getProcessIdsOnPort(port);
 
     var processCommandsAndDirectories = processIds.map(function(processId) {
-      var command = getProcessCommandById(processId);
       var directory = getDirectoryOfProcessById(processId);
+      var command = getProcessCommand(processId, directory);
       return chalk.cyan(command) + chalk.blue('  in ') + chalk.cyan(directory);
     });
 
