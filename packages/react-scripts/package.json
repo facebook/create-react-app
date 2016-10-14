@@ -29,7 +29,7 @@
     "babel-eslint": "6.1.2",
     "babel-jest": "16.0.0",
     "babel-loader": "6.2.5",
-    "babel-preset-trunkclub": "^3.0.4",
+    "babel-preset-trunkclub": "3.0.4-next",
     "babel-runtime": "^6.11.6",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
