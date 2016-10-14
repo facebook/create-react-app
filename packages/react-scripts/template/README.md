@@ -440,8 +440,8 @@ Re-run flow, and you shouldn’t get any extra issues.
 
 Your project can consume variables declared in your environment as if they were declared locally in your JS files. By
 default you will have `NODE_ENV` defined for you, and any other environment variables starting with
-`REACT_APP_`. These environment variables will be defined for you on `process.env`. For example, having an environment
-variable named `REACT_APP_SECRET_CODE` will be exposed in your JS as `process.env.REACT_APP_SECRET_CODE`, in addition
+`TC_`. These environment variables will be defined for you on `process.env`. For example, having an environment
+variable named `TC_SECRET_CODE` will be exposed in your JS as `process.env.TC_SECRET_CODE`, in addition
 to `process.env.NODE_ENV`.
 
 These environment variables can be useful for displaying information conditionally based on where the project is
@@ -456,14 +456,14 @@ render() {
     <div>
       <small>You are running this application in <b>{process.env.NODE_ENV}</b> mode.</small>
       <form>
-        <input type="hidden" defaultValue={process.env.REACT_APP_SECRET_CODE} />
+        <input type="hidden" defaultValue={process.env.TC_SECRET_CODE} />
       </form>
     </div>
   );
 }
 ```
 
-During the build, `process.env.REACT_APP_SECRET_CODE` will be replaced with the current value of the `REACT_APP_SECRET_CODE` environment variable. Remember that the `NODE_ENV` variable will be set for you automatically.
+During the build, `process.env.TC_SECRET_CODE` will be replaced with the current value of the `TC_SECRET_CODE` environment variable. Remember that the `NODE_ENV` variable will be set for you automatically.
 
 When you load the app in the browser and inspect the `<input>`, you will see its value set to `abcdef`, and the bold text will show the environment provided when using `npm start`:
 
@@ -484,7 +484,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 ```
 
-The above form is looking for a variable called `REACT_APP_SECRET_CODE` from the environment. In order to consume this
+The above form is looking for a variable called `TC_SECRET_CODE` from the environment. In order to consume this
 value, we need to have it defined in the environment. This can be done using two ways: either in your shell or in
 a `.env` file.
 
@@ -496,7 +496,7 @@ life of the shell session.
 #### Windows (cmd.exe)
 
 ```cmd
-set REACT_APP_SECRET_CODE=abcdef&&npm start
+set TC_SECRET_CODE=abcdef&&npm start
 ```
 
 (Note: the lack of whitespace is intentional.)
@@ -504,7 +504,7 @@ set REACT_APP_SECRET_CODE=abcdef&&npm start
 #### Linux, OS X (Bash)
 
 ```bash
-REACT_APP_SECRET_CODE=abcdef npm start
+TC_SECRET_CODE=abcdef npm start
 ```
 
 ### Adding Development Environment Variables In `.env`
@@ -514,7 +514,7 @@ REACT_APP_SECRET_CODE=abcdef npm start
 To define permanent environment variables, create a file called `.env` in the root of your project:
 
 ```
-REACT_APP_SECRET_CODE=abcdef
+TC_SECRET_CODE=abcdef
 ```
 
 These variables will act as the defaults if the machine does not explicitly set them.<br>

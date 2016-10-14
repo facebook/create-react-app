@@ -18,7 +18,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const setupTestsFile = pathExists.sync(paths.testsSetup) ? '<rootDir>/src/setupTests.js' : undefined;
 
   const config = {
-    moduleFileExtensions: ['jsx', 'js', 'json'],
+    preset: '@trunkclub/jest-preset',
     moduleNameMapper: {
       '^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
       '^.+\\.css$': resolve('config/jest/CSSStub.js')
