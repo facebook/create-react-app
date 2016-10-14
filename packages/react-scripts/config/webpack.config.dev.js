@@ -120,6 +120,9 @@ module.exports = {
           // @remove-on-eject-begin
           babelrc: false,
           presets: [require.resolve('babel-preset-trunkclub')],
+          plugins: [[require.resolve('babel-plugin-transform-runtime'), {
+            moduleName: path.resolve(paths.ownNodeModules, 'babel-runtime')
+          }]],
           // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/react-scripts/

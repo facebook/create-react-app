@@ -125,6 +125,9 @@ module.exports = {
         query: {
           babelrc: false,
           presets: [require.resolve('babel-preset-trunkclub')],
+          plugins: [[require.resolve('babel-plugin-transform-runtime'), {
+            moduleName: path.resolve(paths.ownNodeModules, 'babel-runtime')
+          }]],
         },
         // @remove-on-eject-end
       },
