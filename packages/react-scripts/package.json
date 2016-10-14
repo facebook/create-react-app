@@ -1,6 +1,7 @@
 {
   "name": "@trunkclub/react-scripts",
-  "version": "1.0.0",
+  "version": "1.0.2",
+  "upstream-version": "0.6.1",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
   "license": "BSD-3-Clause",
@@ -23,6 +24,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@trunkclub/jest-preset": "^1.0.2",
     "autoprefixer": "6.4.1",
     "babel-core": "6.14.0",
     "babel-eslint": "6.1.2",
@@ -79,6 +81,7 @@
     "fsevents": "1.0.14"
   },
   "bundledDependencies": [
+    "@trunkclub/jest-preset",
     "autoprefixer",
     "babel-core",
     "babel-eslint",
