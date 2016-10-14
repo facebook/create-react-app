@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.scss';
+import React, { Component } from 'react'
+import logo from 'logo.svg'
+import 'App.scss'
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <div className="App">
@@ -14,8 +14,6 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
       </div>
-    );
+    )
   }
 }
-
-export default App;
