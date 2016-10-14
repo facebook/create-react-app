@@ -40,6 +40,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 var DEFAULT_PORT = process.env.PORT || 3000;
 var compiler;
 var handleCompile;
+var time = new Date();
 
 // You can safely remove this after ejecting.
 // We only use this block for testing of Create React App itself:
@@ -65,6 +66,7 @@ function setupCompiler(host, port, protocol) {
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
   compiler.plugin('invalid', function() {
     clearConsole();
+    time = +new Date();
     console.log('Compiling...');
   });
 
@@ -78,7 +80,7 @@ function setupCompiler(host, port, protocol) {
     // them in a readable focused way.
     var messages = formatWebpackMessages(stats.toJson({}, true));
     if (!messages.errors.length && !messages.warnings.length) {
-      console.log(chalk.green('Compiled successfully!'));
+      console.log(chalk.green('Compiled successfully in ' + (+new Date() - time) + 'ms!'));
       console.log();
       console.log('The app is running at:');
       console.log();
@@ -113,6 +115,7 @@ function setupCompiler(host, port, protocol) {
       console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
       console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
     }
+    time = 0
   });
 }
 

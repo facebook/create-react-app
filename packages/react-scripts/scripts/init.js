@@ -27,6 +27,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     'start': 'react-scripts start',
     'build': 'react-scripts build',
     'test': 'react-scripts test --env=jsdom',
+    'eject': 'react-scripts eject'
   };
 
   fs.writeFileSync(
@@ -65,6 +66,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     'install',
     'react',
     'react-dom',
+    'babel-runtime',
     '--save',
     verbose && '--verbose'
   ].filter(function(e) { return e; });
