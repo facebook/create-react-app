@@ -444,6 +444,8 @@ default you will have `NODE_ENV` defined for you, and any other environment vari
 variable named `REACT_APP_SECRET_CODE` will be exposed in your JS as `process.env.REACT_APP_SECRET_CODE`, in addition
 to `process.env.NODE_ENV`.
 
+>Note: Changing any environment variables will require you to restart the development server if it is running.
+
 These environment variables can be useful for displaying information conditionally based on where the project is
 deployed or consuming sensitive data that lives outside of version control.
 
