@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from 'App'
-import { AppContainer } from 'react-hot-loader'
+import { AppContainer } from '@trunkclub/react-scripts/node_modules/react-hot-loader'
 import 'index.css'
 
 ReactDOM.render(
