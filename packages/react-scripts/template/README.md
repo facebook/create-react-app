@@ -802,8 +802,8 @@ node_js:
   - 6
 cache:
   directories:
-  - node_modules
-script
+    - node_modules
+script:
   - npm test
 ```
 1. Trigger your first build with a git push.
