@@ -561,6 +561,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { users: [] };
+    this.defaultError = 'Error while fetching stargazers';
   }
 
   componentDidMount() {
@@ -570,23 +571,20 @@ class App extends Component {
   fetchStargazers() {
     this.setState({ isLoading: true });
     fetch('https://api.github.com/repos/facebook/react/stargazers')
-      .then((response) => response.json())
-      .catch(() => ({ message: 'Error while fetching stargazers' }))
-      .then((res) => {
+      .then((response) => {
+        const body = response.json();
+        if (response.ok) {
+          return body.then((users) => ({ users }));
+        }
+
+        return body.then(({ message }) => (
+          { users: [], error: message || this.defaultError }
+        ));
+      })
+      .catch(() => ({ users: [], error: this.defaultError }))
+      .then(({ users, error }) => {
         if (!this.hasUnmounted) {
-          if (res.message) {
-            this.setState({
-              isLoading: false,
-              error: res.message,
-              users: [],
-            });
-          } else {
-            this.setState({
-              isLoading: false,
-              error: null,
-              users: res,
-            });
-          }
+          this.setState({ isLoading: false, error, users });
         }
       });
   }
@@ -633,6 +631,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { users: [] };
+    this.defaultError = 'Error while fetching stargazers';
   }
 
   componentDidMount() {
@@ -647,14 +646,16 @@ class App extends Component {
 
     try {
       const response = await fetch('https://api.github.com/repos/facebook/react/stargazers');
-      const body = await response.json();
-      if (body.message) {
-        error = body.message;
+
+      if (response.ok) {
+        users = await response.json();
       } else {
-        users = body;
+        const body = await response.json();
+        error = body.message || this.defaultError;
+        users = [];
       }
     } catch (e) {
-      error = 'Error while fetching stargazers';
+      error = this.defaultError;
       users = [];
     }
 
