@@ -16,10 +16,8 @@ cd "$(dirname "$0")"
 
 function cleanup {
   echo 'Cleaning up.'
-  cd $root_path
   # Uncomment when snapshot testing is enabled by default:
   # rm ./template/src/__snapshots__/App.test.js.snap
-  rm -rf $clean_path
 }
 
 # Error messages are redirected to stderr
@@ -53,31 +51,25 @@ root_path=$PWD
 # Pack react-scripts so we can verify they work.
 # ******************************************************************************
 
-# Packing react-scripts takes some work because we want to clean it up first.
-# Create a temporary clean folder that contains production only code.
-# Do not overwrite any files in the current folder.
-clean_path=`mktemp -d 2>/dev/null || mktemp -d -t 'clean_path'`
+# Install all our packages
+$root_path/node_modules/.bin/lerna bootstrap
 
-# Copy some of the project files to the temporary folder.
-# Exclude folders that definitely won’t be part of the package from processing.
-# We will strip the dev-only code there, `npm pack`, and copy the package back.
-cd $root_path
-rsync -av --exclude='.git' --exclude=$clean_path\
-  --exclude='node_modules' --exclude='build'\
-  './' $clean_path  >/dev/null
+cd packages/react-scripts
 
-# Open the clean folder
-cd $clean_path
-# Now remove all the code relevant to development of Create React App.
-files="$(find -L . -name "*.js" -type f)"
-for file in $files; do
-  sed -i.bak '/\/\/ @remove-on-publish-begin/,/\/\/ @remove-on-publish-end/d' $file
-  rm $file.bak
-done
+# Save package.json because we're going to touch it
+cp package.json package.json.orig
+
+# Like bundle-deps, this script modifies packages/react-scripts/package.json,
+# copying own dependencies (those in the `packages` dir) to bundledDependencies
+node $root_path/tasks/bundle-own-deps.js
 
 # Finally, pack react-scripts
-cp -rf $root_path/node_modules $clean_path
-scripts_path=$clean_path/`npm pack`
+scripts_path=$root_path/packages/react-scripts/`npm pack`
+
+# Restore package.json
+rm package.json
+mv package.json.orig package.json
+
 
 # ******************************************************************************
 # Now that we have packed them, call the global CLI.
@@ -85,7 +77,7 @@ scripts_path=$clean_path/`npm pack`
 
 # Go back to the root directory and run the command from here
 cd $root_path
-node global-cli/index.js --scripts-version=$scripts_path "$@"
+node packages/create-react-app/index.js --scripts-version=$scripts_path "$@"
 
 # Cleanup
 cleanup
