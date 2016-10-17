@@ -1,4 +1,7 @@
 {
   "lerna": "2.0.0-beta.29",
-  "version": "independent"
+  "version": "independent",
+  "publishConfig": {
+      "registry": "https://nexus.lolacloud.com/repository/npm-private/"
+  }
 }
