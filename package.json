@@ -5,7 +5,7 @@
     "create-react-app": "tasks/cra.sh",
     "e2e": "tasks/e2e.sh",
     "postinstall": "lerna bootstrap",
-    "publish": "tasks/release.sh",
+    "publish": "echo 'Avoiding use of lerna for now because of nexus and dist-tag issues' && cd packages/react-scripts && npm publish",
     "start": "node packages/react-scripts/scripts/start.js",
     "test": "node packages/react-scripts/scripts/test.js --env=jsdom"
   },
