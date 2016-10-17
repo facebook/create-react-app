@@ -1,6 +1,6 @@
 {
   "name": "@g4/react-scripts",
-  "version": "0.6.1",
+  "version": "0.6.5",
   "description": "Configuration and scripts for Create React App.",
   "repository": "lolaent/create-react-app",
   "publishConfig" : {
@@ -9,6 +9,9 @@
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
+  },
+  "scripts": {
+      "prepublish": "npm dedupe && rm -rf node_modules/fsevents && node ./node_modules/.bin/bundle-deps"
   },
   "bugs": {
     "url": "https://github.com/lolaent/create-react-app/issues"
