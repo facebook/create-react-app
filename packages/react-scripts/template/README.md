@@ -31,6 +31,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Can I Use Decorators?](#can-i-use-decorators)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
+- [Integrating with a Rails Backend](#integrating-with-a-rails-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
@@ -606,6 +607,10 @@ Create React App will add decorator support when the specification advances to a
 ## Integrating with a Node Backend
 
 Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/) for instructions on integrating an app with a Node backend running on another port, and using `fetch()` to access it. You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo).
+
+## Integrating with a Rails Backend
+
+Check out [this tutorial](https://www.fullstackreact.com/articles/how-to-get-create-react-app-to-work-with-your-rails-api/) for instructions on integrating an app with a Rails backend running on another port, and using `fetch()` to access it. You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo-rails).
 
 ## Proxying API Requests in Development
 
