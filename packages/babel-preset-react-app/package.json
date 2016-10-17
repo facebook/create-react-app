@@ -1,5 +1,6 @@
 {
   "name": "babel-preset-react-app",
+  "private": true,
   "version": "0.2.1",
   "description": "Babel preset used by Create React App",
   "repository": "facebookincubator/create-react-app",
