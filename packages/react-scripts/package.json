@@ -1,7 +1,7 @@
 {
-  "name": "@g4/react-scripts",
+  "name": "g4-react-scripts",
   "version": "0.6.6",
-  "description": "Configuration and scripts for Create React App.",
+  "description": "Configuration and scripts for Create React App. Used for g4mobile",
   "repository": "lolaent/create-react-app",
   "publishConfig": {
     "registry": "https://nexus.lolacloud.com/repository/npm-private/"
