@@ -75,10 +75,13 @@ rm -rf node_modules/fsevents
 # This modifies $clean_path/package.json to copy all dependencies to bundledDependencies
 node ./node_modules/.bin/bundle-deps
 
+# Don't publish with lerna because nexus doesn't support npm dist-tag...
+npm publish
+
 cd $clean_path
 
 # Go!
-./node_modules/.bin/lerna publish --independent "$@"
+#./node_modules/.bin/lerna publish --independent "$@"
 
 # cleanup
 cd ..

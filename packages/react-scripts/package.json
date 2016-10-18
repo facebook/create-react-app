@@ -10,9 +10,6 @@
   "engines": {
     "node": ">=4"
   },
-  "scripts": {
-    "prepublish": "npm dedupe && rm -rf node_modules/fsevents && node ./node_modules/.bin/bundle-deps"
-  },
   "bugs": {
     "url": "https://github.com/lolaent/create-react-app/issues"
   },
