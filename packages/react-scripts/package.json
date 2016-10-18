@@ -1,6 +1,6 @@
 {
   "name": "g4-react-scripts",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "Configuration and scripts for Create React App. Used for g4mobile",
   "repository": "lolaent/create-react-app",
   "publishConfig": {
