@@ -59,23 +59,23 @@ for file in $files; do
 done
 
 # Update deps
-rm -rf node_modules
-rm -rf ~/.npm
-npm cache clear
+# rm -rf node_modules
+# rm -rf ~/.npm
+# npm cache clear
 npm install
-
-cd packages/react-scripts
-# Force dedupe
-npm dedupe
-
-# Don't bundle fsevents because it is optional and OS X-only
-# Since it's in optionalDependencies, it will attempt install outside bundle
-rm -rf node_modules/fsevents
-
-# This modifies $clean_path/package.json to copy all dependencies to bundledDependencies
-node ./node_modules/.bin/bundle-deps
-
-cd $clean_path
+#
+# cd packages/react-scripts
+# # Force dedupe
+# npm dedupe
+#
+# # Don't bundle fsevents because it is optional and OS X-only
+# # Since it's in optionalDependencies, it will attempt install outside bundle
+# rm -rf node_modules/fsevents
+#
+# # This modifies $clean_path/package.json to copy all dependencies to bundledDependencies
+# node ./node_modules/.bin/bundle-deps
+#
+# cd $clean_path
 
 # Go!
 ./node_modules/.bin/lerna publish --independent "$@"
