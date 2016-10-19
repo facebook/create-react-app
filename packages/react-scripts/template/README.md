@@ -863,7 +863,20 @@ This feature is experimental and still [has major usage issues](https://github.c
 
 ## Deployment
 
-## Building for Relative Paths
+`npm run build` creates a `build` directory with a production build of your app. Set up your favourite http server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` is served with the contents of the `/static/js/main.<hash>.js` file.
+
+```sh
+cd ./build
+python3 -m http.server 80
+```
+
+### `pushState` routers
+
+If you use routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`), many static file servers will fail. For example, if you used react-router with a route for `/todos/42`, the development server will respond to `localhost:3000/todos/42` properly, but the python3 http.server serving a production build as above will not. 
+
+This is because when there is a fresh page load for a `0.0.0.0/todos/42`, the server looks for the file `build/todos/42` and does not find it. The server needs to be configured to respond to a request to `/todos/42` by serving `index.html`.
+
+### Building for Relative Paths
 
 By default, Create React App produces a build assuming your app is hosted at the server root.<br>
 To override this, specify the `homepage` in your `package.json`, for example:
