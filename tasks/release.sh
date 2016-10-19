@@ -59,3 +59,4 @@ node ./node_modules/.bin/bundle-deps
 cd $root_path
 # Go!
 ./node_modules/.bin/lerna publish --independent "$@"
+./node_modules/.bin/lerna-npm-readme-hack
