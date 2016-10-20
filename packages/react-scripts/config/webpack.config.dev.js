@@ -15,6 +15,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+var ensureSlash = require('./utils/ensureSlash');
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 
@@ -29,7 +30,7 @@ var publicPath = '/';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
-var publicUrl = '';
+var publicUrl = ensureSlash(paths.servedPath, false);
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
 
