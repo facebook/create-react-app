@@ -36,7 +36,7 @@ var nodePaths = (process.env.NODE_PATH || '')
   .map(resolveApp);
 
 // config after eject: we're in ./config/
-module.exports = {
+var configs = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
@@ -56,7 +56,7 @@ function resolveOwn(relativePath) {
 }
 
 // config before eject: we're in ./node_modules/react-scripts/config/
-module.exports = {
+configs = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
@@ -73,7 +73,7 @@ module.exports = {
 
 // config before publish: we're in ./packages/react-scripts/config/
 if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
-  module.exports = {
+  configs = {
     appBuild: resolveOwn('../../../build'),
     appPublic: resolveOwn('../template/public'),
     appHtml: resolveOwn('../template/public/index.html'),
@@ -88,3 +88,7 @@ if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) 
   };
 }
 // @remove-on-eject-end
+
+configs.publicUrl = process.env.PUBLIC_URL ? process.env.PUBLIC_URL : require(configs.appPackageJson).homepage;
+
+module.exports = configs;

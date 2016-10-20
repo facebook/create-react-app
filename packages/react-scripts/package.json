@@ -4,6 +4,7 @@
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
+  "homepage": "https://s3.eu-central-1.amazonaws.com/my-project",
   "engines": {
     "node": ">=4"
   },
