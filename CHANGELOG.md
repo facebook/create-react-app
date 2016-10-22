@@ -1,3 +1,59 @@
+## 0.7.0 (October 13, 2016)
+
+### Build Dependency (`react-scripts`)
+
+* Updates Jest to [version 16.0](http://facebook.github.io/jest/blog/2016/10/03/jest-16.html), with an upgraded CLI, improved snapshot testing, new matchers and more. ([@chase](https://github.com/chase) in [#858](https://github.com/facebookincubator/create-react-app/pull/858))
+* Test setup file `src/setupTests.js` is now called after test framework initialization  to support loading custom matchers. ([@just-boris](https://github.com/just-boris) in [#846](https://github.com/facebookincubator/create-react-app/pull/846))
+* Build command shows better instructions for deploying the app to GitHub Pages ([@Janpot](https://github.com/Janpot) in [#841](https://github.com/facebookincubator/create-react-app/pull/841))
+* Build command now generates an asset manifest with mappings from each filename to its final output filename. ([@lukyth](https://github.com/lukyth) in [#891](https://github.com/facebookincubator/create-react-app/pull/891))
+* Build command exits, if there are errors from UglifyJS ([@pdillon](https://github.com/pdillon) in [#859](https://github.com/facebookincubator/create-react-app/pull/859))
+* Eject output is more beautiful now. ([@azakordonets](https://github.com/azakordonets) in [#769](https://github.com/facebookincubator/create-react-app/pull/769))
+* Fixes opening the app in a new tab in Chrome. ([@unixdev](https://github.com/unixdev) in [#831](https://github.com/facebookincubator/create-react-app/pull/831))
+* Fixes environment variables not being defined as normal properties of the `process.env` object. ([@jobi](https://github.com/jobi) in [#795](https://github.com/facebookincubator/create-react-app/issues/795))
+
+### ESLint Config (`eslint-config-react-app`)
+
+* `react/react-in-jsx-scope` rule ("React must be in scope") is now an error. ([@gaearon](https://github.com/gaearon) in [#822](https://github.com/facebookincubator/create-react-app/pull/822))
+* `no-unused-expressions` rule now allows the use of short circuit and ternary expressions. ([@cannona](https://github.com/cannona) in [#724](https://github.com/facebookincubator/create-react-app/pull/724))
+
+### Babel Preset (`babel-preset-react-app`)
+
+* The preset now detects the Node.js version in test environment and disables unnecessary ES2015 transforms using using `babel-preset-env`. ([@shubheksha](https://github.com/shubheksha) in [#878](https://github.com/facebookincubator/create-react-app/pull/878))
+* Fixes a duplicate dependency on `babel-plugin-transform-regenerator`. ([@akofman](https://github.com/akofman) in [#864](https://github.com/facebookincubator/create-react-app/pull/864))
+
+### Utilities (`react-dev-utils`)
+
+* The error overlay is now disposed after fixing linting errors. ([@jarlef](https://github.com/jarlef) in [#856](https://github.com/facebookincubator/create-react-app/pull/856))
+* Adds support for Webpack 2 to `webpackHotDevClient`. ([@michalkvasnicak](https://github.com/michalkvasnicak) in [#840](https://github.com/facebookincubator/create-react-app/pull/840))
+
+### Global CLI (`create-react-app`)
+
+* Adds support for passing a scoped package name to the `--scripts-version` argument. ([@pdillon](https://github.com/pdillon) in [#826](https://github.com/facebookincubator/create-react-app/pull/826))
+* Fixes installing pre-release versions using a tarball URL with the `--scripts-version` argument. ([@jihchi](https://github.com/jihchi) in [#876](https://github.com/facebookincubator/create-react-app/pull/876))
+
+### Migrating from 0.6.1 to 0.7.0
+
+You may optionally update the global command (it’s not required):
+
+```
+npm install -g create-react-app@0.7.0
+```
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.7.0
+```
+
+### Breaking Change in 0.7.0
+
+#### Updating Snapshots
+
+Jest 16 includes [improvements to snapshot testing and changes to the snapshot format](https://facebook.github.io/jest/blog/2016/10/03/jest-16.html#snapshot-updates). If your project uses snapshot testing, you'll need to update the snapshot files. To update the snapshots, run:
+```
+npm test -- -u
+```
+
 ## 0.6.1 (September 27, 2016)
 
 ### Build Dependency (`react-scripts`)
