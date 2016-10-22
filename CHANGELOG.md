@@ -1,4 +1,4 @@
-## 0.7.0 (October 13, 2016)
+## 0.7.0 (October 22, 2016)
 
 ### Build Dependency (`react-scripts`)
 
@@ -10,15 +10,18 @@
 * Eject output is more beautiful now. ([@azakordonets](https://github.com/azakordonets) in [#769](https://github.com/facebookincubator/create-react-app/pull/769))
 * Fixes opening the app in a new tab in Chrome. ([@unixdev](https://github.com/unixdev) in [#831](https://github.com/facebookincubator/create-react-app/pull/831))
 * Fixes environment variables not being defined as normal properties of the `process.env` object. ([@jobi](https://github.com/jobi) in [#795](https://github.com/facebookincubator/create-react-app/issues/795))
+* Fixes PostCSS autoprefixer not processing CSS files imported with CSS `@import` statements. ([@nhunzaker](https://github.com/nhunzaker) in [##929](https://github.com/facebookincubator/create-react-app/pull/929))
 
 ### ESLint Config (`eslint-config-react-app`)
 
+* Adds `import/no-webpack-loader-syntax` rule that forbids using custom Webpack specific syntax to specify Webpack loaders in import statements. ([@fson](https://github.com/fson) in [#803](https://github.com/facebookincubator/create-react-app/pull/803))
 * `react/react-in-jsx-scope` rule ("React must be in scope") is now an error. ([@gaearon](https://github.com/gaearon) in [#822](https://github.com/facebookincubator/create-react-app/pull/822))
 * `no-unused-expressions` rule now allows the use of short circuit and ternary expressions. ([@cannona](https://github.com/cannona) in [#724](https://github.com/facebookincubator/create-react-app/pull/724))
 
 ### Babel Preset (`babel-preset-react-app`)
 
-* The preset now detects the Node.js version in test environment and disables unnecessary ES2015 transforms using using `babel-preset-env`. ([@shubheksha](https://github.com/shubheksha) in [#878](https://github.com/facebookincubator/create-react-app/pull/878))
+* The preset now detects the Node.js version in test environment and disables unnecessary ES2015 transforms using using `babel-preset-env`. ([@shubheksha](https://github.com/shubheksha) in [#878](https://github.com/facebookincubator/create-react-app/pull/878), [@JeffreyATW](https://github.com/JeffreyATW) in [#927
+](https://github.com/facebookincubator/create-react-app/pull/927))
 * Fixes a duplicate dependency on `babel-plugin-transform-regenerator`. ([@akofman](https://github.com/akofman) in [#864](https://github.com/facebookincubator/create-react-app/pull/864))
 
 ### Utilities (`react-dev-utils`)
