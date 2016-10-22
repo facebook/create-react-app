@@ -1,6 +1,7 @@
 {
   "name": "eslint-config-react-app",
   "version": "0.6.1",
+  "private": true,
   "description": "ESLint configuration used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",

@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "0.9.4",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "name": "powerreviews-react-scripts",
+  "version": "0.1.6",
+  "description": "Configuration and scripts for Create React App, customized for Powerreviews",
+  "repository": "powerreviews/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/powerreviews/create-react-app/issues"
   },
   "files": [
     "babelrc",
@@ -55,6 +55,13 @@
     "postcss-loader": "1.2.2",
     "promise": "7.1.1",
     "react-dev-utils": "^0.5.2",
+    "identity-obj-proxy": "^3.0.0",
+    "node-sass": "^3.10.1",
+    "path-exists": "2.1.0",
+    "recursive-readdir": "2.1.0",
+    "rimraf": "2.5.4",
+    "sass-loader": "^4.0.2",
+    "strip-ansi": "3.0.1",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": "1.14.0",

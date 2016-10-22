@@ -1,6 +1,7 @@
 {
   "name": "react-dev-utils",
   "version": "0.5.2",
+  "private": true,
   "description": "Webpack utilities used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
