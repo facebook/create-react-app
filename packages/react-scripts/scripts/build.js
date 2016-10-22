@@ -142,6 +142,11 @@ function build(previousSizeMap) {
       process.exit(1);
     }
 
+    if (process.env.CI && stats.compilation.warnings.length) {
+     printErrors('Failed to compile. Note, the build has crashed because it is being run with the environment variable CI set to true. In this mode the build crashes when any warnings are encountered.', stats.compilation.warnings);
+     process.exit(1);
+   }
+
     console.log(chalk.green('Compiled successfully.'));
     console.log();
 
