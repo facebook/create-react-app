@@ -9,8 +9,8 @@
 * Build command exits, if there are errors from UglifyJS ([@pdillon](https://github.com/pdillon) in [#859](https://github.com/facebookincubator/create-react-app/pull/859))
 * Eject output is more beautiful now. ([@azakordonets](https://github.com/azakordonets) in [#769](https://github.com/facebookincubator/create-react-app/pull/769))
 * Fixes opening the app in a new tab in Chrome. ([@unixdev](https://github.com/unixdev) in [#831](https://github.com/facebookincubator/create-react-app/pull/831))
-* Fixes environment variables not being defined as normal properties of the `process.env` object. ([@jobi](https://github.com/jobi) in [#795](https://github.com/facebookincubator/create-react-app/issues/795))
-* Fixes PostCSS autoprefixer not processing CSS files imported with CSS `@import` statements. ([@nhunzaker](https://github.com/nhunzaker) in [##929](https://github.com/facebookincubator/create-react-app/pull/929))
+* Fixes environment variables not being defined as normal properties of the `process.env` object. ([@dvkndn](https://github.com/dvkndn) in [#807](https://github.com/facebookincubator/create-react-app/pull/807))
+* Fixes PostCSS autoprefixer not processing CSS files imported with CSS `@import` statements. ([@nhunzaker](https://github.com/nhunzaker) in [#929](https://github.com/facebookincubator/create-react-app/pull/929))
 
 ### ESLint Config (`eslint-config-react-app`)
 
