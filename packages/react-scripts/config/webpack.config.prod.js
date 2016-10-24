@@ -19,6 +19,7 @@ var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
+var BuildProgressPlugin = require('react-dev-utils/BuildProgressPlugin');
 
 function ensureSlash(path, needsSlash) {
   var hasSlash = path.endsWith('/');
@@ -257,7 +258,8 @@ module.exports = {
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json'
-    })
+    }),
+    new BuildProgressPlugin()
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
