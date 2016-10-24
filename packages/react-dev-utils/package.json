@@ -11,6 +11,7 @@
     "node": ">=4"
   },
   "files": [
+    "BuildProgressPlugin.js",
     "clearConsole.js",
     "checkRequiredFiles.js",
     "formatWebpackMessages.js",
@@ -28,7 +29,11 @@
     "escape-string-regexp": "1.0.5",
     "html-entities": "1.2.0",
     "opn": "4.0.2",
+    "progress": "1.1.8",
     "sockjs-client": "1.0.1",
     "strip-ansi": "3.0.1"
+  },
+  "devDependencies": {
+    "webpack": "^1.14.0"
   }
 }
