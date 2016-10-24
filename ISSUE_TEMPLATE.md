@@ -1,5 +1,21 @@
 If you are reporting a bug, please fill in below. Otherwise feel free to remove this template entirely.
 
+### Can you reproduce the problem with latest npm?
+
+Run:
+
+```
+npm install -g npm@latest
+
+cd your_project_directory
+rm -rf node_modules
+npm install
+```
+
+and try to reproduce the issue again.
+
+Can you still reproduce it?
+
 ### Description
 
 What are you reporting?
