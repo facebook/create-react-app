@@ -24,6 +24,15 @@ var formatWebpackMessages = require('./formatWebpackMessages');
 var Entities = require('html-entities').AllHtmlEntities;
 var entities = new Entities();
 
+var urlParts;
+var query = __resourceQuery; // eslint-disable-line
+
+if (typeof query === "string" && query) {
+  urlParts = url.parse(query.substr(1));
+} else {
+  urlParts = window.location;
+}
+
 // Color scheme inspired by https://github.com/glenjamin/webpack-hot-middleware
 var colors = {
   reset: ['transparent', 'transparent'],
@@ -138,9 +147,9 @@ function destroyErrorOverlay() {
 
 // Connect to WebpackDevServer via a socket.
 var connection = new SockJS(url.format({
-  protocol: window.location.protocol,
-  hostname: window.location.hostname,
-  port: window.location.port,
+  protocol: urlParts.protocol,
+  hostname: urlParts.hostname,
+  port: urlParts.port,
   // Hardcoded in WebpackDevServer
   pathname: '/sockjs-node'
 }));
