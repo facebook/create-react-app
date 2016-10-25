@@ -23,7 +23,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
       '^.+\\.css$': resolve('config/jest/CSSStub.js')
     },
-    coveragePathIgnorePatterns: ['src/index.js', '<rootDir>/node_modules/', '<rootDir>/vendor/'],
+    coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/vendor/'],
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
