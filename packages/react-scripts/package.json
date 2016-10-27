@@ -40,7 +40,7 @@
     "detect-port": "1.0.1",
     "dotenv": "2.0.0",
     "eslint": "3.8.1",
-    "g4-eslint-config-react-app": "^0.1.0",
+    "eslint-config-react-app": "^0.3.0",
     "eslint-loader": "1.6.0",
     "eslint-plugin-flowtype": "2.21.0",
     "eslint-plugin-import": "2.0.1",
