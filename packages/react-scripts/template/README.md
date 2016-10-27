@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-Below you will find some information on how to perform common tasks.  
+Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 ## Table of Contents
@@ -46,6 +46,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [GitHub Pages](#github-pages)
   - [Heroku](#heroku)
   - [Modulus](#modulus)
+  - [Netlify](#netlify)
   - [Now](#now)
   - [Surge](#surge)
 - [Something Missing?](#something-missing)
@@ -57,7 +58,7 @@ Create React App is divided into two packages:
 * `create-react-app` is a global command-line utility that you use to create new projects.
 * `react-scripts` is a development dependency in the generated projects (including this one).
 
-You almost never need to update `create-react-app` itself: it’s delegates all the setup to `react-scripts`.
+You almost never need to update `create-react-app` itself: it delegates all the setup to `react-scripts`.
 
 When you run `create-react-app`, it always creates the project with the latest version of `react-scripts` so you’ll get all the new features and improvements in newly created apps automatically.
 
@@ -99,13 +100,13 @@ For the project to build, **these files must exist with exact filenames**:
 
 You can delete or rename the other files.
 
-You may create subdirectories inside `src`. For faster rebuilds, only files inside `src` are processed by Webpack.  
+You may create subdirectories inside `src`. For faster rebuilds, only files inside `src` are processed by Webpack.<br>
 You need to **put any JS and CSS files inside `src`**, or Webpack won’t see them.
 
-Only files inside `public` can be used from `public/index.html`.  
+Only files inside `public` can be used from `public/index.html`.<br>
 Read instructions below for using assets from JavaScript and HTML.
 
-You can, however, create more top-level directories.  
+You can, however, create more top-level directories.<br>
 They will not be included in the production build so you can use them for things like documentation.
 
 ## Available Scripts
@@ -122,7 +123,7 @@ You will also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.  
+Launches the test runner in the interactive watch mode.<br>
 See the section about [running tests](#running-tests) for more information.
 
 ### `npm run build`
@@ -173,7 +174,7 @@ Then add this block to the `package.json` file of your project:
 Finally, you will need to install some packages *globally*:
 
 ```sh
-npm install -g eslint-config-react-app@0.2.1 eslint@3.5.0 babel-eslint@6.1.2 eslint-plugin-react@6.3.0 eslint-plugin-import@1.12.0 eslint-plugin-jsx-a11y@2.2.2 eslint-plugin-flowtype@2.18.1
+npm install -g eslint-config-react-app@0.3.0 eslint@3.8.1 babel-eslint@7.0.0 eslint-plugin-react@6.4.1 eslint-plugin-import@2.0.1 eslint-plugin-jsx-a11y@2.2.3 eslint-plugin-flowtype@2.21.0
 ```
 
 We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
@@ -188,7 +189,7 @@ npm install --save <library-name>
 
 ## Importing a Component
 
-This project setup supports ES6 modules thanks to Babel.  
+This project setup supports ES6 modules thanks to Babel.<br>
 While you can still use `require()` and `module.exports`, we encourage you to use [`import` and `export`](http://exploringjs.com/es6/ch_modules.html) instead.
 
 For example:
@@ -322,7 +323,7 @@ function Header() {
 export default function Header;
 ```
 
-This ensures that when the project is built, webpack will correctly move the images into the build folder, and provide us with correct paths.
+This ensures that when the project is built, Webpack will correctly move the images into the build folder, and provide us with correct paths.
 
 This works in CSS too:
 
@@ -336,7 +337,7 @@ Webpack finds all relative module references in CSS (they start with `./`) and r
 
 Please be advised that this is also a custom feature of Webpack.
 
-**It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).  
+**It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).<br>
 An alternative way of handling static assets is described in the next section.
 
 ## Using the `public` Folder
@@ -361,7 +362,7 @@ Inside `index.html`, you can use it like this:
 
 Only files inside the `public` folder will be accessible by `%PUBLIC_URL%` prefix. If you need to use a file from `src` or `node_modules`, you’ll have to copy it there to explicitly specify your intention to make this file a part of the build.
 
-When you run `npm run build`, Create React App will substitute `%PUBLIC_URL%` with a correct absolute path so your project works even if you use client-side routing or host it at a non-root URL. 
+When you run `npm run build`, Create React App will substitute `%PUBLIC_URL%` with a correct absolute path so your project works even if you use client-side routing or host it at a non-root URL.
 
 In JavaScript code, you can use `process.env.PUBLIC_URL` for similar purposes:
 
@@ -443,6 +444,8 @@ default you will have `NODE_ENV` defined for you, and any other environment vari
 variable named `REACT_APP_SECRET_CODE` will be exposed in your JS as `process.env.REACT_APP_SECRET_CODE`, in addition
 to `process.env.NODE_ENV`.
 
+>Note: Changing any environment variables will require you to restart the development server if it is running.
+
 These environment variables can be useful for displaying information conditionally based on where the project is
 deployed or consuming sensitive data that lives outside of version control.
 
@@ -510,13 +513,13 @@ REACT_APP_SECRET_CODE=abcdef npm start
 
 >Note: this feature is available with `react-scripts@0.5.0` and higher.
 
-To define permanent environment vairables, create a file called `.env` in the root of your project:
+To define permanent environment variables, create a file called `.env` in the root of your project:
 
 ```
 REACT_APP_SECRET_CODE=abcdef
 ```
 
-These variables will act as the defaults if the machine does not explicitly set them.  
+These variables will act as the defaults if the machine does not explicitly set them.<br>
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
 
 >Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
@@ -524,14 +527,14 @@ these defined as well. Consult their documentation how to do this. For example, 
 
 ## Can I Use Decorators?
 
-Many popular libraries use [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841) in their documentation.  
+Many popular libraries use [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841) in their documentation.<br>
 Create React App doesn’t support decorator syntax at the moment because:
 
 * It is an experimental proposal and is subject to change.
 * The current specification version is not officially supported by Babel.
 * If the specification changes, we won’t be able to write a codemod because we don’t use them internally at Facebook.
 
-However in many cases you can rewrite decorator-based code without decorators just as fine.  
+However in many cases you can rewrite decorator-based code without decorators just as fine.<br>
 Please refer to these two threads for reference:
 
 * [#214](https://github.com/facebookincubator/create-react-app/issues/214)
@@ -547,7 +550,7 @@ Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-r
 
 >Note: this feature is available with `react-scripts@0.2.3` and higher.
 
-People often serve the front-end React app from the same host and port as their backend implementation.  
+People often serve the front-end React app from the same host and port as their backend implementation.<br>
 For example, a production setup might look like this after the app is deployed:
 
 ```
@@ -574,7 +577,7 @@ Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-
 
 Keep in mind that `proxy` only has effect in development (with `npm start`), and it is up to you to ensure that URLs like `/api/todos` point to the right thing in production. You don’t have to use the `/api` prefix. Any unrecognized request without a `text/html` accept header will be redirected to the specified `proxy`.
 
-Currently the `proxy` option only handles HTTP requests, and it won’t proxy WebSocket connections.  
+Currently the `proxy` option only handles HTTP requests, and it won’t proxy WebSocket connections.<br>
 If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
@@ -622,7 +625,7 @@ If you use a Node server, you can even share the route matching logic between th
 
 ## Running Tests
 
->Note: this feature is available with `react-scripts@0.3.0` and higher.  
+>Note: this feature is available with `react-scripts@0.3.0` and higher.<br>
 >[Read the migration guide to learn how to enable it in older projects!](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030)
 
 Create React App uses [Jest](https://facebook.github.io/jest/) as its test runner. To prepare for this integration, we did a [major revamp](https://facebook.github.io/jest/blog/2016/09/01/jest-15.html) of Jest so if you heard bad things about it years ago, give it another try.
@@ -676,7 +679,7 @@ it('sums numbers', () => {
 });
 ```
 
-All `expect()` matchers supported by Jest are [extensively documented here](http://facebook.github.io/jest/docs/api.html#expect-value).  
+All `expect()` matchers supported by Jest are [extensively documented here](http://facebook.github.io/jest/docs/api.html#expect-value).<br>
 You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](http://facebook.github.io/jest/docs/api.html#tobecalled) to create “spies” or mock functions.
 
 ### Testing Components
@@ -716,7 +719,7 @@ it('renders without crashing', () => {
 });
 ```
 
-Unlike the previous smoke test using `ReactDOM.render()`, this test only renders `<App>` and doesn’t go deeper. For example, even if `<App>` itself renders a `<Button>` that throws, this test will pass. Shallow rendering is great for isolated unit tests, but you may still want to create some full rendering tests to ensure the components integrate correctly. Enzyme supports [full rendering with `mount()`](http://airbnb.io/enzyme/docs/api/mount.html), and you can also use it for testing state changes and component lifecyle.
+Unlike the previous smoke test using `ReactDOM.render()`, this test only renders `<App>` and doesn’t go deeper. For example, even if `<App>` itself renders a `<Button>` that throws, this test will pass. Shallow rendering is great for isolated unit tests, but you may still want to create some full rendering tests to ensure the components integrate correctly. Enzyme supports [full rendering with `mount()`](http://airbnb.io/enzyme/docs/api/mount.html), and you can also use it for testing state changes and component lifecycle.
 
 You can read the [Enzyme documentation](http://airbnb.io/enzyme/) for more testing techniques. Enzyme documentation uses Chai and Sinon for assertions but you don’t have to use them because Jest provides built-in `expect()` and `jest.fn()` for spies.
 
@@ -735,8 +738,8 @@ it('renders welcome message', () => {
 });
 ```
 
-All Jest matchers are [extensively documented here](http://facebook.github.io/jest/docs/api.html#expect-value).  
-Nevertheless you can use a third-party assertion library like Chai if you want to, as described below.
+All Jest matchers are [extensively documented here](http://facebook.github.io/jest/docs/api.html#expect-value).<br>
+Nevertheless you can use a third-party assertion library like [Chai](http://chaijs.com/) if you want to, as described below.
 
 ### Using Third Party Assertion Libraries
 
@@ -771,12 +774,12 @@ global.localStorage = localStorageMock
 
 ### Focusing and Excluding Tests
 
-You can replace `it()` with `xit()` to temporarily exclude a test from being executed.  
+You can replace `it()` with `xit()` to temporarily exclude a test from being executed.<br>
 Similarly, `fit()` lets you focus on a specific test without running any other tests.
 
 ### Coverage Reporting
 
-Jest has an integrated coverage reporter that works well with ES6 and requires no configuration.  
+Jest has an integrated coverage reporter that works well with ES6 and requires no configuration.<br>
 Run `npm test -- --coverage` (note extra `--` in the middle) to include a coverage report like this:
 
 ![coverage report](http://i.imgur.com/5bFhnTS.png)
@@ -790,7 +793,7 @@ By default `npm test` runs the watcher with interactive CLI. However, you can fo
 ### On CI servers
 #### Travis CI
 
-1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your Github repository with Travis.  You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
+1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis.  You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
 1. Add a `.travis.yml` file to your git repository.
 ```
 language: node_js
@@ -799,8 +802,8 @@ node_js:
   - 6
 cache:
   directories:
-  - node_modules
-script
+    - node_modules
+script:
   - npm test
 ```
 1. Trigger your first build with a git push.
@@ -837,7 +840,7 @@ By default, the `package.json` of the generated project looks like this:
   }
 ```
 
-If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/jsdom), you can safely remove `--env=jsdom`, and your tests will run faster.  
+If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/jsdom), you can safely remove `--env=jsdom`, and your tests will run faster.<br>
 To help you make up your mind, here is a list of APIs that **need jsdom**:
 
 * Any browser globals like `window` and `document`
@@ -862,7 +865,7 @@ This feature is experimental and still [has major usage issues](https://github.c
 
 ## Building for Relative Paths
 
-By default, Create React App produces a build assuming your app is hosted at the server root.  
+By default, Create React App produces a build assuming your app is hosted at the server root.<br>
 To override this, specify the `homepage` in your `package.json`, for example:
 
 ```js
@@ -881,22 +884,32 @@ Open your `package.json` and add a `homepage` field:
   "homepage": "http://myusername.github.io/my-app",
 ```
 
-**The above step is important!**  
+**The above step is important!**<br>
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
 
-Now, whenever you run `npm run build`, you will see a cheat sheet with a sequence of commands to deploy to GitHub pages:
+Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub pages.
+
+To publish it at [http://myusername.github.io/my-app](http://myusername.github.io/my-app), run:
 
 ```sh
-git commit -am "Save local changes"
-git checkout -B gh-pages
-git add -f build
-git commit -am "Rebuild website"
-git filter-branch -f --prune-empty --subdirectory-filter build
-git push -f origin gh-pages
-git checkout -
+npm install --save-dev gh-pages
 ```
 
-You may copy and paste them, or put them into a custom shell script. You may also customize them for another hosting provider.
+Add the following script in your `package.json`:
+
+```js
+  // ...
+  "scripts": {
+    // ...
+    "deploy": "gh-pages -d build"
+  }
+```
+
+Then run:
+
+```sh
+npm run deploy
+```
 
 Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
@@ -904,12 +917,41 @@ Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` hi
 
 ### Heroku
 
-Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).  
+Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
 You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
 
 ### Modulus
 
 See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modulus) on how to deploy your react app to Modulus.
+
+## Netlify
+
+**To do a manual deploy to Netlify's CDN:**
+
+```sh
+npm install netlify-cli
+netlify deploy
+```
+
+Choose `build` as the path to deploy.
+
+**To setup continuous delivery:**
+
+With this setup Netlify will build and deploy when you push to git or open a pull request:
+
+1. [Start a new netlify project](https://app.netlify.com/signup)
+2. Pick your Git hosting service and select your repository
+3. Click `Build your site`
+
+**Support for client-side routing:**
+
+To support `pushState`, make sure to create a `public/_redirects` file with the following rewrite rules:
+
+```
+/*  /index.html  200
+```
+
+When you build the project, Create React App will place the `public` folder contents into the build output.
 
 ### Now
 
@@ -934,7 +976,7 @@ Install the Surge CLI if you haven't already by running `npm install -g surge`. 
     Success! Project is published and running at create-react-app.surge.sh
 ```
 
-Note that in order to support routers that use html5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
+Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
 
 ## Something Missing?
 
