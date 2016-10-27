@@ -17,8 +17,6 @@
 // It would probably be more strict.
 
 module.exports = {
-  extends: 'standard',
-
   root: true,
 
   parser: 'babel-eslint',
