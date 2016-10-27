@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-g4-react-app",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "ESLint configuration used by G4 Create React App",
   "repository": "lolaent/create-react-app",
   "license": "BSD-3-Clause",
