@@ -17,6 +17,8 @@
 // It would probably be more strict.
 
 module.exports = {
+  extends: 'standard',
+
   root: true,
 
   parser: 'babel-eslint',
@@ -217,6 +219,6 @@ module.exports = {
     'flowtype/use-flow-type': 'warn',
 
     // Customisations for g4-eslint-config-react-app
-    'semi': ['error', 'always']
+    'semi': ['warn', 'always']
   }
 };
