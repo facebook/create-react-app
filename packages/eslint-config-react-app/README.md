@@ -1,6 +1,6 @@
-# eslint-config-react-app
+# g4-eslint-config-react-app
 
-This package includes the shareable ESLint configuration used by [Create React App](https://github.com/facebookincubator/create-react-app).  
+This package includes the shareable ESLint configuration used by [G4 Create React App](https://github.com/facebookincubator/create-react-app).  
 Please refer to its documentation:
 
 * [Getting Started](https://github.com/facebookincubator/create-react-app/blob/master/README.md#getting-started) – How to create a new app.
@@ -8,7 +8,7 @@ Please refer to its documentation:
 
 ## Usage in Create React App Projects
 
-The easiest way to use this configuration is with [Create React App](https://github.com/facebookincubator/create-react-app), which includes it by default. **You don’t need to install it separately in Create React App projects.**
+The easiest way to use this configuration is with [Create React App](https://github.com/lolaent/create-react-app), which includes it by default. **You don’t need to install it separately in Create React App projects.**
 
 ## Usage Outside of Create React App
 
@@ -24,7 +24,7 @@ Then create a file named `.eslintrc` with following contents in the root folder 
 
   ```js
   {
-    "extends": "react-app"
+    "extends": "g4-eslint-config-react-app"
   }
   ```
 
