@@ -24,7 +24,7 @@ Then create a file named `.eslintrc` with following contents in the root folder 
 
   ```js
   {
-    "extends": "g4-eslint-config-react-app"
+    "extends": "eslint-config-g4-react-app"
   }
   ```
 
