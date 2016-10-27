@@ -1,5 +1,5 @@
 {
-  "name": "g4-eslint-config-react-app",
+  "name": "eslint-config-g4-react-app",
   "version": "0.0.2",
   "description": "ESLint configuration used by G4 Create React App",
   "repository": "lolaent/create-react-app",
