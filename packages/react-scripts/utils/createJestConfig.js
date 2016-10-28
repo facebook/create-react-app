@@ -18,15 +18,17 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const setupTestsFile = pathExists.sync(paths.testsSetup) ? '<rootDir>/src/setupTests.js' : undefined;
 
   const config = {
+<<<<<<< HEAD
     testPathDirs: [ 'spec' ],
     testRegex: '.*spec\\.(es6|js)$',
     moduleDirectories: [ 'node_modules', 'src' ],
     moduleFileExtensions: [ 'js', 'json', 'es6', 'jsx' ],
     coverageDirectory: 'coverage',
     collectCoverage: true,
+    collectCoverageFrom: ['src/**/*.{js,jsx,es6}'],
     moduleNameMapper: {
-      '^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
-      '^.+\\.s?css$': resolve('config/jest/CSSStub.js')
+      '^.+\\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
+      '^.+\\.css$': resolve('config/jest/CSSStub.js')
     },
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,

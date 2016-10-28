@@ -205,6 +205,7 @@ Some of the more popular and actively maintained ones are:
 * [insin/nwb](https://github.com/insin/nwb)
 * [mozilla/neo](https://github.com/mozilla/neo)
 * [NYTimes/kyt](https://github.com/NYTimes/kyt)
+* [zeit/next.js](https://github.com/zeit/next.js)
 
 Notable alternatives also include:
 
