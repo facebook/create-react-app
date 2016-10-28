@@ -1,6 +1,6 @@
 {
-  "name": "@trunkclub/react-scripts",
-  "version": "1.1.2",
+  "name": "@trunkclub/build",
+  "version": "5.0.0-alpha.2",
   "upstream-version": "0.7.0",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
@@ -24,6 +24,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@trunkclub/eslint-config": "2.0.0-alpha.2",
     "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",
     "babel-eslint": "7.0.0",
@@ -38,11 +39,9 @@
     "detect-port": "1.0.1",
     "dotenv": "2.0.0",
     "eslint": "3.8.1",
-    "eslint-config-react-app": "^0.3.0",
     "eslint-loader": "1.6.0",
-    "eslint-plugin-flowtype": "2.21.0",
+    "eslint-plugin-flowtype-errors": "^1.5.0",
     "eslint-plugin-import": "2.0.1",
-    "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-react": "6.4.1",
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.9.0",
@@ -82,6 +81,7 @@
     "fsevents": "1.0.14"
   },
   "bundledDependencies": [
+    "@trunkclub/eslint-config",
     "autoprefixer",
     "babel-core",
     "babel-eslint",
@@ -96,11 +96,9 @@
     "detect-port",
     "dotenv",
     "eslint",
-    "eslint-config-react-app",
     "eslint-loader",
     "eslint-plugin-flowtype",
-    "eslint-plugin-import",
-    "eslint-plugin-jsx-a11y",
+    "eslint-plugin-flowtype-errors",
     "eslint-plugin-react",
     "extract-text-webpack-plugin",
     "file-loader",
