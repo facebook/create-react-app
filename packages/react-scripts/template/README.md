@@ -901,7 +901,7 @@ Add the following script in your `package.json`:
   // ...
   "scripts": {
     // ...
-    "deploy": "npm run build && gh-pages -d build"
+    "deploy": "npm run build&&gh-pages -d build"
   }
 ```
 
