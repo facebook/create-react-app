@@ -21,7 +21,8 @@
     "utils"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "react-scripts": "./bin/react-scripts.js",
+    "tcweb-build": "./bin/react-scripts.js"
   },
   "dependencies": {
     "@trunkclub/eslint-config": "2.0.0-alpha.2",
