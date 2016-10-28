@@ -881,7 +881,7 @@ This will let Create React App correctly infer the root path to use in the gener
 Open your `package.json` and add a `homepage` field:
 
 ```js
-  "homepage": "http://myusername.github.io/my-app",
+  "homepage": "https://myusername.github.io/my-app",
 ```
 
 **The above step is important!**<br>
@@ -889,7 +889,7 @@ Create React App uses the `homepage` field to determine the root URL in the buil
 
 Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub pages.
 
-To publish it at [http://myusername.github.io/my-app](http://myusername.github.io/my-app), run:
+To publish it at [https://myusername.github.io/my-app](https://myusername.github.io/my-app), run:
 
 ```sh
 npm install --save-dev gh-pages
