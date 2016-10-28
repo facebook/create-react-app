@@ -174,7 +174,7 @@ Then add this block to the `package.json` file of your project:
 Finally, you will need to install some packages *globally*:
 
 ```sh
-npm install -g eslint-config-react-app@0.2.1 eslint@3.5.0 babel-eslint@6.1.2 eslint-plugin-react@6.3.0 eslint-plugin-import@1.12.0 eslint-plugin-jsx-a11y@2.2.2 eslint-plugin-flowtype@2.18.1
+npm install -g eslint-config-react-app@0.3.0 eslint@3.8.1 babel-eslint@7.0.0 eslint-plugin-react@6.4.1 eslint-plugin-import@2.0.1 eslint-plugin-jsx-a11y@2.2.3 eslint-plugin-flowtype@2.21.0
 ```
 
 We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
@@ -802,8 +802,8 @@ node_js:
   - 6
 cache:
   directories:
-  - node_modules
-script
+    - node_modules
+script:
   - npm test
 ```
 1. Trigger your first build with a git push.
@@ -881,15 +881,15 @@ This will let Create React App correctly infer the root path to use in the gener
 Open your `package.json` and add a `homepage` field:
 
 ```js
-  "homepage": "http://myusername.github.io/my-app",
+  "homepage": "https://myusername.github.io/my-app",
 ```
 
 **The above step is important!**<br>
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
 
-Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub pages.
+Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub Pages.
 
-To publish it at [http://myusername.github.io/my-app](http://myusername.github.io/my-app), run:
+To publish it at [https://myusername.github.io/my-app](https://myusername.github.io/my-app), run:
 
 ```sh
 npm install --save-dev gh-pages
@@ -901,15 +901,19 @@ Add the following script in your `package.json`:
   // ...
   "scripts": {
     // ...
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run build&&gh-pages -d build"
   }
 ```
+
+(Note: the lack of whitespace is intentional.)
 
 Then run:
 
 ```sh
 npm run deploy
 ```
+
+You can configure a custom domain with GitHub Pages by adding a `CNAME` file to the `public/` folder.
 
 Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.

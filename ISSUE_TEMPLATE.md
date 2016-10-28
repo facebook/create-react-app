@@ -1,5 +1,25 @@
 If you are reporting a bug, please fill in below. Otherwise feel free to remove this template entirely.
 
+### Can you reproduce the problem with latest npm?
+
+Many errors, especially related to "missing modules", are due to npm bugs.
+
+If you're using Windows, [follow these instructions to update npm](https://github.com/npm/npm/wiki/Troubleshooting#upgrading-on-windows).
+
+If you're using OS X or Linux, run this to update npm:
+
+```
+npm install -g npm@latest
+
+cd your_project_directory
+rm -rf node_modules
+npm install
+```
+
+Then try to reproduce the issue again.
+
+Can you still reproduce it?
+
 ### Description
 
 What are you reporting?
