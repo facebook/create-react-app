@@ -93,18 +93,19 @@ function setupCompiler(host, port, protocol) {
 
     // If errors exist, only show errors.
     if (messages.errors.length) {
-      console.log(chalk.red('Failed to compile.'));
+      console.log(chalk.red('Failed to compile after ' + (+new Date() - time) +'ms.'));
       console.log();
       messages.errors.forEach(message => {
         console.log(message);
         console.log();
       });
+      time = 0
       return;
     }
 
     // Show warnings if no errors were found.
     if (messages.warnings.length) {
-      console.log(chalk.yellow('Compiled with warnings.'));
+      console.log(chalk.yellow('Compiled with warnings after ' + (+new Date() - time) + 'ms.'));
       console.log();
       messages.warnings.forEach(message => {
         console.log(message);
