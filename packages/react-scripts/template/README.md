@@ -545,7 +545,7 @@ Create React App will add decorator support when the specification advances to a
 
 ## Using Global Variables defined elsewhere
 
-When you include a script in the HTML file that defines global variables, and you then try to use one of these variables in code managed by Create React Aapp, ESLint will complain because it cannot see the definition of the variable.
+When you include a script in the HTML file that defines global variables, and you then try to use one of these variables in code managed by Create React App, ESLint will complain because it cannot see the definition of the variable.
 
 You can avoid this by reading the global variable explicitly from the window object, e.g.:
 
