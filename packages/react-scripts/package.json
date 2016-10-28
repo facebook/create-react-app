@@ -1,6 +1,6 @@
 {
   "name": "@g4/react-scripts",
-  "version": "0.7.13",
+  "version": "0.7.14",
   "description": "Configuration and scripts for Create React App. Used for g4mobile",
   "repository": "lolaent/create-react-app",
   "publishConfig": {
@@ -40,7 +40,7 @@
     "detect-port": "1.0.1",
     "dotenv": "2.0.0",
     "eslint": "3.8.1",
-    "@g4/eslint-config-react-app": "^0.0.9",
+    "@g4/eslint-config-react-app": "^0.0.10",
     "eslint-loader": "1.6.0",
     "eslint-config-standard": "6.2.1",
     "eslint-plugin-flowtype": "2.21.0",
