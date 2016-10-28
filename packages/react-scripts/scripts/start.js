@@ -30,6 +30,7 @@ var openBrowser = require('react-dev-utils/openBrowser');
 var prompt = require('react-dev-utils/prompt');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+var plugins = require('../config/plugins');
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -53,6 +54,9 @@ if (isSmokeTest) {
     }
   };
 }
+
+// Apply plugins to the Webpack config
+config = plugins.applyPlugins(config);
 
 function setupCompiler(host, port, protocol) {
   // "Compiler" is a low-level interface to Webpack.
