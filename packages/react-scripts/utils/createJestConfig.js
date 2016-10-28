@@ -18,7 +18,6 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const setupTestsFile = pathExists.sync(paths.testsSetup) ? '<rootDir>/src/setupTests.js' : undefined;
 
   const config = {
-<<<<<<< HEAD
     testPathDirs: [ 'spec' ],
     testRegex: '.*spec\\.(es6|js)$',
     moduleDirectories: [ 'node_modules', 'src' ],
