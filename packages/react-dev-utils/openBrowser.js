@@ -28,7 +28,7 @@ function openBrowser(url) {
   // Fallback to opn
   // (It will always open new tab)
   try {
-    opn(url);
+    opn(url).catch(() => {}); // Prevent `unhandledRejection` error.
     return true;
   } catch (err) {
     return false;
