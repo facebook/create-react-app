@@ -17,6 +17,8 @@
 // It would probably be more strict.
 
 module.exports = {
+  extends: 'standard',
+  
   root: true,
 
   parser: 'babel-eslint',
@@ -216,7 +218,7 @@ module.exports = {
     'flowtype/require-valid-file-annotation': 'warn',
     'flowtype/use-flow-type': 'warn',
 
-    // Customisations for g4-eslint-config-react-app
+    // Compliance Customisations for @g4/eslint-config-react-app
     'semi': ['warn', 'always']
   }
 };

@@ -42,6 +42,7 @@
     "eslint": "3.8.1",
     "@g4/eslint-config-react-app": "^0.0.9",
     "eslint-loader": "1.6.0",
+    "eslint-config-standard": "6.2.1",
     "eslint-plugin-flowtype": "2.21.0",
     "eslint-plugin-import": "2.0.1",
     "eslint-plugin-jsx-a11y": "2.2.3",
