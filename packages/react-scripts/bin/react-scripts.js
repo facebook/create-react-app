@@ -11,7 +11,7 @@ function run (s) {
   case 'test':
     var result = spawn.sync(
       'node',
-      [require.resolve('../scripts/' + script)].concat(args),
+      [require.resolve('../scripts/' + s)].concat(args),
       {stdio: 'inherit'}
     );
     process.exit(result.status);
