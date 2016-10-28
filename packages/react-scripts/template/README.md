@@ -24,6 +24,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Can I Use Decorators?](#can-i-use-decorators)
+- [Using Global Variables defined elsewhere](#using-global-variables-defined-elsewhere)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Using HTTPS in Development](#using-https-in-development)
@@ -541,6 +542,20 @@ Please refer to these two threads for reference:
 * [#411](https://github.com/facebookincubator/create-react-app/issues/411)
 
 Create React App will add decorator support when the specification advances to a stable stage.
+
+## Using Global Variables defined elsewhere
+
+When you include a script in the HTML file that defines global variables, and you then try to use one of these variables in code managed by Create React Aapp, ESLint will complain because it cannot see the definition of the variable.
+
+You can avoid this by reading the global variable explicitly from the window object, e.g.:
+
+```
+const $ = window.$;
+```
+
+This also makes it obvious you are using a global variable.
+
+You can also force ESLint to ignore any line with `// eslint-disable-line`.
 
 ## Integrating with a Node Backend
 
