@@ -11,6 +11,7 @@
 
 var path = require('path');
 var fs = require('fs');
+var url = require('url');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -40,8 +41,26 @@ var nodePaths = (process.env.NODE_PATH || '')
   .filter(folder => !path.isAbsolute(folder))
   .map(resolveApp);
 
+var envPublicUrl = process.env.PUBLIC_URL;
+
+function getPublicUrl(appPackageJson) {
+  return envPublicUrl ? envPublicUrl : require(appPackageJson).homepage;
+}
+
+// We use `PUBLIC_URL` environment variable or "homepage" field to infer
+// "public path" at which the app is served.
+// Webpack needs to know it to put the right <script> hrefs into HTML even in
+// single-page apps that may serve index.html for nested URLs like /todos/42.
+// We can't use a relative path in HTML because we don't want to load something
+// like /todos/42/static/js/bundle.7289d.js. We have to know the root.
+function getServedPath(appPackageJson) {
+  var homepagePath = getPublicUrl(appPackageJson);
+  var homepagePathname = homepagePath ? url.parse(homepagePath).pathname : '/';
+  return envPublicUrl ? homepagePath : homepagePathname;
+}
+
 // config after eject: we're in ./config/
-var configs = {
+module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
@@ -52,7 +71,9 @@ var configs = {
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   ownNodeModules: resolveApp('node_modules'),
-  nodePaths: nodePaths
+  nodePaths: nodePaths,
+  publicUrl: getPublicUrl(resolveApp('package.json')),
+  servedPath: getServedPath(resolveApp('package.json'))
 };
 
 // @remove-on-eject-begin
@@ -61,7 +82,7 @@ function resolveOwn(relativePath) {
 }
 
 // config before eject: we're in ./node_modules/react-scripts/config/
-configs = {
+module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
@@ -73,12 +94,14 @@ configs = {
   appNodeModules: resolveApp('node_modules'),
   // this is empty with npm3 but node resolution searches higher anyway:
   ownNodeModules: resolveOwn('../node_modules'),
-  nodePaths: nodePaths
+  nodePaths: nodePaths,
+  publicUrl: getPublicUrl(resolveApp('package.json')),
+  servedPath: getServedPath(resolveApp('package.json'))
 };
 
 // config before publish: we're in ./packages/react-scripts/config/
 if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
-  configs = {
+  module.exports = {
     appBuild: resolveOwn('../../../build'),
     appPublic: resolveOwn('../template/public'),
     appHtml: resolveOwn('../template/public/index.html'),
@@ -89,11 +112,9 @@ if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) 
     testsSetup: resolveOwn('../template/src/setupTests.js'),
     appNodeModules: resolveOwn('../node_modules'),
     ownNodeModules: resolveOwn('../node_modules'),
-    nodePaths: nodePaths
+    nodePaths: nodePaths,
+    publicUrl: getPublicUrl(resolveOwn('../package.json')),
+    servedPath: getServedPath(resolveOwn('../package.json'))
   };
 }
 // @remove-on-eject-end
-
-configs.publicUrl = process.env.PUBLIC_URL ? process.env.PUBLIC_URL : require(configs.appPackageJson).homepage;
-
-module.exports = configs;
