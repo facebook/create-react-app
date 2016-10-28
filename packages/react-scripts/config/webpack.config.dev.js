@@ -173,6 +173,9 @@ module.exports = {
   // Point ESLint to our predefined config.
   eslint: {
     configFile: path.join(__dirname, '../.eslintrc'),
+    // All warnings and errors are passed to webpack as warnings to allow
+    // webpack compilation to continue.
+    emitWarning: true,
     useEslintrc: false
   },
   // @remove-on-eject-end
