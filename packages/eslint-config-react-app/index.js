@@ -18,7 +18,7 @@
 
 module.exports = {
   extends: 'standard',
-  
+
   root: true,
 
   parser: 'babel-eslint',
@@ -219,6 +219,8 @@ module.exports = {
     'flowtype/use-flow-type': 'warn',
 
     // Compliance Customisations for @g4/eslint-config-react-app
-    'semi': ['warn', 'always']
+    // Mostly overrides of standard
+    'semi': ['warn', 'always'],
+    'indent': ['warn', 4, { 'SwitchCase': 2 }],
   }
 };
