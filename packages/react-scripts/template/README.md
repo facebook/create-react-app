@@ -841,7 +841,7 @@ The test command will force Jest to run tests once instead of launching the watc
 
 >  If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
 
-The build command will check for linter warning and fail the build if any are found.
+The build command will check for linter warning and fail if any are found.
 
 ### Disabling jsdom
 
