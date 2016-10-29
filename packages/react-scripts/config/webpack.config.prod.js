@@ -90,7 +90,7 @@ module.exports = {
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
     // https://github.com/facebookincubator/create-react-app/issues/290
-    extensions: ['.js', '.json', '.jsx', '.es6', ''],
+    extensions: ['.js', '.json', '.jsx', '.es6', '.coffee', '.cjsx', ''],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -127,6 +127,11 @@ module.exports = {
           presets: [require.resolve('babel-preset-trunkclub')],
         },
         // @remove-on-eject-end
+      },
+      {
+        test: /\.(coffee|cjsx)$/,
+        include: paths.appSrc,
+        loaders: ['coffee', 'cjsx']
       },
       // The notation here is somewhat confusing.
       // "postcss" loader applies autoprefixer to our CSS.
