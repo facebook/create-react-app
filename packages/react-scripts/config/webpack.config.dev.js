@@ -18,6 +18,7 @@ var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
+var HappyPack = require('happypack');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -97,36 +98,17 @@ module.exports = {
   // directory of `react-scripts` itself rather than the project directory.
   resolveLoader: {
     root: paths.ownNodeModules,
-    moduleTemplates: ['*-loader']
   },
   // @remove-on-eject-end
   module: {
     // First, run the linter.
     // It's important to do this before Babel processes the JS.
-    preLoaders: [
-      {
-        test: /\.(js|jsx|es6)$/,
-        loader: 'eslint',
-        include: paths.appSrc,
-      }
-    ],
     loaders: [
       // Process JS with Babel.
       {
         test: /\.(js|jsx|es6)$/,
         include: paths.appSrc,
-        loader: 'babel',
-        query: {
-          // @remove-on-eject-begin
-          babelrc: false,
-          plugins: [require.resolve('react-hot-loader/babel')],
-          presets: [require.resolve('babel-preset-trunkclub')],
-          // @remove-on-eject-end
-          // This is a feature of `babel-loader` for webpack (not Babel itself).
-          // It enables caching results in ./node_modules/.cache/babel-loader/
-          // directory for faster rebuilds.
-          cacheDirectory: true
-        }
+        loader: 'happypack/loader?id=js'
       },
       {
         test: /\.(coffee|cjsx)$/,
@@ -140,7 +122,7 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.s?css$/,
-        loader: 'style!css?importLoaders=1!postcss!sass'
+        loader: 'happypack/loader?id=style',
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
@@ -170,16 +152,6 @@ module.exports = {
       }
     ]
   },
-  // @remove-on-eject-begin
-  // Point ESLint to our predefined config.
-  eslint: {
-    configFile: path.join(__dirname, '../.eslintrc'),
-    // All warnings and errors are passed to webpack as warnings to allow
-    // webpack compilation to continue.
-    emitWarning: true,
-    useEslintrc: false
-  },
-  // @remove-on-eject-end
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
@@ -218,7 +190,41 @@ module.exports = {
     // to restart the development server for Webpack to discover it. This plugin
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
-    new WatchMissingNodeModulesPlugin(paths.appNodeModules)
+    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+
+    // This is to build things in parallel
+    new HappyPack({
+      id: 'js',
+      verbose: false,
+      loaders: [{
+        path: 'babel',
+        query: {
+          // @remove-on-eject-begin
+          babelrc: false,
+          plugins: [require.resolve('react-hot-loader/babel')],
+          presets: [require.resolve('babel-preset-trunkclub')],
+          // @remove-on-eject-end
+          // This is a feature of `babel-loader` for webpack (not Babel itself).
+          // It enables caching results in ./node_modules/.cache/babel-loader/
+          // directory for faster rebuilds.
+          cacheDirectory: true
+        }
+      }, {
+        path: 'eslint',
+        query: {
+          configFile: path.join(__dirname, '../.eslintrc'),
+          // All warnings and errors are passed to webpack as warnings to allow
+          // webpack compilation to continue.
+          emitWarning: true,
+          useEslintrc: false
+        }
+      }],
+    }),
+    new HappyPack({
+      id: 'style',
+      verbose: false,
+      loaders: ['style!css?importLoaders=1!postcss!sass']
+    })
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
