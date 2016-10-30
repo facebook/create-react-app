@@ -228,7 +228,11 @@ module.exports = {
     }),
     new HardSource({
       cacheDirectory: path.resolve(paths.appSrc, '../.cache'),
-      recordsPath: path.resolve(paths.appSrc, '../.cache/records.json')
+      recordsPath: path.resolve(paths.appSrc, '../.cache/records.json'),
+      environmentPaths: {
+        directories: [ paths.appNodeModules ],
+        files: [ paths.appPackageJson ]
+      }
     })
   ],
   // Some libraries import Node modules but don't use them in the browser.
