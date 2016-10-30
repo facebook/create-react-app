@@ -19,6 +19,7 @@ var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeMod
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 var HappyPack = require('happypack');
+var HardSource = require('hard-source-webpack-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -224,6 +225,10 @@ module.exports = {
       id: 'style',
       verbose: false,
       loaders: ['style!css?importLoaders=1!postcss!sass']
+    }),
+    new HardSource({
+      cacheDirectory: path.resolve(paths.appSrc, '../.cache'),
+      recordsPath: path.resolve(paths.appSrc, '../.cache/records.json')
     })
   ],
   // Some libraries import Node modules but don't use them in the browser.
