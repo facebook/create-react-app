@@ -863,11 +863,27 @@ This feature is experimental and still [has major usage issues](https://github.c
 
 ## Deployment
 
-`npm run build` creates a `build` directory with a production build of your app. Set up your favourite http server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` is served with the contents of the `/static/js/main.<hash>.js` file.
+`npm run build` creates a `build` directory with a production build of your app. Set up your favourite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file. For example, python contains a built-in HTTP server that can serve static files:
 
 ```sh
 cd ./build
 python3 -m http.server 80
+```
+
+Or using express:
+
+```javascript
+const express = require('express');
+const path = require('path');
+const app = express();
+
+app.use(express.static('./build'));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, './build', 'index.html'));
+});
+
+app.listen(80);
 ```
 
 ### `pushState` routers
