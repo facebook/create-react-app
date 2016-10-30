@@ -223,12 +223,14 @@ module.exports = {
     }),
     new HappyPack({
       id: 'style',
+      tempDir: path.join(paths.appNodeModules, '.cache/happypack'),
       verbose: false,
       loaders: ['style!css?importLoaders=1!postcss!sass']
     }),
     new HardSource({
-      cacheDirectory: path.resolve(paths.appSrc, '../.cache'),
-      recordsPath: path.resolve(paths.appSrc, '../.cache/records.json'),
+      cacheDirectory: path.resolve(paths.appNodeModules, '.cache/hard-source/[confighash]'),
+      recordsPath: path.resolve(paths.appNodeModules, '.cache/hard-source/[confighash]/records.json'),
+      configHash: function () { return process.env.NODE_ENV },
       environmentPaths: {
         directories: [ paths.appNodeModules ],
         files: [ paths.appPackageJson ]
