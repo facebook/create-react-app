@@ -206,6 +206,7 @@ Some of the more popular and actively maintained ones are:
 * [mozilla/neo](https://github.com/mozilla/neo)
 * [NYTimes/kyt](https://github.com/NYTimes/kyt)
 * [zeit/next.js](https://github.com/zeit/next.js)
+* [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)
 
 Notable alternatives also include:
 
