@@ -6,6 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+'use strict';
 
 // Inspired by https://github.com/airbnb/javascript but less opinionated.
 
@@ -19,9 +20,9 @@
 module.exports = {
   root: true,
 
-  parser: 'babel-eslint',
+  parser: require.resolve('babel-eslint'),
 
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
+  plugins: ['react-app'],
 
   env: {
     browser: true,
@@ -173,47 +174,47 @@ module.exports = {
     // because it doesn't depend on whether the file exists, so this issue
     // doesn't apply to it.)
 
-    // 'import/default': 'warn',
-    // 'import/export': 'warn',
-    // 'import/named': 'warn',
-    // 'import/namespace': 'warn',
-    // 'import/no-amd': 'warn',
-    // 'import/no-duplicates': 'warn',
-    // 'import/no-extraneous-dependencies': 'warn',
-    // 'import/no-named-as-default': 'warn',
-    // 'import/no-named-as-default-member': 'warn',
-    // 'import/no-unresolved': ['warn', { commonjs: true }],
+    // 'react-app/import/default': 'warn',
+    // 'react-app/import/export': 'warn',
+    // 'react-app/import/named': 'warn',
+    // 'react-app/import/namespace': 'warn',
+    // 'react-app/import/no-amd': 'warn',
+    // 'react-app/import/no-duplicates': 'warn',
+    // 'react-app/import/no-extraneous-dependencies': 'warn',
+    // 'react-app/import/no-named-as-default': 'warn',
+    // 'react-app/import/no-named-as-default-member': 'warn',
+    // 'react-app/import/no-unresolved': ['warn', { commonjs: true }],
     // We don't support configuring Webpack using import source strings, so this
     // is always an error.
-    'import/no-webpack-loader-syntax': 'error',
+    'react-app/import/no-webpack-loader-syntax': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
-    'react/jsx-equals-spacing': ['warn', 'never'],
-    'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
-    'react/jsx-no-undef': 'warn',
-    'react/jsx-pascal-case': ['warn', {
+    'react-app/react/jsx-equals-spacing': ['warn', 'never'],
+    'react-app/react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
+    'react-app/react/jsx-no-undef': 'warn',
+    'react-app/react/jsx-pascal-case': ['warn', {
       allowAllCaps: true,
       ignore: [],
     }],
-    'react/jsx-uses-react': 'warn',
-    'react/jsx-uses-vars': 'warn',
-    'react/no-danger-with-children': 'warn',
-    'react/no-deprecated': 'warn',
-    'react/no-direct-mutation-state': 'warn',
-    'react/no-is-mounted': 'warn',
-    'react/react-in-jsx-scope': 'error',
-    'react/require-render-return': 'warn',
-    'react/style-prop-object': 'warn',
+    'react-app/react/jsx-uses-react': 'warn',
+    'react-app/react/jsx-uses-vars': 'warn',
+    'react-app/react/no-danger-with-children': 'warn',
+    'react-app/react/no-deprecated': 'warn',
+    'react-app/react/no-direct-mutation-state': 'warn',
+    'react-app/react/no-is-mounted': 'warn',
+    'react-app/react/react-in-jsx-scope': 'error',
+    'react-app/react/require-render-return': 'warn',
+    'react-app/react/style-prop-object': 'warn',
 
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
-    'jsx-a11y/aria-role': 'warn',
-    'jsx-a11y/img-has-alt': 'warn',
-    'jsx-a11y/img-redundant-alt': 'warn',
-    'jsx-a11y/no-access-key': 'warn',
+    'react-app/jsx-a11y/aria-role': 'warn',
+    'react-app/jsx-a11y/img-has-alt': 'warn',
+    'react-app/jsx-a11y/img-redundant-alt': 'warn',
+    'react-app/jsx-a11y/no-access-key': 'warn',
 
     // https://github.com/gajus/eslint-plugin-flowtype
-    'flowtype/define-flow-type': 'warn',
-    'flowtype/require-valid-file-annotation': 'warn',
-    'flowtype/use-flow-type': 'warn'
+    'react-app/flowtype/define-flow-type': 'warn',
+    'react-app/flowtype/require-valid-file-annotation': 'warn',
+    'react-app/flowtype/use-flow-type': 'warn'
   }
 };
