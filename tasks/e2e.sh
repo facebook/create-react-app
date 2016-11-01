@@ -111,7 +111,7 @@ npm install $cli_path
 # Install the app in a temporary location
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 cd $temp_app_path
-create_react_app --scripts-version=$scripts_path test-app
+create_react_app --scripts-version=$scripts_path --from-template=kitchensink test-app
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -122,7 +122,7 @@ create_react_app --scripts-version=$scripts_path test-app
 cd test-app
 
 # Test the build
-npm run build
+NODE_PATH=src npm run build
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/*.js
@@ -131,12 +131,12 @@ test -e build/static/media/*.svg
 test -e build/favicon.ico
 
 # Run tests with CI flag
-CI=true npm test
+CI=true NODE_PATH=src npm test
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 
 # Test the server
-npm start -- --smoke-test
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell HTTPS=true NODE_PATH=src npm start -- --smoke-test
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -152,7 +152,7 @@ npm link $root_path/packages/react-dev-utils
 npm link $root_path/packages/react-scripts
 
 # Test the build
-npm run build
+NODE_PATH=src npm run build
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/*.js
@@ -164,12 +164,12 @@ test -e build/favicon.ico
 # `CI=true npm test` won't work here because `npm test` becomes just `jest`.
 # We should either teach Jest to respect CI env variable, or make
 # `scripts/test.js` survive ejection (right now it doesn't).
-npm test -- --watch=no
+NODE_PATH=src npm test -- --watch=no
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 
 # Test the server
-npm start -- --smoke-test
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell NODE_PATH=src npm start -- --smoke-test
 
 
 # ******************************************************************************

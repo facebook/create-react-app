@@ -68,9 +68,9 @@ if (commands.length === 0) {
   process.exit(1);
 }
 
-createApp(commands[0], argv.verbose, argv['scripts-version']);
+createApp(commands[0], argv.verbose, argv['scripts-version'], argv['from-template']);
 
-function createApp(name, verbose, version) {
+function createApp(name, verbose, version, templatePath) {
   var root = path.resolve(name);
   var appName = path.basename(root);
 
@@ -104,10 +104,10 @@ function createApp(name, verbose, version) {
   console.log('Installing react-scripts from npm...');
   console.log();
 
-  run(root, appName, version, verbose, originalDirectory);
+  run(root, appName, version, verbose, originalDirectory, templatePath);
 }
 
-function run(root, appName, version, verbose, originalDirectory) {
+function run(root, appName, version, verbose, originalDirectory, templatePath) {
   var installPackage = getInstallPackage(version);
   var packageName = getPackageName(installPackage);
   var args = [
@@ -134,7 +134,7 @@ function run(root, appName, version, verbose, originalDirectory) {
       'init.js'
     );
     var init = require(scriptsPath);
-    init(root, appName, verbose, originalDirectory);
+    init(root, appName, verbose, originalDirectory, templatePath);
   });
 }
 
