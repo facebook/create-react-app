@@ -320,7 +320,7 @@ function Header() {
   return <img src={logo} alt="Logo" />;
 }
 
-export default function Header;
+export default Header;
 ```
 
 This ensures that when the project is built, Webpack will correctly move the images into the build folder, and provide us with correct paths.
