@@ -13,8 +13,13 @@ Sources:
 Features:
 
 * Clutter-free
+
+ * Not too many commands 
+ * Not too many config files
+
 * Transpile from Typescript to Javascript
 * Transpile tsx to Javascript
+* Uses npm for application dependencies (not bower, jspm)
 * Target ES6 and evergreen browsers (Chrome/Firefox/Edge), transpile/polyfill functionality not available in those browsers 
 * Reload browser when code changes
 * Rebuild when code changes, so page can be reloaded in browser manually
@@ -46,14 +51,16 @@ Features:
 * Minimize duplication, eg. installing library should not take many steps 
 * Linting
 
-  * In editor by installing a editor plugin
-  * Before release
+  * In editor by installing a editor plugin 
+  * Document how to prep editor for linting
+  * Before build or commit or release perform lint
   * Lint Typescript using tslint 
   * Lint Typescript using eslint
   * No conflicts between linters
   * Lint css
   * Lint tsx
   * Has editor config
+  * Lint errors should prevent next step from running (ie build should fail) 
   
 * Linting, testing, building must be runnable on Continous Intergration platform like Travis-CI
 * Purge command, to clear build, test results and dependencies
@@ -65,3 +72,13 @@ Features:
 * Include Typescript declaration of js package which is not available as @type/...
 * Opening repo in editor should just work
 * Environment flag (production/development) which can be used in code
+* Proxy To Backend
+* Offline
+* Doucment how to install dependencies
+* Document usual suspects for routing/state/async/fetch: react-router, react-redux, redux-thunk, isomorphic-fetch
+* use of ES7 
+
+  * object spread, very nice for redux
+  * decorator, nice to have for mobx
+  * generator, nice for redux-saga
+ 
