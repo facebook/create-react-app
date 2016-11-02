@@ -1,0 +1,10 @@
+machine:
+  node:
+    version: 6.9.1
+test:
+  override:
+deployment:
+  master:
+    branch: master
+    commands:
+      - tasks/release.sh -- --tag next

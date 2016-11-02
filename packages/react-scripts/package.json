@@ -76,6 +76,7 @@
   "devDependencies": {
     "babel-runtime": "^6.11.6",
     "bundle-deps": "1.0.0",
+    "publish": "^0.6.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0"
   },
