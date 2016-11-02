@@ -1,85 +1,124 @@
-The original create-react-app does not have all the feature we want.
 
-The features we want come from different sources.
+# legend
 
-Sources:
+- :grey_question: : unknown
+- :white_check_mark: : implemented
+- :x: : not implemented
 
-* facebookincubator/create-react-app
-* PunchCardJS (npm scripts)
-* Molviewer (jspm)
-* angular-cli
-* create-ts-app
-* any yeoman or other generator/startkit
 
-Features:
 
-* Clutter-free
+# testing
 
- * Not too many commands 
- * Not too many config files
+|feature description |  [create-react-app](https://github.com/facebookincubator/create-react-app) |  [punchcardjs](https://github.com/nlesc-sherlock/punchcardjs) |  [molviewer](https://github.com/3D-e-Chem/molviewer-tsx) |  [angular-cli](https://github.com/angular/angular-cli) |  [create-ts-app](https://github.com/vgmr/create-ts-app) | yeoman generator | issues |
+|---|---|---|---|---|---|---|---|
+| unit testing | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| dom testing | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| e2e testing | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| testing across browsers/OS/devices | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| coverage of original code  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| coverage includes untouched code  | :grey_question: | :grey_question: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| error stacktrace of original code  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| tests written in TS  | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has ``it()`` and ``describe()`` or similar  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has command to run tests  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| automatic run tests on source change | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 
-* Transpile from Typescript to Javascript
-* Transpile tsx to Javascript
-* Uses npm for application dependencies (not bower, jspm)
-* Target ES6 and evergreen browsers (Chrome/Firefox/Edge), transpile/polyfill functionality not available in those browsers 
-* Reload browser when code changes
-* Rebuild when code changes, so page can be reloaded in browser manually
-* Fast rebuilds, using for eg. incremental builds or hot reload
-* Typescript2 (@types instead of typings)
-* Original source code in browser using source maps
-* Minify of js 
-* Minify of css
-* Bundle (aka concatenate) of js
-* Bundle css
-* Testing
 
-  * Unit
-  * Against dom
-  * End2End testing, eg. testling-ci, saucelabs, protractor or selenium
-  
-    * Test across Browser/Version/OS/Devices matrix
-    
-  * Coverage of original code
-  * Report coverage of untested code
-  * Error stacktraces of original code
-  * Written in Typescript
-  * Advanced assertions eg. chai
-  * Mocking ability eg. sinon
-  * Must have it() and describe() or equivalent
-  * Command to run tests
-  * Run tests when source code changes (watcher)
 
-* Minimize duplication, eg. installing library should not take many steps 
-* Linting
+# linting
 
-  * In editor by installing a editor plugin 
-  * Document how to prep editor for linting
-  * Before build or commit or release perform lint
-  * Lint Typescript using tslint 
-  * Lint Typescript using eslint
-  * No conflicts between linters
-  * Lint css
-  * Lint tsx
-  * Has editor config
-  * Lint errors should prevent next step from running (ie build should fail) 
-  
-* Linting, testing, building must be runnable on Continous Intergration platform like Travis-CI
-* Purge command, to clear build, test results and dependencies
-* Deploy to Github Pages command
-* Generate API documentation command
+|feature description |  [create-react-app](https://github.com/facebookincubator/create-react-app) |  [punchcardjs](https://github.com/nlesc-sherlock/punchcardjs) |  [molviewer](https://github.com/3D-e-Chem/molviewer-tsx) |  [angular-cli](https://github.com/angular/angular-cli) |  [create-ts-app](https://github.com/vgmr/create-ts-app) | yeoman generator | issues |
+|---|---|---|---|---|---|---|---|
+| tslint by editor plugin | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| csslint by editor plugin | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| esjshint by editor plugin | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| prebuild linting | :grey_question: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| precommit linting | :grey_question: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| prerelease linting | :grey_question: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| tslint the TS src | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| eslint src | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| no conflicts between linters | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| lint css | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| linter tsx aware | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has .editorconfig | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| lint errors are terminal | :grey_question: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 
-  * Include documentation for private members
 
-* Include Typescript declaration of js package which is not available as @type/...
+
+# general
+
+|feature description |  [create-react-app](https://github.com/facebookincubator/create-react-app) |  [punchcardjs](https://github.com/nlesc-sherlock/punchcardjs) |  [molviewer](https://github.com/3D-e-Chem/molviewer-tsx) |  [angular-cli](https://github.com/angular/angular-cli) |  [create-ts-app](https://github.com/vgmr/create-ts-app) | yeoman generator | issues |
+|---|---|---|---|---|---|---|---|
+| transpile from TS to JS | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| transpile TSX to JS | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| transpile errors are terminal | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| doesn't use ``gulp`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| doesn't use ``grunt`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| doesn't use ``bower`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| doesn't use ``jspm`` | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| targets es5 | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| targets latest chrome | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| targets latest firefox | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| targets latest edge | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| automatic reload browser on code change | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| automatic rebuild on code changes, manual browser reload | :white_check_mark: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| fast rebuilds | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can handle TS2 ``@types/`` | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| in-browser debugging of original source code | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| minification of js | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| minification of css | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| bundling of js | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| bundling of css | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| linting can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| testing can run on Travis or similar | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| building can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has ``purge`` command: | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has deploy app to gh-pages command | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has deploy docs to gh-pages command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has generate api docs command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can handle es7 object spread | :grey_question: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can handle es7 decorators | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can handle es7 generator | :grey_question: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can use untyped JS libs | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can differentiate prod/dev | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can access external api server | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+
+
+# Remaining
+
+* Not too many commands
+* Not too many config files
+* Minimize duplication, eg. installing library should not take many steps
 * Opening repo in editor should just work
-* Environment flag (production/development) which can be used in code
-* Proxy To Backend
-* Offline
 * Doucment how to install dependencies
 * Document usual suspects for routing/state/async/fetch: react-router, react-redux, redux-thunk, isomorphic-fetch
-* use of ES7 
+* dependency management: npm, unpkg
 
-  * object spread, very nice for redux
-  * decorator, nice to have for mobx
-  * generator, nice for redux-saga
- 
+| Advanced assertions, e.g. Chai  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| Mocking ability, e.g. Sinon  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| allows offline mode | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| allows standalone mode | :grey_question: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
