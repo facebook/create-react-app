@@ -4,6 +4,7 @@ The features we want come from different sources.
 
 Sources:
 
+* facebookincubator/create-react-app
 * PunchCardJS (npm scripts)
 * Molviewer (jspm)
 * angular-cli
