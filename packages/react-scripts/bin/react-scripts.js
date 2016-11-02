@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 var spawn = require('cross-spawn');
+var checkNodeVersion = require('../utils/checkNodeVersion');
 var script = process.argv[2];
 var args = process.argv.slice(3);
+
+checkNodeVersion(process.cwd());
 
 function run (s) {
   switch (s) {
@@ -28,11 +31,11 @@ function run (s) {
     console.log('The "' + s +'" task is no longer separate from the "build", "start", and "test" tasks.')
     break;
   case 'build-module':
-    console.log('Module building is no longer part of "@trunkclub/build". Please install "@trunkclub/build-module" instead.')
+    console.log('Module building has not yet made it into "@trunkclub/build@5".');
     break;
   default:
     console.log('Unknown script "' + script + '".');
-    console.log('Perhaps you need to update react-scripts?');
+    console.log('Perhaps you need to update @trunkclub/build?');
     break;
   }
 }
