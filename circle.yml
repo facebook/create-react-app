@@ -1,8 +1,8 @@
 machine:
   node:
     version: 6.9.1
-test:
-  override:
+general:
+  build_dir: packages/react-scripts
 deployment:
   master:
     branch: master
