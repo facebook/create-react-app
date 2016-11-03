@@ -29,8 +29,5 @@
     "opn": "4.0.2",
     "sockjs-client": "1.0.3",
     "strip-ansi": "3.0.1"
-  },
-  "peerDependencies": {
-    "webpack": "^1.13.2"
   }
 }
