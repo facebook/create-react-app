@@ -44,7 +44,7 @@ The table records what is currently available and working _in the listed repo_, 
 | can handle es7 decorators | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#12](https://github.com/NLeSC/create-react-app/issues/12) |
 | can handle es7 generator | :grey_question: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#12](https://github.com/NLeSC/create-react-app/issues/12) |
 | can use untyped JS libs | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#13](https://github.com/NLeSC/create-react-app/issues/13) |
-| can differentiate prod/dev | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| can differentiate prod/dev | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#14](https://github.com/NLeSC/create-react-app/issues/14) |
 | can access external api server | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
 
 
