@@ -54,6 +54,7 @@ npm dedupe
 rm -rf node_modules/fsevents
 rm -rf node_modules/hard-source-webpack-plugin
 rm -rf node_modules/node-sass
+rm -rf node_modules/sass-loader
 
 # This modifies package.json to copy all dependencies to bundledDependencies
 node ../../tasks/bundle-installed-deps.js

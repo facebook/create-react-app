@@ -1,6 +1,6 @@
 {
   "name": "@trunkclub/build",
-  "version": "5.0.0-alpha.13",
+  "version": "5.0.0-alpha.14",
   "upstream-version": "0.7.0",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
@@ -119,7 +119,6 @@
     "http-proxy-middleware",
     "jest",
     "json-loader",
-    "node-sass",
     "object-assign",
     "path-exists",
     "postcss-loader",
