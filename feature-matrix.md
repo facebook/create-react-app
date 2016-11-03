@@ -33,7 +33,7 @@ The table records what is currently available and working _in the listed repo_, 
 | minification of css | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
 | bundling of js | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
 | bundling of css | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
-| linting can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| linting can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#7](https://github.com/NLeSC/create-react-app/issues/7) |
 | testing can run on Travis or similar | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | building can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | has ``purge`` command: | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
