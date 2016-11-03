@@ -40,9 +40,9 @@ The table records what is currently available and working _in the listed repo_, 
 | has deploy app to gh-pages command | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
 | has deploy docs to gh-pages command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | [#10](https://github.com/NLeSC/create-react-app/issues/10) |
 | has generate api docs command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | [#11](https://github.com/NLeSC/create-react-app/issues/11) |
-| can handle es7 object spread | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| can handle es7 decorators | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| can handle es7 generator | :grey_question: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can handle es7 object spread | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#12](https://github.com/NLeSC/create-react-app/issues/12) |
+| can handle es7 decorators | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#12](https://github.com/NLeSC/create-react-app/issues/12) |
+| can handle es7 generator | :grey_question: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#12](https://github.com/NLeSC/create-react-app/issues/12) |
 | can use untyped JS libs | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | can differentiate prod/dev | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | can access external api server | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
