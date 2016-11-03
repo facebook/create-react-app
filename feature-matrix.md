@@ -54,8 +54,8 @@ The table records what is currently available and working _in the listed repo_, 
 |---|---|---|---|---|---|---|---|
 | unit testing | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#15](https://github.com/NLeSC/create-react-app/issues/15) |
 | dom testing | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#15](https://github.com/NLeSC/create-react-app/issues/15) |
-| e2e testing | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| testing across browsers/OS/devices | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| e2e testing | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#16](https://github.com/NLeSC/create-react-app/issues/16) |
+| testing across browsers/OS/devices | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#16](https://github.com/NLeSC/create-react-app/issues/16) |
 | coverage of original code  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | coverage includes untouched code  | :grey_question: | :grey_question: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | error stacktrace of original code  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
