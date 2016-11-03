@@ -53,7 +53,7 @@ npm dedupe
 # Since it's in optionalDependencies, it will attempt install outside bundle
 rm -rf node_modules/fsevents
 rm -rf node_modules/hard-source-webpack-plugin
-rm -rf node_modules/node_sass
+rm -rf node_modules/node-sass
 
 # This modifies package.json to copy all dependencies to bundledDependencies
 node ../../tasks/bundle-installed-deps.js
