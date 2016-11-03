@@ -71,19 +71,19 @@ The table records what is currently available and working _in the listed repo_, 
 
 |feature description |  [create-react-app](https://github.com/facebookincubator/create-react-app) |  [punchcardjs](https://github.com/nlesc-sherlock/punchcardjs) |  [molviewer](https://github.com/3D-e-Chem/molviewer-tsx) |  [angular-cli](https://github.com/angular/angular-cli) |  [create-ts-app](https://github.com/vgmr/create-ts-app) | yeoman generator | issues |
 |---|---|---|---|---|---|---|---|
-| tslint by editor plugin | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| csslint by editor plugin | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| esjshint by editor plugin | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| prebuild linting | :grey_question: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| tslint by editor plugin | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#19](https://github.com/NLeSC/create-react-app/issues/19) |
+| csslint by editor plugin | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#19](https://github.com/NLeSC/create-react-app/issues/19) |
+| esjshint by editor plugin | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#19](https://github.com/NLeSC/create-react-app/issues/19) |
+| prebuild linting | :grey_question: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | [#20](https://github.com/NLeSC/create-react-app/issues/20) |
 | precommit linting | :grey_question: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | prerelease linting | :grey_question: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| tslint the TS src | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| eslint src | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| no conflicts between linters | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| lint css | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| linter tsx aware | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| has .editorconfig | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| lint errors are terminal | :grey_question: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| tslint the TS src | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#20](https://github.com/NLeSC/create-react-app/issues/20) |
+| eslint src | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| no conflicts between linters | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| lint css | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | [#20](https://github.com/NLeSC/create-react-app/issues/20) |
+| linter tsx aware | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#20](https://github.com/NLeSC/create-react-app/issues/20) |
+| has .editorconfig | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | [#21](https://github.com/NLeSC/create-react-app/issues/21) |
+| lint errors are terminal | :grey_question: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#20](https://github.com/NLeSC/create-react-app/issues/20) |
 
 
 
