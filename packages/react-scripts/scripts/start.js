@@ -23,11 +23,11 @@ var WebpackDevServer = require('webpack-dev-server');
 var historyApiFallback = require('connect-history-api-fallback');
 var httpProxyMiddleware = require('http-proxy-middleware');
 var detect = require('detect-port');
-var clearConsole = require('react-dev-utils/clearConsole');
-var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-var openBrowser = require('react-dev-utils/openBrowser');
-var prompt = require('react-dev-utils/prompt');
+var clearConsole = require('@trunkclub/react-dev-utils/clearConsole');
+var checkRequiredFiles = require('@trunkclub/react-dev-utils/checkRequiredFiles');
+var formatWebpackMessages = require('@trunkclub/react-dev-utils/formatWebpackMessages');
+var openBrowser = require('@trunkclub/react-dev-utils/openBrowser');
+var prompt = require('@trunkclub/react-dev-utils/prompt');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
 

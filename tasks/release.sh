@@ -46,14 +46,16 @@ rm -rf node_modules
 rm -rf ~/.npm
 npm cache clear
 npm install
-# Force dedupe
-npm dedupe
+# Disabling bundling of deps for now
+# TODO: Fix this so things are fast to install again
+# # Force dedupe
+# npm dedupe
 
-# Don't bundle fsevents because it is optional and OS X-only
-# Since it's in optionalDependencies, it will attempt install outside bundle
-rm -rf node_modules/fsevents
-rm -rf node_modules/hard-source-webpack-plugin
+# # Don't bundle fsevents because it is optional and OS X-only
+# # Since it's in optionalDependencies, it will attempt install outside bundle
+# rm -rf node_modules/fsevents
+# rm -rf node_modules/hard-source-webpack-plugin
 
-# This modifies package.json to copy all dependencies to bundledDependencies
-node ./node_modules/.bin/bundle-deps
+# # This modifies package.json to copy all dependencies to bundledDependencies
+# node ./node_modules/.bin/bundle-deps
 node ./node_modules/.bin/publish "$@"
