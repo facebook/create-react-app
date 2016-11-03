@@ -170,9 +170,7 @@ module.exports = {
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
-    new InterpolateHtmlPlugin({
-      PUBLIC_URL: publicUrl
-    }),
+    new InterpolateHtmlPlugin(env['process.env']),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,

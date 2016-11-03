@@ -1,0 +1,10 @@
+machine:
+  node:
+    version: 6.9.1
+general:
+  build_dir: packages/react-scripts
+deployment:
+  master:
+    branch: master
+    commands:
+      - tasks/release.sh -- --tag next

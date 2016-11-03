@@ -57,3 +57,4 @@ rm -rf node_modules/leveldown
 
 # This modifies package.json to copy all dependencies to bundledDependencies
 node ./node_modules/.bin/bundle-deps
+node ./node_modules/.bin/publish "$@"
