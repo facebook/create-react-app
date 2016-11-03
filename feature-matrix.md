@@ -1,7 +1,7 @@
 
 # legend
 
-The table records what is currently available and working, not what could work with some extra effort. Recording these facts helps to keep the discussions clean.
+The table records what is currently available and working _in the listed repo_, not what could work with some extra effort. Recording these facts helps to keep the discussions clean.
 
 - :grey_question: : unknown
 - :white_check_mark: : implemented
