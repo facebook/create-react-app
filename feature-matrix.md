@@ -36,9 +36,9 @@ The table records what is currently available and working _in the listed repo_, 
 | linting can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#7](https://github.com/NLeSC/create-react-app/issues/7) |
 | testing can run on Travis or similar | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
 | building can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#8](https://github.com/NLeSC/create-react-app/issues/8) |
-| has ``purge`` command: | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| has deploy app to gh-pages command | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| has deploy docs to gh-pages command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has ``purge`` command: | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | [#9](https://github.com/NLeSC/create-react-app/issues/9) |
+| has deploy app to gh-pages command | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| has deploy docs to gh-pages command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | [#10](https://github.com/NLeSC/create-react-app/issues/10) |
 | has generate api docs command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | can handle es7 object spread | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | can handle es7 decorators | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
