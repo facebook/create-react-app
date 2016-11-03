@@ -13,8 +13,8 @@ The table records what is currently available and working _in the listed repo_, 
 
 |feature description |  [create-react-app](https://github.com/facebookincubator/create-react-app) |  [punchcardjs](https://github.com/nlesc-sherlock/punchcardjs) |  [molviewer](https://github.com/3D-e-Chem/molviewer-tsx) |  [angular-cli](https://github.com/angular/angular-cli) |  [create-ts-app](https://github.com/vgmr/create-ts-app) | yeoman generator | issues |
 |---|---|---|---|---|---|---|---|
-| transpile from TS to JS | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | #2 |
-| transpile TSX to JS | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#2](/issues/#2) |
+| transpile from TS to JS | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#2](https://github.com/NLeSC/create-react-app/issues/2) |
+| transpile TSX to JS | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#2](issues/#2) |
 | transpile errors are terminal | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | doesn't use ``gulp`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | doesn't use ``grunt`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
