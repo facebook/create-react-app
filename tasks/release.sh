@@ -1,3 +1,4 @@
+#!/bin/bash
 # Copyright (c) 2015-present, Facebook, Inc.
 # All rights reserved.
 #
@@ -5,7 +6,14 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-# Start in tests/ even if run from root directory
+# ******************************************************************************
+# This releases an update to the `react-scripts` package.
+# Don't use `npm publish` for it.
+# Read the release instructions:
+# https://github.com/facebookincubator/create-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
+# ******************************************************************************
+
+# Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
 # Exit the script on any command with non 0 return code
@@ -18,6 +26,7 @@ set -x
 
 # Go to root
 cd ..
+root_path=$PWD
 
 # You can only release with npm >= 3
 if [ $(npm -v | head -c 1) -lt 3 ]; then
@@ -30,6 +39,13 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1;
 fi
 
+# Update deps
+rm -rf node_modules
+rm -rf ~/.npm
+npm cache clear
+npm install
+
+cd packages/react-scripts
 # Force dedupe
 npm dedupe
 
@@ -38,11 +54,8 @@ npm dedupe
 rm -rf node_modules/fsevents
 
 # This modifies package.json to copy all dependencies to bundledDependencies
-# We will revert package.json back after release to avoid doing it every time
 node ./node_modules/.bin/bundle-deps
 
+cd $root_path
 # Go!
-npm publish "$@"
-
-# Discard changes to package.json
-git checkout -- .
+./node_modules/.bin/lerna publish --independent "$@"

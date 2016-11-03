@@ -5,6 +5,7 @@ node_js:
   - 6
 cache:
   directories:
-  - global-cli/node_modules
   - node_modules
+  - packages/create-react-app/node_modules
+  - packages/react-scripts/node_modules
 script: tasks/e2e.sh

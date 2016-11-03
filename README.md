@@ -1,6 +1,9 @@
-# Create React App
+# Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
 
 Create React apps with no build configuration.
+
+* [Getting Started](#getting-started) – How to create a new app.
+* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
 
 ## tl;dr
 
@@ -28,7 +31,9 @@ Install it once globally:
 npm install -g create-react-app
 ```
 
-**You’ll need to have Node >= 4 on your machine**. We recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage. You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects.
+**You’ll need to have Node >= 4 on your machine**.
+
+**We strongly recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage.** You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects.
 
 **This tool doesn’t assume a Node backend**. The Node installation is only required for the build tools that rely on it locally, such as Webpack and Babel.
 
@@ -42,18 +47,21 @@ cd my-app
 ```
 
 It will create a directory called `my-app` inside the current folder.<br>
-Inside that directory, it will generate the initial project structure and install the transient dependencies:
+Inside that directory, it will generate the initial project structure and install the transitive dependencies:
 
 ```
 my-app/
   README.md
-  index.html
-  favicon.ico
   node_modules/
   package.json
+  .gitignore
+  public/
+    favicon.ico
+    index.html
   src/
     App.css
     App.js
+    App.test.js
     index.css
     index.js
     logo.svg
@@ -72,6 +80,13 @@ You will see the build errors and lint warnings in the console.
 
 <img src='https://camo.githubusercontent.com/41678b3254cf583d3186c365528553c7ada53c6e/687474703a2f2f692e696d6775722e636f6d2f466e4c566677362e706e67' width='600' alt='Build errors'>
 
+### `npm test`
+
+Runs the test watcher in an interactive mode.  
+By default, runs tests related to files changes since the last commit.
+
+[Read more about testing.](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
+
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br>
@@ -80,10 +95,36 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
-## How Do I?...
+## User Guide
 
-The generated project will include a guide in its README.<br>
-You can also read its latest version [here](https://github.com/facebookincubator/create-react-app/blob/master/template/README.md).
+The [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) includes information on different topics, such as:
+
+- [Updating to New Releases](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases)
+- [Folder Structure](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#folder-structure)
+- [Available Scripts](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#available-scripts)
+- [Displaying Lint Output in the Editor](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#displaying-lint-output-in-the-editor)
+- [Installing a Dependency](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#installing-a-dependency)
+- [Importing a Component](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#importing-a-component)
+- [Adding a Stylesheet](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet)
+- [Post-Processing CSS](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#post-processing-css)
+- [Adding Images and Fonts](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-images-and-fonts)
+- [Using the `public` Folder](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-the-public-folder)
+- [Adding Bootstrap](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-bootstrap)
+- [Adding Flow](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-flow)
+- [Adding Custom Environment Variables](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)
+- [Can I Use Decorators?](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#can-i-use-decorators)
+- [Integrating with a Node Backend](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#integrating-with-a-node-backend)
+- [Proxying API Requests in Development](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#proxying-api-requests-in-development)
+- [Using HTTPS in Development](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-https-in-development)
+- [Generating Dynamic `<meta>` Tags on the Server](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#generating-dynamic-meta-tags-on-the-server)
+- [Running Tests](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
+- [Deployment](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment)
+
+A copy of the user guide will be created as `README.md` in your project folder.
+
+## How to Update to New Versions?
+
+Please refer to the [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases) for this and other information.
 
 ## Philosophy
 
@@ -104,7 +145,7 @@ You can also read its latest version [here](https://github.com/facebookincubator
 * Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
 * A `build` script to bundle JS, CSS, and images for production, with sourcemaps.
 
-**The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. Currently, it doesn’t support testing either. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
+**The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 
 **You don’t have to use this.** Historically it has been easy to [gradually adopt](https://www.youtube.com/watch?v=BF58ZJ1ZQxY) React. However many people create new single-page React apps from scratch every day. We’ve heard [loud](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4) and [clear](https://twitter.com/thomasfuchs/status/708675139253174273) that this process can be error-prone and tedious, especially if this is your first JavaScript build stack. This project is an attempt to figure out a good way to start developing React apps.
 
@@ -112,7 +153,7 @@ You can also read its latest version [here](https://github.com/facebookincubator
 
 **If you’re a power user** and you aren’t happy with the default configuration, you can “eject” from the tool and use it as a boilerplate generator.
 
-Running `npm run eject` copies all the configuration files and the transient dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. Commands like `npm start` and `npm run build` will still work, but they will point to the copied scripts so you can tweak them. At this point, you’re on your own.
+Running `npm run eject` copies all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. Commands like `npm start` and `npm run build` will still work, but they will point to the copied scripts so you can tweak them. At this point, you’re on your own.
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -123,7 +164,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 Some features are currently **not supported**:
 
 * Server rendering.
-* Testing.
 * Some experimental syntax extensions (e.g. decorators).
 * CSS Modules.
 * LESS or Sass.
@@ -140,23 +180,14 @@ Currently it is a thin layer on top of many amazing community projects, such as:
 * [Babel](http://babeljs.io/) with ES6 and extensions used by Facebook (JSX, [object spread](https://github.com/sebmarkbage/ecmascript-rest-spread/commits/master), [class properties](https://github.com/jeffmo/es-class-public-fields))
 * [Autoprefixer](https://github.com/postcss/autoprefixer)
 * [ESLint](http://eslint.org/)
-* and more.
+* [Jest](http://facebook.github.io/jest)
+* and others.
 
-All of them are transient dependencies of the provided npm package.
+All of them are transitive dependencies of the provided npm package.
 
 ## Contributing
 
-Clone the repo and run `npm install` in the root and the `global-cli` folder.
-
-Once it is done, you can modify any file locally and run `npm start` or `npm run build` just like in a generated project.
-If you want to try out the end-to-end flow with the global CLI, you can do this too:
-
-```
-npm run create-react-app my-app
-cd my-app
-```
-
-and then run `npm start` or `npm run build`.
+We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
 ## Acknowledgements
 
@@ -168,17 +199,26 @@ We are grateful to the authors of existing related projects for their ideas and 
 
 ## Alternatives
 
-If you don’t agree with the choices made in this project, you might want to explore alternatives with different tradeoffs:
+If you don’t agree with the choices made in this project, you might want to explore alternatives with different tradeoffs.  
+Some of the more popular and actively maintained ones are:
+
+* [insin/nwb](https://github.com/insin/nwb)
+* [mozilla/neo](https://github.com/mozilla/neo)
+* [NYTimes/kyt](https://github.com/NYTimes/kyt)
+* [zeit/next.js](https://github.com/zeit/next.js)
+* [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)
+
+Notable alternatives also include:
 
 * [enclave](https://github.com/eanplatter/enclave)
-* [nwb](https://github.com/insin/nwb)
 * [motion](https://github.com/motion/motion)
-* [rackt-cli](https://github.com/mzabriskie/rackt-cli)
-* [budō](https://github.com/mattdesl/budo)
-* [rwb](https://github.com/petehunt/rwb)
 * [quik](https://github.com/satya164/quik)
 * [sagui](https://github.com/saguijs/sagui)
 * [roc](https://github.com/rocjs/roc)
+* [aik](https://github.com/d4rkr00t/aik)
+* [react-app](https://github.com/kriasoft/react-app)
+* [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
+* [tarec](https://github.com/geowarin/tarec)
 
 You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
 React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
