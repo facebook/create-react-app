@@ -116,7 +116,6 @@
     "fs-extra",
     "gzip-size",
     "happypack",
-    "hard-source-webpack-plugin",
     "html-webpack-plugin",
     "http-proxy-middleware",
     "jest",
