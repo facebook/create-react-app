@@ -75,8 +75,8 @@ The table records what is currently available and working _in the listed repo_, 
 | csslint by editor plugin | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#19](https://github.com/NLeSC/create-react-app/issues/19) |
 | esjshint by editor plugin | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#19](https://github.com/NLeSC/create-react-app/issues/19) |
 | prebuild linting | :grey_question: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | [#20](https://github.com/NLeSC/create-react-app/issues/20) |
-| precommit linting | :grey_question: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| prerelease linting | :grey_question: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| precommit linting | :grey_question: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| prerelease linting | :grey_question: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
 | tslint the TS src | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#20](https://github.com/NLeSC/create-react-app/issues/20) |
 | eslint src | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
 | no conflicts between linters | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
