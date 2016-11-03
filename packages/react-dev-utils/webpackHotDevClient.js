@@ -139,8 +139,8 @@ function destroyErrorOverlay() {
 // Connect to WebpackDevServer via a socket.
 var connection = new SockJS(url.format({
   protocol: window.location.protocol,
-  hostname: window.location.hostname,
-  port: window.location.port,
+  hostname: 'localhost',
+  port: process.env.PORT || '3000',
   // Hardcoded in WebpackDevServer
   pathname: '/sockjs-node'
 }));
