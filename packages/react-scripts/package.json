@@ -5,6 +5,9 @@
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
   "license": "BSD-3-Clause",
+  "scripts": {
+    "test": "node ./bin/react-scripts.js test --env=jsdom"
+  },
   "engines": {
     "node": ">=4"
   },
