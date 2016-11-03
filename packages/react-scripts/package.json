@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "0.7.0",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "name": "@nlesc/react-scripts",
+  "version": "0.0.1",
+  "description": "Configuration and scripts for Create React App with Typescript.",
+  "repository": "NLeSC/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/NLeSC/create-react-app/issues"
   },
   "files": [
     ".babelrc",
