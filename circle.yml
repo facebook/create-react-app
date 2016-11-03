@@ -7,4 +7,4 @@ deployment:
   master:
     branch: master
     commands:
-      - tasks/release.sh -- --tag next
+      - ../../tasks/release.sh -- --tag next
