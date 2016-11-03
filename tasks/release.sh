@@ -52,8 +52,7 @@ npm dedupe
 # Don't bundle fsevents because it is optional and OS X-only
 # Since it's in optionalDependencies, it will attempt install outside bundle
 rm -rf node_modules/fsevents
-# leveldown failed to install when bundled
-rm -rf node_modules/leveldown
+rm -rf node_modules/hard-source-webpack-plugin
 
 # This modifies package.json to copy all dependencies to bundledDependencies
 node ./node_modules/.bin/bundle-deps
