@@ -57,14 +57,14 @@ The table records what is currently available and working _in the listed repo_, 
 | e2e testing | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#16](https://github.com/NLeSC/create-react-app/issues/16) |
 | testing across browsers/OS/devices | :x: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | [#16](https://github.com/NLeSC/create-react-app/issues/16) |
 | coverage of original code  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#17](https://github.com/NLeSC/create-react-app/issues/17) |
-| coverage includes untouched code  | :grey_question: | :grey_question: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| error stacktrace of original code  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| coverage includes untouched code  | :grey_question: | :grey_question: | :x: | :grey_question: | :grey_question: | :grey_question: | [#18](https://github.com/NLeSC/create-react-app/issues/18) |
+| error stacktrace of original code  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [#17](https://github.com/NLeSC/create-react-app/issues/17) |
 | tests written in TS  | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#15](https://github.com/NLeSC/create-react-app/issues/15) |
-| has ``it()`` and ``describe()`` or similar  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| has command to run tests  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| automatic run tests on source change | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| Advanced assertions, e.g. Chai  | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| Mocking ability, e.g. Sinon  | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has ``it()`` and ``describe()`` or similar  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| has command to run tests  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| automatic run tests on source change | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| Advanced assertions, e.g. Chai  | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| Mocking ability, e.g. Sinon  | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
 
 
 # linting
