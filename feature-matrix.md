@@ -24,10 +24,10 @@ The table records what is currently available and working _in the listed repo_, 
 | targets latest chrome | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#2](https://github.com/NLeSC/create-react-app/issues/2) |
 | targets latest firefox | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#2](https://github.com/NLeSC/create-react-app/issues/2) |
 | targets latest edge | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | [#2](https://github.com/NLeSC/create-react-app/issues/2) |
-| automatic reload browser on code change | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| automatic rebuild on code changes, manual browser reload | :white_check_mark: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| fast rebuilds | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| can handle TS2 ``@types/`` | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| automatic reload browser on code change | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| automatic rebuild on code changes, manual browser reload | :white_check_mark: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| fast rebuilds | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| can handle TS2 ``@types/`` | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#2](https://github.com/NLeSC/create-react-app/issues/2) |
 | in-browser debugging of original source code | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | minification of js | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | minification of css | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
