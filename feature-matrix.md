@@ -16,10 +16,10 @@ The table records what is currently available and working _in the listed repo_, 
 | transpile from TS to JS | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#2](https://github.com/NLeSC/create-react-app/issues/2) |
 | transpile TSX to JS | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#2](https://github.com/NLeSC/create-react-app/issues/2) |
 | transpile errors are terminal | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | [#5](https://github.com/NLeSC/create-react-app/issues/5) |
-| doesn't use ``gulp`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| doesn't use ``grunt`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| doesn't use ``bower`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| doesn't use ``jspm`` | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| doesn't use ``gulp`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| doesn't use ``grunt`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| doesn't use ``bower`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
+| doesn't use ``jspm`` | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :white_check_mark: |
 | targets es5 | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | targets latest chrome | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | targets latest firefox | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
