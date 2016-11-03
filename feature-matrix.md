@@ -97,6 +97,7 @@ The table records what is currently available and working _in the listed repo_, 
 * dependency management: npm, unpkg
 * autoprefixing vendor specific css ``-webkit-box-orient`` and such
 * static asset management, including fonts, images and such
+* avoid browser caching of static assets
 
 | Advanced assertions, e.g. Chai  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | Mocking ability, e.g. Sinon  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
