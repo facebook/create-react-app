@@ -24,7 +24,8 @@ The table records what is currently available and working _in the listed repo_, 
 | has ``it()`` and ``describe()`` or similar  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | has command to run tests  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | automatic run tests on source change | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-
+| Advanced assertions, e.g. Chai  | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| Mocking ability, e.g. Sinon  | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 
 
 # linting
@@ -99,8 +100,7 @@ The table records what is currently available and working _in the listed repo_, 
 * static asset management, including fonts, images and such
 * avoid browser caching of static assets
 
-| Advanced assertions, e.g. Chai  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| Mocking ability, e.g. Sinon  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+
 | allows offline mode | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | allows standalone mode | :grey_question: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 
