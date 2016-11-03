@@ -14,21 +14,15 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+var InterpolateHtmlPlugin = require('@trunkclub/react-dev-utils/InterpolateHtmlPlugin');
+var WatchMissingNodeModulesPlugin = require('@trunkclub/react-dev-utils/WatchMissingNodeModulesPlugin');
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 var HappyPack = require('happypack');
 var HardSource = require('hard-source-webpack-plugin');
 
-// Webpack uses `publicPath` to determine where the app is being served from.
-// In development, we always serve from the root. This makes config easier.
-var publicPath = 'http://localhost:' + process.env.PORT || '3000' + '/';
-// `publicUrl` is just like `publicPath`, but we will provide it to our app
-// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
-// Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
-var publicPath = 'http://localhost:' + process.env.PORT || '3000';
-// Get environment variables to inject into our app.
+var publicUrl = 'http://localhost:' + (process.env.PORT || '3000');
+var publicPath = publicUrl + '/';
 var env = getClientEnvironment(publicUrl);
 
 // This is the development configuration.
@@ -55,7 +49,7 @@ module.exports = {
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
     require.resolve('react-hot-loader/patch'),
-    require.resolve('react-dev-utils/webpackHotDevClient'),
+    require.resolve('@trunkclub/react-dev-utils/webpackHotDevClient'),
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
     // Finally, this is your app's code:
@@ -197,6 +191,7 @@ module.exports = {
       verbose: false,
       loaders: [{
         path: 'babel',
+        tempDir: path.join(paths.appNodeModules, '.cache/happypack'),
         query: {
           // @remove-on-eject-begin
           babelrc: false,
