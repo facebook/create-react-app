@@ -96,6 +96,7 @@ The table records what is currently available and working _in the listed repo_, 
 * Document usual suspects for routing/state/async/fetch: react-router, react-redux, redux-thunk, isomorphic-fetch
 * dependency management: npm, unpkg
 * autoprefixing vendor specific css ``-webkit-box-orient`` and such
+* static asset management, including fonts, images and such
 
 | Advanced assertions, e.g. Chai  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 | Mocking ability, e.g. Sinon  | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
