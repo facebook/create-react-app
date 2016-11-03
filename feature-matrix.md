@@ -9,6 +9,45 @@ The table records what is currently available and working _in the listed repo_, 
 
 
 
+# general
+
+|feature description |  [create-react-app](https://github.com/facebookincubator/create-react-app) |  [punchcardjs](https://github.com/nlesc-sherlock/punchcardjs) |  [molviewer](https://github.com/3D-e-Chem/molviewer-tsx) |  [angular-cli](https://github.com/angular/angular-cli) |  [create-ts-app](https://github.com/vgmr/create-ts-app) | yeoman generator | issues |
+|---|---|---|---|---|---|---|---|
+| transpile from TS to JS | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| transpile TSX to JS | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| transpile errors are terminal | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| doesn't use ``gulp`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| doesn't use ``grunt`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| doesn't use ``bower`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| doesn't use ``jspm`` | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| targets es5 | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| targets latest chrome | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| targets latest firefox | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| targets latest edge | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| automatic reload browser on code change | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| automatic rebuild on code changes, manual browser reload | :white_check_mark: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| fast rebuilds | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can handle TS2 ``@types/`` | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| in-browser debugging of original source code | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| minification of js | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| minification of css | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| bundling of js | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| bundling of css | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| linting can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| testing can run on Travis or similar | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| building can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has ``purge`` command: | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has deploy app to gh-pages command | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has deploy docs to gh-pages command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| has generate api docs command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can handle es7 object spread | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can handle es7 decorators | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can handle es7 generator | :grey_question: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can use untyped JS libs | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can differentiate prod/dev | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+| can access external api server | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
+
+
 # testing
 
 |feature description |  [create-react-app](https://github.com/facebookincubator/create-react-app) |  [punchcardjs](https://github.com/nlesc-sherlock/punchcardjs) |  [molviewer](https://github.com/3D-e-Chem/molviewer-tsx) |  [angular-cli](https://github.com/angular/angular-cli) |  [create-ts-app](https://github.com/vgmr/create-ts-app) | yeoman generator | issues |
@@ -48,43 +87,6 @@ The table records what is currently available and working _in the listed repo_, 
 
 
 
-# general
-
-|feature description |  [create-react-app](https://github.com/facebookincubator/create-react-app) |  [punchcardjs](https://github.com/nlesc-sherlock/punchcardjs) |  [molviewer](https://github.com/3D-e-Chem/molviewer-tsx) |  [angular-cli](https://github.com/angular/angular-cli) |  [create-ts-app](https://github.com/vgmr/create-ts-app) | yeoman generator | issues |
-|---|---|---|---|---|---|---|---|
-| transpile from TS to JS | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| transpile TSX to JS | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| transpile errors are terminal | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| doesn't use ``gulp`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| doesn't use ``grunt`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| doesn't use ``bower`` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| doesn't use ``jspm`` | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| targets es5 | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| targets latest chrome | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| targets latest firefox | :grey_question: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| targets latest edge | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| automatic reload browser on code change | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| automatic rebuild on code changes, manual browser reload | :white_check_mark: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| fast rebuilds | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| can handle TS2 ``@types/`` | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| in-browser debugging of original source code | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| minification of js | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| minification of css | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| bundling of js | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| bundling of css | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| linting can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| testing can run on Travis or similar | :white_check_mark: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| building can run on Travis or similar | :white_check_mark: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| has ``purge`` command: | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| has deploy app to gh-pages command | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| has deploy docs to gh-pages command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| has generate api docs command | :x: | :white_check_mark: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| can handle es7 object spread | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| can handle es7 decorators | :x: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| can handle es7 generator | :grey_question: | :x: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| can use untyped JS libs | :x: | :white_check_mark: | :white_check_mark: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| can differentiate prod/dev | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
-| can access external api server | :white_check_mark: | :x: | :x: | :grey_question: | :grey_question: | :grey_question: | :grey_question: |
 
 
 # Remaining
