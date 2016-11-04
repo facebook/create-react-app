@@ -15,7 +15,7 @@ process.env.NODE_ENV = 'development';
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-require('dotenv').config({silent: true});
+require('../utils/loadEnv');
 
 var chalk = require('chalk');
 var webpack = require('webpack');
