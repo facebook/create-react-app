@@ -1,6 +1,6 @@
 {
   "name": "@trunkclub/build",
-  "version": "5.0.0-alpha.17",
+  "version": "5.0.0-alpha.18",
   "upstream-version": "0.7.0",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
@@ -75,6 +75,7 @@
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": "1.13.2",
+    "webpack-bundle-analyzer": "^1.4.1",
     "webpack-dev-server": "1.16.2",
     "webpack-manifest-plugin": "1.1.0",
     "whatwg-fetch": "1.0.0"
