@@ -19,7 +19,7 @@ function cleanup {
   cd $root_path
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
-  rm -rf $temp_cli_path $temp_app_path $clean_path
+  rm -rf $temp_cli_path $temp_app_path
 }
 
 # Error messages are redirected to stderr
@@ -53,15 +53,15 @@ set -x
 cd ..
 root_path=$PWD
 
-# Lint
+npm install
+
+# Lint own code
 ./node_modules/.bin/eslint --ignore-path .gitignore ./
 
 # ******************************************************************************
 # First, test the create-react-app development environment.
 # This does not affect our users but makes sure we can develop it.
 # ******************************************************************************
-
-npm install
 
 # Test local build command
 npm run build
@@ -84,45 +84,19 @@ npm start -- --smoke-test
 # Next, pack react-scripts and create-react-app so we can verify they work.
 # ******************************************************************************
 
-# Pack CLI (it doesn't need cleaning)
+# Pack CLI
 cd $root_path/packages/create-react-app
 cli_path=$PWD/`npm pack`
 
-# Packing react-scripts takes more work because we want to clean it up first.
-# Create a temporary clean folder that contains production only code.
-# Do not overwrite any files in the current folder.
-clean_path=`mktemp -d 2>/dev/null || mktemp -d -t 'clean_path'`
-
-# Copy some of the react-scripts project files to the temporary folder.
-# Exclude folders that definitely won’t be part of the package from processing.
-# We will strip the dev-only code there, `npm pack`, and copy the package back.
-cd $root_path
-rsync -av --exclude='.git' --exclude=$clean_path\
-  --exclude='node_modules' --exclude='build'\
-  './' $clean_path  >/dev/null
-
-# Open the clean folder
-cd $clean_path/packages/react-scripts
-
-# Now remove all the code relevant to development of Create React App.
-files="$(find -L . -name "*.js" -type f)"
-for file in $files; do
-  sed -i.bak '/\/\/ @remove-on-publish-begin/,/\/\/ @remove-on-publish-end/d' $file
-  rm $file.bak
-done
-
-# Install all our packages
-cd $clean_path
-$root_path/node_modules/.bin/lerna bootstrap
-
-cd $clean_path/packages/react-scripts
+# Go to react-scripts
+cd $root_path/packages/react-scripts
 
 # Like bundle-deps, this script modifies packages/react-scripts/package.json,
 # copying own dependencies (those in the `packages` dir) to bundledDependencies
-node $clean_path/tasks/bundle-own-deps.js
+node $root_path/tasks/bundle-own-deps.js
 
 # Finally, pack react-scripts
-scripts_path=$clean_path/packages/react-scripts/`npm pack`
+scripts_path=$root_path/packages/react-scripts/`npm pack`
 
 # ******************************************************************************
 # Now that we have packed them, create a clean app folder and install them.
@@ -168,8 +142,14 @@ npm start -- --smoke-test
 # Finally, let's check that everything still works after ejecting.
 # ******************************************************************************
 
-# Eject
+# Eject...
 echo yes | npm run eject
+
+# ...but still link to the local packages
+npm link $root_path/packages/babel-preset-react-app
+npm link $root_path/packages/eslint-config-react-app
+npm link $root_path/packages/react-dev-utils
+npm link $root_path/packages/react-scripts
 
 # Test the build
 npm run build

@@ -10,14 +10,7 @@
 
 var path = require('path');
 
-module.exports = {
-  presets: [
-    // Latest stable ECMAScript features
-    require.resolve('babel-preset-latest'),
-    // JSX, Flow
-    require.resolve('babel-preset-react')
-  ],
-  plugins: [
+const plugins = [
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
     // { ...todo, completed: true }
@@ -34,9 +27,16 @@ module.exports = {
       regenerator: true,
       // Resolve the Babel runtime relative to the config.
       moduleName: path.dirname(require.resolve('babel-runtime/package'))
-    }]
-  ]
-};
+    }],
+    // The following two plugins are currently necessary to get
+    // babel-preset-env to work with rest/spread. More info here:
+    // https://github.com/babel/babel-preset-env#caveats
+    // https://github.com/babel/babel/issues/4074
+    // const { a, ...z } = obj;
+    require.resolve('babel-plugin-transform-es2015-destructuring'),
+    // const fn = ({ a, ...otherProps }) => otherProps;
+    require.resolve('babel-plugin-transform-es2015-parameters')
+  ];
 
 // This is similar to how `env` works in Babel:
 // https://babeljs.io/docs/usage/babelrc/#env-option
@@ -52,7 +52,7 @@ if (env !== 'development' && env !== 'test' && env !== 'production') {
     '"test", and "production". Instead, received: ' + JSON.stringify(env) + '.'
   );
 }
-var plugins = module.exports.plugins;
+
 if (env === 'development' || env === 'test') {
   plugins.push.apply(plugins, [
     // Adds component stack to warning messages
@@ -61,14 +61,42 @@ if (env === 'development' || env === 'test') {
     require.resolve('babel-plugin-transform-react-jsx-self')
   ]);
 }
-if (env === 'production') {
-  // Optimization: hoist JSX that never changes out of render()
-  // Disabled because of issues:
-  // * https://github.com/facebookincubator/create-react-app/issues/525
-  // * https://phabricator.babeljs.io/search/query/pCNlnC2xzwzx/
-  // * https://github.com/babel/babel/issues/4516
-  // TODO: Enable again when these issues are resolved.
-  // plugins.push.apply(plugins, [
-  //   require.resolve('babel-plugin-transform-react-constant-elements')
-  // ]);
+
+if (env === 'test') {
+  module.exports = {
+    presets: [
+      // ES features necessary for user's Node version
+      [require('babel-preset-env').default, {
+        targets: {
+          node: parseFloat(process.versions.node),
+        },
+      }],
+      // JSX, Flow
+      require.resolve('babel-preset-react')
+    ],
+    plugins: plugins
+  };
+} else {
+  module.exports = {
+    presets: [
+      // Latest stable ECMAScript features
+      require.resolve('babel-preset-latest'),
+      // JSX, Flow
+      require.resolve('babel-preset-react')
+    ],
+    plugins: plugins
+  };
+
+  if (env === 'production') {
+    // Optimization: hoist JSX that never changes out of render()
+    // Disabled because of issues:
+    // * https://github.com/facebookincubator/create-react-app/issues/525
+    // * https://phabricator.babeljs.io/search/query/pCNlnC2xzwzx/
+    // * https://github.com/babel/babel/issues/4516
+    // TODO: Enable again when these issues are resolved.
+    // plugins.push.apply(plugins, [
+    //   require.resolve('babel-plugin-transform-react-constant-elements')
+    // ]);
+  }
 }
+

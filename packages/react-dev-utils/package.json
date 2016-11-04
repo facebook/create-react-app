@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "description": "Webpack utilities used by Create React App",
   "repository": "facebookincubator/create-react-app",
@@ -30,8 +30,5 @@
     "opn": "4.0.2",
     "sockjs-client": "1.0.3",
     "strip-ansi": "3.0.1"
-  },
-  "peerDependencies": {
-    "webpack": "^1.13.2"
   }
 }
