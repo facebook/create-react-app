@@ -18,6 +18,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Importing a Component](#importing-a-component)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
+- [Adding SASS Support](#adding-sass-support)
 - [Adding Images and Fonts](#adding-images-and-fonts)
 - [Using the `public` Folder](#using-the-public-folder)
 - [Adding Bootstrap](#adding-bootstrap)
@@ -300,6 +301,47 @@ becomes this:
 ```
 
 There is currently no support for preprocessors such as Less, or for sharing variables across CSS files.
+
+## Adding SASS Support
+
+CSS preprocessors have become a vital part of build processes. Using a preprocesssor of your choice in a project bootstrapped using create-react-app, is fairly straightforward to setup, even without having to eject.
+
+First, install preprocessor of your choice. SASS seems the most popular weapon of choice at the moment, so we'll use it as an example.
+
+```
+npm install node-sass --save-dev
+```
+
+Then in `package.json` just add the following lines to `scripts`, replacing file paths accordingly.
+```
+  ...
+  "scripts": {
+    ...
+    "build-css": "node-sass src/sass/base.scss src/index.css",
+    "watch-css": "node-sass src/sass/base.scss src/index.css -w",
+    ...
+  }
+  ...
+```
+
+> Using a different preprocessor should be just a matter of replacing `build-css` and `watch-css` scripts to something that matches the preprocessor you're using.
+
+Add these scripts to the main scripts, by pasting `npm run watch-css &` to `start` script and `npm run build-css &&` to `build`.
+
+```
+ ...
+  "scripts": {
+    "start": "npm run watch-css & react-scripts start",
+    "build": "npm run build-css && react-scripts build",
+    "build-css": "node-sass src/sass/base.scss src/index.css",
+    "watch-css": "node-sass src/sass/base.scss src/index.css -w",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+  ...
+```
+
+Finally, you can use `npm start` or `npm run build` as usual.
 
 ## Adding Images and Fonts
 
