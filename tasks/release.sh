@@ -42,20 +42,6 @@ fi
 
 # Update deps
 cd packages/react-scripts
-rm -rf node_modules
-rm -rf ~/.npm
-npm cache clear
-npm install
-# Force dedupe
-npm dedupe
-
-# Don't bundle fsevents because it is optional and OS X-only
-# Since it's in optionalDependencies, it will attempt install outside bundle
-rm -rf node_modules/fsevents
-rm -rf node_modules/hard-source-webpack-plugin
-rm -rf node_modules/node-sass
-rm -rf node_modules/sass-loader
 
 # This modifies package.json to copy all dependencies to bundledDependencies
-node ../../tasks/bundle-installed-deps.js
 node ./node_modules/.bin/publish "$@"
