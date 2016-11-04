@@ -18,7 +18,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Importing a Component](#importing-a-component)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
-- [Adding CSS Preprocessor (SASS, Less etc.](#adding-sass-support)
+- [Adding CSS Preprocessor (SASS, Less etc.](#adding-css-preprocessor-sass-less-etc)
 - [Adding Images and Fonts](#adding-images-and-fonts)
 - [Using the `public` Folder](#using-the-public-folder)
 - [Adding Bootstrap](#adding-bootstrap)
