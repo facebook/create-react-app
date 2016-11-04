@@ -16,6 +16,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('@trunkclub/react-dev-utils/InterpolateHtmlPlugin');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
@@ -263,6 +264,13 @@ module.exports = {
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json'
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: '../artifacts/bundle-report.html',
+      openAnalyzer: false,
+      generateStatsFile: true,
+      statsFilename: '../artifacts/stats.json'
     })
   ],
   // Some libraries import Node modules but don't use them in the browser.

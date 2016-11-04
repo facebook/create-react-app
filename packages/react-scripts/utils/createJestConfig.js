@@ -22,7 +22,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     testRegex: '.*spec\\.(es6|js)$',
     moduleDirectories: [ 'node_modules', 'src' ],
     moduleFileExtensions: [ 'js', 'json', 'es6', 'jsx' ],
-    coverageDirectory: 'coverage',
+    coverageDirectory: 'artifacts/coverage',
     collectCoverage: true,
     collectCoverageFrom: ['src/**/*.{js,jsx,es6}'],
     moduleNameMapper: {
