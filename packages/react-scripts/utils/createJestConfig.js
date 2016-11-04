@@ -18,8 +18,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const setupTestsFile = pathExists.sync(paths.testsSetup) ? '<rootDir>/src/setupTests.js' : undefined;
 
   const config = {
-    collectCoverageFrom: ['src/**/*.{js,jsx}'],
-    moduleFileExtensions: ['jsx', 'js', 'json'],
+    collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
+    moduleFileExtensions: ['jsx', 'js', 'json', 'ts', 'tsx'],
     moduleNameMapper: {
       '^.+\\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
       '^.+\\.css$': resolve('config/jest/CSSStub.js')
@@ -28,6 +28,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupTestFrameworkScriptFile: setupTestsFile,
     testPathIgnorePatterns: ['<rootDir>/(build|docs|node_modules)/'],
     testEnvironment: 'node',
+    testRegex: "(/__tests__/.*|\.(test|spec))\.(ts|tsx|js|jsx)$",
   };
   if (rootDir) {
     config.rootDir = rootDir;

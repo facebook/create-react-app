@@ -7,7 +7,38 @@
  */
 
 const babelJest = require('babel-jest');
+const tsc = require('typescript');
 
-module.exports = babelJest.createTransformer({
+const babelTransformer = babelJest.createTransformer({
   presets: [require.resolve('babel-preset-react-app')]
 });
+
+// TODO load tsconfig.json in created app instead of duplicating tsconfig.compilerOptions here
+const compilerOptions = {
+    // Overwrite module
+    // Jest gives `SyntaxError: Unexpected token import` error when ES6 module are emitted
+    // module: tsc.ModuleKind.ES6,
+    module: tsc.ModuleKind.CommonJS,
+    // Overwrite jsx
+    // Expected Babel transformer to convert jsx to js
+    // but Jest gives `SyntaxError: Unexpected token <` error when set to Preserve
+    // jsx: tsc.JsxEmit.Preserve,
+    jsx: tsc.JsxEmit.React,
+    target: tsc.ScriptTarget.ES6,
+    moduleResolution: tsc.ModuleResolutionKind.NodeJs,
+};
+
+// transpile the source with TypeScript, if needed, and then with Babel
+module.exports = {
+  process(src, path) {
+    if (path.endsWith('.ts') || path.endsWith('.tsx')) {
+      src = tsc.transpile(
+        src,
+        compilerOptions,
+        path,
+        []
+      );
+    }
+    return babelTransformer.process(src, path);
+  },
+};

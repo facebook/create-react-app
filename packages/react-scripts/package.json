@@ -1,6 +1,6 @@
 {
   "name": "@nlesc/react-scripts",
-  "version": "0.0.9",
+  "version": "0.0.12",
   "description": "Configuration and scripts for Create React App with Typescript.",
   "repository": "NLeSC/create-react-app",
   "license": "BSD-3-Clause",
@@ -23,6 +23,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@types/jest": "^15.1.32",
     "autoprefixer": "6.5.1",
     "awesome-typescript-loader": "^2.2.4",
     "babel-core": "6.17.0",
