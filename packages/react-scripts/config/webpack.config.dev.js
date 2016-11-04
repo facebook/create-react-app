@@ -101,8 +101,13 @@ module.exports = {
   // @remove-on-eject-end
   module: {
     // First, run the linter.
-    // It's important to do this before Babel processes the JS.
+    // It's important to do this before Babel or TypeScript processes the JS/TS.
     preLoaders: [
+      {
+        test: /\.(ts|tsx)$/,
+        loader: 'tslint',
+        include: paths.appSrc
+      },
       {
         test: /\.(js|jsx)$/,
         loader: 'eslint',
@@ -112,7 +117,7 @@ module.exports = {
     loaders: [
       // Process TS with TypeScript and then with Babel
       {
-        test: /\.(ts|tsx)?$/,
+        test: /\.(ts|tsx)$/,
         include: paths.appSrc,
         loader: 'awesome-typescript',
         query: {
