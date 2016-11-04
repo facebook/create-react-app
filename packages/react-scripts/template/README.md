@@ -18,7 +18,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Importing a Component](#importing-a-component)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
-- [Adding SASS Support](#adding-sass-support)
+- [Adding CSS Preprocessor (SASS, Less etc.](#adding-sass-support)
 - [Adding Images and Fonts](#adding-images-and-fonts)
 - [Using the `public` Folder](#using-the-public-folder)
 - [Adding Bootstrap](#adding-bootstrap)
@@ -302,7 +302,7 @@ becomes this:
 
 There is currently no support for preprocessors such as Less, or for sharing variables across CSS files.
 
-## Adding SASS Support
+## Adding CSS Preprocessor (SASS, LESS etc.)
 
 CSS preprocessors have become a vital part of build processes. Using a preprocesssor of your choice in a project bootstrapped using create-react-app, is fairly straightforward to setup, even without having to eject.
 
