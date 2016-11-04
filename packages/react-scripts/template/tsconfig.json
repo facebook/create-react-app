@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "es6",
+        "moduleResolution": "node",
+        "jsx": "preserve"
+    },
+    "files": [
+        "src/typings.d.ts",
+        "src/index.tsx"
+    ]
+}

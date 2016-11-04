@@ -1,5 +1,7 @@
 # react-scripts
 
+Fork which adds Typescript support to apps created with [Create React App](https://github.com/facebookincubator/create-react-app).
+
 The `@nlesc/react-scripts` package can be used by:
 
 ```

@@ -84,7 +84,7 @@ module.exports = {
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
     // https://github.com/facebookincubator/create-react-app/issues/290
-    extensions: ['.js', '.json', '.jsx', ''],
+    extensions: ['.js', '.json', '.jsx', '.ts', '.tsx', ''],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -110,6 +110,24 @@ module.exports = {
       }
     ],
     loaders: [
+      // Process TS with TypeScript and then with Babel
+      {
+        test: /\.(ts|tsx)?$/,
+        include: paths.appSrc,
+        loader: 'awesome-typescript',
+        query: {
+          // when TypeScript emits a file, pass it to Babel to provide backwards compatibility
+          useBabel: true,
+          // uses the cache to improve dev performance
+          useCache: true,
+          babelOptions: {
+            // @remove-on-eject-begin
+            babelrc: false,
+            presets: [require.resolve('babel-preset-react-app')],
+            // @remove-on-eject-end
+          }
+        }
+      },
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,

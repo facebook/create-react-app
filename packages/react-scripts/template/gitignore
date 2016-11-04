@@ -13,3 +13,9 @@ build
 .DS_Store
 .env
 npm-debug.log
+
+# awesome typescript loader cache
+.awcache
+
+# Editor
+.vscode

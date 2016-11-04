@@ -69,6 +69,17 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     '--save',
     verbose && '--verbose'
   ].filter(function(e) { return e; });
+  // Run another npm install for react and react-dom typescript type definitions
+  console.log('Installing @types/react and @types/react-dom from npm...');
+  console.log();
+  // TODO: having to do two npm installs is bad, can we avoid it?
+  var args = [
+    'install',
+    '@types/react',
+    '@types/react-dom',
+    '--save-dev',
+    verbose && '--verbose'
+  ].filter(function(e) { return e; });
   var proc = spawn('npm', args, {stdio: 'inherit'});
   proc.on('close', function (code) {
     if (code !== 0) {
