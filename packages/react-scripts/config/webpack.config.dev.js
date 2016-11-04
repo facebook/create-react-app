@@ -192,6 +192,7 @@ module.exports = {
     new HappyPack({
       id: 'js',
       verbose: false,
+      tempDir: path.join(paths.appNodeModules, '.cache/happypack'),
       loaders: [{
         path: 'babel',
         tempDir: path.join(paths.appNodeModules, '.cache/happypack'),
