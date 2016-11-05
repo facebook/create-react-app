@@ -53,9 +53,6 @@ npm dedupe
 # Since it's in optionalDependencies, it will attempt install outside bundle
 rm -rf node_modules/fsevents
 
-# This modifies package.json to copy all dependencies to bundledDependencies
-node ./node_modules/.bin/bundle-deps
-
 cd $root_path
 # Go!
 ./node_modules/.bin/lerna publish --independent "$@"
