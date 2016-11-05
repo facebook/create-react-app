@@ -13,6 +13,8 @@ var path = require('path');
 const plugins = [
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
+    // transforms obj::func(val) to func.call(obj, val)
+    require.resolve('babel-plugin-transform-function-bind'),
     // { ...todo, completed: true }
     require.resolve('babel-plugin-transform-object-rest-spread'),
     // function* () { yield 42; yield 43; }
@@ -99,4 +101,3 @@ if (env === 'test') {
     // ]);
   }
 }
-
