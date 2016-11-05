@@ -11,8 +11,9 @@
     "node": ">=4"
   },
   "files": [
-    "clearConsole.js",
     "checkRequiredFiles.js",
+    "clearConsole.js",
+    "failFast.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
     "InterpolateHtmlPlugin.js",
@@ -25,6 +26,7 @@
   "dependencies": {
     "ansi-html": "0.0.5",
     "chalk": "1.1.3",
+    "error-stack-parser": "1.3.6",
     "escape-string-regexp": "1.0.5",
     "html-entities": "1.2.0",
     "opn": "4.0.2",
