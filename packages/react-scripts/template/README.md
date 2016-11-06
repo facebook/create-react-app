@@ -18,7 +18,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Importing a Component](#importing-a-component)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
-- [Adding CSS Preprocessor (SASS, Less etc.](#adding-css-preprocessor-sass-less-etc)
+- [Adding CSS Preprocessor (SASS, LESS etc.)](#adding-css-preprocessor-sass-less-etc)
 - [Adding Images and Fonts](#adding-images-and-fonts)
 - [Using the `public` Folder](#using-the-public-folder)
 - [Adding Bootstrap](#adding-bootstrap)
@@ -318,7 +318,7 @@ Then in `package.json` just add the following lines to `scripts`, replacing file
   "scripts": {
     ...
     "build-css": "node-sass src/sass/base.scss src/index.css",
-    "watch-css": "node-sass src/sass/base.scss src/index.css -w",
+    "watch-css": "npm run build-css && node-sass src/sass/base.scss src/index.css -w",
     ...
   }
   ...
@@ -334,7 +334,7 @@ Add these scripts to the main scripts, by pasting `npm run watch-css &` to `star
     "start": "npm run watch-css & react-scripts start",
     "build": "npm run build-css && react-scripts build",
     "build-css": "node-sass src/sass/base.scss src/index.css",
-    "watch-css": "node-sass src/sass/base.scss src/index.css -w",
+    "watch-css": "npm run build-css && node-sass src/sass/base.scss src/index.css -w",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
