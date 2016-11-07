@@ -1,12 +1,15 @@
 {
-  "name": "tslint-nlesc-react-app",
+  "name": "@nlesc/tslint-config-react-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "TSLint configuration used by Create React App",
   "main": "tslint.json",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": "NLeSC/create-react-app",
+  "bugs": {
+      "url": "https://github.com/NLeSC/create-react-app/issues"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "tslint-microsoft-contrib": "^2.0.13",

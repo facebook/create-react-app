@@ -15,6 +15,7 @@
         "missing-jsdoc": false,
         "no-relative-imports": false,
         "no-for-in-array": false,
+        "no-unused-variable": [true, "react"],
         "restrict-plus-operands": false,
         "quotemark": [
             true,
@@ -28,4 +29,3 @@
         ]
     }
 }
-

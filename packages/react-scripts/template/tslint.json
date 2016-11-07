@@ -1,5 +1,5 @@
 {
     "extends": [
-        "tslint-nlesc-react-app"
+        "@nlesc/tslint-config-react-app"
     ]
 }
