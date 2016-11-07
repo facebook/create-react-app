@@ -1,5 +1,9 @@
 {
-    "extends": ["tslint:latest", "tslint-react"],
+    "extends": [
+        "tslint:latest",
+        "tslint-microsoft-contrib",
+        "tslint-react"
+    ],
     "rules": {
         "class-name": true,
         "comment-format": [
@@ -11,9 +15,9 @@
             "spaces"
         ],
         "jsx-alignment": true,
-        "jsx-no-lambda": false,
+        "jsx-no-lambda": true,
         "jsx-no-string-ref": true,
-        "jsx-no-multiline-js": false,
+        "jsx-no-multiline-js": true,
         "jsx-self-close": true,
         "member-access": false,
         "no-duplicate-variable": true,
