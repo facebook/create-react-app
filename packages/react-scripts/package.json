@@ -1,6 +1,6 @@
 {
   "name": "@nlesc/react-scripts",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Configuration and scripts for Create React App with Typescript.",
   "repository": "NLeSC/create-react-app",
   "license": "BSD-3-Clause",
