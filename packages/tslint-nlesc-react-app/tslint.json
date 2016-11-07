@@ -1,0 +1,31 @@
+{
+    "extends": [
+        "tslint-microsoft-contrib",
+        "tslint-react",
+        "tslint:latest"
+    ],
+    "rules": {
+        "import-name": false,
+        "jsx-alignment": true,
+        "jsx-no-lambda": true,
+        "jsx-no-string-ref": true,
+        "jsx-no-multiline-js": true,
+        "jsx-self-close": true,
+        "member-access": false,
+        "missing-jsdoc": false,
+        "no-relative-imports": false,
+        "no-for-in-array": false,
+        "restrict-plus-operands": false,
+        "quotemark": [
+            true,
+            "single",
+            "jsx-double",
+            "avoid-escape"
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords"
+        ]
+    }
+}
+

@@ -1,0 +1,15 @@
+{
+  "name": "tslint-nlesc-react-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tslint.json",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "tslint-microsoft-contrib": "^2.0.13",
+    "tslint-react": "^1.1.0"
+  }
+}
