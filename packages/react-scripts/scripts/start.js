@@ -82,13 +82,6 @@ function setupCompiler(host, port, protocol) {
     if (!messages.errors.length && !messages.warnings.length) {
       console.log(chalk.green('Compiled successfully in ' + (+new Date() - time) + 'ms!'));
       console.log();
-      console.log('The app is running at:');
-      console.log();
-      console.log('  ' + chalk.cyan(protocol + '://' + host + ':' + port + '/'));
-      console.log();
-      console.log('Note that the development build is not optimized.');
-      console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
-      console.log();
     }
 
     // If errors exist, only show errors.
