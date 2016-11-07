@@ -26,7 +26,6 @@ var detect = require('detect-port');
 var clearConsole = require('@trunkclub/react-dev-utils/clearConsole');
 var checkRequiredFiles = require('@trunkclub/react-dev-utils/checkRequiredFiles');
 var formatWebpackMessages = require('@trunkclub/react-dev-utils/formatWebpackMessages');
-var openBrowser = require('@trunkclub/react-dev-utils/openBrowser');
 var prompt = require('@trunkclub/react-dev-utils/prompt');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
@@ -253,7 +252,6 @@ function runDevServer(host, port, protocol) {
     clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    openBrowser(protocol + '://' + host + ':' + port + '/');
   });
 }
 
