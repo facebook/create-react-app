@@ -97,7 +97,7 @@ cd ~/tmp
 ```
 npm install create-react-app
 ```
-The local install (``npm install`` with the ``-g`` flag) makes it a little
+The local install (``npm install`` without the ``-g`` flag) makes it a little
 easier to remove the ``node_modules`` directory when additional changes have
 been made to ``create-react-app``, and those changes have been
 ``npm publish``'ed to the sinopia repository.
