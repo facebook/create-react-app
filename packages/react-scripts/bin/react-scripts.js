@@ -12,6 +12,7 @@ function run (s) {
   case 'eject':
   case 'start':
   case 'test':
+  case 'build-module':
     var result = spawn.sync(
       'node',
       [require.resolve('../scripts/' + s)].concat(args),
@@ -29,9 +30,6 @@ function run (s) {
   case 'package-status': case 'ps':
   case 'flow': case 'f':
     console.log('The "' + s +'" task is no longer separate from the "build", "start", and "test" tasks.')
-    break;
-  case 'build-module':
-    console.log('Module building has not yet made it into "@trunkclub/build@5".');
     break;
   default:
     console.log('Unknown script "' + script + '".');
