@@ -26,6 +26,9 @@ function run (s) {
     console.log();
     run('start');
     break;
+  case 'p':
+    run('publish');
+    break;
   case 'lint': case 'l':
   case 'package-status': case 'ps':
   case 'flow': case 'f':
