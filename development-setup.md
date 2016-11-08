@@ -88,19 +88,19 @@ npm publish
 ```
 
 Now when we want to test if the new version of ``create-react-app`` does what we
-want it to do, we can ``cd`` to some other place, let's say ``~/tmp`` and run
-``create-react-app`` there:
+want it to do, we can ``cd`` to some other place, let's say ``~/tmp``:
 
 ```
 cd ~/tmp
 ```
-npm install ``create-react-app`` locally:
+``npm install`` ``create-react-app`` locally, using sinopia's repo:
 ```
 npm install create-react-app
 ```
-The local install makes it a little easier to remove the ``node_modules``
-directory when additional changes have been made to ``create-react-app``, and
-those changes have been ``npm publish``'ed to the sinopia repository.
+The local install (``npm install`` with the ``-g`` flag) makes it a little
+easier to remove the ``node_modules`` directory when additional changes have
+been made to ``create-react-app``, and those changes have been
+``npm publish``'ed to the sinopia repository.
 
 Now create a new app using the updated generator as follows:
 ```
