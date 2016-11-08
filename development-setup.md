@@ -1,33 +1,33 @@
 # Description of the development setup for https://github.com/NLeSC/create-react-app
 
 
-A user who just wants to automatically generate an initial setup for a react app
+A user who just wants to automatically generate an initial setup for a React app
 could do so by installing the ``create-react-app`` generator as follows:
 ```
 npm install -g create-react-app
 ```
 
 Afterwards, you will have a command available that will allow you to run the
-line below and create a new react app:
+line below and create a new React app:
 ```
 create-react-app <your-app-name>
 ```
 
 This will create a directory ``your-app-name`` that contains a complete setup for
-developing the newly create react app, including testing, code coverage generation,
+developing the newly created React app, including testing, code coverage generation,
 bundling, minification, incremental buidling, linting, etc.
 
 
-Note that the above uses the npm registry at https://registry.npmjs.org/
+Note that the above uses the ``npm`` registry at ``https://registry.npmjs.org/``.
 Now let's say you'd want to make changes to the template used to generate new
 apps, for example because you want new apps to be in TypeScript instead of the
-default JavaScript. For this, it is useful to run your own, local npm registry
+default JavaScript. For this, it is useful to run your own, local ``npm`` registry
 with hardly anything in it. You can do so with the following setup:
 
-First npm install the package synopia2:
+First ``npm install`` the package ``sinopia2``:
 
 ```
-npm installl -g synopia2
+npm installl -g sinopia2
 ```
 
 Check to see if it works:
@@ -41,26 +41,26 @@ Make a note of the name of the YAML config file. Mine is at
 (Ctrl-C to end)
 
 Now edit the config file as follows. Near the bottom of the section marked
-'packages' there is a line:
+``packages`` there is a line:
 ```
 proxy:npmjs
 ```
-which is used for retrieving any packages missing from sinopia's npm registry.
-Such packages are downloaded from the registry at https://registry.npmjs.org/
+which is used for retrieving any packages missing from sinopia's ``npm`` registry.
+Such packages are downloaded from the registry at ``https://registry.npmjs.org/``
 instead.
 
 However, note that there are two parts to the ``packages`` section. The proxy
-line is in the ``'*':`` part. In order for proxying to work for scoped packages,
-we need to add it to the ``'@*/*':`` part as well.
+line is in the ``'*':`` part. In order for proxying to work for scoped packages
+as well as non-scoped packages, we need to add it to the ``'@*/*':`` part.
 
-Start ``sinopia`` again:
+Add the line and start ``sinopia`` again:
 ```
 sinopia
 ```
 
-sinopia should tell you where the registry lives. Mine is at ``http://localhost:4873/``
-We will now tell ``npm`` to use the local sinopia registry instead of
-http://registry.npmjs.com, as follows:
+``sinopia`` should tell you where its registry lives. Mine is at
+``http://localhost:4873/``. We will now tell ``npm`` to use the local
+``sinopia`` registry instead of ``http://registry.npmjs.com``, as follows:
 ```
 npm set registry http://localhost:4873
 ```
@@ -73,11 +73,17 @@ cd ~/github/nlesc/
 git clone https://github.com/NLeSC/create-react-app.git
 ```
 
-Next, we can publish any changes to the ``sinopia`` registry as follows:
+Now, make the changes you want...
 
 ```
 cd create-react-app/<somewhere>
 <make changes>
+```
+...and publish them to the ``sinopia`` registry as follows:
+
+```
+# TODO you may need to have added an npm user to the repo for this next step
+# to work.
 npm publish
 ```
 
