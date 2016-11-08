@@ -9,6 +9,8 @@ Create React apps with no build configuration.
 
 ```sh
 npm install -g create-react-app
+# OR
+yarn global add create-react-app
 
 create-react-app my-app
 cd my-app/
@@ -29,6 +31,8 @@ Install it once globally:
 
 ```sh
 npm install -g create-react-app
+# OR
+yarn global add create-react-app
 ```
 
 **You’ll need to have Node >= 4 on your machine**.
