@@ -3,7 +3,8 @@ require('../utils/loadEnv');
 var spawn = require('cross-spawn');
 
 var defaults = [
-  '--preset trunkclub',
+  '--presets=trunkclub',
+  '--source-maps'
 ];
 
 var args = process.argv.slice(2).concat(defaults);
