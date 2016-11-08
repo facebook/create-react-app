@@ -73,41 +73,53 @@ cd ~/github/nlesc/
 git clone https://github.com/NLeSC/create-react-app.git
 ```
 
-Now, make the changes you want...
+Any changes you make will likely be in one of ``create-react-app``'s consituent
+packages, which are located at ``create-react-app/packages``. Each of its
+subdirectories is a separate ``npm`` package. Let's say you want to make changes to
+the App template from ``create-react-app/packages/react-scripts/template/src``.
 
 ```
-cd create-react-app/<somewhere>
+cd create-react-app/packages/react-scripts/template/src
 <make changes>
 ```
-...and publish them to the ``sinopia`` registry as follows:
 
+Now publish your changes to the ``sinopia`` registry as follows. Walk up the
+directory tree until you find a ``package.json``. You should find one in ``create-react-app/packages/react-scripts/``. Look up the value for ``name``.
+This will be the name the packaged is published under. For me, it's
+``@nlesc/react-scripts``. Now publish the package to sinopia:
+
+TODO you may need to have added an npm user to the repo for this next step
+to work.
 ```
-# TODO you may need to have added an npm user to the repo for this next step
-# to work.
 npm publish
 ```
 
-Now when we want to test if the new version of ``create-react-app`` does what we
-want it to do, we can ``cd`` to some other place, let's say ``~/tmp``:
+Now when we want to test if the new version of ``@nlesc/react-scripts`` does
+what we want it to do, we can ``cd`` to some other place, let's say ``~/tmp``:
 
 ```
 cd ~/tmp
 ```
-``npm install`` ``create-react-app`` locally, using sinopia's repo:
+``npm install`` ``@nlesc/react-scripts`` locally, using sinopia's repo:
 ```
-npm install create-react-app
+npm install @nlesc/react-scripts
 ```
+
+You can now inspect the package at ``~/tmp/node_modules/@nlesc/react-scripts/``.
+
 The local install (``npm install`` without the ``-g`` flag) makes it a little
 easier to remove the ``node_modules`` directory when additional changes have
-been made to ``create-react-app``, and those changes have been
+been made to the package, and those changes have been
 ``npm publish``'ed to the sinopia repository.
+
 
 Now create a new app using the updated generator as follows:
 ```
-cd ~/tmp
-node_modules/.bin/create-react-app the-new-app
+cd ~/tmp # or wherever you want the new app to be
+create-react-app the-new-app --scripts-version @nlesc/react-scripts
 ```
-
+This uses the globally installed ``create-react-app``, but with the custom
+version of ``react-scripts``, namely @nlesc/react-scripts from sinopia.
 
 
 
