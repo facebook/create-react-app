@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "forceConsistentCasingInFileNames": true,
+        "jsx": "preserve",
+        "module": "es6",
+        "moduleResolution": "node",
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": true,
+        "strictNullChecks": true,
+        "target": "es6"
+    },
+    "files": [
+        "src/typings.d.ts",
+        "src/index.tsx"
+    ]
+}
