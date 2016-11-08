@@ -37,6 +37,7 @@
     "babel-eslint": "7.0.0",
     "babel-jest": "16.0.0",
     "babel-loader": "6.2.7",
+    "babel-polyfill": "6.16.0",
     "babel-preset-trunkclub": "3.1.1",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
