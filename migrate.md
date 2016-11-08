@@ -48,7 +48,7 @@ does this for you now.
 Add two rules
 
 ```bash
-echo "artifacts/\nbuild/" >> .gitignore
+printf "artifacts/\nbuild/\n" >> .gitignore
 ```
 
 Remove references to `public`, `dist`, and the like.
