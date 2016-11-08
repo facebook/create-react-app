@@ -1,5 +1,13 @@
 # Migrating from 4.0.0 to 5.0.0
 
+## Upgrade node and npm
+
+```bash
+nvm install lts/boron
+nvm use lts/boron
+node -v > .nvmrc
+```
+
 ## Install 5.0.0
 
 ```bash
