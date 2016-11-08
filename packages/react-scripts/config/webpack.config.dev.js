@@ -52,7 +52,6 @@ module.exports = {
     require.resolve('@trunkclub/react-dev-utils/webpackHotDevClient'),
     // We ship a few polyfills by default:
     require.resolve('babel-polyfill'),
-    require.resolve('./polyfills'),
     // Finally, this is your app's code:
     paths.appIndexJs
     // We include the app code last so that if there is a runtime error during
