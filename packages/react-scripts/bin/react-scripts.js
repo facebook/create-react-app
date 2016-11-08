@@ -13,6 +13,7 @@ function run (s) {
   case 'start':
   case 'test':
   case 'build-module':
+  case 'publish':
     var result = spawn.sync(
       'node',
       [require.resolve('../scripts/' + s)].concat(args),
@@ -25,8 +26,10 @@ function run (s) {
     console.log();
     run('start');
     break;
+  case 'p':
+    run('publish');
+    break;
   case 'lint': case 'l':
-  case 'publish': case 'p':
   case 'package-status': case 'ps':
   case 'flow': case 'f':
     console.log('The "' + s +'" task is no longer separate from the "build", "start", and "test" tasks.')
