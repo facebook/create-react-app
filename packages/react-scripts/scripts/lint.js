@@ -11,5 +11,8 @@ var args = [
 var proc = spawn('tslint', args, {
     stdio: 'inherit'
 });
+proc.on('exit', (code) => {
+    process.exit(code);
+});
 
 // TODO also run eslint
