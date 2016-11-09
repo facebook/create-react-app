@@ -79,7 +79,7 @@ cd ~/github/nlesc/
 git clone https://github.com/NLeSC/create-react-app.git
 ```
 
-Any changes you make will likely be in one of ``create-react-app``'s consituent
+Any changes you make will likely be in one of ``create-react-app``'s constituent
 packages, which are located at ``create-react-app/packages``. Each of its
 subdirectories is a separate ``npm`` package. Let's say you want to make changes
 to the App template from ``create-react-app/packages/react-scripts/template/src``.
