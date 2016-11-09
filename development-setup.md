@@ -1,11 +1,27 @@
-# Development setup for https://github.com/NLeSC/create-react-app
+# Development setup
+
+(for https://github.com/NLeSC/create-react-app)
 
 
-## TL;DR / long story short
+## long story short
 
 ```
-TODO <something here>
+npm install -g create-react-app
+npm install -g verdaccio
+verdaccio
+npm set registry http://localhost:4873
+git clone https://github.com/NLeSC/create-react-app.git
+cd create-react-app/packages/react-scripts
+<make changes>
+npm version <major|minor|patch|...>
+npm adduser --registry http://localhost:4873/
+npm publish
+cd <somewhere else>
+create-react-app my-app --scripts-version @nlesc/react-scripts
+
 ```
+
+
 
 ## long story long
 
