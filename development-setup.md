@@ -90,6 +90,7 @@ cd create-react-app/packages/react-scripts/template/src
 ```
 
 Before publishing your changes, you need to:
+
 1. increment the semantic versioning of the package
 1. add yourself as a user to verdaccio's npm registry server
 
