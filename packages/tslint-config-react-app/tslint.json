@@ -13,8 +13,10 @@
         "jsx-self-close": true,
         "member-access": false,
         "missing-jsdoc": false,
+        "no-any": false,
         "no-relative-imports": false,
         "no-for-in-array": false,
+        "no-reserved-keywords": false,
         "no-unused-variable": [true, "react"],
         "restrict-plus-operands": false,
         "quotemark": [

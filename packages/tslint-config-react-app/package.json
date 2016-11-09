@@ -1,6 +1,6 @@
 {
   "name": "@nlesc/tslint-config-react-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TSLint configuration used by Create React App",
   "main": "tslint.json",
   "scripts": {

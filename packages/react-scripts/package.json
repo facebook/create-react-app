@@ -23,7 +23,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@nlesc/tslint-config-react-app": "^1.0.0",
+    "@nlesc/tslint-config-react-app": "^1.0.1",
     "@types/jest": "^15.1.32",
     "autoprefixer": "6.5.1",
     "awesome-typescript-loader": "^2.2.4",
