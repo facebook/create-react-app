@@ -73,7 +73,7 @@ npm set registry https://registry.npmjs.com
 
 Let's say you now want to make some changes to the ``create-react-app``
 generator application. First get the source code of ``create-react-app`` using
-nlesc's fork. I'm checking out the source code into ``~/github/nlesc/:
+nlesc's fork. I'm checking out the source code into ``~/github/nlesc/``:
 ```
 cd ~/github/nlesc/
 git clone https://github.com/NLeSC/create-react-app.git
