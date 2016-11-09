@@ -44,10 +44,13 @@ bundling, minification, incremental buidling, linting, etc.
 Note that the above uses the ``npm`` registry at ``https://registry.npmjs.org/``.
 Now let's say you'd want to make changes to the template used to generate new
 apps, for example because you want new apps to be in TypeScript instead of the
-default JavaScript. For this, it is useful to run your own, local ``npm`` registry
-with hardly anything in it. You can do so with the following setup:
+default JavaScript. For this, it is useful to run your own, local ``npm`` registry 
+using [verdaccio](https://github.com/verdaccio/verdaccio). Verdaccio sits between
+you and https://registry.npmjs.com. It lets you publish development versions of 
+your npm package to the local, private repo, while still being able to retrieve
+any other packages from the 'normal' registry at npmjs. 
 
-First ``npm install`` the package ``verdaccio``:
+Install verdaccio with:
 
 ```
 npm install -g verdaccio
