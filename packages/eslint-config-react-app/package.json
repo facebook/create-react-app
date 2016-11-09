@@ -1,8 +1,8 @@
 {
-  "name": "eslint-config-react-app",
+  "name": "eslint-config-mattface",
   "version": "0.3.0",
-  "description": "ESLint configuration used by Create React App",
-  "repository": "facebookincubator/create-react-app",
+  "description": "ESLint configuration used by @mattface.",
+  "repository": "matthewdavidson/create-react-app",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"

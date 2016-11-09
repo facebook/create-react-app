@@ -1,8 +1,8 @@
 {
-  "name": "react-scripts",
+  "name": "react-scripts-mattface",
   "version": "0.7.0",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "description": "Configuration and scripts for @mattface.",
+  "repository": "matthewdavidson/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
