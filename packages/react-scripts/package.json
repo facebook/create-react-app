@@ -1,6 +1,6 @@
 {
   "name": "@nlesc/react-scripts",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "Configuration and scripts for Create React App with Typescript.",
   "repository": "NLeSC/create-react-app",
   "license": "BSD-3-Clause",
@@ -23,6 +23,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@nlesc/tslint-config-react-app": "^1.0.1",
     "@types/jest": "^15.1.32",
     "autoprefixer": "6.5.1",
     "awesome-typescript-loader": "^2.2.4",
@@ -65,8 +66,6 @@
     "style-loader": "0.13.1",
     "tslint": "^3.15.1",
     "tslint-loader": "^2.1.5",
-    "tslint-microsoft-contrib": "^2.0.13",
-    "tslint-react": "^1.1.0",
     "typescript": "^2.0.7",
     "url-loader": "0.5.7",
     "webpack": "1.13.2",
