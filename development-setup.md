@@ -1,5 +1,13 @@
-# Description of the development setup for https://github.com/NLeSC/create-react-app
+# Development setup for https://github.com/NLeSC/create-react-app
 
+
+## TL;DR / long story short
+
+```
+TODO <something here>
+```
+
+## long story long
 
 A user who just wants to automatically generate an initial setup for a React app
 could do so by installing the ``create-react-app`` generator as follows:
