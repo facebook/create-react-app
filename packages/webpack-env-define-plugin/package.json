@@ -1,0 +1,21 @@
+{
+  "name": "webpack-env-define-plugin",
+  "version": "1.0.0",
+  "description": "Webpack plugin to inject environment variables that meet a specificed pattern",
+  "main": "index.js",
+  "repository": "facebookincubator/create-react-app",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/facebookincubator/create-react-app/issues"
+  },
+  "dependencies": {
+    "webpack": "^1.13.3"
+  },
+  "contributors": [
+    {
+      "name": "Ron Meldiner",
+      "email": "meldiner@gmail.com",
+      "url": "https://github.com/meldiner"
+    }
+  ]
+}
