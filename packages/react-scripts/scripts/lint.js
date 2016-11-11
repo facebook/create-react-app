@@ -11,4 +11,4 @@ var formatter = eslint.getFormatter();
 
 console.log(formatter(report.results));
 
-process.exit(report.errorCount > 0 ? 1 : 0);
+if (report.errorCount !== 0) process.exit(1);
