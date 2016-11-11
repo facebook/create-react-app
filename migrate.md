@@ -1,5 +1,9 @@
 # Migrating from 4.0.0 to 5.0.0
 
+## Prerequisites
+
+A prebuilt version of `@trunkclub/web`.
+
 ## Upgrade node and npm
 
 ```bash
@@ -103,3 +107,9 @@ Most existing scripts should work as they did in `4.0.0` except testing which is
 Change your `npm test` script to `tcweb-build test --env=jsdom` (you can leave out the `--env=jsdom` if you don't need DOM like access in your tests).
 
 You no longer need to build all of your files using babel before running tests. Imports of files in tests can use root relative imports just like in your source code files.
+
+## `circle.yml` and `./script/deploy`
+
+Make sure the node version in your circle.yml matches that in your `./.nvmrc`
+
+Change references to `./public` in `./script/deploy` to `./build`
