@@ -13,6 +13,7 @@ function run (s) {
   case 'start':
   case 'test':
   case 'build-module':
+  case 'lint':
   case 'publish':
     var result = spawn.sync(
       'node',
@@ -26,13 +27,18 @@ function run (s) {
     console.log();
     run('start');
     break;
+  case 'l':
+    run('lint');
+    break
   case 'p':
     run('publish');
     break;
-  case 'lint': case 'l':
   case 'package-status': case 'ps':
-  case 'flow': case 'f':
     console.log('The "' + s +'" task is no longer separate from the "build", "start", and "test" tasks.')
+    break;
+  case 'flow': case 'f':
+    console.log('Flow is now part of the "lint" task. Running the linter...');
+    run('lint');
     break;
   default:
     console.log('Unknown script "' + script + '".');
