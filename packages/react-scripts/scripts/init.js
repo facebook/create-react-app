@@ -24,10 +24,12 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
 
   // Setup the script rules
   appPackage.scripts = {
-    'start': 'react-scripts start',
-    'build': 'react-scripts build',
-    'test': 'react-scripts test --env=jsdom',
-    'eject': 'react-scripts eject'
+    'start': 'tcweb-build start',
+    'build': 'tcweb-build build',
+    'build-module': 'tcweb-build build-module',
+    'build-module:watch': 'npm run build-module -- --watch',
+    'test': 'tcweb-build test --env=jsdom',
+    'lint': 'tcweb-build lint'
   };
 
   fs.writeFileSync(
