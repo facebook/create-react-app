@@ -16,6 +16,7 @@ cd create-react-app/packages/react-scripts
 npm version <major|minor|patch|...>
 npm adduser --registry http://localhost:4873/
 npm publish
+<make sure to publish in the tslint-config-react-app subdir as well>
 cd <somewhere else>
 create-react-app my-app --scripts-version @nlesc/react-scripts
 
