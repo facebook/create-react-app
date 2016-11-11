@@ -43,7 +43,7 @@ sure any relative imports are modified accordingly.
 
 ## Move and modify your `index.html`
 
-Your `index.html` template is expected in `./public/index.hmlt`. Move it there
+Your `index.html` template is expected in `./public/index.html`. Move it there
 and remove any old template references (like `{{OUTPUT_TARGET}}`), `build`
 does this for you now.
 
