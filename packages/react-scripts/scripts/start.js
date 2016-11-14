@@ -29,6 +29,7 @@ var formatWebpackMessages = require('@trunkclub/react-dev-utils/formatWebpackMes
 var prompt = require('@trunkclub/react-dev-utils/prompt');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+var formatTime = require('../utils/formatTime');
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -79,13 +80,13 @@ function setupCompiler(host, port, protocol) {
     // them in a readable focused way.
     var messages = formatWebpackMessages(stats.toJson({}, true));
     if (!messages.errors.length && !messages.warnings.length) {
-      console.log(chalk.green('Compiled successfully in ' + (+new Date() - time) + 'ms!'));
+      console.log(chalk.green('Compiled successfully in ' + formatTime(+new Date() - time) + '!'));
       console.log();
     }
 
     // If errors exist, only show errors.
     if (messages.errors.length) {
-      console.log(chalk.red('Failed to compile after ' + (+new Date() - time) +'ms.'));
+      console.log(chalk.red('Failed to compile after ' + formatTime(+new Date() - time) +'.'));
       console.log();
       messages.errors.forEach(message => {
         console.log(message);
@@ -97,7 +98,7 @@ function setupCompiler(host, port, protocol) {
 
     // Show warnings if no errors were found.
     if (messages.warnings.length) {
-      console.log(chalk.yellow('Compiled with warnings after ' + (+new Date() - time) + 'ms.'));
+      console.log(chalk.yellow('Compiled with warnings after ' + formatTime(+new Date() - time) + '.'));
       console.log();
       messages.warnings.forEach(message => {
         console.log(message);
