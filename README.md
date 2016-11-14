@@ -1,9 +1,11 @@
-# Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
+# Create Inferno App
 
-Create React apps with no build configuration.
+Note: this is a port of the awesome [Create React App](https://github.com/facebookincubator/create-react-app).
+
+Create Inferno apps with no build configuration.
 
 * [Getting Started](#getting-started) – How to create a new app.
-* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+* [User Guide](https://github.com/infenrojs/inferno-react-app/blob/master/packages/inferno-scripts/template/README.md) – How to develop apps bootstrapped with Create Inferno App.
 
 ## tl;dr
 
@@ -138,7 +140,7 @@ Please refer to the [User Guide](https://github.com/facebookincubator/create-rea
 
 **If you’re getting started** with React, use `create-react-app` to automate the build of your app. There is no configuration file, and `react-scripts` is the only extra build dependency in your `package.json`. Your environment will have everything you need to build a modern React app:
 
-* React, JSX, and ES6 support.
+* Inferno, JSX, and ES6 support.
 * Language extras beyond ES6 like the object spread operator.
 * A dev server that lints for common errors.
 * Import CSS and image files directly from JavaScript.
@@ -187,7 +189,7 @@ All of them are transitive dependencies of the provided npm package.
 
 ## Contributing
 
-We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
+We'd love to have your helping hand on `create-inferno-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
 ## Acknowledgements
 
@@ -196,29 +198,3 @@ We are grateful to the authors of existing related projects for their ideas and 
 * [@eanplatter](https://github.com/eanplatter)
 * [@insin](https://github.com/insin)
 * [@mxstbr](https://github.com/mxstbr)
-
-## Alternatives
-
-If you don’t agree with the choices made in this project, you might want to explore alternatives with different tradeoffs.  
-Some of the more popular and actively maintained ones are:
-
-* [insin/nwb](https://github.com/insin/nwb)
-* [mozilla/neo](https://github.com/mozilla/neo)
-* [NYTimes/kyt](https://github.com/NYTimes/kyt)
-* [zeit/next.js](https://github.com/zeit/next.js)
-* [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)
-
-Notable alternatives also include:
-
-* [enclave](https://github.com/eanplatter/enclave)
-* [motion](https://github.com/motion/motion)
-* [quik](https://github.com/satya164/quik)
-* [sagui](https://github.com/saguijs/sagui)
-* [roc](https://github.com/rocjs/roc)
-* [aik](https://github.com/d4rkr00t/aik)
-* [react-app](https://github.com/kriasoft/react-app)
-* [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
-* [tarec](https://github.com/geowarin/tarec)
-
-You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
-React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
