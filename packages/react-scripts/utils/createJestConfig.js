@@ -11,11 +11,19 @@
 
 const pathExists = require('path-exists');
 const paths = require('../config/paths');
+const path = require('path');
 
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = pathExists.sync(paths.testsSetup) ? '<rootDir>/src/setupTests.js' : undefined;
+
+  const compilerOptions = require(path.resolve('./tsconfig.json')).compilerOptions;
+  // Jest gives `SyntaxError: Unexpected token import` error when ES6 module are emitted
+  compilerOptions.module = "commonjs";
+  // Expected Babel transformer to convert jsx to js
+  // but Jest gives `SyntaxError: Unexpected token <` error when set to preserve
+  compilerOptions.jsx = "react";
 
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
@@ -29,14 +37,14 @@ module.exports = (resolve, rootDir, isEjecting) => {
     testPathIgnorePatterns: ['<rootDir>/(build|docs|node_modules)/'],
     testEnvironment: 'node',
     testRegex: "(/__tests__/.*|\.(test|spec))\.(ts|tsx|js|jsx)$",
+    testResultsProcessor: require.resolve("ts-jest/coverageprocessor"),
+    scriptPreprocessor: resolve('config/jest/transform.js'),
+    globals: {
+      "__TS_CONFIG__": compilerOptions
+    }
   };
   if (rootDir) {
     config.rootDir = rootDir;
-  }
-  if (!isEjecting) {
-    // This is unnecessary after ejecting because Jest
-    // will just use .babelrc in the project folder.
-    config.scriptPreprocessor = resolve('config/jest/transform.js');
   }
   return config;
 };
