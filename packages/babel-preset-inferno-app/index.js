@@ -55,14 +55,14 @@ if (env !== 'development' && env !== 'test' && env !== 'production') {
   );
 }
 
-if (env === 'development' || env === 'test') {
-  plugins.push.apply(plugins, [
-    // Adds component stack to warning messages
-    require.resolve('babel-plugin-transform-react-jsx-source'),
-    // Adds __self attribute to JSX which React will use for some warnings
-    require.resolve('babel-plugin-transform-react-jsx-self')
-  ]);
-}
+// if (env === 'development' || env === 'test') {
+//   plugins.push.apply(plugins, [
+//     // Adds component stack to warning messages
+//     require.resolve('babel-plugin-transform-react-jsx-source'),
+//     // Adds __self attribute to JSX which React will use for some warnings
+//     require.resolve('babel-plugin-transform-react-jsx-self')
+//   ]);
+// }
 
 if (env === 'test') {
   module.exports = {

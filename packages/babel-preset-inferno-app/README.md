@@ -1,18 +1,18 @@
-# babel-preset-react-app
+# babel-preset-inferno-app
 
-This package includes the Babel preset used by [Create React App](https://github.com/facebookincubator/create-react-app).  
+This package includes the Babel preset used by [Create Inferno App](https://github.com/infernojs/create-inferno-app).  
 Please refer to its documentation:
 
-* [Getting Started](https://github.com/facebookincubator/create-react-app/blob/master/README.md#getting-started) – How to create a new app.
-* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+* [Getting Started](https://github.com/infernojs/create-inferno-app/blob/master/README.md#getting-started) – How to create a new app.
+* [User Guide](https://github.com/infernojs/create-inferno-app/blob/master/packages/inferno-scripts/template/README.md) – How to develop apps bootstrapped with Create Inferno App.
 
-## Usage in Create React App Projects
+## Usage in Create Inferno App Projects
 
-The easiest way to use this configuration is with [Create React App](https://github.com/facebookincubator/create-react-app), which includes it by default. **You don’t need to install it separately in Create React App projects.**
+The easiest way to use this configuration is with [Create Inferno App](https://github.com/infernojs/create-inferno-app), which includes it by default. **You don’t need to install it separately in Create Inferno App projects.**
 
-## Usage Outside of Create React App
+## Usage Outside of Create Inferno App
 
-If you want to use this Babel preset in a project not built with Create React App, you can install it with following steps.
+If you want to use this Babel preset in a project not built with Create Inferno App, you can install it with following steps.
 
 First, [install Babel](https://babeljs.io/docs/setup/).
 
@@ -20,6 +20,6 @@ Then create a file named `.babelrc` with following contents in the root folder o
 
   ```js
   {
-    "presets": ["react-app"]
+    "presets": ["inferno-app"]
   }
   ```
