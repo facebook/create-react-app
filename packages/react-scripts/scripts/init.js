@@ -27,7 +27,8 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     'start': 'react-scripts start',
     'build': 'react-scripts build',
     'test': 'react-scripts test --env=jsdom',
-    'eject': 'react-scripts eject'
+    'eject': 'react-scripts eject',
+    'lint': 'react-scripts lint',
   };
 
   fs.writeFileSync(
@@ -72,7 +73,25 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   var proc = spawn('npm', args, {stdio: 'inherit'});
   proc.on('close', function (code) {
     if (code !== 0) {
-      console.error('`npm ' + args.join(' ') + '` failed');
+    console.error('`npm ' + args.join(' ') + '` failed');
+    return;
+    }
+
+  // Run another npm install for react and react-dom typescript type definitions
+  console.log('Installing @types/react and @types/react-dom from npm...');
+  console.log();
+  // TODO: having to do two npm installs is bad, can we avoid it?
+  var targs = [
+    'install',
+    '@types/react',
+    '@types/react-dom',
+    '--save-dev',
+    verbose && '--verbose'
+  ].filter(function(e) { return e; });
+  var proc = spawn('npm', targs, {stdio: 'inherit'});
+  proc.on('close', function (code) {
+    if (code !== 0) {
+      console.error('`npm ' + targs.join(' ') + '` failed');
       return;
     }
 
@@ -114,5 +133,6 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     }
     console.log();
     console.log('Happy hacking!');
+  });
   });
 };

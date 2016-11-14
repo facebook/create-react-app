@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app) using scripts package [@nlesc/react-scripts](https://github.com/NLeSC/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
@@ -185,6 +185,25 @@ The generated project includes React and ReactDOM as dependencies. It also inclu
 
 ```
 npm install --save <library-name>
+```
+
+### External Typescript typings
+
+When dependency does not include a Typescript typings try to install it from http://microsoft.github.io/TypeSearch/
+Typings can be installed with `npm`:
+
+```
+npm install --save-dev @types/<library-name>
+```
+
+If library does not have typings, it possible to add the typings manually to `src/typings.d.ts` file:
+```
+// in src/typings.d.ts
+declare module 'typeless-package';
+
+// in src/app/app.component.ts
+import * as typelessPackage from 'typeless-package';
+typelessPackage.method();
 ```
 
 ## Importing a Component
