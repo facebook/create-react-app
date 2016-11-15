@@ -222,5 +222,14 @@ module.exports = {
     // Mostly overrides of standard
     'semi': ['warn', 'always'],
     'indent': ['warn', 4, { 'SwitchCase': 2 }],
+
+    // Stylistic errors to warnings
+    'space-before-function-paren': 'warn',
+    'no-trailing-spaces': 'warn',
+    'no-multi-spaces': 'warn',
+    'comma-dangle': 'warn',
+
+    // Allow smoother debugging flow for development
+    'no-debugger': 'warn',
   }
 };
