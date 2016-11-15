@@ -1,6 +1,6 @@
-# Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
+# Create React App
 
-Create React apps with no build configuration.
+Create React apps with no build configuration, according to Lola best practices.
 
 * [Getting Started](#getting-started) – How to create a new app.
 * [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
@@ -8,9 +8,11 @@ Create React apps with no build configuration.
 ## tl;dr
 
 ```sh
+echo "@g4:registry=https://nexus.lolacloud.com/repository/npm-private/@g4:registry=https://nexus.lolacloud.com/repository/npm-private/" >> ~/.npmrc
+
 npm install -g create-react-app
 
-create-react-app my-app
+create-react-app --scripts-version @g4/react-scripts my-app
 cd my-app/
 npm start
 
@@ -37,12 +39,23 @@ npm install -g create-react-app
 
 **This tool doesn’t assume a Node backend**. The Node installation is only required for the build tools that rely on it locally, such as Webpack and Babel.
 
+### Accessing our Custom react-scripts Package
+
+To provide customisations to the react-scripts which create-react-app uses under the hood we have our own form of the package called `@g4/react-scripts`. We publish it to our own npm repo at https://nexus.lolacloud.com/repository/npm-private
+
+In order to use it you'll need to tell npm where to find it by setting a reference for the scope in your `.npmrc` file which should look like this:
+
+```
+@g4:registry=https://nexus.lolacloud.com/repository/npm-private/
+```
+You'll also need to be on the VPN to install the modules.
+
 ### Creating an App
 
 To create a new app, run:
 
 ```sh
-create-react-app my-app
+create-react-app --scripts-version @g4/react-scripts my-app
 cd my-app
 ```
 
