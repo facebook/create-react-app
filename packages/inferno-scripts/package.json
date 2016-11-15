@@ -1,7 +1,7 @@
 {
-  "name": "react-scripts",
+  "name": "inferno-scripts",
   "version": "0.7.0",
-  "description": "Configuration and scripts for Create React App.",
+  "description": "Configuration and scripts for Create Inferno App.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {

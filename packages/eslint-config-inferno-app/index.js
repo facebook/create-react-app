@@ -21,7 +21,7 @@ module.exports = {
 
   parser: 'babel-eslint',
 
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'inferno'],
 
   env: {
     browser: true,
@@ -188,22 +188,21 @@ module.exports = {
     'import/no-webpack-loader-syntax': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
-    'react/jsx-equals-spacing': ['warn', 'never'],
-    'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
-    'react/jsx-no-undef': 'warn',
-    'react/jsx-pascal-case': ['warn', {
+    'inferno/jsx-equals-spacing': ['warn', 'never'],
+    'inferno/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
+    'inferno/jsx-no-undef': 'warn',
+    'inferno/jsx-pascal-case': ['warn', {
       allowAllCaps: true,
       ignore: [],
     }],
-    'react/jsx-uses-react': 'warn',
-    'react/jsx-uses-vars': 'warn',
-    'react/no-danger-with-children': 'warn',
-    'react/no-deprecated': 'warn',
-    'react/no-direct-mutation-state': 'warn',
-    'react/no-is-mounted': 'warn',
-    'react/react-in-jsx-scope': 'error',
-    'react/require-render-return': 'warn',
-    'react/style-prop-object': 'warn',
+    'inferno/jsx-uses-inferno': 'warn',
+    'inferno/jsx-uses-vars': 'warn',
+    'inferno/no-danger-with-children': 'warn',
+    'inferno/no-deprecated': 'warn',
+    'inferno/no-direct-mutation-state': 'warn',
+    'inferno/no-is-mounted': 'warn',
+    'inferno/inferno-in-jsx-scope': 'error',
+    'inferno/style-prop-object': 'warn',
 
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
     'jsx-a11y/aria-role': 'warn',

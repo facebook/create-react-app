@@ -1,23 +1,23 @@
 {
-  "name": "create-react-app",
+  "name": "create-inferno-app",
   "version": "0.6.0",
   "keywords": [
     "react"
   ],
-  "description": "Create React apps with no build configuration.",
-  "repository": "facebookincubator/create-react-app",
+  "description": "Create Inferno apps with no build configuration.",
+  "repository": "infernojs/create-inferno-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/infernojs/create-inferno-app/issues"
   },
   "files": [
     "index.js"
   ],
   "bin": {
-    "create-react-app": "./index.js"
+    "create-inferno-app": "./index.js"
   },
   "dependencies": {
     "chalk": "^1.1.1",
