@@ -18,6 +18,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const setupTestsFile = pathExists.sync(paths.testsSetup) ? '<rootDir>/src/setupTests.js' : undefined;
 
   const config = {
+  	modulePaths: ['<rootDir>/src'],
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
     moduleFileExtensions: ['jsx', 'js', 'json'],
     moduleNameMapper: {
