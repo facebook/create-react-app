@@ -23,7 +23,7 @@ on run argv
       set theTabIndex to 0
       repeat with theTab in every tab of theWindow
         set theTabIndex to theTabIndex + 1
-        if theTab's URL is theURL then
+        if theTab's URL as string contains theURL then
           set found to true
           exit repeat
         end if
@@ -38,6 +38,7 @@ on run argv
       tell theTab to reload
       set index of theWindow to 1
       set theWindow's active tab index to theTabIndex
+      tell theWindow to activate
     else
       tell window 1
         activate
