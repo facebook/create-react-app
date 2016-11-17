@@ -10,6 +10,8 @@
 var createJestConfig = require('../utils/createJestConfig');
 var fs = require('fs');
 var path = require('path');
+var pathExists = require('path-exists');
+var paths = require('../config/paths');
 var prompt = require('react-dev-utils/prompt');
 var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
@@ -143,9 +145,15 @@ prompt(
   );
   console.log();
 
-  console.log(cyan('Running npm install...'));
-  rimrafSync(ownPath);
-  spawnSync('npm', ['install'], {stdio: 'inherit'});
+  if (pathExists.sync(paths.yarnLockFile)) {
+    console.log(cyan('Running yarn...'));
+    rimrafSync(ownPath);
+    spawnSync('yarn', [], {stdio: 'inherit'});
+  } else {
+    console.log(cyan('Running npm install...'));
+    rimrafSync(ownPath);
+    spawnSync('npm', ['install'], {stdio: 'inherit'});
+  }
   console.log(green('Ejected successfully!'));
   console.log();
 

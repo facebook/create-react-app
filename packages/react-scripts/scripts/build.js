@@ -21,6 +21,7 @@ require('dotenv').config({silent: true});
 var chalk = require('chalk');
 var fs = require('fs-extra');
 var path = require('path');
+var pathExists = require('path-exists');
 var filesize = require('filesize');
 var gzipSize = require('gzip-size').sync;
 var rimrafSync = require('rimraf').sync;
@@ -30,6 +31,8 @@ var paths = require('../config/paths');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
+
+var useYarn = pathExists.sync(paths.yarnLockFile);
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -161,7 +164,11 @@ function build(previousSizeMap) {
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
       console.log('To publish it at ' + chalk.green(homepagePath) + ', run:');
       console.log();
-      console.log('  ' + chalk.cyan('npm') +  ' install --save-dev gh-pages');
+      if (useYarn) {
+        console.log('  ' + chalk.cyan('yarn') +  ' add gh-pages');
+      } else {
+        console.log('  ' + chalk.cyan('npm') +  ' install --save-dev gh-pages');
+      }
       console.log();
       console.log('Add the following script in your ' + chalk.cyan('package.json') + '.');
       console.log();
@@ -173,7 +180,7 @@ function build(previousSizeMap) {
       console.log();
       console.log('Then run:');
       console.log();
-      console.log('  ' + chalk.cyan('npm') +  ' run deploy');
+      console.log('  ' + chalk.cyan(useYarn ? 'yarn' : 'npm') +  ' run deploy');
       console.log();
     } else if (publicPath !== '/') {
       // "homepage": "http://mywebsite.com/project"
@@ -200,7 +207,11 @@ function build(previousSizeMap) {
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
       console.log('You may also serve it locally with a static server:')
       console.log();
-      console.log('  ' + chalk.cyan('npm') +  ' install -g pushstate-server');
+      if (useYarn) {
+        console.log('  ' + chalk.cyan('yarn') +  ' global add pushstate-server');
+      } else {
+        console.log('  ' + chalk.cyan('npm') +  ' install -g pushstate-server');
+      }
       console.log('  ' + chalk.cyan('pushstate-server') + ' build');
       console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:9000');
       console.log();
