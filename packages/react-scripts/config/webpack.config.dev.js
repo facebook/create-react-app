@@ -96,6 +96,7 @@ module.exports = {
   },
   // @remove-on-eject-end
   module: {
+    noParse: [/\.elm$/],
     // First, run the linter.
     // It's important to do this before Babel processes the JS.
     loaders: [
@@ -104,6 +105,11 @@ module.exports = {
         test: /\.(js|jsx|es6)$/,
         include: paths.appSrc,
         loader: 'happypack/loader?id=js'
+      },
+      {
+        test: /\.elm/,
+        include: paths.appSrc,
+        loader: 'elm-webpack'
       },
       {
         test: /\.(coffee|cjsx)$/,

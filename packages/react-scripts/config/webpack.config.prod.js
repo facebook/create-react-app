@@ -107,6 +107,7 @@ module.exports = {
   },
   // @remove-on-eject-end
   module: {
+    noParse: [/\.elm$/],
     // First, run the linter.
     // It's important to do this before Babel processes the JS.
     preLoaders: [
@@ -128,6 +129,11 @@ module.exports = {
           presets: [require.resolve('babel-preset-trunkclub')],
         },
         // @remove-on-eject-end
+      },
+      {
+        test: /\.elm/,
+        include: paths.appSrc,
+        loader: 'elm-webpack'
       },
       {
         test: /\.(coffee|cjsx)$/,
