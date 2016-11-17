@@ -103,7 +103,7 @@ function formatMessage(message) {
   message = lines.join('\n');
   // Internal stacks are generally useless so we strip them
   message = message.replace(
-    /^\s*at\s.*:\d+:\d+[\s\)]*\n/gm, ''
+    /^\s*at\s((?!webpack:).)*:\d+:\d+[\s\)]*\n/gm, ''
   ); // at ... ...:x:y
 
   return message;
