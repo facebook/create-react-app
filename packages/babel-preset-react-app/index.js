@@ -68,7 +68,7 @@ if (env === 'test') {
       // ES features necessary for user's Node version
       [require('babel-preset-env').default, {
         targets: {
-          node: parseFloat(process.versions.node),
+          node: 'current',
         },
       }],
       // JSX, Flow
