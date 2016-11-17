@@ -53,6 +53,12 @@ set -x
 cd ..
 root_path=$PWD
 
+if [ "$USE_YARN" = "yes" ]
+then
+  # Install Yarn so that the test can use it to install packages.
+  npm install -g yarn
+fi
+
 npm install
 
 # Lint own code
