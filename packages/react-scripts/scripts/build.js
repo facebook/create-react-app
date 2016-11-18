@@ -165,7 +165,7 @@ function build(previousSizeMap) {
       console.log('To publish it at ' + chalk.green(homepagePath) + ', run:');
       console.log();
       if (useYarn) {
-        console.log('  ' + chalk.cyan('yarn') +  ' add gh-pages');
+        console.log('  ' + chalk.cyan('yarn') +  ' add --dev gh-pages');
       } else {
         console.log('  ' + chalk.cyan('npm') +  ' install --save-dev gh-pages');
       }
