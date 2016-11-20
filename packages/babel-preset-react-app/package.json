@@ -14,6 +14,7 @@
     "babel-plugin-transform-class-properties": "6.16.0",
     "babel-plugin-transform-object-rest-spread": "6.19.0",
     "babel-plugin-transform-react-constant-elements": "6.9.1",
+    "babel-plugin-transform-react-jsx": "6.8.0",
     "babel-plugin-transform-react-jsx-self": "6.11.0",
     "babel-plugin-transform-react-jsx-source": "6.9.0",
     "babel-plugin-transform-regenerator": "6.16.1",
