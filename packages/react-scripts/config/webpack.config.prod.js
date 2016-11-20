@@ -10,7 +10,6 @@
 // @remove-on-eject-end
 
 var path = require('path');
-var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -182,16 +181,10 @@ module.exports = {
   },
   // @remove-on-eject-end
   // We use PostCSS for autoprefixing only.
+  // And some cssnext because we want to future proof code
   postcss: function() {
     return [
-      autoprefixer({
-        browsers: [
-          '>1%',
-          'last 4 versions',
-          'Firefox ESR',
-          'not ie < 9', // React doesn't support IE8 anyway
-        ]
-      }),
+      require('postcss-cssnext')()
     ];
   },
   plugins: [

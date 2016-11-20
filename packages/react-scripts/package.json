@@ -23,7 +23,6 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",
     "babel-eslint": "7.0.0",
     "babel-jest": "16.0.0",
@@ -54,6 +53,7 @@
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
     "path-exists": "2.1.0",
+    "postcss-cssnext": "^2.8.0",
     "postcss-loader": "1.0.0",
     "promise": "7.1.1",
     "react-dev-utils": "^0.3.0",
@@ -76,7 +76,6 @@
     "fsevents": "1.0.14"
   },
   "bundledDependencies": [
-    "autoprefixer",
     "babel-core",
     "babel-eslint",
     "babel-jest",
@@ -108,6 +107,7 @@
     "json-loader",
     "object-assign",
     "path-exists",
+    "postcss-cssnext",
     "postcss-loader",
     "promise",
     "react-dev-utils",
