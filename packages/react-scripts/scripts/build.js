@@ -175,7 +175,7 @@ function build(previousSizeMap) {
       console.log('    ' + chalk.dim('// ...'));
       console.log('    ' + chalk.yellow('"scripts"') + ': {');
       console.log('      ' + chalk.dim('// ...'));
-      console.log('      ' + chalk.yellow('"deploy"') + ': ' + chalk.yellow('"gh-pages -d build"'));
+      console.log('      ' + chalk.yellow('"deploy"') + ': ' + chalk.yellow('"npm run build&&gh-pages -d build"'));
       console.log('    }');
       console.log();
       console.log('Then run:');
