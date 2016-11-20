@@ -479,6 +479,13 @@ flow-typed install
 
 You can re-run this command after each new dependency you add to your project in order to get these annotations.
 
+Now, indicate to flow where to get those annotations by adding the following `[libs]` section to your `.flowconfig`:
+
+```ini
+[libs]
+./flow-typed
+```
+
 ## Adding Custom Environment Variables
 
 >Note: this feature is available with `react-scripts@0.2.3` and higher.
