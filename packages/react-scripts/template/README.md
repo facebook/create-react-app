@@ -20,7 +20,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Post-Processing CSS](#post-processing-css)
 - [Adding Images and Fonts](#adding-images-and-fonts)
 - [Using the `public` Folder](#using-the-public-folder)
-- [Using Global Variables Defined Elsewhere](#using-global-variables-defined-elsewhere)
+- [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
@@ -387,7 +387,7 @@ However, it can be handy for referencing assets like [`manifest.webmanifest`](ht
 
 Note that if you add a `<script>` that declares global variables, you also need to read the next section on using them.
 
-## Using Global Variables Defined Elsewhere
+## Using Global Variables
 
 When you include a script in the HTML file that defines global variables and try to use one of these variables in the code, the linter will complain because it cannot see the definition of the variable.
 
