@@ -13,10 +13,14 @@ var path = require('path');
 const plugins = [
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
+    // The following two plugins use Object.assign directly, instead of Babel's
+    // extends helper. Note that this assumes `Object.assign` is available. 
     // { ...todo, completed: true }
     [require.resolve('babel-plugin-transform-object-rest-spread'), {
-      // Use Object.assign directly, instead of extends helper. Note that this
-      // assumes Object.assign is available/polyfilled.
+      useBuiltIns: true
+    }],
+    // Transforms JSX
+    [require.resolve('babel-plugin-transform-react-jsx'), {
       useBuiltIns: true
     }],
     // function* () { yield 42; yield 43; }
