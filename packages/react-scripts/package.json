@@ -68,57 +68,10 @@
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {
-    "bundle-deps": "1.0.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0"
   },
   "optionalDependencies": {
     "fsevents": "1.0.14"
-  },
-  "bundledDependencies": [
-    "autoprefixer",
-    "babel-core",
-    "babel-eslint",
-    "babel-jest",
-    "babel-loader",
-    "babel-preset-react-app",
-    "case-sensitive-paths-webpack-plugin",
-    "chalk",
-    "connect-history-api-fallback",
-    "cross-spawn",
-    "css-loader",
-    "detect-port",
-    "dotenv",
-    "eslint",
-    "eslint-config-react-app",
-    "eslint-loader",
-    "eslint-plugin-flowtype",
-    "eslint-plugin-import",
-    "eslint-plugin-jsx-a11y",
-    "eslint-plugin-react",
-    "extract-text-webpack-plugin",
-    "file-loader",
-    "filesize",
-    "find-cache-dir",
-    "fs-extra",
-    "gzip-size",
-    "html-webpack-plugin",
-    "http-proxy-middleware",
-    "jest",
-    "json-loader",
-    "object-assign",
-    "path-exists",
-    "postcss-loader",
-    "promise",
-    "react-dev-utils",
-    "recursive-readdir",
-    "rimraf",
-    "strip-ansi",
-    "style-loader",
-    "url-loader",
-    "webpack",
-    "webpack-dev-server",
-    "webpack-manifest-plugin",
-    "whatwg-fetch"
-  ]
+  }
 }
