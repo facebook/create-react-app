@@ -41,6 +41,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Continuous Integration](#continuous-integration)
   - [Disabling jsdom](#disabling-jsdom)
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
+- [Developing UI Components with React Storybook](#developing-ui-components-with-react-storybook)
 - [Deployment](#deployment)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [GitHub Pages](#github-pages)
@@ -860,6 +861,46 @@ Finally, jsdom is also not needed for [snapshot testing](http://facebook.github.
 Snapshot testing is a new feature of Jest that automatically generates text snapshots of your components and saves them on the disk so if the UI output changes, you get notified without manually writing any assertions on the component output.
 
 This feature is experimental and still [has major usage issues](https://github.com/facebookincubator/create-react-app/issues/372) so we only encourage you to use it if you like experimental technology. We intend to gradually improve it over time and eventually offer it as the default solution for testing React components, but this will take time. [Read more about snapshot testing.](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
+
+## Developing UI Components with React Storybook
+
+Usually, in an app, you have a lot of UI components, and each of them has many different states. 
+For an example, a simple button component could have following states:
+
+* With a text label.
+* With an emoji.
+* In the disabled mode.
+
+Usually, it’s hard to see these states without running a sample app or some examples.
+
+That’s where you could get some help from [React Storybook](https://github.com/kadirahq/react-storybook). **It is a third party tool that lets you develop components and see all their states in isolation from your app**.
+
+![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
+
+You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+
+**Here’s how to setup your app with Storybook:**
+
+First, install the following npm package globally:
+
+```sh
+npm install -g getstorybook
+```
+
+Then, run the following command inside your app’s directory:
+
+```sh
+getstorybook
+```
+
+After that, follow the instructions on the screen.
+
+Learn more about React Storybook:
+
+* Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
+* [GitHub Repo](https://github.com/kadirahq/react-storybook)
+* [Documentation](https://getstorybook.io/docs)
+* [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
 
 ## Deployment
 
