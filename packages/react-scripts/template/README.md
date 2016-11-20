@@ -50,6 +50,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Modulus](#modulus)
   - [Netlify](#netlify)
   - [Now](#now)
+  - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
 - [Something Missing?](#something-missing)
 
@@ -1037,6 +1038,10 @@ When you build the project, Create React App will place the `public` folder cont
 ### Now
 
 See [this example](https://github.com/xkawi/create-react-app-now) for a zero-configuration single-command deployment with [now](https://zeit.co/now).
+
+### S3 and CloudFront
+
+See this [blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-to-s3-or-cloudfront-48dae4ce0af) on how to deploy your React app to Amazon Web Services [S3](https://aws.amazon.com/s3) and [CloudFront](https://aws.amazon.com/cloudfront/).
 
 ### Surge
 
