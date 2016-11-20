@@ -878,14 +878,18 @@ This will let Create React App correctly infer the root path to use in the gener
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
+**THE BELOW STEP IS IMPORTANT!**<br>
+**If your skip it, your app will not deploy correctly.**
+
 Open your `package.json` and add a `homepage` field:
 
 ```js
   "homepage": "https://myusername.github.io/my-app",
 ```
 
-**The above step is important!**<br>
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
+
+**Have you added the `homepage` field? Then let's move on.**
 
 Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub Pages.
 
@@ -912,6 +916,8 @@ Then run:
 ```sh
 npm run deploy
 ```
+
+**If you see 404 errors for JS and CSS, re-read the note at the beginning of this section saying "THE BELOW STEP IS IMPORTANT".**
 
 You can configure a custom domain with GitHub Pages by adding a `CNAME` file to the `public/` folder.
 
