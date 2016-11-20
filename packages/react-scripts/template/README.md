@@ -42,7 +42,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Continuous Integration](#continuous-integration)
   - [Disabling jsdom](#disabling-jsdom)
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
-- [Developing UI Components with React Storybook](#developing-ui-components-with-react-storybook)
+- [Developing Components in Isolation](#developing-components-in-isolation)
 - [Deployment](#deployment)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [GitHub Pages](#github-pages)
@@ -879,7 +879,7 @@ Snapshot testing is a new feature of Jest that automatically generates text snap
 
 This feature is experimental and still [has major usage issues](https://github.com/facebookincubator/create-react-app/issues/372) so we only encourage you to use it if you like experimental technology. We intend to gradually improve it over time and eventually offer it as the default solution for testing React components, but this will take time. [Read more about snapshot testing.](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
 
-## Developing UI Components with React Storybook
+## Developing Components in Isolation
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states. 
 For an example, a simple button component could have following states:
@@ -890,7 +890,7 @@ For an example, a simple button component could have following states:
 
 Usually, it’s hard to see these states without running a sample app or some examples.
 
-That’s where you could get some help from [React Storybook](https://github.com/kadirahq/react-storybook). **It is a third party tool that lets you develop components and see all their states in isolation from your app**.
+Create React App doesn't include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
 
 ![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
 
