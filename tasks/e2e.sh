@@ -75,7 +75,6 @@ npm run build
 test -e build/*.html
 test -e build/static/js/*.js
 test -e build/static/css/*.css
-test -e build/static/media/*.svg
 test -e build/favicon.ico
 
 # Run tests with CI flag
@@ -133,7 +132,6 @@ npm run build
 test -e build/*.html
 test -e build/static/js/*.js
 test -e build/static/css/*.css
-test -e build/static/media/*.svg
 test -e build/favicon.ico
 
 # Run tests with CI flag
@@ -163,7 +161,6 @@ npm run build
 test -e build/*.html
 test -e build/static/js/*.js
 test -e build/static/css/*.css
-test -e build/static/media/*.svg
 test -e build/favicon.ico
 
 # Run tests, overring the watch option to disable it.
