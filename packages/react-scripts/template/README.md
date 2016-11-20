@@ -23,6 +23,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
+  - [Jest tests and dependency support](#jest-tests-and-dependency-support)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Can I Use Decorators?](#can-i-use-decorators)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
@@ -451,6 +452,32 @@ To fix this, change your `.flowconfig` to look like this:
 ```
 
 Re-run flow, and you shouldn’t get any extra issues.
+
+### Jest tests and dependency support
+
+Flow by itself is not aware of the test runner (jest) and the dependencies you will be using.
+
+In order to load type annotations on those dependencies, you should use [`flow-typed`](https://github.com/flowtype/flow-typed).
+
+First, you need to make `flow-typed` aware of which version of flow you are using, add `flow-bin` to your `package.json`:
+
+```
+npm install --save-dev flow-bin
+```
+
+Then, install `flow-typed` globally:
+
+```
+npm install -g flow-typed
+```
+
+You can now install the type definitions:
+
+```
+flow-typed install
+```
+
+You can re-run this command after each new dependency you add to your project in order to get these annotations.
 
 ## Adding Custom Environment Variables
 
