@@ -124,15 +124,13 @@ module.exports = {
       // we need to add the supported extension to this loader too.
       // Add one new line in `exclude` for each loader.
       //
-      // "file" loader makes sure those assets get served by WebpackDevServer.
-      // When you `import` an asset, you get its (virtual) filename.
-      // In production, they would get copied to the `build` folder.
-      // "url" loader works like "file" loader except that it embeds assets
-      // smaller than specified limit in bytes as data URLs to avoid requests.
-      // A missing `test` is equivalent to a match.
+      // "file" loader makes sure those assets end up in the `build` folder.
+      // When you `import` an asset, you get its filename.
+      // "url" loader works just like "file" loader but it also embeds
+      // assets smaller than specified size as data URLs to avoid requests.
       {
         exclude: [
-          /\.(html)$/,
+          /\.html$/,
           /\.(js|jsx)$/,
           /\.css$/,
           /\.json$/
