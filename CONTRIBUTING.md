@@ -68,7 +68,7 @@ and then run `npm start` or `npm run build`.
 6. Make sure to include “Migrating from ...” instructions for the previous release. Often you can copy and paste them.
 7. After merging the changelog update, create a GitHub Release with the same text. See previous Releases for inspiration.
 8. **Do not run `npm publish`. Instead, run `npm run publish`.**
-9. Wait for a long time, and it will get published. Don’t worry that it’s stuck. It will bundle dependencies into a single tarball before publishing for faster installs. In the end the publish script will prompt for versions before publishing the packages.
+9. Wait for a long time, and it will get published. Don’t worry that it’s stuck. In the end the publish script will prompt for versions before publishing the packages.
 
 Make sure to test the released version! If you want to be extra careful, you can publish a prerelease by running `npm run publish -- --tag next` instead of `npm run publish`.
 
