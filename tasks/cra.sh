@@ -59,9 +59,9 @@ cd packages/react-scripts
 # Save package.json because we're going to touch it
 cp package.json package.json.orig
 
-# Like bundle-deps, this script modifies packages/react-scripts/package.json,
-# copying own dependencies (those in the `packages` dir) to bundledDependencies
-node $root_path/tasks/bundle-own-deps.js
+# Replace own dependencies (those in the `packages` dir) with the local paths
+# of those packages.
+node $root_path/tasks/replace-own-deps.js
 
 # Finally, pack react-scripts
 scripts_path=$root_path/packages/react-scripts/`npm pack`
@@ -74,6 +74,9 @@ mv package.json.orig package.json
 # ******************************************************************************
 # Now that we have packed them, call the global CLI.
 # ******************************************************************************
+
+# If Yarn is installed, clean its cache because it may have cached react-scripts
+yarn cache clean || true
 
 # Go back to the root directory and run the command from here
 cd $root_path
