@@ -138,7 +138,6 @@ module.exports = {
           /\.(html)$/,
           /\.(js|jsx)$/,
           /\.css$/,
-          /\.html$/,
           /\.json$/
         ].concat(customConfig.excludedFilesRegex),
         loader: 'url',
