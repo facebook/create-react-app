@@ -304,9 +304,9 @@ There is currently no support for preprocessors such as Less, or for sharing var
 
 ## Adding CSS Preprocessor (Sass, Less etc.)
 
-CSS preprocessors have become a vital part of build processes. Using a preprocesssor of your choice in a project bootstrapped using create-react-app, is fairly straightforward to setup, even without having to eject.
+Using a CSS preprocesssor in a project bootstrapped using create-react-app, is fairly straightforward to setup, even without having to eject.
 
-First, install preprocessor of your choice. Sass seems the most popular weapon of choice at the moment, so we'll use it as an example.
+First, install preprocessor of your choice. We will be using SASS in this example, but you can replace SASS with a preprocessor of your choice.
 
 ```
 npm install node-sass --save-dev
@@ -324,7 +324,7 @@ Then in `package.json` just add the following lines to `scripts`, replacing file
   ...
 ```
 
-> Using a different preprocessor should be just a matter of replacing `build-css` and `watch-css` scripts to something that matches the preprocessor you're using.
+> To use a different preprocessor, replace `build-css` and `watch-css` scripts to match the one you're using.
 
 Add these scripts to the main scripts, by pasting `npm run watch-css &` to `start` script and `npm run build-css &&` to `build`.
 
