@@ -132,6 +132,7 @@ module.exports = {
       // A missing `test` is equivalent to a match.
       {
         exclude: [
+          /\.(html)$/,
           /\.(js|jsx)$/,
           /\.css$/,
           /\.json$/
