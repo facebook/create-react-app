@@ -15,6 +15,7 @@ module.exports = {
   },
   'SASS': {
     toArray: 'loaders',
+    fileRegex: /\.(scss|sass)/,
     getDev: function () {
       return {
         test: /(\.scss|\.sass)$/,
@@ -30,6 +31,7 @@ module.exports = {
   },
   'LESS': {
     toArray: 'loaders',
+    fileRegex: /\.less$/,
     getDev: function () {
       return {
         test: /\.less$/,
@@ -45,6 +47,7 @@ module.exports = {
   },
   'STYLUS': {
     toArray: 'loaders',
+    fileRegex: /\.styl$/,
     getDev: function () {
       return {
         test: /\.styl/,

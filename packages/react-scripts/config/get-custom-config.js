@@ -17,6 +17,9 @@ function getCustomConfig(prod) {
           var getCustomizer = (prod ? customizer.getProd : customizer.getDev) || customizer.getDev;
           finalConfig[customizer.toArray].push(getCustomizer());
         }
+        if (customizer.fileRegex) {
+          finalConfig.excludedFilesRegex.push(customizer.fileRegex);
+        }
         finalConfig.values[customizerKey] = customizer.config || true;
       }
       return finalConfig;
@@ -25,7 +28,8 @@ function getCustomConfig(prod) {
       babelPlugins: [],
       plugins: [],
       loaders: [],
-      values: {}
+      values: {},
+      excludedFilesRegex: []
     });
 
   return result;

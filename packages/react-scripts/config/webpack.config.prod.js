@@ -137,8 +137,9 @@ module.exports = {
         exclude: [
           /\.(js|jsx)$/,
           /\.css$/,
+          /\.html$/,
           /\.json$/
-        ],
+        ].concat(customConfig.excludedFilesRegex),
         loader: 'url',
         query: {
           limit: 10000,
