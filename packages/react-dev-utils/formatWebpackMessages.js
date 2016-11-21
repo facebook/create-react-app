@@ -101,7 +101,10 @@ function formatMessage(message) {
 
   // Reassemble the message.
   message = lines.join('\n');
-  // Internal stacks are generally useless so we strip them
+  // Internal stacks are generally useless so we strip them... with the
+  // exception of stacks containing `webpack:` because they're normally
+  // from user code created by WebPack. For more information see
+  // https://github.com/facebookincubator/create-react-app/pull/1050
   message = message.replace(
     /^\s*at\s((?!webpack:).)*:\d+:\d+[\s\)]*(\n|$)/gm, ''
   ); // at ... ...:x:y
