@@ -27,15 +27,7 @@ const plugins = [
       regenerator: true,
       // Resolve the Babel runtime relative to the config.
       moduleName: path.dirname(require.resolve('babel-runtime/package'))
-    }],
-    // The following two plugins are currently necessary to get
-    // babel-preset-env to work with rest/spread. More info here:
-    // https://github.com/babel/babel-preset-env#caveats
-    // https://github.com/babel/babel/issues/4074
-    // const { a, ...z } = obj;
-    require.resolve('babel-plugin-transform-es2015-destructuring'),
-    // const fn = ({ a, ...otherProps }) => otherProps;
-    require.resolve('babel-plugin-transform-es2015-parameters')
+    }]
   ];
 
 // This is similar to how `env` works in Babel:
@@ -54,6 +46,12 @@ if (env !== 'development' && env !== 'test' && env !== 'production') {
 }
 
 if (env === 'development' || env === 'test') {
+  // The following two plugins are currently necessary to make React warnings
+  // include more valuable information. They are included here because they are
+  // currently not enabled in babel-preset-react. See the below threads for more info:
+  // https://github.com/babel/babel/issues/4702
+  // https://github.com/babel/babel/pull/3540#issuecomment-228673661
+  // https://github.com/facebookincubator/create-react-app/issues/989
   plugins.push.apply(plugins, [
     // Adds component stack to warning messages
     require.resolve('babel-plugin-transform-react-jsx-source'),
@@ -68,7 +66,7 @@ if (env === 'test') {
       // ES features necessary for user's Node version
       [require('babel-preset-env').default, {
         targets: {
-          node: parseFloat(process.versions.node),
+          node: 'current',
         },
       }],
       // JSX, Flow
@@ -99,4 +97,3 @@ if (env === 'test') {
     // ]);
   }
 }
-

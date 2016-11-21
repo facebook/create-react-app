@@ -53,6 +53,12 @@ set -x
 cd ..
 root_path=$PWD
 
+if [ "$USE_YARN" = "yes" ]
+then
+  # Install Yarn so that the test can use it to install packages.
+  npm install -g yarn
+fi
+
 npm install
 
 # Lint own code
@@ -69,7 +75,6 @@ npm run build
 test -e build/*.html
 test -e build/static/js/*.js
 test -e build/static/css/*.css
-test -e build/static/media/*.svg
 test -e build/favicon.ico
 
 # Run tests with CI flag
@@ -127,7 +132,6 @@ npm run build
 test -e build/*.html
 test -e build/static/js/*.js
 test -e build/static/css/*.css
-test -e build/static/media/*.svg
 test -e build/favicon.ico
 
 # Run tests with CI flag
@@ -157,7 +161,6 @@ npm run build
 test -e build/*.html
 test -e build/static/js/*.js
 test -e build/static/css/*.css
-test -e build/static/media/*.svg
 test -e build/favicon.ico
 
 # Run tests, overring the watch option to disable it.

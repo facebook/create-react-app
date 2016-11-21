@@ -20,6 +20,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Post-Processing CSS](#post-processing-css)
 - [Adding Images and Fonts](#adding-images-and-fonts)
 - [Using the `public` Folder](#using-the-public-folder)
+- [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
@@ -41,6 +42,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Continuous Integration](#continuous-integration)
   - [Disabling jsdom](#disabling-jsdom)
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
+- [Developing Components in Isolation](#developing-components-in-isolation)
 - [Deployment](#deployment)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [GitHub Pages](#github-pages)
@@ -48,6 +50,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Modulus](#modulus)
   - [Netlify](#netlify)
   - [Now](#now)
+  - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
 - [Something Missing?](#something-missing)
 
@@ -382,6 +385,22 @@ Keep in mind the downsides of this approach:
 * Result filenames won’t include content hashes so you’ll need to add query arguments or rename them every time they change.
 
 However, it can be handy for referencing assets like [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest) from HTML, or including small scripts like [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
+
+Note that if you add a `<script>` that declares global variables, you also need to read the next section on using them.
+
+## Using Global Variables
+
+When you include a script in the HTML file that defines global variables and try to use one of these variables in the code, the linter will complain because it cannot see the definition of the variable.
+
+You can avoid this by reading the global variable explicitly from the `window` object, for example:
+
+```js
+const $ = window.$;
+```
+
+This makes it obvious you are using a global variable intentionally rather than because of a typo.
+
+Alternatively, you can force the linter to ignore any line by adding `// eslint-disable-line` after it.
 
 ## Adding Bootstrap
 
@@ -861,6 +880,46 @@ Snapshot testing is a new feature of Jest that automatically generates text snap
 
 This feature is experimental and still [has major usage issues](https://github.com/facebookincubator/create-react-app/issues/372) so we only encourage you to use it if you like experimental technology. We intend to gradually improve it over time and eventually offer it as the default solution for testing React components, but this will take time. [Read more about snapshot testing.](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
 
+## Developing Components in Isolation
+
+Usually, in an app, you have a lot of UI components, and each of them has many different states. 
+For an example, a simple button component could have following states:
+
+* With a text label.
+* With an emoji.
+* In the disabled mode.
+
+Usually, it’s hard to see these states without running a sample app or some examples.
+
+Create React App doesn't include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
+
+![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
+
+You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+
+**Here’s how to setup your app with Storybook:**
+
+First, install the following npm package globally:
+
+```sh
+npm install -g getstorybook
+```
+
+Then, run the following command inside your app’s directory:
+
+```sh
+getstorybook
+```
+
+After that, follow the instructions on the screen.
+
+Learn more about React Storybook:
+
+* Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
+* [GitHub Repo](https://github.com/kadirahq/react-storybook)
+* [Documentation](https://getstorybook.io/docs)
+* [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
+
 ## Deployment
 
 ## Building for Relative Paths
@@ -878,14 +937,20 @@ This will let Create React App correctly infer the root path to use in the gener
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
+#### Step 1: Add `homepage` to `package.json`
+
+**The below step is important!**<br>
+**If your skip it, your app will not deploy correctly.**
+
 Open your `package.json` and add a `homepage` field:
 
 ```js
   "homepage": "https://myusername.github.io/my-app",
 ```
 
-**The above step is important!**<br>
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
+
+#### Step 2: Install `gh-pages` and add `deploy` to `scripts` in `package.json`
 
 Now, whenever you run `npm run build`, you will see a cheat sheet with instructions on how to deploy to GitHub Pages.
 
@@ -907,15 +972,28 @@ Add the following script in your `package.json`:
 
 (Note: the lack of whitespace is intentional.)
 
+#### Step 3: Deploy the site by running `npm run deploy`
+
 Then run:
 
 ```sh
 npm run deploy
 ```
 
+#### Step 4: Ensure your project's settings use `gh-pages`
+
+Finally, make sure **GitHub Pages** option in your GitHub project settings is set to use the `gh-pages` branch:
+
+<img src="http://i.imgur.com/HUjEr9l.png" width="500" alt="gh-pages branch setting">
+
+#### Step 5: Optionally, configure the domain
+
 You can configure a custom domain with GitHub Pages by adding a `CNAME` file to the `public/` folder.
 
-Note that GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
+#### Notes on client-side routing
+
+GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
+
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
 
@@ -960,6 +1038,10 @@ When you build the project, Create React App will place the `public` folder cont
 ### Now
 
 See [this example](https://github.com/xkawi/create-react-app-now) for a zero-configuration single-command deployment with [now](https://zeit.co/now).
+
+### S3 and CloudFront
+
+See this [blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-to-s3-or-cloudfront-48dae4ce0af) on how to deploy your React app to Amazon Web Services [S3](https://aws.amazon.com/s3) and [CloudFront](https://aws.amazon.com/cloudfront/).
 
 ### Surge
 
