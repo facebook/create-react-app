@@ -16,6 +16,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('@trunkclub/react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('@trunkclub/react-dev-utils/WatchMissingNodeModulesPlugin');
+var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 var HappyPack = require('happypack');
@@ -167,6 +168,9 @@ module.exports = {
     ];
   },
   plugins: [
+    new ProgressBarPlugin({
+      summary: false
+    }),
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
