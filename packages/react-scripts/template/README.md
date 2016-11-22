@@ -52,6 +52,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Now](#now)
   - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
+- [Forking as Alternative to Ejecting](#forking-as-alternative-to-ejecting)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -1063,6 +1064,53 @@ Install the Surge CLI if you haven't already by running `npm install -g surge`. 
 ```
 
 Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
+
+## Forking as Alternative to Ejecting
+You can fork `react-scripts`, publish your fork, and then use it with Create React App.
+
+Pros:
+- You can customize your setup (eg: add CSS Modules, PostCSS plugins, decorators, etc…)
+- You still have all Create React App features and updates
+
+Cons:
+- You need to maintain your fork, [make sure it is synced](https://help.github.com/articles/fork-a-repo/#keep-your-fork-synced) with the upstream to have all updates. [Backstroke](https://github.com/1egoman/backstroke) is a bot that can help you with this.
+
+First, fork repository [`create-react-app`](https://github.com/facebookincubator/create-react-app) repository.
+
+Next, change the name of `react-scripts` package to the name you chose for your fork, and also reset its version. It is recommended to use [scoped package](https://docs.npmjs.com/misc/scope), ie: `@yourcompany/react-scripts`.
+### /packages/react-scripts/package.json
+```js
+{
+  "name": "@yourcompany/react-scripts",
+  "version": "0.0.1",
+  …
+}
+```
+
+Now make your changes inside `react-scripts` package. For example, add CSS Modules:
+### /packages/react-scripts/config/webpack.config.dev.js
+```js
+…
+{
+  test: /\.css$/,
+  loader: 'style!css?modules=1!postcss'
+},
+…
+```
+
+Then, publish your fork by running `npm run publish` in the root of the forked repository.
+```sh
+$ npm run publish
+```
+It is a long process. At the end, you will be asked to update the version.
+
+Now you can use your customized setup with `create react app`:
+```sh
+$ create-react-app my-app --scripts-version @yourcompany/react-scripts
+```
+
+### Note
+- [Create React App](https://github.com/facebookincubator/create-react-app) is a [monorepo](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) that contains `react-scripts` package. This is the heart of Create React App, with all configurations and scripts. You only need to change and publish this package, not the whole repo.
 
 ## Something Missing?
 
