@@ -1,6 +1,6 @@
 {
   "name": "@trunkclub/build",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "upstream-version": "0.7.0",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
@@ -69,6 +69,7 @@
     "object-assign": "4.1.0",
     "path-exists": "2.1.0",
     "postcss-loader": "1.0.0",
+    "progress-bar-webpack-plugin": "1.9.0",
     "promise": "7.1.1",
     "react-hot-loader": "3.0.0-beta.6",
     "recursive-readdir": "2.1.0",
