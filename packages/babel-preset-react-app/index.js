@@ -69,18 +69,20 @@ if (env === 'development' || env === 'test') {
 }
 
 if (env === 'test') {
-  module.exports = {
-    presets: [
-      // ES features necessary for user's Node version
-      [require('babel-preset-env').default, {
-        targets: {
-          node: 'current',
-        },
-      }],
-      // JSX, Flow
-      require.resolve('babel-preset-react')
-    ],
-    plugins: plugins
+  module.exports = function() {
+    return {
+      presets: [
+        // ES features necessary for user's Node version
+        [require('babel-preset-env').default, {
+          targets: {
+            node: 'current',
+          },
+        }],
+        // JSX, Flow
+        require.resolve('babel-preset-react')
+      ],
+      plugins: plugins
+    };
   };
 } else if (env ==='production') {
   // Optimization: hoist JSX that never changes out of render()
@@ -110,15 +112,17 @@ if (env === 'test') {
       ],
       plugins: plugins
     };
-  }
+  };
 } else {
-  module.exports = {
-    presets: [
-      // Latest stable ECMAScript features
-      require.resolve('babel-preset-latest'),
-      // JSX, Flow
-      require.resolve('babel-preset-react')
-    ],
-    plugins: plugins
+  module.exports = function() {
+    return {
+      presets: [
+        // Latest stable ECMAScript features
+        require.resolve('babel-preset-latest'),
+        // JSX, Flow
+        require.resolve('babel-preset-react')
+      ],
+      plugins: plugins
+    };
   };
 }
