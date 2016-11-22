@@ -18,7 +18,7 @@ var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
 var paths = require('./paths');
-var EnvDefinePlugin = require('webpack-env-define-plugin');
+var EnvDefinePlugin = require('react-dev-utils/webpackEnvDefinePlugin');
 
 function ensureSlash(path, needsSlash) {
   var hasSlash = path.endsWith('/');

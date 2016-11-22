@@ -16,7 +16,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-var EnvDefinePlugin = require('webpack-env-define-plugin');
+var EnvDefinePlugin = require('react-dev-utils/webpackEnvDefinePlugin');
 var paths = require('./paths');
 
 // Webpack uses `publicPath` to determine where the app is being served from.

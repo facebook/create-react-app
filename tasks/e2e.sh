@@ -150,7 +150,6 @@ npm link $root_path/packages/babel-preset-react-app
 npm link $root_path/packages/eslint-config-react-app
 npm link $root_path/packages/react-dev-utils
 npm link $root_path/packages/react-scripts
-npm link $root_path/packages/webpack-env-define-plugin
 
 # Test the build
 npm run build
