@@ -8,8 +8,8 @@ function isProcessAReactApp(processCommand) {
   return /^node .*react-scripts\/scripts\/start\.js\s?$/.test(processCommand);
 }
 
-function getProcessIdsOnPort(port) {
-  return execSync('lsof -i:' + port + ' -P -t', execOptions).match(/(\S+)/g);
+function getProcessIdOnPort(port) {
+  return execSync('lsof -i:' + port + ' -P -t -sTCP:LISTEN', execOptions).trim();
 }
 
 function getPackageNameInDirectory(directory) {
@@ -36,20 +36,15 @@ function getProcessCommand(processId, processDirectory) {
 }
 
 function getDirectoryOfProcessById(processId) {
-  return execSync('lsof -p '+ processId + ' | grep cwd | awk \'{print $9}\'', execOptions);
+  return execSync('lsof -p '+ processId + ' | grep cwd | awk \'{print $9}\'', execOptions).trim();
 }
 
 function getProcessForPort(port) {
   try {
-    var processIds = getProcessIdsOnPort(port);
-
-    var processCommandsAndDirectories = processIds.map(function(processId) {
-      var directory = getDirectoryOfProcessById(processId);
-      var command = getProcessCommand(processId, directory);
-      return chalk.cyan(command) + chalk.blue('  in ') + chalk.cyan(directory);
-    });
-
-    return processCommandsAndDirectories.join('\n  ');
+    var processId = getProcessIdOnPort(port);
+    var directory = getDirectoryOfProcessById(processId);
+    var command = getProcessCommand(processId, directory);
+    return chalk.cyan(command) + chalk.blue('  in ') + chalk.cyan(directory);
   } catch(e) {
     return null;
   }
