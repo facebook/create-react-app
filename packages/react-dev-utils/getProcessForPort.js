@@ -2,7 +2,14 @@ var chalk = require('chalk');
 var execSync = require('child_process').execSync;
 var path = require('path');
 
-var execOptions = { encoding: 'utf8' };
+var execOptions = {
+  encoding: 'utf8',
+  stdio: [
+    'pipe', // stdin (default)
+    'pipe', // stdout (default)
+    'ignore' //stderr
+  ]
+};
 
 function isProcessAReactApp(processCommand) {
   return /^node .*react-scripts\/scripts\/start\.js\s?$/.test(processCommand);
