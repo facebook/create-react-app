@@ -675,14 +675,6 @@ The watcher includes an interactive command-line interface with the ability to r
 
 ![Jest watch mode](http://facebook.github.io/jest/img/blog/15-watch.gif)
 
->**A note for Mac OSX users**
-
->If you start `npm test` and the execution hangs there might be a problem with your watchman installation as discovered in #713 and #1767.
-
-> To solve the issues first make sure you run the latest verision: `brew install watchman` (4.7.0).
-Then execute `launchctl unload -F ~/Library/LaunchAgents/com.github.facebook.watchman.plist`. After these steps the issues should be resolved.
-
-
 ### Version Control Integration
 
 By default, when you run `npm test`, Jest will only run the tests related to files changed since the last commit. This is an optimization designed to make your tests runs fast regardless of how many tests you have. However it assumes that you don’t often commit the code that doesn’t pass the tests.
@@ -1071,6 +1063,17 @@ Install the Surge CLI if you haven't already by running `npm install -g surge`. 
 ```
 
 Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
+
+## Troubleshooting
+
+### Jest hangs during execution on Mac OSX
+
+If you start `npm test` and the execution hangs there might be a problem with your watchman installation as described in [#713](https://github.com/facebookincubator/create-react-app/issues/713).
+Related Issues: [Jest #1767](https://github.com/facebook/jest/issues/1767), [ember-cli #6259](https://github.com/ember-cli/ember-cli/issues/6259) and [watchman #358](https://github.com/facebook/watchman/issues/358).
+
+To solve the issues first make sure you run at least watchman 4.7.0 or newer. (`brew install watchman`).
+
+Manually unloading the service with `launchctl unload -F ~/Library/LaunchAgents/com.github.facebook.watchman.plist` is the workaround for this issue.
 
 ## Something Missing?
 
