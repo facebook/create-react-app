@@ -144,7 +144,7 @@ compiler.plugin('done', function(stats) {
 
 #### `getProcessForPort(port: number): string`
 
-Finds the currently running process(es) on `port`.
+Finds the currently running process on `port`.
 Returns a string containing the name and directory, e.g.,
 
 ```
