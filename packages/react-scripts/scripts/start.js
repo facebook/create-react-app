@@ -35,6 +35,7 @@ var paths = require('../config/paths');
 
 var useYarn = pathExists.sync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
+var isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -69,21 +70,33 @@ function setupCompiler(host, port, protocol) {
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
   compiler.plugin('invalid', function() {
-    clearConsole();
+    if (isInteractive) {
+      clearConsole();
+    }
     console.log('Compiling...');
   });
+
+  var isFirstCompile = true;
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
   compiler.plugin('done', function(stats) {
-    clearConsole();
+    if (isInteractive) {
+      clearConsole();
+    }
 
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     var messages = formatWebpackMessages(stats.toJson({}, true));
-    if (!messages.errors.length && !messages.warnings.length) {
+    var isSuccessful = !messages.errors.length && !messages.warnings.length;
+    var showInstructions = isSuccessful && (isInteractive || isFirstCompile);
+
+    if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
+    }
+
+    if (showInstructions) {
       console.log();
       console.log('The app is running at:');
       console.log();
@@ -92,6 +105,7 @@ function setupCompiler(host, port, protocol) {
       console.log('Note that the development build is not optimized.');
       console.log('To create a production build, use ' + chalk.cyan(cli + ' run build') + '.');
       console.log();
+      isFirstCompile = false;
     }
 
     // If errors exist, only show errors.
@@ -258,10 +272,15 @@ function runDevServer(host, port, protocol) {
       return console.log(err);
     }
 
-    clearConsole();
+    if (isInteractive) {
+      clearConsole();
+    }
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    openBrowser(protocol + '://' + host + ':' + port + '/');
+
+    if (isInteractive) {
+      openBrowser(protocol + '://' + host + ':' + port + '/');
+    }
   });
 }
 
@@ -280,16 +299,20 @@ detect(DEFAULT_PORT).then(port => {
     return;
   }
 
-  clearConsole();
-  var existingProcess = getProcessForPort(DEFAULT_PORT);
-  var question =
-    chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.' +
-      ((existingProcess) ? ' Probably:\n  ' + existingProcess : '')) +
-      '\n\nWould you like to run the app on another port instead?';
+  if (isInteractive) {
+    clearConsole();
+    var existingProcess = getProcessForPort(DEFAULT_PORT);
+    var question =
+      chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.' +
+        ((existingProcess) ? ' Probably:\n  ' + existingProcess : '')) +
+        '\n\nWould you like to run the app on another port instead?';
 
-  prompt(question, true).then(shouldChangePort => {
-    if (shouldChangePort) {
-      run(port);
-    }
-  });
+    prompt(question, true).then(shouldChangePort => {
+      if (shouldChangePort) {
+        run(port);
+      }
+    });
+  } else {
+    console.log(chalk.red('Something is already running on port ' + DEFAULT_PORT + '.'));
+  }
 });
