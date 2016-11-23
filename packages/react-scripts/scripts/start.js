@@ -181,18 +181,25 @@ function addMiddleware(devServer) {
     // - /sockjs-node/* (WebpackDevServer uses this for hot reloading)
     // Tip: use https://jex.im/regulex/ to visualize the regex
     var mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
-    devServer.use(mayProxy,
-      // Pass the scope regex both to Express and to the middleware for proxying
-      // of both HTTP and WebSockets to work without false positives.
-      httpProxyMiddleware(pathname => mayProxy.test(pathname), {
-        target: proxy,
-        logLevel: 'silent',
-        onError: onProxyError(proxy),
-        secure: false,
-        changeOrigin: true
-      })
-    );
+
+    // Pass the scope regex both to Express and to the middleware for proxying
+    // of both HTTP and WebSockets to work without false positives.
+    var hpm = httpProxyMiddleware(pathname => mayProxy.test(pathname), {
+      target: proxy,
+      logLevel: 'silent',
+      onError: onProxyError(proxy),
+      secure: false,
+      changeOrigin: true,
+      ws: true
+    });
+    devServer.use(mayProxy, hpm);
+
+    // Listen for the websocket 'upgrade' event and upgrade the connection.
+    // If this is not done, httpProxyMiddleware will not try to upgrade until
+    // an initial plain HTTP request is made.
+    devServer.listeningApp.on('upgrade', hpm.upgrade);
   }
+
   // Finally, by now we have certainly resolved the URL.
   // It may be /index.html, so let the dev server try serving it again.
   devServer.use(devServer.middleware);
