@@ -81,9 +81,12 @@ function setupCompiler(host, port, protocol) {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
-    var messages = formatWebpackMessages(stats.toJson({}, true));
+    var jsonStats = stats.toJson({}, true);
+    var messages = formatWebpackMessages(jsonStats);
+    var seconds = jsonStats.time / 1000;
     if (!messages.errors.length && !messages.warnings.length) {
       console.log(chalk.green('Compiled successfully!'));
+      console.log('Duration: ' + seconds.toFixed(2) + 's');
       console.log();
       console.log('The app is running at:');
       console.log();
