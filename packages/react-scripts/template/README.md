@@ -52,6 +52,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Now](#now)
   - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
+- [Troubleshooting](#troubleshooting)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -1066,14 +1067,29 @@ Note that in order to support routers that use HTML5 `pushState` API, you may wa
 
 ## Troubleshooting
 
-### Jest hangs during execution on Mac OSX
+### `npm test` hangs on macOS Sierra
 
-If you start `npm test` and the execution hangs there might be a problem with your watchman installation as described in [#713](https://github.com/facebookincubator/create-react-app/issues/713).
-Related Issues: [Jest #1767](https://github.com/facebook/jest/issues/1767), [ember-cli #6259](https://github.com/ember-cli/ember-cli/issues/6259) and [watchman #358](https://github.com/facebook/watchman/issues/358).
+If you run `npm test` and the console gets stuck after printing `react-scripts test --env=jsdom` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebookincubator/create-react-app#713](https://github.com/facebookincubator/create-react-app/issues/713).
 
-To solve the issues first make sure you run at least watchman 4.7.0 or newer. (`brew install watchman`).
+We recommend deleting `node_modules` in your project and running `npm install` (or `yarn` if you use it) first. If it doesn't help, you can try one of the numerous workarounds mentioned in these issues:
 
-Manually unloading the service with `launchctl unload -F ~/Library/LaunchAgents/com.github.facebook.watchman.plist` is the workaround for this issue.
+* [facebook/jest#1767](https://github.com/facebook/jest/issues/1767)
+* [facebook/watchman#358](https://github.com/facebook/watchman/issues/358)
+* [ember-cli/ember-cli#6259](https://github.com/ember-cli/ember-cli/issues/6259)
+
+It is reported that installing Watchman 4.7.0 or newer fixes the issue. If you use [Homebrew](http://brew.sh/), you can run these commands to update it:
+
+```
+watchman shutdown-server
+brew update
+brew reinstall watchman
+```
+
+You can find [other installation methods](https://facebook.github.io/watchman/docs/install.html#build-install) on the Watchman documentation page.
+
+If this still doesn't help, try running `launchctl unload -F ~/Library/LaunchAgents/com.github.facebook.watchman.plist`.
+
+There are also reports that *uninstalling* Watchman fixes the issue. So if nothing else helps, remove it from your system and try again.
 
 ## Something Missing?
 
