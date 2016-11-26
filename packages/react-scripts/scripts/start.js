@@ -30,8 +30,17 @@ var getProcessForPort = require('react-dev-utils/getProcessForPort');
 var openBrowser = require('react-dev-utils/openBrowser');
 var prompt = require('react-dev-utils/prompt');
 var pathExists = require('path-exists');
-var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+
+var getWebpackConfig = require('../utils/getWebpackConfig');
+
+var config;
+
+config = require('../config/webpack.config.dev');
+
+// @remove-on-eject-begin
+config = getWebpackConfig('../config/webpack.config.dev');
+// @remove-on-eject-end
 
 var useYarn = pathExists.sync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
