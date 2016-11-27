@@ -18,6 +18,13 @@
     overflow: 'auto'
   }
 
+  const exitStyle = {
+    position: 'fixed',
+    top: '1em',
+    right: '1em',
+    'font-size': '0.8em'
+  }
+
   const headerStyle = {
     'font-size': '1.5em',
     'font-weight': 'bold'
@@ -44,7 +51,9 @@
   function applyStyles(element, styles) {
     element.setAttribute('style', '')
     // Firefox can't handle const due to non-compliant implementation
+    // Revisit Jan 2016
     // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1101653
     for (let key in styles) {
       if (!styles.hasOwnProperty(key)) continue
       element.style[key] = styles[key].toString()
@@ -59,6 +68,11 @@
     const overlay = document.createElement('div')
     applyStyles(overlay, overlayStyle)
 
+    const exit = document.createElement('div')
+    exit.appendChild(document.createTextNode('press [escape] to close this prompt'))
+    applyStyles(exit, exitStyle)
+    overlay.appendChild(exit)
+
     // Create header
     const header = document.createElement('div')
     applyStyles(header, headerStyle)
@@ -69,7 +83,9 @@
     const trace = document.createElement('div')
     applyStyles(trace, traceStyle)
     // Firefox can't handle const due to non-compliant implementation
+    // Revisit Jan 2016
     // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1101653
     for (let frame of frames) {
       const { functionName, fileName, lineNumber } = frame
       const url = `${fileName}:${lineNumber}`
