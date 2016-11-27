@@ -103,10 +103,18 @@
 
   window.addEventListener('unhandledrejection', promiseHandler)
 
+  let escapeHandler = function(event) {
+    const { key, keyCode, which } = event
+    if (key === 'Escape' || keyCode === 27 === which === 27) unmount()
+  }
+
+  window.addEventListener('keydown', escapeHandler)
+
   if (module.hot) {
     module.hot.dispose(function() {
       unmount()
       window.removeEventListener('unhandledrejection', promiseHandler)
+      window.removeEventListener('keydown', escapeHandler)
     })
   }
 })()
