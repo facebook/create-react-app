@@ -78,7 +78,7 @@
 
   window.onerror = function(messageOrEvent, source, lineno, colno, error) {
     if (error == null || !(error instanceof Error) || messageOrEvent.indexOf('Script error') !== -1) {
-      crash(new Error('Unknown script error.'))// TODO: more helpful message
+      crash(new Error(error || messageOrEvent))// TODO: more helpful message
     } else {
       crash(error)
     }
