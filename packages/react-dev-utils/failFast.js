@@ -32,7 +32,10 @@
     }
   }
 
+  let overlayReference = null
+
   function render(name, message, frames) {
+    if (overlayReference !== null) unmount()
     // Create container
     const overlay = document.createElement('div')
     applyStyles(overlay, overlayStyle)
@@ -55,7 +58,13 @@
     overlay.appendChild(trace)
 
     // Mount
-    document.body.appendChild(overlay)
+    document.body.appendChild(overlayReference = overlay)
+  }
+
+  function unmount() {
+    if (overlayReference === null) return
+    document.body.removeChild(overlayReference)
+    overlayReference = null
   }
 
   function crash(error) {
@@ -73,5 +82,11 @@
     } else {
       crash(error)
     }
+  }
+
+  if (module.hot) {
+    module.hot.dispose(function() {
+      unmount()
+    })
   }
 })()
