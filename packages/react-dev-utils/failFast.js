@@ -19,8 +19,22 @@
   }
 
   const headerStyle = {
-    'font-size': 'larger',
+    'font-size': '1.5em',
     'font-weight': 'bold'
+  }
+
+  const functionNameStyle = {
+    'margin-top': '1em',
+    'font-size': '1.2em'
+  }
+
+  const linkStyle = {
+    'font-size': '0.8em'
+  }
+
+  const anchorStyle = {
+    'text-decoration': 'none',
+    color: 'rgb(222, 222, 222)'
   }
 
   const traceStyle = {
@@ -54,22 +68,24 @@
     applyStyles(trace, traceStyle)
     for (const frame of frames) {
       const { functionName, fileName, lineNumber } = frame
-      const { source } = frame
+      const url = `${fileName}:${lineNumber}`
+
       const elem = document.createElement('div')
 
-      // If source is available, use that (directly from browser) ...
-      if (source != null) {
-        elem.appendChild(document.createTextNode(`\t${source.trim()}`))
-      } else {
-        // We need to construct our own source since it wasn't given to us
-        // This StackFrame is most likely from sourcemaps which means
-        //  column numbers aren't available ... so let's only show line numbers.
-        if (functionName != null) {
-          elem.appendChild(document.createTextNode(`\tat ${functionName} (${fileName}:${lineNumber})`))
-        } else {
-          elem.appendChild(document.createTextNode(`\tat ${fileName}:${lineNumber}`))
-        }
-      }
+      const elemFunctionName = document.createElement('div')
+      applyStyles(elemFunctionName, functionNameStyle)
+      elemFunctionName.appendChild(document.createTextNode(functionName || '(anonymous function)'))
+      elem.appendChild(elemFunctionName)
+
+      const elemLink = document.createElement('div')
+      applyStyles(elemLink, linkStyle)
+      const elemAnchor = document.createElement('a')
+      applyStyles(elemAnchor, anchorStyle)
+      elemAnchor.href = url
+      elemAnchor.appendChild(document.createTextNode(url))
+      elemLink.appendChild(elemAnchor)
+      elem.appendChild(elemLink)
+
       trace.appendChild(elem)
     }
     overlay.appendChild(trace)
