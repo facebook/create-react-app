@@ -8,6 +8,20 @@ function customizer(objValue, srcValue) {
   }
 }
 
+function firstLevelCustomizer(objValue, srcValue, paramName) {
+  var array = customizer(objValue, srcValue, paramName);
+
+  if (array) return array;
+
+  if (paramName === 'eslint' && srcValue.configFile) {
+    srcValue.configFile = resolveApp(srcValue.configFile);
+  }
+
+  if (typeof srcValue === 'object') {
+    return mergeWith(objValue, srcValue, customizer);
+  }
+}
+
 function getWebpackConfig(defaultPath) {
   var configPath = resolveApp(process.env.WEBPACK_REPLACE, defaultPath);
 
@@ -17,7 +31,7 @@ function getWebpackConfig(defaultPath) {
   var resultConfig = extendConfig ? mergeWith(
     initialConfig,
     require(extendConfig),
-    customizer
+    firstLevelCustomizer
   ) : initialConfig;
 
   var babelConfigPath = resolveApp(process.env.BABEL_REPLACE);
