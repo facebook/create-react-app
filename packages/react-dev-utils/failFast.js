@@ -50,9 +50,23 @@
     const trace = document.createElement('div')
     applyStyles(trace, traceStyle)
     for (const frame of frames) {
+      const { functionName, fileName, lineNumber } = frame
       const { source } = frame
       const elem = document.createElement('div')
-      elem.appendChild(document.createTextNode(source))
+
+      // If source is available, use that (directly from browser) ...
+      if (source != null) {
+        elem.appendChild(document.createTextNode(`\t${source.trim()}`))
+      } else {
+        // We need to construct our own source since it wasn't given to us
+        // This StackFrame is most likely from sourcemaps which means
+        //  column numbers aren't available ... so let's only show line numbers.
+        if (functionName != null) {
+          elem.appendChild(document.createTextNode(`\tat ${functionName} (${fileName}:${lineNumber})`))
+        } else {
+          elem.appendChild(document.createTextNode(`\tat ${fileName}:${lineNumber}`))
+        }
+      }
       trace.appendChild(elem)
     }
     overlay.appendChild(trace)
