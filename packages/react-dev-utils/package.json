@@ -31,6 +31,7 @@
     "html-entities": "1.2.0",
     "opn": "4.0.2",
     "sockjs-client": "1.0.3",
+    "stacktrace-gps": "2.4.4",
     "strip-ansi": "3.0.1"
   }
 }
