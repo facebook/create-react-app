@@ -101,11 +101,13 @@
         const frames2 = []
         let pending = frames.length
         frames.forEach(function(frame, index) {
-          gps.pinpoint(frame).then(function(nFrame) {
+          // Switched from pinpoint due to erratic bugs
+          // follow: https://github.com/stacktracejs/stacktrace-gps/issues/46
+          gps.getMappedLocation(frame).then(function(nFrame) {
             frames2[index] = nFrame
             if (--pending === 0) resolve(frames2)
           }).catch(function() {
-            // Failed to pinpoint frame ... reuse old frame.
+            // Failed to map frame ... reuse old frame.
             frames2[index] = frame
             if (--pending === 0) resolve(frames2)
           })
