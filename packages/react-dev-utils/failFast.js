@@ -14,7 +14,8 @@
     'z-index': 1337,
     'font-family': 'Menlo, Consolas, monospace',
     color: 'rgb(232, 232, 232)',
-    'white-space': 'pre-wrap'
+    'white-space': 'pre-wrap',
+    overflow: 'auto'
   }
 
   const headerStyle = {
