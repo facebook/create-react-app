@@ -67,13 +67,17 @@
     overlayReference = null
   }
 
-  function crash(error) {
+  function crash(error, unhandledRejection = false) {
     let frames = []
     try {
       frames = ErrorStackParser.parse(error)
     } catch (e) {
     }
-    render(error.name, error.message, frames)
+    if (unhandledRejection) {
+      render(`Unhandled Rejection (${error.name})`, error.message, frames)
+    } else {
+      render(error.name, error.message, frames)
+    }
   }
 
   window.onerror = function(messageOrEvent, source, lineno, colno, error) {
@@ -84,9 +88,25 @@
     }
   }
 
+  let promiseHandler = function(event) {
+    if (event != null && event.reason != null) {
+      const { reason } = event
+      if (reason == null || !(reason instanceof Error)) {
+        crash(new Error(reason), true)
+      } else {
+        crash(reason, true)
+      }
+    } else {
+      crash(new Error('Unknown event'), true)
+    }
+  }
+
+  window.addEventListener('unhandledrejection', promiseHandler)
+
   if (module.hot) {
     module.hot.dispose(function() {
       unmount()
+      window.removeEventListener('unhandledrejection', promiseHandler)
     })
   }
 })()
