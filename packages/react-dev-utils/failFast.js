@@ -61,9 +61,26 @@
   }
 
   let overlayReference = null
+  let additionalCount = 0
+
+  function renderAdditional() {
+    ++additionalCount
+    const title = overlayReference.childNodes[1]
+    const children = title.childNodes
+    const text = document.createTextNode(` (+${additionalCount} more)`)
+    if (children.length < 2) {
+      title.appendChild(text)
+    } else {
+      title.removeChild(children[children.length - 1])
+      title.appendChild(text)
+    }
+  }
 
   function render(name, message, frames) {
-    if (overlayReference !== null) unmount()
+    if (overlayReference !== null) {
+      renderAdditional()
+      return
+    }
     // Create container
     const overlay = document.createElement('div')
     applyStyles(overlay, overlayStyle)
@@ -112,6 +129,7 @@
 
     // Mount
     document.body.appendChild(overlayReference = overlay)
+    additionalCount = 0
   }
 
   function unmount() {
