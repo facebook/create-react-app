@@ -43,7 +43,9 @@
 
   function applyStyles(element, styles) {
     element.setAttribute('style', '')
-    for (const key in styles) {
+    // Firefox can't handle const due to non-compliant implementation
+    // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
+    for (let key in styles) {
       if (!styles.hasOwnProperty(key)) continue
       element.style[key] = styles[key].toString()
     }
@@ -66,7 +68,9 @@
     // Show trace
     const trace = document.createElement('div')
     applyStyles(trace, traceStyle)
-    for (const frame of frames) {
+    // Firefox can't handle const due to non-compliant implementation
+    // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
+    for (let frame of frames) {
       const { functionName, fileName, lineNumber } = frame
       const url = `${fileName}:${lineNumber}`
 
