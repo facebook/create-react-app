@@ -43,6 +43,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Disabling jsdom](#disabling-jsdom)
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
 - [Developing Components in Isolation](#developing-components-in-isolation)
+- [Making a Progressive Web App](#making-a-progressive-web-app)
 - [Deployment](#deployment)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [GitHub Pages](#github-pages)
@@ -920,6 +921,10 @@ Learn more about React Storybook:
 * [GitHub Repo](https://github.com/kadirahq/react-storybook)
 * [Documentation](https://getstorybook.io/docs)
 * [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
+
+## Making a Progressive Web App
+
+You can turn your React app into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) by following the steps in [this repository](https://github.com/jeffposnick/create-react-pwa).
 
 ## Deployment
 
