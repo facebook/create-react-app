@@ -224,6 +224,10 @@
 
   window.addEventListener('keydown', escapeHandler)
 
+  try {
+    Error.stackTraceLimit = 50
+  } catch (e) { }
+
   if (module.hot) {
     module.hot.dispose(function() {
       unmount()
