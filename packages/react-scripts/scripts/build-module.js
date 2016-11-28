@@ -1,58 +1,80 @@
 require('../utils/loadEnv');
 
-var paths = require('../config/paths');
-var spawn = require('cross-spawn');
-var result;
-
-var defaults = [
-  '--presets=trunkclub',
-  '--source-maps'
-];
-
-var directoryArgs = [
-  paths.appSrc,
-  '--out-dir=' + paths.appBuild
-];
-
-
-var args = process.argv.slice(2).concat(defaults);
-
-var isWatchMode = args.indexOf('--watch') !== -1 || args.indexOf('-w') !== -1
-
-// Don't send watch to babel cli
-args = args.filter(function (arg) { return arg !== '--watch' && arg !== '-w'})
-
-result = spawn.sync('node', [require.resolve('./lint')], {stdio: 'inherit'});
-
-if (result.status && !isWatchMode) process.exit(result.status);
-
-result = spawn.sync(
-  'node',
-  [require.resolve('babel-cli/bin/babel.js')].concat(directoryArgs).concat(args),
-  {stdio: 'inherit'}
-);
-
-if (!isWatchMode) process.exit(result.status);
-
-
-// Watch for incremental changes
+var path = require('path');
+var fs = require('fs-extra');
 var chokidar = require('chokidar');
+var transformFileSync = require('babel-core').transformFileSync;
+var spawn = require('cross-spawn');
+var paths = require('../config/paths');
 
-chokidar.watch(paths.appSrc + '**/*.js', {
+function lint () {
+  return spawn.sync('node', [require.resolve('./lint')], {stdio: 'inherit'});
+}
+
+function transformWithBabel (filePath) {
+  const { code } = transformFileSync(path.join(paths.appSrc, filePath), {
+    ast: false,
+    sourceMaps: 'inline',
+    presets: [
+      require.resolve('babel-preset-trunkclub')
+    ],
+    plugins: [
+      [require.resolve('babel-plugin-module-resolver'), {
+        root: [paths.appSrc]
+      }]
+    ]
+  });
+  fs.writeFileSync(path.join(paths.appBuild, filePath), code);
+}
+
+function copyAsset (filePath) {
+  fs.copySync(path.join(paths.appSrc, filePath),
+              path.join(paths.appBuild, filePath))
+}
+
+function processFile (filePath) {
+  if (/\.(es6|jsx?)$/.test(filePath)) {
+
+    fs.mkdirpSync(path.parse(path.join(paths.appBuild, filePath)).dir);
+    transformWithBabel(filePath);
+    console.log(path.join(paths.appSrc, filePath) + ' -> ' + path.join(paths.appBuild, filePath));
+
+  } else if (/\.(s?css|svg|json|ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$/.test(filePath)) {
+
+    fs.mkdirpSync(path.parse(path.join(paths.appBuild, filePath)).dir);
+    copyAsset(filePath)
+    console.log(path.join(paths.appSrc, filePath) + ' -> ' + path.join(paths.appBuild, filePath));
+
+  }
+}
+
+
+var args = process.argv.slice(2);
+
+var outDirIdx = args.indexOf('-d') & args.indexOf('--out-dir')
+var isWatch = (args.indexOf('-w') & args.indexOf('--watch')) !== -1
+if (outDirIdx !== -1) {
+  paths.appBuild = path.resolve(paths.appBuild, '..', args[outDirIdx + 1])
+}
+
+var result = lint();
+fs.walkSync(paths.appSrc).forEach(function (filePath) {
+  processFile(path.relative(paths.appSrc, filePath));
+});
+
+if (!isWatch) process.exit(result.status);
+
+var watcher = chokidar.watch([
+  '**/*.*'
+], {
+  cwd: paths.appSrc,
   persistent: true,
   ignoreInitial: true
-}).add(paths.appSrc + '**/*.jsx')
-  .add(paths.appSrc + '**/*.es6')
-  .on('all', function (event, path) {
-    switch (event) {
-      case 'add':
-      case 'change':
-        spawn.sync('node', [require.resolve('./lint')], {stdio: 'inherit'});
-        spawn.sync(
-          'node',
-          [require.resolve('babel-cli/bin/babel.js')].concat([
-            path, '--out-dir=' + paths.appBuild ]).concat(args),
-          {stdio: 'inherit'}
-        );
-    }
-  })
+})
+
+watcher.on('all', function (event, filePath) {
+  if (event === 'add' || event === 'change') {
+    lint();
+    processFile(filePath);
+  }
+})
