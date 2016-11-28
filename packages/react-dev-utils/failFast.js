@@ -41,11 +41,16 @@
 
   const anchorStyle = {
     'text-decoration': 'none',
-    color: 'rgb(222, 222, 222)'
+    color: 'rgba(255, 255, 255, 0.6)'
   }
 
   const traceStyle = {
     'font-size': '1rem'
+  }
+
+  const depStyle = {
+    'font-size': '1em',
+    color: 'rgba(255, 255, 255, 0.6)'
   }
 
   function applyStyles(element, styles) {
@@ -110,7 +115,11 @@
       const elem = document.createElement('div')
 
       const elemFunctionName = document.createElement('div')
-      applyStyles(elemFunctionName, functionNameStyle)
+      if (url.indexOf('/~/') !== -1) {
+        applyStyles(elemFunctionName, Object.assign({}, functionNameStyle, depStyle))
+      } else {
+        applyStyles(elemFunctionName, functionNameStyle)
+      }
       elemFunctionName.appendChild(document.createTextNode(functionName || '(anonymous function)'))
       elem.appendChild(elemFunctionName)
 
