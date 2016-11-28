@@ -177,9 +177,10 @@
       } else {
         render(error.name, error.message, frames)
       }
-    }).catch(function() {
+    }).catch(function(e) {
       // This is another fail case (unlikely to happen)
       // e.g. render(...) throws an error with provided arguments
+      console.log('Red box renderer error:', e)
       render('Error', 'Unknown Error (failure to materialize)', [])
     })
   }
