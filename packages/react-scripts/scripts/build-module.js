@@ -51,8 +51,9 @@ function processFile (filePath) {
 
 var args = process.argv.slice(2);
 
-var outDirIdx = args.indexOf('-d') & args.indexOf('--out-dir')
-var isWatch = (args.indexOf('-w') & args.indexOf('--watch')) !== -1
+var outDirIdx = args.indexOf('-d') !== -1
+  ? args.indexOf('-d')
+  : args.indexOf('--out-dir')
 if (outDirIdx !== -1) {
   paths.appBuild = path.resolve(paths.appBuild, '..', args[outDirIdx + 1])
 }
@@ -62,6 +63,7 @@ fs.walkSync(paths.appSrc).forEach(function (filePath) {
   processFile(path.relative(paths.appSrc, filePath));
 });
 
+var isWatch = args.indexOf('-w') !== -1 || args.indexOf('--watch') !== -1
 if (!isWatch) process.exit(result.status);
 
 var watcher = chokidar.watch([
