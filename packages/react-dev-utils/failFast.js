@@ -78,6 +78,12 @@
     'background-color': '#FBF5B4'
   }
 
+  const omittedFramesStyle = {
+    color: black,
+    'margin': '1.5em 0',
+    'text-align': 'center'
+  }
+
   function applyStyles(element, styles) {
     element.setAttribute('style', '')
     // Firefox can't handle const due to non-compliant implementation
@@ -150,6 +156,7 @@
     // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1101653
     let index = 0
+    let omittedFramesCount = 0
     for (let frame of resolvedFrames) {
       const {
         functionName,
@@ -165,10 +172,19 @@
       } else {
         url = fileName + ':' + lineNumber + ':' + columnNumber
       }
+
       const internalUrl = isInternalFile(url)
       if (internalUrl && internalDisabled) {
-        trace.appendChild(document.createTextNode('... '))
+        omittedFramesCount++
         continue
+      }
+
+      if (omittedFramesCount) {
+        const omittedFrames = document.createElement('div')
+        omittedFrames.appendChild(document.createTextNode(`---[ ${omittedFramesCount} internal calls hidden ]---`))
+        applyStyles(omittedFrames, omittedFramesStyle)
+        trace.appendChild(omittedFrames)
+        omittedFramesCount = 0
       }
 
       const elem = document.createElement('div')
