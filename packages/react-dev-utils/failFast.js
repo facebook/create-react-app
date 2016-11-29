@@ -1,4 +1,6 @@
 (function() {
+  require('./failFast.css')
+
   const StackTraceResolve = require('stacktrace-resolve').default
 
   const CONTEXT_SIZE = 4
@@ -7,7 +9,7 @@
   const darkGray = '#878e91'
   const lightGray = '#fafafa'
   const red = '#ce1126'
-  const yellow = '#FBF5B4'
+  const yellow = '#fbf5b4'
 
   const overlayStyle = {
     position: 'fixed',
@@ -25,12 +27,6 @@
     overflow: 'auto',
     'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
     'line-height': 1.5,
-  }
-
-  const containerStyle = {
-    'max-width': '50%',
-    'min-width': '600px',
-    margin: '0 auto',
   }
 
   const hintsStyle = {
@@ -139,7 +135,7 @@
     overlay.appendChild(hints)
 
     const container = document.createElement('div')
-    applyStyles(container, containerStyle)
+    container.className = 'cra-container'
     overlay.appendChild(container)
 
     // Create header
