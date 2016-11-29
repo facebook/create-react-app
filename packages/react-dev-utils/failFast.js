@@ -121,22 +121,26 @@
       renderAdditional()
       return
     }
-    // Create container
+    // Create overlay
     const overlay = document.createElement('div')
     applyStyles(overlay, overlayStyle)
 
-    const exit = document.createElement('div')
-    exit.appendChild(document.createTextNode('press [escape] to close this prompt'))
-    exit.appendChild(document.createElement('br'))
-    exit.appendChild(document.createTextNode(`press [ = ] to ${internalDisabled ? 'show' : 'hide'} internal calls`))
-    applyStyles(exit, exitStyle)
-    overlay.appendChild(exit)
+    const hints = document.createElement('div')
+    hints.appendChild(document.createTextNode(`[=] ${internalDisabled ? 'Show' : 'Hide'} internal calls`))
+    hints.appendChild(document.createTextNode('\t\t'))
+    hints.appendChild(document.createTextNode('[escape] Close'))
+    applyStyles(hints, hintsStyle)
+    overlay.appendChild(hints)
+
+    const container = document.createElement('div')
+    applyStyles(container, containerStyle)
+    overlay.appendChild(container)
 
     // Create header
     const header = document.createElement('div')
     applyStyles(header, headerStyle)
     header.appendChild(document.createTextNode(`${name}: ${message}`))
-    overlay.appendChild(header)
+    container.appendChild(header)
 
     // Show trace
     const trace = document.createElement('div')
@@ -204,7 +208,7 @@
 
       ++index
     }
-    overlay.appendChild(trace)
+    container.appendChild(trace)
 
     // Mount
     document.body.appendChild(overlayReference = overlay)
