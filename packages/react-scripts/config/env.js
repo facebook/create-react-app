@@ -27,6 +27,8 @@ function getClientEnvironment(publicUrl) {
       'NODE_ENV': JSON.stringify(
         process.env.NODE_ENV || 'development'
       ),
+      // Allows the chalk library to work on the browser
+      'FORCE_COLOR': JSON.stringify(true),
       // Useful for resolving the correct path to static assets in `public`.
       // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
       // This should only be used as an escape hatch. Normally you would put

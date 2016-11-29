@@ -1,15 +1,18 @@
+// Use the same highlighter as syntax errors in console
+const codeFrame = require('babel-code-frame');
+const ansiHTML = require('./ansiHTML');
+
 (function() {
   require('./failFast.css')
 
   const StackTraceResolve = require('stacktrace-resolve').default
 
-  const CONTEXT_SIZE = 4
+  const CONTEXT_SIZE = Infinity
 
   const black = '#293238'
   const darkGray = '#878e91'
   const lightGray = '#fafafa'
   const red = '#ce1126'
-  const yellow = '#fbf5b4'
 
   const overlayStyle = {
     position: 'fixed',
@@ -65,20 +68,20 @@
     'font-size': '1.2em',
   }
 
-  const preStyle = {
-    'font-size': '1.1em',
-    margin: '1.5em 0',
-  }
-
-  const contextStyle = {
-    'background-color': yellow
-  }
-
   const omittedFramesStyle = {
     color: black,
     'margin': '1.5em 0',
     'text-align': 'center'
   }
+
+  const preStyle = {
+    display: 'block',
+    padding: '0.5em',
+    margin: '1.5em 0',
+    'overflow-x': 'auto',
+    background: '#fff',
+    'font-size': '1.1em'
+  };
 
   function applyStyles(element, styles) {
     element.setAttribute('style', '')
@@ -116,6 +119,18 @@
       title.removeChild(children[children.length - 1])
       title.appendChild(text)
     }
+  }
+
+  function sourceCodePre(sourceLines, lineNum, columnNum) {
+    const sourceCode = sourceLines.map(({ text }) => text).join('\n')
+    const ansiHighlight = codeFrame(sourceCode, lineNum, columnNum, { highlightCode: true });
+    const htmlHighlight = ansiHTML(ansiHighlight);
+    const code = document.createElement('code')
+    code.innerHTML = htmlHighlight;
+    const pre = document.createElement('pre')
+    applyStyles(pre, preStyle);
+    pre.appendChild(code)
+    return pre;
   }
 
   function render(error, name, message, resolvedFrames) {
@@ -203,20 +218,7 @@
       elem.appendChild(elemLink)
 
       if (!internalUrl && sourceLines.length !== 0) {
-        const pre = document.createElement('pre')
-        applyStyles(pre, preStyle)
-
-        for (let line of sourceLines) {
-          const { context, text, line: fileLine } = line
-          let modSource = (Array(11).join(' ') + fileLine).slice(-6) + (context ? '   | ' : ' > | ')
-          modSource += text
-          const lineElem = document.createElement('div')
-          if (!context) applyStyles(lineElem, contextStyle)
-
-          lineElem.appendChild(document.createTextNode(modSource))
-          pre.appendChild(lineElem)
-        }
-        elem.appendChild(pre)
+        elem.appendChild(sourceCodePre(sourceLines, sourceLineNumber, sourceColumnNumber));
       }
 
       trace.appendChild(elem)
