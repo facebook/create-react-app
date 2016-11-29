@@ -5,7 +5,7 @@
   const ansiHTML = require('./ansiHTML')
   const StackTraceResolve = require('stacktrace-resolve').default
 
-  const CONTEXT_SIZE = Infinity
+  const CONTEXT_SIZE = 3
 
   const black = '#293238'
   const darkGray = '#878e91'
@@ -119,8 +119,16 @@
   }
 
   function sourceCodePre(sourceLines, lineNum, columnNum) {
-    const sourceCode = sourceLines.map(({ text }) => text).join('\n')
-    const ansiHighlight = codeFrame(sourceCode, lineNum, columnNum, { highlightCode: true })
+    let sourceCode = []
+    sourceLines.forEach(({ text, line }) => {
+      sourceCode[line - 1] = text
+    })
+    sourceCode = sourceCode.join('\n')
+    const ansiHighlight = codeFrame(sourceCode, lineNum, columnNum, {
+      highlightCode: true,
+      linesAbove: 3,
+      linesBelow: 3
+    })
     const htmlHighlight = ansiHTML(ansiHighlight)
     const code = document.createElement('code')
     code.innerHTML = htmlHighlight
