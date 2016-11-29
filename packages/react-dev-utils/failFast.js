@@ -151,13 +151,12 @@
     // Revisit Jan 2016
     // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1101653
-    let index = 0
     let omittedFramesCount = 0
     for (let frame of resolvedFrames) {
       const {
         functionName,
         fileName, lineNumber, columnNumber,
-        scriptLines,
+        _scriptLines,
         sourceFileName, sourceLineNumber, sourceColumnNumber,
         sourceLines
       } = frame
@@ -221,8 +220,6 @@
       }
 
       trace.appendChild(elem)
-
-      ++index
     }
     container.appendChild(trace)
 

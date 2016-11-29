@@ -106,7 +106,7 @@ function showErrorOverlay(message) {
   });
 }
 
-function destroyErrorOverlay() {  
+function destroyErrorOverlay() {
   if (!overlayDiv) {
     // It is not there in the first place.
     return;
