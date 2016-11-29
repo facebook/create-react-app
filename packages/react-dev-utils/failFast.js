@@ -200,6 +200,8 @@
           let modSource = (Array(11).join(' ') + fileLine).slice(-6) + (context ? '   | ' : ' > | ')
           modSource += text
           const lineElem = document.createElement('div')
+          if (!context) applyStyles(lineElem, contextStyle)
+
           lineElem.appendChild(document.createTextNode(modSource))
           pre.appendChild(lineElem)
         }
