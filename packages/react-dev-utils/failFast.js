@@ -193,6 +193,8 @@
 
       if (!internalUrl && sourceLines.length !== 0) {
         const pre = document.createElement('pre')
+        applyStyles(pre, preStyle)
+
         for (let line of sourceLines) {
           const { context, text, line: fileLine } = line
           let modSource = (Array(11).join(' ') + fileLine).slice(-6) + (context ? '   | ' : ' > | ')
