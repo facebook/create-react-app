@@ -9,11 +9,11 @@
     top: '0px', left: '0px',
     bottom: '0px', right: '0px',
     width: '100vw', height: '100vh',
-    'background-color': 'rgb(150, 0, 0)',
+    'background-color': '#fafafa',
     padding: '2rem',
     'z-index': 1337,
     'font-family': 'Menlo, Consolas, monospace',
-    color: 'rgb(232, 232, 232)',
+    color: '#293238',
     'white-space': 'pre-wrap',
     overflow: 'auto'
   }
@@ -28,7 +28,8 @@
 
   const headerStyle = {
     'font-size': '1.5em',
-    'font-weight': 'bold'
+    'font-weight': 'bold',
+    color: '#ce1126'
   }
 
   const functionNameStyle = {
@@ -42,7 +43,7 @@
 
   const anchorStyle = {
     'text-decoration': 'none',
-    color: 'rgba(255, 255, 255, 0.6)'
+    color: '#878e91'
   }
 
   const traceStyle = {
@@ -51,7 +52,7 @@
 
   const depStyle = {
     'font-size': '1em',
-    color: 'rgba(255, 255, 255, 0.6)'
+    color: '#878e91'
   }
 
   function applyStyles(element, styles) {
