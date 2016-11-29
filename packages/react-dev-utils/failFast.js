@@ -22,7 +22,8 @@
     position: 'fixed',
     top: '1em',
     right: '1em',
-    'font-size': '0.8em'
+    'font-size': '0.8em',
+    'text-align': 'right'
   }
 
   const headerStyle = {
@@ -66,7 +67,17 @@
   }
 
   let overlayReference = null
+  let errorCache = null
   let additionalCount = 0
+  let internalDisabled = true
+
+  function toggleInternal() {
+    internalDisabled = !internalDisabled
+    if (errorCache != null) {
+      unmount()
+      crash(errorCache)
+    }
+  }
 
   function renderAdditional() {
     ++additionalCount
@@ -81,7 +92,7 @@
     }
   }
 
-  function render(name, message, resolvedFrames) {
+  function render(error, name, message, resolvedFrames) {
     if (overlayReference !== null) {
       renderAdditional()
       return
@@ -92,6 +103,8 @@
 
     const exit = document.createElement('div')
     exit.appendChild(document.createTextNode('press [escape] to close this prompt'))
+    exit.appendChild(document.createElement('br'))
+    exit.appendChild(document.createTextNode('press [ = ] to show internal calls'))
     applyStyles(exit, exitStyle)
     overlay.appendChild(exit)
 
@@ -125,6 +138,10 @@
         url = fileName + ':' + lineNumber + ':' + columnNumber
       }
       const internalUrl = isInternalFile(url)
+      if (internalUrl && internalDisabled) {
+        trace.appendChild(document.createTextNode('... '))
+        continue
+      }
 
       const elem = document.createElement('div')
 
@@ -167,6 +184,7 @@
 
     // Mount
     document.body.appendChild(overlayReference = overlay)
+    errorCache = error
     additionalCount = 0
   }
 
@@ -183,15 +201,15 @@
   function crash(error, unhandledRejection = false) {
     StackTraceResolve(error, CONTEXT_SIZE).then(function(resolvedFrames) {
       if (unhandledRejection) {
-        render(`Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
+        render(error, `Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
       } else {
-        render(error.name, error.message, resolvedFrames)
+        render(error, error.name, error.message, resolvedFrames)
       }
     }).catch(function(e) {
       // This is another fail case (unlikely to happen)
       // e.g. render(...) throws an error with provided arguments
       console.log('Red box renderer error:', e)
-      render('Error', 'Unknown Error (failure to materialize)', [])
+      render(null, 'Error', 'Unknown Error (failure to materialize)', [])
     })
   }
 
@@ -221,6 +239,7 @@
   let escapeHandler = function(event) {
     const { key, keyCode, which } = event
     if (key === 'Escape' || keyCode === 27 || which === 27) unmount()
+    else if (key === '+' || key === '=' || keyCode === 187 || which === 187) toggleInternal()
   }
 
   window.addEventListener('keydown', escapeHandler)
