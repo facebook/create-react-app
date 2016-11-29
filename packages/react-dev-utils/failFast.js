@@ -7,6 +7,7 @@
   const darkGray = '#878e91'
   const lightGray = '#fafafa'
   const red = '#ce1126'
+  const yellow = '#FBF5B4'
 
   const overlayStyle = {
     position: 'fixed',
@@ -75,7 +76,7 @@
   }
 
   const contextStyle = {
-    'background-color': '#FBF5B4'
+    'background-color': yellow
   }
 
   const omittedFramesStyle = {
