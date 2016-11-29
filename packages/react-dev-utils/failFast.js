@@ -1,7 +1,7 @@
 (function() {
-  const ErrorStackParser = require('error-stack-parser')
-  const StackTraceGPS = require('stacktrace-gps')
-  const gps = new StackTraceGPS()
+  const StackTraceResolve = require('stacktrace-resolve').default
+
+  const CONTEXT_SIZE = 4
 
   const overlayStyle = {
     position: 'fixed',
@@ -9,7 +9,7 @@
     top: '0px', left: '0px',
     bottom: '0px', right: '0px',
     width: '100vw', height: '100vh',
-    'background-color': 'rgb(200, 0, 0)',
+    'background-color': 'rgb(150, 0, 0)',
     padding: '2rem',
     'z-index': 1337,
     'font-family': 'Menlo, Consolas, monospace',
@@ -81,7 +81,7 @@
     }
   }
 
-  function render(name, message, frames) {
+  function render(name, message, resolvedFrames) {
     if (overlayReference !== null) {
       renderAdditional()
       return
@@ -108,14 +108,28 @@
     // Revisit Jan 2016
     // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1101653
-    for (let frame of frames) {
-      const { functionName, fileName, lineNumber } = frame
-      const url = `${fileName}:${lineNumber}`
+    let index = 0
+    for (let frame of resolvedFrames) {
+      const {
+        functionName,
+        fileName, lineNumber, columnNumber,
+        scriptLines,
+        sourceFileName, sourceLineNumber, sourceColumnNumber,
+        sourceLines
+      } = frame
+
+      let url
+      if (sourceFileName) {
+        url = sourceFileName + ':' + sourceLineNumber + ':' + sourceColumnNumber
+      } else {
+        url = fileName + ':' + lineNumber + ':' + columnNumber
+      }
+      const internalUrl = isInternalFile(url)
 
       const elem = document.createElement('div')
 
       const elemFunctionName = document.createElement('div')
-      if (url.indexOf('/~/') !== -1) {
+      if (internalUrl) {
         applyStyles(elemFunctionName, Object.assign({}, functionNameStyle, depStyle))
       } else {
         applyStyles(elemFunctionName, functionNameStyle)
@@ -132,7 +146,22 @@
       elemLink.appendChild(elemAnchor)
       elem.appendChild(elemLink)
 
+      if (!internalUrl && sourceLines.length !== 0) {
+        const pre = document.createElement('pre')
+        for (let line of sourceLines) {
+          const { context, text, line: fileLine } = line
+          let modSource = (Array(11).join(' ') + fileLine).slice(-6) + (context ? '   | ' : ' > | ')
+          modSource += text
+          const lineElem = document.createElement('div')
+          lineElem.appendChild(document.createTextNode(modSource))
+          pre.appendChild(lineElem)
+        }
+        elem.appendChild(pre)
+      }
+
       trace.appendChild(elem)
+
+      ++index
     }
     overlay.appendChild(trace)
 
@@ -147,44 +176,16 @@
     overlayReference = null
   }
 
+  function isInternalFile(url) {
+    return url.indexOf('/~/') !== -1 || url.trim().indexOf(' ') !== -1
+  }
+
   function crash(error, unhandledRejection = false) {
-    new Promise(function(resolve, reject) {
-      let frames = []
-
-      // Wrap all this up to make sure we have a fail case (external apis) ...
-      try {
-        // Error -> StackFrame[]
-        frames = ErrorStackParser.parse(error)
-        if (frames.length === 0) {
-          resolve(frames)
-          return
-        }
-
-        // Resolve StackFrames via sourcemaps and magic
-        const frames2 = []
-        let pending = frames.length
-        frames.forEach(function(frame, index) {
-          // Switched from pinpoint due to erratic bugs
-          // follow: https://github.com/stacktracejs/stacktrace-gps/issues/46
-          gps.getMappedLocation(frame).then(function(nFrame) {
-            frames2[index] = nFrame
-            if (--pending === 0) resolve(frames2)
-          }).catch(function() {
-            // Failed to map frame ... reuse old frame.
-            frames2[index] = frame
-            if (--pending === 0) resolve(frames2)
-          })
-        })
-      } catch (e) {
-        // Failed to resolve frames at one point or another (synchronous)
-        // Default to using `frames` which should contain the browser's stack
-        resolve(frames)
-      }
-    }).then(function(frames) {
+    StackTraceResolve(error, CONTEXT_SIZE).then(function(resolvedFrames) {
       if (unhandledRejection) {
-        render(`Unhandled Rejection (${error.name})`, error.message, frames)
+        render(`Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
       } else {
-        render(error.name, error.message, frames)
+        render(error.name, error.message, resolvedFrames)
       }
     }).catch(function(e) {
       // This is another fail case (unlikely to happen)
