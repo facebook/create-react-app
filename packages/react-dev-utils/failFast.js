@@ -1,10 +1,8 @@
-// Use the same highlighter as syntax errors in console
-const codeFrame = require('babel-code-frame');
-const ansiHTML = require('./ansiHTML');
-
 (function() {
   require('./failFast.css')
 
+  const codeFrame = require('babel-code-frame')
+  const ansiHTML = require('./ansiHTML')
   const StackTraceResolve = require('stacktrace-resolve').default
 
   const CONTEXT_SIZE = Infinity
@@ -81,7 +79,7 @@ const ansiHTML = require('./ansiHTML');
     'overflow-x': 'auto',
     background: '#fff',
     'font-size': '1.1em'
-  };
+  }
 
   function applyStyles(element, styles) {
     element.setAttribute('style', '')
@@ -123,14 +121,14 @@ const ansiHTML = require('./ansiHTML');
 
   function sourceCodePre(sourceLines, lineNum, columnNum) {
     const sourceCode = sourceLines.map(({ text }) => text).join('\n')
-    const ansiHighlight = codeFrame(sourceCode, lineNum, columnNum, { highlightCode: true });
-    const htmlHighlight = ansiHTML(ansiHighlight);
+    const ansiHighlight = codeFrame(sourceCode, lineNum, columnNum, { highlightCode: true })
+    const htmlHighlight = ansiHTML(ansiHighlight)
     const code = document.createElement('code')
-    code.innerHTML = htmlHighlight;
+    code.innerHTML = htmlHighlight
     const pre = document.createElement('pre')
-    applyStyles(pre, preStyle);
+    applyStyles(pre, preStyle)
     pre.appendChild(code)
-    return pre;
+    return pre
   }
 
   function render(error, name, message, resolvedFrames) {
@@ -178,9 +176,11 @@ const ansiHTML = require('./ansiHTML');
 
       let url
       if (sourceFileName) {
-        url = sourceFileName + ':' + sourceLineNumber + ':' + sourceColumnNumber
+        url = sourceFileName + ':' + sourceLineNumber
+        if (sourceColumnNumber) url += ':' + sourceColumnNumber
       } else {
-        url = fileName + ':' + lineNumber + ':' + columnNumber
+        url = fileName + ':' + lineNumber
+        if (columnNumber) url += ':' + columnNumber
       }
 
       const internalUrl = isInternalFile(url)
@@ -218,7 +218,7 @@ const ansiHTML = require('./ansiHTML');
       elem.appendChild(elemLink)
 
       if (!internalUrl && sourceLines.length !== 0) {
-        elem.appendChild(sourceCodePre(sourceLines, sourceLineNumber, sourceColumnNumber));
+        elem.appendChild(sourceCodePre(sourceLines, sourceLineNumber, sourceColumnNumber))
       }
 
       trace.appendChild(elem)
