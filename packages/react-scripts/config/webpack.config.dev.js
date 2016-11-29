@@ -232,7 +232,7 @@ module.exports = {
       id: 'style',
       tempDir: path.join(paths.appNodeModules, '.cache/happypack'),
       verbose: false,
-      loaders: ['style!css?importLoaders=1!postcss!sass']
+      loaders: ['style!css?importLoaders=1&sourceMap!postcss!sass?sourceMap']
     }),
     new HardSource({
       cacheDirectory: path.resolve(paths.appNodeModules, '.cache/hard-source/[confighash]'),
