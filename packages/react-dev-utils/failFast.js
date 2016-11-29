@@ -6,9 +6,10 @@
   const overlayStyle = {
     position: 'fixed',
     'box-sizing': 'border-box',
-    top: '0px', left: '0px',
-    bottom: '0px', right: '0px',
-    width: '100vw', height: '100vh',
+    top: '1em', left: '1em',
+    bottom: '1em', right: '1em',
+    width: 'calc(100% - 2em)', height: 'calc(100% - 2em)',
+    'border-radius': '1em',
     'background-color': '#fafafa',
     padding: '2rem',
     'z-index': 1337,
@@ -19,7 +20,7 @@
   }
 
   const exitStyle = {
-    position: 'fixed',
+    position: 'absolute',
     top: '1em',
     right: '1em',
     'font-size': '0.8em',
