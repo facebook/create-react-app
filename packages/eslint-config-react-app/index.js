@@ -228,7 +228,10 @@ module.exports = {
     'no-trailing-spaces': 'warn',
     'no-multi-spaces': 'warn',
     'comma-dangle': 'warn',
-
+    'keyword-spacing': 'warn',
+    'quotes': 'warn',
+    'padded-blocks': 'warn',
+    'no-multiple-empty-lines',
     // Allow smoother debugging flow for development
     'no-debugger': 'warn',
   }
