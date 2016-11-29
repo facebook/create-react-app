@@ -28,6 +28,9 @@
     'line-height': 1.5,
   }
 
+  // TODO: reapply containerStyle on resize or externalize to css and ensure
+  //  e2e checks & tests pass
+  //  ref commit: 46db1ae54c0449b737f82fb1cf8a47b7457d5b9b
   const containerStyle = {
     'padding-right': '15px',
     'padding-left': '15px',
@@ -141,8 +144,8 @@
     sourceCode = sourceCode.join('\n')
     const ansiHighlight = codeFrame(sourceCode, lineNum, columnNum, {
       highlightCode: true,
-      linesAbove: 3,
-      linesBelow: 3
+      linesAbove: CONTEXT_SIZE,
+      linesBelow: CONTEXT_SIZE
     })
     const htmlHighlight = ansiHTML(ansiHighlight)
     const code = document.createElement('code')
