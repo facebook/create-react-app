@@ -67,7 +67,6 @@
 
   const depStyle = {
     'font-size': '1.2em',
-    color: darkGray
   }
 
   const preStyle = {
