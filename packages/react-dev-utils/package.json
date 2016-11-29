@@ -14,7 +14,6 @@
     "ansiHTML.js",
     "checkRequiredFiles.js",
     "clearConsole.js",
-    "failFast.css",
     "failFast.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",

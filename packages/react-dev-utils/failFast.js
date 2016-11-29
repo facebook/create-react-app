@@ -1,6 +1,4 @@
 (function() {
-  require('./failFast.css')
-
   const codeFrame = require('babel-code-frame')
   const ansiHTML = require('./ansiHTML')
   const StackTraceResolve = require('stacktrace-resolve').default
@@ -28,6 +26,14 @@
     overflow: 'auto',
     'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
     'line-height': 1.5,
+  }
+
+  const containerStyle = {
+    'padding-right': '15px',
+    'padding-left': '15px',
+    'margin-right': 'auto',
+    'margin-left': 'auto',
+    width: () => calcWidth(window.innerWidth)
   }
 
   const hintsStyle = {
@@ -80,6 +86,13 @@
     'font-size': '1.1em'
   }
 
+  function calcWidth(width) {
+    if (width >= 1200) return '1170px'
+    if (width >= 992) return '970px'
+    if (width >= 768) return '750px'
+    return 'auto'
+  }
+
   function applyStyles(element, styles) {
     element.setAttribute('style', '')
     // Firefox can't handle const due to non-compliant implementation
@@ -88,7 +101,9 @@
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1101653
     for (let key in styles) {
       if (!styles.hasOwnProperty(key)) continue
-      element.style[key] = styles[key].toString()
+      let val = styles[key]
+      if (typeof val === 'function') val = val()
+      element.style[key] = val.toString()
     }
   }
 
@@ -155,7 +170,7 @@
     overlay.appendChild(hints)
 
     const container = document.createElement('div')
-    container.className = 'cra-container'
+    applyStyles(container, containerStyle)
     overlay.appendChild(container)
 
     // Create header
