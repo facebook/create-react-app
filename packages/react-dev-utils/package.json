@@ -11,8 +11,10 @@
     "node": ">=4"
   },
   "files": [
+    "ansiHTML.js",
     "checkRequiredFiles.js",
     "clearConsole.js",
+    "failFast.css",
     "failFast.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
