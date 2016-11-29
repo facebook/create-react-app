@@ -16,28 +16,13 @@
 // that looks similar to our console output. The error overlay is inspired by:
 // https://github.com/glenjamin/webpack-hot-middleware
 
-var ansiHTML = require('ansi-html');
 var SockJS = require('sockjs-client');
 var stripAnsi = require('strip-ansi');
 var url = require('url');
 var formatWebpackMessages = require('./formatWebpackMessages');
 var Entities = require('html-entities').AllHtmlEntities;
+var ansiHTML = require('./ansiHTML');
 var entities = new Entities();
-
-// Color scheme inspired by https://github.com/glenjamin/webpack-hot-middleware
-var colors = {
-  reset: ['transparent', 'transparent'],
-  black: '181818',
-  red: 'E36049',
-  green: 'B3CB74',
-  yellow: 'FFD080',
-  blue: '7CAFC2',
-  magenta: '7FACCA',
-  cyan: 'C3C2EF',
-  lightgrey: 'EBE7E3',
-  darkgrey: '6D7891'
-};
-ansiHTML.setColors(colors);
 
 function createOverlayIframe(onIframeLoad) {
   var iframe = document.createElement('iframe');
@@ -67,8 +52,8 @@ function addOverlayDivTo(iframe) {
   div.style.bottom = 0;
   div.style.width = '100vw';
   div.style.height = '100vh';
-  div.style.backgroundColor = 'black';
-  div.style.color = '#E8E8E8';
+  div.style.backgroundColor = '#fff';
+  div.style.color = '#333';
   div.style.fontFamily = 'Menlo, Consolas, monospace';
   div.style.fontSize = 'large';
   div.style.padding = '2rem';
@@ -116,9 +101,7 @@ function showErrorOverlay(message) {
   ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
     // Make it look similar to our terminal.
     overlayDiv.innerHTML =
-      '<span style="color: #' +
-      colors.red +
-      '">Failed to compile.</span><br><br>' +
+      '<span style="color: #E36049">Failed to compile.</span><br><br>' +
       ansiHTML(entities.encode(message));
   });
 }
