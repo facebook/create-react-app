@@ -164,6 +164,14 @@
     // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1101653
     let omittedFramesCount = 0
+    const appendOmittedFrames = () => {
+      if (!omittedFramesCount) return
+      const omittedFrames = document.createElement('div')
+      omittedFrames.appendChild(document.createTextNode(`---[ ${omittedFramesCount} internal calls hidden ]---`))
+      applyStyles(omittedFrames, omittedFramesStyle)
+      trace.appendChild(omittedFrames)
+      omittedFramesCount = 0
+    }
     for (let frame of resolvedFrames) {
       const {
         functionName,
@@ -188,13 +196,7 @@
         continue
       }
 
-      if (omittedFramesCount) {
-        const omittedFrames = document.createElement('div')
-        omittedFrames.appendChild(document.createTextNode(`---[ ${omittedFramesCount} internal calls hidden ]---`))
-        applyStyles(omittedFrames, omittedFramesStyle)
-        trace.appendChild(omittedFrames)
-        omittedFramesCount = 0
-      }
+      appendOmittedFrames()
 
       const elem = document.createElement('div')
 
@@ -222,6 +224,7 @@
 
       trace.appendChild(elem)
     }
+    appendOmittedFrames()
     container.appendChild(trace)
 
     // Mount
