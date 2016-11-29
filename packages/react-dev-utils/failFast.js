@@ -104,7 +104,7 @@
     const exit = document.createElement('div')
     exit.appendChild(document.createTextNode('press [escape] to close this prompt'))
     exit.appendChild(document.createElement('br'))
-    exit.appendChild(document.createTextNode('press [ = ] to show internal calls'))
+    exit.appendChild(document.createTextNode(`press [ = ] to ${internalDisabled ? 'show' : 'hide'} internal calls`))
     applyStyles(exit, exitStyle)
     overlay.appendChild(exit)
 
