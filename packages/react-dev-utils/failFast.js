@@ -3,34 +3,47 @@
 
   const CONTEXT_SIZE = 4
 
+  const black = '#293238'
+  const darkGray = '#878e91'
+  const lightGray = '#fafafa'
+  const red = '#ce1126'
+
   const overlayStyle = {
     position: 'fixed',
     'box-sizing': 'border-box',
     top: '1em', left: '1em',
     bottom: '1em', right: '1em',
     width: 'calc(100% - 2em)', height: 'calc(100% - 2em)',
-    'border-radius': '1em',
-    'background-color': '#fafafa',
-    padding: '2rem',
+    'border-radius': '3px',
+    'background-color': lightGray,
+    padding: '4rem',
     'z-index': 1337,
-    'font-family': 'Menlo, Consolas, monospace',
-    color: '#293238',
+    'font-family': 'Consolas, Menlo, monospace',
+    color: black,
     'white-space': 'pre-wrap',
-    overflow: 'auto'
+    overflow: 'auto',
+    'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
+    'line-height': 1.5,
   }
 
-  const exitStyle = {
-    position: 'absolute',
-    top: '1em',
-    right: '1em',
+  const containerStyle = {
+    'max-width': '50%',
+    'min-width': '600px',
+    margin: '0 auto',
+  }
+
+  const hintsStyle = {
     'font-size': '0.8em',
-    'text-align': 'right'
+    'margin-top': '-3em',
+    'margin-bottom': '3em',
+    'text-align': 'right',
+    color: darkGray
   }
 
   const headerStyle = {
-    'font-size': '1.5em',
+    'font-size': '1.7em',
     'font-weight': 'bold',
-    color: '#ce1126'
+    color: red
   }
 
   const functionNameStyle = {
@@ -39,21 +52,30 @@
   }
 
   const linkStyle = {
-    'font-size': '0.8em'
+    'font-size': '0.9em',
   }
 
   const anchorStyle = {
     'text-decoration': 'none',
-    color: '#878e91'
+    color: darkGray
   }
 
   const traceStyle = {
-    'font-size': '1rem'
+    'font-size': '1em'
   }
 
   const depStyle = {
-    'font-size': '1em',
-    color: '#878e91'
+    'font-size': '1.2em',
+    color: darkGray
+  }
+
+  const preStyle = {
+    'font-size': '1.1em',
+    margin: '1.5em 0',
+  }
+
+  const contextStyle = {
+    'background-color': '#FBF5B4'
   }
 
   function applyStyles(element, styles) {
