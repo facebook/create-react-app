@@ -77,7 +77,6 @@
     padding: '0.5em',
     margin: '1.5em 0',
     'overflow-x': 'auto',
-    background: '#fff',
     'font-size': '1.1em'
   }
 
