@@ -214,7 +214,7 @@
       const elemAnchor = document.createElement('a')
       applyStyles(elemAnchor, anchorStyle)
       elemAnchor.href = url
-      elemAnchor.appendChild(document.createTextNode(url))
+      elemAnchor.appendChild(document.createTextNode(url.replace('webpack://', '.')))
       elemLink.appendChild(elemAnchor)
       elem.appendChild(elemLink)
 
