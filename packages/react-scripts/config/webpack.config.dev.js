@@ -147,10 +147,18 @@ module.exports = function(publicPath) {
       // "style" loader turns CSS into JS modules that inject <style> tags.
       // In production, we use a plugin to extract that CSS to a file, but
       // in development "style" loader enables hot editing of CSS.
-      // ZEAL: Add support for CSS Modules
+      // ZEAL: Add support for CSS Modules and SASS
       {
         test: /\.css$/,
         loader: 'style!css?importLoaders=1&modules=1!postcss'
+      },
+      {
+        test: /\.scss$/,
+        loaders: [
+          'style',
+          'css?modules&importLoaders=1' +
+            '&localIdentName=[path][local]__[hash:base64:5]!sass'
+        ]
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
