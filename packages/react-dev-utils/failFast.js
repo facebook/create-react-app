@@ -32,10 +32,7 @@
   //  e2e checks & tests pass
   //  ref commit: 46db1ae54c0449b737f82fb1cf8a47b7457d5b9b
   const containerStyle = {
-    'padding-right': '15px',
-    'padding-left': '15px',
-    'margin-right': 'auto',
-    'margin-left': 'auto',
+    'margin': '0 auto',
     width: () => calcWidth(window.innerWidth)
   }
 
