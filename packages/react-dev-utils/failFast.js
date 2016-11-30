@@ -86,6 +86,10 @@
     'font-size': '1.1em'
   }
 
+  const codeStyle = {
+    'font-family': 'Consolas, Menlo, monospace',
+  }
+
   function calcWidth(width) {
     if (width >= 1200) return '1170px'
     if (width >= 992) return '970px'
@@ -147,6 +151,8 @@
     const htmlHighlight = ansiHTML(ansiHighlight)
     const code = document.createElement('code')
     code.innerHTML = htmlHighlight
+    applyStyles(code, codeStyle)
+
     const pre = document.createElement('pre')
     applyStyles(pre, preStyle)
     pre.appendChild(code)
