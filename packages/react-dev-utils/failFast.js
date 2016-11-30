@@ -196,27 +196,29 @@ function hintsDiv() {
   return hints;
 }
 
-function render(error, name, message, resolvedFrames) {
-  if (overlayReference !== null) {
-    renderAdditional()
-    return
+function frameDiv(functionName, url, internalUrl) {
+  const elem = document.createElement('div')
+
+  const elemFunctionName = document.createElement('div')
+  if (internalUrl) {
+    applyStyles(elemFunctionName, Object.assign({}, functionNameStyle, depStyle))
+  } else {
+    applyStyles(elemFunctionName, functionNameStyle)
   }
-  // Create overlay
-  const overlay = document.createElement('div')
-  applyStyles(overlay, overlayStyle)
-  overlay.appendChild(hintsDiv())
+  elemFunctionName.appendChild(document.createTextNode(functionName && functionName !== 'Object.<anonymous>' ? functionName : '(anonymous function)'))
+  elem.appendChild(elemFunctionName)
 
-  const container = document.createElement('div')
-  applyStyles(container, containerStyle)
-  overlay.appendChild(container)
+  const elemLink = document.createElement('div')
+  applyStyles(elemLink, linkStyle)
+  const elemAnchor = document.createElement('a')
+  applyStyles(elemAnchor, anchorStyle)
+  //elemAnchor.href = url
+  elemAnchor.appendChild(document.createTextNode(url.replace('webpack://', '.')))
+  elemLink.appendChild(elemAnchor)
+  elem.appendChild(elemLink)
+}
 
-  // Create header
-  const header = document.createElement('div')
-  applyStyles(header, headerStyle)
-  header.appendChild(document.createTextNode(`${name}: ${message}`))
-  container.appendChild(header)
-
-  // Show trace
+function traceDiv(resolvedFrames) {
   const trace = document.createElement('div')
   applyStyles(trace, traceStyle)
   // Firefox can't handle const due to non-compliant implementation
@@ -262,25 +264,7 @@ function render(error, name, message, resolvedFrames) {
 
     appendOmittedFrames()
 
-    const elem = document.createElement('div')
-
-    const elemFunctionName = document.createElement('div')
-    if (internalUrl) {
-      applyStyles(elemFunctionName, Object.assign({}, functionNameStyle, depStyle))
-    } else {
-      applyStyles(elemFunctionName, functionNameStyle)
-    }
-    elemFunctionName.appendChild(document.createTextNode(functionName && functionName !== 'Object.<anonymous>' ? functionName : '(anonymous function)'))
-    elem.appendChild(elemFunctionName)
-
-    const elemLink = document.createElement('div')
-    applyStyles(elemLink, linkStyle)
-    const elemAnchor = document.createElement('a')
-    applyStyles(elemAnchor, anchorStyle)
-    //elemAnchor.href = url
-    elemAnchor.appendChild(document.createTextNode(url.replace('webpack://', '.')))
-    elemLink.appendChild(elemAnchor)
-    elem.appendChild(elemLink)
+    const elem = frameDiv(functionName, url, internalUrl);
 
     if (!internalUrl) {
       if (sourceDisabled && scriptLines.length !== 0) {
@@ -294,7 +278,33 @@ function render(error, name, message, resolvedFrames) {
     trace.appendChild(elem)
   }
   appendOmittedFrames()
-  container.appendChild(trace)
+  return trace;
+}
+
+function render(error, name, message, resolvedFrames) {
+  if (overlayReference !== null) {
+    renderAdditional()
+    return
+  }
+
+  // Create overlay
+  const overlay = document.createElement('div')
+  applyStyles(overlay, overlayStyle)
+  overlay.appendChild(hintsDiv())
+
+  // Create container
+  const container = document.createElement('div')
+  applyStyles(container, containerStyle)
+  overlay.appendChild(container)
+
+  // Create header
+  const header = document.createElement('div')
+  applyStyles(header, headerStyle)
+  header.appendChild(document.createTextNode(`${name}: ${message}`))
+  container.appendChild(header)
+
+  // Create trace
+  container.appendChild(traceDiv(resolvedFrames))
 
   // Mount
   document.body.appendChild(overlayReference = overlay)
