@@ -197,25 +197,37 @@ function hintsDiv() {
 }
 
 function frameDiv(functionName, url, internalUrl) {
-  const elem = document.createElement('div')
+  const frame = document.createElement('div')
+  const frameFunctionName = document.createElement('div')
 
-  const elemFunctionName = document.createElement('div')
-  if (internalUrl) {
-    applyStyles(elemFunctionName, Object.assign({}, functionNameStyle, depStyle))
+  let cleanedFunctionName;
+  if (!functionName || functionName === 'Object.<anonymous>') {
+    cleanedFunctionName = '(anonymous function)'
   } else {
-    applyStyles(elemFunctionName, functionNameStyle)
+    cleanedFunctionName = functionName
   }
-  elemFunctionName.appendChild(document.createTextNode(functionName && functionName !== 'Object.<anonymous>' ? functionName : '(anonymous function)'))
-  elem.appendChild(elemFunctionName)
 
-  const elemLink = document.createElement('div')
-  applyStyles(elemLink, linkStyle)
-  const elemAnchor = document.createElement('a')
-  applyStyles(elemAnchor, anchorStyle)
-  //elemAnchor.href = url
-  elemAnchor.appendChild(document.createTextNode(url.replace('webpack://', '.')))
-  elemLink.appendChild(elemAnchor)
-  elem.appendChild(elemLink)
+  let cleanedUrl = url.replace('webpack://', '.');
+
+  if (internalUrl) {
+    applyStyles(frameFunctionName, Object.assign({}, functionNameStyle, depStyle))
+  } else {
+    applyStyles(frameFunctionName, functionNameStyle)
+  }
+
+  frameFunctionName.appendChild(document.createTextNode(cleanedFunctionName))
+  frame.appendChild(frameFunctionName)
+
+  const frameLink = document.createElement('div')
+  applyStyles(frameLink, linkStyle)
+  const frameAnchor = document.createElement('a')
+  applyStyles(frameAnchor, anchorStyle)
+  //frameAnchor.href = url
+  frameAnchor.appendChild(document.createTextNode(cleanedUrl))
+  frameLink.appendChild(frameAnchor)
+  frame.appendChild(frameLink)
+
+  return frame;
 }
 
 function traceDiv(resolvedFrames) {
