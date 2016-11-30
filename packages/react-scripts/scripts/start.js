@@ -57,7 +57,9 @@ if (isSmokeTest) {
 function setupCompiler(host, port, protocol) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
-  compiler = webpack(config, handleCompile);
+  // ZEAL: Injecting the publicPath into the config since it needs to be fully
+  // qualified now. More notes in the config regarding publicPath.
+  compiler = webpack(config(publicPath(host, port, protocol)), handleCompile);
 
   // "invalid" event fires when you have changed a file, and Webpack is
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
@@ -221,7 +223,9 @@ function runDevServer(host, port, protocol) {
     hot: true,
     // It is important to tell WebpackDevServer to use the same "root" path
     // as we specified in the config. In development, we always serve from /.
-    publicPath: config.output.publicPath,
+    // ZEAL: The public path is now being injected into the config with this
+    // function, so no need to reach into the config to get it anymore.
+    publicPath: publicPath(host, port, protocol),
     // WebpackDevServer is noisy by default so we emit custom message instead
     // by listening to the compiler events with `compiler.plugin` calls above.
     quiet: true,
@@ -249,6 +253,10 @@ function runDevServer(host, port, protocol) {
     console.log();
     openBrowser(protocol + '://' + host + ':' + port + '/');
   });
+}
+
+function publicPath(host, port, protocol) {
+  return protocol + '://' + host + ':' + port + '/'
 }
 
 function run(port) {

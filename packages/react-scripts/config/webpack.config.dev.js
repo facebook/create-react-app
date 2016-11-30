@@ -22,7 +22,14 @@ var paths = require('./paths');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
-var publicPath = '/';
+// ZEAL: Setting publicPath in the start script and passing it in. Since we are
+// mounting this app on various backends, the dev server port will be different
+// from the port on window location. Because of this, we need the full public
+// path, not just the relative path. Elements of the full path can be dynamic,
+// but are all known in the start script, making it the best place to define the
+// public path.
+// var publicPath = '/';
+
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
@@ -33,7 +40,9 @@ var env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
-module.exports = {
+// ZEAL: Converted to a function to allow injecting the publicPath.
+module.exports = function(publicPath) {
+  return {
   // This makes the bundle appear split into separate modules in the devtools.
   // We don't use source maps here because they can be confusing:
   // https://github.com/facebookincubator/create-react-app/issues/343#issuecomment-237241875
@@ -51,9 +60,12 @@ module.exports = {
     // Note: instead of the default WebpackDevServer client, we use a custom one
     // to bring better experience for Create React App users. You can replace
     // the line below with these two lines if you prefer the stock client:
-    // require.resolve('webpack-dev-server/client') + '?/',
-    // require.resolve('webpack/hot/dev-server'),
-    require.resolve('react-dev-utils/webpackHotDevClient'),
+    // ZEAL: Opted to use the default client because the custom one gets the
+    // port off window location, which will be different from the dev server
+    // when the app is served from a different back end.
+    require.resolve('webpack-dev-server/client') + '?' + publicPath,
+    require.resolve('webpack/hot/dev-server'),
+    // require.resolve('react-dev-utils/webpackHotDevClient'),
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
     // Finally, this is your app's code:
@@ -221,4 +233,4 @@ module.exports = {
     net: 'empty',
     tls: 'empty'
   }
-};
+}};
