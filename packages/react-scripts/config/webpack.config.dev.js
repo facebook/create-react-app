@@ -131,7 +131,11 @@ module.exports = function(publicPath) {
         query: {
           // @remove-on-eject-begin
           babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          presets: [
+            require.resolve('babel-preset-latest'),
+            require.resolve('babel-preset-react'),
+            require.resolve('babel-preset-stage-1')
+          ],
           // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/react-scripts/

@@ -124,7 +124,11 @@ module.exports = {
         // @remove-on-eject-begin
         query: {
           babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          presets: [
+            require.resolve('babel-preset-latest'),
+            require.resolve('babel-preset-react'),
+            require.resolve('babel-preset-stage-1')
+          ],
         },
         // @remove-on-eject-end
       },
