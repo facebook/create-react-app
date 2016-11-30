@@ -22,6 +22,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Using the `public` Folder](#using-the-public-folder)
 - [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
+- [Adding a Customized package](#adding-a-customized-package)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Can I Use Decorators?](#can-i-use-decorators)
@@ -429,6 +430,16 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 ```
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
+
+## Adding a Customized package
+
+You can use a customized package in Create React App by following these steps:
+
+* Create a new package that depends on the package you wish to customize, e.g. Bootstrap
+* Customize the build process of this package
+* Depend on this customized package in your create-react-app based project
+
+Here is an example of adding a [customized Bootstrap](https://medium.com/@tacomanator/customizing-create-react-app-aa9ffb88165#.68e11h6hv) that follows these steps.
 
 ## Adding Flow
 
