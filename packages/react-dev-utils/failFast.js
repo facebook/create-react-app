@@ -165,7 +165,7 @@
     applyStyles(overlay, overlayStyle)
 
     const hints = document.createElement('div')
-    hints.appendChild(document.createTextNode(`[=] ${internalDisabled ? 'Show' : 'Hide'} internal calls`))
+    hints.appendChild(document.createTextNode(`[i] ${internalDisabled ? 'Show' : 'Hide'} internal calls`))
     hints.appendChild(document.createTextNode('\t\t'))
     hints.appendChild(document.createTextNode('[escape] Close'))
     applyStyles(hints, hintsStyle)
@@ -309,7 +309,7 @@
   let escapeHandler = function(event) {
     const { key, keyCode, which } = event
     if (key === 'Escape' || keyCode === 27 || which === 27) unmount()
-    else if (key === '+' || key === '=' || keyCode === 187 || which === 187) toggleInternal()
+    else if (key === 'i' || keyCode === 73 || which === 73) toggleInternal()
   }
 
   window.addEventListener('keydown', escapeHandler)
