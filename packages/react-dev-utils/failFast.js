@@ -125,7 +125,7 @@
 
   function renderAdditional() {
     ++additionalCount
-    const title = overlayReference.childNodes[1]
+    const title = overlayReference.childNodes[1].childNodes[0]
     const children = title.childNodes
     const text = document.createTextNode(` (+${additionalCount} more)`)
     if (children.length < 2) {
