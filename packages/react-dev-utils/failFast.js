@@ -239,6 +239,9 @@ function render(error, name, message, resolvedFrames) {
       sourceLines
     } = frame
 
+    // Skip native functions like Array.forEach
+    if (fileName === '(native)') continue;
+
     let url
     if (sourceFileName) {
       url = sourceFileName + ':' + sourceLineNumber
