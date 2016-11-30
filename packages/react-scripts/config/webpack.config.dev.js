@@ -34,7 +34,7 @@ module.exports = {
   // We don't use source maps here because they can be confusing:
   // https://github.com/facebookincubator/create-react-app/issues/343#issuecomment-237241875
   // You may want 'cheap-module-source-map' instead if you prefer source maps.
-  devtool: 'cheap-module-source-map',
+  devtool: 'eval-source-map',
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
@@ -232,7 +232,7 @@ module.exports = {
       id: 'style',
       tempDir: path.join(paths.appNodeModules, '.cache/happypack'),
       verbose: false,
-      loaders: ['style!css?importLoaders=1!postcss!sass']
+      loaders: ['style!css?importLoaders=1&sourceMap!postcss!sass?sourceMap']
     }),
     new HardSource({
       cacheDirectory: path.resolve(paths.appNodeModules, '.cache/hard-source/[confighash]'),
