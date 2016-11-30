@@ -42,7 +42,10 @@ var anserMap = {
   'ansi-green': 'green',
   'ansi-bright-cyan': 'cyan',
   'ansi-cyan': 'cyan',
-  'ansi-red': 'red'
+  'ansi-bright-red': 'red',
+  'ansi-red': 'red',
+  'ansi-bright-magenta': 'magenta',
+  'ansi-magenta': 'magenta'
 }
 
 function ansiHTML(txt) {
