@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "0.7.0",
+  "name": "@zeal/react-scripts",
+  "version": "0.1.0",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "codingzeal/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/codingzeal/create-react-app/issues"
   },
   "files": [
     ".babelrc",
