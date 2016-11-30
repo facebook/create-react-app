@@ -25,7 +25,7 @@
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "ansi-html": "0.0.5",
+    "anser": "1.1.0",
     "babel-code-frame": "6.16.0",
     "chalk": "1.1.3",
     "escape-string-regexp": "1.0.5",

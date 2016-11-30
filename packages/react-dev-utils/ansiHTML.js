@@ -1,4 +1,5 @@
-var ansiHTML = require('ansi-html');
+var Anser = require('anser');
+
 // Color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
 var base00 = 'ffffff'; // Default Background
 var base01 = 'f5f5f5'; // Lighter Background (Used for status bars)
@@ -32,6 +33,53 @@ var colors = {
   lightgrey: base01,
   darkgrey: base03
 };
-ansiHTML.setColors(colors);
+
+var anserMap = {
+  'ansi-bright-black': 'black',
+  'ansi-bright-yellow': 'yellow',
+  'ansi-yellow': 'yellow',
+  'ansi-bright-green': 'green',
+  'ansi-green': 'green',
+  'ansi-bright-cyan': 'cyan',
+  'ansi-cyan': 'cyan',
+  'ansi-red': 'red'
+}
+
+function ansiHTML(txt) {
+  const arr = new Anser().ansiToJson(txt, {
+    use_classes: true
+  })
+
+  let result = ''
+  let open = false
+  for (let c of arr) {
+    const { content, fg } = c
+    const contentParts = content.split('\n')
+    for (let index = 0; index < contentParts.length; ++index) {
+      if (!open) {
+        result += '<span data-ansi-line="true">'
+        open = true
+      }
+      let part = contentParts[index].replace('\r', '')
+      const color = colors[anserMap[fg]]
+      if (color != null) {
+        result += `<span style="color: #${color};">${part}</span>`
+      } else {
+        if (fg != null) console.log('Missing color mapping: ', fg)
+        result += `<span>${part}</span>`
+      }
+      if (index < contentParts.length - 1) {
+        result += '</span>'
+        open = false
+        result += '<br/>'
+      }
+    }
+  }
+  if (open) {
+    result += '</span>'
+    open = false
+  }
+  return result
+}
 
 module.exports = ansiHTML;
