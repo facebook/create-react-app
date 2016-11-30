@@ -185,6 +185,17 @@ function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
   return pre
 }
 
+function hintsDiv() {
+  const hints = document.createElement('div')
+  hints.appendChild(document.createTextNode(`[i] ${internalDisabled ? 'Show' : 'Hide'} internal calls`))
+  hints.appendChild(document.createTextNode('\t\t'))
+  hints.appendChild(document.createTextNode(`[s] ${sourceDisabled ? 'Hide' : 'Show'} script source`))
+  hints.appendChild(document.createTextNode('\t\t'))
+  hints.appendChild(document.createTextNode('[escape] Close'))
+  applyStyles(hints, hintsStyle)
+  return hints;
+}
+
 function render(error, name, message, resolvedFrames) {
   if (overlayReference !== null) {
     renderAdditional()
@@ -193,15 +204,7 @@ function render(error, name, message, resolvedFrames) {
   // Create overlay
   const overlay = document.createElement('div')
   applyStyles(overlay, overlayStyle)
-
-  const hints = document.createElement('div')
-  hints.appendChild(document.createTextNode(`[i] ${internalDisabled ? 'Show' : 'Hide'} internal calls`))
-  hints.appendChild(document.createTextNode('\t\t'))
-  hints.appendChild(document.createTextNode(`[s] ${sourceDisabled ? 'Hide' : 'Show'} script source`))
-  hints.appendChild(document.createTextNode('\t\t'))
-  hints.appendChild(document.createTextNode('[escape] Close'))
-  applyStyles(hints, hintsStyle)
-  overlay.appendChild(hints)
+  overlay.appendChild(hintsDiv())
 
   const container = document.createElement('div')
   applyStyles(container, containerStyle)
