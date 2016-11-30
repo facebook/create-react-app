@@ -254,7 +254,7 @@
       } else {
         applyStyles(elemFunctionName, functionNameStyle)
       }
-      elemFunctionName.appendChild(document.createTextNode(functionName || '(anonymous function)'))
+      elemFunctionName.appendChild(document.createTextNode(functionName && functionName !== 'Object.<anonymous>' ? functionName : '(anonymous function)'))
       elem.appendChild(elemFunctionName)
 
       const elemLink = document.createElement('div')
