@@ -74,7 +74,8 @@
 
   const omittedFramesStyle = {
     color: black,
-    'margin': '1.5em 0'
+    'font-size': '0.9em',
+    'margin': '1.5em 0',
   }
 
   const preStyle = {
