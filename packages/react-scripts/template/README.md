@@ -42,6 +42,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Continuous Integration](#continuous-integration)
   - [Disabling jsdom](#disabling-jsdom)
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
+  - [Editor Integration](#editor-integration)
 - [Developing Components in Isolation](#developing-components-in-isolation)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
 - [Deployment](#deployment)
@@ -881,6 +882,12 @@ Finally, jsdom is also not needed for [snapshot testing](http://facebook.github.
 Snapshot testing is a new feature of Jest that automatically generates text snapshots of your components and saves them on the disk so if the UI output changes, you get notified without manually writing any assertions on the component output.
 
 This feature is experimental and still [has major usage issues](https://github.com/facebookincubator/create-react-app/issues/372) so we only encourage you to use it if you like experimental technology. We intend to gradually improve it over time and eventually offer it as the default solution for testing React components, but this will take time. [Read more about snapshot testing.](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
+
+### Editor Integration
+
+If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates. 
+
+![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
 ## Developing Components in Isolation
 
