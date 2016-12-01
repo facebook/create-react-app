@@ -55,24 +55,34 @@ function resolveOwn(relativePath) {
   return path.resolve(__dirname, relativePath);
 }
 
-// config before eject: we're in ./node_modules/react-scripts/config/
-module.exports = {
-  appBuild: resolveApp('build'),
-  appPublic: resolveApp('public'),
-  appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
-  appPackageJson: resolveApp('package.json'),
-  appSrc: resolveApp('src'),
-  yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('src/setupTests.js'),
-  appNodeModules: resolveApp('node_modules'),
-  // this is empty with npm3 but node resolution searches higher anyway:
-  ownNodeModules: resolveOwn('../node_modules'),
-  nodePaths: nodePaths
-};
+// We set up module.exports depending on how react-scripts is run. The current
+// directory path will contain `packages/react-scripts` when running from
+// create-react-app, and `node_modules/react-scripts` when installed from
+// another project. Note that when installing this package using `npm link`,
+// the current directory path contains `packages/react-scripts`. There is a
+// specific condition to handle this case so that it doesn't conflict with
+// other scripts (like `build` or  `publish`) or running the smoke test.
+var isRunningFromApp = __dirname.indexOf(path.join('node_modules', 'react-scripts', 'config')) !== -1;
+var isRunningFromOwn = __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1;
+var isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
+var isRunningFromAppUsingLink = (process.env.npm_lifecycle_event === 'start') && isRunningFromOwn && !isSmokeTest
 
-// config before publish: we're in ./packages/react-scripts/config/
-if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
+if (isRunningFromApp || isRunningFromAppUsingLink) {
+  module.exports = {
+    appBuild: resolveApp('build'),
+    appPublic: resolveApp('public'),
+    appHtml: resolveApp('public/index.html'),
+    appIndexJs: resolveApp('src/index.js'),
+    appPackageJson: resolveApp('package.json'),
+    appSrc: resolveApp('src'),
+    yarnLockFile: resolveApp('yarn.lock'),
+    testsSetup: resolveApp('src/setupTests.js'),
+    appNodeModules: resolveApp('node_modules'),
+    // this is empty with npm3 but node resolution searches higher anyway:
+    ownNodeModules: resolveOwn('../node_modules'),
+    nodePaths: nodePaths
+  };
+} else {
   module.exports = {
     appBuild: resolveOwn('../../../build'),
     appPublic: resolveOwn('../template/public'),
