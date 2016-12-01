@@ -58,7 +58,8 @@ function resolveOwn(relativePath) {
 // Set up module.exports depending on how react-scripts is run. The current
 // path will contain `packages/react-scripts` when running from create-react-app.
 // We don't make assumptions about the path when this package is installed from
-// another app since it could've be renamed.
+// another app since it could've been renamed.
+
 // Note that when installing this package using `npm link`, the current
 // directory path contains `packages/react-scripts` (instead of, for example,
 // `node_modules/react-scripts`). There is a specific condition to handle this
