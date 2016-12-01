@@ -15,6 +15,7 @@
     "clearConsole.js",
     "checkRequiredFiles.js",
     "formatWebpackMessages.js",
+    "getProcessForPort.js",
     "InterpolateHtmlPlugin.js",
     "openChrome.applescript",
     "openBrowser.js",

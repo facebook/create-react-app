@@ -142,6 +142,22 @@ compiler.plugin('done', function(stats) {
 });
 ```
 
+#### `getProcessForPort(port: number): string`
+
+Finds the currently running process on `port`.
+Returns a string containing the name and directory, e.g.,
+
+```
+create-react-app
+in /Users/developer/create-react-app
+```
+
+```js
+var getProcessForPort = require('react-dev-utils/getProcessForPort');
+
+getProcessForPort(3000);
+```
+
 #### `openBrowser(url: string): boolean`
 
 Attempts to open the browser with a given URL.  
