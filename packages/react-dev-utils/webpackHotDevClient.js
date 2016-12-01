@@ -24,6 +24,8 @@ var Entities = require('html-entities').AllHtmlEntities;
 var ansiHTML = require('./ansiHTML');
 var entities = new Entities();
 
+var red = '#E36049';
+
 function createOverlayIframe(onIframeLoad) {
   var iframe = document.createElement('iframe');
   iframe.id = 'react-dev-utils-webpack-hot-dev-client-overlay';
@@ -101,7 +103,7 @@ function showErrorOverlay(message) {
   ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
     // Make it look similar to our terminal.
     overlayDiv.innerHTML =
-      '<span style="color: #E36049">Failed to compile.</span><br><br>' +
+      '<span style="color: ' + red + '">Failed to compile.</span><br><br>' +
       ansiHTML(entities.encode(message));
   });
 }
