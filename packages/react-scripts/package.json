@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "0.7.0",
+  "name": "super-react-scripts",
+  "version": "0.1.0",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "shrynx/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/shrynx/create-react-app/issues"
   },
   "files": [
     ".babelrc",
@@ -52,14 +52,16 @@
     "http-proxy-middleware": "0.17.2",
     "jest": "17.0.2",
     "json-loader": "0.5.4",
+    "node-sass": "^3.13.0",
     "object-assign": "4.1.0",
     "path-exists": "2.1.0",
     "postcss-loader": "1.0.0",
     "promise": "7.1.1",
     "react-dev-utils": "^0.3.0",
     "recursive-readdir": "2.1.0",
+    "sass-loader": "^4.0.2",
     "strip-ansi": "3.0.1",
-    "style-loader": "0.13.1",
+    "style-loader": "^0.13.1",
     "url-loader": "0.5.7",
     "webpack": "1.13.2",
     "webpack-dev-server": "1.16.2",
