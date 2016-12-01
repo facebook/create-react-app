@@ -55,19 +55,20 @@ function resolveOwn(relativePath) {
   return path.resolve(__dirname, relativePath);
 }
 
-// We set up module.exports depending on how react-scripts is run. The current
-// directory path will contain `packages/react-scripts` when running from
-// create-react-app, and `node_modules/react-scripts` when installed from
-// another project. Note that when installing this package using `npm link`,
-// the current directory path contains `packages/react-scripts`. There is a
-// specific condition to handle this case so that it doesn't conflict with
-// other scripts (like `build` or  `publish`) or running the smoke test.
-var isRunningFromApp = __dirname.indexOf(path.join('node_modules', 'react-scripts', 'config')) !== -1;
+// Set up module.exports depending on how react-scripts is run. The current
+// path will contain `packages/react-scripts` when running from create-react-app.
+// We don't make assumptions about the path when this package is installed from
+// another app since it could've be renamed.
+// Note that when installing this package using `npm link`, the current
+// directory path contains `packages/react-scripts` (instead of, for example,
+// `node_modules/react-scripts`). There is a specific condition to handle this
+// case so that it doesn't conflict with other scripts (like `build` or
+// `publish`) or running the smoke test.
 var isRunningFromOwn = __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1;
 var isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
 var isRunningFromAppUsingLink = (process.env.npm_lifecycle_event === 'start') && isRunningFromOwn && !isSmokeTest
 
-if (isRunningFromApp || isRunningFromAppUsingLink) {
+if (!isRunningFromOwn || isRunningFromAppUsingLink) {
   module.exports = {
     appBuild: resolveApp('build'),
     appPublic: resolveApp('public'),
