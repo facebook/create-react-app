@@ -193,21 +193,21 @@ function hintsDiv() {
   hints.appendChild(document.createTextNode('\t\t'))
   hints.appendChild(document.createTextNode('[escape] Close'))
   applyStyles(hints, hintsStyle)
-  return hints;
+  return hints
 }
 
 function frameDiv(functionName, url, internalUrl) {
   const frame = document.createElement('div')
   const frameFunctionName = document.createElement('div')
 
-  let cleanedFunctionName;
+  let cleanedFunctionName
   if (!functionName || functionName === 'Object.<anonymous>') {
     cleanedFunctionName = '(anonymous function)'
   } else {
     cleanedFunctionName = functionName
   }
 
-  let cleanedUrl = url.replace('webpack://', '.');
+  let cleanedUrl = url.replace('webpack://', '.')
 
   if (internalUrl) {
     applyStyles(frameFunctionName, Object.assign({}, functionNameStyle, depStyle))
@@ -227,7 +227,7 @@ function frameDiv(functionName, url, internalUrl) {
   frameLink.appendChild(frameAnchor)
   frame.appendChild(frameLink)
 
-  return frame;
+  return frame
 }
 
 function traceDiv(resolvedFrames) {
@@ -257,10 +257,10 @@ function traceDiv(resolvedFrames) {
     } = frame
 
     // Skip native functions like Array.forEach
-    if (fileName === '(native)') continue;
+    if (fileName === '(native)') continue
 
     let url
-    if (sourceFileName) {
+    if (!sourceDisabled && sourceFileName) {
       url = sourceFileName + ':' + sourceLineNumber
       if (sourceColumnNumber) url += ':' + sourceColumnNumber
     } else {
@@ -276,7 +276,7 @@ function traceDiv(resolvedFrames) {
 
     appendOmittedFrames()
 
-    const elem = frameDiv(functionName, url, internalUrl);
+    const elem = frameDiv(functionName, url, internalUrl)
 
     if (!internalUrl) {
       if (sourceDisabled && scriptLines.length !== 0) {
@@ -290,7 +290,7 @@ function traceDiv(resolvedFrames) {
     trace.appendChild(elem)
   }
   appendOmittedFrames()
-  return trace;
+  return trace
 }
 
 function render(error, name, message, resolvedFrames) {
