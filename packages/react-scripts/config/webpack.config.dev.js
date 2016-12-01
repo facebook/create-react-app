@@ -72,6 +72,7 @@ module.exports = {
     publicPath: publicPath
   },
   resolve: {
+    root: paths.ownNodeModules,
     // This allows you to set a fallback for where Webpack should look for modules.
     // We read `NODE_PATH` environment variable in `paths.js` and pass paths here.
     // We use `fallback` instead of `root` because we want `node_modules` to "win"
