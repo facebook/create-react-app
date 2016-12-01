@@ -7,8 +7,11 @@
  */
 
 const babelJest = require('babel-jest');
+const getCustomConfig = require('../get-custom-config');
+const customConfig = getCustomConfig();
 
 module.exports = babelJest.createTransformer({
-  presets: [require.resolve('babel-preset-react-app')],
+  presets: [require.resolve('babel-preset-react-app')].concat(customConfig.presets),
+  plugins: customConfig.plugins,
   babelrc: false
 });
