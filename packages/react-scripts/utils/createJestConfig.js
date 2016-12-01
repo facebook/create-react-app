@@ -29,6 +29,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
     testPathIgnorePatterns: ['<rootDir>/(build|docs|node_modules)/'],
     testEnvironment: 'node',
     preprocessorIgnorePatterns: ["<rootDir>/node_modules"],
+    haste: {
+        providesModuleNodeModules: [".*"],
+    },
   };
   if (rootDir) {
     config.rootDir = rootDir;
