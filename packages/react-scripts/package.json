@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "0.7.3",
+  "name": "custom-react-scripts",
+  "version": "0.7.5",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "npmjs.com/package/custom-react-scripts",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/kitze/create-react-app/issues"
   },
   "files": [
     ".babelrc",
