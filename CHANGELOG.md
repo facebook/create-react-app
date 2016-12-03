@@ -4,7 +4,7 @@
 * `react-scripts`
   * [#944](https://github.com/facebookincubator/create-react-app/pull/944) Crash the build during CI whenever linter warnings are encountered. ([@excitement-engineer](https://github.com/excitement-engineer))
 
-    Linter warnings and errors will now be checked for during the build when it's run in a continous integration server (the `CI` environment variable is set) and the build will fail if issues are found. See [Continuous Integration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#continuous-integration) for more.
+    Linter warnings and errors are now checked during a continuous integration build (set by the `CI` environment variable) and the build will fail if any issues are found. See [Continuous Integration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#continuous-integration) for more information.
 
   * [#1090](https://github.com/facebookincubator/create-react-app/pull/1090) Enable proxying of WebSockets. ([@dceddia](https://github.com/dceddia))
 
