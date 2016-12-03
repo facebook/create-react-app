@@ -143,7 +143,7 @@
 You may optionally update the global command (it’s not required, but it adds Yarn support for new projects):
 
 ```
-npm install -g create-react-app@0.7.0
+npm install -g create-react-app@1.0.0
 ```
 
 Inside any created project that has not been ejected, run:
