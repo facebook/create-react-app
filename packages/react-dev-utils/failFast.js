@@ -418,6 +418,8 @@ function isInternalFile(url) {
 }
 
 function crash(error, unhandledRejection = false) {
+  if (module.hot) module.hot.decline()
+
   StackTraceResolve(error, CONTEXT_SIZE).then(function(resolvedFrames) {
     frameSettings = resolvedFrames.map(() => { return { compiled: false } })
     if (unhandledRejection) {
