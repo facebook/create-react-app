@@ -247,17 +247,27 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   } else {
     if (omits.value > 0) {
       const omittedFrames = document.createElement('div')
-      omittedFrames.appendChild(document.createTextNode(`${omits.value } stack frames were omitted.`))
+      const text1 = document.createTextNode(`${omits.value} stack frames were omitted.`)
+      const text2 = document.createTextNode(`[Click to expand]`)
+      omittedFrames.appendChild(text1)
       omittedFrames.appendChild(document.createElement('br'))
-      omittedFrames.appendChild(document.createTextNode(`[Click to expand]`))
+      omittedFrames.appendChild(text2)
       omittedFrames.addEventListener('click', e => {
+        const hide = text2.textContent.match(/collapse/)
         document.getElementsByName(`bundle-${omitBundle}`).forEach(n => {
-          if (n.style.display) {
-            n.style.display = ''
-          } else {
+          if (hide) {
             n.style.display = 'none'
+          } else {
+            n.style.display = ''
           }
         })
+        if (hide) {
+          text1.textContent = text1.textContent.replace(/will be/, 'were')
+          text2.textContent = text2.textContent.replace(/collapse/, 'expand')
+        } else {
+          text1.textContent = text1.textContent.replace(/were/, 'will be')
+          text2.textContent = text2.textContent.replace(/expand/, 'collapse')
+        }
       })
       applyStyles(omittedFrames, omittedFramesStyle)
       parentContainer.appendChild(omittedFrames)
