@@ -23,7 +23,7 @@ const overlayStyle = {
   'z-index': 1337,
   'font-family': 'Consolas, Menlo, monospace',
   color: black,
-  'white-space': 'pre-wrap',
+  'white-space': 'pre',
   overflow: 'auto',
   'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
   'line-height': 1.5,
