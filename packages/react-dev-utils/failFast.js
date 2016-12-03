@@ -247,7 +247,7 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   } else {
     if (omits.value > 0) {
       const omittedFrames = document.createElement('div')
-      omittedFrames.appendChild(document.createTextNode(`${omits.value } stack frames where omitted.`))
+      omittedFrames.appendChild(document.createTextNode(`${omits.value } stack frames were omitted.`))
       omittedFrames.appendChild(document.createElement('br'))
       omittedFrames.appendChild(document.createTextNode(`[Click to expand]`))
       omittedFrames.addEventListener('click', e => {
