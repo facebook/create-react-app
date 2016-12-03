@@ -89,13 +89,22 @@ const omittedFramesStyle = {
 const preStyle = {
   display: 'block',
   padding: '0.5em',
-  margin: '1.5em 0',
+  'margin-top': '1.5em',
+  'margin-bottom': '0px',
   'overflow-x': 'auto',
   'font-size': '1.1em'
 }
 
+const toggleStyle = {
+  'margin-bottom': '1.5em'
+}
+
 const codeStyle = {
   'font-family': 'Consolas, Menlo, monospace',
+}
+
+const hiddenStyle = {
+  display: 'none'
 }
 
 function calcWidth(width) {
@@ -120,26 +129,8 @@ function applyStyles(element, styles) {
 }
 
 let overlayReference = null
-let errorCache = null
+let frameSettings = []
 let additionalCount = 0
-let internalDisabled = true
-let sourceDisabled = false
-
-function toggleInternal() {
-  internalDisabled = !internalDisabled
-  if (errorCache != null) {
-    unmount()
-    crash(errorCache)
-  }
-}
-
-function toggleSource() {
-  sourceDisabled = !sourceDisabled
-  if (errorCache != null) {
-    unmount()
-    crash(errorCache)
-  }
-}
 
 function renderAdditional() {
   ++additionalCount
@@ -187,10 +178,6 @@ function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
 
 function hintsDiv() {
   const hints = document.createElement('div')
-  hints.appendChild(document.createTextNode(`[i] ${internalDisabled ? 'Show' : 'Hide'} internal calls`))
-  hints.appendChild(document.createTextNode('\t\t'))
-  hints.appendChild(document.createTextNode(`[s] ${sourceDisabled ? 'Hide' : 'Show'} script source`))
-  hints.appendChild(document.createTextNode('\t\t'))
   hints.appendChild(document.createTextNode('[escape] Close'))
   applyStyles(hints, hintsStyle)
   return hints
@@ -230,66 +217,138 @@ function frameDiv(functionName, url, internalUrl) {
   return frame
 }
 
+function traceFrame(frameSetting, frame, critical, omits, parentContainer) {
+  const { compiled } = frameSetting
+  const {
+    functionName,
+    fileName, lineNumber, columnNumber,
+    scriptLines,
+    sourceFileName, sourceLineNumber, sourceColumnNumber,
+    sourceLines
+  } = frame
+
+  // Skip native functions like Array.forEach
+  if (fileName === '(native)') return
+
+  let url
+  if (!compiled && sourceFileName) {
+    url = sourceFileName + ':' + sourceLineNumber
+    if (sourceColumnNumber) url += ':' + sourceColumnNumber
+  } else {
+    url = fileName + ':' + lineNumber
+    if (columnNumber) url += ':' + columnNumber
+  }
+
+  let needsHidden = false
+  const internalUrl = isInternalFile(url)
+  if (internalUrl) {
+    ++omits.value
+    needsHidden = true
+  } else {
+    if (omits.value > 0) {
+      const omittedFrames = document.createElement('div')
+      omittedFrames.appendChild(document.createTextNode(`${omits.value } stack frames where omitted.`))
+      //TODO: ability to expand omitted frames!
+      /*omittedFrames.appendChild(document.createElement('br'))
+      omittedFrames.appendChild(document.createTextNode(`[Click to expand]`))*/
+      applyStyles(omittedFrames, omittedFramesStyle)
+      parentContainer.appendChild(omittedFrames)
+    }
+    omits.value = 0
+  }
+
+  const elem = frameDiv(functionName, url, internalUrl)
+  if (needsHidden) applyStyles(elem, hiddenStyle)
+
+  let hasSource = false
+  if (!internalUrl) {
+    if (compiled && scriptLines.length !== 0) {
+      elem.appendChild(sourceCodePre(scriptLines, lineNumber, columnNumber, critical))
+      hasSource = true
+    } else if (!compiled && sourceLines.length !== 0) {
+      elem.appendChild(sourceCodePre(sourceLines, sourceLineNumber, sourceColumnNumber, critical))
+      hasSource = true
+    }
+  }
+
+  return { elem, hasSource }
+}
+
+function getAnchor(text, call) {
+  const anchor = document.createElement('a')
+  anchor.href = '#'
+  applyStyles(anchor, anchorStyle)
+  anchor.appendChild(document.createTextNode(text))
+  anchor.addEventListener('click', e => {
+    e.preventDefault()
+    e.target.blur()
+
+    call()
+  })
+  return anchor
+}
+
+function lazyFrame(parent, factory, lIndex) {
+  const fac = factory()
+  if (fac == null) return
+  const { hasSource, elem } = fac
+
+  const elemWrapper = document.createElement('div')
+  elemWrapper.appendChild(elem)
+
+  const compiledDiv = document.createElement('div')
+  applyStyles(compiledDiv, toggleStyle)
+  if (hasSource) {
+    const sourceAnchor = getAnchor('Source', () => {
+      const o = frameSettings[lIndex]
+      if (o) o.compiled = false
+
+      const next = lazyFrame(parent, factory, lIndex)
+      if (next != null) {
+        parent.insertBefore(next, elemWrapper)
+        parent.removeChild(elemWrapper)
+      }
+    })
+    const compiledAnchor = getAnchor('Compiled', () => {
+      const o = frameSettings[lIndex]
+      if (o) o.compiled = true
+
+      const next = lazyFrame(parent, factory, lIndex)
+      if (next != null) {
+        parent.insertBefore(next, elemWrapper)
+        parent.removeChild(elemWrapper)
+      }
+    })
+    compiledDiv.appendChild(sourceAnchor)
+    compiledDiv.appendChild(document.createTextNode(' <-> '))
+    compiledDiv.appendChild(compiledAnchor)
+  }
+  elemWrapper.appendChild(compiledDiv)
+
+  return elemWrapper
+}
+
 function traceDiv(resolvedFrames) {
   const trace = document.createElement('div')
   applyStyles(trace, traceStyle)
-  // Firefox can't handle const due to non-compliant implementation
-  // Revisit Jan 2016
-  // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
-  // https://bugzilla.mozilla.org/show_bug.cgi?id=1101653
-  let omittedFramesCount = 0
-  const appendOmittedFrames = () => {
-    if (!omittedFramesCount) return
-    const omittedFrames = document.createElement('div')
-    omittedFrames.appendChild(document.createTextNode(`---[ ${omittedFramesCount} internal calls hidden ]---`))
-    applyStyles(omittedFrames, omittedFramesStyle)
-    trace.appendChild(omittedFrames)
-    omittedFramesCount = 0
-  }
-  let main = true
+
+  let index = 0
+  let critical = true
+  const omits = { value: 0 }
   for (let frame of resolvedFrames) {
-    const {
-      functionName,
-      fileName, lineNumber, columnNumber,
-      scriptLines,
-      sourceFileName, sourceLineNumber, sourceColumnNumber,
-      sourceLines
-    } = frame
-
-    // Skip native functions like Array.forEach
-    if (fileName === '(native)') continue
-
-    let url
-    if (!sourceDisabled && sourceFileName) {
-      url = sourceFileName + ':' + sourceLineNumber
-      if (sourceColumnNumber) url += ':' + sourceColumnNumber
-    } else {
-      url = fileName + ':' + lineNumber
-      if (columnNumber) url += ':' + columnNumber
-    }
-
-    const internalUrl = isInternalFile(url)
-    if (internalUrl && internalDisabled) {
-      omittedFramesCount++
-      continue
-    }
-
-    appendOmittedFrames()
-
-    const elem = frameDiv(functionName, url, internalUrl)
-
-    if (!internalUrl) {
-      if (sourceDisabled && scriptLines.length !== 0) {
-        elem.appendChild(sourceCodePre(scriptLines, lineNumber, columnNumber, main))
-      } else if (!sourceDisabled && sourceLines.length !== 0) {
-        elem.appendChild(sourceCodePre(sourceLines, sourceLineNumber, sourceColumnNumber, main))
-      }
-      main = false
-    }
-
+    const lIndex = index++
+    const elem = lazyFrame(
+      trace,
+      traceFrame.bind(undefined, frameSettings[lIndex], frame, critical, omits, trace),
+      lIndex
+    )
+    if (elem == null) continue
+    critical = false
     trace.appendChild(elem)
   }
-  appendOmittedFrames()
+  //TODO: fix this
+  omits.value = 0
+
   return trace
 }
 
@@ -320,7 +379,6 @@ function render(error, name, message, resolvedFrames) {
 
   // Mount
   document.body.appendChild(overlayReference = overlay)
-  errorCache = error
   additionalCount = 0
 }
 
@@ -336,6 +394,7 @@ function isInternalFile(url) {
 
 function crash(error, unhandledRejection = false) {
   StackTraceResolve(error, CONTEXT_SIZE).then(function(resolvedFrames) {
+    frameSettings = resolvedFrames.map(() => { return { compiled: false } })
     if (unhandledRejection) {
       render(error, `Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
     } else {
@@ -375,8 +434,6 @@ window.addEventListener('unhandledrejection', promiseHandler)
 let escapeHandler = function(event) {
   const { key, keyCode, which } = event
   if (key === 'Escape' || keyCode === 27 || which === 27) unmount()
-  else if (key === 'i' || keyCode === 73 || which === 73) toggleInternal()
-  else if (key === 's' || keyCode === 83 || which === 83) toggleSource()
 }
 
 window.addEventListener('keydown', escapeHandler)
