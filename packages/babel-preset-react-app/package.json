@@ -1,8 +1,8 @@
 {
-  "name": "babel-preset-react-app",
+  "name": "babel-preset-mattface",
   "version": "1.0.0",
-  "description": "Babel preset used by Create React App",
-  "repository": "facebookincubator/create-react-app",
+  "description": "Babel preset used by @mattface.",
+  "repository": "matthewdavidson/create-react-app",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
