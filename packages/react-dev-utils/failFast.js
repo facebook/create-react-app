@@ -45,6 +45,14 @@ const hintsStyle = {
   color: darkGray
 }
 
+const hintStyle = {
+  'border-radius': '0.3em',
+  padding: '0.5em 1em',
+  border: '1px solid',
+  'border-color': darkGray,
+  cursor: 'pointer'
+}
+
 const headerStyle = {
   'font-size': '1.7em',
   'font-weight': 'bold',
@@ -176,13 +184,21 @@ function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
   return pre
 }
 
+function createHint(hint) {
+  const span = document.createElement('span')
+  span.appendChild(document.createTextNode(hint))
+  applyStyles(span, hintStyle)
+  return span
+}
+
 function hintsDiv() {
   const hints = document.createElement('div')
-  hints.appendChild(document.createTextNode('[escape] Close'))
-  hints.addEventListener('click', e => {
+  applyStyles(hints, hintsStyle)
+  const close = createHint('Close')
+  close.addEventListener('click', e => {
     unmount()
   })
-  applyStyles(hints, hintsStyle)
+  hints.appendChild(close)
   return hints
 }
 
