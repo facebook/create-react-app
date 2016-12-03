@@ -73,7 +73,7 @@ function addOverlayDivTo(iframe) {
   div.style.fontSize = 'large';
   div.style.padding = '2rem';
   div.style.lineHeight = '1.2';
-  div.style.whiteSpace = 'pre-wrap';
+  div.style.whiteSpace = 'pre';
   div.style.overflow = 'auto';
   iframe.contentDocument.body.appendChild(div);
   return div;
@@ -123,7 +123,7 @@ function showErrorOverlay(message) {
   });
 }
 
-function destroyErrorOverlay() {  
+function destroyErrorOverlay() {
   if (!overlayDiv) {
     // It is not there in the first place.
     return;
