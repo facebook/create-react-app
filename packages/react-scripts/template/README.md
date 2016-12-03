@@ -810,7 +810,11 @@ Note that tests run much slower with coverage so it is recommended to run it sep
 
 ### Continuous Integration
 
-By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`. Popular CI servers already set it by default but you can do this yourself too:
+By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`.
+
+When creating a build of your application with `npm run build` linter warnings are not checked by default. Like `npm test`, you can force the build to perform a linter warning check by setting the environment variable `CI`. If any warnings are encountered then the build fails.
+
+Popular CI servers already set the environment variable `CI` by default but you can do this yourself too:
 
 ### On CI servers
 #### Travis CI
@@ -827,6 +831,7 @@ cache:
     - node_modules
 script:
   - npm test
+  - npm run build
 ```
 1. Trigger your first build with a git push.
 1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
@@ -838,6 +843,10 @@ script:
 set CI=true&&npm test
 ```
 
+```cmd
+set CI=true&&npm run build
+```
+
 (Note: the lack of whitespace is intentional.)
 
 ##### Linux, OS X (Bash)
@@ -846,9 +855,15 @@ set CI=true&&npm test
 CI=true npm test
 ```
 
-This way Jest will run tests once instead of launching the watcher.
+```bash
+CI=true npm run build
+```
 
-If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
+The test command will force Jest to run tests once instead of launching the watcher.
+
+>  If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
+
+The build command will check for linter warnings and fail if any are found.
 
 ### Disabling jsdom
 
