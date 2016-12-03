@@ -382,6 +382,7 @@ function render(error, name, message, resolvedFrames) {
     renderAdditional()
     return
   }
+  frameSettings = resolvedFrames.map(() => { return { compiled: false } })
 
   // Create overlay
   const overlay = document.createElement('div')
@@ -421,7 +422,6 @@ function crash(error, unhandledRejection = false) {
   if (module.hot) module.hot.decline()
 
   StackTraceResolve(error, CONTEXT_SIZE).then(function(resolvedFrames) {
-    frameSettings = resolvedFrames.map(() => { return { compiled: false } })
     if (unhandledRejection) {
       render(error, `Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
     } else {
