@@ -179,6 +179,9 @@ function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
 function hintsDiv() {
   const hints = document.createElement('div')
   hints.appendChild(document.createTextNode('[escape] Close'))
+  hints.addEventListener('click', e => {
+    unmount()
+  })
   applyStyles(hints, hintsStyle)
   return hints
 }
