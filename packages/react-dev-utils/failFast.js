@@ -446,6 +446,7 @@ function renderError(index) {
   } else {
     render(error, error.name, error.message, resolvedFrames)
   }
+  viewIndex = index
 }
 
 function crash(error, unhandledRejection = false) {
@@ -464,6 +465,18 @@ function crash(error, unhandledRejection = false) {
     unmount()
     render(null, 'Error', 'There is an error with red box. *Please* report this (see console).', [])
   })
+}
+
+function switchError(offset) {
+  try {
+    const nextView = viewIndex + offset
+    if (nextView < 0 || nextView >= capturedErrors.length) return
+    renderError(nextView)
+  } catch (e) {
+    console.log('Red box renderer error:', e)
+    unmount()
+    render(null, 'Error', 'There is an error with red box. *Please* report this (see console).', [])
+  }
 }
 
 window.onerror = function(messageOrEvent, source, lineno, colno, error) {
@@ -492,6 +505,8 @@ window.addEventListener('unhandledrejection', promiseHandler)
 let escapeHandler = function(event) {
   const { key, keyCode, which } = event
   if (key === 'Escape' || keyCode === 27 || which === 27) unmount()
+  else if (key === 'ArrowLeft' || keyCode === 37 || which === 37) switchError(-1)
+  else if (key === 'ArrowRight' || keyCode === 39 || which === 39) switchError(1)
 }
 
 window.addEventListener('keydown', escapeHandler)
