@@ -137,14 +137,13 @@ function applyStyles(element, styles) {
 }
 
 let overlayReference = null
+let capturedErrors = []
 let frameSettings = []
-let additionalCount = 0
 
 function renderAdditional() {
-  ++additionalCount
   const title = overlayReference.childNodes[1].childNodes[0]
   const children = title.childNodes
-  const text = document.createTextNode(` (+${additionalCount} more)`)
+  const text = document.createTextNode(` (viewing 1/${capturedErrors.length})`)
   if (children.length < 2) {
     title.appendChild(text)
   } else {
@@ -421,13 +420,13 @@ function render(error, name, message, resolvedFrames) {
 
   // Mount
   document.body.appendChild(overlayReference = overlay)
-  additionalCount = 0
 }
 
 function unmount() {
   if (overlayReference === null) return
   document.body.removeChild(overlayReference)
   overlayReference = null
+  capturedErrors = []
 }
 
 function isInternalFile(url) {
@@ -438,6 +437,7 @@ function crash(error, unhandledRejection = false) {
   if (module.hot) module.hot.decline()
 
   StackTraceResolve(error, CONTEXT_SIZE).then(function(resolvedFrames) {
+    capturedErrors.push({ error, unhandledRejection })
     if (unhandledRejection) {
       render(error, `Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
     } else {
@@ -447,7 +447,8 @@ function crash(error, unhandledRejection = false) {
     // This is another fail case (unlikely to happen)
     // e.g. render(...) throws an error with provided arguments
     console.log('Red box renderer error:', e)
-    render(null, 'Error', 'Unknown Error (failure to materialize)', [])
+    unmount()
+    render(null, 'Error', 'There is an error with red box. *Please* report this (see console).', [])
   })
 }
 
