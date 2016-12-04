@@ -238,6 +238,9 @@ module.exports = {
         './flow-typed'
       ],
       flowVersion: "0.36.0",
+      otherFlowTypedDefs: {
+        jest: "17.0.0"
+      }
     })
   ],
   // Some libraries import Node modules but don't use them in the browser.
