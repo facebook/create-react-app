@@ -4,6 +4,14 @@
 * `react-scripts`
   * [#1149](https://github.com/facebookincubator/create-react-app/pull/1149) Fix incorrectly stubbing JavaScript files with a dot in the import path in tests. ([@fson](https://github.com/fson))
 
+### Migrating from 0.8.0 to 0.8.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.8.1
+```
+
 ## 0.8.0 (2016-12-03)
 
 #### :rocket: New Feature
