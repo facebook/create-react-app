@@ -46,11 +46,18 @@ const hintsStyle = {
 }
 
 const hintStyle = {
-  'border-radius': '0.3em',
   padding: '0.5em 1em',
-  border: '1px solid',
-  'border-color': darkGray,
   cursor: 'pointer'
+}
+
+const closeButtonStyle = {
+  'font-size': '26px',
+  color: black,
+  padding: '0.5em 1em',
+  cursor: 'pointer',
+  position: 'absolute',
+  right: 0,
+  top: 0,
 }
 
 const headerStyle = {
@@ -196,10 +203,12 @@ function createHint(hint) {
 function hintsDiv() {
   const hints = document.createElement('div')
   applyStyles(hints, hintsStyle)
-  const close = createHint('Close')
+
+  const close = createHint('×')
   close.addEventListener('click', e => {
     unmount()
   })
+  applyStyles(close, closeButtonStyle)
   hints.appendChild(close)
   return hints
 }
