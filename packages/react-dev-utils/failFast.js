@@ -23,7 +23,7 @@ const overlayStyle = {
   'z-index': 1337,
   'font-family': 'Consolas, Menlo, monospace',
   color: black,
-  'white-space': 'pre',
+  'white-space': 'pre-wrap',
   overflow: 'auto',
   'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
   'line-height': 1.5,
@@ -88,6 +88,7 @@ const primaryErrorStyle = {
 const secondaryErrorStyle = {
   'background-color': yellow
 }
+
 const omittedFramesStyle = {
   color: black,
   'font-size': '0.9em',
@@ -100,7 +101,8 @@ const preStyle = {
   'margin-top': '1.5em',
   'margin-bottom': '0px',
   'overflow-x': 'auto',
-  'font-size': '1.1em'
+  'font-size': '1.1em',
+  'white-space': 'pre',
 }
 
 const toggleStyle = {
