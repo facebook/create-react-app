@@ -12,6 +12,7 @@
   },
   "files": [
     "clearConsole.js",
+    "FlowTypecheckPlugin.js",
     "checkRequiredFiles.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
