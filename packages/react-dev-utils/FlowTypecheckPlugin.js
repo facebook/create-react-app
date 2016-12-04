@@ -96,6 +96,7 @@ FlowTypecheckPlugin.prototype._initializeFlow = function(projectPath, flowVersio
     }.bind(this));
     this._flowServer.on('exit', function() {
       if (this._flowServerStderr.indexOf('Lib files changed')) {
+        this._flowServerStderr = "";
         spawnServer();
       }
     }.bind(this));
