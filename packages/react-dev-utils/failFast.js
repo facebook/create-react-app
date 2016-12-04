@@ -393,10 +393,8 @@ function traceDiv(resolvedFrames) {
 }
 
 function render(error, name, message, resolvedFrames) {
-  if (overlayReference !== null) {
-    renderAdditional()
-    return
-  }
+  dispose()
+
   frameSettings = resolvedFrames.map(() => { return { compiled: false } })
 
   // Create overlay
@@ -422,10 +420,14 @@ function render(error, name, message, resolvedFrames) {
   document.body.appendChild(overlayReference = overlay)
 }
 
-function unmount() {
+function dispose() {
   if (overlayReference === null) return
   document.body.removeChild(overlayReference)
   overlayReference = null
+}
+
+function unmount() {
+  dispose()
   capturedErrors = []
 }
 
@@ -438,10 +440,13 @@ function crash(error, unhandledRejection = false) {
 
   StackTraceResolve(error, CONTEXT_SIZE).then(function(resolvedFrames) {
     capturedErrors.push({ error, unhandledRejection })
-    if (unhandledRejection) {
-      render(error, `Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
-    } else {
-      render(error, error.name, error.message, resolvedFrames)
+    if (overlayReference !== null) renderAdditional()
+    else {
+      if (unhandledRejection) {
+        render(error, `Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
+      } else {
+        render(error, error.name, error.message, resolvedFrames)
+      }
     }
   }).catch(function(e) {
     // This is another fail case (unlikely to happen)
