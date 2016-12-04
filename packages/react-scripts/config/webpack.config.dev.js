@@ -72,6 +72,11 @@ module.exports = {
     publicPath: publicPath
   },
   resolve: {
+    // This ensures that create-react-app's node_modules are first checked before
+    // other module locations (e.g. NODE_PATH). Without this, if NODE_PATH has
+    // the same module, webpack will use it before the dependency specified in our
+    // node modules.
+    // https://github.com/facebookincubator/create-react-app/issues/1023
     root: paths.ownNodeModules,
     // This allows you to set a fallback for where Webpack should look for modules.
     // We read `NODE_PATH` environment variable in `paths.js` and pass paths here.
