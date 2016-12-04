@@ -28,6 +28,7 @@
     "chalk": "1.1.3",
     "escape-string-regexp": "1.0.5",
     "flow-bin": "^0.36.0",
+    "flow-typed": "^2.0.0",
     "html-entities": "1.2.0",
     "opn": "4.0.2",
     "sockjs-client": "1.0.3",
