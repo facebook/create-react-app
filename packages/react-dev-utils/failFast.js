@@ -140,6 +140,7 @@ function applyStyles(element, styles) {
 
 let overlayReference = null
 let capturedErrors = []
+let viewIndex = -1
 let frameSettings = []
 
 function renderAdditional() {
@@ -431,24 +432,30 @@ function dispose() {
 function unmount() {
   dispose()
   capturedErrors = []
+  viewIndex = -1
 }
 
 function isInternalFile(url) {
   return url.indexOf('/~/') !== -1 || url.trim().indexOf(' ') !== -1
 }
 
+function renderError(index) {
+  const { error, unhandledRejection, resolvedFrames } = capturedErrors[index]
+  if (unhandledRejection) {
+    render(error, `Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
+  } else {
+    render(error, error.name, error.message, resolvedFrames)
+  }
+}
+
 function crash(error, unhandledRejection = false) {
   if (module.hot) module.hot.decline()
 
   StackTraceResolve(error, CONTEXT_SIZE).then(function(resolvedFrames) {
-    capturedErrors.push({ error, unhandledRejection })
+    capturedErrors.push({ error, unhandledRejection, resolvedFrames })
     if (overlayReference !== null) renderAdditional()
     else {
-      if (unhandledRejection) {
-        render(error, `Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
-      } else {
-        render(error, error.name, error.message, resolvedFrames)
-      }
+      renderError(viewIndex = 0)
     }
   }).catch(function(e) {
     // This is another fail case (unlikely to happen)
