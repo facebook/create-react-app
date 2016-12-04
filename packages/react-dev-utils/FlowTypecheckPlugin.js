@@ -4,6 +4,81 @@ var childProcess = require('child_process');
 var flowBinPath = require('flow-bin');
 const flowTypedPath = path.join(__dirname, 'node_modules', '.bin', 'flow-typed');
 
+function execOneTime(command, args, options) {
+  return new Promise((resolve) => {
+    childProcess.exec(
+      command + ' ' + (args || []).join(' '),
+      (options || {}),
+      (error, stdout, stderr) => {
+        resolve({
+          error: error,
+          stdout: stdout,
+          stderr: stderr
+        });
+      }
+    )
+  });
+}
+
+function writeFileIfDoesNotExist(path, data) {
+  return new Promise((resolve, reject) => {
+    fs.exists(path, exists => {
+      if (!exists) {
+        fs.writeFile(path, data, err => {
+          if (err) {
+            reject(err);
+          }
+          resolve(data);
+        });
+      }
+    });
+  });
+}
+
+function initializeFlow(projectPath, flowVersion, flowconfig, otherFlowTypedDefs) {
+  const flowconfigPath = path.join(projectPath, '.flowconfig');
+  Promise.all(
+    [
+      writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n')),
+      execOneTime(
+        flowTypedPath,
+        ['install', '--overwrite', '--flowVersion=' + flowVersion],
+        { cwd: projectPath }
+      )
+    ].concat(
+      Object.keys(otherFlowTypedDefs).map((packageName) => execOneTime(
+        flowTypedPath,
+        [
+          'install',
+          packageName + '@' + otherFlowTypedDefs[packageName],
+          '--overwrite',
+          '--flowVersion=' + flowVersion
+        ],
+        { cwd: projectPath }
+      ))
+    )
+  );
+}
+
+function flowCheck(projectPath, flowVersion) {
+  return execOneTime(
+    flowBinPath,
+    ['status', '--color=always'],
+    { cwd: projectPath }
+  )
+  .then(res => {
+    var flowOutput = res.stdout;
+    var flowErrOutput = res.stderr;
+    if (flowErrOutput.length > 0) {
+      if(flowErrOutput.indexOf("still initializing") < 0) {
+        return Promise.reject(new Error('flow server:\n' + flowErrOutput));
+      }
+    }
+    return flowOutput;
+  });
+}
+
+
 function FlowTypecheckPlugin(options) {
   options = options || {};
   // The flow-bin version
@@ -13,19 +88,12 @@ function FlowTypecheckPlugin(options) {
   // Load up other flow-typed defs outside of the package.json (implicit packages behind react-scripts)
   // Key is the package name, value is the version number
   this.otherFlowTypedDefs = options.otherFlowTypedDefs || {};
-  
-  // If flow is globally present in the project, this will stay across compilations
-  this._flowInitialized = false;
-  // If flow should run in a current compilation
-  this._flowShouldRun = false;
-  // Stores the last flow output
-  this._flowOutput = '';
-  // Flow server process
-  this._flowServer = null;
-  this._flowServerStderr = '';
 }
 
 FlowTypecheckPlugin.prototype.apply = function(compiler) {
+  var flowInitialized = false;
+  var flowShouldRun = false;
+  var flowOutput = '';
   compiler.plugin('compilation', (compilation, params) => {
     // Detect the presence of flow and initialize it
     compilation.plugin('normal-module-loader', (loaderContext, module) => {
@@ -35,11 +103,14 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
         // We use webpack's cached FileSystem to avoid slowing down compilation
         loaderContext.fs.readFile(module.resource, (err, data) => {
           if (data && data.toString().indexOf('@flow') >= 0) {
-            if (!this._flowInitialized) {
-              this._initializeFlow(compiler.options.context, this.flowVersion);
-              this._flowInitialized = true;
+            if (!flowInitialized) {
+              initializeFlow(
+                compiler.options.context, this.flowVersion,
+                this.flowconfig, this.otherFlowTypedDefs
+              );
+              flowInitialized = true;
             }
-            this._flowShouldRun = true;
+            flowShouldRun = true;
           }
         });
       }
@@ -49,100 +120,27 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
   // While emitting run a flow check if flow has been detected
   compiler.plugin('emit', (compilation, callback) => {
     // Only if a file with @ flow has been changed
-    if (this._flowShouldRun) {
-      this._flowShouldRun = false;
-      this._flowCheck(compiler.options.context, this.flowVersion, (err, flowOutput) => {
-        if (err) {
-          compilation.errors.push(err.message);
-          return callback();
-        }
-        this._flowOutput = flowOutput;
+    if (flowShouldRun) {
+      flowShouldRun = false;
+      flowCheck(compiler.options.context, this.flowVersion)
+      .then(newOutput => {
+        flowOutput = newOutput;
         // Output a warning if flow failed
-        if (this._flowOutput.indexOf('No errors!') < 0) {
-          compilation.warnings.push(this._flowOutput);
+        if (flowOutput.indexOf('No errors!') < 0) {
+          compilation.warnings.push(flowOutput);
         }
+        callback();
+      }, (err) => {
+        compilation.errors.push(err.message);
         callback();
       });
     } else {
       // Output a warning if flow failed in a previous run
-      if (this._flowOutput.length > 0 && this._flowOutput.indexOf('No errors!') < 0) {
-        compilation.warnings.push(this._flowOutput);
+      if (flowOutput.length > 0 && flowOutput.indexOf('No errors!') < 0) {
+        compilation.warnings.push(flowOutput);
       }
       callback();
     }
-  });
-};
-
-// This initializer will run once per webpack run (runs once across all compilations)
-FlowTypecheckPlugin.prototype._initializeFlow = function(projectPath, flowVersion) {
-  const flowconfigPath = path.join(projectPath, '.flowconfig');
-  fs.exists(flowconfigPath, (exists) => {
-    if (!exists) {
-      fs.writeFile(flowconfigPath, this.flowconfig.join('\n'));
-    }
-  });
-  childProcess.exec(
-    flowTypedPath + ' install --overwrite --flowVersion=' + flowVersion,
-    { cwd: projectPath }
-  );
-  Object.keys(this.otherFlowTypedDefs).forEach((packageName) => {
-    childProcess.exec(
-      flowTypedPath + ' install ' + packageName + '@' + this.otherFlowTypedDefs[packageName] + ' --overwrite --flowVersion=' + flowVersion,
-      { cwd: projectPath }
-    );
-  })
-  function spawnServer() {
-    this._flowServer = childProcess.spawn(
-      flowBinPath,
-      ['server'],
-      { cwd: projectPath }
-    );
-    this._flowServer.stderr.on('data', (chunk) => {
-      this._flowServerStderr += chunk.toString();
-    });
-    this._flowServer.on('exit', () => {
-      if (this._flowServerStderr.indexOf('Lib files changed')) {
-        this._flowServerStderr = "";
-        spawnServer();
-      }
-    });
-  };
-  spawnServer.call(this);
-};
-
-// This check will run each time a compilation sees a file with @ flow change
-FlowTypecheckPlugin.prototype._flowCheck = function(projectPath, flowVersion, cb) {
-  var flowOutput = "";
-  var flowErrOutput = "";
-  var statusCheck = childProcess.spawn(
-    flowBinPath,
-    ['status', '--no-auto-start', '--color=always'],
-    { cwd: projectPath }
-  );
-  statusCheck.stdout.on('data', (chunk) => {
-    flowOutput += chunk.toString();
-  });
-  statusCheck.stderr.on('data', (chunk) => {
-    flowErrOutput += chunk.toString();
-  });
-  statusCheck.on('close', () => {
-    if (flowErrOutput.length > 0) {
-      if (flowErrOutput.indexOf("There is no Flow server running") >= 0) {
-        return cb(new Error(
-          'flow server: unexpectedly died.\n\n' +
-          this._flowServerStderr +
-          '\n' +
-          'This is likely due to a version mismatch between a global flow ' +
-          'server (that you or your IDE may try to run) and react-script\'s ' +
-          'flow server.\n' +
-          'You should run: \n' +
-          'npm install -g flow-bin@' + flowVersion
-        ));
-      } else if(flowErrOutput.indexOf("still initializing") < 0) {
-        return cb(new Error(flowErrOutput));
-      }
-    }
-    cb(null, flowOutput);
   });
 };
 
