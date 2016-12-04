@@ -60,6 +60,11 @@ const closeButtonStyle = {
   top: 0,
 }
 
+const additionalStyle = {
+  'margin-bottom': '1.5em',
+  'margin-top': '-4em',
+}
+
 const headerStyle = {
   'font-size': '1.7em',
   'font-weight': 'bold',
@@ -146,20 +151,20 @@ function applyStyles(element, styles) {
 }
 
 let overlayReference = null
+let additionalReference = null
 let capturedErrors = []
 let viewIndex = -1
 let frameSettings = []
 
 function renderAdditional() {
-  const title = overlayReference.childNodes[1].childNodes[0]
-  const children = title.childNodes
-  const text = document.createTextNode(` (viewing ${viewIndex + 1}/${capturedErrors.length})`)
-  if (children.length < 2) {
-    title.appendChild(text)
-  } else {
-    title.removeChild(children[children.length - 1])
-    title.appendChild(text)
+  let text = ' '
+  if (capturedErrors.length > 1) {
+    text = `Errors ${viewIndex + 1} of ${capturedErrors.length}`
   }
+  if (additionalReference.lastChild) {
+    additionalReference.removeChild(additionalReference.lastChild)
+  }
+  additionalReference.appendChild(document.createTextNode(text))
 }
 
 function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
@@ -419,6 +424,12 @@ function render(error, name, message, resolvedFrames) {
   applyStyles(container, containerStyle)
   overlay.appendChild(container)
 
+  // Create additional
+  additionalReference = document.createElement('div')
+  applyStyles(additionalReference, additionalStyle)
+  container.appendChild(additionalReference)
+  renderAdditional()
+
   // Create header
   const header = document.createElement('div')
   applyStyles(header, headerStyle)
@@ -430,8 +441,6 @@ function render(error, name, message, resolvedFrames) {
 
   // Mount
   document.body.appendChild(overlayReference = overlay)
-
-  if (capturedErrors.length > 1) renderAdditional()
 }
 
 function dispose() {
