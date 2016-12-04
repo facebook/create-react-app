@@ -26,14 +26,14 @@ function FlowTypecheckPlugin(options) {
 }
 
 FlowTypecheckPlugin.prototype.apply = function(compiler) {
-  compiler.plugin('compilation', function(compilation, params) {
+  compiler.plugin('compilation', (compilation, params) => {
     // Detect the presence of flow and initialize it
-    compilation.plugin('normal-module-loader', function(loaderContext, module) {
+    compilation.plugin('normal-module-loader', (loaderContext, module) => {
       // We're only checking the presence of flow in non-node_modules
       // (some dependencies may keep their flow comments, we don't want to match them)
       if (module.resource.indexOf("node_modules") < 0) {
         // We use webpack's cached FileSystem to avoid slowing down compilation
-        loaderContext.fs.readFile(module.resource, function(err, data) {
+        loaderContext.fs.readFile(module.resource, (err, data) => {
           if (data && data.toString().indexOf('@flow') >= 0) {
             if (!this._flowInitialized) {
               this._initializeFlow(compiler.options.context, this.flowVersion);
@@ -41,17 +41,17 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
             }
             this._flowShouldRun = true;
           }
-        }.bind(this));
+        });
       }
-    }.bind(this))
-  }.bind(this));
+    })
+  });
 
   // While emitting run a flow check if flow has been detected
-  compiler.plugin('emit', function(compilation, callback) {
+  compiler.plugin('emit', (compilation, callback) => {
     // Only if a file with @ flow has been changed
     if (this._flowShouldRun) {
       this._flowShouldRun = false;
-      this._flowCheck(compiler.options.context, this.flowVersion, function(err, flowOutput) {
+      this._flowCheck(compiler.options.context, this.flowVersion, (err, flowOutput) => {
         if (err) {
           compilation.errors.push(err.message);
           return callback();
@@ -62,7 +62,7 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
           compilation.warnings.push(this._flowOutput);
         }
         callback();
-      }.bind(this));
+      });
     } else {
       // Output a warning if flow failed in a previous run
       if (this._flowOutput.length > 0 && this._flowOutput.indexOf('No errors!') < 0) {
@@ -70,22 +70,22 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
       }
       callback();
     }
-  }.bind(this));
+  });
 };
 
 // This initializer will run once per webpack run (runs once across all compilations)
 FlowTypecheckPlugin.prototype._initializeFlow = function(projectPath, flowVersion) {
   const flowconfigPath = path.join(projectPath, '.flowconfig');
-  fs.exists(flowconfigPath, function(exists) {
+  fs.exists(flowconfigPath, (exists) => {
     if (!exists) {
       fs.writeFile(flowconfigPath, this.flowconfig.join('\n'));
     }
-  }.bind(this));
+  });
   childProcess.exec(
     flowTypedPath + ' install --overwrite --flowVersion=' + flowVersion,
     { cwd: projectPath }
   );
-  Object.keys(this.otherFlowTypedDefs).forEach(function(packageName) {
+  Object.keys(this.otherFlowTypedDefs).forEach((packageName) => {
     childProcess.exec(
       flowTypedPath + ' install ' + packageName + '@' + this.otherFlowTypedDefs[packageName] + ' --overwrite --flowVersion=' + flowVersion,
       { cwd: projectPath }
@@ -97,15 +97,15 @@ FlowTypecheckPlugin.prototype._initializeFlow = function(projectPath, flowVersio
       ['server'],
       { cwd: projectPath }
     );
-    this._flowServer.stderr.on('data', function(chunk) {
+    this._flowServer.stderr.on('data', (chunk) => {
       this._flowServerStderr += chunk.toString();
-    }.bind(this));
-    this._flowServer.on('exit', function() {
+    });
+    this._flowServer.on('exit', () => {
       if (this._flowServerStderr.indexOf('Lib files changed')) {
         this._flowServerStderr = "";
         spawnServer();
       }
-    }.bind(this));
+    });
   };
   spawnServer.call(this);
 };
@@ -119,13 +119,13 @@ FlowTypecheckPlugin.prototype._flowCheck = function(projectPath, flowVersion, cb
     ['status', '--no-auto-start', '--color=always'],
     { cwd: projectPath }
   );
-  statusCheck.stdout.on('data', function(chunk) {
+  statusCheck.stdout.on('data', (chunk) => {
     flowOutput += chunk.toString();
   });
-  statusCheck.stderr.on('data', function(chunk) {
+  statusCheck.stderr.on('data', (chunk) => {
     flowErrOutput += chunk.toString();
   });
-  statusCheck.on('close', function() {
+  statusCheck.on('close', () => {
     if (flowErrOutput.length > 0) {
       if (flowErrOutput.indexOf("There is no Flow server running") >= 0) {
         return cb(new Error(
@@ -143,7 +143,7 @@ FlowTypecheckPlugin.prototype._flowCheck = function(projectPath, flowVersion, cb
       }
     }
     cb(null, flowOutput);
-  }.bind(this));
+  });
 };
 
 module.exports = FlowTypecheckPlugin;
