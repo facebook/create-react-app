@@ -39,13 +39,9 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
       this._flowOutput = this._flowCheck();
       this._flowShouldRun = false;
     }
+    // Output a warning if flow failed
     if (this._flowOutput.length > 0) {
-      // In a CI, we wish to get flow breaking the build so we write errors here
-      if (process.env.CI) {
-        compilation.errors.push(this._flowOutput);
-      } else {
-        compilation.warnings.push(this._flowOutput);
-      }
+      compilation.warnings.push(this._flowOutput);
     }
     callback();
   }.bind(this));

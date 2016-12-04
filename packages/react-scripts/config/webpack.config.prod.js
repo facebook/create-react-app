@@ -16,6 +16,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
+var FlowTypecheckPlugin = require('react-dev-utils/FlowTypecheckPlugin');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
@@ -277,7 +278,9 @@ module.exports = {
     // Generate and inject subresources hashes in the final `index.html`.
     new SubresourceIntegrityPlugin({
       hashFuncNames: ['sha256', 'sha384']
-    })
+    }),
+    // Run Flow only if we see some @ flow annotations, will error on CI
+    new FlowTypecheckPlugin({})
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
