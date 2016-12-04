@@ -5,7 +5,15 @@ var flowBinPath = require('flow-bin');
 const flowTypedPath = path.join(__dirname, 'node_modules', '.bin', 'flow-typed');
 
 function FlowTypecheckPlugin(options) {
-  this.options = options || {};
+  options = options || {};
+  // The flow-bin version
+  this.flowVersion = options.flowVersion || 'latest';
+  // Contents of the generated .flowconfig if it doesn't exist
+  this.flowconfig = options.flowconfig || [];
+  // Load up other flow-typed defs outside of the package.json (implicit packages behind react-scripts)
+  // Key is the package name, value is the version number
+  this.otherFlowTypedDefs = options.otherFlowTypedDefs || {};
+  
   // If flow is globally present in the project, this will stay across compilations
   this._flowInitialized = false;
   // If flow should run in a current compilation
@@ -18,7 +26,6 @@ function FlowTypecheckPlugin(options) {
 }
 
 FlowTypecheckPlugin.prototype.apply = function(compiler) {
-  var version = this.options.flowVersion || 'latest';
   compiler.plugin('compilation', function(compilation, params) {
     // Detect the presence of flow and initialize it
     compilation.plugin('normal-module-loader', function(loaderContext, module) {
@@ -29,7 +36,7 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
         loaderContext.fs.readFile(module.resource, function(err, data) {
           if (data && data.toString().indexOf('@flow') >= 0) {
             if (!this._flowInitialized) {
-              this._initializeFlow(compiler.options.context, version);
+              this._initializeFlow(compiler.options.context, this.flowVersion);
               this._flowInitialized = true;
             }
             this._flowShouldRun = true;
@@ -44,7 +51,7 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
     // Only if a file with @ flow has been changed
     if (this._flowShouldRun) {
       this._flowShouldRun = false;
-      this._flowCheck(compiler.options.context, version, function(err, flowOutput) {
+      this._flowCheck(compiler.options.context, this.flowVersion, function(err, flowOutput) {
         if (err) {
           compilation.errors.push(err.message);
           return callback();
@@ -71,17 +78,16 @@ FlowTypecheckPlugin.prototype._initializeFlow = function(projectPath, flowVersio
   const flowconfigPath = path.join(projectPath, '.flowconfig');
   fs.exists(flowconfigPath, function(exists) {
     if (!exists) {
-      fs.writeFile(flowconfigPath, (this.options.flowconfig || []).join('\n'));
+      fs.writeFile(flowconfigPath, this.flowconfig.join('\n'));
     }
   }.bind(this));
   childProcess.exec(
     flowTypedPath + ' install --overwrite --flowVersion=' + flowVersion,
     { cwd: projectPath }
   );
-  var otherTypeDefs = this.options.otherFlowTypedDefs;
-  Object.keys(otherTypeDefs || {}).forEach(function(packageName) {
+  Object.keys(this.otherFlowTypedDefs).forEach(function(packageName) {
     childProcess.exec(
-      flowTypedPath + ' install ' + packageName + '@' + otherTypeDefs[packageName] + ' --overwrite --flowVersion=' + flowVersion,
+      flowTypedPath + ' install ' + packageName + '@' + this.otherFlowTypedDefs[packageName] + ' --overwrite --flowVersion=' + flowVersion,
       { cwd: projectPath }
     );
   })
