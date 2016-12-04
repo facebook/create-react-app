@@ -146,7 +146,7 @@ let frameSettings = []
 function renderAdditional() {
   const title = overlayReference.childNodes[1].childNodes[0]
   const children = title.childNodes
-  const text = document.createTextNode(` (viewing 1/${capturedErrors.length})`)
+  const text = document.createTextNode(` (viewing ${viewIndex + 1}/${capturedErrors.length})`)
   if (children.length < 2) {
     title.appendChild(text)
   } else {
@@ -421,6 +421,8 @@ function render(error, name, message, resolvedFrames) {
 
   // Mount
   document.body.appendChild(overlayReference = overlay)
+
+  if (capturedErrors.length > 1) renderAdditional()
 }
 
 function dispose() {
@@ -440,13 +442,13 @@ function isInternalFile(url) {
 }
 
 function renderError(index) {
+  viewIndex = index
   const { error, unhandledRejection, resolvedFrames } = capturedErrors[index]
   if (unhandledRejection) {
     render(error, `Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
   } else {
     render(error, error.name, error.message, resolvedFrames)
   }
-  viewIndex = index
 }
 
 function crash(error, unhandledRejection = false) {
