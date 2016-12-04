@@ -1,5 +1,7 @@
 var fs = require('fs');
 var path = require('path');
+var flowBinPath = require('flow-bin');
+var childProcess = require('child_process');
 
 function FlowTypecheckPlugin(options) {
   this.options = options || {};
@@ -9,6 +11,8 @@ function FlowTypecheckPlugin(options) {
   this._flowShouldRun = false;
   // Stores the last flow output
   this._flowOutput = "";
+  // Flow server process
+  this._flowServer = null;
 }
 
 FlowTypecheckPlugin.prototype.apply = function(compiler) {
@@ -36,14 +40,27 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
   compiler.plugin('emit', function(compilation, callback) {
     // Only if a file with @ flow has been changed
     if (this._flowShouldRun) {
-      this._flowOutput = this._flowCheck();
       this._flowShouldRun = false;
+      var version = this.options.flowVersion || 'latest';
+      this._flowCheck(compiler.options.context, version, function(err, flowOutput) {
+        if (err) {
+          compilation.errors.push(err.message);
+          return callback();
+        }
+        this._flowOutput = flowOutput;
+        // Output a warning if flow failed
+        if (this._flowOutput.indexOf('No errors!') < 0) {
+          compilation.warnings.push(this._flowOutput);
+        }
+        callback();
+      }.bind(this));
+    } else {
+      // Output a warning if flow failed in a previous run
+      if (this._flowOutput.length > 0 && this._flowOutput.indexOf('No errors!') < 0) {
+        compilation.warnings.push(this._flowOutput);
+      }
+      callback();
     }
-    // Output a warning if flow failed
-    if (this._flowOutput.length > 0) {
-      compilation.warnings.push(this._flowOutput);
-    }
-    callback();
   }.bind(this));
 };
 
@@ -56,24 +73,45 @@ FlowTypecheckPlugin.prototype._initializeFlow = function(projectPath) {
     }
   }.bind(this));
   // TODO: run flow-typed
-  // TODO: start a flow instance
+  this._flowServer = childProcess.spawn(
+    flowBinPath,
+    ['server'],
+    { cwd: projectPath }
+  );
 };
 
 // This check will run each time a compilation sees a file with @ flow change
-FlowTypecheckPlugin.prototype._flowCheck = function() {
-  // TODO: run a single flow check
-  return `
-src/App.js:11
- 11: f("abc");
-     ^^^^^^^^ function call
- 11: f("abc");
-       ^^^^^ string. This type is incompatible with
-  7: function f(x: number) {
-                   ^^^^^^ number
-
-
-Found 1 error
-  `;
+FlowTypecheckPlugin.prototype._flowCheck = function(projectPath, flowVersion, cb) {
+  var flowOutput = "";
+  var flowErrOutput = "";
+  var statusCheck = childProcess.spawn(
+    flowBinPath,
+    ['status', '--no-auto-start', '--color=always'],
+    { cwd: projectPath }
+  );
+  statusCheck.stdout.on('data', function(chunk) {
+    flowOutput += chunk.toString();
+  });
+  statusCheck.stderr.on('data', function(chunk) {
+    flowErrOutput += chunk.toString();
+  });
+  statusCheck.on('close', function() {
+    if (flowErrOutput.length > 0) {
+      if (flowErrOutput.indexOf("There is no Flow server running") >= 0) {
+        return cb(new Error(
+          'flow server: unexpectedly died.\n' +
+          'This is likely due to a version mismatch between a global flow ' +
+          'server (that you or your IDE may try to run) and react-script\'s ' +
+          'flow server.\n' +
+          'You should run: \n' +
+          'npm install -g flow-bin@' + flowVersion
+        ));
+      } else if(flowErrOutput.indexOf("still initializing") < 0) {
+        return cb(new Error(flowErrOutput));
+      }
+    }
+    cb(null, flowOutput);
+  });
 };
 
 module.exports = FlowTypecheckPlugin;
