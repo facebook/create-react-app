@@ -56,12 +56,43 @@ function writeFileIfDoesNotExist(path, data) {
       if (!exists) {
         fs.writeFile(path, data, err => {
           if (err) {
-            reject(err);
+            return reject(err);
           }
           resolve(data);
         });
       } else {
         resolve(data);
+      }
+    });
+  });
+}
+
+function writeInFileIfNotPresent(path, contentToAssert, contentToAppend) {
+  return new Promise((resolve, reject) => {
+    fs.exists(path, exists => {
+      if (!exists) {
+        fs.writeFile(path, contentToAppend, err => {
+          if (err) {
+            return reject(err);
+          }
+          resolve(contentToAppend);
+        });
+      } else {
+        fs.readFile(path, (err, existingContent) => {
+          if (err) {
+            return reject(err);
+          }
+          if (existingContent.indexOf(contentToAssert) < 0) {
+            fs.appendFile(path, contentToAppend, err => {
+              if (err) {
+                return reject(err);
+              }
+              resolve(contentToAppend);
+            });
+          } else {
+            resolve(contentToAppend);
+          }
+        });
       }
     });
   });
@@ -78,6 +109,7 @@ function getFlowVersion(options) {
 
 function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
   const flowconfigPath = path.join(projectPath, '.flowconfig');
+  const gitignorePath = path.join(projectPath, '.gitignore');
   return getFlowVersion().then(localVersion => Promise.all([
     getFlowVersion({global: true}).catch(() => localVersion)
     .then(globalVersion =>
@@ -95,6 +127,7 @@ function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
         true
     ),
     writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n')),
+    writeInFileIfNotPresent(gitignorePath, 'flow-typed', 'flow-typed'),
     execOneTime(
       flowTypedPath,
       ['install', '--overwrite', '--flowVersion=' + localVersion],
