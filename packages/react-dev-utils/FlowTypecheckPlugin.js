@@ -14,6 +14,10 @@ function stripFlowLoadingIndicators(message) {
   if (stillIndex >= 0) {
     newMessage = newMessage.slice(0, stillIndex);
   }
+  var notRespIndex = newMessage.indexOf("The flow server is not responding");
+  if (notRespIndex >= 0) {
+    newMessage = newMessage.slice(0, notRespIndex);
+  }
   return newMessage;
 }
 
@@ -32,6 +36,7 @@ function execOneTime(command, args, options) {
     oneTimeProcess.stderr.on('data', chunk => {
       stderr = Buffer.concat([stderr, chunk]);
     });
+    oneTimeProcess.on('error', error => reject(error));
     oneTimeProcess.on('exit', code => {
       switch (code) {
         case 0:
@@ -62,29 +67,11 @@ function writeFileIfDoesNotExist(path, data) {
   });
 }
 
-function getFlowPath(globalInstall) {
-  return (
-    globalInstall ?
-      execOneTime(
-        '/bin/sh',
-        ['-c', 'which flow']
-      )
-      .then(rawPath => {
-        var path = rawPath.toString().replace('\n', '');
-        return path.indexOf("not found") >= 0 ?
-          flowBinPath :
-          path
-      }) :
-      Promise.resolve(flowBinPath)
-  )
-}
-
 function getFlowVersion(options) {
-  return getFlowPath((options || {}).globalInstall)
-  .then(flowPath => execOneTime(
-    flowPath,
+  return execOneTime(
+    (options || {}).global ? "flow" : flowBinPath,
     ['version', '--json']
-  ))
+  )
   .then(rawData => JSON.parse(rawData))
   .then(versionData => versionData.semver);
 }
@@ -92,6 +79,21 @@ function getFlowVersion(options) {
 function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
   const flowconfigPath = path.join(projectPath, '.flowconfig');
   return getFlowVersion().then(localVersion => Promise.all([
+    getFlowVersion({global: true}).catch(() => localVersion)
+    .then(globalVersion =>
+      globalVersion !== localVersion ?
+        Promise.reject(new Error(
+          'Your global flow version does not match react-script\'s flow version.\n\n' +
+          'Having two different versions is likely to restart your flow server ' +
+          'regularly while you go back and forth between your App and your IDE ' +
+          '(that is likely to rely on your global flow installation). ' +
+          'This will slow down significantly your development experience. ' +
+          'In order to avoid this, ensure you have flow ' + localVersion + ' globally ' +
+          '(your current global version is ' + globalVersion + ').\n\n' +
+          'Run `npm install -g flow-bin@' + localVersion + '` to fix this.'
+        )) :
+        true
+    ),
     writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n')),
     execOneTime(
       flowTypedPath,
