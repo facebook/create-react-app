@@ -30,6 +30,8 @@ function writeFileIfDoesNotExist(path, data) {
           }
           resolve(data);
         });
+      } else {
+        resolve(data);
       }
     });
   });
@@ -37,7 +39,7 @@ function writeFileIfDoesNotExist(path, data) {
 
 function initializeFlow(projectPath, flowVersion, flowconfig, otherFlowTypedDefs) {
   const flowconfigPath = path.join(projectPath, '.flowconfig');
-  Promise.all(
+  return Promise.all(
     [
       writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n')),
       execOneTime(
@@ -91,7 +93,9 @@ function FlowTypecheckPlugin(options) {
 }
 
 FlowTypecheckPlugin.prototype.apply = function(compiler) {
+  var flowActiveOnProject = false;
   var flowInitialized = false;
+  var flowInitializationPromise;
   var flowShouldRun = false;
   var flowOutput = '';
   compiler.plugin('compilation', (compilation, params) => {
@@ -103,12 +107,20 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
         // We use webpack's cached FileSystem to avoid slowing down compilation
         loaderContext.fs.readFile(module.resource, (err, data) => {
           if (data && data.toString().indexOf('@flow') >= 0) {
-            if (!flowInitialized) {
-              initializeFlow(
+            if (!flowActiveOnProject) {
+              flowInitializationPromise = initializeFlow(
                 compiler.options.context, this.flowVersion,
                 this.flowconfig, this.otherFlowTypedDefs
-              );
-              flowInitialized = true;
+              )
+              .then(() => {
+                flowInitialized = true;
+              }, (e) => {
+                loaderContext.emitWarning(new Error(
+                  'Flow project initialization warning:\n' +
+                  e.message
+                ));
+              });
+              flowActiveOnProject = true;
             }
             flowShouldRun = true;
           }
@@ -122,7 +134,10 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
     // Only if a file with @ flow has been changed
     if (flowShouldRun) {
       flowShouldRun = false;
-      flowCheck(compiler.options.context, this.flowVersion)
+      (flowInitialized ?
+        Promise.resolve() :
+        flowInitializationPromise)
+      .then(() => flowCheck(compiler.options.context, this.flowVersion))
       .then(newOutput => {
         flowOutput = newOutput;
         // Output a warning if flow failed
