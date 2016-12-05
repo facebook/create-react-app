@@ -105,6 +105,7 @@ const omittedFramesStyle = {
   color: black,
   'font-size': '0.9em',
   'margin': '1.5em 0',
+  cursor: 'pointer'
 }
 
 const preStyle = {
