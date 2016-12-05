@@ -189,7 +189,7 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/jsx-equals-spacing': ['warn', 'never'],
     'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
-    'react/jsx-no-undef': 'warn',
+    'react/jsx-no-undef': 'error',
     'react/jsx-pascal-case': ['warn', {
       allowAllCaps: true,
       ignore: [],
