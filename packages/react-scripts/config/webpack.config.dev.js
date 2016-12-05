@@ -230,10 +230,6 @@ module.exports = {
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
     // Trigger some typechecking if a file matches with an @ flow comment
     new FlowTypecheckPlugin({
-      flowconfig: [
-        '[libs]',
-        './flow-typed'
-      ],
       otherFlowTypedDefs: {
         jest: "17.0.0"
       }
