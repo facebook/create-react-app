@@ -129,6 +129,31 @@ const hiddenStyle = {
   display: 'none'
 }
 
+const groupStyle = {
+  'margin-left': '1em'
+}
+
+const _groupElemStyle = {
+  'border-color': '#ddd',
+  'border-width': '1px',
+  'border-radius': '4px',
+  'border-style': 'solid',
+  padding: '3px 6px',
+  cursor: 'pointer'
+}
+
+const groupElemLeft = Object.assign({}, _groupElemStyle, {
+  'border-top-right-radius': '0px',
+  'border-bottom-right-radius': '0px',
+  'margin-right': '0px'
+})
+
+const groupElemRight = Object.assign({}, _groupElemStyle, {
+  'border-top-left-radius': '0px',
+  'border-bottom-left-radius': '0px',
+  'margin-left': '-1px'
+})
+
 function calcWidth(width) {
   if (width >= 1200) return '1170px'
   if (width >= 992) return '970px'
@@ -164,7 +189,22 @@ function renderAdditional() {
   if (additionalReference.lastChild) {
     additionalReference.removeChild(additionalReference.lastChild)
   }
-  additionalReference.appendChild(document.createTextNode(text))
+  const span = document.createElement('span')
+  span.appendChild(document.createTextNode(text))
+  const group = document.createElement('span')
+  applyStyles(group, groupStyle)
+  const left = document.createElement('span')
+  applyStyles(left, groupElemLeft)
+  left.addEventListener('click', () => switchError(-1))
+  left.appendChild(document.createTextNode('←'))
+  const right = document.createElement('span')
+  applyStyles(right, groupElemRight)
+  right.addEventListener('click', () => switchError(1))
+  right.appendChild(document.createTextNode('→'))
+  group.appendChild(left)
+  group.appendChild(right)
+  span.appendChild(group)
+  additionalReference.appendChild(span)
 }
 
 function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
