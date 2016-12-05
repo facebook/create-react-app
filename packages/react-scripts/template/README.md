@@ -42,6 +42,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Disabling jsdom](#disabling-jsdom)
   - [Experimental Snapshot Testing](#experimental-snapshot-testing)
 - [Deployment](#deployment)
+  - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [GitHub Pages](#github-pages)
   - [Heroku](#heroku)
@@ -133,6 +134,8 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
+
+See the section about [deployment](#deployment) for more information.
 
 ### `npm run eject`
 
@@ -870,7 +873,7 @@ cd build
 python -m SimpleHTTPServer 9000
 ```
 
-Or using [Express](http://expressjs.com/):
+If you're using [Node](https://nodejs.org/) and [Express](http://expressjs.com/) as a server, it might look like this:
 
 ```javascript
 const express = require('express');
@@ -886,9 +889,11 @@ app.get('/', function (req, res) {
 app.listen(9000);
 ```
 
+Create React App is not opinionated about your choice of web server. Any static file server will do. The `build` folder with static assets is the only output produced by Create React App.
+
 However this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
 
-### `pushState` routers
+### Serving Apps with Client-Side Routing
 
 If you use routers that use the HTML5 [`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) under the hood (for example, [React Router](https://github.com/ReactTraining/react-router) with `browserHistory`), many static file servers will fail. For example, if you used React Router with a route for `/todos/42`, the development server will respond to `localhost:3000/todos/42` properly, but an Express serving a production build as above will not.
 
