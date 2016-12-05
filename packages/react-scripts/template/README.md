@@ -908,7 +908,7 @@ If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest
 
 ## Developing Components in Isolation
 
-Usually, in an app, you have a lot of UI components, and each of them has many different states. 
+Usually, in an app, you have a lot of UI components, and each of them has many different states.
 For an example, a simple button component could have following states:
 
 * With a text label.
@@ -969,8 +969,8 @@ This will let Create React App correctly infer the root path to use in the gener
 
 #### Step 1: Add `homepage` to `package.json`
 
-**The below step is important!**<br>
-**If your skip it, your app will not deploy correctly.**
+**The step below is important!**<br>
+**If you skip it, your app will not deploy correctly.**
 
 Open your `package.json` and add a `homepage` field:
 
