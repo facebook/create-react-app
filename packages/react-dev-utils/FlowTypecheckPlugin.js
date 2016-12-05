@@ -4,19 +4,44 @@ var childProcess = require('child_process');
 var flowBinPath = require('flow-bin');
 const flowTypedPath = path.join(__dirname, 'node_modules', '.bin', 'flow-typed');
 
+function stripFlowLoadingIndicators(message) {
+  var newMessage = message;
+  var launchingIndex = newMessage.indexOf("Launching Flow server for");
+  if (launchingIndex >= 0) {
+    newMessage = newMessage.slice(0, launchingIndex);
+  }
+  var stillIndex = newMessage.indexOf("flow is still initializing");
+  if (stillIndex >= 0) {
+    newMessage = newMessage.slice(0, stillIndex);
+  }
+  return newMessage;
+}
+
 function execOneTime(command, args, options) {
-  return new Promise((resolve) => {
-    childProcess.exec(
-      command + ' ' + (args || []).join(' '),
-      (options || {}),
-      (error, stdout, stderr) => {
-        resolve({
-          error: error,
-          stdout: stdout,
-          stderr: stderr
-        });
+  return new Promise((resolve, reject) => {
+    var stdout = new Buffer("");
+    var stderr = new Buffer("");
+    var oneTimeProcess = childProcess.spawn(
+      command,
+      args,
+      options
+    );
+    oneTimeProcess.stdout.on('data', chunk => {
+      stdout = Buffer.concat([stdout, chunk]);
+    });
+    oneTimeProcess.stderr.on('data', chunk => {
+      stderr = Buffer.concat([stderr, chunk]);
+    });
+    oneTimeProcess.on('exit', code => {
+      switch (code) {
+        case 0:
+          return resolve(stdout);
+        default:
+          return reject(new Error(
+            Buffer.concat([stdout, stderr]).toString()
+          ));
       }
-    )
+    });
   });
 }
 
@@ -67,17 +92,7 @@ function flowCheck(projectPath, flowVersion) {
     flowBinPath,
     ['status', '--color=always'],
     { cwd: projectPath }
-  )
-  .then(res => {
-    var flowOutput = res.stdout;
-    var flowErrOutput = res.stderr;
-    if (flowErrOutput.length > 0) {
-      if(flowErrOutput.indexOf("still initializing") < 0) {
-        return Promise.reject(new Error('flow server:\n' + flowErrOutput));
-      }
-    }
-    return flowOutput;
-  });
+  );
 }
 
 
@@ -97,9 +112,10 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
   var flowInitialized = false;
   var flowInitializationPromise;
   var flowShouldRun = false;
-  var flowOutput = '';
+  var flowErrorOutput = null;
+
+  // During module traversal, assert the presence of an @ flow in a module
   compiler.plugin('compilation', (compilation, params) => {
-    // Detect the presence of flow and initialize it
     compilation.plugin('normal-module-loader', (loaderContext, module) => {
       // We're only checking the presence of flow in non-node_modules
       // (some dependencies may keep their flow comments, we don't want to match them)
@@ -129,7 +145,7 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
     })
   });
 
-  // While emitting run a flow check if flow has been detected
+  // While emitting, run a flow check if flow has been detected
   compiler.plugin('emit', (compilation, callback) => {
     // Only if a file with @ flow has been changed
     if (flowShouldRun) {
@@ -138,21 +154,17 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
         Promise.resolve() :
         flowInitializationPromise)
       .then(() => flowCheck(compiler.options.context, this.flowVersion))
-      .then(newOutput => {
-        flowOutput = newOutput;
-        // Output a warning if flow failed
-        if (flowOutput.indexOf('No errors!') < 0) {
-          compilation.warnings.push(flowOutput);
-        }
-        callback();
-      }, (err) => {
-        compilation.errors.push(err.message);
-        callback();
-      });
+      .then(() => {
+        flowErrorOutput = null;
+      }, error => {
+        flowErrorOutput = stripFlowLoadingIndicators(error.message);
+        compilation.warnings.push(flowErrorOutput);
+      })
+      .then(callback);
     } else {
       // Output a warning if flow failed in a previous run
-      if (flowOutput.length > 0 && flowOutput.indexOf('No errors!') < 0) {
-        compilation.warnings.push(flowOutput);
+      if (flowErrorOutput) {
+        compilation.warnings.push(flowErrorOutput);
       }
       callback();
     }
