@@ -159,12 +159,14 @@ cp .gitignore .gitignore.backup
 echo "
 /* @flow */
 var wrong: string = 0;
-" >> src/App.js
-npm start -- --smoke-test || true
+" > src/App.js
+cat src/App.backup.js >> src/App.js
+CI=true npm run build >> errors.log 2>> errors.log || true
+cat errors.log | grep "This type is incompatible with"
 test -e .flowconfig
 test -d flow-typed
 cat .gitignore | grep flow-typed
-rm src/App.js .gitignore
+rm src/App.js .gitignore errors.log
 cp src/App.backup.js src/App.js
 cp .gitignore.backup .gitignore
 rm src/App.backup.js .gitignore.backup .flowconfig
@@ -210,12 +212,13 @@ cp .gitignore .gitignore.backup
 echo "
 /* @flow */
 var wrong: string = 0;
-" >> src/App.js
-npm start -- --smoke-test || true
-test -e .flowconfig
+" > src/App.js
+cat src/App.backup.js >> src/App.js
+CI=true npm run build >> errors.log 2>> errors.log || true
+cat errors.log | grep "This type is incompatible with"
 test -d flow-typed
 cat .gitignore | grep flow-typed
-rm src/App.js .gitignore
+rm src/App.js .gitignore errors.log
 cp src/App.backup.js src/App.js
 cp .gitignore.backup .gitignore
 rm src/App.backup.js .gitignore.backup .flowconfig
