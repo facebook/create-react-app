@@ -119,7 +119,9 @@ const preStyle = {
 }
 
 const toggleStyle = {
-  'margin-bottom': '1.5em'
+  'margin-bottom': '1.5em',
+  color: darkGray,
+  cursor: 'pointer'
 }
 
 const codeStyle = {
@@ -367,20 +369,6 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   return { elem, hasSource }
 }
 
-function getAnchor(text, call) {
-  const anchor = document.createElement('a')
-  anchor.href = '#'
-  applyStyles(anchor, anchorStyle)
-  anchor.appendChild(document.createTextNode(text))
-  anchor.addEventListener('click', e => {
-    e.preventDefault()
-    e.target.blur()
-
-    call()
-  })
-  return anchor
-}
-
 function lazyFrame(parent, factory, lIndex) {
   const fac = factory()
   if (fac == null) return
@@ -393,9 +381,10 @@ function lazyFrame(parent, factory, lIndex) {
     const compiledDiv = document.createElement('div')
     applyStyles(compiledDiv, toggleStyle)
 
-    const sourceAnchor = getAnchor('Source', () => {
-      const o = frameSettings[lIndex]
-      if (o) o.compiled = false
+    const o = frameSettings[lIndex]
+    const compiledText = document.createTextNode(`View ${o && o.compiled ? 'source' : 'compiled'}`)
+    compiledDiv.addEventListener('click', () => {
+      if (o) o.compiled = !o.compiled
 
       const next = lazyFrame(parent, factory, lIndex)
       if (next != null) {
@@ -403,20 +392,7 @@ function lazyFrame(parent, factory, lIndex) {
         parent.removeChild(elemWrapper)
       }
     })
-    const compiledAnchor = getAnchor('Compiled', () => {
-      const o = frameSettings[lIndex]
-      if (o) o.compiled = true
-
-      const next = lazyFrame(parent, factory, lIndex)
-      if (next != null) {
-        parent.insertBefore(next, elemWrapper)
-        parent.removeChild(elemWrapper)
-      }
-    })
-    compiledDiv.appendChild(sourceAnchor)
-    compiledDiv.appendChild(document.createTextNode(' <-> '))
-    compiledDiv.appendChild(compiledAnchor)
-
+    compiledDiv.appendChild(compiledText)
     elemWrapper.appendChild(compiledDiv)
   }
 
