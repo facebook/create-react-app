@@ -323,13 +323,10 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   } else {
     if (omits.value > 0) {
       const omittedFrames = document.createElement('div')
-      const text1 = document.createTextNode(`${omits.value} stack frames were omitted.`)
-      const text2 = document.createTextNode(`[Click to expand]`)
+      const text1 = document.createTextNode(`▶ ${omits.value} stack frames were omitted.`)
       omittedFrames.appendChild(text1)
-      omittedFrames.appendChild(document.createElement('br'))
-      omittedFrames.appendChild(text2)
       omittedFrames.addEventListener('click', e => {
-        const hide = text2.textContent.match(/collapse/)
+        const hide = text1.textContent.match(/▲/)
         document.getElementsByName(`bundle-${omitBundle}`).forEach(n => {
           if (hide) {
             n.style.display = 'none'
@@ -338,11 +335,9 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
           }
         })
         if (hide) {
-          text1.textContent = text1.textContent.replace(/will be/, 'were')
-          text2.textContent = text2.textContent.replace(/collapse/, 'expand')
+          text1.textContent = text1.textContent.replace(/▲/, '▶')
         } else {
-          text1.textContent = text1.textContent.replace(/were/, 'will be')
-          text2.textContent = text2.textContent.replace(/expand/, 'collapse')
+          text1.textContent = text1.textContent.replace(/▶/, '▲')
         }
       })
       applyStyles(omittedFrames, omittedFramesStyle)
