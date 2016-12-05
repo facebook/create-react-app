@@ -62,32 +62,57 @@ function writeFileIfDoesNotExist(path, data) {
   });
 }
 
-function initializeFlow(projectPath, flowVersion, flowconfig, otherFlowTypedDefs) {
-  const flowconfigPath = path.join(projectPath, '.flowconfig');
-  return Promise.all(
-    [
-      writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n')),
+function getFlowPath(globalInstall) {
+  return (
+    globalInstall ?
       execOneTime(
-        flowTypedPath,
-        ['install', '--overwrite', '--flowVersion=' + flowVersion],
-        { cwd: projectPath }
+        '/bin/sh',
+        ['-c', 'which flow']
       )
-    ].concat(
-      Object.keys(otherFlowTypedDefs).map((packageName) => execOneTime(
-        flowTypedPath,
-        [
-          'install',
-          packageName + '@' + otherFlowTypedDefs[packageName],
-          '--overwrite',
-          '--flowVersion=' + flowVersion
-        ],
-        { cwd: projectPath }
-      ))
-    )
-  );
+      .then(rawPath => {
+        var path = rawPath.toString().replace('\n', '');
+        return path.indexOf("not found") >= 0 ?
+          flowBinPath :
+          path
+      }) :
+      Promise.resolve(flowBinPath)
+  )
 }
 
-function flowCheck(projectPath, flowVersion) {
+function getFlowVersion(options) {
+  return getFlowPath((options || {}).globalInstall)
+  .then(flowPath => execOneTime(
+    flowPath,
+    ['version', '--json']
+  ))
+  .then(rawData => JSON.parse(rawData))
+  .then(versionData => versionData.semver);
+}
+
+function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
+  const flowconfigPath = path.join(projectPath, '.flowconfig');
+  return getFlowVersion().then(localVersion => Promise.all([
+    writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n')),
+    execOneTime(
+      flowTypedPath,
+      ['install', '--overwrite', '--flowVersion=' + localVersion],
+      { cwd: projectPath }
+    )
+  ].concat(
+    Object.keys(otherFlowTypedDefs).map((packageName) => execOneTime(
+      flowTypedPath,
+      [
+        'install',
+        packageName + '@' + otherFlowTypedDefs[packageName],
+        '--overwrite',
+        '--flowVersion=' + localVersion
+      ],
+      { cwd: projectPath }
+    ))
+  )));
+}
+
+function flowCheck(projectPath) {
   return execOneTime(
     flowBinPath,
     ['status', '--color=always'],
@@ -95,11 +120,8 @@ function flowCheck(projectPath, flowVersion) {
   );
 }
 
-
 function FlowTypecheckPlugin(options) {
   options = options || {};
-  // The flow-bin version
-  this.flowVersion = options.flowVersion || 'latest';
   // Contents of the generated .flowconfig if it doesn't exist
   this.flowconfig = options.flowconfig || [];
   // Load up other flow-typed defs outside of the package.json (implicit packages behind react-scripts)
@@ -125,8 +147,7 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
           if (data && data.toString().indexOf('@flow') >= 0) {
             if (!flowActiveOnProject) {
               flowInitializationPromise = initializeFlow(
-                compiler.options.context, this.flowVersion,
-                this.flowconfig, this.otherFlowTypedDefs
+                compiler.options.context, this.flowconfig, this.otherFlowTypedDefs
               )
               .then(() => {
                 flowInitialized = true;
@@ -153,7 +174,7 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
       (flowInitialized ?
         Promise.resolve() :
         flowInitializationPromise)
-      .then(() => flowCheck(compiler.options.context, this.flowVersion))
+      .then(() => flowCheck(compiler.options.context))
       .then(() => {
         flowErrorOutput = null;
       }, error => {

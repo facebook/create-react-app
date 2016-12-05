@@ -237,7 +237,6 @@ module.exports = {
         '[libs]',
         './flow-typed'
       ],
-      flowVersion: "0.36.0",
       otherFlowTypedDefs: {
         jest: "17.0.0"
       }
