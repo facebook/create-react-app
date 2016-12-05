@@ -57,7 +57,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Troubleshooting](#troubleshooting)
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` silently fails](#npm-run-build-silently-fails)
-
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
