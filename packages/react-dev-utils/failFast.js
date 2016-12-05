@@ -389,9 +389,10 @@ function lazyFrame(parent, factory, lIndex) {
   const elemWrapper = document.createElement('div')
   elemWrapper.appendChild(elem)
 
-  const compiledDiv = document.createElement('div')
-  applyStyles(compiledDiv, toggleStyle)
   if (hasSource) {
+    const compiledDiv = document.createElement('div')
+    applyStyles(compiledDiv, toggleStyle)
+
     const sourceAnchor = getAnchor('Source', () => {
       const o = frameSettings[lIndex]
       if (o) o.compiled = false
@@ -415,8 +416,9 @@ function lazyFrame(parent, factory, lIndex) {
     compiledDiv.appendChild(sourceAnchor)
     compiledDiv.appendChild(document.createTextNode(' <-> '))
     compiledDiv.appendChild(compiledAnchor)
+
+    elemWrapper.appendChild(compiledDiv)
   }
-  elemWrapper.appendChild(compiledDiv)
 
   return elemWrapper
 }
