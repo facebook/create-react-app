@@ -184,7 +184,9 @@ module.exports = {
     // TODO: consider separate config for production,
     // e.g. to enable no-console and no-debugger only in production.
     configFile: path.join(__dirname, '../.eslintrc'),
-    useEslintrc: false
+    useEslintrc: false,
+    failOnWarning: !!process.env.CI,
+    failOnError: true
   },
   // @remove-on-eject-end
   // We use PostCSS for autoprefixing only.
