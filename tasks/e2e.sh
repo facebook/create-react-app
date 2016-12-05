@@ -143,6 +143,7 @@ test -e build/static/js/*.js
 test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
+test ! -e .flowconfig
 
 # Run tests with CI flag
 CI=true npm test
@@ -151,6 +152,23 @@ CI=true npm test
 
 # Test the server
 npm start -- --smoke-test
+
+# Test optional flow enabling
+cp src/App.js src/App.backup.js
+cp .gitignore .gitignore.backup
+echo "
+/* @flow */
+var wrong: string = 0;
+" >> src/App.js
+npm start -- --smoke-test || true
+test -e .flowconfig
+test -d flow-typed
+cat .gitignore | grep flow-typed
+rm src/App.js .gitignore
+cp src/App.backup.js src/App.js
+cp .gitignore.backup .gitignore
+rm src/App.backup.js .gitignore.backup .flowconfig
+rm -rf flow-typed
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -173,6 +191,7 @@ test -e build/static/js/*.js
 test -e build/static/css/*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
+test ! -e .flowconfig
 
 # Run tests, overring the watch option to disable it.
 # `CI=true npm test` won't work here because `npm test` becomes just `jest`.
@@ -185,6 +204,22 @@ npm test -- --watch=no
 # Test the server
 npm start -- --smoke-test
 
+# Test optional flow enabling
+cp src/App.js src/App.backup.js
+cp .gitignore .gitignore.backup
+echo "
+/* @flow */
+var wrong: string = 0;
+" >> src/App.js
+npm start -- --smoke-test || true
+test -e .flowconfig
+test -d flow-typed
+cat .gitignore | grep flow-typed
+rm src/App.js .gitignore
+cp src/App.backup.js src/App.js
+cp .gitignore.backup .gitignore
+rm src/App.backup.js .gitignore.backup .flowconfig
+rm -rf flow-typed
 
 # ******************************************************************************
 # Test --scripts-version with a version number
