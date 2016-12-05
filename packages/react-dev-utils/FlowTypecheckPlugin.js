@@ -184,13 +184,14 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
               flowInitializationPromise = initializeFlow(
                 compiler.options.context, this.flowconfig, this.otherFlowTypedDefs
               )
-              .then(() => {
-                flowInitialized = true;
-              }, (e) => {
+              .catch(e => {
                 loaderContext.emitWarning(new Error(
                   'Flow project initialization warning:\n' +
                   e.message
                 ));
+              })
+              .then(() => {
+                flowInitialized = true;
               });
               flowActiveOnProject = true;
             }
