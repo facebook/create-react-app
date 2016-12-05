@@ -863,14 +863,14 @@ This feature is experimental and still [has major usage issues](https://github.c
 
 ## Deployment
 
-`npm run build` creates a `build` directory with a production build of your app. Set up your favourite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file. For example, python contains a built-in HTTP server that can serve static files:
+`npm run build` creates a `build` directory with a production build of your app. Set up your favourite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file. For example, Python contains a built-in HTTP server that can serve static files:
 
 ```sh
-cd ./build
-python3 -m http.server 80
+cd build
+python -m SimpleHTTPServer 9000
 ```
 
-Or using express:
+Or using [Express](http://expressjs.com/):
 
 ```javascript
 const express = require('express');
@@ -883,14 +883,27 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, './build', 'index.html'));
 });
 
-app.listen(80);
+app.listen(9000);
 ```
+
+However this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
 
 ### `pushState` routers
 
-If you use routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`), many static file servers will fail. For example, if you used react-router with a route for `/todos/42`, the development server will respond to `localhost:3000/todos/42` properly, but the python3 http.server serving a production build as above will not. 
+If you use routers that use the HTML5 [`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) under the hood (for example, [React Router](https://github.com/ReactTraining/react-router) with `browserHistory`), many static file servers will fail. For example, if you used React Router with a route for `/todos/42`, the development server will respond to `localhost:3000/todos/42` properly, but an Express serving a production build as above will not.
 
-This is because when there is a fresh page load for a `0.0.0.0/todos/42`, the server looks for the file `build/todos/42` and does not find it. The server needs to be configured to respond to a request to `/todos/42` by serving `index.html`.
+This is because when there is a fresh page load for a `/todos/42`, the server looks for the file `build/todos/42` and does not find it. The server needs to be configured to respond to a request to `/todos/42` by serving `index.html`. For example, we can amend our Express example above to serve `index.html` for any unknown paths:
+
+```diff
+ app.use(express.static('./build'));
+
+-app.get('/', function (req, res) {
++app.get('/*', function (req, res) {
+   res.sendFile(path.join(__dirname, './build', 'index.html'));
+ });
+```
+
+Now requests to `/todos/42` will be handled correctly both in development and in production.
 
 ### Building for Relative Paths
 
