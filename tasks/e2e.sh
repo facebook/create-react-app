@@ -134,6 +134,9 @@ create_react_app --scripts-version=$scripts_path test-app
 # Enter the app directory
 cd test-app
 
+echo "GONNA TEST NOW"
+npm ls extend
+
 # Test the build
 npm run build
 # Check for expected output
