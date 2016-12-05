@@ -231,9 +231,6 @@ module.exports = {
     // Trigger some typechecking if a file matches with an @ flow comment
     new FlowTypecheckPlugin({
       flowconfig: [
-        '[ignore]',
-        '<PROJECT_ROOT>/node_modules/fbjs/.*',
-        '',
         '[libs]',
         './flow-typed'
       ],
