@@ -178,17 +178,17 @@ module.exports = {
       }
     ]
   },
-  // @remove-on-eject-begin
   // Point ESLint to our predefined config.
   eslint: {
+    // @remove-on-eject-begin
     // TODO: consider separate config for production,
     // e.g. to enable no-console and no-debugger only in production.
     configFile: path.join(__dirname, '../.eslintrc'),
     useEslintrc: false,
+    // @remove-on-eject-end
     failOnWarning: !!process.env.CI,
     failOnError: true
   },
-  // @remove-on-eject-end
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
