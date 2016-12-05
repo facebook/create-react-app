@@ -281,7 +281,6 @@ module.exports = {
     }),
     // Run Flow only if we see some @ flow annotations, will error on CI
     new FlowTypecheckPlugin({
-      flowVersion: "0.36.0",
       otherFlowTypedDefs: {
         jest: "17.0.0"
       }
