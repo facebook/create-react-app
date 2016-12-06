@@ -153,6 +153,11 @@ const groupElemRight = Object.assign({}, _groupElemStyle, {
   'margin-left': '-1px'
 })
 
+const footerStyle = {
+  'text-align': 'center',
+  color: darkGray
+}
+
 function applyStyles(element, styles) {
   element.setAttribute('style', '')
   // Firefox can't handle const due to non-compliant implementation
@@ -435,6 +440,15 @@ function traceDiv(resolvedFrames) {
   return trace
 }
 
+function footer() {
+  const div = document.createElement('div')
+  applyStyles(div, footerStyle)
+  div.appendChild(document.createTextNode('This screen is visible only in development. It will not appear when the app crashes in production.'))
+  div.appendChild(document.createElement('br'))
+  div.appendChild(document.createTextNode('Open your browser’s developer console to further inspect this error.'))
+  return div
+}
+
 function render(error, name, message, resolvedFrames) {
   dispose()
 
@@ -464,6 +478,9 @@ function render(error, name, message, resolvedFrames) {
 
   // Create trace
   container.appendChild(traceDiv(resolvedFrames))
+
+  // Show message
+  container.appendChild(footer())
 
   // Mount
   document.body.appendChild(overlayReference = overlay)
