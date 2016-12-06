@@ -72,6 +72,7 @@ if (env === 'test') {
   // The following plugins are a temporary workaround because
   // `babel-plugin-transform-regenerator` apparently needs them
   // and `babel-preset-env` doesn't detect it.
+  // https://github.com/facebookincubator/create-react-app/issues/1156
   plugins.push.apply(plugins, [
     require.resolve('babel-plugin-transform-es2015-arrow-functions'),
     require.resolve('babel-plugin-transform-es2015-destructuring'),
