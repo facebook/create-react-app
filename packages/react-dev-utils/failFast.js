@@ -2,6 +2,8 @@ const codeFrame = require('babel-code-frame')
 const ansiHTML = require('./ansiHTML')
 const StackTraceResolve = require('stacktrace-resolve').default
 
+require('./failFast.css')
+
 const CONTEXT_SIZE = 3
 
 const black = '#293238'
@@ -27,14 +29,6 @@ const overlayStyle = {
   overflow: 'auto',
   'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
   'line-height': 1.5,
-}
-
-// TODO: reapply containerStyle on resize or externalize to css and ensure
-//  e2e checks & tests pass
-//  ref commit: 46db1ae54c0449b737f82fb1cf8a47b7457d5b9b
-const containerStyle = {
-  'margin': '0 auto',
-  width: () => calcWidth(window.innerWidth)
 }
 
 const hintsStyle = {
@@ -156,13 +150,6 @@ const groupElemRight = Object.assign({}, _groupElemStyle, {
   'border-bottom-left-radius': '0px',
   'margin-left': '-1px'
 })
-
-function calcWidth(width) {
-  if (width >= 1200) return '1170px'
-  if (width >= 992) return '970px'
-  if (width >= 768) return '750px'
-  return 'auto'
-}
 
 function applyStyles(element, styles) {
   element.setAttribute('style', '')
@@ -447,7 +434,7 @@ function render(error, name, message, resolvedFrames) {
 
   // Create container
   const container = document.createElement('div')
-  applyStyles(container, containerStyle)
+  container.className = 'cra-container'
   overlay.appendChild(container)
 
   // Create additional
