@@ -23,11 +23,6 @@ const plugins = [
   [require.resolve('babel-plugin-transform-react-jsx'), {
     useBuiltIns: true
   }],
-  // function* () { yield 42; yield 43; }
-  [require.resolve('babel-plugin-transform-regenerator'), {
-    // Async functions are converted to generators by babel-preset-latest
-    async: false
-  }],
   // Polyfills the runtime needed for async/await and generators
   [require.resolve('babel-plugin-transform-runtime'), {
     helpers: false,
@@ -69,13 +64,10 @@ if (env === 'development' || env === 'test') {
 }
 
 if (env === 'test') {
-  // The following plugins are a temporary workaround because
-  // `babel-plugin-transform-regenerator` apparently needs them
-  // and `babel-preset-env` doesn't detect it.
-  // https://github.com/facebookincubator/create-react-app/issues/1156
   plugins.push.apply(plugins, [
-    require.resolve('babel-plugin-transform-es2015-arrow-functions'),
-    require.resolve('babel-plugin-transform-es2015-destructuring'),
+    // We always include this plugin regardless of environment
+    // because of a Babel bug that breaks object rest/spread without it:
+    // https://github.com/babel/babel/issues/4851
     require.resolve('babel-plugin-transform-es2015-parameters')
   ]);
 
@@ -100,7 +92,13 @@ if (env === 'test') {
       // JSX, Flow
       require.resolve('babel-preset-react')
     ],
-    plugins: plugins
+    plugins: plugins.concat([
+      // function* () { yield 42; yield 43; }
+      [require.resolve('babel-plugin-transform-regenerator'), {
+        // Async functions are converted to generators by babel-preset-latest
+        async: false
+      }],
+    ])
   };
 
   if (env === 'production') {
