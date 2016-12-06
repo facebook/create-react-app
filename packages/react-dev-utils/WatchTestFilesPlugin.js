@@ -12,27 +12,40 @@ function computeGlob(pattern, options) {
   });
 }
 
+function getGlobs(patterns, cwd) {
+  return Promise.all(patterns.map(globPattern =>
+    computeGlob(globPattern, {
+      cwd: cwd,
+      ignore: 'node_modules/**',
+    })
+  ))
+  .then(globLists => [].concat.apply([], globLists))
+}
+
 function WatchTestFilesPlugin(testGlobs) {
   this.testGlobs = testGlobs || [];
 }
 
 WatchTestFilesPlugin.prototype.apply = function(compiler) {
-  compiler.plugin('emit', (compilation, callback) => {
-    console.log()
-    Promise.all(this.testGlobs.map(globPattern =>
-      computeGlob(globPattern, {
-        cwd: compiler.options.context,
-        ignore: 'node_modules/**',
-      })
-    ))
-    .then(globLists => [].concat.apply([], globLists))
-    .then(testFiles => {
-      testFiles.forEach(testFile => {
-        compilation.fileDependencies.push(path.join(compiler.options.context, testFile));
-      });
+  var testFiles = [];
+  compiler.plugin('make', (compilation, callback) => {
+    getGlobs(this.testGlobs, compiler.options.context)
+    .then(foundFiles => {
+      testFiles = foundFiles;
+      return Promise.all(
+        testFiles.map(filename => new Promise((resolve, reject) => {
+          // TODO: add to modules
+          resolve(filename);
+        }))
+      )
     })
-    .then(callback)
-    .catch(console.error);
+    .then(callback);
+  });
+  compiler.plugin('emit', (compilation, callback) => {
+    testFiles.forEach(testFile => {
+      compilation.fileDependencies.push(path.join(compiler.options.context, testFile));
+    });
+    callback();
   });
 };
 
