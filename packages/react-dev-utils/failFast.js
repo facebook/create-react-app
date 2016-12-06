@@ -298,7 +298,7 @@ function frameDiv(functionName, url, internalUrl) {
   return frame
 }
 
-function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentContainer) {
+function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentContainer, lastElement) {
   const { compiled } = frameSetting
   const {
     functionName,
@@ -325,7 +325,9 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   if (internalUrl) {
     ++omits.value
     needsHidden = true
-  } else {
+  }
+  let collapseElement = null
+  if (!internalUrl || lastElement) {
     if (omits.value > 0) {
       const omittedFrames = document.createElement('div')
       const text1 = document.createTextNode(`▶ ${omits.value} stack frames were collapsed.`)
@@ -348,7 +350,11 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
         }
       })
       applyStyles(omittedFrames, omittedFramesStyle)
-      parentContainer.appendChild(omittedFrames)
+      if (lastElement && internalUrl) {
+        collapseElement = omittedFrames
+      } else {
+        parentContainer.appendChild(omittedFrames)
+      }
       ++omits.bundle
     }
     omits.value = 0
@@ -371,13 +377,13 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
     }
   }
 
-  return { elem, hasSource }
+  return { elem, hasSource, collapseElement }
 }
 
 function lazyFrame(parent, factory, lIndex) {
   const fac = factory()
   if (fac == null) return
-  const { hasSource, elem } = fac
+  const { hasSource, elem, collapseElement } = fac
 
   const elemWrapper = document.createElement('div')
   elemWrapper.appendChild(elem)
@@ -401,6 +407,10 @@ function lazyFrame(parent, factory, lIndex) {
     elemWrapper.appendChild(compiledDiv)
   }
 
+  if (collapseElement != null) {
+    elemWrapper.appendChild(collapseElement)
+  }
+
   return elemWrapper
 }
 
@@ -415,7 +425,7 @@ function traceDiv(resolvedFrames) {
     const lIndex = index++
     const elem = lazyFrame(
       trace,
-      traceFrame.bind(undefined, frameSettings[lIndex], frame, critical, omits, omits.bundle, trace),
+      traceFrame.bind(undefined, frameSettings[lIndex], frame, critical, omits, omits.bundle, trace, index === resolvedFrames.length),
       lIndex
     )
     if (elem == null) continue
