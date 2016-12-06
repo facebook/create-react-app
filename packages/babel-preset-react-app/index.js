@@ -11,32 +11,32 @@
 var path = require('path');
 
 const plugins = [
-    // class { handleClick = () => { } }
-    require.resolve('babel-plugin-transform-class-properties'),
-    // The following two plugins use Object.assign directly, instead of Babel's
-    // extends helper. Note that this assumes `Object.assign` is available. 
-    // { ...todo, completed: true }
-    [require.resolve('babel-plugin-transform-object-rest-spread'), {
-      useBuiltIns: true
-    }],
-    // Transforms JSX
-    [require.resolve('babel-plugin-transform-react-jsx'), {
-      useBuiltIns: true
-    }],
-    // function* () { yield 42; yield 43; }
-    [require.resolve('babel-plugin-transform-regenerator'), {
-      // Async functions are converted to generators by babel-preset-latest
-      async: false
-    }],
-    // Polyfills the runtime needed for async/await and generators
-    [require.resolve('babel-plugin-transform-runtime'), {
-      helpers: false,
-      polyfill: false,
-      regenerator: true,
-      // Resolve the Babel runtime relative to the config.
-      moduleName: path.dirname(require.resolve('babel-runtime/package'))
-    }]
-  ];
+  // class { handleClick = () => { } }
+  require.resolve('babel-plugin-transform-class-properties'),
+  // The following two plugins use Object.assign directly, instead of Babel's
+  // extends helper. Note that this assumes `Object.assign` is available.
+  // { ...todo, completed: true }
+  [require.resolve('babel-plugin-transform-object-rest-spread'), {
+    useBuiltIns: true
+  }],
+  // Transforms JSX
+  [require.resolve('babel-plugin-transform-react-jsx'), {
+    useBuiltIns: true
+  }],
+  // function* () { yield 42; yield 43; }
+  [require.resolve('babel-plugin-transform-regenerator'), {
+    // Async functions are converted to generators by babel-preset-latest
+    async: false
+  }],
+  // Polyfills the runtime needed for async/await and generators
+  [require.resolve('babel-plugin-transform-runtime'), {
+    helpers: false,
+    polyfill: false,
+    regenerator: true,
+    // Resolve the Babel runtime relative to the config.
+    moduleName: path.dirname(require.resolve('babel-runtime/package'))
+  }]
+];
 
 // This is similar to how `env` works in Babel:
 // https://babeljs.io/docs/usage/babelrc/#env-option
@@ -69,6 +69,16 @@ if (env === 'development' || env === 'test') {
 }
 
 if (env === 'test') {
+  // The following plugins are a temporary workaround because
+  // `babel-plugin-transform-regenerator` apparently needs them
+  // and `babel-preset-env` doesn't detect it.
+  // https://github.com/facebookincubator/create-react-app/issues/1156
+  plugins.push.apply(plugins, [
+    require.resolve('babel-plugin-transform-es2015-arrow-functions'),
+    require.resolve('babel-plugin-transform-es2015-destructuring'),
+    require.resolve('babel-plugin-transform-es2015-parameters')
+  ]);
+
   module.exports = {
     presets: [
       // ES features necessary for user's Node version
