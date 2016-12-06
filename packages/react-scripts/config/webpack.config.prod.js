@@ -9,7 +9,10 @@
  */
 // @remove-on-eject-end
 
+// @remove-on-eject-begin
+// `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
 var path = require('path');
+// @remove-on-eject-end
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
