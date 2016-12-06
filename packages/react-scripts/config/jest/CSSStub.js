@@ -10,4 +10,10 @@
  */
 // @remove-on-eject-end
 
-module.exports = {};
+/*
+* ZEAL: Stub style imports with identity proxy to allow testing of
+* dynamic styles etc
+*/
+const idenityObjProxy = require('identity-obj-proxy');
+
+module.exports = idenityObjProxy;
