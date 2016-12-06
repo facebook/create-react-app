@@ -20,12 +20,14 @@
     "openBrowser.js",
     "prompt.js",
     "WatchMissingNodeModulesPlugin.js",
+    "WatchTestFilesPlugin.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
     "ansi-html": "0.0.5",
     "chalk": "1.1.3",
     "escape-string-regexp": "1.0.5",
+    "glob": "^7.1.1",
     "html-entities": "1.2.0",
     "opn": "4.0.2",
     "sockjs-client": "1.0.3",
