@@ -16,27 +16,15 @@ on run argv
       make new window
     end if
 
-    -- Find a tab currently running the debugger
-    set found to false
-    set theTabIndex to -1
-    repeat with theWindow in every window
-      set theTabIndex to 0
-      repeat with theTab in every tab of theWindow
-        set theTabIndex to theTabIndex + 1
-        if theTab's URL as string contains theURL then
-          set found to true
-          exit repeat
-        end if
-      end repeat
-
-      if found then
-        exit repeat
-      end if
-    end repeat
-
-    -- Reload debugging tab if found
+    -- 1: Looking for tab running debugger
+    -- then, Reload debugging tab if found
     -- then return
-    if found then
+    set foundWindow to my findTabByURL(theURL)
+    if foundWindow is not equal null then
+      set theTab to foundWindow's targetTab
+      set theTabIndex to foundWindow's targetTabIndex
+      set theWindow to foundWindow's targetWindow
+
       tell theTab to reload
       set index of theWindow to 1
       set theWindow's active tab index to theTabIndex
@@ -44,39 +32,63 @@ on run argv
       return
     end if
 
+    -- 2: Looking for Empty tab
     -- In case debugging tab was not found
     -- We try to find an empty tab instead
-    set foundEmpty to false
-    set theEmptyTabIndex to -1
+    set foundWindow to my findTabByURL("chrome://newtab/")
+    if foundWindow is not equal null then
+      set theTab to foundWindow's targetTab
+      set theTabIndex to foundWindow's targetTabIndex
+      set theWindow to foundWindow's targetWindow
+
+      set URL of theTab to theURL
+      set index of theWindow to 1
+      set theWindow's active tab index to theTabIndex
+      tell theWindow to activate
+      return
+    end if
+
+    -- 3: Create new tab
+    -- both debugging and empty tab were not found
+    -- make a new tab with url
+    tell window 1
+        activate
+        make new tab with properties {URL:theURL}
+    end tell
+  end tell
+end run
+
+-- Function:
+-- Lookup tab with given url
+-- return object
+-- - targetWindow
+-- - targetTab
+-- - targetTabIndex
+on findTabByURL(lookupUrl)
+  tell application "Google Chrome"
+    -- Find a tab currently running the debugger
+    set found to false
+    set theTabIndex to -1
     repeat with theWindow in every window
-      set theEmptyTabIndex to 0
+      set theTabIndex to 0
       repeat with theTab in every tab of theWindow
-        set theEmptyTabIndex to theEmptyTabIndex + 1
-        if theTab's URL as string contains "chrome://newtab/" then
-          set foundEmpty to true
+        set theTabIndex to theTabIndex + 1
+        if (theTab's URL as string) contains lookupUrl then
+          set found to true
           exit repeat
         end if
       end repeat
 
-      if foundEmpty then
-        exit repeat
+      if found then
+        -- create object
+        script myWindow
+          property targetTab: theTab
+          property targetTabIndex: theTabIndex
+          property targetWindow: theWindow
+        end script
+        return myWindow
       end if
     end repeat
-
-    -- if empty tab was found
-    if foundEmpty then
-      set URL of theTab to theURL
-      set index of theWindow to 1
-      set theWindow's active tab index to theEmptyTabIndex
-      tell theWindow to activate
-    else
-      -- both debugging and empty tab were not found
-      -- make a new tab with url
-      tell window 1
-        activate
-        make new tab with properties {URL:theURL}
-      end tell
-    end if
-
   end tell
-end run
+  return null
+end findTabByURL
