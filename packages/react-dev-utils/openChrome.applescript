@@ -7,10 +7,14 @@ This source code is licensed under the BSD-style license found in the
 of patent rights can be found in the PATENTS file in the same directory.
 *)
 
+property targetTab: null
+property targetTabIndex: -1
+property targetWindow: null
+
 on run argv
   set theURL to item 1 of argv
 
-  tell application "Chrome"
+  tell application "Google Chrome"
 
     if (count every window) = 0 then
       make new window
@@ -19,32 +23,24 @@ on run argv
     -- 1: Looking for tab running debugger
     -- then, Reload debugging tab if found
     -- then return
-    set foundWindow to my findTabByURL(theURL)
-    if foundWindow is not equal null then
-      set theTab to foundWindow's targetTab
-      set theTabIndex to foundWindow's targetTabIndex
-      set theWindow to foundWindow's targetWindow
-
-      tell theTab to reload
-      set index of theWindow to 1
-      set theWindow's active tab index to theTabIndex
-      tell theWindow to activate
+    set found to my lookupTabWithUrl(theURL)
+    if found then
+      tell targetTab to reload
+      set index of targetWindow to 1
+      set targetWindow's active tab index to targetTabIndex
+      tell targetWindow to activate
       return
     end if
 
     -- 2: Looking for Empty tab
     -- In case debugging tab was not found
     -- We try to find an empty tab instead
-    set foundWindow to my findTabByURL("chrome://newtab/")
-    if foundWindow is not equal null then
-      set theTab to foundWindow's targetTab
-      set theTabIndex to foundWindow's targetTabIndex
-      set theWindow to foundWindow's targetWindow
-
-      set URL of theTab to theURL
-      set index of theWindow to 1
-      set theWindow's active tab index to theTabIndex
-      tell theWindow to activate
+    set found to my lookupTabWithUrl("chrome://newtab/")
+    if found then
+      set URL of targetTab to theURL
+      set index of targetWindow to 1
+      set targetWindow's active tab index to targetTabIndex
+      tell targetWindow to activate
       return
     end if
 
@@ -60,13 +56,11 @@ end run
 
 -- Function:
 -- Lookup tab with given url
--- return object
--- - targetWindow
--- - targetTab
--- - targetTabIndex
-on findTabByURL(lookupUrl)
+-- if found, store tab, index, and window in properties
+-- (properties were declared on top of file)
+on lookupTabWithUrl(lookupUrl)
   tell application "Google Chrome"
-    -- Find a tab currently running the debugger
+    -- Find a tab with the given url
     set found to false
     set theTabIndex to -1
     repeat with theWindow in every window
@@ -74,21 +68,19 @@ on findTabByURL(lookupUrl)
       repeat with theTab in every tab of theWindow
         set theTabIndex to theTabIndex + 1
         if (theTab's URL as string) contains lookupUrl then
+          -- assign tab, tab index, and window to properties
+          set targetTab to theTab
+          set targetTabIndex to theTabIndex
+          set targetWindow to theWindow
           set found to true
           exit repeat
         end if
       end repeat
 
       if found then
-        -- create object
-        script myWindow
-          property targetTab: theTab
-          property targetTabIndex: theTabIndex
-          property targetWindow: theWindow
-        end script
-        return myWindow
+        exit repeat
       end if
     end repeat
   end tell
-  return null
-end findTabByURL
+  return found
+end lookupTabWithUrl
