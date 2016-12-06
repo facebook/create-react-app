@@ -10,33 +10,33 @@
 
 var path = require('path');
 
-module.exports = {
-  presets: [
-    // Latest stable ECMAScript features
-    require.resolve('babel-preset-latest'),
-    // JSX, Flow
-    require.resolve('babel-preset-react')
-  ],
-  plugins: [
-    // class { handleClick = () => { } }
-    require.resolve('babel-plugin-transform-class-properties'),
-    // { ...todo, completed: true }
-    require.resolve('babel-plugin-transform-object-rest-spread'),
-    // function* () { yield 42; yield 43; }
-    [require.resolve('babel-plugin-transform-regenerator'), {
-      // Async functions are converted to generators by babel-preset-latest
-      async: false
-    }],
-    // Polyfills the runtime needed for async/await and generators
-    [require.resolve('babel-plugin-transform-runtime'), {
-      helpers: false,
-      polyfill: false,
-      regenerator: true,
-      // Resolve the Babel runtime relative to the config.
-      moduleName: path.dirname(require.resolve('babel-runtime/package'))
-    }]
-  ]
-};
+const plugins = [
+  // class { handleClick = () => { } }
+  require.resolve('babel-plugin-transform-class-properties'),
+  // The following two plugins use Object.assign directly, instead of Babel's
+  // extends helper. Note that this assumes `Object.assign` is available.
+  // { ...todo, completed: true }
+  [require.resolve('babel-plugin-transform-object-rest-spread'), {
+    useBuiltIns: true
+  }],
+  // Transforms JSX
+  [require.resolve('babel-plugin-transform-react-jsx'), {
+    useBuiltIns: true
+  }],
+  // function* () { yield 42; yield 43; }
+  [require.resolve('babel-plugin-transform-regenerator'), {
+    // Async functions are converted to generators by babel-preset-latest
+    async: false
+  }],
+  // Polyfills the runtime needed for async/await and generators
+  [require.resolve('babel-plugin-transform-runtime'), {
+    helpers: false,
+    polyfill: false,
+    regenerator: true,
+    // Resolve the Babel runtime relative to the config.
+    moduleName: path.dirname(require.resolve('babel-runtime/package'))
+  }]
+];
 
 // This is similar to how `env` works in Babel:
 // https://babeljs.io/docs/usage/babelrc/#env-option
@@ -52,8 +52,14 @@ if (env !== 'development' && env !== 'test' && env !== 'production') {
     '"test", and "production". Instead, received: ' + JSON.stringify(env) + '.'
   );
 }
-var plugins = module.exports.plugins;
+
 if (env === 'development' || env === 'test') {
+  // The following two plugins are currently necessary to make React warnings
+  // include more valuable information. They are included here because they are
+  // currently not enabled in babel-preset-react. See the below threads for more info:
+  // https://github.com/babel/babel/issues/4702
+  // https://github.com/babel/babel/pull/3540#issuecomment-228673661
+  // https://github.com/facebookincubator/create-react-app/issues/989
   plugins.push.apply(plugins, [
     // Adds component stack to warning messages
     require.resolve('babel-plugin-transform-react-jsx-source'),
@@ -61,14 +67,51 @@ if (env === 'development' || env === 'test') {
     require.resolve('babel-plugin-transform-react-jsx-self')
   ]);
 }
-if (env === 'production') {
-  // Optimization: hoist JSX that never changes out of render()
-  // Disabled because of issues:
-  // * https://github.com/facebookincubator/create-react-app/issues/525
-  // * https://phabricator.babeljs.io/search/query/pCNlnC2xzwzx/
-  // * https://github.com/babel/babel/issues/4516
-  // TODO: Enable again when these issues are resolved.
-  // plugins.push.apply(plugins, [
-  //   require.resolve('babel-plugin-transform-react-constant-elements')
-  // ]);
+
+if (env === 'test') {
+  // The following plugins are a temporary workaround because
+  // `babel-plugin-transform-regenerator` apparently needs them
+  // and `babel-preset-env` doesn't detect it.
+  // https://github.com/facebookincubator/create-react-app/issues/1156
+  plugins.push.apply(plugins, [
+    require.resolve('babel-plugin-transform-es2015-arrow-functions'),
+    require.resolve('babel-plugin-transform-es2015-destructuring'),
+    require.resolve('babel-plugin-transform-es2015-parameters')
+  ]);
+
+  module.exports = {
+    presets: [
+      // ES features necessary for user's Node version
+      [require('babel-preset-env').default, {
+        targets: {
+          node: 'current',
+        },
+      }],
+      // JSX, Flow
+      require.resolve('babel-preset-react')
+    ],
+    plugins: plugins
+  };
+} else {
+  module.exports = {
+    presets: [
+      // Latest stable ECMAScript features
+      require.resolve('babel-preset-latest'),
+      // JSX, Flow
+      require.resolve('babel-preset-react')
+    ],
+    plugins: plugins
+  };
+
+  if (env === 'production') {
+    // Optimization: hoist JSX that never changes out of render()
+    // Disabled because of issues:
+    // * https://github.com/facebookincubator/create-react-app/issues/525
+    // * https://phabricator.babeljs.io/search/query/pCNlnC2xzwzx/
+    // * https://github.com/babel/babel/issues/4516
+    // TODO: Enable again when these issues are resolved.
+    // plugins.push.apply(plugins, [
+    //   require.resolve('babel-plugin-transform-react-constant-elements')
+    // ]);
+  }
 }

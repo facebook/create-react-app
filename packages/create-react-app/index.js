@@ -101,26 +101,54 @@ function createApp(name, verbose, version) {
   process.chdir(root);
 
   console.log('Installing packages. This might take a couple minutes.');
-  console.log('Installing react-scripts from npm...');
+  console.log('Installing react-scripts...');
   console.log();
 
   run(root, appName, version, verbose, originalDirectory);
 }
 
-function run(root, appName, version, verbose, originalDirectory) {
-  var installPackage = getInstallPackage(version);
-  var packageName = getPackageName(installPackage);
+function install(packageToInstall, verbose, callback) {
   var args = [
-    'install',
-    verbose && '--verbose',
-    '--save-dev',
-    '--save-exact',
-    installPackage,
-  ].filter(function(e) { return e; });
-  var proc = spawn('npm', args, {stdio: 'inherit'});
+    'add',
+    '--dev',
+    '--exact',
+    packageToInstall,
+  ];
+  var proc = spawn('yarn', args, {stdio: 'inherit'});
+
+  var yarnExists = true;
+  proc.on('error', function (err) {
+    if (err.code === 'ENOENT') {
+      yarnExists = false;
+    }
+  });
   proc.on('close', function (code) {
+    if (yarnExists) {
+      callback(code, 'yarn', args);
+      return;
+    }
+    // No Yarn installed, continuing with npm.
+    args = [
+      'install',
+      verbose && '--verbose',
+      '--save-dev',
+      '--save-exact',
+      packageToInstall,
+    ].filter(function(e) { return e; });
+    var npmProc = spawn('npm', args, {stdio: 'inherit'});
+    npmProc.on('close', function (code) {
+      callback(code, 'npm', args);
+    });
+  });
+}
+
+function run(root, appName, version, verbose, originalDirectory) {
+  var packageToInstall = getInstallPackage(version);
+  var packageName = getPackageName(packageToInstall);
+
+  install(packageToInstall, verbose, function (code, command, args) {
     if (code !== 0) {
-      console.error('`npm ' + args.join(' ') + '` failed');
+      console.error('`' + command + ' ' + args.join(' ') + '` failed');
       return;
     }
 
@@ -152,10 +180,13 @@ function getInstallPackage(version) {
 
 // Extract package name from tarball url or path.
 function getPackageName(installPackage) {
-  if (~installPackage.indexOf('.tgz')) {
-    return installPackage.match(/^.+\/(.+)-.+\.tgz$/)[1];
-  } else if (~installPackage.indexOf('@')) {
-    return installPackage.split('@')[0];
+  if (installPackage.indexOf('.tgz') > -1) {
+    // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
+    // However, this function returns package name only wihout semver version.
+    return installPackage.match(/^.+\/(.+?)(?:-\d+.+)?\.tgz$/)[1];
+  } else if (installPackage.indexOf('@') > 0) {
+    // Do not match @scope/ when stripping off @version or @tag
+    return installPackage.charAt(0) + installPackage.substr(1).split('@')[0];
   }
   return installPackage;
 }

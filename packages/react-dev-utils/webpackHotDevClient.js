@@ -106,7 +106,7 @@ function ensureOverlayDivExists(onOverlayDivReady) {
     lastOnOverlayDivReady(overlayDiv);
   });
 
-  // Zalgo alert: onIframeLoad() will be called either synchronouly
+  // Zalgo alert: onIframeLoad() will be called either synchronously
   // or asynchronously depending on the browser.
   // We delay adding it so `overlayIframe` is set when `onIframeLoad` fires.
   document.body.appendChild(overlayIframe);
@@ -121,6 +121,19 @@ function showErrorOverlay(message) {
       '">Failed to compile.</span><br><br>' +
       ansiHTML(entities.encode(message));
   });
+}
+
+function destroyErrorOverlay() {  
+  if (!overlayDiv) {
+    // It is not there in the first place.
+    return;
+  }
+
+  // Clean up and reset internal state.
+  document.body.removeChild(overlayIframe);
+  overlayDiv = null;
+  overlayIframe = null;
+  lastOnOverlayDivReady = null;
 }
 
 // Connect to WebpackDevServer via a socket.
@@ -156,6 +169,7 @@ function clearOutdatedErrors() {
 // Successful compilation.
 function handleSuccess() {
   clearOutdatedErrors();
+  destroyErrorOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
@@ -170,6 +184,7 @@ function handleSuccess() {
 // Compilation with warnings (e.g. ESLint).
 function handleWarnings(warnings) {
   clearOutdatedErrors();
+  destroyErrorOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
@@ -272,8 +287,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
     return;
   }
 
-  // https://webpack.github.io/docs/hot-module-replacement.html#check
-  module.hot.check(/* autoApply */true, function(err, updatedModules) {
+  function handleApplyUpdates(err, updatedModules) {
     if (err || !updatedModules) {
       window.location.reload();
       return;
@@ -288,5 +302,20 @@ function tryApplyUpdates(onHotUpdateSuccess) {
       // While we were updating, there was a new update! Do it again.
       tryApplyUpdates();
     }
-  });
+  }
+
+  // https://webpack.github.io/docs/hot-module-replacement.html#check
+  var result = module.hot.check(/* autoApply */true, handleApplyUpdates);
+
+  // // Webpack 2 returns a Promise instead of invoking a callback
+  if (result && result.then) {
+    result.then(
+      function(updatedModules) {
+        handleApplyUpdates(null, updatedModules);
+      },
+      function(err) {
+        handleApplyUpdates(err, null);
+      }
+    );
+  }
 };

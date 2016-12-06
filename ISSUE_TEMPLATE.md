@@ -1,4 +1,24 @@
-If you are reporting a bug, please fill in below. Otherwise feel to remove this template entirely.
+If you are reporting a bug, please fill in below. Otherwise feel free to remove this template entirely.
+
+### Can you reproduce the problem with latest npm?
+
+Many errors, especially related to "missing modules", are due to npm bugs.
+
+If you're using Windows, [follow these instructions to update npm](https://github.com/npm/npm/wiki/Troubleshooting#upgrading-on-windows).
+
+If you're using OS X or Linux, run this to update npm:
+
+```
+npm install -g npm@latest
+
+cd your_project_directory
+rm -rf node_modules
+npm install
+```
+
+Then try to reproduce the issue again.
+
+Can you still reproduce it?
 
 ### Description
 
@@ -31,7 +51,7 @@ Please take the time to create a new app that reproduces the issue.
 
 Alternatively, you could copy your app that experiences the problem and start removing things until you’re left with the minimal reproducible demo.
 
-(Accidentially, you might get to the root of your problem during that process.)
+(Accidentally, you might get to the root of your problem during that process.)
 
 Push to GitHub and paste the link here.
 

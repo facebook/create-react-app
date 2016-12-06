@@ -17,7 +17,7 @@ function openBrowser(url) {
       // on OS X Google Chrome with AppleScript
       execSync('ps cax | grep "Google Chrome"');
       execSync(
-        'osascript chrome.applescript ' + url,
+        'osascript openChrome.applescript ' + url,
         {cwd: __dirname, stdio: 'ignore'}
       );
       return true;
@@ -28,7 +28,7 @@ function openBrowser(url) {
   // Fallback to opn
   // (It will always open new tab)
   try {
-    opn(url);
+    opn(url).catch(() => {}); // Prevent `unhandledRejection` error.
     return true;
   } catch (err) {
     return false;
