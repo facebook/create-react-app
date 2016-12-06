@@ -308,9 +308,6 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
     sourceLines
   } = frame
 
-  // Skip native functions like Array.forEach
-  if (fileName === '(native)') return
-
   let url
   if (!compiled && sourceFileName) {
     url = sourceFileName + ':' + sourceLineNumber
@@ -321,7 +318,7 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   }
 
   let needsHidden = false
-  const internalUrl = isInternalFile(url)
+  const internalUrl = isInternalFile(url, sourceFileName)
   if (internalUrl) {
     ++omits.value
     needsHidden = true
@@ -484,8 +481,8 @@ function unmount() {
   viewIndex = -1
 }
 
-function isInternalFile(url) {
-  return url.indexOf('/~/') !== -1 || url.trim().indexOf(' ') !== -1
+function isInternalFile(url, sourceFileName) {
+  return url.indexOf('/~/') !== -1 || url.trim().indexOf(' ') !== -1 || !sourceFileName
 }
 
 function renderError(index) {
