@@ -19,6 +19,7 @@ var SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
+var appPackageJson = require(paths.appPackageJson)
 
 // @remove-on-eject-begin
 // `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
@@ -36,12 +37,16 @@ function ensureSlash(path, needsSlash) {
   }
 }
 
+// If `lodash` is present into app package.json we apply `babel-plugin-lodash`
+// through the `isUsingLodash` option of `babel-preset-react-app` to reduce build size
+var isUsingLodash = !!appPackageJson.dependencies.lodash
+
 // We use "homepage" field to infer "public path" at which the app is served.
 // Webpack needs to know it to put the right <script> hrefs into HTML even in
 // single-page apps that may serve index.html for nested URLs like /todos/42.
 // We can't use a relative path in HTML because we don't want to load something
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
-var homepagePath = require(paths.appPackageJson).homepage;
+var homepagePath = appPackageJson.homepage;
 var homepagePathname = homepagePath ? url.parse(homepagePath).pathname : '/';
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -154,7 +159,7 @@ module.exports = {
         // @remove-on-eject-begin
         query: {
           babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          presets: [[require.resolve('babel-preset-react-app'), {isUsingLodash: isUsingLodash}]],
         },
         // @remove-on-eject-end
       },

@@ -14,7 +14,7 @@ const plugins = [
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
     // The following two plugins use Object.assign directly, instead of Babel's
-    // extends helper. Note that this assumes `Object.assign` is available. 
+    // extends helper. Note that this assumes `Object.assign` is available.
     // { ...todo, completed: true }
     [require.resolve('babel-plugin-transform-object-rest-spread'), {
       useBuiltIns: true
@@ -69,39 +69,60 @@ if (env === 'development' || env === 'test') {
 }
 
 if (env === 'test') {
-  module.exports = {
-    presets: [
-      // ES features necessary for user's Node version
-      [require('babel-preset-env').default, {
-        targets: {
-          node: 'current',
-        },
-      }],
-      // JSX, Flow
-      require.resolve('babel-preset-react')
-    ],
-    plugins: plugins
+  module.exports = function() {
+    return {
+      presets: [
+        // ES features necessary for user's Node version
+        [require('babel-preset-env').default, {
+          targets: {
+            node: 'current',
+          },
+        }],
+        // JSX, Flow
+        require.resolve('babel-preset-react')
+      ],
+      plugins: plugins
+    };
+  };
+} else if (env ==='production') {
+  // Optimization: hoist JSX that never changes out of render()
+  // Disabled because of issues:
+  // * https://github.com/facebookincubator/create-react-app/issues/525
+  // * https://phabricator.babeljs.io/search/query/pCNlnC2xzwzx/
+  // * https://github.com/babel/babel/issues/4516
+  // TODO: Enable again when these issues are resolved.
+  // plugins.push.apply(plugins, [
+  //   require.resolve('babel-plugin-transform-react-constant-elements')
+  // ]);
+
+  module.exports = function(context, opts) {
+    // A simple transform to cherry-pick Lodash modules so you don’t have to.
+    if (opts && opts.isUsingLodash === true) {
+      plugins.push.apply(plugins, [
+        require.resolve('babel-plugin-lodash')
+      ]);
+    }
+
+    return {
+      presets: [
+        // Latest stable ECMAScript features
+        require.resolve('babel-preset-latest'),
+        // JSX, Flow
+        require.resolve('babel-preset-react')
+      ],
+      plugins: plugins
+    };
   };
 } else {
-  module.exports = {
-    presets: [
-      // Latest stable ECMAScript features
-      require.resolve('babel-preset-latest'),
-      // JSX, Flow
-      require.resolve('babel-preset-react')
-    ],
-    plugins: plugins
+  module.exports = function() {
+    return {
+      presets: [
+        // Latest stable ECMAScript features
+        require.resolve('babel-preset-latest'),
+        // JSX, Flow
+        require.resolve('babel-preset-react')
+      ],
+      plugins: plugins
+    };
   };
-
-  if (env === 'production') {
-    // Optimization: hoist JSX that never changes out of render()
-    // Disabled because of issues:
-    // * https://github.com/facebookincubator/create-react-app/issues/525
-    // * https://phabricator.babeljs.io/search/query/pCNlnC2xzwzx/
-    // * https://github.com/babel/babel/issues/4516
-    // TODO: Enable again when these issues are resolved.
-    // plugins.push.apply(plugins, [
-    //   require.resolve('babel-plugin-transform-react-constant-elements')
-    // ]);
-  }
 }
