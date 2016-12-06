@@ -27,6 +27,8 @@ const overlayStyle = {
   color: black,
   'white-space': 'pre-wrap',
   overflow: 'auto',
+  'overflow-x': 'hidden',
+  'word-break': 'break-all',
   'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
   'line-height': 1.5,
 }
