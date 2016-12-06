@@ -43,5 +43,4 @@ fi
 # Update deps
 cd packages/react-scripts
 
-# This modifies package.json to copy all dependencies to bundledDependencies
 node ./node_modules/.bin/publish "$@"

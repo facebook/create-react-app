@@ -9,7 +9,6 @@
  */
 // @remove-on-eject-end
 
-var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -17,9 +16,15 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('@trunkclub/react-dev-utils/InterpolateHtmlPlugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
+
+// @remove-on-eject-begin
+// `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
+var path = require('path');
+// @remove-on-eject-end
 
 function ensureSlash(path, needsSlash) {
   var hasSlash = path.endsWith('/');
@@ -118,6 +123,32 @@ module.exports = {
       }
     ],
     loaders: [
+      // Default loader: load all assets that are not handled
+      // by other loaders with the url loader.
+      // Note: This list needs to be updated with every change of extensions
+      // the other loaders match.
+      // E.g., when adding a loader for a new supported file extension,
+      // we need to add the supported extension to this loader too.
+      // Add one new line in `exclude` for each loader.
+      //
+      // "file" loader makes sure those assets end up in the `build` folder.
+      // When you `import` an asset, you get its filename.
+      // "url" loader works just like "file" loader but it also embeds
+      // assets smaller than specified size as data URLs to avoid requests.
+      {
+        exclude: [
+          /\.html$/,
+          /\.(js|jsx)$/,
+          /\.css$/,
+          /\.json$/,
+          /\.svg$/
+        ],
+        loader: 'url',
+        query: {
+          limit: 10000,
+          name: 'static/media/[name].[hash:8].[ext]'
+        }
+      },
       // Process JS with Babel.
       {
         test: /\.(js|jsx|es6)$/,
@@ -162,7 +193,7 @@ module.exports = {
         // Webpack 1.x uses Uglify plugin as a signal to minify *all* the assets
         // including CSS. This is confusing and will be removed in Webpack 2:
         // https://github.com/webpack/webpack/issues/283
-        loader: ExtractTextPlugin.extract('style', 'css?importLoaders=1&-autoprefixer&sourceMap!postcss!sass?sourceMap')
+        loader: ExtractTextPlugin.extract('style', 'css?importLoaders=1&sourceMap!postcss!sass?sourceMap')
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
@@ -171,22 +202,11 @@ module.exports = {
         test: /\.json$/,
         loader: 'json'
       },
-      // "file" loader makes sure those assets end up in the `build` folder.
-      // When you `import` an asset, you get its filename.
+      // "file" loader for svg
       {
-        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+        test: /\.svg$/,
         loader: 'file',
         query: {
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
-      },
-      // "url" loader works just like "file" loader but it also embeds
-      // assets smaller than specified size as data URLs to avoid requests.
-      {
-        test: /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
-        loader: 'url',
-        query: {
-          limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
@@ -277,6 +297,10 @@ module.exports = {
       openAnalyzer: false,
       generateStatsFile: true,
       statsFilename: '../artifacts/stats.json'
+    }),
+    // Generate and inject subresources hashes in the final `index.html`.
+    new SubresourceIntegrityPlugin({
+      hashFuncNames: ['sha256', 'sha384']
     })
   ],
   // Some libraries import Node modules but don't use them in the browser.

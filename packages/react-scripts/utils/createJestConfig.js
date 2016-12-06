@@ -34,6 +34,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupTestFrameworkScriptFile: setupTestsFile,
     testPathIgnorePatterns: ['<rootDir>/(build|docs|node_modules)/'],
     testEnvironment: 'node',
+    testURL: 'http://localhost',
   };
   if (rootDir) {
     config.rootDir = rootDir;
@@ -41,7 +42,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
   if (!isEjecting) {
     // This is unnecessary after ejecting because Jest
     // will just use .babelrc in the project folder.
-    config.scriptPreprocessor = resolve('config/jest/transform.js');
+    config.transform = {
+      '^.+\\.(js|jsx)$': resolve('config/jest/transform.js'),
+    };
   }
   return config;
 };

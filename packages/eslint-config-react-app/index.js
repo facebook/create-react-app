@@ -43,8 +43,7 @@ module.exports = {
 
   settings: {
     'import/ignore': [
-      'node_modules',
-      '\\.(json|css|ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$',
+      'node_modules'
     ],
     'import/extensions': ['.js'],
     'import/resolver': {
@@ -190,7 +189,7 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/jsx-equals-spacing': ['warn', 'never'],
     'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
-    'react/jsx-no-undef': 'warn',
+    'react/jsx-no-undef': 'error',
     'react/jsx-pascal-case': ['warn', {
       allowAllCaps: true,
       ignore: [],

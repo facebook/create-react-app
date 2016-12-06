@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "build": "node packages/react-scripts/scripts/build.js",
+    "changelog": "lerna-changelog",
     "create-react-app": "tasks/cra.sh",
     "e2e": "tasks/e2e.sh",
     "postinstall": "lerna bootstrap",
@@ -17,6 +18,7 @@
     "eslint-plugin-import": "1.12.0",
     "eslint-plugin-jsx-a11y": "2.2.2",
     "eslint-plugin-react": "6.3.0",
-    "lerna": "2.0.0-beta.30"
+    "lerna": "2.0.0-beta.30",
+    "lerna-changelog": "^0.2.3"
   }
 }

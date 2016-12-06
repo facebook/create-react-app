@@ -53,6 +53,13 @@ set -x
 cd ..
 root_path=$PWD
 
+if [ "$USE_YARN" = "yes" ]
+then
+  # Install Yarn so that the test can use it to install packages.
+  npm install -g yarn@0.17.10 # TODO: remove version when https://github.com/yarnpkg/yarn/issues/2142 is fixed.
+  yarn cache clean
+fi
+
 npm install
 
 # Lint own code
@@ -91,12 +98,19 @@ cli_path=$PWD/`npm pack`
 # Go to react-scripts
 cd $root_path/packages/react-scripts
 
-# Like bundle-deps, this script modifies packages/react-scripts/package.json,
-# copying own dependencies (those in the `packages` dir) to bundledDependencies
-node $root_path/tasks/bundle-own-deps.js
+# Save package.json because we're going to touch it
+cp package.json package.json.orig
+
+# Replace own dependencies (those in the `packages` dir) with the local paths
+# of those packages.
+node $root_path/tasks/replace-own-deps.js
 
 # Finally, pack react-scripts
 scripts_path=$root_path/packages/react-scripts/`npm pack`
+
+# Restore package.json
+rm package.json
+mv package.json.orig package.json
 
 # ******************************************************************************
 # Now that we have packed them, create a clean app folder and install them.
