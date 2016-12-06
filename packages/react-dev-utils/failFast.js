@@ -328,7 +328,7 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   } else {
     if (omits.value > 0) {
       const omittedFrames = document.createElement('div')
-      const text1 = document.createTextNode(`▶ ${omits.value} stack frames were omitted.`)
+      const text1 = document.createTextNode(`▶ ${omits.value} stack frames were collapsed.`)
       omittedFrames.appendChild(text1)
       omittedFrames.addEventListener('click', e => {
         const hide = text1.textContent.match(/▲/)
@@ -341,8 +341,10 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
         })
         if (hide) {
           text1.textContent = text1.textContent.replace(/▲/, '▶')
+          text1.textContent = text1.textContent.replace(/expanded/, 'collapsed')
         } else {
           text1.textContent = text1.textContent.replace(/▶/, '▲')
+          text1.textContent = text1.textContent.replace(/collapsed/, 'expanded')
         }
       })
       applyStyles(omittedFrames, omittedFramesStyle)
