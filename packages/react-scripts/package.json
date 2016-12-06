@@ -1,6 +1,6 @@
 {
   "name": "@trunkclub/build",
-  "version": "5.2.1",
+  "version": "5.3.0",
   "upstream-version": "0.8.1",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
@@ -8,7 +8,6 @@
   "scripts": {
     "test": "node ./bin/react-scripts.js test --env=jsdom"
   },
-  "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4",
     "npm": ">=3"
@@ -78,7 +77,6 @@
     "rimraf": "2.5.4",
     "sass-loader": "4.0.2",
     "react-dev-utils": "^0.4.0",
-    "recursive-readdir": "2.1.0",
     "strip-ansi": "3.0.1",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
