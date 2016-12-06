@@ -25,10 +25,10 @@ on run argv
     -- then return
     set found to my lookupTabWithUrl(theURL)
     if found then
-      tell targetTab to reload
-      set index of targetWindow to 1
       set targetWindow's active tab index to targetTabIndex
+      tell targetTab to reload
       tell targetWindow to activate
+      set index of targetWindow to 1
       return
     end if
 
@@ -37,9 +37,8 @@ on run argv
     -- We try to find an empty tab instead
     set found to my lookupTabWithUrl("chrome://newtab/")
     if found then
-      set URL of targetTab to theURL
-      set index of targetWindow to 1
       set targetWindow's active tab index to targetTabIndex
+      set URL of targetTab to theURL
       tell targetWindow to activate
       return
     end if
@@ -48,8 +47,8 @@ on run argv
     -- both debugging and empty tab were not found
     -- make a new tab with url
     tell window 1
-        activate
-        make new tab with properties {URL:theURL}
+      activate
+      make new tab with properties {URL:theURL}
     end tell
   end tell
 end run
