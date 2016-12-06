@@ -185,13 +185,16 @@ let viewIndex = -1
 let frameSettings = []
 
 function renderAdditional() {
-  let text = ' '
-  if (capturedErrors.length > 1) {
-    text = `Errors ${viewIndex + 1} of ${capturedErrors.length}`
-  }
   if (additionalReference.lastChild) {
     additionalReference.removeChild(additionalReference.lastChild)
   }
+
+  let text = ' '
+  if (capturedErrors.length <= 1) {
+    additionalReference.appendChild(document.createTextNode(text))
+    return
+  }
+  text = `Errors ${viewIndex + 1} of ${capturedErrors.length}`
   const span = document.createElement('span')
   span.appendChild(document.createTextNode(text))
   const group = document.createElement('span')
