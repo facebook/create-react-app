@@ -9,7 +9,6 @@
  */
 // @remove-on-eject-end
 
-var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -18,6 +17,7 @@ var InterpolateHtmlPlugin = require('@trunkclub/react-dev-utils/InterpolateHtmlP
 var WatchMissingNodeModulesPlugin = require('@trunkclub/react-dev-utils/WatchMissingNodeModulesPlugin');
 var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 var getClientEnvironment = require('./env');
+var path = require('path');
 var paths = require('./paths');
 var HappyPack = require('happypack');
 var HardSource = require('hard-source-webpack-plugin');
@@ -101,6 +101,37 @@ module.exports = {
     // First, run the linter.
     // It's important to do this before Babel processes the JS.
     loaders: [
+      // Default loader: load all assets that are not handled
+      // by other loaders with the url loader.
+      // Note: This list needs to be updated with every change of extensions
+      // the other loaders match.
+      // E.g., when adding a loader for a new supported file extension,
+      // we need to add the supported extension to this loader too.
+      // Add one new line in `exclude` for each loader.
+      //
+      // "file" loader makes sure those assets get served by WebpackDevServer.
+      // When you `import` an asset, you get its (virtual) filename.
+      // In production, they would get copied to the `build` folder.
+      // "url" loader works like "file" loader except that it embeds assets
+      // smaller than specified limit in bytes as data URLs to avoid requests.
+      // A missing `test` is equivalent to a match.
+      {
+        exclude: [
+          /\.html$/,
+          /\.(js|jsx|es6)$/,
+          /\.s?css$/,
+          /\.json$/,
+          /\.coffee$/,
+          /\.cjsx$/,
+          /\.elm$/,
+          /\.svg$/
+        ],
+        loader: 'url',
+        query: {
+          limit: 10000,
+          name: 'static/media/[name].[hash:8].[ext]'
+        }
+      },
       // Process JS with Babel.
       {
         test: /\.(js|jsx|es6)$/,
@@ -132,23 +163,11 @@ module.exports = {
         test: /\.json$/,
         loader: 'json'
       },
-      // "file" loader makes sure those assets get served by WebpackDevServer.
-      // When you `import` an asset, you get its (virtual) filename.
-      // In production, they would get copied to the `build` folder.
+      // "file" loader for svg
       {
-        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+        test: /\.svg$/,
         loader: 'file',
         query: {
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
-      },
-      // "url" loader works just like "file" loader but it also embeds
-      // assets smaller than specified size as data URLs to avoid requests.
-      {
-        test: /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
-        loader: 'url',
-        query: {
-          limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
