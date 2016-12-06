@@ -204,11 +204,22 @@ function renderAdditional() {
 
 function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
   let sourceCode = []
+  let whiteSpace = Infinity
+  sourceLines.forEach(({ text }) => {
+    const m = text.match(/^\s*/)
+    if (text === '') return
+    if (m && m[0]) {
+      whiteSpace = Math.min(whiteSpace, m[0].length)
+    } else {
+      whiteSpace = 0
+    }
+  })
   sourceLines.forEach(({ text, line }) => {
+    if (isFinite(whiteSpace)) text = text.substring(whiteSpace)
     sourceCode[line - 1] = text
   })
   sourceCode = sourceCode.join('\n')
-  const ansiHighlight = codeFrame(sourceCode, lineNum, columnNum, {
+  const ansiHighlight = codeFrame(sourceCode, lineNum, columnNum - (isFinite(whiteSpace) ? whiteSpace : 0), {
     highlightCode: true,
     linesAbove: CONTEXT_SIZE,
     linesBelow: CONTEXT_SIZE
