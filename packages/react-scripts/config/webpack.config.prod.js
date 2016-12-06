@@ -16,6 +16,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
@@ -233,6 +234,15 @@ module.exports = {
     ],
   },
   plugins: [
+    // Lint CSS with stylelint and fail on error
+    new StyleLintPlugin({
+      // @remove-on-eject-begin
+      config: {
+        extends: 'stylelint-config-standard',
+      },
+      // @remove-on-eject-end
+      failOnError: true,
+    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
