@@ -17,6 +17,7 @@ var InterpolateHtmlPlugin = require('@trunkclub/react-dev-utils/InterpolateHtmlP
 var WatchMissingNodeModulesPlugin = require('@trunkclub/react-dev-utils/WatchMissingNodeModulesPlugin');
 var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 var getClientEnvironment = require('./env');
+var path = require('path');
 var paths = require('./paths');
 var HappyPack = require('happypack');
 var HardSource = require('hard-source-webpack-plugin');
@@ -117,9 +118,12 @@ module.exports = {
       {
         exclude: [
           /\.html$/,
-          /\.(js|jsx)$/,
-          /\.css$/,
+          /\.(js|jsx|es6)$/,
+          /\.s?css$/,
           /\.json$/,
+          /\.coffee$/,
+          /\.cjsx$/,
+          /\.elm$/,
           /\.svg$/
         ],
         loader: 'url',

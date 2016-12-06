@@ -138,9 +138,12 @@ module.exports = {
       {
         exclude: [
           /\.html$/,
-          /\.(js|jsx)$/,
-          /\.css$/,
+          /\.(js|jsx|es6)$/,
+          /\.s?css$/,
           /\.json$/,
+          /\.coffee$/,
+          /\.cjsx$/,
+          /\.elm$/,
           /\.svg$/
         ],
         loader: 'url',

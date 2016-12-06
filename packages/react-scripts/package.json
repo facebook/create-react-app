@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@trunkclub/eslint-config": "2.0.0",
-    "@trunkclub/react-dev-utils": "1.0.0",
+    "@trunkclub/react-dev-utils": "1.1.0",
     "autoprefixer": "6.5.1",
     "babel-cli": "6.18.0",
     "babel-core": "6.17.0",
