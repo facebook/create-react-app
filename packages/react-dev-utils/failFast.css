@@ -7,18 +7,18 @@
 
 @media (min-width: 768px) {
   .cra-container {
-    width: 750px;
+    width: calc(750px - 6em);
   }
 }
 
 @media (min-width: 992px) {
   .cra-container {
-    width: 970px;
+    width: calc(970px - 6em);
   }
 }
 
 @media (min-width: 1200px) {
   .cra-container {
-    width: 1170px;
+    width: calc(1170px - 6em);
   }
 }
