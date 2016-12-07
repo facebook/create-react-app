@@ -98,8 +98,16 @@ module.exports = {
   // @remove-on-eject-end
   module: {
     noParse: [/\.elm$/],
-    // First, run the linter.
-    // It's important to do this before Babel processes the JS.
+    preLoaders: [{
+      loader: 'source-map',
+      test: /\.(jsx?|es6)$/,
+      include: function (abs) {
+        const rel = path.relative(paths.appSrc, abs)
+        return (/@trunkclub/.test(rel) ||
+                /trunkclub-web/.test(rel) ||
+                /tcweb-/.test(rel))
+      }
+    }],
     loaders: [
       // Default loader: load all assets that are not handled
       // by other loaders with the url loader.
