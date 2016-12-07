@@ -1,4 +1,4 @@
-## 0.8.2 (December 4, 2016)
+## 0.8.2 (December 7, 2016)
 
 #### :rocket: New Feature
 * `react-scripts`
