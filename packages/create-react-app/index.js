@@ -45,10 +45,16 @@ var chalk = require('chalk');
 var semver = require('semver');
 var pathExists = require('path-exists');
 
+var projectName;
+
 var program = require('commander')
   .version(require('./package.json').version)
-  .option('-v, --verbose', 'to print logs while init')
-  .option('-s, --scripts-version <alternative package>', 'to select a react script variant [react-scripts]', 'react-scripts')
+  .arguments('<name>')
+  .action(function (name) {
+    projectName = name;
+  })
+  .option('-v, --verbose', 'print logs while init')
+  .option('-s, --scripts-version <alternative package>', 'select a react script variant')
   .on('--help', function () {
     console.log('Example of valid script version values:')
     console.log('  - a specific npm version: "0.22.0-rc1"')
@@ -57,7 +63,13 @@ var program = require('commander')
   })
   .parse(process.argv)
 
-createApp(program.args[0], program.verbose, program.scriptsVersion);
+if (typeof projectName === 'undefined') {
+  console.error('Error: no name given!');
+  console.log('Usage: ' + program.name() + ' ' + program.usage());
+  process.exit(1);
+}
+
+createApp(projectName, program.verbose, program.scriptsVersion);
 
 function createApp(name, verbose, version) {
   var root = path.resolve(name);
@@ -156,10 +168,13 @@ function run(root, appName, version, verbose, originalDirectory) {
 }
 
 function getInstallPackage(version) {
-  var packageToInstall = version;
+  var packageToInstall = 'react-scripts';
   var validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += '@' + validSemver;
+  } else if (version) {
+    // for tar.gz or alternative paths
+    packageToInstall = version;
   }
   return packageToInstall;
 }
