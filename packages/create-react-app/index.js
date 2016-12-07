@@ -69,6 +69,7 @@ var program = require('commander')
   })
   .option('--verbose', 'print additional logs')
   .option('--scripts-version <alternative-package>', 'use a non-standard version of react-scripts')
+  .option('-t, --template-path <path>', 'to select a template variant')
   .on('--help', function () {
     console.log('    Only ' + chalk.green('<project-directory>') + ' is required.');
     console.log();
@@ -95,7 +96,7 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-createApp(projectName, program.verbose, program.scriptsVersion, argv['from-template']);
+createApp(projectName, program.verbose, program.scriptsVersion, program.templatePath);
 
 function createApp(name, verbose, version, templatePath) {
   var root = path.resolve(name);
@@ -188,13 +189,10 @@ function run(root, appName, version, verbose, originalDirectory, templatePath) {
 }
 
 function getInstallPackage(version) {
-  var packageToInstall = 'react-scripts';
+  var packageToInstall = version;
   var validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += '@' + validSemver;
-  } else if (version) {
-    // for tar.gz or alternative paths
-    packageToInstall = version;
   }
   return packageToInstall;
 }
