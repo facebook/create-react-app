@@ -29,6 +29,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
+      '^.+\\.(js|jsx)$': isEjecting ?
+        '<rootDir>/node_modules/babel-jest'
+        : resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
     },
@@ -38,13 +41,6 @@ module.exports = (resolve, rootDir, isEjecting) => {
   };
   if (rootDir) {
     config.rootDir = rootDir;
-  }
-  if (!isEjecting) {
-    // This is unnecessary after ejecting because Jest
-    // will just use .babelrc in the project folder.
-    Object.assign(config.transform, {
-      '^.+\\.(js|jsx)$': resolve('config/jest/babelTransform.js'),
-    });
   }
   return config;
 };
