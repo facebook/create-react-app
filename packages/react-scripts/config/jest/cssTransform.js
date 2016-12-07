@@ -5,9 +5,18 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @flow
  */
 // @remove-on-eject-end
 
-module.exports = "test-file-stub";
+// This is a custom Jest transformer turning style imports into empty objects.
+// http://facebook.github.io/jest/docs/tutorial-webpack.html
+
+module.exports = {
+  process() {
+    return 'module.exports = {};';
+  },
+  getCacheKey(fileData, filename) {
+    // The output is always the same.
+    return 'cssTransform';
+  },
+};

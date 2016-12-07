@@ -17,27 +17,30 @@ module.exports = (resolve, rootDir, isEjecting) => {
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = pathExists.sync(paths.testsSetup) ? '<rootDir>/src/setupTests.js' : undefined;
 
+  // TODO: I don't know if it's safe or not to just use / as path separator
+  // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
-    moduleNameMapper: {
-      '^.+\\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
-      '^.+\\.css$': resolve('config/jest/CSSStub.js')
-    },
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
-    testPathIgnorePatterns: ['<rootDir>/(build|docs|node_modules)/'],
+    testPathIgnorePatterns: [
+      '<rootDir>[/\\\\](build|docs|node_modules)[/\\\\]'
+    ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
+    transform: {
+      '^.+\\.(js|jsx)$': isEjecting ?
+        '<rootDir>/node_modules/babel-jest'
+        : resolve('config/jest/babelTransform.js'),
+      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
+      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
+    },
+    transformIgnorePatterns: [
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'
+    ],
   };
   if (rootDir) {
     config.rootDir = rootDir;
-  }
-  if (!isEjecting) {
-    // This is unnecessary after ejecting because Jest
-    // will just use .babelrc in the project folder.
-    config.transform = {
-      '^.+\\.(js|jsx)$': resolve('config/jest/transform.js'),
-    };
   }
   return config;
 };
