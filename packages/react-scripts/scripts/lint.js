@@ -5,6 +5,7 @@ var CLIEngine = require('eslint').CLIEngine;
 var config = require('@trunkclub/eslint-config');
 
 config.fix = true;
+config.extensions = ['.js', '.jsx', '.es6'];
 
 var eslint = new CLIEngine(config);
 
