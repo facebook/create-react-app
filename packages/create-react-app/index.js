@@ -30,7 +30,7 @@
 // tell people to update their global version of create-react-app.
 //
 // Also be careful with new language features.
-// This file must work on Node 0.10+.
+// This file must work on Node 4+.
 //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //   /!\ DO NOT MODIFY THIS FILE /!\
@@ -43,32 +43,21 @@ var path = require('path');
 var spawn = require('cross-spawn');
 var chalk = require('chalk');
 var semver = require('semver');
-var argv = require('minimist')(process.argv.slice(2));
 var pathExists = require('path-exists');
 
-/**
- * Arguments:
- *   --version - to print current version
- *   --verbose - to print logs while init
- *   --scripts-version <alternative package>
- *     Example of valid values:
- *     - a specific npm version: "0.22.0-rc1"
- *     - a .tgz archive from any npm repo: "https://registry.npmjs.org/react-scripts/-/react-scripts-0.20.0.tgz"
- *     - a package prepared with `tasks/clean_pack.sh`: "/Users/home/vjeux/create-react-app/react-scripts-0.22.0.tgz"
- */
-var commands = argv._;
-if (commands.length === 0) {
-  if (argv.version) {
-    console.log('create-react-app version: ' + require('./package.json').version);
-    process.exit();
-  }
-  console.error(
-    'Usage: create-react-app <project-directory> [--verbose]'
-  );
-  process.exit(1);
-}
+var program = require('commander')
+  .version(require('./package.json').version)
+  .option('-v, --verbose', 'to print logs while init')
+  .option('-s, --scripts-version <alternative package>', 'to select a react script variant [react-scripts]', 'react-scripts')
+  .on('--help', function () {
+    console.log('Example of valid script version values:')
+    console.log('  - a specific npm version: "0.22.0-rc1"')
+    console.log('  - a .tgz archive from any npm repo: "https://registry.npmjs.org/react-scripts/-/react-scripts-0.20.0.tgz"')
+    console.log('  - a package prepared with `tasks/clean_pack.sh`: "/Users/home/vjeux/create-react-app/react-scripts-0.22.0.tgz"')
+  })
+  .parse(process.argv)
 
-createApp(commands[0], argv.verbose, argv['scripts-version']);
+createApp(program.args[0], program.verbose, program.scriptsVersion);
 
 function createApp(name, verbose, version) {
   var root = path.resolve(name);
@@ -167,13 +156,10 @@ function run(root, appName, version, verbose, originalDirectory) {
 }
 
 function getInstallPackage(version) {
-  var packageToInstall = 'react-scripts';
+  var packageToInstall = version;
   var validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += '@' + validSemver;
-  } else if (version) {
-    // for tar.gz or alternative paths
-    packageToInstall = version;
   }
   return packageToInstall;
 }

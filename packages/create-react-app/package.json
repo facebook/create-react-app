@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "chalk": "^1.1.1",
+    "commander": "^2.9.0",
     "cross-spawn": "^4.0.0",
-    "minimist": "^1.2.0",
     "path-exists": "^2.1.0",
     "semver": "^5.0.3"
   }
