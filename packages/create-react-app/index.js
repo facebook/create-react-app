@@ -189,10 +189,13 @@ function run(root, appName, version, verbose, originalDirectory, templatePath) {
 }
 
 function getInstallPackage(version) {
-  var packageToInstall = version;
+  var packageToInstall = 'react-scripts';
   var validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += '@' + validSemver;
+  } else if (version) {
+    // for tar.gz or alternative paths
+    packageToInstall = version;
   }
   return packageToInstall;
 }
