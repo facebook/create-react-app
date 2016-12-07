@@ -1,6 +1,6 @@
 {
   "name": "@trunkclub/build",
-  "version": "5.4.1",
+  "version": "5.5.0",
   "upstream-version": "0.8.1",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
@@ -77,6 +77,7 @@
     "recursive-readdir": "2.1.0",
     "rimraf": "2.5.4",
     "sass-loader": "4.0.2",
+    "source-map-loader": "0.1.5",
     "strip-ansi": "3.0.1",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",

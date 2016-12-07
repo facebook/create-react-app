@@ -124,6 +124,15 @@ module.exports = {
         test: /\.(js|jsx|es6)$/,
         loader: 'eslint',
         include: paths.appSrc
+      }, {
+        loader: 'source-map',
+        test: /\.(jsx?|es6)$/,
+        include: function (abs) {
+          const rel = path.relative(paths.appSrc, abs)
+          return (/@trunkclub/.test(rel) ||
+                  /trunkclub-web/.test(rel) ||
+                  /tcweb-/.test(rel))
+        }
       }
     ],
     loaders: [
