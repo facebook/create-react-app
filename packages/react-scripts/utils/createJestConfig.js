@@ -43,7 +43,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     // This is unnecessary after ejecting because Jest
     // will just use .babelrc in the project folder.
     config.transform = {
-      '^.+\\.(js|jsx)$': resolve('config/jest/transform.js'),
+      '^.+\\.(js|jsx|es6)$': resolve('config/jest/transform.js'),
     };
   }
   return config;
