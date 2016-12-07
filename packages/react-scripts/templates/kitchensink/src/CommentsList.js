@@ -2,6 +2,10 @@
 import React, { Component, PropTypes } from 'react';
 import loadComments from './loadComments';
 
+const previousComments = {
+  'idOld': { id: 'old', body: 'comment old' },
+};
+
 class CommentsList extends Component {
   static propTypes = {
     user: PropTypes.string,
@@ -13,7 +17,11 @@ class CommentsList extends Component {
   } = { loading: true, comments: [] };
 
   componentDidMount() {
-    loadComments().then(comments => this.setState({ loading: false, comments }))
+    loadComments({ max: 4, ...previousComments })
+      .then(comments => {
+        const commentArray = Object.keys(comments).map(key => comments[key]);
+        this.setState({ loading: false, comments: commentArray });
+      })
   }
 
   render() {
@@ -25,7 +33,7 @@ class CommentsList extends Component {
         {
           loading
             ? <div>Comments are loading</div>
-            : <ul>{comments.map((comment, i) => <li key={i}>{comment}</li>)}</ul>
+            : <ul>{comments.map((comment) => <li key={comment.id}>{`message: ${comment.body}`}</li>)}</ul>
         }
       </div>
     )
