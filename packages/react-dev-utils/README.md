@@ -202,7 +202,7 @@ module.exports = {
 }
 ```
 
-#### `new webpackEnvDefinePlugin({regex: string, customVariables: Object.<string, string>})`
+#### `new EnvDefinePlugin({regex: string, customVariables: Object.<string, string>})`
 
 This webpack plugin grabs environment variables that follows a specified regex and injects them into the application 
 using the webpack DefinePlugin.
@@ -223,11 +223,8 @@ and define it as a plugin in the webpack config plugin section:
        // Grab MY_PREFIX_* environment variables
        regex: /^MY_PREFIX_/i,
        customVariables: {
-         // Useful for determining whether we’re running in production mode.
-         // Most importantly, it switches React into the correct mode.
-         'MY_ENV_VAR': JSON.stringify(
-           process.env.MY_ENV_VAR || 'default'
-         )
+         // Useful for injecting static values as environment variables to the application
+         'APP_NAME': 'My App'
        }
      }),
      ...

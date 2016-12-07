@@ -193,17 +193,13 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
     }),
-    // Makes some environment variables available to the JS code, for example:
-    // if (process.env.NODE_ENV === 'development') { ... }.
+    // Makes some environment variables available to the JS code
     new EnvDefinePlugin({
       // Grab REACT_APP_* environment variables
       regex: /^REACT_APP_/i,
       customVariables: {
-        // Useful for determining whether we’re running in production mode.
-        // Most importantly, it switches React into the correct mode.
-        'NODE_ENV': JSON.stringify(
-          process.env.NODE_ENV || 'development'
-        ),
+        // Set NODE_ENV to development
+        'NODE_ENV': 'development',
         // Useful for resolving the correct path to static assets in `public`.
         // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
         // This should only be used as an escape hatch. Normally you would put

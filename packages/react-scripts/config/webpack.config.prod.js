@@ -219,19 +219,14 @@ module.exports = {
         minifyURLs: true
       }
     }),
-    // Makes some environment variables available to the JS code, for example:
-    // if (process.env.NODE_ENV === 'production') { ... }.
-    // It is absolutely essential that NODE_ENV was set to production here.
-    // Otherwise React will be compiled in the very slow development mode.
+    // Makes some environment variables available to the JS code
     new EnvDefinePlugin({
       // Grab REACT_APP_* environment variables
       regex: /^REACT_APP_/i,
       customVariables: {
-        // Useful for determining whether we’re running in production mode.
-        // Most importantly, it switches React into the correct mode.
-        'NODE_ENV': JSON.stringify(
-          process.env.NODE_ENV || 'production'
-        ),
+        // It is absolutely essential that NODE_ENV is set to production here.
+        // Otherwise React will be compiled in the very slow development mode.
+        'NODE_ENV': 'production',
         // Useful for resolving the correct path to static assets in `public`.
         // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
         // This should only be used as an escape hatch. Normally you would put
