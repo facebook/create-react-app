@@ -49,7 +49,6 @@ module.exports = {
     // the line below with these two lines if you prefer the stock client:
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
-    require.resolve('react-hot-loader/patch'),
     require.resolve('@trunkclub/react-dev-utils/webpackHotDevClient'),
     // We ship a few polyfills by default:
     require.resolve('babel-polyfill'),
@@ -237,7 +236,6 @@ module.exports = {
         query: {
           // @remove-on-eject-begin
           babelrc: false,
-          plugins: [require.resolve('react-hot-loader/babel')],
           presets: [require.resolve('babel-preset-trunkclub')],
           // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
