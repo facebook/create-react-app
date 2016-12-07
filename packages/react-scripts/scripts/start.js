@@ -46,7 +46,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 var DEFAULT_PORT = process.env.PORT || 3000;
 var compiler;
 var handleCompile;
-var time = new Date();
+var time = +new Date();
 
 // You can safely remove this after ejecting.
 // We only use this block for testing of Create React App itself:
@@ -78,7 +78,6 @@ function setupCompiler(host, port, protocol) {
     console.log('Compiling...');
   });
 
-  var isFirstCompile = true;
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
@@ -92,22 +91,9 @@ function setupCompiler(host, port, protocol) {
     // them in a readable focused way.
     var messages = formatWebpackMessages(stats.toJson({}, true));
     var isSuccessful = !messages.errors.length && !messages.warnings.length;
-    var showInstructions = isSuccessful && (isInteractive || isFirstCompile);
 
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully in ' + formatTime(+new Date() - time) + '!'));
-    }
-
-    if (showInstructions) {
-      console.log();
-      console.log('The app is running at:');
-      console.log();
-      console.log('  ' + chalk.cyan(protocol + '://' + host + ':' + port + '/'));
-      console.log();
-      console.log('Note that the development build is not optimized.');
-      console.log('To create a production build, use ' + chalk.cyan(cli + ' run build') + '.');
-      console.log();
-      isFirstCompile = false;
     }
 
     // If errors exist, only show errors.
@@ -118,7 +104,6 @@ function setupCompiler(host, port, protocol) {
         console.log(message);
         console.log();
       });
-      time = 0
       return;
     }
 
@@ -135,7 +120,6 @@ function setupCompiler(host, port, protocol) {
       console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
       console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
     }
-    time = 0
   });
 }
 
