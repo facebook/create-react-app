@@ -20,7 +20,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const config = {
     testPathDirs: [ 'spec' ],
     testRegex: '.*spec\\.(es6|js)$',
-    moduleDirectories: [ 'node_modules', 'src' ],
+    moduleDirectories: [ 'src', 'node_modules' ],
     moduleFileExtensions: [ 'js', 'json', 'es6', 'jsx' ],
     coverageDirectory: 'artifacts/coverage',
     coverageReporters: ['lcov'],
