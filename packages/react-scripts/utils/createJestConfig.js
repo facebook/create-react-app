@@ -19,15 +19,18 @@ module.exports = (resolve, rootDir, isEjecting) => {
 
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
-    moduleNameMapper: {
-      '^.+\\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
-      '^.+\\.css$': resolve('config/jest/CSSStub.js')
-    },
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testPathIgnorePatterns: ['<rootDir>/(build|docs|node_modules)/'],
     testEnvironment: 'node',
     testURL: 'http://localhost',
+    transform: {
+      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
+      '^.+\\.(?!(js|jsx|css|json)$)[^\\.]+$': resolve('config/jest/fileTransform.js'),
+    },
+    transformIgnorePatterns: [
+      '/node_modules/.+\.(js|jsx|json)$'
+    ],
   };
   if (rootDir) {
     config.rootDir = rootDir;
@@ -35,9 +38,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
   if (!isEjecting) {
     // This is unnecessary after ejecting because Jest
     // will just use .babelrc in the project folder.
-    config.transform = {
-      '^.+\\.(js|jsx)$': resolve('config/jest/transform.js'),
-    };
+    Object.assign(config.transform, {
+      '^.+\\.(js|jsx)$': resolve('config/jest/babelTransform.js'),
+    });
   }
   return config;
 };
