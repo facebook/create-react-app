@@ -10,7 +10,7 @@ class CommentsList extends Component {
   state : {
     loading: boolean,
     comments: string[],
-  } = { loading: true, comments: [] }
+  } = { loading: true, comments: [] };
 
   componentDidMount() {
     loadComments().then(comments => this.setState({ loading: false, comments }))

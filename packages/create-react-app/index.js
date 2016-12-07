@@ -69,7 +69,7 @@ var program = require('commander')
   })
   .option('--verbose', 'print additional logs')
   .option('--scripts-version <alternative-package>', 'use a non-standard version of react-scripts')
-  .option('-t, --template-path <path>', 'to select a template variant')
+  .option('--template <variant> [app]', 'to select a template variant', 'app')
   .on('--help', function () {
     console.log('    Only ' + chalk.green('<project-directory>') + ' is required.');
     console.log();
@@ -83,7 +83,7 @@ var program = require('commander')
     console.log('      ' + chalk.cyan('https://github.com/facebookincubator/create-react-app/issues/new'));
     console.log();
   })
-  .parse(process.argv)
+  .parse(process.argv);
 
 if (typeof projectName === 'undefined') {
   console.error('Please specify the project directory:');
@@ -96,9 +96,9 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-createApp(projectName, program.verbose, program.scriptsVersion, program.templatePath);
+createApp(projectName, program.verbose, program.scriptsVersion, program.template);
 
-function createApp(name, verbose, version, templatePath) {
+function createApp(name, verbose, version, template) {
   var root = path.resolve(name);
   var appName = path.basename(root);
 
@@ -131,7 +131,7 @@ function createApp(name, verbose, version, templatePath) {
   console.log('Installing ' + chalk.cyan('react-scripts') + '...');
   console.log();
 
-  run(root, appName, version, verbose, originalDirectory, templatePath);
+  run(root, appName, version, verbose, originalDirectory, template);
 }
 
 function shouldUseYarn() {
@@ -164,7 +164,7 @@ function install(packageToInstall, verbose, callback) {
   });
 }
 
-function run(root, appName, version, verbose, originalDirectory, templatePath) {
+function run(root, appName, version, verbose, originalDirectory, template) {
   var packageToInstall = getInstallPackage(version);
   var packageName = getPackageName(packageToInstall);
 
@@ -184,7 +184,7 @@ function run(root, appName, version, verbose, originalDirectory, templatePath) {
       'init.js'
     );
     var init = require(scriptsPath);
-    init(root, appName, verbose, originalDirectory, templatePath);
+    init(root, appName, verbose, originalDirectory, template);
   });
 }
 

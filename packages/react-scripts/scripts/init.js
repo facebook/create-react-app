@@ -12,7 +12,7 @@ var path = require('path');
 var spawn = require('cross-spawn');
 var chalk = require('chalk');
 
-module.exports = function(appPath, appName, verbose, originalDirectory, templatePath) {
+module.exports = function(appPath, appName, verbose, originalDirectory, template) {
   var ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
   var ownPath = path.join(appPath, 'node_modules', ownPackageName);
   var appPackage = require(path.join(appPath, 'package.json'));
@@ -41,16 +41,12 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
   }
 
   // Copy the files for the user
-  if (!templatePath) {
-    fs.copySync(path.join(ownPath, 'template'), appPath);
+  var templatePath = path.join(ownPath, 'templates', template);
+  if (pathExists.sync(templatePath)) {
+    fs.copySync(templatePath, appPath);
   } else {
-    var templateExists = pathExists.sync(path.join(ownPath, templatePath));
-    if (templateExists) {
-      fs.copySync(path.join(ownPath, templatePath), appPath);
-    } else {
-      console.error('Could not locate supplied template path: ' + templatePath);
-      return;
-    }
+    console.error('Could not locate supplied template: ' + template);
+    return;
   }
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
@@ -85,6 +81,14 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
     ].filter(function(e) { return e; });
   }
   args.push('react', 'react-dom');
+
+  // Install additional template dependencies, if present
+  var templateDependenciesPath = path.join(appPath, '.template.dependencies.json');
+  if (fs.existsSync(templateDependenciesPath)) {
+    var templateDependencies = require(templateDependenciesPath).dependencies;
+    args = args.concat(templateDependencies);
+    fs.unlinkSync(templateDependenciesPath);
+  }
 
   console.log('Installing react and react-dom using ' + command + '...');
   console.log();

@@ -23,7 +23,7 @@ function cleanup {
   echo 'Cleaning up.'
   cd $root_path
   # Uncomment when snapshot testing is enabled by default:
-  # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
+  # rm ./packages/react-scripts/templates/app/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
@@ -95,7 +95,7 @@ test -e build/favicon.ico
 # Run tests with CI flag
 CI=true npm test
 # Uncomment when snapshot testing is enabled by default:
-# test -e template/src/__snapshots__/App.test.js.snap
+# test -e templates/app/src/__snapshots__/App.test.js.snap
 
 # Test local start command
 npm start -- --smoke-test
@@ -118,6 +118,9 @@ cp package.json package.json.orig
 # of those packages.
 node $root_path/tasks/replace-own-deps.js
 
+# Remove .npmignore so the test template is added
+rm $root_path/packages/react-scripts/.npmignore
+
 # Finally, pack react-scripts
 scripts_path=$root_path/packages/react-scripts/`npm pack`
 
@@ -135,7 +138,7 @@ npm install $cli_path
 
 # Install the app in a temporary location
 cd $temp_app_path
-create_react_app --scripts-version=$scripts_path --from-template=kitchensink test-app
+create_react_app --scripts-version=$scripts_path --template=kitchensink test-app
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
