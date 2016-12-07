@@ -44,7 +44,7 @@ var nodePaths = (process.env.NODE_PATH || '')
 var envPublicUrl = process.env.PUBLIC_URL;
 
 function getPublicUrl(appPackageJson) {
-  return envPublicUrl ? envPublicUrl : require(appPackageJson).homepage;
+  return envPublicUrl || require(appPackageJson).homepage;
 }
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
@@ -54,9 +54,13 @@ function getPublicUrl(appPackageJson) {
 // We can't use a relative path in HTML because we don't want to load something
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
 function getServedPath(appPackageJson) {
-  var homepagePath = getPublicUrl(appPackageJson);
-  var homepagePathname = homepagePath ? url.parse(homepagePath).pathname : '/';
-  return envPublicUrl ? homepagePath : homepagePathname;
+  var publicUrl = getPublicUrl(appPackageJson)
+  if (!publicUrl) {
+    return '/'
+  } else if (envPublicUrl) {
+    return publicUrl;
+  }
+  return url.parse(publicUrl).pathname;
 }
 
 // config after eject: we're in ./config/
