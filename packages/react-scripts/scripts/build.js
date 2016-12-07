@@ -25,11 +25,20 @@ var pathExists = require('path-exists');
 var filesize = require('filesize');
 var gzipSize = require('gzip-size').sync;
 var webpack = require('webpack');
-var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
+
+var getWebpackConfig = require('../utils/getWebpackConfig');
+
+var config;
+
+config = require('../config/webpack.config.prod');
+
+// @remove-on-eject-begin
+config = getWebpackConfig('../config/webpack.config.prod');
+// @remove-on-eject-end
 
 var useYarn = pathExists.sync(paths.yarnLockFile);
 
