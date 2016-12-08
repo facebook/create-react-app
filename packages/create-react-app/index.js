@@ -132,23 +132,25 @@ function install(packageToInstall, verbose, callback) {
   var yarnExists = true;
   try {
     yarnProc = spawn('yarn', yarnArgs, {stdio: 'inherit'});
-    yarnProc.on('error', function (err) {
-      if (err.code === 'ENOENT') {
-        yarnExists = false;
-      }
-    });
-    yarnProc.on('close', function (code) {
-      if (yarnExists) {
-        callback(code, 'yarn', yarnArgs);
-        return;
-      }
-    });
   } catch (err) {
     // It's not clear why we end up here in some cases but we need this.
     // https://github.com/facebookincubator/create-react-app/issues/1200
     yarnExists = false;
     fallbackToNpm();
+    return;
   }
+  yarnProc.on('error', function (err) {
+    if (err.code === 'ENOENT') {
+      yarnExists = false;
+    }
+  });
+  yarnProc.on('close', function (code) {
+    if (yarnExists) {
+      callback(code, 'yarn', yarnArgs);
+    } else {
+      fallbackToNpm();
+    }
+  });
 }
 
 function run(root, appName, version, verbose, originalDirectory) {
