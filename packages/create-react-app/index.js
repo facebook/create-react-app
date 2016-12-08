@@ -108,37 +108,48 @@ function createApp(name, verbose, version) {
 }
 
 function install(packageToInstall, verbose, callback) {
-  var args = [
-    'add',
-    '--dev',
-    '--exact',
-    packageToInstall,
-  ];
-  var proc = spawn('yarn', args, {stdio: 'inherit'});
-
-  var yarnExists = true;
-  proc.on('error', function (err) {
-    if (err.code === 'ENOENT') {
-      yarnExists = false;
-    }
-  });
-  proc.on('close', function (code) {
-    if (yarnExists) {
-      callback(code, 'yarn', args);
-      return;
-    }
-    // No Yarn installed, continuing with npm.
-    args = [
+  function fallbackToNpm() {
+    var npmArgs = [
       'install',
       verbose && '--verbose',
       '--save-dev',
       '--save-exact',
       packageToInstall,
     ].filter(function(e) { return e; });
-    var npmProc = spawn('npm', args, {stdio: 'inherit'});
+    var npmProc = spawn('npm', npmArgs, {stdio: 'inherit'});
     npmProc.on('close', function (code) {
-      callback(code, 'npm', args);
+      callback(code, 'npm', npmArgs);
     });
+  }
+
+  var yarnArgs = [
+    'add',
+    '--dev',
+    '--exact',
+    packageToInstall,
+  ];
+  var yarnProc;
+  var yarnExists = true;
+  try {
+    yarnProc = spawn('yarn', yarnArgs, {stdio: 'inherit'});
+  } catch (err) {
+    // It's not clear why we end up here in some cases but we need this.
+    // https://github.com/facebookincubator/create-react-app/issues/1200
+    yarnExists = false;
+    fallbackToNpm();
+    return;
+  }
+  yarnProc.on('error', function (err) {
+    if (err.code === 'ENOENT') {
+      yarnExists = false;
+    }
+  });
+  yarnProc.on('close', function (code) {
+    if (yarnExists) {
+      callback(code, 'yarn', yarnArgs);
+    } else {
+      fallbackToNpm();
+    }
   });
 }
 
