@@ -2,8 +2,6 @@ const codeFrame = require('babel-code-frame')
 const ansiHTML = require('./ansiHTML')
 const StackTraceResolve = require('stacktrace-resolve').default
 
-require('./failFast.css')
-
 const CONTEXT_SIZE = 3
 
 const black = '#293238'
@@ -12,6 +10,48 @@ const lightGray = '#fafafa'
 const red = '#ce1126'
 const lightRed = '#fccfcf'
 const yellow = '#fbf5b4'
+
+// From: http://stackoverflow.com/a/524721/127629
+function injectCSS(css) {
+  const head = document.head || document.getElementsByTagName('head')[0];
+  const style = document.createElement('style');
+
+  style.type = 'text/css';
+  if (style.styleSheet){
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+
+  head.appendChild(style);
+}
+
+injectCSS(`
+.cra-container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 768px) {
+  .cra-container {
+    width: calc(750px - 6em);
+  }
+}
+
+@media (min-width: 992px) {
+  .cra-container {
+    width: calc(970px - 6em);
+  }
+}
+
+@media (min-width: 1200px) {
+  .cra-container {
+    width: calc(1170px - 6em);
+  }
+}
+`);
 
 const overlayStyle = {
   position: 'fixed',
