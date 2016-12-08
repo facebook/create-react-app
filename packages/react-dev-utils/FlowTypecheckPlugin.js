@@ -58,10 +58,10 @@ function writeFileIfDoesNotExist(path, data) {
           if (err) {
             return reject(err);
           }
-          resolve(data);
+          resolve(true);
         });
       } else {
-        resolve(data);
+        resolve(false);
       }
     });
   });
@@ -75,7 +75,7 @@ function writeInFileIfNotPresent(path, contentToAssert, contentToAppend) {
           if (err) {
             return reject(err);
           }
-          resolve(contentToAppend);
+          resolve(true);
         });
       } else {
         fs.readFile(path, (err, existingContent) => {
@@ -87,10 +87,10 @@ function writeInFileIfNotPresent(path, contentToAssert, contentToAppend) {
               if (err) {
                 return reject(err);
               }
-              resolve(contentToAppend);
+              resolve(true);
             });
           } else {
-            resolve(contentToAppend);
+            resolve(false);
           }
         });
       }
@@ -126,8 +126,11 @@ function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
         )) :
         true
     ),
-    writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n')),
-    writeInFileIfNotPresent(gitignorePath, 'flow-typed', 'flow-typed'),
+    writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n'))
+    .then(wroteFlowconfig => wroteFlowconfig ?
+      writeInFileIfNotPresent(gitignorePath, 'flow-typed', 'flow-typed/npm') :
+      false
+    ),
     execOneTime(
       flowTypedPath,
       ['install', '--overwrite', '--flowVersion=' + localVersion],
