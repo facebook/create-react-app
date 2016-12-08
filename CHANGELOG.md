@@ -1,3 +1,44 @@
+## 0.8.3 (December 8, 2016)
+
+#### :bug: Bug Fix
+* `create-react-app`
+  * [#1204](https://github.com/facebookincubator/create-react-app/pull/1204) Catch synchronous errors from spawning yarn. ([@gaearon](https://github.com/gaearon))
+
+    Fixes a crash when running `create-react-app` in some cases.
+  
+* `react-scripts`
+  * [#1203](https://github.com/facebookincubator/create-react-app/pull/1203) Update webpack-subresource-integrity to fix Windows builds. ([@gaearon](https://github.com/gaearon))
+    
+    Fixes a crash when running `npm run build` on Windows.
+  
+  * [#1201](https://github.com/facebookincubator/create-react-app/pull/1201) Instruct Jest to load native components from RNW instead of RN. ([@remon-georgy](https://github.com/remon-georgy))
+  
+    Fixes tests for users of React Native Web.
+
+#### :memo: Documentation
+* `react-scripts`
+
+  * [#806](https://github.com/facebookincubator/create-react-app/pull/806) Add syntax highlighting configuration guide. ([@mareksuscak](https://github.com/mareksuscak))
+
+#### Committers: 3
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Marek Suscak ([mareksuscak](https://github.com/mareksuscak))
+- Remon Georgy ([remon-georgy](https://github.com/remon-georgy))
+
+### Migrating from 0.8.2 to 0.8.3
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.8.3
+```
+
+You can optionally update the global CLI too:
+
+```
+npm install -g create-react-app@1.0.1
+```
+
 ## 0.8.2 (December 7, 2016)
 
 #### :rocket: New Feature
