@@ -20,9 +20,11 @@ require('dotenv').config({silent: true});
 
 const jest = require('jest');
 const argv = process.argv.slice(2);
+// If any of these environment variables exist, don't add --watch to Jest args
+const ENV_WITHOUT_WATCH = ['CI', 'COVERAGE', 'NO_TEST_WATCH'];
 
 // Watch unless on CI
-if (!process.env.CI) {
+if (!ENV_WITHOUT_WATCH.some( eww => eww in process.env)) {
   argv.push('--watch');
 }
 
