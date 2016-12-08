@@ -10,14 +10,14 @@ function * load(limit) {
 
 export default class extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.state = { users: [] }
+    this.state = { users: [] };
   }
 
   componentDidMount() {
     const users = [];
-    for (let user of load(5)) {
+    for (let user of load(4)) {
       users.push(user);
     }
     this.setState({ users });
@@ -30,6 +30,6 @@ export default class extends React.Component {
           <div key={user.id}>{user.name}</div>
         ))}
       </div>
-    )
+    );
   }
 }

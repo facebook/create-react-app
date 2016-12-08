@@ -87,8 +87,8 @@ fi
 npm run build
 # Check for expected output
 test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
+test -e build/static/js/main.*.js
+test -e build/static/css/main.*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
@@ -152,8 +152,8 @@ cd test-app
 NODE_PATH=src npm run build
 # Check for expected output
 test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
+test -e build/static/js/main.*.js
+test -e build/static/css/main.*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 
@@ -182,8 +182,8 @@ npm link $root_path/packages/react-scripts
 NODE_PATH=src npm run build
 # Check for expected output
 test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
+test -e build/static/js/main.*.js
+test -e build/static/css/main.*.css
 test -e build/static/media/*.svg
 test -e build/favicon.ico
 

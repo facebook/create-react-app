@@ -1,29 +1,88 @@
-// @flow
 import React from 'react';
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.state = { feature: null }
+    this.state = { feature: null };
   }
 
   componentDidMount() {
     switch (location.hash.slice(1)) {
-      case 'promises':
-        require.ensure(['./features/Promises'], () => {
-          this.setState({ feature: require('./features/Promises').default })
-        });
+      case 'array-destructuring':
+        require.ensure(['./features/syntax/ArrayDestructuring'], () =>
+          this.setState({ feature: require('./features/syntax/ArrayDestructuring').default })
+        );
         break;
-      case 'generators':
-        require.ensure(['./features/Generators'], () => {
-          this.setState({ feature: require('./features/Generators').default })
-        });
+      case 'array-spread':
+        require.ensure(['./features/syntax/ArraySpread'], () =>
+          this.setState({ feature: require('./features/syntax/ArraySpread').default })
+        );
         break;
       case 'async-await':
-        require.ensure(['./features/AsyncAwait'], () => {
-          this.setState({ feature: require('./features/AsyncAwait').default })
-        });
+        require.ensure(['./features/syntax/AsyncAwait'], () =>
+          this.setState({ feature: require('./features/syntax/AsyncAwait').default })
+        );
+        break;
+      case 'class-properties':
+        require.ensure(['./features/syntax/ClassProperties'], () =>
+          this.setState({ feature: require('./features/syntax/ClassProperties').default })
+        );
+        break;
+      case 'computed-properties':
+        require.ensure(['./features/syntax/ComputedProperties'], () =>
+          this.setState({ feature: require('./features/syntax/ComputedProperties').default })
+        );
+        break;
+      case 'custom-interpolation':
+        require.ensure(['./features/syntax/CustomInterpolation'], () =>
+          this.setState({ feature: require('./features/syntax/CustomInterpolation').default })
+        );
+        break;
+      case 'default-parameters':
+        require.ensure(['./features/syntax/DefaultParameters'], () =>
+          this.setState({ feature: require('./features/syntax/DefaultParameters').default })
+        );
+        break;
+      case 'destructuring-and-await':
+        require.ensure(['./features/syntax/DestructuringAndAwait'], () =>
+          this.setState({ feature: require('./features/syntax/DestructuringAndAwait').default })
+        );
+        break;
+      case 'generators':
+        require.ensure(['./features/syntax/Generators'], () =>
+          this.setState({ feature: require('./features/syntax/Generators').default })
+        );
+        break;
+      case 'object-destructuring':
+        require.ensure(['./features/syntax/ObjectDestructuring'], () =>
+          this.setState({ feature: require('./features/syntax/ObjectDestructuring').default })
+        );
+        break;
+      case 'object-spread':
+        require.ensure(['./features/syntax/ObjectSpread'], () =>
+          this.setState({ feature: require('./features/syntax/ObjectSpread').default })
+        );
+        break;
+      case 'promises':
+        require.ensure(['./features/syntax/Promises'], () =>
+          this.setState({ feature: require('./features/syntax/Promises').default })
+        );
+        break;
+      case 'rest-and-default':
+        require.ensure(['./features/syntax/RestAndDefault'], () =>
+          this.setState({ feature: require('./features/syntax/RestAndDefault').default })
+        );
+        break;
+      case 'rest-parameters':
+        require.ensure(['./features/syntax/RestParameters'], () =>
+          this.setState({ feature: require('./features/syntax/RestParameters').default })
+        );
+        break;
+      case 'template-interpolation':
+        require.ensure(['./features/syntax/TemplateInterpolation'], () =>
+          this.setState({ feature: require('./features/syntax/TemplateInterpolation').default })
+        );
         break;
       default:
         this.setState({ feature: null });
