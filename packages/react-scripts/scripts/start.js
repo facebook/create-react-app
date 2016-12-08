@@ -201,6 +201,11 @@ function addMiddleware(devServer) {
     var hpm = httpProxyMiddleware(pathname => mayProxy.test(pathname), {
       target: proxy,
       logLevel: 'silent',
+      onProxyReq: function(proxyReq, req, res) {
+        if (proxyReq.getHeader('origin')) {
+          proxyReq.setHeader('origin', proxy);
+        }
+      },
       onError: onProxyError(proxy),
       secure: false,
       changeOrigin: true,
