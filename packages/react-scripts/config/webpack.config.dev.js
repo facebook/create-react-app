@@ -16,6 +16,7 @@ var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 var FlowTypecheckPlugin = require('react-dev-utils/FlowTypecheckPlugin');
+var WatchTestFilesPlugin = require('react-dev-utils/WatchTestFilesPlugin');
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 
@@ -233,7 +234,14 @@ module.exports = {
       otherFlowTypedDefs: {
         jest: "17.0.0"
       }
-    })
+    }),
+    // Tests won't have any linting unless they go through webpack.
+    // This plugin makes webpack aware of them without emitting them.
+    // See https://github.com/facebookincubator/create-react-app/issues/1169
+    new WatchTestFilesPlugin([
+      '**/__tests__/**',
+      '**/*.test.js',
+    ])
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

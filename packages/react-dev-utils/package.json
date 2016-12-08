@@ -21,6 +21,7 @@
     "openBrowser.js",
     "prompt.js",
     "WatchMissingNodeModulesPlugin.js",
+    "WatchTestFilesPlugin.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
@@ -29,9 +30,16 @@
     "escape-string-regexp": "1.0.5",
     "flow-bin": "^0.36.0",
     "flow-typed": "^2.0.0",
+    "glob": "^7.1.1",
     "html-entities": "1.2.0",
     "opn": "4.0.2",
     "sockjs-client": "1.0.3",
     "strip-ansi": "3.0.1"
+  },
+  "devDependencies": {
+    "webpack": "1.14.0"
+  },
+  "peerDependencies": {
+    "webpack": "1.14.0"
   }
 }
