@@ -86,7 +86,9 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
   var templateDependenciesPath = path.join(appPath, '.template.dependencies.json');
   if (fs.existsSync(templateDependenciesPath)) {
     var templateDependencies = require(templateDependenciesPath).dependencies;
-    args = args.concat(templateDependencies);
+    args = args.concat(Object.keys(templateDependencies).map(function (key) {
+      return key + '@' + templateDependencies[key];
+    }));
     fs.unlinkSync(templateDependenciesPath);
   }
 

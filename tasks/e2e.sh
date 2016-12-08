@@ -158,7 +158,7 @@ test -e build/static/media/*.svg
 test -e build/favicon.ico
 
 # Run tests with CI flag
-CI=true NODE_PATH=src npm test
+E2E_FILE=./build/index.html CI=true NODE_PATH=src npm test
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 
@@ -191,7 +191,7 @@ test -e build/favicon.ico
 # `CI=true npm test` won't work here because `npm test` becomes just `jest`.
 # We should either teach Jest to respect CI env variable, or make
 # `scripts/test.js` survive ejection (right now it doesn't).
-NODE_PATH=src npm test -- --watch=no
+E2E_FILE=./build/index.html NODE_PATH=src npm test -- --watch=no
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 

@@ -1,3 +1,5 @@
 {
-  "dependencies": ["jsdom"]
+  "dependencies": {
+    "jsdom": "9.8.3"
+  }
 }
