@@ -11,22 +11,29 @@ const red = '#ce1126'
 const lightRed = '#fccfcf'
 const yellow = '#fbf5b4'
 
-// From: http://stackoverflow.com/a/524721/127629
-function injectCSS(css) {
-  const head = document.head || document.getElementsByTagName('head')[0];
-  const style = document.createElement('style');
-
-  style.type = 'text/css';
-  if (style.styleSheet){
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
-
-  head.appendChild(style);
+function getHead() {
+  return document.head || document.getElementsByTagName('head')[0]
 }
 
-injectCSS(`
+let injectedCss = []
+
+// From: http://stackoverflow.com/a/524721/127629
+function injectCss(css) {
+  const head = getHead()
+  const style = document.createElement('style')
+
+  style.type = 'text/css'
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css
+  } else {
+    style.appendChild(document.createTextNode(css))
+  }
+
+  head.appendChild(style)
+  injectedCss.push(style)
+}
+
+const css = `
 .cra-container {
   padding-right: 15px;
   padding-left: 15px;
@@ -51,7 +58,7 @@ injectCSS(`
     width: calc(1170px - 6em);
   }
 }
-`);
+`
 
 const overlayStyle = {
   position: 'fixed',
@@ -494,6 +501,8 @@ function render(error, name, message, resolvedFrames) {
 
   frameSettings = resolvedFrames.map(() => { return { compiled: false } })
 
+  injectCss(css)
+
   // Create overlay
   const overlay = document.createElement('div')
   applyStyles(overlay, overlayStyle)
@@ -530,6 +539,11 @@ function dispose() {
   if (overlayReference === null) return
   document.body.removeChild(overlayReference)
   overlayReference = null
+  const head = getHead()
+  for (const node of injectedCss) {
+    head.removeChild(node)
+  }
+  injectedCss = []
 }
 
 function unmount() {
