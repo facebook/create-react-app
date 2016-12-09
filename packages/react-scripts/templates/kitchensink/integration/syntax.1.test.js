@@ -5,13 +5,13 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
 
 describe('Integration', () => {
   describe('Language syntax', () => {
-    it('array-destructuring', async () => {
+    it('array destructuring', async () => {
       const doc = await initDOM('array-destructuring')
 
       expect(doc.getElementById('feature-array-destructuring').childElementCount).toBe(4)
     })
 
-    it('array-spread', async () => {
+    it('array spread', async () => {
       const doc = await initDOM('array-spread')
 
       expect(doc.getElementById('feature-array-spread').childElementCount).toBe(4)
@@ -59,7 +59,7 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-generators').childElementCount).toBe(4)
     })
 
-    it('object-destructuring', async () => {
+    it('object destructuring', async () => {
       const doc = await initDOM('object-destructuring')
 
       expect(doc.getElementById('feature-object-destructuring').childElementCount).toBe(4)

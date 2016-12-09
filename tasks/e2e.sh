@@ -149,7 +149,7 @@ create_react_app --scripts-version=$scripts_path --template=kitchensink test-app
 cd test-app
 
 # Test the build
-NODE_PATH=src npm run build
+NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/main.*.js
@@ -158,14 +158,29 @@ test -e build/static/css/main.*.css
 # test -e build/favicon.ico # TODO uncomment this line
 
 # Unit tests
-CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/src"
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true \
+  NODE_PATH=src \
+  npm test -- --no-cache --testPathPattern="/src/"
+
 # Test "development" environment
 tmp_server_log=`mktemp`
-PORT=3001 nohup npm start &>$tmp_server_log &
+PORT=3001 \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  nohup npm start &>$tmp_server_log &
 grep -q 'The app is running at:' <(tail -f $tmp_server_log)
-E2E_URL="http://localhost:3001" CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/integration/"
+E2E_URL="http://localhost:3001" \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true NODE_PATH=src \
+  npm test -- --no-cache --testPathPattern="/integration/"
+
 # Test "production" environment
-E2E_FILE=./build/index.html CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/integration/"
+E2E_FILE=./build/index.html \
+  CI=true \
+  NODE_PATH=src \
+  npm test -- --no-cache --testPathPattern="/integration/"
+
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 
@@ -186,7 +201,7 @@ npm link $root_path/packages/react-dev-utils
 npm link $root_path/packages/react-scripts
 
 # Test the build
-NODE_PATH=src npm run build
+NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/main.*.js
@@ -195,14 +210,29 @@ test -e build/static/css/main.*.css
 # test -e build/favicon.ico # TODO uncomment this line
 
 # Unit tests
-CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/src"
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true \
+  NODE_PATH=src \
+  npm test -- --no-cache --testPathPattern="/src/"
+
 # Test "development" environment
 tmp_server_log=`mktemp`
-PORT=3002 nohup npm start &>$tmp_server_log &
+PORT=3002 \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  nohup npm start &>$tmp_server_log &
 grep -q 'The app is running at:' <(tail -f $tmp_server_log)
-E2E_URL="http://localhost:3002" CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/integration/"
+E2E_URL="http://localhost:3002" \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true NODE_PATH=src \
+  npm test -- --no-cache --testPathPattern="/integration/"
+
 # Test "production" environment
-E2E_FILE=./build/index.html CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/integration/"
+E2E_FILE=./build/index.html \
+  CI=true \
+  NODE_PATH=src \
+  npm test -- --no-cache --testPathPattern="/integration/"
+
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 

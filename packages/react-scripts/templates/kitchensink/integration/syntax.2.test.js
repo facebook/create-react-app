@@ -5,7 +5,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
 
 describe('Integration', () => {
   describe('Language syntax', () => {
-    it('object-spread', async () => {
+    it('object spread', async () => {
       const doc = await initDOM('object-spread')
 
       expect(doc.getElementById('feature-object-spread').childElementCount).toBe(4)

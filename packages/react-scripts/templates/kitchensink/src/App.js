@@ -49,9 +49,19 @@ class App extends React.Component {
           this.setState({ feature: require('./features/syntax/DestructuringAndAwait').default })
         );
         break;
+      case 'file-env-variables':
+        require.ensure(['./features/env/FileEnvVariables'], () =>
+          this.setState({ feature: require('./features/env/FileEnvVariables').default })
+        );
+        break;
       case 'generators':
         require.ensure(['./features/syntax/Generators'], () =>
           this.setState({ feature: require('./features/syntax/Generators').default })
+        );
+        break;
+      case 'node-path':
+        require.ensure(['./features/env/NodePath'], () =>
+          this.setState({ feature: require('./features/env/NodePath').default })
         );
         break;
       case 'object-destructuring':
@@ -77,6 +87,11 @@ class App extends React.Component {
       case 'rest-parameters':
         require.ensure(['./features/syntax/RestParameters'], () =>
           this.setState({ feature: require('./features/syntax/RestParameters').default })
+        );
+        break;
+      case 'shell-env-variables':
+        require.ensure(['./features/env/ShellEnvVariables'], () =>
+          this.setState({ feature: require('./features/env/ShellEnvVariables').default })
         );
         break;
       case 'template-interpolation':
