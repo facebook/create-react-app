@@ -372,8 +372,24 @@ function getGroupToggle(omitsCount, omitBundle) {
     }
   })
   applyStyles(omittedFrames, omittedFramesStyle)
-
   return omittedFrames
+}
+
+function insertBeforeBundle(parent, omitsCount, omitBundle, actionElement) {
+  const children = document.getElementsByName(`bundle-${omitBundle}`)
+  if (children.length < 1) return
+  let first = children[0]
+  while (first.parentNode != parent) first = first.parentNode
+
+  const div = document.createElement('div')
+  div.setAttribute('name', `bundle-${omitBundle}`)
+  const text = document.createTextNode(`▼ ${omitsCount} stack frames were expanded.`)
+  div.appendChild(text)
+  div.addEventListener('click', e => actionElement.click())
+  applyStyles(div, omittedFramesStyle)
+  div.style.display = 'none'
+
+  parent.insertBefore(div, first)
 }
 
 function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentContainer, lastElement) {
@@ -404,7 +420,8 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   let collapseElement = null
   if (!internalUrl || lastElement) {
     if (omits.value > 0) {
-      const omittedFrames = getGroupToggle(omits, omitBundle)
+      const omittedFrames = getGroupToggle(omits.value, omitBundle)
+      setTimeout(((...args) => insertBeforeBundle(...args)).bind(undefined, parentContainer, omits.value, omitBundle, omittedFrames))
       if (lastElement && internalUrl) {
         collapseElement = omittedFrames
       } else {
