@@ -272,7 +272,7 @@ function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
   })
   sourceCode = sourceCode.join('\n')
   const ansiHighlight = codeFrame(sourceCode, lineNum, columnNum - (isFinite(whiteSpace) ? whiteSpace : 0), {
-    highlightCode: true,
+    forceColor: true,
     linesAbove: CONTEXT_SIZE,
     linesBelow: CONTEXT_SIZE
   })
