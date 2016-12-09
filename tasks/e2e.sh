@@ -157,8 +157,15 @@ test -e build/static/css/main.*.css
 # test -e build/static/media/*.svg # TODO uncomment this line
 # test -e build/favicon.ico # TODO uncomment this line
 
-# Run tests with CI flag
-E2E_FILE=./build/index.html CI=true NODE_PATH=src npm test
+# Unit tests
+CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/src"
+# Test "development" environment
+tmp_server_log=`mktemp`
+PORT=3001 nohup npm start &>$tmp_server_log &
+grep -q 'The app is running at:' <(tail -f $tmp_server_log)
+E2E_URL="http://localhost:3001" CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/integration/"
+# Test "production" environment
+E2E_FILE=./build/index.html CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/integration/"
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 
@@ -187,11 +194,15 @@ test -e build/static/css/main.*.css
 # test -e build/static/media/*.svg # TODO uncomment this line
 # test -e build/favicon.ico # TODO uncomment this line
 
-# Run tests, overring the watch option to disable it.
-# `CI=true npm test` won't work here because `npm test` becomes just `jest`.
-# We should either teach Jest to respect CI env variable, or make
-# `scripts/test.js` survive ejection (right now it doesn't).
-E2E_FILE=./build/index.html NODE_PATH=src npm test -- --watch=no
+# Unit tests
+CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/src"
+# Test "development" environment
+tmp_server_log=`mktemp`
+PORT=3002 nohup npm start &>$tmp_server_log &
+grep -q 'The app is running at:' <(tail -f $tmp_server_log)
+E2E_URL="http://localhost:3002" CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/integration/"
+# Test "production" environment
+E2E_FILE=./build/index.html CI=true NODE_PATH=src npm test -- --no-cache --testPathPattern="/integration/"
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 
