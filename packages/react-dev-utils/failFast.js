@@ -350,9 +350,9 @@ function frameDiv(functionName, url, internalUrl) {
   return frame
 }
 
-function getGroupToggle(omits, omitBundle, arrow = '▲') {
+function getGroupToggle(omitsCount, omitBundle) {
   const omittedFrames = document.createElement('div')
-  const text1 = document.createTextNode(`▶ ${omits.value} stack frames were collapsed.`)
+  const text1 = document.createTextNode(`▶ ${omitsCount} stack frames were collapsed.`)
   omittedFrames.appendChild(text1)
   omittedFrames.addEventListener('click', e => {
     const hide = text1.textContent.match(/▲/)
@@ -364,10 +364,10 @@ function getGroupToggle(omits, omitBundle, arrow = '▲') {
       }
     })
     if (hide) {
-      text1.textContent = text1.textContent.replace(arrow, '▶')
+      text1.textContent = text1.textContent.replace(/▲/, '▶')
       text1.textContent = text1.textContent.replace(/expanded/, 'collapsed')
     } else {
-      text1.textContent = text1.textContent.replace(/▶/, arrow)
+      text1.textContent = text1.textContent.replace(/▶/, '▲')
       text1.textContent = text1.textContent.replace(/collapsed/, 'expanded')
     }
   })
