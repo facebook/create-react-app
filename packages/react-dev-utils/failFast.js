@@ -421,7 +421,9 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   if (!internalUrl || lastElement) {
     if (omits.value > 0) {
       const omittedFrames = getGroupToggle(omits.value, omitBundle)
-      setTimeout(((...args) => insertBeforeBundle(...args)).bind(undefined, parentContainer, omits.value, omitBundle, omittedFrames))
+      setTimeout(function () {
+        insertBeforeBundle.apply(undefined, arguments)
+      }.bind(undefined, parentContainer, omits.value, omitBundle, omittedFrames), 1)
       if (lastElement && internalUrl) {
         collapseElement = omittedFrames
       } else {
