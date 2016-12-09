@@ -14,7 +14,7 @@ property targetWindow: null
 on run argv
   set theURL to item 1 of argv
 
-  tell application "Google Chrome"
+  tell application "Chrome"
 
     if (count every window) = 0 then
       make new window
@@ -58,7 +58,7 @@ end run
 -- if found, store tab, index, and window in properties
 -- (properties were declared on top of file)
 on lookupTabWithUrl(lookupUrl)
-  tell application "Google Chrome"
+  tell application "Chrome"
     -- Find a tab with the given url
     set found to false
     set theTabIndex to -1
