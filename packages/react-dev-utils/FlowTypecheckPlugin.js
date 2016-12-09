@@ -184,9 +184,11 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
         loaderContext.fs.readFile(module.resource, (err, data) => {
           if (data && data.toString().indexOf('@flow') >= 0) {
             if (!flowActiveOnProject) {
-              flowInitializationPromise = initializeFlow(
-                compiler.options.context, this.flowconfig, this.otherFlowTypedDefs
-              )
+              flowInitializationPromise = (!compiler.parentCompilation ?
+                initializeFlow(
+                  compiler.options.context, this.flowconfig, this.otherFlowTypedDefs
+                ) : Promise.resolve()
+              )  
               .catch(e => {
                 loaderContext.emitWarning(new Error(
                   'Flow project initialization warning:\n' +
