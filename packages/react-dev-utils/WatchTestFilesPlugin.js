@@ -18,7 +18,8 @@ function getGlobs(patterns, cwd) {
   return Promise.all(patterns.map(globPattern =>
     computeGlob(globPattern, {
       cwd: cwd,
-      ignore: 'node_modules/**',
+      ignore: 'node_modules/**/*',
+      nodir: true,
     })
   ))
   .then(globLists => [].concat.apply([], globLists))
