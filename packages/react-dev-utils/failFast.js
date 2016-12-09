@@ -350,6 +350,32 @@ function frameDiv(functionName, url, internalUrl) {
   return frame
 }
 
+function getGroupToggle(omits, omitBundle, arrow = '▲') {
+  const omittedFrames = document.createElement('div')
+  const text1 = document.createTextNode(`▶ ${omits.value} stack frames were collapsed.`)
+  omittedFrames.appendChild(text1)
+  omittedFrames.addEventListener('click', e => {
+    const hide = text1.textContent.match(/▲/)
+    document.getElementsByName(`bundle-${omitBundle}`).forEach(n => {
+      if (hide) {
+        n.style.display = 'none'
+      } else {
+        n.style.display = ''
+      }
+    })
+    if (hide) {
+      text1.textContent = text1.textContent.replace(arrow, '▶')
+      text1.textContent = text1.textContent.replace(/expanded/, 'collapsed')
+    } else {
+      text1.textContent = text1.textContent.replace(/▶/, arrow)
+      text1.textContent = text1.textContent.replace(/collapsed/, 'expanded')
+    }
+  })
+  applyStyles(omittedFrames, omittedFramesStyle)
+
+  return omittedFrames
+}
+
 function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentContainer, lastElement) {
   const { compiled } = frameSetting
   const {
@@ -378,27 +404,7 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   let collapseElement = null
   if (!internalUrl || lastElement) {
     if (omits.value > 0) {
-      const omittedFrames = document.createElement('div')
-      const text1 = document.createTextNode(`▶ ${omits.value} stack frames were collapsed.`)
-      omittedFrames.appendChild(text1)
-      omittedFrames.addEventListener('click', e => {
-        const hide = text1.textContent.match(/▲/)
-        document.getElementsByName(`bundle-${omitBundle}`).forEach(n => {
-          if (hide) {
-            n.style.display = 'none'
-          } else {
-            n.style.display = ''
-          }
-        })
-        if (hide) {
-          text1.textContent = text1.textContent.replace(/▲/, '▶')
-          text1.textContent = text1.textContent.replace(/expanded/, 'collapsed')
-        } else {
-          text1.textContent = text1.textContent.replace(/▶/, '▲')
-          text1.textContent = text1.textContent.replace(/collapsed/, 'expanded')
-        }
-      })
-      applyStyles(omittedFrames, omittedFramesStyle)
+      const omittedFrames = getGroupToggle(omits, omitBundle)
       if (lastElement && internalUrl) {
         collapseElement = omittedFrames
       } else {
