@@ -239,8 +239,9 @@ module.exports = {
     // This plugin makes webpack aware of them without emitting them.
     // See https://github.com/facebookincubator/create-react-app/issues/1169
     new WatchTestFilesPlugin([
-      '**/__tests__/**',
-      '**/*.test.js',
+      'src/**/__tests__/**/*',
+      'src/**/*.test.*',
+      '__tests__/**/*',
     ])
   ],
   // Some libraries import Node modules but don't use them in the browser.

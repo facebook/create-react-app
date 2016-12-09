@@ -17,6 +17,7 @@ var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
 var FlowTypecheckPlugin = require('react-dev-utils/FlowTypecheckPlugin');
+var WatchTestFilesPlugin = require('react-dev-utils/WatchTestFilesPlugin');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
@@ -284,7 +285,15 @@ module.exports = {
       otherFlowTypedDefs: {
         jest: "17.0.0"
       }
-    })
+    }),
+    // Tests won't have any linting unless they go through webpack.
+    // This plugin makes webpack aware of them without emitting them.
+    // See https://github.com/facebookincubator/create-react-app/issues/1169
+    new WatchTestFilesPlugin([
+      'src/**/__tests__/**/*',
+      'src/**/*.test.*',
+      '__tests__/**/*',
+    ])
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
