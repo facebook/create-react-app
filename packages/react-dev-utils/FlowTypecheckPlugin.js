@@ -170,7 +170,7 @@ function FlowTypecheckPlugin(options) {
 FlowTypecheckPlugin.prototype.apply = function(compiler) {
   var flowActiveOnProject = false;
   var flowInitialized = false;
-  var flowInitializationPromise;
+  var flowInitializationPromise = Promise.reject(new Error('Init process did not start yet'));
   var flowShouldRun = false;
   var flowErrorOutput = null;
 
