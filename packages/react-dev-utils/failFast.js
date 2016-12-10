@@ -231,6 +231,17 @@ function consumeEvent(e) {
   e.target.blur()
 }
 
+function accessify(node) {
+  node.setAttribute('tabindex', 0)
+  node.addEventListener('keydown', e => {
+    const { key, which, keyCode } = e
+    if (key === 'Enter' || which === 13 || keyCode === 13) {
+      e.preventDefault()
+      e.target.click()
+    }
+  })
+}
+
 function renderAdditional() {
   if (additionalReference.lastChild) {
     additionalReference.removeChild(additionalReference.lastChild)
@@ -253,6 +264,7 @@ function renderAdditional() {
     switchError(-1)
   })
   left.appendChild(document.createTextNode('←'))
+  accessify(left)
   const right = document.createElement('button')
   applyStyles(right, groupElemRight)
   right.addEventListener('click', e => {
@@ -260,6 +272,7 @@ function renderAdditional() {
     switchError(1)
   })
   right.appendChild(document.createTextNode('→'))
+  accessify(right)
   group.appendChild(left)
   group.appendChild(right)
   span.appendChild(group)
@@ -384,6 +397,7 @@ function frameDiv(functionName, url, internalUrl) {
 
 function getGroupToggle(omitsCount, omitBundle) {
   const omittedFrames = document.createElement('div')
+  accessify(omittedFrames)
   const text1 = document.createTextNode(`▶ ${omitsCount} stack frames were collapsed.`)
   omittedFrames.appendChild(text1)
   omittedFrames.addEventListener('click', e => {
@@ -414,6 +428,7 @@ function insertBeforeBundle(parent, omitsCount, omitBundle, actionElement) {
   while (first.parentNode != parent) first = first.parentNode
 
   const div = document.createElement('div')
+  accessify(div)
   div.setAttribute('name', `bundle-${omitBundle}`)
   const text = document.createTextNode(`▼ ${omitsCount} stack frames were expanded.`)
   div.appendChild(text)
@@ -496,6 +511,7 @@ function lazyFrame(parent, factory, lIndex) {
 
   if (hasSource) {
     const compiledDiv = document.createElement('div')
+    accessify(compiledDiv)
     applyStyles(compiledDiv, toggleStyle)
 
     const o = frameSettings[lIndex]
