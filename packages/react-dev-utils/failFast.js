@@ -338,22 +338,15 @@ function sourceCodePre(sourceLines, lineNum, columnNum) {
   applyStyles(code, codeStyle);
 
   var ccn = code.childNodes;
-
-  var _loop = function _loop(index) {
+  for (var index = 0; index < ccn.length; ++index) {
     var node = ccn[index];
-    breakOut = false;
+    var breakOut = false;
     node.childNodes.forEach(function (lineNode) {
       if (lineNode.innerText.indexOf(' ' + lineNum + ' |') === -1) return;
       applyStyles(node, main ? primaryErrorStyle : secondaryErrorStyle);
       breakOut = true;
     });
-    if (breakOut) return 'break';
-  };
-
-  for (var index = 0; index < ccn.length; ++index) {
-    var breakOut;
-    var _ret = _loop(index);
-    if (_ret === 'break') break;
+    if (breakOut) break;
   }
   var pre = document.createElement('pre');
   applyStyles(pre, preStyle);
