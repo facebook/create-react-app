@@ -153,9 +153,6 @@ NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/main.*.js
-test -e build/static/css/main.*.css
-# test -e build/static/media/*.svg # TODO uncomment this line
-# test -e build/favicon.ico # TODO uncomment this line
 
 # Unit tests
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -205,9 +202,6 @@ NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/main.*.js
-test -e build/static/css/main.*.css
-# test -e build/static/media/*.svg # TODO uncomment this line
-# test -e build/favicon.ico # TODO uncomment this line
 
 # Unit tests
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \

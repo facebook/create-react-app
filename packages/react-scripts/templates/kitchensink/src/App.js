@@ -34,6 +34,11 @@ class App extends React.Component {
           this.setState({ feature: require('./features/syntax/ComputedProperties').default })
         );
         break;
+      case 'css-inclusion':
+        require.ensure(['./features/webpack/CssInclusion'], () =>
+          this.setState({ feature: require('./features/webpack/CssInclusion').default })
+        );
+        break;
       case 'custom-interpolation':
         require.ensure(['./features/syntax/CustomInterpolation'], () =>
           this.setState({ feature: require('./features/syntax/CustomInterpolation').default })
@@ -59,9 +64,24 @@ class App extends React.Component {
           this.setState({ feature: require('./features/syntax/Generators').default })
         );
         break;
+      case 'image-inclusion':
+        require.ensure(['./features/webpack/ImageInclusion'], () =>
+          this.setState({ feature: require('./features/webpack/ImageInclusion').default })
+        );
+        break;
+      case 'json-inclusion':
+        require.ensure(['./features/webpack/JsonInclusion'], () =>
+          this.setState({ feature: require('./features/webpack/JsonInclusion').default })
+        );
+        break;
       case 'node-path':
         require.ensure(['./features/env/NodePath'], () =>
           this.setState({ feature: require('./features/env/NodePath').default })
+        );
+        break;
+      case 'no-ext-inclusion':
+        require.ensure(['./features/webpack/NoExtInclusion'], () =>
+          this.setState({ feature: require('./features/webpack/NoExtInclusion').default })
         );
         break;
       case 'object-destructuring':
@@ -94,9 +114,19 @@ class App extends React.Component {
           this.setState({ feature: require('./features/env/ShellEnvVariables').default })
         );
         break;
+      case 'svg-inclusion':
+        require.ensure(['./features/webpack/SvgInclusion'], () =>
+          this.setState({ feature: require('./features/webpack/SvgInclusion').default })
+        );
+        break;
       case 'template-interpolation':
         require.ensure(['./features/syntax/TemplateInterpolation'], () =>
           this.setState({ feature: require('./features/syntax/TemplateInterpolation').default })
+        );
+        break;
+      case 'unknown-ext-inclusion':
+        require.ensure(['./features/webpack/UnknownExtInclusion'], () =>
+          this.setState({ feature: require('./features/webpack/UnknownExtInclusion').default })
         );
         break;
       default:

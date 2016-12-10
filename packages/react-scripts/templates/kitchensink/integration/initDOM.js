@@ -48,7 +48,7 @@ export default feature => new Promise(async resolve => {
   const host = process.env.E2E_URL || 'http://localhost:3000'
   const doc = jsdom.jsdom(markup, {
     features : {
-      FetchExternalResources : ['script'],
+      FetchExternalResources : ['script', 'css'],
       ProcessExternalResources : ['script'],
     },
     resourceLoader,
