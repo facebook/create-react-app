@@ -13,3 +13,4 @@ build
 .DS_Store
 .env
 npm-debug.log
+typings
