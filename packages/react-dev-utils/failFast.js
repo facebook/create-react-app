@@ -1,66 +1,43 @@
-const codeFrame = require('babel-code-frame')
-const ansiHTML = require('./ansiHTML')
-const StackTraceResolve = require('stacktrace-resolve').default
+'use strict';
 
-const CONTEXT_SIZE = 3
+var codeFrame = require('babel-code-frame');
+var ansiHTML = require('./ansiHTML');
+var StackTraceResolve = require('stacktrace-resolve').default;
 
-const black = '#293238'
-const darkGray = '#878e91'
-const lightGray = '#fafafa'
-const red = '#ce1126'
-const lightRed = '#fccfcf'
-const yellow = '#fbf5b4'
+var CONTEXT_SIZE = 3;
+
+var black = '#293238';
+var darkGray = '#878e91';
+var lightGray = '#fafafa';
+var red = '#ce1126';
+var lightRed = '#fccfcf';
+var yellow = '#fbf5b4';
 
 function getHead() {
-  return document.head || document.getElementsByTagName('head')[0]
+  return document.head || document.getElementsByTagName('head')[0];
 }
 
-let injectedCss = []
+var injectedCss = [];
 
 // From: http://stackoverflow.com/a/524721/127629
 function injectCss(css) {
-  const head = getHead()
-  const style = document.createElement('style')
+  var head = getHead();
+  var style = document.createElement('style');
 
-  style.type = 'text/css'
+  style.type = 'text/css';
   if (style.styleSheet) {
-    style.styleSheet.cssText = css
+    style.styleSheet.cssText = css;
   } else {
-    style.appendChild(document.createTextNode(css))
+    style.appendChild(document.createTextNode(css));
   }
 
-  head.appendChild(style)
-  injectedCss.push(style)
+  head.appendChild(style);
+  injectedCss.push(style);
 }
 
-const css = `
-.cra-container {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
+var css = '\n.cra-container {\n  padding-right: 15px;\n  padding-left: 15px;\n  margin-right: auto;\n  margin-left: auto;\n}\n\n@media (min-width: 768px) {\n  .cra-container {\n    width: calc(750px - 6em);\n  }\n}\n\n@media (min-width: 992px) {\n  .cra-container {\n    width: calc(970px - 6em);\n  }\n}\n\n@media (min-width: 1200px) {\n  .cra-container {\n    width: calc(1170px - 6em);\n  }\n}\n';
 
-@media (min-width: 768px) {
-  .cra-container {
-    width: calc(750px - 6em);
-  }
-}
-
-@media (min-width: 992px) {
-  .cra-container {
-    width: calc(970px - 6em);
-  }
-}
-
-@media (min-width: 1200px) {
-  .cra-container {
-    width: calc(1170px - 6em);
-  }
-}
-`
-
-const overlayStyle = {
+var overlayStyle = {
   position: 'fixed',
   'box-sizing': 'border-box',
   top: '1em', left: '1em',
@@ -77,109 +54,109 @@ const overlayStyle = {
   'overflow-x': 'hidden',
   'word-break': 'break-all',
   'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
-  'line-height': 1.5,
-}
+  'line-height': 1.5
+};
 
-const hintsStyle = {
+var hintsStyle = {
   'font-size': '0.8em',
   'margin-top': '-3em',
   'margin-bottom': '3em',
   'text-align': 'right',
   color: darkGray
-}
+};
 
-const hintStyle = {
+var hintStyle = {
   padding: '0.5em 1em',
   cursor: 'pointer'
-}
+};
 
-const closeButtonStyle = {
+var closeButtonStyle = {
   'font-size': '26px',
   color: black,
   padding: '0.5em 1em',
   cursor: 'pointer',
   position: 'absolute',
   right: 0,
-  top: 0,
-}
+  top: 0
+};
 
-const additionalStyle = {
+var additionalStyle = {
   'margin-bottom': '1.5em',
-  'margin-top': '-4em',
-}
+  'margin-top': '-4em'
+};
 
-const headerStyle = {
+var headerStyle = {
   'font-size': '1.7em',
   'font-weight': 'bold',
   color: red
-}
+};
 
-const functionNameStyle = {
+var functionNameStyle = {
   'margin-top': '1em',
   'font-size': '1.2em'
-}
+};
 
-const linkStyle = {
-  'font-size': '0.9em',
-}
+var linkStyle = {
+  'font-size': '0.9em'
+};
 
-const anchorStyle = {
+var anchorStyle = {
   'text-decoration': 'none',
   color: darkGray
-}
+};
 
-const traceStyle = {
+var traceStyle = {
   'font-size': '1em'
-}
+};
 
-const depStyle = {
-  'font-size': '1.2em',
-}
+var depStyle = {
+  'font-size': '1.2em'
+};
 
-const primaryErrorStyle = {
+var primaryErrorStyle = {
   'background-color': lightRed
-}
+};
 
-const secondaryErrorStyle = {
+var secondaryErrorStyle = {
   'background-color': yellow
-}
+};
 
-const omittedFramesStyle = {
+var omittedFramesStyle = {
   color: black,
   'font-size': '0.9em',
   'margin': '1.5em 0',
   cursor: 'pointer'
-}
+};
 
-const preStyle = {
+var preStyle = {
   display: 'block',
   padding: '0.5em',
   'margin-top': '1.5em',
   'margin-bottom': '0px',
   'overflow-x': 'auto',
   'font-size': '1.1em',
-  'white-space': 'pre',
-}
+  'white-space': 'pre'
+};
 
-const toggleStyle = {
+var toggleStyle = {
   'margin-bottom': '1.5em',
   color: darkGray,
   cursor: 'pointer'
-}
+};
 
-const codeStyle = {
-  'font-family': 'Consolas, Menlo, monospace',
-}
+var codeStyle = {
+  'font-family': 'Consolas, Menlo, monospace'
+};
 
-const hiddenStyle = {
+var hiddenStyle = {
   display: 'none'
-}
+};
 
-const groupStyle = {
+var groupStyle = {
   'margin-left': '1em'
-}
+};
 
-const _groupElemStyle = {
+var _groupElemStyle = {
   'background-color': 'inherit',
   'border-color': '#ddd',
   'border-width': '1px',
@@ -187,528 +164,615 @@ const _groupElemStyle = {
   'border-style': 'solid',
   padding: '3px 6px',
   cursor: 'pointer'
-}
+};
 
-const groupElemLeft = Object.assign({}, _groupElemStyle, {
+var groupElemLeft = Object.assign({}, _groupElemStyle, {
   'border-top-right-radius': '0px',
   'border-bottom-right-radius': '0px',
   'margin-right': '0px'
-})
+});
 
-const groupElemRight = Object.assign({}, _groupElemStyle, {
+var groupElemRight = Object.assign({}, _groupElemStyle, {
   'border-top-left-radius': '0px',
   'border-bottom-left-radius': '0px',
   'margin-left': '-1px'
-})
+});
 
-const footerStyle = {
+var footerStyle = {
   'text-align': 'center',
   color: darkGray
-}
+};
 
 function applyStyles(element, styles) {
-  element.setAttribute('style', '')
+  element.setAttribute('style', '');
   // Firefox can't handle const due to non-compliant implementation
   // Revisit Jan 2016
   // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
   // https://bugzilla.mozilla.org/show_bug.cgi?id=1101653
-  for (let key in styles) {
-    if (!styles.hasOwnProperty(key)) continue
-    let val = styles[key]
-    if (typeof val === 'function') val = val()
-    element.style[key] = val.toString()
+  for (var key in styles) {
+    if (!styles.hasOwnProperty(key)) continue;
+    var val = styles[key];
+    if (typeof val === 'function') val = val();
+    element.style[key] = val.toString();
   }
 }
 
-let overlayReference = null
-let additionalReference = null
-let capturedErrors = []
-let viewIndex = -1
-let frameSettings = []
+var overlayReference = null;
+var additionalReference = null;
+var capturedErrors = [];
+var viewIndex = -1;
+var frameSettings = [];
 
 function consumeEvent(e) {
-  e.preventDefault()
-  e.target.blur()
+  e.preventDefault();
+  e.target.blur();
 }
 
 function accessify(node) {
-  node.setAttribute('tabindex', 0)
-  node.addEventListener('keydown', e => {
-    const { key, which, keyCode } = e
+  node.setAttribute('tabindex', 0);
+  node.addEventListener('keydown', function (e) {
+    var key = e.key,
+        which = e.which,
+        keyCode = e.keyCode;
     if (key === 'Enter' || which === 13 || keyCode === 13) {
-      e.preventDefault()
-      e.target.click()
+      e.preventDefault();
+      e.target.click();
     }
-  })
+  });
 }
 
 function renderAdditional() {
   if (additionalReference.lastChild) {
-    additionalReference.removeChild(additionalReference.lastChild)
+    additionalReference.removeChild(additionalReference.lastChild);
   }
 
-  let text = ' '
+  var text = ' ';
   if (capturedErrors.length <= 1) {
-    additionalReference.appendChild(document.createTextNode(text))
-    return
+    additionalReference.appendChild(document.createTextNode(text));
+    return;
   }
-  text = `Errors ${viewIndex + 1} of ${capturedErrors.length}`
-  const span = document.createElement('span')
-  span.appendChild(document.createTextNode(text))
-  const group = document.createElement('span')
-  applyStyles(group, groupStyle)
-  const left = document.createElement('button')
-  applyStyles(left, groupElemLeft)
-  left.addEventListener('click', e => {
-    consumeEvent(e)
-    switchError(-1)
-  })
-  left.appendChild(document.createTextNode('←'))
-  accessify(left)
-  const right = document.createElement('button')
-  applyStyles(right, groupElemRight)
-  right.addEventListener('click', e => {
-    consumeEvent(e)
-    switchError(1)
-  })
-  right.appendChild(document.createTextNode('→'))
-  accessify(right)
-  group.appendChild(left)
-  group.appendChild(right)
-  span.appendChild(group)
-  additionalReference.appendChild(span)
+  text = 'Errors ' + (viewIndex + 1) + ' of ' + capturedErrors.length;
+  var span = document.createElement('span');
+  span.appendChild(document.createTextNode(text));
+  var group = document.createElement('span');
+  applyStyles(group, groupStyle);
+  var left = document.createElement('button');
+  applyStyles(left, groupElemLeft);
+  left.addEventListener('click', function (e) {
+    consumeEvent(e);
+    switchError(-1);
+  });
+  left.appendChild(document.createTextNode('←'));
+  accessify(left);
+  var right = document.createElement('button');
+  applyStyles(right, groupElemRight);
+  right.addEventListener('click', function (e) {
+    consumeEvent(e);
+    switchError(1);
+  });
+  right.appendChild(document.createTextNode('→'));
+  accessify(right);
+  group.appendChild(left);
+  group.appendChild(right);
+  span.appendChild(group);
+  additionalReference.appendChild(span);
 }
 
 function removeNextBr(parent, component) {
   while (component != null && component.tagName.toLowerCase() !== 'br') {
-    component = component.nextSibling
+    component = component.nextSibling;
   }
   if (component != null) {
-    parent.removeChild(component)
+    parent.removeChild(component);
   }
 }
 
 function absolutifyCode(component) {
-  for (let c of component.childNodes) {
-    if (c.tagName.toLowerCase() !== 'span') continue
-    let text = c.innerText.replace(/\s/g, '')
-    if (text !== '|^') continue
-    c.style.position = 'absolute'
-    removeNextBr(component, c)
+  for (var _iterator = component.childNodes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+    var _ref;
+
+    if (_isArray) {
+      if (_i >= _iterator.length) break;
+      _ref = _iterator[_i++];
+    } else {
+      _i = _iterator.next();
+      if (_i.done) break;
+      _ref = _i.value;
+    }
+
+    var c = _ref;
+
+    if (c.tagName.toLowerCase() !== 'span') continue;
+    var text = c.innerText.replace(/\s/g, '');
+    if (text !== '|^') continue;
+    c.style.position = 'absolute';
+    removeNextBr(component, c);
   }
 }
 
-function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
-  let sourceCode = []
-  let whiteSpace = Infinity
-  sourceLines.forEach(({ text }) => {
-    const m = text.match(/^\s*/)
-    if (text === '') return
+function sourceCodePre(sourceLines, lineNum, columnNum) {
+  var main = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+  var sourceCode = [];
+  var whiteSpace = Infinity;
+  sourceLines.forEach(function (_ref2) {
+    var text = _ref2.text;
+
+    var m = text.match(/^\s*/);
+    if (text === '') return;
     if (m && m[0]) {
-      whiteSpace = Math.min(whiteSpace, m[0].length)
+      whiteSpace = Math.min(whiteSpace, m[0].length);
     } else {
-      whiteSpace = 0
+      whiteSpace = 0;
     }
-  })
-  sourceLines.forEach(({ text, line }) => {
-    if (isFinite(whiteSpace)) text = text.substring(whiteSpace)
-    sourceCode[line - 1] = text
-  })
-  sourceCode = sourceCode.join('\n')
-  const ansiHighlight = codeFrame(sourceCode, lineNum, columnNum - (isFinite(whiteSpace) ? whiteSpace : 0), {
+  });
+  sourceLines.forEach(function (_ref3) {
+    var text = _ref3.text,
+        line = _ref3.line;
+
+    if (isFinite(whiteSpace)) text = text.substring(whiteSpace);
+    sourceCode[line - 1] = text;
+  });
+  sourceCode = sourceCode.join('\n');
+  var ansiHighlight = codeFrame(sourceCode, lineNum, columnNum - (isFinite(whiteSpace) ? whiteSpace : 0), {
     forceColor: true,
     linesAbove: CONTEXT_SIZE,
     linesBelow: CONTEXT_SIZE
-  })
-  const htmlHighlight = ansiHTML(ansiHighlight)
-  const code = document.createElement('code')
-  code.innerHTML = htmlHighlight
-  absolutifyCode(code)
-  applyStyles(code, codeStyle)
+  });
+  var htmlHighlight = ansiHTML(ansiHighlight);
+  var code = document.createElement('code');
+  code.innerHTML = htmlHighlight;
+  absolutifyCode(code);
+  applyStyles(code, codeStyle);
 
-  for (let node of code.childNodes) {
-    let breakOut = false
-    for (let lineNode of node.childNodes) {
-      if (lineNode.innerText.indexOf(` ${lineNum} |`) === -1) continue
-      applyStyles(node, main ? primaryErrorStyle : secondaryErrorStyle)
-      breakOut = true
+  for (var _iterator2 = code.childNodes, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+    var _ref4;
+
+    if (_isArray2) {
+      if (_i2 >= _iterator2.length) break;
+      _ref4 = _iterator2[_i2++];
+    } else {
+      _i2 = _iterator2.next();
+      if (_i2.done) break;
+      _ref4 = _i2.value;
     }
-    if (breakOut) break
+
+    var node = _ref4;
+
+    var breakOut = false;
+    for (var _iterator3 = node.childNodes, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
+      var _ref5;
+
+      if (_isArray3) {
+        if (_i3 >= _iterator3.length) break;
+        _ref5 = _iterator3[_i3++];
+      } else {
+        _i3 = _iterator3.next();
+        if (_i3.done) break;
+        _ref5 = _i3.value;
+      }
+
+      var lineNode = _ref5;
+
+      if (lineNode.innerText.indexOf(' ' + lineNum + ' |') === -1) continue;
+      applyStyles(node, main ? primaryErrorStyle : secondaryErrorStyle);
+      breakOut = true;
+    }
+    if (breakOut) break;
   }
-  const pre = document.createElement('pre')
-  applyStyles(pre, preStyle)
-  pre.appendChild(code)
-  return pre
+  var pre = document.createElement('pre');
+  applyStyles(pre, preStyle);
+  pre.appendChild(code);
+  return pre;
 }
 
 function createHint(hint) {
-  const span = document.createElement('span')
-  span.appendChild(document.createTextNode(hint))
-  applyStyles(span, hintStyle)
-  return span
+  var span = document.createElement('span');
+  span.appendChild(document.createTextNode(hint));
+  applyStyles(span, hintStyle);
+  return span;
 }
 
 function hintsDiv() {
-  const hints = document.createElement('div')
-  applyStyles(hints, hintsStyle)
+  var hints = document.createElement('div');
+  applyStyles(hints, hintsStyle);
 
-  const close = createHint('×')
-  close.addEventListener('click', e => {
-    unmount()
-  })
-  applyStyles(close, closeButtonStyle)
-  hints.appendChild(close)
-  return hints
+  var close = createHint('×');
+  close.addEventListener('click', function (e) {
+    unmount();
+  });
+  applyStyles(close, closeButtonStyle);
+  hints.appendChild(close);
+  return hints;
 }
 
 function frameDiv(functionName, url, internalUrl) {
-  const frame = document.createElement('div')
-  const frameFunctionName = document.createElement('div')
+  var frame = document.createElement('div');
+  var frameFunctionName = document.createElement('div');
 
-  let cleanedFunctionName
+  var cleanedFunctionName = void 0;
   if (!functionName || functionName === 'Object.<anonymous>') {
-    cleanedFunctionName = '(anonymous function)'
+    cleanedFunctionName = '(anonymous function)';
   } else {
-    cleanedFunctionName = functionName
+    cleanedFunctionName = functionName;
   }
 
-  let cleanedUrl = url.replace('webpack://', '.')
+  var cleanedUrl = url.replace('webpack://', '.');
 
   if (internalUrl) {
-    applyStyles(frameFunctionName, Object.assign({}, functionNameStyle, depStyle))
+    applyStyles(frameFunctionName, Object.assign({}, functionNameStyle, depStyle));
   } else {
-    applyStyles(frameFunctionName, functionNameStyle)
+    applyStyles(frameFunctionName, functionNameStyle);
   }
 
-  frameFunctionName.appendChild(document.createTextNode(cleanedFunctionName))
-  frame.appendChild(frameFunctionName)
+  frameFunctionName.appendChild(document.createTextNode(cleanedFunctionName));
+  frame.appendChild(frameFunctionName);
 
-  const frameLink = document.createElement('div')
-  applyStyles(frameLink, linkStyle)
-  const frameAnchor = document.createElement('a')
-  applyStyles(frameAnchor, anchorStyle)
+  var frameLink = document.createElement('div');
+  applyStyles(frameLink, linkStyle);
+  var frameAnchor = document.createElement('a');
+  applyStyles(frameAnchor, anchorStyle);
   //frameAnchor.href = url
-  frameAnchor.appendChild(document.createTextNode(cleanedUrl))
-  frameLink.appendChild(frameAnchor)
-  frame.appendChild(frameLink)
+  frameAnchor.appendChild(document.createTextNode(cleanedUrl));
+  frameLink.appendChild(frameAnchor);
+  frame.appendChild(frameLink);
 
-  return frame
+  return frame;
 }
 
 function getGroupToggle(omitsCount, omitBundle) {
-  const omittedFrames = document.createElement('div')
-  accessify(omittedFrames)
-  const text1 = document.createTextNode(`▶ ${omitsCount} stack frames were collapsed.`)
-  omittedFrames.appendChild(text1)
-  omittedFrames.addEventListener('click', e => {
-    const hide = text1.textContent.match(/▲/)
-    document.getElementsByName(`bundle-${omitBundle}`).forEach(n => {
+  var omittedFrames = document.createElement('div');
+  accessify(omittedFrames);
+  var text1 = document.createTextNode('\u25B6 ' + omitsCount + ' stack frames were collapsed.');
+  omittedFrames.appendChild(text1);
+  omittedFrames.addEventListener('click', function (e) {
+    var hide = text1.textContent.match(/▲/);
+    document.getElementsByName('bundle-' + omitBundle).forEach(function (n) {
       if (hide) {
-        n.style.display = 'none'
+        n.style.display = 'none';
       } else {
-        n.style.display = ''
+        n.style.display = '';
       }
-    })
+    });
     if (hide) {
-      text1.textContent = text1.textContent.replace(/▲/, '▶')
-      text1.textContent = text1.textContent.replace(/expanded/, 'collapsed')
+      text1.textContent = text1.textContent.replace(/▲/, '▶');
+      text1.textContent = text1.textContent.replace(/expanded/, 'collapsed');
     } else {
-      text1.textContent = text1.textContent.replace(/▶/, '▲')
-      text1.textContent = text1.textContent.replace(/collapsed/, 'expanded')
+      text1.textContent = text1.textContent.replace(/▶/, '▲');
+      text1.textContent = text1.textContent.replace(/collapsed/, 'expanded');
     }
-  })
-  applyStyles(omittedFrames, omittedFramesStyle)
-  return omittedFrames
+  });
+  applyStyles(omittedFrames, omittedFramesStyle);
+  return omittedFrames;
 }
 
 function insertBeforeBundle(parent, omitsCount, omitBundle, actionElement) {
-  const children = document.getElementsByName(`bundle-${omitBundle}`)
-  if (children.length < 1) return
-  let first = children[0]
-  while (first.parentNode != parent) first = first.parentNode
+  var children = document.getElementsByName('bundle-' + omitBundle);
+  if (children.length < 1) return;
+  var first = children[0];
+  while (first.parentNode != parent) {
+    first = first.parentNode;
+  }var div = document.createElement('div');
+  accessify(div);
+  div.setAttribute('name', 'bundle-' + omitBundle);
+  var text = document.createTextNode('\u25BC ' + omitsCount + ' stack frames were expanded.');
+  div.appendChild(text);
+  div.addEventListener('click', function (e) {
+    return actionElement.click();
+  });
+  applyStyles(div, omittedFramesStyle);
+  div.style.display = 'none';
 
-  const div = document.createElement('div')
-  accessify(div)
-  div.setAttribute('name', `bundle-${omitBundle}`)
-  const text = document.createTextNode(`▼ ${omitsCount} stack frames were expanded.`)
-  div.appendChild(text)
-  div.addEventListener('click', e => actionElement.click())
-  applyStyles(div, omittedFramesStyle)
-  div.style.display = 'none'
-
-  parent.insertBefore(div, first)
+  parent.insertBefore(div, first);
 }
 
 function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentContainer, lastElement) {
-  const { compiled } = frameSetting
-  const {
-    functionName,
-    fileName, lineNumber, columnNumber,
-    scriptLines,
-    sourceFileName, sourceLineNumber, sourceColumnNumber,
-    sourceLines
-  } = frame
+  var compiled = frameSetting.compiled;
+  var functionName = frame.functionName,
+      fileName = frame.fileName,
+      lineNumber = frame.lineNumber,
+      columnNumber = frame.columnNumber,
+      scriptLines = frame.scriptLines,
+      sourceFileName = frame.sourceFileName,
+      sourceLineNumber = frame.sourceLineNumber,
+      sourceColumnNumber = frame.sourceColumnNumber,
+      sourceLines = frame.sourceLines;
 
-  let url
+  var url = void 0;
   if (!compiled && sourceFileName) {
-    url = sourceFileName + ':' + sourceLineNumber
-    if (sourceColumnNumber) url += ':' + sourceColumnNumber
+    url = sourceFileName + ':' + sourceLineNumber;
+    if (sourceColumnNumber) url += ':' + sourceColumnNumber;
   } else {
-    url = fileName + ':' + lineNumber
-    if (columnNumber) url += ':' + columnNumber
+    url = fileName + ':' + lineNumber;
+    if (columnNumber) url += ':' + columnNumber;
   }
 
-  let needsHidden = false
-  const internalUrl = isInternalFile(url, sourceFileName)
+  var needsHidden = false;
+  var internalUrl = isInternalFile(url, sourceFileName);
   if (internalUrl) {
-    ++omits.value
-    needsHidden = true
+    ++omits.value;
+    needsHidden = true;
   }
-  let collapseElement = null
+  var collapseElement = null;
   if (!internalUrl || lastElement) {
     if (omits.value > 0) {
-      const omittedFrames = getGroupToggle(omits.value, omitBundle)
+      var omittedFrames = getGroupToggle(omits.value, omitBundle);
       setTimeout(function () {
-        insertBeforeBundle.apply(undefined, arguments)
-      }.bind(undefined, parentContainer, omits.value, omitBundle, omittedFrames), 1)
+        insertBeforeBundle.apply(undefined, arguments);
+      }.bind(undefined, parentContainer, omits.value, omitBundle, omittedFrames), 1);
       if (lastElement && internalUrl) {
-        collapseElement = omittedFrames
+        collapseElement = omittedFrames;
       } else {
-        parentContainer.appendChild(omittedFrames)
+        parentContainer.appendChild(omittedFrames);
       }
-      ++omits.bundle
+      ++omits.bundle;
     }
-    omits.value = 0
+    omits.value = 0;
   }
 
-  const elem = frameDiv(functionName, url, internalUrl)
+  var elem = frameDiv(functionName, url, internalUrl);
   if (needsHidden) {
-    applyStyles(elem, hiddenStyle)
-    elem.setAttribute('name', `bundle-${omitBundle}`)
+    applyStyles(elem, hiddenStyle);
+    elem.setAttribute('name', 'bundle-' + omitBundle);
   }
 
-  let hasSource = false
+  var hasSource = false;
   if (!internalUrl) {
     if (compiled && scriptLines.length !== 0) {
-      elem.appendChild(sourceCodePre(scriptLines, lineNumber, columnNumber, critical))
-      hasSource = true
+      elem.appendChild(sourceCodePre(scriptLines, lineNumber, columnNumber, critical));
+      hasSource = true;
     } else if (!compiled && sourceLines.length !== 0) {
-      elem.appendChild(sourceCodePre(sourceLines, sourceLineNumber, sourceColumnNumber, critical))
-      hasSource = true
+      elem.appendChild(sourceCodePre(sourceLines, sourceLineNumber, sourceColumnNumber, critical));
+      hasSource = true;
     }
   }
 
-  return { elem, hasSource, collapseElement }
+  return { elem: elem, hasSource: hasSource, collapseElement: collapseElement };
 }
 
 function lazyFrame(parent, factory, lIndex) {
-  const fac = factory()
-  if (fac == null) return
-  const { hasSource, elem, collapseElement } = fac
+  var fac = factory();
+  if (fac == null) return;
+  var hasSource = fac.hasSource,
+      elem = fac.elem,
+      collapseElement = fac.collapseElement;
 
-  const elemWrapper = document.createElement('div')
-  elemWrapper.appendChild(elem)
+  var elemWrapper = document.createElement('div');
+  elemWrapper.appendChild(elem);
 
   if (hasSource) {
-    const compiledDiv = document.createElement('div')
-    accessify(compiledDiv)
-    applyStyles(compiledDiv, toggleStyle)
+    (function () {
+      var compiledDiv = document.createElement('div');
+      accessify(compiledDiv);
+      applyStyles(compiledDiv, toggleStyle);
 
-    const o = frameSettings[lIndex]
-    const compiledText = document.createTextNode(`View ${o && o.compiled ? 'source' : 'compiled'}`)
-    compiledDiv.addEventListener('click', () => {
-      if (o) o.compiled = !o.compiled
+      var o = frameSettings[lIndex];
+      var compiledText = document.createTextNode('View ' + (o && o.compiled ? 'source' : 'compiled'));
+      compiledDiv.addEventListener('click', function () {
+        if (o) o.compiled = !o.compiled;
 
-      const next = lazyFrame(parent, factory, lIndex)
-      if (next != null) {
-        parent.insertBefore(next, elemWrapper)
-        parent.removeChild(elemWrapper)
-      }
-    })
-    compiledDiv.appendChild(compiledText)
-    elemWrapper.appendChild(compiledDiv)
+        var next = lazyFrame(parent, factory, lIndex);
+        if (next != null) {
+          parent.insertBefore(next, elemWrapper);
+          parent.removeChild(elemWrapper);
+        }
+      });
+      compiledDiv.appendChild(compiledText);
+      elemWrapper.appendChild(compiledDiv);
+    })();
   }
 
   if (collapseElement != null) {
-    elemWrapper.appendChild(collapseElement)
+    elemWrapper.appendChild(collapseElement);
   }
 
-  return elemWrapper
+  return elemWrapper;
 }
 
 function traceDiv(resolvedFrames) {
-  const trace = document.createElement('div')
-  applyStyles(trace, traceStyle)
+  var trace = document.createElement('div');
+  applyStyles(trace, traceStyle);
 
-  let index = 0
-  let critical = true
-  const omits = { value: 0, bundle: 1 }
-  for (let frame of resolvedFrames) {
-    const lIndex = index++
-    const elem = lazyFrame(
-      trace,
-      traceFrame.bind(undefined, frameSettings[lIndex], frame, critical, omits, omits.bundle, trace, index === resolvedFrames.length),
-      lIndex
-    )
-    if (elem == null) continue
-    critical = false
-    trace.appendChild(elem)
+  var index = 0;
+  var critical = true;
+  var omits = { value: 0, bundle: 1 };
+  for (var _iterator4 = resolvedFrames, _isArray4 = Array.isArray(_iterator4), _i4 = 0, _iterator4 = _isArray4 ? _iterator4 : _iterator4[Symbol.iterator]();;) {
+    var _ref6;
+
+    if (_isArray4) {
+      if (_i4 >= _iterator4.length) break;
+      _ref6 = _iterator4[_i4++];
+    } else {
+      _i4 = _iterator4.next();
+      if (_i4.done) break;
+      _ref6 = _i4.value;
+    }
+
+    var frame = _ref6;
+
+    var lIndex = index++;
+    var elem = lazyFrame(trace, traceFrame.bind(undefined, frameSettings[lIndex], frame, critical, omits, omits.bundle, trace, index === resolvedFrames.length), lIndex);
+    if (elem == null) continue;
+    critical = false;
+    trace.appendChild(elem);
   }
   //TODO: fix this
-  omits.value = 0
+  omits.value = 0;
 
-  return trace
+  return trace;
 }
 
 function footer() {
-  const div = document.createElement('div')
-  applyStyles(div, footerStyle)
-  div.appendChild(document.createTextNode('This screen is visible only in development. It will not appear when the app crashes in production.'))
-  div.appendChild(document.createElement('br'))
-  div.appendChild(document.createTextNode('Open your browser’s developer console to further inspect this error.'))
-  return div
+  var div = document.createElement('div');
+  applyStyles(div, footerStyle);
+  div.appendChild(document.createTextNode('This screen is visible only in development. It will not appear when the app crashes in production.'));
+  div.appendChild(document.createElement('br'));
+  div.appendChild(document.createTextNode('Open your browser’s developer console to further inspect this error.'));
+  return div;
 }
 
 function render(error, name, message, resolvedFrames) {
-  dispose()
+  dispose();
 
-  frameSettings = resolvedFrames.map(() => { return { compiled: false } })
+  frameSettings = resolvedFrames.map(function () {
+    return { compiled: false };
+  });
 
-  injectCss(css)
+  injectCss(css);
 
   // Create overlay
-  const overlay = document.createElement('div')
-  applyStyles(overlay, overlayStyle)
-  overlay.appendChild(hintsDiv())
+  var overlay = document.createElement('div');
+  applyStyles(overlay, overlayStyle);
+  overlay.appendChild(hintsDiv());
 
   // Create container
-  const container = document.createElement('div')
-  container.className = 'cra-container'
-  overlay.appendChild(container)
+  var container = document.createElement('div');
+  container.className = 'cra-container';
+  overlay.appendChild(container);
 
   // Create additional
-  additionalReference = document.createElement('div')
-  applyStyles(additionalReference, additionalStyle)
-  container.appendChild(additionalReference)
-  renderAdditional()
+  additionalReference = document.createElement('div');
+  applyStyles(additionalReference, additionalStyle);
+  container.appendChild(additionalReference);
+  renderAdditional();
 
   // Create header
-  const header = document.createElement('div')
-  applyStyles(header, headerStyle)
-  header.appendChild(document.createTextNode(`${name}: ${message}`))
-  container.appendChild(header)
+  var header = document.createElement('div');
+  applyStyles(header, headerStyle);
+  header.appendChild(document.createTextNode(name + ': ' + message));
+  container.appendChild(header);
 
   // Create trace
-  container.appendChild(traceDiv(resolvedFrames))
+  container.appendChild(traceDiv(resolvedFrames));
 
   // Show message
-  container.appendChild(footer())
+  container.appendChild(footer());
 
   // Mount
-  document.body.appendChild(overlayReference = overlay)
+  document.body.appendChild(overlayReference = overlay);
 }
 
 function dispose() {
-  if (overlayReference === null) return
-  document.body.removeChild(overlayReference)
-  overlayReference = null
-  const head = getHead()
-  for (const node of injectedCss) {
-    head.removeChild(node)
+  if (overlayReference === null) return;
+  document.body.removeChild(overlayReference);
+  overlayReference = null;
+  var head = getHead();
+  for (var _iterator5 = injectedCss, _isArray5 = Array.isArray(_iterator5), _i5 = 0, _iterator5 = _isArray5 ? _iterator5 : _iterator5[Symbol.iterator]();;) {
+    var _ref7;
+
+    if (_isArray5) {
+      if (_i5 >= _iterator5.length) break;
+      _ref7 = _iterator5[_i5++];
+    } else {
+      _i5 = _iterator5.next();
+      if (_i5.done) break;
+      _ref7 = _i5.value;
+    }
+
+    var node = _ref7;
+
+    head.removeChild(node);
   }
-  injectedCss = []
+  injectedCss = [];
 }
 
 function unmount() {
-  dispose()
-  capturedErrors = []
-  viewIndex = -1
+  dispose();
+  capturedErrors = [];
+  viewIndex = -1;
 }
 
 function isInternalFile(url, sourceFileName) {
-  return url.indexOf('/~/') !== -1 || url.trim().indexOf(' ') !== -1 || !sourceFileName
+  return url.indexOf('/~/') !== -1 || url.trim().indexOf(' ') !== -1 || !sourceFileName;
 }
 
 function renderError(index) {
-  viewIndex = index
-  const { error, unhandledRejection, resolvedFrames } = capturedErrors[index]
+  viewIndex = index;
+  var _capturedErrors$index = capturedErrors[index],
+      error = _capturedErrors$index.error,
+      unhandledRejection = _capturedErrors$index.unhandledRejection,
+      resolvedFrames = _capturedErrors$index.resolvedFrames;
+
   if (unhandledRejection) {
-    render(error, `Unhandled Rejection (${error.name})`, error.message, resolvedFrames)
+    render(error, 'Unhandled Rejection (' + error.name + ')', error.message, resolvedFrames);
   } else {
-    render(error, error.name, error.message, resolvedFrames)
+    render(error, error.name, error.message, resolvedFrames);
   }
 }
 
-function crash(error, unhandledRejection = false) {
-  if (module.hot) module.hot.decline()
+function crash(error) {
+  var unhandledRejection = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-  StackTraceResolve(error, CONTEXT_SIZE).then(function(resolvedFrames) {
-    capturedErrors.push({ error, unhandledRejection, resolvedFrames })
-    if (overlayReference !== null) renderAdditional()
-    else {
-      renderError(viewIndex = 0)
+  if (module.hot) module.hot.decline();
+
+  StackTraceResolve(error, CONTEXT_SIZE).then(function (resolvedFrames) {
+    capturedErrors.push({ error: error, unhandledRejection: unhandledRejection, resolvedFrames: resolvedFrames });
+    if (overlayReference !== null) renderAdditional();else {
+      renderError(viewIndex = 0);
     }
-  }).catch(function(e) {
+  }).catch(function (e) {
     // This is another fail case (unlikely to happen)
     // e.g. render(...) throws an error with provided arguments
-    console.log('Red box renderer error:', e)
-    unmount()
-    render(null, 'Error', 'There is an error with red box. *Please* report this (see console).', [])
-  })
+    console.log('Red box renderer error:', e);
+    unmount();
+    render(null, 'Error', 'There is an error with red box. *Please* report this (see console).', []);
+  });
 }
 
 function switchError(offset) {
   try {
-    const nextView = viewIndex + offset
-    if (nextView < 0 || nextView >= capturedErrors.length) return
-    renderError(nextView)
+    var nextView = viewIndex + offset;
+    if (nextView < 0 || nextView >= capturedErrors.length) return;
+    renderError(nextView);
   } catch (e) {
-    console.log('Red box renderer error:', e)
-    unmount()
-    render(null, 'Error', 'There is an error with red box. *Please* report this (see console).', [])
+    console.log('Red box renderer error:', e);
+    unmount();
+    render(null, 'Error', 'There is an error with red box. *Please* report this (see console).', []);
   }
 }
 
-window.onerror = function(messageOrEvent, source, lineno, colno, error) {
+window.onerror = function (messageOrEvent, source, lineno, colno, error) {
   if (error == null || !(error instanceof Error) || messageOrEvent.indexOf('Script error') !== -1) {
-    crash(new Error(error || messageOrEvent))// TODO: more helpful message
+    crash(new Error(error || messageOrEvent)); // TODO: more helpful message
   } else {
-    crash(error)
+    crash(error);
   }
-}
+};
 
-let promiseHandler = function(event) {
+var promiseHandler = function promiseHandler(event) {
   if (event != null && event.reason != null) {
-    const { reason } = event
+    var reason = event.reason;
+
     if (reason == null || !(reason instanceof Error)) {
-      crash(new Error(reason), true)
+      crash(new Error(reason), true);
     } else {
-      crash(reason, true)
+      crash(reason, true);
     }
   } else {
-    crash(new Error('Unknown event'), true)
+    crash(new Error('Unknown event'), true);
   }
-}
+};
 
-window.addEventListener('unhandledrejection', promiseHandler)
+window.addEventListener('unhandledrejection', promiseHandler);
 
-let escapeHandler = function(event) {
-  const { key, keyCode, which } = event
-  if (key === 'Escape' || keyCode === 27 || which === 27) unmount()
-  else if (key === 'ArrowLeft' || keyCode === 37 || which === 37) switchError(-1)
-  else if (key === 'ArrowRight' || keyCode === 39 || which === 39) switchError(1)
-}
+var escapeHandler = function escapeHandler(event) {
+  var key = event.key,
+      keyCode = event.keyCode,
+      which = event.which;
 
-window.addEventListener('keydown', escapeHandler)
+  if (key === 'Escape' || keyCode === 27 || which === 27) unmount();else if (key === 'ArrowLeft' || keyCode === 37 || which === 37) switchError(-1);else if (key === 'ArrowRight' || keyCode === 39 || which === 39) switchError(1);
+};
+
+window.addEventListener('keydown', escapeHandler);
 
 try {
-  Error.stackTraceLimit = 50
-} catch (e) { }
+  Error.stackTraceLimit = 50;
+} catch (e) {}
 
 if (module.hot) {
-  module.hot.dispose(function() {
-    unmount()
-    window.removeEventListener('unhandledrejection', promiseHandler)
-    window.removeEventListener('keydown', escapeHandler)
-  })
+  module.hot.dispose(function () {
+    unmount();
+    window.removeEventListener('unhandledrejection', promiseHandler);
+    window.removeEventListener('keydown', escapeHandler);
+  });
 }
