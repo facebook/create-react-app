@@ -293,13 +293,15 @@ function removeNextBr(parent, component) {
 }
 
 function absolutifyCode(component) {
-  component.childNodes.forEach(function (c) {
-    if (c.tagName.toLowerCase() !== 'span') return;
+  var ccn = component.childNodes;
+  for (var index = 0; index < ccn.length; ++index) {
+    var c = ccn[index];
+    if (c.tagName.toLowerCase() !== 'span') continue;
     var text = c.innerText.replace(/\s/g, '');
-    if (text !== '|^') return;
+    if (text !== '|^') continue;
     c.style.position = 'absolute';
     removeNextBr(component, c);
-  });
+  }
 }
 
 function sourceCodePre(sourceLines, lineNum, columnNum) {
@@ -341,11 +343,13 @@ function sourceCodePre(sourceLines, lineNum, columnNum) {
   for (var index = 0; index < ccn.length; ++index) {
     var node = ccn[index];
     var breakOut = false;
-    node.childNodes.forEach(function (lineNode) {
-      if (lineNode.innerText.indexOf(' ' + lineNum + ' |') === -1) return;
+    var ccn2 = node.childNodes;
+    for (var index2 = 0; index2 < ccn2.length; ++index2) {
+      var lineNode = ccn2[index2];
+      if (lineNode.innerText.indexOf(' ' + lineNum + ' |') === -1) continue;
       applyStyles(node, main ? primaryErrorStyle : secondaryErrorStyle);
       breakOut = true;
-    });
+    }
     if (breakOut) break;
   }
   var pre = document.createElement('pre');
@@ -415,13 +419,15 @@ function getGroupToggle(omitsCount, omitBundle) {
   omittedFrames.appendChild(text1);
   omittedFrames.addEventListener('click', function (e) {
     var hide = text1.textContent.match(/▲/);
-    document.getElementsByName('bundle-' + omitBundle).forEach(function (n) {
+    var list = document.getElementsByName('bundle-' + omitBundle);
+    for (var index = 0; index < list.length; ++index) {
+      var n = list[index];
       if (hide) {
         n.style.display = 'none';
       } else {
         n.style.display = '';
       }
-    });
+    }
     if (hide) {
       text1.textContent = text1.textContent.replace(/▲/, '▶');
       text1.textContent = text1.textContent.replace(/expanded/, 'collapsed');
