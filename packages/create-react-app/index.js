@@ -38,10 +38,18 @@
 
 'use strict';
 
+var chalk = require('chalk');
+
+var currentNodeVersion = process.versions.node
+if (currentNodeVersion.split('.')[0] < 4) {
+  console.error(chalk.red('You are currently running Node v' + currentNodeVersion +
+    ' but create-react-app requires >=4. Please use a supported version of Node.\n'));
+  process.exit(1);
+}
+
 var fs = require('fs');
 var path = require('path');
 var spawn = require('cross-spawn');
-var chalk = require('chalk');
 var semver = require('semver');
 var pathExists = require('path-exists');
 
