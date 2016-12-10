@@ -293,26 +293,13 @@ function removeNextBr(parent, component) {
 }
 
 function absolutifyCode(component) {
-  for (var _iterator = component.childNodes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-    var _ref;
-
-    if (_isArray) {
-      if (_i >= _iterator.length) break;
-      _ref = _iterator[_i++];
-    } else {
-      _i = _iterator.next();
-      if (_i.done) break;
-      _ref = _i.value;
-    }
-
-    var c = _ref;
-
-    if (c.tagName.toLowerCase() !== 'span') continue;
+  component.childNodes.forEach(function (c) {
+    if (c.tagName.toLowerCase() !== 'span') return;
     var text = c.innerText.replace(/\s/g, '');
-    if (text !== '|^') continue;
+    if (text !== '|^') return;
     c.style.position = 'absolute';
     removeNextBr(component, c);
-  }
+  });
 }
 
 function sourceCodePre(sourceLines, lineNum, columnNum) {
@@ -350,40 +337,23 @@ function sourceCodePre(sourceLines, lineNum, columnNum) {
   absolutifyCode(code);
   applyStyles(code, codeStyle);
 
-  for (var _iterator2 = code.childNodes, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-    var _ref4;
+  var ccn = code.childNodes;
 
-    if (_isArray2) {
-      if (_i2 >= _iterator2.length) break;
-      _ref4 = _iterator2[_i2++];
-    } else {
-      _i2 = _iterator2.next();
-      if (_i2.done) break;
-      _ref4 = _i2.value;
-    }
-
-    var node = _ref4;
-
-    var breakOut = false;
-    for (var _iterator3 = node.childNodes, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
-      var _ref5;
-
-      if (_isArray3) {
-        if (_i3 >= _iterator3.length) break;
-        _ref5 = _iterator3[_i3++];
-      } else {
-        _i3 = _iterator3.next();
-        if (_i3.done) break;
-        _ref5 = _i3.value;
-      }
-
-      var lineNode = _ref5;
-
-      if (lineNode.innerText.indexOf(' ' + lineNum + ' |') === -1) continue;
+  var _loop = function _loop(index) {
+    var node = ccn[index];
+    breakOut = false;
+    node.childNodes.forEach(function (lineNode) {
+      if (lineNode.innerText.indexOf(' ' + lineNum + ' |') === -1) return;
       applyStyles(node, main ? primaryErrorStyle : secondaryErrorStyle);
       breakOut = true;
-    }
-    if (breakOut) break;
+    });
+    if (breakOut) return 'break';
+  };
+
+  for (var index = 0; index < ccn.length; ++index) {
+    var breakOut;
+    var _ret = _loop(index);
+    if (_ret === 'break') break;
   }
   var pre = document.createElement('pre');
   applyStyles(pre, preStyle);
@@ -601,26 +571,13 @@ function traceDiv(resolvedFrames) {
   var index = 0;
   var critical = true;
   var omits = { value: 0, bundle: 1 };
-  for (var _iterator4 = resolvedFrames, _isArray4 = Array.isArray(_iterator4), _i4 = 0, _iterator4 = _isArray4 ? _iterator4 : _iterator4[Symbol.iterator]();;) {
-    var _ref6;
-
-    if (_isArray4) {
-      if (_i4 >= _iterator4.length) break;
-      _ref6 = _iterator4[_i4++];
-    } else {
-      _i4 = _iterator4.next();
-      if (_i4.done) break;
-      _ref6 = _i4.value;
-    }
-
-    var frame = _ref6;
-
+  resolvedFrames.forEach(function (frame) {
     var lIndex = index++;
     var elem = lazyFrame(trace, traceFrame.bind(undefined, frameSettings[lIndex], frame, critical, omits, omits.bundle, trace, index === resolvedFrames.length), lIndex);
-    if (elem == null) continue;
+    if (elem == null) return;
     critical = false;
     trace.appendChild(elem);
-  }
+  });
   //TODO: fix this
   omits.value = 0;
 
@@ -682,22 +639,9 @@ function dispose() {
   document.body.removeChild(overlayReference);
   overlayReference = null;
   var head = getHead();
-  for (var _iterator5 = injectedCss, _isArray5 = Array.isArray(_iterator5), _i5 = 0, _iterator5 = _isArray5 ? _iterator5 : _iterator5[Symbol.iterator]();;) {
-    var _ref7;
-
-    if (_isArray5) {
-      if (_i5 >= _iterator5.length) break;
-      _ref7 = _iterator5[_i5++];
-    } else {
-      _i5 = _iterator5.next();
-      if (_i5.done) break;
-      _ref7 = _i5.value;
-    }
-
-    var node = _ref7;
-
+  injectedCss.forEach(function (node) {
     head.removeChild(node);
-  }
+  });
   injectedCss = [];
 }
 
