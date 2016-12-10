@@ -254,6 +254,25 @@ function renderAdditional() {
   additionalReference.appendChild(span)
 }
 
+function removeNextBr(parent, component) {
+  while (component != null && component.tagName.toLowerCase() !== 'br') {
+    component = component.nextSibling
+  }
+  if (component != null) {
+    parent.removeChild(component)
+  }
+}
+
+function absolutifyCode(component) {
+  for (let c of component.childNodes) {
+    if (c.tagName.toLowerCase() !== 'span') continue
+    let text = c.innerText.replace(/\s/g, '')
+    if (text !== '|^') continue
+    c.style.position = 'absolute'
+    removeNextBr(component, c)
+  }
+}
+
 function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
   let sourceCode = []
   let whiteSpace = Infinity
@@ -279,6 +298,7 @@ function sourceCodePre(sourceLines, lineNum, columnNum, main = false) {
   const htmlHighlight = ansiHTML(ansiHighlight)
   const code = document.createElement('code')
   code.innerHTML = htmlHighlight
+  absolutifyCode(code)
   applyStyles(code, codeStyle)
 
   for (let node of code.childNodes) {
