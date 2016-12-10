@@ -60,11 +60,14 @@ and then run `npm start` or `npm run build`.
 
 ## Cutting a Release
 
-1. Tag all merged PRs that go into the release with the relevant milestone.
+1. Tag all merged pull requests that go into the release with the relevant milestone. Each merged PR should also be labeled with one of the [labels](https://github.com/facebookincubator/create-react-app/labels) named `tag: ...` to indicate what kind of change it is.
 2. Close the milestone.
 3. In most releases, only `react-scripts` needs to be released. If you don’t have any changes to the `packages/create-react-app` folder, you don’t need to bump its version or publish it (the publish script will publish only changed packages).
 4. Note that files in `packages/create-react-app` should be modified with extreme caution. Since it’s a global CLI, any version of `create-react-app` (global CLI) including very old ones should work with the latest version of `react-scripts`.
-5. Add an entry to `CHANGELOG.md` detailing what has changed with links to PRs and their authors. Use previous entries for inspiration. Group changes to `react-scripts` and `create-react-app` separately in the notes, for example like in `0.2.0` release notes.
+5. Create a change log entry for the release:
+  * You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
+  * Run `npm run changelog`. The command will find all the labeled pull requests merged since the last release and group them by the label and affected packages, and create a change log entry with all the changes and links to PRs and their authors. Copy and paste it to `CHANGELOG.md`.
+  * Add a four-space indented paragraph after each non-trivial list item, explaining what changed and why. For each breaking change also write who it affects and instructions for migrating existing code.
 6. Make sure to include “Migrating from ...” instructions for the previous release. Often you can copy and paste them.
 7. After merging the changelog update, create a GitHub Release with the same text. See previous Releases for inspiration.
 8. **Do not run `npm publish`. Instead, run `npm run publish`.**
