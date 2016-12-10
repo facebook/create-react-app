@@ -180,6 +180,7 @@ const groupStyle = {
 }
 
 const _groupElemStyle = {
+  'background-color': 'inherit',
   'border-color': '#ddd',
   'border-width': '1px',
   'border-radius': '4px',
@@ -225,6 +226,11 @@ let capturedErrors = []
 let viewIndex = -1
 let frameSettings = []
 
+function consumeEvent(e) {
+  e.preventDefault()
+  e.target.blur()
+}
+
 function renderAdditional() {
   if (additionalReference.lastChild) {
     additionalReference.removeChild(additionalReference.lastChild)
@@ -240,13 +246,19 @@ function renderAdditional() {
   span.appendChild(document.createTextNode(text))
   const group = document.createElement('span')
   applyStyles(group, groupStyle)
-  const left = document.createElement('span')
+  const left = document.createElement('button')
   applyStyles(left, groupElemLeft)
-  left.addEventListener('click', () => switchError(-1))
+  left.addEventListener('click', e => {
+    consumeEvent(e)
+    switchError(-1)
+  })
   left.appendChild(document.createTextNode('←'))
-  const right = document.createElement('span')
+  const right = document.createElement('button')
   applyStyles(right, groupElemRight)
-  right.addEventListener('click', () => switchError(1))
+  right.addEventListener('click', e => {
+    consumeEvent(e)
+    switchError(1)
+  })
   right.appendChild(document.createTextNode('→'))
   group.appendChild(left)
   group.appendChild(right)
