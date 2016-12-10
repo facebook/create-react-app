@@ -142,10 +142,10 @@ function run(root, appName, version, verbose, originalDirectory) {
   var packageToInstall = getInstallPackage(version);
   var packageName = getPackageName(packageToInstall);
 
-  install(packageToInstall, verbose, function (code, command, args) {
+  install(packageToInstall, verbose, function(code, command, args) {
     if (code !== 0) {
       console.error('`' + command + ' ' + args.join(' ') + '` failed');
-      return;
+      process.exit(1);
     }
 
     checkNodeVersion(packageName);
