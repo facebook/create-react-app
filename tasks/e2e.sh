@@ -64,7 +64,8 @@ npm install
 if [ `node --version | sed -e 's/^v//' -e 's/\..\+//g'` -lt 4 ]
 then
   cd $temp_app_path
-  node "$root_path"/packages/create-react-app/index.js test-node-version && exit 1 || exit 0
+  err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
+  [[ $err_output =~ You\ are\ currently\ running\ Node\ v.+\ but\ create-react-app\ requires\ \>=4\. ]] && exit 0 || exit 1
 fi
 
 if [ "$USE_YARN" = "yes" ]
