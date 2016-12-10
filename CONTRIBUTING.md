@@ -67,7 +67,7 @@ and then run `npm start` or `npm run build`.
 5. Create a change log entry for the release:
   * You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
   * Run `npm run changelog`. The command will find all the labeled pull requests merged since the last release and group them by the label and affected packages, and create a change log entry with all the changes and links to PRs and their authors. Copy and paste it to `CHANGELOG.md`.
-  * Edit the change log as necessary. Don't forget to document any breaking changes!
+  * Add a four-space indented paragraph after each non-trivial list item, explaining what changed and why. For each breaking change also write who it affects and instructions for migrating existing code.
 6. Make sure to include “Migrating from ...” instructions for the previous release. Often you can copy and paste them.
 7. After merging the changelog update, create a GitHub Release with the same text. See previous Releases for inspiration.
 8. **Do not run `npm publish`. Instead, run `npm run publish`.**
