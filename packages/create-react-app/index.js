@@ -40,6 +40,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
 var chalk = require('chalk');
 var semver = require('semver');
@@ -107,49 +108,33 @@ function createApp(name, verbose, version) {
   run(root, appName, version, verbose, originalDirectory);
 }
 
+function shouldUseYarn() {
+  try {
+    execSync('yarn --version', {stdio: 'ignore'});
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function install(packageToInstall, verbose, callback) {
-  function fallbackToNpm() {
-    var npmArgs = [
-      'install',
-      verbose && '--verbose',
-      '--save-dev',
-      '--save-exact',
-      packageToInstall,
-    ].filter(function(e) { return e; });
-    var npmProc = spawn('npm', npmArgs, {stdio: 'inherit'});
-    npmProc.on('close', function (code) {
-      callback(code, 'npm', npmArgs);
-    });
+  var command;
+  var args;
+  if (shouldUseYarn()) {
+    command = 'yarn';
+    args = [ 'add', '--dev', '--exact', packageToInstall];
+  } else {
+    command = 'npm';
+    args = ['install', '--save-dev', '--save-exact', packageToInstall];
   }
 
-  var yarnArgs = [
-    'add',
-    '--dev',
-    '--exact',
-    packageToInstall,
-  ];
-  var yarnProc;
-  var yarnExists = true;
-  try {
-    yarnProc = spawn('yarn', yarnArgs, {stdio: 'inherit'});
-  } catch (err) {
-    // It's not clear why we end up here in some cases but we need this.
-    // https://github.com/facebookincubator/create-react-app/issues/1200
-    yarnExists = false;
-    fallbackToNpm();
-    return;
+  if (verbose) {
+    args.push('--verbose');
   }
-  yarnProc.on('error', function (err) {
-    if (err.code === 'ENOENT') {
-      yarnExists = false;
-    }
-  });
-  yarnProc.on('close', function (code) {
-    if (yarnExists) {
-      callback(code, 'yarn', yarnArgs);
-    } else {
-      fallbackToNpm();
-    }
+
+  var child = spawn(command, args, {stdio: 'inherit'});
+  child.on('close', function(code) {
+    callback(code, command, args);
   });
 }
 
