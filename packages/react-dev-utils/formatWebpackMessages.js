@@ -24,12 +24,6 @@ function isLikelyASyntaxError(message) {
 function formatMessage(message) {
   var lines = message.split('\n');
 
-  // line #0 is filename
-  // line #1 is the main error message
-  if (!lines[0] || !lines[1]) {
-    return message;
-  }
-
   // Remove webpack-specific loader notation from filename.
   // Before:
   // ./~/css-loader!./~/postcss-loader!./src/App.css
@@ -37,6 +31,12 @@ function formatMessage(message) {
   // ./src/App.css
   if (lines[0].lastIndexOf('!') !== -1) {
     lines[0] = lines[0].substr(lines[0].lastIndexOf('!') + 1);
+  }
+
+  // line #0 is filename
+  // line #1 is the main error message
+  if (!lines[0] || !lines[1]) {
+    return lines.join('\n');
   }
 
   // Cleans up verbose "module not found" messages for files and packages.
