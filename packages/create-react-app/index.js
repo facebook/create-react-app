@@ -42,8 +42,13 @@ var chalk = require('chalk');
 
 var currentNodeVersion = process.versions.node
 if (currentNodeVersion.split('.')[0] < 4) {
-  console.error(chalk.red('You are currently running Node v' + currentNodeVersion +
-    ' but create-react-app requires >=4. Please use a supported version of Node.\n'));
+  console.error(
+    chalk.red(
+      'You are running Node ' + currentNodeVersion + '.\n' +
+      'Create React App requires Node 4 or higher. \n' +
+      'Please update your version of Node.'
+    )
+  );
   process.exit(1);
 }
 
@@ -58,23 +63,36 @@ var projectName;
 
 var program = require('commander')
   .version(require('./package.json').version)
-  .arguments('<name>')
+  .arguments('<project-directory>')
+  .usage(chalk.green('<project-directory>') + ' [options]')
   .action(function (name) {
     projectName = name;
   })
-  .option('-v, --verbose', 'print logs while init')
-  .option('-s, --scripts-version <alternative package>', 'select a react script variant')
+  .option('--verbose', 'print additional logs')
+  .option('--scripts-version <alternative-package>', 'use a non-standard version of react-scripts')
   .on('--help', function () {
-    console.log('Example of valid script version values:')
-    console.log('  - a specific npm version: "0.22.0-rc1"')
-    console.log('  - a .tgz archive from any npm repo: "https://registry.npmjs.org/react-scripts/-/react-scripts-0.20.0.tgz"')
-    console.log('  - a package prepared with `tasks/clean_pack.sh`: "/Users/home/vjeux/create-react-app/react-scripts-0.22.0.tgz"')
+    console.log('    Only ' + chalk.green('<project-directory>') + ' is required.');
+    console.log();
+    console.log('    A custom ' + chalk.cyan('--scripts-version') + ' can be one of:');
+    console.log('      - a specific npm version: ' + chalk.green('0.8.2'));
+    console.log('      - a custom fork published on npm: ' + chalk.green('my-react-scripts'));
+    console.log('      - a .tgz archive: ' + chalk.green('https://mysite.com/my-react-scripts-0.8.2.tgz'));
+    console.log('    It is not needed unless you specifically want to use a fork.');
+    console.log();
+    console.log('    If you have any problems, do not hesitate to file an issue:');
+    console.log('      ' + chalk.cyan('https://github.com/facebookincubator/create-react-app/issues/new'));
+    console.log();
   })
   .parse(process.argv)
 
 if (typeof projectName === 'undefined') {
-  console.error('Error: no name given!');
-  console.log('Usage: ' + program.name() + ' ' + program.usage());
+  console.error('Please specify the project directory:');
+  console.log('  ' + chalk.cyan(program.name()) + chalk.green(' <project-directory>'));
+  console.log();
+  console.log('For example:');
+  console.log('  ' + chalk.cyan(program.name()) + chalk.green(' my-react-app'));
+  console.log();
+  console.log('Run ' + chalk.cyan(program.name() + ' --help') + ' to see all options.');
   process.exit(1);
 }
 
@@ -89,12 +107,13 @@ function createApp(name, verbose, version) {
   if (!pathExists.sync(name)) {
     fs.mkdirSync(root);
   } else if (!isSafeToCreateProjectIn(root)) {
-    console.log('The directory `' + name + '` contains file(s) that could conflict. Aborting.');
+    console.log('The directory ' + chalk.green(name) + ' contains files that could conflict.');
+    console.log('Try using a new directory name.');
     process.exit(1);
   }
 
   console.log(
-    'Creating a new React app in ' + root + '.'
+    'Creating a new React app in ' + chalk.green(root) + '.'
   );
   console.log();
 
@@ -111,7 +130,7 @@ function createApp(name, verbose, version) {
   process.chdir(root);
 
   console.log('Installing packages. This might take a couple minutes.');
-  console.log('Installing react-scripts...');
+  console.log('Installing ' + chalk.cyan('react-scripts') + '...');
   console.log();
 
   run(root, appName, version, verbose, originalDirectory);
@@ -153,7 +172,7 @@ function run(root, appName, version, verbose, originalDirectory) {
 
   install(packageToInstall, verbose, function(code, command, args) {
     if (code !== 0) {
-      console.error('`' + command + ' ' + args.join(' ') + '` failed');
+      console.error(chalk.cyan(command + ' ' + args.join(' ')) + ' failed');
       process.exit(1);
     }
 
@@ -187,7 +206,7 @@ function getInstallPackage(version) {
 function getPackageName(installPackage) {
   if (installPackage.indexOf('.tgz') > -1) {
     // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
-    // However, this function returns package name only wihout semver version.
+    // However, this function returns package name only without semver version.
     return installPackage.match(/^.+\/(.+?)(?:-\d+.+)?\.tgz$/)[1];
   } else if (installPackage.indexOf('@') > 0) {
     // Do not match @scope/ when stripping off @version or @tag
@@ -211,8 +230,9 @@ function checkNodeVersion(packageName) {
   if (!semver.satisfies(process.version, packageJson.engines.node)) {
     console.error(
       chalk.red(
-        'You are currently running Node %s but create-react-app requires %s.' +
-        ' Please use a supported version of Node.\n'
+        'You are running Node %s.\n' +
+        'Create React App requires Node %s or higher. \n' +
+        'Please update your version of Node.'
       ),
       process.version,
       packageJson.engines.node
@@ -230,7 +250,7 @@ function checkAppName(appName) {
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
-        'We cannot create a project called `' + appName + '` because a dependency with the same name exists.\n' +
+        'We cannot create a project called ' + chalk.green(appName) + ' because a dependency with the same name exists.\n' +
         'Due to the way npm works, the following names are not allowed:\n\n'
       ) +
       chalk.cyan(

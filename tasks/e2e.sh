@@ -65,7 +65,7 @@ if [ `node --version | sed -e 's/^v//' -e 's/\..\+//g'` -lt 4 ]
 then
   cd $temp_app_path
   err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
-  [[ $err_output =~ You\ are\ currently\ running\ Node\ v.+\ but\ create-react-app\ requires\ \>=4\. ]] && exit 0 || exit 1
+  [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 fi
 
 if [ "$USE_YARN" = "yes" ]
