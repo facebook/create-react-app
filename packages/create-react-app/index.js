@@ -38,38 +38,47 @@
 
 'use strict';
 
+var chalk = require('chalk');
+
+var currentNodeVersion = process.versions.node
+if (currentNodeVersion.split('.')[0] < 4) {
+  console.error(chalk.red('You are currently running Node v' + currentNodeVersion +
+    ' but create-react-app requires >=4. Please use a supported version of Node.\n'));
+  process.exit(1);
+}
+
 var fs = require('fs');
 var path = require('path');
 var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
-var chalk = require('chalk');
 var semver = require('semver');
-var argv = require('minimist')(process.argv.slice(2));
 var pathExists = require('path-exists');
 
-/**
- * Arguments:
- *   --version - to print current version
- *   --verbose - to print logs while init
- *   --scripts-version <alternative package>
- *     Example of valid values:
- *     - a specific npm version: "0.22.0-rc1"
- *     - a .tgz archive from any npm repo: "https://registry.npmjs.org/react-scripts/-/react-scripts-0.20.0.tgz"
- *     - a package prepared with `tasks/clean_pack.sh`: "/Users/home/vjeux/create-react-app/react-scripts-0.22.0.tgz"
- */
-var commands = argv._;
-if (commands.length === 0) {
-  if (argv.version) {
-    console.log('create-react-app version: ' + require('./package.json').version);
-    process.exit();
-  }
-  console.error(
-    'Usage: create-react-app <project-directory> [--verbose]'
-  );
+var projectName;
+
+var program = require('commander')
+  .version(require('./package.json').version)
+  .arguments('<name>')
+  .action(function (name) {
+    projectName = name;
+  })
+  .option('-v, --verbose', 'print logs while init')
+  .option('-s, --scripts-version <alternative package>', 'select a react script variant')
+  .on('--help', function () {
+    console.log('Example of valid script version values:')
+    console.log('  - a specific npm version: "0.22.0-rc1"')
+    console.log('  - a .tgz archive from any npm repo: "https://registry.npmjs.org/react-scripts/-/react-scripts-0.20.0.tgz"')
+    console.log('  - a package prepared with `tasks/clean_pack.sh`: "/Users/home/vjeux/create-react-app/react-scripts-0.22.0.tgz"')
+  })
+  .parse(process.argv)
+
+if (typeof projectName === 'undefined') {
+  console.error('Error: no name given!');
+  console.log('Usage: ' + program.name() + ' ' + program.usage());
   process.exit(1);
 }
 
-createApp(commands[0], argv.verbose, argv['scripts-version']);
+createApp(projectName, program.verbose, program.scriptsVersion);
 
 function createApp(name, verbose, version) {
   var root = path.resolve(name);
