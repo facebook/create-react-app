@@ -25,7 +25,7 @@
   "dependencies": {
     "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",
-    "babel-eslint": "7.0.0",
+    "babel-eslint": "7.1.1",
     "babel-jest": "17.0.2",
     "babel-loader": "6.2.7",
     "babel-preset-react-app": "^2.0.1",
