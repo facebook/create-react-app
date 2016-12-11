@@ -3,6 +3,7 @@
   "version": "0.4.1",
   "description": "Webpack utilities used by Create React App",
   "repository": "facebookincubator/create-react-app",
+  "private": "true",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"

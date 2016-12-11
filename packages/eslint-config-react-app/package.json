@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "ESLint configuration used by Create React App",
   "repository": "facebookincubator/create-react-app",
+  "private": "true",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
