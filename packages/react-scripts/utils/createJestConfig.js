@@ -20,7 +20,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
-    collectCoverageFrom: ['src/**/*.{js,jsx}'],
+    collectCoverageFrom: ['src/**/*.{ts,tsx}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testPathIgnorePatterns: [
@@ -28,12 +28,12 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
+    moduleFileExtensions: ['ts', 'tsx', 'js'],
+    testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
     transform: {
-      '^.+\\.(js|jsx)$': isEjecting ?
-        '<rootDir>/node_modules/babel-jest'
-        : resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
+      '^.+\\.tsx?$': resolve('config/jest/typescriptTransform.js'),
+      '^(?!.*\\.(css|json)$)': resolve('config/jest/fileTransform.js'),
     },
     transformIgnorePatterns: [
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'
