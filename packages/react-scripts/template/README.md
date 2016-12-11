@@ -60,7 +60,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Troubleshooting](#troubleshooting)
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` silently fails](#npm-run-build-silently-fails)
-  - [Subresource integrity checks fail](#subresource-integrity-checks-fail)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -1239,17 +1238,6 @@ There are also reports that *uninstalling* Watchman fixes the issue. So if nothi
 ### `npm run build` silently fails
 
 It is reported that `npm run build` can fail on machines with no swap space, which is common in cloud environments. If [the symptoms are matching](https://github.com/facebookincubator/create-react-app/issues/1133#issuecomment-264612171), consider adding some swap space to the machine you’re building on, or build the project locally.
-
-### Subresource integrity checks fail
-
-[Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) digests are added to the build output files. For a particular scenario, these checks may fail when deployed. The files are built using `LF` characters, but if your deployment uses a Git repository for deployment (like Azure web sites) and the Git repository is set up to translate `LF` characters into `CR/LF` characters, then the checked out files will be different and the digests will be invalid.
-
-To fix this, just add a `.gitattributes` file to your deployment repository that will ensure the build files are not modified when checked out:
-
-```
-*.css text eol=lf
-*.js text eol=lf
-```
 
 ## Something Missing?
 
