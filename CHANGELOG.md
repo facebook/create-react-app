@@ -1,3 +1,105 @@
+## 0.8.4 (December 11, 2016)
+
+#### :bug: Bug Fix
+* `react-scripts`
+
+  * [#1233](https://github.com/facebookincubator/create-react-app/pull/1233) Disable subresource integrity temporarily. ([@Timer](https://github.com/Timer))
+  
+    We added [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) checks to the build output in 0.8.2 but it turns out that they may fail in browsers using special compression proxies, such as Chrome on Android, when served over HTTP. We disabled the checks until we can find a safe way to add them.
+  
+* `react-dev-utils`
+
+  * [#1226](https://github.com/facebookincubator/create-react-app/pull/1226) Fix weird lint output. ([@n3tr](https://github.com/n3tr))
+  
+    Fixes a strange lint message formatting in some edge cases.
+  
+  * [#1215](https://github.com/facebookincubator/create-react-app/pull/1215) Fix - openChrome won't open default browser (using Canary). ([@n3tr](https://github.com/n3tr))
+  
+    Fixes an regression that caused stable Google Chrome to be opened even if you are using Canary as the default browser.
+  
+* `create-react-app`
+
+  * [#1223](https://github.com/facebookincubator/create-react-app/pull/1223) Clean up Yarn detection and install code. ([@fson](https://github.com/fson))
+  
+  Fixes noisy output on Windows when Yarn is not installed.
+
+  * [#1224](https://github.com/facebookincubator/create-react-app/pull/1224) Exit with an error code when npm/yarn install fails. ([@fson](https://github.com/fson))
+  
+#### :nail_care: Enhancement
+* `react-scripts`
+
+  * [#1237](https://github.com/facebookincubator/create-react-app/pull/1237) Clear scrollback in test mode. ([@gaearon](https://github.com/gaearon))
+  
+    Ensures test watcher clears the console before running.
+  
+  * [#1229](https://github.com/facebookincubator/create-react-app/pull/1229) Disable jest watch mode when --coverage flag is present [#1207]. ([@BenoitAverty](https://github.com/BenoitAverty))
+    
+    Since coverage doesn't work well with watch mode, we don’t run the watcher on `npm test -- --coverage` anymore.
+  
+  * [#1212](https://github.com/facebookincubator/create-react-app/pull/1212) Proxy rewrites Origin header to match the target server URL. ([@koles](https://github.com/koles))
+  
+    Makes sure more API endpoints can work with the `proxy` setting.
+  
+  * [#1222](https://github.com/facebookincubator/create-react-app/pull/1222) Disable gh-page setup instruction if scripts.deploy has been added. ([@n3tr](https://github.com/n3tr))
+  
+    Suppresses the instructions printed at the end of `npm run build` if `npm run deploy` already exists.
+
+* `create-react-app`
+
+  * [#1236](https://github.com/facebookincubator/create-react-app/pull/1236) Tweak console messages. ([@gaearon](https://github.com/gaearon))
+  
+    Makes error messages more friendly.
+  
+  * [#1195](https://github.com/facebookincubator/create-react-app/pull/1195) Use "commander" for  cli argv handling. ([@EnoahNetzach](https://github.com/EnoahNetzach))
+  
+    Adds `create-react-app --help` with a list of options.
+
+* `react-dev-utils`
+
+  * [#1211](https://github.com/facebookincubator/create-react-app/pull/1211) Use a better clear console sequence. ([@gaearon](https://github.com/gaearon))
+  
+    Ensures the development server clears the terminal when files are changed.
+
+#### :memo: Documentation
+* `react-dev-utils`
+
+  * [#1232](https://github.com/facebookincubator/create-react-app/pull/1232) [documentation] fix html-dev-plugin link in react-dev-utils doc. ([@shogunsea](https://github.com/shogunsea))
+
+* `react-scripts`
+
+  * [#1220](https://github.com/facebookincubator/create-react-app/pull/1220) Adding troubleshooting information about Subresource Integrity digests.. ([@dfbaskin](https://github.com/dfbaskin))
+
+#### :house: Internal
+* `react-scripts`
+
+  * [#1214](https://github.com/facebookincubator/create-react-app/pull/1214) Bump babel-eslint version. ([@existentialism](https://github.com/existentialism))
+
+#### Committers: 10
+- Benoit Averty ([BenoitAverty](https://github.com/BenoitAverty))
+- Brian Ng ([existentialism](https://github.com/existentialism))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Dave Baskin ([dfbaskin](https://github.com/dfbaskin))
+- Fabrizio Castellarin ([EnoahNetzach](https://github.com/EnoahNetzach))
+- Jirat Ki. ([n3tr](https://github.com/n3tr))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Pavel Kolesnikov ([koles](https://github.com/koles))
+- Shogun Sea ([shogunsea](https://github.com/shogunsea))
+- Ville Immonen ([fson](https://github.com/fson))
+
+### Migrating from 0.8.3 to 0.8.4
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.8.4
+```
+
+You may also optionally update the global command-line utility:
+
+```
+npm install -g create-react-app@1.0.2
+```
+
 ## 0.8.3 (December 8, 2016)
 
 #### :bug: Bug Fix
