@@ -28,7 +28,8 @@ function openBrowser(url) {
   // Fallback to opn
   // (It will always open new tab)
   try {
-    opn(url).catch(() => {}); // Prevent `unhandledRejection` error.
+    var option = {app: process.env.BROWSER};
+    opn(url, option).catch(() => {}); // Prevent `unhandledRejection` error.
     return true;
   } catch (err) {
     return false;
