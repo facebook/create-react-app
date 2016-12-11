@@ -11,11 +11,11 @@
 
   * [#1226](https://github.com/facebookincubator/create-react-app/pull/1226) Fix weird lint output. ([@n3tr](https://github.com/n3tr))
   
-    Fixes a strange lint message formatting in some edge cases.
+    Fixes strange lint message formatting in some edge cases.
   
   * [#1215](https://github.com/facebookincubator/create-react-app/pull/1215) Fix - openChrome won't open default browser (using Canary). ([@n3tr](https://github.com/n3tr))
   
-    Fixes an regression that caused stable Google Chrome to be opened even if you are using Canary as the default browser.
+    Fixes a regression that caused stable Google Chrome to be opened even if you are using Canary as the default browser.
   
 * `create-react-app`
 
