@@ -76,7 +76,7 @@ var program = require('commander')
     console.log('    A custom ' + chalk.cyan('--scripts-version') + ' can be one of:');
     console.log('      - a specific npm version: ' + chalk.green('0.8.2'));
     console.log('      - a custom fork published on npm: ' + chalk.green('my-react-scripts'));
-    console.log('      - a .tgz archive from npm: ' + chalk.green('https://mysite.com/my-react-scripts-0.8.2.tgz'));
+    console.log('      - a .tgz archive: ' + chalk.green('https://mysite.com/my-react-scripts-0.8.2.tgz'));
     console.log('    It is not needed unless you specifically want to use a fork.');
     console.log();
     console.log('    If you have any problems, do not hesitate to file an issue:');
