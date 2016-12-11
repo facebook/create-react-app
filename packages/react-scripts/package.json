@@ -1,26 +1,26 @@
 {
-  "name": "react-scripts",
+  "name": "react-scripts-ts",
   "version": "0.8.4",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "wmonk/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/wmonk/create-react-app/issues"
   },
   "files": [
     ".babelrc",
     ".eslintrc",
-    "bin",
     "config",
+    "bin",
     "scripts",
     "template",
     "utils"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "react-scripts-ts": "./bin/react-scripts-ts.js"
   },
   "dependencies": {
     "autoprefixer": "6.5.1",
