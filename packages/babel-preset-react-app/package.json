@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-react-app",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "Babel preset used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -12,8 +12,10 @@
   ],
   "dependencies": {
     "babel-plugin-transform-class-properties": "6.16.0",
+    "babel-plugin-transform-es2015-parameters": "6.18.0",
     "babel-plugin-transform-object-rest-spread": "6.19.0",
     "babel-plugin-transform-react-constant-elements": "6.9.1",
+    "babel-plugin-transform-react-jsx": "6.8.0",
     "babel-plugin-transform-react-jsx-self": "6.11.0",
     "babel-plugin-transform-react-jsx-source": "6.9.0",
     "babel-plugin-transform-regenerator": "6.16.1",
