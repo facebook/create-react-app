@@ -1,3 +1,397 @@
+## 0.8.4 (December 11, 2016)
+
+#### :bug: Bug Fix
+* `react-scripts`
+
+  * [#1233](https://github.com/facebookincubator/create-react-app/pull/1233) Disable subresource integrity temporarily. ([@Timer](https://github.com/Timer))
+  
+    We added [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) checks to the build output in 0.8.2 but it turns out that they may fail in browsers using special compression proxies, such as Chrome on Android, when served over HTTP. We disabled the checks until we can find a safe way to add them.
+  
+* `react-dev-utils`
+
+  * [#1226](https://github.com/facebookincubator/create-react-app/pull/1226) Fix weird lint output. ([@n3tr](https://github.com/n3tr))
+  
+    Fixes strange lint message formatting in some edge cases.
+  
+  * [#1215](https://github.com/facebookincubator/create-react-app/pull/1215) Fix - openChrome won't open default browser (using Canary). ([@n3tr](https://github.com/n3tr))
+  
+    Fixes a regression that caused stable Google Chrome to be opened even if you are using Canary as the default browser.
+  
+* `create-react-app`
+
+  * [#1223](https://github.com/facebookincubator/create-react-app/pull/1223) Clean up Yarn detection and install code. ([@fson](https://github.com/fson))
+  
+  Fixes noisy output on Windows when Yarn is not installed.
+
+  * [#1224](https://github.com/facebookincubator/create-react-app/pull/1224) Exit with an error code when npm/yarn install fails. ([@fson](https://github.com/fson))
+  
+#### :nail_care: Enhancement
+* `react-scripts`
+
+  * [#1237](https://github.com/facebookincubator/create-react-app/pull/1237) Clear scrollback in test mode. ([@gaearon](https://github.com/gaearon))
+  
+    Ensures test watcher clears the console before running.
+  
+  * [#1229](https://github.com/facebookincubator/create-react-app/pull/1229) Disable jest watch mode when --coverage flag is present [#1207]. ([@BenoitAverty](https://github.com/BenoitAverty))
+    
+    Since coverage doesn't work well with watch mode, we don’t run the watcher on `npm test -- --coverage` anymore.
+  
+  * [#1212](https://github.com/facebookincubator/create-react-app/pull/1212) Proxy rewrites Origin header to match the target server URL. ([@koles](https://github.com/koles))
+  
+    Makes sure more API endpoints can work with the `proxy` setting.
+  
+  * [#1222](https://github.com/facebookincubator/create-react-app/pull/1222) Disable gh-page setup instruction if scripts.deploy has been added. ([@n3tr](https://github.com/n3tr))
+  
+    Suppresses the instructions printed at the end of `npm run build` if `npm run deploy` already exists.
+
+* `create-react-app`
+
+  * [#1236](https://github.com/facebookincubator/create-react-app/pull/1236) Tweak console messages. ([@gaearon](https://github.com/gaearon))
+  
+    Makes error messages more friendly.
+  
+  * [#1195](https://github.com/facebookincubator/create-react-app/pull/1195) Use "commander" for  cli argv handling. ([@EnoahNetzach](https://github.com/EnoahNetzach))
+  
+    Adds `create-react-app --help` with a list of options.
+
+* `react-dev-utils`
+
+  * [#1211](https://github.com/facebookincubator/create-react-app/pull/1211) Use a better clear console sequence. ([@gaearon](https://github.com/gaearon))
+  
+    Ensures the development server clears the terminal when files are changed.
+
+#### :memo: Documentation
+* `react-dev-utils`
+
+  * [#1232](https://github.com/facebookincubator/create-react-app/pull/1232) [documentation] fix html-dev-plugin link in react-dev-utils doc. ([@shogunsea](https://github.com/shogunsea))
+
+* `react-scripts`
+
+  * [#1220](https://github.com/facebookincubator/create-react-app/pull/1220) Adding troubleshooting information about Subresource Integrity digests.. ([@dfbaskin](https://github.com/dfbaskin))
+
+#### :house: Internal
+* `react-scripts`
+
+  * [#1214](https://github.com/facebookincubator/create-react-app/pull/1214) Bump babel-eslint version. ([@existentialism](https://github.com/existentialism))
+
+#### Committers: 10
+- Benoit Averty ([BenoitAverty](https://github.com/BenoitAverty))
+- Brian Ng ([existentialism](https://github.com/existentialism))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Dave Baskin ([dfbaskin](https://github.com/dfbaskin))
+- Fabrizio Castellarin ([EnoahNetzach](https://github.com/EnoahNetzach))
+- Jirat Ki. ([n3tr](https://github.com/n3tr))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Pavel Kolesnikov ([koles](https://github.com/koles))
+- Shogun Sea ([shogunsea](https://github.com/shogunsea))
+- Ville Immonen ([fson](https://github.com/fson))
+
+### Migrating from 0.8.3 to 0.8.4
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.8.4
+```
+
+You may also optionally update the global command-line utility:
+
+```
+npm install -g create-react-app@1.0.2
+```
+
+## 0.8.3 (December 8, 2016)
+
+#### :bug: Bug Fix
+* `create-react-app`
+  * [#1204](https://github.com/facebookincubator/create-react-app/pull/1204) Catch synchronous errors from spawning yarn. ([@gaearon](https://github.com/gaearon))
+
+    Fixes a crash when running `create-react-app` in some cases.
+  
+* `react-scripts`
+  * [#1203](https://github.com/facebookincubator/create-react-app/pull/1203) Update webpack-subresource-integrity to fix Windows builds. ([@gaearon](https://github.com/gaearon))
+    
+    Fixes a crash when running `npm run build` on Windows.
+  
+  * [#1201](https://github.com/facebookincubator/create-react-app/pull/1201) Instruct Jest to load native components from RNW instead of RN. ([@remon-georgy](https://github.com/remon-georgy))
+  
+    Fixes tests for users of React Native Web.
+
+#### :memo: Documentation
+* `react-scripts`
+
+  * [#806](https://github.com/facebookincubator/create-react-app/pull/806) Add syntax highlighting configuration guide. ([@mareksuscak](https://github.com/mareksuscak))
+
+#### Committers: 3
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Marek Suscak ([mareksuscak](https://github.com/mareksuscak))
+- Remon Georgy ([remon-georgy](https://github.com/remon-georgy))
+
+### Migrating from 0.8.2 to 0.8.3
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.8.3
+```
+
+You can optionally update the global CLI too:
+
+```
+npm install -g create-react-app@1.0.1
+```
+
+## 0.8.2 (December 7, 2016)
+
+#### :rocket: New Feature
+* `react-scripts`
+  * [#1176](https://github.com/facebookincubator/create-react-app/pull/1176) Add Subresource Integrity support. ([@XVincentX](https://github.com/XVincentX))
+
+    The generated HTML now includes [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) attributes ensuring that your users aren't served malicious code if your CDN gets compromised.
+
+#### :bug: Bug Fix
+* `react-scripts`
+  * [#1197](https://github.com/facebookincubator/create-react-app/pull/1197) Let Jest handle all file types. ([@gaearon](https://github.com/gaearon))
+
+    Since 0.8.0, we started treating imports of any unknown file extensions as URLs. However, we had to revert this change for the test configuration in 0.8.1 because of a bug causing false positives. In 0.8.2, we are fixing this and making test configuration treat imports with unknown extensions the same way as we do in the browser environment.
+
+  * [#1194](https://github.com/facebookincubator/create-react-app/pull/1194) Only honor relative `NODE_PATH`. ([@gaearon](https://github.com/gaearon))
+
+    Historically we have allowed specifying `NODE_PATH` environment variable as a way to allow “absolute imports”. For example, running `NODE_PATH=src npm start` in Bash or `set NODE_PATH=src&&npm start` in Windows Cmd would let you import anything inside `src` without specifying a relative path. However, we found a few nasty edge cases when Node.js core modules end up being in `NODE_PATH` and erroneously become bundled. As a result the build would crash on some systems when some libraries are imported. To fix this, we now only honor relative paths from `NODE_PATH` in Create React App. This means the existing use case for absolute imports is still supported (`src` in the example above is relative), but absolute paths in `NODE_PATH` (such as paths to Node.js core modules) will be ignored.
+
+  * [#1188](https://github.com/facebookincubator/create-react-app/pull/1188) Update Webpack to fix source map issues. ([@gaearon](https://github.com/gaearon))
+
+    Since 0.8.0, we show source maps in development instead of the compiled code. However, it has come to our attention that Webpack's source map implementation had issues interpreting Babel output, and caused source maps to be wrong and breakpoints to be unusable in some cases. Webpack has released a fix for this, and we have updated the minimal version of Webpack that we are using.
+
+  * [#1180](https://github.com/facebookincubator/create-react-app/pull/1180) Use `file-loader` for svgs. ([@bogdansoare](https://github.com/bogdansoare))
+
+    Since 0.8.0, we are treating all imports with non-JS/CSS extensions the same way. Importing them gives you a string with their URL, and if their content is small enough (less than 10K), the URL is in fact an inlined [data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs). However, this doesn't work well with SVGs in case you use them for a sprite system since fragments don't work in data URIs, and it's wasteful to inline the same sprite SVG many times. To fix this, we have added an exception so that SVG files never get inlined.
+
+* `react-dev-utils`
+  * [#1165](https://github.com/facebookincubator/create-react-app/pull/1165) Chrome 'open tab' reuse an empty tab when possible. ([@n3tr](https://github.com/n3tr))
+
+    Fixes an issue that caused two tabs to get opened instead of just one. It also fixes some cases where the window with the existing tab would not get activated.
+
+* `babel-preset-react-app`
+  * [#1179](https://github.com/facebookincubator/create-react-app/pull/1179) Fix Babel issues in tests by applying the right transforms. ([@gaearon](https://github.com/gaearon))
+
+    Fixes regressions in test environment that caused syntax errors with generators and `async` / `await`.
+
+#### :nail_care: Enhancement
+* `eslint-config-react-app`
+  * [#1191](https://github.com/facebookincubator/create-react-app/pull/1191) Relax peerDependencies for ESLint preset. ([@gaearon](https://github.com/gaearon))
+
+    This allows the preset to be used in more apps without peer dependency conflicts. We still pin the exact versions in apps that haven't ejected for extra safety.
+
+  * [#1159](https://github.com/facebookincubator/create-react-app/pull/1159) Make jsx-no-undef rule an error. ([@existentialism](https://github.com/existentialism))
+
+    Using an undefined type in JSX is now treated as a hard lint error because it is guaranteed to crash application at runtime.
+
+* `react-scripts`
+  * [#1175](https://github.com/facebookincubator/create-react-app/pull/1175) Remove path module from webpack config on eject. ([@harunhasdal](https://github.com/harunhasdal))
+
+    This makes the output after ejecting a bit cleaner.
+
+  * [#1120](https://github.com/facebookincubator/create-react-app/pull/1120) Add `testURL` to Jest config. ([@spudly](https://github.com/spudly))
+
+    This fixes an error when running tests that interact with History API in jsdom.
+
+#### :memo: Documentation
+* `react-scripts`
+  * [#1143](https://github.com/facebookincubator/create-react-app/pull/1143) Add deploy to Firebase CDN on template's README (Closes [#374](https://github.com/facebookincubator/create-react-app/issues/374)). ([@guilhermebruzzi](https://github.com/guilhermebruzzi))
+  * [#1099](https://github.com/facebookincubator/create-react-app/pull/1099) Fix minor typo/grammar. ([@alex-wilmer](https://github.com/alex-wilmer))
+  * [#1168](https://github.com/facebookincubator/create-react-app/pull/1168) Add "npm run build silently fails" to Troubleshooting. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 12
+- Alex Wilmer ([alex-wilmer](https://github.com/alex-wilmer))
+- Bogdan Soare ([bogdansoare](https://github.com/bogdansoare))
+- Brian Ng ([existentialism](https://github.com/existentialism))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Fabrizio Castellarin ([EnoahNetzach](https://github.com/EnoahNetzach))
+- Guilherme Heynemann Bruzzi ([guilhermebruzzi](https://github.com/guilhermebruzzi))
+- Harun ([harunhasdal](https://github.com/harunhasdal))
+- James Newell ([jameslnewell](https://github.com/jameslnewell))
+- Jirat Ki. ([n3tr](https://github.com/n3tr))
+- Li Xuanji ([zodiac](https://github.com/zodiac))
+- Stephen John Sorensen ([spudly](https://github.com/spudly))
+- Vincenzo Chianese ([XVincentX](https://github.com/XVincentX))
+
+### Migrating from 0.8.1 to 0.8.2
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.8.2
+```
+
+## 0.8.1 (December 4, 2016)
+
+#### :bug: Bug Fix
+* `react-scripts`
+  * [#1149](https://github.com/facebookincubator/create-react-app/pull/1149) Fix incorrectly stubbing JavaScript files with a dot in the import path in tests. ([@fson](https://github.com/fson))
+
+### Migrating from 0.8.0 to 0.8.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.8.1
+```
+
+## 0.8.0 (December 3, 2016)
+
+#### :rocket: New Feature
+* `react-scripts`
+  * [#944](https://github.com/facebookincubator/create-react-app/pull/944) Crash the build during CI whenever linter warnings are encountered. ([@excitement-engineer](https://github.com/excitement-engineer))
+
+    Linter warnings and errors are now checked during a continuous integration build (set by the `CI` environment variable) and the build will fail if any issues are found. See [Continuous Integration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#continuous-integration) for more information.
+
+  * [#1090](https://github.com/facebookincubator/create-react-app/pull/1090) Enable proxying of WebSockets. ([@dceddia](https://github.com/dceddia))
+
+* `create-react-app`, `react-scripts`
+  * [#898](https://github.com/facebookincubator/create-react-app/pull/898) Support Yarn. ([@fson](https://github.com/fson))
+
+    Yarn is a new fast, reliable and secure alternative to the `npm` client. If you have Yarn installed, `create-react-app` will use it to install packages when you create an app. It also creates a `yarn.lock` file that should be checked into source control (e.g. git). This ensures the same versions of packages will be installed each time `yarn install` is run, on any machine.
+
+    `react-scripts` now also displays instructions using `yarn` commands for projects using Yarn (projects having a `yarn.lock` file).
+
+    To create a project using Yarn, simply install `yarn` and use `create-react-app` like before:
+    ```
+    npm install -g yarn create-react-app@latest
+
+    create-react-app my-app  # Packages are now installed with Yarn.
+    ```
+
+#### :boom: Breaking Change
+* `babel-preset-react-app`
+  * [#902](https://github.com/facebookincubator/create-react-app/pull/902) Enable useBuiltIns option on object-rest-spread. ([@existentialism](https://github.com/existentialism))
+
+    Object rest spread and JSX now use the native `Object.assign()` method instead of Babel's helper function. If you are using `babel-preset-react-app` directly in your project *and* targeting browsers that don't have `Object.assign()` available, from now on you need a polyfill for it (e.g. [`object-assign`](https://www.npmjs.com/package/object-assign)).
+
+    **Note:** `react-scripts` already adds this polyfill, so no changes are necessary in Create React App projects.
+
+#### :bug: Bug Fix
+* `react-scripts`
+  * [#978](https://github.com/facebookincubator/create-react-app/pull/978) Move the remove-on-eject-end tag at the end of the file. ([@EnoahNetzach](https://github.com/EnoahNetzach))
+
+    Fixes a bug in ejected configuration.
+
+  * [#1017](https://github.com/facebookincubator/create-react-app/pull/1017) Don't look for `.babelrc` file during test. ([@nhajidin](https://github.com/nhajidin))
+
+    Fixes a `.babelrc` file in a parent directory interfering with the `npm test` command.
+
+  * [#951](https://github.com/facebookincubator/create-react-app/pull/951) Check for presence of folders before continuing eject. ([@heldinz](https://github.com/heldinz))
+
+    Fixes a bug where `eject` failed when a `scripts` or `config` folder already existed in the project.
+
+* `react-dev-utils`
+  * [#1035](https://github.com/facebookincubator/create-react-app/pull/1035) Fix Chrome tab reuse. ([@einarlove](https://github.com/einarlove))
+
+    Fixes a bug with the app not opening in the existing tab in Chrome.
+
+  * [#964](https://github.com/facebookincubator/create-react-app/pull/964) Catch and noop call to open web browser. ([@spadin](https://github.com/spadin))
+
+    Not being able to open a browser doesn't crash the development server now.
+
+* `eslint-config-react-app`, `react-scripts`
+  * [#953](https://github.com/facebookincubator/create-react-app/pull/953) Fix `.ico` file extension being handled by test configuration. ([@vadzim](https://github.com/vadzim))
+
+#### :nail_care: Enhancement
+* `react-scripts`
+  * [#1032](https://github.com/facebookincubator/create-react-app/pull/1032) Add support for non-interactive terminal. ([@sheerun](https://github.com/sheerun))
+  * [#1078](https://github.com/facebookincubator/create-react-app/pull/1078) Upgrade Jest to 17.0. ([@fson](https://github.com/fson))
+  * [#1059](https://github.com/facebookincubator/create-react-app/pull/1059) Use `url-loader` with limit 10k as a default loader. ([@bebbi](https://github.com/bebbi))
+
+    `react-scripts` now treats imports with any unknown file extension as a resource. Files with a size below 10 KB are inlined using a data URI and larger files copied to the build folder. This removes the need for an internal [whitelist of supported file extensions](https://github.com/facebookincubator/create-react-app/issues/667). Any file that's not JS or CSS is now handled the same way.
+
+  * [#924](https://github.com/facebookincubator/create-react-app/pull/924) Enable JavaScript source maps in development. ([@ekaradon](https://github.com/ekaradon))
+  * [#1058](https://github.com/facebookincubator/create-react-app/pull/1058) Add missing dev argument in build script message. ([@nhajidin](https://github.com/nhajidin))
+  * [#961](https://github.com/facebookincubator/create-react-app/pull/961) Add `collectCoverageFrom` option to collect coverage on files without any tests. ([@pmackcode](https://github.com/pmackcode))
+
+    The test script now considers all files in the project when calculating test coverage.
+
+  * [#968](https://github.com/facebookincubator/create-react-app/pull/968) Enable gzip compression in the development server (#966). ([@frontsideair](https://github.com/frontsideair))
+* `react-dev-utils`, `react-scripts`
+  * [#816](https://github.com/facebookincubator/create-react-app/pull/816) add logging of existing default port process on start. ([@ianmcnally](https://github.com/ianmcnally))
+
+    `react-scripts` can guess which process is running on the port 3000 when it's not available:
+    ```
+    Something is already running on port 3000. Probably:
+      my-app
+      in /Users/ian/dev/my-app
+
+    Would you like to run the app on another port instead?
+    ```
+* `react-dev-utils`
+  * [#963](https://github.com/facebookincubator/create-react-app/pull/963) Allow webpack 2 as a peerDependency in react-dev-utils. ([@einarlove](https://github.com/einarlove))
+
+#### :memo: Documentation
+* `react-scripts`
+  * [#1126](https://github.com/facebookincubator/create-react-app/pull/1126) Add a note about vscode-jest. ([@orta](https://github.com/orta))
+  * [#1080](https://github.com/facebookincubator/create-react-app/pull/1080) Add a note for OSX users about watchman and jest. ([@dmr](https://github.com/dmr))
+  * [#1071](https://github.com/facebookincubator/create-react-app/pull/1071) Adds to docs - deployment with S3/CloudFront. ([@marcgarreau](https://github.com/marcgarreau))
+  * [#976](https://github.com/facebookincubator/create-react-app/pull/976) Added info on using global variables. ([@jhorneman](https://github.com/jhorneman))
+  * [#996](https://github.com/facebookincubator/create-react-app/pull/996) Remove redundant `function` from export statement. ([@gnowoel](https://github.com/gnowoel))
+  * [#959](https://github.com/facebookincubator/create-react-app/pull/959) Always build before deploying to gh-pages. ([@dsernst](https://github.com/dsernst))
+  * [#974](https://github.com/facebookincubator/create-react-app/pull/974) Gently nudge users towards https by default. ([@Swizec](https://github.com/Swizec))
+* Other
+  * [#1031](https://github.com/facebookincubator/create-react-app/pull/1031) No Configuration -> Convention over Configuration. ([@sheerun](https://github.com/sheerun))
+  * [#995](https://github.com/facebookincubator/create-react-app/pull/995) Add Gatsby to alternatives. ([@KyleAMathews](https://github.com/KyleAMathews))
+
+#### :house: Internal
+* `react-scripts`
+  * [#1072](https://github.com/facebookincubator/create-react-app/pull/1072) Replace rimraf with fs-extra functions. ([@existentialism](https://github.com/existentialism))
+  * [#1068](https://github.com/facebookincubator/create-react-app/pull/1068) Remove bundledDependencies. ([@fson](https://github.com/fson))
+  * [#1057](https://github.com/facebookincubator/create-react-app/pull/1057) Update `css-loader`. ([@nhajidin](https://github.com/nhajidin))
+  * [#983](https://github.com/facebookincubator/create-react-app/pull/983) Remove custom babel-loader cache dir config. ([@fson](https://github.com/fson))
+* `babel-preset-react-app`
+  * [#1052](https://github.com/facebookincubator/create-react-app/pull/1052) Remove unnecessary transform plugins for object spread to work. ([@valscion](https://github.com/valscion))
+  * [#992](https://github.com/facebookincubator/create-react-app/pull/992) Explain the usage of react-jsx-source & react-jsx-self. ([@bboysathish](https://github.com/bboysathish))
+  * [#1051](https://github.com/facebookincubator/create-react-app/pull/1051) Update babel-present-env and use node: 'current' as target. ([@valscion](https://github.com/valscion))
+
+#### Committers: 27
+- Adam Stankiewicz ([sheerun](https://github.com/sheerun))
+- Alice Rose ([heldinz](https://github.com/heldinz))
+- Arunoda Susiripala ([arunoda](https://github.com/arunoda))
+- Brian Ng ([existentialism](https://github.com/existentialism))
+- Daniel Rech ([dmr](https://github.com/dmr))
+- Dave Ceddia ([dceddia](https://github.com/dceddia))
+- David Ernst ([dsernst](https://github.com/dsernst))
+- Dirk-Jan Rutten ([excitement-engineer](https://github.com/excitement-engineer))
+- Einar Löve ([einarlove](https://github.com/einarlove))
+- Fabrizio Castellarin ([EnoahNetzach](https://github.com/EnoahNetzach))
+- Fatih ([frontsideair](https://github.com/frontsideair))
+- Ian McNally ([ianmcnally](https://github.com/ianmcnally))
+- Jurie Horneman ([jhorneman](https://github.com/jhorneman))
+- Kyle Mathews ([KyleAMathews](https://github.com/KyleAMathews))
+- Leo Wong ([gnowoel](https://github.com/gnowoel))
+- Marc Garreau ([marcgarreau](https://github.com/marcgarreau))
+- Nazim Hajidin ([nhajidin](https://github.com/nhajidin))
+- Orta ([orta](https://github.com/orta))
+- Patrick Mackinder ([pmackcode](https://github.com/pmackcode))
+- Sandro Padin ([spadin](https://github.com/spadin))
+- Sathish ([bboysathish](https://github.com/bboysathish))
+- Stefan ([bebbi](https://github.com/bebbi))
+- Swizec Teller ([Swizec](https://github.com/Swizec))
+- Vadzim ([vadzim](https://github.com/vadzim))
+- Vesa Laakso ([valscion](https://github.com/valscion))
+- Ville Immonen ([fson](https://github.com/fson))
+- [ekaradon](https://github.com/ekaradon)
+
+### Migrating from 0.7.0 to 0.8.0
+
+You may optionally update the global command (it’s not required, but it adds Yarn support for new projects):
+
+```
+npm install -g create-react-app@1.0.0
+```
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.8.0
+```
+
 ## 0.7.0 (October 22, 2016)
 
 ### Build Dependency (`react-scripts`)

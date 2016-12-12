@@ -201,6 +201,14 @@ function addMiddleware(devServer) {
     var hpm = httpProxyMiddleware(pathname => mayProxy.test(pathname), {
       target: proxy,
       logLevel: 'silent',
+      onProxyReq: function(proxyReq, req, res) {
+        // Browers may send Origin headers even with same-origin
+        // requests. To prevent CORS issues, we have to change
+        // the Origin to match the target URL.
+        if (proxyReq.getHeader('origin')) {
+          proxyReq.setHeader('origin', proxy);
+        }
+      },
       onError: onProxyError(proxy),
       secure: false,
       changeOrigin: true,

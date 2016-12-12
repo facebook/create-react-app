@@ -7,12 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var isFirstClear = true;
 function clearConsole() {
-  // On first run, clear completely so it doesn't show half screen on Windows.
-  // On next runs, use a different sequence that properly scrolls back.
-  process.stdout.write(isFirstClear ? '\x1bc' : '\x1b[2J\x1b[0f');
-  isFirstClear = false;
+  process.stdout.write(process.platform === 'win32' ? '\x1Bc' : '\x1B[2J\x1B[3J\x1B[H');
 }
 
 module.exports = clearConsole;
