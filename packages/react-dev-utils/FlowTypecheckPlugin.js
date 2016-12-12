@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var chalk = require('chalk');
 var childProcess = require('child_process');
 var flowBinPath = require('flow-bin');
 const flowTypedPath = path.join(__dirname, 'node_modules', '.bin', 'flow-typed');
@@ -117,7 +118,7 @@ function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
         Promise.reject(new Error(
           'Flow integration was disabled because the global Flow version does not match.\n' +
           'You may either remove the global Flow installation or install a compatible version:\n' +
-          '  npm install -g flow-bin@' + localVersion
+          chalk.cyan('  npm install -g flow-bin@' + localVersion)
         )) :
         localVersion
     )
