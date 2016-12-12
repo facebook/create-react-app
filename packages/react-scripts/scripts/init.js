@@ -75,13 +75,14 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
       verbose && '--verbose'
     ].filter(function(e) { return e; });
   }
-  args.push('react', 'react-dom');
+  args.push('react', 'react-dom', '@types/node', '@types/react', '@types/react-dom');
 
   console.log('Installing react and react-dom using ' + command + '...');
   console.log();
 
-  var proc = spawn(command, args, {stdio: 'inherit'});
-  proc.on('close', function (code) {
+  var install = spawn(command, args, {stdio: 'inherit'});
+
+  install.on('close', function (code) {
     if (code !== 0) {
       console.error('`' + command + ' ' + args.join(' ') + '` failed');
       return;

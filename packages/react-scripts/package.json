@@ -23,6 +23,7 @@
     "react-scripts-ts": "./bin/react-scripts-ts.js"
   },
   "dependencies": {
+    "@types/jest": "^16.0.1",
     "autoprefixer": "6.5.1",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
