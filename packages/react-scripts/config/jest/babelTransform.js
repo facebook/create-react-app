@@ -12,6 +12,6 @@ const customConfig = getCustomConfig(false);
 
 module.exports = babelJest.createTransformer({
   presets: [require.resolve('babel-preset-react-app')].concat(customConfig.presets),
-  plugins: customConfig.plugins,
+  plugins: [].concat(customConfig.babelPlugins),
   babelrc: false
 });
