@@ -20,6 +20,11 @@ function isLikelyASyntaxError(message) {
   return message.indexOf(friendlySyntaxErrorLabel) !== -1;
 }
 
+// Used to detect flow errors we want to swallow
+function isFlowIntegrationErrorMessage(message) {
+  return /^flow integration was disabled/i.test(message);
+}
+
 // Cleans up webpack error messages.
 function formatMessage(message) {
   var lines = message.split('\n');
@@ -113,15 +118,22 @@ function formatMessage(message) {
 }
 
 function formatWebpackMessages(json) {
-  var formattedErrors = json.errors.map(function(message) {
+  var formattedErrors = json.errors
+  .filter(m => !isFlowIntegrationErrorMessage(m))
+  .map(function(message) {
     return 'Error in ' + formatMessage(message)
   });
-  var formattedWarnings = json.warnings.map(function(message) {
+  var formattedWarnings = json.warnings
+  .filter(m => !isFlowIntegrationErrorMessage(m))
+  .map(function(message) {
     return 'Warning in ' + formatMessage(message)
   });
+  var flowIntegrationError = [].concat(json.errors, json.warnings)
+  .find(isFlowIntegrationErrorMessage);
   var result = {
     errors: formattedErrors,
-    warnings: formattedWarnings
+    warnings: formattedWarnings,
+    flowIntegrationError: flowIntegrationError
   };
   if (result.errors.some(isLikelyASyntaxError)) {
     // If there are any syntax errors, show just them.
