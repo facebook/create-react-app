@@ -60,6 +60,11 @@ if (isSmokeTest) {
   };
 }
 
+// Used to detect flow errors we want to swallow
+function isFlowIntegrationErrorMessage(message) {
+  return /^flow integration was disabled/i.test(message);
+}
+
 function setupCompiler(host, port, protocol) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
@@ -85,15 +90,25 @@ function setupCompiler(host, port, protocol) {
       clearConsole();
     }
 
+    // We need to know if there was an error preventing flow from starting so
+    // we can swallow it and show it in a more discreet manner
+    var statsMessages = stats.toJson({}, true);
+    var flowDisabledMessage = statsMessages.warnings.find(isFlowIntegrationErrorMessage);
+    statsMessages.warnings = statsMessages.warnings.filter(m => !isFlowIntegrationErrorMessage(m));
+
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
-    var messages = formatWebpackMessages(stats.toJson({}, true));
+    var messages = formatWebpackMessages(statsMessages);
     var isSuccessful = !messages.errors.length && !messages.warnings.length;
     var showInstructions = isSuccessful && (isInteractive || isFirstCompile);
 
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
+      // If flow was disabled, report it
+      if (flowDisabledMessage) {
+        console.log(chalk.yellow('Flow checks were skipped.'));
+      }
     }
 
     if (showInstructions) {
@@ -132,6 +147,11 @@ function setupCompiler(host, port, protocol) {
       console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
       console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
       console.log('Use ' + chalk.yellow('// $FlowFixMe') + ' to ignore flow-related warnings on the next line.');
+    }
+
+    // We print why flow was disabled
+    if (flowDisabledMessage) {
+      console.log(flowDisabledMessage);
     }
   });
 }

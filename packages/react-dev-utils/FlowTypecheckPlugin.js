@@ -114,7 +114,11 @@ function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
     getFlowVersion({global: true}).catch(() => localVersion)
     .then(globalVersion =>
       globalVersion !== localVersion ?
-        Promise.reject(new Error('Please try to run `npm i -g flow-bin@' + localVersion + '`.')) :
+        Promise.reject(new Error(
+          'Flow integration was disabled because the global Flow version does not match.\n' +
+          'You may either remove the global Flow installation or install a compatible version:\n' +
+          '  npm install -g flow-bin@' + localVersion
+        )) :
         localVersion
     )
   )
@@ -163,6 +167,7 @@ function FlowTypecheckPlugin(options) {
 FlowTypecheckPlugin.prototype.apply = function(compiler) {
   var flowActiveOnProject = false;
   var flowInitialized = false;
+  var flowInitError = null;
   var flowInitializationPromise;
   var flowShouldRun = false;
   var flowErrorOutput = null;
@@ -182,14 +187,11 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
                   compiler.options.context, this.flowconfig, this.otherFlowTypedDefs
                 ) : Promise.resolve()
               )
-              .catch(e => {
-                loaderContext.emitWarning(new Error(
-                  'Flow project initialization warning:\n' +
-                  e.message
-                ));
-              })
               .then(() => {
                 flowInitialized = true;
+              }, e => {
+                flowInitError = e;
+                return Promise.reject(e);
               });
               flowActiveOnProject = true;
             }
@@ -206,9 +208,12 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
     if (flowShouldRun) {
       flowShouldRun = false;
       (flowInitialized ?
-        Promise.resolve() :
+        (flowInitError ? Promise.reject(flowInitError) : Promise.resolve()) :
         flowInitializationPromise)
-      .then(() => flowCheck(compiler.options.context))
+      .then(
+        () => flowCheck(compiler.options.context),
+        e => Promise.reject(e) // don't run a check if init errored, just carry the error
+      )
       .then(() => {
         flowErrorOutput = null;
       }, error => {
