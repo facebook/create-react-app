@@ -1,4 +1,5 @@
 # ☢ custom-react-scripts ☢
+Latest version of original react-scripts: **0.8.4**
 
 ### ⚠️ Disclaimer:
 > This is **not** a fork of ```create-react-app```. It's just a fork of ```react-scripts``` with simple babel/webpack modifications that can toggle extra features.
