@@ -232,6 +232,7 @@ module.exports = {
         extends: 'stylelint-config-standard',
       },
       // @remove-on-eject-end
+      context: paths.appSrc,
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:

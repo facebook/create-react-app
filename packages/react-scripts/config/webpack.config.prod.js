@@ -241,6 +241,7 @@ module.exports = {
         extends: 'stylelint-config-standard',
       },
       // @remove-on-eject-end
+      context: paths.appSrc,
       failOnError: true,
     }),
     // Makes some environment variables available in index.html.
