@@ -747,6 +747,14 @@ Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzym
 expect(wrapper).toContainReact(welcome)
 ```
 
+To setup jest-enzyme with Create React App, follow the instructions for [`src/setupTests.js`](#srcsetuptestsjs) and import `jest-enzyme`.
+
+```js
+// src/setupTests.js
+import 'jest-enzyme';
+```
+
+
 ### Using Third Party Assertion Libraries
 
 We recommend that you use `expect()` for assertions and `jest.fn()` for spies. If you are having issues with them please [file those against Jest](https://github.com/facebook/jest/issues/new), and we’ll fix them. We intend to keep making them better for React, supporting, for example, [pretty-printing React elements as JSX](https://github.com/facebook/jest/pull/1566).
