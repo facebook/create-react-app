@@ -110,22 +110,15 @@ function getFlowVersion(options) {
 function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
   const flowconfigPath = path.join(projectPath, '.flowconfig');
   const gitignorePath = path.join(projectPath, '.gitignore');
-  return getFlowVersion().then(localVersion => Promise.all([
+  return getFlowVersion().then(localVersion => 
     getFlowVersion({global: true}).catch(() => localVersion)
     .then(globalVersion =>
       globalVersion !== localVersion ?
-        Promise.reject(new Error(
-          'Your global flow version does not match react-script\'s flow version.\n\n' +
-          'Having two different versions is likely to restart your flow server ' +
-          'regularly while you go back and forth between your App and your IDE ' +
-          '(that is likely to rely on your global flow installation). ' +
-          'This will slow down significantly your development experience. ' +
-          'In order to avoid this, ensure you have flow ' + localVersion + ' globally ' +
-          '(your current global version is ' + globalVersion + ').\n\n' +
-          'Run `npm install -g flow-bin@' + localVersion + '` to fix this.'
-        )) :
-        true
-    ),
+        Promise.reject(new Error('Please try to run `npm i -g flow-bin@' + localVersion + '`.')) :
+        localVersion
+    )
+  )
+  .then(localVersion => Promise.all([
     writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n'))
     .then(wroteFlowconfig => wroteFlowconfig ?
       writeInFileIfNotPresent(gitignorePath, 'flow-typed', 'flow-typed/npm') :
@@ -188,7 +181,7 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
                 initializeFlow(
                   compiler.options.context, this.flowconfig, this.otherFlowTypedDefs
                 ) : Promise.resolve()
-              )  
+              )
               .catch(e => {
                 loaderContext.emitWarning(new Error(
                   'Flow project initialization warning:\n' +
