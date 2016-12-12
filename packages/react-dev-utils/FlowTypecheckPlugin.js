@@ -219,6 +219,7 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
       )
       .then(() => {
         flowErrorOutput = null;
+        compilation.flowPassed = true;
       }, error => {
         flowErrorOutput = stripFlowLoadingIndicators(error.message);
         compilation.warnings.push(flowErrorOutput);
@@ -228,6 +229,8 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
       // Output a warning if flow failed in a previous run
       if (flowErrorOutput) {
         compilation.warnings.push(flowErrorOutput);
+      } else {
+        compilation.flowPassed = true;
       }
       callback();
     }

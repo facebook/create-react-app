@@ -105,9 +105,11 @@ function setupCompiler(host, port, protocol) {
 
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
-      // If flow was disabled, report it
       if (flowDisabledMessage) {
         console.log(chalk.yellow('Flow checks were skipped.'));
+      }
+      if (stats.compilation.flowPassed) {
+        console.log(chalk.green('Flow checks have passed.'));
       }
     }
 
