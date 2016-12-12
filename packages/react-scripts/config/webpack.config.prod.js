@@ -10,6 +10,7 @@
 // @remove-on-eject-end
 
 var autoprefixer = require('autoprefixer');
+var chalk = require('chalk');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -51,6 +52,21 @@ var publicPath = ensureSlash(homepagePathname, true);
 var publicUrl = ensureSlash(homepagePathname, false);
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
+
+// TODO: better messages (or make it optional)
+var supportedBrowsers = require(paths.appPackageJson).browsers;
+if (!supportedBrowsers) {
+  console.error(
+    chalk.red('Please specify supported browsers in the "browsers" field in "package.json".')
+  );
+  process.exit(1);
+}
+if (!Array.isArray(supportedBrowsers.production)) {
+  console.error(
+    chalk.red('Please specify the "production" browser array in the "browsers" field in "package.json".')
+  );
+  process.exit(1);
+}
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -204,12 +220,7 @@ module.exports = {
   postcss: function() {
     return [
       autoprefixer({
-        browsers: [
-          '>1%',
-          'last 4 versions',
-          'Firefox ESR',
-          'not ie < 9', // React doesn't support IE8 anyway
-        ]
+        browsers: supportedBrowsers.production
       }),
     ];
   },

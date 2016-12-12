@@ -10,6 +10,7 @@
 // @remove-on-eject-end
 
 var autoprefixer = require('autoprefixer');
+var chalk = require('chalk');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -32,6 +33,21 @@ var publicPath = '/';
 var publicUrl = '';
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
+
+// TODO: better messages (or make it optional)
+var supportedBrowsers = require(paths.appPackageJson).browsers;
+if (!supportedBrowsers) {
+  console.error(
+    chalk.red('Please specify supported browsers in the "browsers" field in "package.json".')
+  );
+  process.exit(1);
+}
+if (!Array.isArray(supportedBrowsers.development)) {
+  console.error(
+    chalk.red('Please specify the "development" browser array in the "browsers" field in "package.json".')
+  );
+  process.exit(1);
+}
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -192,12 +208,7 @@ module.exports = {
   postcss: function() {
     return [
       autoprefixer({
-        browsers: [
-          '>1%',
-          'last 4 versions',
-          'Firefox ESR',
-          'not ie < 9', // React doesn't support IE8 anyway
-        ]
+        browsers: supportedBrowsers.development
       }),
     ];
   },
