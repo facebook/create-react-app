@@ -483,7 +483,7 @@ Flow typing is now supported out of the box. All you have to do is add the `/* @
 want to typecheck. If no `.flowconfig` is present, one will be generated for you. The script will also download type
 definitions from [flow-typed](https://github.com/flowtype/flow-typed) automatically.
 
-Flow errors will show up alongside eslint errors as you work on your application.
+Flow errors will show up alongside ESLint errors as you work on your application.
 
 >Note: If your global flow installation version differs from react-scripts's flow version, you may experience slower compilation times while going back and forth between your app and your IDE (that may use your global flow). Ensure you have the same `flow-bin` version [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-dev-utils/package.json).
 
