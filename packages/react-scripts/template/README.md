@@ -15,6 +15,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm run eject](#npm-run-eject)
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
+- [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
 - [Adding a Stylesheet](#adding-a-stylesheet)
@@ -195,6 +196,16 @@ npm install -g eslint-config-react-app@0.3.0 eslint@3.8.1 babel-eslint@7.0.0 esl
 ```
 
 We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
+
+## Changing the Page `<title>`
+
+You can find the source HTML file in the `public` folder of the generated project. You may edit the `<title>` tag in it to change the title from “React App” to anything else.
+
+Note that normally you wouldn't edit files in the `public` folder very often. For example, [adding a stylesheet](#adding-a-stylesheet) is is done without touching the HTML.
+
+If you need to dynamically update the page title based on the content, you can use the browser [`document.title`](https://developer.mozilla.org/en-US/docs/Web/API/Document/title) API. For more complex scenarios when you want to change the title from React components, you can use [React Helmet](https://github.com/nfl/react-helmet), a third party library.
+
+Finally, if you use a custom server for your app in production and want to modify the title before it gets sent to the browser, you can follow advice in [this section](#generating-dynamic-meta-tags-on-the-server).
 
 ## Installing a Dependency
 
