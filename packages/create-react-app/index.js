@@ -134,7 +134,7 @@ function createApp(name, verbose, version, template) {
   process.chdir(root);
 
   console.log('Installing packages. This might take a couple minutes.');
-  console.log('Installing ' + chalk.cyan('react-scripts') + '...');
+  console.log('Installing ' + chalk.cyan('react, react-dom, react-scripts') + '...');
   console.log();
 
   run(root, appName, version, verbose, originalDirectory, template);
@@ -149,15 +149,15 @@ function shouldUseYarn() {
   }
 }
 
-function install(packageToInstall, verbose, callback) {
+function install(dependencies, verbose, callback) {
   var command;
   var args;
   if (shouldUseYarn()) {
     command = 'yarnpkg';
-    args = [ 'add', '--dev', '--exact', packageToInstall];
+    args = [ 'add', '--exact'].concat(dependencies);
   } else {
     command = 'npm';
-    args = ['install', '--save-dev', '--save-exact', packageToInstall];
+    args = ['install', '--save', '--save-exact'].concat(dependencies);
   }
 
   if (verbose) {
@@ -174,13 +174,19 @@ function run(root, appName, version, verbose, originalDirectory, template) {
   var packageToInstall = getInstallPackage(version);
   var packageName = getPackageName(packageToInstall);
 
-  install(packageToInstall, verbose, function(code, command, args) {
+  var allDependencies = ['react', 'react-dom', packageToInstall];
+
+  install(allDependencies, verbose, function(code, command, args) {
     if (code !== 0) {
       console.error(chalk.cyan(command + ' ' + args.join(' ')) + ' failed');
       process.exit(1);
     }
 
     checkNodeVersion(packageName);
+
+    // Since react-scripts has been installed with --save
+    // We need to move it into devDependencies and rewrite package.json
+    moveReactScriptsToDev();
 
     var scriptsPath = path.resolve(
       process.cwd(),
@@ -265,6 +271,30 @@ function checkAppName(appName) {
       chalk.red('\n\nPlease choose a different project name.')
     );
     process.exit(1);
+  }
+}
+
+function moveReactScriptsToDev() {
+  var packagePath = path.join(process.cwd(), 'package.json');
+  if (!fs.existsSync(packagePath)) {
+    return;
+  }
+
+  var packageJson = require(packagePath);
+  if (typeof packageJson.dependencies === 'undefined') {
+    return;
+  }
+
+  var packageVersion = packageJson.dependencies['react-scripts']
+
+  if (typeof packageVersion !== 'undefined') {
+    packageJson.devDependencies = {
+      'react-scripts': packageVersion
+    };
+    delete packageJson.dependencies['react-scripts'];
+
+    fs.unlinkSync(packagePath);
+    fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2))
   }
 }
 
