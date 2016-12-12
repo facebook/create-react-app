@@ -16,7 +16,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('@trunkclub/react-dev-utils/InterpolateHtmlPlugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-var SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
@@ -82,10 +81,6 @@ module.exports = {
     // We don't currently advertise code splitting but Webpack supports it.
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
-    // Given Webpack supports codesplit and production bundles are using 
-    // subresource integrity, it's important to make sure the attribute
-    // set on async-loaded chunks is set to anonymous.
-    crossOriginLoading: 'anonymous',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath
   },
@@ -314,10 +309,6 @@ module.exports = {
       openAnalyzer: false,
       generateStatsFile: true,
       statsFilename: '../artifacts/stats.json'
-    }),
-    // Generate and inject subresources hashes in the final `index.html`.
-    new SubresourceIntegrityPlugin({
-      hashFuncNames: ['sha256', 'sha384']
     })
   ],
   // Some libraries import Node modules but don't use them in the browser.
