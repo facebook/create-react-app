@@ -118,7 +118,7 @@ function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
         Promise.reject(new Error(
           'Flow integration was disabled because the global Flow version does not match.\n' +
           'You may either remove the global Flow installation or install a compatible version:\n' +
-          chalk.cyan('  npm install -g flow-bin@' + localVersion)
+          '  ' + chalk.cyan('npm') + ' install -g flow-bin@' + localVersion
         )) :
         localVersion
     )
