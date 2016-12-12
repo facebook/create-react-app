@@ -170,13 +170,13 @@ grep -q 'The app is running at:' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
-  npm test -- --no-cache --testPathPattern="/integration/"
+  node node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_PATH=src \
-  npm test -- --no-cache --testPathPattern="/integration/"
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
 
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
@@ -196,6 +196,9 @@ npm link $root_path/packages/babel-preset-react-app
 npm link $root_path/packages/eslint-config-react-app
 npm link $root_path/packages/react-dev-utils
 npm link $root_path/packages/react-scripts
+
+# ...and we need  to remove template's .babelrc
+rm .babelrc
 
 # Test the build
 NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
@@ -219,13 +222,15 @@ grep -q 'The app is running at:' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
-  npm test -- --no-cache --testPathPattern="/integration/"
+  NODE_ENV=production \
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
+  NODE_ENV=production \
   NODE_PATH=src \
-  npm test -- --no-cache --testPathPattern="/integration/"
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
 
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
