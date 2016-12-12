@@ -1,7 +1,7 @@
 {
   "name": "@trunkclub/build",
-  "version": "5.5.4",
-  "upstream-version": "0.8.1",
+  "version": "5.6.0",
+  "upstream-version": "0.8.4",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
   "license": "BSD-3-Clause",
@@ -34,7 +34,7 @@
     "autoprefixer": "6.5.1",
     "babel-cli": "6.18.0",
     "babel-core": "6.17.0",
-    "babel-eslint": "7.0.0",
+    "babel-eslint": "7.1.1",
     "babel-jest": "17.0.2",
     "babel-loader": "6.2.7",
     "babel-plugin-module-resolver": "2.3.0",
@@ -72,7 +72,7 @@
     "postcss-loader": "1.0.0",
     "progress-bar-webpack-plugin": "1.9.0",
     "promise": "7.1.1",
-    "react-dev-utils": "^0.4.0",
+    "react-dev-utils": "^0.4.2",
     "recursive-readdir": "2.1.0",
     "rimraf": "2.5.4",
     "sass-loader": "4.0.2",
@@ -84,7 +84,6 @@
     "webpack-bundle-analyzer": "1.4.1",
     "webpack-dev-server": "1.16.2",
     "webpack-manifest-plugin": "1.1.0",
-    "webpack-subresource-integrity": "0.7.0",
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {

@@ -21,7 +21,7 @@ There is no single entry point. You can only import individual top-level modules
 #### `new InterpolateHtmlPlugin(replacements: {[key:string]: string})`
 
 This Webpack plugin lets us interpolate custom variables into `index.html`.  
-It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/html-dev-plugin) 2.x via its [events](https://github.com/ampedandwired/html-dev-plugin#events).
+It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/html-webpack-plugin) 2.x via its [events](https://github.com/ampedandwired/html-webpack-plugin#events).
 
 ```js
 var path = require('path');
