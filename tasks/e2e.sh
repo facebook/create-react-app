@@ -174,7 +174,6 @@ cat src/App.backup.js >> src/App.js
 CI=true npm run build >> errors.log 2>> errors.log || true
 cat errors.log | grep "This type is incompatible with"
 test -e .flowconfig
-test -d flow-typed
 cat .gitignore | grep flow-typed
 rm src/App.js .gitignore errors.log
 cp src/App.backup.js src/App.js
@@ -226,7 +225,7 @@ var wrong: string = 0;
 cat src/App.backup.js >> src/App.js
 CI=true npm run build >> errors.log 2>> errors.log || true
 cat errors.log | grep "This type is incompatible with"
-test -d flow-typed
+test -e .flowconfig
 cat .gitignore | grep flow-typed
 rm src/App.js .gitignore errors.log
 cp src/App.backup.js src/App.js
