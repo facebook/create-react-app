@@ -28,8 +28,6 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
-    moduleFileExtensions: ['ts', 'tsx', 'js'],
-    testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
     transform: {
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^.+\\.tsx?$': resolve('config/jest/typescriptTransform.js'),
@@ -40,7 +38,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web'
-    }
+    },
+    moduleFileExtensions: ['ts', 'tsx', 'js'],
+    testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
   };
   if (rootDir) {
     config.rootDir = rootDir;
