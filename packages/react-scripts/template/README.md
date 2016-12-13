@@ -64,6 +64,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Troubleshooting](#troubleshooting)
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` silently fails](#npm-run-build-silently-fails)
+  - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -1171,7 +1172,21 @@ GitHub Pages doesn't support routers that use the HTML5 `pushState` history API 
 ### Heroku
 
 Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
-You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
+You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration). 
+
+#### Resolving "Module not found: Error: Cannot resolve 'file' or 'directory'"
+
+Sometimes `npm run build` works locally but fails during deploy via Heroku with an error like this:
+
+```  
+remote: Failed to create a production build. Reason:
+remote: Module not found: Error: Cannot resolve 'file' or 'directory' 
+MyDirectory in /tmp/build_1234/src  
+```
+
+This means you need to ensure that the lettercase of the file or directory you `import` matches the one you see on your filesystem or on GitHub.
+
+This is important because Linux (the operating system used by Heroku) is case sensitive. So `MyDirectory` and `mydirectory` are two distinct directories and thus, even though the project builds locally, the difference in case breaks the `import` statements on Heroku remotes.
 
 ### Modulus
 
@@ -1264,6 +1279,11 @@ There are also reports that *uninstalling* Watchman fixes the issue. So if nothi
 ### `npm run build` silently fails
 
 It is reported that `npm run build` can fail on machines with no swap space, which is common in cloud environments. If [the symptoms are matching](https://github.com/facebookincubator/create-react-app/issues/1133#issuecomment-264612171), consider adding some swap space to the machine you’re building on, or build the project locally.
+
+### `npm run build` fails on Heroku
+
+This may be a problem with case sensitive filenames.
+Please refer to [this section](#resolving-module-not-found-error-cannot-resolve-file-or-directory).
 
 ## Something Missing?
 
