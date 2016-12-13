@@ -165,18 +165,15 @@ npm start -- --smoke-test
 
 # Test optional flow enabling
 cp src/App.js src/App.backup.js
-cp .gitignore .gitignore.backup
 echo "/* @flow */" > src/App.js
 cat src/App.backup.js >> src/App.js
 npm start -- --smoke-test
 test -e .flowconfig
 test -d flow-typed
 cat .gitignore | grep flow-typed
-rm src/App.js .gitignore
+rm src/App.js
 cp src/App.backup.js src/App.js
-cp .gitignore.backup .gitignore
-rm src/App.backup.js .gitignore.backup .flowconfig
-rm -rf flow-typed
+rm src/App.backup.js
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -218,14 +215,8 @@ cp .gitignore .gitignore.backup
 echo "/* @flow */" > src/App.js
 cat src/App.backup.js >> src/App.js
 npm start -- --smoke-test
-test -e .flowconfig
-test -d flow-typed
-cat .gitignore | grep flow-typed
-rm src/App.js .gitignore
 cp src/App.backup.js src/App.js
-cp .gitignore.backup .gitignore
-rm src/App.backup.js .gitignore.backup .flowconfig
-rm -rf flow-typed
+rm src/App.backup.js
 
 # ******************************************************************************
 # Test --scripts-version with a version number
