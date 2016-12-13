@@ -1171,7 +1171,29 @@ GitHub Pages doesn't support routers that use the HTML5 `pushState` history API 
 ### Heroku
 
 Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
-You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
+You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration). 
+
+- **_resolving Module Not Found Errors when using [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack)_**.<br>
+    - If `npm run build` works locally but fails while attempting to 
+deploy via heroku; specifically if you get an error similar to this:  
+
+    ```  
+    remote: Failed to create a production build. Reason:
+    remote: Module not found: Error: Cannot resolve 'file' or 'directory' 
+    <name-of-directory> in /tmp/build_somenumber/src  
+    ``` 
+    You need to ensure that the lettercase of the name of 'file' or 
+    'directory' in question matches what you have commited to github.<br>
+
+    For example: heroku is searching for 'Filename' but you have 
+    'filename'.<br>
+
+    Reason for this is that Linux (the OS used in the Heroku 
+    runtime) is case sensitive. So  'Filename' and 'filename' 
+    are two distinct files and thus, even though it seems to work 
+    locally, the difference in lettercase will break require/import 
+    statements on heroku remotes. 
+
 
 ### Modulus
 
