@@ -287,7 +287,15 @@ function runDevServer(host, port, protocol) {
     console.log();
 
     if (isInteractive) {
-      openBrowser(protocol + '://' + host + ':' + port + '/');
+      var devUrl = protocol + '://' + host + ':' + port + '/';
+      var startScriptPath = require(paths.appPackageJson).startScript || false;
+      if (startScriptPath) {
+        var path = require('path');
+        process.env.DEV_URL = devUrl;
+        require(path.join(process.cwd(), startScriptPath));
+      } else {
+        openBrowser(devUrl);
+      }
     }
   });
 }
