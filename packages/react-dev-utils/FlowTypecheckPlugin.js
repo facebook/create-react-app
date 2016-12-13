@@ -136,6 +136,7 @@ function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
     )
     // This operation will fail if react-scripts is a path to a tarball in the
     // package.json (like in End To End testing!). So we swallow this error.
+    // See https://github.com/flowtype/flow-typed/issues/399#issuecomment-266766678
     .catch((e) => /(invalid comparator)|(unable to rebase the local cache repo)/i.test(e.message) ? true : Promise.reject(e))
     .then(() => Promise.all(
       Object.keys(otherFlowTypedDefs).map((packageName) => execOneTime(
