@@ -136,19 +136,20 @@ function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
     )
     // This operation will fail if react-scripts is a path to a tarball in the
     // package.json (like in End To End testing!). So we swallow this error.
-    .catch((e) => /invalid comparator/i.test(e.message) ? true : Promise.reject(e)) 
-  ].concat(
-    Object.keys(otherFlowTypedDefs).map((packageName) => execOneTime(
-      flowTypedPath,
-      [
-        'install',
-        packageName + '@' + otherFlowTypedDefs[packageName],
-        '--overwrite',
-        '--flowVersion=' + localVersion
-      ],
-      { cwd: projectPath }
+    .catch((e) => /invalid comparator/i.test(e.message) ? true : Promise.reject(e))
+    .then(() => Promise.all(
+      Object.keys(otherFlowTypedDefs).map((packageName) => execOneTime(
+        flowTypedPath,
+        [
+          'install',
+          packageName + '@' + otherFlowTypedDefs[packageName],
+          '--overwrite',
+          '--flowVersion=' + localVersion
+        ],
+        { cwd: projectPath }
+      ))
     ))
-  )));
+  ]));
 }
 
 function flowCheck(projectPath) {
