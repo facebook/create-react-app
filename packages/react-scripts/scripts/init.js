@@ -92,7 +92,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
 
   // Install react and react-dom for backward compatibility with old CRA cli
   // which doesn't install react and react-dom along with react-scripts
-  if (!isReactInstalled(appPath)) {
+  if (!isReactInstalled(appPackage)) {
     console.log('Installing react and react-dom using ' + command + '...');
     console.log();
 
@@ -143,12 +143,11 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
   console.log('Happy hacking!');
 };
 
-function isReactInstalled(appPath) {
-  var reactPath = path.join(
-    appPath, 'node_modules', 'react', 'package.json'
-  );
-  var reactDomPath = path.join(
-    appPath, 'node_modules', 'react-dom', 'package.json'
-  );
-  return ( fs.existsSync(reactPath) && fs.existsSync(reactDomPath) )
+function isReactInstalled(appPackage) {
+  var dependencies = appPackage.dependencies || {};
+
+  return (
+    typeof dependencies.react !== 'undefined' &&
+    typeof dependencies['react-dom'] !== 'undefined'
+  )
 }
