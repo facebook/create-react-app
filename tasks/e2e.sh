@@ -218,7 +218,6 @@ cp src/App.js src/App.backup.js
 cp .gitignore .gitignore.backup
 echo "/* @flow */" > src/App.js
 cat src/App.backup.js >> src/App.js
-cp src/App.js /Users/rricard/app.js
 npm start -- --smoke-test
 npm run build
 test -e .flowconfig
