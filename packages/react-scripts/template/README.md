@@ -488,7 +488,6 @@ Flow errors will show up alongside ESLint errors as you work on your application
 >Note: If your global flow installation version differs from react-scripts's flow version, you may experience slower compilation times while going back and forth between your app and your IDE (that may use your global flow). Ensure you have the same `flow-bin` version [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-dev-utils/package.json).
 
 You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/flow/) for a better integrated experience.
-In the future we plan to integrate it into Create React App even more closely.
 
 To learn more about Flow, check out [its documentation](https://flowtype.org/).
 
