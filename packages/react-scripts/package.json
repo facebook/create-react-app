@@ -1,6 +1,6 @@
 {
   "name": "@trunkclub/build",
-  "version": "5.6.0",
+  "version": "5.6.1",
   "upstream-version": "0.8.4",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
@@ -60,8 +60,6 @@
     "filesize": "3.3.0",
     "fs-extra": "1.0.0",
     "gzip-size": "3.0.0",
-    "happypack": "3.0.1",
-    "hard-source-webpack-plugin": "0.1.4",
     "html-webpack-plugin": "2.24.0",
     "http-proxy-middleware": "0.17.2",
     "jest": "17.0.2",

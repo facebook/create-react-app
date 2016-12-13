@@ -19,8 +19,6 @@ var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 var getClientEnvironment = require('./env');
 var path = require('path');
 var paths = require('./paths');
-var HappyPack = require('happypack');
-var HardSource = require('hard-source-webpack-plugin');
 
 var publicUrl = 'http://localhost:' + (process.env.PORT || '3000');
 var publicPath = publicUrl + '/';
@@ -98,16 +96,28 @@ module.exports = {
   // @remove-on-eject-end
   module: {
     noParse: [/\.elm$/],
-    preLoaders: [{
-      loader: 'source-map',
-      test: /\.(jsx?|es6)$/,
-      include: function (abs) {
-        const rel = path.relative(paths.appSrc, abs)
-        return (/@trunkclub/.test(rel) ||
-                /trunkclub-web/.test(rel) ||
-                /tcweb-/.test(rel))
+    preLoaders: [
+      {
+        loader: 'source-map',
+        test: /\.(jsx?|es6)$/,
+        include: function (abs) {
+          const rel = path.relative(paths.appSrc, abs)
+          return /@trunkclub/.test(rel)
+        }
+      },
+      {
+        loader: 'eslint',
+        test: /\.(jsx?|es6)$/,
+        include: paths.appSrc,
+        query: {
+          configFile: path.join(__dirname, '../.eslintrc'),
+          // All warnings and errors are passed to webpack as warnings to allow
+          // webpack compilation to continue.
+          emitWarning: true,
+          useEslintrc: false
+        }
       }
-    }],
+    ],
     loaders: [
       // Default loader: load all assets that are not handled
       // by other loaders with the url loader.
@@ -144,7 +154,17 @@ module.exports = {
       {
         test: /\.(js|jsx|es6)$/,
         include: paths.appSrc,
-        loader: 'happypack/loader?id=js'
+        loader: 'babel',
+        query: {
+          // @remove-on-eject-begin
+          babelrc: false,
+          presets: [require.resolve('babel-preset-trunkclub')],
+          // @remove-on-eject-end
+          // This is a feature of `babel-loader` for webpack (not Babel itself).
+          // It enables caching results in ./node_modules/.cache/babel-loader/
+          // directory for faster rebuilds.
+          cacheDirectory: true
+        }
       },
       {
         test: /\.elm/,
@@ -163,7 +183,7 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.s?css$/,
-        loader: 'happypack/loader?id=style',
+        loader: 'style!css?importLoaders=1&sourceMap!postcss!sass?sourceMap'
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
@@ -223,52 +243,7 @@ module.exports = {
     // to restart the development server for Webpack to discover it. This plugin
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
-    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-
-    // This is to build things in parallel
-    new HappyPack({
-      id: 'js',
-      verbose: false,
-      tempDir: path.join(paths.appNodeModules, '.cache/happypack'),
-      loaders: [{
-        path: 'babel',
-        tempDir: path.join(paths.appNodeModules, '.cache/happypack'),
-        query: {
-          // @remove-on-eject-begin
-          babelrc: false,
-          presets: [require.resolve('babel-preset-trunkclub')],
-          // @remove-on-eject-end
-          // This is a feature of `babel-loader` for webpack (not Babel itself).
-          // It enables caching results in ./node_modules/.cache/babel-loader/
-          // directory for faster rebuilds.
-          cacheDirectory: true
-        }
-      }, {
-        path: 'eslint',
-        query: {
-          configFile: path.join(__dirname, '../.eslintrc'),
-          // All warnings and errors are passed to webpack as warnings to allow
-          // webpack compilation to continue.
-          emitWarning: true,
-          useEslintrc: false
-        }
-      }],
-    }),
-    new HappyPack({
-      id: 'style',
-      tempDir: path.join(paths.appNodeModules, '.cache/happypack'),
-      verbose: false,
-      loaders: ['style!css?importLoaders=1&sourceMap!postcss!sass?sourceMap']
-    }),
-    new HardSource({
-      cacheDirectory: path.resolve(paths.appNodeModules, '.cache/hard-source/[confighash]'),
-      recordsPath: path.resolve(paths.appNodeModules, '.cache/hard-source/[confighash]/records.json'),
-      configHash: function () { return process.env.NODE_ENV },
-      environmentPaths: {
-        directories: [ paths.appNodeModules ],
-        files: [ paths.appPackageJson ]
-      }
-    })
+    new WatchMissingNodeModulesPlugin(paths.appNodeModules)
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
