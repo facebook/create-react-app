@@ -169,7 +169,6 @@ cp .gitignore .gitignore.backup
 echo "/* @flow */" > src/App.js
 cat src/App.backup.js >> src/App.js
 npm start -- --smoke-test
-npm run build
 test -e .flowconfig
 test -d flow-typed
 cat .gitignore | grep flow-typed
@@ -219,7 +218,6 @@ cp .gitignore .gitignore.backup
 echo "/* @flow */" > src/App.js
 cat src/App.backup.js >> src/App.js
 npm start -- --smoke-test
-npm run build
 test -e .flowconfig
 test -d flow-typed
 cat .gitignore | grep flow-typed
