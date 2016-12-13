@@ -102,9 +102,7 @@ module.exports = {
         test: /\.(jsx?|es6)$/,
         include: function (abs) {
           const rel = path.relative(paths.appSrc, abs)
-          return (/@trunkclub/.test(rel) ||
-                  /trunkclub-web/.test(rel) ||
-                  /tcweb-/.test(rel))
+          return /@trunkclub/.test(rel)
         }
       },
       {
