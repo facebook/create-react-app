@@ -166,16 +166,14 @@ npm start -- --smoke-test
 # Test optional flow enabling
 cp src/App.js src/App.backup.js
 cp .gitignore .gitignore.backup
-echo "
-/* @flow */
-var wrong: string = 0;
-" > src/App.js
+echo "/* @flow */" > src/App.js
 cat src/App.backup.js >> src/App.js
-CI=true npm run build >> errors.log 2>> errors.log || true
-cat errors.log | grep "This type is incompatible with"
+npm start -- --smoke-test
+npm run build
 test -e .flowconfig
+test -d flow-typed
 cat .gitignore | grep flow-typed
-rm src/App.js .gitignore errors.log
+rm src/App.js .gitignore
 cp src/App.backup.js src/App.js
 cp .gitignore.backup .gitignore
 rm src/App.backup.js .gitignore.backup .flowconfig
@@ -218,16 +216,15 @@ npm start -- --smoke-test
 # Test optional flow enabling
 cp src/App.js src/App.backup.js
 cp .gitignore .gitignore.backup
-echo "
-/* @flow */
-var wrong: string = 0;
-" > src/App.js
+echo "/* @flow */" > src/App.js
 cat src/App.backup.js >> src/App.js
-CI=true npm run build >> errors.log 2>> errors.log || true
-cat errors.log | grep "This type is incompatible with"
+cp src/App.js /Users/rricard/app.js
+npm start -- --smoke-test
+npm run build
 test -e .flowconfig
+test -d flow-typed
 cat .gitignore | grep flow-typed
-rm src/App.js .gitignore errors.log
+rm src/App.js .gitignore
 cp src/App.backup.js src/App.js
 cp .gitignore.backup .gitignore
 rm src/App.backup.js .gitignore.backup .flowconfig
