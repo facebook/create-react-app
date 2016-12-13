@@ -186,7 +186,7 @@ function run(root, appName, version, verbose, originalDirectory, template) {
 
     // Since react-scripts has been installed with --save
     // We need to move it into devDependencies and rewrite package.json
-    moveReactScriptsToDev();
+    moveReactScriptsToDev(packageName);
 
     var scriptsPath = path.resolve(
       process.cwd(),
@@ -274,7 +274,7 @@ function checkAppName(appName) {
   }
 }
 
-function moveReactScriptsToDev() {
+function moveReactScriptsToDev(packageName) {
   var packagePath = path.join(process.cwd(), 'package.json');
   if (!fs.existsSync(packagePath)) {
     return;
@@ -285,16 +285,14 @@ function moveReactScriptsToDev() {
     return;
   }
 
-  var packageVersion = packageJson.dependencies['react-scripts']
+  var packageVersion = packageJson.dependencies[packageName]
 
   if (typeof packageVersion !== 'undefined') {
-    packageJson.devDependencies = {
-      'react-scripts': packageVersion
-    };
-    delete packageJson.dependencies['react-scripts'];
+    packageJson.devDependencies = packageJson.devDependencies || {};
+    packageJson.devDependencies[packageName] = packageVersion;
+    delete packageJson.dependencies[packageName];
 
-    fs.unlinkSync(packagePath);
-    fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2))
+    fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
   }
 }
 
