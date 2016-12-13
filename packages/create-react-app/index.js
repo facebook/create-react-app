@@ -173,7 +173,7 @@ function run(root, appName, version, verbose, originalDirectory, template) {
   var allDependencies = ['react', 'react-dom', packageToInstall];
 
   console.log('Installing packages. This might take a couple minutes.');
-  console.log('Installing ' + chalk.cyan(`react, react-dom, ${packageName}`) + '...');
+  console.log('Installing ' + chalk.cyan('react, react-dom, ' + packageName) + '...');
   console.log();
 
   install(allDependencies, verbose, function(code, command, args) {
