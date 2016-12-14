@@ -10,6 +10,7 @@
 // Note: this file does not exist after ejecting.
 
 const fs = require('fs');
+const path = require('path');
 const paths = require('../config/paths');
 
 module.exports = (resolve, rootDir, isEjecting) => {
@@ -38,7 +39,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
     transformIgnorePatterns: [
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'
     ],
-    moduleDirectories: ['node_modules', process.env.NODE_PATH].filter(dir => dir),
+    moduleDirectories: ['node_modules', process.env.NODE_PATH]
+      .filter(dir => dir)
+      .filter(folder => !path.isAbsolute(folder)),
     moduleNameMapper: {
       '^react-native$': 'react-native-web'
     }
