@@ -38,6 +38,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     transformIgnorePatterns: [
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'
     ],
+    moduleDirectories: ['node_modules', process.env.NODE_PATH].filter(dir => dir),
     moduleNameMapper: {
       '^react-native$': 'react-native-web'
     }
