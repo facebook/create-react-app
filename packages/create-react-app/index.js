@@ -105,7 +105,7 @@ function createApp(name, verbose, version) {
   checkAppName(appName);
 
   if (!pathExists.sync(name)) {
-    fs.mkdirSync(root);
+    createFolderPath(name);
   } else if (!isSafeToCreateProjectIn(root)) {
     console.log('The directory ' + chalk.green(name) + ' contains files that could conflict.');
     console.log('Try using a new directory name.');
@@ -134,6 +134,16 @@ function createApp(name, verbose, version) {
   console.log();
 
   run(root, appName, version, verbose, originalDirectory);
+}
+
+function createFolderPath(path) {
+  var projectPath = (path + "/");
+  projectPath.replace(/(\w+)\//ig, function(i, dirName, index){
+    var dirPath = path.substr(0, index + 1 + dirName.length);
+    if (!pathExists.sync(dirPath)) {
+      fs.mkdirSync(dirPath);
+    }
+  });
 }
 
 function shouldUseYarn() {
