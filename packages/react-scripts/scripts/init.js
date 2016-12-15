@@ -11,6 +11,34 @@ var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('cross-spawn');
 var chalk = require('chalk');
+var execSync = require('child_process').execSync;
+
+function insideGitRepository() {
+  try {
+    execSync('git rev-parse --is-inside-work-tree', {stdio: 'ignore'});
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function gitInit() {
+  try {
+    execSync('git --version', {stdio: 'ignore'});
+
+    if (insideGitRepository()) {
+      return false;
+    }
+
+    execSync('git init', {stdio: 'ignore'});
+    execSync('git add .', {stdio: 'ignore'});
+    execSync('git commit -m "chore: initial commit from react-create-app"', {stdio: 'ignore'});
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 
 module.exports = function(appPath, appName, verbose, originalDirectory, template) {
   var ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
@@ -63,6 +91,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
       }
     }
   });
+
+  if (gitInit()) {
+    console.log('Initializing git repository');
+  }
 
   var command;
   var args;
