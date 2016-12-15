@@ -3,7 +3,7 @@ var path = require('path');
 var chalk = require('chalk');
 var childProcess = require('child_process');
 var flowBinPath = require('flow-bin');
-const flowTypedPath = path.join(__dirname, 'node_modules', '.bin', 'flow-typed');
+const flowTypedPath = path.join(__dirname, '..' , '..', 'node_modules', '.bin', 'flow-typed');
 
 function stripFlowLoadingIndicators(message) {
   var newMessage = message;
