@@ -38,7 +38,7 @@ function getClientEnvironment(publicUrl) {
 
       'TC_CLIENT_APP_NAME': JSON.stringify(pkg.name),
       'TC_CLIENT_BUILD_COMMIT': JSON.stringify(git.long()),
-      'TC_CLIENT_BUILD_TIME': JSON.stringify((new Date()).toString())
+      'TC_CLIENT_BUILD_TIME': JSON.stringify((new Date()).toISOString())
     });
   return {'process.env': processEnv};
 }
