@@ -36,7 +36,7 @@ function ensureSlash(path, needsSlash) {
 }
 
 // If the user sets the homepage field on package.json as a url starting
-// with @ it means they want to the publicPath themselves.
+// with @ it means they want to set the publicPath themselves.
 function parseHomepagePath(path) {
   var useAbsolutePath = path.startsWith('@');
   return useAbsolutePath ? path.substr(1, path.length - 1) : url.parse(homepagePath).pathname
