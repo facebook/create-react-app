@@ -16,6 +16,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
+var ensureSlash = require('./utils/ensureSlash');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
 
@@ -23,17 +24,6 @@ var getClientEnvironment = require('./env');
 // `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
 var path = require('path');
 // @remove-on-eject-end
-
-function ensureSlash(path, needsSlash) {
-  var hasSlash = path.endsWith('/');
-  if (hasSlash && !needsSlash) {
-    return path.substr(path, path.length - 1);
-  } else if (!hasSlash && needsSlash) {
-    return path + '/';
-  } else {
-    return path;
-  }
-}
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
