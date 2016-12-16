@@ -160,6 +160,9 @@ module.exports = {
         query: {
           babelrc: false,
           presets: [require.resolve('babel-preset-react-app')],
+          plugins: [
+            ['transform-react-jsx', { pragma: 'h' }]
+          ],
         },
         // @remove-on-eject-end
       },
