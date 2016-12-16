@@ -35,13 +35,20 @@ function ensureSlash(path, needsSlash) {
   }
 }
 
+// If the user sets the homepage field on package.json as a url starting
+// with @ it means they want to the publicPath themselves.
+function parseHomepagePath(path) {
+  var useAbsolutePath = path.startsWith('@');
+  return useAbsolutePath ? path.substr(1, path.length - 1) : url.parse(homepagePath).pathname
+}
+
 // We use "homepage" field to infer "public path" at which the app is served.
 // Webpack needs to know it to put the right <script> hrefs into HTML even in
 // single-page apps that may serve index.html for nested URLs like /todos/42.
 // We can't use a relative path in HTML because we don't want to load something
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
 var homepagePath = require(paths.appPackageJson).homepage;
-var homepagePathname = homepagePath ? url.parse(homepagePath).pathname : '/';
+var homepagePathname = homepagePath ? parseHomepagePath(homepagePath) : '/';
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 var publicPath = ensureSlash(homepagePathname, true);
