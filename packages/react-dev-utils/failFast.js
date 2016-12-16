@@ -621,7 +621,11 @@ function render(error, name, message, resolvedFrames) {
   // Create header
   var header = document.createElement('div');
   applyStyles(header, headerStyle);
-  header.appendChild(document.createTextNode(name + ': ' + message));
+  if (message.match(/^\w*:/)) {
+    header.appendChild(document.createTextNode(message));
+  } else {
+    header.appendChild(document.createTextNode(name + ': ' + message));
+  }
   container.appendChild(header);
 
   // Create trace
@@ -675,6 +679,10 @@ function crash(error) {
   if (module.hot) module.hot.decline();
 
   StackTraceResolve(error, CONTEXT_SIZE).then(function (resolvedFrames) {
+    resolvedFrames = resolvedFrames.filter(function (_ref) {
+      var functionName = _ref.functionName;
+      return functionName.indexOf('__cra_proxy_console__') === -1;
+    });
     capturedErrors.push({ error: error, unhandledRejection: unhandledRejection, resolvedFrames: resolvedFrames });
     if (overlayReference !== null) renderAdditional();
     else {
@@ -740,6 +748,26 @@ window.addEventListener('keydown', escapeHandler);
 try {
   Error.stackTraceLimit = 50;
 } catch (e) {}
+
+var proxyConsole = function proxyConsole(type) {
+  var orig = console[type];
+  console[type] = function __cra_proxy_console__() {
+    var message = [].slice.call(arguments).join(' ');
+    if (message.indexOf('\n') !== -1) message = message.substring(0, message.indexOf('\n'));
+    var error = void 0;
+    try {
+      throw new Error(message);
+    } catch (e) {
+      error = e;
+    }
+    setTimeout(function () {
+      return crash(error);
+    });
+    return orig.apply(this, arguments);
+  };
+};
+
+proxyConsole('error');
 
 if (module.hot) {
   module.hot.dispose(function () {
