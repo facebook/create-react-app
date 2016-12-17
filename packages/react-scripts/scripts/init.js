@@ -75,9 +75,9 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
       verbose && '--verbose'
     ].filter(function(e) { return e; });
   }
-  args.push('react', 'react-dom');
+  args.push('preact');
 
-  console.log('Installing react and react-dom using ' + command + '...');
+  console.log('Installing preact using ' + command + '...');
   console.log();
 
   var proc = spawn(command, args, {stdio: 'inherit'});
