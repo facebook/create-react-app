@@ -230,5 +230,31 @@ cd test-app-fork
 # Check corresponding scripts version is installed.
 test -e node_modules/react-scripts-fork
 
+# ******************************************************************************
+# Test nested folder path as the project name
+# ******************************************************************************
+
+#Testing a path that exists
+cd $temp_app_path
+mkdir test-app-nested-paths-t1
+cd test-app-nested-paths-t1
+mkdir -p test-app-nested-paths-t1/aa/bb/cc/dd
+create_react_app test-app-nested-paths-t1/aa/bb/cc/dd
+cd test-app-nested-paths-t1/aa/bb/cc/dd
+npm start -- --smoke-test
+
+#Testing a path that does not exist
+cd $temp_app_path
+create_react_app test-app-nested-paths-t2/aa/bb/cc/dd
+cd test-app-nested-paths-t2/aa/bb/cc/dd
+npm start -- --smoke-test
+
+#Testing a path that is half exists
+cd $temp_app_path
+mkdir -p test-app-nested-paths-t3/aa
+create_react_app test-app-nested-paths-t3/aa/bb/cc/dd
+cd test-app-nested-paths-t3/aa/bb/cc/dd
+npm start -- --smoke-test
+
 # Cleanup
 cleanup
