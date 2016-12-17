@@ -674,6 +674,8 @@ function renderError(index) {
 }
 
 function crash(error) {
+  var sourceOverrides = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
   var unhandledRejection = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
   if (module.hot) module.hot.decline();
@@ -683,6 +685,25 @@ function crash(error) {
       var functionName = _ref.functionName;
       return functionName.indexOf('__cra_proxy_console__') === -1;
     });
+    var overrideCount = sourceOverrides.length,
+        frameCount = resolvedFrames.length;
+    var frameIndex = 0;
+    for (var overrideIndex = 0; overrideIndex < overrideCount; ++overrideIndex) {
+      var tag = sourceOverrides[overrideIndex];
+      var shouldContinue = false;
+      for (; frameIndex < frameCount; ++frameIndex) {
+        var sourceFileName = resolvedFrames[frameIndex].sourceFileName;
+
+        if (sourceFileName == null) continue;
+        if (sourceFileName.indexOf('/' + tag.file) !== -1) {
+          resolvedFrames[frameIndex].sourceLineNumber = tag.lineNum;
+          shouldContinue = true;
+          break;
+        }
+      }
+      if (shouldContinue) continue;
+      break;
+    }
     capturedErrors.push({ error: error, unhandledRejection: unhandledRejection, resolvedFrames: resolvedFrames });
     if (overlayReference !== null) renderAdditional();
     else {
@@ -752,8 +773,26 @@ try {
 var proxyConsole = function proxyConsole(type) {
   var orig = console[type];
   console[type] = function __cra_proxy_console__() {
-    var message = [].slice.call(arguments).join(' ');
-    if (message.indexOf('\n') !== -1) message = message.substring(0, message.indexOf('\n'));
+    var warning = [].slice.call(arguments).join(' ');
+    var nIndex = warning.indexOf('\n');
+    var message = warning;
+    if (nIndex !== -1) message = message.substring(0, nIndex);
+    var stack = warning.substring(nIndex + 1).split('\n').filter(function (line) {
+      return line.indexOf('(at ') !== -1;
+    }).map(function (line) {
+      var prefix = '(at ';
+      var suffix = ')';
+      line = line.substring(line.indexOf(prefix) + prefix.length);
+      line = line.substring(0, line.indexOf(suffix));
+      var parts = line.split(/[:]/g);
+      if (parts.length !== 2) return null;
+      var file = parts[0];
+      var lineNum = Number(parts[1]);
+      if (isNaN(lineNum)) return null;
+      return { file: file, lineNum: lineNum };
+    }).filter(function (obj) {
+      return obj !== null;
+    });
     var error = void 0;
     try {
       throw new Error(message);
@@ -761,7 +800,7 @@ var proxyConsole = function proxyConsole(type) {
       error = e;
     }
     setTimeout(function () {
-      return crash(error);
+      return crash(error, stack);
     });
     return orig.apply(this, arguments);
   };
