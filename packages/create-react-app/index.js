@@ -52,12 +52,11 @@ if (currentNodeVersion.split('.')[0] < 4) {
   process.exit(1);
 }
 
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
 var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
 var semver = require('semver');
-var pathExists = require('path-exists');
 
 var projectName;
 
@@ -103,10 +102,8 @@ function createApp(name, verbose, version) {
   var appName = path.basename(root);
 
   checkAppName(appName);
-
-  if (!pathExists.sync(name)) {
-    createFolderPath(name);
-  } else if (!isSafeToCreateProjectIn(root)) {
+  fs.ensureDirSync(name);
+  if (!isSafeToCreateProjectIn(root)) {
     console.log('The directory ' + chalk.green(name) + ' contains files that could conflict.');
     console.log('Try using a new directory name.');
     process.exit(1);
@@ -134,16 +131,6 @@ function createApp(name, verbose, version) {
   console.log();
 
   run(root, appName, version, verbose, originalDirectory);
-}
-
-function createFolderPath(path) {
-  var projectPath = (path + "/");
-  projectPath.replace(/(\w+)\//ig, function(i, dirName, index){
-    var dirPath = path.substr(0, index + 1 + dirName.length);
-    if (!pathExists.sync(dirPath)) {
-      fs.mkdirSync(dirPath);
-    }
-  });
 }
 
 function shouldUseYarn() {
