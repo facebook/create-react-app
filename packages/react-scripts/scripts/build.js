@@ -66,6 +66,11 @@ function getDifferenceLabel(currentSize, previousSize) {
 // First, read the current file sizes in build directory.
 // This lets us display how much they changed later.
 recursive(paths.appBuild, (err, fileNames) => {
+  if (err) {
+    printErrors('recursive-readdir error', [err]);
+    process.exit(1);
+  }
+
   var previousSizeMap = (fileNames || [])
     .filter(fileName => /\.(js|css)$/.test(fileName))
     .reduce((memo, fileName) => {
@@ -145,9 +150,9 @@ function build(previousSizeMap) {
     }
 
     if (process.env.CI && stats.compilation.warnings.length) {
-     printErrors('Failed to compile.', stats.compilation.warnings);
-     process.exit(1);
-   }
+      printErrors('Failed to compile.', stats.compilation.warnings);
+      process.exit(1);
+    }
 
     console.log(chalk.green('Compiled successfully.'));
     console.log();
@@ -207,13 +212,13 @@ function build(previousSizeMap) {
       } else {
         // no homepage
         console.log('To override this, specify the ' + chalk.green('homepage') + ' in your '  + chalk.cyan('package.json') + '.');
-        console.log('For example, add this to build it for GitHub Pages:')
+        console.log('For example, add this to build it for GitHub Pages:');
         console.log();
         console.log('  ' + chalk.green('"homepage"') + chalk.cyan(': ') + chalk.green('"http://myname.github.io/myapp"') + chalk.cyan(','));
         console.log();
       }
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
-      console.log('You may also serve it locally with a static server:')
+      console.log('You may also serve it locally with a static server:');
       console.log();
       if (useYarn) {
         console.log('  ' + chalk.cyan('yarn') +  ' global add pushstate-server');
