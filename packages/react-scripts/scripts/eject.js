@@ -30,7 +30,7 @@ prompt(
   console.log('Ejecting...');
 
   var ownPath = path.join(__dirname, '..');
-  var appPath = path.join(ownPath, '..', '..');
+  var appPath = path.join(ownPath, '..', '..', '..');
 
   function verifyAbsent(file) {
     if (fs.existsSync(path.join(appPath, file))) {
