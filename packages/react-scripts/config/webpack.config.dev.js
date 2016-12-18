@@ -81,12 +81,12 @@ module.exports = {
     // We use `fallback` instead of `root` because we want `node_modules` to "win"
     // if there any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    fallback: paths.nodePaths,
+    modules: ['node_modules', ...paths.nodePaths],
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
     // https://github.com/facebookincubator/create-react-app/issues/290
-    extensions: ['.js', '.json', '.jsx', ''],
+    extensions: ['.js', '.json', '.jsx'],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -97,21 +97,21 @@ module.exports = {
   // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
   // directory of `react-scripts` itself rather than the project directory.
   resolveLoader: {
-    root: paths.ownNodeModules,
-    moduleTemplates: ['*-loader']
+    modules: [
+      paths.ownNodeModules
+    ]
   },
   // @remove-on-eject-end
   module: {
-    // First, run the linter.
-    // It's important to do this before Babel processes the JS.
-    preLoaders: [
+    rules: [
+      // First, run the linter.
+      // It's important to do this before Babel processes the JS.
       {
         test: /\.(js|jsx)$/,
-        loader: 'eslint',
-        include: paths.appSrc,
-      }
-    ],
-    loaders: [
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        include: paths.appSrc
+      },
       // Default loader: load all assets that are not handled
       // by other loaders with the url loader.
       // Note: This list needs to be updated with every change of extensions
@@ -134,7 +134,7 @@ module.exports = {
           /\.json$/,
           /\.svg$/
         ],
-        loader: 'url',
+        loader: 'url-loader',
         query: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
@@ -144,7 +144,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           // @remove-on-eject-begin
           babelrc: false,
@@ -163,43 +163,23 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        loader: 'style!css?importLoaders=1!postcss'
+        loader: 'style-loader!css-loader?importLoaders=1!postcss-loader'
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
       {
         test: /\.json$/,
-        loader: 'json'
+        loader: 'json-loader'
       },
       // "file" loader for svg
       {
         test: /\.svg$/,
-        loader: 'file',
+        loader: 'file-loader',
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
     ]
-  },
-  // @remove-on-eject-begin
-  // Point ESLint to our predefined config.
-  eslint: {
-    configFile: path.join(__dirname, '../.eslintrc'),
-    useEslintrc: false
-  },
-  // @remove-on-eject-end
-  // We use PostCSS for autoprefixing only.
-  postcss: function() {
-    return [
-      autoprefixer({
-        browsers: [
-          '>1%',
-          'last 4 versions',
-          'Firefox ESR',
-          'not ie < 9', // React doesn't support IE8 anyway
-        ]
-      }),
-    ];
   },
   plugins: [
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
@@ -212,6 +192,30 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+    }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        // @remove-on-eject-begin
+        // Point ESLint to our predefined config.
+        eslint: {
+          configFile: path.join(__dirname, '../.eslintrc'),
+          useEslintrc: false
+        },
+        // @remove-on-eject-end
+        // We use PostCSS for autoprefixing only.
+        postcss: function() {
+          return [
+            autoprefixer({
+              browsers: [
+                '>1%',
+                'last 4 versions',
+                'Firefox ESR',
+                'not ie < 9', // React doesn't support IE8 anyway
+              ]
+            }),
+          ];
+        }
+      }
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
