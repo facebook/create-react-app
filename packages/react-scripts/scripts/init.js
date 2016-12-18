@@ -10,14 +10,13 @@
 var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('cross-spawn');
-var pathExists = require('path-exists');
 var chalk = require('chalk');
 
 module.exports = function(appPath, appName, verbose, originalDirectory) {
   var ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
   var ownPath = path.join(appPath, 'node_modules', ownPackageName);
   var appPackage = require(path.join(appPath, 'package.json'));
-  var useYarn = pathExists.sync(path.join(appPath, 'yarn.lock'));
+  var useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
@@ -36,7 +35,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     JSON.stringify(appPackage, null, 2)
   );
 
-  var readmeExists = pathExists.sync(path.join(appPath, 'README.md'));
+  var readmeExists = fs.existsSync(path.join(appPath, 'README.md'));
   if (readmeExists) {
     fs.renameSync(path.join(appPath, 'README.md'), path.join(appPath, 'README.old.md'));
   }

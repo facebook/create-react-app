@@ -29,11 +29,11 @@ var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 var getProcessForPort = require('react-dev-utils/getProcessForPort');
 var openBrowser = require('react-dev-utils/openBrowser');
 var prompt = require('react-dev-utils/prompt');
-var pathExists = require('path-exists');
+var fs = require('fs');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
 
-var useYarn = pathExists.sync(paths.yarnLockFile);
+var useYarn = fs.existsSync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
 var isInteractive = process.stdout.isTTY;
 
@@ -286,9 +286,7 @@ function runDevServer(host, port, protocol) {
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
 
-    if (isInteractive) {
-      openBrowser(protocol + '://' + host + ':' + port + '/');
-    }
+    openBrowser(protocol + '://' + host + ':' + port + '/');
   });
 }
 
