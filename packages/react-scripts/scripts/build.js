@@ -21,7 +21,6 @@ require('dotenv').config({silent: true});
 var chalk = require('chalk');
 var fs = require('fs-extra');
 var path = require('path');
-var pathExists = require('path-exists');
 var filesize = require('filesize');
 var gzipSize = require('gzip-size').sync;
 var webpack = require('webpack');
@@ -31,7 +30,7 @@ var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
 
-var useYarn = pathExists.sync(paths.yarnLockFile);
+var useYarn = fs.existsSync(paths.yarnLockFile);
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
