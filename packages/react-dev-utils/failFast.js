@@ -2,7 +2,7 @@
 
 var codeFrame = require('babel-code-frame');
 var ansiHTML = require('./ansiHTML');
-var StackTraceResolve = require('stacktrace-resolve').default;
+var StackTraceResolve = require('stack-frame-resolver').default;
 
 var CONTEXT_SIZE = 3;
 
@@ -444,7 +444,7 @@ function insertBeforeBundle(parent, omitsCount, omitBundle, actionElement) {
   var children = document.getElementsByName('bundle-' + omitBundle);
   if (children.length < 1) return;
   var first = children[0];
-  while (first.parentNode != parent) {
+  while (first.parentNode !== parent) {
     first = first.parentNode;
   }
   var div = document.createElement('div');
@@ -674,9 +674,8 @@ function renderError(index) {
 }
 
 function crash(error) {
-  var sourceOverrides = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
   var unhandledRejection = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var sourceOverrides = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
   if (module.hot) module.hot.decline();
 
@@ -800,7 +799,7 @@ var proxyConsole = function proxyConsole(type) {
       error = e;
     }
     setTimeout(function () {
-      return crash(error, stack);
+      return crash(error, false, stack);
     });
     return orig.apply(this, arguments);
   };
