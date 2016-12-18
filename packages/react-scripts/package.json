@@ -52,7 +52,6 @@
     "html-webpack-plugin": "2.24.0",
     "http-proxy-middleware": "0.17.2",
     "jest": "18.1.0",
-    "json-loader": "0.5.4",
     "object-assign": "4.1.0",
     "postcss-loader": "1.0.0",
     "promise": "7.1.1",
@@ -62,7 +61,7 @@
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": ">=2.2.0-rc.0 <3",
-    "webpack-dev-server": "1.16.2",
+    "webpack-dev-server": "2.2.0-rc.0",
     "webpack-manifest-plugin": "1.1.0",
     "whatwg-fetch": "1.0.0"
   },

@@ -86,10 +86,10 @@ module.exports = {
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We read `NODE_PATH` environment variable in `paths.js` and pass paths here.
-    // We use `fallback` instead of `root` because we want `node_modules` to "win"
+    // We place these paths second because we want `node_modules` to "win"
     // if there any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', ...paths.nodePaths],
+    modules: ['node_modules'].concat(paths.nodePaths),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
@@ -117,7 +117,18 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
-        loader: 'eslint-loader',
+        use: [{
+          // @remove-on-eject-begin
+          // Point ESLint to our predefined config.
+          options: {
+            // TODO: consider separate config for production,
+            // e.g. to enable no-console and no-debugger only in production.
+            configFile: path.join(__dirname, '../.eslintrc'),
+            useEslintrc: false
+          },
+          // @remove-on-eject-end
+          loader: 'eslint-loader'
+        }],
         include: paths.appSrc
       },
       // Default loader: load all assets that are not handled
@@ -141,7 +152,7 @@ module.exports = {
           /\.svg$/
         ],
         loader: 'url-loader',
-        query: {
+        options: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
         }
@@ -152,7 +163,7 @@ module.exports = {
         include: paths.appSrc,
         loader: 'babel-loader',
         // @remove-on-eject-begin
-        query: {
+        options: {
           babelrc: false,
           presets: [require.resolve('babel-preset-react-app')],
         },
@@ -174,21 +185,23 @@ module.exports = {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: 'css-loader?importLoaders=1!postcss-loader'
+          loader: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1
+              }
+            },
+            'postcss-loader'
+          ]
         })
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-      },
-      // JSON is not enabled by default in Webpack but both Node and Browserify
-      // allow it implicitly so we also enable it.
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
       },
       // "file" loader for svg
       {
         test: /\.svg$/,
         loader: 'file-loader',
-        query: {
+        options: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
@@ -222,15 +235,6 @@ module.exports = {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       options: {
-        // @remove-on-eject-begin
-        // Point ESLint to our predefined config.
-        eslint: {
-          // TODO: consider separate config for production,
-          // e.g. to enable no-console and no-debugger only in production.
-          configFile: path.join(__dirname, '../.eslintrc'),
-          useEslintrc: false
-        },
-        // @remove-on-eject-end
         // We use PostCSS for autoprefixing only.
         postcss: function() {
           return [
@@ -251,8 +255,6 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env),
-    // Try to dedupe duplicated modules, if any:
-    new webpack.optimize.DedupePlugin(),
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {

@@ -78,10 +78,10 @@ module.exports = {
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We read `NODE_PATH` environment variable in `paths.js` and pass paths here.
-    // We use `fallback` instead of `root` because we want `node_modules` to "win"
+    // We place these paths second because we want `node_modules` to "win"
     // if there any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', ...paths.nodePaths],
+    modules: ['node_modules'].concat(paths.nodePaths),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
@@ -109,7 +109,16 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
-        loader: 'eslint-loader',
+        use: [{
+          // @remove-on-eject-begin
+          // Point ESLint to our predefined config.
+          options: {
+            configFile: path.join(__dirname, '../.eslintrc'),
+            useEslintrc: false
+          },
+          // @remove-on-eject-end
+          loader: 'eslint-loader'
+        }],
         include: paths.appSrc
       },
       // Default loader: load all assets that are not handled
@@ -135,7 +144,7 @@ module.exports = {
           /\.svg$/
         ],
         loader: 'url-loader',
-        query: {
+        options: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
         }
@@ -145,7 +154,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
         loader: 'babel-loader',
-        query: {
+        options: {
           // @remove-on-eject-begin
           babelrc: false,
           presets: [require.resolve('babel-preset-react-app')],
@@ -163,19 +172,21 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader?importLoaders=1!postcss-loader'
-      },
-      // JSON is not enabled by default in Webpack but both Node and Browserify
-      // allow it implicitly so we also enable it.
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
+        use: [
+          'style-loader', {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
+          'postcss-loader'
+        ]
       },
       // "file" loader for svg
       {
         test: /\.svg$/,
         loader: 'file-loader',
-        query: {
+        options: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
@@ -195,13 +206,6 @@ module.exports = {
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
-        // @remove-on-eject-begin
-        // Point ESLint to our predefined config.
-        eslint: {
-          configFile: path.join(__dirname, '../.eslintrc'),
-          useEslintrc: false
-        },
-        // @remove-on-eject-end
         // We use PostCSS for autoprefixing only.
         postcss: function() {
           return [
@@ -238,5 +242,11 @@ module.exports = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty'
+  },
+  // Turn off performance hints during development because we don't do any
+  // splitting or minification in interest of speed. These warnings become
+  // cumbersome.
+  performance: {
+    hints: false
   }
 };
