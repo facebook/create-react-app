@@ -10,7 +10,7 @@ Create React apps with no build configuration.
 ```sh
 npm install -g create-react-app
 
-create-react-app my-app --scripts-version @trunkclub/react-scripts
+create-react-app my-app --scripts-version @trunkclub/build
 cd my-app/
 npm start
 
@@ -42,7 +42,7 @@ npm install -g create-react-app
 To create a new app, run:
 
 ```sh
-create-react-app my-app --scripts-version @trunkclub/react-scripts
+create-react-app my-app --scripts-version @trunkclub/build
 cd my-app
 ```
 
