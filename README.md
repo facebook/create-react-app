@@ -1,9 +1,8 @@
 # `react-scripts-ts`
 
-Create React apps (with Typescript_ with no build configuration.
+Create React apps (with Typescript) with no build configuration.
 
-* [Getting Started](#getting-started) – How to create a new app.
-* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+_Do you know react and want to try out typescript? Or do you know typescript and want to try out react?_ Get all the benefits from `create-react-app` but you use typescript! 🚀
 
 ## tl;dr
 
