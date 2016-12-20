@@ -61,6 +61,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Now](#now)
   - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
+- [Environment Variables](#environment-variables)
 - [Troubleshooting](#troubleshooting)
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` silently fails](#npm-run-build-silently-fails)
@@ -1250,6 +1251,26 @@ Install the Surge CLI if you haven't already by running `npm install -g surge`. 
 
 Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
 
+## Environment Variables for React Scripts
+
+You can adjust a few settings of the `npm start` command with environment variables. The supported variables are:
+
+- `BROWSER` picks the browser to open to view your app. By default, Create
+  React App opens your system's default browser, but you can pass an executable
+  path to any other browser that you want to use instead. You can also pass `none` to
+  disable this functionality.
+- `HTTPS` enables HTTPS in development. You can read more about it on [this
+  section](#using-https-in-development).
+- `HOST` sets the hostname or IP used by the dev server. The default value is
+  `localhost` and listens on all network interfaces.
+- `NODE_PATH` adds directories to the module search path. If you prefer working
+  with absolute `import` paths, just pass a string with a `':'`-separated list
+  of paths to your modules. On Windows, it is a `';'`-separated list instead.
+- `PORT`sets the port used by the dev server. By default, the dev server  will 
+  try to listen on port 3000, but if that port is busy it will ask you if you 
+  want to try the next available port. Some tools like Cloud9 require being 
+  able to specify the port used by the dev server.
+  
 ## Troubleshooting
 
 ### `npm test` hangs on macOS Sierra
