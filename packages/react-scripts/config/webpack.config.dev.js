@@ -137,7 +137,8 @@ module.exports = {
           /\.(js|jsx)$/,
           /\.css$/,
           /\.json$/,
-          /\.svg$/
+          /\.svg$/,
+          /\.md$/
         ],
         loader: 'url-loader',
         options: {
@@ -201,6 +202,12 @@ module.exports = {
         options: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
+      },
+      // Load Markdown files by converting them to JSON. It's then up to
+      // the consumer to render the result
+      {
+        test: /\.md$/,
+        loader: 'markdown-with-front-matter-loader'
       }
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "url" loader exclusion list.

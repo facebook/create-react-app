@@ -52,6 +52,7 @@
     "html-webpack-plugin": "2.28.0",
     "http-proxy-middleware": "0.17.3",
     "jest": "18.1.0",
+    "markdown-with-front-matter-loader": "^0.1.0",
     "object-assign": "4.1.1",
     "postcss-loader": "1.2.2",
     "promise": "7.1.1",
