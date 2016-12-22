@@ -13,6 +13,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
+- [Supported features beyond ES6](#supported-features-beyond-es6)
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
 - [Changing the Page `<title>`](#changing-the-page-title)
@@ -161,6 +162,14 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Supported Features Beyond ES6
+
+The following language features beyond ES6 are supported (at the time of writing, stage 2 and 3 proposals):
+
+* [Public class fields](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-class-properties) ([stage 2](https://tc39.github.io/proposal-class-public-fields/))
+* [ES2015 parameters](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-object-rest-spread) ([stage 3](https://babeljs.io/docs/plugins/transform-es2015-parameters/))
+* [Object rest spread](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-object-rest-spread) ([stage 3](https://github.com/tc39/ecma262))
 
 ## Syntax Highlighting in the Editor
 
