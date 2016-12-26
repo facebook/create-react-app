@@ -18,7 +18,7 @@ var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
 var paths = require('./paths');
-var EnvDefinePlugin = require('react-dev-utils/webpackEnvDefinePlugin');
+var envDefinePlugin = require('react-dev-utils/webpackEnvDefinePlugin');
 
 function ensureSlash(path, needsSlash) {
   var hasSlash = path.endsWith('/');
@@ -220,20 +220,20 @@ module.exports = {
       }
     }),
     // Makes some environment variables available to the JS code
-    new EnvDefinePlugin({
+    new webpack.DefinePlugin(envDefinePlugin({
       // Grab REACT_APP_* environment variables
       regex: /^REACT_APP_/i,
       customVariables: {
         // It is absolutely essential that NODE_ENV is set to production here.
         // Otherwise React will be compiled in the very slow development mode.
-        'NODE_ENV': 'production',
+        'NODE_ENV': JSON.stringify('production'),
         // Useful for resolving the correct path to static assets in `public`.
         // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         'PUBLIC_URL': JSON.stringify(publicUrl)
       }
-    }),
+    })),
     // This helps ensure the builds are consistent if source hasn't changed:
     new webpack.optimize.OccurrenceOrderPlugin(),
     // Try to dedupe duplicated modules, if any:

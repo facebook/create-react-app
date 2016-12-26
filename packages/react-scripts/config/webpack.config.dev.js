@@ -16,7 +16,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-var EnvDefinePlugin = require('react-dev-utils/webpackEnvDefinePlugin');
+var envDefinePlugin = require('react-dev-utils/webpackEnvDefinePlugin');
 var paths = require('./paths');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -194,19 +194,19 @@ module.exports = {
       template: paths.appHtml,
     }),
     // Makes some environment variables available to the JS code
-    new EnvDefinePlugin({
+    new webpack.DefinePlugin(envDefinePlugin({
       // Grab REACT_APP_* environment variables
       regex: /^REACT_APP_/i,
       customVariables: {
         // Set NODE_ENV to development
-        'NODE_ENV': 'development',
+        'NODE_ENV': JSON.stringify('development'),
         // Useful for resolving the correct path to static assets in `public`.
         // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         'PUBLIC_URL': JSON.stringify(publicUrl)
       }
-    }),
+    })),
     // This is necessary to emit hot updates (currently CSS only):
     new webpack.HotModuleReplacementPlugin(),
     // Watcher doesn't work well if you mistype casing in a path so we use

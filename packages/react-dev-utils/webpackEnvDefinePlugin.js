@@ -8,22 +8,22 @@
  */
 'use strict';
 
-const DefinePlugin = require('webpack').DefinePlugin;
-
 /**
- * Webpack plugin to inject environment variables that pass a regex test. The plugin also support
- * custom variables by passing them in the options argument
+ * Generates a webpack define plugin config injecting environment variables that pass a regex test.
+ * The function also support custom variables by passing them in the options argument
  *
  * @param {Object} options - The plugin configuration
  * @param {string} options.regex - The regex to select the environment variables by
  * @param {Object.<string, string>} options.customVariables - A map that its keys are the
  * custom injected environment
  * variable names and its values are the variable values
- * @constructor - Returns a new EnvDefinePlugin instance
+ * @returns - Returns a webpack define plugin configuration
  */
-function EnvDefinePlugin(options) {
-  this.regex = options.regex || /.*/;
-  this.customVariables = options.customVariables || {};
+function envDefinePlugin(options) {
+  const regex = options.regex || /.*/;
+  const customVariables = options.customVariables || {};
+
+  return getClientEnvironment(regex, customVariables);
 }
 
 /**
@@ -44,8 +44,4 @@ function getClientEnvironment(regex, customVariables) {
   return { 'process.env': processEnv };
 }
 
-EnvDefinePlugin.prototype.apply = function(compiler) {
-  compiler.apply(new DefinePlugin(getClientEnvironment(this.regex, this.customVariables)));
-};
-
-module.exports = EnvDefinePlugin;
+module.exports = envDefinePlugin;
