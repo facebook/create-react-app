@@ -14,3 +14,6 @@ cd my-app/
 npm start
 
 ```
+## Changelog
+### 1.0.2
+* Copy `typescriptTransform.js` when running `npm run eject`
