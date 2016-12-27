@@ -32,7 +32,7 @@ function gitInit() {
 
     execSync('git init', {stdio: 'ignore'});
     execSync('git add .', {stdio: 'ignore'});
-    execSync('git commit -m "chore: initial commit from react-create-app"', {stdio: 'ignore'});
+    execSync('git commit -m "chore: initial commit from create-react-app"', {stdio: 'ignore'});
 
     return true;
   } catch (e) {
