@@ -42,7 +42,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
 
   // Copy the files for the user
   var templatePath = path.join(ownPath, 'templates', template);
-  if (pathExists.sync(templatePath)) {
+  if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {
     console.error('Could not locate supplied template: ' + template);
