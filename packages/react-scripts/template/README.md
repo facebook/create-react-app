@@ -1132,17 +1132,18 @@ To publish it at [https://myusername.github.io/my-app](https://myusername.github
 npm install --save-dev gh-pages
 ```
 
-Add the following script in your `package.json`:
+Add the following scripts in your `package.json`:
 
 ```js
   // ...
   "scripts": {
     // ...
-    "deploy": "npm run build&&gh-pages -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 ```
 
-(Note: the lack of whitespace is intentional.)
+The `predeploy` script will run automatically before `deploy` is run.
 
 #### Step 3: Deploy the site by running `npm run deploy`
 
