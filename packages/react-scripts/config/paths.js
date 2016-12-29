@@ -80,13 +80,13 @@ module.exports = {
 if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
   module.exports = {
     appBuild: resolveOwn('../../../build'),
-    appPublic: resolveOwn('../templates/app/public'),
-    appHtml: resolveOwn('../templates/app/public/index.html'),
-    appIndexJs: resolveOwn('../templates/app/src/index.js'),
+    appPublic: resolveOwn('../template/public'),
+    appHtml: resolveOwn('../template/public/index.html'),
+    appIndexJs: resolveOwn('../template/src/index.js'),
     appPackageJson: resolveOwn('../package.json'),
-    appSrc: resolveOwn('../templates/app/src'),
-    yarnLockFile: resolveOwn('../templates/app/yarn.lock'),
-    testsSetup: resolveOwn('../templates/app/src/setupTests.js'),
+    appSrc: resolveOwn('../template/src'),
+    yarnLockFile: resolveOwn('../template/yarn.lock'),
+    testsSetup: resolveOwn('../template/src/setupTests.js'),
     appNodeModules: resolveOwn('../node_modules'),
     ownNodeModules: resolveOwn('../node_modules'),
     nodePaths: nodePaths

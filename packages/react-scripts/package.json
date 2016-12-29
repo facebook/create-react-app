@@ -16,7 +16,7 @@
     "bin",
     "config",
     "scripts",
-    "templates",
+    "template",
     "utils"
   ],
   "bin": {

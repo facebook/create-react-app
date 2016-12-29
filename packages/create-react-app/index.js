@@ -69,7 +69,7 @@ var program = require('commander')
   })
   .option('--verbose', 'print additional logs')
   .option('--scripts-version <alternative-package>', 'use a non-standard version of react-scripts')
-  .option('--template <variant> [app]', 'to select a template variant', 'app')
+  .option('--template <path-to-variant>', 'to select a template variant')
   .on('--help', function () {
     console.log('    Only ' + chalk.green('<project-directory>') + ' is required.');
     console.log();

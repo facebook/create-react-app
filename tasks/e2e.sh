@@ -138,7 +138,7 @@ npm install $cli_path
 
 # Install the app in a temporary location
 cd $temp_app_path
-create_react_app --scripts-version=$scripts_path --template=kitchensink test-app
+create_react_app --scripts-version=$scripts_path --template=$root_path/packages/react-scripts/fixtures/kitchensink test-app
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,

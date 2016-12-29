@@ -41,11 +41,11 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
   }
 
   // Copy the files for the user
-  var templatePath = path.join(ownPath, 'templates', template);
+  var templatePath = template ? path.resolve(originalDirectory, template) : path.join(ownPath, 'template');
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {
-    console.error('Could not locate supplied template: ' + template);
+    console.error('Could not locate supplied template: ' + chalk.green(templatePath));
     return;
   }
 
