@@ -484,7 +484,7 @@ Recent versions of [Flow](http://flowtype.org/) work with Create React App proje
 
 To add Flow to a Create React App project, follow these steps:
 
-1. Run `npm install --save-dev flow-bin`.
+1. Run `yarn add --dev flow-bin`.
 2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
 3. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
 
