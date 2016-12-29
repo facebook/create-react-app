@@ -15,5 +15,7 @@ npm start
 
 ```
 ## Changelog
+### 1.0.3
+* Remove hidden character from `tsconfig.json`
 ### 1.0.2
 * Copy `typescriptTransform.js` when running `npm run eject`
