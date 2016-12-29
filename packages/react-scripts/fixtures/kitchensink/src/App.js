@@ -5,134 +5,93 @@ class App extends React.Component {
     super(props);
 
     this.state = { feature: null };
+
+    this.setFeature = this.setFeature.bind(this);
   }
 
   componentDidMount() {
     switch (location.hash.slice(1)) {
       case 'array-destructuring':
-        require.ensure(['./features/syntax/ArrayDestructuring'], () =>
-          this.setState({ feature: require('./features/syntax/ArrayDestructuring').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/ArrayDestructuring').default));
         break;
       case 'array-spread':
-        require.ensure(['./features/syntax/ArraySpread'], () =>
-          this.setState({ feature: require('./features/syntax/ArraySpread').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/ArraySpread').default));
         break;
       case 'async-await':
-        require.ensure(['./features/syntax/AsyncAwait'], () =>
-          this.setState({ feature: require('./features/syntax/AsyncAwait').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/AsyncAwait').default));
         break;
       case 'class-properties':
-        require.ensure(['./features/syntax/ClassProperties'], () =>
-          this.setState({ feature: require('./features/syntax/ClassProperties').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/ClassProperties').default));
         break;
       case 'computed-properties':
-        require.ensure(['./features/syntax/ComputedProperties'], () =>
-          this.setState({ feature: require('./features/syntax/ComputedProperties').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/ComputedProperties').default));
         break;
       case 'css-inclusion':
-        require.ensure(['./features/webpack/CssInclusion'], () =>
-          this.setState({ feature: require('./features/webpack/CssInclusion').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/webpack/CssInclusion').default));
         break;
       case 'custom-interpolation':
-        require.ensure(['./features/syntax/CustomInterpolation'], () =>
-          this.setState({ feature: require('./features/syntax/CustomInterpolation').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/CustomInterpolation').default));
         break;
       case 'default-parameters':
-        require.ensure(['./features/syntax/DefaultParameters'], () =>
-          this.setState({ feature: require('./features/syntax/DefaultParameters').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/DefaultParameters').default));
         break;
       case 'destructuring-and-await':
-        require.ensure(['./features/syntax/DestructuringAndAwait'], () =>
-          this.setState({ feature: require('./features/syntax/DestructuringAndAwait').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/DestructuringAndAwait').default));
         break;
       case 'file-env-variables':
-        require.ensure(['./features/env/FileEnvVariables'], () =>
-          this.setState({ feature: require('./features/env/FileEnvVariables').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/env/FileEnvVariables').default));
         break;
       case 'generators':
-        require.ensure(['./features/syntax/Generators'], () =>
-          this.setState({ feature: require('./features/syntax/Generators').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/Generators').default));
         break;
       case 'image-inclusion':
-        require.ensure(['./features/webpack/ImageInclusion'], () =>
-          this.setState({ feature: require('./features/webpack/ImageInclusion').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/webpack/ImageInclusion').default));
         break;
       case 'json-inclusion':
-        require.ensure(['./features/webpack/JsonInclusion'], () =>
-          this.setState({ feature: require('./features/webpack/JsonInclusion').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/webpack/JsonInclusion').default));
         break;
       case 'node-path':
-        require.ensure(['./features/env/NodePath'], () =>
-          this.setState({ feature: require('./features/env/NodePath').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/env/NodePath').default));
         break;
       case 'no-ext-inclusion':
-        require.ensure(['./features/webpack/NoExtInclusion'], () =>
-          this.setState({ feature: require('./features/webpack/NoExtInclusion').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/webpack/NoExtInclusion').default));
         break;
       case 'object-destructuring':
-        require.ensure(['./features/syntax/ObjectDestructuring'], () =>
-          this.setState({ feature: require('./features/syntax/ObjectDestructuring').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/ObjectDestructuring').default));
         break;
       case 'object-spread':
-        require.ensure(['./features/syntax/ObjectSpread'], () =>
-          this.setState({ feature: require('./features/syntax/ObjectSpread').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/ObjectSpread').default));
         break;
       case 'promises':
-        require.ensure(['./features/syntax/Promises'], () =>
-          this.setState({ feature: require('./features/syntax/Promises').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/Promises').default));
         break;
       case 'rest-and-default':
-        require.ensure(['./features/syntax/RestAndDefault'], () =>
-          this.setState({ feature: require('./features/syntax/RestAndDefault').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/RestAndDefault').default));
         break;
       case 'rest-parameters':
-        require.ensure(['./features/syntax/RestParameters'], () =>
-          this.setState({ feature: require('./features/syntax/RestParameters').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/RestParameters').default));
         break;
       case 'shell-env-variables':
-        require.ensure(['./features/env/ShellEnvVariables'], () =>
-          this.setState({ feature: require('./features/env/ShellEnvVariables').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/env/ShellEnvVariables').default));
         break;
       case 'svg-inclusion':
-        require.ensure(['./features/webpack/SvgInclusion'], () =>
-          this.setState({ feature: require('./features/webpack/SvgInclusion').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/webpack/SvgInclusion').default));
         break;
       case 'template-interpolation':
-        require.ensure(['./features/syntax/TemplateInterpolation'], () =>
-          this.setState({ feature: require('./features/syntax/TemplateInterpolation').default })
-        );
+        require.ensure([], () => this.setFeature(require('./features/syntax/TemplateInterpolation').default));
         break;
       case 'unknown-ext-inclusion':
-        require.ensure(['./features/webpack/UnknownExtInclusion'], () =>
-          this.setState({ feature: require('./features/webpack/UnknownExtInclusion').default })
+        require.ensure([], () => this.setFeature(require('./features/webpack/UnknownExtInclusion').default)
         );
         break;
       default:
-        this.setState({ feature: null });
+        this.setFeature(null);
         break;
     }
+  }
+
+  setFeature(feature) {
+    this.setState({ feature });
   }
 
   render() {

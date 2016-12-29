@@ -23,7 +23,7 @@ function cleanup {
   echo 'Cleaning up.'
   cd $root_path
   # Uncomment when snapshot testing is enabled by default:
-  # rm ./packages/react-scripts/templates/app/src/__snapshots__/App.test.js.snap
+  # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
@@ -95,7 +95,7 @@ test -e build/favicon.ico
 # Run tests with CI flag
 CI=true npm test
 # Uncomment when snapshot testing is enabled by default:
-# test -e templates/app/src/__snapshots__/App.test.js.snap
+# test -e template/src/__snapshots__/App.test.js.snap
 
 # Test local start command
 npm start -- --smoke-test
