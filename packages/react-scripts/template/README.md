@@ -61,6 +61,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Editor Integration](#editor-integration)
 - [Developing Components in Isolation](#developing-components-in-isolation)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
+- [Git Repository](#git-repository)
 - [Deployment](#deployment)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
   - [Building for Relative Paths](#building-for-relative-paths)
@@ -1205,6 +1206,12 @@ Learn more about React Storybook:
 ## Making a Progressive Web App
 
 You can turn your React app into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) by following the steps in [this repository](https://github.com/jeffposnick/create-react-pwa).
+
+## Git Repository
+
+Create React App will create a new Git repository and commit the generated files to it as the initial commit. This step is skipped if the folder you are creating is already part of a larger Git repository.
+The initial commit will be created with a message **chore: initial commit from create-react-app**. If you prefer another message it is easy to change before doing any other commits using the command ```git commit --amend -m "Some other message"```.
+You can delete the Git repository using the command ```rm -rf .git```.
 
 ## Deployment
 
