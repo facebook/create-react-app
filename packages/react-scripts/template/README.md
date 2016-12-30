@@ -385,7 +385,7 @@ The `<script>` tag with the compiled code will be added to it automatically duri
 
 You can also add other assets to the `public` folder.
 
-Note that we normally we encourage you to `import` assets in JavaScript files instead.
+Note that we normally encourage you to `import` assets in JavaScript files instead.
 For example, see the sections on [adding a stylesheet](#adding-a-stylesheet) and [adding images and fonts](#adding-images-and-fonts).
 This mechanism provides a number of benefits:
 
