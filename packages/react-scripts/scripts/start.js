@@ -127,10 +127,12 @@ function setupCompiler(host, port, protocol) {
         console.log(message);
         console.log();
       });
-      // Teach some ESLint tricks.
-      console.log('You may use special comments to disable some warnings.');
-      console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
-      console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
+      // Teach some TSLint tricks.
+      console.log('You may use special comments to disable some warnings.');      
+      console.log('Use ' + chalk.yellow('tslint:disable-line') + ' to disable this line.');
+      console.log('Use ' + chalk.yellow('tslint:disable-next-line') + ' to ignore the rules on next line.');
+      console.log('Use ' + chalk.yellow('tslint:disable ') + ' to disable linting for rest of file.');
+      console.log('Use ' + chalk.yellow('tslint:enable ') + ' to enable linting for rest of file.');
     }
   });
 }
