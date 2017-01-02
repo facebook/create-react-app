@@ -12,7 +12,6 @@
   },
   "files": [
     ".babelrc",
-    ".eslintrc",
     "config",
     "bin",
     "scripts",

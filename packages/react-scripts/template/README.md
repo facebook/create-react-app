@@ -158,7 +158,7 @@ See the section about [deployment](#deployment) for more information.
 
 If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, TSLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
@@ -170,36 +170,11 @@ To configure the syntax highlighting in your favorite text editor, head to the [
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
 
-Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
+Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for TSLint.
 
 They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
 
-You would need to install an ESLint plugin for your editor first.
-
->**A note for Atom `linter-eslint` users**
-
->If you are using the Atom `linter-eslint` plugin, make sure that **Use global ESLint installation** option is checked:
-
-><img src="http://i.imgur.com/yVNNHJM.png" width="300">
-
-Then add this block to the `package.json` file of your project:
-
-```js
-{
-  // ...
-  "eslintConfig": {
-    "extends": "react-app"
-  }
-}
-```
-
-Finally, you will need to install some packages *globally*:
-
-```sh
-npm install -g eslint-config-react-app@0.3.0 eslint@3.8.1 babel-eslint@7.0.0 eslint-plugin-react@6.4.1 eslint-plugin-import@2.0.1 eslint-plugin-jsx-a11y@2.2.3 eslint-plugin-flowtype@2.21.0
-```
-
-We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
+You would need to install an TSLint plugin for your editor first.
 
 ## Changing the Page `<title>`
 
@@ -448,7 +423,7 @@ const $ = window.$;
 
 This makes it obvious you are using a global variable intentionally rather than because of a typo.
 
-Alternatively, you can force the linter to ignore any line by adding `// eslint-disable-line` after it.
+Alternatively, you can force the linter to ignore any line by adding `// tslint:disable-line` after it.
 
 ## Adding Bootstrap
 
