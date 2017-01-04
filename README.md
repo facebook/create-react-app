@@ -1,4 +1,4 @@
-# `react-scripts-ts`
+# `react-scripts-ts` [![npm version](https://badge.fury.io/js/react-scripts-ts.svg)](https://badge.fury.io/js/react-scripts-ts)
 
 Create React apps (with Typescript) with no build configuration.
 
@@ -15,6 +15,9 @@ npm start
 
 ```
 ## Changelog
+### 1.0.4
+* Change mentions of `eslint` to `tslint`
+
 ### 1.0.3
 * Remove hidden character from `tsconfig.json`
 
