@@ -144,7 +144,7 @@ function build(previousSizeMap) {
     }
 
     if (process.env.CI && stats.compilation.warnings.length) {
-     printErrors('Failed to compile.', stats.compilation.warnings);
+     printErrors('Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.', stats.compilation.warnings);
      process.exit(1);
    }
 
