@@ -49,7 +49,7 @@
     "filesize": "3.3.0",
     "fs-extra": "0.30.0",
     "gzip-size": "3.0.0",
-    "html-webpack-plugin": "2.24.0",
+    "html-webpack-plugin": "2.26.0",
     "http-proxy-middleware": "0.17.2",
     "jest": "18.1.0",
     "object-assign": "4.1.0",
