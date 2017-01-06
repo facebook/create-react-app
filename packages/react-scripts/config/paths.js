@@ -42,6 +42,7 @@ var nodePaths = (process.env.NODE_PATH || '')
 
 // config after eject: we're in ./config/
 module.exports = {
+  babelrc: resolveApp('.babelrc'),
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
@@ -62,6 +63,7 @@ function resolveOwn(relativePath) {
 
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
+  babelrc: resolveApp('.babelrc'),
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
@@ -79,6 +81,7 @@ module.exports = {
 // config before publish: we're in ./packages/react-scripts/config/
 if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
   module.exports = {
+    babelrc: resolveOwn('../template/.babelrc'),
     appBuild: resolveOwn('../../../build'),
     appPublic: resolveOwn('../template/public'),
     appHtml: resolveOwn('../template/public/index.html'),

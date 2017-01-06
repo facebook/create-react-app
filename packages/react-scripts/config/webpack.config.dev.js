@@ -23,6 +23,11 @@ var paths = require('./paths');
 var path = require('path');
 // @remove-on-eject-end
 
+// @remove-on-eject-begin
+var isLocalBabelExists = require('../utils/isLocalBabelExists');
+var localBabelExists = isLocalBabelExists();
+// @remove-on-eject-end
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 var publicPath = '/';
@@ -147,8 +152,8 @@ module.exports = {
         loader: 'babel',
         query: {
           // @remove-on-eject-begin
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          babelrc: localBabelExists,
+          presets: !localBabelExists ? [require.resolve('babel-preset-react-app')] : null,
           // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/

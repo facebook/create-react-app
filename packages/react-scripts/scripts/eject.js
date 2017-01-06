@@ -11,6 +11,7 @@ var createJestConfig = require('../utils/createJestConfig');
 var fs = require('fs-extra');
 var path = require('path');
 var paths = require('../config/paths');
+var isLocalBabelExists = require('../utils/isLocalBabelExists');
 var prompt = require('react-dev-utils/prompt');
 var spawnSync = require('cross-spawn').sync;
 var chalk = require('chalk');
@@ -128,10 +129,11 @@ prompt(
     true
   );
 
-  // Add Babel config
-
-  console.log('  Adding ' + cyan('Babel') + ' preset');
-  appPackage.babel = babelConfig;
+  // Add Babel config if there is no local babel config
+  if (isLocalBabelExists()) {
+    console.log('  Adding ' + cyan('Babel') + ' preset');
+    appPackage.babel = babelConfig;
+  }
 
   // Add ESlint config
   console.log('  Adding ' + cyan('ESLint') +' configuration');
