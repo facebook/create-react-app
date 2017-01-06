@@ -130,7 +130,7 @@ prompt(
   );
 
   // Add Babel config if there is no local babel config
-  if (isLocalBabelExists()) {
+  if (!isLocalBabelExists()) {
     console.log('  Adding ' + cyan('Babel') + ' preset');
     appPackage.babel = babelConfig;
   }
