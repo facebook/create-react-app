@@ -13,6 +13,10 @@ var path = require('path');
 var fs = require('fs');
 var url = require('url');
 
+// @remove-on-eject-begin
+var isReactScriptsLinked = require('../utils/isReactScriptsLinked');
+// @remove-on-eject-end
+
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
 var appDirectory = fs.realpathSync(process.cwd());
@@ -113,7 +117,7 @@ module.exports = {
 };
 
 // config before publish: we're in ./packages/react-scripts/config/
-if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
+if (!isReactScriptsLinked() && __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
   module.exports = {
     appBuild: resolveOwn('../../../build'),
     appPublic: resolveOwn('../template/public'),

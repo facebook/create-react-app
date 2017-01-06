@@ -11,11 +11,14 @@ var createJestConfig = require('../utils/createJestConfig');
 var fs = require('fs-extra');
 var path = require('path');
 var paths = require('../config/paths');
+var isReactScriptsLinked = require('../utils/isReactScriptsLinked');
 var prompt = require('react-dev-utils/prompt');
 var spawnSync = require('cross-spawn').sync;
 var chalk = require('chalk');
 var green = chalk.green;
 var cyan = chalk.cyan;
+
+var reactScriptsLinked = isReactScriptsLinked();
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
@@ -28,8 +31,15 @@ prompt(
 
   console.log('Ejecting...');
 
+  // NOTE: get ownPath and appPath from config/paths.js ?
   var ownPath = path.join(__dirname, '..');
-  var appPath = path.join(ownPath, '..', '..');
+  var appPath;
+
+  if (reactScriptsLinked) {
+    appPath = path.resolve('.');
+  } else {
+    appPath = path.join(ownPath, '..', '..');
+  }
 
   function verifyAbsent(file) {
     if (fs.existsSync(path.join(appPath, file))) {
@@ -135,7 +145,6 @@ prompt(
   );
 
   // Add Babel config
-
   console.log('  Adding ' + cyan('Babel') + ' preset');
   appPackage.babel = babelConfig;
 
@@ -151,11 +160,15 @@ prompt(
 
   if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));
-    fs.removeSync(ownPath);
+    if (!reactScriptsLinked) {
+      fs.removeSync(ownPath);
+    }
     spawnSync('yarnpkg', [], {stdio: 'inherit'});
   } else {
     console.log(cyan('Running npm install...'));
-    fs.removeSync(ownPath);
+    if (!reactScriptsLinked) {
+      fs.removeSync(ownPath);
+    }
     spawnSync('npm', ['install'], {stdio: 'inherit'});
   }
   console.log(green('Ejected successfully!'));
