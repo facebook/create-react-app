@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 var spawn = require('cross-spawn');
+var getDebugFlag = require('../utils/getDebugFlag');
 var script = process.argv[2];
 var args = process.argv.slice(3);
 
@@ -8,9 +9,14 @@ case 'build':
 case 'eject':
 case 'start':
 case 'test':
+  var scriptArgs = [require.resolve('../scripts/' + script)].concat(args);
+  var debugFlag = getDebugFlag(args);
+  if (debugFlag) {
+    scriptArgs.unshift(debugFlag);
+  }
   var result = spawn.sync(
     'node',
-    [require.resolve('../scripts/' + script)].concat(args),
+    scriptArgs,
     {stdio: 'inherit'}
   );
   process.exit(result.status);

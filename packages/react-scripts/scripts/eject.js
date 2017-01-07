@@ -59,7 +59,8 @@ prompt(
     path.join('config', 'jest', 'fileTransform.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
-    path.join('scripts', 'test.js')
+    path.join('scripts', 'test.js'),
+    path.join('utils', 'getDebugFlag.js')
   ];
 
   // Ensure that the app folder is clean and we won't override any files
@@ -122,11 +123,10 @@ prompt(
   console.log(cyan('Configuring package.json'));
   // Add Jest config
   console.log('  Adding ' + cyan('Jest') + ' configuration');
-  appPackage.jest = createJestConfig(
-    filePath => path.join('<rootDir>', filePath),
-    null,
-    true
-  );
+  appPackage.jest = createJestConfig({
+    resolve: filePath => path.join('<rootDir>', filePath),
+    isEjecting: true
+  });
 
   // Add Babel config
 
