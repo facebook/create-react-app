@@ -64,7 +64,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   var args;
 
   if (useYarn) {
-    command = 'yarn';
+    command = 'yarnpkg';
     args = ['add'];
   } else {
     command = 'npm';
