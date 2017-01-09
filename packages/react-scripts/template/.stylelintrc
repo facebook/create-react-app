@@ -1,7 +1,7 @@
 {
   "rules": {
     "at-rule-empty-line-before": ["always", {
-      "except": ["blockless-group"],
+      "except": ["blockless-after-blockless"],
       "ignore": ["after-comment"],
     }],
     "at-rule-no-vendor-prefix": true,
@@ -20,7 +20,6 @@
     "declaration-bang-space-after": "never",
     "declaration-bang-space-before": "always",
     "declaration-block-no-shorthand-property-overrides": true,
-    "declaration-block-properties-order": "alphabetical",
     "declaration-block-trailing-semicolon": "always",
     "declaration-block-semicolon-newline-after": "always-multi-line",
     "declaration-block-semicolon-space-after": "always-single-line",
@@ -57,18 +56,13 @@
     "number-leading-zero": "always",
     "number-no-trailing-zeros": true,
     "property-no-vendor-prefix": true,
-    "root-no-standard-properties": true,
-    "rule-nested-empty-line-before": "always-multi-line",
-    "rule-non-nested-empty-line-before": ["always-multi-line", {
-      except: ["after-single-line-comment"]
-    }],
+    "rule-empty-line-before": "always-multi-line",
     "selector-combinator-space-after": "always",
     "selector-combinator-space-before": "always",
     "selector-list-comma-newline-after": "always",
     "selector-list-comma-space-before": "never",
     "selector-no-vendor-prefix": true,
     "selector-pseudo-element-colon-notation": "double",
-    "selector-root-no-composition": true,
     "string-quotes": "single",
     "value-list-comma-newline-after": "always-multi-line",
     "value-list-comma-space-after": "always-single-line",

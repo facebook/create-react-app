@@ -195,7 +195,7 @@ module.exports = {
               loader: 'postcss-loader',
               options: {
                 ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
-                plugins: postcss
+                plugins: postcss,
               }
             }
           ]

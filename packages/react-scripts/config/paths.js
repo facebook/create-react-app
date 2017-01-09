@@ -88,7 +88,9 @@ module.exports = {
   testsCustomConfig: resolveApp('jest-config.json'),
   browsersFile: resolveApp('browsers.json'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json'))
+  servedPath: getServedPath(resolveApp('package.json')),
+  testsCustomConfig: resolveApp('jest-config.json'),
+  browsersFile: resolveApp('browsers.json')
 };
 
 // @remove-on-eject-begin
@@ -113,7 +115,9 @@ module.exports = {
   testsCustomConfig: resolveApp('jest-config.json'),
   browsersFile: resolveApp('browsers.json'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json'))
+  servedPath: getServedPath(resolveApp('package.json')),
+  testsCustomConfig: resolveApp('jest-config.json'),
+  browsersFile: resolveApp('browsers.json')
 };
 
 // config before publish: we're in ./packages/react-scripts/config/
@@ -133,7 +137,9 @@ if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) 
     testsCustomConfig: resolveApp('jest-config.json'),
     browsersFile: resolveApp('browsers.json'),
     publicUrl: getPublicUrl(resolveOwn('../package.json')),
-    servedPath: getServedPath(resolveOwn('../package.json'))
+    servedPath: getServedPath(resolveOwn('../package.json')),
+    testsCustomConfig: resolveApp('jest-config.json'),
+    browsersFile: resolveApp('browsers.json')
   };
 }
 // @remove-on-eject-end
