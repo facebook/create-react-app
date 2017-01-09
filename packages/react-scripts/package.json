@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "0.8.5",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "name": "rangle-react-scripts",
+  "version": "0.0.1",
+  "description": "Rangle's custom configuration and scripts for Create React App.",
+  "repository": "rangle/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/rangle/rangle-starter/issues"
   },
   "files": [
     ".babelrc",
@@ -54,12 +54,24 @@
     "jest": "18.1.0",
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
+    "postcss-cssnext": "^2.9.0",
+    "postcss-import": "^9.0.0",
     "postcss-loader": "1.0.0",
+    "postcss-modules-local-by-default": "^1.1.1",
     "promise": "7.1.1",
+    "react": "^15.3.0",
     "react-dev-utils": "^0.4.2",
+    "react-redux": "^5.0.1",
+    "react-router": "^3.0.0",
+    "react-router-redux": "^4.0.7",
     "recursive-readdir": "2.1.0",
+    "redux": "^3.6.0",
+    "redux-form": "^6.4.3",
     "strip-ansi": "3.0.1",
+    "stylelint": "^7.7.1",
+    "stylelint-webpack-plugin": "^0.5.1",
     "style-loader": "0.13.1",
+    "tachyons": "^4.6.1",
     "url-loader": "0.5.7",
     "webpack": "1.14.0",
     "webpack-dev-server": "1.16.2",
