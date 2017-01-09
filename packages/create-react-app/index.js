@@ -135,7 +135,7 @@ function createApp(name, verbose, version) {
 
 function shouldUseYarn() {
   try {
-    execSync('yarn --version', {stdio: 'ignore'});
+    execSync('yarnpkg --version', {stdio: 'ignore'});
     return true;
   } catch (e) {
     return false;
@@ -146,7 +146,7 @@ function install(packageToInstall, verbose, callback) {
   var command;
   var args;
   if (shouldUseYarn()) {
-    command = 'yarn';
+    command = 'yarnpkg';
     args = [ 'add', '--dev', '--exact', packageToInstall];
   } else {
     command = 'npm';
