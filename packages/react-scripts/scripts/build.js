@@ -29,6 +29,7 @@ var paths = require('../config/paths');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
+var buildPath = process.env.npm_config_buildPath || process.env.npm_package_config_buildPath || paths.appBuild;
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 
@@ -41,7 +42,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // Output: /static/js/main.js
 function removeFileNameHash(fileName) {
   return fileName
-    .replace(paths.appBuild, '')
+    .replace(buildPath, '')
     .replace(/\/?(.*)(\.\w+)(\.js|\.css)/, (match, p1, p2, p3) => p1 + p3);
 }
 
@@ -64,7 +65,7 @@ function getDifferenceLabel(currentSize, previousSize) {
 
 // First, read the current file sizes in build directory.
 // This lets us display how much they changed later.
-recursive(paths.appBuild, (err, fileNames) => {
+recursive(buildPath, (err, fileNames) => {
   var previousSizeMap = (fileNames || [])
     .filter(fileName => /\.(js|css)$/.test(fileName))
     .reduce((memo, fileName) => {
@@ -76,7 +77,7 @@ recursive(paths.appBuild, (err, fileNames) => {
 
   // Remove all content but keep the directory so that
   // if you're in it, you don't end up in Trash
-  fs.emptyDirSync(paths.appBuild);
+  fs.emptyDirSync(buildPath);
 
   // Start the webpack build
   build(previousSizeMap);
@@ -90,12 +91,12 @@ function printFileSizes(stats, previousSizeMap) {
   var assets = stats.toJson().assets
     .filter(asset => /\.(js|css)$/.test(asset.name))
     .map(asset => {
-      var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
+      var fileContents = fs.readFileSync(buildPath + '/' + asset.name);
       var size = gzipSize(fileContents);
       var previousSize = previousSizeMap[removeFileNameHash(asset.name)];
       var difference = getDifferenceLabel(size, previousSize);
       return {
-        folder: path.join('build', path.dirname(asset.name)),
+        folder: path.join(buildPath, path.dirname(asset.name)),
         name: path.basename(asset.name),
         size: size,
         sizeLabel: filesize(size) + (difference ? ' (' + difference + ')' : '')
@@ -228,7 +229,7 @@ function build(previousSizeMap) {
 }
 
 function copyPublicFolder() {
-  fs.copySync(paths.appPublic, paths.appBuild, {
+  fs.copySync(paths.appPublic, buildPath, {
     dereference: true,
     filter: file => file !== paths.appHtml
   });
