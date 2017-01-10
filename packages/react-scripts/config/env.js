@@ -33,7 +33,14 @@ function getClientEnvironment(publicUrl) {
       // images into the `src` and `import` them in code to get their paths.
       'PUBLIC_URL': JSON.stringify(publicUrl)
     });
-  return {'process.env': processEnv};
+  return Object
+    .keys(processEnv)
+    .reduce((env, key) => {
+      env['process.env.' + key] = processEnv[key];
+      return env;
+    }, {
+      'process.env': processEnv
+    });
 }
 
 module.exports = getClientEnvironment;
