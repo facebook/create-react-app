@@ -117,6 +117,7 @@ Extracts and prettifies warning and error messages from webpack [stats](https://
 ```js
 var webpack = require('webpack');
 var config = require('../config/webpack.config.dev');
+var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
 var compiler = webpack(config);
 
@@ -184,6 +185,7 @@ You can control the behavior on `<Enter>` with `isYesDefault`.
 
 ```js
 var prompt = require('react-dev-utils/prompt');
+
 prompt(
   'Are you sure you want to eat all the candy?',
   /* isYesDefault */ false
