@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "0.8.4",
+  "version": "0.8.4-alpha.st.1484052026818",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -54,6 +54,8 @@
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
     "postcss-loader": "1.0.0",
+    "postcss-cssnext": "2.9.0",
+    "postcss-import": "9.0.0",
     "promise": "7.1.1",
     "react-dev-utils": "^0.4.2",
     "recursive-readdir": "2.1.0",

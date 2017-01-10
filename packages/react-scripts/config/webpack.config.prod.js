@@ -9,7 +9,6 @@
  */
 // @remove-on-eject-end
 
-var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -18,6 +17,9 @@ var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
+var cssnext = require('postcss-cssnext');
+var atImport = require('postcss-import');
+var customProperties = require('postcss-custom-properties')
 
 // @remove-on-eject-begin
 // `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
@@ -173,7 +175,11 @@ module.exports = {
       // in the main CSS file.
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', 'css?importLoaders=1!postcss')
+        loader: ExtractTextPlugin.extract(
+          'style',
+          'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]' +
+          '!postcss'
+        )
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
@@ -204,7 +210,11 @@ module.exports = {
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
-      autoprefixer({
+      atImport(),
+      customProperties({
+        variables: require(paths.appCssVariables)
+      }),
+      cssnext({
         browsers: [
           '>1%',
           'last 4 versions',
