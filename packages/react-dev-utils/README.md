@@ -133,12 +133,12 @@ compiler.plugin('done', function(stats) {
   }
   if (messages.errors.length) {
     console.log('Failed to compile.');
-    messages.errors.forEach(console.log);
+    messages.errors.forEach(e => console.log(e));
     return;
   }
   if (messages.warnings.length) {
     console.log('Compiled with warnings.');
-    messages.warnings.forEach(console.log);
+    messages.warnings.forEach(w => console.log(w));
   }
 });
 ```
