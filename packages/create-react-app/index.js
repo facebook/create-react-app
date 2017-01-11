@@ -69,6 +69,7 @@ var program = require('commander')
   })
   .option('--verbose', 'print additional logs')
   .option('--scripts-version <alternative-package>', 'use a non-standard version of react-scripts')
+  .option('--disable-yarn', 'disallow using yarn over npm, (useful for certain global binary packages failing with yarn)')
   .on('--help', function () {
     console.log('    Only ' + chalk.green('<project-directory>') + ' is required.');
     console.log();
@@ -109,6 +110,9 @@ function createApp(name, verbose, version) {
     process.exit(1);
   }
 
+  if (program.disableYarn) {
+    console.log(chalk.orange('Yarn has been disabled via the "--disable-yarn" command line option.\n Using npm package manager to build'));
+  }
   console.log(
     'Creating a new React app in ' + chalk.green(root) + '.'
   );
@@ -136,6 +140,9 @@ function createApp(name, verbose, version) {
 function shouldUseYarn() {
   try {
     execSync('yarnpkg --version', {stdio: 'ignore'});
+    if (program.disableYarn) {
+      return false;
+    }
     return true;
   } catch (e) {
     return false;
