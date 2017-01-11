@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "0.8.4-alpha.st.1484052026818",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "name": "st-scripts",
+  "version": "0.8.4",
+  "description": "Opinionated react-scripts with a CSS setup and a UMD output for server side.",
+  "repository": "sharetribe/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/sharetribe/create-react-app/issues"
   },
   "files": [
     ".babelrc",
@@ -20,7 +20,7 @@
     "utils"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "st-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
     "autoprefixer": "6.5.1",
