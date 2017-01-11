@@ -111,7 +111,7 @@ function createApp(name, verbose, version) {
   }
 
   if (program.disableYarn) {
-    console.log(chalk.orange('Yarn has been disabled via the "--disable-yarn" command line option.\n Using npm package manager to build'));
+    console.log(chalk.yellow('Yarn has been disabled via the "--disable-yarn" command line option.\n Using npm package manager to build'));
   }
   console.log(
     'Creating a new React app in ' + chalk.green(root) + '.'
