@@ -5,7 +5,7 @@
     "changelog": "lerna-changelog",
     "create-react-app": "tasks/cra.sh",
     "e2e": "tasks/e2e.sh",
-    "postinstall": "lerna bootstrap",
+    "postinstall": "lerna bootstrap `[ \"$CI\" = true ] && echo --loglevel=verbose`",
     "publish": "tasks/release.sh",
     "start": "node packages/react-scripts/scripts/start.js",
     "test": "node packages/react-scripts/scripts/test.js --env=jsdom"
@@ -18,7 +18,7 @@
     "eslint-plugin-import": "1.12.0",
     "eslint-plugin-jsx-a11y": "2.2.2",
     "eslint-plugin-react": "6.3.0",
-    "lerna": "2.0.0-beta.30",
+    "lerna": "2.0.0-beta.31",
     "lerna-changelog": "^0.2.3"
   }
 }
