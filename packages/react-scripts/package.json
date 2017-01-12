@@ -53,6 +53,7 @@
     "jest": "18.0.0",
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
+    "optimize-js-plugin": "0.0.4",
     "postcss-loader": "1.0.0",
     "promise": "7.1.1",
     "react-dev-utils": "^0.4.2",
