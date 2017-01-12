@@ -144,7 +144,7 @@ Please refer to the [User Guide](https://github.com/facebookincubator/create-rea
 
 **If you’re getting started** with React, use `create-react-app` to automate the build of your app. There is no configuration file, and `react-scripts` is the only extra build dependency in your `package.json`. Your environment will have everything you need to build a modern React app:
 
-* React, JSX, and ES6 support.
+* React, JSX, ES6, and Flow syntax support.
 * Language extras beyond ES6 like the object spread operator.
 * A dev server that lints for common errors.
 * Import CSS and image files directly from JavaScript.
