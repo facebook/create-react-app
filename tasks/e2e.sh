@@ -71,7 +71,7 @@ fi
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn@0.17.10 # TODO: remove version when https://github.com/yarnpkg/yarn/issues/2142 is fixed.
+  npm install -g yarn
   yarn cache clean
 fi
 
@@ -144,6 +144,9 @@ create_react_app --scripts-version=$scripts_path test-app
 
 # Enter the app directory
 cd test-app
+
+echo "GONNA TEST NOW"
+npm ls extend
 
 # Test the build
 npm run build
