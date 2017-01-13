@@ -1,5 +1,5 @@
 {
-  "name": "rangle-react-scripts",
+  "name": "@rangle/react-scripts",
   "version": "0.0.1",
   "description": "Rangle's custom configuration and scripts for Create React App.",
   "repository": "rangle/create-react-app",
