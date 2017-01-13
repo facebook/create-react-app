@@ -205,7 +205,7 @@ We recognize that this is suboptimal, but it is currently required due to the wa
 
 You can find the source HTML file in the `public` folder of the generated project. You may edit the `<title>` tag in it to change the title from “React App” to anything else.
 
-Note that normally you wouldn't edit files in the `public` folder very often. For example, [adding a stylesheet](#adding-a-stylesheet) is is done without touching the HTML.
+Note that normally you wouldn't edit files in the `public` folder very often. For example, [adding a stylesheet](#adding-a-stylesheet) is done without touching the HTML.
 
 If you need to dynamically update the page title based on the content, you can use the browser [`document.title`](https://developer.mozilla.org/en-US/docs/Web/API/Document/title) API. For more complex scenarios when you want to change the title from React components, you can use [React Helmet](https://github.com/nfl/react-helmet), a third party library.
 
@@ -385,7 +385,7 @@ The `<script>` tag with the compiled code will be added to it automatically duri
 
 You can also add other assets to the `public` folder.
 
-Note that we normally we encourage you to `import` assets in JavaScript files instead.
+Note that we normally encourage you to `import` assets in JavaScript files instead.
 For example, see the sections on [adding a stylesheet](#adding-a-stylesheet) and [adding images and fonts](#adding-images-and-fonts).
 This mechanism provides a number of benefits:
 
@@ -1132,17 +1132,18 @@ To publish it at [https://myusername.github.io/my-app](https://myusername.github
 npm install --save-dev gh-pages
 ```
 
-Add the following script in your `package.json`:
+Add the following scripts in your `package.json`:
 
 ```js
   // ...
   "scripts": {
     // ...
-    "deploy": "npm run build&&gh-pages -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 ```
 
-(Note: the lack of whitespace is intentional.)
+The `predeploy` script will run automatically before `deploy` is run.
 
 #### Step 3: Deploy the site by running `npm run deploy`
 
