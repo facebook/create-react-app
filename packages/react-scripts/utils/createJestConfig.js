@@ -19,7 +19,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
 
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
-  const config = {
+  let config = {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
@@ -44,6 +44,21 @@ module.exports = (resolve, rootDir, isEjecting) => {
   };
   if (rootDir) {
     config.rootDir = rootDir;
+  }
+
+  // If there is a jest-config.json in the root folder, merge it with
+  // the default configuration. This allows threshold and few other
+  // configs to be defined at the project level as you would normally do
+  // inside your package.json -> "jest": { ... }
+  // This solution issue will probably turn out to be something better than this,
+  // but this change is a simple work around for now.
+  // https://github.com/facebookincubator/create-react-app/issues/922
+  if (fs.existsSync(paths.testsCustomConfig)) {
+    config = Object.assign(
+      {},
+      config,
+      require(paths.testsCustomConfig)
+    );
   }
   return config;
 };

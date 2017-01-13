@@ -1,0 +1,22 @@
+machine:
+  pre:
+    - mkdir ~/.yarn-cache
+  node:
+    version: 6.9.1
+dependencies:
+  pre:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.17.9
+  override:
+    - yarn install
+  cache_directories:
+    # Cache yarn's intermediate stuff to make it even faster.
+    - ~/.yarn-cache
+    # Cache global modules so we don't have to install yarn each run.
+    - ~/nvm/versions/node/6.9.1/bin
+    - ~/nvm/versions/node/6.9.1/lib/node_modules
+test:
+  pre:
+    - yarn run clean
+    - yarn run test:lint
+  override:
+    - yarn test
