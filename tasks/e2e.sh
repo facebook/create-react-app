@@ -182,6 +182,7 @@ E2E_FILE=./build/index.html \
 # test -e src/__snapshots__/App.test.js.snap
 
 # Test the server
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell NODE_PATH=src npm start -- --smoke-test
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell HTTPS=true NODE_PATH=src npm start -- --smoke-test
 
 # ******************************************************************************
