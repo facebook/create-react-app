@@ -13,12 +13,6 @@ The following briefly lists all changes performed over facebook standard Creat R
 Check the [postcss](https://github.com/rangle/create-react-app/tree/master/packages/react-scripts/config/rangle/postcss.js) configuration that replaces the standard css setup. 
 [Tachyons](http://tachyons.io/) dependency comes by default now.
 
-## ESLint and Stylelint
- 
-Stylelint [plugin](https://github.com/rangle/create-react-app/tree/master/packages/react-scripts/config/rangle/plugins.js) added to webpack. 
-
-Default ESlint [file](https://github.com/rangle/create-react-app/tree/master/packages/react-scripts/template/.eslintrc) and Stylelint [file](https://github.com/rangle/create-react-app/tree/master/packages/react-scripts/template/.stylelintrc) will be included by default in the root folder when project is generated.
- 
 You can override the default browsers list by creating a `browsers.json` file in the root folder of the generated project. The configuration won't be merged, it will override the standard setup.
 The following is a `browsers.json` file example:
 
@@ -32,6 +26,12 @@ The following is a `browsers.json` file example:
   ]
 }
 ```
+
+## ESLint and Stylelint
+ 
+Stylelint [plugin](https://github.com/rangle/create-react-app/tree/master/packages/react-scripts/config/rangle/plugins.js) added to webpack. 
+
+Default ESlint [file](https://github.com/rangle/create-react-app/tree/master/packages/react-scripts/template/.eslintrc) and Stylelint [file](https://github.com/rangle/create-react-app/tree/master/packages/react-scripts/template/.stylelintrc) will be included by default in the root folder when project is generated.
  
 ## Redux dependencies
  
