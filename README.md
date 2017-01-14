@@ -83,3 +83,7 @@ Put this same configuration inside `jest-config.json` in the root folder, but no
   }
 }
 ```
+
+### Ejecting and `jest-config.json`
+
+Note that when ejecting `jest-config.json` will be wiped out and its content with be added, along with the standard jest configuration, into the new generated `package.json`. 
