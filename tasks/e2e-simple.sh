@@ -152,6 +152,7 @@ mv package.json.orig package.json
 
 # Install the CLI in a temporary location
 cd $temp_cli_path
+echo "{}" > package.json
 npm install $cli_path
 
 # Install the app in a temporary location
