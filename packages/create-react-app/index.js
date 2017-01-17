@@ -52,6 +52,7 @@ if (currentNodeVersion.split('.')[0] < 4) {
   process.exit(1);
 }
 
+var commander = require('commander');
 var fs = require('fs-extra');
 var path = require('path');
 var execSync = require('child_process').execSync;
@@ -60,7 +61,7 @@ var semver = require('semver');
 
 var projectName;
 
-var program = require('commander')
+var program = commander
   .version(require('./package.json').version)
   .arguments('<project-directory>')
   .usage(chalk.green('<project-directory>') + ' [options]')
@@ -69,7 +70,7 @@ var program = require('commander')
   })
   .option('--verbose', 'print additional logs')
   .option('--scripts-version <alternative-package>', 'use a non-standard version of react-scripts')
-  .option('--template <path-to-template>', 'use a non-standard application template')
+  .allowUnknownOption()
   .on('--help', function () {
     console.log('    Only ' + chalk.green('<project-directory>') + ' is required.');
     console.log();
@@ -96,7 +97,12 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-createApp(projectName, program.verbose, program.scriptsVersion, program.template);
+var hiddenProgram = new commander.Command()
+  .option('--internal-testing-template <path-to-template>', '(internal usage only, DO NOT RELY ON THIS) ' +
+    'use a non-standard application template')
+  .parse(process.argv)
+
+createApp(projectName, program.verbose, program.scriptsVersion, hiddenProgram.internalTestingTemplate);
 
 function createApp(name, verbose, version, template) {
   var root = path.resolve(name);
