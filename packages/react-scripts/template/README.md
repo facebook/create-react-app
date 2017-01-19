@@ -27,6 +27,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [When to Use the `public` Folder](#when-to-use-the-public-folder)
 - [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
+- [Adding Material UI](#adding-material-ui)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Can I Use Decorators?](#can-i-use-decorators)
@@ -475,6 +476,51 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 ```
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
+
+## Adding Material UI
+
+[Material Design](https://material.io/guidelines/) is an interface design specification create by Google. It's a popular, and increasingly familiar, look and feel for web applications.
+[material-ui](http://www.material-ui.com/) is a library of React components implementing Material Design.
+To add `material-ui` to your create-react-app project:
+
+```
+npm install --save material-ui react-tap-event-plugin
+```
+
+Add the Roboto font to your project. Material UI components are designed to use it.  
+Add the contents of [this repo](https://github.com/andy-j-d/roboto-font-face) to `src/fonts` (you'll need to create the `fonts` directory).
+
+In your app container (ie `App.js`), add the following:
+
+```js
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import './fonts/index.css';
+
+injectTapEventPlugin();
+```
+
+And wrap your app in the theme provider:
+
+```jsx
+render() {
+  return (
+    <MuiThemeProvider>
+      <div className="App">
+        ...
+      </div>
+    </MuiThemeProvider>
+  );
+}
+```
+
+You can now import and use [Material UI components](http://www.material-ui.com/#/components/) in your project.
+
+```js
+import RaisedButton from 'material-ui/RaisedButton';
+
+() => <RaisedButton primary label="primary" />
+```
 
 ## Adding Flow
 
