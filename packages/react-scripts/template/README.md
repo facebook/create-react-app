@@ -489,6 +489,7 @@ npm install --save material-ui react-tap-event-plugin
 
 Add the Roboto font to your project. Material UI components are designed to use it.  
 Add the contents of [this repo](https://github.com/andy-j-d/roboto-font-face) to `src/fonts` (you'll need to create the `fonts` directory).
+Legal information regarding Roboto and other Google Fonts can be [found here](https://developers.google.com/fonts/faq).
 
 In your app container (ie `App.js`), add the following:
 
