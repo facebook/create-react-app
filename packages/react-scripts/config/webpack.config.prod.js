@@ -188,7 +188,7 @@ module.exports = {
           loader: [
             {
               loader: 'css-loader',
-              options: {
+              query: {
                 importLoaders: 1
               }
             },
@@ -233,7 +233,7 @@ module.exports = {
       }
     }),
     new webpack.LoaderOptionsPlugin({
-      minimize: true,
+      minimize: true, // The minimize mode for loaders will be removed in webpack 3 or later.
       options: {
         // We use PostCSS for autoprefixing only.
         postcss: function() {

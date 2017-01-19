@@ -181,7 +181,7 @@ module.exports = {
           }, {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
+              ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
               plugins: function () {
                 return [
                   autoprefixer({
