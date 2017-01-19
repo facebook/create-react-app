@@ -178,8 +178,24 @@ module.exports = {
             options: {
               importLoaders: 1
             }
-          },
-          'postcss-loader'
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: function () {
+                return [
+                  autoprefixer({
+                    browsers: [
+                      '>1%',
+                      'last 4 versions',
+                      'Firefox ESR',
+                      'not ie < 9', // React doesn't support IE8 anyway
+                    ]
+                  })
+                ]
+              }
+            }
+          }
         ]
       },
       // "file" loader for svg
@@ -203,23 +219,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
-    }),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        // We use PostCSS for autoprefixing only.
-        postcss: function() {
-          return [
-            autoprefixer({
-              browsers: [
-                '>1%',
-                'last 4 versions',
-                'Firefox ESR',
-                'not ie < 9', // React doesn't support IE8 anyway
-              ]
-            }),
-          ];
-        }
-      }
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
