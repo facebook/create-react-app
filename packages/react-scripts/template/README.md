@@ -514,7 +514,7 @@ render() {
 }
 ```
 
-You can now import and use [Material UI components](http://www.material-ui.com/#/components/) in your project.
+You can now import and use [Material UI components](http://www.material-ui.com/#/components/) in your project. Here is [an example App.js](https://gist.github.com/andy-j-d/47285c9c78e483bccc0cfd9111349554) redone using Material UI.
 
 ```js
 import RaisedButton from 'material-ui/RaisedButton';
