@@ -65,6 +65,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` silently fails](#npm-run-build-silently-fails)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
+  - [`npm start` doesn't detect changes](#npm-start-doesnt-detect-changes)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -1285,6 +1286,15 @@ It is reported that `npm run build` can fail on machines with no swap space, whi
 
 This may be a problem with case sensitive filenames.
 Please refer to [this section](#resolving-module-not-found-error-cannot-resolve-file-or-directory).
+
+### `npm start` doesn't detect changes
+
+Some common causes:
+
+* Starting project in a Dropbox folder, you need to move it out
+* Some editors like Vim and IntelliJ have a "safe write" feature that breaks the watcher, you need to disable it. See ["Working with editors/IDEs supporting safe write"](https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write) from the webpack-dev-server docs
+* Parenthesis in project folder name, you need to remove them until it is fixed. See [webpack/webpack#2753](https://github.com/webpack/webpack/issues/2753)
+* You might need to tweak system settings (https://webpack.github.io/docs/troubleshooting.html#not-enough-watchers)
 
 ## Something Missing?
 
