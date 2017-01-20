@@ -1,3 +1,28 @@
+## 0.8.5 (January 9, 2017)
+
+#### :bug: Bug Fix
+* `create-react-app`, `react-scripts`
+  * [#1365](https://github.com/facebookincubator/create-react-app/pull/1365) Use yarnpkg alias to run Yarn. ([@fson](https://github.com/fson))
+
+    Fixes an issue where running `create-react-app` failed on systems with Apache Hadoop installed because it falsely detected Hadoop YARN executable as Yarn package manager.
+
+#### Committers: 1
+- Ville Immonen ([fson](https://github.com/fson))
+
+### Migrating from 0.8.4 to 0.8.5
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.8.5
+```
+
+You may also optionally update the global command-line utility:
+
+```
+npm install -g create-react-app@1.0.3
+```
+
 ## 0.8.4 (December 11, 2016)
 
 #### :bug: Bug Fix

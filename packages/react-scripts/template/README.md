@@ -15,12 +15,16 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm run eject](#npm-run-eject)
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
+- [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
 - [Adding Images and Fonts](#adding-images-and-fonts)
 - [Using the `public` Folder](#using-the-public-folder)
+  - [Changing the HTML](#changing-the-html)
+  - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system)
+  - [When to Use the `public` Folder](#when-to-use-the-public-folder)
 - [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
@@ -60,6 +64,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Troubleshooting](#troubleshooting)
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` silently fails](#npm-run-build-silently-fails)
+  - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -195,6 +200,16 @@ npm install -g eslint-config-react-app@0.3.0 eslint@3.8.1 babel-eslint@7.0.0 esl
 ```
 
 We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
+
+## Changing the Page `<title>`
+
+You can find the source HTML file in the `public` folder of the generated project. You may edit the `<title>` tag in it to change the title from “React App” to anything else.
+
+Note that normally you wouldn't edit files in the `public` folder very often. For example, [adding a stylesheet](#adding-a-stylesheet) is done without touching the HTML.
+
+If you need to dynamically update the page title based on the content, you can use the browser [`document.title`](https://developer.mozilla.org/en-US/docs/Web/API/Document/title) API. For more complex scenarios when you want to change the title from React components, you can use [React Helmet](https://github.com/nfl/react-helmet), a third party library.
+
+Finally, if you use a custom server for your app in production and want to modify the title before it gets sent to the browser, you can follow advice in [this section](#generating-dynamic-meta-tags-on-the-server).
 
 ## Installing a Dependency
 
@@ -361,7 +376,18 @@ An alternative way of handling static assets is described in the next section.
 
 >Note: this feature is available with `react-scripts@0.5.0` and higher.
 
-Normally we encourage you to `import` assets in JavaScript files as described above. This mechanism provides a number of benefits:
+### Changing the HTML
+
+The `public` folder contains the HTML file so you can tweak it, for example, to [set the page title](#changing-the-page-title).
+The `<script>` tag with the compiled code will be added to it automatically during the build process.
+
+### Adding Assets Outside of the Module System
+
+You can also add other assets to the `public` folder.
+
+Note that we normally encourage you to `import` assets in JavaScript files instead.
+For example, see the sections on [adding a stylesheet](#adding-a-stylesheet) and [adding images and fonts](#adding-images-and-fonts).
+This mechanism provides a number of benefits:
 
 * Scripts and stylesheets get minified and bundled together to avoid extra network requests.
 * Missing files cause compilation errors instead of 404 errors for your users.
@@ -398,7 +424,15 @@ Keep in mind the downsides of this approach:
 * Missing files will not be called at compilation time, and will cause 404 errors for your users.
 * Result filenames won’t include content hashes so you’ll need to add query arguments or rename them every time they change.
 
-However, it can be handy for referencing assets like [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest) from HTML, or including small scripts like [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
+### When to Use the `public` Folder
+
+Normally we recommend importing [stylesheets](#adding-a-stylesheet), [images, and fonts](#adding-images-and-fonts) from JavaScript.
+The `public` folder is useful as a workaround for a number of less common cases:
+
+* You need a file with a specific name in the build output, such as [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+* You have thousands of images and need to dynamically reference their paths.
+* You want to include a small script like [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
+* Some library may be incompatible with Webpack and you have no other option but to include it as a `<script>` tag.
 
 Note that if you add a `<script>` that declares global variables, you also need to read the next section on using them.
 
@@ -1098,17 +1132,18 @@ To publish it at [https://myusername.github.io/my-app](https://myusername.github
 npm install --save-dev gh-pages
 ```
 
-Add the following script in your `package.json`:
+Add the following scripts in your `package.json`:
 
 ```js
   // ...
   "scripts": {
     // ...
-    "deploy": "npm run build&&gh-pages -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 ```
 
-(Note: the lack of whitespace is intentional.)
+The `predeploy` script will run automatically before `deploy` is run.
 
 #### Step 3: Deploy the site by running `npm run deploy`
 
@@ -1138,7 +1173,21 @@ GitHub Pages doesn't support routers that use the HTML5 `pushState` history API 
 ### Heroku
 
 Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
-You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
+You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration). 
+
+#### Resolving "Module not found: Error: Cannot resolve 'file' or 'directory'"
+
+Sometimes `npm run build` works locally but fails during deploy via Heroku with an error like this:
+
+```  
+remote: Failed to create a production build. Reason:
+remote: Module not found: Error: Cannot resolve 'file' or 'directory' 
+MyDirectory in /tmp/build_1234/src  
+```
+
+This means you need to ensure that the lettercase of the file or directory you `import` matches the one you see on your filesystem or on GitHub.
+
+This is important because Linux (the operating system used by Heroku) is case sensitive. So `MyDirectory` and `mydirectory` are two distinct directories and thus, even though the project builds locally, the difference in case breaks the `import` statements on Heroku remotes.
 
 ### Modulus
 
@@ -1231,6 +1280,11 @@ There are also reports that *uninstalling* Watchman fixes the issue. So if nothi
 ### `npm run build` silently fails
 
 It is reported that `npm run build` can fail on machines with no swap space, which is common in cloud environments. If [the symptoms are matching](https://github.com/facebookincubator/create-react-app/issues/1133#issuecomment-264612171), consider adding some swap space to the machine you’re building on, or build the project locally.
+
+### `npm run build` fails on Heroku
+
+This may be a problem with case sensitive filenames.
+Please refer to [this section](#resolving-module-not-found-error-cannot-resolve-file-or-directory).
 
 ## Something Missing?
 
