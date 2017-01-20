@@ -82,6 +82,9 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     extensions: ['.js', '.json', '.jsx', '.es6', '.coffee', '.cjsx', ''],
     alias: {
+      // This will prevent the multiple React instances issue (invariant). This mostly
+      // occurs when locally linking another npm package that requires React.
+      react: path.resolve(paths.appNodeModules, 'react'),
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web'
