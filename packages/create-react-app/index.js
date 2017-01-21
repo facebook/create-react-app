@@ -142,10 +142,22 @@ function shouldUseYarn() {
   }
 }
 
+function shouldUseCnpm() {
+  try {
+    execSync('cnpm --version', {stdio: 'ignore'});
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function install(packageToInstall, verbose, callback) {
   var command;
   var args;
-  if (shouldUseYarn()) {
+  if (shouldUseCnpm()) {
+    command = 'cnpm';
+    args = ['install', '--save-dev', '--save-exact', packageToInstall];
+  } else if (shouldUseYarn()) {
     command = 'yarnpkg';
     args = [ 'add', '--dev', '--exact', packageToInstall];
   } else {
