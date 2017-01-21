@@ -12,7 +12,7 @@ var path = require('path');
 var spawn = require('cross-spawn');
 var chalk = require('chalk');
 
-module.exports = function(appPath, appName, verbose, originalDirectory, template) {
+module.exports = function(appPath, appName, verbose, originalDirectory, template, isOnline) {
   var ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
   var ownPath = path.join(appPath, 'node_modules', ownPackageName);
   var appPackage = require(path.join(appPath, 'package.json'));
@@ -69,7 +69,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
 
   if (useYarn) {
     command = 'yarnpkg';
-    args = ['add'];
+    args = [
+      'add',
+      isOnline === false && '--offline'
+    ];
   } else {
     command = 'npm';
     args = [
