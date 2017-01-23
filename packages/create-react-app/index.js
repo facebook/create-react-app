@@ -52,6 +52,7 @@ if (currentNodeVersion.split('.')[0] < 4) {
   process.exit(1);
 }
 
+var commander = require('commander');
 var fs = require('fs-extra');
 var path = require('path');
 var execSync = require('child_process').execSync;
@@ -60,7 +61,7 @@ var semver = require('semver');
 
 var projectName;
 
-var program = require('commander')
+var program = commander
   .version(require('./package.json').version)
   .arguments('<project-directory>')
   .usage(chalk.green('<project-directory>') + ' [options]')
@@ -69,6 +70,7 @@ var program = require('commander')
   })
   .option('--verbose', 'print additional logs')
   .option('--scripts-version <alternative-package>', 'use a non-standard version of react-scripts')
+  .allowUnknownOption()
   .on('--help', function () {
     console.log('    Only ' + chalk.green('<project-directory>') + ' is required.');
     console.log();
@@ -82,7 +84,7 @@ var program = require('commander')
     console.log('      ' + chalk.cyan('https://github.com/facebookincubator/create-react-app/issues/new'));
     console.log();
   })
-  .parse(process.argv)
+  .parse(process.argv);
 
 if (typeof projectName === 'undefined') {
   console.error('Please specify the project directory:');
@@ -95,9 +97,14 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-createApp(projectName, program.verbose, program.scriptsVersion);
+var hiddenProgram = new commander.Command()
+  .option('--internal-testing-template <path-to-template>', '(internal usage only, DO NOT RELY ON THIS) ' +
+    'use a non-standard application template')
+  .parse(process.argv)
 
-function createApp(name, verbose, version) {
+createApp(projectName, program.verbose, program.scriptsVersion, hiddenProgram.internalTestingTemplate);
+
+function createApp(name, verbose, version, template) {
   var root = path.resolve(name);
   var appName = path.basename(root);
 
@@ -130,7 +137,7 @@ function createApp(name, verbose, version) {
   console.log('Installing ' + chalk.cyan('react-scripts') + '...');
   console.log();
 
-  run(root, appName, version, verbose, originalDirectory);
+  run(root, appName, version, verbose, originalDirectory, template);
 }
 
 function shouldUseYarn() {
@@ -163,7 +170,7 @@ function install(packageToInstall, verbose, callback) {
   });
 }
 
-function run(root, appName, version, verbose, originalDirectory) {
+function run(root, appName, version, verbose, originalDirectory, template) {
   var packageToInstall = getInstallPackage(version);
   var packageName = getPackageName(packageToInstall);
 
@@ -183,7 +190,7 @@ function run(root, appName, version, verbose, originalDirectory) {
       'init.js'
     );
     var init = require(scriptsPath);
-    init(root, appName, verbose, originalDirectory);
+    init(root, appName, verbose, originalDirectory, template);
   });
 }
 

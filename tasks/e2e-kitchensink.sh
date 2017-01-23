@@ -7,7 +7,7 @@
 # of patent rights can be found in the PATENTS file in the same directory.
 
 # ******************************************************************************
-# This is an end-to-end test intended to run on CI.
+# This is an end-to-end kitchensink test intended to run on CI.
 # You can also run it locally but it's slow.
 # ******************************************************************************
 
@@ -75,33 +75,8 @@ then
   yarn cache clean
 fi
 
-# Lint own code
-./node_modules/.bin/eslint --ignore-path .gitignore ./
-
 # ******************************************************************************
-# First, test the create-react-app development environment.
-# This does not affect our users but makes sure we can develop it.
-# ******************************************************************************
-
-# Test local build command
-npm run build
-# Check for expected output
-test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/static/media/*.svg
-test -e build/favicon.ico
-
-# Run tests with CI flag
-CI=true npm test
-# Uncomment when snapshot testing is enabled by default:
-# test -e template/src/__snapshots__/App.test.js.snap
-
-# Test local start command
-npm start -- --smoke-test
-
-# ******************************************************************************
-# Next, pack react-scripts and create-react-app so we can verify they work.
+# First, pack react-scripts and create-react-app so we can use them.
 # ******************************************************************************
 
 # Pack CLI
@@ -117,6 +92,9 @@ cp package.json package.json.orig
 # Replace own dependencies (those in the `packages` dir) with the local paths
 # of those packages.
 node $root_path/tasks/replace-own-deps.js
+
+# Remove .npmignore so the test template is added
+rm $root_path/packages/react-scripts/.npmignore
 
 # Finally, pack react-scripts
 scripts_path=$root_path/packages/react-scripts/`npm pack`
@@ -135,7 +113,7 @@ npm install $cli_path
 
 # Install the app in a temporary location
 cd $temp_app_path
-create_react_app --scripts-version=$scripts_path test-app
+create_react_app --scripts-version=$scripts_path --internal-testing-template=$root_path/packages/react-scripts/fixtures/kitchensink test-kitchensink
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -143,24 +121,44 @@ create_react_app --scripts-version=$scripts_path test-app
 # ******************************************************************************
 
 # Enter the app directory
-cd test-app
+cd test-kitchensink
 
 # Test the build
-npm run build
+NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
 # Check for expected output
 test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/static/media/*.svg
-test -e build/favicon.ico
+test -e build/static/js/main.*.js
 
-# Run tests with CI flag
-CI=true npm test
+# Unit tests
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true \
+  NODE_PATH=src \
+  npm test -- --no-cache --testPathPattern="/src/"
+
+# Test "development" environment
+tmp_server_log=`mktemp`
+PORT=3001 \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  nohup npm start &>$tmp_server_log &
+grep -q 'The app is running at:' <(tail -f $tmp_server_log)
+E2E_URL="http://localhost:3001" \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true NODE_PATH=src \
+  node node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+
+# Test "production" environment
+E2E_FILE=./build/index.html \
+  CI=true \
+  NODE_PATH=src \
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
+
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 
 # Test the server
-npm start -- --smoke-test
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell NODE_PATH=src npm start -- --smoke-test
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell HTTPS=true NODE_PATH=src npm start -- --smoke-test
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -175,86 +173,46 @@ npm link $root_path/packages/eslint-config-react-app
 npm link $root_path/packages/react-dev-utils
 npm link $root_path/packages/react-scripts
 
+# ...and we need  to remove template's .babelrc
+rm .babelrc
+
 # Test the build
-npm run build
+NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
 # Check for expected output
 test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/static/media/*.svg
-test -e build/favicon.ico
+test -e build/static/js/main.*.js
 
-# Run tests, overring the watch option to disable it.
-# `CI=true npm test` won't work here because `npm test` becomes just `jest`.
-# We should either teach Jest to respect CI env variable, or make
-# `scripts/test.js` survive ejection (right now it doesn't).
-npm test -- --watch=no
+# Unit tests
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true \
+  NODE_PATH=src \
+  npm test -- --no-cache --testPathPattern="/src/"
+
+# Test "development" environment
+tmp_server_log=`mktemp`
+PORT=3002 \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  nohup npm start &>$tmp_server_log &
+grep -q 'The app is running at:' <(tail -f $tmp_server_log)
+E2E_URL="http://localhost:3002" \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true NODE_PATH=src \
+  NODE_ENV=production \
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
+
+# Test "production" environment
+E2E_FILE=./build/index.html \
+  CI=true \
+  NODE_ENV=production \
+  NODE_PATH=src \
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
+
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
 
 # Test the server
-npm start -- --smoke-test
-
-# ******************************************************************************
-# Test --scripts-version with a version number
-# ******************************************************************************
-
-cd $temp_app_path
-create_react_app --scripts-version=0.4.0 test-app-version-number
-cd test-app-version-number
-
-# Check corresponding scripts version is installed.
-test -e node_modules/react-scripts
-grep '"version": "0.4.0"' node_modules/react-scripts/package.json
-
-# ******************************************************************************
-# Test --scripts-version with a tarball url
-# ******************************************************************************
-
-cd $temp_app_path
-create_react_app --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-0.4.0.tgz test-app-tarball-url
-cd test-app-tarball-url
-
-# Check corresponding scripts version is installed.
-test -e node_modules/react-scripts
-grep '"version": "0.4.0"' node_modules/react-scripts/package.json
-
-# ******************************************************************************
-# Test --scripts-version with a custom fork of react-scripts
-# ******************************************************************************
-
-cd $temp_app_path
-create_react_app --scripts-version=react-scripts-fork test-app-fork
-cd test-app-fork
-
-# Check corresponding scripts version is installed.
-test -e node_modules/react-scripts-fork
-
-# ******************************************************************************
-# Test nested folder path as the project name
-# ******************************************************************************
-
-#Testing a path that exists
-cd $temp_app_path
-mkdir test-app-nested-paths-t1
-cd test-app-nested-paths-t1
-mkdir -p test-app-nested-paths-t1/aa/bb/cc/dd
-create_react_app test-app-nested-paths-t1/aa/bb/cc/dd
-cd test-app-nested-paths-t1/aa/bb/cc/dd
-npm start -- --smoke-test
-
-#Testing a path that does not exist
-cd $temp_app_path
-create_react_app test-app-nested-paths-t2/aa/bb/cc/dd
-cd test-app-nested-paths-t2/aa/bb/cc/dd
-npm start -- --smoke-test
-
-#Testing a path that is half exists
-cd $temp_app_path
-mkdir -p test-app-nested-paths-t3/aa
-create_react_app test-app-nested-paths-t3/aa/bb/cc/dd
-cd test-app-nested-paths-t3/aa/bb/cc/dd
-npm start -- --smoke-test
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell NODE_PATH=src npm start -- --smoke-test
 
 # Cleanup
 cleanup
