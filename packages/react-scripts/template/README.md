@@ -30,6 +30,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Can I Use Decorators?](#can-i-use-decorators)
+- [Fetching AJAX Requests](#fetching-ajax-requests)
 - [Integrating with a Node Backend](#integrating-with-a-node-backend)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Using HTTPS in Development](#using-https-in-development)
@@ -602,6 +603,160 @@ Please refer to these two threads for reference:
 * [#411](https://github.com/facebookincubator/create-react-app/issues/411)
 
 Create React App will add decorator support when the specification advances to a stable stage.
+
+## Fetching AJAX Requests
+
+This project includes a [fetch polyfill](https://github.com/github/fetch), which makes it easier to make web requests.
+
+The global `fetch` function allows to easily makes AJAX requests. It takes in a URL as an input and returns a `Promise` that resolves to a `Response` object. You can find more information about `fetch` [here](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+
+
+__About Promises:__ This project also includes a [Promise polyfill](https://github.com/then/promise) which provides a full implementation of Promises/A+. A Promise represents the eventual result of an asynchronous operation, you can find more information about Promises [here](https://www.promisejs.org/) and [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
+
+You can make a GET request like this:
+```javascript
+import React, { Component } from 'react';
+import './App.css';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { users: [] };
+    this.defaultError = 'Error while fetching stargazers';
+  }
+
+  componentDidMount() {
+    this.fetchStargazers();
+  }
+
+  fetchStargazers() {
+    this.setState({ isLoading: true });
+    fetch('https://api.github.com/repos/facebook/react/stargazers')
+      .then((response) => {
+        const body = response.json();
+        if (response.ok) {
+          return body.then((users) => ({ users }));
+        }
+
+        return body.then(({ message }) => (
+          { users: [], error: message || this.defaultError }
+        ));
+      })
+      .catch(() => ({ users: [], error: this.defaultError }))
+      .then(({ users, error }) => {
+        if (!this.hasUnmounted) {
+          this.setState({ isLoading: false, error, users });
+        }
+      });
+  }
+
+  componentWillUnmount() {
+    this.hasUnmounted = true;
+  }
+
+  render() {
+    const { users, error, isLoading } = this.state;
+
+    if (isLoading) {
+      return (
+        <div className="App">
+          <p>Loading...</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="App">
+        <ul>
+          <p>{error}</p>
+          {users.map((user) => (
+            <li key={user.login}>
+              <a href={user.html_url}>{user.login}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+You can also use the `async/await` syntax to fetch data. [Here](https://zeit.co/blog/async-and-await) is an introduction to it.
+```javascript
+import React, { Component } from 'react';
+import './App.css';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { users: [] };
+    this.defaultError = 'Error while fetching stargazers';
+  }
+
+  componentDidMount() {
+    this.fetchStargazers();
+  }
+
+  async fetchStargazers() {
+    let error;
+    let users;
+
+    this.setState({ isLoading: true });
+
+    try {
+      const response = await fetch('https://api.github.com/repos/facebook/react/stargazers');
+
+      if (response.ok) {
+        users = await response.json();
+      } else {
+        const body = await response.json();
+        error = body.message || this.defaultError;
+        users = [];
+      }
+    } catch (e) {
+      error = this.defaultError;
+      users = [];
+    }
+
+    if (!this.hasUnmounted) {
+      this.setState({ isLoading: false, error, users });
+    }
+  }
+
+  componentWillUnmount() {
+    this.hasUnmounted = true;
+  }
+
+  render() {
+    const { users, error, isLoading } = this.state;
+
+    if (isLoading) {
+      return (
+        <div className="App">
+          <p>Loading...</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="App">
+        <ul>
+          <p>{error}</p>
+          {users.map((user) => (
+            <li key={user.login}>
+              <a href={user.html_url}>{user.login}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
 
 ## Integrating with a Node Backend
 
