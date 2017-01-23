@@ -1254,7 +1254,7 @@ Note that in order to support routers that use HTML5 `pushState` API, you may wa
 
 ## Troubleshooting
 
-### `npm start` doesn't detect changes
+### `npm start` doesn’t detect changes
 
 When you save a file while `npm start` is running, the browser should refresh with the updated code.<br>
 If this doesn’t happen, try one of the following workarounds:
