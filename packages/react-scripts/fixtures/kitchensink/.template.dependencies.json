@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "babel-preset-latest": "6.16.0",
+    "babel-register": "6.18.0",
+    "babel-polyfill": "6.20.0",
+    "chai": "3.5.0",
+    "jsdom": "9.8.3",
+    "mocha": "3.2.0"
+  }
+}
