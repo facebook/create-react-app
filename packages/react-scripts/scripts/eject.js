@@ -17,10 +17,21 @@ var chalk = require('chalk');
 var green = chalk.green;
 var cyan = chalk.cyan;
 
-prompt(
+new Promise(resolve => {
+  const force = process.argv[2];
+
+  if (force !== undefined && (force === '--force' || force === '-f')) {
+    return resolve(true);
+  }
+
+  prompt(
   'Are you sure you want to eject? This action is permanent.',
   false
-).then(shouldEject => {
+  ).then(shouldEject => {
+    resolve(shouldEject);
+  });
+
+}).then(shouldEject => {
   if (!shouldEject) {
     console.log(cyan('Close one! Eject aborted.'));
     process.exit(1);
