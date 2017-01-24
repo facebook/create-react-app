@@ -115,7 +115,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory, autoEjec
 
     // If --eject option given, we will run 'npm run eject'
     if (autoEject) {
-      ejectJsPath = paths.resolve('init.js');
+      ejectJsPath = path.resolve('init.js');
 
       var ejectSpawn = spawn("npm", ['run', 'eject', '--force']);
 
