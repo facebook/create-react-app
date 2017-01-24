@@ -70,6 +70,7 @@ var program = commander
   })
   .option('--verbose', 'print additional logs')
   .option('--scripts-version <alternative-package>', 'use a non-standard version of react-scripts')
+  .option('--auto-eject', 'automatically runs eject operation after installation')
   .allowUnknownOption()
   .on('--help', function () {
     console.log('    Only ' + chalk.green('<project-directory>') + ' is required.');
@@ -102,9 +103,9 @@ var hiddenProgram = new commander.Command()
     'use a non-standard application template')
   .parse(process.argv)
 
-createApp(projectName, program.verbose, program.scriptsVersion, hiddenProgram.internalTestingTemplate);
+createApp(projectName, program.verbose, program.scriptsVersion, program.autoEject, hiddenProgram.internalTestingTemplate);
 
-function createApp(name, verbose, version, template) {
+function createApp(name, verbose, version, autoEject, template) {
   var root = path.resolve(name);
   var appName = path.basename(root);
 
@@ -137,7 +138,7 @@ function createApp(name, verbose, version, template) {
   console.log('Installing ' + chalk.cyan('react-scripts') + '...');
   console.log();
 
-  run(root, appName, version, verbose, originalDirectory, template);
+  run(root, appName, version, verbose, originalDirectory, autoEject, template);
 }
 
 function shouldUseYarn() {
@@ -170,7 +171,7 @@ function install(packageToInstall, verbose, callback) {
   });
 }
 
-function run(root, appName, version, verbose, originalDirectory, template) {
+function run(root, appName, version, verbose, originalDirectory, autoEject, template) {
   var packageToInstall = getInstallPackage(version);
   var packageName = getPackageName(packageToInstall);
 
@@ -190,7 +191,7 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       'init.js'
     );
     var init = require(scriptsPath);
-    init(root, appName, verbose, originalDirectory, template);
+    init(root, appName, verbose, originalDirectory, autoEject, template);
   });
 }
 
