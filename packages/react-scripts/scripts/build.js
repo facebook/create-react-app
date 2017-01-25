@@ -29,12 +29,18 @@ var paths = require('../config/paths');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
+var { highlight } = require('cli-highlight');
+
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
+}
+
+function padLeft(n, nr, str = ' '){
+    return Array(n-String(nr).length+1).join(str)+nr;
 }
 
 // Input: /User/dan/app/build/static/js/main.82be8.js
@@ -124,9 +130,25 @@ function printErrors(summary, errors) {
   console.log(chalk.red(summary));
   console.log();
   errors.forEach(err => {
+    let linePointer;
     if (err.loaderSource === 'ts-loader') {
       if (err.file) {
+        const { line, character } = err.location;
+        const longestLineNumber = Array.from({ length: 7 }).map((_, i) => (line - 3) + i).reduce((a, b) => String(a).length === String(b).length ? String(a).length : String(a).length > String(b).length ? String(a).length : String(b).length);
+        const fileContent = highlight(fs.readFileSync(err.file, 'utf8'), { language: 'typescript' })
+          .split('\n');
+        const before = fileContent.slice(line - 4, line)
+          .reduce((lines, code, i) => 
+              lines.concat(`${padLeft(longestLineNumber, (line - 4) + (i + 1))} | ${code}`)
+              , [])
+        const pointer = Array.from({ length: character + 4 }).map(() => '-').concat('^');
+        const after = fileContent.slice(line, line + 4)
+          .reduce((lines, code, i) => 
+              lines.concat(`${padLeft(longestLineNumber, (line) + (i + 1))} | ${code}`)
+              , [])
+
         console.log('Error in ' + err.file);
+        linePointer = before.concat(pointer.join('')).concat(after).join('\n');
       } else if (err.module) {
         console.log('Error in ' + err.module.userRequest);
       }
@@ -134,6 +156,10 @@ function printErrors(summary, errors) {
 
     console.log(err.message || err);
     console.log();
+    if (linePointer) {
+      console.log(linePointer);
+      console.log();
+    }
   });
 }
 
