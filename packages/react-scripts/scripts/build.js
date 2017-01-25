@@ -124,6 +124,14 @@ function printErrors(summary, errors) {
   console.log(chalk.red(summary));
   console.log();
   errors.forEach(err => {
+    if (err.loaderSource === 'ts-loader') {
+      if (err.file) {
+        console.log('Error in ' + err.file);
+      } else if (err.module) {
+        console.log('Error in ' + err.module.userRequest);
+      }
+    }
+
     console.log(err.message || err);
     console.log();
   });
