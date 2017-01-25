@@ -12,8 +12,15 @@ npm install -g create-react-app
 create-react-app my-app --scripts-version=react-scripts-ts
 cd my-app/
 npm start
-
 ```
+
+## Features
+
+### Code highlighting on error
+When you run `npm run build` the terminal will output the error, including the highlighted sourecode (like babel)! 
+
+![CodeHighlight](https://cloud.githubusercontent.com/assets/175278/22310149/1ee66ccc-e346-11e6-83ff-e3a053701fb4.gif)
+
 ## Changelog
 ### 1.0.4
 * Change mentions of `eslint` to `tslint`
