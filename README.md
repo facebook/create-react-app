@@ -22,6 +22,11 @@ When you run `npm run build` the terminal will output the error, including the h
 ![CodeHighlight](https://cloud.githubusercontent.com/assets/175278/22310149/1ee66ccc-e346-11e6-83ff-e3a053701fb4.gif)
 
 ## Changelog
+### 1.0.5
+* Print file names when running `npm run build`
+* Add support for `setupTest.ts`
+* Highlight source code when erroring in `npm run build`
+
 ### 1.0.4
 * Change mentions of `eslint` to `tslint`
 
