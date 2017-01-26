@@ -14,7 +14,7 @@ var spawnSync = require('cross-spawn').sync;
 var chalk = require('chalk');
 var prompt = require('react-dev-utils/prompt');
 var paths = require('../config/paths');
-var createJestConfig = require('../utils/createJestConfig');
+var createJestConfig = require('./utils/createJestConfig');
 
 var green = chalk.green;
 var cyan = chalk.cyan;
@@ -48,7 +48,8 @@ prompt(
   var folders = [
     'config',
     'config/jest',
-    'scripts'
+    'scripts',
+    'scripts/utils'
   ];
 
   // Make shallow array of files paths

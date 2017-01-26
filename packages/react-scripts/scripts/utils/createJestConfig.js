@@ -9,7 +9,7 @@
  */
 
 const fs = require('fs');
-const paths = require('../config/paths');
+const paths = require('../../config/paths');
 
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
