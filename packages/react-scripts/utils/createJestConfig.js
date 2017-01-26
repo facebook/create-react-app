@@ -1,3 +1,4 @@
+// @remove-file-on-eject
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -6,8 +7,6 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-
-// Note: this file does not exist after ejecting.
 
 const fs = require('fs');
 const paths = require('../config/paths');
