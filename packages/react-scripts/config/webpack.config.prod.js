@@ -108,7 +108,6 @@ module.exports = {
   // directory of `react-scripts` itself rather than the project directory.
   resolveLoader: {
     root: paths.ownNodeModules,
-    moduleTemplates: ['*-loader']
   },
   // @remove-on-eject-end
   module: {
