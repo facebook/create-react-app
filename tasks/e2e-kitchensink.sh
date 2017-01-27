@@ -22,6 +22,8 @@ temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 function cleanup {
   echo 'Cleaning up.'
   cd $root_path
+  # Restore removed .npmignore
+  mv $root_path/packages/react-scripts/.npmignore.orig $root_path/packages/react-scripts/.npmignore  
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path
@@ -92,6 +94,9 @@ cp package.json package.json.orig
 # Replace own dependencies (those in the `packages` dir) with the local paths
 # of those packages.
 node $root_path/tasks/replace-own-deps.js
+
+# Save .npmignore becasue we're going to remove it
+cp $root_path/packages/react-scripts/.npmignore $root_path/packages/react-scripts/.npmignore.orig
 
 # Remove .npmignore so the test template is added
 rm $root_path/packages/react-scripts/.npmignore
