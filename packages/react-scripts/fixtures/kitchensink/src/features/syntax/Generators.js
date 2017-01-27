@@ -1,4 +1,5 @@
 import React from 'react'
+import fixtureEvent from '../fixture-event'
 
 function * load(limit) {
   let i = 1;
@@ -21,6 +22,10 @@ export default class extends React.Component {
       users.push(user);
     }
     this.setState({ users });
+  }
+
+  componentDidUpdate() {
+    fixtureEvent(document);
   }
 
   render() {

@@ -1,4 +1,5 @@
 import React from 'react'
+import fixtureEvent from '../fixture-event'
 
 function load({ id, ...rest } = { id: 0, user: { id: 42, name: '42' } }) {
   return [
@@ -19,6 +20,10 @@ export default class extends React.Component {
   async componentDidMount() {
     const users = load();
     this.setState({ users });
+  }
+
+  componentDidUpdate() {
+    fixtureEvent(document);
   }
 
   render() {

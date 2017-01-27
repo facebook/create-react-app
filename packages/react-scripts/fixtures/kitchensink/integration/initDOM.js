@@ -5,6 +5,7 @@ const path = require('path')
 
 let getMarkup
 let resourceLoader
+let initCallback
 
 if (process.env.E2E_FILE) {
   const file = path.isAbsolute(process.env.E2E_FILE)
@@ -18,6 +19,8 @@ if (process.env.E2E_FILE) {
     null,
     fs.readFileSync(path.join(path.dirname(file), resource.url.pathname), 'utf8')
   )
+
+  initCallback = (doc, resolve) => doc.defaultView.addEventListener('load', () => resolve(doc), false)
 } else if (process.env.E2E_URL) {
   getMarkup = () => new Promise(resolve => {
     http.get(process.env.E2E_URL, (res) => {
@@ -30,6 +33,8 @@ if (process.env.E2E_FILE) {
   resourceLoader = (resource, callback) => {
     return resource.defaultFetch(callback)
   }
+
+  initCallback = (doc, resolve) => doc.addEventListener('fixture', () => resolve(doc), false)
 } else {
   it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {
     expect(new Error('This isn\'t the error you are looking for.')).toBeUndefined()
@@ -49,15 +54,5 @@ export default feature => new Promise(async resolve => {
     virtualConsole: jsdom.createVirtualConsole().sendTo(console),
   })
 
-  doc.defaultView.addEventListener('load', () => {
-    let tries = 0
-    const check = () => {
-      if (++tries > 50 || doc.querySelector('[id^="feature"]') != null) {
-        resolve(doc)
-      } else {
-        setTimeout(check, 10)
-      }
-    }
-    check()
-  }, false)
+  initCallback(doc, resolve)
 })

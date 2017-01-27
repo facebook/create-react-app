@@ -1,4 +1,5 @@
 import React from 'react'
+import fixtureEvent from '../fixture-event'
 
 const styled = ([style]) => style.trim()
   .split(/\s*;\s*/)
@@ -24,6 +25,10 @@ export default class extends React.Component {
   async componentDidMount() {
     const users = load();
     this.setState({ users });
+  }
+
+  componentDidUpdate() {
+    fixtureEvent(document);
   }
 
   render() {
