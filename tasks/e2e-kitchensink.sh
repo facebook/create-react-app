@@ -151,7 +151,7 @@ E2E_URL="http://localhost:3001" \
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_PATH=src \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap
@@ -182,6 +182,8 @@ NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
 test -e build/*.html
 test -e build/static/js/main.*.js
 
+cat package.json
+
 # Unit tests
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
@@ -199,14 +201,14 @@ E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=production \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_ENV=production \
   NODE_PATH=src \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Uncomment when snapshot testing is enabled by default:
 # test -e src/__snapshots__/App.test.js.snap

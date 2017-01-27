@@ -1,5 +1,15 @@
 import React from 'react';
 
+class BuiltEmitter extends React.Component {
+  componentDidMount() {
+    document.dispatchEvent(new Event('ReactFeatureDidMount'));
+  }
+
+  render() {
+    return <div>{this.props.children}</div>
+  }
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -96,7 +106,7 @@ class App extends React.Component {
 
   render() {
     const Feature = this.state.feature;
-    return Feature ? <Feature /> : null;
+    return Feature ? <BuiltEmitter><Feature /></BuiltEmitter> : null;
   }
 }
 
