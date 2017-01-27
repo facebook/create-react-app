@@ -93,8 +93,14 @@ prompt(
 
   console.log(cyan('Updating the dependencies'));
   var ownPackageName = ownPackage.name;
-  console.log('  Removing ' + cyan(ownPackageName) + ' from devDependencies');
-  delete appPackage.devDependencies[ownPackageName];
+  if (appPackage.devDependencies[ownPackageName]) {
+    console.log('  Removing ' + cyan(ownPackageName) + ' from devDependencies');
+    delete appPackage.devDependencies[ownPackageName];
+  }
+  if (appPackage.dependencies[ownPackageName]) {
+    console.log('  Removing ' + cyan(ownPackageName) + ' from dependencies');
+    delete appPackage.dependencies[ownPackageName];
+  }
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
     // For some reason optionalDependencies end up in dependencies after install
