@@ -1,4 +1,5 @@
 import React from 'react';
+import fixtureEvent from './features/fixture-event';
 
 class App extends React.Component {
   constructor(props) {
@@ -92,6 +93,12 @@ class App extends React.Component {
 
   setFeature(feature) {
     this.setState({ feature });
+  }
+
+  componentDidUpdate() {
+    const { feature } = this.state;
+    if (feature === null || React.Component.isPrototypeOf(feature)) return;
+    fixtureEvent(document);
   }
 
   render() {

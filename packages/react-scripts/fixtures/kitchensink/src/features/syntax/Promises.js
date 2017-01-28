@@ -1,4 +1,5 @@
 import React from 'react'
+import fixtureEvent from '../fixture-event'
 
 function load() {
   return Promise.resolve([
@@ -20,6 +21,10 @@ export default class extends React.Component {
     load().then(users => {
       this.setState({ users });
     });
+  }
+
+  componentDidUpdate() {
+    fixtureEvent(document);
   }
 
   render() {

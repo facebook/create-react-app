@@ -1,4 +1,5 @@
 import React from 'react'
+import fixtureEvent from '../fixture-event'
 
 export default class extends React.Component {
   users = [
@@ -7,6 +8,10 @@ export default class extends React.Component {
     { id: 3, name: '3' },
     { id: 4, name: '4' }
   ];
+
+  componentDidMount() {
+    fixtureEvent(document);
+  }
 
   render() {
     return (
