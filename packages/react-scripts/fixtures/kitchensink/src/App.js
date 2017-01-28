@@ -1,12 +1,24 @@
 import React from 'react';
 
 class BuiltEmitter extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.callWhenDone = done => done();
+  }
+
   componentDidMount() {
-    document.dispatchEvent(new Event('ReactFeatureDidMount'));
+    this.callWhenDone(() => document.dispatchEvent(new Event('ReactFeatureDidMount')));
   }
 
   render() {
-    return <div>{this.props.children}</div>
+    const feature = React.cloneElement(React.Children.only(this.props.children), {
+      setCallWhenDone: done => {
+        this.callWhenDone = done;
+      }
+    });
+
+    return <div>{feature}</div>;
   }
 }
 

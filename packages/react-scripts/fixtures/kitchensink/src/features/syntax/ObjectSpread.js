@@ -13,12 +13,17 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
 
+    this.done = () => {};
+    this.props.setCallWhenDone && this.props.setCallWhenDone((done) => {
+      this.done = done;
+    });
+
     this.state = { users: [] };
   }
 
   async componentDidMount() {
     const users = load({ age: 42 });
-    this.setState({ users });
+    this.setState({ users }, () => this.done());
   }
 
   render() {

@@ -182,8 +182,6 @@ NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
 test -e build/*.html
 test -e build/static/js/main.*.js
 
-cat package.json
-
 # Unit tests
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
