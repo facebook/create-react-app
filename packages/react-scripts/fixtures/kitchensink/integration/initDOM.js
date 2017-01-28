@@ -2,6 +2,7 @@ const fs = require('fs')
 const http = require('http')
 const jsdom = require('jsdom')
 const path = require('path')
+const { expect } = require('chai')
 
 let getMarkup
 let resourceLoader
@@ -39,7 +40,7 @@ if (process.env.E2E_FILE) {
   timeToWaitForJsToExecute = 100
 } else {
   it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {
-    expect(new Error('This isn\'t the error you are looking for.')).toBeUndefined()
+    expect(new Error('This isn\'t the error you are looking for.')).to.be.undefined()
   })
 }
 
