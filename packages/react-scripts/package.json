@@ -1,6 +1,6 @@
 {
   "name": "@rangle/react-scripts",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Rangle's custom configuration and scripts for Create React App.",
   "repository": "rangle/create-react-app",
   "license": "BSD-3-Clause",
