@@ -103,8 +103,7 @@ class App extends React.Component {
         require.ensure([], () => this.setFeature(require('./features/syntax/TemplateInterpolation').default));
         break;
       case 'unknown-ext-inclusion':
-        require.ensure([], () => this.setFeature(require('./features/webpack/UnknownExtInclusion').default)
-        );
+        require.ensure([], () => this.setFeature(require('./features/webpack/UnknownExtInclusion').default));
         break;
       default:
         this.setFeature(null);
