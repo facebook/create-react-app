@@ -22,8 +22,6 @@ temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 function cleanup {
   echo 'Cleaning up.'
   cd $root_path
-  # Uncomment when snapshot testing is enabled by default:
-  # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
@@ -60,14 +58,6 @@ root_path=$PWD
 
 npm install
 
-# If the node version is < 4, the script should just give an error.
-if [ `node --version | sed -e 's/^v//' -e 's/\..\+//g'` -lt 4 ]
-then
-  cd $temp_app_path
-  err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
-  [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
-fi
-
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
@@ -92,9 +82,6 @@ cp package.json package.json.orig
 # Replace own dependencies (those in the `packages` dir) with the local paths
 # of those packages.
 node $root_path/tasks/replace-own-deps.js
-
-# Remove .npmignore so the test template is added
-rm $root_path/packages/react-scripts/.npmignore
 
 # Finally, pack react-scripts
 scripts_path=$root_path/packages/react-scripts/`npm pack`
@@ -151,14 +138,7 @@ E2E_URL="http://localhost:3001" \
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_PATH=src \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
-
-# Uncomment when snapshot testing is enabled by default:
-# test -e src/__snapshots__/App.test.js.snap
-
-# Test the server
-REACT_APP_SHELL_ENV_MESSAGE=fromtheshell NODE_PATH=src npm start -- --smoke-test
-REACT_APP_SHELL_ENV_MESSAGE=fromtheshell HTTPS=true NODE_PATH=src npm start -- --smoke-test
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -199,20 +179,14 @@ E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=production \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_ENV=production \
   NODE_PATH=src \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.js
-
-# Uncomment when snapshot testing is enabled by default:
-# test -e src/__snapshots__/App.test.js.snap
-
-# Test the server
-REACT_APP_SHELL_ENV_MESSAGE=fromtheshell NODE_PATH=src npm start -- --smoke-test
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Cleanup
 cleanup

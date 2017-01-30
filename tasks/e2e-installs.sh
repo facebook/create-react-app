@@ -22,8 +22,6 @@ temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 function cleanup {
   echo 'Cleaning up.'
   cd $root_path
-  # Uncomment when snapshot testing is enabled by default:
-  # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
@@ -59,14 +57,6 @@ cd ..
 root_path=$PWD
 
 npm install
-
-# If the node version is < 4, the script should just give an error.
-if [ `node --version | sed -e 's/^v//' -e 's/\..\+//g'` -lt 4 ]
-then
-  cd $temp_app_path
-  err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
-  [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
-fi
 
 if [ "$USE_YARN" = "yes" ]
 then
