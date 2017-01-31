@@ -11,14 +11,12 @@ var createJestConfig = require('../utils/createJestConfig');
 var fs = require('fs-extra');
 var path = require('path');
 var paths = require('../config/paths');
-var isReactScriptsLinked = require('../utils/isReactScriptsLinked');
+var reactScriptsLinked = require('../utils/isReactScriptsLinked')();
 var prompt = require('react-dev-utils/prompt');
 var spawnSync = require('cross-spawn').sync;
 var chalk = require('chalk');
 var green = chalk.green;
 var cyan = chalk.cyan;
-
-var reactScriptsLinked = isReactScriptsLinked();
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
@@ -33,13 +31,7 @@ prompt(
 
   // NOTE: get ownPath and appPath from config/paths.js ?
   var ownPath = path.join(__dirname, '..');
-  var appPath;
-
-  if (reactScriptsLinked) {
-    appPath = path.resolve('.');
-  } else {
-    appPath = path.join(ownPath, '..', '..');
-  }
+  var appPath = reactScriptsLinked ? path.resolve('.') : path.join(ownPath, '..', '..');
 
   function verifyAbsent(file) {
     if (fs.existsSync(path.join(appPath, file))) {
