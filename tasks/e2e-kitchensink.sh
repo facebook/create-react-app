@@ -111,7 +111,11 @@ create_react_app --scripts-version=$scripts_path --internal-testing-template=$ro
 cd test-kitchensink
 
 # Test the build
-NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
+  npm run build
+
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/main.*.js
@@ -127,6 +131,7 @@ tmp_server_log=`mktemp`
 PORT=3001 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
   nohup npm start &>$tmp_server_log &
 grep -q 'The app is running at:' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3001" \
@@ -138,6 +143,7 @@ E2E_URL="http://localhost:3001" \
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
   node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # ******************************************************************************
@@ -157,7 +163,11 @@ npm link $root_path/packages/react-scripts
 rm .babelrc
 
 # Test the build
-NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
+  npm run build
+
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/main.*.js
@@ -173,6 +183,7 @@ tmp_server_log=`mktemp`
 PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
   nohup npm start &>$tmp_server_log &
 grep -q 'The app is running at:' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3002" \
@@ -186,6 +197,7 @@ E2E_FILE=./build/index.html \
   CI=true \
   NODE_ENV=production \
   NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
   node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Cleanup
