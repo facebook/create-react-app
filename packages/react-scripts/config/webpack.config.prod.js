@@ -108,6 +108,7 @@ module.exports = {
   // directory of `react-scripts` itself rather than the project directory.
   resolveLoader: {
     root: paths.ownNodeModules,
+    fallback: paths.appNodeModules,
   },
   // @remove-on-eject-end
   module: {
@@ -117,10 +118,10 @@ module.exports = {
     preLoaders: [
       {
         test: /\.(js|jsx|es6)$/,
-        loader: 'eslint',
+        loader: 'eslint-loader',
         include: paths.appSrc
       }, {
-        loader: 'source-map',
+        loader: 'source-map-loader',
         test: /\.(jsx?|es6)$/,
         include: function (abs) {
           const rel = path.relative(paths.appSrc, abs)
@@ -152,7 +153,7 @@ module.exports = {
           /\.elm$/,
           /\.svg$/
         ],
-        loader: 'url',
+        loader: 'url-loader',
         query: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
@@ -162,7 +163,7 @@ module.exports = {
       {
         test: /\.(js|jsx|es6)$/,
         include: paths.appSrc,
-        loader: 'babel',
+        loader: 'babel-loader',
         // @remove-on-eject-begin
         query: {
           babelrc: false,
@@ -173,12 +174,12 @@ module.exports = {
       {
         test: /\.elm/,
         include: paths.appSrc,
-        loader: 'elm-webpack'
+        loader: 'elm-webpack-loader'
       },
       {
         test: /\.(coffee|cjsx)$/,
         include: paths.appSrc,
-        loaders: ['coffee', 'cjsx']
+        loaders: ['coffee-loader', 'cjsx-loader']
       },
       // The notation here is somewhat confusing.
       // "postcss" loader applies autoprefixer to our CSS.
@@ -202,19 +203,19 @@ module.exports = {
         // Webpack 1.x uses Uglify plugin as a signal to minify *all* the assets
         // including CSS. This is confusing and will be removed in Webpack 2:
         // https://github.com/webpack/webpack/issues/283
-        loader: ExtractTextPlugin.extract('style', 'css?importLoaders=1&sourceMap!postcss!sass?sourceMap')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?importLoaders=1&sourceMap!postcss-loader!sass-loader?sourceMap')
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
       {
         test: /\.json$/,
-        loader: 'json'
+        loader: 'json-loader'
       },
       // "file" loader for svg
       {
         test: /\.svg$/,
-        loader: 'file',
+        loader: 'file-loader',
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
