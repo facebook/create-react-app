@@ -188,11 +188,27 @@ module.exports = {
           loader: [
             {
               loader: 'css-loader',
-              query: {
+              options: {
                 importLoaders: 1
               }
-            },
-            'postcss-loader'
+            }, {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+                plugins: function () {
+                  return [
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ]
+                    })
+                  ]
+                }
+              }
+            }
           ]
         })
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
@@ -230,24 +246,6 @@ module.exports = {
         minifyJS: true,
         minifyCSS: true,
         minifyURLs: true
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true, // The minimize mode for loaders will be removed in webpack 3 or later.
-      options: {
-        // We use PostCSS for autoprefixing only.
-        postcss: function() {
-          return [
-            autoprefixer({
-              browsers: [
-                '>1%',
-                'last 4 versions',
-                'Firefox ESR',
-                'not ie < 9', // React doesn't support IE8 anyway
-              ]
-            }),
-          ];
-        }
       }
     }),
     // Makes some environment variables available to the JS code, for example:
