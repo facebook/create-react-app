@@ -4,7 +4,7 @@
     "build": "node packages/react-scripts/scripts/build.js",
     "changelog": "lerna-changelog",
     "create-react-app": "tasks/cra.sh",
-    "e2e": "tasks/e2e.sh",
+    "e2e": "tasks/e2e-simple.sh",
     "postinstall": "lerna bootstrap",
     "publish": "tasks/release.sh",
     "start": "node packages/react-scripts/scripts/start.js",
