@@ -98,7 +98,9 @@ module.exports = {
   // directory of `react-scripts` itself rather than the project directory.
   resolveLoader: {
     modules: [
-      paths.ownNodeModules
+      paths.ownNodeModules,
+      // Lerna hoists everything, so we need to look in our app directory
+      paths.appNodeModules
     ]
   },
   // @remove-on-eject-end
