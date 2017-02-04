@@ -3,11 +3,7 @@ import load from 'absoluteLoad'
 
 export default class extends Component {
   static propTypes = {
-    notifyRendered: PropTypes.func
-  }
-
-  static defaultProps = {
-    notifyRendered: () => {}
+    notifyRendered: PropTypes.func.isRequired
   }
 
   constructor(props) {

@@ -2,11 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 export default class extends Component {
   static propTypes = {
-    notifyRendered: PropTypes.func
-  }
-
-  static defaultProps = {
-    notifyRendered: () => {}
+    notifyRendered: PropTypes.func.isRequired
   }
 
   users = [

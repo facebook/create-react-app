@@ -11,11 +11,7 @@ function load({ id, ...rest } = { id: 0, user: { id: 42, name: '42' } }) {
 
 export default class extends Component {
   static propTypes = {
-    notifyRendered: PropTypes.func
-  }
-
-  static defaultProps = {
-    notifyRendered: () => {}
+    notifyRendered: PropTypes.func.isRequired
   }
 
   constructor(props) {
