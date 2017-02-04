@@ -1,28 +1,40 @@
-import React from 'react';
+import React, { Component, PropTypes, createElement } from 'react';
 
-class BuiltEmitter extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.callWhenDone = done => done();
+class BuiltEmitter extends Component {
+  static propTypes = {
+    feature: PropTypes.func.isRequired
   }
 
   componentDidMount() {
-    this.callWhenDone(() => document.dispatchEvent(new Event('ReactFeatureDidMount')));
+    const { feature } = this.props
+
+    // Class components must call this.props.onReady when they're ready for the test.
+    // We will assume functional components are ready immediately after mounting.
+    if (!Component.isPrototypeOf(feature)) {
+      this.handleReady();
+    }
+  }
+
+  handleReady() {
+    document.dispatchEvent(new Event('ReactFeatureDidMount'));
   }
 
   render() {
-    const feature = React.cloneElement(React.Children.only(this.props.children), {
-      setCallWhenDone: done => {
-        this.callWhenDone = done;
-      }
-    });
-
-    return <div>{feature}</div>;
+    const {
+      props: { feature },
+      handleReady
+    } = this;
+    return (
+      <div>
+        {createElement(feature, {
+          onReady: handleReady
+        })}
+      </div>
+    );
   }
 }
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -105,9 +117,7 @@ class App extends React.Component {
       case 'unknown-ext-inclusion':
         require.ensure([], () => this.setFeature(require('./features/webpack/UnknownExtInclusion').default));
         break;
-      default:
-        this.setFeature(null);
-        break;
+      default: throw new Error('Unknown feature!');
     }
   }
 
@@ -116,8 +126,11 @@ class App extends React.Component {
   }
 
   render() {
-    const Feature = this.state.feature;
-    return Feature ? <BuiltEmitter><Feature /></BuiltEmitter> : null;
+    const { feature } = this.state;
+    if (feature !== null) {
+      return <BuiltEmitter feature={feature} />;
+    }
+    return null;
   }
 }
 

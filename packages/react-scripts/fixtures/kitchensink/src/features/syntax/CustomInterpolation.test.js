@@ -5,6 +5,8 @@ import CustomInterpolation from './CustomInterpolation';
 describe('custom interpolation', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<CustomInterpolation />, div);
+    return new Promise(resolve => {
+      ReactDOM.render(<CustomInterpolation onReady={resolve} />, div);
+    });
   });
 });

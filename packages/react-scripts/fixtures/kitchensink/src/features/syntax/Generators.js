@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 
 function * load(limit) {
   let i = 1;
@@ -8,15 +8,13 @@ function * load(limit) {
   }
 }
 
-export default class extends React.Component {
+export default class extends Component {
+  static propTypes = {
+    onReady: PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props);
-
-    this.done = () => {};
-    this.props.setCallWhenDone && this.props.setCallWhenDone((done) => {
-      this.done = done;
-    });
-
     this.state = { users: [] };
   }
 
@@ -25,7 +23,11 @@ export default class extends React.Component {
     for (let user of load(4)) {
       users.push(user);
     }
-    this.setState({ users }, () => this.done());
+    this.setState({ users });
+  }
+
+  componentDidUpdate() {
+    this.props.onReady();
   }
 
   render() {
