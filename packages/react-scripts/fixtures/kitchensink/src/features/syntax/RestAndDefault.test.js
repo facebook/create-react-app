@@ -5,6 +5,8 @@ import RestAndDefault from './RestAndDefault';
 describe('rest + default', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<RestAndDefault />, div);
+    return new Promise(resolve => {
+      ReactDOM.render(<RestAndDefault onReady={resolve} />, div);
+    });
   });
 });

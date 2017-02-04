@@ -5,6 +5,8 @@ import AsyncAwait from './AsyncAwait';
 describe('async/await', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<AsyncAwait />, div);
+    return new Promise(resolve => {
+      ReactDOM.render(<AsyncAwait onReady={resolve} />, div);
+    });
   });
 });
