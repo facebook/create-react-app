@@ -52,12 +52,11 @@ if (currentNodeVersion.split('.')[0] < 4) {
   process.exit(1);
 }
 
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
 var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
 var semver = require('semver');
-var pathExists = require('path-exists');
 
 var projectName;
 
@@ -103,10 +102,8 @@ function createApp(name, verbose, version) {
   var appName = path.basename(root);
 
   checkAppName(appName);
-
-  if (!pathExists.sync(name)) {
-    fs.mkdirSync(root);
-  } else if (!isSafeToCreateProjectIn(root)) {
+  fs.ensureDirSync(name);
+  if (!isSafeToCreateProjectIn(root)) {
     console.log('The directory ' + chalk.green(name) + ' contains files that could conflict.');
     console.log('Try using a new directory name.');
     process.exit(1);
@@ -138,7 +135,7 @@ function createApp(name, verbose, version) {
 
 function shouldUseYarn() {
   try {
-    execSync('yarn --version', {stdio: 'ignore'});
+    execSync('yarnpkg --version', {stdio: 'ignore'});
     return true;
   } catch (e) {
     return false;
@@ -149,7 +146,7 @@ function install(packageToInstall, verbose, callback) {
   var command;
   var args;
   if (shouldUseYarn()) {
-    command = 'yarn';
+    command = 'yarnpkg';
     args = [ 'add', '--dev', '--exact', packageToInstall];
   } else {
     command = 'npm';
