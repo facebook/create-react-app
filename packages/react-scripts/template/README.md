@@ -185,6 +185,20 @@ You would need to install an ESLint plugin for your editor first.
 
 ><img src="http://i.imgur.com/yVNNHJM.png" width="300">
 
+
+>**For VS Code users**
+
+>Because VS Code ESLint plugin requires you to create your own ESLint configuration file at the root directory, you have to also include `eslint-config-react-app` in it.
+
+>Add this line to `./.eslintrc.json`:
+
+>```js
+{
+  // ...
+  "extends": "react-app"
+}
+```
+
 Then add this block to the `package.json` file of your project:
 
 ```js
