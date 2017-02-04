@@ -186,11 +186,9 @@ You would need to install an ESLint plugin for your editor first.
 ><img src="http://i.imgur.com/yVNNHJM.png" width="300">
 
 
->**For VS Code users**
+>**For Visual Studio Code users**
 
->Because VS Code ESLint plugin requires you to create your own ESLint configuration file at the root directory, you have to also include `eslint-config-react-app` in it.
-
->Add this line to `./.eslintrc.json`:
+>VS Code ESLint plugin automatically detects Create React App's configuration file. So you do not need to create `eslintrc.json` at the root directory, except when you want to add your own rules. In that case, you should include CRA's config by adding this line:
 
 >```js
 {
