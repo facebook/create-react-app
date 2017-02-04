@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 
-export default class extends React.Component {
+export default class extends Component {
+  static propTypes = {
+    notifyRendered: PropTypes.func
+  }
+
+  static defaultProps = {
+    notifyRendered: () => {}
+  }
+
   users = [
     { id: 1, name: '1' },
     { id: 2, name: '2' },
     { id: 3, name: '3' },
     { id: 4, name: '4' }
   ];
+
+  componentDidMount() {
+    this.props.notifyRendered()
+  }
 
   render() {
     return (

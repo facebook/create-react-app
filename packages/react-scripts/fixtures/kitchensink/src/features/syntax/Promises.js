@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 
 function load() {
   return Promise.resolve([
@@ -9,22 +9,28 @@ function load() {
   ]);
 }
 
-export default class extends React.Component {
+export default class extends Component {
+  static propTypes = {
+    notifyRendered: PropTypes.func
+  }
+
+  static defaultProps = {
+    notifyRendered: () => {}
+  }
+
   constructor(props) {
     super(props);
-
-    this.done = () => {};
-    this.props.setCallWhenDone && this.props.setCallWhenDone((done) => {
-      this.done = done;
-    });
-
     this.state = { users: [] };
   }
 
   componentDidMount() {
     load().then(users => {
-      this.setState({ users }, () => this.done());
+      this.setState({ users });
     });
+  }
+
+  componentDidUpdate() {
+    this.props.notifyRendered();
   }
 
   render() {

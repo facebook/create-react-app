@@ -1,24 +1,33 @@
-import React from 'react';
+import React, { Component, PropTypes, createElement } from 'react';
 
 class BuiltEmitter extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.callWhenDone = done => done();
+  static propTypes = {
+    feature: PropTypes.func.isRequired
   }
 
   componentDidMount() {
-    this.callWhenDone(() => document.dispatchEvent(new Event('ReactFeatureDidMount')));
+    const { feature } = this.props
+    if (!Component.isPrototypeOf(feature)) {
+      this.notifyRendered();
+    }
+  }
+
+  notifyRendered() {
+    document.dispatchEvent(new Event('ReactFeatureDidMount'));
   }
 
   render() {
-    const feature = React.cloneElement(React.Children.only(this.props.children), {
-      setCallWhenDone: done => {
-        this.callWhenDone = done;
-      }
-    });
-
-    return <div>{feature}</div>;
+    const {
+      props: { feature },
+      notifyRendered
+    } = this;
+    return (
+      <div>
+        {createElement(feature, {
+          notifyRendered
+        })}
+      </div>
+    );
   }
 }
 
@@ -116,8 +125,11 @@ class App extends React.Component {
   }
 
   render() {
-    const Feature = this.state.feature;
-    return Feature ? <BuiltEmitter><Feature /></BuiltEmitter> : null;
+    const { feature } = this.state;
+    if (feature !== null) {
+      return <BuiltEmitter feature={feature} />;
+    }
+    return null
   }
 }
 
