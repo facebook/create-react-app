@@ -32,7 +32,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    switch (location.hash.slice(1)) {
+    const feature = location.hash.slice(1)
+    switch (feature) {
       case 'array-destructuring':
         require.ensure([], () => this.setFeature(require('./features/syntax/ArrayDestructuring').default));
         break;
@@ -87,6 +88,9 @@ class App extends React.Component {
       case 'promises':
         require.ensure([], () => this.setFeature(require('./features/syntax/Promises').default));
         break;
+      case 'public-url':
+        require.ensure([], () => this.setFeature(require('./features/env/PublicUrl').default));
+        break;
       case 'rest-and-default':
         require.ensure([], () => this.setFeature(require('./features/syntax/RestAndDefault').default));
         break;
@@ -106,6 +110,9 @@ class App extends React.Component {
         require.ensure([], () => this.setFeature(require('./features/webpack/UnknownExtInclusion').default));
         break;
       default:
+        if (feature) {
+          throw new Error(`Missing feature "${feature}"`);
+        }
         this.setFeature(null);
         break;
     }
