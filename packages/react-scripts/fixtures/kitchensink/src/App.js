@@ -114,9 +114,7 @@ class App extends React.Component {
       case 'unknown-ext-inclusion':
         require.ensure([], () => this.setFeature(require('./features/webpack/UnknownExtInclusion').default));
         break;
-      default:
-        this.setFeature(null);
-        break;
+      default: throw new Error('Unknown feature!');
     }
   }
 
@@ -129,7 +127,7 @@ class App extends React.Component {
     if (feature !== null) {
       return <BuiltEmitter feature={feature} />;
     }
-    return null
+    return null;
   }
 }
 
