@@ -6,7 +6,7 @@ describe('NODE_PATH', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<NodePath notifyRendered={resolve} />, div);
+      ReactDOM.render(<NodePath onReady={resolve} />, div);
     });
   });
 });

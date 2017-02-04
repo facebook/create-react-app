@@ -6,7 +6,7 @@ describe('promises', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<Promises notifyRendered={resolve} />, div);
+      ReactDOM.render(<Promises onReady={resolve} />, div);
     });
   });
 });

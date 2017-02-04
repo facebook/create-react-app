@@ -6,7 +6,7 @@ describe('async/await', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<AsyncAwait notifyRendered={resolve} />, div);
+      ReactDOM.render(<AsyncAwait onReady={resolve} />, div);
     });
   });
 });

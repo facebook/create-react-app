@@ -6,7 +6,7 @@ describe('default parameters', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<DefaultParameters notifyRendered={resolve} />, div);
+      ReactDOM.render(<DefaultParameters onReady={resolve} />, div);
     });
   });
 });

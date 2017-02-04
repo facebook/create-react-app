@@ -6,7 +6,7 @@ describe('rest + default', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<RestAndDefault notifyRendered={resolve} />, div);
+      ReactDOM.render(<RestAndDefault onReady={resolve} />, div);
     });
   });
 });

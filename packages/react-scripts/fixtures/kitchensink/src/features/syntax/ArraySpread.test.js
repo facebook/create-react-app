@@ -6,7 +6,7 @@ describe('array spread', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<ArraySpread notifyRendered={resolve} />, div);
+      ReactDOM.render(<ArraySpread onReady={resolve} />, div);
     });
   });
 });

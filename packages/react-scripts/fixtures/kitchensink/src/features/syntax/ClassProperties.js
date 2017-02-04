@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 export default class extends Component {
   static propTypes = {
-    notifyRendered: PropTypes.func.isRequired
+    onReady: PropTypes.func.isRequired
   }
 
   users = [
@@ -13,7 +13,7 @@ export default class extends Component {
   ];
 
   componentDidMount() {
-    this.props.notifyRendered()
+    this.props.onReady()
   }
 
   render() {

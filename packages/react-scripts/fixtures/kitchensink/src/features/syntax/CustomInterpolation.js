@@ -16,7 +16,7 @@ function load() {
 
 export default class extends Component {
   static propTypes = {
-    notifyRendered: PropTypes.func.isRequired
+    onReady: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -30,7 +30,7 @@ export default class extends Component {
   }
 
   componentDidUpdate() {
-    this.props.notifyRendered();
+    this.props.onReady();
   }
 
   render() {

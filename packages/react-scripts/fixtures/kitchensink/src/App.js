@@ -8,23 +8,23 @@ class BuiltEmitter extends React.Component {
   componentDidMount() {
     const { feature } = this.props
     if (!Component.isPrototypeOf(feature)) {
-      this.notifyRendered();
+      this.handleReady();
     }
   }
 
-  notifyRendered() {
+  handleReady() {
     document.dispatchEvent(new Event('ReactFeatureDidMount'));
   }
 
   render() {
     const {
       props: { feature },
-      notifyRendered
+      handleReady
     } = this;
     return (
       <div>
         {createElement(feature, {
-          notifyRendered
+          onReady: handleReady
         })}
       </div>
     );
