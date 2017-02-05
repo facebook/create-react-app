@@ -151,6 +151,9 @@ E2E_FILE=./build/index.html \
 # Finally, let's check that everything still works after ejecting.
 # ******************************************************************************
 
+# Unlink our preset
+npm unlink $root_path/packages/babel-preset-react-app
+
 # Eject...
 echo yes | npm run eject
 
