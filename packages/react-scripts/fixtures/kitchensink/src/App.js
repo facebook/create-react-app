@@ -1,6 +1,6 @@
 import React, { Component, PropTypes, createElement } from 'react';
 
-class BuiltEmitter extends React.Component {
+class BuiltEmitter extends Component {
   static propTypes = {
     feature: PropTypes.func.isRequired
   }
@@ -34,7 +34,7 @@ class BuiltEmitter extends React.Component {
   }
 }
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
