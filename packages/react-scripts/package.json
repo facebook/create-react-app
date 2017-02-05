@@ -2,7 +2,10 @@
   "name": "custom-react-scripts",
   "version": "0.0.22",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "https://npmjs.com/package/custom-react-scripts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kitze/create-react-app/"
+  },
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
