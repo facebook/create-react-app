@@ -114,7 +114,7 @@ cd test-kitchensink
 npm link $root_path/packages/babel-preset-react-app
 
 # Test the build
-NODE_PATH=src NODE_ENV=production REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
+NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/main.*.js
@@ -167,7 +167,7 @@ npm link $root_path/packages/react-scripts
 rm .babelrc
 
 # Test the build
-NODE_PATH=src NODE_ENV=production REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
+NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/main.*.js
