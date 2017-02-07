@@ -233,3 +233,15 @@ function copyPublicFolder() {
     filter: file => file !== paths.appHtml
   });
 }
+
+var signals = {
+  'SIGINT': 2,
+  'SIGTERM': 15
+};
+
+Object.keys(signals).forEach(function (signalName) {
+  process.on(signalName, function () {
+    console.log('Build stopped by ' + signalName);
+    process.exit(signals[signalName]);
+  });
+});
