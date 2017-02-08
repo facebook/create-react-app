@@ -24,7 +24,13 @@ function transformWithBabel (filePath) {
       }]
     ]
   });
-  fs.writeFileSync(path.join(paths.appBuild, filePath), code);
+  const outputFilePath =
+    path.join(paths.appBuild,
+              path.join(path.dirname(filePath),
+                        path.basename(filePath, path.extname(filePath)) + '.js'))
+  // TODO: Create 1:1 copy with .js.flow extension for flow support
+  fs.writeFileSync(outputFilePath, code);
+  return outputFilePath
 }
 
 function copyAsset (filePath) {
@@ -36,8 +42,8 @@ function processFile (filePath) {
   if (/\.(es6|jsx?)$/.test(filePath)) {
 
     fs.mkdirpSync(path.parse(path.join(paths.appBuild, filePath)).dir);
-    transformWithBabel(filePath);
-    console.log(path.join(paths.appSrc, filePath) + ' -> ' + path.join(paths.appBuild, filePath));
+    const outputPath = transformWithBabel(filePath);
+    console.log(path.join(paths.appSrc, filePath) + ' -> ' + outputPath);
 
   } else if (/\.(s?css|svg|json|ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$/.test(filePath)) {
 

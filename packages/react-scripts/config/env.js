@@ -12,9 +12,6 @@
 // Grab NODE_ENV and TC_* environment variables and prepare them to be
 // injected into the application via DefinePlugin in Webpack configuration.
 
-var paths = require('./paths');
-var pkg = require(paths.appPackageJson);
-var git = require('git-rev-sync');
 var REACT_APP = /^(TC_|PORT)/i;
 
 function getClientEnvironment(publicUrl) {
@@ -35,10 +32,6 @@ function getClientEnvironment(publicUrl) {
       // This should only be used as an escape hatch. Normally you would put
       // images into the `src` and `import` them in code to get their paths.
       'PUBLIC_URL': JSON.stringify(publicUrl),
-
-      'TC_CLIENT_APP_NAME': JSON.stringify(pkg.name),
-      'TC_CLIENT_BUILD_COMMIT': JSON.stringify(git.long()),
-      'TC_CLIENT_BUILD_TIME': JSON.stringify((new Date()).toISOString())
     });
   return {'process.env': processEnv};
 }
