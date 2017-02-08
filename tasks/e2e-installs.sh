@@ -39,6 +39,13 @@ function handle_exit {
   exit
 }
 
+# Check for the existence of one or more files.
+function exists {
+  for f in $*; do
+    test -e "$f"
+  done
+}
+
 function create_react_app {
   node "$temp_cli_path"/node_modules/create-react-app/index.js $*
 }
@@ -86,7 +93,7 @@ create_react_app --scripts-version=0.4.0 test-app-version-number
 cd test-app-version-number
 
 # Check corresponding scripts version is installed.
-test -e node_modules/react-scripts
+exists node_modules/react-scripts
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
 
 # ******************************************************************************
@@ -98,7 +105,7 @@ create_react_app --scripts-version=https://registry.npmjs.org/react-scripts/-/re
 cd test-app-tarball-url
 
 # Check corresponding scripts version is installed.
-test -e node_modules/react-scripts
+exists node_modules/react-scripts
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
 
 # ******************************************************************************
@@ -110,7 +117,7 @@ create_react_app --scripts-version=react-scripts-fork test-app-fork
 cd test-app-fork
 
 # Check corresponding scripts version is installed.
-test -e node_modules/react-scripts-fork
+exists node_modules/react-scripts-fork
 
 # ******************************************************************************
 # Test nested folder path as the project name
