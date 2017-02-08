@@ -114,11 +114,12 @@ module.exports = {
     loaders: [
       // Default loader: load all assets that are not handled
       // by other loaders with the url loader.
-      // Note: This list needs to be updated with every change of extensions
+      //
+      // Note:
+      // The "url" loader exclude list needs to be updated with every change of extensions
       // the other loaders match.
-      // E.g., when adding a loader for a new supported file extension,
-      // we need to add the supported extension to this loader too.
-      // Add one new line in `exclude` for each loader.
+      // E.g., when adding a loader for a new supported file extension (such as .sass),
+      // you need to add the supported extension (/\.sass$/) to this loader too.
       //
       // "file" loader makes sure those assets get served by WebpackDevServer.
       // When you `import` an asset, you get its (virtual) filename.
@@ -163,7 +164,7 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        loader: 'style!css?modules&importLoaders=1!postcss'
+        loader: 'style!css?importLoaders=1!postcss'
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
@@ -179,6 +180,9 @@ module.exports = {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
+      // *STOP* Are you adding a new loader?
+      // Remember to update the exclude list in the "url" loader to exclude the new extension.
+      // E.g., adding a loader to handle .sass remember to add /\.sass$/ to "url" loaders exclude list
     ]
   },
   // @remove-on-eject-begin
