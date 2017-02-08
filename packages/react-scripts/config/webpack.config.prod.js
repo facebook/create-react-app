@@ -52,6 +52,9 @@ var publicPath = ensureSlash(homepagePathname, true);
 var publicUrl = ensureSlash(homepagePathname, false);
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
+// Create an instance of the text extract plugin to be used by both
+// regular CSS and CSS-modules.
+const extractCSS = new ExtractTextPlugin('static/css/[name].[contenthash:8].css')
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -193,17 +196,24 @@ module.exports = {
       // tags. If you use code splitting, however, any async bundles will still
       // use the "style" loader inside the async code so CSS from them won't be
       // in the main CSS file.
+      //
+      // "?-autoprefixer" disables autoprefixer in css-loader itself:
+      // https://github.com/webpack/css-loader/issues/281
+      // We already have it thanks to postcss. We only pass this flag in
+      // production because "css" loader only enables autoprefixer-powered
+      // removal of unnecessary prefixes when Uglify plugin is enabled.
+      // Webpack 1.x uses Uglify plugin as a signal to minify *all* the assets
+      // including CSS. This is confusing and will be removed in Webpack 2:
+      // https://github.com/webpack/webpack/issues/283
+      {
+        test: /\.module\.s?css$/,
+        loader: extractCSS.extract('style-loader', 'css-loader?importLoaders=1&modules&localIdentName=[path][name]__[local]--[hash:base64:8]&sourceMap!postcss-loader!sass-loader?sourceMap')
+        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+      },
       {
         test: /\.s?css$/,
-        // "?-autoprefixer" disables autoprefixer in css-loader itself:
-        // https://github.com/webpack/css-loader/issues/281
-        // We already have it thanks to postcss. We only pass this flag in
-        // production because "css" loader only enables autoprefixer-powered
-        // removal of unnecessary prefixes when Uglify plugin is enabled.
-        // Webpack 1.x uses Uglify plugin as a signal to minify *all* the assets
-        // including CSS. This is confusing and will be removed in Webpack 2:
-        // https://github.com/webpack/webpack/issues/283
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?importLoaders=1&sourceMap!postcss-loader!sass-loader?sourceMap')
+        exclude: /\.module\.s?css$/,
+        loader: extractCSS.extract('style-loader', 'css-loader?importLoaders=1&sourceMap!postcss-loader!sass-loader?sourceMap')
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
@@ -293,8 +303,8 @@ module.exports = {
         screw_ie8: true
       }
     }),
-    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-    new ExtractTextPlugin('static/css/[name].[contenthash:8].css'),
+    // Note: this won't work without extractCSS.extract(..) in `loaders`.
+    extractCSS,
     new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/en$/),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
