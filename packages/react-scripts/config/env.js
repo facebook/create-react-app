@@ -32,12 +32,14 @@ function getClientEnvironment(publicUrl) {
       'PUBLIC_URL': publicUrl
     });
   // Stringify all values so we can feed into Webpack DefinePlugin
-  var string = Object
-    .keys(vars)
-    .reduce((env, key) => {
-      env[key] = JSON.stringify(vars[key]);
-      return env;
-    }, {});
+  var string = {
+    'process.env': Object
+      .keys(vars)
+      .reduce((env, key) => {
+        env[key] = JSON.stringify(vars[key]);
+        return env;
+      }, {}),
+  };
 
   return {
     vars: vars,
