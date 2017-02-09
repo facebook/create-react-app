@@ -15,7 +15,7 @@
 var REACT_APP = /^REACT_APP_/i;
 
 function getClientEnvironment(publicUrl) {
-  var processEnv = Object
+  var vars = Object
     .keys(process.env)
     .filter(key => REACT_APP.test(key))
     .reduce((env, key) => {
@@ -31,15 +31,18 @@ function getClientEnvironment(publicUrl) {
       // images into the `src` and `import` them in code to get their paths.
       'PUBLIC_URL': publicUrl
     });
-
-  processEnv['process.env'] = Object
-    .keys(processEnv)
+  // Stringify all values so we can feed into Webpack DefinePlugin
+  var string = Object
+    .keys(vars)
     .reduce((env, key) => {
-      env[key] = JSON.stringify(processEnv[key]);
+      env[key] = JSON.stringify(vars[key]);
       return env;
     }, {});
 
-  return processEnv;
+  return {
+    vars: vars,
+    string: string,
+  };
 }
 
 module.exports = getClientEnvironment;
