@@ -20,7 +20,8 @@
     "openBrowser.js",
     "prompt.js",
     "WatchMissingNodeModulesPlugin.js",
-    "webpackHotDevClient.js"
+    "webpackHotDevClient.js",
+    "webpackEnvDefinePlugin.js"
   ],
   "dependencies": {
     "ansi-html": "0.0.5",

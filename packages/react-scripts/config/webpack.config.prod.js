@@ -17,7 +17,7 @@ var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
 var paths = require('./paths');
-var getClientEnvironment = require('./env');
+var envDefinePlugin = require('react-dev-utils/webpackEnvDefinePlugin');
 
 // @remove-on-eject-begin
 // `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
@@ -49,14 +49,6 @@ var publicPath = ensureSlash(homepagePathname, true);
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 var publicUrl = ensureSlash(homepagePathname, false);
-// Get environment variables to inject into our app.
-var env = getClientEnvironment(publicUrl);
-
-// Assert this just to be safe.
-// Development builds of React are slow and not intended for production.
-if (env['process.env'].NODE_ENV !== '"production"') {
-  throw new Error('Production builds must have NODE_ENV=production.');
-}
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -236,11 +228,21 @@ module.exports = {
         minifyURLs: true
       }
     }),
-    // Makes some environment variables available to the JS code, for example:
-    // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
-    // It is absolutely essential that NODE_ENV was set to production here.
-    // Otherwise React will be compiled in the very slow development mode.
-    new webpack.DefinePlugin(env),
+    // Makes some environment variables available to the JS code
+    new webpack.DefinePlugin(envDefinePlugin({
+      // Grab REACT_APP_* environment variables
+      regex: /^REACT_APP_/i,
+      customVariables: {
+        // It is absolutely essential that NODE_ENV is set to production here.
+        // Otherwise React will be compiled in the very slow development mode.
+        'NODE_ENV': JSON.stringify('production'),
+        // Useful for resolving the correct path to static assets in `public`.
+        // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
+        // This should only be used as an escape hatch. Normally you would put
+        // images into the `src` and `import` them in code to get their paths.
+        'PUBLIC_URL': JSON.stringify(publicUrl)
+      }
+    })),
     // This helps ensure the builds are consistent if source hasn't changed:
     new webpack.optimize.OccurrenceOrderPlugin(),
     // Try to dedupe duplicated modules, if any:

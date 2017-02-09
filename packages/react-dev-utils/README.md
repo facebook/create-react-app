@@ -219,3 +219,33 @@ module.exports = {
   // ...
 }
 ```
+
+#### `envDefinePlugin({regex: string, customVariables: Object.<string, string>})`
+
+This function grabs environment variables that follows a specified regex and injects them into the application 
+using the webpack DefinePlugin.
+In addition, the function allows defining custom environment variables to be injected.
+
+To use first reference it in your webpack config:
+
+  ```js
+  var webpack = require('webpack');
+  var envDefinePlugin = require('react-dev-utils/webpackEnvDefinePlugin');
+  ```
+
+and define it as a plugin in the webpack config plugin section:
+ 
+ ```js
+  plugins: [
+     ...
+     new webpack.DefinePlugin(envDefinePlugin({
+       // Grab MY_PREFIX_* environment variables
+       regex: /^MY_PREFIX_/i,
+       customVariables: {
+         // Useful for injecting static values as environment variables to the application
+         'APP_NAME': 'My App'
+       }
+     })),
+     ...
+  ]
+ ```
