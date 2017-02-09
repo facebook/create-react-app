@@ -22,11 +22,20 @@ function insideGitRepository() {
   }
 }
 
+function insideMercurialRepository() {
+  try {
+    execSync('hg --cwd . root', {stdio: 'ignore'});
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function gitInit() {
   try {
     execSync('git --version', {stdio: 'ignore'});
 
-    if (insideGitRepository()) {
+    if (insideGitRepository() || insideMercurialRepository()) {
       return false;
     }
 
