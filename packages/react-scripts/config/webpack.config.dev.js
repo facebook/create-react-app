@@ -126,7 +126,8 @@ module.exports = {
           /\.(js|jsx)$/,
           /\.css$/,
           /\.json$/,
-          /\.svg$/
+          /\.svg$/,
+          /(\.scss|\.sass)$/
         ],
         loader: 'url',
         query: {
@@ -159,6 +160,17 @@ module.exports = {
         test: /\.css$/,
         loader: 'style!css?importLoaders=1!postcss'
       },
+      // "sass" loader transpiling SASS to CSS.
+      // "postcss" loader applies autoprefixer to our CSS.
+      // "css" loader resolves paths in CSS and adds assets as dependencies.
+      // "style" loader turns CSS into JS modules that inject <style> tags.
+      // In production, we use a plugin to extract that CSS to a file, but
+      // in development "style" loader enables hot editing of CSS.
+      {
+        test: /(\.scss|\.sass)$/,
+        include: paths.appSrc,
+        loader: "style!css!postcss!sass?sourceMap"
+      }
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
       {
