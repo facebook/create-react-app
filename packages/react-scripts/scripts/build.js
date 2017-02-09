@@ -235,8 +235,10 @@ function copyPublicFolder() {
 }
 
 process.on('SIGTERM', function () {
-  console.log('Build stopped by SIGTERM. This could mean someone that ' +
-      'killed the process (e.g. with `kill -15` or `killall`), that the ' +
-      'system is shutting down, or that it ran out of memory.');
+  console.log(
+    'Build stopped by SIGTERM. This could mean that someone killed the ' +
+    'process (e.g. with `kill -15` or `killall`), that the system is ' +
+    'shutting down, or that it ran out of memory.'
+  );
   process.exit(15);
 });
