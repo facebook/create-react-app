@@ -15,7 +15,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-var ensureSlash = require('./utils/ensureSlash');
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 
@@ -30,7 +29,7 @@ var publicPath = '/';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
-var publicUrl = ensureSlash(paths.servedPath, false);
+var publicUrl = '';
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
 
@@ -116,7 +115,7 @@ module.exports = {
       // ** ADDING/UPDATING LOADERS **
       // The "url" loader handles all assets unless explicitly excluded.
       // The `exclude` list *must* be updated with every change to loader extensions.
-      // When adding a new loader, you must add its `test` 
+      // When adding a new loader, you must add its `test`
       // as a new entry in the `exclude` list for "url" loader.
 
       // "url" loader embeds assets smaller than specified size as data URLs to avoid requests.

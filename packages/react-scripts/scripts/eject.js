@@ -43,6 +43,12 @@ prompt(
     }
   }
 
+  var folders = [
+    'config',
+    path.join('config', 'jest'),
+    'scripts'
+  ];
+
   var files = [
     path.join('config', 'env.js'),
     path.join('config', 'paths.js'),
@@ -51,19 +57,10 @@ prompt(
     path.join('config', 'webpack.config.prod.js'),
     path.join('config', 'jest', 'cssTransform.js'),
     path.join('config', 'jest', 'fileTransform.js'),
-    path.join('config', 'utils', 'ensureSlash.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
-    path.join('scripts', 'test.js'),
+    path.join('scripts', 'test.js')
   ];
-
-  var folders = files.reduce(function(prevFolders, file) {
-    var dirname = path.dirname(file);
-    if (prevFolders.indexOf(dirname) === -1) {
-      return prevFolders.concat(dirname);
-    }
-    return prevFolders;
-  }, []);
 
   // Ensure that the app folder is clean and we won't override any files
   folders.forEach(verifyAbsent);

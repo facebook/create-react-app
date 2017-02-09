@@ -43,6 +43,17 @@ var nodePaths = (process.env.NODE_PATH || '')
 
 var envPublicUrl = process.env.PUBLIC_URL;
 
+function ensureSlash(path, needsSlash) {
+  var hasSlash = path.endsWith('/');
+  if (hasSlash && !needsSlash) {
+    return path.substr(path, path.length - 1);
+  } else if (!hasSlash && needsSlash) {
+    return path + '/';
+  } else {
+    return path;
+  }
+}
+
 function getPublicUrl(appPackageJson) {
   return envPublicUrl || require(appPackageJson).homepage;
 }
@@ -55,12 +66,10 @@ function getPublicUrl(appPackageJson) {
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
 function getServedPath(appPackageJson) {
   var publicUrl = getPublicUrl(appPackageJson);
-  if (!publicUrl) {
-    return '/';
-  } else if (envPublicUrl) {
-    return publicUrl;
-  }
-  return url.parse(publicUrl).pathname;
+  var servedUrl = envPublicUrl || (
+    publicUrl ? url.parse(publicUrl).pathname : '/'
+  );
+  return ensureSlash(servedUrl, true);
 }
 
 // config after eject: we're in ./config/

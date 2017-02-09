@@ -16,7 +16,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
-var ensureSlash = require('./utils/ensureSlash');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
 
@@ -27,11 +26,11 @@ var path = require('path');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-var publicPath = ensureSlash(paths.servedPath, true);
+var publicPath = paths.servedPath;
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
-var publicUrl = ensureSlash(paths.servedPath, false);
+var publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
 
@@ -106,7 +105,7 @@ module.exports = {
       // ** ADDING/UPDATING LOADERS **
       // The "url" loader handles all assets unless explicitly excluded.
       // The `exclude` list *must* be updated with every change to loader extensions.
-      // When adding a new loader, you must add its `test` 
+      // When adding a new loader, you must add its `test`
       // as a new entry in the `exclude` list in the "url" loader.
 
       // "url" loader embeds assets smaller than specified size as data URLs to avoid requests.

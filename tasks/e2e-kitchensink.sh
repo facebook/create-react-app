@@ -135,7 +135,6 @@ tmp_server_log=`mktemp`
 PORT=3001 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
-  PUBLIC_URL=http://www.example.org/spa/ \
   nohup npm start &>$tmp_server_log &
 grep -q 'The app is running at:' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3001" \
@@ -193,7 +192,6 @@ tmp_server_log=`mktemp`
 PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
-  PUBLIC_URL=http://www.example.org/spa/ \
   nohup npm start &>$tmp_server_log &
 grep -q 'The app is running at:' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3002" \
