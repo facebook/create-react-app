@@ -439,7 +439,7 @@ npm install --save-dev --save-exact react-scripts@0.8.0
 
 ### Babel Preset (`babel-preset-react-app`)
 
-* The preset now detects the Node.js version in test environment and disables unnecessary ES2015 transforms using using `babel-preset-env`. ([@shubheksha](https://github.com/shubheksha) in [#878](https://github.com/facebookincubator/create-react-app/pull/878), [@JeffreyATW](https://github.com/JeffreyATW) in [#927
+* The preset now detects the Node.js version in test environment and disables unnecessary ES2015 transforms using `babel-preset-env`. ([@shubheksha](https://github.com/shubheksha) in [#878](https://github.com/facebookincubator/create-react-app/pull/878), [@JeffreyATW](https://github.com/JeffreyATW) in [#927
 ](https://github.com/facebookincubator/create-react-app/pull/927))
 * Fixes a duplicate dependency on `babel-plugin-transform-regenerator`. ([@akofman](https://github.com/akofman) in [#864](https://github.com/facebookincubator/create-react-app/pull/864))
 
