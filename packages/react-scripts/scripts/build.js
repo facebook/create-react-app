@@ -234,24 +234,9 @@ function copyPublicFolder() {
   });
 }
 
-var signals = [
-  {
-    name: 'SIGINT',
-    code: 2,
-    message: 'This usually means someone pressed Ctrl+C.'
-  },
-  {
-    name: 'SIGTERM',
-    code: 15,
-    message: 'This could mean someone that killed the process (e.g. with ' +
-      '`kill -15` or `killall`), that the system is shutting down, or that ' +
-      'it ran out of memory.'
-  }
-];
-
-signals.forEach(function (signal) {
-  process.on(signal.name, function () {
-    console.log('ERROR: Build stopped by ' + signal.name + '. ' + signal.message);
-    process.exit(signal.code);
-  });
+process.on('SIGTERM', function () {
+  console.log('Build stopped by SIGTERM. This could mean someone that ' +
+      'killed the process (e.g. with `kill -15` or `killall`), that the ' +
+      'system is shutting down, or that it ran out of memory.');
+  process.exit(15);
 });
