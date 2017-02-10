@@ -142,6 +142,36 @@ create_react_app --scripts-version=$scripts_path test-app
 # let's make sure all npm scripts are in the working state.
 # ******************************************************************************
 
+function verify_env_url {
+  # Backup package.json because we're going to make it dirty
+  cp package.json package.json.orig
+
+  # Test relative path build
+  awk -v n=2 -v s="  \"homepage\": \".\"," 'NR == n {print s} {print}' package.json > tmp && mv tmp package.json
+
+  npm run build
+
+  PUBLIC_URL="/anabsolute" npm run build
+
+  # Test absolute path build
+  sed "2s/.*/  \"homepage\": \"\/testingpath\",/" package.json > tmp && mv tmp package.json
+
+  npm run build
+
+  PUBLIC_URL="https://www.example.net/overridetest" npm run build
+
+  # Test absolute url build
+  sed "2s/.*/  \"homepage\": \"https:\/\/www.example.net\/testingpath\",/" package.json > tmp && mv tmp package.json
+
+  npm run build
+
+  PUBLIC_URL="https://www.example.net/overridetest" npm run build
+
+  # Restore package.json
+  rm package.json
+  mv package.json.orig package.json
+}
+
 # Enter the app directory
 cd test-app
 
@@ -161,6 +191,9 @@ CI=true npm test
 
 # Test the server
 npm start -- --smoke-test
+
+# Test environment handling
+verify_env_url
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -195,6 +228,8 @@ npm test -- --watch=no
 # Test the server
 npm start -- --smoke-test
 
+# Test environment handling
+verify_env_url
 
 # Cleanup
 cleanup
