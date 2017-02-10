@@ -6,7 +6,7 @@ class BuiltEmitter extends Component {
   }
 
   componentDidMount() {
-    const { feature } = this.props
+    const { feature } = this.props;
 
     // Class components must call this.props.onReady when they're ready for the test.
     // We will assume functional components are ready immediately after mounting.
@@ -44,7 +44,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    switch (location.hash.slice(1)) {
+    const feature = location.hash.slice(1);
+    switch (feature) {
       case 'array-destructuring':
         require.ensure([], () => this.setFeature(require('./features/syntax/ArrayDestructuring').default));
         break;
@@ -99,6 +100,9 @@ class App extends Component {
       case 'promises':
         require.ensure([], () => this.setFeature(require('./features/syntax/Promises').default));
         break;
+      case 'public-url':
+        require.ensure([], () => this.setFeature(require('./features/env/PublicUrl').default));
+        break;
       case 'rest-and-default':
         require.ensure([], () => this.setFeature(require('./features/syntax/RestAndDefault').default));
         break;
@@ -117,7 +121,7 @@ class App extends Component {
       case 'unknown-ext-inclusion':
         require.ensure([], () => this.setFeature(require('./features/webpack/UnknownExtInclusion').default));
         break;
-      default: throw new Error('Unknown feature!');
+      default: throw new Error(`Missing feature "${feature}"`);
     }
   }
 

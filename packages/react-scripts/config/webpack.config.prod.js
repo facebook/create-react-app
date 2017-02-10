@@ -24,31 +24,13 @@ var getClientEnvironment = require('./env');
 var path = require('path');
 // @remove-on-eject-end
 
-function ensureSlash(path, needsSlash) {
-  var hasSlash = path.endsWith('/');
-  if (hasSlash && !needsSlash) {
-    return path.substr(path, path.length - 1);
-  } else if (!hasSlash && needsSlash) {
-    return path + '/';
-  } else {
-    return path;
-  }
-}
-
-// We use "homepage" field to infer "public path" at which the app is served.
-// Webpack needs to know it to put the right <script> hrefs into HTML even in
-// single-page apps that may serve index.html for nested URLs like /todos/42.
-// We can't use a relative path in HTML because we don't want to load something
-// like /todos/42/static/js/bundle.7289d.js. We have to know the root.
-var homepagePath = require(paths.appPackageJson).homepage;
-var homepagePathname = homepagePath ? url.parse(homepagePath).pathname : '/';
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-var publicPath = ensureSlash(homepagePathname, true);
+var publicPath = paths.servedPath;
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
-// Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
-var publicUrl = ensureSlash(homepagePathname, false);
+// Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
+var publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
 
@@ -123,7 +105,7 @@ module.exports = {
       // ** ADDING/UPDATING LOADERS **
       // The "url" loader handles all assets unless explicitly excluded.
       // The `exclude` list *must* be updated with every change to loader extensions.
-      // When adding a new loader, you must add its `test` 
+      // When adding a new loader, you must add its `test`
       // as a new entry in the `exclude` list in the "url" loader.
 
       // "url" loader embeds assets smaller than specified size as data URLs to avoid requests.

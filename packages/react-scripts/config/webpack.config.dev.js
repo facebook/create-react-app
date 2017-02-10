@@ -115,7 +115,7 @@ module.exports = {
       // ** ADDING/UPDATING LOADERS **
       // The "url" loader handles all assets unless explicitly excluded.
       // The `exclude` list *must* be updated with every change to loader extensions.
-      // When adding a new loader, you must add its `test` 
+      // When adding a new loader, you must add its `test`
       // as a new entry in the `exclude` list for "url" loader.
 
       // "url" loader embeds assets smaller than specified size as data URLs to avoid requests.
