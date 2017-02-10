@@ -150,28 +150,36 @@ function verify_env_url {
   awk -v n=2 -v s="  \"homepage\": \".\"," 'NR == n {print s} {print}' package.json > tmp && mv tmp package.json
 
   npm run build
-  grep -F -R --exclude=*.map "../../static/" build/ -q
+  grep -F -R --exclude=*.map "../../static/" build/ -q; test $? -eq 0
+  grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1
 
   PUBLIC_URL="/anabsolute" npm run build
-  grep -F -R --exclude=*.map "/anabsolute/static/" build/ -q
+  grep -F -R --exclude=*.map "/anabsolute/static/" build/ -q; test $? -eq 0
+  grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1
 
   # Test absolute path build
   sed "2s/.*/  \"homepage\": \"\/testingpath\",/" package.json > tmp && mv tmp package.json
 
   npm run build
-  grep -F -R --exclude=*.map "/testingpath/static/" build/ -q
+  grep -F -R --exclude=*.map "/testingpath/static/" build/ -q; test $? -eq 0
+  grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1
 
   PUBLIC_URL="https://www.example.net/overridetest" npm run build
-  grep -F -R --exclude=*.map "https://www.example.net/overridetest/static/" build/ -q
+  grep -F -R --exclude=*.map "https://www.example.net/overridetest/static/" build/ -q; test $? -eq 0
+  grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1
+  grep -F -R --exclude=*.map "testingpath/static" build/ -q; test $? -eq 1
 
   # Test absolute url build
   sed "2s/.*/  \"homepage\": \"https:\/\/www.example.net\/testingpath\",/" package.json > tmp && mv tmp package.json
 
   npm run build
-  grep -F -R --exclude=*.map "/testingpath/static/" build/ -q
+  grep -F -R --exclude=*.map "/testingpath/static/" build/ -q; test $? -eq 0
+  grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1
 
   PUBLIC_URL="https://www.example.net/overridetest" npm run build
-  grep -F -R --exclude=*.map "https://www.example.net/overridetest/static/" build/ -q
+  grep -F -R --exclude=*.map "https://www.example.net/overridetest/static/" build/ -q; test $? -eq 0
+  grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1
+  grep -F -R --exclude=*.map "testingpath/static" build/ -q; test $? -eq 1
 
   # Restore package.json
   rm package.json
