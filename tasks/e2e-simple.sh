@@ -153,7 +153,9 @@ function verify_env_url {
   awk -v n=2 -v s="  \"homepage\": \".\"," 'NR == n {print s} {print}' package.json > tmp && mv tmp package.json
 
   npm run build
-  grep -F -R --exclude=*.map "../../static/" build/ -q; test $? -eq 0 || exit 1
+  # Disabled until this can be tested
+  # grep -F -R --exclude=*.map "../../static/" build/ -q; test $? -eq 0 || exit 1
+  grep -F -R --exclude=*.map "\"./static/" build/ -q; test $? -eq 0 || exit 1
   grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1 || exit 1
 
   PUBLIC_URL="/anabsolute" npm run build
