@@ -14,7 +14,7 @@ var fs = require('fs');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
-var appDirectory = fs.realpathSync(process.cwd());
+var appDirectory = process.env.PROJECT_DIR || fs.realpathSync(process.cwd());
 function resolveApp(relativePath) {
   return path.resolve(appDirectory, relativePath);
 }
@@ -81,7 +81,7 @@ module.exports = {
 };
 
 // config before publish: we're in ./packages/react-scripts/config/
-if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
+if (!process.env.PROJECT_DIR && __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
   module.exports = {
     appBuild: resolveOwn('../../../build'),
     appPublic: resolveOwn('../template/public'),
