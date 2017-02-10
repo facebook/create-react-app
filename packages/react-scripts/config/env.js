@@ -38,13 +38,10 @@ function getClientEnvironment(publicUrl) {
       .reduce((env, key) => {
         env[key] = JSON.stringify(raw[key]);
         return env;
-      }, {}),
+      }, {})
   };
 
-  return {
-    raw: raw,
-    stringified: stringified,
-  };
+  return { raw, stringified };
 }
 
 module.exports = getClientEnvironment;
