@@ -8,7 +8,6 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 // @remove-on-eject-end
-
 process.env.NODE_ENV = 'development';
 
 // Load environment variables from .env file. Suppress warnings using silent
@@ -19,6 +18,7 @@ require('dotenv').config({silent: true});
 
 var chalk = require('chalk');
 var webpack = require('webpack');
+var semver = require('semver');
 var WebpackDevServer = require('webpack-dev-server');
 var historyApiFallback = require('connect-history-api-fallback');
 var httpProxyMiddleware = require('http-proxy-middleware');
@@ -30,8 +30,14 @@ var getProcessForPort = require('react-dev-utils/getProcessForPort');
 var openBrowser = require('react-dev-utils/openBrowser');
 var prompt = require('react-dev-utils/prompt');
 var fs = require('fs');
+var fse = require('fs-extra');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+
+// @remove-on-eject-begin
+var isLocalBabelExists = require('../utils/isLocalBabelExists');
+var babelPresetReactApp = require('babel-preset-react-app/package.json');
+// @remove-on-eject-end
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
@@ -41,6 +47,24 @@ var isInteractive = process.stdout.isTTY;
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
+
+// @remove-on-eject-begin
+var wrongLocalBabelPresetReactAppVersion = false;
+
+if (isLocalBabelExists()) {
+  var appPackageJson = fse.readJsonSync(paths.appPackageJson);
+  var deps = appPackageJson.dependencies;
+  var devDeps = appPackageJson.devDependencies;
+  var reactAppPresetName = babelPresetReactApp.name;
+
+  var localBabelPresetReactAppVersion = deps[reactAppPresetName] || devDeps[reactAppPresetName]
+
+  if (localBabelPresetReactAppVersion &&
+      !semver.satisfies(babelPresetReactApp.version, localBabelPresetReactAppVersion)) {
+    wrongLocalBabelPresetReactAppVersion = true;
+  }
+}
+// @remove-on-eject-end
 
 // Tools like Cloud9 rely on this.
 var DEFAULT_PORT = process.env.PORT || 3000;
@@ -104,6 +128,12 @@ function setupCompiler(host, port, protocol) {
       console.log();
       console.log('Note that the development build is not optimized.');
       console.log('To create a production build, use ' + chalk.cyan(cli + ' run build') + '.');
+      console.log();
+      // @remove-on-eject-begin
+      if (wrongLocalBabelPresetReactAppVersion) {
+        console.log(chalk.yellow('Note that the local package "' + babelPresetReactApp.name + '" version is outdated.'));
+      }
+      // @remove-on-eject-end
       console.log();
       isFirstCompile = false;
     }

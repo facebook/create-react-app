@@ -28,6 +28,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
 - [Adding Flow](#adding-flow)
+- [Adding Custom Babel Configuration](#adding-custom-babel-configuration)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
 - [Can I Use Decorators?](#can-i-use-decorators)
 - [Integrating with an API Backend](#integrating-with-an-api-backend)
@@ -508,6 +509,18 @@ You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/f
 In the future we plan to integrate it into Create React App even more closely.
 
 To learn more about Flow, check out [its documentation](https://flowtype.org/).
+
+## Adding Custom Babel Configuration
+
+You can override builtin babel presets and plugins [via .babelrc or package.json](https://babeljs.io/docs/usage/babelrc/).
+
+>Note: Don't forget to install babel-preset-react-app and include "react-app" preset into your .babelrc or package.json babel configuration section.
+
+```js
+{
+  "presets": ["react-app", "stage-0"]
+}
+```
 
 ## Adding Custom Environment Variables
 

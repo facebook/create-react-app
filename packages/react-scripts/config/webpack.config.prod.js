@@ -24,6 +24,11 @@ var getClientEnvironment = require('./env');
 var path = require('path');
 // @remove-on-eject-end
 
+// @remove-on-eject-begin
+var isLocalBabelExists = require('../utils/isLocalBabelExists');
+var localBabelExists = isLocalBabelExists();
+// @remove-on-eject-end
+
 function ensureSlash(path, needsSlash) {
   var hasSlash = path.endsWith('/');
   if (hasSlash && !needsSlash) {
@@ -149,8 +154,8 @@ module.exports = {
         loader: 'babel',
         // @remove-on-eject-begin
         query: {
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          babelrc: localBabelExists,
+          presets: !localBabelExists ? [require.resolve('babel-preset-react-app')] : null,
         },
         // @remove-on-eject-end
       },
