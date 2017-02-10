@@ -114,7 +114,11 @@ cd test-kitchensink
 npm link $root_path/packages/babel-preset-react-app
 
 # Test the build
-NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
+  npm run build
+
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/main.*.js
@@ -144,6 +148,7 @@ E2E_FILE=./build/index.html \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=production \
+  PUBLIC_URL=http://www.example.org/spa/ \
   node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # ******************************************************************************
@@ -166,7 +171,11 @@ npm link $root_path/packages/react-scripts
 rm .babelrc
 
 # Test the build
-NODE_PATH=src REACT_APP_SHELL_ENV_MESSAGE=fromtheshell npm run build
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
+  npm run build
+
 # Check for expected output
 test -e build/*.html
 test -e build/static/js/main.*.js
@@ -196,6 +205,7 @@ E2E_FILE=./build/index.html \
   CI=true \
   NODE_ENV=production \
   NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
   node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Cleanup
