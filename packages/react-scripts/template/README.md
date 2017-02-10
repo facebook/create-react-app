@@ -1292,7 +1292,7 @@ Note that in order to support routers that use HTML5 `pushState` API, you may wa
 
 ## Advanced Configuration
 
-You can adjust various development and production settings via environment variables.
+You can adjust various development and production settings by setting environment variables in your shell or with [.env](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-development-environment-variables-in-env).
 
 Variable | Development | Production | Usage
 :--- | :---: | :---: | :---
