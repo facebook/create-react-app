@@ -6,6 +6,7 @@ var chokidar = require('chokidar');
 var transformFileSync = require('babel-core').transformFileSync;
 var spawn = require('cross-spawn');
 var paths = require('../config/paths');
+const chalk = require('chalk')
 
 function lint () {
   return spawn.sync('node', [require.resolve('./lint')], {stdio: 'inherit'});
@@ -43,13 +44,21 @@ function processFile (filePath) {
 
     fs.mkdirpSync(path.parse(path.join(paths.appBuild, filePath)).dir);
     const outputPath = transformWithBabel(filePath);
-    console.log(path.join(paths.appSrc, filePath) + ' -> ' + outputPath);
+    console.log(
+      chalk.cyan.bgBlack('BABEL') +
+      ' [' + chalk.green(filePath) + '] ' +
+      chalk.gray(path.join(paths.appSrc, filePath) + ' -> ' + outputPath)
+    );
 
   } else if (/\.(s?css|svg|json|ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$/.test(filePath)) {
 
     fs.mkdirpSync(path.parse(path.join(paths.appBuild, filePath)).dir);
     copyAsset(filePath)
-    console.log(path.join(paths.appSrc, filePath) + ' -> ' + path.join(paths.appBuild, filePath));
+    console.log(
+      chalk.magenta.bgBlack('COPY') +
+      ' [' + chalk.green(filePath) + '] ' +
+      chalk.gray(path.join(paths.appSrc, filePath) + ' -> ' + path.join(paths.appBuild, filePath))
+    );
 
   }
 }
