@@ -15,7 +15,7 @@
 var REACT_APP = /^REACT_APP_/i;
 
 function getClientEnvironment(publicUrl) {
-  var vars = Object
+  var raw = Object
     .keys(process.env)
     .filter(key => REACT_APP.test(key))
     .reduce((env, key) => {
@@ -32,18 +32,18 @@ function getClientEnvironment(publicUrl) {
       'PUBLIC_URL': publicUrl
     });
   // Stringify all values so we can feed into Webpack DefinePlugin
-  var string = {
+  var stringified = {
     'process.env': Object
-      .keys(vars)
+      .keys(raw)
       .reduce((env, key) => {
-        env[key] = JSON.stringify(vars[key]);
+        env[key] = JSON.stringify(raw[key]);
         return env;
       }, {}),
   };
 
   return {
-    vars: vars,
-    string: string,
+    raw: raw,
+    stringified: stringified,
   };
 }
 
