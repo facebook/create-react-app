@@ -146,6 +146,9 @@ function verify_env_url {
   # Backup package.json because we're going to make it dirty
   cp package.json package.json.orig
 
+  # Test default behavior
+  grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 0
+
   # Test relative path build
   awk -v n=2 -v s="  \"homepage\": \".\"," 'NR == n {print s} {print}' package.json > tmp && mv tmp package.json
 
