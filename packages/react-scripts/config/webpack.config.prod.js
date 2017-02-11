@@ -81,9 +81,12 @@ module.exports = {
     publicPath: publicPath
   },
   resolve: {
+    // allows importing from the 'src' folder
+    // to avoid having to type long relative paths to get back up the folder hierarchy
+    root: [ paths.appSrc ],
     // This allows you to set a fallback for where Webpack should look for modules.
     // We read `NODE_PATH` environment variable in `paths.js` and pass paths here.
-    // We use `fallback` instead of `root` because we want `node_modules` to "win"
+    // We use `fallback` because we want `node_modules` to "win"
     // if there any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
     fallback: paths.nodePaths,
