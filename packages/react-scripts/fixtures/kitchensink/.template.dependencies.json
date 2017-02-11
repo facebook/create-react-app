@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "babel-preset-latest": "6.16.0",
     "babel-register": "6.22.0",
     "babel-polyfill": "6.20.0",
     "chai": "3.5.0",
