@@ -11,12 +11,12 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
     Applications that don’t use the HTML5 `pushState` API can now be built to be served from any relative URL. To enable this, specify `"."` as your `homepage` setting in `package.json`. It used to be possible before with a few known bugs, but they should be fixed now. See [Serving the Same Build from Different Paths](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#serving-the-same-build-from-different-paths).
 
   * [#937](https://github.com/facebookincubator/create-react-app/pull/1504) Add `PUBLIC_URL` env variable for advanced use. ([@EnoahNetzach](https://github.com/EnoahNetzach))
-  
-  If you use a CDN to serve the app, you can now specify `PUBLIC_URL` environment variable to override the base URL (including the hostname) for resources referenced from the built code. This new variable is mentioned in the new [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) section.
+
+    If you use a CDN to serve the app, you can now specify `PUBLIC_URL` environment variable to override the base URL (including the hostname) for resources referenced from the built code. This new variable is mentioned in the new [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) section.
   
   * [#1440](https://github.com/facebookincubator/create-react-app/pull/1440) Make all react env vars accessible in index.html. ([@jihchi](https://github.com/jihchi))
-  
-  This makes all environment variables previously available in JS, also available in the HTML file, for example `%REACT_APP_MY_VARIABLE%`. See [Referencing Environment Variables in HTML](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#referencing-environment-variables-in-the-html).
+
+    This makes all environment variables previously available in JS, also available in the HTML file, for example `%REACT_APP_MY_VARIABLE%`. See [Referencing Environment Variables in HTML](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#referencing-environment-variables-in-the-html).
   
 * `react-dev-utils`
 
@@ -46,7 +46,7 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 
   * [#1441](https://github.com/facebookincubator/create-react-app/pull/1441) Added babel-runtime dependency to deduplicate dependencies when using yarn. ([@jkimbo](https://github.com/jkimbo))
   
-  This works around a bug in Yarn that caused newly created projects to be over 400MB. Now they are down to 126MB, just like with npm 3.
+    This works around a bug in Yarn that caused newly created projects to be over 400MB. Now they are down to 126MB, just like with npm 3.
   
   * [#1522](https://github.com/facebookincubator/create-react-app/pull/1522) Upgrade dependencies. ([@Timer](https://github.com/Timer))
   * [#1458](https://github.com/facebookincubator/create-react-app/pull/1458) eject: Additionally remove `react-scripts` from dependencies. ([@creynders](https://github.com/creynders))
