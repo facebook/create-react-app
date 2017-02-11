@@ -7,23 +7,23 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 * `react-scripts`
 
   * [#1489](https://github.com/facebookincubator/create-react-app/pull/1489) Support setting `"homepage"` to `"."` to generate relative asset paths. ([@tibdex](https://github.com/tibdex))
-
-    Applications that don’t use the HTML5 `pushState` API can now be built to be served from any relative URL. To enable this, specify `"."` as your `homepage` setting in `package.json`. It used to be possible before with a few known bugs, but they should be fixed now. See [Serving the Same Build from Different Paths](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#serving-the-same-build-from-different-paths).
+  
+    Applications that don’t use the HTML5 `pushState` API can now be built to be served from any relative URL. To enable this, specify `"."` as your `homepage` setting in `package.json`. It used to be possible before with a few known bugs, but they should be fixed now. See [Serving the Same Build from Different Paths](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#serving-the-same-build-from-different-paths).
 
   * [#937](https://github.com/facebookincubator/create-react-app/pull/1504) Add `PUBLIC_URL` env variable for advanced use. ([@EnoahNetzach](https://github.com/EnoahNetzach))
-
-    If you use a CDN to serve the app, you can now specify `PUBLIC_URL` environment variable to override the base URL (including the hostname) for resources referenced from the built code. This new variable is mentioned in the new [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) section.
   
+    If you use a CDN to serve the app, you can now specify `PUBLIC_URL` environment variable to override the base URL (including the hostname) for resources referenced from the built code. This new variable is mentioned in the new [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) section.
+
   * [#1440](https://github.com/facebookincubator/create-react-app/pull/1440) Make all react env vars accessible in index.html. ([@jihchi](https://github.com/jihchi))
-
-    This makes all environment variables previously available in JS, also available in the HTML file, for example `%REACT_APP_MY_VARIABLE%`. See [Referencing Environment Variables in HTML](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#referencing-environment-variables-in-the-html).
   
+    This makes all environment variables previously available in JS, also available in the HTML file, for example `%REACT_APP_MY_VARIABLE%`. See [Referencing Environment Variables in HTML](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#referencing-environment-variables-in-the-html).
+
 * `react-dev-utils`
 
   * [#1148](https://github.com/facebookincubator/create-react-app/pull/1148) Configure which browser to open in npm start (#873). ([@GAumala](https://github.com/GAumala))
-
+  
     You can now disable the automatic browser launching by setting the `BROWSER` environment variable to `none`. You can also specify a different browser (or an arbitrary script) to open by default, [as supported by `opn` command](https://github.com/sindresorhus/opn#app) that we use under the hood. See [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration).
-
+  
 #### :boom: Breaking Change
 
 * `react-scripts`
@@ -31,7 +31,7 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
   * [#1522](https://github.com/facebookincubator/create-react-app/pull/1522) Upgrade dependencies. ([@Timer](https://github.com/Timer))
   * [#1432](https://github.com/facebookincubator/create-react-app/pull/1432) Bump Jest version. ([@gaearon](https://github.com/gaearon))
   * [#1311](https://github.com/facebookincubator/create-react-app/pull/1311) Updated react-scripts babel-jest && jest packages to 18.0.0. ([@lopezator](https://github.com/lopezator))
-
+  
     Jest has been updated to 18 and has introduced some [breaking changes and new features](https://facebook.github.io/jest/blog/2016/12/15/2016-in-jest.html).
 
 * `react-scripts`, `react-dev-utils`
@@ -46,8 +46,8 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 
   * [#1441](https://github.com/facebookincubator/create-react-app/pull/1441) Added babel-runtime dependency to deduplicate dependencies when using yarn. ([@jkimbo](https://github.com/jkimbo))
   
-    This works around a bug in Yarn that caused newly created projects to be over 400MB. Now they are down to 126MB, just like with npm 3.
-  
+    This works around a bug in Yarn that caused newly created projects to be over 400MB. Now they are down to 126MB, just like with npm 3.
+
   * [#1522](https://github.com/facebookincubator/create-react-app/pull/1522) Upgrade dependencies. ([@Timer](https://github.com/Timer))
   * [#1458](https://github.com/facebookincubator/create-react-app/pull/1458) eject: Additionally remove `react-scripts` from dependencies. ([@creynders](https://github.com/creynders))
   * [#1309](https://github.com/facebookincubator/create-react-app/pull/1309) Bump babel-loader version (#1009). ([@frontsideair](https://github.com/frontsideair))
@@ -93,7 +93,7 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
   * [#1256](https://github.com/facebookincubator/create-react-app/pull/1256) Add "Changing the Page Title" to User Guide. ([@gaearon](https://github.com/gaearon))
   * [#1245](https://github.com/facebookincubator/create-react-app/pull/1245) Replace the Flow documentation section. ([@gaearon](https://github.com/gaearon))
   * [#1514](https://github.com/facebookincubator/create-react-app/pull/1514) corrected minor typo. ([@crowchirp](https://github.com/crowchirp))
-  * [#1393](https://github.com/facebookincubator/create-react-app/pull/1393) replace two space syntax with <br> tag. ([@carlsagan21](https://github.com/carlsagan21))
+  * [#1393](https://github.com/facebookincubator/create-react-app/pull/1393) replace two space syntax with br tag. ([@carlsagan21](https://github.com/carlsagan21))
   * [#1384](https://github.com/facebookincubator/create-react-app/pull/1384) Document Flow support. ([@dschep](https://github.com/dschep))
 
 * READMEs
