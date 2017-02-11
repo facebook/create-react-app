@@ -1,5 +1,7 @@
 ## 0.9.0 (February 11, 2017)
 
+Thanks to [@Timer](https://github.com/timer) for cutting this release.
+
 #### :rocket: New Feature
 
 * `react-scripts`
@@ -163,6 +165,8 @@ Then, run your tests. If you are affected by breaking changes from Jest 18, cons
 If you relied on the browser not starting in non-interactive terminals, you now need to explicitly specify `BROWSER=none` as an environment variable to disable it.
 
 ## 0.8.5 (January 9, 2017)
+
+Thanks to [@fson](https://github.com/fson) for cutting this release.
 
 #### :bug: Bug Fix
 * `create-react-app`, `react-scripts`
@@ -415,6 +419,8 @@ npm install --save-dev --save-exact react-scripts@0.8.2
 
 ## 0.8.1 (December 4, 2016)
 
+Thanks to [@fson](https://github.com/fson) for cutting this release.
+
 #### :bug: Bug Fix
 * `react-scripts`
   * [#1149](https://github.com/facebookincubator/create-react-app/pull/1149) Fix incorrectly stubbing JavaScript files with a dot in the import path in tests. ([@fson](https://github.com/fson))
@@ -428,6 +434,8 @@ npm install --save-dev --save-exact react-scripts@0.8.1
 ```
 
 ## 0.8.0 (December 3, 2016)
+
+Thanks to [@fson](https://github.com/fson) for cutting this release.
 
 #### :rocket: New Feature
 * `react-scripts`
@@ -582,6 +590,8 @@ npm install --save-dev --save-exact react-scripts@0.8.0
 ```
 
 ## 0.7.0 (October 22, 2016)
+
+Thanks to [@fson](https://github.com/fson) for cutting this release.
 
 ### Build Dependency (`react-scripts`)
 
