@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 
 function load() {
   return [
@@ -12,7 +12,7 @@ function load() {
 export default class extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -33,7 +33,7 @@ export default class extends Component {
       <div id="feature-object-destructuring">
         {this.state.users.map(user => {
           const { id, name } = user;
-          return <div key={id}>{name}</div>
+          return <div key={id}>{name}</div>;
         })}
       </div>
     );

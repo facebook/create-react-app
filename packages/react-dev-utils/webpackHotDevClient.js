@@ -57,7 +57,7 @@ function createOverlayIframe(onIframeLoad) {
 }
 
 function addOverlayDivTo(iframe) {
-  var div =  iframe.contentDocument.createElement('div');
+  var div = iframe.contentDocument.createElement('div');
   div.id = 'react-dev-utils-webpack-hot-dev-client-overlay-div';
   div.style.position = 'fixed';
   div.style.boxSizing = 'border-box';
@@ -115,15 +115,14 @@ function ensureOverlayDivExists(onOverlayDivReady) {
 function showErrorOverlay(message) {
   ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
     // Make it look similar to our terminal.
-    overlayDiv.innerHTML =
-      '<span style="color: #' +
+    overlayDiv.innerHTML = '<span style="color: #' +
       colors.red +
       '">Failed to compile.</span><br><br>' +
       ansiHTML(entities.encode(message));
   });
 }
 
-function destroyErrorOverlay() {  
+function destroyErrorOverlay() {
   if (!overlayDiv) {
     // It is not there in the first place.
     return;
@@ -137,13 +136,15 @@ function destroyErrorOverlay() {
 }
 
 // Connect to WebpackDevServer via a socket.
-var connection = new SockJS(url.format({
-  protocol: window.location.protocol,
-  hostname: window.location.hostname,
-  port: window.location.port,
-  // Hardcoded in WebpackDevServer
-  pathname: '/sockjs-node'
-}));
+var connection = new SockJS(
+  url.format({
+    protocol: window.location.protocol,
+    hostname: window.location.hostname,
+    port: window.location.port,
+    // Hardcoded in WebpackDevServer
+    pathname: '/sockjs-node'
+  })
+);
 
 // Unlike WebpackDevServer client, we won't try to reconnect
 // to avoid spamming the console. Disconnect usually happens
@@ -230,7 +231,6 @@ function handleErrors(errors) {
   for (var i = 0; i < formatted.errors.length; i++) {
     console.error(stripAnsi(formatted.errors[i]));
   }
-
   // Do not attempt to reload now.
   // We will reload on next success instead.
 }
@@ -245,23 +245,23 @@ function handleAvailableHash(hash) {
 connection.onmessage = function(e) {
   var message = JSON.parse(e.data);
   switch (message.type) {
-  case 'hash':
-    handleAvailableHash(message.data);
-    break;
-  case 'still-ok':
-  case 'ok':
-    handleSuccess();
-    break;
-  case 'warnings':
-    handleWarnings(message.data);
-    break;
-  case 'errors':
-    handleErrors(message.data);
-    break;
-  default:
+    case 'hash':
+      handleAvailableHash(message.data);
+      break;
+    case 'still-ok':
+    case 'ok':
+      handleSuccess();
+      break;
+    case 'warnings':
+      handleWarnings(message.data);
+      break;
+    case 'errors':
+      handleErrors(message.data);
+      break;
+    default:
     // Do nothing.
   }
-}
+};
 
 // Is there a newer version of this code available?
 function isUpdateAvailable() {
@@ -306,7 +306,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   // https://webpack.github.io/docs/hot-module-replacement.html#check
-  var result = module.hot.check(/* autoApply */true, handleApplyUpdates);
+  var result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
 
   // // Webpack 2 returns a Promise instead of invoking a callback
   if (result && result.then) {
@@ -319,4 +319,4 @@ function tryApplyUpdates(onHotUpdateSuccess) {
       }
     );
   }
-};
+}

@@ -14,12 +14,14 @@ var rl = require('readline');
 // You can control the behavior on <Enter> with `isYesDefault`.
 function prompt(question, isYesDefault) {
   if (typeof isYesDefault !== 'boolean') {
-    throw new Error('Provide explicit boolean isYesDefault as second argument.');
+    throw new Error(
+      'Provide explicit boolean isYesDefault as second argument.'
+    );
   }
   return new Promise(resolve => {
     var rlInterface = rl.createInterface({
       input: process.stdin,
-      output: process.stdout,
+      output: process.stdout
     });
 
     var hint = isYesDefault === true ? '[Y/n]' : '[y/N]';
@@ -37,6 +39,6 @@ function prompt(question, isYesDefault) {
       return resolve(isYes);
     });
   });
-};
+}
 
 module.exports = prompt;

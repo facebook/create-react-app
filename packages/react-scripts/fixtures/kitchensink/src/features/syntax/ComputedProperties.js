@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 
 function load(prefix) {
   return [
@@ -12,7 +12,7 @@ function load(prefix) {
 export default class extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);

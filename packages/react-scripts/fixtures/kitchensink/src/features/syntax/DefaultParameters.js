@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 
 function load(id = 0) {
   return [
@@ -12,7 +12,7 @@ function load(id = 0) {
 export default class extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -31,9 +31,7 @@ export default class extends Component {
   render() {
     return (
       <div id="feature-default-parameters">
-        {this.state.users.map(user => (
-          <div key={user.id}>{user.name}</div>
-        ))}
+        {this.state.users.map(user => <div key={user.id}>{user.name}</div>)}
       </div>
     );
   }

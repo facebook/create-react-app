@@ -1,9 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 
-const styled = ([style]) => style.trim()
-  .split(/\s*;\s*/)
-  .map(rule => rule.split(/\s*:\s*/))
-  .reduce((rules, rule) => ({ ...rules, [rule[0]]: rule[1] }), {});
+const styled = ([style]) =>
+  style
+    .trim()
+    .split(/\s*;\s*/)
+    .map(rule => rule.split(/\s*:\s*/))
+    .reduce((rules, rule) => ({ ...rules, [rule[0]]: rule[1] }), {});
 
 function load() {
   return [
@@ -17,7 +19,7 @@ function load() {
 export default class extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);

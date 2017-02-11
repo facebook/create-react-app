@@ -40,13 +40,15 @@
 
 var chalk = require('chalk');
 
-var currentNodeVersion = process.versions.node
+var currentNodeVersion = process.versions.node;
 if (currentNodeVersion.split('.')[0] < 4) {
   console.error(
     chalk.red(
-      'You are running Node ' + currentNodeVersion + '.\n' +
-      'Create React App requires Node 4 or higher. \n' +
-      'Please update your version of Node.'
+      'You are running Node ' +
+        currentNodeVersion +
+        '.\n' +
+        'Create React App requires Node 4 or higher. \n' +
+        'Please update your version of Node.'
     )
   );
   process.exit(1);
@@ -65,44 +67,78 @@ var program = commander
   .version(require('./package.json').version)
   .arguments('<project-directory>')
   .usage(chalk.green('<project-directory>') + ' [options]')
-  .action(function (name) {
+  .action(function(name) {
     projectName = name;
   })
   .option('--verbose', 'print additional logs')
-  .option('--scripts-version <alternative-package>', 'use a non-standard version of react-scripts')
+  .option(
+    '--scripts-version <alternative-package>',
+    'use a non-standard version of react-scripts'
+  )
   .allowUnknownOption()
-  .on('--help', function () {
-    console.log('    Only ' + chalk.green('<project-directory>') + ' is required.');
+  .on('--help', function() {
+    console.log(
+      '    Only ' + chalk.green('<project-directory>') + ' is required.'
+    );
     console.log();
-    console.log('    A custom ' + chalk.cyan('--scripts-version') + ' can be one of:');
+    console.log(
+      '    A custom ' + chalk.cyan('--scripts-version') + ' can be one of:'
+    );
     console.log('      - a specific npm version: ' + chalk.green('0.8.2'));
-    console.log('      - a custom fork published on npm: ' + chalk.green('my-react-scripts'));
-    console.log('      - a .tgz archive: ' + chalk.green('https://mysite.com/my-react-scripts-0.8.2.tgz'));
-    console.log('    It is not needed unless you specifically want to use a fork.');
+    console.log(
+      '      - a custom fork published on npm: ' +
+        chalk.green('my-react-scripts')
+    );
+    console.log(
+      '      - a .tgz archive: ' +
+        chalk.green('https://mysite.com/my-react-scripts-0.8.2.tgz')
+    );
+    console.log(
+      '    It is not needed unless you specifically want to use a fork.'
+    );
     console.log();
-    console.log('    If you have any problems, do not hesitate to file an issue:');
-    console.log('      ' + chalk.cyan('https://github.com/facebookincubator/create-react-app/issues/new'));
+    console.log(
+      '    If you have any problems, do not hesitate to file an issue:'
+    );
+    console.log(
+      '      ' +
+        chalk.cyan(
+          'https://github.com/facebookincubator/create-react-app/issues/new'
+        )
+    );
     console.log();
   })
   .parse(process.argv);
 
 if (typeof projectName === 'undefined') {
   console.error('Please specify the project directory:');
-  console.log('  ' + chalk.cyan(program.name()) + chalk.green(' <project-directory>'));
+  console.log(
+    '  ' + chalk.cyan(program.name()) + chalk.green(' <project-directory>')
+  );
   console.log();
   console.log('For example:');
   console.log('  ' + chalk.cyan(program.name()) + chalk.green(' my-react-app'));
   console.log();
-  console.log('Run ' + chalk.cyan(program.name() + ' --help') + ' to see all options.');
+  console.log(
+    'Run ' + chalk.cyan(program.name() + ' --help') + ' to see all options.'
+  );
   process.exit(1);
 }
 
 var hiddenProgram = new commander.Command()
-  .option('--internal-testing-template <path-to-template>', '(internal usage only, DO NOT RELY ON THIS) ' +
-    'use a non-standard application template')
-  .parse(process.argv)
+  .option(
+    '--internal-testing-template <path-to-template>',
+    '(internal usage only, DO NOT RELY ON THIS) ' +
+      'use a non-standard application template'
+  )
+  .parse(process.argv);
 
-createApp(projectName, program.verbose, program.scriptsVersion, hiddenProgram.internalTestingTemplate);
+createApp(
+  projectName,
+  program.verbose,
+  program.scriptsVersion,
+  hiddenProgram.internalTestingTemplate
+);
 
 function createApp(name, verbose, version, template) {
   var root = path.resolve(name);
@@ -111,20 +147,22 @@ function createApp(name, verbose, version, template) {
   checkAppName(appName);
   fs.ensureDirSync(name);
   if (!isSafeToCreateProjectIn(root)) {
-    console.log('The directory ' + chalk.green(name) + ' contains files that could conflict.');
+    console.log(
+      'The directory ' +
+        chalk.green(name) +
+        ' contains files that could conflict.'
+    );
     console.log('Try using a new directory name.');
     process.exit(1);
   }
 
-  console.log(
-    'Creating a new React app in ' + chalk.green(root) + '.'
-  );
+  console.log('Creating a new React app in ' + chalk.green(root) + '.');
   console.log();
 
   var packageJson = {
     name: appName,
     version: '0.1.0',
-    private: true,
+    private: true
   };
   fs.writeFileSync(
     path.join(root, 'package.json'),
@@ -142,7 +180,7 @@ function createApp(name, verbose, version, template) {
 
 function shouldUseYarn() {
   try {
-    execSync('yarnpkg --version', {stdio: 'ignore'});
+    execSync('yarnpkg --version', { stdio: 'ignore' });
     return true;
   } catch (e) {
     return false;
@@ -154,7 +192,7 @@ function install(packageToInstall, verbose, callback) {
   var args;
   if (shouldUseYarn()) {
     command = 'yarnpkg';
-    args = [ 'add', '--dev', '--exact', packageToInstall];
+    args = ['add', '--dev', '--exact', packageToInstall];
   } else {
     command = 'npm';
     args = ['install', '--save-dev', '--save-exact', packageToInstall];
@@ -164,7 +202,7 @@ function install(packageToInstall, verbose, callback) {
     args.push('--verbose');
   }
 
-  var child = spawn(command, args, {stdio: 'inherit'});
+  var child = spawn(command, args, { stdio: 'inherit' });
   child.on('close', function(code) {
     callback(code, command, args);
   });
@@ -235,8 +273,8 @@ function checkNodeVersion(packageName) {
     console.error(
       chalk.red(
         'You are running Node %s.\n' +
-        'Create React App requires Node %s or higher. \n' +
-        'Please update your version of Node.'
+          'Create React App requires Node %s or higher. \n' +
+          'Please update your version of Node.'
       ),
       process.version,
       packageJson.engines.node
@@ -254,15 +292,19 @@ function checkAppName(appName) {
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
-        'We cannot create a project called ' + chalk.green(appName) + ' because a dependency with the same name exists.\n' +
-        'Due to the way npm works, the following names are not allowed:\n\n'
+        'We cannot create a project called ' +
+          chalk.green(appName) +
+          ' because a dependency with the same name exists.\n' +
+          'Due to the way npm works, the following names are not allowed:\n\n'
       ) +
-      chalk.cyan(
-        allDependencies.map(function(depName) {
-          return '  ' + depName;
-        }).join('\n')
-      ) +
-      chalk.red('\n\nPlease choose a different project name.')
+        chalk.cyan(
+          allDependencies
+            .map(function(depName) {
+              return '  ' + depName;
+            })
+            .join('\n')
+        ) +
+        chalk.red('\n\nPlease choose a different project name.')
     );
     process.exit(1);
   }
@@ -273,10 +315,15 @@ function checkAppName(appName) {
 // https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-243446094
 function isSafeToCreateProjectIn(root) {
   var validFiles = [
-    '.DS_Store', 'Thumbs.db', '.git', '.gitignore', '.idea', 'README.md', 'LICENSE'
+    '.DS_Store',
+    'Thumbs.db',
+    '.git',
+    '.gitignore',
+    '.idea',
+    'README.md',
+    'LICENSE'
   ];
-  return fs.readdirSync(root)
-    .every(function(file) {
-      return validFiles.indexOf(file) >= 0;
-    });
+  return fs.readdirSync(root).every(function(file) {
+    return validFiles.indexOf(file) >= 0;
+  });
 }
