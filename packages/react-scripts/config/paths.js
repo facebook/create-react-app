@@ -66,9 +66,8 @@ function getPublicUrl(appPackageJson) {
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
 function getServedPath(appPackageJson) {
   var publicUrl = getPublicUrl(appPackageJson);
-  var servedUrl = envPublicUrl || (
-    publicUrl ? url.parse(publicUrl).pathname : '/'
-  );
+  var servedUrl = envPublicUrl ||
+    (publicUrl ? url.parse(publicUrl).pathname : '/');
   return ensureSlash(servedUrl, true);
 }
 
@@ -113,7 +112,9 @@ module.exports = {
 };
 
 // config before publish: we're in ./packages/react-scripts/config/
-if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
+if (
+  __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
+) {
   module.exports = {
     appBuild: resolveOwn('../../../build'),
     appPublic: resolveOwn('../template/public'),

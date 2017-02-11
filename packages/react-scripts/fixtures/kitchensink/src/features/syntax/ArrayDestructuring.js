@@ -1,18 +1,13 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 
 function load() {
-  return [
-    [1, '1'],
-    [2, '2'],
-    [3, '3'],
-    [4, '4']
-  ];
+  return [[1, '1'], [2, '2'], [3, '3'], [4, '4']];
 }
 
 export default class extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -33,7 +28,7 @@ export default class extends Component {
       <div id="feature-array-destructuring">
         {this.state.users.map(user => {
           const [id, name] = user;
-          return <div key={id}>{name}</div>
+          return <div key={id}>{name}</div>;
         })}
       </div>
     );

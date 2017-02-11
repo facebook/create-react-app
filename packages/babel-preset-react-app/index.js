@@ -16,21 +16,30 @@ const plugins = [
   // The following two plugins use Object.assign directly, instead of Babel's
   // extends helper. Note that this assumes `Object.assign` is available.
   // { ...todo, completed: true }
-  [require.resolve('babel-plugin-transform-object-rest-spread'), {
-    useBuiltIns: true
-  }],
+  [
+    require.resolve('babel-plugin-transform-object-rest-spread'),
+    {
+      useBuiltIns: true
+    }
+  ],
   // Transforms JSX
-  [require.resolve('babel-plugin-transform-react-jsx'), {
-    useBuiltIns: true
-  }],
+  [
+    require.resolve('babel-plugin-transform-react-jsx'),
+    {
+      useBuiltIns: true
+    }
+  ],
   // Polyfills the runtime needed for async/await and generators
-  [require.resolve('babel-plugin-transform-runtime'), {
-    helpers: false,
-    polyfill: false,
-    regenerator: true,
-    // Resolve the Babel runtime relative to the config.
-    moduleName: path.dirname(require.resolve('babel-runtime/package'))
-  }]
+  [
+    require.resolve('babel-plugin-transform-runtime'),
+    {
+      helpers: false,
+      polyfill: false,
+      regenerator: true,
+      // Resolve the Babel runtime relative to the config.
+      moduleName: path.dirname(require.resolve('babel-runtime/package'))
+    }
+  ]
 ];
 
 // This is similar to how `env` works in Babel:
@@ -42,9 +51,11 @@ const plugins = [
 var env = process.env.BABEL_ENV || process.env.NODE_ENV;
 if (env !== 'development' && env !== 'test' && env !== 'production') {
   throw new Error(
-    'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or '+
-    '`BABEL_ENV` environment variables. Valid values are "development", ' +
-    '"test", and "production". Instead, received: ' + JSON.stringify(env) + '.'
+    'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
+      '`BABEL_ENV` environment variables. Valid values are "development", ' +
+      '"test", and "production". Instead, received: ' +
+      JSON.stringify(env) +
+      '.'
   );
 }
 
@@ -74,11 +85,14 @@ if (env === 'test') {
   module.exports = {
     presets: [
       // ES features necessary for user's Node version
-      [require('babel-preset-env').default, {
-        targets: {
-          node: 'current',
-        },
-      }],
+      [
+        require('babel-preset-env').default,
+        {
+          targets: {
+            node: 'current'
+          }
+        }
+      ],
       // JSX, Flow
       require.resolve('babel-preset-react')
     ],
@@ -94,10 +108,13 @@ if (env === 'test') {
     ],
     plugins: plugins.concat([
       // function* () { yield 42; yield 43; }
-      [require.resolve('babel-plugin-transform-regenerator'), {
-        // Async functions are converted to generators by babel-preset-latest
-        async: false
-      }],
+      [
+        require.resolve('babel-plugin-transform-regenerator'),
+        {
+          // Async functions are converted to generators by babel-preset-latest
+          async: false
+        }
+      ]
     ])
   };
 

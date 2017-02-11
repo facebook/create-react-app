@@ -1,10 +1,8 @@
-import React from 'react'
-import aFileWithoutExt from './assets/aFileWithoutExt'
+import React from 'react';
+import aFileWithoutExt from './assets/aFileWithoutExt';
 
 const text = aFileWithoutExt.includes('base64')
   ? atob(aFileWithoutExt.split('base64,')[1]).trim()
-  : aFileWithoutExt
+  : aFileWithoutExt;
 
-export default () => (
-  <p id="feature-no-ext-inclusion">{text}.</p>
-)
+export default () => <p id="feature-no-ext-inclusion">{text}.</p>;

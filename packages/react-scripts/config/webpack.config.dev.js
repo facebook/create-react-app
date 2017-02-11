@@ -14,7 +14,9 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+var WatchMissingNodeModulesPlugin = require(
+  'react-dev-utils/WatchMissingNodeModulesPlugin'
+);
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 
@@ -108,7 +110,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         loader: 'eslint',
-        include: paths.appSrc,
+        include: paths.appSrc
       }
     ],
     loaders: [
@@ -121,13 +123,7 @@ module.exports = {
       // "url" loader embeds assets smaller than specified size as data URLs to avoid requests.
       // Otherwise, it acts like the "file" loader.
       {
-        exclude: [
-          /\.html$/,
-          /\.(js|jsx)$/,
-          /\.css$/,
-          /\.json$/,
-          /\.svg$/
-        ],
+        exclude: [/\.html$/, /\.(js|jsx)$/, /\.css$/, /\.json$/, /\.svg$/],
         loader: 'url',
         query: {
           limit: 10000,
@@ -192,9 +188,9 @@ module.exports = {
           '>1%',
           'last 4 versions',
           'Firefox ESR',
-          'not ie < 9', // React doesn't support IE8 anyway
+          'not ie < 9' // React doesn't support IE8 anyway
         ]
-      }),
+      })
     ];
   },
   plugins: [
@@ -206,7 +202,7 @@ module.exports = {
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
-      template: paths.appHtml,
+      template: paths.appHtml
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
