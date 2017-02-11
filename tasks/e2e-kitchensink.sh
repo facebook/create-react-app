@@ -167,9 +167,6 @@ npm link $root_path/packages/eslint-config-react-app
 npm link $root_path/packages/react-dev-utils
 npm link $root_path/packages/react-scripts
 
-# ...and we need to remove template's .babelrc
-rm .babelrc
-
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
