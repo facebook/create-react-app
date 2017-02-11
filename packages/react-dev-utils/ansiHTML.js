@@ -46,43 +46,46 @@ var anserMap = {
   'ansi-red': 'red',
   'ansi-bright-magenta': 'magenta',
   'ansi-magenta': 'magenta'
-}
+};
 
 function ansiHTML(txt) {
-  const arr = new Anser().ansiToJson(txt, {
+  var arr = new Anser().ansiToJson(txt, {
     use_classes: true
-  })
+  });
 
-  let result = ''
-  let open = false
-  for (let c of arr) {
-    const { content, fg } = c
-    const contentParts = content.split('\n')
-    for (let index = 0; index < contentParts.length; ++index) {
+  var result = '';
+  var open = false;
+  for (var index = 0; index < arr.length; ++index) {
+    var c = arr[index];
+    var content = c.content,
+        fg = c.fg;
+
+    var contentParts = content.split('\n');
+    for (var _index = 0; _index < contentParts.length; ++_index) {
       if (!open) {
-        result += '<span data-ansi-line="true">'
-        open = true
+        result += '<span data-ansi-line="true">';
+        open = true;
       }
-      let part = contentParts[index].replace('\r', '')
-      const color = colors[anserMap[fg]]
+      var part = contentParts[_index].replace('\r', '');
+      var color = colors[anserMap[fg]];
       if (color != null) {
-        result += `<span style="color: #${color};">${part}</span>`
+        result += '<span style="color: #' + color + ';">' + part + '</span>';
       } else {
-        if (fg != null) console.log('Missing color mapping: ', fg)
-        result += `<span>${part}</span>`
+        if (fg != null) console.log('Missing color mapping: ', fg);
+        result += '<span>' + part + '</span>';
       }
-      if (index < contentParts.length - 1) {
-        result += '</span>'
-        open = false
-        result += '<br/>'
+      if (_index < contentParts.length - 1) {
+        result += '</span>';
+        open = false;
+        result += '<br/>';
       }
     }
   }
   if (open) {
-    result += '</span>'
-    open = false
+    result += '</span>';
+    open = false;
   }
-  return result
+  return result;
 }
 
 module.exports = ansiHTML;
