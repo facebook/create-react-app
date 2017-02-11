@@ -10,17 +10,17 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
   
     Applications that don’t use the HTML5 `pushState` API can now be built to be served from any relative URL. To enable this, specify `"."` as your `homepage` setting in `package.json`. It used to be possible before with a few known bugs, but they should be fixed now. See [Serving the Same Build from Different Paths](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#serving-the-same-build-from-different-paths).
 
-  * [#937](https://github.com/facebookincubator/create-react-app/pull/1504) Add `PUBLIC_URL` env variable for advanced use. ([@EnoahNetzach](https://github.com/EnoahNetzach))
+  * [#937](https://github.com/facebookincubator/create-react-app/pull/1504) Add `PUBLIC_URL` environment variable for advanced use. ([@EnoahNetzach](https://github.com/EnoahNetzach))
   
     If you use a CDN to serve the app, you can now specify `PUBLIC_URL` environment variable to override the base URL (including the hostname) for resources referenced from the built code. This new variable is mentioned in the new [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) section.
 
-  * [#1440](https://github.com/facebookincubator/create-react-app/pull/1440) Make all react env vars accessible in index.html. ([@jihchi](https://github.com/jihchi))
+  * [#1440](https://github.com/facebookincubator/create-react-app/pull/1440) Make all `REACT_APP_*` environment variables accessible in `index.html`. ([@jihchi](https://github.com/jihchi))
   
     This makes all environment variables previously available in JS, also available in the HTML file, for example `%REACT_APP_MY_VARIABLE%`. See [Referencing Environment Variables in HTML](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#referencing-environment-variables-in-the-html).
 
 * `react-dev-utils`
 
-  * [#1148](https://github.com/facebookincubator/create-react-app/pull/1148) Configure which browser to open in npm start (#873). ([@GAumala](https://github.com/GAumala))
+  * [#1148](https://github.com/facebookincubator/create-react-app/pull/1148) Configure which browser to open with `npm start`. ([@GAumala](https://github.com/GAumala))
   
     You can now disable the automatic browser launching by setting the `BROWSER` environment variable to `none`. You can also specify a different browser (or an arbitrary script) to open by default, [as supported by `opn` command](https://github.com/sindresorhus/opn#app) that we use under the hood. See [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration).
   
@@ -30,13 +30,13 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 
   * [#1522](https://github.com/facebookincubator/create-react-app/pull/1522) Upgrade dependencies. ([@Timer](https://github.com/Timer))
   * [#1432](https://github.com/facebookincubator/create-react-app/pull/1432) Bump Jest version. ([@gaearon](https://github.com/gaearon))
-  * [#1311](https://github.com/facebookincubator/create-react-app/pull/1311) Updated react-scripts babel-jest && jest packages to 18.0.0. ([@lopezator](https://github.com/lopezator))
+  * [#1311](https://github.com/facebookincubator/create-react-app/pull/1311) Updated `babel-jest` and `jest` packages to 18.0.0. ([@lopezator](https://github.com/lopezator))
   
     Jest has been updated to 18 and has introduced some [breaking changes and new features](https://facebook.github.io/jest/blog/2016/12/15/2016-in-jest.html).
 
 * `react-scripts`, `react-dev-utils`
 
-  * [#1264](https://github.com/facebookincubator/create-react-app/pull/1264) Remove interactive shell check when opening browser on start ([@CaryLandholt](https://github.com/CaryLandholt))
+  * [#1264](https://github.com/facebookincubator/create-react-app/pull/1264) Remove interactive shell check when opening browser on start. ([@CaryLandholt](https://github.com/CaryLandholt))
 
     Non-interactive terminals no longer automatically disable launching of the browser. Instead, you need to [specify `none` as `BROWSER` environment variable](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) if you wish to disable it.
 
@@ -44,14 +44,14 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 
 * `react-scripts`
 
-  * [#1441](https://github.com/facebookincubator/create-react-app/pull/1441) Added babel-runtime dependency to deduplicate dependencies when using yarn. ([@jkimbo](https://github.com/jkimbo))
+  * [#1441](https://github.com/facebookincubator/create-react-app/pull/1441) Added `babel-runtime` dependency to deduplicate dependencies when using Yarn. ([@jkimbo](https://github.com/jkimbo))
   
     This works around a bug in Yarn that caused newly created projects to be over 400MB. Now they are down to 126MB, just like with npm 3.
 
   * [#1522](https://github.com/facebookincubator/create-react-app/pull/1522) Upgrade dependencies. ([@Timer](https://github.com/Timer))
-  * [#1458](https://github.com/facebookincubator/create-react-app/pull/1458) eject: Additionally remove `react-scripts` from dependencies. ([@creynders](https://github.com/creynders))
-  * [#1309](https://github.com/facebookincubator/create-react-app/pull/1309) Bump babel-loader version (#1009). ([@frontsideair](https://github.com/frontsideair))
-  * [#1267](https://github.com/facebookincubator/create-react-app/pull/1267) Only gitignore dirs in root, not deep. ([@jayphelps](https://github.com/jayphelps))
+  * [#1458](https://github.com/facebookincubator/create-react-app/pull/1458) Additionally remove `react-scripts` from dependencies on eject. ([@creynders](https://github.com/creynders))
+  * [#1309](https://github.com/facebookincubator/create-react-app/pull/1309) Bump `babel-loader` version (#1009). ([@frontsideair](https://github.com/frontsideair))
+  * [#1267](https://github.com/facebookincubator/create-react-app/pull/1267) Only gitignore directories in root, not deep. ([@jayphelps](https://github.com/jayphelps))
 
 * `react-dev-utils`
 
@@ -64,13 +64,13 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 * `react-scripts`
 
   * [#1496](https://github.com/facebookincubator/create-react-app/pull/1496) Make build exit with error code when interrupted. ([@brandones](https://github.com/brandones))
-  * [#1352](https://github.com/facebookincubator/create-react-app/pull/1352) More descriptive error message for env.CI = true warnings causing failures. ([@jayphelps](https://github.com/jayphelps))
+  * [#1352](https://github.com/facebookincubator/create-react-app/pull/1352) More descriptive error message for `env.CI = true` warnings causing failures. ([@jayphelps](https://github.com/jayphelps))
   * [#1264](https://github.com/facebookincubator/create-react-app/pull/1264) Remove interactive shell check when opening browser on start. ([@CaryLandholt](https://github.com/CaryLandholt))
-  * [#1311](https://github.com/facebookincubator/create-react-app/pull/1311) Updated react-scripts babel-jest && jest packages to 18.0.0. ([@lopezator](https://github.com/lopezator))
+  * [#1311](https://github.com/facebookincubator/create-react-app/pull/1311) Updated `babel-jest` and `jest` packages to 18.0.0. ([@lopezator](https://github.com/lopezator))
   * [#1432](https://github.com/facebookincubator/create-react-app/pull/1432) Bump Jest version. ([@gaearon](https://github.com/gaearon))
   * [#1507](https://github.com/facebookincubator/create-react-app/pull/1507) fix: add yarn gitignores. ([@adjohnson916](https://github.com/adjohnson916))
-  * [#1510](https://github.com/facebookincubator/create-react-app/pull/1510) Add missing '\n' to the end of `package.json` file. ([@pd4d10](https://github.com/pd4d10))
-  * [#1324](https://github.com/facebookincubator/create-react-app/pull/1324) Use npm script hooks to avoid && in deploy script. ([@zpao](https://github.com/zpao))
+  * [#1510](https://github.com/facebookincubator/create-react-app/pull/1510) Add missing `'\n'` to the end of `package.json` file. ([@pd4d10](https://github.com/pd4d10))
+  * [#1324](https://github.com/facebookincubator/create-react-app/pull/1324) Use npm script hooks to avoid `&&` in deploy script. ([@zpao](https://github.com/zpao))
 
 * `create-react-app`
 
