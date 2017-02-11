@@ -30,7 +30,11 @@ const plugins = [
     regenerator: true,
     // Resolve the Babel runtime relative to the config.
     moduleName: path.dirname(require.resolve('babel-runtime/package'))
-  }]
+  }],
+  // We always include this plugin regardless of environment
+  // because of a Babel bug that breaks object rest/spread without it:
+  // https://github.com/babel/babel/issues/4851
+  require.resolve('babel-plugin-transform-es2015-parameters'),
 ];
 
 // This is similar to how `env` works in Babel:
@@ -63,53 +67,46 @@ if (env === 'development' || env === 'test') {
   ]);
 }
 
-if (env === 'test') {
-  plugins.push.apply(plugins, [
-    // We always include this plugin regardless of environment
-    // because of a Babel bug that breaks object rest/spread without it:
-    // https://github.com/babel/babel/issues/4851
-    require.resolve('babel-plugin-transform-es2015-parameters')
-  ]);
+if (env === 'production') {
+  // Optimization: hoist JSX that never changes out of render()
+  // Disabled because of issues:
+  // * https://github.com/facebookincubator/create-react-app/issues/525
+  // * https://phabricator.babeljs.io/search/query/pCNlnC2xzwzx/
+  // * https://github.com/babel/babel/issues/4516
+  // TODO: Enable again when these issues are resolved.
+  // plugins.push.apply(plugins, [
+  //   require.resolve('babel-plugin-transform-react-constant-elements')
+  // ]);
+}
 
-  module.exports = {
+module.exports = function buildPreset(context, opts) {
+  if (env !== 'test') {
+    if (!opts.browsers) {
+      throw new Error('The "browsers" option is required outside "test" environment.');
+    }
+    if (!Array.isArray(opts.browsers.development)) {
+      throw new Error('The "browsers" option must contain a "development" array.');
+    }
+    if (!Array.isArray(opts.browsers.production)) {
+      throw new Error('The "browsers" option must contain a "production" array.');
+    }
+  }
+
+  return {
     presets: [
       // ES features necessary for user's Node version
       [require('babel-preset-env').default, {
-        targets: {
+        targets: env === 'test' ? {
           node: 'current',
-        },
+        } : {
+          browsers: env === 'development' ?
+            opts.browsers.development  :
+            opts.browsers.production
+        }
       }],
       // JSX, Flow
       require.resolve('babel-preset-react')
     ],
     plugins: plugins
   };
-} else {
-  module.exports = {
-    presets: [
-      // Latest stable ECMAScript features
-      require.resolve('babel-preset-latest'),
-      // JSX, Flow
-      require.resolve('babel-preset-react')
-    ],
-    plugins: plugins.concat([
-      // function* () { yield 42; yield 43; }
-      [require.resolve('babel-plugin-transform-regenerator'), {
-        // Async functions are converted to generators by babel-preset-latest
-        async: false
-      }],
-    ])
-  };
-
-  if (env === 'production') {
-    // Optimization: hoist JSX that never changes out of render()
-    // Disabled because of issues:
-    // * https://github.com/facebookincubator/create-react-app/issues/525
-    // * https://phabricator.babeljs.io/search/query/pCNlnC2xzwzx/
-    // * https://github.com/babel/babel/issues/4516
-    // TODO: Enable again when these issues are resolved.
-    // plugins.push.apply(plugins, [
-    //   require.resolve('babel-plugin-transform-react-constant-elements')
-    // ]);
-  }
 }

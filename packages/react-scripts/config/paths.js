@@ -119,7 +119,7 @@ if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) 
     appPublic: resolveOwn('../template/public'),
     appHtml: resolveOwn('../template/public/index.html'),
     appIndexJs: resolveOwn('../template/src/index.js'),
-    appPackageJson: resolveOwn('../package.json'),
+    appPackageJson: resolveOwn('../example.package.json'),
     appSrc: resolveOwn('../template/src'),
     yarnLockFile: resolveOwn('../template/yarn.lock'),
     testsSetup: resolveOwn('../template/src/setupTests.js'),
