@@ -21,7 +21,5 @@ env:
     - TEST_SUITE=kitchensink
 matrix:
   include:
-    - node_js: 0.10
-      env: TEST_SUITE=simple
     - node_js: 6
       env: USE_YARN=yes TEST_SUITE=simple
