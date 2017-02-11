@@ -18,6 +18,7 @@ var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
+var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 // @remove-on-eject-begin
 // `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
@@ -273,6 +274,11 @@ module.exports = {
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json'
+    }),
+    new SWPrecacheWebpackPlugin({
+      dontCacheBustUrlsMatching: /\.\w{8}\./,
+      filename: 'service-worker.js',
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
     })
   ],
   // Some libraries import Node modules but don't use them in the browser.

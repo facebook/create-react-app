@@ -59,6 +59,7 @@
     "recursive-readdir": "2.1.0",
     "strip-ansi": "3.0.1",
     "style-loader": "0.13.1",
+    "sw-precache-webpack-plugin": "^0.9.0",
     "url-loader": "0.5.7",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.3.0",
