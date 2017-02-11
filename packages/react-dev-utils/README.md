@@ -21,7 +21,7 @@ There is no single entry point. You can only import individual top-level modules
 #### `new InterpolateHtmlPlugin(replacements: {[key:string]: string})`
 
 This Webpack plugin lets us interpolate custom variables into `index.html`.  
-It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/html-dev-plugin) 2.x via its [events](https://github.com/ampedandwired/html-dev-plugin#events).
+It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/html-webpack-plugin) 2.x via its [events](https://github.com/ampedandwired/html-webpack-plugin#events).
 
 ```js
 var path = require('path');
@@ -117,6 +117,7 @@ Extracts and prettifies warning and error messages from webpack [stats](https://
 ```js
 var webpack = require('webpack');
 var config = require('../config/webpack.config.dev');
+var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
 var compiler = webpack(config);
 
@@ -132,12 +133,12 @@ compiler.plugin('done', function(stats) {
   }
   if (messages.errors.length) {
     console.log('Failed to compile.');
-    messages.errors.forEach(console.log);
+    messages.errors.forEach(e => console.log(e));
     return;
   }
   if (messages.warnings.length) {
     console.log('Compiled with warnings.');
-    messages.warnings.forEach(console.log);
+    messages.warnings.forEach(w => console.log(w));
   }
 });
 ```
@@ -184,6 +185,7 @@ You can control the behavior on `<Enter>` with `isYesDefault`.
 
 ```js
 var prompt = require('react-dev-utils/prompt');
+
 prompt(
   'Are you sure you want to eat all the candy?',
   /* isYesDefault */ false

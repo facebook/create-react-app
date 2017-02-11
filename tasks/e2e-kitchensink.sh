@@ -7,18 +7,21 @@
 # of patent rights can be found in the PATENTS file in the same directory.
 
 # ******************************************************************************
-# This is an end-to-end test intended to run on CI.
+# This is an end-to-end kitchensink test intended to run on CI.
 # You can also run it locally but it's slow.
 # ******************************************************************************
 
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
+# CLI and app temporary locations
+# http://unix.stackexchange.com/a/84980
+temp_cli_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_cli_path'`
+temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
+
 function cleanup {
   echo 'Cleaning up.'
   cd $root_path
-  # Uncomment when snapshot testing is enabled by default:
-  # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
@@ -53,41 +56,17 @@ set -x
 cd ..
 root_path=$PWD
 
+npm install
+
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn
+  npm install -g yarn@0.17.10 # TODO: remove version when https://github.com/yarnpkg/yarn/issues/2142 is fixed.
   yarn cache clean
 fi
 
-npm install
-
-# Lint own code
-./node_modules/.bin/eslint --ignore-path .gitignore ./
-
 # ******************************************************************************
-# First, test the create-react-app development environment.
-# This does not affect our users but makes sure we can develop it.
-# ******************************************************************************
-
-# Test local build command
-npm run build
-# Check for expected output
-test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/favicon.ico
-
-# Run tests with CI flag
-CI=true npm test
-# Uncomment when snapshot testing is enabled by default:
-# test -e template/src/__snapshots__/App.test.js.snap
-
-# Test local start command
-npm start -- --smoke-test
-
-# ******************************************************************************
-# Next, pack react-scripts and create-react-app so we can verify they work.
+# First, pack react-scripts and create-react-app so we can use them.
 # ******************************************************************************
 
 # Pack CLI
@@ -116,15 +95,12 @@ mv package.json.orig package.json
 # ******************************************************************************
 
 # Install the CLI in a temporary location
-# http://unix.stackexchange.com/a/84980
-temp_cli_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_cli_path'`
 cd $temp_cli_path
 npm install $cli_path
 
 # Install the app in a temporary location
-temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 cd $temp_app_path
-create_react_app --scripts-version=$scripts_path test-app
+create_react_app --scripts-version=$scripts_path --internal-testing-template=$root_path/packages/react-scripts/fixtures/kitchensink test-kitchensink
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -132,27 +108,55 @@ create_react_app --scripts-version=$scripts_path test-app
 # ******************************************************************************
 
 # Enter the app directory
-cd test-app
+cd test-kitchensink
+
+# Link to our preset
+npm link $root_path/packages/babel-preset-react-app
 
 # Test the build
-npm run build
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
+  npm run build
+
 # Check for expected output
 test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/favicon.ico
+test -e build/static/js/main.*.js
 
-# Run tests with CI flag
-CI=true npm test
-# Uncomment when snapshot testing is enabled by default:
-# test -e src/__snapshots__/App.test.js.snap
+# Unit tests
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true \
+  NODE_PATH=src \
+  NODE_ENV=test \
+  npm test -- --no-cache --testPathPattern="/src/"
 
-# Test the server
-npm start -- --smoke-test
+# Test "development" environment
+tmp_server_log=`mktemp`
+PORT=3001 \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  nohup npm start &>$tmp_server_log &
+grep -q 'The app is running at:' <(tail -f $tmp_server_log)
+E2E_URL="http://localhost:3001" \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true NODE_PATH=src \
+  NODE_ENV=development \
+  node node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+
+# Test "production" environment
+E2E_FILE=./build/index.html \
+  CI=true \
+  NODE_PATH=src \
+  NODE_ENV=production \
+  PUBLIC_URL=http://www.example.org/spa/ \
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
 # ******************************************************************************
+
+# Unlink our preset
+npm unlink $root_path/packages/babel-preset-react-app
 
 # Eject...
 echo yes | npm run eject
@@ -163,60 +167,46 @@ npm link $root_path/packages/eslint-config-react-app
 npm link $root_path/packages/react-dev-utils
 npm link $root_path/packages/react-scripts
 
+# ...and we need to remove template's .babelrc
+rm .babelrc
+
 # Test the build
-npm run build
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
+  npm run build
+
 # Check for expected output
 test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/favicon.ico
+test -e build/static/js/main.*.js
 
-# Run tests, overring the watch option to disable it.
-# `CI=true npm test` won't work here because `npm test` becomes just `jest`.
-# We should either teach Jest to respect CI env variable, or make
-# `scripts/test.js` survive ejection (right now it doesn't).
-npm test -- --watch=no
-# Uncomment when snapshot testing is enabled by default:
-# test -e src/__snapshots__/App.test.js.snap
+# Unit tests
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true \
+  NODE_PATH=src \
+  NODE_ENV=test \
+  npm test -- --no-cache --testPathPattern="/src/"
 
-# Test the server
-npm start -- --smoke-test
+# Test "development" environment
+tmp_server_log=`mktemp`
+PORT=3002 \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  nohup npm start &>$tmp_server_log &
+grep -q 'The app is running at:' <(tail -f $tmp_server_log)
+E2E_URL="http://localhost:3002" \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true NODE_PATH=src \
+  NODE_ENV=development \
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
-
-# ******************************************************************************
-# Test --scripts-version with a version number
-# ******************************************************************************
-
-cd $temp_app_path
-create_react_app --scripts-version=0.4.0 test-app-version-number
-cd test-app-version-number
-
-# Check corresponding scripts version is installed.
-test -e node_modules/react-scripts
-grep '"version": "0.4.0"' node_modules/react-scripts/package.json
-
-# ******************************************************************************
-# Test --scripts-version with a tarball url
-# ******************************************************************************
-
-cd $temp_app_path
-create_react_app --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-0.4.0.tgz test-app-tarball-url
-cd test-app-tarball-url
-
-# Check corresponding scripts version is installed.
-test -e node_modules/react-scripts
-grep '"version": "0.4.0"' node_modules/react-scripts/package.json
-
-# ******************************************************************************
-# Test --scripts-version with a custom fork of react-scripts
-# ******************************************************************************
-
-cd $temp_app_path
-create_react_app --scripts-version=react-scripts-fork test-app-fork
-cd test-app-fork
-
-# Check corresponding scripts version is installed.
-test -e node_modules/react-scripts-fork
+# Test "production" environment
+E2E_FILE=./build/index.html \
+  CI=true \
+  NODE_ENV=production \
+  NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Cleanup
 cleanup

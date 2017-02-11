@@ -233,6 +233,7 @@ connection.onmessage = function(e) {
   case 'hash':
     handleAvailableHash(message.data);
     break;
+  case 'still-ok':
   case 'ok':
     handleSuccess();
     break;

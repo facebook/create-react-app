@@ -10,7 +10,6 @@
 var createJestConfig = require('../utils/createJestConfig');
 var fs = require('fs-extra');
 var path = require('path');
-var pathExists = require('path-exists');
 var paths = require('../config/paths');
 var prompt = require('react-dev-utils/prompt');
 var spawnSync = require('cross-spawn').sync;
@@ -56,8 +55,8 @@ prompt(
     path.join('config', 'polyfills.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
-    path.join('config', 'jest', 'CSSStub.js'),
-    path.join('config', 'jest', 'FileStub.js'),
+    path.join('config', 'jest', 'cssTransform.js'),
+    path.join('config', 'jest', 'fileTransform.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
     path.join('scripts', 'test.js')
@@ -94,8 +93,14 @@ prompt(
 
   console.log(cyan('Updating the dependencies'));
   var ownPackageName = ownPackage.name;
-  console.log('  Removing ' + cyan(ownPackageName) + ' from devDependencies');
-  delete appPackage.devDependencies[ownPackageName];
+  if (appPackage.devDependencies[ownPackageName]) {
+    console.log('  Removing ' + cyan(ownPackageName) + ' from devDependencies');
+    delete appPackage.devDependencies[ownPackageName];
+  }
+  if (appPackage.dependencies[ownPackageName]) {
+    console.log('  Removing ' + cyan(ownPackageName) + ' from dependencies');
+    delete appPackage.dependencies[ownPackageName];
+  }
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
     // For some reason optionalDependencies end up in dependencies after install
@@ -140,14 +145,14 @@ prompt(
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
-    JSON.stringify(appPackage, null, 2)
+    JSON.stringify(appPackage, null, 2) + '\n'
   );
   console.log();
 
-  if (pathExists.sync(paths.yarnLockFile)) {
+  if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));
     fs.removeSync(ownPath);
-    spawnSync('yarn', [], {stdio: 'inherit'});
+    spawnSync('yarnpkg', [], {stdio: 'inherit'});
   } else {
     console.log(cyan('Running npm install...'));
     fs.removeSync(ownPath);
