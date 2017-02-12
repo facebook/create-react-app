@@ -174,7 +174,7 @@ Some features are currently **not supported**:
 * Server rendering.
 * Some experimental syntax extensions (e.g. decorators).
 * CSS Modules.
-* LESS or Sass.
+* Importing LESS or Sass directly ([but you still can use them](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)).
 * Hot reloading of components.
 
 Some of them might get added in the future if they are stable, are useful to majority of React apps, don’t conflict with existing tools, and don’t introduce additional configuration.
