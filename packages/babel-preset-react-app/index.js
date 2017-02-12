@@ -30,7 +30,9 @@ const plugins = [
     regenerator: true,
     // Resolve the Babel runtime relative to the config.
     moduleName: path.dirname(require.resolve('babel-runtime/package'))
-  }]
+  }],
+  // Enables parsing of import()
+  require.resolve('babel-plugin-syntax-dynamic-import')
 ];
 
 // This is similar to how `env` works in Babel:
