@@ -151,6 +151,7 @@ Please refer to the [User Guide](https://github.com/facebookincubator/create-rea
 * Import CSS and image files directly from JavaScript.
 * Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
 * A `build` script to bundle JS, CSS, and images for production, with sourcemaps.
+* An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app) criteria.
 
 **The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 

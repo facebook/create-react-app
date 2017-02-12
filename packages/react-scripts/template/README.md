@@ -1048,7 +1048,60 @@ Learn more about React Storybook:
 
 ## Making a Progressive Web App
 
-You can turn your React app into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) by following the steps in [this repository](https://github.com/jeffposnick/create-react-pwa).
+By default, the production build is a fully functional, offline-first
+[Progressive Web App](https://developers.google.com/web/progressive-web-apps/).
+
+The [`sw-precache-webpack-plugin`](https://github.com/goldhand/sw-precache-webpack-plugin)
+is integrated into [`webpack.config.prod.js`](../config/webpack.config.prod.js),
+and it will take care of generating a service worker file that will automatically
+precache all of your local assets and keep them up to date as you deploy updates.
+The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
+for handling all requests for local assets, including the initial HTML, ensuring
+that you web app is reliably fast, even on a slow or unreliable network.
+
+It includes a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/),
+located at [`public/manifest.json`](public/manifest.json), that you might want
+to customize with metadata specific to your web application, such as its name
+and branding colors.
+
+### Offline-First Considerations
+
+1. The service worker is only enabled in the production environment. It's
+recommended that you do not enable an offline-first service worker in a
+development environment, as it can lead to frustration when previously cached
+assets are used and do not include the latest changes you've made locally.
+
+1. If possible,configure your production environment to serve the generated
+`service-worker.js` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
+If that's not possible—[GitHub Pages](#github-pages), for instance, does not
+allow you to change the default 10 minute HTTP cache lifetime—then be aware
+that if you visit your production site, and then revisit again before
+`service-worker.js` has expired from your HTTP cache, you'll continue to get
+the previously cached assets from the service worker. If you have an immediate
+need to view your updated production deployment, performing a shift-refresh
+will temporarily disable the service worker and retrieve all assets from the
+network.
+
+1. Users aren't always familiar with offline-first web apps. It can be useful to
+let the user know when the service worker has finished populating your caches
+(showing a "This web app works offline!" message) and also let them know when
+the service worker has fetched the latest updates that will be available the
+next time they load the page (showing a "New content is available; please
+refresh." message). Showing this messages is currently left as an exercise to
+the developer, but as a starting point, you can make use of the logic included
+in [`src/register-service-worker.js`](src/register-service-worker.js), which
+demonstrates which service worker lifecycle events to listen for to detect each
+scenario, and which as a default, just logs appropriate messages to the
+JavaScript console.
+
+1. By default, the generated service worker file will not intercept or cache any
+cross-origin traffic, like HTTP [API requests](#integrating-with-an-api-backend),
+images, or embeds loaded from a different domain. If you would like to use a
+runtime caching strategy for those requests, you can [`eject`](#npm-run-eject)
+and then configure the
+[`runtimeCaching`](https://github.com/GoogleChrome/sw-precache#runtimecaching-arrayobject)
+option in the `SWPrecachePlugin` section of
+[`webpack.config.prod.js`](../config/webpack.config.prod.js).
 
 ## Deployment
 
@@ -1095,6 +1148,15 @@ This is because when there is a fresh page load for a `/todos/42`, the server lo
 ```
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
+
+On a production build, and in a browser that supports [service workers](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers),
+the service worker will automatically handle all navigation requests, like for
+`/todos/42`, by serving the cached copy of your `index.html`. This
+service worker navigation routing can be configured or disabled by
+[`eject`ing](#npm-run-eject) and then modifying the
+[`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
+and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
+options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
 
 ### Building for Relative Paths
 

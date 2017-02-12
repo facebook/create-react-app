@@ -278,6 +278,7 @@ module.exports = {
     new SWPrecacheWebpackPlugin({
       dontCacheBustUrlsMatching: /\.\w{8}\./,
       filename: 'service-worker.js',
+      navigateFallback: publicUrl + '/index.html',
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
     })
   ],
