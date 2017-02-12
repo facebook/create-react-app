@@ -123,6 +123,7 @@ module.exports = {
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
     'no-undef': 'error',
+    'no-restricted-globals': ['error', 'event'],
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': ['warn', {
@@ -213,7 +214,6 @@ module.exports = {
     // https://github.com/gajus/eslint-plugin-flowtype
     'flowtype/define-flow-type': 'warn',
     'flowtype/require-valid-file-annotation': 'warn',
-    'flowtype/use-flow-type': 'warn',
-    'no-restricted-globals': ['warn', 'event']
+    'flowtype/use-flow-type': 'warn'
   }
 };
