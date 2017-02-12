@@ -176,7 +176,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Supported Language Features and Polyfills
 
 This project supports a superset of the latest JavaScript standard.  
-In addition to [ES6](https://leanpub.com/understandinges6/read) syntax features, it also supports:
+In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, it also supports:
 
 * [Exponentiation Operator](https://github.com/rwaldron/exponentiation-operator) (ES2016).
 * [Async/await](https://github.com/tc39/ecmascript-asyncawait) (ES2017).
