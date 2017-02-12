@@ -419,7 +419,7 @@ As a final step, you may find it convenient to run `watch-css` automatically wit
 -    "start": "react-scripts start",
 -    "build": "react-scripts build",
 +    "start": "react-scripts start & npm run watch-css",
-+    "build": "react-scripts build && npm run build-css",
++    "build": "npm run build-css && react-scripts build",
      "test": "react-scripts test --env=jsdom",
      "eject": "react-scripts eject"
    }
