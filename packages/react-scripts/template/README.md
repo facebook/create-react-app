@@ -374,7 +374,7 @@ becomes this:
 }
 ```
 
-There is currently no support for preprocessors such as Less, or for sharing variables across CSS files.
+If you need to disable autoprefixing for some reason, [follow this section](https://github.com/postcss/autoprefixer#disabling).
 
 ## Adding a CSS Preprocessor (Sass, Less etc.)
 
