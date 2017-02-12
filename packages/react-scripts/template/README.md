@@ -410,6 +410,8 @@ At this point you might want to remove all CSS files from the source control, an
 
 As a final step, you may find it convenient to run `watch-css` automatically with `npm start`, and run `build-css` as a part of `npm run build`. You can use `&` operator for executing scripts in parallel, and `&&` for executing them sequentially:
 
+>Note: Windows shells (both CMD and Powershell) do not support the single `&` character. This means that *only the updated `build` script will actually work on Windows* and you'll have to start the `watch-css` script separately.
+
 ```diff
    "scripts": {
      "build-css": "node-sass src/ -o src/",
