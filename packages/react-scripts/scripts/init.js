@@ -41,7 +41,7 @@ function gitInit() {
 
     execSync('git init', {stdio: 'ignore'});
     execSync('git add .', {stdio: 'ignore'});
-    execSync('git commit -m "initial commit from create-react-app"', {stdio: 'ignore'});
+    execSync('git commit -m "Initial commit from create-react-app"', {stdio: 'ignore'});
 
     return true;
   } catch (e) {
@@ -101,10 +101,6 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
     }
   });
 
-  if (gitInit()) {
-    console.log('Initializing git repository');
-  }
-
   var command;
   var args;
 
@@ -143,6 +139,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
       console.error('`' + command + ' ' + args.join(' ') + '` failed');
       return;
     }
+  }
+
+  if (gitInit()) {
+    console.log('Initializing git repository');
   }
 
   // Display the most elegant way to cd.
