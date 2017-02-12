@@ -1,7 +1,6 @@
 ---
 language: node_js
 node_js:
-  - 0.10
   - 4
   - 6
 cache:
@@ -9,7 +8,18 @@ cache:
   - node_modules
   - packages/create-react-app/node_modules
   - packages/react-scripts/node_modules
-script: tasks/e2e.sh
+script:
+ - 'if [ $TEST_SUITE = "simple" ]; then tasks/e2e-simple.sh; fi'
+ - 'if [ $TEST_SUITE = "installs" ]; then tasks/e2e-installs.sh; fi'
+ - 'if [ $TEST_SUITE = "kitchensink" ]; then tasks/e2e-kitchensink.sh; fi'
 env:
-  - USE_YARN=no
-  - USE_YARN=yes
+  global:
+    - USE_YARN=no
+  matrix:
+    - TEST_SUITE=simple
+    - TEST_SUITE=installs
+    - TEST_SUITE=kitchensink
+matrix:
+  include:
+    - node_js: 6
+      env: USE_YARN=yes TEST_SUITE=simple

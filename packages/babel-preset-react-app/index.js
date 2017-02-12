@@ -88,7 +88,11 @@ if (env === 'test') {
   module.exports = {
     presets: [
       // Latest stable ECMAScript features
-      require.resolve('babel-preset-latest'),
+      [require.resolve('babel-preset-latest'), {
+        'es2015': {
+          modules: false
+        }
+      }],
       // JSX, Flow
       require.resolve('babel-preset-react')
     ],
