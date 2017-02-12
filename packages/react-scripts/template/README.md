@@ -331,19 +331,7 @@ becomes this:
 }
 ```
 
-You can use control comment to disable [Autoprefixer](https://github.com/postcss/autoprefixer) feature.
-
-```css
-/* autoprefixer: off */
-
-.App {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-```
-
-There is currently no support for preprocessors such as Less, or for sharing variables across CSS files.
+If you need to disable autoprefixing for some reason, [follow this section](https://github.com/postcss/autoprefixer#disabling).
 
 ## Adding Images and Fonts
 
