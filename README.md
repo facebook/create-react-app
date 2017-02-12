@@ -67,7 +67,24 @@ my-app/
     logo.svg
 ```
 
+
+
 No configuration or complicated folder structures, just the files you need to build your app.<br>
+
+#### `--auto-eject` switch
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you like create-react-app for everyday work and usually modifying the webpack configuration,
+you can use `--auto-eject` switch to automatically eject the react-scripts after everything finished.
+
+For more information about ejecting please refer to [npm run eject](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-run-eject)
+
+```sh
+create-react-app my-app --auto-eject
+cd my-app
+```
+
 Once the installation is done, you can run some commands inside the project folder:
 
 ### `npm start`

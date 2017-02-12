@@ -12,7 +12,7 @@ var path = require('path');
 var spawn = require('cross-spawn');
 var chalk = require('chalk');
 
-module.exports = function(appPath, appName, verbose, originalDirectory, template) {
+module.exports = function(appPath, appName, verbose, originalDirectory, autoEject, template) {
   var ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
   var ownPath = path.join(appPath, 'node_modules', ownPackageName);
   var appPackage = require(path.join(appPath, 'package.json'));
@@ -113,32 +113,61 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
       cdpath = appPath;
     }
 
-    console.log();
-    console.log('Success! Created ' + appName + ' at ' + appPath);
-    console.log('Inside that directory, you can run several commands:');
-    console.log();
-    console.log(chalk.cyan('  ' + command + ' start'));
-    console.log('    Starts the development server.');
-    console.log();
-    console.log(chalk.cyan('  ' + command + ' run build'));
-    console.log('    Bundles the app into static files for production.');
-    console.log();
-    console.log(chalk.cyan('  ' + command + ' test'));
-    console.log('    Starts the test runner.');
-    console.log();
-    console.log(chalk.cyan('  ' + command + ' run eject'));
-    console.log('    Removes this tool and copies build dependencies, configuration files');
-    console.log('    and scripts into the app directory. If you do this, you can’t go back!');
-    console.log();
-    console.log('We suggest that you begin by typing:');
-    console.log();
-    console.log(chalk.cyan('  cd'), cdpath);
-    console.log('  ' + chalk.cyan(command + ' start'));
-    if (readmeExists) {
-      console.log();
-      console.log(chalk.yellow('You had a `README.md` file, we renamed it to `README.old.md`'));
+    // If --eject option given, we will run 'npm run eject'
+    if (autoEject) {
+      ejectJsPath = paths.resolve('init.js');
+
+      var ejectSpawn = spawn("npm", ['run', 'eject', '--force']);
+
+      // Check if eject option has returned any error?
+      ejectSpawn.stderr.on('data', function (error) {
+        console.error(error.toString());
+        process.exit(1);
+      });
+
+      ejectSpawn.on('close', function (code) {
+        // So there has been an error. Process no further!
+        if (code !== 0) {
+          process.exit(code);
+        }
+        successMessage();
+      });
+    } else {
+      // There is no eject command. Just display the success message.
+      successMessage();
     }
-    console.log();
-    console.log('Happy hacking!');
+
+    function successMessage() {
+      console.log();
+      console.log('Success! Created ' + appName + ' at ' + appPath);
+      console.log('Inside that directory, you can run several commands:');
+      console.log();
+      console.log(chalk.cyan('  ' + command + ' start'));
+      console.log('    Starts the development server.');
+      console.log();
+      console.log(chalk.cyan('  ' + command + ' run build'));
+      console.log('    Bundles the app into static files for production.');
+      console.log();
+      console.log(chalk.cyan('  ' + command + ' test'));
+      console.log('    Starts the test runner.');
+      console.log();
+      if (!autoEject) {
+        console.log(chalk.cyan('  ' + command + ' run eject'));
+        console.log('    Removes this tool and copies build dependencies, configuration files');
+        console.log('    and scripts into the app directory. If you do this, you can’t go back!');
+        console.log();
+      }
+      console.log('We suggest that you begin by typing:');
+      console.log();
+      console.log(chalk.cyan('  cd'), cdpath);
+      console.log('  ' + chalk.cyan(command + ' start'));
+      if (readmeExists) {
+        console.log();
+        console.log(chalk.yellow('You had a `README.md` file, we renamed it to `README.old.md`'));
+      }
+      console.log();
+      console.log('Happy hacking!');
+    }
+
   });
 };
