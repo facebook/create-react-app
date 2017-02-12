@@ -92,8 +92,14 @@ prompt(
 
   console.log(cyan('Updating the dependencies'));
   var ownPackageName = ownPackage.name;
-  console.log('  Removing ' + cyan(ownPackageName) + ' from devDependencies');
-  delete appPackage.devDependencies[ownPackageName];
+  if (appPackage.devDependencies[ownPackageName]) {
+    console.log('  Removing ' + cyan(ownPackageName) + ' from devDependencies');
+    delete appPackage.devDependencies[ownPackageName];
+  }
+  if (appPackage.dependencies[ownPackageName]) {
+    console.log('  Removing ' + cyan(ownPackageName) + ' from dependencies');
+    delete appPackage.dependencies[ownPackageName];
+  }
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
     // For some reason optionalDependencies end up in dependencies after install
@@ -129,14 +135,14 @@ prompt(
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
-    JSON.stringify(appPackage, null, 2)
+    JSON.stringify(appPackage, null, 2) + '\n'
   );
   console.log();
 
   if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));
     fs.removeSync(ownPath);
-    spawnSync('yarn', [], {stdio: 'inherit'});
+    spawnSync('yarnpkg', [], {stdio: 'inherit'});
   } else {
     console.log(cyan('Running npm install...'));
     fs.removeSync(ownPath);

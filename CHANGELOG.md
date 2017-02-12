@@ -1,3 +1,156 @@
+## 0.9.0 (2017-02-11)
+
+#### :rocket: New Feature
+* `react-scripts`
+  * [#1489](https://github.com/facebookincubator/create-react-app/pull/1489) Support setting "homepage" to "." to generate relative asset paths. ([@tibdex](https://github.com/tibdex))
+
+    This addition allows any application not using the HTML5 pushState API to be built to be served from any relative URL.
+  * [#937](https://github.com/facebookincubator/create-react-app/pull/1504) Add `PUBLIC_URL` env variable for advanced use. ([@EnoahNetzach](https://github.com/EnoahNetzach))
+  * [#1440](https://github.com/facebookincubator/create-react-app/pull/1440) Make all react env vars accessible in index.html. ([@jihchi](https://github.com/jihchi))
+* `react-dev-utils`
+  * [#1148](https://github.com/facebookincubator/create-react-app/pull/1148) Configure which browser to open in npm start (#873). ([@GAumala](https://github.com/GAumala))
+
+    You can now disable the automatic browser launching by setting the `BROWSER` environment variable to `none`.
+
+#### :boom: Breaking Change
+* `react-scripts`
+  * [#1522](https://github.com/facebookincubator/create-react-app/pull/1522) Upgrade dependencies. ([@Timer](https://github.com/Timer))
+  * [#1432](https://github.com/facebookincubator/create-react-app/pull/1432) Bump Jest version. ([@gaearon](https://github.com/gaearon))
+
+    Jest has been updated to v18 and has introduced some [breaking changes](https://facebook.github.io/jest/blog/2016/12/15/2016-in-jest.html).
+
+* `react-scripts`, `react-dev-utils`
+  * [#1148](https://github.com/facebookincubator/create-react-app/pull/1148) Configure which browser to open in npm start (#873). ([@GAumala](https://github.com/GAumala))
+
+    Non-interactive terminals no longer automatically disable launching of the browser.
+
+#### :bug: Bug Fix
+* `react-scripts`
+  * [#1522](https://github.com/facebookincubator/create-react-app/pull/1522) Upgrade dependencies. ([@Timer](https://github.com/Timer))
+  * [#1458](https://github.com/facebookincubator/create-react-app/pull/1458) eject: Additionally remove `react-scripts` from dependencies. ([@creynders](https://github.com/creynders))
+  * [#1441](https://github.com/facebookincubator/create-react-app/pull/1441) Added babel-runtime dependency to deduplicate dependencies when using yarn. ([@jkimbo](https://github.com/jkimbo))
+  * [#1309](https://github.com/facebookincubator/create-react-app/pull/1309) Bump babel-loader version (#1009). ([@frontsideair](https://github.com/frontsideair))
+  * [#1267](https://github.com/facebookincubator/create-react-app/pull/1267) Only gitignore dirs in root, not deep. ([@jayphelps](https://github.com/jayphelps))
+* `react-dev-utils`
+  * [#1377](https://github.com/facebookincubator/create-react-app/pull/1377) webpack-dev-server patch for 'still-ok' success status. ([@TheBlackBolt](https://github.com/TheBlackBolt))
+  * [#1274](https://github.com/facebookincubator/create-react-app/pull/1274) Downgrading to compatible version of SockJS-Client. ([@holloway](https://github.com/holloway))
+  * [#1247](https://github.com/facebookincubator/create-react-app/pull/1247) Only open Chrome tab if BROWSER is missing or is Chrome. ([@gaearon](https://github.com/gaearon))
+
+#### :nail_care: Enhancement
+* `react-scripts`
+  * [#1507](https://github.com/facebookincubator/create-react-app/pull/1507) fix: add yarn gitignores. ([@adjohnson916](https://github.com/adjohnson916))
+  * [#1496](https://github.com/facebookincubator/create-react-app/pull/1496) Make build exit with error code when interrupted. ([@brandones](https://github.com/brandones))
+  * [#1510](https://github.com/facebookincubator/create-react-app/pull/1510) Add missing '\n' to the end of `package.json` file. ([@pd4d10](https://github.com/pd4d10))
+  * [#1352](https://github.com/facebookincubator/create-react-app/pull/1352) More descriptive error message for env.CI = true warnings causing failures. ([@jayphelps](https://github.com/jayphelps))
+  * [#1432](https://github.com/facebookincubator/create-react-app/pull/1432) Bump Jest version. ([@gaearon](https://github.com/gaearon))
+  * [#1324](https://github.com/facebookincubator/create-react-app/pull/1324) Use npm script hooks to avoid && in deploy script. ([@zpao](https://github.com/zpao))
+  * [#1311](https://github.com/facebookincubator/create-react-app/pull/1311) Updated react-scripts babel-jest && jest packages to 18.0.0. ([@lopezator](https://github.com/lopezator))
+  * [#1264](https://github.com/facebookincubator/create-react-app/pull/1264) Remove interactive shell check when opening browser on start. ([@CaryLandholt](https://github.com/CaryLandholt))
+* `create-react-app`
+  * [#1270](https://github.com/facebookincubator/create-react-app/pull/1270) gh-1269: Enabling nested folder paths for project name. ([@dinukadesilva](https://github.com/dinukadesilva))
+
+#### :memo: Documentation
+* `react-scripts`
+  * [#1515](https://github.com/facebookincubator/create-react-app/pull/1515) readme: Advanced Configuration. ([@Timer](https://github.com/Timer))
+  * [#1513](https://github.com/facebookincubator/create-react-app/pull/1513) clarifying the use of custom environment variables. ([@calweb](https://github.com/calweb))
+  * [#1511](https://github.com/facebookincubator/create-react-app/pull/1511) Change "OS X" references to "macOS". ([@RodrigoHahn](https://github.com/RodrigoHahn))
+  * [#1482](https://github.com/facebookincubator/create-react-app/pull/1482) Edit User Guide: Add ESLint config for VS Code users. ([@vulong23](https://github.com/vulong23))
+  * [#1483](https://github.com/facebookincubator/create-react-app/pull/1483) Reflect websocket proxy support on README (#1013). ([@frontsideair](https://github.com/frontsideair))
+  * [#1453](https://github.com/facebookincubator/create-react-app/pull/1453) Readme: Removes experimental from Jest snapshot. ([@frehner](https://github.com/frehner))
+  * [#1437](https://github.com/facebookincubator/create-react-app/pull/1437) Added links to tutorials for integrating cra with an api backend. ([@alexdriaguine](https://github.com/alexdriaguine))
+  * [#1422](https://github.com/facebookincubator/create-react-app/pull/1422) Add causes of dev server not detecting changes. ([@jetpackpony](https://github.com/jetpackpony))
+  * [#1260](https://github.com/facebookincubator/create-react-app/pull/1260) Heroku Deployment: Adds a note on how to resolve "File/Module Not Found Errors" . ([@MsUzoAgu](https://github.com/MsUzoAgu))
+  * [#1256](https://github.com/facebookincubator/create-react-app/pull/1256) Add "Changing the Page Title" to User Guide. ([@gaearon](https://github.com/gaearon))
+  * [#1245](https://github.com/facebookincubator/create-react-app/pull/1245) Replace the Flow documentation section. ([@gaearon](https://github.com/gaearon))
+* Other
+  * [#1514](https://github.com/facebookincubator/create-react-app/pull/1514) corrected minor typo. ([@crowchirp](https://github.com/crowchirp))
+  * [#1393](https://github.com/facebookincubator/create-react-app/pull/1393) replace two space syntax with <br> tag. ([@carlsagan21](https://github.com/carlsagan21))
+  * [#1384](https://github.com/facebookincubator/create-react-app/pull/1384) Document Flow support. ([@dschep](https://github.com/dschep))
+* `react-dev-utils`
+  * [#1375](https://github.com/facebookincubator/create-react-app/pull/1375) Change console.log for errors and warnings. ([@jimmyhmiller](https://github.com/jimmyhmiller))
+  * [#1369](https://github.com/facebookincubator/create-react-app/pull/1369) Add missing import in react-dev-utils README.md. ([@pedronauck](https://github.com/pedronauck))
+
+#### :house: Internal
+* Other
+  * [#1519](https://github.com/facebookincubator/create-react-app/pull/1519) Add test cases for PUBLIC_URL and relative path. ([@Timer](https://github.com/Timer))
+* `react-scripts`
+  * [#1484](https://github.com/facebookincubator/create-react-app/pull/1484) Improve e2e-kitchensink and Jest coverage. ([@Timer](https://github.com/Timer))
+  * [#1463](https://github.com/facebookincubator/create-react-app/pull/1463) Minor code style and wrong expect. ([@tuchk4](https://github.com/tuchk4))
+  * [#1470](https://github.com/facebookincubator/create-react-app/pull/1470) E2e jsdom fix. ([@EnoahNetzach](https://github.com/EnoahNetzach))
+  * [#1289](https://github.com/facebookincubator/create-react-app/pull/1289) Remove path-exists from dependencies and replace it with fs.existsSync. ([@halfzebra](https://github.com/halfzebra))
+* `create-react-app`, `react-scripts`
+  * [#1187](https://github.com/facebookincubator/create-react-app/pull/1187) Use a more sophisticated template for end-to-end testing.. ([@EnoahNetzach](https://github.com/EnoahNetzach))
+
+#### Committers: 35
+- Alex Driaguine ([alexdriaguine](https://github.com/alexdriaguine))
+- Anders D. Johnson ([adjohnson916](https://github.com/adjohnson916))
+- Anthony F. ([frehner](https://github.com/frehner))
+- Brandon Istenes ([brandones](https://github.com/brandones))
+- Calvin Webster ([calweb](https://github.com/calweb))
+- Cary Landholt ([CaryLandholt](https://github.com/CaryLandholt))
+- Chandan Rai ([crowchirp](https://github.com/crowchirp))
+- Christian Raidl ([Chris-R3](https://github.com/Chris-R3))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Daniel Schep ([dschep](https://github.com/dschep))
+- David ([lopezator](https://github.com/lopezator))
+- Dinuka De Silva ([dinukadesilva](https://github.com/dinukadesilva))
+- Eduard Kyvenko ([halfzebra](https://github.com/halfzebra))
+- Fabrizio Castellarin ([EnoahNetzach](https://github.com/EnoahNetzach))
+- Fatih ([frontsideair](https://github.com/frontsideair))
+- Gabriel Aumala ([GAumala](https://github.com/GAumala))
+- Jay Phelps ([jayphelps](https://github.com/jayphelps))
+- Jih-Chi Lee ([jihchi](https://github.com/jihchi))
+- Jimmy Miller ([jimmyhmiller](https://github.com/jimmyhmiller))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Johnny Magrippis ([jmagrippis](https://github.com/jmagrippis))
+- Jonathan Kim ([jkimbo](https://github.com/jkimbo))
+- MUA ([MsUzoAgu](https://github.com/MsUzoAgu))
+- Matthew Holloway ([holloway](https://github.com/holloway))
+- Nguyen Le Vu Long ([vulong23](https://github.com/vulong23))
+- Paul O’Shannessy ([zpao](https://github.com/zpao))
+- Pedro Nauck ([pedronauck](https://github.com/pedronauck))
+- Robbie H ([TheBlackBolt](https://github.com/TheBlackBolt))
+- Thibault Derousseaux ([tibdex](https://github.com/tibdex))
+- Valerii ([tuchk4](https://github.com/tuchk4))
+- Vasiliy Taranov ([jetpackpony](https://github.com/jetpackpony))
+- [RodrigoHahn](https://github.com/RodrigoHahn)
+- creynders ([creynders](https://github.com/creynders))
+- pd4d10 ([pd4d10](https://github.com/pd4d10))
+- soo ([carlsagan21](https://github.com/carlsagan21))
+
+### Migrating from 0.8.5 to 0.9.0
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.9.0
+```
+
+## 0.8.5 (January 9, 2017)
+
+#### :bug: Bug Fix
+* `create-react-app`, `react-scripts`
+  * [#1365](https://github.com/facebookincubator/create-react-app/pull/1365) Use yarnpkg alias to run Yarn. ([@fson](https://github.com/fson))
+
+    Fixes an issue where running `create-react-app` failed on systems with Apache Hadoop installed because it falsely detected Hadoop YARN executable as Yarn package manager.
+
+#### Committers: 1
+- Ville Immonen ([fson](https://github.com/fson))
+
+### Migrating from 0.8.4 to 0.8.5
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.8.5
+```
+
+You may also optionally update the global command-line utility:
+
+```
+npm install -g create-react-app@1.0.3
+```
+
 ## 0.8.4 (December 11, 2016)
 
 #### :bug: Bug Fix
@@ -414,7 +567,7 @@ npm install --save-dev --save-exact react-scripts@0.8.0
 
 ### Babel Preset (`babel-preset-react-app`)
 
-* The preset now detects the Node.js version in test environment and disables unnecessary ES2015 transforms using using `babel-preset-env`. ([@shubheksha](https://github.com/shubheksha) in [#878](https://github.com/facebookincubator/create-react-app/pull/878), [@JeffreyATW](https://github.com/JeffreyATW) in [#927
+* The preset now detects the Node.js version in test environment and disables unnecessary ES2015 transforms using `babel-preset-env`. ([@shubheksha](https://github.com/shubheksha) in [#878](https://github.com/facebookincubator/create-react-app/pull/878), [@JeffreyATW](https://github.com/JeffreyATW) in [#927
 ](https://github.com/facebookincubator/create-react-app/pull/927))
 * Fixes a duplicate dependency on `babel-plugin-transform-regenerator`. ([@akofman](https://github.com/akofman) in [#864](https://github.com/facebookincubator/create-react-app/pull/864))
 
