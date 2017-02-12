@@ -43,6 +43,13 @@ function create_react_app {
   node "$temp_cli_path"/node_modules/create-react-app/index.js $*
 }
 
+# Check for the existence of one or more files.
+function exists {
+  for f in $*; do
+    test -e "$f"
+  done
+}
+
 # Exit the script with a helpful error message when any error is encountered
 trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 
@@ -120,8 +127,8 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   npm run build
 
 # Check for expected output
-test -e build/*.html
-test -e build/static/js/main.*.js
+exists build/*.html
+exists build/static/js/main.*.js
 
 # Unit tests
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -177,8 +184,8 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   npm run build
 
 # Check for expected output
-test -e build/*.html
-test -e build/static/js/main.*.js
+exists build/*.html
+exists build/static/js/main.*.js
 
 # Unit tests
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
