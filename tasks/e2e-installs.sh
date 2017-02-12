@@ -120,6 +120,29 @@ cd test-app-fork
 exists node_modules/react-scripts-fork
 
 # ******************************************************************************
+# Test --scripts-version with a scoped fork of react-scripts
+# ******************************************************************************
+
+cd $temp_app_path
+create_react_app --scripts-version=@enoah_netzach/react-scripts test-app-scoped-fork
+cd test-app-scoped-fork
+
+# Check corresponding scripts version is installed.
+exists node_modules/@enoah_netzach/react-scripts
+
+# ******************************************************************************
+# Test --scripts-version with a scoped fork tgz of react-scripts
+# ******************************************************************************
+
+cd $temp_app_path
+curl "https://registry.npmjs.org/@enoah_netzach/react-scripts/-/react-scripts-0.9.0.tgz" -o enoah_netzach-react-scripts-0.9.0.tgz
+create_react_app --scripts-version=$temp_app_path/enoah_netzach-react-scripts-0.9.0.tgz test-app-scoped-fork-tgz
+cd test-app-scoped-fork
+
+# Check corresponding scripts version is installed.
+exists node_modules/@enoah_netzach/react-scripts
+
+# ******************************************************************************
 # Test nested folder path as the project name
 # ******************************************************************************
 

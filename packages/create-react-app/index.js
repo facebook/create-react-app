@@ -179,13 +179,12 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       console.error(chalk.cyan(command + ' ' + args.join(' ')) + ' failed');
       process.exit(1);
     }
+    var packagePath = getPackagePath(packageName);
 
-    checkNodeVersion(packageName);
+    checkNodeVersion(packagePath);
 
     var scriptsPath = path.resolve(
-      process.cwd(),
-      'node_modules',
-      packageName,
+      packagePath,
       'scripts',
       'init.js'
     );
@@ -219,11 +218,29 @@ function getPackageName(installPackage) {
   return installPackage;
 }
 
-function checkNodeVersion(packageName) {
-  var packageJsonPath = path.resolve(
+function getPackagePath(packageName) {
+  let packagePath = path.resolve(
     process.cwd(),
     'node_modules',
-    packageName,
+    packageName
+  );
+
+  if (!packageName.startsWith('@') && packageName.indexOf('react-scripts') > -1 && !fs.existsSync(packagePath)) {
+    // The package could be @scoped
+    packagePath = path.resolve(
+      process.cwd(),
+      'node_modules',
+      '@' + packageName.replace(/-react-scripts.*/, ''),
+      'react-scripts'
+    );
+  }
+
+  return packagePath
+}
+
+function checkNodeVersion(packagePath) {
+  var packageJsonPath = path.resolve(
+    packagePath,
     'package.json'
   );
   var packageJson = require(packageJsonPath);
