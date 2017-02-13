@@ -252,6 +252,10 @@ connection.onmessage = function(e) {
   case 'ok':
     handleSuccess();
     break;
+  case 'content-changed':
+    // Triggered when a file from `contentBase` changed.
+    window.location.reload();
+    break;
   case 'warnings':
     handleWarnings(message.data);
     break;
