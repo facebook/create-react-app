@@ -408,7 +408,13 @@ Now you can rename `src/App.css` to `src/App.scss` and run `npm run watch-css`. 
 
 At this point you might want to remove all CSS files from the source control, and add `src/**/*.css` to your `.gitignore` file. It is generally a good practice to keep the build products outside of the source control.
 
-As a final step, you may find it convenient to run `watch-css` automatically with `npm start`, and run `build-css` as a part of `npm run build`. You can use `&` operator for executing scripts in parallel, and `&&` for executing them sequentially:
+As a final step, you may find it convenient to run `watch-css` automatically with `npm start`, and run `build-css` as a part of `npm run build`. You can use the `&&` operator to execute two scripts sequentially. However, there is no cross-platform way to run two scripts in parallel, so we will install a package for this:
+
+```
+npm install --save-dev npm-run-all
+```
+
+Then we can change `start` and `build` scripts to include the CSS preprocessor commands:
 
 ```diff
    "scripts": {
@@ -416,8 +422,9 @@ As a final step, you may find it convenient to run `watch-css` automatically wit
      "watch-css": "npm run build-css && node-sass src/ -o src/ --watch",
 -    "start": "react-scripts start",
 -    "build": "react-scripts build",
-+    "start": "react-scripts start & npm run watch-css",
-+    "build": "react-scripts build && npm run build-css",
++    "start-js": "react-scripts start",
++    "start": "npm-run-all -p watch-css start-js",
++    "build": "npm run build-css && react-scripts build",
      "test": "react-scripts test --env=jsdom",
      "eject": "react-scripts eject"
    }
