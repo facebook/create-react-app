@@ -68,7 +68,7 @@ root_path=$PWD
 npm install
 
 # If the node version is < 4, the script should just give an error.
-if [ `node --version | sed -e 's/^v//' -e 's/\..\+//g'` -lt 4 ]
+if [[ `node --version | sed -e 's/^v//' -e 's/\..*//g'` -lt 4 ]]
 then
   cd $temp_app_path
   err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
