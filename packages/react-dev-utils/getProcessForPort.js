@@ -1,3 +1,5 @@
+'use strict';
+
 var chalk = require('chalk');
 var execSync = require('child_process').execSync;
 var path = require('path');
@@ -58,4 +60,3 @@ function getProcessForPort(port) {
 }
 
 module.exports = getProcessForPort;
-

@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 var rl = require('readline');
 
 // Convention: "no" should be the conservative choice.

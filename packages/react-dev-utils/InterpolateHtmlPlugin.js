@@ -15,8 +15,8 @@
 // Learn more about creating plugins like this:
 // https://github.com/ampedandwired/html-webpack-plugin#events
 
-// eslint-disable-next-line
 'use strict';
+
 const escapeStringRegexp = require('escape-string-regexp');
 
 class InterpolateHtmlPlugin {

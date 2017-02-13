@@ -11,7 +11,6 @@
 // We’re not sure why this isn't Webpack's default behavior.
 // See https://github.com/facebookincubator/create-react-app/issues/186.
 
-// eslint-disable-next-line
 'use strict';
 
 class WatchMissingNodeModulesPlugin {
