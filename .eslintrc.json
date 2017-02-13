@@ -2,10 +2,11 @@
   "extends": "react-app",
   "parserOptions": {
     "ecmaVersion": 5,
-    "sourceType": "default",
+    "sourceType": "script",
     "ecmaFeatures": {
       "jsx": false,
-      "generators": true
+      "generators": true,
+      "impliedStrict": false
     }
   },
   "rules": {
