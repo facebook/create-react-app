@@ -23,6 +23,9 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Changelog
 
+### 1.1.6
+* Merge facebookincubator/create-react-app@0.9.0 into react-scripts-ts
+
 ### 1.0.6
 * Add missing `cli-highlight` dependency
 
