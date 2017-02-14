@@ -12,7 +12,7 @@ var path = require('path');
 var spawn = require('cross-spawn');
 var chalk = require('chalk');
 
-module.exports = function(appPath, appName, verbose, originalDirectory) {
+module.exports = function(appPath, appName, verbose, originalDirectory, template) {
   var ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
   var ownPath = path.join(appPath, 'node_modules', ownPackageName);
   var appPackage = require(path.join(appPath, 'package.json'));
@@ -41,7 +41,13 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   }
 
   // Copy the files for the user
-  fs.copySync(path.join(ownPath, 'template'), appPath);
+  var templatePath = template ? path.resolve(originalDirectory, template) : path.join(ownPath, 'template');
+  if (fs.existsSync(templatePath)) {
+    fs.copySync(templatePath, appPath);
+  } else {
+    console.error('Could not locate supplied template: ' + chalk.green(templatePath));
+    return;
+  }
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862
@@ -64,7 +70,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   var args;
 
   if (useYarn) {
-    command = 'yarn';
+    command = 'yarnpkg';
     args = ['add'];
   } else {
     command = 'npm';
@@ -75,6 +81,16 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     ].filter(function(e) { return e; });
   }
   args.push('react', 'react-dom', '@types/node', '@types/react', '@types/react-dom', '@types/jest');
+
+  // Install additional template dependencies, if present
+  var templateDependenciesPath = path.join(appPath, '.template.dependencies.json');
+  if (fs.existsSync(templateDependenciesPath)) {
+    var templateDependencies = require(templateDependenciesPath).dependencies;
+    args = args.concat(Object.keys(templateDependencies).map(function (key) {
+      return key + '@' + templateDependencies[key];
+    }));
+    fs.unlinkSync(templateDependenciesPath);
+  }
 
   console.log('Installing react and react-dom using ' + command + '...');
   console.log();

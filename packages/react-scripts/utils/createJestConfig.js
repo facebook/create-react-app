@@ -24,7 +24,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testPathIgnorePatterns: [
-      '<rootDir>[/\\\\](build|docs|node_modules)[/\\\\]'
+      '<rootDir>[/\\\\](build|docs|node_modules|scripts)[/\\\\]'
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
