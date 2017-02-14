@@ -1,6 +1,6 @@
 {
   "name": "react-scripts-ts",
-  "version": "1.1.6-prerelease.0",
+  "version": "1.1.6",
   "description": "Configuration and scripts for Create React App.",
   "repository": "wmonk/create-react-app",
   "license": "BSD-3-Clause",
