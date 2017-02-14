@@ -92,7 +92,8 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
 
   // Install react and react-dom for backward compatibility with old CRA cli
   // which doesn't install react and react-dom along with react-scripts
-  if (!isReactInstalled(appPackage)) {
+  // or template is presetend (via --internal-testing-template)
+  if (!isReactInstalled(appPackage) || template) {
     console.log('Installing react and react-dom using ' + command + '...');
     console.log();
 
