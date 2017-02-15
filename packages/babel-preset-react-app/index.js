@@ -66,13 +66,6 @@ if (env === 'development' || env === 'test') {
 }
 
 if (env === 'test') {
-  plugins.push.apply(plugins, [
-    // We always include this plugin regardless of environment
-    // because of a Babel bug that breaks object rest/spread without it:
-    // https://github.com/babel/babel/issues/4851
-    require.resolve('babel-plugin-transform-es2015-parameters')
-  ]);
-
   module.exports = {
     presets: [
       // ES features necessary for user's Node version
