@@ -87,6 +87,21 @@ if (env === 'test') {
     plugins: plugins
   };
 } else {
+  plugins.push.apply(plugins, [
+    // function* () { yield 42; yield 43; }
+    [require.resolve('babel-plugin-transform-regenerator'), {
+      // Async functions are converted to generators by babel-preset-latest
+      async: false
+    }]
+  ]);
+
+  if (env === 'production') {
+    // Optimization: hoist JSX that never changes out of render()
+    plugins.push.apply(plugins, [
+      require.resolve('babel-plugin-transform-react-constant-elements')
+    ]);
+  }
+
   module.exports = {
     presets: [
       // Latest stable ECMAScript features
@@ -98,19 +113,6 @@ if (env === 'test') {
       // JSX, Flow
       require.resolve('babel-preset-react')
     ],
-    plugins: plugins.concat([
-      // function* () { yield 42; yield 43; }
-      [require.resolve('babel-plugin-transform-regenerator'), {
-        // Async functions are converted to generators by babel-preset-latest
-        async: false
-      }],
-    ])
+    plugins: plugins
   };
-
-  if (env === 'production') {
-    // Optimization: hoist JSX that never changes out of render()
-    plugins.push.apply(plugins, [
-      require.resolve('babel-plugin-transform-react-constant-elements')
-    ]);
-  }
 }
