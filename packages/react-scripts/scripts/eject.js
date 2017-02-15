@@ -11,7 +11,6 @@ var createJestConfig = require('../utils/createJestConfig');
 var fs = require('fs-extra');
 var path = require('path');
 var paths = require('../config/paths');
-var reactScriptsLinked = require('../utils/isReactScriptsLinked')();
 var prompt = require('react-dev-utils/prompt');
 var spawnSync = require('cross-spawn').sync;
 var chalk = require('chalk');
@@ -29,9 +28,8 @@ prompt(
 
   console.log('Ejecting...');
 
-  // NOTE: get ownPath and appPath from config/paths.js ?
-  var ownPath = path.join(__dirname, '..');
-  var appPath = reactScriptsLinked ? path.resolve('.') : path.join(ownPath, '..', '..');
+  var ownPath = paths.ownPath;
+  var appPath = paths.appPath;
 
   function verifyAbsent(file) {
     if (fs.existsSync(path.join(appPath, file))) {
@@ -152,13 +150,13 @@ prompt(
 
   if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));
-    if (!reactScriptsLinked) {
+    if (ownPath.indexOf(appPath) !== -1) {
       fs.removeSync(ownPath);
     }
     spawnSync('yarnpkg', [], {stdio: 'inherit'});
   } else {
     console.log(cyan('Running npm install...'));
-    if (!reactScriptsLinked) {
+    if (ownPath.indexOf(appPath) !== -1) {
       fs.removeSync(ownPath);
     }
     spawnSync('npm', ['install'], {stdio: 'inherit'});
