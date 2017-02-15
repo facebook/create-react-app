@@ -1,0 +1,15 @@
+{
+  "extends": "react-app",
+  "parserOptions": {
+    "ecmaVersion": 5,
+    "sourceType": "script",
+    "ecmaFeatures": {
+      "jsx": false,
+      "generators": true,
+      "impliedStrict": false
+    }
+  },
+  "rules": {
+    "strict": ["warn", "safe"]
+  }
+}

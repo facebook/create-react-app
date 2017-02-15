@@ -16,6 +16,8 @@
 // that looks similar to our console output. The error overlay is inspired by:
 // https://github.com/glenjamin/webpack-hot-middleware
 
+'use strict';
+
 var ansiHTML = require('ansi-html');
 var SockJS = require('sockjs-client');
 var stripAnsi = require('strip-ansi');
@@ -123,7 +125,7 @@ function showErrorOverlay(message) {
   });
 }
 
-function destroyErrorOverlay() {  
+function destroyErrorOverlay() {
   if (!overlayDiv) {
     // It is not there in the first place.
     return;

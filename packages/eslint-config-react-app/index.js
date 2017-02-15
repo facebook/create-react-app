@@ -16,6 +16,8 @@
 // In the future, we might create a separate list of rules for production.
 // It would probably be more strict.
 
+'use strict';
+
 module.exports = {
   root: true,
 
