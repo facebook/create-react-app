@@ -954,6 +954,10 @@ expect(wrapper).toContainReact(welcome)
 
 To setup jest-enzyme with Create React App, follow the instructions for [initializing your test environment](#initializing-test-environment) to import `jest-enzyme`.
 
+```sh
+npm install --save-dev jest-enzyme
+```
+
 ```js
 // src/setupTests.js
 import 'jest-enzyme';
