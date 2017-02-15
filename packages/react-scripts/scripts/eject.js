@@ -150,15 +150,11 @@ prompt(
 
   if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));
-    if (ownPath.indexOf(appPath) !== -1) {
-      fs.removeSync(ownPath);
-    }
+    fs.removeSync(ownPath);
     spawnSync('yarnpkg', [], {stdio: 'inherit'});
   } else {
     console.log(cyan('Running npm install...'));
-    if (ownPath.indexOf(appPath) !== -1) {
-      fs.removeSync(ownPath);
-    }
+    fs.removeSync(ownPath);
     spawnSync('npm', ['install'], {stdio: 'inherit'});
   }
   console.log(green('Ejected successfully!'));
