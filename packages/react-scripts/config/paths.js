@@ -114,7 +114,6 @@ module.exports = {
   servedPath: getServedPath(resolveApp('package.json'))
 };
 
-
 var reactScriptsPath = path.resolve('node_modules/react-scripts');
 var reactScriptsLinked = fs.existsSync(reactScriptsPath) && fs.lstatSync(reactScriptsPath).isSymbolicLink();
 
