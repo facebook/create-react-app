@@ -41,6 +41,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
+- [Pre-Generating `<meta>` Tags with `react-snapshot`](#pre-generating-meta-tags-with-react-snapshot)
 - [Injecting Data from the Server into the Page](#injecting-data-from-the-server-into-the-page)
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
@@ -255,7 +256,7 @@ Note that normally you wouldn't edit files in the `public` folder very often. Fo
 
 If you need to dynamically update the page title based on the content, you can use the browser [`document.title`](https://developer.mozilla.org/en-US/docs/Web/API/Document/title) API. For more complex scenarios when you want to change the title from React components, you can use [React Helmet](https://github.com/nfl/react-helmet), a third party library.
 
-Finally, if you use a custom server for your app in production and want to modify the title before it gets sent to the browser, you can follow advice in [this section](#generating-dynamic-meta-tags-on-the-server).
+If you use a custom server for your app in production and want to modify the title before it gets sent to the browser, you can follow advice in [this section](#generating-dynamic-meta-tags-on-the-server). Alternatively, you can pre-build each page as a static html file which then loads the JavaScript bundle, which is covered [here](#pre-generating-meta-tags-with-react-snapshot).
 
 ## Installing a Dependency
 
@@ -812,6 +813,12 @@ Since Create React App doesn’t support server rendering, you might be wonderin
 Then, on the server, regardless of the backend you use, you can read `index.html` into memory and replace `__OG_TITLE__`, `__OG_DESCRIPTION__`, and any other placeholders with values depending on the current URL. Just make sure to sanitize and escape the interpolated values so that they are safe to embed into HTML!
 
 If you use a Node server, you can even share the route matching logic between the client and the server. However duplicating it also works fine in simple cases.
+
+## Pre-Generating `<meta>` Tags with `react-snapshot`
+
+If you'd prefer to host your `build` with a static hosting provider, like [Surge](https://surge.sh), you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot), [react-router](https://reacttraining.com/react-router/) and [react-helmet](https://github.com/nfl/react-helmet) to generate html pages for each route in your application. These pages will then seamlessly become active, or "hydrated", when the JavaScript bundle has loaded.
+
+You can read more about [zero configuration server side rendering here](https://medium.com/superhighfives/an-almost-static-stack-6df0a2791319).
 
 ## Injecting Data from the Server into the Page
 
