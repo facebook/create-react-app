@@ -109,8 +109,13 @@ if (env === 'test') {
 
   if (env === 'production') {
     // Optimization: hoist JSX that never changes out of render()
-    plugins.push.apply(plugins, [
-      require.resolve('babel-plugin-transform-react-constant-elements')
-    ]);
+    // Disabled because of issues:
+    // * https://github.com/facebookincubator/create-react-app/issues/525
+    // * https://phabricator.babeljs.io/search/query/pCNlnC2xzwzx/
+    // * https://github.com/babel/babel/issues/4516
+    // TODO: Enable again when these issues are resolved.
+    // plugins.push.apply(plugins, [
+    //   require.resolve('babel-plugin-transform-react-constant-elements')
+    // ]);
   }
 }
