@@ -1064,12 +1064,34 @@ located at [`public/manifest.json`](public/manifest.json), that you might want
 to customize with metadata specific to your web application, such as its name
 and branding colors.
 
+If you would prefer not to enable service workers prior to your initial
+production deployment, then remove the call to `serviceWorkerRegistration.register()`
+from [`src/index.js`](src/index.js).
+
+If you had previously enabled service workers in your production deployment and
+have decided that you would like to disable them for all your existing users,
+you can swap out the call to `serviceWorkerRegistration.register()` in
+[`src/index.js`](src/index.js) with a call to `serviceWorkerRegistration.unregister()`.
+After the user visits a page that has `serviceWorkerRegistration.unregister()`,
+the service worker will be uninstalled.
+
 ### Offline-First Considerations
 
-1. The service worker is only enabled in the production environment. It's
-recommended that you do not enable an offline-first service worker in a
-development environment, as it can lead to frustration when previously cached
-assets are used and do not include the latest changes you've made locally.
+1. Service workers [require HTTPS](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers#you_need_https),
+although to facilitate local testing, that policy
+[does not apply to `localhost`](http://stackoverflow.com/questions/34160509/options-for-testing-service-workers-via-http/34161385#34161385).
+If your production web server does not support HTTPS, then the service worker
+registration will fail, but the rest of your web app will remain functional.
+
+1. Service workers are [not currently supported](https://jakearchibald.github.io/isserviceworkerready/)
+in all web browsers. Service worker registration [won't be attempted](src/register-service-worker.js)
+on browsers that lack support.
+
+1. The service worker is only enabled in the [production environment](#Deployment),
+e.g. the output of `npm run build`. It's recommended that you do not enable an
+offline-first service worker in a development environment, as it can lead to
+frustration when previously cached assets are used and do not include the latest
+changes you've made locally.
 
 1. If possible,configure your production environment to serve the generated
 `service-worker.js` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
@@ -1083,13 +1105,13 @@ will temporarily disable the service worker and retrieve all assets from the
 network.
 
 1. Users aren't always familiar with offline-first web apps. It can be useful to
-let the user know when the service worker has finished populating your caches
-(showing a "This web app works offline!" message) and also let them know when
-the service worker has fetched the latest updates that will be available the
-next time they load the page (showing a "New content is available; please
-refresh." message). Showing this messages is currently left as an exercise to
-the developer, but as a starting point, you can make use of the logic included
-in [`src/register-service-worker.js`](src/register-service-worker.js), which
+[let the user know](https://developers.google.com/web/fundamentals/instant-and-offline/offline-ux#inform_the_user_when_the_app_is_ready_for_offline_consumption)
+when the service worker has finished populating your caches (showing a "This web
+app works offline!" message) and also let them know when the service worker has
+fetched the latest updates that will be available the next time they load the
+page (showing a "New content is available; please refresh." message). Showing
+this messages is currently left as an exercise to the developer, but as a
+starting point, you can make use of the logic included in [`src/register-service-worker.js`](src/register-service-worker.js), which
 demonstrates which service worker lifecycle events to listen for to detect each
 scenario, and which as a default, just logs appropriate messages to the
 JavaScript console.
