@@ -818,7 +818,7 @@ If you use a Node server, you can even share the route matching logic between th
 
 If you'd prefer to host your `build` with a static hosting provider, like [Surge](https://surge.sh), you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot), [react-router](https://reacttraining.com/react-router/) and [react-helmet](https://github.com/nfl/react-helmet) to generate html pages for each route in your application. These pages will then seamlessly become active, or "hydrated", when the JavaScript bundle has loaded.
 
-You can read more about [zero configuration server side rendering here](https://medium.com/superhighfives/an-almost-static-stack-6df0a2791319).
+You can read more about [zero-configuration snapshotting (also called pre-rendering) here](https://medium.com/superhighfives/an-almost-static-stack-6df0a2791319).
 
 ## Injecting Data from the Server into the Page
 
