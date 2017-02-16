@@ -66,13 +66,6 @@ if (env === 'development' || env === 'test') {
 }
 
 if (env === 'test') {
-  plugins.push.apply(plugins, [
-    // We always include this plugin regardless of environment
-    // because of a Babel bug that breaks object rest/spread without it:
-    // https://github.com/babel/babel/issues/4851
-    require.resolve('babel-plugin-transform-es2015-parameters')
-  ]);
-
   module.exports = {
     presets: [
       // ES features necessary for user's Node version
@@ -87,6 +80,21 @@ if (env === 'test') {
     plugins: plugins
   };
 } else {
+  plugins.push.apply(plugins, [
+    // function* () { yield 42; yield 43; }
+    [require.resolve('babel-plugin-transform-regenerator'), {
+      // Async functions are converted to generators by babel-preset-latest
+      async: false
+    }]
+  ]);
+
+  if (env === 'production') {
+    // Optimization: hoist JSX that never changes out of render()
+    plugins.push.apply(plugins, [
+      require.resolve('babel-plugin-transform-react-constant-elements')
+    ]);
+  }
+
   module.exports = {
     presets: [
       // Latest stable ECMAScript features
@@ -98,19 +106,6 @@ if (env === 'test') {
       // JSX, Flow
       require.resolve('babel-preset-react')
     ],
-    plugins: plugins.concat([
-      // function* () { yield 42; yield 43; }
-      [require.resolve('babel-plugin-transform-regenerator'), {
-        // Async functions are converted to generators by babel-preset-latest
-        async: false
-      }],
-    ])
+    plugins: plugins
   };
-
-  if (env === 'production') {
-    // Optimization: hoist JSX that never changes out of render()
-    plugins.push.apply(plugins, [
-      require.resolve('babel-plugin-transform-react-constant-elements')
-    ]);
-  }
 }
