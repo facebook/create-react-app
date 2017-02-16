@@ -1,4 +1,4 @@
-export default () => {
+export function register() {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
@@ -27,4 +27,12 @@ export default () => {
       });
     });
   }
-};
+}
+
+export function unregister() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then(function(registration) {
+      registration.unregister();
+    });
+  }
+}
