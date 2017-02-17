@@ -1084,7 +1084,7 @@ If your production web server does not support HTTPS, then the service worker
 registration will fail, but the rest of your web app will remain functional.
 
 1. Service workers are [not currently supported](https://jakearchibald.github.io/isserviceworkerready/)
-in all web browsers. Service worker registration [won't be attempted](src/register-service-worker.js)
+in all web browsers. Service worker registration [won't be attempted](src/service-worker-registration.js)
 on browsers that lack support.
 
 1. The service worker is only enabled in the [production environment](#Deployment),
@@ -1111,7 +1111,7 @@ app works offline!" message) and also let them know when the service worker has
 fetched the latest updates that will be available the next time they load the
 page (showing a "New content is available; please refresh." message). Showing
 this messages is currently left as an exercise to the developer, but as a
-starting point, you can make use of the logic included in [`src/register-service-worker.js`](src/register-service-worker.js), which
+starting point, you can make use of the logic included in [`src/service-worker-registration.js`](src/service-worker-registration.js), which
 demonstrates which service worker lifecycle events to listen for to detect each
 scenario, and which as a default, just logs appropriate messages to the
 JavaScript console.
