@@ -1122,7 +1122,7 @@ images, or embeds loaded from a different domain. If you would like to use a
 runtime caching strategy for those requests, you can [`eject`](#npm-run-eject)
 and then configure the
 [`runtimeCaching`](https://github.com/GoogleChrome/sw-precache#runtimecaching-arrayobject)
-option in the `SWPrecachePlugin` section of
+option in the `SWPrecacheWebpackPlugin` section of
 [`webpack.config.prod.js`](../config/webpack.config.prod.js).
 
 ## Deployment
