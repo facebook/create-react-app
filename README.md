@@ -214,7 +214,7 @@ If you don’t agree with the choices made in this project, you might want to ex
 Some of the more popular and actively maintained ones are:
 
 * [insin/nwb](https://github.com/insin/nwb)
-* [mozilla/neo](https://github.com/mozilla/neo)
+* [mozilla-neutrino/neutrino-dev](https://github.com/mozilla-neutrino/neutrino-dev)
 * [NYTimes/kyt](https://github.com/NYTimes/kyt)
 * [zeit/next.js](https://github.com/zeit/next.js)
 * [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)
