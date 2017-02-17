@@ -1087,11 +1087,19 @@ registration will fail, but the rest of your web app will remain functional.
 in all web browsers. Service worker registration [won't be attempted](src/service-worker-registration.js)
 on browsers that lack support.
 
-1. The service worker is only enabled in the [production environment](#Deployment),
+1. The service worker is only enabled in the [production environment](#deployment),
 e.g. the output of `npm run build`. It's recommended that you do not enable an
 offline-first service worker in a development environment, as it can lead to
 frustration when previously cached assets are used and do not include the latest
 changes you've made locally.
+
+1. If you *need* to test your offline-first service worker locally, build
+the application (using `npm run build`) and run a simple http server from your
+build directory. After running the build script, `create-react-app` will give
+instructions for one way to test your production build locally using
+`pushstate-server` and the [deployment instructions](#deployment) have
+instructions for using the python `SimpleHTTPServer`. *Be sure to always use an
+incognito window to avoid complications with your browser cache.*
 
 1. If possible,configure your production environment to serve the generated
 `service-worker.js` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
