@@ -16,6 +16,7 @@ var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('@trunkclub/react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('@trunkclub/react-dev-utils/WatchMissingNodeModulesPlugin');
 var ProgressBarPlugin = require('progress-bar-webpack-plugin');
+var TrunkClubVersionsPlugin = require('../utils/trunkclub-versions-plugin');
 var getClientEnvironment = require('./env');
 var path = require('path');
 var paths = require('./paths');
@@ -241,6 +242,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+    }),
+    // This will add a file to the build named 'tcversions.json' to assist
+    // with debugging apps that are in staging and production.
+    new TrunkClubVersionsPlugin({
+      packagePath: paths.appPackageJson,
+      modulesPath: paths.appNodeModules,
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.

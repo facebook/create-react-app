@@ -16,6 +16,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('@trunkclub/react-dev-utils/InterpolateHtmlPlugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var TrunkClubVersionsPlugin = require('../utils/trunkclub-versions-plugin');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
@@ -279,6 +280,12 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true
       }
+    }),
+    // This will add a file to the build named 'tcversions.json' to assist
+    // with debugging apps that are in staging and production.
+    new TrunkClubVersionsPlugin({
+      packagePath: paths.appPackageJson,
+      modulesPath: paths.appNodeModules,
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.

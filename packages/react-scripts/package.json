@@ -1,6 +1,6 @@
 {
   "name": "@trunkclub/build",
-  "version": "5.11.0",
+  "version": "5.12.0",
   "upstream-version": "0.8.4",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
