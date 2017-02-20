@@ -81,6 +81,31 @@ module.exports = {
 }
 ```
 
+#### `new BlockUnsupportedWebpackLoaderSyntax()`
+
+This Webpack plugin warns the user when using special webpack syntax for
+disabling loaders (like `!!file!./stuff`). This makes it very coupled
+to webpack special syntax and might break in the future.
+See [#733](https://github.com/facebookincubator/create-react-app/issues/733) for details.
+
+```js
+var path = require('path');
+var BlockUnsupportedWebpackLoaderSyntax = require('react-dev-utils/BlockUnsupportedWebpackLoaderSyntax');
+
+// Webpack config
+module.exports = {
+  // ...
+  plugins: [
+    // ...
+    // This forbids usage of Webpack Special Loader syntax, which makes it
+    // very coupled to Webpack and might break in the future.
+    // See https://github.com/facebookincubator/create-react-app/issues/733
+    new BlockUnsupportedWebpackLoaderSyntax()
+  ],
+  // ...
+}
+```
+
 #### `checkRequiredFiles(files: Array<string>): boolean`
 
 Makes sure that all passed files exist.  
