@@ -25,6 +25,7 @@ The following is a `browsers.json` file example:
     "not ie < 9"
   ]
 }
+
 ```
 
 ## ESLint and Stylelint
