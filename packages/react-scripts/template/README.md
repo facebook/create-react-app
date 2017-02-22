@@ -566,6 +566,7 @@ Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```src/index.js``
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 ```
+Ensure the bootstrap css is imported before the rest of your app (i.e. before `import Routes from './routes';`) so that your styles are loaded afterwards.
 
 Import required React Bootstrap components within ```src/App.js``` file or your custom component files:
 
