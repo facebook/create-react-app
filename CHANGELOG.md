@@ -771,7 +771,7 @@ This ensures it become a part of the build output, and resolves correctly both w
 
 ## 0.4.3 (September 18, 2016)
 
-This is a hotfix release for a broken package.  
+This is a hotfix release for a broken package.<br>
 It contained no changes to the code.
 
 ### Build Dependency (`react-scripts`)
@@ -913,7 +913,7 @@ npm install --save-dev --save-exact react-scripts@0.3.0
 
 #### Breaking Change
 
-Now `favicon.ico` is not treated specially anymore.  
+Now `favicon.ico` is not treated specially anymore.<br>
 If you use it, move it to `src` and add the following line to `<head>` in your HTML:
 
 ```html
