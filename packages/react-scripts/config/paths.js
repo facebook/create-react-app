@@ -85,8 +85,12 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   ownNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths,
+  testsCustomConfig: resolveApp('jest-config.json'),
+  browsersFile: resolveApp('browsers.json'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json'))
+  servedPath: getServedPath(resolveApp('package.json')),
+  testsCustomConfig: resolveApp('jest-config.json'),
+  browsersFile: resolveApp('browsers.json')
 };
 
 // @remove-on-eject-begin
@@ -108,8 +112,12 @@ module.exports = {
   // this is empty with npm3 but node resolution searches higher anyway:
   ownNodeModules: resolveOwn('../node_modules'),
   nodePaths: nodePaths,
+  testsCustomConfig: resolveApp('jest-config.json'),
+  browsersFile: resolveApp('browsers.json'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json'))
+  servedPath: getServedPath(resolveApp('package.json')),
+  testsCustomConfig: resolveApp('jest-config.json'),
+  browsersFile: resolveApp('browsers.json')
 };
 
 // config before publish: we're in ./packages/react-scripts/config/
@@ -126,8 +134,12 @@ if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) 
     appNodeModules: resolveOwn('../node_modules'),
     ownNodeModules: resolveOwn('../node_modules'),
     nodePaths: nodePaths,
+    testsCustomConfig: resolveApp('jest-config.json'),
+    browsersFile: resolveApp('browsers.json'),
     publicUrl: getPublicUrl(resolveOwn('../package.json')),
-    servedPath: getServedPath(resolveOwn('../package.json'))
+    servedPath: getServedPath(resolveOwn('../package.json')),
+    testsCustomConfig: resolveApp('jest-config.json'),
+    browsersFile: resolveApp('browsers.json')
   };
 }
 // @remove-on-eject-end

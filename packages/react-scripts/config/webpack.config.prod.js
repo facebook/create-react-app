@@ -37,6 +37,9 @@ var publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
 
+// Get postcss and cssnext config for webpack
+var postcss = require('./rangle/postcss');
+
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
@@ -192,18 +195,7 @@ module.exports = {
               loader: 'postcss-loader',
               options: {
                 ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
-                plugins: function () {
-                  return [
-                    autoprefixer({
-                      browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
-                        'not ie < 9', // React doesn't support IE8 anyway
-                      ]
-                    })
-                  ]
-                }
+                plugins: postcss,
               }
             }
           ]

@@ -29,7 +29,9 @@ prompt(
   console.log('Ejecting...');
 
   var ownPath = path.join(__dirname, '..');
-  var appPath = path.join(ownPath, '..', '..');
+  // Rangle's NPM org adds a folder between react-scripts and node_modules
+  // so we have to go one folder up than the default
+  var appPath = path.join(ownPath, '..', '..', '..');
 
   function verifyAbsent(file) {
     if (fs.existsSync(path.join(appPath, file))) {
@@ -46,6 +48,7 @@ prompt(
   var folders = [
     'config',
     path.join('config', 'jest'),
+    path.join('config', 'rangle'),
     'scripts'
   ];
 
@@ -57,6 +60,8 @@ prompt(
     path.join('config', 'webpack.config.prod.js'),
     path.join('config', 'jest', 'cssTransform.js'),
     path.join('config', 'jest', 'fileTransform.js'),
+    path.join('config', 'rangle', 'plugins.js'),
+    path.join('config', 'rangle', 'postcss.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
     path.join('scripts', 'test.js')
@@ -148,6 +153,11 @@ prompt(
     JSON.stringify(appPackage, null, 2) + '\n'
   );
   console.log();
+
+  if (fs.existsSync(paths.testsCustomConfig)) {
+    console.log(cyan('Removing custom jest-config.json...'));
+    fs.removeSync(paths.testsCustomConfig);
+  }
 
   if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));
