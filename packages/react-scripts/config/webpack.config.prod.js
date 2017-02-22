@@ -152,7 +152,7 @@ module.exports = {
           /\.png$/
         ],
         loader: 'file-loader',
-        query: {
+        options: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       },
