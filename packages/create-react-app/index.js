@@ -40,7 +40,7 @@
 
 var chalk = require('chalk');
 
-var currentNodeVersion = process.versions.node
+var currentNodeVersion = process.versions.node;
 if (currentNodeVersion.split('.')[0] < 4) {
   console.error(
     chalk.red(
@@ -124,7 +124,7 @@ function createApp(name, verbose, version, template) {
   var packageJson = {
     name: appName,
     version: '0.1.0',
-    private: true,
+    private: true
   };
   fs.writeFileSync(
     path.join(root, 'package.json'),
