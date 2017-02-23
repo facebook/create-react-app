@@ -15,6 +15,7 @@ function run (s) {
   case 'build-module':
   case 'lint':
   case 'publish':
+  case 'deploy':
     var result = spawn.sync(
       'node',
       [require.resolve('../scripts/' + s)].concat(args),
