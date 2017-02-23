@@ -29,6 +29,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [When to Use the `public` Folder](#when-to-use-the-public-folder)
 - [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
+- [Adding React Router](#adding-react-router)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
@@ -574,6 +575,18 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 ```
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
+
+## Adding React Router
+
+React Router is a popular solution for adding routing capabilities to your single-page applications. If your app needs routing, you can configure React Router to work with Create React App by following these steps:
+
+Install React Router v4 from NPM. _note: we are installing a pre-release version of React Router as of the time of this writing, but it functions very well for many needs._
+
+```
+npm install react-router@next --save
+```
+
+You can run the [basic React Router example](https://react-router.now.sh/basic) by replacing the contents of `src/App.js` with the example code they provide. Most of the documented React Router examples should function in this way.
 
 ## Adding Flow
 
