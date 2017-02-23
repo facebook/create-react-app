@@ -18,9 +18,10 @@ if (process.env.TC_HONEYBADGER_KEY) {
           process.exit(1);
         })
     .end([ `deploy[environment]=${process.env.NODE_ENV}`
-          , `deploy[revision]=${process.env.TC_CLIENT_BUILD_COMMIT}`
-          , `api_key=${process.env.TC_HONEYBADGER_KEY}`
-          ].join('&'),
+         , `deploy[revision]=${process.env.TC_CLIENT_BUILD_COMMIT}`
+         , `deploy[local_username]=${process.env.CIRCLE_USERNAME}`
+         , `api_key=${process.env.TC_HONEYBADGER_KEY}`
+         ].join('&'),
            res => {
              console.log('HoneyBadger deployment notification successful.')
              process.exit(0);
