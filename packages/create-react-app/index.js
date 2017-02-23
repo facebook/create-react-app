@@ -212,6 +212,11 @@ function getPackageName(installPackage) {
     // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
     // However, this function returns package name only without semver version.
     return installPackage.match(/^.+\/(.+?)(?:-\d+.+)?\.tgz$/)[1];
+  } else if (installPackage.indexOf('git+') === 0) {
+    // Pull package name out of git urls e.g:
+    // git+https://github.com/mycompany/react-scripts.git
+    // git+ssh://github.com/mycompany/react-scripts.git#v1.2.3
+    return installPackage.match(/([^\/]+)\.git(#.*)?$/)[1];
   } else if (installPackage.indexOf('@') > 0) {
     // Do not match @scope/ when stripping off @version or @tag
     return installPackage.charAt(0) + installPackage.substr(1).split('@')[0];
