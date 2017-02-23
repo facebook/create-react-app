@@ -157,7 +157,10 @@ module.exports = {
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: paths.appSrc,
+				include: [
+          paths.appSrc,
+          /node_modules[\\\/]react-native-.*/
+        ],
         loader: 'babel-loader',
         // @remove-on-eject-begin
         options: {
