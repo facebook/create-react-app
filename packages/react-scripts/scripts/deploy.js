@@ -20,6 +20,7 @@ if (process.env.TC_HONEYBADGER_KEY) {
     .end([ `deploy[environment]=${process.env.NODE_ENV}`
          , `deploy[revision]=${process.env.TC_CLIENT_BUILD_COMMIT}`
          , `deploy[local_username]=${process.env.CIRCLE_USERNAME}`
+         , `deploy[repository]=${process.env.CIRCLE_REPOSITORY_URL}`
          , `api_key=${process.env.TC_HONEYBADGER_KEY}`
          ].join('&'),
            res => {
