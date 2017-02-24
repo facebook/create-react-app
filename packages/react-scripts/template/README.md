@@ -1173,11 +1173,16 @@ For an example, a simple button component could have following states:
 
 Usually, it’s hard to see these states without running a sample app or some examples.
 
-Create React App doesn't include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
+Create React App doesn't include any tools for this by default, but there are some **third-party tools**, that that let you develop components and see all their states in isolation from your app:
+ 
+* [React-storybook](https://github.com/kadirahq/react-storybook)
+* [React-styleguidist](https://github.com/styleguidist/react-styleguidist)
+
+### Getting started with Storybook
 
 ![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
 
-You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+You can build your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
 
 **Here’s how to setup your app with Storybook:**
 
@@ -1201,6 +1206,26 @@ Learn more about React Storybook:
 * [GitHub Repo](https://github.com/kadirahq/react-storybook)
 * [Documentation](https://getstorybook.io/docs)
 * [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
+
+## Getting started with Styleguidist
+
+[React-styleguidist](https://github.com/sapegin/react-styleguidist) is another tool that gives you an isolated sandbox, where you can develop your components independently. The difference between this and tool Storybook mentioned before is that Styleguidist automatically builds component index for you. It finds all React-components, understand PropTypes definition and creates a kind of documentation. You can extend this information by adding `Readme.md` file in the folder with your components. React-styleguidist will find all code snippets and will compile them, so you will get your examples alive. See [its documentation](https://github.com/sapegin/react-styleguidist/blob/master/docs/GettingStarted.md#documenting-components) to get more information.
+
+To start using this with Create React App you need to install `react-app-styleguidist` – an integration of React-styleguidist into Create React App-based environment:
+
+```
+npm install react-app-styleguidist --save-dev
+```
+
+Then add `styleguide` into `scripts` section in your package.json
+
+```
+"styleguide": "styleguidist server ./src/App.js"
+```
+
+Then you can run `npm run styleguide` and see the initial version of the styleguide. Then you can modify your components, document additional prop types or add more examples, your code will be automatically rebuilt and webpage – reloaded.
+
+In case, if you want to have more control on React-styleguidist and change some properties there, you can also perform the `eject` process, which is described [there](https://github.com/just-boris/react-app-styleguidist#ejecting). (This is only about React-styleguidist ejection, not the whole Create React App).
 
 ## Making a Progressive Web App
 
