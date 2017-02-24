@@ -28,8 +28,8 @@ prompt(
 
   console.log('Ejecting...');
 
-  var ownPath = path.join(__dirname, '..');
-  var appPath = path.join(ownPath, '..', '..');
+  var ownPath = paths.ownPath;
+  var appPath = paths.appPath;
 
   function verifyAbsent(file) {
     if (fs.existsSync(path.join(appPath, file))) {
@@ -135,7 +135,6 @@ prompt(
   );
 
   // Add Babel config
-
   console.log('  Adding ' + cyan('Babel') + ' preset');
   appPackage.babel = babelConfig;
 
