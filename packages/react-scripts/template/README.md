@@ -1175,7 +1175,7 @@ GitHub Pages doesn't support routers that use the HTML5 `pushState` history API 
 Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
 You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration). 
 
-#### Resolving deployment errors
+#### Resolving Heroku Deployment Errors
 
 Sometimes `npm run build` works locally but fails during deploy via Heroku. Following are the most common cases.
 
@@ -1303,7 +1303,7 @@ It is reported that `npm run build` can fail on machines with no swap space, whi
 ### `npm run build` fails on Heroku
 
 This may be a problem with case sensitive filenames.
-Please refer to [this section](#resolving-module-not-found-error-cannot-resolve-file-or-directory).
+Please refer to [this section](#resolving-heroku-deployment-errors).
 
 ## Something Missing?
 
