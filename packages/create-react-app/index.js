@@ -174,7 +174,10 @@ function run(root, appName, version, verbose, originalDirectory, template) {
   var allDependencies = ['react', 'react-dom', packageToInstall];
 
   console.log('Installing packages. This might take a couple minutes.');
-  console.log('Installing ' + chalk.cyan('react, react-dom, ' + packageName) + '...');
+  console.log(
+    'Installing ' + chalk.cyan('react') + ', ' + chalk.cyan('react-dom') +
+    ', and ' + chalk.cyan(packageName) + '...'
+  );
   console.log();
 
   install(allDependencies, verbose, function(code, command, args) {
@@ -239,12 +242,12 @@ function checkNpmVersion() {
   if (npmVersion) {
     var recommendVersion = semver.lt(npmVersion.toString(), '3.0.0');
     if (recommendVersion) {
-      console.log(
-        chalk.green(
-          'Tip: It looks like you are using npm 2.\n' +
-          'We suggest using npm 3 or Yarn for faster install times and less disk space usage.'
-        )
-      );
+      console.log(chalk.yellow('It looks like you are using npm 2.'));
+      console.log(chalk.yellow(
+        'We suggest using npm 3 or Yarn for faster install times ' +
+        'and less disk space usage.'
+      ));
+      console.log();
     }
   }
 }
