@@ -32,6 +32,7 @@ var prompt = require('react-dev-utils/prompt');
 var fs = require('fs');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+var appName = require(paths.appPackageJson).name;
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
@@ -98,7 +99,7 @@ function setupCompiler(host, port, protocol) {
 
     if (showInstructions) {
       console.log();
-      console.log('The app is running at:');
+      console.log('The app [' + chalk.yellow(appName) + '] is running at:');
       console.log();
       console.log('  ' + chalk.cyan(protocol + '://' + host + ':' + port + '/'));
       console.log();
