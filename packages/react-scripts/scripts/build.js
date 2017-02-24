@@ -135,7 +135,6 @@ function build(previousSizeMap) {
   console.log('Creating an optimized production build...');
 
   var compiler;
-
   try {
     compiler = webpack(config);
   } catch (err) {
