@@ -224,7 +224,7 @@ function build(previousSizeMap) {
         console.log('  ' + chalk.cyan('npm') +  ' install -g pushstate-server');
       }
       console.log('  ' + chalk.cyan('pushstate-server') + ' ' + build);
-      console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:' + (process.env.PORT || 9000)
+      console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:' + (process.env.PORT || 9000));
       console.log();
     }
   });
