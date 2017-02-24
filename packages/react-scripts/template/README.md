@@ -816,11 +816,11 @@ If you use a Node server, you can even share the route matching logic between th
 
 ## Pre-Rendering into Static HTML Files
 
-If you're hosting your `build` with a static hosting provider, like [Surge](https://surge.sh), you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot), [react-router](https://reacttraining.com/react-router/) and [react-helmet](https://github.com/nfl/react-helmet) to generate html pages for each route, or relative link, in your application. These pages will then seamlessly become active, or "hydrated", when the JavaScript bundle has loaded.
+If you're hosting your `build` with a static hosting provider you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot) to generate html pages for each route, or relative link, in your application. These pages will then seamlessly become active, or "hydrated", when the JavaScript bundle has loaded.
 
 There are also opportunities to use this outside of static hosting, to take the pressure off the server when generating and caching routes.
 
-The primary benefit of pre-rendering is that you get the core content of each page _with_ the HTML payload - regardless of whether or not your JavaScript bundle successfully downloads. It also increases the likelihood that each route of your application will be picked up by search engines.
+The primary benefit of pre-rendering is that you get the core content of each page _with_ the HTML payload—regardless of whether or not your JavaScript bundle successfully downloads. It also increases the likelihood that each route of your application will be picked up by search engines.
 
 You can read more about [zero-configuration pre-rendering (also called snapshotting) here](https://medium.com/superhighfives/an-almost-static-stack-6df0a2791319).
 
