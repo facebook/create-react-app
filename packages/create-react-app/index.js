@@ -121,21 +121,6 @@ function createApp(name, verbose, version, template) {
   );
   console.log();
 
-  // Check npm version
-  var npmVersionProc = spawn.sync('npm', ['--version']),
-      npmVersion = npmVersionProc.stdout;
-  if (npmVersion) {
-    var recommendVersion = semver.lt(npmVersion.toString(), '3.0.0');
-    if (recommendVersion) {
-      console.log(
-        chalk.green(
-          'Tip: It looks like you are using npm 2.\n' + 
-          'We suggest using npm 3 or Yarn for faster install times and less disk space usage.'
-        )
-      );
-    }
-  }
-
   var packageJson = {
     name: appName,
     version: '0.1.0',
@@ -167,6 +152,7 @@ function install(dependencies, verbose, callback) {
     command = 'yarnpkg';
     args = [ 'add', '--exact'].concat(dependencies);
   } else {
+    checkNpmVersion();
     command = 'npm';
     args = ['install', '--save', '--save-exact'].concat(dependencies);
   }
@@ -243,6 +229,24 @@ function getPackageName(installPackage) {
     return installPackage.charAt(0) + installPackage.substr(1).split('@')[0];
   }
   return installPackage;
+}
+
+function checkNpmVersion() {
+  // Check npm version
+  var npmVersionProc = spawn.sync('npm', ['--version']),
+    npmVersion = npmVersionProc.stdout;
+
+  if (npmVersion) {
+    var recommendVersion = semver.lt(npmVersion.toString(), '3.0.0');
+    if (recommendVersion) {
+      console.log(
+        chalk.green(
+          'Tip: It looks like you are using npm 2.\n' +
+          'We suggest using npm 3 or Yarn for faster install times and less disk space usage.'
+        )
+      );
+    }
+  }
 }
 
 function checkNodeVersion(packageName) {
