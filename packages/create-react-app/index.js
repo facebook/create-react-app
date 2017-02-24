@@ -235,21 +235,22 @@ function getPackageName(installPackage) {
 }
 
 function checkNpmVersion() {
-  // Check npm version
-  var npmVersionProc = spawn.sync('npm', ['--version']),
-    npmVersion = npmVersionProc.stdout;
-
-  if (npmVersion) {
-    var recommendVersion = semver.lt(npmVersion.toString(), '3.0.0');
-    if (recommendVersion) {
-      console.log(chalk.yellow('It looks like you are using npm 2.'));
-      console.log(chalk.yellow(
-        'We suggest using npm 3 or Yarn for faster install times ' +
-        'and less disk space usage.'
-      ));
-      console.log();
-    }
+  var isNpm2 = false;
+  try {
+    var npmVersion = execSync('npm --version').toString();
+    isNpm2 = semver.lt(npmVersion, '3.0.0');
+  } catch (err) {
+    return;
   }
+  if (!isNpm2) {
+    return;
+  }
+  console.log(chalk.yellow('It looks like you are using npm 2.'));
+  console.log(chalk.yellow(
+    'We suggest using npm 3 or Yarn for faster install times ' +
+    'and less disk space usage.'
+  ));
+  console.log();
 }
 
 function checkNodeVersion(packageName) {
