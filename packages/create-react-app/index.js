@@ -152,6 +152,7 @@ function install(dependencies, verbose, callback) {
     command = 'yarnpkg';
     args = [ 'add', '--exact'].concat(dependencies);
   } else {
+    checkNpmVersion();
     command = 'npm';
     args = ['install', '--save', '--save-exact'].concat(dependencies);
   }
@@ -173,7 +174,10 @@ function run(root, appName, version, verbose, originalDirectory, template) {
   var allDependencies = ['react', 'react-dom', packageToInstall];
 
   console.log('Installing packages. This might take a couple minutes.');
-  console.log('Installing ' + chalk.cyan('react, react-dom, ' + packageName) + '...');
+  console.log(
+    'Installing ' + chalk.cyan('react') + ', ' + chalk.cyan('react-dom') +
+    ', and ' + chalk.cyan(packageName) + '...'
+  );
   console.log();
 
   install(allDependencies, verbose, function(code, command, args) {
@@ -228,6 +232,25 @@ function getPackageName(installPackage) {
     return installPackage.charAt(0) + installPackage.substr(1).split('@')[0];
   }
   return installPackage;
+}
+
+function checkNpmVersion() {
+  var isNpm2 = false;
+  try {
+    var npmVersion = execSync('npm --version').toString();
+    isNpm2 = semver.lt(npmVersion, '3.0.0');
+  } catch (err) {
+    return;
+  }
+  if (!isNpm2) {
+    return;
+  }
+  console.log(chalk.yellow('It looks like you are using npm 2.'));
+  console.log(chalk.yellow(
+    'We suggest using npm 3 or Yarn for faster install times ' +
+    'and less disk space usage.'
+  ));
+  console.log();
 }
 
 function checkNodeVersion(packageName) {
