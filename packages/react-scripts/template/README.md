@@ -16,6 +16,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Supported Language Features and Polyfills](#supported-language-features-and-polyfills)
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
+- [Debugging in the Editor](#debugging-in-the-editor)
 - [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
@@ -246,6 +247,35 @@ npm install -g eslint-config-react-app@0.3.0 eslint@3.8.1 babel-eslint@7.0.0 esl
 ```
 
 We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
+
+## Debugging in the Editor
+
+**This feature is currently only supported by [Visual Studio Code](https://code.visualstudio.com) editor.**
+
+Visual Studio Code supports live-editing and debugging out of the box with Create React App. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.
+
+You would need to have the latest version of [VS Code](https://code.visualstudio.com) and VS Code [Chrome Debugger Extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed.
+
+Then add the block below to your `launch.json` file and put it inside the `.vscode` folder in your app’s root directory.
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [{
+    "name": "Chrome",
+    "type": "chrome",
+    "request": "launch",
+    "url": "http://localhost:3000",
+    "webRoot": "${workspaceRoot}/src",
+    "userDataDir": "${workspaceRoot}/.chrome",
+    "sourceMapPathOverrides": {
+      "webpack:///src/*": "${webRoot}/*"
+    }
+  }]
+}
+```
+
+Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
 
 ## Changing the Page `<title>`
 
