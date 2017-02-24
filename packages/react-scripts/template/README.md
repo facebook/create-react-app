@@ -283,7 +283,7 @@ Start your app by running `npm start`, and start debugging in VS Code by pressin
 
 You can find the source HTML file in the `public` folder of the generated project. You may edit the `<title>` tag in it to change the title from “React App” to anything else.
 
-Note that normally you wouldn't edit files in the `public` folder very often. For example, [adding a stylesheet](#adding-a-stylesheet) is done without touching the HTML.
+Note that normally you wouldn’t edit files in the `public` folder very often. For example, [adding a stylesheet](#adding-a-stylesheet) is done without touching the HTML.
 
 If you need to dynamically update the page title based on the content, you can use the browser [`document.title`](https://developer.mozilla.org/en-US/docs/Web/API/Document/title) API. For more complex scenarios when you want to change the title from React components, you can use [React Helmet](https://github.com/nfl/react-helmet), a third party library.
 
@@ -721,7 +721,7 @@ Note that the caveats from the above section apply:
 
 ### Adding Temporary Environment Variables In Your Shell
 
-Defining environment variables can vary between OSes. It's also important to know that this manner is temporary for the
+Defining environment variables can vary between OSes. It’s also important to know that this manner is temporary for the
 life of the shell session.
 
 #### Windows (cmd.exe)
@@ -1173,7 +1173,7 @@ For an example, a simple button component could have following states:
 
 Usually, it’s hard to see these states without running a sample app or some examples.
 
-Create React App doesn't include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
+Create React App doesn’t include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
 
 ![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
 
@@ -1215,7 +1215,7 @@ cd build
 python -m SimpleHTTPServer 9000
 ```
 
-If you're using [Node](https://nodejs.org/) and [Express](http://expressjs.com/) as a server, it might look like this:
+If you’re using [Node](https://nodejs.org/) and [Express](http://expressjs.com/) as a server, it might look like this:
 
 ```javascript
 const express = require('express');
@@ -1281,9 +1281,9 @@ See [this](https://medium.com/@to_pe/deploying-create-react-app-on-microsoft-azu
 
 ### Firebase
 
-Install the Firebase CLI if you haven't already by running `npm install -g firebase-tools`. Sign up for a [Firebase account](https://console.firebase.google.com/) and create a new project. Run `firebase login` and login with your previous created Firebase account.
+Install the Firebase CLI if you haven’t already by running `npm install -g firebase-tools`. Sign up for a [Firebase account](https://console.firebase.google.com/) and create a new project. Run `firebase login` and login with your previous created Firebase account.
 
-Then run the `firebase init` command from your project's root. You need to choose the **Hosting: Configure and deploy Firebase Hosting sites** and choose the Firebase project you created in the previous step. You will need to agree with `database.rules.json` being created, choose `build` as the public directory, and also agree to **Configure as a single-page app** by replying with `y`.
+Then run the `firebase init` command from your project’s root. You need to choose the **Hosting: Configure and deploy Firebase Hosting sites** and choose the Firebase project you created in the previous step. You will need to agree with `database.rules.json` being created, choose `build` as the public directory, and also agree to **Configure as a single-page app** by replying with `y`.
 
 ```sh
     === Project Setup
@@ -1388,7 +1388,7 @@ Then run:
 npm run deploy
 ```
 
-#### Step 4: Ensure your project's settings use `gh-pages`
+#### Step 4: Ensure your project’s settings use `gh-pages`
 
 Finally, make sure **GitHub Pages** option in your GitHub project settings is set to use the `gh-pages` branch:
 
@@ -1400,7 +1400,7 @@ You can configure a custom domain with GitHub Pages by adding a `CNAME` file to 
 
 #### Notes on client-side routing
 
-GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
+GitHub Pages doesn’t support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
@@ -1410,9 +1410,13 @@ GitHub Pages doesn't support routers that use the HTML5 `pushState` history API 
 Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
 You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
 
-#### Resolving "Module not found: Error: Cannot resolve 'file' or 'directory'"
+#### Resolving Heroku Deployment Errors
 
-Sometimes `npm run build` works locally but fails during deploy via Heroku with an error like this:
+Sometimes `npm run build` works locally but fails during deploy via Heroku. Following are the most common cases.
+
+##### "Module not found: Error: Cannot resolve 'file' or 'directory'"
+
+If you get something like this:
 
 ```
 remote: Failed to create a production build. Reason:
@@ -1420,9 +1424,24 @@ remote: Module not found: Error: Cannot resolve 'file' or 'directory'
 MyDirectory in /tmp/build_1234/src
 ```
 
-This means you need to ensure that the lettercase of the file or directory you `import` matches the one you see on your filesystem or on GitHub.
+It means you need to ensure that the lettercase of the file or directory you `import` matches the one you see on your filesystem or on GitHub.
 
 This is important because Linux (the operating system used by Heroku) is case sensitive. So `MyDirectory` and `mydirectory` are two distinct directories and thus, even though the project builds locally, the difference in case breaks the `import` statements on Heroku remotes.
+
+##### "Could not find a required file."
+
+If you exclude or ignore necessary files from the package you will see a error similar this one:
+
+```
+remote: Could not find a required file.
+remote:   Name: `index.html`
+remote:   Searched in: /tmp/build_a2875fc163b209225122d68916f1d4df/public
+remote:
+remote: npm ERR! Linux 3.13.0-105-generic
+remote: npm ERR! argv "/tmp/build_a2875fc163b209225122d68916f1d4df/.heroku/node/bin/node" "/tmp/build_a2875fc163b209225122d68916f1d4df/.heroku/node/bin/npm" "run" "build"
+```
+
+In this case, ensure that the file is there with the proper lettercase and that’s not ignored on your local `.gitignore` or `~/.gitignore_global`.
 
 ### Modulus
 
@@ -1430,7 +1449,7 @@ See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modul
 
 ## Netlify
 
-**To do a manual deploy to Netlify's CDN:**
+**To do a manual deploy to Netlify’s CDN:**
 
 ```sh
 npm install netlify-cli
@@ -1467,7 +1486,7 @@ See this [blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-t
 
 ### Surge
 
-Install the Surge CLI if you haven't already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account. You just need to specify the *build* folder and your custom domain, and you are done.
+Install the Surge CLI if you haven’t already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account. You just need to specify the *build* folder and your custom domain, and you are done.
 
 ```sh
               email: email@domain.com
@@ -1535,7 +1554,7 @@ brew reinstall watchman
 
 You can find [other installation methods](https://facebook.github.io/watchman/docs/install.html#build-install) on the Watchman documentation page.
 
-If this still doesn't help, try running `launchctl unload -F ~/Library/LaunchAgents/com.github.facebook.watchman.plist`.
+If this still doesn’t help, try running `launchctl unload -F ~/Library/LaunchAgents/com.github.facebook.watchman.plist`.
 
 There are also reports that *uninstalling* Watchman fixes the issue. So if nothing else helps, remove it from your system and try again.
 
@@ -1546,7 +1565,7 @@ It is reported that `npm run build` can fail on machines with no swap space, whi
 ### `npm run build` fails on Heroku
 
 This may be a problem with case sensitive filenames.
-Please refer to [this section](#resolving-module-not-found-error-cannot-resolve-file-or-directory).
+Please refer to [this section](#resolving-heroku-deployment-errors).
 
 ## Something Missing?
 
