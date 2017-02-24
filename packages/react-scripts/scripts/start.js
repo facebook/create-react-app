@@ -43,7 +43,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Tools like Cloud9 rely on this.
-var DEFAULT_PORT = process.env.PORT || 3000;
+var DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 var compiler;
 var handleCompile;
 
@@ -63,7 +63,15 @@ if (isSmokeTest) {
 function setupCompiler(host, port, protocol) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
-  compiler = webpack(config, handleCompile);
+  try {
+    compiler = webpack(config, handleCompile);
+  } catch (err) {
+    console.log(chalk.red('Failed to compile.'));
+    console.log();
+    console.log(err.message || err);
+    console.log();
+    process.exit(1);
+  }
 
   // "invalid" event fires when you have changed a file, and Webpack is
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
@@ -241,7 +249,7 @@ function runDevServer(host, port, protocol) {
     // project directory is dangerous because we may expose sensitive files.
     // Instead, we establish a convention that only files in `public` directory
     // get served. Our build script will copy `public` into the `build` folder.
-    // In `index.html`, you can get URL of `public` folder with %PUBLIC_PATH%:
+    // In `index.html`, you can get URL of `public` folder with %PUBLIC_URL%:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In JavaScript code, you can access it with `process.env.PUBLIC_URL`.
     // Note that we only recommend to use `public` folder as an escape hatch
@@ -249,6 +257,8 @@ function runDevServer(host, port, protocol) {
     // for some reason broken when imported through Webpack. If you just want to
     // use an image, put it in `src` and `import` it from JavaScript instead.
     contentBase: paths.appPublic,
+    // By default files from `contentBase` will not trigger a page reload.
+    watchContentBase: true,
     // Enable hot reloading server. It will provide /sockjs-node/ endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
@@ -268,7 +278,8 @@ function runDevServer(host, port, protocol) {
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === "https",
-    host: host
+    host: host,
+    overlay: false,
   });
 
   // Our custom middleware proxies requests to /index.html or a remote API.

@@ -78,15 +78,15 @@ module.exports = {
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We read `NODE_PATH` environment variable in `paths.js` and pass paths here.
-    // We use `fallback` instead of `root` because we want `node_modules` to "win"
-    // if there any conflicts. This matches Node resolution mechanism.
+    // We placed these paths second because we want `node_modules` to "win"
+    // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    fallback: paths.nodePaths,
+    modules: ['node_modules'].concat(paths.nodePaths),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
     // https://github.com/facebookincubator/create-react-app/issues/290
-    extensions: ['.js', '.json', '.jsx', ''],
+    extensions: ['.js', '.json', '.jsx'],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -97,35 +97,43 @@ module.exports = {
   // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
   // directory of `react-scripts` itself rather than the project directory.
   resolveLoader: {
-    root: paths.ownNodeModules,
-    moduleTemplates: ['*-loader']
+    modules: [
+      paths.ownNodeModules,
+      // Lerna hoists everything, so we need to look in our app directory
+      paths.appNodeModules
+    ]
   },
   // @remove-on-eject-end
   module: {
-    // First, run the linter.
-    // It's important to do this before Babel processes the JS.
-    preLoaders: [
+    rules: [
+      // Disable require.ensure as it's not a standard language feature.
+      { parser: { requireEnsure: false } },
+      // First, run the linter.
+      // It's important to do this before Babel processes the JS.
       {
         test: /\.(js|jsx)$/,
-        loader: 'eslint',
-        include: paths.appSrc,
-      }
-    ],
-    loaders: [
-      // Default loader: load all assets that are not handled
-      // by other loaders with the url loader.
-      // Note: This list needs to be updated with every change of extensions
-      // the other loaders match.
-      // E.g., when adding a loader for a new supported file extension,
-      // we need to add the supported extension to this loader too.
-      // Add one new line in `exclude` for each loader.
-      //
-      // "file" loader makes sure those assets get served by WebpackDevServer.
-      // When you `import` an asset, you get its (virtual) filename.
-      // In production, they would get copied to the `build` folder.
-      // "url" loader works like "file" loader except that it embeds assets
-      // smaller than specified limit in bytes as data URLs to avoid requests.
-      // A missing `test` is equivalent to a match.
+        enforce: 'pre',
+        use: [{
+          options: {
+            // @remove-on-eject-begin
+            // Point ESLint to our predefined config.
+            configFile: path.join(__dirname, '../.eslintrc'),
+            useEslintrc: false,
+            // @remove-on-eject-end
+            cache: true
+          },
+          loader: 'eslint-loader'
+        }],
+        include: paths.appSrc
+      },
+      // ** ADDING/UPDATING LOADERS **
+      // The "url" loader handles all assets unless explicitly excluded.
+      // The `exclude` list *must* be updated with every change to loader extensions.
+      // When adding a new loader, you must add its `test`
+      // as a new entry in the `exclude` list for "url" loader.
+
+      // "url" loader embeds assets smaller than specified size as data URLs to avoid requests.
+      // Otherwise, it acts like the "file" loader.
       {
         exclude: [
           /\.html$/,
@@ -134,8 +142,8 @@ module.exports = {
           /\.json$/,
           /\.svg$/
         ],
-        loader: 'url',
-        query: {
+        loader: 'url-loader',
+        options: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
         }
@@ -144,8 +152,8 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
-        loader: 'babel',
-        query: {
+        loader: 'babel-loader',
+        options: {
           // @remove-on-eject-begin
           babelrc: false,
           presets: [require.resolve('babel-preset-react-app')],
@@ -163,51 +171,50 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        loader: 'style!css?importLoaders=1!postcss'
-      },
-      // JSON is not enabled by default in Webpack but both Node and Browserify
-      // allow it implicitly so we also enable it.
-      {
-        test: /\.json$/,
-        loader: 'json'
+        use: [
+          'style-loader', {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+              plugins: function () {
+                return [
+                  autoprefixer({
+                    browsers: [
+                      '>1%',
+                      'last 4 versions',
+                      'Firefox ESR',
+                      'not ie < 9', // React doesn't support IE8 anyway
+                    ]
+                  })
+                ]
+              }
+            }
+          }
+        ]
       },
       // "file" loader for svg
       {
         test: /\.svg$/,
-        loader: 'file',
-        query: {
+        loader: 'file-loader',
+        options: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
+      // ** STOP ** Are you adding a new loader?
+      // Remember to add the new extension(s) to the "url" loader exclusion list.
     ]
   },
-  // @remove-on-eject-begin
-  // Point ESLint to our predefined config.
-  eslint: {
-    configFile: path.join(__dirname, '../.eslintrc'),
-    useEslintrc: false
-  },
-  // @remove-on-eject-end
-  // We use PostCSS for autoprefixing only.
-  postcss: function() {
-    return [
-      autoprefixer({
-        browsers: [
-          '>1%',
-          'last 4 versions',
-          'Firefox ESR',
-          'not ie < 9', // React doesn't support IE8 anyway
-        ]
-      }),
-    ];
-  },
   plugins: [
-    // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
+    // Makes some environment variables available in index.html.
+    // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
-    new InterpolateHtmlPlugin({
-      PUBLIC_URL: publicUrl
-    }),
+    new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
@@ -215,7 +222,7 @@ module.exports = {
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
-    new webpack.DefinePlugin(env),
+    new webpack.DefinePlugin(env.stringified),
     // This is necessary to emit hot updates (currently CSS only):
     new webpack.HotModuleReplacementPlugin(),
     // Watcher doesn't work well if you mistype casing in a path so we use
@@ -234,5 +241,11 @@ module.exports = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty'
+  },
+  // Turn off performance hints during development because we don't do any
+  // splitting or minification in interest of speed. These warnings become
+  // cumbersome.
+  performance: {
+    hints: false
   }
 };

@@ -28,8 +28,8 @@ prompt(
 
   console.log('Ejecting...');
 
-  var ownPath = path.join(__dirname, '..');
-  var appPath = path.join(ownPath, '..', '..');
+  var ownPath = paths.ownPath;
+  var appPath = paths.appPath;
 
   function verifyAbsent(file) {
     if (fs.existsSync(path.join(appPath, file))) {
@@ -93,8 +93,14 @@ prompt(
 
   console.log(cyan('Updating the dependencies'));
   var ownPackageName = ownPackage.name;
-  console.log('  Removing ' + cyan(ownPackageName) + ' from devDependencies');
-  delete appPackage.devDependencies[ownPackageName];
+  if (appPackage.devDependencies[ownPackageName]) {
+    console.log('  Removing ' + cyan(ownPackageName) + ' from devDependencies');
+    delete appPackage.devDependencies[ownPackageName];
+  }
+  if (appPackage.dependencies[ownPackageName]) {
+    console.log('  Removing ' + cyan(ownPackageName) + ' from dependencies');
+    delete appPackage.dependencies[ownPackageName];
+  }
 
   Object.keys(ownPackage.dependencies).forEach(function (key) {
     // For some reason optionalDependencies end up in dependencies after install
@@ -129,7 +135,6 @@ prompt(
   );
 
   // Add Babel config
-
   console.log('  Adding ' + cyan('Babel') + ' preset');
   appPackage.babel = babelConfig;
 
@@ -139,17 +144,23 @@ prompt(
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
-    JSON.stringify(appPackage, null, 2)
+    JSON.stringify(appPackage, null, 2) + '\n'
   );
   console.log();
 
+  try {
+    // remove react-scripts and react-scripts binaries from app node_modules
+    Object.keys(ownPackage.bin).forEach(function(binKey) {
+      fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
+    });
+    fs.removeSync(ownPath);
+  } catch(e) {}
+
   if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));
-    fs.removeSync(ownPath);
     spawnSync('yarnpkg', [], {stdio: 'inherit'});
   } else {
     console.log(cyan('Running npm install...'));
-    fs.removeSync(ownPath);
     spawnSync('npm', ['install'], {stdio: 'inherit'});
   }
   console.log(green('Ejected successfully!'));

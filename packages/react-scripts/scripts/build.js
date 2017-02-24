@@ -21,6 +21,7 @@ require('dotenv').config({silent: true});
 var chalk = require('chalk');
 var fs = require('fs-extra');
 var path = require('path');
+var url = require('url');
 var filesize = require('filesize');
 var gzipSize = require('gzip-size').sync;
 var webpack = require('webpack');
@@ -132,7 +133,16 @@ function printErrors(summary, errors) {
 // Create the production build and print the deployment instructions.
 function build(previousSizeMap) {
   console.log('Creating an optimized production build...');
-  webpack(config).run((err, stats) => {
+
+  var compiler;
+  try {
+    compiler = webpack(config);
+  } catch (err) {
+    printErrors('Failed to compile.', [err]);
+    process.exit(1);
+  }
+
+  compiler.run((err, stats) => {
     if (err) {
       printErrors('Failed to compile.', [err]);
       process.exit(1);
@@ -144,7 +154,7 @@ function build(previousSizeMap) {
     }
 
     if (process.env.CI && stats.compilation.warnings.length) {
-     printErrors('Failed to compile.', stats.compilation.warnings);
+     printErrors('Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.', stats.compilation.warnings);
      process.exit(1);
    }
 
@@ -158,15 +168,16 @@ function build(previousSizeMap) {
 
     var openCommand = process.platform === 'win32' ? 'start' : 'open';
     var appPackage  = require(paths.appPackageJson);
-    var homepagePath = appPackage.homepage;
+    var publicUrl = paths.publicUrl;
     var publicPath = config.output.publicPath;
-    if (homepagePath && homepagePath.indexOf('.github.io/') !== -1) {
+    var publicPathname = url.parse(publicPath).pathname;
+    if (publicUrl && publicUrl.indexOf('.github.io/') !== -1) {
       // "homepage": "http://user.github.io/project"
-      console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.');
+      console.log('The project was built assuming it is hosted at ' + chalk.green(publicPathname) + '.');
       console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
       console.log();
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
-      console.log('To publish it at ' + chalk.green(homepagePath) + ', run:');
+      console.log('To publish it at ' + chalk.green(publicUrl) + ', run:');
       // If script deploy has been added to package.json, skip the instructions
       if (typeof appPackage.scripts.deploy === 'undefined') {
         console.log();
@@ -198,21 +209,22 @@ function build(previousSizeMap) {
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
       console.log();
     } else {
-      // no homepage or "homepage": "http://mywebsite.com"
-      console.log('The project was built assuming it is hosted at the server root.');
-      if (homepagePath) {
+      if (publicUrl) {
         // "homepage": "http://mywebsite.com"
+        console.log('The project was built assuming it is hosted at ' + chalk.green(publicUrl) +  '.');
         console.log('You can control this with the ' + chalk.green('homepage') + ' field in your '  + chalk.cyan('package.json') + '.');
         console.log();
       } else {
         // no homepage
+        console.log('The project was built assuming it is hosted at the server root.');
         console.log('To override this, specify the ' + chalk.green('homepage') + ' in your '  + chalk.cyan('package.json') + '.');
         console.log('For example, add this to build it for GitHub Pages:')
         console.log();
         console.log('  ' + chalk.green('"homepage"') + chalk.cyan(': ') + chalk.green('"http://myname.github.io/myapp"') + chalk.cyan(','));
         console.log();
       }
-      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
+      var build = path.relative(process.cwd(), paths.appBuild);
+      console.log('The ' + chalk.cyan(build) + ' folder is ready to be deployed.');
       console.log('You may also serve it locally with a static server:')
       console.log();
       if (useYarn) {
@@ -220,7 +232,7 @@ function build(previousSizeMap) {
       } else {
         console.log('  ' + chalk.cyan('npm') +  ' install -g pushstate-server');
       }
-      console.log('  ' + chalk.cyan('pushstate-server') + ' build');
+      console.log('  ' + chalk.cyan('pushstate-server') + ' ' + build);
       console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:9000');
       console.log();
     }

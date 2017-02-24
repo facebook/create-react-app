@@ -10,7 +10,7 @@ Following these guidelines helps to communicate that you respect the time of the
 
 As much as possible, we try to avoid adding configuration and flags. The purpose of this tool is to provide the best experience for people getting started with React, and this will always be our first priority. This means that sometimes we [sacrifice additional functionality](https://gettingreal.37signals.com/ch05_Half_Not_Half_Assed.php) (such as server rendering) because it is too hard to solve it in a way that wouldn’t require any configuration.
 
-We prefer **convention, heuristics, or interactivity** over configuration.  
+We prefer **convention, heuristics, or interactivity** over configuration.<br>
 Here’s a few examples of them in action.
 
 ### Convention
@@ -68,6 +68,7 @@ and then run `npm start` or `npm run build`.
   * You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
   * Run `npm run changelog`. The command will find all the labeled pull requests merged since the last release and group them by the label and affected packages, and create a change log entry with all the changes and links to PRs and their authors. Copy and paste it to `CHANGELOG.md`.
   * Add a four-space indented paragraph after each non-trivial list item, explaining what changed and why. For each breaking change also write who it affects and instructions for migrating existing code.
+  * Maybe add some newlines here and there. Preview the result on GitHub to get a feel for it. Changelog generator output is a bit too terse for my taste, so try to make it visually pleasing and well grouped.
 6. Make sure to include “Migrating from ...” instructions for the previous release. Often you can copy and paste them.
 7. After merging the changelog update, create a GitHub Release with the same text. See previous Releases for inspiration.
 8. **Do not run `npm publish`. Instead, run `npm run publish`.**
