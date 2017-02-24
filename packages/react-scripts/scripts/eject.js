@@ -129,7 +129,7 @@ prompt(
   // Add Jest config
   console.log('  Adding ' + cyan('Jest') + ' configuration');
   appPackage.jest = createJestConfig(
-    filePath => path.join('<rootDir>', filePath),
+    filePath => path.posix.join('<rootDir>', filePath),
     null,
     true
   );
