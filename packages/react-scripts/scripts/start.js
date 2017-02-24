@@ -65,9 +65,8 @@ function setupCompiler(host, port, protocol) {
   // It lets us listen to some events and provide our own custom messages.
   try {
     compiler = webpack(config, handleCompile);
-  }
-  catch(err) {
-    console.log(chalk.red('Failed to setup webpack'));
+  } catch (err) {
+    console.log(chalk.red('Failed to compile.'));
     console.log();
     console.log(err.message || err);
     console.log();
