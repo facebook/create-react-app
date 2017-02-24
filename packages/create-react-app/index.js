@@ -39,6 +39,30 @@
 'use strict';
 
 var chalk = require('chalk');
+var path = require('path');
+var semver = require('semver');
+
+function checkNodeVersion(packageJsonPath) {
+  var packageJson = require(packageJsonPath);
+  if (!packageJson.engines || !packageJson.engines.node) {
+    return;
+  }
+
+  if (!semver.satisfies(process.version, packageJson.engines.node)) {
+    console.error(
+      chalk.red(
+        'You are running Node %s.\n' +
+        'Create React App requires Node %s or higher. \n' +
+        'Please update your version of Node.'
+      ),
+      process.version,
+      packageJson.engines.node
+    );
+    process.exit(1);
+  }
+}
+
+checkNodeVersion(path.resolve(__dirname, 'package.json'));
 
 var currentNodeVersion = process.versions.node;
 if (currentNodeVersion.split('.')[0] < 4) {
@@ -54,10 +78,8 @@ if (currentNodeVersion.split('.')[0] < 4) {
 
 var commander = require('commander');
 var fs = require('fs-extra');
-var path = require('path');
 var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
-var semver = require('semver');
 
 var projectName;
 
@@ -182,7 +204,13 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       process.exit(1);
     }
 
-    checkNodeVersion(packageName);
+    var packageJsonPath = path.resolve(
+      process.cwd(),
+      'node_modules',
+      packageName,
+      'package.json'
+    );
+    checkNodeVersion(packageJsonPath);
 
     // Since react-scripts has been installed with --save
     // We need to move it into devDependencies and rewrite package.json
@@ -228,32 +256,6 @@ function getPackageName(installPackage) {
     return installPackage.charAt(0) + installPackage.substr(1).split('@')[0];
   }
   return installPackage;
-}
-
-function checkNodeVersion(packageName) {
-  var packageJsonPath = path.resolve(
-    process.cwd(),
-    'node_modules',
-    packageName,
-    'package.json'
-  );
-  var packageJson = require(packageJsonPath);
-  if (!packageJson.engines || !packageJson.engines.node) {
-    return;
-  }
-
-  if (!semver.satisfies(process.version, packageJson.engines.node)) {
-    console.error(
-      chalk.red(
-        'You are running Node %s.\n' +
-        'Create React App requires Node %s or higher. \n' +
-        'Please update your version of Node.'
-      ),
-      process.version,
-      packageJson.engines.node
-    );
-    process.exit(1);
-  }
 }
 
 function checkAppName(appName) {
