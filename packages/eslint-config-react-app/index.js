@@ -155,6 +155,15 @@ module.exports = {
     'unicode-bom': ['warn', 'never'],
     'use-isnan': 'warn',
     'valid-typeof': 'warn',
+    'no-restricted-properties': ['error', {
+      object: 'require',
+      property: 'ensure',
+      message: 'Please use import() instead. More info: https://webpack.js.org/guides/code-splitting-import/#dynamic-import'
+    }, {
+      object: 'System',
+      property: 'import',
+      message: 'Please use import() instead. More info: https://webpack.js.org/guides/code-splitting-import/#dynamic-import'
+    }],
 
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/
 
