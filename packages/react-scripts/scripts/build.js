@@ -138,9 +138,8 @@ function build(previousSizeMap) {
 
   try {
     compiler = webpack(config);
-  }
-  catch(err) {
-    printErrors('Failed to configure webpack.', [err]);
+  } catch (err) {
+    printErrors('Failed to compile.', [err]);
     process.exit(1);
   }
 
