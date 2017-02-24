@@ -12,11 +12,18 @@
 const fs = require('fs');
 const paths = require('../config/paths');
 
-module.exports = (resolve, rootDir, isEjecting) => {
+module.exports = (opts) => {
+  const resolve = opts.resolve;
+  const rootDir = opts.rootDir || null;
+  const isEjecting = opts.isEjecting || false;
+  const isDebug = opts.isDebug || false;
+
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup) ? '<rootDir>/src/setupTests.js' : undefined;
-
+  const babelTransform = isEjecting
+    ? '<rootDir>/node_modules/babel-jest'
+    : resolve('config/jest/babelTransform' + (isDebug ? 'Debug' : '') + '.js')
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
@@ -29,9 +36,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
-      '^.+\\.(js|jsx)$': isEjecting ?
-        '<rootDir>/node_modules/babel-jest'
-        : resolve('config/jest/babelTransform.js'),
+      '^.+\\.(js|jsx)$': babelTransform,
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
     },
