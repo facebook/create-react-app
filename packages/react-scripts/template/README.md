@@ -501,7 +501,7 @@ To add Flow to a Create React App project, follow these steps:
 
 1. Run `npm install --save-dev flow-bin`.
 2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
-3. Create `.flowconfig` in your project root directory. You can either create this file manually or run `npm run flow -- init`. You can leave it empty or [configure it](https://flowtype.org/docs/advanced-configuration.html) if you need to.
+3. Run `npm run flow -- init` to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
 4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
 
 Now you can run `npm run flow` to check the files for type errors.
