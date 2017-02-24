@@ -177,13 +177,14 @@ module.exports = {
       // Remember to add the new extension(s) to the "url" loader exclusion list.
     ]
   },
-  // @remove-on-eject-begin
   // Point ESLint to our predefined config.
   eslint: {
+    // @remove-on-eject-begin
     configFile: path.join(__dirname, '../.eslintrc'),
-    useEslintrc: false
+    useEslintrc: false,
+    // @remove-on-eject-end
+    cache: true
   },
-  // @remove-on-eject-end
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
