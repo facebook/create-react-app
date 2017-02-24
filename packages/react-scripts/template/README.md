@@ -41,7 +41,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
-- [Pre-Generating `<meta>` Tags with `react-snapshot`](#pre-generating-meta-tags-with-react-snapshot)
+- [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
 - [Injecting Data from the Server into the Page](#injecting-data-from-the-server-into-the-page)
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
@@ -403,7 +403,7 @@ Then in `package.json`, add the following lines to `scripts`:
      "test": "react-scripts test --env=jsdom",
 ```
 
->Note: To use a different preprocessor, replace `build-css` and `watch-css` commands according to your preprocessor’s documentation. 
+>Note: To use a different preprocessor, replace `build-css` and `watch-css` commands according to your preprocessor’s documentation.
 
 Now you can rename `src/App.css` to `src/App.scss` and run `npm run watch-css`. The watcher will find every Sass file in `src` subdirectories, and create a corresponding CSS file next to it, in our case overwriting `src/App.css`. Since `src/App.js` still imports `src/App.css`, the styles become a part of your application. You can now edit `src/App.scss`, and `src/App.css` will be regenerated.
 
@@ -814,11 +814,15 @@ Then, on the server, regardless of the backend you use, you can read `index.html
 
 If you use a Node server, you can even share the route matching logic between the client and the server. However duplicating it also works fine in simple cases.
 
-## Pre-Generating `<meta>` Tags with `react-snapshot`
+## Pre-Rendering into Static HTML Files
 
-If you'd prefer to host your `build` with a static hosting provider, like [Surge](https://surge.sh), you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot), [react-router](https://reacttraining.com/react-router/) and [react-helmet](https://github.com/nfl/react-helmet) to generate html pages for each route in your application. These pages will then seamlessly become active, or "hydrated", when the JavaScript bundle has loaded.
+If you're hosting your `build` with a static hosting provider, like [Surge](https://surge.sh), you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot), [react-router](https://reacttraining.com/react-router/) and [react-helmet](https://github.com/nfl/react-helmet) to generate html pages for each route, or relative link, in your application. These pages will then seamlessly become active, or "hydrated", when the JavaScript bundle has loaded.
 
-You can read more about [zero-configuration snapshotting (also called pre-rendering) here](https://medium.com/superhighfives/an-almost-static-stack-6df0a2791319).
+There are also opportunities to use this outside of static hosting, to take the pressure off the server when generating and caching routes.
+
+The primary benefit of pre-rendering is that you get the core content of each page _with_ the HTML payload - regardless of whether or not your JavaScript bundle successfully downloads. It also increases the likelihood that each route of your application will be picked up by search engines.
+
+You can read more about [zero-configuration pre-rendering (also called snapshotting) here](https://medium.com/superhighfives/an-almost-static-stack-6df0a2791319).
 
 ## Injecting Data from the Server into the Page
 
