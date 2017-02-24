@@ -221,6 +221,14 @@ npm start -- --smoke-test
 # Test environment handling
 verify_env_url
 
+# CONNOR : #1551 : Trying to figure out where everything goes. This is after testing is done (before testing eject).
+# That's what we want, but this is tested with a packed, local-pathed version of react-scripts, correct?
+# So how, in our yarn.lock, would we ever get it to install its own released version before we release it?
+# We could create + copy the yarn.lock as part of the release process, but if the version to release is 0.9.2,
+# then you can still only install 0.9.1, and that's what the lockfile would have. And you can't do it *after*
+# releasing because then you've already released it.
+# See: https://github.com/facebookincubator/create-react-app/issues/1551
+
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
 # ******************************************************************************
