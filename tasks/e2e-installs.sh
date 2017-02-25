@@ -120,6 +120,32 @@ cd test-app-fork
 exists node_modules/react-scripts-fork
 
 # ******************************************************************************
+# Test project folder is deleted on failing package installation
+# ******************************************************************************
+
+cd $temp_app_path
+# we will install a non-existing package to simulate a failed installataion.
+create_react_app --scripts-version=`date +%s` test-app-should-not-exist || true
+# confirm that the project folder was deleted
+test ! -d test-app-should-not-exist
+
+# ******************************************************************************
+# Test project folder is not deleted when creating app over existing folder
+# ******************************************************************************
+
+cd $temp_app_path
+mkdir test-app-should-remain
+echo '## Hello' > ./test-app-should-remain/README.md
+# we will install a non-existing package to simulate a failed installataion.
+create_react_app --scripts-version=`date +%s` test-app-should-remain || true
+# confirm the file exist
+test -e test-app-should-remain/README.md
+# confirm only README.md is the only file in the directory
+if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "1" ]; then
+  false
+fi
+
+# ******************************************************************************
 # Test nested folder path as the project name
 # ******************************************************************************
 
