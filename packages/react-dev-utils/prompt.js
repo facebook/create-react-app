@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var rl = require('readline');
+const rl = require('readline');
 
 // Convention: "no" should be the conservative choice.
 // If you mistype the answer, we'll always take it as a "no".
@@ -17,23 +17,23 @@ function prompt(question, isYesDefault) {
     throw new Error('Provide explicit boolean isYesDefault as second argument.');
   }
   return new Promise(resolve => {
-    var rlInterface = rl.createInterface({
+    const rlInterface = rl.createInterface({
       input: process.stdin,
       output: process.stdout,
     });
 
-    var hint = isYesDefault === true ? '[Y/n]' : '[y/N]';
-    var message = question + ' ' + hint + '\n';
+    let hint = isYesDefault === true ? '[Y/n]' : '[y/N]';
+    let message = `${question} ${hint}`;
 
     rlInterface.question(message, function(answer) {
       rlInterface.close();
 
-      var useDefault = answer.trim().length === 0;
+      let useDefault = answer.trim().length === 0;
       if (useDefault) {
         return resolve(isYesDefault);
       }
 
-      var isYes = answer.match(/^(yes|y)$/i);
+      let isYes = answer.match(/^(yes|y)$/i);
       return resolve(isYes);
     });
   });

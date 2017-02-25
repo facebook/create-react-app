@@ -20,8 +20,8 @@ class WatchMissingNodeModulesPlugin {
 
   apply(compiler) {
     compiler.plugin('emit', (compilation, callback) => {
-      var missingDeps = compilation.missingDependencies;
-      var nodeModulesPath = this.nodeModulesPath;
+      let missingDeps = compilation.missingDependencies;
+      let nodeModulesPath = this.nodeModulesPath;
 
       // If any missing files are expected to appear in node_modules...
       if (missingDeps.some(file => file.indexOf(nodeModulesPath) !== -1)) {

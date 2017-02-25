@@ -16,16 +16,16 @@
 // that looks similar to our console output. The error overlay is inspired by:
 // https://github.com/glenjamin/webpack-hot-middleware
 
-var ansiHTML = require('ansi-html');
-var SockJS = require('sockjs-client');
-var stripAnsi = require('strip-ansi');
-var url = require('url');
-var formatWebpackMessages = require('./formatWebpackMessages');
-var Entities = require('html-entities').AllHtmlEntities;
-var entities = new Entities();
+const ansiHTML = require('ansi-html');
+const SockJS = require('sockjs-client');
+const stripAnsi = require('strip-ansi');
+const url = require('url');
+const formatWebpackMessages = require('./formatWebpackMessages');
+const Entities = require('html-entities').AllHtmlEntities;
+const entities = new Entities();
 
 // Color scheme inspired by https://github.com/glenjamin/webpack-hot-middleware
-var colors = {
+let colors = {
   reset: ['transparent', 'transparent'],
   black: '181818',
   red: 'E36049',
@@ -40,7 +40,7 @@ var colors = {
 ansiHTML.setColors(colors);
 
 function createOverlayIframe(onIframeLoad) {
-  var iframe = document.createElement('iframe');
+  const iframe = document.createElement('iframe');
   iframe.id = 'react-dev-utils-webpack-hot-dev-client-overlay';
   iframe.src = 'about:blank';
   iframe.style.position = 'fixed';
@@ -57,7 +57,7 @@ function createOverlayIframe(onIframeLoad) {
 }
 
 function addOverlayDivTo(iframe) {
-  var div =  iframe.contentDocument.createElement('div');
+  const div =  iframe.contentDocument.createElement('div');
   div.id = 'react-dev-utils-webpack-hot-dev-client-overlay-div';
   div.style.position = 'fixed';
   div.style.boxSizing = 'border-box';
@@ -79,9 +79,9 @@ function addOverlayDivTo(iframe) {
   return div;
 }
 
-var overlayIframe = null;
-var overlayDiv = null;
-var lastOnOverlayDivReady = null;
+let overlayIframe = null;
+let overlayDiv = null;
+let lastOnOverlayDivReady = null;
 
 function ensureOverlayDivExists(onOverlayDivReady) {
   if (overlayDiv) {
@@ -116,14 +116,13 @@ function showErrorOverlay(message) {
   ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
     // Make it look similar to our terminal.
     overlayDiv.innerHTML =
-      '<span style="color: #' +
-      colors.red +
-      '">Failed to compile.</span><br><br>' +
-      ansiHTML(entities.encode(message));
+    `<span style="color: #${colors.red}">
+     Failed to compile.</span><br><br>
+     ${ansiHTML(entities.encode(message))}`;
   });
 }
 
-function destroyErrorOverlay() {  
+function destroyErrorOverlay() {
   if (!overlayDiv) {
     // It is not there in the first place.
     return;
@@ -137,7 +136,7 @@ function destroyErrorOverlay() {
 }
 
 // Connect to WebpackDevServer via a socket.
-var connection = new SockJS(url.format({
+const connection = new SockJS(url.format({
   protocol: window.location.protocol,
   hostname: window.location.hostname,
   port: window.location.port,
@@ -155,9 +154,9 @@ connection.onclose = function() {
 };
 
 // Remember some state related to hot module replacement.
-var isFirstCompilation = true;
-var mostRecentCompilationHash = null;
-var hasCompileErrors = false;
+let isFirstCompilation = true;
+let mostRecentCompilationHash = null;
+let hasCompileErrors = false;
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
@@ -171,7 +170,7 @@ function handleSuccess() {
   clearOutdatedErrors();
   destroyErrorOverlay();
 
-  var isHotUpdate = !isFirstCompilation;
+  let isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
   hasCompileErrors = false;
 
@@ -186,13 +185,13 @@ function handleWarnings(warnings) {
   clearOutdatedErrors();
   destroyErrorOverlay();
 
-  var isHotUpdate = !isFirstCompilation;
+  let isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
   hasCompileErrors = false;
 
   function printWarnings() {
     // Print warnings to the console.
-    for (var i = 0; i < warnings.length; i++) {
+    for (let i = 0; i < warnings.length; i++) {
       console.warn(stripAnsi(warnings[i]));
     }
   }
@@ -218,7 +217,7 @@ function handleErrors(errors) {
   hasCompileErrors = true;
 
   // "Massage" webpack messages.
-  var formatted = formatWebpackMessages({
+  let formatted = formatWebpackMessages({
     errors: errors,
     warnings: []
   });
@@ -227,7 +226,7 @@ function handleErrors(errors) {
   showErrorOverlay(formatted.errors[0]);
 
   // Also log them to the console.
-  for (var i = 0; i < formatted.errors.length; i++) {
+  for (let i = 0; i < formatted.errors.length; i++) {
     console.error(stripAnsi(formatted.errors[i]));
   }
 
@@ -243,7 +242,7 @@ function handleAvailableHash(hash) {
 
 // Handle messages from the server.
 connection.onmessage = function(e) {
-  var message = JSON.parse(e.data);
+  const message = JSON.parse(e.data);
   switch (message.type) {
   case 'hash':
     handleAvailableHash(message.data);
