@@ -202,7 +202,7 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       var remainingFiles = fs.readdirSync(path.join(root));
       if (!remainingFiles.length) {
         // Delete target folder if empty
-        console.log('Deleting', chalk.cyan(appName), 'from', chalk.cyan(originalDirectory));
+        console.log('Deleting', chalk.cyan(appName + '/'), 'from', chalk.cyan(path.resolve(root, '..')));
         fs.removeSync(path.join(root));
       }
       console.log('Done.');
