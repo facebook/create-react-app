@@ -61,6 +61,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Editor Integration](#editor-integration)
 - [Developing Components in Isolation](#developing-components-in-isolation)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
+- [Analyzing the Bundle Size](#analyzing-the-bundle-size)
 - [Deployment](#deployment)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
   - [Building for Relative Paths](#building-for-relative-paths)
@@ -1205,6 +1206,37 @@ Learn more about React Storybook:
 ## Making a Progressive Web App
 
 You can turn your React app into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) by following the steps in [this repository](https://github.com/jeffposnick/create-react-pwa).
+
+## Analyzing the Bundle Size
+
+[Source map explorer](https://www.npmjs.com/package/source-map-explorer) analyzes
+JavaScript bundles using the source maps. This helps you understand where code
+bloat is coming from.
+
+To add Source map explorer to a Create React App project, follow these steps:
+
+```
+npm install source-map-explorer --save-dev
+```
+
+Then in `package.json`, add the following line to `scripts`
+On Windows you will have to type the full file path out.
+
+```diff
+   "scripts": {
+     "start": "react-scripts start",
+     "build": "react-scripts build",
+     "test": "react-scripts test --env=jsdom",
++    "analyze": "source-map-explorer build/static/js/main.* "
+```
+
+Then to analyze the bundle run the production build then run the analyze
+script.
+
+```
+npm run build
+npm run analyze
+```
 
 ## Deployment
 
