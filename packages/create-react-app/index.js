@@ -58,6 +58,8 @@ var path = require('path');
 var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
 var semver = require('semver');
+var https = require('https');
+var request = require('request');
 
 var projectName;
 
@@ -145,12 +147,14 @@ function shouldUseYarn() {
   }
 }
 
-function install(dependencies, verbose, callback) {
+function install(dependencies, verbose, useYarnLock, callback) {
   var command;
   var args;
   if (shouldUseYarn()) {
     command = 'yarnpkg';
-    args = [ 'add', '--exact'].concat(dependencies);
+
+    // If the yarn.lock exists, just run `yarnpkg`.
+    args = useYarnLock ? [] : ['add', '--exact'].concat(dependencies);
   } else {
     command = 'npm';
     args = ['install', '--save', '--save-exact'].concat(dependencies);
@@ -172,32 +176,74 @@ function run(root, appName, version, verbose, originalDirectory, template) {
 
   var allDependencies = ['react', 'react-dom', packageToInstall];
 
+  var installDependencies = function(yarnLockExists) {
+    install(allDependencies, verbose, yarnLockExists, function(code, command, args) {
+      if (code !== 0) {
+        console.error(chalk.cyan(command + ' ' + args.join(' ')) + ' failed');
+        process.exit(1);
+      }
+
+      checkNodeVersion(packageName);
+
+      // Since react-scripts has been installed with --save
+      // We need to move it into devDependencies and rewrite package.json
+      if (!yarnLockExists) {
+        moveReactScriptsToDev(packageName);
+      }
+
+      var scriptsPath = path.resolve(
+        process.cwd(),
+        'node_modules',
+        packageName,
+        'scripts',
+        'init.js'
+      );
+      var init = require(scriptsPath);
+      init(root, appName, verbose, originalDirectory, template);
+    });
+  }
+
   console.log('Installing packages. This might take a couple minutes.');
   console.log('Installing ' + chalk.cyan('react, react-dom, ' + packageName) + '...');
   console.log();
 
-  install(allDependencies, verbose, function(code, command, args) {
-    if (code !== 0) {
-      console.error(chalk.cyan(command + ' ' + args.join(' ')) + ' failed');
-      process.exit(1);
-    }
+  // Try to download the yarn.lock file.
+  if (shouldUseYarn()) {
+    var releaseRequest = request({
+      uri: 'https://api.github.com/repos/facebookincubator/create-react-app/releases/latest',
+      method: 'GET',
+      headers: {
+        'User-Agent': 'create-react-app'
+      }
+    }, function(err, response, releasesBody) {
+      var yarnLockUrl = JSON.parse(releasesBody).assets.reduce(function(acc, asset) {
+        return asset.name === 'yarn.lock' ? asset.browser_download_url : acc;
+      }, "");
 
-    checkNodeVersion(packageName);
+      // TODO: We'll want to copy the package.json && yarn.lock,
+      // `yarn install` will change the lockfile if the deps don't
+      // satisfy versions in the package.json.
 
-    // Since react-scripts has been installed with --save
-    // We need to move it into devDependencies and rewrite package.json
-    moveReactScriptsToDev(packageName);
+      if (!yarnLockUrl) {
+        installDependencies(false);
 
-    var scriptsPath = path.resolve(
-      process.cwd(),
-      'node_modules',
-      packageName,
-      'scripts',
-      'init.js'
-    );
-    var init = require(scriptsPath);
-    init(root, appName, verbose, originalDirectory, template);
-  });
+        return;
+      }
+
+      var yarnLockRequest = request(yarnLockUrl, function(err, response, body) {
+        fs.writeFileSync('yarn.lock', body); // TODO: Async
+
+        // Success. Write the package.json dependencies manually.
+        writePackageJsonFromYarnLock(packageName, packageToInstall);
+        installDependencies(true);
+      }).on('error', function(err) {
+        fs.unlink(dest);
+        installDependencies(false);
+      });
+    });
+  } else {
+    installDependencies(false);
+  }
 }
 
 function getInstallPackage(version) {
@@ -302,6 +348,26 @@ function moveReactScriptsToDev(packageName) {
   packageJson.devDependencies = packageJson.devDependencies || {};
   packageJson.devDependencies[packageName] = packageVersion;
   delete packageJson.dependencies[packageName];
+
+  fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
+}
+
+// TODO: Get rid of most this - we'll copy a package.json
+// Will need to write the name, though.
+function writePackageJsonFromYarnLock(packageName, packageVersion) {
+  var packagePath = path.join(process.cwd(), 'package.json');
+  var packageJson = require(packagePath);
+
+  packageJson.devDependencies = packageJson.devDependencies || {};
+  packageJson.devDependencies[packageName] = packageVersion;
+
+  var reactVersion = 'latest';
+  var reactDomVersion = 'latest';
+
+  packageJson.dependencies = {
+    'react': reactVersion,
+    'react-dom': reactDomVersion
+  };
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }
