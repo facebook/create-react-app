@@ -64,8 +64,6 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
     }
   });
 
-  // Run yarn or npm for react and react-dom
-  // TODO: having to do two npm/yarn installs is bad, can we avoid it?
   var command;
   var args;
 
@@ -92,53 +90,65 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
     fs.unlinkSync(templateDependenciesPath);
   }
 
-  console.log('Installing react and react-dom using ' + command + '...');
-  console.log();
+  // Install react and react-dom for backward compatibility with old CRA cli
+  // which doesn't install react and react-dom along with react-scripts
+  // or template is presetend (via --internal-testing-template)
+  if (!isReactInstalled(appPackage) || template) {
+    console.log('Installing react and react-dom using ' + command + '...');
+    console.log();
 
-  var proc = spawn(command, args, {stdio: 'inherit'});
-  proc.on('close', function (code) {
-    if (code !== 0) {
+    var proc = spawn.sync(command, args, {stdio: 'inherit'});
+    if (proc.status !== 0) {
       console.error('`' + command + ' ' + args.join(' ') + '` failed');
       return;
     }
+  }
 
-    // Display the most elegant way to cd.
-    // This needs to handle an undefined originalDirectory for
-    // backward compatibility with old global-cli's.
-    var cdpath;
-    if (originalDirectory &&
-        path.join(originalDirectory, appName) === appPath) {
-      cdpath = appName;
-    } else {
-      cdpath = appPath;
-    }
+  // Display the most elegant way to cd.
+  // This needs to handle an undefined originalDirectory for
+  // backward compatibility with old global-cli's.
+  var cdpath;
+  if (originalDirectory &&
+      path.join(originalDirectory, appName) === appPath) {
+    cdpath = appName;
+  } else {
+    cdpath = appPath;
+  }
 
+  console.log();
+  console.log('Success! Created ' + appName + ' at ' + appPath);
+  console.log('Inside that directory, you can run several commands:');
+  console.log();
+  console.log(chalk.cyan('  ' + command + ' start'));
+  console.log('    Starts the development server.');
+  console.log();
+  console.log(chalk.cyan('  ' + command + ' run build'));
+  console.log('    Bundles the app into static files for production.');
+  console.log();
+  console.log(chalk.cyan('  ' + command + ' test'));
+  console.log('    Starts the test runner.');
+  console.log();
+  console.log(chalk.cyan('  ' + command + ' run eject'));
+  console.log('    Removes this tool and copies build dependencies, configuration files');
+  console.log('    and scripts into the app directory. If you do this, you can’t go back!');
+  console.log();
+  console.log('We suggest that you begin by typing:');
+  console.log();
+  console.log(chalk.cyan('  cd'), cdpath);
+  console.log('  ' + chalk.cyan(command + ' start'));
+  if (readmeExists) {
     console.log();
-    console.log('Success! Created ' + appName + ' at ' + appPath);
-    console.log('Inside that directory, you can run several commands:');
-    console.log();
-    console.log(chalk.cyan('  ' + command + ' start'));
-    console.log('    Starts the development server.');
-    console.log();
-    console.log(chalk.cyan('  ' + command + ' run build'));
-    console.log('    Bundles the app into static files for production.');
-    console.log();
-    console.log(chalk.cyan('  ' + command + ' test'));
-    console.log('    Starts the test runner.');
-    console.log();
-    console.log(chalk.cyan('  ' + command + ' run eject'));
-    console.log('    Removes this tool and copies build dependencies, configuration files');
-    console.log('    and scripts into the app directory. If you do this, you can’t go back!');
-    console.log();
-    console.log('We suggest that you begin by typing:');
-    console.log();
-    console.log(chalk.cyan('  cd'), cdpath);
-    console.log('  ' + chalk.cyan(command + ' start'));
-    if (readmeExists) {
-      console.log();
-      console.log(chalk.yellow('You had a `README.md` file, we renamed it to `README.old.md`'));
-    }
-    console.log();
-    console.log('Happy hacking!');
-  });
+    console.log(chalk.yellow('You had a `README.md` file, we renamed it to `README.old.md`'));
+  }
+  console.log();
+  console.log('Happy hacking!');
 };
+
+function isReactInstalled(appPackage) {
+  var dependencies = appPackage.dependencies || {};
+
+  return (
+    typeof dependencies.react !== 'undefined' &&
+    typeof dependencies['react-dom'] !== 'undefined'
+  )
+}

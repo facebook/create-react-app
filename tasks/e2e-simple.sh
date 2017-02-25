@@ -45,6 +45,13 @@ function create_react_app {
   node "$temp_cli_path"/node_modules/create-react-app/index.js $*
 }
 
+# Check for the existence of one or more files.
+function exists {
+  for f in $*; do
+    test -e "$f"
+  done
+}
+
 # Exit the script with a helpful error message when any error is encountered
 trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 
@@ -58,20 +65,20 @@ set -x
 cd ..
 root_path=$PWD
 
-npm install
-
 # If the node version is < 4, the script should just give an error.
-if [ `node --version | sed -e 's/^v//' -e 's/\..\+//g'` -lt 4 ]
+if [[ `node --version | sed -e 's/^v//' -e 's/\..*//g'` -lt 4 ]]
 then
   cd $temp_app_path
   err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
   [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 fi
 
+npm install
+
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn@0.17.10 # TODO: remove version when https://github.com/yarnpkg/yarn/issues/2142 is fixed.
+  npm install -g yarn
   yarn cache clean
 fi
 
@@ -86,16 +93,16 @@ fi
 # Test local build command
 npm run build
 # Check for expected output
-test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/static/media/*.svg
-test -e build/favicon.ico
+exists build/*.html
+exists build/static/js/*.js
+exists build/static/css/*.css
+exists build/static/media/*.svg
+exists build/favicon.ico
 
 # Run tests with CI flag
 CI=true npm test
 # Uncomment when snapshot testing is enabled by default:
-# test -e template/src/__snapshots__/App.test.js.snap
+# exists template/src/__snapshots__/App.test.js.snap
 
 # Test local start command
 npm start -- --smoke-test
@@ -197,16 +204,16 @@ cd test-app
 # Test the build
 npm run build
 # Check for expected output
-test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/static/media/*.svg
-test -e build/favicon.ico
+exists build/*.html
+exists build/static/js/*.js
+exists build/static/css/*.css
+exists build/static/media/*.svg
+exists build/favicon.ico
 
 # Run tests with CI flag
 CI=true npm test
 # Uncomment when snapshot testing is enabled by default:
-# test -e src/__snapshots__/App.test.js.snap
+# exists src/__snapshots__/App.test.js.snap
 
 # Test the server
 npm start -- --smoke-test
@@ -230,11 +237,11 @@ npm link $root_path/packages/react-scripts
 # Test the build
 npm run build
 # Check for expected output
-test -e build/*.html
-test -e build/static/js/*.js
-test -e build/static/css/*.css
-test -e build/static/media/*.svg
-test -e build/favicon.ico
+exists build/*.html
+exists build/static/js/*.js
+exists build/static/css/*.css
+exists build/static/media/*.svg
+exists build/favicon.ico
 
 # Run tests, overring the watch option to disable it.
 # `CI=true npm test` won't work here because `npm test` becomes just `jest`.
@@ -242,7 +249,7 @@ test -e build/favicon.ico
 # `scripts/test.js` survive ejection (right now it doesn't).
 npm test -- --watch=no
 # Uncomment when snapshot testing is enabled by default:
-# test -e src/__snapshots__/App.test.js.snap
+# exists src/__snapshots__/App.test.js.snap
 
 # Test the server
 npm start -- --smoke-test

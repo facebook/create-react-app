@@ -43,6 +43,13 @@ function create_react_app {
   node "$temp_cli_path"/node_modules/create-react-app/index.js $*
 }
 
+# Check for the existence of one or more files.
+function exists {
+  for f in $*; do
+    test -e "$f"
+  done
+}
+
 # Exit the script with a helpful error message when any error is encountered
 trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 
@@ -61,7 +68,7 @@ npm install
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn@0.17.10 # TODO: remove version when https://github.com/yarnpkg/yarn/issues/2142 is fixed.
+  npm install -g yarn
   yarn cache clean
 fi
 
@@ -120,8 +127,8 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   npm run build
 
 # Check for expected output
-test -e build/*.html
-test -e build/static/js/main.*.js
+exists build/*.html
+exists build/static/js/main.*.js
 
 # Unit tests
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -167,9 +174,6 @@ npm link $root_path/packages/eslint-config-react-app
 npm link $root_path/packages/react-dev-utils
 npm link $root_path/packages/react-scripts
 
-# ...and we need to remove template's .babelrc
-rm .babelrc
-
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
@@ -177,8 +181,8 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   npm run build
 
 # Check for expected output
-test -e build/*.html
-test -e build/static/js/main.*.js
+exists build/*.html
+exists build/static/js/main.*.js
 
 # Unit tests
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \

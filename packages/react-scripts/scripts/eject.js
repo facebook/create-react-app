@@ -28,8 +28,8 @@ prompt(
 
   console.log('Ejecting...');
 
-  var ownPath = path.join(__dirname, '..');
-  var appPath = path.join(ownPath, '..', '..');
+  var ownPath = paths.ownPath;
+  var appPath = paths.appPath;
 
   function verifyAbsent(file) {
     if (fs.existsSync(path.join(appPath, file))) {
@@ -129,13 +129,12 @@ prompt(
   // Add Jest config
   console.log('  Adding ' + cyan('Jest') + ' configuration');
   appPackage.jest = createJestConfig(
-    filePath => path.join('<rootDir>', filePath),
+    filePath => path.posix.join('<rootDir>', filePath),
     null,
     true
   );
 
   // Add Babel config
-
   console.log('  Adding ' + cyan('Babel') + ' preset');
   appPackage.babel = babelConfig;
 
@@ -149,13 +148,19 @@ prompt(
   );
   console.log();
 
+  try {
+    // remove react-scripts and react-scripts binaries from app node_modules
+    Object.keys(ownPackage.bin).forEach(function(binKey) {
+      fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
+    });
+    fs.removeSync(ownPath);
+  } catch(e) {}
+
   if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));
-    fs.removeSync(ownPath);
     spawnSync('yarnpkg', [], {stdio: 'inherit'});
   } else {
     console.log(cyan('Running npm install...'));
-    fs.removeSync(ownPath);
     spawnSync('npm', ['install'], {stdio: 'inherit'});
   }
   console.log(green('Ejected successfully!'));
