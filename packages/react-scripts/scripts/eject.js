@@ -59,7 +59,11 @@ prompt(
     path.join('config', 'jest', 'fileTransform.js'),
     path.join('scripts', 'build.js'),
     path.join('scripts', 'start.js'),
-    path.join('scripts', 'test.js')
+    path.join('scripts', 'test.js'),
+    path.join('utils', 'bundleVendorIfStale.js'),
+    path.join('utils', 'packageJsonMd5.js'),
+    path.join('utils', 'printErrors.js'),
+    path.join('utils', 'vendorManifestId.js'),
   ];
 
   // Ensure that the app folder is clean and we won't override any files
