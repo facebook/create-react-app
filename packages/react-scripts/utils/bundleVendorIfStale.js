@@ -10,11 +10,19 @@ var printErrors = require('../utils/printErrors');
 var environment = process.env.NODE_ENV;
 var hashFilePrefix = 'REACT_APP_PACKAGE_JSON_MD5_';
 var vendorManifestId = require('../utils/vendorManifestId');
+
 module.exports = (callback, args) => {
   if (shouldManifestUpdate()) {
     fs.emptyDirSync(paths.vendorPath);
     var compiler = webpack(config);
-    console.log(environment);
+    console.log('Current environment: ', environment);
+    console.log();
+    console.log('Current dependencies :');
+    console.log();
+    Object.keys(require(paths.appPackageJson).dependencies)
+      .forEach(dependency => console.log(dependency));
+    Object.keys(require(paths.appPackageJson).devDependencies)
+      .forEach(dependency => console.log(dependency));
     console.log('Creating Vendor Files...');
     return compiler.run((err, stats) => {
       if (err) {
