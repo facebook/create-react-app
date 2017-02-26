@@ -1,3 +1,19 @@
+## 0.9.2 (February 26, 2017)
+
+#### :bug: Bug Fix
+* `react-scripts`
+  * [#1647](https://github.com/facebookincubator/create-react-app/pull/1647) Fix `npm test` on Windows ([@gaearon](https://github.com/gaearon))
+
+    Fixes a regression introduced in 0.9.1.
+
+### Migrating from 0.9.1 to 0.9.2
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.9.2
+```
+
 ## 0.9.1 (February 25, 2017)
 
 ### Note: There is a known issue with [`npm test` failing on Windows](https://github.com/facebookincubator/create-react-app/issues/1645). We’re looking into it.
