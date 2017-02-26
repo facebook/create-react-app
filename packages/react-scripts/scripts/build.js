@@ -133,7 +133,16 @@ function printErrors(summary, errors) {
 // Create the production build and print the deployment instructions.
 function build(previousSizeMap) {
   console.log('Creating an optimized production build...');
-  webpack(config).run((err, stats) => {
+
+  var compiler;
+  try {
+    compiler = webpack(config);
+  } catch (err) {
+    printErrors('Failed to compile.', [err]);
+    process.exit(1);
+  }
+
+  compiler.run((err, stats) => {
     if (err) {
       printErrors('Failed to compile.', [err]);
       process.exit(1);
@@ -214,7 +223,8 @@ function build(previousSizeMap) {
         console.log('  ' + chalk.green('"homepage"') + chalk.cyan(': ') + chalk.green('"http://myname.github.io/myapp"') + chalk.cyan(','));
         console.log();
       }
-      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
+      var build = path.relative(process.cwd(), paths.appBuild);
+      console.log('The ' + chalk.cyan(build) + ' folder is ready to be deployed.');
       console.log('You may also serve it locally with a static server:')
       console.log();
       if (useYarn) {
@@ -222,8 +232,8 @@ function build(previousSizeMap) {
       } else {
         console.log('  ' + chalk.cyan('npm') +  ' install -g pushstate-server');
       }
-      console.log('  ' + chalk.cyan('pushstate-server') + ' build');
-      console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:9000');
+      console.log('  ' + chalk.cyan('pushstate-server') + ' ' + build);
+      console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:' + (process.env.PORT || 9000));
       console.log();
     }
   });

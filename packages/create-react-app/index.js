@@ -156,6 +156,7 @@ function install(dependencies, verbose, useYarnLock, callback) {
     // If the yarn.lock exists, just run `yarnpkg`.
     args = useYarnLock ? [] : ['add', '--exact'].concat(dependencies);
   } else {
+    checkNpmVersion();
     command = 'npm';
     args = ['install', '--save', '--save-exact'].concat(dependencies);
   }
@@ -179,7 +180,30 @@ function run(root, appName, version, verbose, originalDirectory, template) {
   var installDependencies = function(yarnLockExists) {
     install(allDependencies, verbose, yarnLockExists, function(code, command, args) {
       if (code !== 0) {
-        console.error(chalk.cyan(command + ' ' + args.join(' ')) + ' failed');
+        console.log();
+        console.error('Aborting installation.', chalk.cyan(command + ' ' + args.join(' ')), 'has failed.');
+        // On 'exit' we will delete these files from target directory.
+        var knownGeneratedFiles = [
+          'package.json', 'npm-debug.log', 'yarn-error.log', 'yarn-debug.log', 'node_modules'
+        ];
+        var currentFiles = fs.readdirSync(path.join(root));
+        currentFiles.forEach(function (file) {
+          knownGeneratedFiles.forEach(function (fileToMatch) {
+            // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
+            // and the rest of knownGeneratedFiles.
+            if ((fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) || file === fileToMatch) {
+              console.log('Deleting generated file...', chalk.cyan(file));
+              fs.removeSync(path.join(root, file));
+            }
+          });
+        });
+        var remainingFiles = fs.readdirSync(path.join(root));
+        if (!remainingFiles.length) {
+          // Delete target folder if empty
+          console.log('Deleting', chalk.cyan(appName + '/'), 'from', chalk.cyan(path.resolve(root, '..')));
+          fs.removeSync(path.join(root));
+        }
+        console.log('Done.');
         process.exit(1);
       }
 
@@ -204,7 +228,10 @@ function run(root, appName, version, verbose, originalDirectory, template) {
   }
 
   console.log('Installing packages. This might take a couple minutes.');
-  console.log('Installing ' + chalk.cyan('react, react-dom, ' + packageName) + '...');
+  console.log(
+    'Installing ' + chalk.cyan('react') + ', ' + chalk.cyan('react-dom') +
+    ', and ' + chalk.cyan(packageName) + '...'
+  );
   console.log();
 
   // Try to download the yarn.lock file.
@@ -274,6 +301,25 @@ function getPackageName(installPackage) {
     return installPackage.charAt(0) + installPackage.substr(1).split('@')[0];
   }
   return installPackage;
+}
+
+function checkNpmVersion() {
+  var isNpm2 = false;
+  try {
+    var npmVersion = execSync('npm --version').toString();
+    isNpm2 = semver.lt(npmVersion, '3.0.0');
+  } catch (err) {
+    return;
+  }
+  if (!isNpm2) {
+    return;
+  }
+  console.log(chalk.yellow('It looks like you are using npm 2.'));
+  console.log(chalk.yellow(
+    'We suggest using npm 3 or Yarn for faster install times ' +
+    'and less disk space usage.'
+  ));
+  console.log();
 }
 
 function checkNodeVersion(packageName) {
@@ -377,7 +423,7 @@ function writePackageJsonFromYarnLock(packageName, packageVersion) {
 // https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-243446094
 function isSafeToCreateProjectIn(root) {
   var validFiles = [
-    '.DS_Store', 'Thumbs.db', '.git', '.gitignore', '.idea', 'README.md', 'LICENSE'
+    '.DS_Store', 'Thumbs.db', '.git', '.gitignore', '.idea', 'README.md', 'LICENSE', 'web.iml'
   ];
   return fs.readdirSync(root)
     .every(function(file) {
