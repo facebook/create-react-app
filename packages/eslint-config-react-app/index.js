@@ -126,10 +126,6 @@ module.exports = {
     'no-restricted-globals': ['error', 'event'],
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
-    'no-unused-expressions': ['warn', {
-      'allowShortCircuit': true,
-      'allowTernary': true
-    }],
     'no-unused-labels': 'warn',
     'no-unused-vars': ['warn', {
       vars: 'local',
