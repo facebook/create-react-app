@@ -15,15 +15,7 @@ module.exports = (callback, args) => {
   if (shouldManifestUpdate()) {
     fs.emptyDirSync(paths.vendorPath);
     var compiler = webpack(config);
-    console.log('Current environment: ', environment);
-    console.log();
-    console.log('Current dependencies :');
-    console.log();
-    Object.keys(require(paths.appPackageJson).dependencies)
-      .forEach(dependency => console.log(dependency));
-    Object.keys(require(paths.appPackageJson).devDependencies)
-      .forEach(dependency => console.log(dependency));
-    console.log('Creating Vendor Files...');
+    console.log('Bundling vendor files for faster rebuilds...');
     return compiler.run((err, stats) => {
       if (err) {
         printErrors('Failed to compile.', [err]);
