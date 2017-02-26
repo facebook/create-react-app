@@ -85,6 +85,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   ownNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths,
+  vendorPath: resolveApp('public/vendor'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json'))
 };
@@ -110,6 +111,7 @@ module.exports = {
   // this is empty with npm3 but node resolution searches higher anyway:
   ownNodeModules: resolveOwn('node_modules'),
   nodePaths: nodePaths,
+  vendorPath: resolveApp('public/vendor'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json'))
 };
@@ -133,6 +135,7 @@ if (!reactScriptsLinked && __dirname.indexOf(path.join('packages', 'react-script
     appNodeModules: resolveOwn('node_modules'),
     ownNodeModules: resolveOwn('node_modules'),
     nodePaths: nodePaths,
+    vendorPath: resolveOwn('template/public/vendor'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json'))
   };

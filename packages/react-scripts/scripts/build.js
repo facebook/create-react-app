@@ -25,11 +25,11 @@ var url = require('url');
 var filesize = require('filesize');
 var gzipSize = require('gzip-size').sync;
 var webpack = require('webpack');
-var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
+var bundleVendorIfStale = require('../utils/bundleVendorIfStale')
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 
@@ -63,28 +63,30 @@ function getDifferenceLabel(currentSize, previousSize) {
   }
 }
 
-// First, read the current file sizes in build directory.
-// This lets us display how much they changed later.
-recursive(paths.appBuild, (err, fileNames) => {
-  var previousSizeMap = (fileNames || [])
-    .filter(fileName => /\.(js|css)$/.test(fileName))
-    .reduce((memo, fileName) => {
-      var contents = fs.readFileSync(fileName);
-      var key = removeFileNameHash(fileName);
-      memo[key] = gzipSize(contents);
-      return memo;
-    }, {});
+bundleVendorIfStale(()=>{
+  // First, read the current file sizes in build directory.
+  // This lets us display how much they changed later.
+  recursive(paths.appBuild, (err, fileNames) => {
+    var previousSizeMap = (fileNames || [])
+      .filter(fileName => /\.(js|css)$/.test(fileName))
+      .reduce((memo, fileName) => {
+        var contents = fs.readFileSync(fileName);
+        var key = removeFileNameHash(fileName);
+        memo[key] = gzipSize(contents);
+        return memo;
+      }, {});
 
-  // Remove all content but keep the directory so that
-  // if you're in it, you don't end up in Trash
-  fs.emptyDirSync(paths.appBuild);
+    // Remove all content but keep the directory so that
+    // if you're in it, you don't end up in Trash
+    fs.emptyDirSync(paths.appBuild);
 
-  // Start the webpack build
-  build(previousSizeMap);
+    // Start the webpack build
+    build(previousSizeMap);
 
-  // Merge with the public folder
-  copyPublicFolder();
-});
+    // Merge with the public folder
+    copyPublicFolder();
+  });
+}, true);
 
 // Print a detailed summary of build files.
 function printFileSizes(stats, previousSizeMap) {
@@ -132,6 +134,7 @@ function printErrors(summary, errors) {
 
 // Create the production build and print the deployment instructions.
 function build(previousSizeMap) {
+  var config = require('../config/webpack.config.prod');
   console.log('Creating an optimized production build...');
 
   var compiler;
