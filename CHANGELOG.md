@@ -1,7 +1,4 @@
-## <s>0.9.1 (February 25, 2017)</s>
 ## 0.9.2 (February 26, 2017)
-
-**There was a bug in 0.9.1, so you should update directly to 0.9.2 instead.**
 
 #### :nail_care: Enhancement
 
@@ -122,6 +119,8 @@
 
 ### Migrating from 0.9.0 to 0.9.2
 
+**Note:** 0.9.1 had known issues so you should skip it.
+
 Inside any created project that has not been ejected, run:
 
 ```
@@ -133,6 +132,10 @@ You may also optionally update the global command-line utility for more efficien
 ```
 npm install -g create-react-app@1.1.0
 ```
+
+## <s>0.9.1 (February 25, 2017)</s>
+
+This release has known issues and you should skip it. Update directly to 0.9.2 instead.
 
 ## 0.9.0 (February 11, 2017)
 
