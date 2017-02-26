@@ -45,5 +45,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
   if (rootDir) {
     config.rootDir = rootDir;
   }
+  const packageConfig = require(paths.appPackageJson).jest;
+  if (packageConfig) {
+    config.collectCoverageFrom = packageConfig.collectCoverageFrom || config.collectCoverageFrom;
+  }
   return config;
 };
