@@ -1,3 +1,127 @@
+## 0.9.1 (February 25, 2017)
+
+#### :bug: Bug Fix
+* `react-scripts`
+  * [#1628](https://github.com/facebookincubator/create-react-app/pull/1628) Setting a dynamic port value for the pushstate-server URL text. ([@mattccrampton](https://github.com/mattccrampton))
+
+  * [#1635](https://github.com/facebookincubator/create-react-app/pull/1635) Retain posix paths in Jest config. ([@Timer](https://github.com/Timer))
+
+    Ejecting on Windows no longer causes `npm test` to not function on macOS and Linux machines.
+
+  * [#1356](https://github.com/facebookincubator/create-react-app/pull/1356) Fix workflow if react-scripts package is linked via npm-link. ([@tuchk4](https://github.com/tuchk4))
+
+    `react-scripts` will now function as expected when linking to a development version. Previously, you could not test changes with an existing application via linking.
+
+  * [#1585](https://github.com/facebookincubator/create-react-app/pull/1585) PORT env variable not always an integer. ([@matoilic](https://github.com/matoilic))
+
+#### :nail_care: Enhancement
+* `react-scripts`
+  * [#1478](https://github.com/facebookincubator/create-react-app/pull/1478) Use real build path name in build output. ([@chyipin](https://github.com/chyipin))
+  * [#1578](https://github.com/facebookincubator/create-react-app/pull/1578) Enable eslint caching in development. ([@viankakrisna](https://github.com/viankakrisna))
+  * [#1560](https://github.com/facebookincubator/create-react-app/pull/1560) Bump `recursive-readdir`. ([@wtgtybhertgeghgtwtg](https://github.com/wtgtybhertgeghgtwtg))
+  * [#1567](https://github.com/facebookincubator/create-react-app/pull/1567) Remove .bin files defined at react-scripts/package.json after eject. ([@tuchk4](https://github.com/tuchk4))
+  * [#1495](https://github.com/facebookincubator/create-react-app/pull/1495) Add useful link to react-scripts. ([@pd4d10](https://github.com/pd4d10))
+
+* `create-react-app`
+  * [#1512](https://github.com/facebookincubator/create-react-app/pull/1512) Gracefully handle initial installation error (#1505). ([@chitchu](https://github.com/chitchu))
+
+    If an error occurs while `create-react-app` is running, it will now clean up and not leave a broken project to reduce confusion.
+
+  * [#1193](https://github.com/facebookincubator/create-react-app/pull/1193) NPM version check for tip. ([@mobinni](https://github.com/mobinni))
+
+  * [#1603](https://github.com/facebookincubator/create-react-app/pull/1603) Fix conflict file issue in IJ static web projects by adding web.iml to the exclusion list. ([@driquelme](https://github.com/driquelme))
+
+  * [#1570](https://github.com/facebookincubator/create-react-app/pull/1570) Allow --scripts-version git urls. ([@tomconroy](https://github.com/tomconroy))
+
+* `create-react-app`, `react-scripts`
+  * [#1253](https://github.com/facebookincubator/create-react-app/pull/1253) Install React, ReactDOM and React-Scripts at the same time. ([@n3tr](https://github.com/n3tr))
+
+     React, ReactDOM, and `react-scripts` are now installed in the same install instead of two different installs. This reduces app creation time by a noticeable amount.
+
+#### :memo: Documentation
+* `react-scripts`
+  * [#1391](https://github.com/facebookincubator/create-react-app/pull/1391) adding a note on how to resolve "Could not find a required file." dep…. ([@sbritoig](https://github.com/sbritoig))
+  * [#1577](https://github.com/facebookincubator/create-react-app/pull/1577) Added a how-to on react-snapshot. ([@superhighfives](https://github.com/superhighfives))
+  * [#1121](https://github.com/facebookincubator/create-react-app/pull/1121) Add documentation for customizing Bootstrap theme. ([@myappincome](https://github.com/myappincome))
+  * [#1540](https://github.com/facebookincubator/create-react-app/pull/1540) Document debugging in the browser.. ([@bondz](https://github.com/bondz))
+  * [#1618](https://github.com/facebookincubator/create-react-app/pull/1618) Add note about when to import bootstrap CSS.. ([@joewoodhouse](https://github.com/joewoodhouse))
+  * [#1518](https://github.com/facebookincubator/create-react-app/pull/1518) Update flow configuration documentation. ([@SBrown52](https://github.com/SBrown52))
+  * [#1625](https://github.com/facebookincubator/create-react-app/pull/1625) add a comment about NODE_ENV value set to 'production' during build step. ([@mderazon](https://github.com/mderazon))
+  * [#1573](https://github.com/facebookincubator/create-react-app/pull/1573) Update README.md. ([@mkermani144](https://github.com/mkermani144))
+  * [#1564](https://github.com/facebookincubator/create-react-app/pull/1564) add --recursive to sass watch script. ([@aleburato](https://github.com/aleburato))
+  * [#1561](https://github.com/facebookincubator/create-react-app/pull/1561) Use https in link to Ignoring files at Github. ([@dariocravero](https://github.com/dariocravero))
+  * [#1562](https://github.com/facebookincubator/create-react-app/pull/1562) modified documentation for setting up jest-enzyme. ([@kiranps](https://github.com/kiranps))
+  * [#1543](https://github.com/facebookincubator/create-react-app/pull/1543) update CSS preprocessor instructions. ([@aleburato](https://github.com/aleburato))
+  * [#1338](https://github.com/facebookincubator/create-react-app/pull/1338) Added link to Azure deployment tutorial. ([@tpetrina](https://github.com/tpetrina))
+  * [#1320](https://github.com/facebookincubator/create-react-app/pull/1320) [documentation] how to disable autoprefix feature. ([@rrubas](https://github.com/rrubas))
+  * [#1313](https://github.com/facebookincubator/create-react-app/pull/1313) List features beyond ES6 supported by create-react-app. ([@jonathanconway](https://github.com/jonathanconway))
+  * [#1008](https://github.com/facebookincubator/create-react-app/pull/1008) Add SASS support documentation #1007. ([@tsironis](https://github.com/tsironis))
+  * [#994](https://github.com/facebookincubator/create-react-app/pull/994) Suggest jest-enzyme for simplifying test matchers. ([@blainekasten](https://github.com/blainekasten))
+  * [#1608](https://github.com/facebookincubator/create-react-app/pull/1608) Add note for using CHOKIDAR_USEPOLLING in virtual machines to enable HMR. ([@AJamesPhillips](https://github.com/AJamesPhillips))
+* READMEs
+  * [#1576](https://github.com/facebookincubator/create-react-app/pull/1576) Switch from Neo to Neutrino. ([@eliperelman](https://github.com/eliperelman))
+  * [#1275](https://github.com/facebookincubator/create-react-app/pull/1275) Correct Command in README.md. ([@lifez](https://github.com/lifez))
+
+#### :house: Internal
+* `babel-preset-react-app`
+  * [#1598](https://github.com/facebookincubator/create-react-app/pull/1598) babel-preset: remove babel-plugin-transform-es2015-parameters. ([@christophehurpeau](https://github.com/christophehurpeau))
+* Other
+  * [#1534](https://github.com/facebookincubator/create-react-app/pull/1534) Use Yarn latest in e2e. ([@gaearon](https://github.com/gaearon))
+  * [#1295](https://github.com/facebookincubator/create-react-app/pull/1295) Make node version check more robust in e2e.sh. ([@pugnascotia](https://github.com/pugnascotia))
+  * [#1503](https://github.com/facebookincubator/create-react-app/pull/1503) Fix `test -e` with wildcard arguments.. ([@igetgames](https://github.com/igetgames))
+
+#### Committers: 36
+- Ade Viankakrisna Fadlil ([viankakrisna](https://github.com/viankakrisna))
+- Alessandro Burato ([aleburato](https://github.com/aleburato))
+- Alexander James Phillips ([AJamesPhillips](https://github.com/AJamesPhillips))
+- Blaine Kasten ([blainekasten](https://github.com/blainekasten))
+- Bond ([bondz](https://github.com/bondz))
+- Charlie Gleason ([superhighfives](https://github.com/superhighfives))
+- Christophe Hurpeau ([christophehurpeau](https://github.com/christophehurpeau))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Daniel Riquelme ([driquelme](https://github.com/driquelme))
+- Darío Javier Cravero ([dariocravero](https://github.com/dariocravero))
+- Dimitris Tsironis ([tsironis](https://github.com/tsironis))
+- Eli Perelman ([eliperelman](https://github.com/eliperelman))
+- Jirat Ki. ([n3tr](https://github.com/n3tr))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Joe Woodhouse ([joewoodhouse](https://github.com/joewoodhouse))
+- Jonathan Conway ([jonathanconway](https://github.com/jonathanconway))
+- Marcus R. Brown ([igetgames](https://github.com/igetgames))
+- Mato Ilic ([matoilic](https://github.com/matoilic))
+- Matt Crampton ([mattccrampton](https://github.com/mattccrampton))
+- Michael DeRazon ([mderazon](https://github.com/mderazon))
+- Mo Binni ([mobinni](https://github.com/mobinni))
+- Mohammad Kermani ([mkermani144](https://github.com/mkermani144))
+- Phawin Khongkhasawan ([lifez](https://github.com/lifez))
+- Roman Rubas ([rrubas](https://github.com/rrubas))
+- Rory Hunter ([pugnascotia](https://github.com/pugnascotia))
+- Tom Conroy ([tomconroy](https://github.com/tomconroy))
+- Toni Petrina ([tpetrina](https://github.com/tpetrina))
+- Valerii Sorokobatko ([tuchk4](https://github.com/tuchk4))
+- Vicente Jr Yuchitcho ([chitchu](https://github.com/chitchu))
+- [SBrown52](https://github.com/SBrown52)
+- [chyipin](https://github.com/chyipin)
+- [myappincome](https://github.com/myappincome)
+- [sbritoig](https://github.com/sbritoig)
+- [wtgtybhertgeghgtwtg](https://github.com/wtgtybhertgeghgtwtg)
+- kiran ps ([kiranps](https://github.com/kiranps))
+- pd4d10 ([pd4d10](https://github.com/pd4d10))
+
+### Migrating from 0.9.0 to 0.9.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.9.1
+```
+
+You may also optionally update the global command-line utility for more efficient installs (thanks [@n3tr](https://github.com/n3tr)):
+
+```
+npm install -g create-react-app@1.1.0
+```
+
 ## 0.9.0 (February 11, 2017)
 
 Thanks to [@Timer](https://github.com/timer) for cutting this release.
@@ -7,23 +131,23 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 * `react-scripts`
 
   * [#1489](https://github.com/facebookincubator/create-react-app/pull/1489) Support setting `"homepage"` to `"."` to generate relative asset paths. ([@tibdex](https://github.com/tibdex))
-  
+
     Applications that don’t use the HTML5 `pushState` API can now be built to be served from any relative URL. To enable this, specify `"."` as your `homepage` setting in `package.json`. It used to be possible before with a few known bugs, but they should be fixed now. See [Serving the Same Build from Different Paths](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#serving-the-same-build-from-different-paths).
 
   * [#937](https://github.com/facebookincubator/create-react-app/pull/1504) Add `PUBLIC_URL` environment variable for advanced use. ([@EnoahNetzach](https://github.com/EnoahNetzach))
-  
+
     If you use a CDN to serve the app, you can now specify `PUBLIC_URL` environment variable to override the base URL (including the hostname) for resources referenced from the built code. This new variable is mentioned in the new [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) section.
 
   * [#1440](https://github.com/facebookincubator/create-react-app/pull/1440) Make all `REACT_APP_*` environment variables accessible in `index.html`. ([@jihchi](https://github.com/jihchi))
-  
+
     This makes all environment variables previously available in JS, also available in the HTML file, for example `%REACT_APP_MY_VARIABLE%`. See [Referencing Environment Variables in HTML](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#referencing-environment-variables-in-the-html).
 
 * `react-dev-utils`
 
   * [#1148](https://github.com/facebookincubator/create-react-app/pull/1148) Configure which browser to open with `npm start`. ([@GAumala](https://github.com/GAumala))
-  
+
     You can now disable the automatic browser launching by setting the `BROWSER` environment variable to `none`. You can also specify a different browser (or an arbitrary script) to open by default, [as supported by `opn` command](https://github.com/sindresorhus/opn#app) that we use under the hood. See [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration).
-  
+
 #### :boom: Breaking Change
 
 * `react-scripts`
@@ -31,7 +155,7 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
   * [#1522](https://github.com/facebookincubator/create-react-app/pull/1522) Upgrade dependencies. ([@Timer](https://github.com/Timer))
   * [#1432](https://github.com/facebookincubator/create-react-app/pull/1432) Bump Jest version. ([@gaearon](https://github.com/gaearon))
   * [#1311](https://github.com/facebookincubator/create-react-app/pull/1311) Updated `babel-jest` and `jest` packages to 18.0.0. ([@lopezator](https://github.com/lopezator))
-  
+
     Jest has been updated to 18 and has introduced some [breaking changes and new features](https://facebook.github.io/jest/blog/2016/12/15/2016-in-jest.html).
 
 * `react-scripts`, `react-dev-utils`
@@ -45,7 +169,7 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 * `react-scripts`
 
   * [#1441](https://github.com/facebookincubator/create-react-app/pull/1441) Added `babel-runtime` dependency to deduplicate dependencies when using Yarn. ([@jkimbo](https://github.com/jkimbo))
-  
+
     This works around a bug in Yarn that caused newly created projects to be over 400MB. Now they are down to 126MB, just like with npm 3.
 
   * [#1522](https://github.com/facebookincubator/create-react-app/pull/1522) Upgrade dependencies. ([@Timer](https://github.com/Timer))
@@ -110,7 +234,7 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
   * [#1463](https://github.com/facebookincubator/create-react-app/pull/1463) Minor code style and wrong expect. ([@tuchk4](https://github.com/tuchk4))
   * [#1470](https://github.com/facebookincubator/create-react-app/pull/1470) E2e jsdom fix. ([@EnoahNetzach](https://github.com/EnoahNetzach))
   * [#1187](https://github.com/facebookincubator/create-react-app/pull/1187) Use a more sophisticated template for end-to-end testing.. ([@EnoahNetzach](https://github.com/EnoahNetzach))
-  
+
 * Other
 
   * [#1289](https://github.com/facebookincubator/create-react-app/pull/1289) Remove path-exists from dependencies and replace it with fs.existsSync. ([@halfzebra](https://github.com/halfzebra))
@@ -197,60 +321,60 @@ npm install -g create-react-app@1.0.3
 * `react-scripts`
 
   * [#1233](https://github.com/facebookincubator/create-react-app/pull/1233) Disable subresource integrity temporarily. ([@Timer](https://github.com/Timer))
-  
+
     We added [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) checks to the build output in 0.8.2 but it turns out that they may fail in browsers using special compression proxies, such as Chrome on Android, when served over HTTP. We disabled the checks until we can find a safe way to add them.
-  
+
 * `react-dev-utils`
 
   * [#1226](https://github.com/facebookincubator/create-react-app/pull/1226) Fix weird lint output. ([@n3tr](https://github.com/n3tr))
-  
+
     Fixes strange lint message formatting in some edge cases.
-  
+
   * [#1215](https://github.com/facebookincubator/create-react-app/pull/1215) Fix - openChrome won't open default browser (using Canary). ([@n3tr](https://github.com/n3tr))
-  
+
     Fixes a regression that caused stable Google Chrome to be opened even if you are using Canary as the default browser.
-  
+
 * `create-react-app`
 
   * [#1223](https://github.com/facebookincubator/create-react-app/pull/1223) Clean up Yarn detection and install code. ([@fson](https://github.com/fson))
-  
+
   Fixes noisy output on Windows when Yarn is not installed.
 
   * [#1224](https://github.com/facebookincubator/create-react-app/pull/1224) Exit with an error code when npm/yarn install fails. ([@fson](https://github.com/fson))
-  
+
 #### :nail_care: Enhancement
 * `react-scripts`
 
   * [#1237](https://github.com/facebookincubator/create-react-app/pull/1237) Clear scrollback in test mode. ([@gaearon](https://github.com/gaearon))
-  
+
     Ensures test watcher clears the console before running.
-  
+
   * [#1229](https://github.com/facebookincubator/create-react-app/pull/1229) Disable jest watch mode when --coverage flag is present [#1207]. ([@BenoitAverty](https://github.com/BenoitAverty))
-    
+
     Since coverage doesn't work well with watch mode, we don’t run the watcher on `npm test -- --coverage` anymore.
-  
+
   * [#1212](https://github.com/facebookincubator/create-react-app/pull/1212) Proxy rewrites Origin header to match the target server URL. ([@koles](https://github.com/koles))
-  
+
     Makes sure more API endpoints can work with the `proxy` setting.
-  
+
   * [#1222](https://github.com/facebookincubator/create-react-app/pull/1222) Disable gh-page setup instruction if scripts.deploy has been added. ([@n3tr](https://github.com/n3tr))
-  
+
     Suppresses the instructions printed at the end of `npm run build` if `npm run deploy` already exists.
 
 * `create-react-app`
 
   * [#1236](https://github.com/facebookincubator/create-react-app/pull/1236) Tweak console messages. ([@gaearon](https://github.com/gaearon))
-  
+
     Makes error messages more friendly.
-  
+
   * [#1195](https://github.com/facebookincubator/create-react-app/pull/1195) Use "commander" for  cli argv handling. ([@EnoahNetzach](https://github.com/EnoahNetzach))
-  
+
     Adds `create-react-app --help` with a list of options.
 
 * `react-dev-utils`
 
   * [#1211](https://github.com/facebookincubator/create-react-app/pull/1211) Use a better clear console sequence. ([@gaearon](https://github.com/gaearon))
-  
+
     Ensures the development server clears the terminal when files are changed.
 
 #### :memo: Documentation
@@ -300,14 +424,14 @@ npm install -g create-react-app@1.0.2
   * [#1204](https://github.com/facebookincubator/create-react-app/pull/1204) Catch synchronous errors from spawning yarn. ([@gaearon](https://github.com/gaearon))
 
     Fixes a crash when running `create-react-app` in some cases.
-  
+
 * `react-scripts`
   * [#1203](https://github.com/facebookincubator/create-react-app/pull/1203) Update webpack-subresource-integrity to fix Windows builds. ([@gaearon](https://github.com/gaearon))
-    
+
     Fixes a crash when running `npm run build` on Windows.
-  
+
   * [#1201](https://github.com/facebookincubator/create-react-app/pull/1201) Instruct Jest to load native components from RNW instead of RN. ([@remon-georgy](https://github.com/remon-georgy))
-  
+
     Fixes tests for users of React Native Web.
 
 #### :memo: Documentation
