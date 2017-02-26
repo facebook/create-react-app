@@ -1,5 +1,7 @@
 ## 0.9.1 (February 25, 2017)
 
+### Note: There is a known issue with [`npm test` failing on Windows](https://github.com/facebookincubator/create-react-app/issues/1645). We’re looking into it.
+
 #### :nail_care: Enhancement
 
 * `create-react-app`
