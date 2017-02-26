@@ -104,8 +104,10 @@ module.exports = {
   resolveLoader: {
     modules: [
       paths.ownNodeModules,
+      // @remove-on-eject-begin
       // Lerna hoists everything, so we need to look in our app directory
-      paths.appNodeModules
+      paths.appNodeModules,
+      // @remove-on-eject-end
     ]
   },
   // @remove-on-eject-end
