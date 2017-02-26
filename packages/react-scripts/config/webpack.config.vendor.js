@@ -9,9 +9,14 @@ var getClientEnvironment = require('./env');
 var publicPath = paths.servedPath;
 var publicUrl = publicPath.slice(0, -1);
 var env = getClientEnvironment(publicUrl);
-// @remove-on-publish-begin
-dependencies = packageJson.devDependencies;
-// @remove-on-publish-end
+var fs = require('fs')
+var reactScriptsPath = path.resolve('node_modules/react-scripts');
+var reactScriptsLinked = fs.existsSync(reactScriptsPath) && fs.lstatSync(reactScriptsPath).isSymbolicLink();
+
+// config before publish: we're in ./packages/react-scripts/config/
+if (!reactScriptsLinked && __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
+  dependencies = packageJson.devDependencies;
+}
 
 module.exports = {
   entry: {
