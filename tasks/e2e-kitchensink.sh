@@ -21,8 +21,10 @@ temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 
 function cleanup {
   echo 'Cleaning up.'
+  ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -s 9
   cd $root_path
-  rm -rf $temp_cli_path $temp_app_path
+  # TODO: fix "Device or resource busy" and remove ``|| $CI`
+  rm -rf $temp_cli_path $temp_app_path || $CI
 }
 
 # Error messages are redirected to stderr
@@ -143,12 +145,19 @@ PORT=3001 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   nohup npm start &>$tmp_server_log &
-grep -q 'The app is running at:' <(tail -f $tmp_server_log)
+while true
+do
+  if grep -q 'The app is running at:' $tmp_server_log; then
+    break
+  else
+    sleep 1
+  fi
+done
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
-  node node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
@@ -200,7 +209,14 @@ PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   nohup npm start &>$tmp_server_log &
-grep -q 'The app is running at:' <(tail -f $tmp_server_log)
+while true
+do
+  if grep -q 'The app is running at:' $tmp_server_log; then
+    break
+  else
+    sleep 1
+  fi
+done
 E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \

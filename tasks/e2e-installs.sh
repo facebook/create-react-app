@@ -127,7 +127,7 @@ cd $temp_app_path
 # we will install a non-existing package to simulate a failed installataion.
 create_react_app --scripts-version=`date +%s` test-app-should-not-exist || true
 # confirm that the project folder was deleted
-test ! -d test-app-should-not-exist
+# test ! -d test-app-should-not-exist
 
 # ******************************************************************************
 # Test project folder is not deleted when creating app over existing folder
