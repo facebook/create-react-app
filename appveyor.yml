@@ -1,0 +1,42 @@
+environment:
+  matrix:
+    - nodejs_version: 6
+      test_suite: "simple"
+    - nodejs_version: 6
+      test_suite: "installs"
+    - nodejs_version: 6
+      test_suite: "kitchensink"
+    - nodejs_version: 4
+      test_suite: "simple"
+    - nodejs_version: 4
+      test_suite: "installs"
+    - nodejs_version: 4
+      test_suite: "kitchensink"
+    - nodejs_version: 0.10
+      test_suite: "simple"
+
+cache:
+  - node_modules
+  - packages\react-scripts\node_modules
+
+clone_depth: 50
+
+branches:
+  only:
+  - master
+
+matrix:
+  fast_finish: true
+
+platform:
+  - x64
+
+install:
+  - ps: Install-Product node $env:nodejs_version $env:platform
+
+build: off
+
+test_script:
+  - node --version
+  - npm --version
+  - sh tasks/e2e-%test_suite%.sh
