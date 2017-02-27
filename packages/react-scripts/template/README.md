@@ -156,6 +156,9 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.<br>
 See the section about [running tests](#running-tests) for more information.
 
+You can add your own test configuration by specifying a json file using '--overrideConfig'.
+This will also override existing react-scripts configuration.
+
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br>

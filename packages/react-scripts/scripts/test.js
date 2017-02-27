@@ -20,6 +20,7 @@ require('dotenv').config({silent: true});
 
 const jest = require('jest');
 const argv = process.argv.slice(2);
+const overrideArg = (process.argv.filter((i) => i.match('--overrideConfig')) || [])[0];
 
 // Watch unless on CI or in coverage mode
 if (!process.env.CI && argv.indexOf('--coverage') < 0) {
@@ -31,10 +32,19 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
 const createJestConfig = require('../utils/createJestConfig');
 const path = require('path');
 const paths = require('../config/paths');
+
+let overrideConfig;
+if ( overrideArg ) {
+  const parts = overrideArg.split('=');
+  overrideConfig = require(path.resolve(paths.appSrc, '..', parts[1]));
+  console.log('config is', overrideConfig.transformIgnorePatterns);
+}
+
 argv.push('--config', JSON.stringify(createJestConfig(
   relativePath => path.resolve(__dirname, '..', relativePath),
   path.resolve(paths.appSrc, '..'),
-  false
+  false,
+  overrideConfig
 )));
 // @remove-on-eject-end
 jest.run(argv);
