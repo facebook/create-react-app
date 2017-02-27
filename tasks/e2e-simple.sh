@@ -71,6 +71,11 @@ grep -v "lerna bootstrap" package.json > temp && mv temp package.json
 npm install
 mv package.json.bak package.json
 
+# We need to install create-react-app deps to test it
+cd "$root_path"/packages/create-react-app
+npm install
+cd "$root_path"
+
 # If the node version is < 4, the script should just give an error.
 if [[ `node --version | sed -e 's/^v//' -e 's/\..*//g'` -lt 4 ]]
 then
