@@ -326,21 +326,26 @@ function checkAppName(appName) {
   }
 }
 
-function patchReactDependencyVersion(name, version) {
+function makeCaretRange(dependencies, name) {
+  var version = dependencies[name];
+
   if (typeof version === 'undefined') {
     console.error(
       chalk.red('Missing ' + name + ' dependency in package.json')
     );
     process.exit(1);
   }
+
   var patchedVersion = '^' + version;
+
   if (!semver.validRange(patchedVersion)) {
     console.error(
       'Unable to patch ' + name + ' dependency version because version ' + chalk.red(version) + ' will become invalid ' + chalk.red(patchedVersion)
     );
     patchedVersion = version;
   }
-  return patchedVersion;
+
+  dependencies[name] = patchedVersion;
 }
 
 function fixDependencies(packageName) {
@@ -367,8 +372,8 @@ function fixDependencies(packageName) {
   packageJson.devDependencies[packageName] = packageVersion;
   delete packageJson.dependencies[packageName];
 
-  packageJson.dependencies['react'] = patchReactDependencyVersion('react', packageJson.dependencies['react']);
-  packageJson.dependencies['react-dom'] = patchReactDependencyVersion('react-dom', packageJson.dependencies['react-dom']);
+  makeCaretRange(packageJson.dependencies, 'react');
+  makeCaretRange(packageJson.dependencies, 'react-dom');
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }
