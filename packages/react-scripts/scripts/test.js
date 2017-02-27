@@ -33,11 +33,9 @@ const createJestConfig = require('../utils/createJestConfig');
 const path = require('path');
 const paths = require('../config/paths');
 
-let overrideConfig;
+var overrideConfig;
 if ( overrideArg ) {
-  const parts = overrideArg.split('=');
-  overrideConfig = require(path.resolve(paths.appSrc, '..', parts[1]));
-  console.log('config is', overrideConfig.transformIgnorePatterns);
+  overrideConfig = require(path.resolve(paths.appSrc, '..', overrideArg.split('=')[1] ));
 }
 
 argv.push('--config', JSON.stringify(createJestConfig(
