@@ -18,6 +18,7 @@ var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
+var buildPath = process.env.npm_config_buildPath || process.env.npm_package_config_buildPath || paths.appBuild;
 
 // @remove-on-eject-begin
 // `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
@@ -71,7 +72,7 @@ module.exports = {
   ],
   output: {
     // The build folder.
-    path: paths.appBuild,
+    path: buildPath,
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.

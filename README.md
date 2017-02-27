@@ -92,6 +92,17 @@ By default, runs tests related to files changes since the last commit.
 ### `npm run build` or `yarn build`
 
 Builds the app for production to the `build` folder.<br>
+Now you can also specify the build path using following ways:
+
+1. npm run build --buildPath=specify_full_path
+2. Inside package.json add config as bellow
+```
+"config" : {
+  "buildPath": "specify_full_path"
+ }
+```
+*Note: Priority 1st, 2nd and default*
+
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br>
