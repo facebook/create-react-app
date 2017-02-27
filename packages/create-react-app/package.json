@@ -24,6 +24,7 @@
     "commander": "^2.9.0",
     "cross-spawn": "^4.0.0",
     "fs-extra": "^1.0.0",
-    "semver": "^5.0.3"
+    "semver": "^5.0.3",
+    "validate-npm-package-name": "^3.0.0"
   }
 }
