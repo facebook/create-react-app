@@ -59,6 +59,7 @@ var path = require('path');
 var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
 var semver = require('semver');
+var dns = require('dns');
 
 var projectName;
 
@@ -154,25 +155,44 @@ function shouldUseYarn() {
   }
 }
 
-function install(dependencies, verbose, callback) {
-  var command;
-  var args;
-  if (shouldUseYarn()) {
-    command = 'yarnpkg';
-    args = [ 'add', '--exact'].concat(dependencies);
-  } else {
-    checkNpmVersion();
-    command = 'npm';
-    args = ['install', '--save', '--save-exact'].concat(dependencies);
-  }
+function install(useYarn, dependencies, verbose, isOnline) {
+  return new Promise(function(resolve, reject) {
+    var command;
+    var args;
+    if (useYarn) {
+      command = 'yarnpkg';
+      args = [
+        'add',
+        '--exact',
+        isOnline === false && '--offline'
+      ].concat(dependencies);
 
-  if (verbose) {
-    args.push('--verbose');
-  }
+      if (!isOnline) {
+        console.log(chalk.yellow('You appear to be offline.'));
+        console.log(chalk.yellow('Falling back to the local Yarn cache.'));
+        console.log();
+      }
 
-  var child = spawn(command, args, {stdio: 'inherit'});
-  child.on('close', function(code) {
-    callback(code, command, args);
+    } else {
+      checkNpmVersion();
+      command = 'npm';
+      args = ['install', '--save', '--save-exact'].concat(dependencies);
+    }
+
+    if (verbose) {
+      args.push('--verbose');
+    }
+
+    var child = spawn(command, args, {stdio: 'inherit'});
+    child.on('close', function(code) {
+      if (code !== 0) {
+        reject({
+          command: command + ' ' + args.join(' ')
+        });
+        return;
+      }
+      resolve();
+    });
   });
 }
 
@@ -188,11 +208,38 @@ function run(root, appName, version, verbose, originalDirectory, template) {
     ', and ' + chalk.cyan(packageName) + '...'
   );
   console.log();
+  
+  var useYarn = shouldUseYarn();
+  checkIfOnline(useYarn)
+    .then(function(isOnline) {
+      return install(useYarn, allDependencies, verbose, isOnline);
+    })
+    .then(function() {
+      checkNodeVersion(packageName);
 
-  install(allDependencies, verbose, function(code, command, args) {
-    if (code !== 0) {
+      // Since react-scripts has been installed with --save
+      // we need to move it into devDependencies and rewrite package.json
+      // also ensure react dependencies have caret version range
+      fixDependencies(packageName);
+
+      var scriptsPath = path.resolve(
+        process.cwd(),
+        'node_modules',
+        packageName,
+        'scripts',
+        'init.js'
+      );
+      var init = require(scriptsPath);
+      init(root, appName, verbose, originalDirectory, template);
+    })
+    .catch(function(reason) {
       console.log();
-      console.error('Aborting installation.', chalk.cyan(command + ' ' + args.join(' ')), 'has failed.');
+      console.log('Aborting installation.');
+      if (reason.command) {
+        console.log('  ' + chalk.cyan(reason.command), 'has failed.')
+      }
+      console.log();
+
       // On 'exit' we will delete these files from target directory.
       var knownGeneratedFiles = [
         'package.json', 'npm-debug.log', 'yarn-error.log', 'yarn-debug.log', 'node_modules'
@@ -217,25 +264,7 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       }
       console.log('Done.');
       process.exit(1);
-    }
-
-    checkNodeVersion(packageName);
-
-    // Since react-scripts has been installed with --save
-    // we need to move it into devDependencies and rewrite package.json
-    // also ensure react dependencies have caret version range
-    fixDependencies(packageName);
-
-    var scriptsPath = path.resolve(
-      process.cwd(),
-      'node_modules',
-      packageName,
-      'scripts',
-      'init.js'
-    );
-    var init = require(scriptsPath);
-    init(root, appName, verbose, originalDirectory, template);
-  });
+    });
 }
 
 function getInstallPackage(version) {
@@ -406,4 +435,18 @@ function isSafeToCreateProjectIn(root) {
     .every(function(file) {
       return validFiles.indexOf(file) >= 0;
     });
+}
+
+function checkIfOnline(useYarn) {
+  if (!useYarn) {
+    // Don't ping the Yarn registry.
+    // We'll just assume the best case.
+    return Promise.resolve(true);
+  }
+  
+  return new Promise(function(resolve) {
+    dns.resolve('registry.yarnpkg.com', function(err) {
+      resolve(err === null);
+    });
+  });
 }
