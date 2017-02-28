@@ -155,11 +155,11 @@ function shouldUseYarn() {
   }
 }
 
-function install(dependencies, verbose, isOnline) {
+function install(useYarn, dependencies, verbose, isOnline) {
   return new Promise(function(resolve, reject) {
     var command;
     var args;
-    if (shouldUseYarn()) {
+    if (useYarn) {
       command = 'yarnpkg';
       args = [
         'add',
@@ -201,10 +201,11 @@ function run(root, appName, version, verbose, originalDirectory, template) {
     ', and ' + chalk.cyan(packageName) + '...'
   );
   console.log();
-
-  checkIfOnline()
+  
+  var useYarn = shouldUseYarn();
+  checkIfOnline(useYarn)
     .then(function(isOnline) {
-      return install(allDependencies, verbose, isOnline);
+      return install(useYarn, allDependencies, verbose, isOnline);
     })
     .then(function() {
       checkNodeVersion(packageName);
@@ -422,7 +423,13 @@ function isSafeToCreateProjectIn(root) {
     });
 }
 
-function checkIfOnline() {
+function checkIfOnline(useYarn) {
+  if (!useYarn) {
+    // Don't ping the Yarn registry.
+    // We'll just assume the best case.
+    return Promise.resolve(true);
+  }
+  
   return new Promise(function(resolve) {
     dns.resolve('registry.yarnpkg.com', function(err) {
       resolve(err === null);
