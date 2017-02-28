@@ -164,8 +164,11 @@ function install(useYarn, dependencies, verbose, isOnline) {
       args = [
         'add',
         '--exact',
-        isOnline === false && '--offline'
-      ].concat(dependencies);
+      ];
+      if (!isOnline) {
+        args.push('--offline');
+      }
+      [].push.apply(args, dependencies);
 
       if (!isOnline) {
         console.log(chalk.yellow('You appear to be offline.'));
