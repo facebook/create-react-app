@@ -166,6 +166,13 @@ function install(useYarn, dependencies, verbose, isOnline) {
         '--exact',
         isOnline === false && '--offline'
       ].concat(dependencies);
+
+      if (!isOnline) {
+        console.log(chalk.yellow('You appear to be offline.'));
+        console.log(chalk.yellow('Falling back to the local Yarn cache.'));
+        console.log();
+      }
+
     } else {
       checkNpmVersion();
       command = 'npm';
