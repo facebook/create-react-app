@@ -179,7 +179,9 @@ function install(useYarn, dependencies, verbose, isOnline) {
     var child = spawn(command, args, {stdio: 'inherit'});
     child.on('close', function(code) {
       if (code !== 0) {
-        reject();
+        reject({
+          command: command + ' ' + args.join(' ')
+        });
         return;
       }
       resolve();
@@ -223,9 +225,13 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       var init = require(scriptsPath);
       init(root, appName, verbose, originalDirectory, template);
     })
-    .catch(function() {
+    .catch(function(reason) {
       console.log();
-      console.error('Aborting installation.', chalk.cyan(command + ' ' + args.join(' ')), 'has failed.');
+      console.log('Aborting installation.');
+      if (reason.command) {
+        console.log('  ' + chalk.cyan(reason.command), 'has failed.')
+      }
+      console.log();
 
       // On 'exit' we will delete these files from target directory.
       var knownGeneratedFiles = [
