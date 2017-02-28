@@ -182,9 +182,9 @@ function install(dependencies, verbose, isOnline) {
         console.log();
         console.error('Aborting installation.', chalk.cyan(command + ' ' + args.join(' ')), 'has failed.');
         reject();
+        return;
       }
-
-      resolve(isOnline);
+      resolve();
     });
   });
 }
@@ -203,53 +203,53 @@ function run(root, appName, version, verbose, originalDirectory, template) {
   console.log();
 
   checkIfOnline()
-  .then(function(isOnline) {
-    return install(allDependencies, verbose, isOnline);
-  })
-  .then(function(isOnline) {
-    checkNodeVersion(packageName);
+    .then(function(isOnline) {
+      return install(allDependencies, verbose, isOnline);
+    })
+    .then(function() {
+      checkNodeVersion(packageName);
 
-    // Since react-scripts has been installed with --save
-    // we need to move it into devDependencies and rewrite package.json
-    // also ensure react dependencies have caret version range
-    fixDependencies(packageName);
+      // Since react-scripts has been installed with --save
+      // we need to move it into devDependencies and rewrite package.json
+      // also ensure react dependencies have caret version range
+      fixDependencies(packageName);
 
-    var scriptsPath = path.resolve(
-      process.cwd(),
-      'node_modules',
-      packageName,
-      'scripts',
-      'init.js'
-    );
-    var init = require(scriptsPath);
-    init(root, appName, verbose, originalDirectory, template, isOnline);
-  })
-  .catch(function(command, args) {
-    // On 'exit' we will delete these files from target directory.
-    var knownGeneratedFiles = [
-      'package.json', 'npm-debug.log', 'yarn-error.log', 'yarn-debug.log', 'node_modules'
-    ];
-    var currentFiles = fs.readdirSync(path.join(root));
-    currentFiles.forEach(function (file) {
-      knownGeneratedFiles.forEach(function (fileToMatch) {
-        // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
-        // and the rest of knownGeneratedFiles.
-        if ((fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) || file === fileToMatch) {
-          console.log('Deleting generated file...', chalk.cyan(file));
-          fs.removeSync(path.join(root, file));
-        }
+      var scriptsPath = path.resolve(
+        process.cwd(),
+        'node_modules',
+        packageName,
+        'scripts',
+        'init.js'
+      );
+      var init = require(scriptsPath);
+      init(root, appName, verbose, originalDirectory, template);
+    })
+    .catch(function(command, args) {
+      // On 'exit' we will delete these files from target directory.
+      var knownGeneratedFiles = [
+        'package.json', 'npm-debug.log', 'yarn-error.log', 'yarn-debug.log', 'node_modules'
+      ];
+      var currentFiles = fs.readdirSync(path.join(root));
+      currentFiles.forEach(function (file) {
+        knownGeneratedFiles.forEach(function (fileToMatch) {
+          // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
+          // and the rest of knownGeneratedFiles.
+          if ((fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) || file === fileToMatch) {
+            console.log('Deleting generated file...', chalk.cyan(file));
+            fs.removeSync(path.join(root, file));
+          }
+        });
       });
+      var remainingFiles = fs.readdirSync(path.join(root));
+      if (!remainingFiles.length) {
+        // Delete target folder if empty
+        console.log('Deleting', chalk.cyan(appName + '/'), 'from', chalk.cyan(path.resolve(root, '..')));
+        process.chdir(path.resolve(root, '..'));
+        fs.removeSync(path.join(root));
+      }
+      console.log('Done.');
+      process.exit(1);
     });
-    var remainingFiles = fs.readdirSync(path.join(root));
-    if (!remainingFiles.length) {
-      // Delete target folder if empty
-      console.log('Deleting', chalk.cyan(appName + '/'), 'from', chalk.cyan(path.resolve(root, '..')));
-      process.chdir(path.resolve(root, '..'));
-      fs.removeSync(path.join(root));
-    }
-    console.log('Done.');
-    process.exit(1);
-  });
 }
 
 function getInstallPackage(version) {
