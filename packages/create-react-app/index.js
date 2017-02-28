@@ -212,8 +212,9 @@ function run(root, appName, version, verbose, originalDirectory, template) {
     checkNodeVersion(packageName);
 
     // Since react-scripts has been installed with --save
-    // We need to move it into devDependencies and rewrite package.json
-    moveReactScriptsToDev(packageName);
+    // we need to move it into devDependencies and rewrite package.json
+    // also ensure react dependencies have caret version range
+    fixDependencies(packageName);
 
     var scriptsPath = path.resolve(
       process.cwd(),
@@ -325,7 +326,29 @@ function checkAppName(appName) {
   }
 }
 
-function moveReactScriptsToDev(packageName) {
+function makeCaretRange(dependencies, name) {
+  var version = dependencies[name];
+
+  if (typeof version === 'undefined') {
+    console.error(
+      chalk.red('Missing ' + name + ' dependency in package.json')
+    );
+    process.exit(1);
+  }
+
+  var patchedVersion = '^' + version;
+
+  if (!semver.validRange(patchedVersion)) {
+    console.error(
+      'Unable to patch ' + name + ' dependency version because version ' + chalk.red(version) + ' will become invalid ' + chalk.red(patchedVersion)
+    );
+    patchedVersion = version;
+  }
+
+  dependencies[name] = patchedVersion;
+}
+
+function fixDependencies(packageName) {
   var packagePath = path.join(process.cwd(), 'package.json');
   var packageJson = require(packagePath);
 
@@ -348,6 +371,9 @@ function moveReactScriptsToDev(packageName) {
   packageJson.devDependencies = packageJson.devDependencies || {};
   packageJson.devDependencies[packageName] = packageVersion;
   delete packageJson.dependencies[packageName];
+
+  makeCaretRange(packageJson.dependencies, 'react');
+  makeCaretRange(packageJson.dependencies, 'react-dom');
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }
