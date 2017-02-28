@@ -114,14 +114,13 @@ module.exports = {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
         use: [{
+          // @remove-on-eject-begin
+          // Point ESLint to our predefined config.
           options: {
-            // @remove-on-eject-begin
-            // Point ESLint to our predefined config.
             configFile: path.join(__dirname, '../.eslintrc'),
-            useEslintrc: false,
-            // @remove-on-eject-end
-            cache: true
+            useEslintrc: false
           },
+          // @remove-on-eject-end
           loader: 'eslint-loader'
         }],
         include: paths.appSrc
