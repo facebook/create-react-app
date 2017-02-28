@@ -39,6 +39,7 @@
 'use strict';
 
 var chalk = require('chalk');
+var validateProjectName = require("validate-npm-package-name");
 
 var currentNodeVersion = process.versions.node;
 if (currentNodeVersion.split('.')[0] < 4) {
@@ -95,6 +96,14 @@ if (typeof projectName === 'undefined') {
   console.log();
   console.log('Run ' + chalk.cyan(program.name() + ' --help') + ' to see all options.');
   process.exit(1);
+}
+
+function printValidationResults(results) {
+  if (typeof results !== 'undefined') {
+    results.forEach(function (error) {
+      console.error(chalk.red('  * ' + error));
+    });
+  }
 }
 
 var hiddenProgram = new commander.Command()
@@ -304,11 +313,18 @@ function checkNodeVersion(packageName) {
 }
 
 function checkAppName(appName) {
+  var validationResult = validateProjectName(appName);
+  if (!validationResult.validForNewPackages) {
+    console.error('Could not create a project called ' + chalk.red('"' + appName + '"') + ' because of npm naming restrictions:');
+    printValidationResults(validationResult.errors);
+    printValidationResults(validationResult.warnings);
+    process.exit(1);
+  }
+  
   // TODO: there should be a single place that holds the dependencies
   var dependencies = ['react', 'react-dom'];
   var devDependencies = ['react-scripts'];
   var allDependencies = dependencies.concat(devDependencies).sort();
-
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
