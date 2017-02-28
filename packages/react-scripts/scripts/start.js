@@ -30,8 +30,8 @@ var getProcessForPort = require('react-dev-utils/getProcessForPort');
 var openBrowser = require('react-dev-utils/openBrowser');
 var prompt = require('react-dev-utils/prompt');
 var fs = require('fs');
-var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+var bundleVendorIfStale = require('../utils/bundleVendorIfStale')
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
@@ -41,7 +41,8 @@ var isInteractive = process.stdout.isTTY;
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
-
+bundleVendorIfStale(()=>{
+var config = require('../config/webpack.config.dev');
 // Tools like Cloud9 rely on this.
 var DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 var compiler;
@@ -334,3 +335,4 @@ detect(DEFAULT_PORT).then(port => {
     console.log(chalk.red('Something is already running on port ' + DEFAULT_PORT + '.'));
   }
 });
+})

@@ -3,36 +3,23 @@ var paths = require('../config/paths');
 var path = require('path');
 var packageJson = require(paths.appPackageJson);
 var environment = process.env.NODE_ENV;
-var vendorManifestId = require('../utils/vendorManifestId');
+var vendorHash = require('../utils/vendorHash');
 var dependencies = packageJson.dependencies;
 var getClientEnvironment = require('./env');
 var publicPath = paths.servedPath;
 var publicUrl = publicPath.slice(0, -1);
 var env = getClientEnvironment(publicUrl);
 var fs = require('fs');
-var reactScriptsPath = path.resolve('node_modules/react-scripts');
-var reactScriptsLinked = fs.existsSync(reactScriptsPath) &&
-  fs.lstatSync(reactScriptsPath).isSymbolicLink();
-
-// config before publish: we're in ./packages/react-scripts/config/
-if (
-  !reactScriptsLinked &&
-  __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
-) {
-  dependencies = packageJson.devDependencies;
-}
-
-console.log('Current dependencies :');
-Object.keys(dependencies).forEach(dependency => console.log(dependency));
-
+var vendorGlobalName = '[name]' + vendorHash.replace(/\./g,'')
 module.exports = {
+  cache: true,
   entry: {
-    vendor: Object.keys(dependencies)
+    vendor: [paths.vendorPath]
   },
   output: {
-    filename: '[name].' + vendorManifestId + '.js',
+    filename: vendorHash + '.js',
     path: paths.vendorPath,
-    library: '[name]_' + vendorManifestId
+    library: vendorGlobalName
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -70,12 +57,12 @@ module.exports = {
       // within that bundle
       path: path.join(
         paths.vendorPath,
-        'manifest.' + vendorManifestId + '.json'
+        vendorHash + '.json'
       ),
       // The name of the global variable which the library's
       // require function has been assigned to. This must match the
       // output.library option above
-      name: '[name]_' + vendorManifestId
+      name: vendorGlobalName
     }),
     environment === 'production'
       ? new webpack.DefinePlugin(env.stringified)
