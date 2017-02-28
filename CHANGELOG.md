@@ -1,3 +1,46 @@
+## 0.9.3 (February 28, 2017)
+
+#### :rocket: New Feature
+* `create-react-app`
+  * [#1423](https://github.com/facebookincubator/create-react-app/pull/1423) **Fall back to Yarn offline cache when creating a new project.** ([@voxsim](https://github.com/voxsim))
+  
+  If you are using Yarn, and you have created at least one app previously, Create React App now works offline.
+  
+  <img src="http://i.imgur.com/1FLa9Tg.gif" width="500" alt="Yarn offline installation demo">
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#1665](https://github.com/facebookincubator/create-react-app/pull/1665) Temporarily disable ESLint caching because of a bug. ([@gaearon](https://github.com/gaearon))
+
+* `create-react-app`
+  * [#1675](https://github.com/facebookincubator/create-react-app/pull/1675) Delete project folder on failed installation on Windows. ([@johann-sonntagbauer](https://github.com/johann-sonntagbauer))
+  * [#1662](https://github.com/facebookincubator/create-react-app/pull/1662) Validate project name before creating a project. ([@johann-sonntagbauer](https://github.com/johann-sonntagbauer))
+  * [#1669](https://github.com/facebookincubator/create-react-app/pull/1669) Make sure React dependencies aren’t pinned in new projects. ([@johann-sonntagbauer](https://github.com/johann-sonntagbauer))
+
+#### :nail_care: Enhancement
+* `react-scripts`
+
+  * [#1677](https://github.com/facebookincubator/create-react-app/pull/1677) Add `X-FORWARDED` headers for proxy requests. ([@johann-sonntagbauer](https://github.com/johann-sonntagbauer))
+
+#### :memo: Documentation
+* `react-scripts`
+
+  * [#1657](https://github.com/facebookincubator/create-react-app/pull/1657) Tweak the Visual Studio Code debugging guide. ([@ryansully](https://github.com/ryansully))
+
+#### :house: Internal
+* End-to-end Tests
+
+  * [#1648](https://github.com/facebookincubator/create-react-app/pull/1648) Add Windows CI tests for better stability. ([@Timer](https://github.com/Timer))
+
+#### Committers: 5
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Johann Hubert Sonntagbauer ([johann-sonntagbauer](https://github.com/johann-sonntagbauer))
+- Ryan Sullivan ([ryansully](https://github.com/ryansully))
+- Simon Vocella ([voxsim](https://github.com/voxsim))
+
 ## 0.9.2 (February 26, 2017)
 
 #### :nail_care: Enhancement
