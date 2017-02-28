@@ -101,7 +101,7 @@ if (typeof projectName === 'undefined') {
 function printValidationResults(results) {
   if (typeof results !== 'undefined') {
     results.forEach(function (error) {
-      console.error('  ' + error);
+      console.error(chalk.red('  * ' + error));
     });
   }
 }
@@ -312,19 +312,18 @@ function checkNodeVersion(packageName) {
 }
 
 function checkAppName(appName) {
-  // TODO: there should be a single place that holds the dependencies
-  var dependencies = ['react', 'react-dom'];
-  var devDependencies = ['react-scripts'];
-  var allDependencies = dependencies.concat(devDependencies).sort();
-
   var validationResult = validateProjectName(appName);
   if (!validationResult.validForNewPackages) {
-    console.error('We cannot create a project called ' + chalk.green(appName) + ' because the name does not match npm naming restrictions:');
+    console.error('Could not create a project called ' + chalk.red('"' + appName + '"') + ' because of npm naming restrictions:');
     printValidationResults(validationResult.errors);
     printValidationResults(validationResult.warnings);
     process.exit(1);
   }
-
+  
+  // TODO: there should be a single place that holds the dependencies
+  var dependencies = ['react', 'react-dom'];
+  var devDependencies = ['react-scripts'];
+  var allDependencies = dependencies.concat(devDependencies).sort();
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
