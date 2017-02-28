@@ -12,8 +12,6 @@ environment:
       test_suite: "installs"
     - nodejs_version: 4
       test_suite: "kitchensink"
-    - nodejs_version: 0.10
-      test_suite: "simple"
 
 cache:
   - node_modules
