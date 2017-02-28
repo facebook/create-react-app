@@ -163,9 +163,13 @@ function install(useYarn, dependencies, verbose, isOnline) {
       command = 'yarnpkg';
       args = [
         'add',
-        '--exact',
-        isOnline === false && '--offline'
-      ].concat(dependencies);
+        '--exact'
+      ];
+
+      if (isOnline === false)
+        args.append('--offline');
+
+      args = args.concat(dependencies);
 
       if (!isOnline) {
         console.log(chalk.yellow('You appear to be offline.'));
