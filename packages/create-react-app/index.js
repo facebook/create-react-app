@@ -179,8 +179,6 @@ function install(useYarn, dependencies, verbose, isOnline) {
     var child = spawn(command, args, {stdio: 'inherit'});
     child.on('close', function(code) {
       if (code !== 0) {
-        console.log();
-        console.error('Aborting installation.', chalk.cyan(command + ' ' + args.join(' ')), 'has failed.');
         reject();
         return;
       }
@@ -226,6 +224,9 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       init(root, appName, verbose, originalDirectory, template);
     })
     .catch(function() {
+      console.log();
+      console.error('Aborting installation.', chalk.cyan(command + ' ' + args.join(' ')), 'has failed.');
+
       // On 'exit' we will delete these files from target directory.
       var knownGeneratedFiles = [
         'package.json', 'npm-debug.log', 'yarn-error.log', 'yarn-debug.log', 'node_modules'
