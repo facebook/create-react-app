@@ -212,7 +212,8 @@ function addMiddleware(devServer) {
       onError: onProxyError(proxy),
       secure: false,
       changeOrigin: true,
-      ws: true
+      ws: true,
+      xfwd: true
     });
     devServer.use(mayProxy, hpm);
 
