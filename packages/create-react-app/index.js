@@ -225,7 +225,7 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       var init = require(scriptsPath);
       init(root, appName, verbose, originalDirectory, template);
     })
-    .catch(function(command, args) {
+    .catch(function() {
       // On 'exit' we will delete these files from target directory.
       var knownGeneratedFiles = [
         'package.json', 'npm-debug.log', 'yarn-error.log', 'yarn-debug.log', 'node_modules'
