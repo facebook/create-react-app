@@ -50,10 +50,16 @@ function openBrowser(url) {
     }
   }
 
+  // On OS X, check if BROWSER has been set to "open",
+  // and if so, do not pass it to the opn() options.
+  const isBrowserValid = !(
+    process.platform === 'darwin' && browser === 'open'
+  );
+
   // Fallback to opn
   // (It will always open new tab)
   try {
-    var options = {app: browser};
+    var options = {app: isBrowserValid? browser : ''};
     opn(url, options).catch(() => {}); // Prevent `unhandledRejection` error.
     return true;
   } catch (err) {
