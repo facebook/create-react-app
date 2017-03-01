@@ -19,10 +19,6 @@ cache:
 
 clone_depth: 50
 
-branches:
-  only:
-  - master
-
 matrix:
   fast_finish: true
 
