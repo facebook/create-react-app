@@ -11,16 +11,17 @@ var environment = process.env.NODE_ENV;
 var vendorHash = require("../utils/vendorHash");
 
 module.exports = (callback) => {
-  if (shouldManifestUpdate()) {
+  if (shouldVendorBundleUpdate()) {
     return fs.readdir(paths.vendorPath, (err, files) => {
       try {
+        // delete all stale vendor bundle for this environment
         files.filter(file => !file.indexOf(environment)).forEach(file => {
           fs.unlinkSync(path.join(paths.vendorPath, file));
         });
       } catch (e) {
       }
       var compiler = webpack(config);
-      console.log("Bundling vendor files for faster rebuilds...");
+      console.log("Compiling vendor bundle for faster rebuilds...");
       compiler.run((err, stats) => {
         if (err) {
           printErrors("Failed to compile.", [err]);
@@ -40,13 +41,12 @@ module.exports = (callback) => {
           process.exit(1);
         }
 
-        console.log(chalk.green("Vendor compiled successfully."));
+        console.log(chalk.green("Vendor bundle compiled successfully."));
         console.log();
         callback();
       });
     });
   }
-  console.log("Vendor file is up to date! No need to rebuild it");
   return callback();
 };
 
@@ -54,13 +54,13 @@ function manifestExists() {
   return fs.existsSync(path.join(paths.vendorPath, vendorHash + ".json"));
 }
 
-function shouldManifestUpdate() {
-  var isExists = manifestExists();
+function shouldVendorBundleUpdate() {
   clearConsole();
-  console.log("Using " + vendorHash + " vendor build");
-  if (!isExists) {
-    console.log("Vendor file needs to be created...");
-    return true;
+  console.log("Checking if " + vendorHash + " vendor bundle exists");
+  if (manifestExists()) {
+    console.log("Vendor bundle is up to date and safe to use!");
+    return false;
   }
-  return false;
+  console.log("Vendor bundle needs to be compiled...");
+  return true;
 }
