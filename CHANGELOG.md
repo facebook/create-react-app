@@ -52,7 +52,7 @@ npm install --save-dev --save-exact react-scripts@0.9.3
 You may also optionally update the global command-line utility for offline Yarn cache support:
 
 ```
-npm install -g create-react-app@1.2.0
+npm install -g create-react-app@1.2.1
 ```
 
 ## 0.9.2 (February 26, 2017)
