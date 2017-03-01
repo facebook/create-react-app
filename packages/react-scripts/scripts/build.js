@@ -86,7 +86,7 @@ bundleVendorIfStale(()=>{
     // Merge with the public folder
     copyPublicFolder();
   });
-}, true);
+});
 
 // Print a detailed summary of build files.
 function printFileSizes(stats, previousSizeMap) {

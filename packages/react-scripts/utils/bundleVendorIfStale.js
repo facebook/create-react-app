@@ -10,7 +10,7 @@ var printErrors = require("../utils/printErrors");
 var environment = process.env.NODE_ENV;
 var vendorHash = require("../utils/vendorHash");
 
-module.exports = (callback, args) => {
+module.exports = (callback) => {
   if (shouldManifestUpdate()) {
     // fs.emptyDirSync(paths.vendorPath);
     return fs.readdir(paths.vendorPath, (err, files) => {
