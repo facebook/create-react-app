@@ -63,19 +63,19 @@ function getDifferenceLabel(currentSize, previousSize) {
   }
 }
 
-bundleVendorIfStale(()=>{
-  // First, read the current file sizes in build directory.
-  // This lets us display how much they changed later.
-  recursive(paths.appBuild, (err, fileNames) => {
-    var previousSizeMap = (fileNames || [])
-      .filter(fileName => /\.(js|css)$/.test(fileName))
-      .reduce((memo, fileName) => {
-        var contents = fs.readFileSync(fileName);
-        var key = removeFileNameHash(fileName);
-        memo[key] = gzipSize(contents);
-        return memo;
-      }, {});
-
+// First, read the current file sizes in build directory.
+// This lets us display how much they changed later.
+recursive(paths.appBuild, (err, fileNames) => {
+  var previousSizeMap = (fileNames || [])
+    .filter(fileName => /\.(js|css)$/.test(fileName))
+    .reduce((memo, fileName) => {
+      var contents = fs.readFileSync(fileName);
+      var key = removeFileNameHash(fileName);
+      memo[key] = gzipSize(contents);
+      return memo;
+    }, {});
+  // Check if we should rebuild vendor files
+  bundleVendorIfStale(()=>{
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
     fs.emptyDirSync(paths.appBuild);

@@ -32,7 +32,7 @@ var prompt = require('react-dev-utils/prompt');
 var fs = require('fs');
 var paths = require('../config/paths');
 var bundleVendorIfStale = require('../utils/bundleVendorIfStale')
-
+var config // Will lazily initialize this in setupCompiler
 var useYarn = fs.existsSync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
 var isInteractive = process.stdout.isTTY;
@@ -41,8 +41,7 @@ var isInteractive = process.stdout.isTTY;
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
-bundleVendorIfStale(()=>{
-var config = require('../config/webpack.config.dev');
+
 // Tools like Cloud9 rely on this.
 var DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 var compiler;
@@ -62,6 +61,7 @@ if (isSmokeTest) {
 }
 
 function setupCompiler(host, port, protocol) {
+  config = require('../config/webpack.config.dev');
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   try {
@@ -304,10 +304,14 @@ function runDevServer(host, port, protocol) {
 }
 
 function run(port) {
-  var protocol = process.env.HTTPS === 'true' ? "https" : "http";
-  var host = process.env.HOST || 'localhost';
-  setupCompiler(host, port, protocol);
-  runDevServer(host, port, protocol);
+   // Check if we should rebuild our vendor files
+  bundleVendorIfStale(()=>{
+     // Run the compiler
+    var protocol = process.env.HTTPS === 'true' ? "https" : "http";
+    var host = process.env.HOST || 'localhost';
+    setupCompiler(host, port, protocol);
+    runDevServer(host, port, protocol);
+  });
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to
@@ -335,4 +339,3 @@ detect(DEFAULT_PORT).then(port => {
     console.log(chalk.red('Something is already running on port ' + DEFAULT_PORT + '.'));
   }
 });
-})
