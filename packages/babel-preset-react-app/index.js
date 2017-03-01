@@ -30,9 +30,7 @@ const plugins = [
     regenerator: true,
     // Resolve the Babel runtime relative to the config.
     moduleName: path.dirname(require.resolve('babel-runtime/package'))
-  }],
-  // Enables parsing of import()
-  require.resolve('babel-plugin-syntax-dynamic-import')
+  }]
 ];
 
 // This is similar to how `env` works in Babel:
@@ -77,7 +75,10 @@ if (env === 'test') {
       // JSX, Flow
       require.resolve('babel-preset-react')
     ],
-    plugins: plugins
+    plugins: plugins.concat([
+      // Compiles import() to a deferred require()
+      require.resolve('babel-plugin-dynamic-import-node')
+    ])
   };
 } else {
   module.exports = {
@@ -97,6 +98,8 @@ if (env === 'test') {
         // Async functions are converted to generators by babel-preset-latest
         async: false
       }],
+      // Adds syntax support for import()
+      require.resolve('babel-plugin-syntax-dynamic-import'),
     ])
   };
 

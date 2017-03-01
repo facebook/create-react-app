@@ -39,6 +39,7 @@
 'use strict';
 
 var chalk = require('chalk');
+var validateProjectName = require("validate-npm-package-name");
 
 var currentNodeVersion = process.versions.node;
 if (currentNodeVersion.split('.')[0] < 4) {
@@ -58,6 +59,7 @@ var path = require('path');
 var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
 var semver = require('semver');
+var dns = require('dns');
 
 var projectName;
 
@@ -95,6 +97,14 @@ if (typeof projectName === 'undefined') {
   console.log();
   console.log('Run ' + chalk.cyan(program.name() + ' --help') + ' to see all options.');
   process.exit(1);
+}
+
+function printValidationResults(results) {
+  if (typeof results !== 'undefined') {
+    results.forEach(function (error) {
+      console.error(chalk.red('  * ' + error));
+    });
+  }
 }
 
 var hiddenProgram = new commander.Command()
@@ -145,25 +155,47 @@ function shouldUseYarn() {
   }
 }
 
-function install(dependencies, verbose, callback) {
-  var command;
-  var args;
-  if (shouldUseYarn()) {
-    command = 'yarnpkg';
-    args = [ 'add', '--exact'].concat(dependencies);
-  } else {
-    checkNpmVersion();
-    command = 'npm';
-    args = ['install', '--save', '--save-exact'].concat(dependencies);
-  }
+function install(useYarn, dependencies, verbose, isOnline) {
+  return new Promise(function(resolve, reject) {
+    var command;
+    var args;
+    if (useYarn) {
+      command = 'yarnpkg';
+      args = [
+        'add',
+        '--exact',
+      ];
+      if (!isOnline) {
+        args.push('--offline');
+      }
+      [].push.apply(args, dependencies);
 
-  if (verbose) {
-    args.push('--verbose');
-  }
+      if (!isOnline) {
+        console.log(chalk.yellow('You appear to be offline.'));
+        console.log(chalk.yellow('Falling back to the local Yarn cache.'));
+        console.log();
+      }
 
-  var child = spawn(command, args, {stdio: 'inherit'});
-  child.on('close', function(code) {
-    callback(code, command, args);
+    } else {
+      checkNpmVersion();
+      command = 'npm';
+      args = ['install', '--save', '--save-exact'].concat(dependencies);
+    }
+
+    if (verbose) {
+      args.push('--verbose');
+    }
+
+    var child = spawn(command, args, {stdio: 'inherit'});
+    child.on('close', function(code) {
+      if (code !== 0) {
+        reject({
+          command: command + ' ' + args.join(' ')
+        });
+        return;
+      }
+      resolve();
+    });
   });
 }
 
@@ -179,29 +211,63 @@ function run(root, appName, version, verbose, originalDirectory, template) {
     ', and ' + chalk.cyan(packageName) + '...'
   );
   console.log();
+  
+  var useYarn = shouldUseYarn();
+  checkIfOnline(useYarn)
+    .then(function(isOnline) {
+      return install(useYarn, allDependencies, verbose, isOnline);
+    })
+    .then(function() {
+      checkNodeVersion(packageName);
 
-  install(allDependencies, verbose, function(code, command, args) {
-    if (code !== 0) {
-      console.error(chalk.cyan(command + ' ' + args.join(' ')) + ' failed');
+      // Since react-scripts has been installed with --save
+      // we need to move it into devDependencies and rewrite package.json
+      // also ensure react dependencies have caret version range
+      fixDependencies(packageName);
+
+      var scriptsPath = path.resolve(
+        process.cwd(),
+        'node_modules',
+        packageName,
+        'scripts',
+        'init.js'
+      );
+      var init = require(scriptsPath);
+      init(root, appName, verbose, originalDirectory, template);
+    })
+    .catch(function(reason) {
+      console.log();
+      console.log('Aborting installation.');
+      if (reason.command) {
+        console.log('  ' + chalk.cyan(reason.command), 'has failed.')
+      }
+      console.log();
+
+      // On 'exit' we will delete these files from target directory.
+      var knownGeneratedFiles = [
+        'package.json', 'npm-debug.log', 'yarn-error.log', 'yarn-debug.log', 'node_modules'
+      ];
+      var currentFiles = fs.readdirSync(path.join(root));
+      currentFiles.forEach(function (file) {
+        knownGeneratedFiles.forEach(function (fileToMatch) {
+          // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
+          // and the rest of knownGeneratedFiles.
+          if ((fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) || file === fileToMatch) {
+            console.log('Deleting generated file...', chalk.cyan(file));
+            fs.removeSync(path.join(root, file));
+          }
+        });
+      });
+      var remainingFiles = fs.readdirSync(path.join(root));
+      if (!remainingFiles.length) {
+        // Delete target folder if empty
+        console.log('Deleting', chalk.cyan(appName + '/'), 'from', chalk.cyan(path.resolve(root, '..')));
+        process.chdir(path.resolve(root, '..'));
+        fs.removeSync(path.join(root));
+      }
+      console.log('Done.');
       process.exit(1);
-    }
-
-    checkNodeVersion(packageName);
-
-    // Since react-scripts has been installed with --save
-    // We need to move it into devDependencies and rewrite package.json
-    moveReactScriptsToDev(packageName);
-
-    var scriptsPath = path.resolve(
-      process.cwd(),
-      'node_modules',
-      packageName,
-      'scripts',
-      'init.js'
-    );
-    var init = require(scriptsPath);
-    init(root, appName, verbose, originalDirectory, template);
-  });
+    });
 }
 
 function getInstallPackage(version) {
@@ -280,11 +346,18 @@ function checkNodeVersion(packageName) {
 }
 
 function checkAppName(appName) {
+  var validationResult = validateProjectName(appName);
+  if (!validationResult.validForNewPackages) {
+    console.error('Could not create a project called ' + chalk.red('"' + appName + '"') + ' because of npm naming restrictions:');
+    printValidationResults(validationResult.errors);
+    printValidationResults(validationResult.warnings);
+    process.exit(1);
+  }
+  
   // TODO: there should be a single place that holds the dependencies
   var dependencies = ['react', 'react-dom'];
   var devDependencies = ['react-scripts'];
   var allDependencies = dependencies.concat(devDependencies).sort();
-
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
@@ -302,7 +375,29 @@ function checkAppName(appName) {
   }
 }
 
-function moveReactScriptsToDev(packageName) {
+function makeCaretRange(dependencies, name) {
+  var version = dependencies[name];
+
+  if (typeof version === 'undefined') {
+    console.error(
+      chalk.red('Missing ' + name + ' dependency in package.json')
+    );
+    process.exit(1);
+  }
+
+  var patchedVersion = '^' + version;
+
+  if (!semver.validRange(patchedVersion)) {
+    console.error(
+      'Unable to patch ' + name + ' dependency version because version ' + chalk.red(version) + ' will become invalid ' + chalk.red(patchedVersion)
+    );
+    patchedVersion = version;
+  }
+
+  dependencies[name] = patchedVersion;
+}
+
+function fixDependencies(packageName) {
   var packagePath = path.join(process.cwd(), 'package.json');
   var packageJson = require(packagePath);
 
@@ -326,6 +421,9 @@ function moveReactScriptsToDev(packageName) {
   packageJson.devDependencies[packageName] = packageVersion;
   delete packageJson.dependencies[packageName];
 
+  makeCaretRange(packageJson.dependencies, 'react');
+  makeCaretRange(packageJson.dependencies, 'react-dom');
+
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }
 
@@ -340,4 +438,18 @@ function isSafeToCreateProjectIn(root) {
     .every(function(file) {
       return validFiles.indexOf(file) >= 0;
     });
+}
+
+function checkIfOnline(useYarn) {
+  if (!useYarn) {
+    // Don't ping the Yarn registry.
+    // We'll just assume the best case.
+    return Promise.resolve(true);
+  }
+  
+  return new Promise(function(resolve) {
+    dns.resolve('registry.yarnpkg.com', function(err) {
+      resolve(err === null);
+    });
+  });
 }
