@@ -12,7 +12,6 @@ var vendorHash = require("../utils/vendorHash");
 
 module.exports = (callback) => {
   if (shouldManifestUpdate()) {
-    // fs.emptyDirSync(paths.vendorPath);
     return fs.readdir(paths.vendorPath, (err, files) => {
       try {
         files.filter(file => !file.indexOf(environment)).forEach(file => {
@@ -55,23 +54,12 @@ function manifestExists() {
   return fs.existsSync(path.join(paths.vendorPath, vendorHash + ".json"));
 }
 
-function manifestStale() {
-  if (vendorHash) {
-    return false;
-  }
-  return true;
-}
-
 function shouldManifestUpdate() {
   var isExists = manifestExists();
   clearConsole();
   console.log("Using " + vendorHash + " vendor build");
   if (!isExists) {
     console.log("Vendor file needs to be created...");
-    return true;
-  }
-  if (isExists && manifestStale()) {
-    console.log("Vendor file needs to be updated...");
     return true;
   }
   return false;
