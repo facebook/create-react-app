@@ -240,6 +240,9 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       console.log('Aborting installation.');
       if (reason.command) {
         console.log('  ' + chalk.cyan(reason.command), 'has failed.')
+      } else {
+        console.log(chalk.red('Unexpected error. Please report it as a bug:'));
+        console.log(reason);
       }
       console.log();
 
