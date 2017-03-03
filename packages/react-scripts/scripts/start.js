@@ -32,6 +32,7 @@ var prompt = require('react-dev-utils/prompt');
 var fs = require('fs');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+var plugins = require('../config/plugins');
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
@@ -59,6 +60,9 @@ if (isSmokeTest) {
     }
   };
 }
+
+// Apply plugins to the Webpack config
+config = plugins.applyPlugins(config);
 
 function setupCompiler(host, port, protocol) {
   // "Compiler" is a low-level interface to Webpack.

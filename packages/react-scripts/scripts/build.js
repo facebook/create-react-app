@@ -30,6 +30,7 @@ var paths = require('../config/paths');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
+var plugins = require('../config/plugins');
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 
@@ -37,6 +38,9 @@ var useYarn = fs.existsSync(paths.yarnLockFile);
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
+
+// Apply plugins to the Webpack config
+config = plugins.applyPlugins(config);
 
 // Input: /User/dan/app/build/static/js/main.82be8.js
 // Output: /static/js/main.js
