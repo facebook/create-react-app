@@ -1084,14 +1084,22 @@ If your production web server does not support HTTPS, then the service worker
 registration will fail, but the rest of your web app will remain functional.
 
 1. Service workers are [not currently supported](https://jakearchibald.github.io/isserviceworkerready/)
-in all web browsers. Service worker registration [won't be attempted](src/register-service-worker.js)
+in all web browsers. Service worker registration [won't be attempted](src/service-worker-registration.js)
 on browsers that lack support.
 
-1. The service worker is only enabled in the [production environment](#Deployment),
+1. The service worker is only enabled in the [production environment](#deployment),
 e.g. the output of `npm run build`. It's recommended that you do not enable an
 offline-first service worker in a development environment, as it can lead to
 frustration when previously cached assets are used and do not include the latest
 changes you've made locally.
+
+1. If you *need* to test your offline-first service worker locally, build
+the application (using `npm run build`) and run a simple http server from your
+build directory. After running the build script, `create-react-app` will give
+instructions for one way to test your production build locally using
+`pushstate-server` and the [deployment instructions](#deployment) have
+instructions for using the python `SimpleHTTPServer`. *Be sure to always use an
+incognito window to avoid complications with your browser cache.*
 
 1. If possible,configure your production environment to serve the generated
 `service-worker.js` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
@@ -1111,7 +1119,7 @@ app works offline!" message) and also let them know when the service worker has
 fetched the latest updates that will be available the next time they load the
 page (showing a "New content is available; please refresh." message). Showing
 this messages is currently left as an exercise to the developer, but as a
-starting point, you can make use of the logic included in [`src/register-service-worker.js`](src/register-service-worker.js), which
+starting point, you can make use of the logic included in [`src/service-worker-registration.js`](src/service-worker-registration.js), which
 demonstrates which service worker lifecycle events to listen for to detect each
 scenario, and which as a default, just logs appropriate messages to the
 JavaScript console.
@@ -1122,7 +1130,7 @@ images, or embeds loaded from a different domain. If you would like to use a
 runtime caching strategy for those requests, you can [`eject`](#npm-run-eject)
 and then configure the
 [`runtimeCaching`](https://github.com/GoogleChrome/sw-precache#runtimecaching-arrayobject)
-option in the `SWPrecachePlugin` section of
+option in the `SWPrecacheWebpackPlugin` section of
 [`webpack.config.prod.js`](../config/webpack.config.prod.js).
 
 ## Deployment
