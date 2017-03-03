@@ -1,6 +1,6 @@
 {
   "name": "@trunkclub/build",
-  "version": "5.15.0",
+  "version": "5.16.0",
   "upstream-version": "0.8.4",
   "description": "Configuration and scripts for Create React App. Fork maintained by Trunk Club",
   "repository": "trunkclub/create-react-app",
@@ -29,7 +29,7 @@
     "tcweb-build": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@trunkclub/eslint-config": "3.0.0",
+    "@trunkclub/eslint-config": "3.1.0",
     "@trunkclub/react-dev-utils": "1.1.0",
     "autoprefixer": "6.5.1",
     "babel-cli": "6.18.0",
