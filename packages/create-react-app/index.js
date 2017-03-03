@@ -332,12 +332,12 @@ function extractStream(stream, dest) {
 function getPackageName(installPackage) {
   if (installPackage.indexOf('.tgz') > -1) {
     return getTemporaryDirectory().then(function(obj) {
-      if (installPackage.test(/^http/)) {
+      if (/^http/.test(installPackage)) {
         var stream = hyperquest(installPackage);
       } else {
         var stream = fs.createReadStream(installPackage);
       }
-      return extractStream(stream).then(function() {
+      return extractStream(stream, obj.tmpdir).then(function() {
         return obj;
       });
     }).then(function(obj) {
