@@ -1493,7 +1493,7 @@ When you build the project, Create React App will place the `public` folder cont
 4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
     
     ```
-    > Ready! https://aosa-features-tpspyhtdtk.now.sh (copied to clipboard)
+    > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
     ```
     
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
