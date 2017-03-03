@@ -198,7 +198,7 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  npm test -- --no-cache --testPathPattern="/src/"
+  npm test -- --no-cache --testPathPattern='/src/'
 
 # Test "development" environment
 tmp_server_log=`mktemp`
