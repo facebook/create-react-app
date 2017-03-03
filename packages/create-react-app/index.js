@@ -60,6 +60,8 @@ var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
 var semver = require('semver');
 var dns = require('dns');
+var tmp = require('tmp');
+var unpack = require('tar-pack').unpack;
 
 var projectName;
 
@@ -201,20 +203,25 @@ function install(useYarn, dependencies, verbose, isOnline) {
 
 function run(root, appName, version, verbose, originalDirectory, template) {
   var packageToInstall = getInstallPackage(version);
-  var packageName = getPackageName(packageToInstall);
+  var packageName = packageToInstall;
 
   var allDependencies = ['react', 'react-dom', packageToInstall];
 
   console.log('Installing packages. This might take a couple minutes.');
-  console.log(
-    'Installing ' + chalk.cyan('react') + ', ' + chalk.cyan('react-dom') +
-    ', and ' + chalk.cyan(packageName) + '...'
-  );
-  console.log();
-  
+
   var useYarn = shouldUseYarn();
-  checkIfOnline(useYarn)
+  getPackageName(packageToInstall)
+    .then(function(_packageName) {
+      packageName = _packageName;
+      return checkIfOnline(useYarn);
+    })
     .then(function(isOnline) {
+      console.log(
+        'Installing ' + chalk.cyan('react') + ', ' + chalk.cyan('react-dom') +
+        ', and ' + chalk.cyan(packageName) + '...'
+      );
+      console.log();
+
       return install(useYarn, allDependencies, verbose, isOnline);
     })
     .then(function() {
@@ -288,19 +295,48 @@ function getInstallPackage(version) {
 // Extract package name from tarball url or path.
 function getPackageName(installPackage) {
   if (installPackage.indexOf('.tgz') > -1) {
-    // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
-    // However, this function returns package name only without semver version.
-    return installPackage.match(/^.+\/(.+?)(?:-\d+.+)?\.tgz$/)[1];
+    return new Promise(function(resolve, reject) {
+      tmp.dir({ unsafeCleanup: true }, function(err, tmpdir, callback) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve({
+            tmpdir: tmpdir,
+            callback: callback
+          });
+        }
+      });
+    }).then(function(obj) {
+      return new Promise(function(resolve, reject) {
+        fs.createReadStream(installPackage).pipe(unpack(obj.tmpdir, function(err) {
+          if (err) {
+            reject(err);
+          } else {
+            var packageName = require(path.join(obj.tmpdir, 'package.json')).name;
+            try {
+              obj.callback();
+            } catch (ignored) {}
+            resolve(packageName);
+          }
+        }));
+      });
+    }).catch(function(err) {
+      // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
+      // However, this function returns package name only without semver version.
+      console.log('Failed to extract package: ' + err.message);
+      console.log('Falling back to naive behavior ...')
+      return Promise.resolve(installPackage.match(/^.+\/(.+?)(?:-\d+.+)?\.tgz$/)[1]);
+    });
   } else if (installPackage.indexOf('git+') === 0) {
     // Pull package name out of git urls e.g:
     // git+https://github.com/mycompany/react-scripts.git
     // git+ssh://github.com/mycompany/react-scripts.git#v1.2.3
-    return installPackage.match(/([^\/]+)\.git(#.*)?$/)[1];
+    return Promise.resolve(installPackage.match(/([^\/]+)\.git(#.*)?$/)[1]);
   } else if (installPackage.indexOf('@') > 0) {
     // Do not match @scope/ when stripping off @version or @tag
-    return installPackage.charAt(0) + installPackage.substr(1).split('@')[0];
+    return Promise.resolve(installPackage.charAt(0) + installPackage.substr(1).split('@')[0]);
   }
-  return installPackage;
+  return Promise.resolve(installPackage);
 }
 
 function checkNpmVersion() {
@@ -356,7 +392,7 @@ function checkAppName(appName) {
     printValidationResults(validationResult.warnings);
     process.exit(1);
   }
-  
+
   // TODO: there should be a single place that holds the dependencies
   var dependencies = ['react', 'react-dom'];
   var devDependencies = ['react-scripts'];
@@ -449,7 +485,7 @@ function checkIfOnline(useYarn) {
     // We'll just assume the best case.
     return Promise.resolve(true);
   }
-  
+
   return new Promise(function(resolve) {
     dns.resolve('registry.yarnpkg.com', function(err) {
       resolve(err === null);
