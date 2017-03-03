@@ -19,7 +19,7 @@ if (isSmokeTest) {
   };
 }
 
-module.exports = function createCompiler(config, onReadyCallack) {
+module.exports = function createCompiler(config, onReadyCallback) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   try {
@@ -64,8 +64,8 @@ module.exports = function createCompiler(config, onReadyCallack) {
     }
 
     if (showInstructions) {
-      if (typeof onReadyCallack === 'function') {
-        onReadyCallack();
+      if (typeof onReadyCallback === 'function') {
+        onReadyCallback();
       }
       isFirstCompile = false;
     }
@@ -97,4 +97,4 @@ module.exports = function createCompiler(config, onReadyCallack) {
   });
 
   return compiler;
-}
+};

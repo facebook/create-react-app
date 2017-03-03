@@ -45,7 +45,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 var DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 
 function run(port) {
-  var protocol = process.env.HTTPS === 'true' ? "https" : "http";
+  var protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
   var host = process.env.HOST || 'localhost';
 
   // Create a webpack compiler that is configured with custom messages.

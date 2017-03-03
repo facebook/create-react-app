@@ -49,7 +49,7 @@ prompt(
     'config',
     'config/jest',
     'scripts',
-    'scripts/utils'
+    'scripts/utils',
   ];
 
   // Make shallow array of files paths
@@ -75,24 +75,21 @@ prompt(
   });
 
   files.forEach(function(file) {
-    var content = fs.readFileSync(file, 'utf8')
+    var content = fs.readFileSync(file, 'utf8');
 
     // Skip flagged files
     if (content.match(/\/\/ @remove-file-on-eject/)) {
       return;
     }
-
     content = content
       // Remove dead code from .js files on eject
       .replace(/\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/mg, '')
       // Remove dead code from .applescript files on eject
       .replace(/-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/mg, '')
       .trim() + '\n';
-
-    console.log('  Adding ' + cyan(file.replace(ownPath, '')) + ' to the project');
-    fs.writeFileSync(file.replace(ownPath, appPath), content);
+    console.log('  Adding ' + cyan(file) + ' to the project');
+    fs.writeFileSync(path.join(appPath, file), content);
   });
-
   console.log();
 
   var ownPackage = require(path.join(ownPath, 'package.json'));
