@@ -62,6 +62,7 @@ var semver = require('semver');
 var dns = require('dns');
 var tmp = require('tmp');
 var unpack = require('tar-pack').unpack;
+var hyperquest = require('hyperquest');
 
 var projectName;
 
@@ -292,34 +293,57 @@ function getInstallPackage(version) {
   return packageToInstall;
 }
 
+function getTemporaryDirectory() {
+  return new Promise(function(resolve, reject) {
+    // Unsafe cleanup lets us recursively delete the directory if it contains
+    // contents; by default it only allows removal if it's empty
+    tmp.dir({ unsafeCleanup: true }, function(err, tmpdir, callback) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve({
+          tmpdir: tmpdir,
+          cleanup: function() {
+            try {
+              // Callback might throw and fail, since it's a temp directory the
+              // OS will clean it up eventually...
+              callback();
+            } catch (ignored) {}
+          }
+        });
+      }
+    });
+  });
+}
+
+function extractStream(stream, dest) {
+  return new Promise(function(resolve, reject) {
+    stream.pipe(unpack(dest, function(err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(dest);
+      }
+    }));
+  });
+}
+
 // Extract package name from tarball url or path.
 function getPackageName(installPackage) {
   if (installPackage.indexOf('.tgz') > -1) {
-    return new Promise(function(resolve, reject) {
-      tmp.dir({ unsafeCleanup: true }, function(err, tmpdir, callback) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({
-            tmpdir: tmpdir,
-            callback: callback
-          });
-        }
+    return getTemporaryDirectory().then(function(obj) {
+      if (installPackage.test(/^http/)) {
+        var stream = hyperquest(installPackage);
+      } else {
+        var stream = fs.createReadStream(installPackage);
+      }
+      return extractStream(stream).then(function() {
+        return obj;
       });
     }).then(function(obj) {
-      return new Promise(function(resolve, reject) {
-        fs.createReadStream(installPackage).pipe(unpack(obj.tmpdir, function(err) {
-          if (err) {
-            reject(err);
-          } else {
-            var packageName = require(path.join(obj.tmpdir, 'package.json')).name;
-            try {
-              obj.callback();
-            } catch (ignored) {}
-            resolve(packageName);
-          }
-        }));
-      });
+      var packageName = require(path.join(obj.tmpdir, 'package.json')).name;
+      obj.cleanup();
+      return packageName;
     }).catch(function(err) {
       // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
       // However, this function returns package name only without semver version.
