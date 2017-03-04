@@ -1,3 +1,4 @@
+// @remove-file-on-eject
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -7,13 +8,14 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var createJestConfig = require('../utils/createJestConfig');
 var fs = require('fs-extra');
 var path = require('path');
-var paths = require('../config/paths');
-var prompt = require('react-dev-utils/prompt');
 var spawnSync = require('cross-spawn').sync;
 var chalk = require('chalk');
+var prompt = require('react-dev-utils/prompt');
+var paths = require('../config/paths');
+var createJestConfig = require('./utils/createJestConfig');
+
 var green = chalk.green;
 var cyan = chalk.cyan;
 
@@ -45,44 +47,48 @@ prompt(
 
   var folders = [
     'config',
-    path.join('config', 'jest'),
-    'scripts'
+    'config/jest',
+    'scripts',
+    'scripts/utils',
   ];
 
-  var files = [
-    path.join('config', 'env.js'),
-    path.join('config', 'paths.js'),
-    path.join('config', 'polyfills.js'),
-    path.join('config', 'webpack.config.dev.js'),
-    path.join('config', 'webpack.config.prod.js'),
-    path.join('config', 'jest', 'cssTransform.js'),
-    path.join('config', 'jest', 'fileTransform.js'),
-    path.join('scripts', 'build.js'),
-    path.join('scripts', 'start.js'),
-    path.join('scripts', 'test.js')
-  ];
+  // Make shallow array of files paths
+  var files = folders.reduce(function (files, folder) {
+    return files.concat(
+      fs.readdirSync(path.join(ownPath, folder))
+        // set full path
+        .map(file => path.join(ownPath, folder, file))
+        // omit dirs from file list
+        .filter(file => fs.lstatSync(file).isFile())
+    );
+  }, []);
 
   // Ensure that the app folder is clean and we won't override any files
   folders.forEach(verifyAbsent);
   files.forEach(verifyAbsent);
 
-  // Copy the files over
+  console.log();
+  console.log(cyan('Copying files into ' + appPath));
+
   folders.forEach(function(folder) {
     fs.mkdirSync(path.join(appPath, folder))
   });
 
-  console.log();
-  console.log(cyan('Copying files into ' + appPath));
   files.forEach(function(file) {
-    console.log('  Adding ' + cyan(file) + ' to the project');
-    var content = fs
-      .readFileSync(path.join(ownPath, file), 'utf8')
+    var content = fs.readFileSync(file, 'utf8');
+
+    // Skip flagged files
+    if (content.match(/\/\/ @remove-file-on-eject/)) {
+      return;
+    }
+    content = content
       // Remove dead code from .js files on eject
       .replace(/\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/mg, '')
       // Remove dead code from .applescript files on eject
       .replace(/-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/mg, '')
       .trim() + '\n';
-    fs.writeFileSync(path.join(appPath, file), content);
+    console.log('  Adding ' + cyan(file.replace(ownPath, '')) + ' to the project');
+    fs.writeFileSync(file.replace(ownPath, appPath), content);
   });
   console.log();
 
