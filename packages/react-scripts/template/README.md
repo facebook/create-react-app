@@ -346,6 +346,35 @@ Learn more about ES6 modules:
 * [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
 * [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
 
+## Importing a Component using path relative to src (Absolute path)
+
+Create a file called `.env` in the root of the project, then add the following:
+
+```
+NODE_PATH=src
+```
+
+This will allows any component to be imported using its path relative to `src`, for example:
+
+```js
+import Button from './components/Button';
+```
+
+is now:
+
+
+```js
+import Button from 'components/Button';
+```
+
+This allows uniform import path accross different component, and eliminate the following "hypothetical" situation:
+
+```js
+import Utils from '../../../Utils';
+```
+
+
+
 ## Adding a Stylesheet
 
 This project setup uses [Webpack](https://webpack.github.io/) for handling all assets. Webpack offers a custom way of “extending” the concept of `import` beyond JavaScript. To express that a JavaScript file depends on a CSS file, you need to **import the CSS from the JavaScript file**:
