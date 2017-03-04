@@ -87,8 +87,8 @@ prompt(
       // Remove dead code from .applescript files on eject
       .replace(/-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/mg, '')
       .trim() + '\n';
-    console.log('  Adding ' + cyan(file) + ' to the project');
-    fs.writeFileSync(path.join(appPath, file), content);
+    console.log('  Adding ' + cyan(file.replace(ownPath, '')) + ' to the project');
+    fs.writeFileSync(file.replace(ownPath, appPath), content);
   });
   console.log();
 
