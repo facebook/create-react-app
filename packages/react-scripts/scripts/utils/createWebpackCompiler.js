@@ -19,7 +19,7 @@ if (isSmokeTest) {
   };
 }
 
-module.exports = function createCompiler(config, onReadyCallback) {
+module.exports = function createWebpackCompiler(config, onReadyCallback) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   try {
@@ -63,12 +63,10 @@ module.exports = function createCompiler(config, onReadyCallback) {
       console.log(chalk.green('Compiled successfully!'));
     }
 
-    if (showInstructions) {
-      if (typeof onReadyCallback === 'function') {
-        onReadyCallback();
-      }
-      isFirstCompile = false;
+    if (typeof onReadyCallback === 'function') {
+      onReadyCallback(showInstructions);
     }
+    isFirstCompile = false;
 
     // If errors exist, only show errors.
     if (messages.errors.length) {

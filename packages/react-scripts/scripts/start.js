@@ -49,7 +49,10 @@ function run(port) {
   var host = process.env.HOST || 'localhost';
 
   // Create a webpack compiler that is configured with custom messages.
-  var compiler = createWebpackCompiler(config, function onReady() {
+  var compiler = createWebpackCompiler(config, function onReady(showInstructions) {
+    if (!showInstructions) {
+      return;
+    }
     console.log();
     console.log('The app is running at:');
     console.log();
