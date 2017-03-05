@@ -120,6 +120,20 @@ function printFileSizes(stats, previousSizeMap) {
   });
 }
 
+// Generate stats.json file
+function generateStatsFile(stats, config) {
+  const statsFilepath = path.join(config.output.path, 'stats.json');
+
+  fs.writeFileSync(
+    statsFilepath,
+    JSON.stringify(stats.toJson("verbose"))
+  );
+  console.log('Stats file output to', chalk.cyan(path.join('build', 'stats.json')));
+  console.log('Open ', chalk.magenta('http://webpack.github.io/analyse/'), ' in your browser and upload the stats.json file!');
+  console.log(chalk.blue('(Tip: ', chalk.italic('CMD + double-click'), ' the link!)'));
+  console.log();
+}
+
 // Print out errors
 function printErrors(summary, errors) {
   console.log(chalk.red(summary));
@@ -165,6 +179,7 @@ function build(previousSizeMap) {
     console.log();
     printFileSizes(stats, previousSizeMap);
     console.log();
+    generateStatsFile(stats, config);
 
     var openCommand = process.platform === 'win32' ? 'start' : 'open';
     var appPackage  = require(paths.appPackageJson);
