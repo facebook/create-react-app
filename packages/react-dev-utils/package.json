@@ -10,22 +10,13 @@
   "engines": {
     "node": ">=4"
   },
-  "files": [
-    "clearConsole.js",
-    "checkRequiredFiles.js",
-    "formatWebpackMessages.js",
-    "getProcessForPort.js",
-    "InterpolateHtmlPlugin.js",
-    "openChrome.applescript",
-    "openBrowser.js",
-    "prompt.js",
-    "WatchMissingNodeModulesPlugin.js",
-    "webpackHotDevClient.js"
-  ],
+  "files": ["clearConsole.js", "checkRequiredFiles.js", "formatWebpackMessages.js", "getProcessForPort.js", "InterpolateHtmlPlugin.js", "openChrome.applescript", "openBrowser.js", "prompt.js", "WatchMissingNodeModulesPlugin.js", "webpackHotDevClient.js"],
   "dependencies": {
     "ansi-html": "0.0.5",
     "chalk": "1.1.3",
     "escape-string-regexp": "1.0.5",
+    "filesize": "3.3.0",
+    "gzip-size": "^3.0.0",
     "html-entities": "1.2.0",
     "opn": "4.0.2",
     "sockjs-client": "1.1.2",
