@@ -97,7 +97,7 @@ function resolveOwn(relativePath) {
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
   appPath: resolveApp('.'),
-  ownPath: resolveApp('node_modules/react-scripts'),
+  ownPath: resolveOwn('.'),
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
