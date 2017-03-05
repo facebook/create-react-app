@@ -6,14 +6,14 @@ var stripAnsi = require('strip-ansi');
 var gzipSize = require('gzip-size').sync;
 
 // Print a detailed summary of build files.
-module.exports = paths => function printFileSizes(stats, previousSizeMap) {
-  var removeFileNameHash = require('./removeFileNameHash')(paths);
+module.exports = appBuild => function printFileSizes(stats, previousSizeMap) {
+  var removeFileNameHash = require('./removeFileNameHash')(appBuild);
   var getDifferenceLabel = require('../getDifferenceLabel');
   var assets = stats
     .toJson()
     .assets.filter(asset => /\.(js|css)$/.test(asset.name))
     .map(asset => {
-      var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
+      var fileContents = fs.readFileSync(appBuild + '/' + asset.name);
       var size = gzipSize(fileContents);
       var previousSize = previousSizeMap[removeFileNameHash(asset.name)];
       var difference = getDifferenceLabel(size, previousSize);
