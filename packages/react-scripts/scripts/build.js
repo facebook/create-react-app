@@ -31,7 +31,6 @@ var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var copyPublicFolder = require('react-dev-utils/copyPublicFolder');
 var printFileSizes = require('react-dev-utils/printFileSizes');
 var removeFileNameHash = require('react-dev-utils/removeFileNameHash');
-var getDifferenceLabel = require('react-dev-utils/getDifferenceLabel');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
 

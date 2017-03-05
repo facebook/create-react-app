@@ -4,8 +4,6 @@ var chalk = require('chalk');
 var filesize = require('filesize');
 var stripAnsi = require('strip-ansi');
 var gzipSize = require('gzip-size').sync;
-var removeFileNameHash = require('./removeFileNameHash');
-var getDifferenceLabel = require('./getDifferenceLabel');
 // Print a detailed summary of build files.
 module.exports = function printFileSizes(appBuild, stats, previousSizeMap) {
   var assets = stats
@@ -43,6 +41,29 @@ module.exports = function printFileSizes(appBuild, stats, previousSizeMap) {
         chalk.cyan(asset.name)
     );
   });
+};
+
+function removeFileNameHash(appBuild, fileName) {
+  return fileName
+    .replace(appBuild, '')
+    .replace(/\/?(.*)(\.\w+)(\.js|\.css)/, (match, p1, p2, p3) => p1 + p3);
+};
+
+// Input: 1024, 2048
+// Output: "(+1 KB)"
+function getDifferenceLabel(currentSize, previousSize) {
+  var FIFTY_KILOBYTES = 1024 * 50;
+  var difference = currentSize - previousSize;
+  var fileSize = !Number.isNaN(difference) ? filesize(difference) : 0;
+  if (difference >= FIFTY_KILOBYTES) {
+    return chalk.red('+' + fileSize);
+  } else if (difference < FIFTY_KILOBYTES && difference > 0) {
+    return chalk.yellow('+' + fileSize);
+  } else if (difference < 0) {
+    return chalk.green(fileSize);
+  } else {
+    return '';
+  }
 };
 
 
