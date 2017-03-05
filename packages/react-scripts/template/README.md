@@ -1250,6 +1250,17 @@ This is because when there is a fresh page load for a `/todos/42`, the server lo
  });
 ```
 
+If you’re using [Apache](https://httpd.apache.org/), you need to create a `.htaccess` file in the `public` folder that looks like this:
+
+```
+    Options -MultiViews
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.html [QSA,L]
+```
+
+It will get copied to the `build` folder when you run `npm run build`.
+
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
 ### Building for Relative Paths
