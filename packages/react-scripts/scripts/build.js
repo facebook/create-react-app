@@ -42,7 +42,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // First, read the current file sizes in build directory.
 // This lets us display how much they changed later.
 recursive(paths.appBuild, (err, fileNames) => {
-  var previousSizeMap = fileSizeReporter.measureFileSizesBeforeBuild(paths, fileNames);
+  var previousSizeMap = fileSizeReporter.measureFileSizesBeforeBuild(paths.appBuild, fileNames);
 
   // Remove all content but keep the directory so that
   // if you're in it, you don't end up in Trash
