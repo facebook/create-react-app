@@ -15,7 +15,7 @@ if (process.env.E2E_FILE) {
   const markup = fs.readFileSync(file, 'utf8')
   getMarkup = () => markup
 
-  const pathPrefix = process.env.PUBLIC_URL.replace(/^https?:\/\/[^\/]+\/?/, '')
+  const pathPrefix = process.env.PUBLIC_URL.replace(/^https?:\/\/[^/]+\/?/, '')
 
   resourceLoader = (resource, callback) => callback(
     null,

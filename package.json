@@ -11,13 +11,7 @@
     "test": "node packages/react-scripts/scripts/test.js --env=jsdom"
   },
   "devDependencies": {
-    "babel-eslint": "7.1.0",
     "eslint": "3.16.1",
-    "eslint-config-react-app": "0.6.0",
-    "eslint-plugin-flowtype": "2.21.0",
-    "eslint-plugin-import": "2.0.1",
-    "eslint-plugin-jsx-a11y": "4.0.0",
-    "eslint-plugin-react": "6.4.1",
     "lerna": "2.0.0-beta.38",
     "lerna-changelog": "^0.2.3"
   }

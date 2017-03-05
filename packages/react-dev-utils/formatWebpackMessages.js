@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 // WARNING: this code is untranspiled and is used in browser too.
 // Please make sure any changes are in ES5 or contribute a Babel compile step.
 
