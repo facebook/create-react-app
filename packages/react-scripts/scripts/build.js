@@ -28,8 +28,7 @@ var webpack = require('webpack');
 var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-var printFileSizes = require('react-dev-utils/printFileSizes');
-var removeFileNameHash = require('react-dev-utils/removeFileNameHash');
+var fileSizeReporter = require('react-dev-utils/fileSizeReporter');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
 
@@ -43,14 +42,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // First, read the current file sizes in build directory.
 // This lets us display how much they changed later.
 recursive(paths.appBuild, (err, fileNames) => {
-  var previousSizeMap = (fileNames || [])
-    .filter(fileName => /\.(js|css)$/.test(fileName))
-    .reduce((memo, fileName) => {
-      var contents = fs.readFileSync(fileName);
-      var key = removeFileNameHash(paths.appBuild, fileName);
-      memo[key] = gzipSize(contents);
-      return memo;
-    }, {});
+  var previousSizeMap = fileSizeReporter.measureFileSizesBeforeBuild(paths, fileNames);
 
   // Remove all content but keep the directory so that
   // if you're in it, you don't end up in Trash
@@ -110,7 +102,7 @@ function build(previousSizeMap) {
 
     console.log('File sizes after gzip:');
     console.log();
-    printFileSizes(paths.appBuild, stats, previousSizeMap);
+    fileSizeReporter.printFileSizesAfterBuild(paths.appBuild, stats, previousSizeMap);
     console.log();
 
     var openCommand = process.platform === 'win32' ? 'start' : 'open';

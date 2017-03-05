@@ -5,7 +5,7 @@ var filesize = require('filesize');
 var stripAnsi = require('strip-ansi');
 var gzipSize = require('gzip-size').sync;
 // Print a detailed summary of build files.
-module.exports = function printFileSizes(appBuild, stats, previousSizeMap) {
+function printFileSizesAfterBuild(appBuild, stats, previousSizeMap) {
   var assets = stats
     .toJson()
     .assets.filter(asset => /\.(js|css)$/.test(asset.name))
@@ -65,5 +65,21 @@ function getDifferenceLabel(currentSize, previousSize) {
     return '';
   }
 };
+
+function measureFileSizesBeforeBuild(appBuild, fileNames){
+  return (fileNames || [])
+    .filter(fileName => /\.(js|css)$/.test(fileName))
+    .reduce((memo, fileName) => {
+      var contents = fs.readFileSync(fileName);
+      var key = removeFileNameHash(appBuild, fileName);
+      memo[key] = gzipSize(contents);
+      return memo;
+    }, {});
+}
+
+module.exports = {
+  measureFileSizesBeforeBuild: measureFileSizesBeforeBuild,
+  printFileSizesAfterBuild: printFileSizesAfterBuild
+}
 
 
