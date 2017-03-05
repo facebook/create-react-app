@@ -4,18 +4,17 @@ var chalk = require('chalk');
 var filesize = require('filesize');
 var stripAnsi = require('strip-ansi');
 var gzipSize = require('gzip-size').sync;
-
+var removeFileNameHash = require('./removeFileNameHash');
+var getDifferenceLabel = require('./getDifferenceLabel');
 // Print a detailed summary of build files.
-module.exports = appBuild => function printFileSizes(stats, previousSizeMap) {
-  var removeFileNameHash = require('./removeFileNameHash')(appBuild);
-  var getDifferenceLabel = require('../getDifferenceLabel');
+module.exports = function printFileSizes(appBuild, stats, previousSizeMap) {
   var assets = stats
     .toJson()
     .assets.filter(asset => /\.(js|css)$/.test(asset.name))
     .map(asset => {
       var fileContents = fs.readFileSync(appBuild + '/' + asset.name);
       var size = gzipSize(fileContents);
-      var previousSize = previousSizeMap[removeFileNameHash(asset.name)];
+      var previousSize = previousSizeMap[removeFileNameHash(appBuild, asset.name)];
       var difference = getDifferenceLabel(size, previousSize);
       return {
         folder: path.join('build', path.dirname(asset.name)),

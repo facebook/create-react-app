@@ -28,9 +28,9 @@ var webpack = require('webpack');
 var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-var copyPublicFolder = require('react-dev-utils/paths/copyPublicFolder')(paths);
-var printFileSizes = require('react-dev-utils/paths/printFileSizes')(paths.appBuild);
-var removeFileNameHash = require('react-dev-utils/paths/removeFileNameHash')(paths.appBuild);
+var copyPublicFolder = require('react-dev-utils/copyPublicFolder');
+var printFileSizes = require('react-dev-utils/printFileSizes');
+var removeFileNameHash = require('react-dev-utils/removeFileNameHash');
 var getDifferenceLabel = require('react-dev-utils/getDifferenceLabel');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
@@ -49,7 +49,7 @@ recursive(paths.appBuild, (err, fileNames) => {
     .filter(fileName => /\.(js|css)$/.test(fileName))
     .reduce((memo, fileName) => {
       var contents = fs.readFileSync(fileName);
-      var key = removeFileNameHash(fileName);
+      var key = removeFileNameHash(paths.appBuild, fileName);
       memo[key] = gzipSize(contents);
       return memo;
     }, {});
@@ -62,7 +62,11 @@ recursive(paths.appBuild, (err, fileNames) => {
   build(previousSizeMap);
 
   // Merge with the public folder
-  copyPublicFolder();
+  copyPublicFolder(
+    paths.appPublic, 
+    paths.appBuild, 
+    paths.appHtml
+  );
 });
 
 // Print out errors
@@ -108,7 +112,7 @@ function build(previousSizeMap) {
 
     console.log('File sizes after gzip:');
     console.log();
-    printFileSizes(stats, previousSizeMap);
+    printFileSizes(paths.appBuild, stats, previousSizeMap);
     console.log();
 
     var openCommand = process.platform === 'win32' ? 'start' : 'open';
