@@ -114,14 +114,17 @@ prompt(
   console.log(cyan('Updating the scripts'));
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
-    appPackage.scripts[key] = appPackage.scripts[key]
-      .replace(/react-scripts (\w+)/g, 'node scripts/$1.js');
-    console.log(
-      '  Replacing ' +
-      cyan('"react-scripts ' + key + '"') +
-      ' with ' +
-      cyan('"node scripts/' + key + '.js"')
-    );
+    Object.keys(ownPackage.bin).forEach(function (binKey) {
+      var regex = new RegExp(binKey + ' (\\w+)', 'g');
+      appPackage.scripts[key] = appPackage.scripts[key]
+        .replace(regex, 'node scripts/$1.js');
+      console.log(
+        '  Replacing ' +
+        cyan('"' + binKey + ' ' + key + '"') +
+        ' with ' +
+        cyan('"node scripts/' + key + '.js"')
+      );
+    });
   });
 
   console.log();
