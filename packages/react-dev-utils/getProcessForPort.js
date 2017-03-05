@@ -43,7 +43,7 @@ function getProcessCommand(processId, processDirectory) {
 }
 
 function getDirectoryOfProcessById(processId) {
-  return execSync('lsof -p '+ processId + ' | grep cwd | awk \'{print $9}\'', execOptions).trim();
+  return execSync('lsof -p '+ processId + ' | awk \'$4=="cwd" {print $9}\'', execOptions).trim();
 }
 
 function getProcessForPort(port) {
