@@ -32,7 +32,7 @@ build: off
 
 skip_commits:
   files:
-    - **/*.md
+    - '**/*.md'
 
 test_script:
   - node --version
