@@ -153,7 +153,7 @@ mv package.json.orig package.json
 # Install the CLI in a temporary location
 cd $temp_cli_path
 
-# Initialize package.json before installing the CLI becuase npm will not install
+# Initialize package.json before installing the CLI because npm will not install
 # the CLI properly in the temporary location if it is missing.
 npm init --yes
 
