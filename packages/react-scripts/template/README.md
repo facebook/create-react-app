@@ -43,6 +43,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
+- [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
 - [Injecting Data from the Server into the Page](#injecting-data-from-the-server-into-the-page)
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
@@ -268,7 +269,7 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
     "request": "launch",
     "url": "http://localhost:3000",
     "webRoot": "${workspaceRoot}/src",
-    "userDataDir": "${workspaceRoot}/.chrome",
+    "userDataDir": "${workspaceRoot}/.vscode/chrome",
     "sourceMapPathOverrides": {
       "webpack:///src/*": "${webRoot}/*"
     }
@@ -282,11 +283,11 @@ Start your app by running `npm start`, and start debugging in VS Code by pressin
 
 You can find the source HTML file in the `public` folder of the generated project. You may edit the `<title>` tag in it to change the title from “React App” to anything else.
 
-Note that normally you wouldn't edit files in the `public` folder very often. For example, [adding a stylesheet](#adding-a-stylesheet) is done without touching the HTML.
+Note that normally you wouldn’t edit files in the `public` folder very often. For example, [adding a stylesheet](#adding-a-stylesheet) is done without touching the HTML.
 
 If you need to dynamically update the page title based on the content, you can use the browser [`document.title`](https://developer.mozilla.org/en-US/docs/Web/API/Document/title) API. For more complex scenarios when you want to change the title from React components, you can use [React Helmet](https://github.com/nfl/react-helmet), a third party library.
 
-Finally, if you use a custom server for your app in production and want to modify the title before it gets sent to the browser, you can follow advice in [this section](#generating-dynamic-meta-tags-on-the-server).
+If you use a custom server for your app in production and want to modify the title before it gets sent to the browser, you can follow advice in [this section](#generating-dynamic-meta-tags-on-the-server). Alternatively, you can pre-build each page as a static HTML file which then loads the JavaScript bundle, which is covered [here](#pre-rendering-into-static-html-files).
 
 ## Installing a Dependency
 
@@ -427,7 +428,7 @@ Then in `package.json`, add the following lines to `scripts`:
 ```diff
    "scripts": {
 +    "build-css": "node-sass src/ -o src/",
-+    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch",
++    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
@@ -720,7 +721,7 @@ Note that the caveats from the above section apply:
 
 ### Adding Temporary Environment Variables In Your Shell
 
-Defining environment variables can vary between OSes. It's also important to know that this manner is temporary for the
+Defining environment variables can vary between OSes. It’s also important to know that this manner is temporary for the
 life of the shell session.
 
 #### Windows (cmd.exe)
@@ -860,6 +861,16 @@ Since Create React App doesn’t support server rendering, you might be wonderin
 Then, on the server, regardless of the backend you use, you can read `index.html` into memory and replace `__OG_TITLE__`, `__OG_DESCRIPTION__`, and any other placeholders with values depending on the current URL. Just make sure to sanitize and escape the interpolated values so that they are safe to embed into HTML!
 
 If you use a Node server, you can even share the route matching logic between the client and the server. However duplicating it also works fine in simple cases.
+
+## Pre-Rendering into Static HTML Files
+
+If you’re hosting your `build` with a static hosting provider you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot) to generate HTML pages for each route, or relative link, in your application. These pages will then seamlessly become active, or “hydrated”, when the JavaScript bundle has loaded.
+
+There are also opportunities to use this outside of static hosting, to take the pressure off the server when generating and caching routes.
+
+The primary benefit of pre-rendering is that you get the core content of each page _with_ the HTML payload—regardless of whether or not your JavaScript bundle successfully downloads. It also increases the likelihood that each route of your application will be picked up by search engines.
+
+You can read more about [zero-configuration pre-rendering (also called snapshotting) here](https://medium.com/superhighfives/an-almost-static-stack-6df0a2791319).
 
 ## Injecting Data from the Server into the Page
 
@@ -1162,7 +1173,7 @@ For an example, a simple button component could have following states:
 
 Usually, it’s hard to see these states without running a sample app or some examples.
 
-Create React App doesn't include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
+Create React App doesn’t include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
 
 ![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
 
@@ -1204,7 +1215,7 @@ cd build
 python -m SimpleHTTPServer 9000
 ```
 
-If you're using [Node](https://nodejs.org/) and [Express](http://expressjs.com/) as a server, it might look like this:
+If you’re using [Node](https://nodejs.org/) and [Express](http://expressjs.com/) as a server, it might look like this:
 
 ```javascript
 const express = require('express');
@@ -1239,6 +1250,17 @@ This is because when there is a fresh page load for a `/todos/42`, the server lo
  });
 ```
 
+If you’re using [Apache](https://httpd.apache.org/), you need to create a `.htaccess` file in the `public` folder that looks like this:
+
+```
+    Options -MultiViews
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.html [QSA,L]
+```
+
+It will get copied to the `build` folder when you run `npm run build`.
+
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
 ### Building for Relative Paths
@@ -1270,9 +1292,9 @@ See [this](https://medium.com/@to_pe/deploying-create-react-app-on-microsoft-azu
 
 ### Firebase
 
-Install the Firebase CLI if you haven't already by running `npm install -g firebase-tools`. Sign up for a [Firebase account](https://console.firebase.google.com/) and create a new project. Run `firebase login` and login with your previous created Firebase account.
+Install the Firebase CLI if you haven’t already by running `npm install -g firebase-tools`. Sign up for a [Firebase account](https://console.firebase.google.com/) and create a new project. Run `firebase login` and login with your previous created Firebase account.
 
-Then run the `firebase init` command from your project's root. You need to choose the **Hosting: Configure and deploy Firebase Hosting sites** and choose the Firebase project you created in the previous step. You will need to agree with `database.rules.json` being created, choose `build` as the public directory, and also agree to **Configure as a single-page app** by replying with `y`.
+Then run the `firebase init` command from your project’s root. You need to choose the **Hosting: Configure and deploy Firebase Hosting sites** and choose the Firebase project you created in the previous step. You will need to agree with `database.rules.json` being created, choose `build` as the public directory, and also agree to **Configure as a single-page app** by replying with `y`.
 
 ```sh
     === Project Setup
@@ -1377,7 +1399,7 @@ Then run:
 npm run deploy
 ```
 
-#### Step 4: Ensure your project's settings use `gh-pages`
+#### Step 4: Ensure your project’s settings use `gh-pages`
 
 Finally, make sure **GitHub Pages** option in your GitHub project settings is set to use the `gh-pages` branch:
 
@@ -1389,7 +1411,7 @@ You can configure a custom domain with GitHub Pages by adding a `CNAME` file to 
 
 #### Notes on client-side routing
 
-GitHub Pages doesn't support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
+GitHub Pages doesn’t support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
@@ -1399,9 +1421,13 @@ GitHub Pages doesn't support routers that use the HTML5 `pushState` history API 
 Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
 You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
 
-#### Resolving "Module not found: Error: Cannot resolve 'file' or 'directory'"
+#### Resolving Heroku Deployment Errors
 
-Sometimes `npm run build` works locally but fails during deploy via Heroku with an error like this:
+Sometimes `npm run build` works locally but fails during deploy via Heroku. Following are the most common cases.
+
+##### "Module not found: Error: Cannot resolve 'file' or 'directory'"
+
+If you get something like this:
 
 ```
 remote: Failed to create a production build. Reason:
@@ -1409,9 +1435,24 @@ remote: Module not found: Error: Cannot resolve 'file' or 'directory'
 MyDirectory in /tmp/build_1234/src
 ```
 
-This means you need to ensure that the lettercase of the file or directory you `import` matches the one you see on your filesystem or on GitHub.
+It means you need to ensure that the lettercase of the file or directory you `import` matches the one you see on your filesystem or on GitHub.
 
 This is important because Linux (the operating system used by Heroku) is case sensitive. So `MyDirectory` and `mydirectory` are two distinct directories and thus, even though the project builds locally, the difference in case breaks the `import` statements on Heroku remotes.
+
+##### "Could not find a required file."
+
+If you exclude or ignore necessary files from the package you will see a error similar this one:
+
+```
+remote: Could not find a required file.
+remote:   Name: `index.html`
+remote:   Searched in: /tmp/build_a2875fc163b209225122d68916f1d4df/public
+remote:
+remote: npm ERR! Linux 3.13.0-105-generic
+remote: npm ERR! argv "/tmp/build_a2875fc163b209225122d68916f1d4df/.heroku/node/bin/node" "/tmp/build_a2875fc163b209225122d68916f1d4df/.heroku/node/bin/npm" "run" "build"
+```
+
+In this case, ensure that the file is there with the proper lettercase and that’s not ignored on your local `.gitignore` or `~/.gitignore_global`.
 
 ### Modulus
 
@@ -1419,7 +1460,7 @@ See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modul
 
 ## Netlify
 
-**To do a manual deploy to Netlify's CDN:**
+**To do a manual deploy to Netlify’s CDN:**
 
 ```sh
 npm install netlify-cli
@@ -1448,7 +1489,27 @@ When you build the project, Create React App will place the `public` folder cont
 
 ### Now
 
-See [this example](https://github.com/xkawi/create-react-app-now) for a zero-configuration single-command deployment with [now](https://zeit.co/now).
+[now](https://zeit.co/now) offers a zero-configuration single-command deployment.
+
+1. Install the `now` command-line tool either via the recommended [desktop tool](https://zeit.co/download) or via node with `npm install -g now`.
+
+2. Install `serve` by running `npm install --save serve`.
+
+3. Add this line to `scripts` in `package.json`:
+    
+    ```
+    "now-start": "serve build/",
+    ```
+    
+4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
+    
+    ```
+    > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
+    ```
+    
+    Paste that URL into your browser when the build is complete, and you will see your deployed app.
+
+Details are available in [this article.](https://zeit.co/blog/now-static)
 
 ### S3 and CloudFront
 
@@ -1456,7 +1517,7 @@ See this [blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-t
 
 ### Surge
 
-Install the Surge CLI if you haven't already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account. You just need to specify the *build* folder and your custom domain, and you are done.
+Install the Surge CLI if you haven’t already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account. You just need to specify the *build* folder and your custom domain, and you are done.
 
 ```sh
               email: email@domain.com
@@ -1500,7 +1561,7 @@ If this doesn’t happen, try one of the following workarounds:
 * Some editors like Vim and IntelliJ have a “safe write” feature that currently breaks the watcher. You will need to disable it. Follow the instructions in [“Working with editors supporting safe write”](https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write).
 * If your project path contains parentheses, try moving the project to a path without them. This is caused by a [Webpack watcher bug](https://github.com/webpack/watchpack/issues/42).
 * On Linux and macOS, you might need to [tweak system settings](https://webpack.github.io/docs/troubleshooting.html#not-enough-watchers) to allow more watchers.
-* If the project runs inside a virtual machine such as (a Vagrant provisioned) VirtualBox, run `npm install --save-dev cross-env` in its root folder and then replace `"react-scripts start"` in the `scripts` section of its `package.json` with `"cross-env CHOKIDAR_USEPOLLING=true react-scripts start"`. This ensures that the next time you run `npm start`, the watcher uses the polling mode, as necessary inside a VM.
+* If the project runs inside a virtual machine such as (a Vagrant provisioned) VirtualBox, create an `.env` file in your project directory if it doesn’t exist, and add `CHOKIDAR_USEPOLLING=true` to it. This ensures that the next time you run `npm start`, the watcher uses the polling mode, as necessary inside a VM.
 
 If none of these solutions help please leave a comment [in this thread](https://github.com/facebookincubator/create-react-app/issues/659).
 
@@ -1524,7 +1585,7 @@ brew reinstall watchman
 
 You can find [other installation methods](https://facebook.github.io/watchman/docs/install.html#build-install) on the Watchman documentation page.
 
-If this still doesn't help, try running `launchctl unload -F ~/Library/LaunchAgents/com.github.facebook.watchman.plist`.
+If this still doesn’t help, try running `launchctl unload -F ~/Library/LaunchAgents/com.github.facebook.watchman.plist`.
 
 There are also reports that *uninstalling* Watchman fixes the issue. So if nothing else helps, remove it from your system and try again.
 
@@ -1535,7 +1596,7 @@ It is reported that `npm run build` can fail on machines with no swap space, whi
 ### `npm run build` fails on Heroku
 
 This may be a problem with case sensitive filenames.
-Please refer to [this section](#resolving-module-not-found-error-cannot-resolve-file-or-directory).
+Please refer to [this section](#resolving-heroku-deployment-errors).
 
 ## Something Missing?
 
