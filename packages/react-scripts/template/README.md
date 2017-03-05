@@ -1249,6 +1249,13 @@ This is because when there is a fresh page load for a `/todos/42`, the server lo
    res.sendFile(path.join(__dirname, './build', 'index.html'));
  });
 ```
+If you're using [apache](https://httpd.apache.org/), you need to create a `.htaccess` file that is located beside your build's `index.html` that might look like this:
+```
+    Options -MultiViews
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.html [QSA,L]
+```
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
