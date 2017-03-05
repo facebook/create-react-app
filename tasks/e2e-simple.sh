@@ -21,10 +21,10 @@ temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 
 function cleanup {
   echo 'Cleaning up.'
-  cd $root_path
+  cd "$root_path"
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
-  rm -rf $temp_cli_path $temp_app_path
+  rm -rf "$temp_cli_path" $temp_app_path
 }
 
 # Error messages are redirected to stderr
@@ -42,7 +42,7 @@ function handle_exit {
 }
 
 function create_react_app {
-  node "$temp_cli_path"/node_modules/create-react-app/index.js $*
+  node "$temp_cli_path"/node_modules/create-react-app/index.js "$@"
 }
 
 # Check for the existence of one or more files.
@@ -126,21 +126,21 @@ npm start -- --smoke-test
 # ******************************************************************************
 
 # Pack CLI
-cd $root_path/packages/create-react-app
+cd "$root_path"/packages/create-react-app
 cli_path=$PWD/`npm pack`
 
 # Go to react-scripts
-cd $root_path/packages/react-scripts
+cd "$root_path"/packages/react-scripts
 
 # Save package.json because we're going to touch it
 cp package.json package.json.orig
 
 # Replace own dependencies (those in the `packages` dir) with the local paths
 # of those packages.
-node $root_path/tasks/replace-own-deps.js
+node "$root_path"/tasks/replace-own-deps.js
 
 # Finally, pack react-scripts
-scripts_path=$root_path/packages/react-scripts/`npm pack`
+scripts_path="$root_path"/packages/react-scripts/`npm pack`
 
 # Restore package.json
 rm package.json
@@ -151,12 +151,12 @@ mv package.json.orig package.json
 # ******************************************************************************
 
 # Install the CLI in a temporary location
-cd $temp_cli_path
-npm install $cli_path
+cd "$temp_cli_path"
+npm install "$cli_path"
 
 # Install the app in a temporary location
 cd $temp_app_path
-create_react_app --scripts-version=$scripts_path test-app
+create_react_app --scripts-version="$scripts_path" test-app
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -243,10 +243,10 @@ verify_env_url
 echo yes | npm run eject
 
 # ...but still link to the local packages
-npm link $root_path/packages/babel-preset-react-app
-npm link $root_path/packages/eslint-config-react-app
-npm link $root_path/packages/react-dev-utils
-npm link $root_path/packages/react-scripts
+npm link "$root_path"/packages/babel-preset-react-app
+npm link "$root_path"/packages/eslint-config-react-app
+npm link "$root_path"/packages/react-dev-utils
+npm link "$root_path"/packages/react-scripts
 
 # Test the build
 npm run build
