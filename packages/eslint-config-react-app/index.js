@@ -133,7 +133,8 @@ module.exports = {
     'no-unused-vars': ['warn', {
       vars: 'local',
       varsIgnorePattern: '^_',
-      args: 'none'
+      args: 'none',
+      ignoreRestSiblings: true,
     }],
     'no-use-before-define': ['warn', 'nofunc'],
     'no-useless-computed-key': 'warn',
