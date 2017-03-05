@@ -353,9 +353,10 @@ function getPackageName(installPackage) {
     }).catch(function(err) {
       // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
       // However, this function returns package name only without semver version.
-      console.log('Failed to extract package: ' + err.message);
-      console.log('Falling back to naive behavior ...')
-      return Promise.resolve(installPackage.match(/^.+\/(.+?)(?:-\d+.+)?\.tgz$/)[1]);
+      console.log('Could not extract the package name from the archive: ' + err.message);
+      var assumedProjectName = installPackage.match(/^.+\/(.+?)(?:-\d+.+)?\.tgz$/)[1];
+      console.log('Based on the filename, assuming it is "' + chalk.cyan(assumedProjectName) + '"');
+      return Promise.resolve(assumedProjectName);
     });
   } else if (installPackage.indexOf('git+') === 0) {
     // Pull package name out of git urls e.g:
