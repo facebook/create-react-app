@@ -28,7 +28,6 @@ var webpack = require('webpack');
 var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-var copyPublicFolder = require('react-dev-utils/copyPublicFolder');
 var printFileSizes = require('react-dev-utils/printFileSizes');
 var removeFileNameHash = require('react-dev-utils/removeFileNameHash');
 var recursive = require('recursive-readdir');
@@ -186,3 +185,11 @@ function build(previousSizeMap) {
     }
   });
 }
+
+function copyPublicFolder(appPublic, appBuild, appHtml) {
+  fs.copySync(appPublic, appBuild, {
+    dereference: true,
+    filter: file => file !== appHtml
+  });
+};
+

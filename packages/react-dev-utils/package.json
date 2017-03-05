@@ -11,11 +11,9 @@
     "node": ">=4"
   },
   "files": [    
-    "copyPublicFolder.js",   
     "checkRequiredFiles.js",    
     "clearConsole.js",   
     "formatWebpackMessages.js",   
-    "getDifferenceLabel.js",   
     "getProcessForPort.js",   
     "InterpolateHtmlPlugin.js",   
     "openBrowser.js",   
@@ -33,7 +31,6 @@
     "filesize": "3.3.0",
     "gzip-size": "^3.0.0",
     "html-entities": "1.2.0",
-    "fs-extra": "0.30.0",
     "opn": "4.0.2",
     "sockjs-client": "1.1.2",
     "strip-ansi": "3.0.1"
