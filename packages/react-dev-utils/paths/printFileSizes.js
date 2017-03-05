@@ -7,6 +7,11 @@ var gzipSize = require('gzip-size').sync;
 
 // Print a detailed summary of build files.
 module.exports = paths => function printFileSizes(stats, previousSizeMap) {
+  function removeFileNameHash(fileName) {
+    return fileName
+      .replace(paths.appBuild, '')
+      .replace(/\/?(.*)(\.\w+)(\.js|\.css)/, (match, p1, p2, p3) => p1 + p3);
+  };
   var removeFileNameHash = require('./removeFileNameHash')(paths);
   var getDifferenceLabel = require('../getDifferenceLabel');
   var assets = stats
@@ -45,3 +50,5 @@ module.exports = paths => function printFileSizes(stats, previousSizeMap) {
     );
   });
 };
+
+

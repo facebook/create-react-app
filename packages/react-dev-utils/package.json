@@ -10,7 +10,21 @@
   "engines": {
     "node": ">=4"
   },
-  "files": ["clearConsole.js", "checkRequiredFiles.js", "formatWebpackMessages.js", "getProcessForPort.js", "InterpolateHtmlPlugin.js", "openChrome.applescript", "openBrowser.js", "prompt.js", "WatchMissingNodeModulesPlugin.js", "webpackHotDevClient.js"],
+  "files": [    
+    "paths/copyPublicFolder.js",   
+    "paths/printFileSizes.js",   
+    "clearConsole.js",   
+    "checkRequiredFiles.js",    
+    "formatWebpackMessages.js",   
+    "getProcessForPort.js",   
+    "getDifferenceLabel.js",   
+    "InterpolateHtmlPlugin.js",   
+    "openChrome.applescript",   
+    "openBrowser.js",   
+    "prompt.js",    
+    "WatchMissingNodeModulesPlugin.js",   
+    "webpackHotDevClient.js"
+  ],
   "dependencies": {
     "ansi-html": "0.0.5",
     "chalk": "1.1.3",
