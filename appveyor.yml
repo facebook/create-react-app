@@ -30,6 +30,10 @@ install:
 
 build: off
 
+skip_commits:
+  files:
+    - '**/*.md'
+
 test_script:
   - node --version
   - npm --version
