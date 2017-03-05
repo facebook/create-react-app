@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 
