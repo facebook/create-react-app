@@ -17,7 +17,7 @@ function openBrowser(url) {
   // Attempt to honor this environment variable.
   // It is specific to the operating system.
   // See https://github.com/sindresorhus/opn#app for documentation.
-  let browser = process.env.BROWSER;
+  var browser = process.env.BROWSER;
 
   // Special case: BROWSER="none" will prevent opening completely.
   if (browser === 'none') {
