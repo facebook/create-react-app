@@ -17,7 +17,7 @@ function openBrowser(url) {
   // Attempt to honor this environment variable.
   // It is specific to the operating system.
   // See https://github.com/sindresorhus/opn#app for documentation.
-  const browser = process.env.BROWSER;
+  let browser = process.env.BROWSER;
 
   // Special case: BROWSER="none" will prevent opening completely.
   if (browser === 'none') {
@@ -50,6 +50,14 @@ function openBrowser(url) {
     }
   }
 
+  // Another special case: on OS X, check if BROWSER has been set to "open".
+  // In this case, instead of passing `open` to `opn` (which won't work),
+  // just ignore it (thus ensuring the intended behavior, i.e. opening the system browser):
+  // https://github.com/facebookincubator/create-react-app/pull/1690#issuecomment-283518768
+  if (process.platform === 'darwin' && browser === 'open') {
+    browser = undefined;
+  }
+  
   // Fallback to opn
   // (It will always open new tab)
   try {
