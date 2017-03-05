@@ -146,6 +146,18 @@ if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "1" ]; t
 fi
 
 # ******************************************************************************
+# Test --scripts-version with a scoped fork tgz of react-scripts
+# ******************************************************************************
+
+cd $temp_app_path
+curl "https://registry.npmjs.org/@enoah_netzach/react-scripts/-/react-scripts-0.9.0.tgz" -o enoah-scripts-0.9.0.tgz
+create_react_app --scripts-version=$temp_app_path/enoah-scripts-0.9.0.tgz test-app-scoped-fork-tgz
+cd test-app-scoped-fork-tgz
+
+# Check corresponding scripts version is installed.
+exists node_modules/@enoah_netzach/react-scripts
+
+# ******************************************************************************
 # Test nested folder path as the project name
 # ******************************************************************************
 
