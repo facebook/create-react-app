@@ -204,28 +204,34 @@ function install(useYarn, dependencies, verbose, isOnline) {
 
 function run(root, appName, version, verbose, originalDirectory, template) {
   var packageToInstall = getInstallPackage(version);
-  var packageName = packageToInstall;
-
   var allDependencies = ['react', 'react-dom', packageToInstall];
 
   console.log('Installing packages. This might take a couple minutes.');
 
   var useYarn = shouldUseYarn();
   getPackageName(packageToInstall)
-    .then(function(_packageName) {
-      packageName = _packageName;
-      return checkIfOnline(useYarn);
+    .then(function(packageName) {
+      return checkIfOnline(useYarn).then(function(isOnline) {
+        return {
+          isOnline: isOnline,
+          packageName: packageName,
+        };
+      });
     })
-    .then(function(isOnline) {
+    .then(function(info) {
+      var isOnline = info.isOnline;
+      var packageName = info.packageName;
       console.log(
         'Installing ' + chalk.cyan('react') + ', ' + chalk.cyan('react-dom') +
         ', and ' + chalk.cyan(packageName) + '...'
       );
       console.log();
 
-      return install(useYarn, allDependencies, verbose, isOnline);
+      return install(useYarn, allDependencies, verbose, isOnline).then(function() {
+        return packageName;
+      });
     })
-    .then(function() {
+    .then(function(packageName) {
       checkNodeVersion(packageName);
 
       // Since react-scripts has been installed with --save
