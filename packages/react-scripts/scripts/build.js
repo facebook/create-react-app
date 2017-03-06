@@ -22,15 +22,13 @@ var chalk = require('chalk');
 var fs = require('fs-extra');
 var path = require('path');
 var url = require('url');
-var filesize = require('filesize');
-var gzipSize = require('gzip-size').sync;
 var webpack = require('webpack');
 var config = require('../config/webpack.config.prod');
 var paths = require('../config/paths');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-var fileSizeReporter = require('react-dev-utils/fileSizeReporter');
-var recursive = require('recursive-readdir');
-var stripAnsi = require('strip-ansi');
+var FileSizeReporter = require('react-dev-utils/FileSizeReporter');
+var measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
+var printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 
@@ -41,22 +39,16 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 // First, read the current file sizes in build directory.
 // This lets us display how much they changed later.
-recursive(paths.appBuild, (err, fileNames) => {
-  var previousSizeMap = fileSizeReporter.measureFileSizesBeforeBuild(paths.appBuild, fileNames);
-
+measureFileSizesBeforeBuild(paths.appBuild).then(previousFileSizes => {
   // Remove all content but keep the directory so that
   // if you're in it, you don't end up in Trash
   fs.emptyDirSync(paths.appBuild);
 
   // Start the webpack build
-  build(previousSizeMap);
+  build(previousFileSizes);
 
   // Merge with the public folder
-  copyPublicFolder(
-    paths.appPublic, 
-    paths.appBuild, 
-    paths.appHtml
-  );
+  copyPublicFolder();
 });
 
 // Print out errors
@@ -70,7 +62,7 @@ function printErrors(summary, errors) {
 }
 
 // Create the production build and print the deployment instructions.
-function build(previousSizeMap) {
+function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
   var compiler;
@@ -102,7 +94,7 @@ function build(previousSizeMap) {
 
     console.log('File sizes after gzip:');
     console.log();
-    fileSizeReporter.printFileSizesAfterBuild(paths.appBuild, stats, previousSizeMap);
+    printFileSizesAfterBuild(stats, previousFileSizes);
     console.log();
 
     var openCommand = process.platform === 'win32' ? 'start' : 'open';
@@ -178,10 +170,10 @@ function build(previousSizeMap) {
   });
 }
 
-function copyPublicFolder(appPublic, appBuild, appHtml) {
-  fs.copySync(appPublic, appBuild, {
+function copyPublicFolder() {
+  fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
-    filter: file => file !== appHtml
+    filter: file => file !== paths.appHtml
   });
 };
 

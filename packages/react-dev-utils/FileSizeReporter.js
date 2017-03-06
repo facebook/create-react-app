@@ -1,18 +1,33 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
 var fs = require('fs');
 var path = require('path');
 var chalk = require('chalk');
 var filesize = require('filesize');
+var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
 var gzipSize = require('gzip-size').sync;
-// Print a detailed summary of build files.
-function printFileSizesAfterBuild(appBuild, stats, previousSizeMap) {
-  var assets = stats
+
+// Prints a detailed summary of build files.
+function printFileSizesAfterBuild(webpackStats, previousSizeMap) {
+  var root = previousSizeMap.root;
+  var sizes = previousSizeMap.sizes;
+  var assets = webpackStats
     .toJson()
     .assets.filter(asset => /\.(js|css)$/.test(asset.name))
     .map(asset => {
-      var fileContents = fs.readFileSync(appBuild + '/' + asset.name);
+      var fileContents = fs.readFileSync(path.join(root, asset.name));
       var size = gzipSize(fileContents);
-      var previousSize = previousSizeMap[removeFileNameHash(appBuild, asset.name)];
+      var previousSize = sizes[removeFileNameHash(root, asset.name)];
       var difference = getDifferenceLabel(size, previousSize);
       return {
         folder: path.join('build', path.dirname(asset.name)),
@@ -41,13 +56,13 @@ function printFileSizesAfterBuild(appBuild, stats, previousSizeMap) {
         chalk.cyan(asset.name)
     );
   });
-};
+}
 
-function removeFileNameHash(appBuild, fileName) {
+function removeFileNameHash(buildFolder, fileName) {
   return fileName
-    .replace(appBuild, '')
+    .replace(buildFolder, '')
     .replace(/\/?(.*)(\.\w+)(\.js|\.css)/, (match, p1, p2, p3) => p1 + p3);
-};
+}
 
 // Input: 1024, 2048
 // Output: "(+1 KB)"
@@ -64,22 +79,32 @@ function getDifferenceLabel(currentSize, previousSize) {
   } else {
     return '';
   }
-};
+}
 
-function measureFileSizesBeforeBuild(appBuild, fileNames){
-  return (fileNames || [])
-    .filter(fileName => /\.(js|css)$/.test(fileName))
-    .reduce((memo, fileName) => {
-      var contents = fs.readFileSync(fileName);
-      var key = removeFileNameHash(appBuild, fileName);
-      memo[key] = gzipSize(contents);
-      return memo;
-    }, {});
+function measureFileSizesBeforeBuild(buildFolder) {
+  return new Promise(resolve => {
+    recursive(buildFolder, (err, fileNames) => {
+      var sizes;
+      if (!err && fileNames) {
+        sizes = fileNames
+          .filter(fileName => /\.(js|css)$/.test(fileName))
+          .reduce((memo, fileName) => {
+            var contents = fs.readFileSync(fileName);
+            var key = removeFileNameHash(buildFolder, fileName);
+            memo[key] = gzipSize(contents);
+            return memo;
+          }, {});
+      }
+      resolve({
+        root: buildFolder,
+        sizes: sizes || {},
+      });
+    });
+  });
 }
 
 module.exports = {
   measureFileSizesBeforeBuild: measureFileSizesBeforeBuild,
-  printFileSizesAfterBuild: printFileSizesAfterBuild
-}
-
+  printFileSizesAfterBuild: printFileSizesAfterBuild,
+};
 
