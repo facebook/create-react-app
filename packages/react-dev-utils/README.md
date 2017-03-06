@@ -110,6 +110,29 @@ clearConsole();
 console.log('Just cleared the screen!');
 ```
 
+#### `FileSizeReporter`
+
+##### `measureFileSizesBeforeBuild(buildFolder: string): Promise<OpaqueFileSizes>`
+
+Captures JS and CSS asset sizes inside the passed `buildFolder`. Save the result value to compare it after the build.
+
+##### `printFileSizesAfterBuild(webpackStats: WebpackStats, previousFileSizes: OpaqueFileSizes)`
+
+Prints the JS and CSS asset sizes after the build, and includes a size comparison with `previousFileSizes` that were captured earlier using `measureFileSizesBeforeBuild()`.
+
+```js
+var {
+  measureFileSizesBeforeBuild,
+  printFileSizesAfterBuild,
+} = require('react-dev-utils/FileSizeReporter');
+
+measureFileSizesBeforeBuild(buildFolder).then(previousFileSizes => {
+  return cleanAndRebuild().then(webpackStats => {
+    printFileSizesAfterBuild(webpackStats, previousFileSizes);
+  });
+});
+```
+
 #### `formatWebpackMessages({errors: Array<string>, warnings: Array<string>}): {errors: Array<string>, warnings: Array<string>}`
 
 Extracts and prettifies warning and error messages from webpack [stats](https://github.com/webpack/docs/wiki/node.js-api#stats) object.
