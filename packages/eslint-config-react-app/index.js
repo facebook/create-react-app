@@ -200,13 +200,13 @@ module.exports = {
     // 'import/namespace': 'warn',
     // 'import/no-amd': 'warn',
     // 'import/no-duplicates': 'warn',
-    // 'import/no-extraneous-dependencies': 'warn',
     // 'import/no-named-as-default': 'warn',
     // 'import/no-named-as-default-member': 'warn',
     // 'import/no-unresolved': ['warn', { commonjs: true }],
     // We don't support configuring Webpack using import source strings, so this
     // is always an error.
     'import/no-webpack-loader-syntax': 'error',
+    'import/no-extraneous-dependencies': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/jsx-equals-spacing': ['warn', 'never'],
