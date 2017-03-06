@@ -8,6 +8,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 // @remove-on-eject-end
+'use strict';
 
 if (typeof Promise === 'undefined') {
   // Rejection tracking prevents a common issue where React gets into an

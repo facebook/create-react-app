@@ -8,6 +8,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 // @remove-on-eject-end
+'use strict';
 
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.NODE_ENV = 'production';
