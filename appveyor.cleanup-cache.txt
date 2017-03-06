@@ -3,4 +3,3 @@ http://help.appveyor.com/discussions/questions/1310-delete-cache
 
 ----
 Just testing if this works.
-Hello, world.
