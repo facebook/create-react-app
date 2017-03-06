@@ -10,7 +10,7 @@
   "engines": {
     "node": ">=4"
   },
-  "files": [    
+  "files": [
     "checkRequiredFiles.js",
     "clearConsole.js",
     "FileSizeReporter.js",
