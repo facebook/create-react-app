@@ -20,7 +20,6 @@
     "openBrowser.js",
     "openChrome.applescript",
     "prompt.js",
-    "removeFileNameHash.js", 
     "WatchMissingNodeModulesPlugin.js",
     "webpackHotDevClient.js"
   ],
