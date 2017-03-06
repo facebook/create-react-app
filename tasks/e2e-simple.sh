@@ -97,7 +97,7 @@ then
 fi
 
 # Lint own code
-./node_modules/.bin/eslint --max-warnings 0 --ignore-path .gitignore ./
+./node_modules/.bin/eslint --max-warnings 0 .
 
 # ******************************************************************************
 # First, test the create-react-app development environment.

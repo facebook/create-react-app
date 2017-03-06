@@ -9,6 +9,8 @@
  */
 // @remove-on-eject-end
 
+'use strict';
+
 process.env.NODE_ENV = 'development';
 
 // Load environment variables from .env file. Suppress warnings using silent
@@ -70,7 +72,7 @@ function run(port) {
   addWebpackMiddleware(devServer);
 
   // Launch WebpackDevServer.
-  devServer.listen(port, (err, result) => {
+  devServer.listen(port, err => {
     if (err) {
       return console.log(err);
     }
