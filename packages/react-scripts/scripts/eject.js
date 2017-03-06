@@ -152,14 +152,17 @@ prompt(
   );
   console.log();
 
-  try {
-    // remove react-scripts and react-scripts binaries from app node_modules
-    Object.keys(ownPackage.bin).forEach(function(binKey) {
-      fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
-    });
-    fs.removeSync(ownPath);
-  } catch(e) {
-    // It's not essential that this succeeds
+  // "Don't destroy what isn't ours"
+  if (ownPath.indexOf(appPath) === 0) {
+    try {
+      // remove react-scripts and react-scripts binaries from app node_modules
+      Object.keys(ownPackage.bin).forEach(function(binKey) {
+        fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
+      });
+      fs.removeSync(ownPath);
+    } catch(e) {
+      // It's not essential that this succeeds
+    }
   }
 
   if (fs.existsSync(paths.yarnLockFile)) {
