@@ -107,4 +107,3 @@ module.exports = {
   measureFileSizesBeforeBuild: measureFileSizesBeforeBuild,
   printFileSizesAfterBuild: printFileSizesAfterBuild,
 };
-
