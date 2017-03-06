@@ -115,7 +115,7 @@ module.exports = {
 };
 
 var ownPackageJson = require('../package.json');
-var reactScriptsPath = path.resolve(`node_modules/${ownPackageJson.name}`);
+var reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
 var reactScriptsLinked = fs.existsSync(reactScriptsPath) && fs.lstatSync(reactScriptsPath).isSymbolicLink();
 
 // config before publish: we're in ./packages/react-scripts/config/
