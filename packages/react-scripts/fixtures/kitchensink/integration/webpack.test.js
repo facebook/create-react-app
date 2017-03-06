@@ -28,24 +28,7 @@ describe('Integration', () => {
     it('no ext inclusion', async () => {
       const doc = await initDOM('no-ext-inclusion')
 
-      // The expected pattern here is wrong. Due to:
-      //
-      //     https://github.com/webpack/loader-utils/pull/71
-      //
-      // ...the loader-utils module gets the interpolated name wrong when
-      // there's no file extension and there's a period in source directory
-      // path (which happens here due to generated temp directories). You
-      // end up with something like:
-      //
-      //  /static/media/.cb7eb057.OEs6g9SsPz/test-kitchensink/src/features/webpack/assets/aFileWithoutExt
-      //
-      //  instead of:
-      //
-      //  /static/media/aFileWithoutExt.[hash].bin
-      //
-      // At some point loader-utils will be fixed, and the pattern can be
-      // fixed too.
-      expect(doc.getElementById('feature-no-ext-inclusion').href).to.match(/\/static\/media\/.*aFileWithoutExt$/)
+      expect(doc.getElementById('feature-no-ext-inclusion').href).to.match(/\/static\/media\/aFileWithoutExt\.[a-f0-9]{8}\.bin$/)
     })
 
     it('json inclusion', async () => {
@@ -63,7 +46,7 @@ describe('Integration', () => {
     it('unknown ext inclusion', async () => {
       const doc = await initDOM('unknown-ext-inclusion')
 
-      expect(doc.getElementById('feature-unknown-ext-inclusion').href).to.match(/\/static\/media\/aFileWithExt\.[a-f0-9]{8}\.unknown$/);
+      expect(doc.getElementById('feature-unknown-ext-inclusion').href).to.match(/\/static\/media\/aFileWithExt\.[a-f0-9]{8}\.unknown$/)
     })
   })
 })
