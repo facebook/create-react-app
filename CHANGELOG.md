@@ -3,7 +3,7 @@
 #### :bug: Bug Fix
 * `create-react-app`
 
-  * [#1706](https://github.com/facebookincubator/create-react-app/pull/1706) Extract for package name when installing compressed packages. ([@Timer](https://github.com/Timer))
+  * [#1706](https://github.com/facebookincubator/create-react-app/pull/1706) Extract compressed package for package name. ([@Timer](https://github.com/Timer))
 
     You may now specify a scoped package for `--scripts-version` and obtain a working installation.
 
@@ -95,9 +95,9 @@ npm install -g create-react-app@1.3.0
 #### :rocket: New Feature
 * `create-react-app`
   * [#1423](https://github.com/facebookincubator/create-react-app/pull/1423) **Fall back to Yarn offline cache when creating a new project.** ([@voxsim](https://github.com/voxsim))
-  
+
   If you are using Yarn, and you have created at least one app previously, Create React App now works offline.
-  
+
   <img src="http://i.imgur.com/1FLa9Tg.gif" width="500" alt="Yarn offline installation demo">
 
 #### :bug: Bug Fix
