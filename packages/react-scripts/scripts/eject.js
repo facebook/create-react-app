@@ -7,6 +7,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+'use strict';
 
 var fs = require('fs-extra');
 var path = require('path');
@@ -94,8 +95,8 @@ prompt(
 
   var ownPackage = require(path.join(ownPath, 'package.json'));
   var appPackage = require(path.join(appPath, 'package.json'));
-  var babelConfig = JSON.parse(fs.readFileSync(path.join(ownPath, '.babelrc'), 'utf8'));
-  var eslintConfig = JSON.parse(fs.readFileSync(path.join(ownPath, '.eslintrc'), 'utf8'));
+  var babelConfig = JSON.parse(fs.readFileSync(path.join(ownPath, 'babelrc'), 'utf8'));
+  var eslintConfig = JSON.parse(fs.readFileSync(path.join(ownPath, 'eslintrc'), 'utf8'));
 
   console.log(cyan('Updating the dependencies'));
   var ownPackageName = ownPackage.name;
@@ -163,7 +164,9 @@ prompt(
       fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
     });
     fs.removeSync(ownPath);
-  } catch(e) {}
+  } catch(e) {
+    // It's not essential that this succeeds
+  }
 
   if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));

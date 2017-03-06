@@ -8,6 +8,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 const fs = require('fs');
 const paths = require('../../config/paths');
 
