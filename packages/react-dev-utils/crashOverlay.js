@@ -783,6 +783,7 @@ try {
   // Browser may not support this, we don't care.
 }
 
+// eslint-disable-next-line
 var proxyConsole = function proxyConsole(type) {
   var orig = console[type];
   console[type] = function __cra_proxy_console__() {
