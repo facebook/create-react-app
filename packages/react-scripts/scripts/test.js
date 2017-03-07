@@ -8,7 +8,6 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 // @remove-on-eject-end
-
 'use strict';
 
 process.env.NODE_ENV = 'test';
@@ -18,7 +17,7 @@ process.env.PUBLIC_URL = '';
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-require('dotenv').config({silent: true});
+require('dotenv').config({ silent: true });
 
 const jest = require('jest');
 const argv = process.argv.slice(2);
@@ -33,10 +32,15 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
 const createJestConfig = require('./utils/createJestConfig');
 const path = require('path');
 const paths = require('../config/paths');
-argv.push('--config', JSON.stringify(createJestConfig(
-  relativePath => path.resolve(__dirname, '..', relativePath),
-  path.resolve(paths.appSrc, '..'),
-  false
-)));
+argv.push(
+  '--config',
+  JSON.stringify(
+    createJestConfig(
+      relativePath => path.resolve(__dirname, '..', relativePath),
+      path.resolve(paths.appSrc, '..'),
+      false
+    )
+  )
+);
 // @remove-on-eject-end
 jest.run(argv);

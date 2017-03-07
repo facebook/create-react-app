@@ -10,29 +10,29 @@
 // @remove-on-eject-end
 'use strict';
 
-var autoprefixer = require('autoprefixer');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-var getClientEnvironment = require('./env');
-var paths = require('./paths');
+const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+const getClientEnvironment = require('./env');
+const paths = require('./paths');
 
 // @remove-on-eject-begin
 // `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
-var path = require('path');
+const path = require('path');
 // @remove-on-eject-end
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
-var publicPath = '/';
+const publicPath = '/';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
-var publicUrl = '';
+const publicUrl = '';
 // Get environment variables to inject into our app.
-var env = getClientEnvironment(publicUrl);
+const env = getClientEnvironment(publicUrl);
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -61,7 +61,7 @@ module.exports = {
     // Errors should be considered fatal in development
     require.resolve('react-dev-utils/crashOverlay'),
     // Finally, this is your app's code:
-    paths.appIndexJs
+    paths.appIndexJs,
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
@@ -76,7 +76,7 @@ module.exports = {
     // containing code from all our entry points, and the Webpack runtime.
     filename: 'static/js/bundle.js',
     // This is the URL that app is served from. We use "/" in development.
-    publicPath: publicPath
+    publicPath: publicPath,
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -93,8 +93,8 @@ module.exports = {
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-      'react-native': 'react-native-web'
-    }
+      'react-native': 'react-native-web',
+    },
   },
   // @remove-on-eject-begin
   // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
@@ -103,8 +103,8 @@ module.exports = {
     modules: [
       paths.ownNodeModules,
       // Lerna hoists everything, so we need to look in our app directory
-      paths.appNodeModules
-    ]
+      paths.appNodeModules,
+    ],
   },
   // @remove-on-eject-end
   module: {
@@ -116,17 +116,19 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
-        use: [{
-          // @remove-on-eject-begin
-          // Point ESLint to our predefined config.
-          options: {
-            configFile: path.join(__dirname, '../eslintrc'),
-            useEslintrc: false
+        use: [
+          {
+            // @remove-on-eject-begin
+            // Point ESLint to our predefined config.
+            options: {
+              configFile: path.join(__dirname, '../eslintrc'),
+              useEslintrc: false,
+            },
+            // @remove-on-eject-end
+            loader: 'eslint-loader',
           },
-          // @remove-on-eject-end
-          loader: 'eslint-loader'
-        }],
-        include: paths.appSrc
+        ],
+        include: paths.appSrc,
       },
       // ** ADDING/UPDATING LOADERS **
       // The "url" loader handles all assets unless explicitly excluded.
@@ -146,28 +148,23 @@ module.exports = {
           /\.bmp$/,
           /\.gif$/,
           /\.jpe?g$/,
-          /\.png$/
+          /\.png$/,
         ],
         loader: 'file-loader',
         options: {
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
+          name: 'static/media/[name].[hash:8].[ext]',
+        },
       },
       // "url" loader works like "file" loader except that it embeds assets
       // smaller than specified limit in bytes as data URLs to avoid requests.
       // A missing `test` is equivalent to a match.
       {
-        test: [
-          /\.bmp$/,
-          /\.gif$/,
-          /\.jpe?g$/,
-          /\.png$/
-        ],
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
+          name: 'static/media/[name].[hash:8].[ext]',
+        },
       },
       // Process JS with Babel.
       {
@@ -182,8 +179,8 @@ module.exports = {
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
           // directory for faster rebuilds.
-          cacheDirectory: true
-        }
+          cacheDirectory: true,
+        },
       },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -193,34 +190,34 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader', {
+          'style-loader',
+          {
             loader: 'css-loader',
             options: {
-              importLoaders: 1
-            }
-          }, {
+              importLoaders: 1,
+            },
+          },
+          {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
-              plugins: function () {
-                return [
-                  autoprefixer({
-                    browsers: [
-                      '>1%',
-                      'last 4 versions',
-                      'Firefox ESR',
-                      'not ie < 9', // React doesn't support IE8 anyway
-                    ]
-                  })
-                ]
-              }
-            }
-          }
-        ]
-      }
+              plugins: () => [
+                autoprefixer({
+                  browsers: [
+                    '>1%',
+                    'last 4 versions',
+                    'Firefox ESR',
+                    'not ie < 9', // React doesn't support IE8 anyway
+                  ],
+                }),
+              ],
+            },
+          },
+        ],
+      },
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "url" loader exclusion list.
-    ]
+    ],
   },
   plugins: [
     // Makes some environment variables available in index.html.
@@ -246,19 +243,19 @@ module.exports = {
     // to restart the development server for Webpack to discover it. This plugin
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
-    new WatchMissingNodeModulesPlugin(paths.appNodeModules)
+    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
+    tls: 'empty',
   },
   // Turn off performance hints during development because we don't do any
   // splitting or minification in interest of speed. These warnings become
   // cumbersome.
   performance: {
-    hints: false
-  }
+    hints: false,
+  },
 };

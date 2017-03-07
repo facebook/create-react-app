@@ -7,21 +7,21 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 
 function load(prefix) {
   return [
-    { id: 1, [prefix + 'name']: '1' },
-    { id: 2, [prefix + 'name']: '2' },
-    { id: 3, [prefix + 'name']: '3' },
-    { id: 4, [prefix + 'name']: '4' }
+    { id: 1, [`${prefix} name`]: '1' },
+    { id: 2, [`${prefix} name`]: '2' },
+    { id: 3, [`${prefix} name`]: '3' },
+    { id: 4, [`${prefix} name`]: '4' },
   ];
 }
 
 export default class extends Component {
   static propTypes = {
-    onReady: PropTypes.func.isRequired
-  }
+    onReady: PropTypes.func.isRequired,
+  };
 
   constructor(props) {
     super(props);

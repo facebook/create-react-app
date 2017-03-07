@@ -7,9 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react'
-import logo from './assets/logo.svg'
+import React from 'react';
+import logo from './assets/logo.svg';
 
-export default () => (
-  <img id="feature-svg-inclusion" src={logo} alt="logo" />
-)
+export default () => <img id="feature-svg-inclusion" src={logo} alt="logo" />;

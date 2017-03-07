@@ -34,15 +34,15 @@ var base0E = 'a71d5d'; // Keywords, Storage, Selector, Markup Italic, Diff Chang
 var colors = {
   reset: [base05, 'transparent'],
   black: base05,
-  red: base08, /* marker, bg-invalid */
-  green: base0B, /* string */
-  yellow: base08, /* capitalized, jsx_tag, punctuator */
+  red: base08 /* marker, bg-invalid */,
+  green: base0B /* string */,
+  yellow: base08 /* capitalized, jsx_tag, punctuator */,
   blue: base0C,
-  magenta: base0C, /* regex */
-  cyan: base0E, /* keyword */
-  gray: base03, /* comment, gutter */
+  magenta: base0C /* regex */,
+  cyan: base0E /* keyword */,
+  gray: base03 /* comment, gutter */,
   lightgrey: base01,
-  darkgrey: base03
+  darkgrey: base03,
 };
 
 var anserMap = {
@@ -56,20 +56,19 @@ var anserMap = {
   'ansi-bright-red': 'red',
   'ansi-red': 'red',
   'ansi-bright-magenta': 'magenta',
-  'ansi-magenta': 'magenta'
+  'ansi-magenta': 'magenta',
 };
 
 function ansiHTML(txt) {
   var arr = new Anser().ansiToJson(txt, {
-    use_classes: true
+    use_classes: true,
   });
 
   var result = '';
   var open = false;
   for (var index = 0; index < arr.length; ++index) {
     var c = arr[index];
-    var content = c.content,
-        fg = c.fg;
+    var content = c.content, fg = c.fg;
 
     var contentParts = content.split('\n');
     for (var _index = 0; _index < contentParts.length; ++_index) {
