@@ -48,3 +48,8 @@ argv.push(
 );
 // @remove-on-eject-end
 jest.run(argv);
+
+process.stdin.on('end', function() {
+  process.exit(0);
+});
+process.stdin.resume();
