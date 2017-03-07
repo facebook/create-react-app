@@ -12,7 +12,8 @@
     "screencast": "svg-term --cast hItN7sl5yfCPTHxvFg5glhhfp --out screencast.svg --window",
     "test": "node packages/react-scripts/scripts/test.js --env=jsdom",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "watch": "node packages/react-scripts/scripts/watch.js"
   },
   "devDependencies": {
     "eslint": "^4.4.1",
