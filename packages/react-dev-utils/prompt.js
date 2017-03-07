@@ -16,7 +16,9 @@ var rl = require('readline');
 // You can control the behavior on <Enter> with `isYesDefault`.
 function prompt(question, isYesDefault) {
   if (typeof isYesDefault !== 'boolean') {
-    throw new Error('Provide explicit boolean isYesDefault as second argument.');
+    throw new Error(
+      'Provide explicit boolean isYesDefault as second argument.'
+    );
   }
   return new Promise(resolve => {
     var rlInterface = rl.createInterface({

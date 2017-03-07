@@ -44,9 +44,11 @@ var currentNodeVersion = process.versions.node;
 if (currentNodeVersion.split('.')[0] < 4) {
   console.error(
     chalk.red(
-      'You are running Node ' + currentNodeVersion + '.\n' +
-      'Create React App requires Node 4 or higher. \n' +
-      'Please update your version of Node.'
+      'You are running Node ' +
+        currentNodeVersion +
+        '.\n' +
+        'Create React App requires Node 4 or higher. \n' +
+        'Please update your version of Node.'
     )
   );
   process.exit(1);

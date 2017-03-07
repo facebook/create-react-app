@@ -68,15 +68,18 @@ var css = [
   '  .cra-container {',
   '    width: calc(1170px - 6em);',
   '  }',
-  '}'
+  '}',
 ].join('\n');
 
 var overlayStyle = {
   position: 'fixed',
   'box-sizing': 'border-box',
-  top: '1em', left: '1em',
-  bottom: '1em', right: '1em',
-  width: 'calc(100% - 2em)', height: 'calc(100% - 2em)',
+  top: '1em',
+  left: '1em',
+  bottom: '1em',
+  right: '1em',
+  width: 'calc(100% - 2em)',
+  height: 'calc(100% - 2em)',
   'border-radius': '3px',
   'background-color': lightGray,
   padding: '4rem',
@@ -88,7 +91,7 @@ var overlayStyle = {
   'overflow-x': 'hidden',
   'word-break': 'break-all',
   'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
-  'line-height': 1.5
+  'line-height': 1.5,
 };
 
 var hintsStyle = {
@@ -96,12 +99,12 @@ var hintsStyle = {
   'margin-top': '-3em',
   'margin-bottom': '3em',
   'text-align': 'right',
-  color: darkGray
+  color: darkGray,
 };
 
 var hintStyle = {
   padding: '0.5em 1em',
-  cursor: 'pointer'
+  cursor: 'pointer',
 };
 
 var closeButtonStyle = {
@@ -111,55 +114,55 @@ var closeButtonStyle = {
   cursor: 'pointer',
   position: 'absolute',
   right: 0,
-  top: 0
+  top: 0,
 };
 
 var additionalStyle = {
   'margin-bottom': '1.5em',
-  'margin-top': '-4em'
+  'margin-top': '-4em',
 };
 
 var headerStyle = {
   'font-size': '1.7em',
   'font-weight': 'bold',
-  color: red
+  color: red,
 };
 
 var functionNameStyle = {
   'margin-top': '1em',
-  'font-size': '1.2em'
+  'font-size': '1.2em',
 };
 
 var linkStyle = {
-  'font-size': '0.9em'
+  'font-size': '0.9em',
 };
 
 var anchorStyle = {
   'text-decoration': 'none',
-  color: darkGray
+  color: darkGray,
 };
 
 var traceStyle = {
-  'font-size': '1em'
+  'font-size': '1em',
 };
 
 var depStyle = {
-  'font-size': '1.2em'
+  'font-size': '1.2em',
 };
 
 var primaryErrorStyle = {
-  'background-color': lightRed
+  'background-color': lightRed,
 };
 
 var secondaryErrorStyle = {
-  'background-color': yellow
+  'background-color': yellow,
 };
 
 var omittedFramesStyle = {
   color: black,
   'font-size': '0.9em',
-  'margin': '1.5em 0',
-  cursor: 'pointer'
+  margin: '1.5em 0',
+  cursor: 'pointer',
 };
 
 var preStyle = {
@@ -169,25 +172,25 @@ var preStyle = {
   'margin-bottom': '0px',
   'overflow-x': 'auto',
   'font-size': '1.1em',
-  'white-space': 'pre'
+  'white-space': 'pre',
 };
 
 var toggleStyle = {
   'margin-bottom': '1.5em',
   color: darkGray,
-  cursor: 'pointer'
+  cursor: 'pointer',
 };
 
 var codeStyle = {
-  'font-family': 'Consolas, Menlo, monospace'
+  'font-family': 'Consolas, Menlo, monospace',
 };
 
 var hiddenStyle = {
-  display: 'none'
+  display: 'none',
 };
 
 var groupStyle = {
-  'margin-left': '1em'
+  'margin-left': '1em',
 };
 
 var _groupElemStyle = {
@@ -197,24 +200,24 @@ var _groupElemStyle = {
   'border-radius': '4px',
   'border-style': 'solid',
   padding: '3px 6px',
-  cursor: 'pointer'
+  cursor: 'pointer',
 };
 
 var groupElemLeft = Object.assign({}, _groupElemStyle, {
   'border-top-right-radius': '0px',
   'border-bottom-right-radius': '0px',
-  'margin-right': '0px'
+  'margin-right': '0px',
 });
 
 var groupElemRight = Object.assign({}, _groupElemStyle, {
   'border-top-left-radius': '0px',
   'border-bottom-left-radius': '0px',
-  'margin-left': '-1px'
+  'margin-left': '-1px',
 });
 
 var footerStyle = {
   'text-align': 'center',
-  color: darkGray
+  color: darkGray,
 };
 
 function applyStyles(element, styles) {
@@ -244,10 +247,8 @@ function consumeEvent(e) {
 
 function accessify(node) {
   node.setAttribute('tabindex', 0);
-  node.addEventListener('keydown', function (e) {
-    var key = e.key,
-        which = e.which,
-        keyCode = e.keyCode;
+  node.addEventListener('keydown', function(e) {
+    var key = e.key, which = e.which, keyCode = e.keyCode;
     if (key === 'Enter' || which === 13 || keyCode === 13) {
       e.preventDefault();
       e.target.click();
@@ -272,7 +273,7 @@ function renderAdditional() {
   applyStyles(group, groupStyle);
   var left = document.createElement('button');
   applyStyles(left, groupElemLeft);
-  left.addEventListener('click', function (e) {
+  left.addEventListener('click', function(e) {
     consumeEvent(e);
     switchError(-1);
   });
@@ -280,7 +281,7 @@ function renderAdditional() {
   accessify(left);
   var right = document.createElement('button');
   applyStyles(right, groupElemRight);
-  right.addEventListener('click', function (e) {
+  right.addEventListener('click', function(e) {
     consumeEvent(e);
     switchError(1);
   });
@@ -314,11 +315,13 @@ function absolutifyCode(component) {
 }
 
 function sourceCodePre(sourceLines, lineNum, columnNum) {
-  var main = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  var main = arguments.length > 3 && arguments[3] !== undefined
+    ? arguments[3]
+    : false;
 
   var sourceCode = [];
   var whiteSpace = Infinity;
-  sourceLines.forEach(function (_ref2) {
+  sourceLines.forEach(function(_ref2) {
     var text = _ref2.text;
 
     var m = text.match(/^\s*/);
@@ -329,19 +332,23 @@ function sourceCodePre(sourceLines, lineNum, columnNum) {
       whiteSpace = 0;
     }
   });
-  sourceLines.forEach(function (_ref3) {
-    var text = _ref3.text,
-        line = _ref3.line;
+  sourceLines.forEach(function(_ref3) {
+    var text = _ref3.text, line = _ref3.line;
 
     if (isFinite(whiteSpace)) text = text.substring(whiteSpace);
     sourceCode[line - 1] = text;
   });
   sourceCode = sourceCode.join('\n');
-  var ansiHighlight = codeFrame(sourceCode, lineNum, columnNum - (isFinite(whiteSpace) ? whiteSpace : 0), {
-    forceColor: true,
-    linesAbove: CONTEXT_SIZE,
-    linesBelow: CONTEXT_SIZE
-  });
+  var ansiHighlight = codeFrame(
+    sourceCode,
+    lineNum,
+    columnNum - (isFinite(whiteSpace) ? whiteSpace : 0),
+    {
+      forceColor: true,
+      linesAbove: CONTEXT_SIZE,
+      linesBelow: CONTEXT_SIZE,
+    }
+  );
   var htmlHighlight = ansiHTML(ansiHighlight);
   var code = document.createElement('code');
   code.innerHTML = htmlHighlight;
@@ -379,7 +386,7 @@ function hintsDiv() {
   applyStyles(hints, hintsStyle);
 
   var close = createHint('×');
-  close.addEventListener('click', function () {
+  close.addEventListener('click', function() {
     unmount();
   });
   applyStyles(close, closeButtonStyle);
@@ -401,7 +408,10 @@ function frameDiv(functionName, url, internalUrl) {
   var cleanedUrl = url.replace('webpack://', '.');
 
   if (internalUrl) {
-    applyStyles(frameFunctionName, Object.assign({}, functionNameStyle, depStyle));
+    applyStyles(
+      frameFunctionName,
+      Object.assign({}, functionNameStyle, depStyle)
+    );
   } else {
     applyStyles(frameFunctionName, functionNameStyle);
   }
@@ -424,9 +434,11 @@ function frameDiv(functionName, url, internalUrl) {
 function getGroupToggle(omitsCount, omitBundle) {
   var omittedFrames = document.createElement('div');
   accessify(omittedFrames);
-  var text1 = document.createTextNode('\u25B6 ' + omitsCount + ' stack frames were collapsed.');
+  var text1 = document.createTextNode(
+    '\u25B6 ' + omitsCount + ' stack frames were collapsed.'
+  );
   omittedFrames.appendChild(text1);
-  omittedFrames.addEventListener('click', function () {
+  omittedFrames.addEventListener('click', function() {
     var hide = text1.textContent.match(/▲/);
     var list = document.getElementsByName('bundle-' + omitBundle);
     for (var index = 0; index < list.length; ++index) {
@@ -459,9 +471,11 @@ function insertBeforeBundle(parent, omitsCount, omitBundle, actionElement) {
   var div = document.createElement('div');
   accessify(div);
   div.setAttribute('name', 'bundle-' + omitBundle);
-  var text = document.createTextNode('\u25BC ' + omitsCount + ' stack frames were expanded.');
+  var text = document.createTextNode(
+    '\u25BC ' + omitsCount + ' stack frames were expanded.'
+  );
   div.appendChild(text);
-  div.addEventListener('click', function () {
+  div.addEventListener('click', function() {
     return actionElement.click();
   });
   applyStyles(div, omittedFramesStyle);
@@ -470,17 +484,25 @@ function insertBeforeBundle(parent, omitsCount, omitBundle, actionElement) {
   parent.insertBefore(div, first);
 }
 
-function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentContainer, lastElement) {
+function traceFrame(
+  frameSetting,
+  frame,
+  critical,
+  omits,
+  omitBundle,
+  parentContainer,
+  lastElement
+) {
   var compiled = frameSetting.compiled;
   var functionName = frame.functionName,
-      fileName = frame.fileName,
-      lineNumber = frame.lineNumber,
-      columnNumber = frame.columnNumber,
-      scriptLines = frame.scriptLines,
-      sourceFileName = frame.sourceFileName,
-      sourceLineNumber = frame.sourceLineNumber,
-      sourceColumnNumber = frame.sourceColumnNumber,
-      sourceLines = frame.sourceLines;
+    fileName = frame.fileName,
+    lineNumber = frame.lineNumber,
+    columnNumber = frame.columnNumber,
+    scriptLines = frame.scriptLines,
+    sourceFileName = frame.sourceFileName,
+    sourceLineNumber = frame.sourceLineNumber,
+    sourceColumnNumber = frame.sourceColumnNumber,
+    sourceLines = frame.sourceLines;
 
   var url = void 0;
   if (!compiled && sourceFileName) {
@@ -501,9 +523,18 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   if (!internalUrl || lastElement) {
     if (omits.value > 0) {
       var omittedFrames = getGroupToggle(omits.value, omitBundle);
-      setTimeout(function () {
-        insertBeforeBundle.apply(undefined, arguments);
-      }.bind(undefined, parentContainer, omits.value, omitBundle, omittedFrames), 1);
+      setTimeout(
+        (function() {
+          insertBeforeBundle.apply(undefined, arguments);
+        }).bind(
+          undefined,
+          parentContainer,
+          omits.value,
+          omitBundle,
+          omittedFrames
+        ),
+        1
+      );
       if (lastElement && internalUrl) {
         collapseElement = omittedFrames;
       } else {
@@ -523,10 +554,19 @@ function traceFrame(frameSetting, frame, critical, omits, omitBundle, parentCont
   var hasSource = false;
   if (!internalUrl) {
     if (compiled && scriptLines.length !== 0) {
-      elem.appendChild(sourceCodePre(scriptLines, lineNumber, columnNumber, critical));
+      elem.appendChild(
+        sourceCodePre(scriptLines, lineNumber, columnNumber, critical)
+      );
       hasSource = true;
     } else if (!compiled && sourceLines.length !== 0) {
-      elem.appendChild(sourceCodePre(sourceLines, sourceLineNumber, sourceColumnNumber, critical));
+      elem.appendChild(
+        sourceCodePre(
+          sourceLines,
+          sourceLineNumber,
+          sourceColumnNumber,
+          critical
+        )
+      );
       hasSource = true;
     }
   }
@@ -538,21 +578,23 @@ function lazyFrame(parent, factory, lIndex) {
   var fac = factory();
   if (fac == null) return;
   var hasSource = fac.hasSource,
-      elem = fac.elem,
-      collapseElement = fac.collapseElement;
+    elem = fac.elem,
+    collapseElement = fac.collapseElement;
 
   var elemWrapper = document.createElement('div');
   elemWrapper.appendChild(elem);
 
   if (hasSource) {
-    (function () {
+    (function() {
       var compiledDiv = document.createElement('div');
       accessify(compiledDiv);
       applyStyles(compiledDiv, toggleStyle);
 
       var o = frameSettings[lIndex];
-      var compiledText = document.createTextNode('View ' + (o && o.compiled ? 'source' : 'compiled'));
-      compiledDiv.addEventListener('click', function () {
+      var compiledText = document.createTextNode(
+        'View ' + (o && o.compiled ? 'source' : 'compiled')
+      );
+      compiledDiv.addEventListener('click', function() {
         if (o) o.compiled = !o.compiled;
 
         var next = lazyFrame(parent, factory, lIndex);
@@ -580,9 +622,22 @@ function traceDiv(resolvedFrames) {
   var index = 0;
   var critical = true;
   var omits = { value: 0, bundle: 1 };
-  resolvedFrames.forEach(function (frame) {
+  resolvedFrames.forEach(function(frame) {
     var lIndex = index++;
-    var elem = lazyFrame(trace, traceFrame.bind(undefined, frameSettings[lIndex], frame, critical, omits, omits.bundle, trace, index === resolvedFrames.length), lIndex);
+    var elem = lazyFrame(
+      trace,
+      traceFrame.bind(
+        undefined,
+        frameSettings[lIndex],
+        frame,
+        critical,
+        omits,
+        omits.bundle,
+        trace,
+        index === resolvedFrames.length
+      ),
+      lIndex
+    );
     if (elem == null) return;
     critical = false;
     trace.appendChild(elem);
@@ -596,16 +651,24 @@ function traceDiv(resolvedFrames) {
 function footer() {
   var div = document.createElement('div');
   applyStyles(div, footerStyle);
-  div.appendChild(document.createTextNode('This screen is visible only in development. It will not appear when the app crashes in production.'));
+  div.appendChild(
+    document.createTextNode(
+      'This screen is visible only in development. It will not appear when the app crashes in production.'
+    )
+  );
   div.appendChild(document.createElement('br'));
-  div.appendChild(document.createTextNode('Open your browser’s developer console to further inspect this error.'));
+  div.appendChild(
+    document.createTextNode(
+      'Open your browser’s developer console to further inspect this error.'
+    )
+  );
   return div;
 }
 
 function render(error, name, message, resolvedFrames) {
   dispose();
 
-  frameSettings = resolvedFrames.map(function () {
+  frameSettings = resolvedFrames.map(function() {
     return { compiled: false };
   });
 
@@ -644,7 +707,7 @@ function render(error, name, message, resolvedFrames) {
   container.appendChild(footer());
 
   // Mount
-  document.body.appendChild(overlayReference = overlay);
+  document.body.appendChild((overlayReference = overlay));
 }
 
 function dispose() {
@@ -652,7 +715,7 @@ function dispose() {
   document.body.removeChild(overlayReference);
   overlayReference = null;
   var head = getHead();
-  injectedCss.forEach(function (node) {
+  injectedCss.forEach(function(node) {
     head.removeChild(node);
   });
   injectedCss = [];
@@ -665,68 +728,95 @@ function unmount() {
 }
 
 function isInternalFile(url, sourceFileName) {
-  return url.indexOf('/~/') !== -1 || url.trim().indexOf(' ') !== -1 || !sourceFileName;
+  return url.indexOf('/~/') !== -1 ||
+    url.trim().indexOf(' ') !== -1 ||
+    !sourceFileName;
 }
 
 function renderError(index) {
   viewIndex = index;
   var _capturedErrors$index = capturedErrors[index],
-      error = _capturedErrors$index.error,
-      unhandledRejection = _capturedErrors$index.unhandledRejection,
-      resolvedFrames = _capturedErrors$index.resolvedFrames;
+    error = _capturedErrors$index.error,
+    unhandledRejection = _capturedErrors$index.unhandledRejection,
+    resolvedFrames = _capturedErrors$index.resolvedFrames;
 
   if (unhandledRejection) {
-    render(error, 'Unhandled Rejection (' + error.name + ')', error.message, resolvedFrames);
+    render(
+      error,
+      'Unhandled Rejection (' + error.name + ')',
+      error.message,
+      resolvedFrames
+    );
   } else {
     render(error, error.name, error.message, resolvedFrames);
   }
 }
 
 function crash(error) {
-  var unhandledRejection = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var sourceOverrides = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  var unhandledRejection = arguments.length > 1 && arguments[1] !== undefined
+    ? arguments[1]
+    : false;
+  var sourceOverrides = arguments.length > 2 && arguments[2] !== undefined
+    ? arguments[2]
+    : [];
 
   if (module.hot) module.hot.decline();
 
-  StackTraceResolve(error, CONTEXT_SIZE).then(function (resolvedFrames) {
-    resolvedFrames = resolvedFrames.filter(function (_ref) {
-      var functionName = _ref.functionName;
-      return functionName.indexOf('__cra_proxy_console__') === -1;
-    });
-    var overrideCount = sourceOverrides.length,
+  StackTraceResolve(error, CONTEXT_SIZE)
+    .then(function(resolvedFrames) {
+      resolvedFrames = resolvedFrames.filter(function(_ref) {
+        var functionName = _ref.functionName;
+        return functionName.indexOf('__cra_proxy_console__') === -1;
+      });
+      var overrideCount = sourceOverrides.length,
         frameCount = resolvedFrames.length;
-    var frameIndex = 0;
-    for (var overrideIndex = 0; overrideIndex < overrideCount; ++overrideIndex) {
-      var tag = sourceOverrides[overrideIndex];
-      var shouldContinue = false;
-      for (; frameIndex < frameCount; ++frameIndex) {
-        var sourceFileName = resolvedFrames[frameIndex].sourceFileName;
+      var frameIndex = 0;
+      for (
+        var overrideIndex = 0;
+        overrideIndex < overrideCount;
+        ++overrideIndex
+      ) {
+        var tag = sourceOverrides[overrideIndex];
+        var shouldContinue = false;
+        for (; frameIndex < frameCount; ++frameIndex) {
+          var sourceFileName = resolvedFrames[frameIndex].sourceFileName;
 
-        if (sourceFileName == null) continue;
-        if (sourceFileName.indexOf('/' + tag.file) !== -1) {
-          var prevLineNumber = resolvedFrames[frameIndex].sourceLineNumber;
-          if (Math.abs(prevLineNumber - tag.lineNum) < CONTEXT_SIZE) {
-            resolvedFrames[frameIndex].sourceLineNumber = tag.lineNum;
+          if (sourceFileName == null) continue;
+          if (sourceFileName.indexOf('/' + tag.file) !== -1) {
+            var prevLineNumber = resolvedFrames[frameIndex].sourceLineNumber;
+            if (Math.abs(prevLineNumber - tag.lineNum) < CONTEXT_SIZE) {
+              resolvedFrames[frameIndex].sourceLineNumber = tag.lineNum;
+            }
+            shouldContinue = true;
+            break;
           }
-          shouldContinue = true;
-          break;
         }
+        if (shouldContinue) continue;
+        break;
       }
-      if (shouldContinue) continue;
-      break;
-    }
-    capturedErrors.push({ error: error, unhandledRejection: unhandledRejection, resolvedFrames: resolvedFrames });
-    if (overlayReference !== null) renderAdditional();
-    else {
-      renderError(viewIndex = 0);
-    }
-  }).catch(function (e) {
-    // This is another fail case (unlikely to happen)
-    // e.g. render(...) throws an error with provided arguments
-    console.log('Red box renderer error:', e);
-    unmount();
-    render(null, 'Error', 'There is an error with red box. *Please* report this (see console).', []);
-  });
+      capturedErrors.push({
+        error: error,
+        unhandledRejection: unhandledRejection,
+        resolvedFrames: resolvedFrames,
+      });
+      if (overlayReference !== null)
+        renderAdditional();
+      else {
+        renderError((viewIndex = 0));
+      }
+    })
+    .catch(function(e) {
+      // This is another fail case (unlikely to happen)
+      // e.g. render(...) throws an error with provided arguments
+      console.log('Red box renderer error:', e);
+      unmount();
+      render(
+        null,
+        'Error',
+        'There is an error with red box. *Please* report this (see console).',
+        []
+      );
+    });
 }
 
 function switchError(offset) {
@@ -737,12 +827,21 @@ function switchError(offset) {
   } catch (e) {
     console.log('Red box renderer error:', e);
     unmount();
-    render(null, 'Error', 'There is an error with red box. *Please* report this (see console).', []);
+    render(
+      null,
+      'Error',
+      'There is an error with red box. *Please* report this (see console).',
+      []
+    );
   }
 }
 
-window.onerror = function (messageOrEvent, source, lineno, colno, error) {
-  if (error == null || !(error instanceof Error) || messageOrEvent.indexOf('Script error') !== -1) {
+window.onerror = function(messageOrEvent, source, lineno, colno, error) {
+  if (
+    error == null ||
+    !(error instanceof Error) ||
+    messageOrEvent.indexOf('Script error') !== -1
+  ) {
     crash(new Error(error || messageOrEvent)); // TODO: more helpful message
   } else {
     crash(error);
@@ -766,13 +865,13 @@ var promiseHandler = function promiseHandler(event) {
 window.addEventListener('unhandledrejection', promiseHandler);
 
 var escapeHandler = function escapeHandler(event) {
-  var key = event.key,
-      keyCode = event.keyCode,
-      which = event.which;
+  var key = event.key, keyCode = event.keyCode, which = event.which;
 
   if (key === 'Escape' || keyCode === 27 || which === 27) unmount();
-  else if (key === 'ArrowLeft' || keyCode === 37 || which === 37) switchError(-1);
-  else if (key === 'ArrowRight' || keyCode === 39 || which === 39) switchError(1);
+  else if (key === 'ArrowLeft' || keyCode === 37 || which === 37)
+    switchError(-1);
+  else if (key === 'ArrowRight' || keyCode === 39 || which === 39)
+    switchError(1);
 };
 
 window.addEventListener('keydown', escapeHandler);
@@ -791,29 +890,34 @@ var proxyConsole = function proxyConsole(type) {
     var nIndex = warning.indexOf('\n');
     var message = warning;
     if (nIndex !== -1) message = message.substring(0, nIndex);
-    var stack = warning.substring(nIndex + 1).split('\n').filter(function (line) {
-      return line.indexOf('(at ') !== -1;
-    }).map(function (line) {
-      var prefix = '(at ';
-      var suffix = ')';
-      line = line.substring(line.indexOf(prefix) + prefix.length);
-      line = line.substring(0, line.indexOf(suffix));
-      var parts = line.split(/[:]/g);
-      if (parts.length !== 2) return null;
-      var file = parts[0];
-      var lineNum = Number(parts[1]);
-      if (isNaN(lineNum)) return null;
-      return { file: file, lineNum: lineNum };
-    }).filter(function (obj) {
-      return obj !== null;
-    });
+    var stack = warning
+      .substring(nIndex + 1)
+      .split('\n')
+      .filter(function(line) {
+        return line.indexOf('(at ') !== -1;
+      })
+      .map(function(line) {
+        var prefix = '(at ';
+        var suffix = ')';
+        line = line.substring(line.indexOf(prefix) + prefix.length);
+        line = line.substring(0, line.indexOf(suffix));
+        var parts = line.split(/[:]/g);
+        if (parts.length !== 2) return null;
+        var file = parts[0];
+        var lineNum = Number(parts[1]);
+        if (isNaN(lineNum)) return null;
+        return { file: file, lineNum: lineNum };
+      })
+      .filter(function(obj) {
+        return obj !== null;
+      });
     var error = void 0;
     try {
       throw new Error(message);
     } catch (e) {
       error = e;
     }
-    setTimeout(function () {
+    setTimeout(function() {
       return crash(error, false, stack);
     });
     return orig.apply(this, arguments);
@@ -823,7 +927,7 @@ var proxyConsole = function proxyConsole(type) {
 // proxyConsole('error');
 
 if (module.hot) {
-  module.hot.dispose(function () {
+  module.hot.dispose(function() {
     unmount();
     window.removeEventListener('unhandledrejection', promiseHandler);
     window.removeEventListener('keydown', escapeHandler);

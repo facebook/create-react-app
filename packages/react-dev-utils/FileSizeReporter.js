@@ -33,7 +33,7 @@ function printFileSizesAfterBuild(webpackStats, previousSizeMap) {
         folder: path.join('build', path.dirname(asset.name)),
         name: path.basename(asset.name),
         size: size,
-        sizeLabel: filesize(size) + (difference ? ' (' + difference + ')' : '')
+        sizeLabel: filesize(size) + (difference ? ' (' + difference + ')' : ''),
       };
     });
   assets.sort((a, b) => b.size - a.size);
@@ -88,12 +88,15 @@ function measureFileSizesBeforeBuild(buildFolder) {
       if (!err && fileNames) {
         sizes = fileNames
           .filter(fileName => /\.(js|css)$/.test(fileName))
-          .reduce((memo, fileName) => {
-            var contents = fs.readFileSync(fileName);
-            var key = removeFileNameHash(buildFolder, fileName);
-            memo[key] = gzipSize(contents);
-            return memo;
-          }, {});
+          .reduce(
+            (memo, fileName) => {
+              var contents = fs.readFileSync(fileName);
+              var key = removeFileNameHash(buildFolder, fileName);
+              memo[key] = gzipSize(contents);
+              return memo;
+            },
+            {}
+          );
       }
       resolve({
         root: buildFolder,

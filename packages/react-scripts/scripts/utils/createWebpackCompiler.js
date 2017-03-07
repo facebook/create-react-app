@@ -60,7 +60,7 @@ module.exports = function createWebpackCompiler(config, onReadyCallback) {
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.plugin('done', (stats) => {
+  compiler.plugin('done', stats => {
     if (isInteractive) {
       clearConsole();
     }
@@ -102,8 +102,16 @@ module.exports = function createWebpackCompiler(config, onReadyCallback) {
       });
       // Teach some ESLint tricks.
       console.log('You may use special comments to disable some warnings.');
-      console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
-      console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
+      console.log(
+        'Use ' +
+          chalk.yellow('// eslint-disable-next-line') +
+          ' to ignore the next line.'
+      );
+      console.log(
+        'Use ' +
+          chalk.yellow('/* eslint-disable */') +
+          ' to ignore all warnings in a file.'
+      );
     }
   });
 

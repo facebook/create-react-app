@@ -7,8 +7,10 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react'
+import React from 'react';
 
 export default () => (
-  <span id="feature-shell-env-variables">{process.env.REACT_APP_SHELL_ENV_MESSAGE}.</span>
-)
+  <span id="feature-shell-env-variables">
+    {process.env.REACT_APP_SHELL_ENV_MESSAGE}.
+  </span>
+);

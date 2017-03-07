@@ -21,50 +21,73 @@ function onProxyError(proxy) {
   return (err, req, res) => {
     const host = req.headers && req.headers.host;
     console.log(
-      chalk.red('Proxy error:') + ' Could not proxy request ' + chalk.cyan(req.url) +
-      ' from ' + chalk.cyan(host) + ' to ' + chalk.cyan(proxy) + '.'
+      chalk.red('Proxy error:') +
+        ' Could not proxy request ' +
+        chalk.cyan(req.url) +
+        ' from ' +
+        chalk.cyan(host) +
+        ' to ' +
+        chalk.cyan(proxy) +
+        '.'
     );
     console.log(
       'See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (' +
-      chalk.cyan(err.code) + ').'
+        chalk.cyan(err.code) +
+        ').'
     );
     console.log();
 
     // And immediately send the proper error response to the client.
     // Otherwise, the request will eventually timeout with ERR_EMPTY_RESPONSE on the client side.
     if (res.writeHead && !res.headersSent) {
-        res.writeHead(500);
+      res.writeHead(500);
     }
-    res.end('Proxy error: Could not proxy request ' + req.url + ' from ' +
-      host + ' to ' + proxy + ' (' + err.code + ').'
+    res.end(
+      'Proxy error: Could not proxy request ' +
+        req.url +
+        ' from ' +
+        host +
+        ' to ' +
+        proxy +
+        ' (' +
+        err.code +
+        ').'
     );
-  }
+  };
 }
 
 module.exports = function addWebpackMiddleware(devServer) {
   // `proxy` lets you to specify a fallback server during development.
   // Every unrecognized request will be forwarded to it.
   const proxy = require(paths.appPackageJson).proxy;
-  devServer.use(historyApiFallback({
-    // Paths with dots should still use the history fallback.
-    // See https://github.com/facebookincubator/create-react-app/issues/387.
-    disableDotRule: true,
-    // For single page apps, we generally want to fallback to /index.html.
-    // However we also want to respect `proxy` for API calls.
-    // So if `proxy` is specified, we need to decide which fallback to use.
-    // We use a heuristic: if request `accept`s text/html, we pick /index.html.
-    // Modern browsers include text/html into `accept` header when navigating.
-    // However API calls like `fetch()` won’t generally accept text/html.
-    // If this heuristic doesn’t work well for you, don’t use `proxy`.
-    htmlAcceptHeaders: proxy ?
-      ['text/html'] :
-      ['text/html', '*/*']
-  }));
+  devServer.use(
+    historyApiFallback({
+      // Paths with dots should still use the history fallback.
+      // See https://github.com/facebookincubator/create-react-app/issues/387.
+      disableDotRule: true,
+      // For single page apps, we generally want to fallback to /index.html.
+      // However we also want to respect `proxy` for API calls.
+      // So if `proxy` is specified, we need to decide which fallback to use.
+      // We use a heuristic: if request `accept`s text/html, we pick /index.html.
+      // Modern browsers include text/html into `accept` header when navigating.
+      // However API calls like `fetch()` won’t generally accept text/html.
+      // If this heuristic doesn’t work well for you, don’t use `proxy`.
+      htmlAcceptHeaders: proxy ? ['text/html'] : ['text/html', '*/*'],
+    })
+  );
   if (proxy) {
     if (typeof proxy !== 'string') {
-      console.log(chalk.red('When specified, "proxy" in package.json must be a string.'));
-      console.log(chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".'));
-      console.log(chalk.red('Either remove "proxy" from package.json, or make it a string.'));
+      console.log(
+        chalk.red('When specified, "proxy" in package.json must be a string.')
+      );
+      console.log(
+        chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".')
+      );
+      console.log(
+        chalk.red(
+          'Either remove "proxy" from package.json, or make it a string.'
+        )
+      );
       process.exit(1);
     }
 
@@ -93,7 +116,7 @@ module.exports = function addWebpackMiddleware(devServer) {
       secure: false,
       changeOrigin: true,
       ws: true,
-      xfwd: true
+      xfwd: true,
     });
     devServer.use(mayProxy, hpm);
 

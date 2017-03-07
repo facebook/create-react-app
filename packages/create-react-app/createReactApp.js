@@ -8,7 +8,7 @@
  */
 'use strict';
 
-const validateProjectName = require("validate-npm-package-name");
+const validateProjectName = require('validate-npm-package-name');
 const chalk = require('chalk');
 const commander = require('commander');
 const fs = require('fs-extra');
@@ -31,31 +31,50 @@ const program = commander
     projectName = name;
   })
   .option('--verbose', 'print additional logs')
-  .option('--scripts-version <alternative-package>', 'use a non-standard version of react-scripts')
+  .option(
+    '--scripts-version <alternative-package>',
+    'use a non-standard version of react-scripts'
+  )
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
     console.log();
-    console.log(`    A custom ${chalk.cyan('--scripts-version')} can be one of:`);
+    console.log(
+      `    A custom ${chalk.cyan('--scripts-version')} can be one of:`
+    );
     console.log(`      - a specific npm version: ${chalk.green('0.8.2')}`);
-    console.log(`      - a custom fork published on npm: ${chalk.green('my-react-scripts')}`);
-    console.log(`      - a .tgz archive: ${chalk.green('https://mysite.com/my-react-scripts-0.8.2.tgz')}`);
-    console.log(`    It is not needed unless you specifically want to use a fork.`);
+    console.log(
+      `      - a custom fork published on npm: ${chalk.green('my-react-scripts')}`
+    );
+    console.log(
+      `      - a .tgz archive: ${chalk.green('https://mysite.com/my-react-scripts-0.8.2.tgz')}`
+    );
+    console.log(
+      `    It is not needed unless you specifically want to use a fork.`
+    );
     console.log();
-    console.log(`    If you have any problems, do not hesitate to file an issue:`);
-    console.log(`      ${chalk.cyan('https://github.com/facebookincubator/create-react-app/issues/new')}`);
+    console.log(
+      `    If you have any problems, do not hesitate to file an issue:`
+    );
+    console.log(
+      `      ${chalk.cyan('https://github.com/facebookincubator/create-react-app/issues/new')}`
+    );
     console.log();
   })
   .parse(process.argv);
 
 if (typeof projectName === 'undefined') {
   console.error('Please specify the project directory:');
-  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`);
+  console.log(
+    `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
+  );
   console.log();
   console.log('For example:');
   console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-app')}`);
   console.log();
-  console.log(`Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`);
+  console.log(
+    `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
+  );
   process.exit(1);
 }
 
@@ -68,11 +87,19 @@ function printValidationResults(results) {
 }
 
 const hiddenProgram = new commander.Command()
-  .option('--internal-testing-template <path-to-template>', '(internal usage only, DO NOT RELY ON THIS) ' +
-    'use a non-standard application template')
-  .parse(process.argv)
+  .option(
+    '--internal-testing-template <path-to-template>',
+    '(internal usage only, DO NOT RELY ON THIS) ' +
+      'use a non-standard application template'
+  )
+  .parse(process.argv);
 
-createApp(projectName, program.verbose, program.scriptsVersion, hiddenProgram.internalTestingTemplate);
+createApp(
+  projectName,
+  program.verbose,
+  program.scriptsVersion,
+  hiddenProgram.internalTestingTemplate
+);
 
 function createApp(name, verbose, version, template) {
   const root = path.resolve(name);
@@ -81,20 +108,20 @@ function createApp(name, verbose, version, template) {
   checkAppName(appName);
   fs.ensureDirSync(name);
   if (!isSafeToCreateProjectIn(root)) {
-    console.log(`The directory ${chalk.green(name)} contains files that could conflict.`);
+    console.log(
+      `The directory ${chalk.green(name)} contains files that could conflict.`
+    );
     console.log('Try using a new directory name.');
     process.exit(1);
   }
 
-  console.log(
-    `Creating a new React app in ${chalk.green(root)}.`
-  );
+  console.log(`Creating a new React app in ${chalk.green(root)}.`);
   console.log();
 
   const packageJson = {
     name: appName,
     version: '0.1.0',
-    private: true
+    private: true,
   };
   fs.writeFileSync(
     path.join(root, 'package.json'),
@@ -108,7 +135,7 @@ function createApp(name, verbose, version, template) {
 
 function shouldUseYarn() {
   try {
-    execSync('yarnpkg --version', {stdio: 'ignore'});
+    execSync('yarnpkg --version', { stdio: 'ignore' });
     return true;
   } catch (e) {
     return false;
@@ -121,10 +148,7 @@ function install(useYarn, dependencies, verbose, isOnline) {
     let args;
     if (useYarn) {
       command = 'yarnpkg';
-      args = [
-        'add',
-        '--exact',
-      ];
+      args = ['add', '--exact'];
       if (!isOnline) {
         args.push('--offline');
       }
@@ -135,7 +159,6 @@ function install(useYarn, dependencies, verbose, isOnline) {
         console.log(chalk.yellow('Falling back to the local Yarn cache.'));
         console.log();
       }
-
     } else {
       checkNpmVersion();
       command = 'npm';
@@ -146,11 +169,11 @@ function install(useYarn, dependencies, verbose, isOnline) {
       args.push('--verbose');
     }
 
-    const child = spawn(command, args, {stdio: 'inherit'});
+    const child = spawn(command, args, { stdio: 'inherit' });
     child.on('close', code => {
       if (code !== 0) {
         reject({
-          command: `${command} ${args.join(' ')}`
+          command: `${command} ${args.join(' ')}`,
         });
         return;
       }
@@ -168,10 +191,9 @@ function run(root, appName, version, verbose, originalDirectory, template) {
   const useYarn = shouldUseYarn();
   getPackageName(packageToInstall)
     .then(packageName => checkIfOnline(useYarn).then(isOnline => ({
-        isOnline: isOnline,
-        packageName: packageName,
-      })
-    ))
+      isOnline: isOnline,
+      packageName: packageName,
+    })))
     .then(info => {
       const isOnline = info.isOnline;
       const packageName = info.packageName;
@@ -180,7 +202,9 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       );
       console.log();
 
-      return install(useYarn, allDependencies, verbose, isOnline).then(() => packageName);
+      return install(useYarn, allDependencies, verbose, isOnline).then(
+        () => packageName
+      );
     })
     .then(packageName => {
       checkNodeVersion(packageName);
@@ -204,7 +228,7 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       console.log();
       console.log('Aborting installation.');
       if (reason.command) {
-        console.log(`  ${chalk.cyan(reason.command)} has failed.`)
+        console.log(`  ${chalk.cyan(reason.command)} has failed.`);
       } else {
         console.log(chalk.red('Unexpected error. Please report it as a bug:'));
         console.log(reason);
@@ -213,14 +237,21 @@ function run(root, appName, version, verbose, originalDirectory, template) {
 
       // On 'exit' we will delete these files from target directory.
       const knownGeneratedFiles = [
-        'package.json', 'npm-debug.log', 'yarn-error.log', 'yarn-debug.log', 'node_modules'
+        'package.json',
+        'npm-debug.log',
+        'yarn-error.log',
+        'yarn-debug.log',
+        'node_modules',
       ];
       const currentFiles = fs.readdirSync(path.join(root));
       currentFiles.forEach(file => {
         knownGeneratedFiles.forEach(fileToMatch => {
           // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
           // and the rest of knownGeneratedFiles.
-          if ((fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) || file === fileToMatch) {
+          if (
+            (fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) ||
+            file === fileToMatch
+          ) {
             console.log(`Deleting generated file... ${chalk.cyan(file)}`);
             fs.removeSync(path.join(root, file));
           }
@@ -229,7 +260,9 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       const remainingFiles = fs.readdirSync(path.join(root));
       if (!remainingFiles.length) {
         // Delete target folder if empty
-        console.log(`Deleting ${chalk.cyan(`${appName} /`)} from ${chalk.cyan(path.resolve(root, '..'))}`);
+        console.log(
+          `Deleting ${chalk.cyan(`${appName} /`)} from ${chalk.cyan(path.resolve(root, '..'))}`
+        );
         process.chdir(path.resolve(root, '..'));
         fs.removeSync(path.join(root));
       }
@@ -267,7 +300,7 @@ function getTemporaryDirectory() {
               // Callback might throw and fail, since it's a temp directory the
               // OS will clean it up eventually...
             }
-          }
+          },
         });
       }
     });
@@ -276,39 +309,50 @@ function getTemporaryDirectory() {
 
 function extractStream(stream, dest) {
   return new Promise((resolve, reject) => {
-    stream.pipe(unpack(dest, err => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(dest);
-      }
-    }));
+    stream.pipe(
+      unpack(dest, err => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(dest);
+        }
+      })
+    );
   });
 }
 
 // Extract package name from tarball url or path.
 function getPackageName(installPackage) {
   if (installPackage.indexOf('.tgz') > -1) {
-    return getTemporaryDirectory().then(obj => {
-      let stream;
-      if (/^http/.test(installPackage)) {
-        stream = hyperquest(installPackage);
-      } else {
-        stream = fs.createReadStream(installPackage);
-      }
-      return extractStream(stream, obj.tmpdir).then(() => obj);
-    }).then(obj => {
-      const packageName = require(path.join(obj.tmpdir, 'package.json')).name;
-      obj.cleanup();
-      return packageName;
-    }).catch(err => {
-      // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
-      // However, this function returns package name only without semver version.
-      console.log(`Could not extract the package name from the archive: ${err.message}`);
-      const assumedProjectName = installPackage.match(/^.+\/(.+?)(?:-\d+.+)?\.tgz$/)[1];
-      console.log(`Based on the filename, assuming it is "${chalk.cyan(assumedProjectName)}"`);
-      return Promise.resolve(assumedProjectName);
-    });
+    return getTemporaryDirectory()
+      .then(obj => {
+        let stream;
+        if (/^http/.test(installPackage)) {
+          stream = hyperquest(installPackage);
+        } else {
+          stream = fs.createReadStream(installPackage);
+        }
+        return extractStream(stream, obj.tmpdir).then(() => obj);
+      })
+      .then(obj => {
+        const packageName = require(path.join(obj.tmpdir, 'package.json')).name;
+        obj.cleanup();
+        return packageName;
+      })
+      .catch(err => {
+        // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
+        // However, this function returns package name only without semver version.
+        console.log(
+          `Could not extract the package name from the archive: ${err.message}`
+        );
+        const assumedProjectName = installPackage.match(
+          /^.+\/(.+?)(?:-\d+.+)?\.tgz$/
+        )[1];
+        console.log(
+          `Based on the filename, assuming it is "${chalk.cyan(assumedProjectName)}"`
+        );
+        return Promise.resolve(assumedProjectName);
+      });
   } else if (installPackage.indexOf('git+') === 0) {
     // Pull package name out of git urls e.g:
     // git+https://github.com/mycompany/react-scripts.git
@@ -316,7 +360,9 @@ function getPackageName(installPackage) {
     return Promise.resolve(installPackage.match(/([^\/]+)\.git(#.*)?$/)[1]);
   } else if (installPackage.indexOf('@') > 0) {
     // Do not match @scope/ when stripping off @version or @tag
-    return Promise.resolve(installPackage.charAt(0) + installPackage.substr(1).split('@')[0]);
+    return Promise.resolve(
+      installPackage.charAt(0) + installPackage.substr(1).split('@')[0]
+    );
   }
   return Promise.resolve(installPackage);
 }
@@ -333,10 +379,12 @@ function checkNpmVersion() {
     return;
   }
   console.log(chalk.yellow('It looks like you are using npm 2.'));
-  console.log(chalk.yellow(
-    'We suggest using npm 3 or Yarn for faster install times ' +
-    'and less disk space usage.'
-  ));
+  console.log(
+    chalk.yellow(
+      'We suggest using npm 3 or Yarn for faster install times ' +
+        'and less disk space usage.'
+    )
+  );
   console.log();
 }
 
@@ -356,8 +404,8 @@ function checkNodeVersion(packageName) {
     console.error(
       chalk.red(
         'You are running Node %s.\n' +
-        'Create React App requires Node %s or higher. \n' +
-        'Please update your version of Node.'
+          'Create React App requires Node %s or higher. \n' +
+          'Please update your version of Node.'
       ),
       process.version,
       packageJson.engines.node
@@ -369,7 +417,9 @@ function checkNodeVersion(packageName) {
 function checkAppName(appName) {
   const validationResult = validateProjectName(appName);
   if (!validationResult.validForNewPackages) {
-    console.error(`Could not create a project called ${chalk.red(`"${appName}"`)} because of npm naming restrictions:`);
+    console.error(
+      `Could not create a project called ${chalk.red(`"${appName}"`)} because of npm naming restrictions:`
+    );
     printValidationResults(validationResult.errors);
     printValidationResults(validationResult.warnings);
     process.exit(1);
@@ -383,12 +433,10 @@ function checkAppName(appName) {
     console.error(
       chalk.red(
         `We cannot create a project called ${chalk.green(appName)} because a dependency with the same name exists.\n` +
-        `Due to the way npm works, the following names are not allowed:\n\n`
+          `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
-      chalk.cyan(
-        allDependencies.map(depName => `  ${depName}`).join('\n')
-      ) +
-      chalk.red('\n\nPlease choose a different project name.')
+        chalk.cyan(allDependencies.map(depName => `  ${depName}`).join('\n')) +
+        chalk.red('\n\nPlease choose a different project name.')
     );
     process.exit(1);
   }
@@ -398,9 +446,7 @@ function makeCaretRange(dependencies, name) {
   const version = dependencies[name];
 
   if (typeof version === 'undefined') {
-    console.error(
-      chalk.red(`Missing ${name} dependency in package.json`)
-    );
+    console.error(chalk.red(`Missing ${name} dependency in package.json`));
     process.exit(1);
   }
 
@@ -421,18 +467,14 @@ function fixDependencies(packageName) {
   const packageJson = require(packagePath);
 
   if (typeof packageJson.dependencies === 'undefined') {
-    console.error(
-      chalk.red('Missing dependencies in package.json')
-    );
+    console.error(chalk.red('Missing dependencies in package.json'));
     process.exit(1);
   }
 
   const packageVersion = packageJson.dependencies[packageName];
 
   if (typeof packageVersion === 'undefined') {
-    console.error(
-      chalk.red(`Unable to find ${packageName} in package.json`)
-    );
+    console.error(chalk.red(`Unable to find ${packageName} in package.json`));
     process.exit(1);
   }
 
@@ -451,10 +493,16 @@ function fixDependencies(packageName) {
 // https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-243446094
 function isSafeToCreateProjectIn(root) {
   const validFiles = [
-    '.DS_Store', 'Thumbs.db', '.git', '.gitignore', '.idea', 'README.md', 'LICENSE', 'web.iml'
+    '.DS_Store',
+    'Thumbs.db',
+    '.git',
+    '.gitignore',
+    '.idea',
+    'README.md',
+    'LICENSE',
+    'web.iml',
   ];
-  return fs.readdirSync(root)
-    .every(file => validFiles.indexOf(file) >= 0);
+  return fs.readdirSync(root).every(file => validFiles.indexOf(file) >= 0);
 }
 
 function checkIfOnline(useYarn) {
@@ -464,7 +512,7 @@ function checkIfOnline(useYarn) {
     return Promise.resolve(true);
   }
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     dns.resolve('registry.yarnpkg.com', err => {
       resolve(err === null);
     });

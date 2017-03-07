@@ -38,31 +38,30 @@ prompt(
     if (fs.existsSync(path.join(appPath, file))) {
       console.error(
         `\`${file}\` already exists in your app folder. We cannot ` +
-        'continue as you would lose all the changes in that file or directory. ' +
-        'Please move or delete it (maybe make a copy for backup) and run this ' +
-        'command again.'
+          'continue as you would lose all the changes in that file or directory. ' +
+          'Please move or delete it (maybe make a copy for backup) and run this ' +
+          'command again.'
       );
       process.exit(1);
     }
   }
 
-  const folders = [
-    'config',
-    'config/jest',
-    'scripts',
-    'scripts/utils',
-  ];
+  const folders = ['config', 'config/jest', 'scripts', 'scripts/utils'];
 
   // Make shallow array of files paths
-  const files = folders.reduce((files, folder) => {
-    return files.concat(
-      fs.readdirSync(path.join(ownPath, folder))
-        // set full path
-        .map(file => path.join(ownPath, folder, file))
-        // omit dirs from file list
-        .filter(file => fs.lstatSync(file).isFile())
-    );
-  }, []);
+  const files = folders.reduce(
+    (files, folder) => {
+      return files.concat(
+        fs
+          .readdirSync(path.join(ownPath, folder))
+          // set full path
+          .map(file => path.join(ownPath, folder, file))
+          // omit dirs from file list
+          .filter(file => fs.lstatSync(file).isFile())
+      );
+    },
+    []
+  );
 
   // Ensure that the app folder is clean and we won't override any files
   folders.forEach(verifyAbsent);
@@ -72,7 +71,7 @@ prompt(
   console.log(cyan(`Copying files into ${appPath}`));
 
   folders.forEach(folder => {
-    fs.mkdirSync(path.join(appPath, folder))
+    fs.mkdirSync(path.join(appPath, folder));
   });
 
   files.forEach(file => {
@@ -84,9 +83,15 @@ prompt(
     }
     content = content
       // Remove dead code from .js files on eject
-      .replace(/\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/mg, '')
+      .replace(
+        /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/mg,
+        ''
+      )
       // Remove dead code from .applescript files on eject
-      .replace(/-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/mg, '')
+      .replace(
+        /-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/mg,
+        ''
+      )
       .trim() + '\n';
     console.log(`  Adding ${cyan(file.replace(ownPath, ''))} to the project`);
     fs.writeFileSync(file.replace(ownPath, appPath), content);
@@ -95,8 +100,12 @@ prompt(
 
   const ownPackage = require(path.join(ownPath, 'package.json'));
   const appPackage = require(path.join(appPath, 'package.json'));
-  const babelConfig = JSON.parse(fs.readFileSync(path.join(ownPath, '.babelrc'), 'utf8'));
-  const eslintConfig = JSON.parse(fs.readFileSync(path.join(ownPath, '.eslintrc'), 'utf8'));
+  const babelConfig = JSON.parse(
+    fs.readFileSync(path.join(ownPath, '.babelrc'), 'utf8')
+  );
+  const eslintConfig = JSON.parse(
+    fs.readFileSync(path.join(ownPath, '.eslintrc'), 'utf8')
+  );
 
   console.log(cyan('Updating the dependencies'));
   const ownPackageName = ownPackage.name;
@@ -123,8 +132,10 @@ prompt(
   Object.keys(appPackage.scripts).forEach(key => {
     Object.keys(ownPackage.bin).forEach(binKey => {
       const regex = new RegExp(binKey + ' (\\w+)', 'g');
-      appPackage.scripts[key] = appPackage.scripts[key]
-        .replace(regex, 'node scripts/$1.js');
+      appPackage.scripts[key] = appPackage.scripts[key].replace(
+        regex,
+        'node scripts/$1.js'
+      );
       console.log(
         `  Replacing ${cyan(`"${binKey} ${key}"`)} with ${cyan(`"node scripts/${key}.js"`)}`
       );
@@ -163,22 +174,22 @@ prompt(
         fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
       });
       fs.removeSync(ownPath);
-    } catch(e) {
+    } catch (e) {
       // It's not essential that this succeeds
     }
   }
 
   if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));
-    spawnSync('yarnpkg', [], {stdio: 'inherit'});
+    spawnSync('yarnpkg', [], { stdio: 'inherit' });
   } else {
     console.log(cyan('Running npm install...'));
-    spawnSync('npm', ['install'], {stdio: 'inherit'});
+    spawnSync('npm', ['install'], { stdio: 'inherit' });
   }
   console.log(green('Ejected successfully!'));
   console.log();
 
   console.log(green('Please consider sharing why you ejected in this survey:'));
   console.log(green('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
-  console.log()
-})
+  console.log();
+});

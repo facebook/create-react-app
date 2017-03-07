@@ -7,26 +7,28 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 
-const styled = ([style]) => style.trim()
-  .split(/\s*;\s*/)
-  .map(rule => rule.split(/\s*:\s*/))
-  .reduce((rules, rule) => ({ ...rules, [rule[0]]: rule[1] }), {});
+const styled = ([style]) =>
+  style
+    .trim()
+    .split(/\s*;\s*/)
+    .map(rule => rule.split(/\s*:\s*/))
+    .reduce((rules, rule) => ({ ...rules, [rule[0]]: rule[1] }), {});
 
 function load() {
   return [
     { id: 1, name: '1' },
     { id: 2, name: '2' },
     { id: 3, name: '3' },
-    { id: 4, name: '4' }
+    { id: 4, name: '4' },
   ];
 }
 
 export default class extends Component {
   static propTypes = {
-    onReady: PropTypes.func.isRequired
-  }
+    onReady: PropTypes.func.isRequired,
+  };
 
   constructor(props) {
     super(props);
