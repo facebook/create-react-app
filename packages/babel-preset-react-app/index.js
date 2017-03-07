@@ -84,10 +84,16 @@ if (env === 'test') {
   module.exports = {
     presets: [
       // Latest stable ECMAScript features
-      [require.resolve('babel-preset-latest'), {
-        'es2015': {
-          modules: false
-        }
+      [require.resolve('babel-preset-env'), {
+        targets: {
+          // React parses on ie 9, so we should too
+          ie: 9,
+          // We currently minify with uglify
+          // Remove after https://github.com/mishoo/UglifyJS2/issues/448
+          uglify: true
+        },
+        // Disable polyfill transforms
+        useBuiltIns: false
       }],
       // JSX, Flow
       require.resolve('babel-preset-react')
