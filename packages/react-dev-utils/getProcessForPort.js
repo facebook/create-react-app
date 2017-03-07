@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
 var chalk = require('chalk');
 var execSync = require('child_process').execSync;
 var path = require('path');
@@ -43,7 +54,7 @@ function getProcessCommand(processId, processDirectory) {
 }
 
 function getDirectoryOfProcessById(processId) {
-  return execSync('lsof -p '+ processId + ' | grep cwd | awk \'{print $9}\'', execOptions).trim();
+  return execSync('lsof -p '+ processId + ' | awk \'$4=="cwd" {print $9}\'', execOptions).trim();
 }
 
 function getProcessForPort(port) {

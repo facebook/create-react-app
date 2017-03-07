@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 // Inspired by https://github.com/airbnb/javascript but less opinionated.
 
 // We use eslint-loader so even warnings are very visible.
@@ -134,7 +136,8 @@ module.exports = {
     'no-unused-vars': ['warn', {
       vars: 'local',
       varsIgnorePattern: '^_',
-      args: 'none'
+      args: 'none',
+      ignoreRestSiblings: true,
     }],
     'no-use-before-define': ['warn', 'nofunc'],
     'no-useless-computed-key': 'warn',

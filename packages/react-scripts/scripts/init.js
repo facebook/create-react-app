@@ -1,3 +1,4 @@
+// @remove-file-on-eject
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -6,6 +7,8 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+
+'use strict';
 
 var fs = require('fs-extra');
 var path = require('path');

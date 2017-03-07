@@ -14,8 +14,8 @@ environment:
       test_suite: "kitchensink"
 
 cache:
-  - node_modules
-  - packages\react-scripts\node_modules
+  - node_modules -> appveyor.cleanup-cache.txt
+  - packages\react-scripts\node_modules -> appveyor.cleanup-cache.txt
 
 clone_depth: 50
 
@@ -29,6 +29,10 @@ install:
   - ps: Install-Product node $env:nodejs_version $env:platform
 
 build: off
+
+skip_commits:
+  files:
+    - '**/*.md'
 
 test_script:
   - node --version

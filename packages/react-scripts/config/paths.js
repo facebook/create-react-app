@@ -8,6 +8,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 // @remove-on-eject-end
+'use strict';
 
 var path = require('path');
 var fs = require('fs');
@@ -83,7 +84,6 @@ module.exports = {
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
-  ownNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths,
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json'))
@@ -97,7 +97,6 @@ function resolveOwn(relativePath) {
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
   appPath: resolveApp('.'),
-  ownPath: resolveApp('node_modules/react-scripts'),
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
@@ -107,21 +106,22 @@ module.exports = {
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
-  // this is empty with npm3 but node resolution searches higher anyway:
-  ownNodeModules: resolveOwn('node_modules'),
   nodePaths: nodePaths,
   publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json'))
+  servedPath: getServedPath(resolveApp('package.json')),
+  // These properties only exist before ejecting:
+  ownPath: resolveOwn('.'),
+  ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
 };
 
-var reactScriptsPath = path.resolve('node_modules/react-scripts');
+var ownPackageJson = require('../package.json');
+var reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
 var reactScriptsLinked = fs.existsSync(reactScriptsPath) && fs.lstatSync(reactScriptsPath).isSymbolicLink();
 
 // config before publish: we're in ./packages/react-scripts/config/
 if (!reactScriptsLinked && __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) {
   module.exports = {
     appPath: resolveApp('.'),
-    ownPath: resolveOwn('.'),
     appBuild: resolveOwn('../../build'),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
@@ -131,10 +131,12 @@ if (!reactScriptsLinked && __dirname.indexOf(path.join('packages', 'react-script
     yarnLockFile: resolveOwn('template/yarn.lock'),
     testsSetup: resolveOwn('template/src/setupTests.js'),
     appNodeModules: resolveOwn('node_modules'),
-    ownNodeModules: resolveOwn('node_modules'),
     nodePaths: nodePaths,
     publicUrl: getPublicUrl(resolveOwn('package.json')),
-    servedPath: getServedPath(resolveOwn('package.json'))
+    servedPath: getServedPath(resolveOwn('package.json')),
+    // These properties only exist before ejecting:
+    ownPath: resolveOwn('.'),
+    ownNodeModules: resolveOwn('node_modules'),
   };
 }
 // @remove-on-eject-end
