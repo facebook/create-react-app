@@ -10,11 +10,11 @@
 // @remove-on-eject-end
 'use strict';
 
-var config = require('./webpack.config.dev');
-var paths = require('./paths');
+const config = require('./webpack.config.dev');
+const paths = require('./paths');
 
-var protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-var host = process.env.HOST || 'localhost';
+const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+const host = process.env.HOST || 'localhost';
 
 module.exports = {
   // Enable gzip compression of generated files.

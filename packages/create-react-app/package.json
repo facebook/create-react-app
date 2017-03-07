@@ -14,7 +14,8 @@
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "createReactApp.js"
   ],
   "bin": {
     "create-react-app": "./index.js"

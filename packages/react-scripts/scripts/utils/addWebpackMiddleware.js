@@ -10,16 +10,16 @@
 // @remove-on-eject-end
 'use strict';
 
-var chalk = require('chalk');
-var historyApiFallback = require('connect-history-api-fallback');
-var httpProxyMiddleware = require('http-proxy-middleware');
-var paths = require('../../config/paths');
+const chalk = require('chalk');
+const historyApiFallback = require('connect-history-api-fallback');
+const httpProxyMiddleware = require('http-proxy-middleware');
+const paths = require('../../config/paths');
 
 // We need to provide a custom onError function for httpProxyMiddleware.
 // It allows us to log custom error messages on the console.
 function onProxyError(proxy) {
-  return function(err, req, res){
-    var host = req.headers && req.headers.host;
+  return (err, req, res) => {
+    const host = req.headers && req.headers.host;
     console.log(
       chalk.red('Proxy error:') + ' Could not proxy request ' + chalk.cyan(req.url) +
       ' from ' + chalk.cyan(host) + ' to ' + chalk.cyan(proxy) + '.'
@@ -44,7 +44,7 @@ function onProxyError(proxy) {
 module.exports = function addWebpackMiddleware(devServer) {
   // `proxy` lets you to specify a fallback server during development.
   // Every unrecognized request will be forwarded to it.
-  var proxy = require(paths.appPackageJson).proxy;
+  const proxy = require(paths.appPackageJson).proxy;
   devServer.use(historyApiFallback({
     // Paths with dots should still use the history fallback.
     // See https://github.com/facebookincubator/create-react-app/issues/387.
@@ -74,14 +74,14 @@ module.exports = function addWebpackMiddleware(devServer) {
     // - /*.hot-update.json (WebpackDevServer uses this too for hot reloading)
     // - /sockjs-node/* (WebpackDevServer uses this for hot reloading)
     // Tip: use https://jex.im/regulex/ to visualize the regex
-    var mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
+    const mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
 
     // Pass the scope regex both to Express and to the middleware for proxying
     // of both HTTP and WebSockets to work without false positives.
-    var hpm = httpProxyMiddleware(pathname => mayProxy.test(pathname), {
+    const hpm = httpProxyMiddleware(pathname => mayProxy.test(pathname), {
       target: proxy,
       logLevel: 'silent',
-      onProxyReq: function(proxyReq) {
+      onProxyReq: proxyReq => {
         // Browers may send Origin headers even with same-origin
         // requests. To prevent CORS issues, we have to change
         // the Origin to match the target URL.
