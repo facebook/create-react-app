@@ -57,41 +57,8 @@ function formatMessage(message) {
     ];
   }
 
-  // Cleans up syntax error messages.
+  // brush up the error message a little.
   if (lines[1].indexOf('Module build failed: ') === 0) {
-    // For some reason, on the client messages appear duplicated:
-    // https://github.com/webpack/webpack/issues/3008
-    // This won't happen in Node but since we share this helpers,
-    // we will dedupe them right here. We will ignore all lines
-    // after the original error message text is repeated the second time.
-    var errorText = lines[1].substr('Module build failed: '.length);
-    var cleanedLines = [];
-    var hasReachedDuplicateMessage = false;
-    // Gather lines until we reach the beginning of duplicate message.
-    lines.forEach(function(line, index) {
-      if (
-        // First time it occurs is fine.
-        index !== 1 &&
-        // line.endsWith(errorText)
-        line.length >= errorText.length &&
-        line.indexOf(errorText) === line.length - errorText.length
-      ) {
-        // We see the same error message for the second time!
-        // Filter out repeated error message and everything after it.
-        hasReachedDuplicateMessage = true;
-      }
-      if (
-        !hasReachedDuplicateMessage ||
-        // Print last line anyway because it contains the source location
-        index === lines.length - 1
-      ) {
-        // This line is OK to appear in the output.
-        cleanedLines.push(line);
-      }
-    });
-    // We are clean now!
-    lines = cleanedLines;
-    // Finally, brush up the error message a little.
     lines[1] = lines[1].replace(
       'Module build failed: SyntaxError:',
       friendlySyntaxErrorLabel
