@@ -118,27 +118,30 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
     cdpath = appPath;
   }
 
+  // Change displayed command to yarn instead of yarnpkg
+  var displayedCommand = useYarn ? 'yarn' : 'npm';
+
   console.log();
   console.log('Success! Created ' + appName + ' at ' + appPath);
   console.log('Inside that directory, you can run several commands:');
   console.log();
-  console.log(chalk.cyan('  ' + command + ' start'));
+  console.log(chalk.cyan('  ' + displayedCommand + ' start'));
   console.log('    Starts the development server.');
   console.log();
-  console.log(chalk.cyan('  ' + command + ' run build'));
+  console.log(chalk.cyan('  ' + displayedCommand + ' run build'));
   console.log('    Bundles the app into static files for production.');
   console.log();
-  console.log(chalk.cyan('  ' + command + ' test'));
+  console.log(chalk.cyan('  ' + displayedCommand + ' test'));
   console.log('    Starts the test runner.');
   console.log();
-  console.log(chalk.cyan('  ' + command + ' run eject'));
+  console.log(chalk.cyan('  ' + displayedCommand + ' run eject'));
   console.log('    Removes this tool and copies build dependencies, configuration files');
   console.log('    and scripts into the app directory. If you do this, you can’t go back!');
   console.log();
   console.log('We suggest that you begin by typing:');
   console.log();
   console.log(chalk.cyan('  cd'), cdpath);
-  console.log('  ' + chalk.cyan(command + ' start'));
+  console.log('  ' + chalk.cyan(displayedCommand + ' start'));
   if (readmeExists) {
     console.log();
     console.log(chalk.yellow('You had a `README.md` file, we renamed it to `README.old.md`'));
