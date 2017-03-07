@@ -114,6 +114,31 @@ function ensureOverlayDivExists(onOverlayDivReady) {
   document.body.appendChild(overlayIframe);
 }
 
+/**
+ * Optionnaly decorate the html output with links to 
+ * @param {Element} node an div that contains error trace
+ */
+function decorateErrorsWithEditorLink(node) {
+
+  var editorLinkPattern = "subl://open?url=%%f&line=%%l&column=%%c";
+  var url, m;
+  var createLink = function (url, line, column) {
+    line = line || 1;
+    column = column || 1;
+    return editorLinkPattern.replace('%%f', 'file://'+url).replace('%%l', line).replace('%%c', column);
+  };
+
+  [].forEach.call(node.childNodes, function (element) {
+    if (element.tagName === "U") {
+      url = element.innerHTML;
+      element.innerHTML = '<a style="color:white" href="' + createLink(url) + '">' + url + '</a>';
+    } else if (element.tagName === "SPAN" && element.innerHTML.match(/\d+:\d+/)) {
+      m = element.innerHTML.match(/(\d+):(\d+)/);
+      element.innerHTML = '<a style="color:white" href="' + createLink(url, m[1], m[2]) + '">' + element.innerHTML + '</a>';
+    }
+  });
+}
+
 function showErrorOverlay(message) {
   ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
     // Make it look similar to our terminal.
@@ -122,8 +147,10 @@ function showErrorOverlay(message) {
       colors.red +
       '">Failed to compile.</span><br><br>' +
       ansiHTML(entities.encode(message));
+    decorateErrorsWithEditorLink(overlayDiv);
   });
 }
+
 
 function destroyErrorOverlay() {  
   if (!overlayDiv) {
