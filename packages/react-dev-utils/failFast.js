@@ -695,7 +695,10 @@ function crash(error) {
 
         if (sourceFileName == null) continue;
         if (sourceFileName.indexOf('/' + tag.file) !== -1) {
-          resolvedFrames[frameIndex].sourceLineNumber = tag.lineNum;
+          var prevLineNumber = resolvedFrames[frameIndex].sourceLineNumber;
+          if (Math.abs(prevLineNumber - tag.lineNum) < CONTEXT_SIZE) {
+            resolvedFrames[frameIndex].sourceLineNumber = tag.lineNum;
+          }
           shouldContinue = true;
           break;
         }
