@@ -118,7 +118,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
   }
 
   // Change displayed command to yarn instead of yarnpkg
-  var displayedCommand = useYarn ? 'yarn' : 'npm';
+  const displayedCommand = useYarn ? 'yarn' : 'npm';
 
   console.log();
   console.log(`Success! Created ${appName} at ${appPath}`);
