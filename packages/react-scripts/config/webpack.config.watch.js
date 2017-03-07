@@ -8,34 +8,34 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 // @remove-on-eject-end
-"use strict"
-var autoprefixer = require('autoprefixer');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var ManifestPlugin = require('webpack-manifest-plugin');
-var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-var paths = require('./paths');
-var getClientEnvironment = require('./env');
-var isProduction = require('react-dev-utils/isProduction');
+'use strict';
+const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const paths = require('./paths');
+const getClientEnvironment = require('./env');
+const isProduction = require('react-dev-utils/isProduction');
 
 // @remove-on-eject-begin
 // `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
-var path = require('path');
+const path = require('path');
 // @remove-on-eject-end
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-var publicPath = paths.servedPath;
+const publicPath = paths.servedPath;
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
-var shouldUseRelativeAssetPaths = publicPath === './';
+const shouldUseRelativeAssetPaths = publicPath === './';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
-var publicUrl = publicPath.slice(0, -1);
+const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
-var env = getClientEnvironment(publicUrl);
+const env = getClientEnvironment(publicUrl);
 
 // Fall back to development if not production
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
@@ -72,11 +72,11 @@ module.exports = {
     // We don't currently advertise code splitting but Webpack supports it.
     // There's prefix in the filename to identify which NODE_ENV generated this build
     filename: 'static/js/' + process.env.NODE_ENV + '.[name].[chunkhash:8].js',
-    chunkFilename: (
-      'static/js/' + process.env.NODE_ENV + '.[name].[chunkhash:8].chunk.js'
-    ),
+    chunkFilename: 'static/js/' +
+      process.env.NODE_ENV +
+      '.[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
-    publicPath: publicPath
+    publicPath: publicPath,
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -93,8 +93,8 @@ module.exports = {
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-      'react-native': 'react-native-web'
-    }
+      'react-native': 'react-native-web',
+    },
   },
   // @remove-on-eject-begin
   // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
@@ -103,8 +103,8 @@ module.exports = {
     modules: [
       paths.ownNodeModules,
       // Lerna hoists everything, so we need to look in our app directory
-      paths.appNodeModules
-    ]
+      paths.appNodeModules,
+    ],
   },
   // @remove-on-eject-end
   // This part is essentially the same as production configuration, but it remove
@@ -126,13 +126,13 @@ module.exports = {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
               configFile: path.join(__dirname, '../.eslintrc'),
-              useEslintrc: false
+              useEslintrc: false,
             },
             // @remove-on-eject-end
-            loader: 'eslint-loader'
-          }
+            loader: 'eslint-loader',
+          },
         ],
-        include: paths.appSrc
+        include: paths.appSrc,
       },
       // ** ADDING/UPDATING LOADERS **
       // The "url" loader handles all assets unless explicitly excluded.
@@ -147,10 +147,10 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: (
-            'static/media/' + process.env.NODE_ENV + '.[name].[hash:8].[ext]'
-          )
-        }
+          name: 'static/media/' +
+            process.env.NODE_ENV +
+            '.[name].[hash:8].[ext]',
+        },
       },
       // Process JS with Babel.
       {
@@ -160,9 +160,8 @@ module.exports = {
         // @remove-on-eject-begin
         options: {
           babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')]
-        }
-
+          presets: [require.resolve('babel-preset-react-app')],
+        },
         // @remove-on-eject-end
       },
       // The notation here is somewhat confusing.
@@ -187,8 +186,8 @@ module.exports = {
                 {
                   loader: 'css-loader',
                   options: {
-                    importLoaders: 1
-                  }
+                    importLoaders: 1,
+                  },
                 },
                 {
                   loader: 'postcss-loader',
@@ -201,19 +200,18 @@ module.exports = {
                             '>1%',
                             'last 4 versions',
                             'Firefox ESR',
-                            'not ie < 9' // React doesn't support IE8 anyway
-                          ]
-                        })
+                            'not ie < 9', // React doesn't support IE8 anyway
+                          ],
+                        }),
                       ];
-                    }
-                  }
-                }
-              ]
+                    },
+                  },
+                },
+              ],
             },
             extractTextPluginOptions
           )
-        )
-
+        ),
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
       // "file" loader for svg
@@ -221,14 +219,14 @@ module.exports = {
         test: /\.svg$/,
         loader: 'file-loader',
         options: {
-          name: (
-            'static/media/' + process.env.NODE_ENV + '.[name].[hash:8].[ext]'
-          )
-        }
-      }
+          name: 'static/media/' +
+            process.env.NODE_ENV +
+            '.[name].[hash:8].[ext]',
+        },
+      },
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "url" loader exclusion list.
-    ]
+    ],
   },
   plugins: [
     // Makes some environment variables available in index.html.
@@ -241,23 +239,21 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
-      minify: (
-        isProduction()
-          ? // Minify the code if in production.
-            {
-              removeComments: true,
-              collapseWhitespace: true,
-              removeRedundantAttributes: true,
-              useShortDoctype: true,
-              removeEmptyAttributes: true,
-              removeStyleLinkTypeAttributes: true,
-              keepClosingSlash: true,
-              minifyJS: true,
-              minifyCSS: true,
-              minifyURLs: true
-            }
-          : false
-      )
+      minify: isProduction()
+        ? // Minify the code if in production.
+          {
+            removeComments: true,
+            collapseWhitespace: true,
+            removeRedundantAttributes: true,
+            useShortDoctype: true,
+            removeEmptyAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            keepClosingSlash: true,
+            minifyJS: true,
+            minifyCSS: true,
+            minifyURLs: true,
+          }
+        : false,
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
@@ -269,35 +265,35 @@ module.exports = {
       ? new webpack.optimize.UglifyJsPlugin({
           compress: {
             screw_ie8: true, // React doesn't support IE8
-            warnings: false
+            warnings: false,
           },
           mangle: {
-            screw_ie8: true
+            screw_ie8: true,
           },
           output: {
             comments: false,
-            screw_ie8: true
+            screw_ie8: true,
           },
-          sourceMap: true
+          sourceMap: true,
         })
       : false,
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
-      filename: cssFilename
+      filename: cssFilename,
     }),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
     // We also read this file to delete stale files in build folder
     new ManifestPlugin({
-      fileName: 'asset-manifest.json'
-    })
+      fileName: 'asset-manifest.json',
+    }),
   ].filter(Boolean), // remove falsy plugin on development
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
-  }
+    tls: 'empty',
+  },
 };
