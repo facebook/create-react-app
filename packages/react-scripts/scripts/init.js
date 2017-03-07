@@ -118,6 +118,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
     cdpath = appPath;
   }
 
+  // Change command to yarn instead of yarnpkg
+  if (useYarn)
+    command = 'yarn';
+
   console.log();
   console.log('Success! Created ' + appName + ' at ' + appPath);
   console.log('Inside that directory, you can run several commands:');
