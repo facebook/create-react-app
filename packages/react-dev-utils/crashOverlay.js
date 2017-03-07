@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 'use strict';
 
 var codeFrame = require('babel-code-frame');
@@ -370,7 +379,7 @@ function hintsDiv() {
   applyStyles(hints, hintsStyle);
 
   var close = createHint('×');
-  close.addEventListener('click', function (e) {
+  close.addEventListener('click', function () {
     unmount();
   });
   applyStyles(close, closeButtonStyle);
@@ -417,7 +426,7 @@ function getGroupToggle(omitsCount, omitBundle) {
   accessify(omittedFrames);
   var text1 = document.createTextNode('\u25B6 ' + omitsCount + ' stack frames were collapsed.');
   omittedFrames.appendChild(text1);
-  omittedFrames.addEventListener('click', function (e) {
+  omittedFrames.addEventListener('click', function () {
     var hide = text1.textContent.match(/▲/);
     var list = document.getElementsByName('bundle-' + omitBundle);
     for (var index = 0; index < list.length; ++index) {
@@ -452,7 +461,7 @@ function insertBeforeBundle(parent, omitsCount, omitBundle, actionElement) {
   div.setAttribute('name', 'bundle-' + omitBundle);
   var text = document.createTextNode('\u25BC ' + omitsCount + ' stack frames were expanded.');
   div.appendChild(text);
-  div.addEventListener('click', function (e) {
+  div.addEventListener('click', function () {
     return actionElement.click();
   });
   applyStyles(div, omittedFramesStyle);
@@ -770,7 +779,9 @@ window.addEventListener('keydown', escapeHandler);
 
 try {
   Error.stackTraceLimit = 50;
-} catch (e) {}
+} catch (e) {
+  // Browser may not support this, we don't care.
+}
 
 var proxyConsole = function proxyConsole(type) {
   var orig = console[type];
