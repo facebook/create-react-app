@@ -11,8 +11,10 @@
     "node": ">=4"
   },
   "files": [
+    "ansiHTML.js",
     "checkRequiredFiles.js",
     "clearConsole.js",
+    "crashOverlay.js",
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
@@ -24,7 +26,8 @@
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "ansi-html": "0.0.5",
+    "anser": "1.1.0",
+    "babel-code-frame": "6.20.0",
     "chalk": "1.1.3",
     "escape-string-regexp": "1.0.5",
     "filesize": "3.3.0",
@@ -33,6 +36,7 @@
     "opn": "4.0.2",
     "recursive-readdir": "2.1.1",
     "sockjs-client": "1.1.2",
+    "stack-frame-resolver": "0.1.3",
     "strip-ansi": "3.0.1"
   }
 }
