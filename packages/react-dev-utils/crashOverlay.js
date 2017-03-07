@@ -808,7 +808,7 @@ var proxyConsole = function proxyConsole(type) {
   };
 };
 
-proxyConsole('error');
+// proxyConsole('error');
 
 if (module.hot) {
   module.hot.dispose(function () {
