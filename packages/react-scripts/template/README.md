@@ -1216,14 +1216,14 @@ You can turn your React app into a [Progressive Web App](https://developers.goog
 
 ### Static Server
 
-For environments using Node.js, the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
+For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
 
 ```sh
 npm install -g serve
 serve -s build
 ```
 
-The last command shown above will serve your static site on the port **3000**. Like many of [serve](https://github.com/zeit/serve)'s internal settings, the port can be adjusted using the `-p` or `--port` flags.
+The last command shown above will serve your static site on the port **5000**. Like many of [serve](https://github.com/zeit/serve)’s internal settings, the port can be adjusted using the `-p` or `--port` flags.
 
 Run this command to get a full list of the options available:
 
@@ -1233,9 +1233,9 @@ serve -h
 
 ### Other Solutions
 
-You don't necessarily need a static server in order to run a `create-react-app` project in production. It works just as fine integrated into an existing dynamic one.
+You don’t necessarily need a static server in order to run a Create React App project in production. It works just as fine integrated into an existing dynamic one.
 
-Here's a programmatic example using [Node](https://nodejs.org/) and [Express](http://expressjs.com/):
+Here’s a programmatic example using [Node](https://nodejs.org/) and [Express](http://expressjs.com/):
 
 ```javascript
 const express = require('express');
@@ -1251,7 +1251,7 @@ app.get('/', function (req, res) {
 app.listen(9000);
 ```
 
-The choice of your server software isn't important either. Since `create-react-app` is completely platform-agnostic, there's no need to explicitly use Node.
+The choice of your server software isn’t important either. Since Create React App is completely platform-agnostic, there’s no need to explicitly use Node.
 
 The `build` folder with static assets is the only output produced by Create React App.
 
