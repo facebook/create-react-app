@@ -193,7 +193,7 @@ function build(previousFileSizes) {
       }
       console.log(`  ${chalk.cyan('serve')} -s build`);
       console.log(
-        `  ${chalk.cyan(openCommand)} http://localhost:${process.env.PORT || 9000}`
+        `  ${chalk.cyan(openCommand)} http://localhost:${process.env.PORT || 3000}`
       );
       console.log();
     }
