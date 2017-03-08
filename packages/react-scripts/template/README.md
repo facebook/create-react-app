@@ -62,6 +62,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Developing Components in Isolation](#developing-components-in-isolation)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
 - [Deployment](#deployment)
+  - [Node.js (Static)](#nodejs-static)
+  - [Other Platforms (+ Non-Static)](#other-platforms--non-static)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [Azure](#azure)
@@ -1210,7 +1212,26 @@ You can turn your React app into a [Progressive Web App](https://developers.goog
 
 ## Deployment
 
-`npm run build` creates a `build` directory with a production build of your app. Set up your favourite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file. For example, Python contains a built-in HTTP server that can serve static files:
+`npm run build` creates a `build` directory with a production build of your app. Set up your favourite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file.
+
+### Node.js (Static)
+
+For environments using Node.js, the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
+
+```sh
+npm install -g serve
+serve -s build
+```
+
+The last command shown above will serve your static site on the port **3000**. Like many of [serve](https://github.com/zeit/serve)'s internal settings, the port can be adjusted using the `-p` or `--port` flags. Run this command to get a full list of the options available:
+
+```sh
+serve -h
+```
+
+### Other Platforms (+ Non-Static)
+
+You don't necessarily need Node.js or a static webserver in order to run a `create-react-app` project in production. For example, Python contains a built-in HTTP server that can serve static files:
 
 ```sh
 cd build
