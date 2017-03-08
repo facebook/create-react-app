@@ -23,6 +23,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "postcss-flexbugs-fixes": "2.1.0",
     "autoprefixer": "6.7.5",
     "babel-core": "6.23.1",
     "babel-eslint": "7.1.1",
