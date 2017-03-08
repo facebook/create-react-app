@@ -89,7 +89,6 @@ function build(previousFileSizes) {
     printFileSizesAfterBuild(stats, previousFileSizes);
     console.log();
 
-    var openCommand = process.platform === 'win32' ? 'start' : 'open';
     var appPackage  = require(paths.appPackageJson);
     var publicUrl = paths.publicUrl;
     var publicPath = config.output.publicPath;
@@ -148,15 +147,14 @@ function build(previousFileSizes) {
       }
       var build = path.relative(process.cwd(), paths.appBuild);
       console.log('The ' + chalk.cyan(build) + ' folder is ready to be deployed.');
-      console.log('You may also serve it locally with a static server:')
+      console.log('You may serve it with a static server:');
       console.log();
       if (useYarn) {
-        console.log('  ' + chalk.cyan('yarn') +  ' global add pushstate-server');
+        console.log(`  ${chalk.cyan('yarn')} global add serve`);
       } else {
-        console.log('  ' + chalk.cyan('npm') +  ' install -g pushstate-server');
+        console.log(`  ${chalk.cyan('npm')} install -g serve`);
       }
-      console.log('  ' + chalk.cyan('pushstate-server') + ' ' + build);
-      console.log('  ' + chalk.cyan(openCommand) + ' http://localhost:' + (process.env.PORT || 9000));
+      console.log(`  ${chalk.cyan('serve')} -s build`);
       console.log();
     }
   });
