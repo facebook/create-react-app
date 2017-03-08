@@ -101,7 +101,6 @@ function build(previousFileSizes) {
     printFileSizesAfterBuild(stats, previousFileSizes);
     console.log();
 
-    const openCommand = process.platform === 'win32' ? 'start' : 'open';
     const appPackage = require(paths.appPackageJson);
     const publicUrl = paths.publicUrl;
     const publicPath = config.output.publicPath;
