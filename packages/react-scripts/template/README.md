@@ -62,8 +62,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Developing Components in Isolation](#developing-components-in-isolation)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
 - [Deployment](#deployment)
-  - [Node.js (Static)](#nodejs-static)
-  - [Other Platforms (+ Non-Static)](#other-platforms--non-static)
+  - [Static Server](#static-server)
+  - [Other Solutions](#other-solutions)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [Azure](#azure)
@@ -1214,7 +1214,7 @@ You can turn your React app into a [Progressive Web App](https://developers.goog
 
 `npm run build` creates a `build` directory with a production build of your app. Set up your favourite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file.
 
-### Node.js (Static)
+### Static Server
 
 For environments using Node.js, the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
 
@@ -1231,16 +1231,11 @@ Run this command to get a full list of the options available:
 serve -h
 ```
 
-### Other Platforms (+ Non-Static)
+### Other Solutions
 
-You don't necessarily need Node.js or a static webserver in order to run a `create-react-app` project in production. For example, Python contains a built-in HTTP server that can serve static files:
+You don't necessarily need a static server in order to run a `create-react-app` project in production. It works just as fine integrated into an existing dynamic one.
 
-```sh
-cd build
-python -m SimpleHTTPServer 9000
-```
-
-If you’re using [Node](https://nodejs.org/) and [Express](http://expressjs.com/) as a server, it might look like this:
+Here's a programmatic example using [Node](https://nodejs.org/) and [Express](http://expressjs.com/):
 
 ```javascript
 const express = require('express');
@@ -1256,7 +1251,7 @@ app.get('/', function (req, res) {
 app.listen(9000);
 ```
 
-Create React App is not opinionated about your choice of web server. Any static file server will do. The `build` folder with static assets is the only output produced by Create React App.
+The choice of your server software isn't important either. Since `create-react-app` is completely platform-agnostic, there's no need to explicitly use Node. The `build` folder with static assets is the only output produced by Create React App.
 
 However this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
 
