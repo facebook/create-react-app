@@ -59,7 +59,6 @@ module.exports = {
     'default-case': ['warn', { commentPattern: '^no default$' }],
     'dot-location': ['warn', 'property'],
     eqeqeq: ['warn', 'allow-null'],
-    'guard-for-in': 'warn',
     'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
