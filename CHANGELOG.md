@@ -1,3 +1,49 @@
+## 0.9.5 (March 9, 2017)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#1783](https://github.com/facebookincubator/create-react-app/pull/1783) **Work around Node 7.7.2 bug that crashes `npm start`.** ([@ryanwalters](https://github.com/ryanwalters))
+
+#### :nail_care: Enhancement
+
+* `eslint-config-react-app`
+
+  * [#1773](https://github.com/facebookincubator/create-react-app/pull/1773) Remove `guard-for-in` lint rule. ([@spicyj](https://github.com/spicyj))
+
+* `react-scripts`
+  * [#1760](https://github.com/facebookincubator/create-react-app/pull/1760) Suggest `serve` for running in production. ([@leo](https://github.com/leo))
+  * [#1747](https://github.com/facebookincubator/create-react-app/pull/1747) Display `yarn` instead of `yarnpkg` when creating a new app. ([@lpalmes](https://github.com/lpalmes))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#1756](https://github.com/facebookincubator/create-react-app/pull/1756) Add Yarn steps for adding Flow. ([@zertosh](https://github.com/zertosh))
+
+#### :house: Internal
+
+* `babel-preset-react-app`
+
+  * [#1742](https://github.com/facebookincubator/create-react-app/pull/1742) Switch to `babel-preset-env` to remove the deprecation warning. ([@Timer](https://github.com/Timer))
+
+#### Committers: 6
+- Andres Suarez ([zertosh](https://github.com/zertosh))
+- Ben Alpert ([spicyj](https://github.com/spicyj))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Leo Lamprecht ([leo](https://github.com/leo))
+- Lorenzo Palmes ([lpalmes](https://github.com/lpalmes))
+- Ryan Walters ([ryanwalters](https://github.com/ryanwalters))
+
+### Migrating from 0.9.4 to 0.9.5
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.9.5
+```
+
 ## 0.9.4 (March 6, 2017)
 
 #### :bug: Bug Fix
