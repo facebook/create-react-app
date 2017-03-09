@@ -4,7 +4,7 @@
 
 * `react-scripts`
 
-  * [#1783](https://github.com/facebookincubator/create-react-app/pull/1783) Work around Node 7.7.2 bug that crashes `npm start` ([@ryanwalters](https://github.com/ryanwalters))
+  * [#1783](https://github.com/facebookincubator/create-react-app/pull/1783) **Work around Node 7.7.2 bug that crashes `npm start`.** ([@ryanwalters](https://github.com/ryanwalters))
 
 #### :nail_care: Enhancement
 
