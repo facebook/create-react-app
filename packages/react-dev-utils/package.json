@@ -23,6 +23,7 @@
     "openChrome.applescript",
     "prompt.js",
     "WatchMissingNodeModulesPlugin.js",
+    "WatchPackageJsonPlugin.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
