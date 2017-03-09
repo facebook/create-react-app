@@ -198,29 +198,6 @@ if (openBrowser('http://localhost:3000')) {
 }
 ```
 
-#### `prompt(message: string, isYesDefault: boolean): Promise<boolean>`
-
-This function displays a console prompt to the user.
-
-By convention, "no" should be the conservative choice.<br>
-If you mistype the answer, we'll always take it as a "no".<br>
-You can control the behavior on `<Enter>` with `isYesDefault`.
-
-```js
-var prompt = require('react-dev-utils/prompt');
-
-prompt(
-  'Are you sure you want to eat all the candy?',
-  /* isYesDefault */ false
-).then(shouldEat => {
-  if (shouldEat) {
-    console.log('You have successfully consumed all the candy.');
-  } else {
-    console.log('Phew, candy is still available!');
-  }
-});
-```
-
 #### `webpackHotDevClient.js`
 
 This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.
