@@ -15,15 +15,27 @@ describe('Integration', () => {
     it('file env variables', async () => {
       const doc = await initDOM('file-env-variables');
 
-      expect(doc.getElementById('feature-file-env-original-1').textContent).to.equal('from-original-env-1');
-      expect(doc.getElementById('feature-file-env-original-2').textContent).to.equal('override-from-original-local-env-2');
+      expect(
+        doc.getElementById('feature-file-env-original-1').textContent
+      ).to.equal('from-original-env-1');
+      expect(
+        doc.getElementById('feature-file-env-original-2').textContent
+      ).to.equal('override-from-original-local-env-2');
 
       if (process.env.NODE_ENV === 'production') {
-        expect(doc.getElementById('feature-file-env').textContent).to.equal('production')
-        expect(doc.getElementById('feature-file-env-x').textContent).to.equal('x-from-production-env')
+        expect(doc.getElementById('feature-file-env').textContent).to.equal(
+          'production'
+        );
+        expect(doc.getElementById('feature-file-env-x').textContent).to.equal(
+          'x-from-production-env'
+        );
       } else {
-        expect(doc.getElementById('feature-file-env').textContent).to.equal('development')
-        expect(doc.getElementById('feature-file-env-x').textContent).to.equal('x-from-development-env')
+        expect(doc.getElementById('feature-file-env').textContent).to.equal(
+          'development'
+        );
+        expect(doc.getElementById('feature-file-env-x').textContent).to.equal(
+          'x-from-development-env'
+        );
       }
     });
 

@@ -19,24 +19,24 @@ var fs = require('fs');
 var paths = require('./paths');
 
 var sequence = {
-  'development': [
+  development: [
     paths.dotenvDevelopmentLocal,
     paths.dotenvDevelopment,
     paths.dotenvLocal,
-    paths.dotenv
+    paths.dotenv,
   ],
-  'test': [
+  test: [
     paths.dotenvTestLocal,
     paths.dotenvTest,
     paths.dotenvLocal,
-    paths.dotenv
+    paths.dotenv,
   ],
-  'production': [
+  production: [
     paths.dotenvProductionLocal,
     paths.dotenvProduction,
     paths.dotenvLocal,
-    paths.dotenv
-  ]
+    paths.dotenv,
+  ],
 };
 
 var envConfigs = sequence[process.env.NODE_ENV];
@@ -46,7 +46,7 @@ if (envConfigs) {
     if (fs.existsSync(envConfig)) {
       require('dotenv').config({
         silent: true,
-        path: envConfig
+        path: envConfig,
       });
     }
   });
