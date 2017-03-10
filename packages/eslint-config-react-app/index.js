@@ -9,6 +9,8 @@
 
 'use strict';
 
+const resolveNodePath = require('./utils/resolveNodePath');
+
 // Inspired by https://github.com/airbnb/javascript but less opinionated.
 
 // We use eslint-loader so even warnings are very visible.
@@ -49,6 +51,7 @@ module.exports = {
     'import/resolver': {
       node: {
         extensions: ['.js', '.json'],
+        moduleDirectory: ['node_modules'].concat(resolveNodePath()),
       },
     },
   },
