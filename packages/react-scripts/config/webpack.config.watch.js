@@ -9,6 +9,7 @@
  */
 // @remove-on-eject-end
 'use strict';
+process.env.NODE_ENV = 'development';
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -17,7 +18,6 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-const isProduction = require('react-dev-utils/isProduction');
 
 // @remove-on-eject-begin
 // `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
@@ -61,7 +61,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 module.exports = {
   watch: true,
   context: paths.appSrc,
-  devtool: isProduction() ? 'source-map' : 'cheap-module-source-map',
+  devtool: 'cheap-module-source-map',
   // There are no support for live reloading changes in this mode
   entry: [require.resolve('./polyfills'), paths.appIndexJs],
   output: {
@@ -125,7 +125,7 @@ module.exports = {
             options: {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
-              configFile: path.join(__dirname, '../.eslintrc'),
+              configFile: path.join(__dirname, '../eslintrc'),
               useEslintrc: false,
             },
             // @remove-on-eject-end
@@ -239,44 +239,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
-      minify: isProduction()
-        ? // Minify the code if in production.
-          {
-            removeComments: true,
-            collapseWhitespace: true,
-            removeRedundantAttributes: true,
-            useShortDoctype: true,
-            removeEmptyAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            keepClosingSlash: true,
-            minifyJS: true,
-            minifyCSS: true,
-            minifyURLs: true,
-          }
-        : false,
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
-    // Minify js if in production.
-    isProduction()
-      ? new webpack.optimize.UglifyJsPlugin({
-          compress: {
-            screw_ie8: true, // React doesn't support IE8
-            warnings: false,
-          },
-          mangle: {
-            screw_ie8: true,
-          },
-          output: {
-            comments: false,
-            screw_ie8: true,
-          },
-          sourceMap: true,
-        })
-      : false,
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,
@@ -288,7 +256,7 @@ module.exports = {
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
-  ].filter(Boolean), // remove falsy plugin on development
+  ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
