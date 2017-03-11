@@ -8,7 +8,7 @@ Create React apps with no build configuration.
 Create React App works on macOS, Windows, and Linux.<br>
 If something doesn’t work please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new).
 
-## tl;dr
+## Quick Overview
 
 ```sh
 npm install -g create-react-app
@@ -22,6 +22,13 @@ Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
 
 <img src='https://camo.githubusercontent.com/506a5a0a33aebed2bf0d24d3999af7f582b31808/687474703a2f2f692e696d6775722e636f6d2f616d794e66434e2e706e67' width='600' alt='npm start'>
+
+### Get Started Immediately
+
+You **don’t** need to install or configure tools like Webpack or Babel.<br>
+They are preconfigured and hidden so that you can focus on the code.
+
+Just create a project, and you’re good to go.
 
 ## Getting Started
 
