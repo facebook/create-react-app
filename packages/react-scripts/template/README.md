@@ -777,36 +777,38 @@ Create React App will add decorator support when the specification advances to a
 [Electron](https://electron.atom.io/) offers an API to create cross platform desktop applications using HTML, CSS and JavaScript in a Node environment. Electron can render a Create React App with minimal changes.
 
 Start by creating a React app using `create-react-app` command line tool. Then, install the following packages:
-- `electron` is the Electron package that includes all necessary modules to create an Electron app
-- `electron-packager` is a command line tool necessary to bundle an Electron app
-- `concurrently` is a command line tool that runs two processes concurrently
-- `wait-on` is a command line tool that waits for a file, port, socket, or http resource to be available
+- `electron` is the Electron package that includes all necessary modules to create an Electron app.
+- `electron-packager` is a command line tool necessary to bundle an Electron app.
+- `electron-is-dev` is a simple package that when required returns a boolean that can be used to differentiate dev from bundled Electron apps.
+- `concurrently` is a command line tool that runs two processes concurrently.
+- `wait-on` is a command line tool that waits for a file, port, socket, or http resource to be available.
 
-At the root of the React application folder you will need to create an Electron script for initializing the Electron app. [Electron's quick start](https://github.com/electron/electron-quick-start) `main.js` is a good starting point. Extra logic needs to be added to the window creation in order to render the React application in both development and bundled environments. On easy way to distinguish development from bundled environment is to use an environment variable. Here is an example implementation using `ELECTRON_DEV` environment variable.
+At the root of the React application folder you will need to create an Electron script for initializing your Electron app. [Electron's quick start](https://github.com/electron/electron-quick-start) `main.js` is a good starting point. Extra logic needs to be added to the window creation in order to render the React application in both development and bundled environments.
 
 ```javascript
+// Dev flag
+const electronIsDev = require('electron-is-dev');
 // Create the browser window.
 mainWindow = new BrowserWindow({width: 800, height: 600})
 
 // and load the index.html of the app.
 mainWindow.loadURL(
-  process.env.ELECTRON_DEV
+  electronIsDev
     ? 'http://localhost:3000' // Dev server ran by react-scripts
     : `file://${path.join(__dirname, '/build/index.html')}` // Bundled application
 );
 ```
 
 Once this file is created, the `package.json` needs to be edited:
-- Set the Electron script (here `main.js`) as `main`
-- Set application's root (`./`) as `homepage`
-- Rename `start` and `build` scripts as `react-start` and `react-build`
-- Prefix `react-start` script with `BROWSER=none` to prevent the script from opening a browser window on start
-- Add `electron-start` script that runs Electron in development mode: `ELECTRON_DEV=1 electron .`
-- Add `electron-build` script that bundles the Electron app: `electron-packager ./`
+- Set the Electron script (here `main.js`) as `main`.
+- Set application's root (`./`) as `homepage`.
+- Rename `start` and `build` scripts as `react-start` and `react-build`.
+- Add `electron-start` script that runs electron in development mode: `electron .`.
+- Add `electron-build` script that bundles the electron app: `electron-packager ./`
 - Add high level `start` script that runs concurrently the React development server and the Electron app once the React app is ready to be rendered: `concurrently 'yarn react-start' 'wait-on http://localhost:3000/ && yarn electron-start'`
 - Add high level `build` script that bundles both the React app and the Electron app: `yarn react-build && yarn electron-build`
 
-The `package.json` should be as follow:
+The packages.json should be as follow:
 
 ```JSON
 {
@@ -827,8 +829,8 @@ The `package.json` should be as follow:
   "main": "main.js",
   "homepage": "./",
   "scripts": {
-    "react-start": "BROWSER=none react-scripts start",
-    "electron-start": "ELECTRON_DEV=1 electron .",
+    "react-start": "react-scripts start",
+    "electron-start": "electron .",
     "start": "concurrently 'yarn react-start' 'wait-on http://localhost:3000/ && yarn electron-start'",
     "react-build": "react-scripts build",
     "electron-build": "electron-packager ./ --overwrite",
@@ -838,6 +840,14 @@ The `package.json` should be as follow:
   }
 }
 ```
+
+Additionally, you can prevent `react-start` script from opening a browser window by setting the `BROWSER` env variable to `none`. On way of doing it is to create a `.env` file at the root of your React application folder with the following content:
+
+```
+BROWSER=none
+```
+
+This configuration can render simple react applications but has limited support of Electron. If your app needs to access Electron specific features such as IPC you will need to eject the react-scripts and set `electron-renderer` as your webpack target.
 
 ## Integrating with an API Backend
 
