@@ -23,8 +23,12 @@ When you’re ready to deploy to production, create a minified bundle with `npm 
 
 <img src='https://camo.githubusercontent.com/506a5a0a33aebed2bf0d24d3999af7f582b31808/687474703a2f2f692e696d6775722e636f6d2f616d794e66434e2e706e67' width='600' alt='npm start'>
 
-### No additional build tools required
-We have made every effort to make create-react-app not require any additional bundler or builder on top of it. Installing Webpack or Babel is not required, conversely - they can cause problems to successful builds.
+### Get Started Immediately
+
+You **don’t** need to install or configure tools like Webpack or Babel.<br>
+They are preconfigured and hidden so that you can focus on the code.
+
+Just create a project, and you’re good to go.
 
 ## Getting Started
 
