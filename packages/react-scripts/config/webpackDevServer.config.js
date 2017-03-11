@@ -12,6 +12,8 @@
 
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
+const proxy = require(paths.appPackageJson).proxy;
+const prepareProxy = require('../scripts/utils/prepareProxy');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || 'localhost';
@@ -60,4 +62,10 @@ module.exports = {
   https: protocol === 'https',
   host: host,
   overlay: false,
+  historyApiFallback: {
+    // Paths with dots should still use the history fallback.
+    // See https://github.com/facebookincubator/create-react-app/issues/387.
+    disableDotRule: true,
+  },
+  proxy: prepareProxy(proxy),
 };
