@@ -8,7 +8,7 @@ Create React apps with no build configuration.
 Create React App works on macOS, Windows, and Linux.<br>
 If something doesn’t work please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new).
 
-## tl;dr
+## Quick Overview
 
 ```sh
 npm install -g create-react-app
