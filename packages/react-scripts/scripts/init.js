@@ -149,7 +149,7 @@ module.exports = function(
   console.log(chalk.cyan(`  ${displayedCommand} start`));
   console.log('    Starts the development server.');
   console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} run build`));
+  console.log(chalk.cyan(`  ${displayedCommand} build`));
   console.log('    Bundles the app into static files for production.');
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} test`));
