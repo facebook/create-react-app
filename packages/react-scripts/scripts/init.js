@@ -155,7 +155,7 @@ module.exports = function(
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
   console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} run eject`));
+  console.log(chalk.cyan(`  ${displayedCommand} eject`));
   console.log(
     '    Removes this tool and copies build dependencies, configuration files'
   );
