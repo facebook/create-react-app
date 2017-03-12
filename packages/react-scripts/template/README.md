@@ -20,6 +20,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
+- [Code Splitting](#code-splitting)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
 - [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
@@ -347,6 +348,50 @@ Learn more about ES6 modules:
 * [When to use the curly braces?](http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281)
 * [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
 * [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
+
+## Code Splitting
+
+Instead of downloading the entire app before users can use it, code splitting allows you to split your code into small chunks which you can then load on demand when a specific event triggered. This project setup supports code splitting with `import()` dynamic module loading syntax [using webpack2](https://webpack.js.org/guides/code-splitting-import/) and babel. Dynamic `import()` is currently an ECMAScript [proposal](https://github.com/tc39/proposal-dynamic-import) in stage 3.
+
+`import()` takes the module name as an argument and returns a promise which always resolves to the namespace object of the module.
+
+Here is an example:
+
+### `moduleA.js`
+
+```js
+const moduleA = // ...
+
+export { moduleA };
+```
+### `App.js`
+
+```js
+import React, { Component } from 'react';
+
+class App extends Component {
+
+  handleClick(){
+    import('./moduleA').then(function({ moduleA }) {
+      // Use moduleA
+    }).catch(function(err) {
+      // Handle failure
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleClick}>Load</button>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+This will make `moduleA.js` and all its unique dependencies as a separate chunk that only loads after the user clicks 'Load' button.
 
 ## Adding a Stylesheet
 
