@@ -1520,7 +1520,7 @@ When you build the project, Create React App will place the `public` folder cont
 3. Add this line to `scripts` in `package.json`:
     
     ```
-    "now-start": "serve build/",
+    "now-start": "serve --single build/",
     ```
     
 4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
