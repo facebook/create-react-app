@@ -503,6 +503,7 @@ function isSafeToCreateProjectIn(root) {
     'web.iml',
     '.hg',
     '.hgignore',
+    '.hgcheck',
   ];
   return fs.readdirSync(root).every(file => validFiles.indexOf(file) >= 0);
 }
