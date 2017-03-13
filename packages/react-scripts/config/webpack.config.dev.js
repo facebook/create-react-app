@@ -121,7 +121,7 @@ module.exports = {
             // @remove-on-eject-begin
             // Point ESLint to our predefined config.
             options: {
-              configFile: path.join(__dirname, '../eslintrc'),
+              extends: ['react-app'],
               useEslintrc: false,
             },
             // @remove-on-eject-end
