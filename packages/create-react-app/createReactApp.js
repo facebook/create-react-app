@@ -501,6 +501,7 @@ function isSafeToCreateProjectIn(root) {
     'README.md',
     'LICENSE',
     'web.iml',
+    '.hg',
   ];
   return fs.readdirSync(root).every(file => validFiles.indexOf(file) >= 0);
 }
