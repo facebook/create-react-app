@@ -20,27 +20,34 @@ process.env.PUBLIC_URL = '';
 require('dotenv').config({ silent: true });
 
 const jest = require('jest');
-const argv = process.argv.slice(2);
 
-// Watch unless on CI or in coverage mode
-if (!process.env.CI && argv.indexOf('--coverage') < 0) {
-  argv.push('--watch');
+function main(argv) {
+  // Watch unless on CI or in coverage mode
+  if (!process.env.CI && argv.indexOf('--coverage') < 0) {
+    argv.push('--watch');
+  }
+
+  // @remove-on-eject-begin
+  // This is not necessary after eject because we embed config into package.json.
+  const createJestConfig = require('./utils/createJestConfig');
+  const path = require('path');
+  const paths = require('../config/paths');
+  argv.push(
+    '--config',
+    JSON.stringify(
+      createJestConfig(
+        relativePath => path.resolve(__dirname, '..', relativePath),
+        path.resolve(paths.appSrc, '..'),
+        false
+      )
+    )
+  );
+  // @remove-on-eject-end
+  jest.run(argv);
 }
 
-// @remove-on-eject-begin
-// This is not necessary after eject because we embed config into package.json.
-const createJestConfig = require('./utils/createJestConfig');
-const path = require('path');
-const paths = require('../config/paths');
-argv.push(
-  '--config',
-  JSON.stringify(
-    createJestConfig(
-      relativePath => path.resolve(__dirname, '..', relativePath),
-      path.resolve(paths.appSrc, '..'),
-      false
-    )
-  )
-);
-// @remove-on-eject-end
-jest.run(argv);
+module.exports = main;
+
+if (require.main === module) {
+  main(process.argv.slice(2));
+}
