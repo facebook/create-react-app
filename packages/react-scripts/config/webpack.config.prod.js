@@ -117,7 +117,9 @@ module.exports = {
             options: {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
-              extends: ['react-app'],
+              baseConfig: {
+                extends: ['react-app'],
+              },
               useEslintrc: false,
             },
             // @remove-on-eject-end
