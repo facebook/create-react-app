@@ -26,7 +26,7 @@
     "autoprefixer": "6.7.5",
     "babel-core": "6.23.1",
     "babel-eslint": "7.1.1",
-    "babel-jest": "18.0.0",
+    "babel-jest": "19.0.0",
     "babel-loader": "7.0.0-alpha.3",
     "babel-preset-react-app": "^2.1.1",
     "babel-runtime": "^6.20.0",
