@@ -85,6 +85,33 @@ cd "$temp_cli_path"
 npm install "$cli_path"
 
 # ******************************************************************************
+# Test for accidental dependencies
+# ******************************************************************************
+
+cd "$temp_app_path"
+create_react_app test-app-accidental-dependencies
+cd test-app-accidental-dependencies
+
+# Check if accidental extraneous dependencies are present
+# Only react, react-dom, react-scripts should be present
+if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
+grep -v -q -E '^\s*"react(?:-dom|-scripts)?"'; then
+ echo "Dependencies are correct"
+else
+ echo "There are extraneous dependencies in package.json"
+ exit 1
+fi
+
+
+if ! awk '/"devDependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
+grep -v -q -E '^\s*"react(?:-dom|-scripts)?"'; then
+ echo "Dev Dependencies are correct"
+else
+ echo "There are extraneous devDependencies in package.json"
+ exit 1
+fi
+
+# ******************************************************************************
 # Test --scripts-version with a version number
 # ******************************************************************************
 
@@ -169,7 +196,6 @@ mkdir -p test-app-nested-paths-t1/aa/bb/cc/dd
 create_react_app test-app-nested-paths-t1/aa/bb/cc/dd
 cd test-app-nested-paths-t1/aa/bb/cc/dd
 npm start -- --smoke-test
-
 #Testing a path that does not exist
 cd "$temp_app_path"
 create_react_app test-app-nested-paths-t2/aa/bb/cc/dd
