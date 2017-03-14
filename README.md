@@ -209,6 +209,11 @@ All of them are transitive dependencies of the provided npm package.
 
 We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
+## React Native
+
+Looking for something similar, but for React Native?<br>
+Check out [Create React Native App](https://github.com/react-community/create-react-native-app/).
+
 ## Acknowledgements
 
 We are grateful to the authors of existing related projects for their ideas and collaboration:
