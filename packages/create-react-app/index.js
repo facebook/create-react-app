@@ -504,7 +504,7 @@ function fixDependencies(packageName) {
 // https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-243446094
 function isSafeToCreateProjectIn(root) {
   var validFiles = [
-    '.DS_Store', 'Thumbs.db', '.git', '.gitignore', '.idea', 'README.md', 'LICENSE', 'web.iml'
+    '.DS_Store', 'Thumbs.db', '.git', '.gitignore', '.idea', 'README.md', 'LICENSE', 'web.iml', '.hg', '.hgignore', '.hgcheck'
   ];
   return fs.readdirSync(root)
     .every(function(file) {
