@@ -46,6 +46,26 @@ function exists {
   done
 }
 
+# Check for accidental dependencies in package.json
+function checkDependencies {
+  if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
+  grep -v -q -E '^\s*"react(?:-dom|-scripts)?"'; then
+   echo "Dependencies are correct"
+  else
+   echo "There are extraneous dependencies in package.json"
+   exit 1
+  fi
+
+
+  if ! awk '/"devDependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
+  grep -v -q -E '^\s*"react(?:-dom|-scripts)?"'; then
+   echo "Dev Dependencies are correct"
+  else
+   echo "There are extraneous devDependencies in package.json"
+   exit 1
+  fi
+}
+
 function create_react_app {
   node "$temp_cli_path"/node_modules/create-react-app/index.js $*
 }
@@ -85,33 +105,6 @@ cd "$temp_cli_path"
 npm install "$cli_path"
 
 # ******************************************************************************
-# Test for accidental dependencies
-# ******************************************************************************
-
-cd "$temp_app_path"
-create_react_app test-app-accidental-dependencies
-cd test-app-accidental-dependencies
-
-# Check if accidental extraneous dependencies are present
-# Only react, react-dom, react-scripts should be present
-if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-grep -v -q -E '^\s*"react(?:-dom|-scripts)?"'; then
- echo "Dependencies are correct"
-else
- echo "There are extraneous dependencies in package.json"
- exit 1
-fi
-
-
-if ! awk '/"devDependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-grep -v -q -E '^\s*"react(?:-dom|-scripts)?"'; then
- echo "Dev Dependencies are correct"
-else
- echo "There are extraneous devDependencies in package.json"
- exit 1
-fi
-
-# ******************************************************************************
 # Test --scripts-version with a version number
 # ******************************************************************************
 
@@ -122,6 +115,7 @@ cd test-app-version-number
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+checkDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
@@ -134,6 +128,7 @@ cd test-app-tarball-url
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+checkDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a custom fork of react-scripts
@@ -145,6 +140,7 @@ cd test-app-fork
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts-fork
+checkDependencies
 
 # ******************************************************************************
 # Test project folder is deleted on failing package installation
@@ -155,6 +151,7 @@ cd "$temp_app_path"
 create_react_app --scripts-version=`date +%s` test-app-should-not-exist || true
 # confirm that the project folder was deleted
 test ! -d test-app-should-not-exist
+checkDependencies
 
 # ******************************************************************************
 # Test project folder is not deleted when creating app over existing folder
@@ -171,6 +168,7 @@ test -e test-app-should-remain/README.md
 if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "1" ]; then
   false
 fi
+checkDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a scoped fork tgz of react-scripts
@@ -183,6 +181,7 @@ cd test-app-scoped-fork-tgz
 
 # Check corresponding scripts version is installed.
 exists node_modules/@enoah_netzach/react-scripts
+checkDependencies
 
 # ******************************************************************************
 # Test nested folder path as the project name
