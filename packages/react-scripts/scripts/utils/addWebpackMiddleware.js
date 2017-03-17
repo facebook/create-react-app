@@ -59,7 +59,7 @@ function onProxyError(proxy) {
 module.exports = function addWebpackMiddleware(devServer) {
   // `proxy` lets you to specify a fallback server during development.
   // Every unrecognized request will be forwarded to it.
-  const proxy = require(paths.appPackageJson).proxy;
+  let proxy = require(paths.appPackageJson).proxy;
   devServer.use(
     historyApiFallback({
       // Paths with dots should still use the history fallback.
@@ -89,6 +89,11 @@ module.exports = function addWebpackMiddleware(devServer) {
         )
       );
       process.exit(1);
+    }
+
+    // HACK to replace localhost with ip to overcome proxy issue on windows #1116
+    if (process.platform === 'win32') {
+      proxy = proxy.replace('://localhost', '://127.0.0.1');
     }
 
     // Otherwise, if proxy is specified, we will let it handle any request.
