@@ -76,6 +76,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
 - [Advanced Configuration](#advanced-configuration)
+- [Server-side Rendering](#server-side-rendering)
 - [Troubleshooting](#troubleshooting)
   - [`npm start` doesn’t detect changes](#npm-start-doesnt-detect-changes)
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
@@ -1561,6 +1562,28 @@ PORT | :white_check_mark: | :x: | By default, the development web server will at
 HTTPS | :white_check_mark: | :x: | When set to `true`, Create React App will run the development server in `https` mode.
 PUBLIC_URL | :x: | :white_check_mark: | Create React App assumes your application is hosted at the serving web server's root or a subpath as specified in [`package.json` (`homepage`)](#building-for-relative-paths). Normally, Create React App ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included). This may be particularly useful when using a CDN to host your application.
 CI | :large_orange_diamond: | :white_check_mark: | When set to `true`, Create React App treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.
+
+## Server-side Rendering
+
+Create React App has limited support for server-side rendering. The production build is generated as a [UMD module](http://davidbcalhoun.com/2014/what-is-amd-commonjs-and-umd/), which means it can be loaded as a CommonsJS module, an AMD module, or as a global variable. The AMD module name and global variable name is derived from the project name in `package.json`, by turning it into a camel-cased version. For example, 'my-app' becomes 'myApp', and '@org/our-app' becomes 'orgOurApp'. This module can then be used to render static markup on the server.
+
+Since the production build generates files with a hash in the name, before you can load the bundle you first need to look up the name in `asset-manifest.json`. For example, in a NodeJS app:
+
+```js
+const manifest = require('./build/asset-manifest.json');
+const bundleName = manifest['main.js'];
+```
+
+When you generate a project with `create-react-app`, `src/index.js` includes an example rendering function as the default export. In a NodeJS app, you might load the bundle and call the render function as following. You then would need to build the final, complete HTML page and send it to the client.
+
+```js
+const renderApp = require(`./build/${bundleName}`).default;
+const bodyHtml = renderApp();
+```
+
+You can change the render function however you like, e.g. to add Redux or react-router, and pass any parameters to the render function that you need. Please keep in mind that server-side rendering is not a primary goal of Create React App, and only the out-of-the-box configuration is supported. In particular, if you are using code-splitting then you will have to eject since the Webpack target is "web", which won't work on the server chunks are loaded with JSONP. You'll need to generate a [second Webpack config](https://webpack.js.org/concepts/targets/#multiple-targets) with e.g. a "node" target.
+
+If you're not interested in server-side rendering, feel free to delete the render function from `src/index.js`.
 
 ## Troubleshooting
 
