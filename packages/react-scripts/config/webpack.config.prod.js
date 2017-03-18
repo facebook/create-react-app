@@ -19,11 +19,6 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
-// @remove-on-eject-begin
-// `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
-const path = require('path');
-// @remove-on-eject-end
-
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
@@ -122,7 +117,9 @@ module.exports = {
             options: {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
-              configFile: path.join(__dirname, '../eslintrc'),
+              baseConfig: {
+                extends: ['react-app'],
+              },
               useEslintrc: false,
             },
             // @remove-on-eject-end
