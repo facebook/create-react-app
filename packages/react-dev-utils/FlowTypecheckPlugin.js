@@ -108,8 +108,6 @@ function getFlowVersion(options) {
 }
 
 function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
-  const flowconfigPath = path.join(projectPath, '.flowconfig');
-  const gitignorePath = path.join(projectPath, '.gitignore');
   return getFlowVersion().then(localVersion => Promise.all([
     getFlowVersion({global: true}).catch(() => localVersion)
     .then(globalVersion =>
@@ -125,11 +123,6 @@ function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
           'Run `npm install -g flow-bin@' + localVersion + '` to fix this.'
         )) :
         true
-    ),
-    writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n'))
-    .then(wroteFlowconfig => wroteFlowconfig ?
-      writeInFileIfNotPresent(gitignorePath, 'flow-typed', 'flow-typed/npm') :
-      false
     ),
     execOneTime(
       flowTypedPath,
