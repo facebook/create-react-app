@@ -110,8 +110,7 @@ function getFlowVersion(options) {
 
 function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
   const flowconfigPath = path.join(projectPath, '.flowconfig');
-  const gitignorePath = path.join(projectPath, '.gitignore');
-  return getFlowVersion().then(localVersion => 
+  return getFlowVersion().then(localVersion =>
     getFlowVersion({global: true}).catch(() => localVersion)
     .then(globalVersion =>
       globalVersion !== localVersion ?
@@ -124,11 +123,7 @@ function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
     )
   )
   .then(localVersion => Promise.all([
-    writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n'))
-    .then(wroteFlowconfig => wroteFlowconfig ?
-      writeInFileIfNotPresent(gitignorePath, 'flow-typed', 'flow-typed/npm') :
-      false
-    ),
+    writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n')),
     execOneTime(
       flowTypedPath,
       ['install', '--overwrite', '--flowVersion=' + localVersion],
