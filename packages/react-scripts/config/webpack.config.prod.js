@@ -16,6 +16,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -274,6 +275,9 @@ module.exports = {
     new ExtractTextPlugin({
       filename: cssFilename,
     }),
+    // Warn about duplicate dependencies.
+    // See https://github.com/facebookincubator/create-react-app/issues/1844
+    new DuplicatePackageCheckerPlugin(),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
