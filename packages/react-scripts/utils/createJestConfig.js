@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 // Note: this file does not exist after ejecting.
 
 const fs = require('fs');

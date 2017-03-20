@@ -6,6 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+'use strict';
 
 var createJestConfig = require('../utils/createJestConfig');
 var fs = require('fs-extra');
@@ -28,8 +29,8 @@ prompt(
 
   console.log('Ejecting...');
 
-  var ownPath = path.join(__dirname, '..');
-  var appPath = path.join(ownPath, '..', '..');
+  var ownPath = paths.ownPath;
+  var appPath = paths.appPath;
 
   function verifyAbsent(file) {
     if (fs.existsSync(path.join(appPath, file))) {
@@ -113,14 +114,17 @@ prompt(
   console.log(cyan('Updating the scripts'));
   delete appPackage.scripts['eject'];
   Object.keys(appPackage.scripts).forEach(function (key) {
-    appPackage.scripts[key] = appPackage.scripts[key]
-      .replace(/react-scripts-ts (\w+)/g, 'node scripts/$1.js');
-    console.log(
-      '  Replacing ' +
-      cyan('"react-scripts-ts ' + key + '"') +
-      ' with ' +
-      cyan('"node scripts/' + key + '.js"')
-    );
+    Object.keys(ownPackage.bin).forEach(function (binKey) {
+      var regex = new RegExp(binKey + ' (\\w+)', 'g');
+      appPackage.scripts[key] = appPackage.scripts[key]
+        .replace(regex, 'node scripts/$1.js');
+      console.log(
+        '  Replacing ' +
+        cyan('"' + binKey + ' ' + key + '"') +
+        ' with ' +
+        cyan('"node scripts/' + key + '.js"')
+      );
+    });
   });
 
   console.log();
@@ -128,7 +132,7 @@ prompt(
   // Add Jest config
   console.log('  Adding ' + cyan('Jest') + ' configuration');
   appPackage.jest = createJestConfig(
-    filePath => path.join('<rootDir>', filePath),
+    filePath => path.posix.join('<rootDir>', filePath),
     null,
     true
   );
@@ -139,13 +143,24 @@ prompt(
   );
   console.log();
 
+  // "Don't destroy what isn't ours"
+  if (ownPath.indexOf(appPath) === 0) {
+    try {
+      // remove react-scripts and react-scripts binaries from app node_modules
+      Object.keys(ownPackage.bin).forEach(function(binKey) {
+        fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
+      });
+      fs.removeSync(ownPath);
+    } catch(e) {
+      // It's not essential that this succeeds
+    }
+  }
+
   if (fs.existsSync(paths.yarnLockFile)) {
     console.log(cyan('Running yarn...'));
-    fs.removeSync(ownPath);
     spawnSync('yarnpkg', [], {stdio: 'inherit'});
   } else {
     console.log(cyan('Running npm install...'));
-    fs.removeSync(ownPath);
     spawnSync('npm', ['install'], {stdio: 'inherit'});
   }
   console.log(green('Ejected successfully!'));

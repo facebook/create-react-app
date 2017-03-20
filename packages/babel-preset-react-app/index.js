@@ -64,13 +64,6 @@ if (env === 'development' || env === 'test') {
 }
 
 if (env === 'test') {
-  plugins.push.apply(plugins, [
-    // We always include this plugin regardless of environment
-    // because of a Babel bug that breaks object rest/spread without it:
-    // https://github.com/babel/babel/issues/4851
-    require.resolve('babel-plugin-transform-es2015-parameters')
-  ]);
-
   module.exports = {
     presets: [
       // ES features necessary for user's Node version
@@ -88,7 +81,17 @@ if (env === 'test') {
   module.exports = {
     presets: [
       // Latest stable ECMAScript features
-      require.resolve('babel-preset-latest'),
+      [require.resolve('babel-preset-env'), {
+        targets: {
+          // React parses on ie 9, so we should too
+          ie: 9,
+          // We currently minify with uglify
+          // Remove after https://github.com/mishoo/UglifyJS2/issues/448
+          uglify: true
+        },
+        // Disable polyfill transforms
+        useBuiltIns: false
+      }],
       // JSX, Flow
       require.resolve('babel-preset-react')
     ],

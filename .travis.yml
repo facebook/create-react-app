@@ -3,11 +3,13 @@ language: node_js
 node_js:
   - 4
   - 6
+  - 7
 cache:
   directories:
   - node_modules
   - packages/create-react-app/node_modules
   - packages/react-scripts/node_modules
+install: true
 script:
  - 'if [ $TEST_SUITE = "simple" ]; then tasks/e2e-simple.sh; fi'
  - 'if [ $TEST_SUITE = "installs" ]; then tasks/e2e-installs.sh; fi'
@@ -21,5 +23,7 @@ env:
     - TEST_SUITE=kitchensink
 matrix:
   include:
+    - node_js: 0.10
+      env: TEST_SUITE=simple
     - node_js: 6
       env: USE_YARN=yes TEST_SUITE=simple
