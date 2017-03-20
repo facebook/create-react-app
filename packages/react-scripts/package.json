@@ -35,7 +35,7 @@
     "css-loader": "0.26.2",
     "detect-port": "1.1.0",
     "dotenv": "2.0.0",
-    "duplicate-package-checker-webpack-plugin": "^1.2.2",
+    "duplicate-package-checker-webpack-plugin": "^1.2.3",
     "eslint": "3.16.1",
     "eslint-config-react-app": "^0.6.1",
     "eslint-loader": "1.6.3",
