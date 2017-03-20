@@ -23,6 +23,13 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Changelog
 
+### 1.1.7
+* Merge facebookincubator/create-react-app@0.9.5 into react-scripts-ts
+* Merge facebookincubator/create-react-app@0.9.4 into react-scripts-ts
+* Merge facebookincubator/create-react-app@0.9.3 into react-scripts-ts
+* Merge facebookincubator/create-react-app@0.9.2 into react-scripts-ts
+* Merge facebookincubator/create-react-app@0.9.1 into react-scripts-ts
+
 ### 1.1.6
 * Merge facebookincubator/create-react-app@0.9.0 into react-scripts-ts
 
