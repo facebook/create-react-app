@@ -62,6 +62,15 @@ function printErrors(summary, errors) {
   });
 }
 
+function printWarnings(summary, warnings) {
+  console.log(chalk.yellow(summary));
+  console.log();
+  warnings.forEach(err => {
+    console.log(err.message || err);
+    console.log();
+  });
+}
+
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
@@ -77,12 +86,17 @@ function build(previousFileSizes) {
     }
 
     if (process.env.CI && stats.compilation.warnings.length) {
-     printErrors('Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.', stats.compilation.warnings);
-     process.exit(1);
-   }
+      printErrors('Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.', stats.compilation.warnings);
+      process.exit(1);
+    }
 
-    console.log(chalk.green('Compiled successfully.'));
-    console.log();
+    if (stats.compilation.warnings.length) {
+      console.log();
+      printWarnings('Compiled with warnings.', stats.compilation.warnings);
+    } else {
+      console.log(chalk.green('Compiled successfully.'));
+      console.log();
+    }
 
     console.log('File sizes after gzip:');
     console.log();
