@@ -227,11 +227,11 @@ You would need to install an ESLint plugin for your editor first.
 >VS Code ESLint plugin automatically detects Create React App's configuration file. So you do not need to create `eslintrc.json` at the root directory, except when you want to add your own rules. In that case, you should include CRA's config by adding this line:
 
 >```js
-{
-  // ...
-  "extends": "react-app"
-}
-```
+>{
+>  // ...
+>  "extends": "react-app"
+>}
+>```
 
 Then add this block to the `package.json` file of your project:
 
