@@ -260,6 +260,14 @@ module.exports = {
       compress: {
         screw_ie8: true, // React doesn't support IE8
         warnings: false,
+        conditionals: true,
+        unused: true,
+        comparisons: true,
+        sequences: true,
+        dead_code: true,
+        evaluate: true,
+        if_return: true,
+        join_vars: true,
       },
       mangle: {
         screw_ie8: true,
