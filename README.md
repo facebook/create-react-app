@@ -23,6 +23,9 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Changelog
 
+### 1.1.8
+* Fix regression where no `@types` were being installed on init
+
 ### 1.1.7
 * Merge facebookincubator/create-react-app@0.9.5 into react-scripts-ts
 * Merge facebookincubator/create-react-app@0.9.4 into react-scripts-ts
