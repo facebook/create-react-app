@@ -13,6 +13,10 @@ var path = require('path');
 const plugins = [
   // class { handleClick = () => { } }
   require.resolve('babel-plugin-transform-class-properties'),
+  // idx: The existential function.
+  // (props, _ => _.user.friends[0].friends)
+  // See https://facebook.github.io/react-native/blog/2017/03/13/idx-the-existential-function.html
+  require.resolve('babel-plugin-idx'),
   // The following two plugins use Object.assign directly, instead of Babel's
   // extends helper. Note that this assumes `Object.assign` is available.
   // { ...todo, completed: true }
