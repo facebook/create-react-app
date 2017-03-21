@@ -79,8 +79,15 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
       '--save',
       verbose && '--verbose'
     ].filter(function(e) { return e; });
+  } 
+
+  var reactDeps = ['react', 'react-dom'];
+  if (!isReactInstalled(appPackage)) {
+    args = args.concat(reactDeps);
   }
-  args.push('react', 'react-dom', '@types/node', '@types/react', '@types/react-dom', '@types/jest');
+
+  var dependencies = [ '@types/node', '@types/react', '@types/react-dom', '@types/jest'];
+  args = args.concat(dependencies);
 
   // Install additional template dependencies, if present
   var templateDependenciesPath = path.join(appPath, '.template.dependencies.json');
@@ -95,15 +102,14 @@ module.exports = function(appPath, appName, verbose, originalDirectory, template
   // Install react and react-dom for backward compatibility with old CRA cli
   // which doesn't install react and react-dom along with react-scripts
   // or template is presetend (via --internal-testing-template)
-  if (!isReactInstalled(appPackage) || template) {
-    console.log('Installing react and react-dom using ' + command + '...');
-    console.log();
+  console.log('Installing dependencies using ' + command + '...');
+  console.log(chalk.cyan(args.join(', ')));
+  console.log();
 
-    var proc = spawn.sync(command, args, {stdio: 'inherit'});
-    if (proc.status !== 0) {
-      console.error('`' + command + ' ' + args.join(' ') + '` failed');
-      return;
-    }
+  var proc = spawn.sync(command, args, {stdio: 'inherit'});
+  if (proc.status !== 0) {
+    console.error('`' + command + ' ' + args.join(' ') + '` failed');
+    return;
   }
 
   // Display the most elegant way to cd.
