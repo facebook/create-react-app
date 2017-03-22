@@ -10,22 +10,74 @@
 // @remove-on-eject-end
 'use strict';
 
-const name = process.argv[2];
-const directory = process.arg[3];
+const fs = require('fs-extra');
+const path = require('path');
+const paths = require('../config/paths');
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
+let name;
+let directory;
+
 // component name is required
-if (!name) {
+if (process.argv.length < 3) {
   console.log(
     `Usage: ${useYarn ? 'yarn' : 'npm'} run generate-component <component-name> [containing-directory]`
   );
   process.exit(1);
+} else {
+  name = process.argv[2];
+  directory = process.argv.length > 3 ? process.argv[3] : '';
 }
 
-// create directory in src/ if directory is set
+// if directory exists, respectfully bow out
+if (directory && fs.existsSync(path.join(paths.appPath, 'src', directory))) {
+  console.log(
+    `Component directory src/${directory} exists. Cannot create component.`
+  );
+  process.exit(1);
+}
+
+// if component name exists, respectfully bow out
+const componentPath = path.join(paths.appPath, 'src', directory, `${name}.js`);
+const componentTestPath = path.join(
+  paths.appPath,
+  'src',
+  directory,
+  `${name}.test.js`
+);
+if (fs.existsSync(componentPath) || fs.existsSync(componentTestPath)) {
+  console.log(
+    `Component/test file with name \`${name}\` exists. Cannot create component.`
+  );
+  process.exit(1);
+}
+
+// create directory and set copyPath
+let copyPath = path.join(paths.appPath, 'src');
 if (directory) {
+  copyPath = path.join(copyPath, directory);
+  fs.mkdirSync(copyPath);
 }
 
-// copy files from templates/component to src/[directory/]
+// copy files to copyPath
+const templatePath = path.join(
+  paths.appNodeModules,
+  'react-scripts',
+  'templates',
+  'component'
+);
+const componentTemplatePath = path.join(templatePath, 'component.js');
+const componentTestTemplatePath = path.join(templatePath, 'component.test.js');
+fs.copySync(componentTemplatePath, componentPath);
+fs.copySync(componentTestTemplatePath, componentTestPath);
 
 // replace all instances of __component__ inside component.js and component.test.js with name
+const componentFile = fs.readFileSync(componentPath, { encoding: 'utf8' });
+const componentTestFile = fs.readFileSync(componentTestPath, {
+  encoding: 'utf8',
+});
+fs.writeFileSync(componentPath, componentFile.replace(/__component__/g, name));
+fs.writeFileSync(
+  componentTestPath,
+  componentTestFile.replace(/__component__/g, name)
+);
