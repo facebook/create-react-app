@@ -520,7 +520,7 @@ function checkIfOnline(useYarn) {
   }
 
   return new Promise(function(resolve) {
-    dns.resolve('registry.yarnpkg.com', function(err) {
+    dns.lookup('registry.yarnpkg.com', function(err) {
       resolve(err === null);
     });
   });
