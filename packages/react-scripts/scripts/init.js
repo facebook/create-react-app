@@ -47,6 +47,7 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    'generate-component': 'react-scripts generate-component',
   };
 
   fs.writeFileSync(
@@ -65,7 +66,7 @@ module.exports = function(
   // Copy the files for the user
   const templatePath = template
     ? path.resolve(originalDirectory, template)
-    : path.join(ownPath, 'template');
+    : path.join(ownPath, 'templates/app');
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {

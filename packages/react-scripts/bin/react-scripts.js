@@ -19,6 +19,7 @@ switch (script) {
   case 'eject':
   case 'start':
   case 'test':
+  case 'generate-component':
     var result = spawn.sync(
       'node',
       [require.resolve('../scripts/' + script)].concat(args),
