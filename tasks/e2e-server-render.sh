@@ -148,8 +148,13 @@ create_react_app --scripts-version="$scripts_path" test-app
 # ******************************************************************************
 
 verify_bundle() {
+  local oldpwd="$PWD"
   bundle_name=$(echo $PWD/build/static/js/main.*.js)
+
+  cd "$root_path"
   node "$root_path/tasks/test-bundle.js" "$bundle_name"
+
+  cd "$oldpwd"
 }
 
 # Enter the app directory
