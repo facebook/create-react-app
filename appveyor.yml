@@ -32,6 +32,8 @@ platform:
   - x64
 
 install:
+  # TODO: Remove after https://github.com/appveyor/ci/issues/1426 is fixed
+  - set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
   - ps: Install-Product node $env:nodejs_version $env:platform
 
 build: off
