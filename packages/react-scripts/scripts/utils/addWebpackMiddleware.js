@@ -91,7 +91,8 @@ module.exports = function addWebpackMiddleware(devServer) {
       process.exit(1);
     }
 
-    // HACK to replace localhost with ip to overcome proxy issue on windows #1116
+    // Patches a long standing `dns.lookup()` bug on Windows.
+    // See https://github.com/nodejs/node-v0.x-archive/issues/25489
     if (process.platform === 'win32') {
       proxy = proxy.replace('://localhost', '://127.0.0.1');
     }
