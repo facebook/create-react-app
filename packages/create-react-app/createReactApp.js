@@ -21,10 +21,12 @@ const tmp = require('tmp');
 const unpack = require('tar-pack').unpack;
 const hyperquest = require('hyperquest');
 
+const packageJson = require('./package.json');
+
 let projectName;
 
-const program = commander
-  .version(require('./package.json').version)
+const program = new commander.Command(packageJson.name)
+  .version(packageJson.version)
   .arguments('<project-directory>')
   .usage(`${chalk.green('<project-directory>')} [options]`)
   .action(name => {
