@@ -518,7 +518,7 @@ function checkIfOnline(useYarn) {
   }
 
   return new Promise(resolve => {
-    dns.resolve('registry.yarnpkg.com', err => {
+    dns.lookup('registry.yarnpkg.com', err => {
       resolve(err === null);
     });
   });
