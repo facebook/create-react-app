@@ -4,7 +4,7 @@ This package includes the shareable ESLint configuration used by [Create React A
 Please refer to its documentation:
 
 * [Getting Started](https://github.com/facebookincubator/create-react-app/blob/master/README.md#getting-started) – How to create a new app.
-* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/templates/app/README.md) – How to develop apps bootstrapped with Create React App.
 
 ## Usage in Create React App Projects
 

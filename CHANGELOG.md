@@ -342,21 +342,21 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 
   * [#1489](https://github.com/facebookincubator/create-react-app/pull/1489) Support setting `"homepage"` to `"."` to generate relative asset paths. ([@tibdex](https://github.com/tibdex))
 
-    Applications that don’t use the HTML5 `pushState` API can now be built to be served from any relative URL. To enable this, specify `"."` as your `homepage` setting in `package.json`. It used to be possible before with a few known bugs, but they should be fixed now. See [Serving the Same Build from Different Paths](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#serving-the-same-build-from-different-paths).
+    Applications that don’t use the HTML5 `pushState` API can now be built to be served from any relative URL. To enable this, specify `"."` as your `homepage` setting in `package.json`. It used to be possible before with a few known bugs, but they should be fixed now. See [Serving the Same Build from Different Paths](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/templates/app/README.md#serving-the-same-build-from-different-paths).
 
   * [#937](https://github.com/facebookincubator/create-react-app/pull/1504) Add `PUBLIC_URL` environment variable for advanced use. ([@EnoahNetzach](https://github.com/EnoahNetzach))
 
-    If you use a CDN to serve the app, you can now specify `PUBLIC_URL` environment variable to override the base URL (including the hostname) for resources referenced from the built code. This new variable is mentioned in the new [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) section.
+    If you use a CDN to serve the app, you can now specify `PUBLIC_URL` environment variable to override the base URL (including the hostname) for resources referenced from the built code. This new variable is mentioned in the new [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/templates/app/README.md#advanced-configuration) section.
 
   * [#1440](https://github.com/facebookincubator/create-react-app/pull/1440) Make all `REACT_APP_*` environment variables accessible in `index.html`. ([@jihchi](https://github.com/jihchi))
 
-    This makes all environment variables previously available in JS, also available in the HTML file, for example `%REACT_APP_MY_VARIABLE%`. See [Referencing Environment Variables in HTML](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#referencing-environment-variables-in-the-html).
+    This makes all environment variables previously available in JS, also available in the HTML file, for example `%REACT_APP_MY_VARIABLE%`. See [Referencing Environment Variables in HTML](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/templates/app/README.md#referencing-environment-variables-in-the-html).
 
 * `react-dev-utils`
 
   * [#1148](https://github.com/facebookincubator/create-react-app/pull/1148) Configure which browser to open with `npm start`. ([@GAumala](https://github.com/GAumala))
 
-    You can now disable the automatic browser launching by setting the `BROWSER` environment variable to `none`. You can also specify a different browser (or an arbitrary script) to open by default, [as supported by `opn` command](https://github.com/sindresorhus/opn#app) that we use under the hood. See [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration).
+    You can now disable the automatic browser launching by setting the `BROWSER` environment variable to `none`. You can also specify a different browser (or an arbitrary script) to open by default, [as supported by `opn` command](https://github.com/sindresorhus/opn#app) that we use under the hood. See [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/templates/app/README.md#advanced-configuration).
 
 #### :boom: Breaking Change
 
@@ -372,7 +372,7 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 
   * [#1264](https://github.com/facebookincubator/create-react-app/pull/1264) Remove interactive shell check when opening browser on start. ([@CaryLandholt](https://github.com/CaryLandholt))
 
-    Non-interactive terminals no longer automatically disable launching of the browser. Instead, you need to [specify `none` as `BROWSER` environment variable](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration) if you wish to disable it.
+    Non-interactive terminals no longer automatically disable launching of the browser. Instead, you need to [specify `none` as `BROWSER` environment variable](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/templates/app/README.md#advanced-configuration) if you wish to disable it.
 
 #### :bug: Bug Fix
 
@@ -775,7 +775,7 @@ Thanks to [@fson](https://github.com/fson) for cutting this release.
 * `react-scripts`
   * [#944](https://github.com/facebookincubator/create-react-app/pull/944) Crash the build during CI whenever linter warnings are encountered. ([@excitement-engineer](https://github.com/excitement-engineer))
 
-    Linter warnings and errors are now checked during a continuous integration build (set by the `CI` environment variable) and the build will fail if any issues are found. See [Continuous Integration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#continuous-integration) for more information.
+    Linter warnings and errors are now checked during a continuous integration build (set by the `CI` environment variable) and the build will fail if any issues are found. See [Continuous Integration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/templates/app/README.md#continuous-integration) for more information.
 
   * [#1090](https://github.com/facebookincubator/create-react-app/pull/1090) Enable proxying of WebSockets. ([@dceddia](https://github.com/dceddia))
 
@@ -1044,8 +1044,8 @@ npm install --save-dev --save-exact react-scripts@0.5.1
 
 ### Build Dependency (`react-scripts`)
 
-* Adds [support for `public` folder](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-the-public-folder) with arbitrary assets. ([@gaearon](https://github.com/gaearon) in [#703](https://github.com/facebookincubator/create-react-app/pull/703))
-* You can now [specify defaults](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-development-environment-variables-in-env) for environment variables with `.env` file. ([@ayrton](https://github.com/ayrton) in [#695](https://github.com/facebookincubator/create-react-app/pull/695))  
+* Adds [support for `public` folder](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/templates/app/README.md#using-the-public-folder) with arbitrary assets. ([@gaearon](https://github.com/gaearon) in [#703](https://github.com/facebookincubator/create-react-app/pull/703))
+* You can now [specify defaults](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/templates/app/README.md#adding-development-environment-variables-in-env) for environment variables with `.env` file. ([@ayrton](https://github.com/ayrton) in [#695](https://github.com/facebookincubator/create-react-app/pull/695))  
 * Ejecting now generates proper `.babelrc` and `.eslintrc`. ([@fson](https://github.com/fson) in [#689](https://github.com/facebookincubator/create-react-app/pull/689), [@gaearon](https://github.com/gaearon) in [#705](https://github.com/facebookincubator/create-react-app/pull/705))
 * Some React warnings now [include the component stacktrace](https://twitter.com/dan_abramov/status/779308833399332864). ([@gaearon](https://github.com/gaearon) in [#716](https://github.com/facebookincubator/create-react-app/pull/716))
 * `npm start` doesn’t fail in a composed Docker container. ([@arekkas](https://github.com/arekkas) in [#711](https://github.com/facebookincubator/create-react-app/issues/711))
@@ -1101,7 +1101,7 @@ You would need to move both `index.html` and `src/favicon.ico` into the `public`
 <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 ```
 
-This ensures it become a part of the build output, and resolves correctly both with client-side routing and non-root `homepage` in `package.json`. Read more about [using the `public` folder](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-the-public-folder) and [why these changes were made](https://github.com/facebookincubator/create-react-app/pull/703).
+This ensures it become a part of the build output, and resolves correctly both with client-side routing and non-root `homepage` in `package.json`. Read more about [using the `public` folder](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/templates/app/README.md#using-the-public-folder) and [why these changes were made](https://github.com/facebookincubator/create-react-app/pull/703).
 
 ## 0.4.3 (September 18, 2016)
 
