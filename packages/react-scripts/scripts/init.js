@@ -175,6 +175,13 @@ module.exports = function(
     '    and scripts into the app directory. If you do this, you can’t go back!'
   );
   console.log();
+  console.log(
+    chalk.cyan(
+      `  ${displayedCommand} ${useYarn ? '' : 'run '}generate-component <component-name> [component-directory]`
+    )
+  );
+  console.log('    Scaffolds a skeleton component with an accompanying test');
+  console.log();
   console.log('We suggest that you begin by typing:');
   console.log();
   console.log(chalk.cyan('  cd'), cdpath);

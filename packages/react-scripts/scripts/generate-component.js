@@ -14,6 +14,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const paths = require('../config/paths');
 const useYarn = fs.existsSync(paths.yarnLockFile);
+const ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
 
 let name;
 let directory;
@@ -21,13 +22,21 @@ let directory;
 // component name is required
 if (process.argv.length < 3) {
   console.log(
-    `Usage: ${useYarn ? 'yarn' : 'npm'} run generate-component <component-name> [containing-directory]`
+    `Usage: ${useYarn ? 'yarn' : 'npm run'} generate-component <component-name> [containing-directory]`
   );
   process.exit(1);
 } else {
   name = process.argv[2];
   directory = process.argv.length > 3 ? process.argv[3] : '';
 }
+
+const componentPath = path.join(paths.appPath, 'src', directory, `${name}.js`);
+const componentTestPath = path.join(
+  paths.appPath,
+  'src',
+  directory,
+  `${name}.test.js`
+);
 
 // if directory exists, respectfully bow out
 if (directory && fs.existsSync(path.join(paths.appPath, 'src', directory))) {
@@ -38,13 +47,6 @@ if (directory && fs.existsSync(path.join(paths.appPath, 'src', directory))) {
 }
 
 // if component name exists, respectfully bow out
-const componentPath = path.join(paths.appPath, 'src', directory, `${name}.js`);
-const componentTestPath = path.join(
-  paths.appPath,
-  'src',
-  directory,
-  `${name}.test.js`
-);
 if (fs.existsSync(componentPath) || fs.existsSync(componentTestPath)) {
   console.log(
     `Component/test file with name \`${name}\` exists. Cannot create component.`
@@ -62,7 +64,7 @@ if (directory) {
 // copy files to copyPath
 const templatePath = path.join(
   paths.appNodeModules,
-  'react-scripts',
+  ownPackageName,
   'templates',
   'component'
 );
