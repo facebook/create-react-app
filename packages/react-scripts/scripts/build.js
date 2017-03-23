@@ -27,6 +27,7 @@ process.on('unhandledRejection', err => {
 require('dotenv').config({ silent: true });
 
 const chalk = require('chalk');
+const espree = require('espree');
 const fs = require('fs-extra');
 const path = require('path');
 const url = require('url');
@@ -69,12 +70,49 @@ function printErrors(summary, errors) {
   });
 }
 
+function bundleExportsFunction() {
+  const appIndexJs = fs.readFileSync(paths.appIndexJs, 'utf8');
+
+  const parserConfig = {
+    loc: true,
+    ecmaVersion: 2017,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+      impliedStrict: true,
+      experimentalObjectRestSpread: true,
+    },
+  };
+
+  let ast;
+  try {
+    ast = espree.parse(appIndexJs, parserConfig);
+  } catch (err) {
+    // TODO: It would be super-awesome to use the same formatting as
+    // Webpack. Need to track down where that comes from.
+    throw `Failed to parse ${paths.appIndexJs}: ${err.message} at ${err.lineNumber}:${err.column}`;
+  }
+
+  const exportNodes = ast.body.filter(
+    node =>
+      node.type === 'ExportDefaultDeclaration' ||
+      (node.type === 'ExportNamedDeclaration' &&
+        node.declaration.id.name === 'render')
+  );
+
+  return exportNodes.length > 0;
+}
+
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
   let compiler;
   try {
+    if (bundleExportsFunction()) {
+      console.log('Building server bundle...');
+    }
+
     compiler = webpack(config);
   } catch (err) {
     printErrors('Failed to compile.', [err]);
