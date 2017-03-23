@@ -35,10 +35,8 @@ module.exports = {
   globals: {
     document: true,
     window: true,
-    confirm: true,
-    alert: true,
-    localStorage: true,
-    sessionStorage: true,
+    console: true,
+    navigator: true
   },
 
   parserOptions: {
