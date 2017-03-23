@@ -82,7 +82,9 @@ module.exports = {
     // We use `fallback` instead of `root` because we want `node_modules` to "win"
     // if there any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    fallback: paths.nodePaths,
+    // We also fallback to the app's node_modules to support hoisted modules in a
+    // linked package workflow.
+    fallback: [paths.appNodeModules].concat(paths.nodePaths),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
@@ -99,6 +101,8 @@ module.exports = {
   // directory of `react-scripts` itself rather than the project directory.
   resolveLoader: {
     root: paths.ownNodeModules,
+    // Fallback to any hoisted modules when dealing with linked libraries
+    fallback: paths.appNodeModules,
     moduleTemplates: ['*-loader']
   },
   // @remove-on-eject-end
