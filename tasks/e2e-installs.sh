@@ -140,7 +140,6 @@ cd test-app-fork
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts-fork
-checkDependencies
 
 # ******************************************************************************
 # Test project folder is deleted on failing package installation
@@ -151,7 +150,6 @@ cd "$temp_app_path"
 create_react_app --scripts-version=`date +%s` test-app-should-not-exist || true
 # confirm that the project folder was deleted
 test ! -d test-app-should-not-exist
-checkDependencies
 
 # ******************************************************************************
 # Test project folder is not deleted when creating app over existing folder
@@ -168,7 +166,6 @@ test -e test-app-should-remain/README.md
 if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "1" ]; then
   false
 fi
-checkDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a scoped fork tgz of react-scripts
@@ -181,13 +178,12 @@ cd test-app-scoped-fork-tgz
 
 # Check corresponding scripts version is installed.
 exists node_modules/@enoah_netzach/react-scripts
-checkDependencies
 
 # ******************************************************************************
 # Test nested folder path as the project name
 # ******************************************************************************
 
-#Testing a path that exists
+# Testing a path that exists
 cd "$temp_app_path"
 mkdir test-app-nested-paths-t1
 cd test-app-nested-paths-t1
@@ -195,13 +191,14 @@ mkdir -p test-app-nested-paths-t1/aa/bb/cc/dd
 create_react_app test-app-nested-paths-t1/aa/bb/cc/dd
 cd test-app-nested-paths-t1/aa/bb/cc/dd
 npm start -- --smoke-test
-#Testing a path that does not exist
+
+# Testing a path that does not exist
 cd "$temp_app_path"
 create_react_app test-app-nested-paths-t2/aa/bb/cc/dd
 cd test-app-nested-paths-t2/aa/bb/cc/dd
 npm start -- --smoke-test
 
-#Testing a path that is half exists
+# Testing a path that is half exists
 cd "$temp_app_path"
 mkdir -p test-app-nested-paths-t3/aa
 create_react_app test-app-nested-paths-t3/aa/bb/cc/dd
