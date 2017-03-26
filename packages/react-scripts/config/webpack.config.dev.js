@@ -90,6 +90,7 @@ module.exports = {
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
     },
+    modules: [paths.appSrc, 'node_modules'],
   },
   // @remove-on-eject-begin
   // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
@@ -140,6 +141,7 @@ module.exports = {
         exclude: [
           /\.html$/,
           /\.(js|jsx)$/,
+          /\.(scss|sass)$/,
           /\.css$/,
           /\.json$/,
           /\.bmp$/,
@@ -178,6 +180,12 @@ module.exports = {
           // directory for faster rebuilds.
           cacheDirectory: true,
         },
+      },
+      // SASS/SCSS
+      {
+        test: /\.(sass|scss)$/,
+        include: paths.appSrc,
+        loaders: ['style-loader', 'css-loader', 'sass-loader'],
       },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
