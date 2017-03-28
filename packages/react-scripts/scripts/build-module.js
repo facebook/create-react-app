@@ -12,8 +12,17 @@ function lint () {
   return spawn.sync('node', [require.resolve('./lint')], {stdio: 'inherit'});
 }
 
+function fancyLog (color, label, fileName, src, dest) {
+  console.log(
+    color.bgBlack(label),
+    '[' + chalk.green(fileName) + ']',
+    chalk.gray(src + ' -> ' + dest)
+  );
+}
+
 function transformWithBabel (filePath) {
-  const { code } = transformFileSync(path.join(paths.appSrc, filePath), {
+  const srcFile = path.join(paths.appSrc, filePath);
+  const { code } = transformFileSync(srcFile, {
     ast: false,
     sourceMaps: 'inline',
     presets: [
@@ -29,14 +38,21 @@ function transformWithBabel (filePath) {
     path.join(paths.appBuild,
               path.join(path.dirname(filePath),
                         path.basename(filePath, path.extname(filePath)) + '.js'))
-  // TODO: Create 1:1 copy with .js.flow extension for flow support
+  // Write the transpiled file
   fs.writeFileSync(outputFilePath, code);
+  fancyLog(chalk.cyan, 'BABEL', filePath, srcFile, outputFilePath)
+  // Copy the source file as a Flow declaration file
+  const  outputFlowFilePath = outputFilePath + '.flow'
+  fs.copySync(srcFile, outputFlowFilePath)
+  fancyLog(chalk.yellow, 'FLOW', filePath, srcFile, outputFlowFilePath)
   return outputFilePath
 }
 
 function copyAsset (filePath) {
-  fs.copySync(path.join(paths.appSrc, filePath),
-              path.join(paths.appBuild, filePath))
+  const srcFile = path.join(paths.appSrc, filePath)
+  const destFile = path.join(paths.appBuild, filePath)
+  fs.copySync(srcFile, destFile)
+  fancyLog(chalk.magenta, 'COPY', filePath, srcFile, destFile)
 }
 
 function processFile (filePath) {
@@ -44,22 +60,11 @@ function processFile (filePath) {
 
     fs.mkdirpSync(path.parse(path.join(paths.appBuild, filePath)).dir);
     const outputPath = transformWithBabel(filePath);
-    console.log(
-      chalk.cyan.bgBlack('BABEL') +
-      ' [' + chalk.green(filePath) + '] ' +
-      chalk.gray(path.join(paths.appSrc, filePath) + ' -> ' + outputPath)
-    );
 
   } else if (/\.(s?css|svg|json|ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$/.test(filePath)) {
 
     fs.mkdirpSync(path.parse(path.join(paths.appBuild, filePath)).dir);
     copyAsset(filePath)
-    console.log(
-      chalk.magenta.bgBlack('COPY') +
-      ' [' + chalk.green(filePath) + '] ' +
-      chalk.gray(path.join(paths.appSrc, filePath) + ' -> ' + path.join(paths.appBuild, filePath))
-    );
-
   }
 }
 
