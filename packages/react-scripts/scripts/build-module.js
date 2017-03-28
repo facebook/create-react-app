@@ -44,7 +44,7 @@ function transformWithBabel (filePath) {
   // Copy the source file as a Flow declaration file
   const  outputFlowFilePath = outputFilePath + '.flow'
   fs.copySync(srcFile, outputFlowFilePath)
-  fancyLog(chalk.yellow, 'FLOW', filePath, srcFile, outputFlowFilePath)
+  fancyLog(chalk.yellow, 'FLOW', filePath + '.flow', srcFile, outputFlowFilePath)
   return outputFilePath
 }
 
