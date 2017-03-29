@@ -38,6 +38,12 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-json-inclusion').textContent).to.equal('This is an abstract.')
     })
 
+    it('linked modules', async () => {
+      const doc = await initDOM('linked-modules')
+
+      expect(doc.getElementById('feature-linked-modules').textContent).to.equal('2.0.0')
+    })
+
     it('svg inclusion', async () => {
       const doc = await initDOM('svg-inclusion')
 
