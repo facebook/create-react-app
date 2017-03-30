@@ -28,7 +28,7 @@
 // tell people to update their global version of create-react-app.
 //
 // Also be careful with new language features.
-// This file must work on Node 4+.
+// This file must work on Node 4.7+.
 //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //   /!\ DO NOT MODIFY THIS FILE /!\

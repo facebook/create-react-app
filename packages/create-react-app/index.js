@@ -30,7 +30,7 @@
 // tell people to update their global version of create-react-app.
 //
 // Also be careful with new language features.
-// This file must work on Node 0.10+.
+// This file must work on Node 4.7+.
 //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //   /!\ DO NOT MODIFY THIS FILE /!\
@@ -41,13 +41,17 @@
 var chalk = require('chalk');
 
 var currentNodeVersion = process.versions.node;
-if (currentNodeVersion.split('.')[0] < 4) {
+var semver = currentNodeVersion.split('.');
+var major = semver[0];
+var minor = semver[1];
+
+if (major < 4 || (major === 4 && minor < 7)) {
   console.error(
     chalk.red(
       'You are running Node ' +
         currentNodeVersion +
         '.\n' +
-        'Create React App requires Node 4 or higher. \n' +
+        'Create React App requires Node 4.7 or higher. \n' +
         'Please update your version of Node.'
     )
   );
