@@ -47,6 +47,7 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    'generate-component': 'react-scripts generate-component',
   };
 
   fs.writeFileSync(
@@ -65,7 +66,7 @@ module.exports = function(
   // Copy the files for the user
   const templatePath = template
     ? path.resolve(originalDirectory, template)
-    : path.join(ownPath, 'template');
+    : path.join(ownPath, 'templates/app');
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {
@@ -173,6 +174,13 @@ module.exports = function(
   console.log(
     '    and scripts into the app directory. If you do this, you can’t go back!'
   );
+  console.log();
+  console.log(
+    chalk.cyan(
+      `  ${displayedCommand} ${useYarn ? '' : 'run '}generate-component <component-name> [component-directory]`
+    )
+  );
+  console.log('    Scaffolds a skeleton component with an accompanying test');
   console.log();
   console.log('We suggest that you begin by typing:');
   console.log();
