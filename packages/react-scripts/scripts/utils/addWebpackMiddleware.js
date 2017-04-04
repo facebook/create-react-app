@@ -91,7 +91,7 @@ module.exports = function addWebpackMiddleware(devServer) {
 
 // Test proxy value if supplied and fix issues if possible
 function fixProxy(proxy) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     if (typeof proxy !== 'string') {
       console.log(
         chalk.red('When specified, "proxy" in package.json must be a string.')
@@ -116,7 +116,7 @@ function fixProxy(proxy) {
           proxy = proxy.replace('localhost', ip);
           resolve(proxy);
         })
-        .catch(e => {
+        .catch(() => {
           console.log(chalk.red('"proxy" in package.json is set to localhost'));
           console.log(
             chalk.red(
