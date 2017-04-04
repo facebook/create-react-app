@@ -54,21 +54,21 @@ It will create a directory called `my-app` inside the current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transitive dependencies:
 
 ```
-my-app/
-  README.md
-  node_modules/
-  package.json
-  .gitignore
-  public/
-    favicon.ico
-    index.html
-  src/
-    App.css
-    App.js
-    App.test.js
-    index.css
-    index.js
-    logo.svg
+my-app
+├── README.md
+├── node_modules
+├── package.json
+├── .gitignore
+├── public
+│   └── favicon.ico
+│   └── index.html
+└── src
+    └── App.css
+    └── App.js
+    └── App.test.js
+    └── index.css
+    └── index.js
+    └── logo.svg
 ```
 
 No configuration or complicated folder structures, just the files you need to build your app.<br>
