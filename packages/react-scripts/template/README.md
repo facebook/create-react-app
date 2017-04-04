@@ -62,6 +62,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Developing Components in Isolation](#developing-components-in-isolation)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
 - [Deployment](#deployment)
+  - [Static Server](#static-server)
+  - [Other Solutions](#other-solutions)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [Azure](#azure)
@@ -225,11 +227,11 @@ You would need to install an ESLint plugin for your editor first.
 >VS Code ESLint plugin automatically detects Create React App's configuration file. So you do not need to create `eslintrc.json` at the root directory, except when you want to add your own rules. In that case, you should include CRA's config by adding this line:
 
 >```js
-{
-  // ...
-  "extends": "react-app"
-}
-```
+>{
+>  // ...
+>  "extends": "react-app"
+>}
+>```
 
 Then add this block to the `package.json` file of your project:
 
@@ -632,12 +634,12 @@ Recent versions of [Flow](http://flowtype.org/) work with Create React App proje
 
 To add Flow to a Create React App project, follow these steps:
 
-1. Run `npm install --save-dev flow-bin`.
+1. Run `npm install --save-dev flow-bin` (or `yarn add --dev flow-bin`).
 2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
-3. Run `npm run flow -- init` to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
+3. Run `npm run flow -- init` (or `yarn flow -- init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
 4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
 
-Now you can run `npm run flow` to check the files for type errors.
+Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
 You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/flow/) for a better integrated experience.
 In the future we plan to integrate it into Create React App even more closely.
 
@@ -1210,14 +1212,30 @@ You can turn your React app into a [Progressive Web App](https://developers.goog
 
 ## Deployment
 
-`npm run build` creates a `build` directory with a production build of your app. Set up your favourite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file. For example, Python contains a built-in HTTP server that can serve static files:
+`npm run build` creates a `build` directory with a production build of your app. Set up your favourite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file.
+
+### Static Server
+
+For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
 
 ```sh
-cd build
-python -m SimpleHTTPServer 9000
+npm install -g serve
+serve -s build
 ```
 
-If you’re using [Node](https://nodejs.org/) and [Express](http://expressjs.com/) as a server, it might look like this:
+The last command shown above will serve your static site on the port **5000**. Like many of [serve](https://github.com/zeit/serve)’s internal settings, the port can be adjusted using the `-p` or `--port` flags.
+
+Run this command to get a full list of the options available:
+
+```sh
+serve -h
+```
+
+### Other Solutions
+
+You don’t necessarily need a static server in order to run a Create React App project in production. It works just as fine integrated into an existing dynamic one.
+
+Here’s a programmatic example using [Node](https://nodejs.org/) and [Express](http://expressjs.com/):
 
 ```javascript
 const express = require('express');
@@ -1233,7 +1251,9 @@ app.get('/', function (req, res) {
 app.listen(9000);
 ```
 
-Create React App is not opinionated about your choice of web server. Any static file server will do. The `build` folder with static assets is the only output produced by Create React App.
+The choice of your server software isn’t important either. Since Create React App is completely platform-agnostic, there’s no need to explicitly use Node.
+
+The `build` folder with static assets is the only output produced by Create React App.
 
 However this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
 
@@ -1519,21 +1539,12 @@ See this [blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-t
 
 ### Surge
 
-Install the Surge CLI if you haven’t already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account. You just need to specify the *build* folder and your custom domain, and you are done.
+Install the Surge CLI if you haven’t already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account.
+
+When asked about the project path, make sure to specify the `build` folder, for example:
 
 ```sh
-              email: email@domain.com
-           password: ********
        project path: /path/to/project/build
-               size: 7 files, 1.8 MB
-             domain: create-react-app.surge.sh
-             upload: [====================] 100%, eta: 0.0s
-   propagate on CDN: [====================] 100%
-               plan: Free
-              users: email@domain.com
-         IP Address: X.X.X.X
-
-    Success! Project is published and running at create-react-app.surge.sh
 ```
 
 Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
