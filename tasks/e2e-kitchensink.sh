@@ -21,8 +21,10 @@ temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 
 function cleanup {
   echo 'Cleaning up.'
-  cd $root_path
-  rm -rf $temp_cli_path $temp_app_path
+  ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -s 9
+  cd "$root_path"
+  # TODO: fix "Device or resource busy" and remove ``|| $CI`
+  rm -rf "$temp_cli_path" $temp_app_path || $CI
 }
 
 # Error messages are redirected to stderr
@@ -40,7 +42,7 @@ function handle_exit {
 }
 
 function create_react_app {
-  node "$temp_cli_path"/node_modules/create-react-app/index.js $*
+  node "$temp_cli_path"/node_modules/create-react-app/index.js "$@"
 }
 
 # Check for the existence of one or more files.
@@ -77,21 +79,21 @@ fi
 # ******************************************************************************
 
 # Pack CLI
-cd $root_path/packages/create-react-app
+cd "$root_path"/packages/create-react-app
 cli_path=$PWD/`npm pack`
 
 # Go to react-scripts
-cd $root_path/packages/react-scripts
+cd "$root_path"/packages/react-scripts
 
 # Save package.json because we're going to touch it
 cp package.json package.json.orig
 
 # Replace own dependencies (those in the `packages` dir) with the local paths
 # of those packages.
-node $root_path/tasks/replace-own-deps.js
+node "$root_path"/tasks/replace-own-deps.js
 
 # Finally, pack react-scripts
-scripts_path=$root_path/packages/react-scripts/`npm pack`
+scripts_path="$root_path"/packages/react-scripts/`npm pack`
 
 # Restore package.json
 rm package.json
@@ -102,12 +104,12 @@ mv package.json.orig package.json
 # ******************************************************************************
 
 # Install the CLI in a temporary location
-cd $temp_cli_path
-npm install $cli_path
+cd "$temp_cli_path"
+npm install "$cli_path"
 
 # Install the app in a temporary location
 cd $temp_app_path
-create_react_app --scripts-version=$scripts_path --internal-testing-template=$root_path/packages/react-scripts/fixtures/kitchensink test-kitchensink
+create_react_app --scripts-version="$scripts_path" --internal-testing-template="$root_path"/packages/react-scripts/fixtures/kitchensink test-kitchensink
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -118,7 +120,7 @@ create_react_app --scripts-version=$scripts_path --internal-testing-template=$ro
 cd test-kitchensink
 
 # Link to our preset
-npm link $root_path/packages/babel-preset-react-app
+npm link "$root_path"/packages/babel-preset-react-app
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -143,12 +145,19 @@ PORT=3001 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   nohup npm start &>$tmp_server_log &
-grep -q 'The app is running at:' <(tail -f $tmp_server_log)
+while true
+do
+  if grep -q 'The app is running at:' $tmp_server_log; then
+    break
+  else
+    sleep 1
+  fi
+done
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
-  node node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
@@ -163,16 +172,16 @@ E2E_FILE=./build/index.html \
 # ******************************************************************************
 
 # Unlink our preset
-npm unlink $root_path/packages/babel-preset-react-app
+npm unlink "$root_path"/packages/babel-preset-react-app
 
 # Eject...
 echo yes | npm run eject
 
 # ...but still link to the local packages
-npm link $root_path/packages/babel-preset-react-app
-npm link $root_path/packages/eslint-config-react-app
-npm link $root_path/packages/react-dev-utils
-npm link $root_path/packages/react-scripts
+npm link "$root_path"/packages/babel-preset-react-app
+npm link "$root_path"/packages/eslint-config-react-app
+npm link "$root_path"/packages/react-dev-utils
+npm link "$root_path"/packages/react-scripts
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -189,7 +198,7 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  npm test -- --no-cache --testPathPattern="/src/"
+  npm test -- --no-cache --testPathPattern='/src/'
 
 # Test "development" environment
 tmp_server_log=`mktemp`
@@ -197,7 +206,14 @@ PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   nohup npm start &>$tmp_server_log &
-grep -q 'The app is running at:' <(tail -f $tmp_server_log)
+while true
+do
+  if grep -q 'The app is running at:' $tmp_server_log; then
+    break
+  else
+    sleep 1
+  fi
+done
 E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
