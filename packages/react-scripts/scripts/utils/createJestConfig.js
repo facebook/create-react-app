@@ -1,3 +1,4 @@
+// @remove-file-on-eject
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -6,16 +7,17 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-
-// Note: this file does not exist after ejecting.
+'use strict';
 
 const fs = require('fs');
-const paths = require('../config/paths');
+const paths = require('../../config/paths');
 
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
-  const setupTestsFile = fs.existsSync(paths.testsSetup) ? '<rootDir>/src/setupTests.js' : undefined;
+  const setupTestsFile = fs.existsSync(paths.testsSetup)
+    ? '<rootDir>/src/setupTests.js'
+    : undefined;
 
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
@@ -24,23 +26,21 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testPathIgnorePatterns: [
-      '<rootDir>[/\\\\](build|docs|node_modules|scripts)[/\\\\]'
+      '<rootDir>[/\\\\](build|docs|node_modules|scripts)[/\\\\]',
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
-      '^.+\\.(js|jsx)$': isEjecting ?
-        '<rootDir>/node_modules/babel-jest'
+      '^.+\\.(js|jsx)$': isEjecting
+        ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
     },
-    transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'
-    ],
+    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
     moduleNameMapper: {
-      '^react-native$': 'react-native-web'
-    }
+      '^react-native$': 'react-native-web',
+    },
   };
   if (rootDir) {
     config.rootDir = rootDir;
