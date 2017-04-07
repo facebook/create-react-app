@@ -42,9 +42,7 @@ npm install -g create-react-app
 
 **You’ll need to have Node >= 4 on your machine**.
 
-**We strongly recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage.** You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects.
-
-**Note:** `nvm` does not support Windows (nvm issue [#284](https://github.com/creationix/nvm/issues/284)). See potential [alternatives](https://github.com/creationix/nvm#installation).
+**We strongly recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage.** You can use [nvm](https://github.com/creationix/nvm#installation) to easily switch Node versions between different projects.
 
 **This tool doesn’t assume a Node backend**. The Node installation is only required for Create React App itself.
 
