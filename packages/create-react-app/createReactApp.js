@@ -216,7 +216,7 @@ function run(root, appName, version, verbose, originalDirectory, template) {
   const packageToInstall = getInstallPackage(version);
   const allDependencies = ['react', 'react-dom', packageToInstall];
 
-  console.log('Installing packages. This might take a couple minutes.');
+  console.log('Installing packages. This might take a couple of minutes.');
 
   const useYarn = shouldUseYarn();
   getPackageName(packageToInstall)
