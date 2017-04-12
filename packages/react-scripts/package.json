@@ -24,6 +24,7 @@
     "react-scripts-ts": "./bin/react-scripts-ts.js"
   },
   "dependencies": {
+    "app-root-path": "^2.0.1",
     "autoprefixer": "6.7.2",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
