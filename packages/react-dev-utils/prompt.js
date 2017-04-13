@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 var rl = require('readline');
 
 // Convention: "no" should be the conservative choice.
@@ -14,7 +16,9 @@ var rl = require('readline');
 // You can control the behavior on <Enter> with `isYesDefault`.
 function prompt(question, isYesDefault) {
   if (typeof isYesDefault !== 'boolean') {
-    throw new Error('Provide explicit boolean isYesDefault as second argument.');
+    throw new Error(
+      'Provide explicit boolean isYesDefault as second argument.'
+    );
   }
   return new Promise(resolve => {
     var rlInterface = rl.createInterface({
@@ -37,6 +41,6 @@ function prompt(question, isYesDefault) {
       return resolve(isYes);
     });
   });
-};
+}
 
 module.exports = prompt;

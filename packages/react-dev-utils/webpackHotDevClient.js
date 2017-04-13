@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 // This alternative WebpackDevServer combines the functionality of:
 // https://github.com/webpack/webpack-dev-server/blob/webpack-1/client/index.js
 // https://github.com/webpack/webpack/blob/webpack-1/hot/dev-server.js
@@ -16,28 +18,15 @@
 // that looks similar to our console output. The error overlay is inspired by:
 // https://github.com/glenjamin/webpack-hot-middleware
 
-var ansiHTML = require('ansi-html');
 var SockJS = require('sockjs-client');
 var stripAnsi = require('strip-ansi');
 var url = require('url');
 var formatWebpackMessages = require('./formatWebpackMessages');
 var Entities = require('html-entities').AllHtmlEntities;
+var ansiHTML = require('./ansiHTML');
 var entities = new Entities();
 
-// Color scheme inspired by https://github.com/glenjamin/webpack-hot-middleware
-var colors = {
-  reset: ['transparent', 'transparent'],
-  black: '181818',
-  red: 'E36049',
-  green: 'B3CB74',
-  yellow: 'FFD080',
-  blue: '7CAFC2',
-  magenta: '7FACCA',
-  cyan: 'C3C2EF',
-  lightgrey: 'EBE7E3',
-  darkgrey: '6D7891'
-};
-ansiHTML.setColors(colors);
+var red = '#E36049';
 
 function createOverlayIframe(onIframeLoad) {
   var iframe = document.createElement('iframe');
@@ -57,7 +46,7 @@ function createOverlayIframe(onIframeLoad) {
 }
 
 function addOverlayDivTo(iframe) {
-  var div =  iframe.contentDocument.createElement('div');
+  var div = iframe.contentDocument.createElement('div');
   div.id = 'react-dev-utils-webpack-hot-dev-client-overlay-div';
   div.style.position = 'fixed';
   div.style.boxSizing = 'border-box';
@@ -67,8 +56,8 @@ function addOverlayDivTo(iframe) {
   div.style.bottom = 0;
   div.style.width = '100vw';
   div.style.height = '100vh';
-  div.style.backgroundColor = 'black';
-  div.style.color = '#E8E8E8';
+  div.style.backgroundColor = '#fafafa';
+  div.style.color = '#333';
   div.style.fontFamily = 'Menlo, Consolas, monospace';
   div.style.fontSize = 'large';
   div.style.padding = '2rem';
@@ -115,15 +104,14 @@ function ensureOverlayDivExists(onOverlayDivReady) {
 function showErrorOverlay(message) {
   ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
     // Make it look similar to our terminal.
-    overlayDiv.innerHTML =
-      '<span style="color: #' +
-      colors.red +
+    overlayDiv.innerHTML = '<span style="color: ' +
+      red +
       '">Failed to compile.</span><br><br>' +
       ansiHTML(entities.encode(message));
   });
 }
 
-function destroyErrorOverlay() {  
+function destroyErrorOverlay() {
   if (!overlayDiv) {
     // It is not there in the first place.
     return;
@@ -137,13 +125,15 @@ function destroyErrorOverlay() {
 }
 
 // Connect to WebpackDevServer via a socket.
-var connection = new SockJS(url.format({
-  protocol: window.location.protocol,
-  hostname: window.location.hostname,
-  port: window.location.port,
-  // Hardcoded in WebpackDevServer
-  pathname: '/sockjs-node'
-}));
+var connection = new SockJS(
+  url.format({
+    protocol: window.location.protocol,
+    hostname: window.location.hostname,
+    port: window.location.port,
+    // Hardcoded in WebpackDevServer
+    pathname: '/sockjs-node',
+  })
+);
 
 // Unlike WebpackDevServer client, we won't try to reconnect
 // to avoid spamming the console. Disconnect usually happens
@@ -220,7 +210,7 @@ function handleErrors(errors) {
   // "Massage" webpack messages.
   var formatted = formatWebpackMessages({
     errors: errors,
-    warnings: []
+    warnings: [],
   });
 
   // Only show the first error.
@@ -245,27 +235,27 @@ function handleAvailableHash(hash) {
 connection.onmessage = function(e) {
   var message = JSON.parse(e.data);
   switch (message.type) {
-  case 'hash':
-    handleAvailableHash(message.data);
-    break;
-  case 'still-ok':
-  case 'ok':
-    handleSuccess();
-    break;
-  case 'content-changed':
-    // Triggered when a file from `contentBase` changed.
-    window.location.reload();
-    break;
-  case 'warnings':
-    handleWarnings(message.data);
-    break;
-  case 'errors':
-    handleErrors(message.data);
-    break;
-  default:
+    case 'hash':
+      handleAvailableHash(message.data);
+      break;
+    case 'still-ok':
+    case 'ok':
+      handleSuccess();
+      break;
+    case 'content-changed':
+      // Triggered when a file from `contentBase` changed.
+      window.location.reload();
+      break;
+    case 'warnings':
+      handleWarnings(message.data);
+      break;
+    case 'errors':
+      handleErrors(message.data);
+      break;
+    default:
     // Do nothing.
   }
-}
+};
 
 // Is there a newer version of this code available?
 function isUpdateAvailable() {
@@ -310,7 +300,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   // https://webpack.github.io/docs/hot-module-replacement.html#check
-  var result = module.hot.check(/* autoApply */true, handleApplyUpdates);
+  var result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
 
   // // Webpack 2 returns a Promise instead of invoking a callback
   if (result && result.then) {
@@ -323,4 +313,4 @@ function tryApplyUpdates(onHotUpdateSuccess) {
       }
     );
   }
-};
+}
