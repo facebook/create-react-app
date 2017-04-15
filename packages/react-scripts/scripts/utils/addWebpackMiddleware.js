@@ -89,6 +89,14 @@ module.exports = function addWebpackMiddleware(devServer) {
         )
       );
       process.exit(1);
+      // Test that proxy url specified starts with http:// or https://
+    } else if (!/^http(s)?:\/\//.test(proxy)) {
+      console.log(
+        chalk.red(
+          'When "proxy" is specified in package.json it must start with either http:// or https://'
+        )
+      );
+      process.exit(1);
     }
 
     // Otherwise, if proxy is specified, we will let it handle any request.
