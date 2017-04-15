@@ -93,7 +93,7 @@ module.exports = function addWebpackMiddleware(devServer) {
     } else if (!/^http(s)?:\/\//.test(proxy)) {
       console.log(
         chalk.red(
-          'When "proxy" in package.json is specified it must start with either http:// or https://'
+          'When "proxy" is specified in package.json it must start with either http:// or https://'
         )
       );
       process.exit(1);
