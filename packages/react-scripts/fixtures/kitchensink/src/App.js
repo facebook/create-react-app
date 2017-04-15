@@ -94,6 +94,9 @@ class App extends Component {
       case 'json-inclusion':
         require.ensure([], () => this.setFeature(require('./features/webpack/JsonInclusion').default));
         break;
+      case 'linked-modules':
+        require.ensure([], () => this.setFeature(require('./features/webpack/LinkedModules').default));
+        break;
       case 'node-path':
         require.ensure([], () => this.setFeature(require('./features/env/NodePath').default));
         break;
