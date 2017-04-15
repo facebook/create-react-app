@@ -188,6 +188,14 @@ function addMiddleware(devServer) {
       console.log(chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".'));
       console.log(chalk.red('Either remove "proxy" from package.json, or make it a string.'));
       process.exit(1);
+      // Test that proxy url specified starts with http:// or https://
+    } else if (!/^http(s)?:\/\//.test(proxy)) {
+      console.log(
+        chalk.red(
+          'When "proxy" is specified in package.json it must start with either http:// or https://'
+        )
+      );
+      process.exit(1);
     }
 
     // Otherwise, if proxy is specified, we will let it handle any request.
