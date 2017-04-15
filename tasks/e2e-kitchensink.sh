@@ -14,17 +14,18 @@
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
-# CLI and app temporary locations
+# CLI, app, and test module temporary locations
 # http://unix.stackexchange.com/a/84980
 temp_cli_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_cli_path'`
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
+temp_module_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_module_path'`
 
 function cleanup {
   echo 'Cleaning up.'
   ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -s 9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
-  rm -rf "$temp_cli_path" $temp_app_path || $CI
+  rm -rf "$temp_cli_path" "$temp_app_path" "$temp_module_path" || $CI
 }
 
 # Error messages are redirected to stderr
@@ -111,16 +112,23 @@ npm install "$cli_path"
 cd $temp_app_path
 create_react_app --scripts-version="$scripts_path" --internal-testing-template="$root_path"/packages/react-scripts/fixtures/kitchensink test-kitchensink
 
+# Install the test module
+cd "$temp_module_path"
+npm install test-integrity@^2.0.1
+
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
 # let's make sure all npm scripts are in the working state.
 # ******************************************************************************
 
 # Enter the app directory
-cd test-kitchensink
+cd "$temp_app_path/test-kitchensink"
 
 # Link to our preset
 npm link "$root_path"/packages/babel-preset-react-app
+
+# Link to test module
+npm link "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -182,6 +190,9 @@ npm link "$root_path"/packages/babel-preset-react-app
 npm link "$root_path"/packages/eslint-config-react-app
 npm link "$root_path"/packages/react-dev-utils
 npm link "$root_path"/packages/react-scripts
+
+# Link to test module
+npm link "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
