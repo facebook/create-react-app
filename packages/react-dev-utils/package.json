@@ -24,7 +24,7 @@
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "ansi-html": "0.0.5",
+    "ansi-html": "0.0.7",
     "chalk": "1.1.3",
     "escape-string-regexp": "1.0.5",
     "filesize": "3.3.0",
