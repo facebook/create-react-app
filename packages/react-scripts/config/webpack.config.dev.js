@@ -121,6 +121,11 @@ module.exports = {
             options: {
               baseConfig: {
                 extends: ['react-app'],
+                settings: {
+                  react: {
+                    pragma: 'h',
+                  },
+                },
               },
               useEslintrc: false,
             },

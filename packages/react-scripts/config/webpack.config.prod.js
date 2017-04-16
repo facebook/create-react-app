@@ -122,6 +122,11 @@ module.exports = {
               // e.g. to enable no-console and no-debugger only in production.
               baseConfig: {
                 extends: ['react-app'],
+                settings: {
+                  react: {
+                    pragma: 'h',
+                  },
+                },
               },
               useEslintrc: false,
             },
