@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react';
+import { h } from 'preact';
 import aFileWithExtUnknown from './assets/aFileWithExt.unknown';
 
 const text = aFileWithExtUnknown.includes('base64')
