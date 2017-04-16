@@ -137,13 +137,37 @@ function destroyErrorOverlay() {
 }
 
 // Connect to WebpackDevServer via a socket.
-var connection = new SockJS(url.format({
-  protocol: window.location.protocol,
-  hostname: window.location.hostname,
-  port: window.location.port,
-  // Hardcoded in WebpackDevServer
-  pathname: '/sockjs-node'
-}));
+function getLocation(href) {
+  var match = href.match(
+    /^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/
+  );
+  return (
+    match && {
+      href: href,
+      protocol: match[1],
+      host: match[2],
+      hostname: match[3],
+      port: match[4],
+      pathname: match[5],
+      search: match[6],
+      hash: match[7]
+    }
+  );
+}
+
+let scriptUrl = document.currentScript
+  ? getLocation(document.currentScript.src)
+  : window.location;
+
+var connection = new SockJS(
+  url.format({
+    protocol: scriptUrl.protocol,
+    hostname: scriptUrl.hostname,
+    port: scriptUrl.port,
+    // Hardcoded in WebpackDevServer
+    pathname: "/sockjs-node"
+  })
+);
 
 // Unlike WebpackDevServer client, we won't try to reconnect
 // to avoid spamming the console. Disconnect usually happens
