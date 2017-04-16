@@ -115,7 +115,7 @@ cd test-app-version-number
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
-checkDependencies
+#checkDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
@@ -128,7 +128,7 @@ cd test-app-tarball-url
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
-checkDependencies
+#checkDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a custom fork of react-scripts
