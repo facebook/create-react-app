@@ -179,7 +179,12 @@ module.exports = {
         options: {
           babelrc: false,
           presets: [require.resolve('babel-preset-react-app')],
-          plugins: [['transform-react-jsx', { pragma: 'h' }]],
+          plugins: [
+            [
+              require.resolve('babel-plugin-transform-react-jsx'),
+              { pragma: 'h' },
+            ],
+          ],
         },
         // @remove-on-eject-end
       },
