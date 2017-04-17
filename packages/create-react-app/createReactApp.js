@@ -164,12 +164,12 @@ function createApp(name, verbose, version, template) {
 }
 
 function shouldUseYarn() {
-  // try {
-  //   execSync('yarnpkg --version', { stdio: 'ignore' });
-  //   return true;
-  // } catch (e) {
-  return false;
-  // }
+  try {
+    execSync('yarnpkg --version', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 function install(useYarn, dependencies, verbose, isOnline) {
