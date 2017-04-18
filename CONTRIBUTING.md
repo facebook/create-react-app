@@ -41,6 +41,31 @@ Please **ask first** if somebody else is already working on this or the core dev
 
 Please also provide a **test plan**, i.e. specify how you verified that your addition works.
 
+### Folder Structure of Create React App
+`create-react-app` is divided into independent sub-packages, which can be found in `packages` directory [Packages](https://github.com/facebookincubator/create-react-app/tree/master/packages).
+
+#### Overview of directory structure
+```
+packages/
+  babel-preset-react-app/
+  create-react-app/
+  eslint-config-react-app/
+  react-dev-utils/
+  react-scripts/
+```
+#### Brief description of individual packages
+#### [babel-preset-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/babel-preset-react-app)
+ This package is used to create `babel-presets` for projects created using `create-react-app`
+#### [create-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/create-react-app)
+Main global CLI command code can be found in this directory
+#### [eslint-config-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/eslint-config-react-app)
+Packages contains rules which will be included as part of the project created using `create-react-app`
+#### [react-dev-utils](https://github.com/facebookincubator/create-react-app/tree/master/packages/react-dev-utils)
+Package contains utilities used for `create-react-app`. These scripts can be installed and used independent of this project.
+#### [react-scripts](https://github.com/facebookincubator/create-react-app/tree/master/packages/react-scripts)
+Package contains `scripts` used by projects created using `create-react-app` for `build`, `eject`, etc.
+
+
 ## Setting Up a Local Copy
 
 1. Clone the repo with `git clone https://github.com/facebookincubator/create-react-app`
