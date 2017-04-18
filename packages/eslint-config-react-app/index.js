@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 // Inspired by https://github.com/airbnb/javascript but less opinionated.
 
 // We use eslint-loader so even warnings are very visible.
@@ -21,15 +23,14 @@ module.exports = {
 
   parser: 'babel-eslint',
 
-  // import plugin is temporarily disabled, scroll below to see why
-  plugins: [/*'import', */'flowtype', 'jsx-a11y', 'react'],
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
 
   env: {
     browser: true,
     commonjs: true,
     es6: true,
     jest: true,
-    node: true
+    node: true,
   },
 
   parserOptions: {
@@ -38,21 +39,18 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
       generators: true,
-      experimentalObjectRestSpread: true
-    }
+      experimentalObjectRestSpread: true,
+    },
   },
 
   settings: {
-    'import/ignore': [
-      'node_modules',
-      '\\.(json|css|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$',
-    ],
+    'import/ignore': ['node_modules'],
     'import/extensions': ['.js'],
     'import/resolver': {
       node: {
-        extensions: ['.js', '.json']
-      }
-    }
+        extensions: ['.js', '.json'],
+      },
+    },
   },
 
   rules: {
@@ -61,7 +59,6 @@ module.exports = {
     'default-case': ['warn', { commentPattern: '^no default$' }],
     'dot-location': ['warn', 'property'],
     eqeqeq: ['warn', 'allow-null'],
-    'guard-for-in': 'warn',
     'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
@@ -89,15 +86,18 @@ module.exports = {
     'no-labels': ['warn', { allowLoop: false, allowSwitch: false }],
     'no-lone-blocks': 'warn',
     'no-loop-func': 'warn',
-    'no-mixed-operators': ['warn', {
-      groups: [
-        ['&', '|', '^', '~', '<<', '>>', '>>>'],
-        ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
-        ['&&', '||'],
-        ['in', 'instanceof']
-      ],
-      allowSamePrecedence: false
-    }],
+    'no-mixed-operators': [
+      'warn',
+      {
+        groups: [
+          ['&', '|', '^', '~', '<<', '>>', '>>>'],
+          ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
+          ['&&', '||'],
+          ['in', 'instanceof'],
+        ],
+        allowSamePrecedence: false,
+      },
+    ],
     'no-multi-str': 'warn',
     'no-native-reassign': 'warn',
     'no-negated-in-lhs': 'warn',
@@ -110,11 +110,7 @@ module.exports = {
     'no-octal-escape': 'warn',
     'no-redeclare': 'warn',
     'no-regex-spaces': 'warn',
-    'no-restricted-syntax': [
-      'warn',
-      'LabeledStatement',
-      'WithStatement',
-    ],
+    'no-restricted-syntax': ['warn', 'LabeledStatement', 'WithStatement'],
     'no-script-url': 'warn',
     'no-self-assign': 'warn',
     'no-self-compare': 'warn',
@@ -125,28 +121,39 @@ module.exports = {
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
     'no-undef': 'error',
+    'no-restricted-globals': ['error', 'event'],
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
-    'no-unused-expressions': ['warn', {
-      'allowShortCircuit': true,
-      'allowTernary': true
-    }],
+    'no-unused-expressions': [
+      'warn',
+      {
+        allowShortCircuit: true,
+        allowTernary: true,
+      },
+    ],
     'no-unused-labels': 'warn',
-    'no-unused-vars': ['warn', {
-      vars: 'local',
-      varsIgnorePattern: '^_',
-      args: 'none'
-    }],
+    'no-unused-vars': [
+      'warn',
+      {
+        vars: 'local',
+        varsIgnorePattern: '^_',
+        args: 'none',
+        ignoreRestSiblings: true,
+      },
+    ],
     'no-use-before-define': ['warn', 'nofunc'],
     'no-useless-computed-key': 'warn',
     'no-useless-concat': 'warn',
     'no-useless-constructor': 'warn',
     'no-useless-escape': 'warn',
-    'no-useless-rename': ['warn', {
-      ignoreDestructuring: false,
-      ignoreImport: false,
-      ignoreExport: false,
-    }],
+    'no-useless-rename': [
+      'warn',
+      {
+        ignoreDestructuring: false,
+        ignoreImport: false,
+        ignoreExport: false,
+      },
+    ],
     'no-with': 'warn',
     'no-whitespace-before-property': 'warn',
     'operator-assignment': ['warn', 'always'],
@@ -157,6 +164,19 @@ module.exports = {
     'unicode-bom': ['warn', 'never'],
     'use-isnan': 'warn',
     'valid-typeof': 'warn',
+    'no-restricted-properties': [
+      'error',
+      {
+        object: 'require',
+        property: 'ensure',
+        message: 'Please use import() instead. More info: https://webpack.js.org/guides/code-splitting-import/#dynamic-import',
+      },
+      {
+        object: 'System',
+        property: 'import',
+        message: 'Please use import() instead. More info: https://webpack.js.org/guides/code-splitting-import/#dynamic-import',
+      },
+    ],
 
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/
 
@@ -170,6 +190,9 @@ module.exports = {
     // This is probably fixable with a patch to eslint-loader.
     // When file A is saved, we want to invalidate all files that import it
     // *and* that currently have lint errors. This should fix the problem.
+    // (As an exception, import/no-webpack-loader-syntax can be enabled already
+    // because it doesn't depend on whether the file exists, so this issue
+    // doesn't apply to it.)
 
     // 'import/default': 'warn',
     // 'import/export': 'warn',
@@ -181,15 +204,21 @@ module.exports = {
     // 'import/no-named-as-default': 'warn',
     // 'import/no-named-as-default-member': 'warn',
     // 'import/no-unresolved': ['warn', { commonjs: true }],
+    // We don't support configuring Webpack using import source strings, so this
+    // is always an error.
+    'import/no-webpack-loader-syntax': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/jsx-equals-spacing': ['warn', 'never'],
     'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
-    'react/jsx-no-undef': 'warn',
-    'react/jsx-pascal-case': ['warn', {
-      allowAllCaps: true,
-      ignore: [],
-    }],
+    'react/jsx-no-undef': 'error',
+    'react/jsx-pascal-case': [
+      'warn',
+      {
+        allowAllCaps: true,
+        ignore: [],
+      },
+    ],
     'react/jsx-uses-react': 'warn',
     'react/jsx-uses-vars': 'warn',
     'react/no-danger-with-children': 'warn',
@@ -209,6 +238,6 @@ module.exports = {
     // https://github.com/gajus/eslint-plugin-flowtype
     'flowtype/define-flow-type': 'warn',
     'flowtype/require-valid-file-annotation': 'warn',
-    'flowtype/use-flow-type': 'warn'
-  }
+    'flowtype/use-flow-type': 'warn',
+  },
 };
