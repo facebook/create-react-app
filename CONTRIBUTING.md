@@ -42,7 +42,7 @@ Please **ask first** if somebody else is already working on this or the core dev
 Please also provide a **test plan**, i.e. specify how you verified that your addition works.
 
 ### Folder Structure of Create React App
-`create-react-app` is divided into independent sub-packages, which can be found in `packages` directory [Packages](https://github.com/facebookincubator/create-react-app/tree/master/packages).
+`create-react-app` is divided into independent sub-packages, which can be found in [Packages](https://github.com/facebookincubator/create-react-app/tree/master/packages) directory .
 
 #### Overview of directory structure
 ```
