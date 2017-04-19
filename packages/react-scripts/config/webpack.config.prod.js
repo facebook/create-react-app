@@ -78,7 +78,7 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules'].concat(paths.nodePaths),
+    modules: ['node_modules', paths.appNodeModules].concat(paths.nodePaths),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
@@ -258,15 +258,10 @@ module.exports = {
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        screw_ie8: true, // React doesn't support IE8
         warnings: false,
-      },
-      mangle: {
-        screw_ie8: true,
       },
       output: {
         comments: false,
-        screw_ie8: true,
       },
       sourceMap: true,
     }),

@@ -46,6 +46,26 @@ function exists {
   done
 }
 
+# Check for accidental dependencies in package.json
+function checkDependencies {
+  if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
+  grep -v -q -E '^\s*"react(-dom|-scripts)?"'; then
+   echo "Dependencies are correct"
+  else
+   echo "There are extraneous dependencies in package.json"
+   exit 1
+  fi
+
+
+  if ! awk '/"devDependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
+  grep -v -q -E '^\s*"react(-dom|-scripts)?"'; then
+   echo "Dev Dependencies are correct"
+  else
+   echo "There are extraneous devDependencies in package.json"
+   exit 1
+  fi
+}
+
 function create_react_app {
   node "$temp_cli_path"/node_modules/create-react-app/index.js $*
 }
@@ -95,6 +115,7 @@ cd test-app-version-number
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+checkDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
@@ -107,6 +128,7 @@ cd test-app-tarball-url
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+checkDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a custom fork of react-scripts
@@ -161,7 +183,7 @@ exists node_modules/@enoah_netzach/react-scripts
 # Test nested folder path as the project name
 # ******************************************************************************
 
-#Testing a path that exists
+# Testing a path that exists
 cd "$temp_app_path"
 mkdir test-app-nested-paths-t1
 cd test-app-nested-paths-t1
@@ -170,13 +192,13 @@ create_react_app test-app-nested-paths-t1/aa/bb/cc/dd
 cd test-app-nested-paths-t1/aa/bb/cc/dd
 npm start -- --smoke-test
 
-#Testing a path that does not exist
+# Testing a path that does not exist
 cd "$temp_app_path"
 create_react_app test-app-nested-paths-t2/aa/bb/cc/dd
 cd test-app-nested-paths-t2/aa/bb/cc/dd
 npm start -- --smoke-test
 
-#Testing a path that is half exists
+# Testing a path that is half exists
 cd "$temp_app_path"
 mkdir -p test-app-nested-paths-t3/aa
 create_react_app test-app-nested-paths-t3/aa/bb/cc/dd

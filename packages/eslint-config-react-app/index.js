@@ -83,7 +83,7 @@ module.exports = {
     'no-invalid-regexp': 'warn',
     'no-iterator': 'warn',
     'no-label-var': 'warn',
-    'no-labels': ['warn', { allowLoop: false, allowSwitch: false }],
+    'no-labels': ['warn', { allowLoop: true, allowSwitch: false }],
     'no-lone-blocks': 'warn',
     'no-loop-func': 'warn',
     'no-mixed-operators': [
@@ -110,7 +110,7 @@ module.exports = {
     'no-octal-escape': 'warn',
     'no-redeclare': 'warn',
     'no-regex-spaces': 'warn',
-    'no-restricted-syntax': ['warn', 'LabeledStatement', 'WithStatement'],
+    'no-restricted-syntax': ['warn', 'WithStatement'],
     'no-script-url': 'warn',
     'no-self-assign': 'warn',
     'no-self-compare': 'warn',
