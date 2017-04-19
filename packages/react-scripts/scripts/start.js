@@ -83,7 +83,7 @@ function run(port) {
   addWebpackMiddleware(devServer);
 
   // Launch WebpackDevServer.
-  devServer.listen(port, err => {
+  devServer.listen(port, host, err => {
     if (err) {
       return console.log(err);
     }
