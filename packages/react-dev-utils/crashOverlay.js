@@ -9,20 +9,18 @@
 
 'use strict';
 
-function _interopDefault(ex) {
-  return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
-}
-
-var stackFrameParser = require('stack-frame-parser');
-var stackFrameMapper = require('stack-frame-mapper');
-var stackFrameUnmapper = require('stack-frame-unmapper');
-var codeFrame = _interopDefault(require('babel-code-frame'));
+import { parse } from 'stack-frame-parser';
+import { map } from 'stack-frame-mapper';
+import { unmap } from 'stack-frame-unmapper';
+import codeFrame from 'babel-code-frame';
 var ansiHTML = require('./ansiHTML');
 
 var boundErrorHandler = null;
 
 function errorHandler(callback, e) {
-  if (!e.error) return;
+  if (!e.error) {
+    return;
+  }
   // $FlowFixMe
   var error = e.error;
 
@@ -36,13 +34,17 @@ function errorHandler(callback, e) {
 }
 
 function registerUnhandledError(target, callback) {
-  if (boundErrorHandler !== null) return;
+  if (boundErrorHandler !== null) {
+    return;
+  }
   boundErrorHandler = errorHandler.bind(undefined, callback);
   target.addEventListener('error', boundErrorHandler);
 }
 
 function unregisterUnhandledError(target) {
-  if (boundErrorHandler === null) return;
+  if (boundErrorHandler === null) {
+    return;
+  }
   target.removeEventListener('error', boundErrorHandler);
   boundErrorHandler = null;
 }
@@ -64,14 +66,18 @@ function rejectionHandler(callback, e) {
 }
 
 function registerUnhandledRejection(target, callback) {
-  if (boundRejectionHandler !== null) return;
+  if (boundRejectionHandler !== null) {
+    return;
+  }
   boundRejectionHandler = rejectionHandler.bind(undefined, callback);
   // $FlowFixMe
   target.addEventListener('unhandledrejection', boundRejectionHandler);
 }
 
 function unregisterUnhandledRejection(target) {
-  if (boundRejectionHandler === null) return;
+  if (boundRejectionHandler === null) {
+    return;
+  }
   // $FlowFixMe
   target.removeEventListener('unhandledrejection', boundRejectionHandler);
   boundRejectionHandler = null;
@@ -96,13 +102,17 @@ function keyHandler(callback, e) {
 }
 
 function registerShortcuts(target, callback) {
-  if (boundKeyHandler !== null) return;
+  if (boundKeyHandler !== null) {
+    return;
+  }
   boundKeyHandler = keyHandler.bind(undefined, callback);
   target.addEventListener('keydown', boundKeyHandler);
 }
 
 function unregisterShortcuts(target) {
-  if (boundKeyHandler === null) return;
+  if (boundKeyHandler === null) {
+    return;
+  }
   target.removeEventListener('keydown', boundKeyHandler);
   boundKeyHandler = null;
 }
@@ -118,7 +128,9 @@ function registerStackTraceLimit() {
     ? arguments[0]
     : MAX_STACK_LENGTH;
 
-  if (stackTraceRegistered) return;
+  if (stackTraceRegistered) {
+    return;
+  }
   try {
     restoreStackTraceValue = Error.stackTraceLimit;
     Error.stackTraceLimit = limit;
@@ -129,7 +141,9 @@ function registerStackTraceLimit() {
 }
 
 function unregisterStackTraceLimit() {
-  if (!stackTraceRegistered) return;
+  if (!stackTraceRegistered) {
+    return;
+  }
   try {
     Error.stackTraceLimit = restoreStackTraceValue;
     stackTraceRegistered = false;
@@ -137,15 +151,6 @@ function unregisterStackTraceLimit() {
     // Not all browsers support this so we don't care if it errors
   }
 }
-
-var permanentRegister = function proxyConsole(type, callback) {
-  var orig = console[type];
-  console[type] = function __stack_frame_overlay_proxy_console__() {
-    var message = [].slice.call(arguments).join(' ');
-    callback(message);
-    return orig.apply(this, arguments);
-  };
-};
 
 var recorded = [];
 
@@ -159,16 +164,16 @@ function consume(error) {
     ? arguments[2]
     : 3;
 
-  var parsedFrames = stackFrameParser.parse(error);
+  var parsedFrames = parse(error);
   var enhancedFramesPromise = void 0;
   if (error.__unmap_source) {
-    enhancedFramesPromise = stackFrameUnmapper.unmap(
+    enhancedFramesPromise = unmap(
       error.__unmap_source,
       parsedFrames,
       contextSize
     );
   } else {
-    enhancedFramesPromise = stackFrameMapper.map(parsedFrames, contextSize);
+    enhancedFramesPromise = map(parsedFrames, contextSize);
   }
   return enhancedFramesPromise.then(function(enhancedFrames) {
     enhancedFrames = enhancedFrames.filter(function(_ref) {
@@ -567,7 +572,9 @@ function insertBeforeBundle(
   actionElement
 ) {
   var children = document.getElementsByName('bundle-' + omitBundle);
-  if (children.length < 1) return;
+  if (children.length < 1) {
+    return;
+  }
   var first = children[0];
   while (first != null && first.parentNode !== parent) {
     first = first.parentNode;
@@ -650,10 +657,14 @@ function createFrame(
   var url = void 0;
   if (!compiled && sourceFileName) {
     url = sourceFileName + ':' + sourceLineNumber;
-    if (sourceColumnNumber) url += ':' + sourceColumnNumber;
+    if (sourceColumnNumber) {
+      url += ':' + sourceColumnNumber;
+    }
   } else {
     url = fileName + ':' + lineNumber;
-    if (columnNumber) url += ':' + columnNumber;
+    if (columnNumber) {
+      url += ':' + columnNumber;
+    }
   }
 
   var needsHidden = false;
@@ -993,7 +1004,9 @@ function render(name, message, resolvedFrames) {
   applyStyles(iframe, iframeStyle);
   iframeReference = iframe;
   iframe.onload = function() {
-    if (iframeReference == null) return;
+    if (iframeReference == null) {
+      return;
+    }
     var w = iframeReference.contentWindow;
     var document = iframeReference.contentDocument;
 
@@ -1136,26 +1149,6 @@ function inject() {
   });
   registerShortcuts(window, shortcutHandler);
   registerStackTraceLimit();
-
-  permanentRegister('error', function(warning) {
-    var nIndex = warning.indexOf('\n');
-    var message = warning;
-    if (nIndex !== -1) {
-      message = message.substring(0, nIndex);
-    }
-    var stack = warning.substring(nIndex + 1);
-    window.requestAnimationFrame(function() {
-      return crash(
-        // $FlowFixMe
-        {
-          message: message,
-          stack: stack,
-          __unmap_source: '/static/js/bundle.js',
-        },
-        false
-      );
-    });
-  });
 }
 
 function uninject() {
