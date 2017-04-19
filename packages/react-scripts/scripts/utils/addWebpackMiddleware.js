@@ -11,10 +11,11 @@
 'use strict';
 
 const chalk = require('chalk');
+const dns = require('dns');
 const historyApiFallback = require('connect-history-api-fallback');
 const httpProxyMiddleware = require('http-proxy-middleware');
+const url = require('url');
 const paths = require('../../config/paths');
-const dns = require('dns');
 
 // We need to provide a custom onError function for httpProxyMiddleware.
 // It allows us to log custom error messages on the console.
@@ -57,10 +58,89 @@ function onProxyError(proxy) {
   };
 }
 
+function resolveProxy(proxy) {
+  const p = url.parse(proxy);
+  const { hostname } = p;
+  if (hostname !== 'localhost') {
+    return Promise.resolve(proxy);
+  }
+  p.host = undefined; // Remove the host; we don't care about it
+  return new Promise(resolve => {
+    dns.lookup(hostname, { hints: 0, all: false }, (err, address) => {
+      if (err) {
+        console.log(
+          chalk.red(
+            '"proxy" in package.json is set to localhost and cannot be resolved.'
+          )
+        );
+        console.log(
+          chalk.red('Try setting "proxy" to 127.0.0.1 instead of localhost.')
+        );
+        process.exit(1);
+      }
+      p.hostname = address;
+      resolve(url.format(p));
+    });
+  });
+}
+
+function registerProxy(devServer, proxy) {
+  if (typeof proxy !== 'string') {
+    console.log(
+      chalk.red('When specified, "proxy" in package.json must be a string.')
+    );
+    console.log(
+      chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".')
+    );
+    console.log(
+      chalk.red('Either remove "proxy" from package.json, or make it a string.')
+    );
+    process.exit(1);
+  }
+
+  return (process.platform === 'windows'
+    ? resolveProxy(proxy)
+    : Promise.resolve()).then(() => {
+    // Otherwise, if proxy is specified, we will let it handle any request.
+    // There are a few exceptions which we won't send to the proxy:
+    // - /index.html (served as HTML5 history API fallback)
+    // - /*.hot-update.json (WebpackDevServer uses this too for hot reloading)
+    // - /sockjs-node/* (WebpackDevServer uses this for hot reloading)
+    // Tip: use https://jex.im/regulex/ to visualize the regex
+    const mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
+
+    // Pass the scope regex both to Express and to the middleware for proxying
+    // of both HTTP and WebSockets to work without false positives.
+    const hpm = httpProxyMiddleware(pathname => mayProxy.test(pathname), {
+      target: proxy,
+      logLevel: 'silent',
+      onProxyReq: proxyReq => {
+        // Browers may send Origin headers even with same-origin
+        // requests. To prevent CORS issues, we have to change
+        // the Origin to match the target URL.
+        if (proxyReq.getHeader('origin')) {
+          proxyReq.setHeader('origin', proxy);
+        }
+      },
+      onError: onProxyError(proxy),
+      secure: false,
+      changeOrigin: true,
+      ws: true,
+      xfwd: true,
+    });
+    devServer.use(mayProxy, hpm);
+
+    // Listen for the websocket 'upgrade' event and upgrade the connection.
+    // If this is not done, httpProxyMiddleware will not try to upgrade until
+    // an initial plain HTTP request is made.
+    devServer.listeningApp.on('upgrade', hpm.upgrade);
+  });
+}
+
 module.exports = function addWebpackMiddleware(devServer) {
   // `proxy` lets you to specify a fallback server during development.
   // Every unrecognized request will be forwarded to it.
-  let proxy = require(paths.appPackageJson).proxy;
+  const proxy = require(paths.appPackageJson).proxy;
   devServer.use(
     historyApiFallback({
       // Paths with dots should still use the history fallback.
@@ -76,106 +156,11 @@ module.exports = function addWebpackMiddleware(devServer) {
       htmlAcceptHeaders: proxy ? ['text/html'] : ['text/html', '*/*'],
     })
   );
-
-  if (proxy) {
-    fixProxy(proxy).then(proxy => {
-      console.log('proxy', proxy);
-      setProxy(proxy, devServer);
-    });
-  }
-
-  // Finally, by now we have certainly resolved the URL.
-  // It may be /index.html, so let the dev server try serving it again.
-  devServer.use(devServer.middleware);
+  return (proxy
+    ? registerProxy(devServer, proxy)
+    : Promise.resolve()).then(() => {
+    // Finally, by now we have certainly resolved the URL.
+    // It may be /index.html, so let the dev server try serving it again.
+    devServer.use(devServer.middleware);
+  });
 };
-
-// Test proxy value if supplied and fix issues if possible
-function fixProxy(proxy) {
-  return new Promise(resolve => {
-    if (typeof proxy !== 'string') {
-      console.log(
-        chalk.red('When specified, "proxy" in package.json must be a string.')
-      );
-      console.log(
-        chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".')
-      );
-      console.log(
-        chalk.red(
-          'Either remove "proxy" from package.json, or make it a string.'
-        )
-      );
-      process.exit(1);
-    }
-
-    // Patches a long standing `dns.lookup()` bug on Windows.
-    // See https://github.com/nodejs/node-v0.x-archive/issues/25489
-    // This is needed only for windows and when proxy value has localhost
-    if (process.platform === 'windows' && proxy.search('localhost') >= 0) {
-      getLocalhostIP()
-        .then(ip => {
-          proxy = proxy.replace('localhost', ip);
-          resolve(proxy);
-        })
-        .catch(() => {
-          console.log(chalk.red('"proxy" in package.json is set to localhost'));
-          console.log(
-            chalk.red(
-              'but unable to connect. Try 127.0.0.1 instead of localhost '
-            )
-          );
-          process.exit(1);
-        });
-    } else {
-      resolve(proxy);
-    }
-  });
-}
-
-// resolve localhost to it's IP4 or IP6 number
-function getLocalhostIP() {
-  return new Promise((resolve, reject) => {
-    dns.lookup('localhost', function(err, result) {
-      if (err) {
-        reject(err); // 'Cannot resolve IP of localhost
-      }
-      resolve(result);
-    });
-  });
-}
-
-// setup proxy devServer
-function setProxy(proxy, devServer) {
-  // Otherwise, if proxy is specified, we will let it handle any request.
-  // There are a few exceptions which we won't send to the proxy:
-  // - /index.html (served as HTML5 history API fallback)
-  // - /*.hot-update.json (WebpackDevServer uses this too for hot reloading)
-  // - /sockjs-node/* (WebpackDevServer uses this for hot reloading)
-  // Tip: use https://jex.im/regulex/ to visualize the regex
-  const mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
-
-  // Pass the scope regex both to Express and to the middleware for proxying
-  // of both HTTP and WebSockets to work without false positives.
-  const hpm = httpProxyMiddleware(pathname => mayProxy.test(pathname), {
-    target: proxy,
-    logLevel: 'silent',
-    onProxyReq: proxyReq => {
-      // Browers may send Origin headers even with same-origin
-      // requests. To prevent CORS issues, we have to change
-      // the Origin to match the target URL.
-      if (proxyReq.getHeader('origin')) {
-        proxyReq.setHeader('origin', proxy);
-      }
-    },
-    onError: onProxyError(proxy),
-    secure: false,
-    changeOrigin: true,
-    ws: true,
-    xfwd: true,
-  });
-  devServer.use(mayProxy, hpm);
-
-  // Listen for the websocket 'upgrade' event and upgrade the connection.
-  // If this is not done, httpProxyMiddleware will not try to upgrade until
-  // an initial plain HTTP request is made.
-  devServer.listeningApp.on('upgrade', hpm.upgrade);
-}
