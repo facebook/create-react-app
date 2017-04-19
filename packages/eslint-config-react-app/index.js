@@ -85,7 +85,7 @@ module.exports = {
     'no-invalid-regexp': 'warn',
     'no-iterator': 'warn',
     'no-label-var': 'warn',
-    'no-labels': ['warn', { allowLoop: false, allowSwitch: false }],
+    'no-labels': ['warn', { allowLoop: true, allowSwitch: false }],
     'no-lone-blocks': 'warn',
     'no-loop-func': 'warn',
     'no-mixed-operators': ['warn', {
@@ -111,7 +111,6 @@ module.exports = {
     'no-regex-spaces': 'warn',
     'no-restricted-syntax': [
       'warn',
-      'LabeledStatement',
       'WithStatement',
     ],
     'no-script-url': 'warn',
