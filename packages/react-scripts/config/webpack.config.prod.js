@@ -260,6 +260,9 @@ module.exports = {
       compress: {
         warnings: false,
       },
+      output: {
+        comments: false,
+      },
       sourceMap: true,
     }),
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
