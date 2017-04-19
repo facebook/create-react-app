@@ -60,7 +60,7 @@ function onProxyError(proxy) {
 
 function resolveProxy(proxy) {
   const p = url.parse(proxy);
-  const { hostname } = p;
+  const hostname = p.hostname;
   if (hostname !== 'localhost') {
     return Promise.resolve(proxy);
   }
