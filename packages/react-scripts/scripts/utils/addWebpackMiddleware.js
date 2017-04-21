@@ -106,7 +106,7 @@ function registerProxy(devServer, proxy) {
     process.exit(1);
   }
 
-  return (process.platform === 'windows'
+  return (process.platform === 'win32'
     ? resolveProxy(proxy)
     : Promise.resolve()).then(() => {
     // Otherwise, if proxy is specified, we will let it handle any request.
