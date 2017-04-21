@@ -84,20 +84,20 @@ function resolveProxy(proxy) {
   });
 }
 
-function registerProxy(devServer, proxy) {
-  if (typeof proxy !== 'string') {
+function registerProxy(devServer, _proxy) {
+  if (typeof _proxy !== 'string') {
     console.log(
       chalk.red('When specified, "proxy" in package.json must be a string.')
     );
     console.log(
-      chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".')
+      chalk.red('Instead, the type of "proxy" was "' + typeof _proxy + '".')
     );
     console.log(
       chalk.red('Either remove "proxy" from package.json, or make it a string.')
     );
     process.exit(1);
     // Test that proxy url specified starts with http:// or https://
-  } else if (!/^http(s)?:\/\//.test(proxy)) {
+  } else if (!/^http(s)?:\/\//.test(_proxy)) {
     console.log(
       chalk.red(
         'When "proxy" is specified in package.json it must start with either http:// or https://'
@@ -107,8 +107,8 @@ function registerProxy(devServer, proxy) {
   }
 
   return (process.platform === 'win32'
-    ? resolveProxy(proxy)
-    : Promise.resolve()).then(() => {
+    ? resolveProxy(_proxy)
+    : Promise.resolve(_proxy)).then(proxy => {
     // Otherwise, if proxy is specified, we will let it handle any request.
     // There are a few exceptions which we won't send to the proxy:
     // - /index.html (served as HTML5 history API fallback)
