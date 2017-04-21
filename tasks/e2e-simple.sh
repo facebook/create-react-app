@@ -84,10 +84,8 @@ then
   [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 fi
 
-# Still use npm install instead of directly calling lerna bootstrap to test
-# postinstall script functionality (one npm install should result in a working
-# project)
-npm install
+# We removed the postinstall, so do it manually here
+./node_modules/.bin/lerna bootstrap --concurrency=1
 
 if [ "$USE_YARN" = "yes" ]
 then
