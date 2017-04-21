@@ -9,10 +9,14 @@
 
 'use strict';
 
-import { parse } from 'stack-frame-parser';
-import { map } from 'stack-frame-mapper';
-import { unmap } from 'stack-frame-unmapper';
-import codeFrame from 'babel-code-frame';
+function _interopDefault(ex) {
+  return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
+}
+
+var stackFrameParser = require('stack-frame-parser');
+var stackFrameMapper = require('stack-frame-mapper');
+var stackFrameUnmapper = require('stack-frame-unmapper');
+var codeFrame = _interopDefault(require('babel-code-frame'));
 var ansiHTML = require('./ansiHTML');
 
 var boundErrorHandler = null;
@@ -164,16 +168,16 @@ function consume(error) {
     ? arguments[2]
     : 3;
 
-  var parsedFrames = parse(error);
+  var parsedFrames = stackFrameParser.parse(error);
   var enhancedFramesPromise = void 0;
   if (error.__unmap_source) {
-    enhancedFramesPromise = unmap(
+    enhancedFramesPromise = stackFrameUnmapper.unmap(
       error.__unmap_source,
       parsedFrames,
       contextSize
     );
   } else {
-    enhancedFramesPromise = map(parsedFrames, contextSize);
+    enhancedFramesPromise = stackFrameMapper.map(parsedFrames, contextSize);
   }
   return enhancedFramesPromise.then(function(enhancedFrames) {
     enhancedFrames = enhancedFrames.filter(function(_ref) {
