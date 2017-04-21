@@ -11,8 +11,10 @@
 'use strict';
 
 const chalk = require('chalk');
+const dns = require('dns');
 const historyApiFallback = require('connect-history-api-fallback');
 const httpProxyMiddleware = require('http-proxy-middleware');
+const url = require('url');
 const paths = require('../../config/paths');
 
 // We need to provide a custom onError function for httpProxyMiddleware.
@@ -56,49 +58,57 @@ function onProxyError(proxy) {
   };
 }
 
-module.exports = function addWebpackMiddleware(devServer) {
-  // `proxy` lets you to specify a fallback server during development.
-  // Every unrecognized request will be forwarded to it.
-  const proxy = require(paths.appPackageJson).proxy;
-  devServer.use(
-    historyApiFallback({
-      // Paths with dots should still use the history fallback.
-      // See https://github.com/facebookincubator/create-react-app/issues/387.
-      disableDotRule: true,
-      // For single page apps, we generally want to fallback to /index.html.
-      // However we also want to respect `proxy` for API calls.
-      // So if `proxy` is specified, we need to decide which fallback to use.
-      // We use a heuristic: if request `accept`s text/html, we pick /index.html.
-      // Modern browsers include text/html into `accept` header when navigating.
-      // However API calls like `fetch()` won’t generally accept text/html.
-      // If this heuristic doesn’t work well for you, don’t use `proxy`.
-      htmlAcceptHeaders: proxy ? ['text/html'] : ['text/html', '*/*'],
-    })
-  );
-  if (proxy) {
-    if (typeof proxy !== 'string') {
-      console.log(
-        chalk.red('When specified, "proxy" in package.json must be a string.')
-      );
-      console.log(
-        chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".')
-      );
-      console.log(
-        chalk.red(
-          'Either remove "proxy" from package.json, or make it a string.'
-        )
-      );
-      process.exit(1);
-      // Test that proxy url specified starts with http:// or https://
-    } else if (!/^http(s)?:\/\//.test(proxy)) {
-      console.log(
-        chalk.red(
-          'When "proxy" is specified in package.json it must start with either http:// or https://'
-        )
-      );
-      process.exit(1);
-    }
+function resolveProxy(proxy) {
+  const p = url.parse(proxy);
+  const hostname = p.hostname;
+  if (hostname !== 'localhost') {
+    return Promise.resolve(proxy);
+  }
+  p.host = undefined; // Remove the host; we don't care about it
+  return new Promise(resolve => {
+    dns.lookup(hostname, { hints: 0, all: false }, (err, address) => {
+      if (err) {
+        console.log(
+          chalk.red(
+            '"proxy" in package.json is set to localhost and cannot be resolved.'
+          )
+        );
+        console.log(
+          chalk.red('Try setting "proxy" to 127.0.0.1 instead of localhost.')
+        );
+        process.exit(1);
+      }
+      p.hostname = address;
+      resolve(url.format(p));
+    });
+  });
+}
 
+function registerProxy(devServer, _proxy) {
+  if (typeof _proxy !== 'string') {
+    console.log(
+      chalk.red('When specified, "proxy" in package.json must be a string.')
+    );
+    console.log(
+      chalk.red('Instead, the type of "proxy" was "' + typeof _proxy + '".')
+    );
+    console.log(
+      chalk.red('Either remove "proxy" from package.json, or make it a string.')
+    );
+    process.exit(1);
+    // Test that proxy url specified starts with http:// or https://
+  } else if (!/^http(s)?:\/\//.test(_proxy)) {
+    console.log(
+      chalk.red(
+        'When "proxy" is specified in package.json it must start with either http:// or https://'
+      )
+    );
+    process.exit(1);
+  }
+
+  return (process.platform === 'win32'
+    ? resolveProxy(_proxy)
+    : Promise.resolve(_proxy)).then(proxy => {
     // Otherwise, if proxy is specified, we will let it handle any request.
     // There are a few exceptions which we won't send to the proxy:
     // - /index.html (served as HTML5 history API fallback)
@@ -132,9 +142,33 @@ module.exports = function addWebpackMiddleware(devServer) {
     // If this is not done, httpProxyMiddleware will not try to upgrade until
     // an initial plain HTTP request is made.
     devServer.listeningApp.on('upgrade', hpm.upgrade);
-  }
+  });
+}
 
-  // Finally, by now we have certainly resolved the URL.
-  // It may be /index.html, so let the dev server try serving it again.
-  devServer.use(devServer.middleware);
+module.exports = function addWebpackMiddleware(devServer) {
+  // `proxy` lets you to specify a fallback server during development.
+  // Every unrecognized request will be forwarded to it.
+  const proxy = require(paths.appPackageJson).proxy;
+  devServer.use(
+    historyApiFallback({
+      // Paths with dots should still use the history fallback.
+      // See https://github.com/facebookincubator/create-react-app/issues/387.
+      disableDotRule: true,
+      // For single page apps, we generally want to fallback to /index.html.
+      // However we also want to respect `proxy` for API calls.
+      // So if `proxy` is specified, we need to decide which fallback to use.
+      // We use a heuristic: if request `accept`s text/html, we pick /index.html.
+      // Modern browsers include text/html into `accept` header when navigating.
+      // However API calls like `fetch()` won’t generally accept text/html.
+      // If this heuristic doesn’t work well for you, don’t use `proxy`.
+      htmlAcceptHeaders: proxy ? ['text/html'] : ['text/html', '*/*'],
+    })
+  );
+  return (proxy
+    ? registerProxy(devServer, proxy)
+    : Promise.resolve()).then(() => {
+    // Finally, by now we have certainly resolved the URL.
+    // It may be /index.html, so let the dev server try serving it again.
+    devServer.use(devServer.middleware);
+  });
 };

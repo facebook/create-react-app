@@ -80,22 +80,30 @@ function run(port) {
   const devServer = new WebpackDevServer(compiler, devServerConfig);
 
   // Our custom middleware proxies requests to /index.html or a remote API.
-  addWebpackMiddleware(devServer);
+  addWebpackMiddleware(devServer)
+    .then(() => {
+      // Launch WebpackDevServer.
+      devServer.listen(port, host, err => {
+        if (err) {
+          return console.log(err);
+        }
 
-  // Launch WebpackDevServer.
-  devServer.listen(port, host, err => {
-    if (err) {
-      return console.log(err);
-    }
+        if (isInteractive) {
+          clearConsole();
+        }
+        console.log(chalk.cyan('Starting the development server...'));
+        console.log();
 
-    if (isInteractive) {
-      clearConsole();
-    }
-    console.log(chalk.cyan('Starting the development server...'));
-    console.log();
-
-    openBrowser(`${protocol}://${host}:${port}/`);
-  });
+        openBrowser(`${protocol}://${host}:${port}/`);
+      });
+    })
+    .catch(e => {
+      console.log(
+        chalk.red('Failed to setup middleware, please report this error:')
+      );
+      console.log(e);
+      process.exit(1);
+    });
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to
