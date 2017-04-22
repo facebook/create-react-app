@@ -1,3 +1,5 @@
+.idea/
+.vscode/
 node_modules/
 build
 .DS_Store
@@ -5,5 +7,7 @@ build
 my-app*
 template/src/__tests__/__snapshots__/
 lerna-debug.log
-npm-debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 /.changelog
