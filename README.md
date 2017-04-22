@@ -17,11 +17,14 @@ npm start
 ## Features
 
 ### Code highlighting on error
-When you run `npm run build` the terminal will output the error, including the highlighted sourecode (like babel)! 
+When you run `npm run build` the terminal will output the error, including the highlighted sourecode (like babel)!
 
 ![CodeHighlight](https://cloud.githubusercontent.com/assets/175278/22310149/1ee66ccc-e346-11e6-83ff-e3a053701fb4.gif)
 
 ## Changelog
+
+### 1.3.0
+* Upgrade to typescript@2.2.2 - thanks to @jeremistadler
 
 ### 1.1.8
 * Fix regression where no `@types` were being installed on init
