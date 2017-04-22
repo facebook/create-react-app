@@ -242,12 +242,8 @@ module.exports = {
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-    // Trigger some typechecking if a file matches with an @ flow comment
-    new FlowTypecheckPlugin({
-      otherFlowTypedDefs: {
-        jest: '18.0.0',
-      },
-    }),
+    // Run Flow on files with the @flow header
+    new FlowTypecheckPlugin(),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

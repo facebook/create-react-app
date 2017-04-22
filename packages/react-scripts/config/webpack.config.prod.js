@@ -278,12 +278,8 @@ module.exports = {
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
-    // Run Flow only if we see some @ flow annotations, will error on CI
-    new FlowTypecheckPlugin({
-      otherFlowTypedDefs: {
-        jest: '18.0.0',
-      },
-    }),
+    // Run Flow on files with the @flow header
+    new FlowTypecheckPlugin(),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

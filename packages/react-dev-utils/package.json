@@ -23,7 +23,6 @@
     "openBrowser.js",
     "openChrome.applescript",
     "prompt.js",
-    "runFlowTyped.js",
     "WatchMissingNodeModulesPlugin.js",
     "webpackHotDevClient.js"
   ],

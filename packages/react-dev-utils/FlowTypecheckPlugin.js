@@ -106,7 +106,6 @@ class FlowTypecheckPlugin {
     // Run lint checks
     compiler.plugin('emit', (compilation, callback) => {
       if (!this.shouldRun) {
-        //TODO: flow did not run
         callback();
         return;
       }
