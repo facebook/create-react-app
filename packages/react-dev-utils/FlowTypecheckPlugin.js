@@ -40,15 +40,15 @@ function exec(command, args, options) {
   });
 }
 
-function filterFlowErrors(error) {
+function formatFlowErrors(error) {
   return error
     .toString()
     .split('\n')
     .filter(line => {
       return !(/flow is still initializing/.test(line) ||
-        /Found \d+ error/.test(line) ||
-        line.trim().length === 0);
+        /Found \d+ error/.test(line));
     })
+    .map(line => line.replace(/^Error:\s*/, ''))
     .join('\n');
 }
 
@@ -94,10 +94,9 @@ class FlowTypecheckPlugin {
         ) {
           return;
         }
+        const contents = loaderContext.fs.readFileSync(module.resource, 'utf8');
         if (
-          loaderContext.fs
-            .readFileSync(module.resource, 'utf8')
-            .indexOf('@flow') !== -1
+          /^\s*\/\/.*@flow/.test(contents) || /^\s*\/\*.*@flow/.test(contents)
         ) {
           this.shouldRun = true;
         }
@@ -120,7 +119,7 @@ class FlowTypecheckPlugin {
               //TODO: flow ran, and there was no errors
             })
             .catch(e => {
-              compilation.warnings.push(filterFlowErrors(e));
+              compilation.warnings.push(formatFlowErrors(e));
               callback();
             });
         })
