@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
 var fs = require('fs');
 var path = require('path');
 var chalk = require('chalk');
@@ -7,15 +18,15 @@ const flowTypedPath = path.join(__dirname, 'runFlowTyped.js');
 
 function stripFlowLoadingIndicators(message) {
   var newMessage = message;
-  var launchingIndex = newMessage.indexOf("Launching Flow server for");
+  var launchingIndex = newMessage.indexOf('Launching Flow server for');
   if (launchingIndex >= 0) {
     newMessage = newMessage.slice(0, launchingIndex);
   }
-  var stillIndex = newMessage.indexOf("flow is still initializing");
+  var stillIndex = newMessage.indexOf('flow is still initializing');
   if (stillIndex >= 0) {
     newMessage = newMessage.slice(0, stillIndex);
   }
-  var notRespIndex = newMessage.indexOf("The flow server is not responding");
+  var notRespIndex = newMessage.indexOf('The flow server is not responding');
   if (notRespIndex >= 0) {
     newMessage = newMessage.slice(0, notRespIndex);
   }
@@ -24,13 +35,9 @@ function stripFlowLoadingIndicators(message) {
 
 function execOneTime(command, args, options) {
   return new Promise((resolve, reject) => {
-    var stdout = new Buffer("");
-    var stderr = new Buffer("");
-    var oneTimeProcess = childProcess.spawn(
-      command,
-      args,
-      options
-    );
+    var stdout = new Buffer('');
+    var stderr = new Buffer('');
+    var oneTimeProcess = childProcess.spawn(command, args, options);
     oneTimeProcess.stdout.on('data', chunk => {
       stdout = Buffer.concat([stdout, chunk]);
     });
@@ -43,9 +50,7 @@ function execOneTime(command, args, options) {
         case 0:
           return resolve(stdout);
         default:
-          return reject(new Error(
-            Buffer.concat([stdout, stderr]).toString()
-          ));
+          return reject(new Error(Buffer.concat([stdout, stderr]).toString()));
       }
     });
   });
@@ -68,92 +73,77 @@ function writeFileIfDoesNotExist(path, data) {
   });
 }
 
-function writeInFileIfNotPresent(path, contentToAssert, contentToAppend) {
-  return new Promise((resolve, reject) => {
-    fs.exists(path, exists => {
-      if (!exists) {
-        fs.writeFile(path, contentToAppend, err => {
-          if (err) {
-            return reject(err);
-          }
-          resolve(true);
-        });
-      } else {
-        fs.readFile(path, (err, existingContent) => {
-          if (err) {
-            return reject(err);
-          }
-          if (existingContent.indexOf(contentToAssert) < 0) {
-            fs.appendFile(path, contentToAppend, err => {
-              if (err) {
-                return reject(err);
-              }
-              resolve(true);
-            });
-          } else {
-            resolve(false);
-          }
-        });
-      }
-    });
-  });
-}
-
 function getFlowVersion(options) {
-  return execOneTime(
-    (options || {}).global ? "flow" : flowBinPath,
-    ['version', '--json']
-  )
-  .then(rawData => JSON.parse(rawData))
-  .then(versionData => versionData.semver);
+  return execOneTime((options || {}).global ? 'flow' : flowBinPath, [
+    'version',
+    '--json',
+  ])
+    .then(rawData => JSON.parse(rawData))
+    .then(versionData => versionData.semver);
 }
 
 function initializeFlow(projectPath, flowconfig, otherFlowTypedDefs) {
   const flowconfigPath = path.join(projectPath, '.flowconfig');
-  return getFlowVersion().then(localVersion =>
-    getFlowVersion({global: true}).catch(() => localVersion)
-    .then(globalVersion =>
-      globalVersion !== localVersion ?
-        Promise.reject(new Error(
-          'Flow integration was disabled because the global Flow version does not match.\n' +
-          'You may either remove the global Flow installation or install a compatible version:\n' +
-          '  ' + chalk.cyan('npm') + ' install -g flow-bin@' + localVersion
-        )) :
-        localVersion
-    )
-  )
-  .then(localVersion => Promise.all([
-    writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n')),
-    execOneTime(
-      flowTypedPath,
-      ['install', '--overwrite', '--flowVersion=' + localVersion],
-      { cwd: projectPath }
-    )
-    // This operation will fail if react-scripts is a path to a tarball in the
-    // package.json (like in End To End testing!). So we swallow this error.
-    // See https://github.com/flowtype/flow-typed/issues/399#issuecomment-266766678
-    .catch((e) => /(invalid comparator)|(unable to rebase the local cache repo)/i.test(e.message) ? true : Promise.reject(e))
-    .then(() => Promise.all(
-      Object.keys(otherFlowTypedDefs).map((packageName) => execOneTime(
+  return getFlowVersion()
+    .then(localVersion =>
+      getFlowVersion({ global: true })
+        .catch(() => localVersion)
+        .then(
+          globalVersion =>
+            globalVersion !== localVersion
+              ? Promise.reject(
+                  new Error(
+                    'Flow integration was disabled because the global Flow version does not match.\n' +
+                      'You may either remove the global Flow installation or install a compatible version:\n' +
+                      '  ' +
+                      chalk.cyan('npm') +
+                      ' install -g flow-bin@' +
+                      localVersion
+                  )
+                )
+              : localVersion
+        ))
+    .then(localVersion => Promise.all([
+      writeFileIfDoesNotExist(flowconfigPath, flowconfig.join('\n')),
+      execOneTime(
         flowTypedPath,
-        [
-          'install',
-          packageName + '@' + otherFlowTypedDefs[packageName],
-          '--overwrite',
-          '--flowVersion=' + localVersion
-        ],
+        ['install', '--overwrite', '--flowVersion=' + localVersion],
         { cwd: projectPath }
-      ))
-    ))
-  ]));
+      )
+        // This operation will fail if react-scripts is a path to a tarball in the
+        // package.json (like in End To End testing!). So we swallow this error.
+        // See https://github.com/flowtype/flow-typed/issues/399#issuecomment-266766678
+        .catch(
+          e =>
+            /(invalid comparator)|(unable to rebase the local cache repo)/i.test(
+              e.message
+            )
+              ? true
+              : Promise.reject(e)
+        )
+        .then(() =>
+          Promise.all(
+            Object.keys(
+              otherFlowTypedDefs
+            ).map(packageName =>
+              execOneTime(
+                flowTypedPath,
+                [
+                  'install',
+                  packageName + '@' + otherFlowTypedDefs[packageName],
+                  '--overwrite',
+                  '--flowVersion=' + localVersion,
+                ],
+                { cwd: projectPath }
+              ))
+          )),
+    ]));
 }
 
 function flowCheck(projectPath) {
-  return execOneTime(
-    flowBinPath,
-    ['status', '--color=always'],
-    { cwd: projectPath }
-  );
+  return execOneTime(flowBinPath, ['status', '--color=always'], {
+    cwd: projectPath,
+  });
 }
 
 function FlowTypecheckPlugin(options) {
@@ -173,34 +163,38 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
   var flowShouldRun = false;
   var flowErrorOutput = null;
 
-  // During module traversal, assert the presence of an @ flow in a module
-  compiler.plugin('compilation', (compilation, params) => {
+  // During module traversal, assert the presence of an @flow in a module
+  compiler.plugin('compilation', compilation => {
     compilation.plugin('normal-module-loader', (loaderContext, module) => {
       // We're only checking the presence of flow in non-node_modules
       // (some dependencies may keep their flow comments, we don't want to match them)
-      if (module.resource.indexOf("node_modules") < 0) {
+      if (module.resource.indexOf('node_modules') < 0) {
         // We use webpack's cached FileSystem to avoid slowing down compilation
         loaderContext.fs.readFile(module.resource, (err, data) => {
           if (data && data.toString().indexOf('@flow') >= 0) {
             if (!flowActiveOnProject) {
-              flowInitializationPromise = (!compiler.parentCompilation ?
-                initializeFlow(
-                  compiler.options.context, this.flowconfig, this.otherFlowTypedDefs
-                ) : Promise.resolve()
-              )
-              .then(() => {
-                flowInitialized = true;
-              }, e => {
-                flowInitError = e;
-                return Promise.reject(e);
-              });
+              flowInitializationPromise = (!compiler.parentCompilation
+                ? initializeFlow(
+                    compiler.options.context,
+                    this.flowconfig,
+                    this.otherFlowTypedDefs
+                  )
+                : Promise.resolve()).then(
+                () => {
+                  flowInitialized = true;
+                },
+                e => {
+                  flowInitError = e;
+                  return Promise.reject(e);
+                }
+              );
               flowActiveOnProject = true;
             }
             flowShouldRun = true;
           }
         });
       }
-    })
+    });
   });
 
   // While emitting, run a flow check if flow has been detected
@@ -208,21 +202,24 @@ FlowTypecheckPlugin.prototype.apply = function(compiler) {
     // Only if a file with @ flow has been changed
     if (flowShouldRun) {
       flowShouldRun = false;
-      (flowInitialized ?
-        (flowInitError ? Promise.reject(flowInitError) : Promise.resolve()) :
-        flowInitializationPromise)
-      .then(
-        () => flowCheck(compiler.options.context),
-        e => Promise.reject(e) // don't run a check if init errored, just carry the error
-      )
-      .then(() => {
-        flowErrorOutput = null;
-        compilation.flowPassed = true;
-      }, error => {
-        flowErrorOutput = stripFlowLoadingIndicators(error.message);
-        compilation.warnings.push(flowErrorOutput);
-      })
-      .then(callback);
+      (flowInitialized
+        ? flowInitError ? Promise.reject(flowInitError) : Promise.resolve()
+        : flowInitializationPromise)
+        .then(
+          () => flowCheck(compiler.options.context),
+          e => Promise.reject(e) // don't run a check if init errored, just carry the error
+        )
+        .then(
+          () => {
+            flowErrorOutput = null;
+            compilation.flowPassed = true;
+          },
+          error => {
+            flowErrorOutput = stripFlowLoadingIndicators(error.message);
+            compilation.warnings.push(flowErrorOutput);
+          }
+        )
+        .then(callback);
     } else {
       // Output a warning if flow failed in a previous run
       if (flowErrorOutput) {
