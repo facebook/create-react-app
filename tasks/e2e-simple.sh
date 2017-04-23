@@ -246,8 +246,6 @@ echo "/* @flow */" > src/App.js
 cat src/App.backup.js >> src/App.js
 npm start -- --smoke-test
 test -e .flowconfig
-test -d flow-typed
-cat .gitignore | grep flow-typed
 rm src/App.js
 cp src/App.backup.js src/App.js
 rm src/App.backup.js
