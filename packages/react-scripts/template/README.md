@@ -646,13 +646,12 @@ We suggest the following approach:
 
 Here is an example of adding a [customized Bootstrap](https://medium.com/@tacomanator/customizing-create-react-app-aa9ffb88165) that follows these steps.
 
-## Adding Flow
+## Using Flow
 
 Flow is a static type checker that helps you write code with fewer bugs. Check out this [introduction to using static types in JavaScript](https://medium.com/@preethikasireddy/why-use-static-types-in-javascript-part-1-8382da1e0adb) if you are new to this concept.
 
-Flow typing is now supported out of the box. All you have to do is add the `/* @flow */` comment on top of files you
-want to typecheck. If no `.flowconfig` is present, one will be generated for you. The script will also download type
-definitions from [flow-typed](https://github.com/flowtype/flow-typed) automatically.
+Flow typing is supported out of the box. All you have to do is add the `/* @flow */` comment on top of files you
+want to typecheck. If no `.flowconfig` is present, one will be generated for you.
 
 Flow errors will show up alongside ESLint errors as you work on your application.
 
@@ -661,6 +660,7 @@ Flow errors will show up alongside ESLint errors as you work on your application
 You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/flow/) for a better integrated experience.
 
 To learn more about Flow, check out [its documentation](https://flowtype.org/).
+You may also want to learn how to use definitions from [flow-typed](https://github.com/flowtype/flow-typed).
 
 ## Adding Custom Environment Variables
 
