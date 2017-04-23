@@ -62,6 +62,7 @@ class FlowTypecheckPlugin {
     if (this.flowStarted) {
       return Promise.resolve();
     }
+    console.log(chalk.cyan('Starting the flow server ...'));
     const flowConfigPath = path.join(cwd, '.flowconfig');
     return new Promise((resolve, reject) => {
       fs.access(flowConfigPath, fs.constants.R_OK | fs.constants.W_OK, err => {
@@ -77,6 +78,11 @@ class FlowTypecheckPlugin {
           exec(flowBinPath, ['start'], { cwd })))
       .then(() => {
         this.flowStarted = true;
+        console.log(
+          chalk.yellow(
+            'Flow is initializing, ' + chalk.bold('this might take a while ...')
+          )
+        );
       });
   }
 
