@@ -50,7 +50,7 @@ To fix warning, uninstall it or run \`npm install -g flow-bin@${flowVersion}\`.`
     );
 }
 
-function formatFlowErrors(error, flowVersion) {
+function formatFlowErrors(error) {
   return error
     .toString()
     .split('\n')
@@ -71,11 +71,11 @@ function formatFlowErrors(error, flowVersion) {
 function getFlowVersion(global) {
   return exec(global ? 'flow' : flowBinPath, ['version', '--json'])
     .then(data => JSON.parse(data.toString('utf8')).semver || '0.0.0')
-    .catch(e => null);
+    .catch(() => null);
 }
 
 class FlowTypecheckPlugin {
-  constructor(options) {
+  constructor() {
     this.shouldRun = false;
     this.flowStarted = false;
 
@@ -101,7 +101,7 @@ class FlowTypecheckPlugin {
         });
       })
       .then(
-        () => new Promise((resolve, reject) => {
+        () => new Promise(resolve => {
           fs.access(
             flowConfigPath,
             fs.constants.R_OK | fs.constants.W_OK,
@@ -171,7 +171,7 @@ class FlowTypecheckPlugin {
               callback();
             })
             .catch(e => {
-              compilation.warnings.push(formatFlowErrors(e, this.flowVersion));
+              compilation.warnings.push(formatFlowErrors(e));
               callback();
             });
         })
