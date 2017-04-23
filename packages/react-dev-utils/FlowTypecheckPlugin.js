@@ -78,11 +78,6 @@ class FlowTypecheckPlugin {
           exec(flowBinPath, ['start'], { cwd })))
       .then(() => {
         this.flowStarted = true;
-        console.log(
-          chalk.yellow(
-            'Flow is initializing, ' + chalk.bold('this might take a while ...')
-          )
-        );
       });
   }
 
@@ -116,8 +111,19 @@ class FlowTypecheckPlugin {
         return;
       }
       const cwd = compiler.options.context;
+      const first = !this.flowStarted;
       this.startFlow(cwd)
         .then(() => {
+          if (first) {
+            console.log(
+              chalk.yellow(
+                'Flow is initializing, ' +
+                  chalk.bold('this might take a while...')
+              )
+            );
+          } else {
+            console.log('Running flow...');
+          }
           exec(flowBinPath, ['status', '--color=always'], { cwd })
             .then(() => {
               callback();
@@ -129,7 +135,9 @@ class FlowTypecheckPlugin {
             });
         })
         .catch(e => {
-          //TODO: flow failed, set a warning
+          compilation.warnings.push(
+            'Flow checking has been disabled due to an error in Flow.'
+          );
           callback();
         });
     });
