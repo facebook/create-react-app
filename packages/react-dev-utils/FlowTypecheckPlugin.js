@@ -127,7 +127,6 @@ class FlowTypecheckPlugin {
           exec(flowBinPath, ['status', '--color=always'], { cwd })
             .then(() => {
               callback();
-              //TODO: flow ran, and there was no errors
             })
             .catch(e => {
               compilation.warnings.push(formatFlowErrors(e));

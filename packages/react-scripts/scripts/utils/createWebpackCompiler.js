@@ -74,9 +74,6 @@ module.exports = function createWebpackCompiler(config, onReadyCallback) {
 
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
-      if (messages.isFlowIntegrationErrorMessage) {
-        console.log(chalk.yellow('Flow checks were skipped.'));
-      }
     }
 
     if (typeof onReadyCallback === 'function') {
@@ -115,15 +112,12 @@ module.exports = function createWebpackCompiler(config, onReadyCallback) {
           chalk.yellow('/* eslint-disable */') +
           ' to ignore all warnings in a file.'
       );
+      // Teach some Flow tricks.
       console.log(
         'Use ' +
           chalk.yellow('// $FlowFixMe') +
           ' to ignore flow-related warnings on the next line.'
       );
-    }
-
-    if (messages.isFlowIntegrationErrorMessage) {
-      console.log(messages.isFlowIntegrationErrorMessage);
     }
   });
 
