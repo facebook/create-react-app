@@ -119,7 +119,7 @@ function formatWebpackMessages(json) {
   var formattedWarnings = json.warnings.map(function(message) {
     var formattedMessage = formatMessage(message);
     if (/^Flow: /.test(message)) return formattedMessage;
-    return 'Warning in ' + formatMessage(message);
+    return 'Warning in ' + formattedMessage;
   });
   var result = {
     errors: formattedErrors,
