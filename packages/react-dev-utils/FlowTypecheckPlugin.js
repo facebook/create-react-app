@@ -102,17 +102,13 @@ class FlowTypecheckPlugin {
       })
       .then(
         () => new Promise(resolve => {
-          fs.access(
-            flowConfigPath,
-            fs.constants.R_OK | fs.constants.W_OK,
-            err => {
-              if (err) {
-                resolve(exec(flowBinPath, ['init'], { cwd }));
-              } else {
-                resolve();
-              }
+          fs.access(flowConfigPath, err => {
+            if (err) {
+              resolve(exec(flowBinPath, ['init'], { cwd }));
+            } else {
+              resolve();
             }
-          );
+          });
         })
       )
       .then(() =>
