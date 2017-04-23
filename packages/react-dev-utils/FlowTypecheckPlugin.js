@@ -40,22 +40,49 @@ function exec(command, args, options) {
   });
 }
 
-function formatFlowErrors(error) {
+function createVersionWarning(flowVersion) {
+  return 'Flow: ' +
+    chalk.red(
+      chalk.bold(
+        `Your global flow version is incompatible with this tool.
+To fix warning, uninstall it or run \`npm install -g flow-bin@${flowVersion}\`.`
+      )
+    );
+}
+
+function formatFlowErrors(error, flowVersion) {
   return error
     .toString()
     .split('\n')
     .filter(line => {
       return !(/flow is still initializing/.test(line) ||
-        /Found \d+ error/.test(line));
+        /Found \d+ error/.test(line) ||
+        /The flow server is not responding/.test(line) ||
+        /Going to launch a new one/.test(line) ||
+        /The flow server is not responding/.test(line) ||
+        /Spawned flow server/.test(line) ||
+        /Logs will go to/.test(line) ||
+        /version didn't match the client's/.test(line));
     })
     .map(line => line.replace(/^Error:\s*/, ''))
     .join('\n');
+}
+
+function getFlowVersion(global) {
+  return exec(global ? 'flow' : flowBinPath, ['version', '--json'])
+    .then(data => JSON.parse(data.toString('utf8')).semver || '0.0.0')
+    .catch(e => null);
 }
 
 class FlowTypecheckPlugin {
   constructor(options) {
     this.shouldRun = false;
     this.flowStarted = false;
+
+    this.flowVersion = require(path.join(
+      __dirname,
+      'package.json'
+    )).dependencies['flow-bin'];
   }
 
   startFlow(cwd) {
@@ -64,15 +91,30 @@ class FlowTypecheckPlugin {
     }
     console.log(chalk.cyan('Starting the flow server ...'));
     const flowConfigPath = path.join(cwd, '.flowconfig');
-    return new Promise((resolve, reject) => {
-      fs.access(flowConfigPath, fs.constants.R_OK | fs.constants.W_OK, err => {
-        if (err) {
-          resolve(exec(flowBinPath, ['init'], { cwd }));
-        } else {
-          resolve();
-        }
-      });
-    })
+    return getFlowVersion(true)
+      .then(globalVersion => {
+        if (globalVersion === null) return;
+        return getFlowVersion(false).then(ourVersion => {
+          if (globalVersion !== ourVersion) {
+            return Promise.reject('__FLOW_VERSION_MISMATCH__');
+          }
+        });
+      })
+      .then(
+        () => new Promise((resolve, reject) => {
+          fs.access(
+            flowConfigPath,
+            fs.constants.R_OK | fs.constants.W_OK,
+            err => {
+              if (err) {
+                resolve(exec(flowBinPath, ['init'], { cwd }));
+              } else {
+                resolve();
+              }
+            }
+          );
+        })
+      )
       .then(() =>
         exec(flowBinPath, ['stop'], { cwd }).then(() =>
           exec(flowBinPath, ['start'], { cwd })))
@@ -129,14 +171,18 @@ class FlowTypecheckPlugin {
               callback();
             })
             .catch(e => {
-              compilation.warnings.push(formatFlowErrors(e));
+              compilation.warnings.push(formatFlowErrors(e, this.flowVersion));
               callback();
             });
         })
         .catch(e => {
-          compilation.warnings.push(
-            'Flow checking has been disabled due to an error in Flow.'
-          );
+          if (e === '__FLOW_VERSION_MISMATCH__') {
+            compilation.warnings.push(createVersionWarning(this.flowVersion));
+          } else {
+            compilation.warnings.push(
+              'Flow: Type checking has been disabled due to an error in Flow.'
+            );
+          }
           callback();
         });
     });
