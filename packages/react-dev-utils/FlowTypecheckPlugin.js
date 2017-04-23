@@ -64,7 +64,7 @@ class FlowTypecheckPlugin {
     }
     const flowConfigPath = path.join(cwd, '.flowconfig');
     return new Promise((resolve, reject) => {
-      fs.stat(flowConfigPath, (err, stats) => {
+      fs.access(flowConfigPath, fs.constants.R_OK | fs.constants.W_OK, err => {
         if (err) {
           resolve(exec(flowBinPath, ['init'], { cwd }));
         } else {
