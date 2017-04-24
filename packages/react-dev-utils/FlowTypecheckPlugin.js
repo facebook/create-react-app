@@ -111,9 +111,18 @@ class FlowTypecheckPlugin {
           });
         })
       )
-      .then(() =>
-        exec(flowBinPath, ['stop'], { cwd }).then(() =>
-          exec(flowBinPath, ['start'], { cwd })))
+      .then(() => exec(flowBinPath, ['stop'], {
+        cwd,
+      }).then(() => exec(flowBinPath, ['start'], { cwd }).catch(err => {
+        if (
+          typeof err.message === 'string' &&
+          err.message.indexOf('There is already a server running') !== -1
+        ) {
+          return true;
+        } else {
+          throw err;
+        }
+      })))
       .then(() => {
         this.flowStarted = true;
       });
