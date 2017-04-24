@@ -20,7 +20,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
-    testPathDirs: [ 'spec' ],
+    testPathDirs: [ 'spec', 'src' ],
     testRegex: '.*spec\\.(es6|js)$',
     moduleDirectories: [ 'src', 'node_modules' ],
     moduleFileExtensions: [ 'js', 'json', 'es6', 'jsx' ],
