@@ -78,6 +78,7 @@ class FlowTypecheckPlugin {
   constructor() {
     this.shouldRun = false;
     this.flowStarted = false;
+    this.flowStarting = null;
 
     this.flowVersion = require(path.join(
       __dirname,
@@ -89,8 +90,16 @@ class FlowTypecheckPlugin {
     if (this.flowStarted) {
       return Promise.resolve();
     }
+    if (this.flowStarting != null) {
+      return this.flowStarting;
+    }
     console.log(chalk.cyan('Starting the flow server ...'));
     const flowConfigPath = path.join(cwd, '.flowconfig');
+    let success, fail;
+    this.flowStarting = new Promise((resolve, reject) => {
+      success = resolve;
+      fail = reject;
+    });
     return getFlowVersion(true)
       .then(globalVersion => {
         if (globalVersion === null) return;
@@ -126,6 +135,13 @@ class FlowTypecheckPlugin {
       }))
       .then(() => {
         this.flowStarted = true;
+        success();
+        this.flowStarting = null;
+      })
+      .catch(err => {
+        fail();
+        this.flowStarting = null;
+        throw err;
       });
   }
 
@@ -159,7 +175,7 @@ class FlowTypecheckPlugin {
         return;
       }
       const cwd = compiler.options.context;
-      const first = !this.flowStarted;
+      const first = this.flowStarting == null && !this.flowStarted;
       this.startFlow(cwd)
         .then(() => {
           if (first) {
