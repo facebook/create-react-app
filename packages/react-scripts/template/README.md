@@ -468,6 +468,26 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
 
 Now running `npm start` and `npm run build` also builds Sass files. Note that `node-sass` seems to have an [issue recognizing newly created files on some systems](https://github.com/sass/node-sass/issues/1891) so you might need to restart the watcher when you create a file until it’s resolved.
 
+**Performance Note**
+
+`node-sass --watch` has been reported to have *performance issues* in certain conditions when used in a virtual machine or with docker. If you are experiencing high CPU usage with node-sass you can alternatively try [node-sass-chokidar](https://www.npmjs.com/package/node-sass-chokidar) which uses a different file-watcher. Usage remains the same, simply replace `node-sass` with `node-sass-chokidar`:
+
+```
+npm uninstall node-sass --save-dev
+npm install node-sass-chokidar --save-dev
+```
+
+And in your scripts:
+
+```diff
+   "scripts": {
+-    "build-css": "node-sass src/ -o src/",
+-    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive"
++    "build-css": "node-sass-chokidar src/ -o src/",
++    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
+   }
+```
+
 ## Adding Images, Fonts, and Files
 
 With Webpack, using static assets like images and fonts works similarly to CSS.
