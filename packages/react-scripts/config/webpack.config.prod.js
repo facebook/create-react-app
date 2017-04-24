@@ -16,8 +16,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const camelCase = require('lodash.camelcase');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+
+const packageJson = require(paths.appPackageJson);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -50,6 +53,15 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
     { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
+let libraryName;
+let libraryTarget;
+
+if (packageJson.name) {
+  // Will also strip non-alphanumerics
+  libraryName = camelCase(packageJson.name);
+  libraryTarget = 'umd';
+}
+
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
@@ -71,6 +83,10 @@ module.exports = {
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
+    // Options for generating a final bundle that is a module or library
+    library: libraryName,
+    libraryTarget: libraryTarget,
+    umdNamedDefine: true,
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
