@@ -44,7 +44,6 @@ const path = require('path');
 const execSync = require('child_process').execSync;
 const spawn = require('cross-spawn');
 const semver = require('semver');
-const dns = require('dns');
 const tmp = require('tmp');
 const unpack = require('tar-pack').unpack;
 const hyperquest = require('hyperquest');
@@ -545,8 +544,13 @@ function checkIfOnline(useYarn) {
   }
 
   return new Promise(resolve => {
-    dns.lookup('registry.yarnpkg.com', err => {
-      resolve(err === null);
-    });
+    const yarnRegistry = execSync('yarnpkg config get registry')
+      .toString()
+      .trim();
+    const registryStream = hyperquest(yarnRegistry);
+
+    registryStream.on('error', () => resolve(false));
+    registryStream.on('data', () => {});
+    registryStream.on('end', () => resolve(true));
   });
 }
