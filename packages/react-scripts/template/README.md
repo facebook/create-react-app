@@ -1500,7 +1500,7 @@ In this case, ensure that the file is there with the proper lettercase and thatâ
 
 See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modulus) on how to deploy your react app to Modulus.
 
-## Netlify
+### Netlify
 
 **To do a manual deploy to Netlifyâ€™s CDN:**
 
