@@ -7,6 +7,12 @@ var config = require('@trunkclub/eslint-config');
 config.fix = true;
 config.extensions = ['.js', '.jsx', '.es6'];
 
+// CLIEngine env config differs from .eslintrc
+// http://eslint.org/docs/developer-guide/nodejs-api#cliengine
+config.envs = Object
+  .keys(config.env)
+  .filter(envKey => config.env[envKey])
+
 var eslint = new CLIEngine(config);
 
 var report = eslint.executeOnFiles([paths.appSrc]);
