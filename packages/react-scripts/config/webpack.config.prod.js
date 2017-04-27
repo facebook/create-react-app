@@ -36,6 +36,9 @@ var shouldUseRelativeAssetPaths = publicPath === './';
 var publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
+// Local ident name is used to generate class names for CSS modules.
+// See https://github.com/css-modules/postcss-modules#generating-scoped-names
+var localIdentName = '[path][name]__[local]___[hash:base64:5]';
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -154,7 +157,7 @@ module.exports = {
         query: {
           babelrc: false,
           presets: [require.resolve('babel-preset-react-app')],
-          plugins: [[require.resolve('babel-plugin-react-css-modules'), { context: paths.appSrc }]],
+          plugins: [[require.resolve('babel-plugin-react-css-modules'), { context: paths.appSrc, generateScopedName: localIdentName }]],
         },
         // @remove-on-eject-end
       },
@@ -174,7 +177,7 @@ module.exports = {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract(
           'style',
-          'css?modules&localIdentName=[path]___[name]__[local]___[hash:base64:5]&importLoaders=1!postcss',
+          'css?modules&localIdentName=' + localIdentName + '&importLoaders=1!postcss',
           extractTextPluginOptions
         )
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.

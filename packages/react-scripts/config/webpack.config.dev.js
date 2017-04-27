@@ -33,6 +33,9 @@ var publicPath = '/';
 var publicUrl = '';
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
+// Local ident name is used to generate class names for CSS modules.
+// See https://github.com/css-modules/postcss-modules#generating-scoped-names
+var localIdentName = '[path][name]__[local]___[hash:base64:5]';
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -156,7 +159,7 @@ module.exports = {
           // @remove-on-eject-begin
           babelrc: false,
           presets: [require.resolve('babel-preset-react-app')],
-          plugins: [[require.resolve('babel-plugin-react-css-modules'), { context: paths.appSrc }]],
+          plugins: [[require.resolve('babel-plugin-react-css-modules'), { context: paths.appSrc, generateScopedName: localIdentName }]],
           // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -171,7 +174,7 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        loader: 'style!css?modules&localIdentName=[path]___[name]__[local]___[hash:base64:5]&importLoaders=1!postcss'
+        loader: 'style!css?modules&localIdentName=' + localIdentName + '&importLoaders=1!postcss'
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
