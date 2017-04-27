@@ -2,10 +2,10 @@
   "name": "react-dev-utils",
   "version": "0.5.2",
   "description": "Webpack utilities used by Create React App",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "webstronauts/create-react-app",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/webstronauts/create-react-app/issues"
   },
   "engines": {
     "node": ">=4"
