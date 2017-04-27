@@ -13,7 +13,7 @@ If something doesn’t work please [file an issue](https://github.com/facebookin
 ```sh
 npm install -g create-react-app
 
-create-react-app my-app
+create-react-app --scripts-version @webstronauts/react-scripts my-app
 cd my-app/
 npm start
 ```
