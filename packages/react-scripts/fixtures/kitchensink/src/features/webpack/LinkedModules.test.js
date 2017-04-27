@@ -9,13 +9,17 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AsyncAwait from './AsyncAwait';
+import { test, version } from 'test-integrity';
+import LinkedModules from './LinkedModules';
 
-describe('async/await', () => {
+describe('linked modules', () => {
+  it('has integrity', () => {
+    expect(test());
+    expect(version() === '2.0.0');
+  });
+
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    return new Promise(resolve => {
-      ReactDOM.render(<AsyncAwait onReady={resolve} />, div);
-    });
+    ReactDOM.render(<LinkedModules />, div);
   });
 });

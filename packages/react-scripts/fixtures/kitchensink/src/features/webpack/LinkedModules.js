@@ -8,14 +8,13 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import AsyncAwait from './AsyncAwait';
+import './assets/style.css';
+import { test, version } from 'test-integrity';
 
-describe('async/await', () => {
-  it('renders without crashing', () => {
-    const div = document.createElement('div');
-    return new Promise(resolve => {
-      ReactDOM.render(<AsyncAwait onReady={resolve} />, div);
-    });
-  });
-});
+export default () => {
+  const v = version();
+  if (!test() || v !== '2.0.0') {
+    throw new Error('Functionality test did not pass.');
+  }
+  return <p id="feature-linked-modules">{v}</p>;
+};

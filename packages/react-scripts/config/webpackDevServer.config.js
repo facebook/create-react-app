@@ -1,8 +1,20 @@
-var config = require('./webpack.config.dev');
-var paths = require('./paths');
+// @remove-on-eject-begin
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+// @remove-on-eject-end
+'use strict';
 
-var protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-var host = process.env.HOST || 'localhost';
+const config = require('./webpack.config.dev');
+const paths = require('./paths');
+
+const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+const host = process.env.HOST || 'localhost';
 
 module.exports = {
   // Enable gzip compression of generated files.
@@ -42,7 +54,7 @@ module.exports = {
   // Reportedly, this avoids CPU overload on some systems.
   // https://github.com/facebookincubator/create-react-app/issues/293
   watchOptions: {
-    ignored: /node_modules/
+    ignored: /node_modules/,
   },
   // Enable HTTPS if the HTTPS environment variable is set to 'true'
   https: protocol === 'https',

@@ -1,11 +1,149 @@
+## 0.9.5 (March 9, 2017)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#1783](https://github.com/facebookincubator/create-react-app/pull/1783) **Work around Node 7.7.2 bug that crashes `npm start`.** ([@ryanwalters](https://github.com/ryanwalters))
+
+#### :nail_care: Enhancement
+
+* `eslint-config-react-app`
+
+  * [#1773](https://github.com/facebookincubator/create-react-app/pull/1773) Remove `guard-for-in` lint rule. ([@spicyj](https://github.com/spicyj))
+
+* `react-scripts`
+  * [#1760](https://github.com/facebookincubator/create-react-app/pull/1760) Suggest `serve` for running in production. ([@leo](https://github.com/leo))
+  * [#1747](https://github.com/facebookincubator/create-react-app/pull/1747) Display `yarn` instead of `yarnpkg` when creating a new app. ([@lpalmes](https://github.com/lpalmes))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#1756](https://github.com/facebookincubator/create-react-app/pull/1756) Add Yarn steps for adding Flow. ([@zertosh](https://github.com/zertosh))
+
+#### :house: Internal
+
+* `babel-preset-react-app`
+
+  * [#1742](https://github.com/facebookincubator/create-react-app/pull/1742) Switch to `babel-preset-env` to remove the deprecation warning. ([@Timer](https://github.com/Timer))
+
+#### Committers: 6
+- Andres Suarez ([zertosh](https://github.com/zertosh))
+- Ben Alpert ([spicyj](https://github.com/spicyj))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Leo Lamprecht ([leo](https://github.com/leo))
+- Lorenzo Palmes ([lpalmes](https://github.com/lpalmes))
+- Ryan Walters ([ryanwalters](https://github.com/ryanwalters))
+
+### Migrating from 0.9.4 to 0.9.5
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.9.5
+```
+
+## 0.9.4 (March 6, 2017)
+
+#### :bug: Bug Fix
+* `create-react-app`
+
+  * [#1706](https://github.com/facebookincubator/create-react-app/pull/1706) Extract compressed package for package name. ([@Timer](https://github.com/Timer))
+
+    You may now specify a scoped package for `--scripts-version` and obtain a working installation.
+
+  * [#1695](https://github.com/facebookincubator/create-react-app/pull/1695) Print why installation was aborted. ([@tgig](https://github.com/tgig))
+
+* `react-scripts`
+
+  * [#1727](https://github.com/facebookincubator/create-react-app/pull/1727) Fix ejecting from a scoped fork. ([@gaearon](https://github.com/gaearon))
+
+    Ejecting now works within a scoped fork.
+
+  * [#1721](https://github.com/facebookincubator/create-react-app/pull/1721) Fix hot reloading for WebpackDevServer after eject. ([@gaearon](https://github.com/gaearon))
+
+* `react-dev-utils`
+
+  * [#1690](https://github.com/facebookincubator/create-react-app/pull/1690) Fix `openBrowser()` when `BROWSER=open` on macOS. ([@bpierre](https://github.com/bpierre))
+
+  * [#1696](https://github.com/facebookincubator/create-react-app/pull/1696) Improve reliability of port detection. ([@chrisdrackett](https://github.com/chrisdrackett))
+
+#### :nail_care: Enhancement
+* `eslint-config-react-app`, `react-scripts`
+
+  * [#1705](https://github.com/facebookincubator/create-react-app/pull/1705) Add support for `ignoreRestSiblings` in `no-unused-vars`. ([@chrisdrackett](https://github.com/chrisdrackett))
+
+    Linter no longer warns when using rest properties to remove variables from an object.
+
+  * [#1542](https://github.com/facebookincubator/create-react-app/pull/1542) Bump `jsx-a11y` version. ([@bondz](https://github.com/bondz))
+
+* `react-dev-utils`, `react-scripts`
+
+  * [#1726](https://github.com/facebookincubator/create-react-app/pull/1726) Extract generic build functions into `react-dev-utils`. ([@viankakrisna](https://github.com/viankakrisna))
+
+* Other
+
+  * [#1402](https://github.com/facebookincubator/create-react-app/pull/1402) Stub `package.json` for e2e test. ([@matoilic](https://github.com/matoilic))
+
+#### :memo: Documentation
+* `react-scripts`
+  * [#1710](https://github.com/facebookincubator/create-react-app/pull/1710) Update now.sh deployment instructions. ([@replaid](https://github.com/replaid))
+  * [#1717](https://github.com/facebookincubator/create-react-app/pull/1717) Add docs for Apache client side routing. ([@viankakrisna](https://github.com/viankakrisna))
+  * [#1698](https://github.com/facebookincubator/create-react-app/pull/1698) Suggest to use `.env` for enabling polling mode. ([@gaearon](https://github.com/gaearon))
+  * [#1687](https://github.com/facebookincubator/create-react-app/pull/1687) Fixed missing `--recursive` flag in first `npm run watch-css` command. ([@mklemme](https://github.com/mklemme))
+
+#### :house: Internal
+* `react-scripts`
+  * [#1736](https://github.com/facebookincubator/create-react-app/pull/1736) Fix eject for linked react-scripts. ([@tuchk4](https://github.com/tuchk4))
+  * [#1741](https://github.com/facebookincubator/create-react-app/pull/1741) Fix internal linting setup. ([@gaearon](https://github.com/gaearon))
+  * [#1730](https://github.com/facebookincubator/create-react-app/pull/1730) Fix Node 4 e2e tests. ([@Timer](https://github.com/Timer))
+* `eslint-config-react-app`
+  * [#1740](https://github.com/facebookincubator/create-react-app/pull/1740) Relax ESLint config peerDependency. ([@gaearon](https://github.com/gaearon))
+* `eslint-config-react-app`, `react-dev-utils`, `react-scripts`
+  * [#1729](https://github.com/facebookincubator/create-react-app/pull/1729) Lint internal scripts with `eslint:recommended`. ([@gaearon](https://github.com/gaearon))
+* `react-dev-utils`
+  * [#1724](https://github.com/facebookincubator/create-react-app/pull/1724) Don't use ES6 in a file that should run on Node 4. ([@gaearon](https://github.com/gaearon))
+* Other
+  * [#1723](https://github.com/facebookincubator/create-react-app/pull/1723) Skip AppVeyor CI builds for Markdown changes. ([@gaearon](https://github.com/gaearon))
+  * [#1707](https://github.com/facebookincubator/create-react-app/pull/1707) Add double quotes to escape spaces in paths in e2e. ([@viankakrisna](https://github.com/viankakrisna))
+  * [#1688](https://github.com/facebookincubator/create-react-app/pull/1688) Upgrade `lerna` version. ([@viankakrisna](https://github.com/viankakrisna))
+
+#### Committers: 11
+- Ade Viankakrisna Fadlil ([viankakrisna](https://github.com/viankakrisna))
+- Bond ([bondz](https://github.com/bondz))
+- Chris Drackett ([chrisdrackett](https://github.com/chrisdrackett))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Mato Ilic ([matoilic](https://github.com/matoilic))
+- Myk Klemme ([mklemme](https://github.com/mklemme))
+- Pierre Bertet ([bpierre](https://github.com/bpierre))
+- Ryan Platte ([replaid](https://github.com/replaid))
+- Travis Giggy ([tgig](https://github.com/tgig))
+- Valerii Sorokobatko ([tuchk4](https://github.com/tuchk4))
+
+### Migrating from 0.9.3 to 0.9.4
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@0.9.4
+```
+
+You may also optionally update the global command-line utility for scoped package support:
+
+```
+npm install -g create-react-app@1.3.0
+```
+
 ## 0.9.3 (February 28, 2017)
 
 #### :rocket: New Feature
 * `create-react-app`
   * [#1423](https://github.com/facebookincubator/create-react-app/pull/1423) **Fall back to Yarn offline cache when creating a new project.** ([@voxsim](https://github.com/voxsim))
-  
+
   If you are using Yarn, and you have created at least one app previously, Create React App now works offline.
-  
+
   <img src="http://i.imgur.com/1FLa9Tg.gif" width="500" alt="Yarn offline installation demo">
 
 #### :bug: Bug Fix
