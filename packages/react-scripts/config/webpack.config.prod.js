@@ -64,6 +64,8 @@ module.exports = {
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
   devtool: 'source-map',
+  // The base directory (absolute path!) for resolving the entry option.
+  context: paths.appSrc,
   // In production, we only want to load the polyfills and the app code.
   entry: [
     require.resolve('./polyfills'),
@@ -152,7 +154,7 @@ module.exports = {
         query: {
           babelrc: false,
           presets: [require.resolve('babel-preset-react-app')],
-          plugins: [require.resolve('babel-plugin-react-css-modules')],
+          plugins: [[require.resolve('babel-plugin-react-css-modules'), { context: paths.appSrc }]],
         },
         // @remove-on-eject-end
       },
