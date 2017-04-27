@@ -156,7 +156,7 @@ module.exports = {
         // @remove-on-eject-begin
         query: {
           babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          presets: [require.resolve('@webstronauts/babel-preset-react-app')],
           plugins: [[require.resolve('babel-plugin-react-css-modules'), { context: paths.appSrc, generateScopedName: localIdentName }]],
         },
         // @remove-on-eject-end

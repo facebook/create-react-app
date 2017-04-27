@@ -158,7 +158,7 @@ module.exports = {
         query: {
           // @remove-on-eject-begin
           babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          presets: [require.resolve('@webstronauts/babel-preset-react-app')],
           plugins: [[require.resolve('babel-plugin-react-css-modules'), { context: paths.appSrc, generateScopedName: localIdentName }]],
           // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
