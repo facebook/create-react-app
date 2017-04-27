@@ -1,6 +1,6 @@
 {
-  "name": "react-scripts",
-  "version": "0.9.5",
+  "name": "@webstronauts/react-scripts",
+  "version": "0.0.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": "webstronauts/create-react-app",
   "license": "BSD-3-Clause",

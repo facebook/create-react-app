@@ -1,6 +1,6 @@
 {
-  "name": "babel-preset-react-app",
-  "version": "2.2.0",
+  "name": "@webstronauts/babel-preset-react-app",
+  "version": "0.0.0",
   "description": "Babel preset used by Create React App",
   "repository": "webstronauts/create-react-app",
   "license": "BSD-3-Clause",

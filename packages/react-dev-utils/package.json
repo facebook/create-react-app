@@ -1,6 +1,6 @@
 {
-  "name": "react-dev-utils",
-  "version": "0.5.2",
+  "name": "@webstronauts/react-dev-utils",
+  "version": "0.0.0",
   "description": "Webpack utilities used by Create React App",
   "repository": "webstronauts/create-react-app",
   "license": "BSD-3-Clause",
