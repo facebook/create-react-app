@@ -11,6 +11,8 @@
 var path = require('path');
 
 const plugins = [
+  // Allow parsing of import().
+  require.resolve('babel-plugin-syntax-dynamic-import'),
   // class { handleClick = () => { } }
   require.resolve('babel-plugin-transform-class-properties'),
   // The following two plugins use Object.assign directly, instead of Babel's

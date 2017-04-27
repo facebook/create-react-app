@@ -23,13 +23,13 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@webstronauts/babel-preset-react-app": "^0.1.0",
     "autoprefixer": "6.7.2",
     "babel-core": "6.22.1",
     "babel-eslint": "7.1.1",
     "babel-jest": "18.0.0",
     "babel-loader": "6.2.10",
     "babel-plugin-react-css-modules": "^2.6.1",
-    "babel-preset-react-app": "^2.2.0",
     "babel-runtime": "^6.20.0",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
