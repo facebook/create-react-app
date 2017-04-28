@@ -208,10 +208,9 @@ module.exports = {
     useEslintrc: false,
   },
   // @remove-on-eject-end
-  // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
-      modulesValues(),
+      modulesValues,
       autoprefixer({
         browsers: [
           '>1%',
