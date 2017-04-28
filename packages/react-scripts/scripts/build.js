@@ -31,8 +31,6 @@ var FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 var measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 var printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 
-var recursive = require('recursive-readdir');
-var stripAnsi = require('strip-ansi');
 var { highlight } = require('cli-highlight');
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
