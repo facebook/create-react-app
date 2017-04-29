@@ -31,7 +31,7 @@ var FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 var measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 var printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 
-var { highlight } = require('cli-highlight');
+var highlight = require('cli-highlight').highlight;
 
 var useYarn = fs.existsSync(paths.yarnLockFile);
 
@@ -40,7 +40,8 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
-function padLeft(n, nr, str = ' '){
+function padLeft(n, nr, str){
+    str = str === undefined ? ' ' : str;
     return Array(n-String(nr).length+1).join(str)+nr;
 }
 
@@ -66,7 +67,8 @@ function printErrors(summary, errors) {
     let linePointer;
     if (err.loaderSource === 'ts-loader') {
       if (err.file) {
-        const { line, character } = err.location;
+        const line = err.location.line;
+        const character = err.location.character;
         const longestLineNumber = Array.from({ length: 7 }).map((_, i) => (line - 3) + i).reduce((a, b) => String(a).length === String(b).length ? String(a).length : String(a).length > String(b).length ? String(a).length : String(b).length);
         const fileContent = highlight(fs.readFileSync(err.file, 'utf8'), { language: 'typescript' })
           .split('\n');
