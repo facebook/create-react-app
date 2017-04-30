@@ -47,7 +47,7 @@ function exists {
 }
 
 function create_react_app {
-  node "$temp_cli_path"/node_modules/create-react-app/index.js $*
+  node "$temp_cli_path"/node_modules/@webstronauts/create-react-app/index.js $*
 }
 
 # Exit the script with a helpful error message when any error is encountered
