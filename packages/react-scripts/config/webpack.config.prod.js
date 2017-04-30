@@ -39,7 +39,7 @@ var publicUrl = publicPath.slice(0, -1);
 var env = getClientEnvironment(publicUrl);
 // Local ident name is used to generate class names for CSS modules.
 // See https://github.com/css-modules/postcss-modules#generating-scoped-names
-var localIdentName = '[path][name]__[local]___[hash:base64:5]';
+var localIdentName = '[local]__[hash:base64:5]';
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.

@@ -36,7 +36,7 @@ var publicUrl = '';
 var env = getClientEnvironment(publicUrl);
 // Local ident name is used to generate class names for CSS modules.
 // See https://github.com/css-modules/postcss-modules#generating-scoped-names
-var localIdentName = '[path][name]__[local]___[hash:base64:5]';
+var localIdentName = '[path][name]__[local]__[hash:base64:5]';
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
