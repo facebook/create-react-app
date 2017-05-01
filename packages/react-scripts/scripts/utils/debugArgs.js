@@ -12,8 +12,8 @@ const DEBUG_FLAGS = [
   /^debug$/,
   /^--debug$/,
   /^--debug-brk(=\d+)?$/,
-  /^--inspect$/,
-  /^--inspect-brk(=\d+)?$/,
+  // /^--inspect$/, // not supported. see https://github.com/facebook/jest/issues/1652
+  // /^--inspect-brk(=\d+)?$/,
 ];
 
 module.exports = {
