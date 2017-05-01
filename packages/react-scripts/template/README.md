@@ -42,6 +42,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Ruby on Rails](#ruby-on-rails)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
 - [Using HTTPS in Development](#using-https-in-development)
+- [Deploying to Heroku, Nginx & SSL](#deploying-to-heroku-nginx-&-ssl)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
 - [Injecting Data from the Server into the Page](#injecting-data-from-the-server-into-the-page)
@@ -869,6 +870,118 @@ HTTPS=true npm start
 ```
 
 Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
+
+## Deploying to Heroku, Nginx & SSL
+
+Deploying to Heroku is fairly simple, you can follow the instructions at the [Heroku](#heroku) section on this guide. After completing that guide you can come here for SSL setup with nginx. Also check the [guide](https://devcenter.heroku.com/articles/ssl-endpoint) from heroku on how to add SSL to you domain.
+
+The first step is to include the [nginx buildpack](https://github.com/ryandotsmith/nginx-buildpack) to the application:
+
+```console
+$ heroku buildpacks:add --index 2 https://github.com/ryandotsmith/nginx-buildpack.git
+```
+
+After adding the buildpack we need to add some base configuration:
+
+Create a file to setup nginx
+
+```
+$ touch config/nginx.conf.erb
+```
+
+Add the minimum configuration for nginx to run with SSL:
+
+```
+daemon off;
+#Heroku dynos have at least 4 cores.
+worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>;
+
+events {
+    use epoll;
+    accept_mutex on;
+    worker_connections 1024;
+}
+
+http {
+    gzip on;
+    gzip_comp_level 2;
+    gzip_min_length 512;
+
+    server_tokens off;
+
+    log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
+    access_log logs/nginx/access.log l2met;
+    error_log logs/nginx/error.log;
+
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+
+    #Must read the body in 5 seconds.
+    client_body_timeout 5;
+
+    upstream app_server {
+        server unix:/tmp/nginx.socket fail_timeout=0;
+     }
+
+    server {
+        listen <%= ENV["PORT"] %>;
+        server_name _
+        keepalive_timeout 5;
+        add_header Strict-Transport-Security max-age=31536000;
+
+        location / {
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_redirect off;
+            if ($http_x_forwarded_proto != 'https') {
+                rewrite ^ https://$host$request_uri? permanent;
+            }
+
+            proxy_pass      http://127.0.0.1:9000;
+        }
+    }
+}
+```
+
+After that make sure you update the `Procfile` to look like:
+
+```
+web: bin/start-nginx node server
+```
+
+**For the few steps you need to add a package if you haven't already to you package.json:**
+
+Under `dependencies` add
+
+```
+"file-system": "2.2.2"
+```
+
+Run the `npm install` command.
+
+Finally make sure your `server/index.js` file looks something like:
+
+```
+'use strict';
+
+var fs = require('file-system');
+
+const app = require('./app');
+
+//This PORT is mapped on the NGINX config, you can change it, but make sure you update the nginx config file
+const PORT = 9000;
+
+//You need to add the fs npm package to create the app-initilized empty file for nginx to know when the server is already running.
+fs.writeFileSync('/tmp/app-initialized', 'w');
+
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}!`);
+});
+```
+
+You are done!, you just need to commit and then push to heroku, it will take a bit longer to deploy as you are now building to packages.
+
 
 ## Generating Dynamic `<meta>` Tags on the Server
 
