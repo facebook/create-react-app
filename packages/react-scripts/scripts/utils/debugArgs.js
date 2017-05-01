@@ -10,6 +10,8 @@
 
 const DEBUG_FLAGS = [
   /^debug$/,
+  /^--debug$/,
+  /^--debug-brk(=\d+)?$/,
   /^--inspect$/,
   /^--inspect-brk(=\d+)?$/,
 ];
