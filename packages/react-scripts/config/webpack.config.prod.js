@@ -240,6 +240,7 @@ module.exports = {
       config: {
         extends: 'stylelint-config-standard',
       },
+      configBaseDir: paths.ownPath,
       // @remove-on-eject-end
       context: paths.appSrc,
       files: ['**/*.css'],
