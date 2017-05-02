@@ -242,6 +242,7 @@ module.exports = {
       },
       // @remove-on-eject-end
       context: paths.appSrc,
+      files: ['**/*.css'],
       failOnError: true,
     }),
     // Makes some environment variables available in index.html.
