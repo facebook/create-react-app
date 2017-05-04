@@ -91,14 +91,20 @@ class FlowTypecheckPlugin {
       return Promise.resolve();
     }
     if (this.flowStarting != null) {
-      return this.flowStarting;
+      return this.flowStarting.then(err => {
+        // We need to do it like this because of unhandled rejections
+        // ... basically, we can't actually reject a promise unless someone
+        // has it handled -- which is only the case when we're returned from here
+        if (err != null) {
+          throw err;
+        }
+      });
     }
     console.log(chalk.cyan('Starting the flow server ...'));
     const flowConfigPath = path.join(cwd, '.flowconfig');
-    let success, fail;
-    this.flowStarting = new Promise((resolve, reject) => {
-      success = resolve;
-      fail = reject;
+    let delegate;
+    this.flowStarting = new Promise(resolve => {
+      delegate = resolve;
     });
     return getFlowVersion(true)
       .then(globalVersion => {
@@ -135,11 +141,11 @@ class FlowTypecheckPlugin {
       }))
       .then(() => {
         this.flowStarted = true;
-        success();
+        delegate();
         this.flowStarting = null;
       })
       .catch(err => {
-        fail();
+        delegate(err);
         this.flowStarting = null;
         throw err;
       });
