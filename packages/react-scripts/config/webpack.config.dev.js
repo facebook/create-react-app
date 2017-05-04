@@ -124,9 +124,12 @@ module.exports = {
             // Point ESLint to our predefined config.
             options: {
               baseConfig: {
-                extends: ['react-app'],
+                extends: ['@mulesoft/eslint-config-mulesoft'],
               },
-              useEslintrc: false,
+              env: {
+                browser: true,
+                es6: true,
+              },
             },
             // @remove-on-eject-end
             loader: 'eslint-loader',

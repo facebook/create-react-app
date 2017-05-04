@@ -1,24 +1,25 @@
 {
-  "name": "create-react-app",
-  "version": "1.3.0",
+  "name": "@mulesoft/create-react-app",
+  "version": "0.9.5-rc.3",
   "keywords": [
     "react"
   ],
   "description": "Create React apps with no build configuration.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "mulesoft/create-mulesoft-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/mulesoft/create-mulesoft-react-app/issues"
   },
   "files": [
     "index.js",
     "createReactApp.js"
   ],
   "bin": {
-    "create-react-app": "./index.js"
+    "create-mulesoft-app": "./index.js",
+    "create-mulesoft-feature": "./createFeatureApp.js"
   },
   "dependencies": {
     "chalk": "^1.1.1",

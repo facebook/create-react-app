@@ -1,8 +1,8 @@
 {
-  "lerna": "2.0.0-beta.38",
+  "lerna": "2.0.0-rc.4",
   "version": "independent",
   "changelog": {
-    "repo": "facebookincubator/create-react-app",
+    "repo": "mulesoft/create-react-app",
     "labels": {
       "tag: new feature": ":rocket: New Feature",
       "tag: breaking change": ":boom: Breaking Change",
@@ -14,6 +14,7 @@
     "cacheDir": ".changelog"
   },
   "packages": [
-    "packages/*"
+    "packages/create-react-app",
+    "packages/react-scripts"
   ]
 }
