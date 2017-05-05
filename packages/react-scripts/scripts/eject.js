@@ -1,4 +1,3 @@
-// @remove-file-on-eject
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -9,23 +8,16 @@
  */
 'use strict';
 
-// Makes the script crash on unhandled rejections instead of silently
-// ignoring them. In the future, promise rejections that are not handled will
-// terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', err => {
-  throw err;
-});
-
-const fs = require('fs-extra');
-const path = require('path');
-const spawnSync = require('cross-spawn').sync;
-const chalk = require('chalk');
-const prompt = require('react-dev-utils/prompt');
-const paths = require('../config/paths');
-const createJestConfig = require('./utils/createJestConfig');
-
-const green = chalk.green;
-const cyan = chalk.cyan;
+var createJestConfig = require('../utils/createJestConfig');
+var fs = require('fs-extra');
+var path = require('path');
+const { exec, execSync } = require('child_process');
+var paths = require('../config/paths');
+var prompt = require('react-dev-utils/prompt');
+var spawnSync = require('cross-spawn').sync;
+var chalk = require('chalk');
+var green = chalk.green;
+var cyan = chalk.cyan;
 
 prompt(
   'Are you sure you want to eject? This action is permanent.',
@@ -36,15 +28,38 @@ prompt(
     process.exit(1);
   }
 
+  function statusSync() {
+    let stdout = execSync(`git status -s`).toString();
+    let status = { dirty: 0, untracked: 0 };
+    stdout.trim().split(/\r?\n/).forEach(file => {
+      if (file.substr(0, 2) === '??') status.untracked++;
+      else status.dirty++;
+    });
+    return status;
+  }
+  const git = fs.existsSync(path.join(process.cwd(), '.git'));
+  const status = statusSync();
+
+  if (git && status.dirty) {
+    console.error(
+      `Git repository has ${status.dirty} dirty ${status.dirty > 1 ? 'files' : 'file'}.` +
+        'We cannot continue as you would lose all the changes in that file or directory. ' +
+        'Please push commit before and run this command again.'
+    );
+    process.exit(1);
+  }
+
   console.log('Ejecting...');
 
-  const ownPath = paths.ownPath;
-  const appPath = paths.appPath;
+  var ownPath = paths.ownPath;
+  var appPath = paths.appPath;
 
   function verifyAbsent(file) {
     if (fs.existsSync(path.join(appPath, file))) {
       console.error(
-        `\`${file}\` already exists in your app folder. We cannot ` +
+        '`' +
+          file +
+          '` already exists in your app folder. We cannot ' +
           'continue as you would lose all the changes in that file or directory. ' +
           'Please move or delete it (maybe make a copy for backup) and run this ' +
           'command again.'
@@ -53,42 +68,36 @@ prompt(
     }
   }
 
-  const folders = ['config', 'config/jest', 'scripts', 'scripts/utils'];
+  var folders = ['config', path.join('config', 'jest'), 'scripts'];
 
-  // Make shallow array of files paths
-  const files = folders.reduce(
-    (files, folder) => {
-      return files.concat(
-        fs
-          .readdirSync(path.join(ownPath, folder))
-          // set full path
-          .map(file => path.join(ownPath, folder, file))
-          // omit dirs from file list
-          .filter(file => fs.lstatSync(file).isFile())
-      );
-    },
-    []
-  );
+  var files = [
+    path.join('config', 'env.js'),
+    path.join('config', 'paths.js'),
+    path.join('config', 'polyfills.js'),
+    path.join('config', 'webpack.config.dev.js'),
+    path.join('config', 'webpack.config.prod.js'),
+    path.join('config', 'jest', 'cssTransform.js'),
+    path.join('config', 'jest', 'fileTransform.js'),
+    path.join('scripts', 'build.js'),
+    path.join('scripts', 'start.js'),
+    path.join('scripts', 'test.js'),
+  ];
 
   // Ensure that the app folder is clean and we won't override any files
   folders.forEach(verifyAbsent);
   files.forEach(verifyAbsent);
 
-  console.log();
-  console.log(cyan(`Copying files into ${appPath}`));
-
-  folders.forEach(folder => {
+  // Copy the files over
+  folders.forEach(function(folder) {
     fs.mkdirSync(path.join(appPath, folder));
   });
 
-  files.forEach(file => {
-    let content = fs.readFileSync(file, 'utf8');
-
-    // Skip flagged files
-    if (content.match(/\/\/ @remove-file-on-eject/)) {
-      return;
-    }
-    content = content
+  console.log();
+  console.log(cyan('Copying files into ' + appPath));
+  files.forEach(function(file) {
+    console.log('  Adding ' + cyan(file) + ' to the project');
+    var content = fs
+      .readFileSync(path.join(ownPath, file), 'utf8')
       // Remove dead code from .js files on eject
       .replace(
         /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/mg,
@@ -100,45 +109,53 @@ prompt(
         ''
       )
       .trim() + '\n';
-    console.log(`  Adding ${cyan(file.replace(ownPath, ''))} to the project`);
-    fs.writeFileSync(file.replace(ownPath, appPath), content);
+    fs.writeFileSync(path.join(appPath, file), content);
   });
   console.log();
 
-  const ownPackage = require(path.join(ownPath, 'package.json'));
-  const appPackage = require(path.join(appPath, 'package.json'));
+  var ownPackage = require(path.join(ownPath, 'package.json'));
+  var appPackage = require(path.join(appPath, 'package.json'));
+  var babelConfig = JSON.parse(
+    fs.readFileSync(path.join(ownPath, 'babelrc'), 'utf8')
+  );
+  var eslintConfig = JSON.parse(
+    fs.readFileSync(path.join(ownPath, 'eslintrc'), 'utf8')
+  );
 
   console.log(cyan('Updating the dependencies'));
-  const ownPackageName = ownPackage.name;
+  var ownPackageName = ownPackage.name;
   if (appPackage.devDependencies[ownPackageName]) {
-    console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
+    console.log('  Removing ' + cyan(ownPackageName) + ' from devDependencies');
     delete appPackage.devDependencies[ownPackageName];
   }
   if (appPackage.dependencies[ownPackageName]) {
-    console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
+    console.log('  Removing ' + cyan(ownPackageName) + ' from dependencies');
     delete appPackage.dependencies[ownPackageName];
   }
 
-  Object.keys(ownPackage.dependencies).forEach(key => {
+  Object.keys(ownPackage.dependencies).forEach(function(key) {
     // For some reason optionalDependencies end up in dependencies after install
     if (ownPackage.optionalDependencies[key]) {
       return;
     }
-    console.log(`  Adding ${cyan(key)} to devDependencies`);
+    console.log('  Adding ' + cyan(key) + ' to devDependencies');
     appPackage.devDependencies[key] = ownPackage.dependencies[key];
   });
   console.log();
   console.log(cyan('Updating the scripts'));
   delete appPackage.scripts['eject'];
-  Object.keys(appPackage.scripts).forEach(key => {
-    Object.keys(ownPackage.bin).forEach(binKey => {
-      const regex = new RegExp(binKey + ' (\\w+)', 'g');
+  Object.keys(appPackage.scripts).forEach(function(key) {
+    Object.keys(ownPackage.bin).forEach(function(binKey) {
+      var regex = new RegExp(binKey + ' (\\w+)', 'g');
       appPackage.scripts[key] = appPackage.scripts[key].replace(
         regex,
         'node scripts/$1.js'
       );
       console.log(
-        `  Replacing ${cyan(`"${binKey} ${key}"`)} with ${cyan(`"node scripts/${key}.js"`)}`
+        '  Replacing ' +
+          cyan('"' + binKey + ' ' + key + '"') +
+          ' with ' +
+          cyan('"node scripts/' + key + '.js"')
       );
     });
   });
@@ -146,7 +163,7 @@ prompt(
   console.log();
   console.log(cyan('Configuring package.json'));
   // Add Jest config
-  console.log(`  Adding ${cyan('Jest')} configuration`);
+  console.log('  Adding ' + cyan('Jest') + ' configuration');
   appPackage.jest = createJestConfig(
     filePath => path.posix.join('<rootDir>', filePath),
     null,
@@ -154,16 +171,12 @@ prompt(
   );
 
   // Add Babel config
-  console.log(`  Adding ${cyan('Babel')} preset`);
-  appPackage.babel = {
-    presets: ['react-app'],
-  };
+  console.log('  Adding ' + cyan('Babel') + ' preset');
+  appPackage.babel = babelConfig;
 
   // Add ESlint config
-  console.log(`  Adding ${cyan('ESLint')} configuration`);
-  appPackage.eslintConfig = {
-    extends: 'react-app',
-  };
+  console.log('  Adding ' + cyan('ESLint') + ' configuration');
+  appPackage.eslintConfig = eslintConfig;
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
@@ -175,7 +188,7 @@ prompt(
   if (ownPath.indexOf(appPath) === 0) {
     try {
       // remove react-scripts and react-scripts binaries from app node_modules
-      Object.keys(ownPackage.bin).forEach(binKey => {
+      Object.keys(ownPackage.bin).forEach(function(binKey) {
         fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
       });
       fs.removeSync(ownPath);
