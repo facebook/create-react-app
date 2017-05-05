@@ -12,8 +12,16 @@ npm install -g create-react-app
 
 create-react-app my-app --scripts-version @trunkclub/build
 cd my-app/
-npm start
 
+```
+
+Before you run the app for the first time, you'll have to make a first commit. The build process assumes you are under version control and it uses the SHA.
+
+
+Once your commit is made:
+
+```sh
+npm start
 ```
 
 Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
