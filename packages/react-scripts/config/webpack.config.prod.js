@@ -171,13 +171,26 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
-        loader: 'babel-loader',
-        // @remove-on-eject-begin
-        options: {
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
-        },
-        // @remove-on-eject-end
+        use: [
+          {
+            loader: 'cache-loader',
+            options: {
+              cacheDirectory: path.resolve(
+                paths.appNodeModules,
+                '.cache-loader'
+              ),
+            },
+          },
+          {
+            loader: 'babel-loader',
+            // @remove-on-eject-begin
+            options: {
+              babelrc: false,
+              presets: [require.resolve('babel-preset-react-app')],
+            },
+            // @remove-on-eject-end
+          },
+        ],
       },
       // The notation here is somewhat confusing.
       // "postcss" loader applies autoprefixer to our CSS.
