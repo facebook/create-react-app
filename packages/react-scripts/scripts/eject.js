@@ -38,28 +38,28 @@ prompt(
   }
 
   // Make sure there are no dirty git status
-  const git = fs.existsSync(path.join(process.cwd(), '.git'));
-
   function statusSync() {
-    let stdout = execSync(`git status -s`).toString();
-    let status = { dirty: 0, untracked: 0 };
-    stdout.trim().split(/\r?\n/).forEach(file => {
-      if (file.substr(0, 2) === '??') status.untracked++;
-      else status.dirty++;
-    });
-    return status;
+    try {
+      let stdout = execSync(`git status -s`).toString();
+      let status = { dirty: 0, untracked: 0 };
+      stdout.trim().split(/\r?\n/).forEach(file => {
+        if (file.substr(0, 2) === '??') status.untracked++;
+        else status.dirty++;
+      });
+      return status;
+    } catch (e) {
+      return false;
+    }
   }
 
-  if (git) {
-    let status = statusSync();
-    if (status.dirty) {
-      console.error(
-        `Git repository has ${status.dirty} dirty ${status.dirty > 1 ? 'files' : 'file'}. ` +
-          'We cannot continue as you would lose all the changes in that file or directory. ' +
-          'Please push commit before and run this command again.'
-      );
-      process.exit(1);
-    }
+  const status = statusSync();
+  if (status && status.dirty) {
+    console.error(
+      `Git repository has ${status.dirty} dirty ${status.dirty > 1 ? 'files' : 'file'}. ` +
+        'We cannot continue as you would lose all the changes in that file or directory. ' +
+        'Please push commit before and run this command again.'
+    );
+    process.exit(1);
   }
 
   console.log('Ejecting...');
