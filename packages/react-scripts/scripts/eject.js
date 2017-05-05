@@ -21,7 +21,7 @@ const path = require('path');
 const spawnSync = require('cross-spawn').sync;
 const chalk = require('chalk');
 const prompt = require('react-dev-utils/prompt');
-const { execSync } = require('child_process');
+const execSync = require('child_process').execSync;
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 
@@ -37,26 +37,29 @@ prompt(
     process.exit(1);
   }
 
-  // Make sure there are no dirty git status
-  function statusSync() {
-    let stdout = execSync(`git status -s`).toString();
-    let status = { dirty: 0, untracked: 0 };
-    stdout.trim().split(/\r?\n/).forEach(file => {
-      if (file.substr(0, 2) === '??') status.untracked++;
-      else status.dirty++;
-    });
-    return status;
-  }
   const git = fs.existsSync(path.join(process.cwd(), '.git'));
-  const status = statusSync();
 
-  if (git && status.dirty) {
-    console.error(
-      `Git repository has ${status.dirty} dirty ${status.dirty > 1 ? 'files' : 'file'}.` +
-        'We cannot continue as you would lose all the changes in that file or directory. ' +
-        'Please push commit before and run this command again.'
-    );
-    process.exit(1);
+  if (git) {
+    // Make sure there are no dirty git status
+    function statusSync() {
+      let stdout = execSync(`git status -s`).toString();
+      let status = { dirty: 0, untracked: 0 };
+      stdout.trim().split(/\r?\n/).forEach(file => {
+        if (file.substr(0, 2) === '??') status.untracked++;
+        else status.dirty++;
+      });
+      return status;
+    }
+
+    let status = statusSync();
+    if (status.dirty) {
+      console.error(
+        `Git repository has ${status.dirty} dirty ${status.dirty > 1 ? 'files' : 'file'}. ` +
+          'We cannot continue as you would lose all the changes in that file or directory. ' +
+          'Please push commit before and run this command again.'
+      );
+      process.exit(1);
+    }
   }
 
   console.log('Ejecting...');
