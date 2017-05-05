@@ -37,20 +37,20 @@ prompt(
     process.exit(1);
   }
 
+  // Make sure there are no dirty git status
   const git = fs.existsSync(path.join(process.cwd(), '.git'));
 
-  if (git) {
-    // Make sure there are no dirty git status
-    function statusSync() {
-      let stdout = execSync(`git status -s`).toString();
-      let status = { dirty: 0, untracked: 0 };
-      stdout.trim().split(/\r?\n/).forEach(file => {
-        if (file.substr(0, 2) === '??') status.untracked++;
-        else status.dirty++;
-      });
-      return status;
-    }
+  function statusSync() {
+    let stdout = execSync(`git status -s`).toString();
+    let status = { dirty: 0, untracked: 0 };
+    stdout.trim().split(/\r?\n/).forEach(file => {
+      if (file.substr(0, 2) === '??') status.untracked++;
+      else status.dirty++;
+    });
+    return status;
+  }
 
+  if (git) {
     let status = statusSync();
     if (status.dirty) {
       console.error(
