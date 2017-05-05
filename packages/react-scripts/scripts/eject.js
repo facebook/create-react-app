@@ -21,7 +21,7 @@ const path = require('path');
 const spawnSync = require('cross-spawn').sync;
 const chalk = require('chalk');
 const prompt = require('react-dev-utils/prompt');
-const { exec, execSync } = require('child_process');
+const { execSync } = require('child_process');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 
@@ -37,6 +37,7 @@ prompt(
     process.exit(1);
   }
 
+  // Make sure there are no dirty git status
   function statusSync() {
     let stdout = execSync(`git status -s`).toString();
     let status = { dirty: 0, untracked: 0 };
