@@ -7,7 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component, PropTypes, createElement } from 'react';
+import React, { Component, createElement } from 'react';
+import PropTypes from 'prop-types';
 
 class BuiltEmitter extends Component {
   static propTypes = {
@@ -109,6 +110,10 @@ class App extends Component {
         break;
       case 'json-inclusion':
         import('./features/webpack/JsonInclusion').then(f =>
+          this.setFeature(f.default));
+        break;
+      case 'linked-modules':
+        import('./features/webpack/LinkedModules').then(f =>
           this.setFeature(f.default));
         break;
       case 'node-path':

@@ -11,6 +11,36 @@
 'use strict';
 
 const chalk = require('chalk');
+const url = require('url');
+const dns = require('dns');
+const paths = require('../../config/paths');
+const proxy = require(paths.appPackageJson).proxy;
+
+function resolveProxy(proxy) {
+  const p = url.parse(proxy);
+  const hostname = p.hostname;
+  if (hostname !== 'localhost') {
+    return Promise.resolve(proxy);
+  }
+  p.host = undefined; // Remove the host; we don't care about it
+  return new Promise(resolve => {
+    dns.lookup(hostname, { hints: 0, all: false }, (err, address) => {
+      if (err) {
+        console.log(
+          chalk.red(
+            '"proxy" in package.json is set to localhost and cannot be resolved.'
+          )
+        );
+        console.log(
+          chalk.red('Try setting "proxy" to 127.0.0.1 instead of localhost.')
+        );
+        process.exit(1);
+      }
+      p.hostname = address;
+      resolve(url.format(p));
+    });
+  });
+}
 
 // We need to provide a custom onError function for httpProxyMiddleware.
 // It allows us to log custom error messages on the console.
@@ -53,7 +83,7 @@ function onProxyError(proxy) {
   };
 }
 
-module.exports = function prepareProxy(proxy) {
+module.exports = function prepareProxy() {
   // `proxy` lets you specify alternate servers for specific requests.
   // It can either be a string or an object conforming to the Webpack dev server proxy configuration
   // https://webpack.github.io/docs/webpack-dev-server.html
@@ -85,65 +115,79 @@ module.exports = function prepareProxy(proxy) {
 
     // Support proxy as a string for those who are using the simple proxy option
     if (typeof proxy === 'string') {
-      return [
-        {
-          target: proxy,
-          logLevel: 'silent',
-          // For single page apps, we generally want to fallback to /index.html.
-          // However we also want to respect `proxy` for API calls.
-          // So if `proxy` is specified as a string, we need to decide which fallback to use.
-          // We use a heuristic: if request `accept`s text/html, we pick /index.html.
-          // Modern browsers include text/html into `accept` header when navigating.
-          // However API calls like `fetch()` won’t generally accept text/html.
-          // If this heuristic doesn’t work well for you, use a custom `proxy` object.
-          context: function(pathname, req) {
-            return mayProxy.test(pathname) &&
-              req.headers.accept &&
-              req.headers.accept.indexOf('text/html') === -1;
+      return (process.platform === 'win32'
+        ? resolveProxy(proxy)
+        : Promise.resolve(proxy)).then(target => {
+        return [
+          {
+            target,
+            logLevel: 'silent',
+            // For single page apps, we generally want to fallback to /index.html.
+            // However we also want to respect `proxy` for API calls.
+            // So if `proxy` is specified as a string, we need to decide which fallback to use.
+            // We use a heuristic: if request `accept`s text/html, we pick /index.html.
+            // Modern browsers include text/html into `accept` header when navigating.
+            // However API calls like `fetch()` won’t generally accept text/html.
+            // If this heuristic doesn’t work well for you, use a custom `proxy` object.
+            context: function(pathname, req) {
+              return mayProxy.test(pathname) &&
+                req.headers.accept &&
+                req.headers.accept.indexOf('text/html') === -1;
+            },
+            onProxyReq: proxyReq => {
+              // Browers may send Origin headers even with same-origin
+              // requests. To prevent CORS issues, we have to change
+              // the Origin to match the target URL.
+              if (proxyReq.getHeader('origin')) {
+                proxyReq.setHeader('origin', proxy);
+              }
+            },
+            onError: onProxyError(proxy),
+            secure: false,
+            changeOrigin: true,
+            ws: true,
+            xfwd: true,
           },
-          onProxyReq: proxyReq => {
-            // Browers may send Origin headers even with same-origin
-            // requests. To prevent CORS issues, we have to change
-            // the Origin to match the target URL.
-            if (proxyReq.getHeader('origin')) {
-              proxyReq.setHeader('origin', proxy);
-            }
-          },
-          onError: onProxyError(proxy),
-          secure: false,
-          changeOrigin: true,
-          ws: true,
-          xfwd: true,
-        },
-      ];
+        ];
+      });
     }
 
     // Otherwise, proxy is an object so create an array of proxies to pass to webpackDevServer
-    return Object.keys(proxy).map(function(context) {
-      if (!proxy[context].hasOwnProperty('target')) {
-        console.log(
-          chalk.red(
-            'When `proxy` in package.json is as an object, each `context` object must have a ' +
-              '`target` property specified as a url string'
-          )
-        );
-        process.exit(1);
-      }
+    return Promise.all(
+      Object.keys(proxy).map(function(context) {
+        if (!proxy[context].hasOwnProperty('target')) {
+          console.log(
+            chalk.red(
+              'When `proxy` in package.json is as an object, each `context` object must have a ' +
+                '`target` property specified as a url string'
+            )
+          );
+          process.exit(1);
+        }
 
-      return Object.assign({}, proxy[context], {
-        context: function(pathname) {
-          return mayProxy.test(pathname) && pathname.match(context);
-        },
-        onProxyReq: proxyReq => {
-          // Browers may send Origin headers even with same-origin
-          // requests. To prevent CORS issues, we have to change
-          // the Origin to match the target URL.
-          if (proxyReq.getHeader('origin')) {
-            proxyReq.setHeader('origin', proxy[context].target);
-          }
-        },
-        onError: onProxyError(proxy[context].target),
-      });
-    });
+        return (process.platform === 'win32'
+          ? resolveProxy(proxy[context].target)
+          : Promise.resolve(proxy[context].target)).then(target => {
+          return Object.assign({}, proxy[context], {
+            context: function(pathname) {
+              return mayProxy.test(pathname) && pathname.match(context);
+            },
+            onProxyReq: proxyReq => {
+              // Browers may send Origin headers even with same-origin
+              // requests. To prevent CORS issues, we have to change
+              // the Origin to match the target URL.
+              if (proxyReq.getHeader('origin')) {
+                proxyReq.setHeader('origin', target);
+              }
+            },
+            target,
+            onError: onProxyError(target),
+          });
+        });
+      })
+    );
+  } else {
+    // No proxy has been specified
+    return Promise.resolve();
   }
 };

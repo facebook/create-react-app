@@ -9,6 +9,13 @@
  */
 'use strict';
 
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
+process.on('unhandledRejection', err => {
+  throw err;
+});
+
 const fs = require('fs-extra');
 const path = require('path');
 const spawnSync = require('cross-spawn').sync;
@@ -100,12 +107,6 @@ prompt(
 
   const ownPackage = require(path.join(ownPath, 'package.json'));
   const appPackage = require(path.join(appPath, 'package.json'));
-  const babelConfig = JSON.parse(
-    fs.readFileSync(path.join(ownPath, '.babelrc'), 'utf8')
-  );
-  const eslintConfig = JSON.parse(
-    fs.readFileSync(path.join(ownPath, '.eslintrc'), 'utf8')
-  );
 
   console.log(cyan('Updating the dependencies'));
   const ownPackageName = ownPackage.name;
@@ -154,11 +155,15 @@ prompt(
 
   // Add Babel config
   console.log(`  Adding ${cyan('Babel')} preset`);
-  appPackage.babel = babelConfig;
+  appPackage.babel = {
+    presets: ['react-app'],
+  };
 
   // Add ESlint config
   console.log(`  Adding ${cyan('ESLint')} configuration`);
-  appPackage.eslintConfig = eslintConfig;
+  appPackage.eslintConfig = {
+    extends: 'react-app',
+  };
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
