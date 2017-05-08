@@ -11,6 +11,7 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -72,6 +73,9 @@ module.exports = {
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
+    // Point sourcemap entries to original disk location
+    devtoolModuleFilenameTemplate: info =>
+      path.relative(paths.appSrc, info.absoluteResourcePath),
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -103,6 +107,7 @@ module.exports = {
   },
   // @remove-on-eject-end
   module: {
+    strictExportPresence: true,
     rules: [
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
@@ -198,6 +203,7 @@ module.exports = {
                   loader: 'css-loader',
                   options: {
                     importLoaders: 1,
+                    minimize: true,
                   },
                 },
                 {
@@ -263,15 +269,10 @@ module.exports = {
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        screw_ie8: true, // React doesn't support IE8
         warnings: false,
-      },
-      mangle: {
-        screw_ie8: true,
       },
       output: {
         comments: false,
-        screw_ie8: true,
       },
       sourceMap: true,
     }),

@@ -11,6 +11,7 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -73,6 +74,9 @@ module.exports = {
     filename: 'static/js/bundle.js',
     // This is the URL that app is served from. We use "/" in development.
     publicPath: publicPath,
+    // Point sourcemap entries to original disk location
+    devtoolModuleFilenameTemplate: info =>
+      path.relative(paths.appSrc, info.absoluteResourcePath),
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -104,6 +108,7 @@ module.exports = {
   },
   // @remove-on-eject-end
   module: {
+    strictExportPresence: true,
     rules: [
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },

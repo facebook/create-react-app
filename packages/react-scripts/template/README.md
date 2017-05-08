@@ -468,6 +468,26 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
 
 Now running `npm start` and `npm run build` also builds Sass files. Note that `node-sass` seems to have an [issue recognizing newly created files on some systems](https://github.com/sass/node-sass/issues/1891) so you might need to restart the watcher when you create a file until it’s resolved.
 
+**Performance Note**
+
+`node-sass --watch` has been reported to have *performance issues* in certain conditions when used in a virtual machine or with docker. If you are experiencing high CPU usage with node-sass you can alternatively try [node-sass-chokidar](https://www.npmjs.com/package/node-sass-chokidar) which uses a different file-watcher. Usage remains the same, simply replace `node-sass` with `node-sass-chokidar`:
+
+```
+npm uninstall node-sass --save-dev
+npm install node-sass-chokidar --save-dev
+```
+
+And in your scripts:
+
+```diff
+   "scripts": {
+-    "build-css": "node-sass src/ -o src/",
+-    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive"
++    "build-css": "node-sass-chokidar src/ -o src/",
++    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
+   }
+```
+
 ## Adding Images, Fonts, and Files
 
 With Webpack, using static assets like images and fonts works similarly to CSS.
@@ -974,7 +994,7 @@ When you encounter bugs caused by changing components, you will gain a deeper in
 If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). You can write a smoke test with it too:
 
 ```sh
-npm install --save-dev enzyme react-addons-test-utils
+npm install --save-dev enzyme react-test-renderer
 ```
 
 ```js
@@ -1242,10 +1262,10 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-app.use(express.static('./build'));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, './build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.listen(9000);
@@ -1264,11 +1284,11 @@ If you use routers that use the HTML5 [`pushState` history API](https://develope
 This is because when there is a fresh page load for a `/todos/42`, the server looks for the file `build/todos/42` and does not find it. The server needs to be configured to respond to a request to `/todos/42` by serving `index.html`. For example, we can amend our Express example above to serve `index.html` for any unknown paths:
 
 ```diff
- app.use(express.static('./build'));
+ app.use(express.static(path.join(__dirname, 'build')));
 
 -app.get('/', function (req, res) {
 +app.get('/*', function (req, res) {
-   res.sendFile(path.join(__dirname, './build', 'index.html'));
+   res.sendFile(path.join(__dirname, 'build', 'index.html'));
  });
 ```
 
@@ -1480,7 +1500,7 @@ In this case, ensure that the file is there with the proper lettercase and that�
 
 See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modulus) on how to deploy your react app to Modulus.
 
-## Netlify
+### Netlify
 
 **To do a manual deploy to Netlify’s CDN:**
 
@@ -1518,17 +1538,17 @@ When you build the project, Create React App will place the `public` folder cont
 2. Install `serve` by running `npm install --save serve`.
 
 3. Add this line to `scripts` in `package.json`:
-    
+
     ```
     "now-start": "serve build/",
     ```
-    
+
 4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
-    
+
     ```
     > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
     ```
-    
+
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
 Details are available in [this article.](https://zeit.co/blog/now-static)
