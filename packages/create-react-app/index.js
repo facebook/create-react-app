@@ -43,7 +43,6 @@ var chalk = require('chalk');
 var currentNodeVersion = process.versions.node;
 var semver = currentNodeVersion.split('.');
 var major = semver[0];
-// var minor = semver[1];
 
 if (major < 6) {
   console.error(
