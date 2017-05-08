@@ -19,7 +19,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
-const vendorHash = require('../utils/vendorHash')
+const vendorHash = require('../scripts/utils/vendorHash');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -227,7 +227,7 @@ module.exports = {
   plugins: [
     new webpack.DllReferencePlugin({
       context: '.',
-      manifest: require(path.join(paths.vendorPath, vendorHash + '.json'))
+      manifest: require(path.join(paths.vendorPath, vendorHash + '.json')),
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:

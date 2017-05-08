@@ -39,7 +39,7 @@ const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
-const bundleVendorIfStale = require('../utils/bundleVendorIfStale');
+const bundleVendorIfStale = require('./utils/bundleVendorIfStale');
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {

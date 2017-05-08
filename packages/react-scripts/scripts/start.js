@@ -38,7 +38,7 @@ const prompt = require('react-dev-utils/prompt');
 const paths = require('../config/paths');
 const createWebpackCompiler = require('./utils/createWebpackCompiler');
 const addWebpackMiddleware = require('./utils/addWebpackMiddleware');
-const bundleVendorIfStale = require('../utils/bundleVendorIfStale');
+const bundleVendorIfStale = require('./utils/bundleVendorIfStale');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const cli = useYarn ? 'yarn' : 'npm';

@@ -2,13 +2,13 @@
 const fs = require('fs-extra');
 const path = require('path');
 const webpack = require('webpack');
-const paths = require('../config/paths');
-const config = require('../config/webpack.config.vendor');
+const paths = require('../../config/paths');
+const config = require('../../config/webpack.config.vendor');
 const clearConsole = require('react-dev-utils/clearConsole');
 const chalk = require('chalk');
-const printErrors = require('../utils/printErrors');
+const printErrors = require('./printErrors');
 const environment = process.env.NODE_ENV;
-const vendorHash = require('../utils/vendorHash');
+const vendorHash = require('./vendorHash');
 
 module.exports = () => new Promise(resolve => {
   if (shouldVendorBundleUpdate()) {

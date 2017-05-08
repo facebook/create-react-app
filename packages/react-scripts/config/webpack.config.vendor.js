@@ -1,25 +1,24 @@
-var webpack = require('webpack');
-var paths = require('../config/paths');
-var path = require('path');
-var packageJson = require(paths.appPackageJson);
-var environment = process.env.NODE_ENV;
-var vendorHash = require('../utils/vendorHash');
-var dependencies = packageJson.dependencies;
-var getClientEnvironment = require('./env');
-var publicPath = paths.servedPath;
-var publicUrl = publicPath.slice(0, -1);
-var env = getClientEnvironment(publicUrl);
-var fs = require('fs');
-var vendorGlobalName = '[name]' + vendorHash.replace(/\./g,'')
+'use strict';
+const webpack = require('webpack');
+const paths = require('./paths');
+const path = require('path');
+const environment = process.env.NODE_ENV;
+const vendorHash = require('../scripts/utils/vendorHash');
+const getClientEnvironment = require('./env');
+const publicPath = paths.servedPath;
+const publicUrl = publicPath.slice(0, -1);
+const env = getClientEnvironment(publicUrl);
+const vendorGlobalName = '[name]' + vendorHash.replace(/\./g, '');
+
 module.exports = {
   cache: true,
   entry: {
-    vendor: [paths.vendorPath]
+    vendor: [paths.vendorPath],
   },
   output: {
     filename: vendorHash + '.js',
     path: paths.vendorPath,
-    library: vendorGlobalName
+    library: vendorGlobalName,
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -36,8 +35,8 @@ module.exports = {
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-      'react-native': 'react-native-web'
-    }
+      'react-native': 'react-native-web',
+    },
   },
   // @remove-on-eject-begin
   // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
@@ -46,8 +45,8 @@ module.exports = {
     modules: [
       paths.ownNodeModules,
       // Lerna hoists everything, so we need to look in our app directory
-      paths.appNodeModules
-    ]
+      paths.appNodeModules,
+    ],
   },
   // @remove-on-eject-end
   plugins: [
@@ -55,14 +54,11 @@ module.exports = {
       // The path to the manifest file which maps between
       // modules included in a bundle and the internal IDs
       // within that bundle
-      path: path.join(
-        paths.vendorPath,
-        vendorHash + '.json'
-      ),
+      path: path.join(paths.vendorPath, vendorHash + '.json'),
       // The name of the global variable which the library's
       // require function has been assigned to. This must match the
       // output.library option above
-      name: vendorGlobalName
+      name: vendorGlobalName,
     }),
     environment === 'production'
       ? new webpack.DefinePlugin(env.stringified)
@@ -71,22 +67,22 @@ module.exports = {
       ? new webpack.optimize.UglifyJsPlugin({
           compress: {
             screw_ie8: true, // React doesn't support IE8
-            warnings: false
+            warnings: false,
           },
           mangle: {
-            screw_ie8: true
+            screw_ie8: true,
           },
           output: {
             comments: false,
-            screw_ie8: true
+            screw_ie8: true,
           },
-          sourceMap: true
+          sourceMap: true,
         })
-      : null
+      : null,
   ].filter(Boolean),
   node: {
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
-  }
+    tls: 'empty',
+  },
 };

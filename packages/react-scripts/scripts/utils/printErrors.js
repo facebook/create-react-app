@@ -1,4 +1,5 @@
-var chalk = require('chalk')
+'use strict';
+const chalk = require('chalk');
 module.exports = function printErrors(summary, errors) {
   console.log(chalk.red(summary));
   console.log();
@@ -6,4 +7,4 @@ module.exports = function printErrors(summary, errors) {
     console.log(err.message || err);
     console.log();
   });
-}
+};
