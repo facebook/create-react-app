@@ -87,15 +87,13 @@ then
   [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 fi
 
-# Still use npm install instead of directly calling lerna bootstrap to test
-# postinstall script functionality (one npm install should result in a working
-# project)
-npm install
+# We removed the postinstall, so do it manually here
+./node_modules/.bin/lerna bootstrap --concurrency=1
 
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn
+  npm install -g yarn@0.22 # FIXME: this pin is temporary to work around a Yarn bug on CI
   yarn cache clean
 fi
 

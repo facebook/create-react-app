@@ -9,11 +9,203 @@
 
 'use strict';
 
-var codeFrame = require('babel-code-frame');
-var ansiHTML = require('./ansiHTML');
-var StackTraceResolve = require('stack-frame-resolver').default;
+function _interopDefault(ex) {
+  return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
+}
 
-var CONTEXT_SIZE = 3;
+var stackFrameParser = require('stack-frame-parser');
+var stackFrameMapper = require('stack-frame-mapper');
+var stackFrameUnmapper = require('stack-frame-unmapper');
+var codeFrame = _interopDefault(require('babel-code-frame'));
+var ansiHTML = require('./ansiHTML');
+
+var boundErrorHandler = null;
+
+function errorHandler(callback, e) {
+  if (!e.error) {
+    return;
+  }
+  // $FlowFixMe
+  var error = e.error;
+
+  if (error instanceof Error) {
+    callback(error);
+  } else {
+    // A non-error was thrown, we don't have a trace. :(
+    // Look in your browser's devtools for more information
+    callback(new Error(error));
+  }
+}
+
+function registerUnhandledError(target, callback) {
+  if (boundErrorHandler !== null) {
+    return;
+  }
+  boundErrorHandler = errorHandler.bind(undefined, callback);
+  target.addEventListener('error', boundErrorHandler);
+}
+
+function unregisterUnhandledError(target) {
+  if (boundErrorHandler === null) {
+    return;
+  }
+  target.removeEventListener('error', boundErrorHandler);
+  boundErrorHandler = null;
+}
+
+var boundRejectionHandler = null;
+
+function rejectionHandler(callback, e) {
+  if (e == null || e.reason == null) {
+    return callback(new Error('Unknown'));
+  }
+  var reason = e.reason;
+
+  if (reason instanceof Error) {
+    return callback(reason);
+  }
+  // A non-error was rejected, we don't have a trace :(
+  // Look in your browser's devtools for more information
+  return callback(new Error(reason));
+}
+
+function registerUnhandledRejection(target, callback) {
+  if (boundRejectionHandler !== null) {
+    return;
+  }
+  boundRejectionHandler = rejectionHandler.bind(undefined, callback);
+  // $FlowFixMe
+  target.addEventListener('unhandledrejection', boundRejectionHandler);
+}
+
+function unregisterUnhandledRejection(target) {
+  if (boundRejectionHandler === null) {
+    return;
+  }
+  // $FlowFixMe
+  target.removeEventListener('unhandledrejection', boundRejectionHandler);
+  boundRejectionHandler = null;
+}
+
+var SHORTCUT_ESCAPE = 'SHORTCUT_ESCAPE';
+var SHORTCUT_LEFT = 'SHORTCUT_LEFT';
+var SHORTCUT_RIGHT = 'SHORTCUT_RIGHT';
+
+var boundKeyHandler = null;
+
+function keyHandler(callback, e) {
+  var key = e.key, keyCode = e.keyCode, which = e.which;
+
+  if (key === 'Escape' || keyCode === 27 || which === 27) {
+    callback(SHORTCUT_ESCAPE);
+  } else if (key === 'ArrowLeft' || keyCode === 37 || which === 37) {
+    callback(SHORTCUT_LEFT);
+  } else if (key === 'ArrowRight' || keyCode === 39 || which === 39) {
+    callback(SHORTCUT_RIGHT);
+  }
+}
+
+function registerShortcuts(target, callback) {
+  if (boundKeyHandler !== null) {
+    return;
+  }
+  boundKeyHandler = keyHandler.bind(undefined, callback);
+  target.addEventListener('keydown', boundKeyHandler);
+}
+
+function unregisterShortcuts(target) {
+  if (boundKeyHandler === null) {
+    return;
+  }
+  target.removeEventListener('keydown', boundKeyHandler);
+  boundKeyHandler = null;
+}
+
+var stackTraceRegistered = false;
+// Default: https://docs.microsoft.com/en-us/scripting/javascript/reference/stacktracelimit-property-error-javascript
+var restoreStackTraceValue = 10;
+
+var MAX_STACK_LENGTH = 50;
+
+function registerStackTraceLimit() {
+  var limit = arguments.length > 0 && arguments[0] !== undefined
+    ? arguments[0]
+    : MAX_STACK_LENGTH;
+
+  if (stackTraceRegistered) {
+    return;
+  }
+  try {
+    restoreStackTraceValue = Error.stackTraceLimit;
+    Error.stackTraceLimit = limit;
+    stackTraceRegistered = true;
+  } catch (e) {
+    // Not all browsers support this so we don't care if it errors
+  }
+}
+
+function unregisterStackTraceLimit() {
+  if (!stackTraceRegistered) {
+    return;
+  }
+  try {
+    Error.stackTraceLimit = restoreStackTraceValue;
+    stackTraceRegistered = false;
+  } catch (e) {
+    // Not all browsers support this so we don't care if it errors
+  }
+}
+
+var recorded = [];
+
+var errorsConsumed = 0;
+
+function consume(error) {
+  var unhandledRejection = arguments.length > 1 && arguments[1] !== undefined
+    ? arguments[1]
+    : false;
+  var contextSize = arguments.length > 2 && arguments[2] !== undefined
+    ? arguments[2]
+    : 3;
+
+  var parsedFrames = stackFrameParser.parse(error);
+  var enhancedFramesPromise = void 0;
+  if (error.__unmap_source) {
+    enhancedFramesPromise = stackFrameUnmapper.unmap(
+      error.__unmap_source,
+      parsedFrames,
+      contextSize
+    );
+  } else {
+    enhancedFramesPromise = stackFrameMapper.map(parsedFrames, contextSize);
+  }
+  return enhancedFramesPromise.then(function(enhancedFrames) {
+    enhancedFrames = enhancedFrames.filter(function(_ref) {
+      var functionName = _ref.functionName;
+      return functionName == null ||
+        functionName.indexOf('__stack_frame_overlay_proxy_console__') === -1;
+    });
+    recorded[++errorsConsumed] = {
+      error: error,
+      unhandledRejection: unhandledRejection,
+      contextSize: contextSize,
+      enhancedFrames: enhancedFrames,
+    };
+    return errorsConsumed;
+  });
+}
+
+function getErrorRecord(ref) {
+  return recorded[ref];
+}
+
+function drain() {
+  // $FlowFixMe
+  var keys = Object.keys(recorded);
+  for (var index = 0; index < keys.length; ++index) {
+    delete recorded[keys[index]];
+  }
+}
 
 var black = '#293238';
 var darkGray = '#878e91';
@@ -22,58 +214,9 @@ var red = '#ce1126';
 var lightRed = '#fccfcf';
 var yellow = '#fbf5b4';
 
-function getHead() {
-  return document.head || document.getElementsByTagName('head')[0];
-}
-
-var injectedCss = [];
-
-// From: http://stackoverflow.com/a/524721/127629
-function injectCss(css) {
-  var head = getHead();
-  var style = document.createElement('style');
-
-  style.type = 'text/css';
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
-
-  head.appendChild(style);
-  injectedCss.push(style);
-}
-
-var css = [
-  '.cra-container {',
-  '  padding-right: 15px;',
-  '  padding-left: 15px;',
-  '  margin-right: auto;',
-  '  margin-left: auto;',
-  '}',
-  '',
-  '@media (min-width: 768px) {',
-  '  .cra-container {',
-  '    width: calc(750px - 6em);',
-  '  }',
-  '}',
-  '',
-  '@media (min-width: 992px) {',
-  '  .cra-container {',
-  '    width: calc(970px - 6em);',
-  '  }',
-  '}',
-  '',
-  '@media (min-width: 1200px) {',
-  '  .cra-container {',
-  '    width: calc(1170px - 6em);',
-  '  }',
-  '}',
-].join('\n');
-
-var overlayStyle = {
+var iframeStyle = {
+  'background-color': lightGray,
   position: 'fixed',
-  'box-sizing': 'border-box',
   top: '1em',
   left: '1em',
   bottom: '1em',
@@ -81,16 +224,19 @@ var overlayStyle = {
   width: 'calc(100% - 2em)',
   height: 'calc(100% - 2em)',
   'border-radius': '3px',
-  'background-color': lightGray,
-  padding: '4rem',
+  'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
   'z-index': 1337,
+};
+
+var overlayStyle = {
+  'box-sizing': 'border-box',
+  padding: '4rem',
   'font-family': 'Consolas, Menlo, monospace',
   color: black,
   'white-space': 'pre-wrap',
   overflow: 'auto',
   'overflow-x': 'hidden',
-  'word-break': 'break-all',
-  'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
+  'word-break': 'break-word',
   'line-height': 1.5,
 };
 
@@ -220,153 +366,163 @@ var footerStyle = {
   color: darkGray,
 };
 
+var injectedCount = 0;
+var injectedCache = {};
+
+function getHead(document) {
+  return document.head || document.getElementsByTagName('head')[0];
+}
+
+function injectCss(document, css) {
+  var head = getHead(document);
+  var style = document.createElement('style');
+  style.type = 'text/css';
+  style.appendChild(document.createTextNode(css));
+  head.appendChild(style);
+
+  injectedCache[++injectedCount] = style;
+  return injectedCount;
+}
+
 function applyStyles(element, styles) {
   element.setAttribute('style', '');
-  // Firefox can't handle const due to non-compliant implementation
-  // Revisit Jan 2016
-  // https://developer.mozilla.org/en-US/Firefox/Releases/51#JavaScript
-  // https://bugzilla.mozilla.org/show_bug.cgi?id=1101653
   for (var key in styles) {
-    if (!styles.hasOwnProperty(key)) continue;
-    var val = styles[key];
-    if (typeof val === 'function') val = val();
-    element.style[key] = val.toString();
+    if (!styles.hasOwnProperty(key)) {
+      continue;
+    }
+    // $FlowFixMe
+    element.style[key] = styles[key];
   }
 }
 
-var overlayReference = null;
-var additionalReference = null;
-var capturedErrors = [];
-var viewIndex = -1;
-var frameSettings = [];
-
-function consumeEvent(e) {
-  e.preventDefault();
-  e.target.blur();
+function createHint(document, hint) {
+  var span = document.createElement('span');
+  span.appendChild(document.createTextNode(hint));
+  applyStyles(span, hintStyle);
+  return span;
 }
 
-function accessify(node) {
-  node.setAttribute('tabindex', 0);
+function createClose(document, callback) {
+  var hints = document.createElement('div');
+  applyStyles(hints, hintsStyle);
+
+  var close = createHint(document, '×');
+  close.addEventListener('click', function() {
+    return callback();
+  });
+  applyStyles(close, closeButtonStyle);
+  hints.appendChild(close);
+  return hints;
+}
+
+function enableTabClick(node) {
+  node.setAttribute('tabindex', '0');
   node.addEventListener('keydown', function(e) {
     var key = e.key, which = e.which, keyCode = e.keyCode;
+
     if (key === 'Enter' || which === 13 || keyCode === 13) {
       e.preventDefault();
-      e.target.click();
+      if (typeof e.target.click === 'function') {
+        e.target.click();
+      }
     }
   });
 }
 
-function renderAdditional() {
-  if (additionalReference.lastChild) {
-    additionalReference.removeChild(additionalReference.lastChild);
-  }
-
-  var text = ' ';
-  if (capturedErrors.length <= 1) {
-    additionalReference.appendChild(document.createTextNode(text));
-    return;
-  }
-  text = 'Errors ' + (viewIndex + 1) + ' of ' + capturedErrors.length;
-  var span = document.createElement('span');
-  span.appendChild(document.createTextNode(text));
-  var group = document.createElement('span');
-  applyStyles(group, groupStyle);
-  var left = document.createElement('button');
-  applyStyles(left, groupElemLeft);
-  left.addEventListener('click', function(e) {
-    consumeEvent(e);
-    switchError(-1);
-  });
-  left.appendChild(document.createTextNode('←'));
-  accessify(left);
-  var right = document.createElement('button');
-  applyStyles(right, groupElemRight);
-  right.addEventListener('click', function(e) {
-    consumeEvent(e);
-    switchError(1);
-  });
-  right.appendChild(document.createTextNode('→'));
-  accessify(right);
-  group.appendChild(left);
-  group.appendChild(right);
-  span.appendChild(group);
-  additionalReference.appendChild(span);
-}
-
 function removeNextBr(parent, component) {
   while (component != null && component.tagName.toLowerCase() !== 'br') {
-    component = component.nextSibling;
+    component = component.nextElementSibling;
   }
   if (component != null) {
     parent.removeChild(component);
   }
 }
 
-function absolutifyCode(component) {
+function absolutifyCaret(component) {
   var ccn = component.childNodes;
   for (var index = 0; index < ccn.length; ++index) {
     var c = ccn[index];
-    if (c.tagName.toLowerCase() !== 'span') continue;
-    var text = c.innerText.replace(/\s/g, '');
-    if (text !== '|^') continue;
+    // $FlowFixMe
+    if (c.tagName.toLowerCase() !== 'span') {
+      continue;
+    }
+    var _text = c.innerText;
+    if (_text == null) {
+      continue;
+    }
+    var text = _text.replace(/\s/g, '');
+    if (text !== '|^') {
+      continue;
+    }
+    // $FlowFixMe
     c.style.position = 'absolute';
+    // $FlowFixMe
     removeNextBr(component, c);
   }
 }
 
-function sourceCodePre(sourceLines, lineNum, columnNum) {
-  var main = arguments.length > 3 && arguments[3] !== undefined
-    ? arguments[3]
+function createCode(document, sourceLines, lineNum, columnNum, contextSize) {
+  var main = arguments.length > 5 && arguments[5] !== undefined
+    ? arguments[5]
     : false;
 
   var sourceCode = [];
   var whiteSpace = Infinity;
-  sourceLines.forEach(function(_ref2) {
-    var text = _ref2.text;
+  sourceLines.forEach(function(e) {
+    var text = e.content;
 
     var m = text.match(/^\s*/);
-    if (text === '') return;
+    if (text === '') {
+      return;
+    }
     if (m && m[0]) {
       whiteSpace = Math.min(whiteSpace, m[0].length);
     } else {
       whiteSpace = 0;
     }
   });
-  sourceLines.forEach(function(_ref3) {
-    var text = _ref3.text, line = _ref3.line;
+  sourceLines.forEach(function(e) {
+    var text = e.content;
+    var line = e.lineNumber;
 
-    if (isFinite(whiteSpace)) text = text.substring(whiteSpace);
+    if (isFinite(whiteSpace)) {
+      text = text.substring(whiteSpace);
+    }
     sourceCode[line - 1] = text;
   });
-  sourceCode = sourceCode.join('\n');
   var ansiHighlight = codeFrame(
-    sourceCode,
+    sourceCode.join('\n'),
     lineNum,
     columnNum - (isFinite(whiteSpace) ? whiteSpace : 0),
     {
       forceColor: true,
-      linesAbove: CONTEXT_SIZE,
-      linesBelow: CONTEXT_SIZE,
+      linesAbove: contextSize,
+      linesBelow: contextSize,
     }
   );
   var htmlHighlight = ansiHTML(ansiHighlight);
   var code = document.createElement('code');
   code.innerHTML = htmlHighlight;
-  absolutifyCode(code);
+  absolutifyCaret(code);
   applyStyles(code, codeStyle);
 
   var ccn = code.childNodes;
-  for (var index = 0; index < ccn.length; ++index) {
+  oLoop: for (var index = 0; index < ccn.length; ++index) {
     var node = ccn[index];
-    var breakOut = false;
     var ccn2 = node.childNodes;
     for (var index2 = 0; index2 < ccn2.length; ++index2) {
       var lineNode = ccn2[index2];
-      if (lineNode.innerText.indexOf(' ' + lineNum + ' |') === -1) continue;
+      var text = lineNode.innerText;
+      if (text == null) {
+        continue;
+      }
+      if (text.indexOf(' ' + lineNum + ' |') === -1) {
+        continue;
+      }
+      // $FlowFixMe
       applyStyles(node, main ? primaryErrorStyle : secondaryErrorStyle);
-      breakOut = true;
+      break oLoop;
     }
-    if (breakOut) break;
   }
   var pre = document.createElement('pre');
   applyStyles(pre, preStyle);
@@ -374,27 +530,76 @@ function sourceCodePre(sourceLines, lineNum, columnNum) {
   return pre;
 }
 
-function createHint(hint) {
-  var span = document.createElement('span');
-  span.appendChild(document.createTextNode(hint));
-  applyStyles(span, hintStyle);
-  return span;
+function isInternalFile(url, sourceFileName) {
+  return url.indexOf('/~/') !== -1 ||
+    url.indexOf('/node_modules/') !== -1 ||
+    url.trim().indexOf(' ') !== -1 ||
+    sourceFileName == null ||
+    sourceFileName.length === 0;
 }
 
-function hintsDiv() {
-  var hints = document.createElement('div');
-  applyStyles(hints, hintsStyle);
-
-  var close = createHint('×');
-  close.addEventListener('click', function() {
-    unmount();
+function getGroupToggle(document, omitsCount, omitBundle) {
+  var omittedFrames = document.createElement('div');
+  enableTabClick(omittedFrames);
+  var text1 = document.createTextNode(
+    '\u25B6 ' + omitsCount + ' stack frames were collapsed.'
+  );
+  omittedFrames.appendChild(text1);
+  omittedFrames.addEventListener('click', function() {
+    var hide = text1.textContent.match(/▲/);
+    var list = document.getElementsByName('bundle-' + omitBundle);
+    for (var index = 0; index < list.length; ++index) {
+      var n = list[index];
+      if (hide) {
+        n.style.display = 'none';
+      } else {
+        n.style.display = '';
+      }
+    }
+    if (hide) {
+      text1.textContent = text1.textContent.replace(/▲/, '▶');
+      text1.textContent = text1.textContent.replace(/expanded/, 'collapsed');
+    } else {
+      text1.textContent = text1.textContent.replace(/▶/, '▲');
+      text1.textContent = text1.textContent.replace(/collapsed/, 'expanded');
+    }
   });
-  applyStyles(close, closeButtonStyle);
-  hints.appendChild(close);
-  return hints;
+  applyStyles(omittedFrames, omittedFramesStyle);
+  return omittedFrames;
 }
 
-function frameDiv(functionName, url, internalUrl) {
+function insertBeforeBundle(
+  document,
+  parent,
+  omitsCount,
+  omitBundle,
+  actionElement
+) {
+  var children = document.getElementsByName('bundle-' + omitBundle);
+  if (children.length < 1) {
+    return;
+  }
+  var first = children[0];
+  while (first != null && first.parentNode !== parent) {
+    first = first.parentNode;
+  }
+  var div = document.createElement('div');
+  enableTabClick(div);
+  div.setAttribute('name', 'bundle-' + omitBundle);
+  var text = document.createTextNode(
+    '\u25BC ' + omitsCount + ' stack frames were expanded.'
+  );
+  div.appendChild(text);
+  div.addEventListener('click', function() {
+    return actionElement.click();
+  });
+  applyStyles(div, omittedFramesStyle);
+  div.style.display = 'none';
+
+  parent.insertBefore(div, first);
+}
+
+function frameDiv(document, functionName, url, internalUrl) {
   var frame = document.createElement('div');
   var frameFunctionName = document.createElement('div');
 
@@ -431,62 +636,11 @@ function frameDiv(functionName, url, internalUrl) {
   return frame;
 }
 
-function getGroupToggle(omitsCount, omitBundle) {
-  var omittedFrames = document.createElement('div');
-  accessify(omittedFrames);
-  var text1 = document.createTextNode(
-    '\u25B6 ' + omitsCount + ' stack frames were collapsed.'
-  );
-  omittedFrames.appendChild(text1);
-  omittedFrames.addEventListener('click', function() {
-    var hide = text1.textContent.match(/▲/);
-    var list = document.getElementsByName('bundle-' + omitBundle);
-    for (var index = 0; index < list.length; ++index) {
-      var n = list[index];
-      if (hide) {
-        n.style.display = 'none';
-      } else {
-        n.style.display = '';
-      }
-    }
-    if (hide) {
-      text1.textContent = text1.textContent.replace(/▲/, '▶');
-      text1.textContent = text1.textContent.replace(/expanded/, 'collapsed');
-    } else {
-      text1.textContent = text1.textContent.replace(/▶/, '▲');
-      text1.textContent = text1.textContent.replace(/collapsed/, 'expanded');
-    }
-  });
-  applyStyles(omittedFrames, omittedFramesStyle);
-  return omittedFrames;
-}
-
-function insertBeforeBundle(parent, omitsCount, omitBundle, actionElement) {
-  var children = document.getElementsByName('bundle-' + omitBundle);
-  if (children.length < 1) return;
-  var first = children[0];
-  while (first.parentNode !== parent) {
-    first = first.parentNode;
-  }
-  var div = document.createElement('div');
-  accessify(div);
-  div.setAttribute('name', 'bundle-' + omitBundle);
-  var text = document.createTextNode(
-    '\u25BC ' + omitsCount + ' stack frames were expanded.'
-  );
-  div.appendChild(text);
-  div.addEventListener('click', function() {
-    return actionElement.click();
-  });
-  applyStyles(div, omittedFramesStyle);
-  div.style.display = 'none';
-
-  parent.insertBefore(div, first);
-}
-
-function traceFrame(
+function createFrame(
+  document,
   frameSetting,
   frame,
+  contextSize,
   critical,
   omits,
   omitBundle,
@@ -498,19 +652,23 @@ function traceFrame(
     fileName = frame.fileName,
     lineNumber = frame.lineNumber,
     columnNumber = frame.columnNumber,
-    scriptLines = frame.scriptLines,
-    sourceFileName = frame.sourceFileName,
-    sourceLineNumber = frame.sourceLineNumber,
-    sourceColumnNumber = frame.sourceColumnNumber,
-    sourceLines = frame.sourceLines;
+    scriptLines = frame._scriptCode,
+    sourceFileName = frame._originalFileName,
+    sourceLineNumber = frame._originalLineNumber,
+    sourceColumnNumber = frame._originalColumnNumber,
+    sourceLines = frame._originalScriptCode;
 
   var url = void 0;
   if (!compiled && sourceFileName) {
     url = sourceFileName + ':' + sourceLineNumber;
-    if (sourceColumnNumber) url += ':' + sourceColumnNumber;
+    if (sourceColumnNumber) {
+      url += ':' + sourceColumnNumber;
+    }
   } else {
     url = fileName + ':' + lineNumber;
-    if (columnNumber) url += ':' + columnNumber;
+    if (columnNumber) {
+      url += ':' + columnNumber;
+    }
   }
 
   var needsHidden = false;
@@ -522,19 +680,17 @@ function traceFrame(
   var collapseElement = null;
   if (!internalUrl || lastElement) {
     if (omits.value > 0) {
-      var omittedFrames = getGroupToggle(omits.value, omitBundle);
-      setTimeout(
-        (function() {
-          insertBeforeBundle.apply(undefined, arguments);
-        }).bind(
-          undefined,
+      var capV = omits.value;
+      var omittedFrames = getGroupToggle(document, capV, omitBundle);
+      window.requestAnimationFrame(function() {
+        insertBeforeBundle(
+          document,
           parentContainer,
-          omits.value,
+          capV,
           omitBundle,
           omittedFrames
-        ),
-        1
-      );
+        );
+      });
       if (lastElement && internalUrl) {
         collapseElement = omittedFrames;
       } else {
@@ -545,7 +701,7 @@ function traceFrame(
     omits.value = 0;
   }
 
-  var elem = frameDiv(functionName, url, internalUrl);
+  var elem = frameDiv(document, functionName, url, internalUrl);
   if (needsHidden) {
     applyStyles(elem, hiddenStyle);
     elem.setAttribute('name', 'bundle-' + omitBundle);
@@ -555,15 +711,24 @@ function traceFrame(
   if (!internalUrl) {
     if (compiled && scriptLines.length !== 0) {
       elem.appendChild(
-        sourceCodePre(scriptLines, lineNumber, columnNumber, critical)
+        createCode(
+          document,
+          scriptLines,
+          lineNumber,
+          columnNumber,
+          contextSize,
+          critical
+        )
       );
       hasSource = true;
     } else if (!compiled && sourceLines.length !== 0) {
       elem.appendChild(
-        sourceCodePre(
+        createCode(
+          document,
           sourceLines,
           sourceLineNumber,
           sourceColumnNumber,
+          contextSize,
           critical
         )
       );
@@ -574,9 +739,18 @@ function traceFrame(
   return { elem: elem, hasSource: hasSource, collapseElement: collapseElement };
 }
 
-function lazyFrame(parent, factory, lIndex) {
+function createFrameWrapper(
+  document,
+  parent,
+  factory,
+  lIndex,
+  frameSettings,
+  contextSize
+) {
   var fac = factory();
-  if (fac == null) return;
+  if (fac == null) {
+    return;
+  }
   var hasSource = fac.hasSource,
     elem = fac.elem,
     collapseElement = fac.collapseElement;
@@ -585,27 +759,34 @@ function lazyFrame(parent, factory, lIndex) {
   elemWrapper.appendChild(elem);
 
   if (hasSource) {
-    (function() {
-      var compiledDiv = document.createElement('div');
-      accessify(compiledDiv);
-      applyStyles(compiledDiv, toggleStyle);
+    var compiledDiv = document.createElement('div');
+    enableTabClick(compiledDiv);
+    applyStyles(compiledDiv, toggleStyle);
 
-      var o = frameSettings[lIndex];
-      var compiledText = document.createTextNode(
-        'View ' + (o && o.compiled ? 'source' : 'compiled')
+    var o = frameSettings[lIndex];
+    var compiledText = document.createTextNode(
+      'View ' + (o && o.compiled ? 'source' : 'compiled')
+    );
+    compiledDiv.addEventListener('click', function() {
+      if (o) {
+        o.compiled = !o.compiled;
+      }
+
+      var next = createFrameWrapper(
+        document,
+        parent,
+        factory,
+        lIndex,
+        frameSettings,
+        contextSize
       );
-      compiledDiv.addEventListener('click', function() {
-        if (o) o.compiled = !o.compiled;
-
-        var next = lazyFrame(parent, factory, lIndex);
-        if (next != null) {
-          parent.insertBefore(next, elemWrapper);
-          parent.removeChild(elemWrapper);
-        }
-      });
-      compiledDiv.appendChild(compiledText);
-      elemWrapper.appendChild(compiledDiv);
-    })();
+      if (next != null) {
+        parent.insertBefore(next, elemWrapper);
+        parent.removeChild(elemWrapper);
+      }
+    });
+    compiledDiv.appendChild(compiledText);
+    elemWrapper.appendChild(compiledDiv);
   }
 
   if (collapseElement != null) {
@@ -615,7 +796,12 @@ function lazyFrame(parent, factory, lIndex) {
   return elemWrapper;
 }
 
-function traceDiv(resolvedFrames) {
+function createFrames(document, resolvedFrames, frameSettings, contextSize) {
+  if (resolvedFrames.length !== frameSettings.length) {
+    throw new Error(
+      'You must give a frame settings array of identical length to resolved frames.'
+    );
+  }
   var trace = document.createElement('div');
   applyStyles(trace, traceStyle);
 
@@ -624,21 +810,28 @@ function traceDiv(resolvedFrames) {
   var omits = { value: 0, bundle: 1 };
   resolvedFrames.forEach(function(frame) {
     var lIndex = index++;
-    var elem = lazyFrame(
+    var elem = createFrameWrapper(
+      document,
       trace,
-      traceFrame.bind(
+      createFrame.bind(
         undefined,
+        document,
         frameSettings[lIndex],
         frame,
+        contextSize,
         critical,
         omits,
         omits.bundle,
         trace,
         index === resolvedFrames.length
       ),
-      lIndex
+      lIndex,
+      frameSettings,
+      contextSize
     );
-    if (elem == null) return;
+    if (elem == null) {
+      return;
+    }
     critical = false;
     trace.appendChild(elem);
   });
@@ -648,7 +841,7 @@ function traceDiv(resolvedFrames) {
   return trace;
 }
 
-function footer() {
+function createFooter(document) {
   var div = document.createElement('div');
   applyStyles(div, footerStyle);
   div.appendChild(
@@ -665,19 +858,74 @@ function footer() {
   return div;
 }
 
-function render(error, name, message, resolvedFrames) {
-  dispose();
+function consumeEvent(e) {
+  e.preventDefault();
+  if (typeof e.target.blur === 'function') {
+    e.target.blur();
+  }
+}
 
-  frameSettings = resolvedFrames.map(function() {
+function updateAdditional(
+  document,
+  additionalReference,
+  currentError,
+  totalErrors,
+  switchCallback
+) {
+  if (additionalReference.lastChild) {
+    additionalReference.removeChild(additionalReference.lastChild);
+  }
+
+  var text = ' ';
+  if (totalErrors <= 1) {
+    additionalReference.appendChild(document.createTextNode(text));
+    return;
+  }
+  text = 'Errors ' + currentError + ' of ' + totalErrors;
+  var span = document.createElement('span');
+  span.appendChild(document.createTextNode(text));
+  var group = document.createElement('span');
+  applyStyles(group, groupStyle);
+  var left = document.createElement('button');
+  applyStyles(left, groupElemLeft);
+  left.addEventListener('click', function(e) {
+    consumeEvent(e);
+    switchCallback(-1);
+  });
+  left.appendChild(document.createTextNode('←'));
+  enableTabClick(left);
+  var right = document.createElement('button');
+  applyStyles(right, groupElemRight);
+  right.addEventListener('click', function(e) {
+    consumeEvent(e);
+    switchCallback(1);
+  });
+  right.appendChild(document.createTextNode('→'));
+  enableTabClick(right);
+  group.appendChild(left);
+  group.appendChild(right);
+  span.appendChild(group);
+  additionalReference.appendChild(span);
+}
+
+function createOverlay(
+  document,
+  name,
+  message,
+  frames,
+  contextSize,
+  currentError,
+  totalErrors,
+  switchCallback,
+  closeCallback
+) {
+  var frameSettings = frames.map(function() {
     return { compiled: false };
   });
-
-  injectCss(css);
-
   // Create overlay
   var overlay = document.createElement('div');
   applyStyles(overlay, overlayStyle);
-  overlay.appendChild(hintsDiv());
+  overlay.appendChild(createClose(document, closeCallback));
 
   // Create container
   var container = document.createElement('div');
@@ -685,10 +933,16 @@ function render(error, name, message, resolvedFrames) {
   overlay.appendChild(container);
 
   // Create additional
-  additionalReference = document.createElement('div');
-  applyStyles(additionalReference, additionalStyle);
-  container.appendChild(additionalReference);
-  renderAdditional();
+  var additional = document.createElement('div');
+  applyStyles(additional, additionalStyle);
+  container.appendChild(additional);
+  updateAdditional(
+    document,
+    additional,
+    currentError,
+    totalErrors,
+    switchCallback
+  );
 
   // Create header
   var header = document.createElement('div');
@@ -701,235 +955,216 @@ function render(error, name, message, resolvedFrames) {
   container.appendChild(header);
 
   // Create trace
-  container.appendChild(traceDiv(resolvedFrames));
+  container.appendChild(
+    createFrames(document, frames, frameSettings, contextSize)
+  );
 
   // Show message
-  container.appendChild(footer());
+  container.appendChild(createFooter(document));
 
-  // Mount
-  document.body.appendChild((overlayReference = overlay));
+  return {
+    overlay: overlay,
+    additional: additional,
+  };
 }
 
-function dispose() {
-  if (overlayReference === null) return;
-  document.body.removeChild(overlayReference);
-  overlayReference = null;
-  var head = getHead();
-  injectedCss.forEach(function(node) {
-    head.removeChild(node);
-  });
-  injectedCss = [];
+var CONTEXT_SIZE = 3;
+var iframeReference = null;
+var additionalReference = null;
+var errorReferences = [];
+var currReferenceIndex = -1;
+
+var css = [
+  '.cra-container {',
+  '  padding-right: 15px;',
+  '  padding-left: 15px;',
+  '  margin-right: auto;',
+  '  margin-left: auto;',
+  '}',
+  '',
+  '@media (min-width: 768px) {',
+  '  .cra-container {',
+  '    width: calc(750px - 6em);',
+  '  }',
+  '}',
+  '',
+  '@media (min-width: 992px) {',
+  '  .cra-container {',
+  '    width: calc(970px - 6em);',
+  '  }',
+  '}',
+  '',
+  '@media (min-width: 1200px) {',
+  '  .cra-container {',
+  '    width: calc(1170px - 6em);',
+  '  }',
+  '}',
+].join('\n');
+
+function render(name, message, resolvedFrames) {
+  disposeCurrentView();
+
+  var iframe = window.document.createElement('iframe');
+  applyStyles(iframe, iframeStyle);
+  iframeReference = iframe;
+  iframe.onload = function() {
+    if (iframeReference == null) {
+      return;
+    }
+    var w = iframeReference.contentWindow;
+    var document = iframeReference.contentDocument;
+
+    var _createOverlay = createOverlay(
+      document,
+      name,
+      message,
+      resolvedFrames,
+      CONTEXT_SIZE,
+      currReferenceIndex + 1,
+      errorReferences.length,
+      function(offset) {
+        switchError(offset);
+      },
+      function() {
+        unmount();
+      }
+    ),
+      overlay = _createOverlay.overlay,
+      additional = _createOverlay.additional;
+
+    if (w != null) {
+      w.onkeydown = function(event) {
+        keyHandler(
+          function(type) {
+            return shortcutHandler(type);
+          },
+          event
+        );
+      };
+    }
+    injectCss(iframeReference.contentDocument, css);
+    if (document.body != null) {
+      document.body.appendChild(overlay);
+    }
+    additionalReference = additional;
+  };
+  window.document.body.appendChild(iframe);
 }
 
-function unmount() {
-  dispose();
-  capturedErrors = [];
-  viewIndex = -1;
-}
+function renderErrorByIndex(index) {
+  currReferenceIndex = index;
 
-function isInternalFile(url, sourceFileName) {
-  return url.indexOf('/~/') !== -1 ||
-    url.trim().indexOf(' ') !== -1 ||
-    !sourceFileName;
-}
-
-function renderError(index) {
-  viewIndex = index;
-  var _capturedErrors$index = capturedErrors[index],
-    error = _capturedErrors$index.error,
-    unhandledRejection = _capturedErrors$index.unhandledRejection,
-    resolvedFrames = _capturedErrors$index.resolvedFrames;
+  var _getErrorRecord = getErrorRecord(errorReferences[index]),
+    error = _getErrorRecord.error,
+    unhandledRejection = _getErrorRecord.unhandledRejection,
+    enhancedFrames = _getErrorRecord.enhancedFrames;
 
   if (unhandledRejection) {
     render(
-      error,
       'Unhandled Rejection (' + error.name + ')',
       error.message,
-      resolvedFrames
+      enhancedFrames
     );
   } else {
-    render(error, error.name, error.message, resolvedFrames);
+    render(error.name, error.message, enhancedFrames);
   }
+}
+
+function switchError(offset) {
+  var nextView = currReferenceIndex + offset;
+  if (nextView < 0 || nextView >= errorReferences.length) {
+    return;
+  }
+  renderErrorByIndex(nextView);
+}
+
+function disposeCurrentView() {
+  if (iframeReference === null) {
+    return;
+  }
+  window.document.body.removeChild(iframeReference);
+  iframeReference = null;
+  additionalReference = null;
+}
+
+function unmount() {
+  disposeCurrentView();
+  drain();
+  errorReferences = [];
+  currReferenceIndex = -1;
 }
 
 function crash(error) {
   var unhandledRejection = arguments.length > 1 && arguments[1] !== undefined
     ? arguments[1]
     : false;
-  var sourceOverrides = arguments.length > 2 && arguments[2] !== undefined
-    ? arguments[2]
-    : [];
 
-  if (module.hot) module.hot.decline();
-
-  StackTraceResolve(error, CONTEXT_SIZE)
-    .then(function(resolvedFrames) {
-      resolvedFrames = resolvedFrames.filter(function(_ref) {
-        var functionName = _ref.functionName;
-        return functionName.indexOf('__cra_proxy_console__') === -1;
-      });
-      var overrideCount = sourceOverrides.length,
-        frameCount = resolvedFrames.length;
-      var frameIndex = 0;
-      for (
-        var overrideIndex = 0;
-        overrideIndex < overrideCount;
-        ++overrideIndex
-      ) {
-        var tag = sourceOverrides[overrideIndex];
-        var shouldContinue = false;
-        for (; frameIndex < frameCount; ++frameIndex) {
-          var sourceFileName = resolvedFrames[frameIndex].sourceFileName;
-
-          if (sourceFileName == null) continue;
-          if (sourceFileName.indexOf('/' + tag.file) !== -1) {
-            var prevLineNumber = resolvedFrames[frameIndex].sourceLineNumber;
-            if (Math.abs(prevLineNumber - tag.lineNum) < CONTEXT_SIZE) {
-              resolvedFrames[frameIndex].sourceLineNumber = tag.lineNum;
-            }
-            shouldContinue = true;
-            break;
+  if (module.hot && typeof module.hot.decline === 'function') {
+    module.hot.decline();
+  }
+  consume(error, unhandledRejection, CONTEXT_SIZE)
+    .then(function(ref) {
+      errorReferences.push(ref);
+      if (iframeReference !== null && additionalReference !== null) {
+        updateAdditional(
+          iframeReference.contentDocument,
+          additionalReference,
+          currReferenceIndex + 1,
+          errorReferences.length,
+          function(offset) {
+            switchError(offset);
           }
+        );
+      } else {
+        if (errorReferences.length !== 1) {
+          throw new Error('Something is *really* wrong.');
         }
-        if (shouldContinue) continue;
-        break;
-      }
-      capturedErrors.push({
-        error: error,
-        unhandledRejection: unhandledRejection,
-        resolvedFrames: resolvedFrames,
-      });
-      if (overlayReference !== null)
-        renderAdditional();
-      else {
-        renderError((viewIndex = 0));
+        renderErrorByIndex((currReferenceIndex = 0));
       }
     })
     .catch(function(e) {
-      // This is another fail case (unlikely to happen)
-      // e.g. render(...) throws an error with provided arguments
-      console.log('Red box renderer error:', e);
+      console.log('Could not consume error:', e);
+    });
+}
+
+function shortcutHandler(type) {
+  switch (type) {
+    case SHORTCUT_ESCAPE: {
       unmount();
-      render(
-        null,
-        'Error',
-        'There is an error with red box. *Please* report this (see console).',
-        []
-      );
-    });
-}
-
-function switchError(offset) {
-  try {
-    var nextView = viewIndex + offset;
-    if (nextView < 0 || nextView >= capturedErrors.length) return;
-    renderError(nextView);
-  } catch (e) {
-    console.log('Red box renderer error:', e);
-    unmount();
-    render(
-      null,
-      'Error',
-      'There is an error with red box. *Please* report this (see console).',
-      []
-    );
-  }
-}
-
-window.onerror = function(messageOrEvent, source, lineno, colno, error) {
-  if (
-    error == null ||
-    !(error instanceof Error) ||
-    messageOrEvent.indexOf('Script error') !== -1
-  ) {
-    crash(new Error(error || messageOrEvent)); // TODO: more helpful message
-  } else {
-    crash(error);
-  }
-};
-
-var promiseHandler = function promiseHandler(event) {
-  if (event != null && event.reason != null) {
-    var reason = event.reason;
-
-    if (reason == null || !(reason instanceof Error)) {
-      crash(new Error(reason), true);
-    } else {
-      crash(reason, true);
+      break;
     }
-  } else {
-    crash(new Error('Unknown event'), true);
+    case SHORTCUT_LEFT: {
+      switchError(-1);
+      break;
+    }
+    case SHORTCUT_RIGHT: {
+      switchError(1);
+      break;
+    }
   }
-};
-
-window.addEventListener('unhandledrejection', promiseHandler);
-
-var escapeHandler = function escapeHandler(event) {
-  var key = event.key, keyCode = event.keyCode, which = event.which;
-
-  if (key === 'Escape' || keyCode === 27 || which === 27) unmount();
-  else if (key === 'ArrowLeft' || keyCode === 37 || which === 37)
-    switchError(-1);
-  else if (key === 'ArrowRight' || keyCode === 39 || which === 39)
-    switchError(1);
-};
-
-window.addEventListener('keydown', escapeHandler);
-
-try {
-  Error.stackTraceLimit = 50;
-} catch (e) {
-  // Browser may not support this, we don't care.
 }
 
-// eslint-disable-next-line
-var proxyConsole = function proxyConsole(type) {
-  var orig = console[type];
-  console[type] = function __cra_proxy_console__() {
-    var warning = [].slice.call(arguments).join(' ');
-    var nIndex = warning.indexOf('\n');
-    var message = warning;
-    if (nIndex !== -1) message = message.substring(0, nIndex);
-    var stack = warning
-      .substring(nIndex + 1)
-      .split('\n')
-      .filter(function(line) {
-        return line.indexOf('(at ') !== -1;
-      })
-      .map(function(line) {
-        var prefix = '(at ';
-        var suffix = ')';
-        line = line.substring(line.indexOf(prefix) + prefix.length);
-        line = line.substring(0, line.indexOf(suffix));
-        var parts = line.split(/[:]/g);
-        if (parts.length !== 2) return null;
-        var file = parts[0];
-        var lineNum = Number(parts[1]);
-        if (isNaN(lineNum)) return null;
-        return { file: file, lineNum: lineNum };
-      })
-      .filter(function(obj) {
-        return obj !== null;
-      });
-    var error = void 0;
-    try {
-      throw new Error(message);
-    } catch (e) {
-      error = e;
-    }
-    setTimeout(function() {
-      return crash(error, false, stack);
-    });
-    return orig.apply(this, arguments);
-  };
-};
+function inject() {
+  registerUnhandledError(window, function(error) {
+    return crash(error);
+  });
+  registerUnhandledRejection(window, function(error) {
+    return crash(error, true);
+  });
+  registerShortcuts(window, shortcutHandler);
+  registerStackTraceLimit();
+}
 
-// proxyConsole('error');
+function uninject() {
+  unregisterStackTraceLimit();
+  unregisterShortcuts(window);
+  unregisterUnhandledRejection(window);
+  unregisterUnhandledError(window);
+}
 
-if (module.hot) {
+inject();
+if (module.hot && typeof module.hot.dispose === 'function') {
   module.hot.dispose(function() {
-    unmount();
-    window.removeEventListener('unhandledrejection', promiseHandler);
-    window.removeEventListener('keydown', escapeHandler);
+    uninject();
   });
 }

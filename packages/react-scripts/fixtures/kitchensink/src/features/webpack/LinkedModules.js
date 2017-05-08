@@ -8,12 +8,13 @@
  */
 
 import React from 'react';
-import aFileWithExtUnknown from './assets/aFileWithExt.unknown';
+import './assets/style.css';
+import { test, version } from 'test-integrity';
 
-const text = aFileWithExtUnknown.includes('base64')
-  ? window.atob(aFileWithExtUnknown.split('base64,')[1]).trim()
-  : aFileWithExtUnknown;
-
-export default () => (
-  <a id="feature-unknown-ext-inclusion" href={text}>aFileWithExtUnknown</a>
-);
+export default () => {
+  const v = version();
+  if (!test() || v !== '2.0.0') {
+    throw new Error('Functionality test did not pass.');
+  }
+  return <p id="feature-linked-modules">{v}</p>;
+};
