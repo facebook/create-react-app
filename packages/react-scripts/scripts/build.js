@@ -31,7 +31,6 @@ const fs = require('fs-extra');
 const path = require('path');
 const url = require('url');
 const webpack = require('webpack');
-const config = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
@@ -40,7 +39,7 @@ const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
-const bundleVendorIfStale = require('../utils/bundleVendorIfStale')
+const bundleVendorIfStale = require('../utils/bundleVendorIfStale');
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -51,7 +50,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // This lets us display how much they changed later.
 
 measureFileSizesBeforeBuild(paths.appBuild).then(previousFileSizes => {
-  bundleVendorIfStale(()=>{
+  bundleVendorIfStale().then(() => {
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
     fs.emptyDirSync(paths.appBuild);
@@ -76,6 +75,8 @@ function printErrors(summary, errors) {
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
+  const config = require('../config/webpack.config.prod');
+
   console.log('Creating an optimized production build...');
 
   let compiler;

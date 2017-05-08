@@ -1,49 +1,49 @@
-var fs = require("fs-extra");
-var path = require("path");
-var webpack = require("webpack");
-var paths = require("../config/paths");
-var config = require("../config/webpack.config.vendor");
-var clearConsole = require("react-dev-utils/clearConsole");
-var os = require("os");
-var chalk = require("chalk");
-var printErrors = require("../utils/printErrors");
-var environment = process.env.NODE_ENV;
-var vendorHash = require("../utils/vendorHash");
+'use strict';
+const fs = require('fs-extra');
+const path = require('path');
+const webpack = require('webpack');
+const paths = require('../config/paths');
+const config = require('../config/webpack.config.vendor');
+const clearConsole = require('react-dev-utils/clearConsole');
+const chalk = require('chalk');
+const printErrors = require('../utils/printErrors');
+const environment = process.env.NODE_ENV;
+const vendorHash = require('../utils/vendorHash');
 
-module.exports = initMainCompiler => {
+module.exports = () => new Promise(resolve => {
   if (shouldVendorBundleUpdate()) {
     // Read vendor path for stale files
     return fs.readdir(paths.vendorPath, (err, files) => {
       cleanUpStaleFiles(files);
 
-      console.log("Compiling vendor bundle for faster rebuilds...");
+      console.log('Compiling vendor bundle for faster rebuilds...');
       webpack(config).run((err, stats) => {
         checkForErrors(err, stats);
 
         // When the process still run until here, there are no errors :)
-        console.log(chalk.green("Vendor bundle compiled successfully!"));
-        initMainCompiler(); // Let the main compiler do its job
+        console.log(chalk.green('Vendor bundle compiled successfully!'));
+        resolve(); // Let the main compiler do its job
       });
     });
   }
   // Just run the main compiler if vendor bundler is up to date
-  return initMainCompiler();
-};
+  return resolve();
+});
 
 function checkForErrors(err, stats) {
   if (err) {
-    printErrors("Failed to compile.", [err]);
+    printErrors('Failed to compile.', [err]);
     process.exit(1);
   }
 
   if (stats.compilation.errors.length) {
-    printErrors("Failed to compile.", stats.compilation.errors);
+    printErrors('Failed to compile.', stats.compilation.errors);
     process.exit(1);
   }
 
   if (process.env.CI && stats.compilation.warnings.length) {
     printErrors(
-      "Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.",
+      'Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.',
       stats.compilation.warnings
     );
     process.exit(1);
@@ -51,18 +51,18 @@ function checkForErrors(err, stats) {
 }
 
 function manifestExists() {
-  return fs.existsSync(path.join(paths.vendorPath, vendorHash + ".json"));
+  return fs.existsSync(path.join(paths.vendorPath, vendorHash + '.json'));
 }
 
 function shouldVendorBundleUpdate() {
   clearConsole();
-  console.log("Checking if " + vendorHash + " vendor bundle exists");
+  console.log('Checking if ' + vendorHash + ' vendor bundle exists');
   if (manifestExists()) {
     clearConsole();
-    console.log(chalk.green("Vendor bundle is up to date and safe to use!"));
+    console.log(chalk.green('Vendor bundle is up to date and safe to use!'));
     return false;
   }
-  console.log("Vendor bundle needs to be compiled...");
+  console.log('Vendor bundle needs to be compiled...');
   return true;
 }
 
@@ -74,6 +74,6 @@ function cleanUpStaleFiles(files) {
     });
   } catch (e) {
     // Let the user knows that the stale file is not deleted
-    console.log(chalk.red("Failed to delete stale files"));
+    console.log(chalk.red('Failed to delete stale files'));
   }
 }
