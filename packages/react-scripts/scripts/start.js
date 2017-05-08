@@ -36,7 +36,6 @@ const getProcessForPort = require('react-dev-utils/getProcessForPort');
 const openBrowser = require('react-dev-utils/openBrowser');
 const prompt = require('react-dev-utils/prompt');
 const paths = require('../config/paths');
-const devServerConfig = require('../config/webpackDevServer.config');
 const createWebpackCompiler = require('./utils/createWebpackCompiler');
 const addWebpackMiddleware = require('./utils/addWebpackMiddleware');
 const bundleVendorIfStale = require('../utils/bundleVendorIfStale');
@@ -58,6 +57,7 @@ function run(port) {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
   const host = process.env.HOST || 'localhost';
   const config = require('../config/webpack.config.dev');
+  const devServerConfig = require('../config/webpackDevServer.config');
 
   // Create a webpack compiler that is configured with custom messages.
   const compiler = createWebpackCompiler(
@@ -112,7 +112,7 @@ function run(port) {
 // We attempt to use the default port but if it is busy, we offer the user to
 // run on a different port. `detect()` Promise resolves to the next free port.
 detect(DEFAULT_PORT).then(port => {
-  bundleVendorIfStale(()=>{
+  bundleVendorIfStale(() => {
     if (port === DEFAULT_PORT) {
       run(port);
       return;
