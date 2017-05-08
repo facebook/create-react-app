@@ -50,7 +50,7 @@
     "tslint": "^4.0.2",
     "tslint-loader": "^3.3.0",
     "tslint-react": "^2.0.0",
-    "typescript": "^2.2.2",
+    "typescript": "^2.3.2",
     "url-loader": "0.5.7",
     "webpack": "1.14.0",
     "webpack-dev-server": "1.16.2",
