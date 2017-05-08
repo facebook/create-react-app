@@ -76,7 +76,7 @@ cd "$root_path"/packages/create-react-app
 npm install
 cd "$root_path"
 
-# If the node version is < 4.7, the script should just give an error.
+# If the node version is < 6, the script should just give an error.
 nodeVersion=`node --version | cut -d v -f2`
 nodeMajor=`echo $nodeVersion | cut -d. -f1`
 nodeMinor=`echo $nodeVersion | cut -d. -f2`
