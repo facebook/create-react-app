@@ -80,7 +80,7 @@ cd "$root_path"
 nodeVersion=`node --version | cut -d v -f2`
 nodeMajor=`echo $nodeVersion | cut -d. -f1`
 nodeMinor=`echo $nodeVersion | cut -d. -f2`
-if [[ nodeMajor -lt 4 ]] || [[ nodeMajor -eq 4  &&  nodeMinor -lt 7 ]]
+if [[ nodeMajor -lt 6 ]]
 then
   cd $temp_app_path
   err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
