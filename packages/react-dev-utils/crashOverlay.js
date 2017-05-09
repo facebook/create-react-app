@@ -9,14 +9,10 @@
 
 'use strict';
 
-function _interopDefault(ex) {
-  return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
-}
-
 var stackFrameParser = require('stack-frame-parser');
 var stackFrameMapper = require('stack-frame-mapper');
 var stackFrameUnmapper = require('stack-frame-unmapper');
-var codeFrame = _interopDefault(require('babel-code-frame'));
+var codeFrame = require('babel-code-frame');
 var ansiHTML = require('./ansiHTML');
 
 var boundErrorHandler = null;
@@ -157,7 +153,6 @@ function unregisterStackTraceLimit() {
 }
 
 var recorded = [];
-
 var errorsConsumed = 0;
 
 function consume(error) {
@@ -223,6 +218,7 @@ var iframeStyle = {
   right: '1em',
   width: 'calc(100% - 2em)',
   height: 'calc(100% - 2em)',
+  border: 'none',
   'border-radius': '3px',
   'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
   'z-index': 1337,
@@ -628,7 +624,6 @@ function frameDiv(document, functionName, url, internalUrl) {
   applyStyles(frameLink, linkStyle);
   var frameAnchor = document.createElement('a');
   applyStyles(frameAnchor, anchorStyle);
-  //frameAnchor.href = url
   frameAnchor.appendChild(document.createTextNode(cleanedUrl));
   frameLink.appendChild(frameAnchor);
   frame.appendChild(frameLink);
