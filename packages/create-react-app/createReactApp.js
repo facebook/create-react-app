@@ -28,7 +28,7 @@
 // tell people to update their global version of create-react-app.
 //
 // Also be careful with new language features.
-// This file must work on Node 4+.
+// This file must work on Node 6+.
 //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //   /!\ DO NOT MODIFY THIS FILE /!\
@@ -398,24 +398,23 @@ function getPackageName(installPackage) {
 }
 
 function checkNpmVersion() {
-  let isNpm2 = false;
+  let hasMinNpm = false;
   try {
     const npmVersion = execSync('npm --version').toString();
-    isNpm2 = semver.lt(npmVersion, '3.0.0');
+    hasMinNpm = semver.gte(npmVersion, '3.0.0');
   } catch (err) {
     return;
   }
-  if (!isNpm2) {
-    return;
+
+  if (!hasMinNpm) {
+    console.error(
+      chalk.red(
+        'Create React App requires npm 3 or higher. \n' +
+          'Please update your version of npm.'
+      )
+    );
+    process.exit(1);
   }
-  console.log(chalk.yellow('It looks like you are using npm 2.'));
-  console.log(
-    chalk.yellow(
-      'We suggest using npm 3 or Yarn for faster install times ' +
-        'and less disk space usage.'
-    )
-  );
-  console.log();
 }
 
 function checkNodeVersion(packageName) {

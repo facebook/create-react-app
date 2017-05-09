@@ -9,7 +9,7 @@
   "license": "BSD-3-Clause",
   "private": true,
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
