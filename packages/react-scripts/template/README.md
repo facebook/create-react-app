@@ -61,6 +61,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Editor Integration](#editor-integration)
 - [Developing Components in Isolation](#developing-components-in-isolation)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
+  - [Offline-First Considerations](#offline-first-considerations)
+  - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Deployment](#deployment)
   - [Static Server](#static-server)
   - [Other Solutions](#other-solutions)
@@ -1239,11 +1241,6 @@ The service worker will use a [cache-first strategy](https://developers.google.c
 for handling all requests for local assets, including the initial HTML, ensuring
 that you web app is reliably fast, even on a slow or unreliable network.
 
-It includes a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/),
-located at [`public/manifest.json`](public/manifest.json), that you might want
-to customize with metadata specific to your web application, such as its name
-and branding colors.
-
 If you would prefer not to enable service workers prior to your initial
 production deployment, then remove the call to `serviceWorkerRegistration.register()`
 from [`src/index.js`](src/index.js).
@@ -1312,6 +1309,19 @@ and then configure the
 [`runtimeCaching`](https://github.com/GoogleChrome/sw-precache#runtimecaching-arrayobject)
 option in the `SWPrecacheWebpackPlugin` section of
 [`webpack.config.prod.js`](../config/webpack.config.prod.js).
+
+### Progressive Web App Metadata
+
+The default configuration includes a web app manifest located at
+[`public/manifest.json`](public/manifest.json), that you can customize with
+details specific to your web application.
+
+When a user adds a web app to their homescreen using Chrome or Firefox on
+Android, the metadata in [`manifest.json`](public/manifest.json) determines what
+icons, names, and branding colors to use when the web app is displayed.
+[The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
+provides more context about what each field means, and how your customizations
+will affect your users' experience.
 
 ## Deployment
 

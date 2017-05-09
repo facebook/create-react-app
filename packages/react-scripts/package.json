@@ -53,7 +53,7 @@
     "promise": "7.1.1",
     "react-dev-utils": "^0.5.2",
     "style-loader": "0.16.1",
-    "sw-precache-webpack-plugin": "^0.10.1",
+    "sw-precache-webpack-plugin": "0.11.0 ",
     "url-loader": "0.5.8",
     "webpack": "2.4.1",
     "webpack-dev-server": "2.4.4",
