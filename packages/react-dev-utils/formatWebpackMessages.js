@@ -117,7 +117,9 @@ function formatWebpackMessages(json) {
     return 'Error in ' + formatMessage(message);
   });
   var formattedWarnings = json.warnings.map(function(message) {
-    return 'Warning in ' + formatMessage(message);
+    var formattedMessage = formatMessage(message);
+    if (/^Flow: /.test(message)) return formattedMessage;
+    return 'Warning in ' + formattedMessage;
   });
   var result = {
     errors: formattedErrors,

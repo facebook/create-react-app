@@ -112,6 +112,12 @@ module.exports = function createWebpackCompiler(config, onReadyCallback) {
           chalk.yellow('/* eslint-disable */') +
           ' to ignore all warnings in a file.'
       );
+      // Teach some Flow tricks.
+      console.log(
+        'Use ' +
+          chalk.yellow('// $FlowFixMe') +
+          ' to ignore flow-related warnings on the next line.'
+      );
     }
   });
 

@@ -230,6 +230,7 @@ exists build/static/js/*.js
 exists build/static/css/*.css
 exists build/static/media/*.svg
 exists build/favicon.ico
+test ! -e .flowconfig
 
 # Run tests with CI flag
 CI=true npm test
@@ -241,6 +242,16 @@ npm start -- --smoke-test
 
 # Test environment handling
 verify_env_url
+
+# Test optional flow enabling
+cp src/App.js src/App.backup.js
+echo "/* @flow */" > src/App.js
+cat src/App.backup.js >> src/App.js
+npm start -- --smoke-test
+test -e .flowconfig
+rm src/App.js
+cp src/App.backup.js src/App.js
+rm src/App.backup.js
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -277,6 +288,15 @@ npm start -- --smoke-test
 
 # Test environment handling
 verify_env_url
+
+# Test optional flow enabling
+cp src/App.js src/App.backup.js
+cp .gitignore .gitignore.backup
+echo "/* @flow */" > src/App.js
+cat src/App.backup.js >> src/App.js
+npm start -- --smoke-test
+cp src/App.backup.js src/App.js
+rm src/App.backup.js
 
 # Cleanup
 cleanup

@@ -622,24 +622,21 @@ We suggest the following approach:
 
 Here is an example of adding a [customized Bootstrap](https://medium.com/@tacomanator/customizing-create-react-app-aa9ffb88165) that follows these steps.
 
-## Adding Flow
+## Using Flow
 
 Flow is a static type checker that helps you write code with fewer bugs. Check out this [introduction to using static types in JavaScript](https://medium.com/@preethikasireddy/why-use-static-types-in-javascript-part-1-8382da1e0adb) if you are new to this concept.
 
-Recent versions of [Flow](http://flowtype.org/) work with Create React App projects out of the box.
+Flow typing is supported out of the box. All you have to do is add the `/* @flow */` comment on top of files you
+want to typecheck. If no `.flowconfig` is present, one will be generated for you.
 
-To add Flow to a Create React App project, follow these steps:
+Flow errors will show up alongside ESLint errors as you work on your application.
 
-1. Run `npm install --save-dev flow-bin` (or `yarn add --dev flow-bin`).
-2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
-3. Run `npm run flow -- init` (or `yarn flow -- init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
-4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
+>Note: If your global flow installation version differs from react-scripts's flow version, you may experience slower compilation times while going back and forth between your app and your IDE (that may use your global flow). Ensure you have the same `flow-bin` version [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-dev-utils/package.json).
 
-Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
 You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/flow/) for a better integrated experience.
-In the future we plan to integrate it into Create React App even more closely.
 
 To learn more about Flow, check out [its documentation](https://flowtype.org/).
+You may also want to learn how to use definitions from [flow-typed](https://github.com/flowtype/flow-typed).
 
 ## Adding Custom Environment Variables
 
