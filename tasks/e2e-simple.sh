@@ -76,8 +76,11 @@ cd "$root_path"/packages/create-react-app
 npm install
 cd "$root_path"
 
-# If the node version is < 4, the script should just give an error.
-if [[ `node --version | sed -e 's/^v//' -e 's/\..*//g'` -lt 4 ]]
+# If the node version is < 6, the script should just give an error.
+nodeVersion=`node --version | cut -d v -f2`
+nodeMajor=`echo $nodeVersion | cut -d. -f1`
+nodeMinor=`echo $nodeVersion | cut -d. -f2`
+if [[ nodeMajor -lt 6 ]]
 then
   cd $temp_app_path
   err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`

@@ -8,7 +8,7 @@
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "files": [
     "ansiHTML.js",
