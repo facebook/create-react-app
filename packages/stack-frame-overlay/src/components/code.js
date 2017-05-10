@@ -61,6 +61,7 @@ function createCode(
   applyStyles(code, codeStyle);
 
   const ccn = code.childNodes;
+  // eslint-disable-next-line
   oLoop: for (let index = 0; index < ccn.length; ++index) {
     const node = ccn[index];
     const ccn2 = node.childNodes;
@@ -75,6 +76,7 @@ function createCode(
       }
       // $FlowFixMe
       applyStyles(node, main ? primaryErrorStyle : secondaryErrorStyle);
+      // eslint-disable-next-line
       break oLoop;
     }
   }

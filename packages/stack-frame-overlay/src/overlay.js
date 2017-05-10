@@ -193,6 +193,10 @@ function shortcutHandler(type: string) {
       switchError(1);
       break;
     }
+    default: {
+      //TODO: this
+      break;
+    }
   }
 }
 

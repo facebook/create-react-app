@@ -98,7 +98,14 @@ then
 fi
 
 # Lint own code
-./node_modules/.bin/eslint --max-warnings 0 .
+./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
+cd packages/stack-frame-overlay/
+./node_modules/.bin/eslint --max-warnings 0 src/
+cd ../..
 
 # ******************************************************************************
 # First, test the create-react-app development environment.
