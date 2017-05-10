@@ -1,17 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "build:overlay": "cd packages/stack-frame-overlay/ && npm run build:prod",
-    "build:app": "node packages/react-scripts/scripts/build.js",
-    "build": "run-s build:overlay build:app",
+    "build": "node packages/react-scripts/scripts/build.js",
     "changelog": "lerna-changelog",
     "create-react-app": "tasks/cra.sh",
     "e2e": "tasks/e2e-simple.sh",
     "postinstall": "lerna bootstrap",
     "publish": "tasks/release.sh",
-    "start:overlay": "cd packages/stack-frame-overlay/ && npm start",
-    "start:app": "sleep 3 && node packages/react-scripts/scripts/start.js",
-    "start": "run-p start:overlay start:app",
+    "start": "node packages/react-scripts/scripts/start.js",
     "test": "node packages/react-scripts/scripts/test.js --env=jsdom",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
     "precommit": "lint-staged"
@@ -22,7 +18,6 @@
     "lerna": "2.0.0-beta.38",
     "lerna-changelog": "^0.2.3",
     "lint-staged": "^3.3.1",
-    "npm-run-all": "^4.0.2",
     "prettier": "^0.21.0"
   },
   "lint-staged": {
