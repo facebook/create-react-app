@@ -6,7 +6,7 @@
   "scripts": {
     "prepublishOnly": "npm run build:prod && npm test",
     "start": "NODE_ENV=development npm run build -- --watch",
-    "test": "jest",
+    "test": "flow && jest",
     "build": "babel src/ -d lib/",
     "build:prod": "NODE_ENV=production babel src/ -d lib/"
   },
@@ -46,6 +46,7 @@
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.4.1",
+    "flow-bin": "^0.46.0",
     "jest": "19.x"
   },
   "jest": {
