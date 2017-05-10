@@ -103,7 +103,7 @@ fi
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
-cd packages/stack-frame-overlay/
+cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
 npm test
 npm run build:prod

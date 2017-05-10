@@ -1,4 +1,4 @@
-# `stack-frame-overlay`
+# `react-error-overlay`
 
 An overlay for displaying stack frames.
 
