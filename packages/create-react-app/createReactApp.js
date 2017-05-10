@@ -65,6 +65,7 @@ const program = new commander.Command(packageJson.name)
     '--scripts-version <alternative-package>',
     'use a non-standard version of react-scripts'
   )
+  .option('--is-feature-app', 'use it to scaffold a feature app')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -128,10 +129,11 @@ createApp(
   projectName,
   program.verbose,
   program.scriptsVersion,
-  hiddenProgram.internalTestingTemplate
+  hiddenProgram.internalTestingTemplate,
+  program.isFeatureApp
 );
 
-function createApp(name, verbose, version, template) {
+function createApp(name, verbose, version, template, isFeatureApp) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -160,7 +162,15 @@ function createApp(name, verbose, version, template) {
   const originalDirectory = process.cwd();
   process.chdir(root);
 
-  run(root, appName, version, verbose, originalDirectory, template);
+  run(
+    root,
+    appName,
+    version,
+    verbose,
+    originalDirectory,
+    template,
+    isFeatureApp
+  );
 }
 
 function shouldUseYarn() {
@@ -212,11 +222,29 @@ function install(useYarn, dependencies, verbose, isOnline) {
   });
 }
 
-function run(root, appName, version, verbose, originalDirectory, template) {
+function run(
+  root,
+  appName,
+  version,
+  verbose,
+  originalDirectory,
+  template,
+  isFeatureApp
+) {
   const packageToInstall = getInstallPackage(version);
-  const allDependencies = ['react', 'react-dom', packageToInstall];
 
-  console.log('Installing packages. This might take a couple minutes.');
+  // [MuleSoft]: Define a version of react and react-dom
+  const reactVersion = '15.5.2';
+  const allDependencies = [
+    `react@${reactVersion}`,
+    `react-dom@${reactVersion}`,
+    packageToInstall,
+  ];
+
+  console.log(
+    'Installing packages. This might take a couple minutes.',
+    allDependencies
+  );
 
   const useYarn = shouldUseYarn();
   getPackageName(packageToInstall)
@@ -242,7 +270,7 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       // Since react-scripts has been installed with --save
       // we need to move it into devDependencies and rewrite package.json
       // also ensure react dependencies have caret version range
-      fixDependencies(packageName);
+      fixDependencies(packageName, isFeatureApp);
 
       const scriptsPath = path.resolve(
         process.cwd(),
@@ -491,7 +519,7 @@ function makeCaretRange(dependencies, name) {
   dependencies[name] = patchedVersion;
 }
 
-function fixDependencies(packageName) {
+function fixDependencies(packageName, isFeatureApp) {
   const packagePath = path.join(process.cwd(), 'package.json');
   const packageJson = require(packagePath);
 
@@ -513,6 +541,22 @@ function fixDependencies(packageName) {
 
   makeCaretRange(packageJson.dependencies, 'react');
   makeCaretRange(packageJson.dependencies, 'react-dom');
+
+  if (isFeatureApp) {
+    // [MuleSoft]: Move React and ReactDOM to devDependencies
+    // And set them as peerDependencies
+    packageJson.devDependencies['react'] = packageJson.dependencies['react'];
+    delete packageJson.dependencies['react'];
+
+    packageJson.devDependencies['react-dom'] = packageJson.dependencies[
+      'react-dom'
+    ];
+    delete packageJson.dependencies['react-dom'];
+
+    packageJson.peerDependencies = packageJson.peerDependencies || {};
+    packageJson.peerDependencies['react'] = '^0.14.0 || ^15.0.0';
+    packageJson.peerDependencies['react-dom'] = '^0.14.0 || ^15.0.0';
+  }
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }

@@ -3,7 +3,8 @@
   "scripts": {
     "build": "node packages/react-scripts/scripts/build.js",
     "changelog": "lerna-changelog",
-    "create-react-app": "tasks/cra.sh",
+    "create-mulesoft-app": "tasks/cra.sh",
+    "create-mulesoft-feature": "tasks/cfa.sh",
     "e2e": "tasks/e2e-simple.sh",
     "postinstall": "lerna bootstrap",
     "publish": "tasks/release.sh",
@@ -15,8 +16,8 @@
   "devDependencies": {
     "eslint": "3.16.1",
     "husky": "^0.13.2",
-    "lerna": "2.0.0-beta.38",
-    "lerna-changelog": "^0.2.3",
+    "lerna": "^2.0.0-rc.4",
+    "lerna-changelog": "^0.4.0",
     "lint-staged": "^3.3.1",
     "prettier": "^0.21.0"
   },

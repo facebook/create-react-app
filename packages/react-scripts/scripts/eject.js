@@ -162,7 +162,7 @@ prompt(
   // Add ESlint config
   console.log(`  Adding ${cyan('ESLint')} configuration`);
   appPackage.eslintConfig = {
-    extends: 'react-app',
+    extends: '@mulesoft/eslint-config-mulesoft',
   };
 
   fs.writeFileSync(

@@ -47,6 +47,7 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    lint: 'react-scripts lint',
   };
 
   fs.writeFileSync(
@@ -136,6 +137,20 @@ module.exports = function(
     }
   }
 
+  // [MuleSoft]: Install MuleSoft custom dev dependencies
+  const mulesoftDevDependencies = {
+    '@mulesoft/eslint-config-mulesoft': '^v1.0.1',
+  };
+
+  const devArgs = [useYarn ? 'add' : 'i', '-D'].concat(
+    Object.keys(mulesoftDevDependencies)
+  );
+  const devProc = spawn.sync(command, devArgs, { stdio: 'inherit' });
+  if (devProc.status !== 0) {
+    console.error(`\`${command} ${devArgs.join(' ')}\` failed`);
+    return;
+  }
+
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for
   // backward compatibility with old global-cli's.
@@ -160,6 +175,9 @@ module.exports = function(
     chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)
   );
   console.log('    Bundles the app into static files for production.');
+  console.log();
+  console.log(chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}lint`));
+  console.log('    Runs the lint tool to validate the code syntax.');
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
@@ -192,7 +210,10 @@ module.exports = function(
 
 function isReactInstalled(appPackage) {
   const dependencies = appPackage.dependencies || {};
+  const devDependencies = appPackage.devDependencies || {};
 
-  return typeof dependencies.react !== 'undefined' &&
-    typeof dependencies['react-dom'] !== 'undefined';
+  return (typeof dependencies.react !== 'undefined' &&
+    typeof dependencies['react-dom'] !== 'undefined') ||
+    (typeof devDependencies.react !== 'undefined' &&
+      typeof devDependencies['react-dom'] !== 'undefined');
 }

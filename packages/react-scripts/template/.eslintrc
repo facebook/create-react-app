@@ -1,0 +1,3 @@
+{
+  "extends": "@mulesoft/eslint-config-mulesoft"
+}
