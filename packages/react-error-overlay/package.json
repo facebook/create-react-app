@@ -8,7 +8,8 @@
     "start": "cross-env NODE_ENV=development npm run build -- --watch",
     "test": "flow && jest",
     "build": "babel src/ -d lib/",
-    "build:prod": "cross-env NODE_ENV=production babel src/ -d lib/"
+    "build:prod": "cross-env NODE_ENV=production babel src/ -d lib/",
+    "postinstall": "npm run build:prod"
   },
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
