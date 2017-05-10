@@ -106,6 +106,7 @@ fi
 cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
 npm test
+npm run build:prod
 cd ../..
 
 # ******************************************************************************
