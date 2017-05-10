@@ -73,6 +73,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Modulus](#modulus)
   - [Netlify](#netlify)
   - [Now](#now)
+  - [Roast.io](#roast)
   - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
 - [Advanced Configuration](#advanced-configuration)
@@ -1528,6 +1529,16 @@ When you build the project, Create React App will place the `public` folder cont
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
 Details are available in [this article.](https://zeit.co/blog/now-static)
+
+### Roast
+
+[Roast.io](https://www.roast.io/) offers zero-configuration server side rendered (via `ReactDOMServer.renderToString`) hosting on a CDN.
+
+1. Install the `roast` command-line tool via node with `npm install -g roast`
+2. Run `roast deploy` from your project directory
+3. Choose `build` as the path to deploy.
+
+push state URLs and server-side rendering are enabled by default.
 
 ### S3 and CloudFront
 
