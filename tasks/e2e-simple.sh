@@ -105,6 +105,7 @@ fi
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
 cd packages/stack-frame-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
+npm test
 npm run build:prod
 cd ../..
 
