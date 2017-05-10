@@ -5,9 +5,9 @@ import { getLinesAround } from './getLinesAround';
 import { settle } from 'settle-promise';
 
 /**
- * Enhances a set of <code>{@link https://github.com/Timer/stack-frame/tree/master/packages/stack-frame#stackframe StackFrame}</code>s with their original positions and code (when available).
- * @param {StackFrame[]} frames A set of <code>{@link https://github.com/Timer/stack-frame/tree/master/packages/stack-frame#stackframe StackFrame}</code>s which contain (generated) code positions.
- * @param {number} [contextLines=3] The number of lines to provide before and after the line specified in the <code>{@link https://github.com/Timer/stack-frame/tree/master/packages/stack-frame#stackframe StackFrame}</code>.
+ * Enhances a set of <code>StackFrame</code>s with their original positions and code (when available).
+ * @param {StackFrame[]} frames A set of <code>StackFrame</code>s which contain (generated) code positions.
+ * @param {number} [contextLines=3] The number of lines to provide before and after the line specified in the <code>StackFrame</code>.
  */
 async function map(
   frames: StackFrame[],

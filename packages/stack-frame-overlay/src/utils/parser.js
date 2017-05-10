@@ -55,7 +55,7 @@ function parseStack(stack: string[]): StackFrame[] {
 }
 
 /**
- * Turns an <code>Error</code>, or similar object, into a set of <code>{@link https://github.com/Timer/stack-frame/tree/master/packages/stack-frame#stackframe StackFrame}</code>s.
+ * Turns an <code>Error</code>, or similar object, into a set of <code>StackFrame</code>s.
  * @alias parse
  */
 function parseError(error: Error | string | string[]): StackFrame[] {

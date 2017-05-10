@@ -5,10 +5,10 @@ import { getLinesAround } from './getLinesAround';
 import path from 'path';
 
 /**
- * Turns a set of mapped <code>{@link https://github.com/Timer/stack-frame/tree/master/packages/stack-frame#stackframe StackFrame}</code>s back into their generated code position and enhances them with code.
+ * Turns a set of mapped <code>StackFrame</code>s back into their generated code position and enhances them with code.
  * @param {string} fileUri The URI of the <code>bundle.js</code> file.
- * @param {StackFrame[]} frames A set of <code>{@link https://github.com/Timer/stack-frame/tree/master/packages/stack-frame#stackframe StackFrame}</code>s which are already mapped and missing their generated positions.
- * @param {number} [fileContents=3] The number of lines to provide before and after the line specified in the <code>{@link https://github.com/Timer/stack-frame/tree/master/packages/stack-frame#stackframe StackFrame}</code>.
+ * @param {StackFrame[]} frames A set of <code>StackFrame</code>s which are already mapped and missing their generated positions.
+ * @param {number} [fileContents=3] The number of lines to provide before and after the line specified in the <code>StackFrame</code>.
  */
 async function unmap(
   _fileUri: string | { uri: string, contents: string },
