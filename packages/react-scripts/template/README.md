@@ -406,7 +406,7 @@ Then in `package.json`, add the following lines to `scripts`:
 ```diff
    "scripts": {
 +    "build-css": "node-sass src/ -o src/",
-+    "watch-css": "npm run build-css && node-sass src/*.scss -o src/ --watch --recursive",
++    "watch-css": "npm run build-css && node-sass src/**/*.scss -o src/ --watch --recursive",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
@@ -431,7 +431,7 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
 ```diff
    "scripts": {
      "build-css": "node-sass src/ -o src/",
-     "watch-css": "npm run build-css && node-sass src/*.scss -o src/ --watch --recursive",
+     "watch-css": "npm run build-css && node-sass src/**/*.scss -o src/ --watch --recursive",
 -    "start": "react-scripts start",
 -    "build": "react-scripts build",
 +    "start-js": "react-scripts start",
