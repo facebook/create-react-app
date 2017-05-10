@@ -23,8 +23,13 @@ function isLikelyASyntaxError(message) {
 }
 
 // Cleans up webpack error messages.
-function formatMessage(message) {
+function formatMessage(message, isError) {
   var lines = message.split('\n');
+
+  if (lines.length > 2 && lines[1] === '') {
+    // Remove extra newline.
+    lines.splice(1, 1);
+  }
 
   // Remove webpack-specific loader notation from filename.
   // Before:
@@ -34,6 +39,15 @@ function formatMessage(message) {
   if (lines[0].lastIndexOf('!') !== -1) {
     lines[0] = lines[0].substr(lines[0].lastIndexOf('!') + 1);
   }
+
+  lines = lines.filter(function(line) {
+    // Webpack adds a list of entry points to warning messages:
+    //  @ ./src/index.js
+    //  @ multi react-scripts/~/react-dev-utils/webpackHotDevClient.js ...
+    // It is misleading (and unrelated to the warnings) so we clean it up.
+    // It is only useful for syntax errors but we have beautiful frames for them.
+    return line.indexOf(' @ ') !== 0;
+  });
 
   // line #0 is filename
   // line #1 is the main error message
@@ -50,53 +64,75 @@ function formatMessage(message) {
         .replace("Cannot resolve 'file' or 'directory' ", '')
         .replace('Cannot resolve module ', '')
         .replace('Error: ', ''),
-      // Skip all irrelevant lines.
-      // (For some reason they only appear on the client in browser.)
-      '',
-      lines[lines.length - 1], // error location is the last line
     ];
   }
 
   // Cleans up syntax error messages.
   if (lines[1].indexOf('Module build failed: ') === 0) {
-    // For some reason, on the client messages appear duplicated:
-    // https://github.com/webpack/webpack/issues/3008
-    // This won't happen in Node but since we share this helpers,
-    // we will dedupe them right here. We will ignore all lines
-    // after the original error message text is repeated the second time.
-    var errorText = lines[1].substr('Module build failed: '.length);
-    var cleanedLines = [];
-    var hasReachedDuplicateMessage = false;
-    // Gather lines until we reach the beginning of duplicate message.
-    lines.forEach(function(line, index) {
-      if (
-        // First time it occurs is fine.
-        index !== 1 &&
-        // line.endsWith(errorText)
-        line.length >= errorText.length &&
-        line.indexOf(errorText) === line.length - errorText.length
-      ) {
-        // We see the same error message for the second time!
-        // Filter out repeated error message and everything after it.
-        hasReachedDuplicateMessage = true;
-      }
-      if (
-        !hasReachedDuplicateMessage ||
-        // Print last line anyway because it contains the source location
-        index === lines.length - 1
-      ) {
-        // This line is OK to appear in the output.
-        cleanedLines.push(line);
-      }
-    });
-    // We are clean now!
-    lines = cleanedLines;
-    // Finally, brush up the error message a little.
     lines[1] = lines[1].replace(
       'Module build failed: SyntaxError:',
       friendlySyntaxErrorLabel
     );
   }
+
+  // Clean up export errors.
+  // TODO: we should really send a PR to Webpack for this.
+  var exportError = /\s*(.+?)\s*(")?export '(.+?)' was not found in '(.+?)'/;
+  if (lines[1].match(exportError)) {
+    lines[1] = lines[1].replace(
+      exportError,
+      "$1 '$4' does not contain an export named '$3'."
+    );
+  }
+  
+  // TODO: Ideally we should write a custom ESLint formatter instead.
+
+  // If the second line already includes a filename, and it's a warning,
+  // this is likely coming from ESLint. Skip it because Webpack also prints it.
+  // Let's omit that in this case.
+  var BEGIN_ESLINT_FILENAME = String.fromCharCode(27) + '[4m';
+  // Also filter out ESLint summaries for each file
+  var BEGIN_ESLINT_WARNING_SUMMARY = String.fromCharCode(27) +
+    '[33m' +
+    String.fromCharCode(27) +
+    '[1m' +
+    String.fromCharCode(10006);
+  var BEGIN_ESLINT_ERROR_SUMMARY = String.fromCharCode(27) +
+    '[31m' +
+    String.fromCharCode(27) +
+    '[1m' +
+    String.fromCharCode(10006);
+  // ESLint puts separators like this between groups. We don't need them:
+  var ESLINT_EMPTY_SEPARATOR = String.fromCharCode(27) +
+    '[22m' +
+    String.fromCharCode(27) +
+    '[39m';
+  // Go!
+  lines = lines.filter(function(line) {
+    if (line === ESLINT_EMPTY_SEPARATOR) {
+      return false;
+    }
+    if (
+      line.indexOf(BEGIN_ESLINT_FILENAME) === 0 ||
+      line.indexOf(BEGIN_ESLINT_WARNING_SUMMARY) === 0 ||
+      line.indexOf(BEGIN_ESLINT_ERROR_SUMMARY) === 0
+    ) {
+      return false;
+    }
+    return true;
+  });
+
+  // Prepend filename with an explanation.
+  lines[0] =
+    // Underline
+    String.fromCharCode(27) +
+    '[4m' +
+    // Filename
+    lines[0] +
+    // End underline
+    String.fromCharCode(27) +
+    '[24m' +
+    (isError ? ' contains errors.' : ' contains warnings.');
 
   // Reassemble the message.
   message = lines.join('\n');
@@ -109,15 +145,15 @@ function formatMessage(message) {
     ''
   ); // at ... ...:x:y
 
-  return message;
+  return message.trim();
 }
 
 function formatWebpackMessages(json) {
   var formattedErrors = json.errors.map(function(message) {
-    return 'Error in ' + formatMessage(message);
+    return formatMessage(message, true);
   });
   var formattedWarnings = json.warnings.map(function(message) {
-    return 'Warning in ' + formatMessage(message);
+    return formatMessage(message, false);
   });
   var result = {
     errors: formattedErrors,
