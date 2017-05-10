@@ -5,10 +5,10 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "npm run build:prod && npm test",
-    "start": "NODE_ENV=development npm run build -- --watch",
+    "start": "cross-env NODE_ENV=development npm run build -- --watch",
     "test": "flow && jest",
     "build": "babel src/ -d lib/",
-    "build:prod": "NODE_ENV=production babel src/ -d lib/"
+    "build:prod": "cross-env NODE_ENV=production babel src/ -d lib/"
   },
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -40,6 +40,7 @@
     "babel-cli": "^6.24.1",
     "babel-eslint": "7.x",
     "babel-preset-react-app": "^2.2.0",
+    "cross-env": "^4.0.0",
     "eslint": "^3.16.1",
     "eslint-config-react-app": "^0.6.2",
     "eslint-plugin-flowtype": "^2.21.0",
