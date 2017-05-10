@@ -5,7 +5,7 @@ import { createClose } from './close';
 import { createFrames } from './frames';
 import { createFooter } from './footer';
 import type { CloseCallback } from './close';
-import type { StackFrame } from 'stack-frame';
+import type { StackFrame } from '../utils/stack-frame';
 import { updateAdditional } from './additional';
 import type { FrameSetting } from './frames';
 import type { SwitchCallback } from './additional';

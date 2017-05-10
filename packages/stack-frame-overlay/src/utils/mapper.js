@@ -13,10 +13,11 @@ async function map(
   frames: StackFrame[],
   contextLines: number = 3
 ): Promise<StackFrame[]> {
-  const cache = {};
-  const files = [];
+  const cache: any = {};
+  const files: string[] = [];
   frames.forEach(frame => {
     const { fileName } = frame;
+    if (fileName == null) return;
     if (files.indexOf(fileName) !== -1) {
       return;
     }
@@ -32,7 +33,7 @@ async function map(
   return frames.map(frame => {
     const { functionName, fileName, lineNumber, columnNumber } = frame;
     let { map, fileSource } = cache[fileName] || {};
-    if (map == null) {
+    if (map == null || lineNumber == null) {
       return frame;
     }
     const { source, line, column } = map.getOriginalPosition(

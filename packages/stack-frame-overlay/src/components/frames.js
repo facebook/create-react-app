@@ -1,5 +1,5 @@
 /* @flow */
-import type { StackFrame } from 'stack-frame';
+import type { StackFrame } from '../utils/stack-frame';
 import { applyStyles } from '../utils/dom/css';
 import { traceStyle, toggleStyle } from '../styles';
 import { enableTabClick } from '../utils/dom/enableTabClick';

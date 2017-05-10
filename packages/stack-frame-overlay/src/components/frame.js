@@ -2,7 +2,7 @@
 import { enableTabClick } from '../utils/dom/enableTabClick';
 import { createCode } from './code';
 import { isInternalFile } from '../utils/isInternalFile';
-import type { StackFrame } from 'stack-frame';
+import type { StackFrame } from '../utils/stack-frame';
 import type { FrameSetting, OmitsObject } from './frames';
 import { applyStyles } from '../utils/dom/css';
 import {
@@ -140,16 +140,18 @@ function createFrame(
   } = frame;
 
   let url;
-  if (!compiled && sourceFileName) {
+  if (!compiled && sourceFileName && sourceLineNumber) {
     url = sourceFileName + ':' + sourceLineNumber;
     if (sourceColumnNumber) {
       url += ':' + sourceColumnNumber;
     }
-  } else {
+  } else if (fileName && lineNumber) {
     url = fileName + ':' + lineNumber;
     if (columnNumber) {
       url += ':' + columnNumber;
     }
+  } else {
+    url = 'unknown';
   }
 
   let needsHidden = false;
@@ -190,7 +192,9 @@ function createFrame(
 
   let hasSource = false;
   if (!internalUrl) {
-    if (compiled && scriptLines.length !== 0) {
+    if (
+      compiled && scriptLines && scriptLines.length !== 0 && lineNumber != null
+    ) {
       elem.appendChild(
         createCode(
           document,
@@ -202,7 +206,12 @@ function createFrame(
         )
       );
       hasSource = true;
-    } else if (!compiled && sourceLines.length !== 0) {
+    } else if (
+      !compiled &&
+      sourceLines &&
+      sourceLines.length !== 0 &&
+      sourceLineNumber != null
+    ) {
       elem.appendChild(
         createCode(
           document,

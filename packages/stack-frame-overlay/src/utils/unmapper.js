@@ -11,12 +11,12 @@ import path from 'path';
  * @param {number} [fileContents=3] The number of lines to provide before and after the line specified in the <code>{@link https://github.com/Timer/stack-frame/tree/master/packages/stack-frame#stackframe StackFrame}</code>.
  */
 async function unmap(
-  fileUri: string | { uri: string, contents: string },
+  _fileUri: string | { uri: string, contents: string },
   frames: StackFrame[],
   contextLines: number = 3
 ): Promise<StackFrame[]> {
-  let fileContents = typeof fileUri === 'object' ? fileUri.contents : null;
-  fileUri = typeof fileUri === 'object' ? fileUri.uri : fileUri;
+  let fileContents = typeof _fileUri === 'object' ? _fileUri.contents : null;
+  let fileUri = typeof _fileUri === 'object' ? _fileUri.uri : _fileUri;
   if (fileContents == null) {
     fileContents = await fetch(fileUri).then(res => res.text());
   }
@@ -35,30 +35,34 @@ async function unmap(
     if (fileName) {
       fileName = path.normalize(fileName);
     }
-    const splitCache1 = {}, splitCache2 = {}, splitCache3 = {};
+    if (fileName == null) {
+      return frame;
+    }
+    const fN: string = fileName;
+    const splitCache1: any = {}, splitCache2: any = {}, splitCache3: any = {};
     const source = map
       .getSources()
       .map(s => s.replace(/[\\]+/g, '/'))
       .filter(s => {
         s = path.normalize(s);
-        return s.indexOf(fileName) === s.length - fileName.length;
+        return s.indexOf(fN) === s.length - fN.length;
       })
       .sort((a, b) => {
-        a = splitCache1[a] || (splitCache1[a] = a.split(path.sep));
-        b = splitCache1[b] || (splitCache1[b] = b.split(path.sep));
-        return Math.sign(a.length - b.length);
+        let a2 = splitCache1[a] || (splitCache1[a] = a.split(path.sep)),
+          b2 = splitCache1[b] || (splitCache1[b] = b.split(path.sep));
+        return Math.sign(a2.length - b2.length);
       })
       .sort((a, b) => {
-        a = splitCache2[a] || (splitCache2[a] = a.split('node_modules'));
-        b = splitCache2[b] || (splitCache2[b] = b.split('node_modules'));
-        return Math.sign(a.length - b.length);
+        let a2 = splitCache2[a] || (splitCache2[a] = a.split('node_modules')),
+          b2 = splitCache2[b] || (splitCache2[b] = b.split('node_modules'));
+        return Math.sign(a2.length - b2.length);
       })
       .sort((a, b) => {
-        a = splitCache3[a] || (splitCache3[a] = a.split('~'));
-        b = splitCache3[b] || (splitCache3[b] = b.split('~'));
-        return Math.sign(a.length - b.length);
+        let a2 = splitCache3[a] || (splitCache3[a] = a.split('~')),
+          b2 = splitCache3[b] || (splitCache3[b] = b.split('~'));
+        return Math.sign(a2.length - b2.length);
       });
-    if (source.length < 1) {
+    if (source.length < 1 || lineNumber == null) {
       return new StackFrame(
         null,
         null,
@@ -66,7 +70,7 @@ async function unmap(
         null,
         null,
         functionName,
-        fileName,
+        fN,
         lineNumber,
         columnNumber,
         null
@@ -75,6 +79,7 @@ async function unmap(
     const { line, column } = map.getGeneratedPosition(
       source[0],
       lineNumber,
+      // $FlowFixMe
       columnNumber
     );
     const originalSource = map.getSource(source[0]);
@@ -83,9 +88,9 @@ async function unmap(
       fileUri,
       line,
       column || null,
-      getLinesAround(line, contextLines, fileContents),
+      getLinesAround(line, contextLines, fileContents || []),
       functionName,
-      fileName,
+      fN,
       lineNumber,
       columnNumber,
       getLinesAround(lineNumber, contextLines, originalSource)

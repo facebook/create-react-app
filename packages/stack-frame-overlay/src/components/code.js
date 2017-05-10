@@ -1,5 +1,5 @@
 /* @flow */
-import type { ScriptLines } from 'stack-frame';
+import type { ScriptLine } from '../utils/stack-frame';
 import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
 import {
@@ -15,9 +15,9 @@ import codeFrame from 'babel-code-frame';
 
 function createCode(
   document: Document,
-  sourceLines: ScriptLines[],
+  sourceLines: ScriptLine[],
   lineNum: number,
-  columnNum: number,
+  columnNum: number | null,
   contextSize: number,
   main: boolean = false
 ) {
@@ -47,7 +47,7 @@ function createCode(
   const ansiHighlight = codeFrame(
     sourceCode.join('\n'),
     lineNum,
-    columnNum - (isFinite(whiteSpace) ? whiteSpace : 0),
+    columnNum == null ? 0 : columnNum - (isFinite(whiteSpace) ? whiteSpace : 0),
     {
       forceColor: true,
       linesAbove: contextSize,

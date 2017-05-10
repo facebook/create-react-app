@@ -27,7 +27,7 @@ import {
 } from './utils/errorRegister';
 import type { ErrorRecordReference } from './utils/errorRegister';
 
-import type { StackFrame } from 'stack-frame';
+import type { StackFrame } from './utils/stack-frame';
 import { iframeStyle } from './styles';
 import { injectCss, applyStyles } from './utils/dom/css';
 import { createOverlay } from './components/overlay';
