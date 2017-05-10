@@ -1,8 +1,8 @@
 /* @flow */
 import type { StackFrame } from 'stack-frame';
-import { parse } from 'stack-frame-parser';
-import { map } from 'stack-frame-mapper';
-import { unmap } from 'stack-frame-unmapper';
+import { parse } from './parser';
+import { map } from './mapper';
+import { unmap } from './unmapper';
 
 type ErrorRecord = {
   error: Error,
@@ -24,6 +24,7 @@ function consume(
   let enhancedFramesPromise;
   if (error.__unmap_source) {
     enhancedFramesPromise = unmap(
+      // $FlowFixMe
       error.__unmap_source,
       parsedFrames,
       contextSize
