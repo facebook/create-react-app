@@ -126,6 +126,7 @@ module.exports = {
               baseConfig: {
                 extends: ['react-app'],
               },
+              ignore: false,
               useEslintrc: false,
             },
             // @remove-on-eject-end
