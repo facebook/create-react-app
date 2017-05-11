@@ -160,6 +160,10 @@ function crash(error: Error, unhandledRejection = false) {
   }
   consumeError(error, unhandledRejection, CONTEXT_SIZE)
     .then(ref => {
+      if (ref == null) {
+        console.warn('react-error-overlay ignored:', error);
+        return;
+      }
       errorReferences.push(ref);
       if (iframeReference !== null && additionalReference !== null) {
         updateAdditional(
