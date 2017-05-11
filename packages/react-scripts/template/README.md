@@ -400,21 +400,20 @@ First, let’s install the command-line interface for Sass:
 ```
 npm install node-sass --save-dev
 ```
+>Note: If your project experiences an issue where it constantly recompiles, try switching to [node-sass-chokidar](https://www.npmjs.com/package/node-sass-chokidar) instead.
 
 Then in `package.json`, add the following lines to `scripts`:
 
 ```diff
    "scripts": {
 +    "build-css": "node-sass src/ -o src/",
-+    "watch-css": "npm run build-css && node-sass src/**/*.scss -o src/ --watch --recursive",
++    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
 ```
 
 >Note: To use a different preprocessor, replace `build-css` and `watch-css` commands according to your preprocessor’s documentation.
-
->Note: You can also use `**/*.sass` if you are using `.sass` files
 
 Now you can rename `src/App.css` to `src/App.scss` and run `npm run watch-css`. The watcher will find every Sass file in `src` subdirectories, and create a corresponding CSS file next to it, in our case overwriting `src/App.css`. Since `src/App.js` still imports `src/App.css`, the styles become a part of your application. You can now edit `src/App.scss`, and `src/App.css` will be regenerated.
 
@@ -433,7 +432,7 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
 ```diff
    "scripts": {
      "build-css": "node-sass src/ -o src/",
-     "watch-css": "npm run build-css && node-sass src/**/*.scss -o src/ --watch --recursive",
+     "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
 -    "start": "react-scripts start",
 -    "build": "react-scripts build",
 +    "start-js": "react-scripts start",
