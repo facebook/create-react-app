@@ -752,6 +752,8 @@ To define permanent environment variables, create a file called `.env` in the ro
 REACT_APP_SECRET_CODE=abcdef
 ```
 
+<!--
+TODO: uncomment (and tweak) the doc for 0.10
 What .env* files are used?
 
 * `.env` - Default
@@ -766,6 +768,7 @@ Files priority (file is skipped if does not exist):
 * npm start - `.env.development.local`, `env.development`, `.env.local`, `.env`
 
 Priority from left to right.
+-->
 
 These variables will act as the defaults if the machine does not explicitly set them.<br>
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
