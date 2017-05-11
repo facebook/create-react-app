@@ -1,0 +1,17 @@
+{
+  "name": "stylelint-config-react-app",
+  "version": "0.0.1",
+  "description": "stylelint configuration used by Create React App",
+  "repository": "facebookincubator/create-react-app",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/facebookincubator/create-react-app/issues"
+  },
+  "files": [
+    "index.js"
+  ],
+  "peerDependencies": {
+    "stylelint": "^7.10.1",
+    "stylelint-csstree-validator": "^1.1.1"
+  }
+}

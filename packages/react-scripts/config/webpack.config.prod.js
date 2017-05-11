@@ -238,10 +238,11 @@ module.exports = {
     new StyleLintPlugin({
       // @remove-on-eject-begin
       config: {
-        extends: 'stylelint-config-standard',
+        extends: 'stylelint-config-react-app',
       },
       configBasedir: paths.ownPath,
       // @remove-on-eject-end
+      allowEmptyInput: true,
       context: paths.appSrc,
       files: ['**/*.css'],
       failOnError: true,
