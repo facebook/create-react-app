@@ -99,6 +99,10 @@ fi
 # We removed the postinstall, so do it manually
 ./node_modules/.bin/lerna bootstrap --concurrency=1
 
+cd packages/react-error-overlay/
+npm run build:prod
+cd ../..
+
 # ******************************************************************************
 # First, pack and install create-react-app.
 # ******************************************************************************

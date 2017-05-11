@@ -54,7 +54,7 @@ const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 
 function run(port) {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-  const host = process.env.HOST || 'localhost';
+  const host = process.env.HOST || '0.0.0.0';
 
   // Create a webpack compiler that is configured with custom messages.
   const compiler = createWebpackCompiler(
