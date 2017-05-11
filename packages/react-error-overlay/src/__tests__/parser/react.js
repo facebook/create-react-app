@@ -9,54 +9,5 @@ test('15.y.z', () => {
      in div (at App.js:8)
      in App (at index.js:7)`
     )
-  ).toEqual([
-    {
-      functionName: 'div',
-      fileName: 'FileA.js',
-      lineNumber: 9,
-      columnNumber: null,
-      _originalColumnNumber: null,
-      _originalFileName: null,
-      _originalFunctionName: null,
-      _originalLineNumber: null,
-      _originalScriptCode: null,
-      _scriptCode: null,
-    },
-    {
-      functionName: 'FileA',
-      fileName: 'App.js',
-      lineNumber: 9,
-      columnNumber: null,
-      _originalColumnNumber: null,
-      _originalFileName: null,
-      _originalFunctionName: null,
-      _originalLineNumber: null,
-      _originalScriptCode: null,
-      _scriptCode: null,
-    },
-    {
-      functionName: 'div',
-      fileName: 'App.js',
-      lineNumber: 8,
-      columnNumber: null,
-      _originalColumnNumber: null,
-      _originalFileName: null,
-      _originalFunctionName: null,
-      _originalLineNumber: null,
-      _originalScriptCode: null,
-      _scriptCode: null,
-    },
-    {
-      functionName: 'App',
-      fileName: 'index.js',
-      lineNumber: 7,
-      columnNumber: null,
-      _originalColumnNumber: null,
-      _originalFileName: null,
-      _originalFunctionName: null,
-      _originalLineNumber: null,
-      _originalScriptCode: null,
-      _scriptCode: null,
-    },
-  ]);
+  ).toMatchSnapshot();
 });
