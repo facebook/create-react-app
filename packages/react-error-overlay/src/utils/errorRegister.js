@@ -36,7 +36,7 @@ function consume(
     if (
       enhancedFrames
         .map(f => f._originalFileName)
-        .filter(f => f == null || f.indexOf('node_modules') === -1).length === 0
+        .filter(f => f != null && f.indexOf('node_modules') === -1).length === 0
     ) {
       return null;
     }
