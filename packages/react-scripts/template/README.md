@@ -441,7 +441,7 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
    }
 ```
 
-Now running `npm start` and `npm run build` also builds Sass files. Note that `node-sass-chokidar` seems to have an issue recognizing newly created files on some systems so you might need to restart the watcher when you create a file until it’s resolved.
+Now running `npm start` and `npm run build` also builds Sass files. 
 
 **Why `node-sass-chokidar`?**
 
