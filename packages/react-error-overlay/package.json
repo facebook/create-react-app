@@ -48,7 +48,8 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.4.1",
     "flow-bin": "^0.46.0",
-    "jest": "19.x"
+    "jest": "19.x",
+    "jest-fetch-mock": "^1.1.1"
   },
   "jest": {
     "setupFiles": [
