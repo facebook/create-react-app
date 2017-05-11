@@ -451,6 +451,8 @@ Now running `npm start` and `npm run build` also builds Sass files.
 
 - Infinite styles compiling [#1939](https://github.com/facebookincubator/create-react-app/issues/1939)
 
+- `node-sass` has been reported as having issues with detecting new files in a directory [#1891](https://github.com/sass/node-sass/issues/1891)
+
  `node-sass-chokidar` is used here as it addresses these issues.
 
 ## Adding Images, Fonts, and Files
