@@ -4,6 +4,12 @@ import { getSourceMap } from './getSourceMap';
 import { getLinesAround } from './getLinesAround';
 import path from 'path';
 
+function count(search: string, string: string): number {
+  let count = -1, index = 0;
+  for (; index !== -1; count++, (index = string.indexOf(search, index + 1)));
+  return count;
+}
+
 /**
  * Turns a set of mapped <code>StackFrame</code>s back into their generated code position and enhances them with code.
  * @param {string} fileUri The URI of the <code>bundle.js</code> file.
@@ -39,28 +45,22 @@ async function unmap(
       return frame;
     }
     const fN: string = fileName;
-    const splitCache1: any = {}, splitCache2: any = {}, splitCache3: any = {};
     const source = map
       .getSources()
-      .map(s => s.replace(/[\\]+/g, '/'))
-      .filter(s => {
-        s = path.normalize(s);
-        return s.indexOf(fN) === s.length - fN.length;
+      .map(s => path.normalize(s.replace(/[\\]+/g, '/')))
+      .filter(p => {
+        const i = p.lastIndexOf(fN);
+        return i !== -1 && i === p.length - fN.length;
       })
+      .map(p => ({
+        token: p,
+        seps: count(path.sep, p),
+        penalties: count('node_modules', p) + count('~', p),
+      }))
       .sort((a, b) => {
-        let a2 = splitCache1[a] || (splitCache1[a] = a.split(path.sep)),
-          b2 = splitCache1[b] || (splitCache1[b] = b.split(path.sep));
-        return Math.sign(a2.length - b2.length);
-      })
-      .sort((a, b) => {
-        let a2 = splitCache2[a] || (splitCache2[a] = a.split('node_modules')),
-          b2 = splitCache2[b] || (splitCache2[b] = b.split('node_modules'));
-        return Math.sign(a2.length - b2.length);
-      })
-      .sort((a, b) => {
-        let a2 = splitCache3[a] || (splitCache3[a] = a.split('~')),
-          b2 = splitCache3[b] || (splitCache3[b] = b.split('~'));
-        return Math.sign(a2.length - b2.length);
+        const s = Math.sign(a.seps - b.seps);
+        if (s !== 0) return s;
+        return Math.sign(a.penalties - b.penalties);
       });
     if (source.length < 1 || lineNumber == null) {
       return new StackFrame(
@@ -76,13 +76,14 @@ async function unmap(
         null
       );
     }
+    const sourceT = source[0].token;
     const { line, column } = map.getGeneratedPosition(
-      source[0],
+      sourceT,
       lineNumber,
       // $FlowFixMe
       columnNumber
     );
-    const originalSource = map.getSource(source[0]);
+    const originalSource = map.getSource(sourceT);
     return new StackFrame(
       functionName,
       fileUri,
