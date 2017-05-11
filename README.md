@@ -12,6 +12,8 @@ If something doesn’t work please [file an issue](https://github.com/facebookin
 
 ```sh
 npm install -g create-react-app
+# OR
+yarn global add create-react-app
 
 create-react-app my-app
 cd my-app/
@@ -38,6 +40,8 @@ Install it once globally:
 
 ```sh
 npm install -g create-react-app
+# OR
+yarn global add create-react-app
 ```
 
 **You’ll need to have Node >= 6 on your machine**. You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects.
