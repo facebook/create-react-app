@@ -47,14 +47,15 @@ async function unmap(
     const fN: string = fileName;
     const source = map
       .getSources()
-      .map(s => path.normalize(s.replace(/[\\]+/g, '/')))
+      .map(s => s.replace(/[\\]+/g, '/'))
       .filter(p => {
+        p = path.normalize(p);
         const i = p.lastIndexOf(fN);
         return i !== -1 && i === p.length - fN.length;
       })
       .map(p => ({
         token: p,
-        seps: count(path.sep, p),
+        seps: count(path.sep, path.normalize(p)),
         penalties: count('node_modules', p) + count('~', p),
       }))
       .sort((a, b) => {
