@@ -441,6 +441,18 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
    }
 ```
 
+Now running `npm start` and `npm run build` also builds Sass files.
+
+**Why `node-sass-chokidar`?**
+
+`node-sass` has been reported as having the following issues:
+
+- `node-sass --watch` has been reported to have *performance issues* in certain conditions when used in a virtual machine or with docker.
+
+- Infinite styles compiling [#1939](https://github.com/facebookincubator/create-react-app/issues/1939)
+
+ `node-sass-chokidar` is used here as it addresses these issues.
+
 ## Adding Images, Fonts, and Files
 
 With Webpack, using static assets like images and fonts works similarly to CSS.
