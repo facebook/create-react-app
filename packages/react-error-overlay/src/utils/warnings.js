@@ -26,7 +26,7 @@ function massage(warning: string): { message: string, stack: string } | null {
     if (!m[1]) {
       break;
     }
-    stack = `in render (at ${m[1]})\n${stack}`;
+    stack = `in (render function) (at ${m[1]})\n${stack}`;
     break;
   }
   if (!found) {
