@@ -177,6 +177,11 @@ function formatWebpackMessages(json) {
     // preceding a much more useful Babel syntax error.
     result.errors = result.errors.filter(isLikelyASyntaxError);
   }
+  // Only keep the first error. Others are often indicative
+  // of the same problem, but confuse the reader with noise.
+  if (result.errors.length > 1) {
+    result.errors.length = 1;
+  }
   return result;
 }
 
