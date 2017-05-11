@@ -96,15 +96,8 @@ function resolveOwn(relativePath) {
 
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
-  appPath: resolveApp('.'),
   dotenv: resolveApp('.env'),
-  dotenvLocal: resolveApp('.env.local'),
-  dotenvDevelopment: resolveApp('.env.development'),
-  dotenvDevelopmentLocal: resolveApp('.env.development.local'),
-  dotenvTest: resolveApp('.env.test'),
-  dotenvTestLocal: resolveApp('.env.test.local'),
-  dotenvProduction: resolveApp('.env.production'),
-  dotenvProductionLocal: resolveApp('.env.production.local'),
+  appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
@@ -133,15 +126,8 @@ if (
   __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
 ) {
   module.exports = {
-    appPath: resolveApp('.'),
     dotenv: resolveOwn('template/.env'),
-    dotenvLocal: resolveOwn('template/.env.local'),
-    dotenvDevelopment: resolveOwn('template/.env.development'),
-    dotenvDevelopmentLocal: resolveOwn('template/.env.development.local'),
-    dotenvTest: resolveOwn('template/.env.test'),
-    dotenvTestLocal: resolveOwn('template/.env.test.local'),
-    dotenvProduction: resolveOwn('template/.env.production'),
-    dotenvProductionLocal: resolveOwn('template/.env.production.local'),
+    appPath: resolveApp('.'),
     appBuild: resolveOwn('../../build'),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
