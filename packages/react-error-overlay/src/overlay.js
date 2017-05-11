@@ -22,6 +22,7 @@ import {
 import {
   permanentRegister as permanentRegisterConsole,
 } from './effects/proxyConsole';
+import { massage as massageWarning } from './utils/warnings';
 
 import {
   consume as consumeError,
@@ -210,23 +211,17 @@ function inject() {
   registerStackTraceLimit();
 
   permanentRegisterConsole('error', warning => {
-    const nIndex = warning.indexOf('\n');
-    let message = warning;
-    if (nIndex !== -1) {
-      message = message.substring(0, nIndex);
-    }
-    const stack = warning.substring(nIndex + 1);
-    window.requestAnimationFrame(function() {
-      return crash(
-        // $FlowFixMe
-        {
-          message: message,
-          stack: stack,
-          __unmap_source: '/static/js/bundle.js',
-        },
-        false
-      );
-    });
+    const data = massageWarning(warning);
+    if (data == null) return;
+    crash(
+      // $FlowFixMe
+      {
+        message: data.message,
+        stack: data.stack,
+        __unmap_source: '/static/js/bundle.js',
+      },
+      false
+    );
   });
 }
 
