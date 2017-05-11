@@ -4,11 +4,11 @@ import { resolve } from 'path';
 
 test('finds an external source map', async () => {
   const file = fs
-    .readFileSync(resolve(__dirname, '../../fixtures/bundle.js'))
+    .readFileSync(resolve(__dirname, '../../fixtures/bundle.mjs'))
     .toString('utf8');
   fetch.mockResponseOnce(
     fs
-      .readFileSync(resolve(__dirname, '../../fixtures/bundle.js.map'))
+      .readFileSync(resolve(__dirname, '../../fixtures/bundle.mjs.map'))
       .toString('utf8')
   );
 
@@ -24,10 +24,10 @@ test('find an inline source map', async () => {
   const sourceName = 'test.js';
 
   const file = fs
-    .readFileSync(resolve(__dirname, '../../fixtures/inline.js'))
+    .readFileSync(resolve(__dirname, '../../fixtures/inline.mjs'))
     .toString('utf8');
   const fileO = fs
-    .readFileSync(resolve(__dirname, '../../fixtures/inline.es6.js'))
+    .readFileSync(resolve(__dirname, '../../fixtures/inline.es6.mjs'))
     .toString('utf8');
 
   const sm = await getSourceMap('/', file);
@@ -43,7 +43,7 @@ test('error on a source map with unsupported encoding', async () => {
   expect.assertions(2);
 
   const file = fs
-    .readFileSync(resolve(__dirname, '../../fixtures/junk-inline.js'))
+    .readFileSync(resolve(__dirname, '../../fixtures/junk-inline.mjs'))
     .toString('utf8');
   try {
     await getSourceMap('/', file);
