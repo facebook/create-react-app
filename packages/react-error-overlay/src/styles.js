@@ -65,6 +65,7 @@ const headerStyle = {
   'font-size': '1.7em',
   'font-weight': 'bold',
   color: red,
+  'white-space': 'pre-wrap',
 };
 
 const functionNameStyle = {

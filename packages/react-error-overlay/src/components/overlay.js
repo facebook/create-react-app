@@ -50,11 +50,19 @@ function createOverlay(
   // Create header
   const header = document.createElement('div');
   applyStyles(header, headerStyle);
-  if (message.match(/^\w*:/)) {
-    header.appendChild(document.createTextNode(message));
-  } else {
-    header.appendChild(document.createTextNode(name + ': ' + message));
-  }
+
+  // Make message prettier
+  let finalMessage = message.match(/^\w*:/) ? name + ': ' + message : message;
+  finalMessage = finalMessage
+    // TODO: maybe remove this prefix from fbjs?
+    // It's just scaring people
+    .replace('Invariant Violation: ', '')
+    // Break the actionable part to the next line.
+    // AFAIK React 16+ should already do this.
+    .replace(' Check the render method', '\n\nCheck the render method');
+
+  // Put it in the DOM
+  header.appendChild(document.createTextNode(finalMessage));
   container.appendChild(header);
 
   // Create trace
