@@ -127,8 +127,8 @@ function createFrame(
   lastElement: boolean
 ) {
   const { compiled } = frameSetting;
+  let { functionName } = frame;
   const {
-    functionName,
     fileName,
     lineNumber,
     columnNumber,
@@ -138,6 +138,14 @@ function createFrame(
     _originalColumnNumber: sourceColumnNumber,
     _originalScriptCode: sourceLines,
   } = frame;
+
+  // TODO: find a better place for this.
+  // Chrome has a bug with inferring function.name:
+  // https://github.com/facebookincubator/create-react-app/issues/2097
+  // Let's ignore a meaningless name we get for top-level modules.
+  if (functionName === 'Object.friendlySyntaxErrorLabel') {
+    functionName = '(anonymous function)';
+  }
 
   let url;
   if (!compiled && sourceFileName && sourceLineNumber) {

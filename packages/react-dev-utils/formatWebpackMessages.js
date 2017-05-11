@@ -84,7 +84,7 @@ function formatMessage(message, isError) {
       "$1 '$4' does not contain an export named '$3'."
     );
   }
-  
+
   // TODO: Ideally we should write a custom ESLint formatter instead.
 
   // If the second line already includes a filename, and it's a warning,
@@ -121,6 +121,18 @@ function formatMessage(message, isError) {
     }
     return true;
   });
+
+  var ESLINT_WARNING_LABEL = String.fromCharCode(27) +
+    '[33m' +
+    'warning' +
+    String.fromCharCode(27) +
+    '[39m';
+  // If there were errors, omit any warnings.
+  if (isError) {
+    lines = lines.filter(function(line) {
+      return line.indexOf(ESLINT_WARNING_LABEL) === -1;
+    });
+  }
 
   // Prepend filename with an explanation.
   lines[0] =
@@ -164,6 +176,11 @@ function formatWebpackMessages(json) {
     // This prevents a confusing ESLint parsing error
     // preceding a much more useful Babel syntax error.
     result.errors = result.errors.filter(isLikelyASyntaxError);
+  }
+  // Only keep the first error. Others are often indicative
+  // of the same problem, but confuse the reader with noise.
+  if (result.errors.length > 1) {
+    result.errors.length = 1;
   }
   return result;
 }
