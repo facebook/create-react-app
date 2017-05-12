@@ -11,6 +11,7 @@
     "node": ">=6"
   },
   "files": [
+    "formatter.js",
     "ansiHTML.js",
     "checkRequiredFiles.js",
     "clearConsole.js",

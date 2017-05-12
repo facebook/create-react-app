@@ -19,6 +19,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const formatter = require('react-dev-utils/formatter');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -123,6 +124,7 @@ module.exports = {
             // @remove-on-eject-begin
             // Point ESLint to our predefined config.
             options: {
+              formatter,
               baseConfig: {
                 extends: ['react-app'],
               },
