@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "node packages/react-scripts/scripts/build.js",
+    "build": "cd packages/react-scripts && node scripts/build.js",
     "changelog": "lerna-changelog",
     "create-react-app": "tasks/cra.sh",
     "e2e": "tasks/e2e-simple.sh",

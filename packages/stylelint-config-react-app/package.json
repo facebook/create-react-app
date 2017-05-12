@@ -13,9 +13,5 @@
   "peerDependencies": {
     "stylelint": "^7.10.1",
     "stylelint-csstree-validator": "^1.1.1"
-  },
-  "dependencies": {
-    "stylelint": "^7.10.1",
-    "stylelint-csstree-validator": "^1.1.1"
   }
 }
