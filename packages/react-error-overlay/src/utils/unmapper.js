@@ -5,8 +5,15 @@ import { getLinesAround } from './getLinesAround';
 import path from 'path';
 
 function count(search: string, string: string): number {
-  let count = -1, index = 0;
-  for (; index !== -1; count++, (index = string.indexOf(search, index + 1)));
+  // Count starts at -1 becuse a do-while loop always runs at least once
+  let count = -1, index = -1;
+  do {
+    // First call or the while case evaluated true, meaning we have to make
+    // count 0 or we found a character
+    ++count;
+    // Find the index of our search string, starting after the previous index
+    index = string.indexOf(search, index + 1);
+  } while (index !== -1);
   return count;
 }
 
