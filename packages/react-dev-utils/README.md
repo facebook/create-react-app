@@ -168,12 +168,13 @@ compiler.plugin('done', function(stats) {
 
 #### `formatter(results: Object): string`
 
-This is an eslint formatter that takes the result generated from eslint and formats the output string
+This is our custom ESLint formatter that integrates well with Create React App console output. You can remove it and use the default one instead
 
 ```js
 const formatter = require('react-dev-utils/formatter');
 const webpack = require('webpack');
 
+// Eslint loader in your webpack config
 module: {
    strictExportPresence: true,
    rules: [
@@ -183,7 +184,6 @@ module: {
         enforce: 'pre',
         use: [
           {
-            // @remove-on-eject-begin
             // Point ESLint to our predefined config.
             options: {
               formatter,
@@ -193,7 +193,6 @@ module: {
               ignore: false,
               useEslintrc: false,
             },
-            // @remove-on-eject-end
             loader: 'eslint-loader',
           },
         ],
