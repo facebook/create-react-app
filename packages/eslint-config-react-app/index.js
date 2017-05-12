@@ -135,8 +135,6 @@ module.exports = {
     'no-unused-vars': [
       'warn',
       {
-        vars: 'local',
-        varsIgnorePattern: '^_',
         args: 'none',
         ignoreRestSiblings: true,
       },

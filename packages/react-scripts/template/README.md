@@ -1199,7 +1199,7 @@ Learn more about React Storybook:
 
 * Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
 * [GitHub Repo](https://github.com/kadirahq/react-storybook)
-* [Documentation](https://getstorybook.io/docs)
+* [Documentation](https://storybooks.js.org/docs/react-storybook/basics/introduction/)
 * [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
 
 ## Making a Progressive Web App
@@ -1516,7 +1516,7 @@ When you build the project, Create React App will place the `public` folder cont
 3. Add this line to `scripts` in `package.json`:
 
     ```
-    "now-start": "serve build/",
+    "now-start": "serve -s build/",
     ```
 
 4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
