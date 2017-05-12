@@ -88,7 +88,7 @@ cd my-app
 
 and then run `npm start` or `npm run build`.
 
-*Note: if you are using yarn, we suggest that you use `yarn install --no-lockfile` instead of the bare `yarn` or `yarn install` because we [intentionally](https://github.com/facebookincubator/create-react-app/pull/2014#issuecomment-300811661) do not ignore or add yarn.lock to our repo.
+*Note: if you are using yarn, we suggest that you use `yarn install --no-lockfile` instead of the bare `yarn` or `yarn install` because we [intentionally](https://github.com/facebookincubator/create-react-app/pull/2014#issuecomment-300811661) do not ignore or add yarn.lock to our repo.*
 
 ## Cutting a Release
 
