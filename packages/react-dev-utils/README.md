@@ -166,6 +166,43 @@ compiler.plugin('done', function(stats) {
 });
 ```
 
+#### `formatter(results: Object): string`
+
+This is an eslint formatter that takes the result generated from eslint and formats the output string
+
+```js
+const formatter = require('react-dev-utils/formatter');
+const webpack = require('webpack');
+
+module: {
+   strictExportPresence: true,
+   rules: [
+     { parser: { requireEnsure: false } },
+     {
+        test: /\.(js|jsx)$/,
+        enforce: 'pre',
+        use: [
+          {
+            // @remove-on-eject-begin
+            // Point ESLint to our predefined config.
+            options: {
+              formatter,
+              baseConfig: {
+                extends: ['react-app'],
+              },
+              ignore: false,
+              useEslintrc: false,
+            },
+            // @remove-on-eject-end
+            loader: 'eslint-loader',
+          },
+        ],
+        include: paths.appSrc,
+      }
+   ]
+}
+```
+
 #### `getProcessForPort(port: number): string`
 
 Finds the currently running process on `port`.
