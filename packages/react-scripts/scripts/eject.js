@@ -56,16 +56,19 @@ prompt(
   const folders = ['config', 'config/jest', 'scripts', 'scripts/utils'];
 
   // Make shallow array of files paths
-  const files = folders.reduce((files, folder) => {
-    return files.concat(
-      fs
-        .readdirSync(path.join(ownPath, folder))
-        // set full path
-        .map(file => path.join(ownPath, folder, file))
-        // omit dirs from file list
-        .filter(file => fs.lstatSync(file).isFile())
-    );
-  }, []);
+  const files = folders.reduce(
+    (files, folder) => {
+      return files.concat(
+        fs
+          .readdirSync(path.join(ownPath, folder))
+          // set full path
+          .map(file => path.join(ownPath, folder, file))
+          // omit dirs from file list
+          .filter(file => fs.lstatSync(file).isFile())
+      );
+    },
+    []
+  );
 
   // Ensure that the app folder is clean and we won't override any files
   folders.forEach(verifyAbsent);
@@ -85,19 +88,18 @@ prompt(
     if (content.match(/\/\/ @remove-file-on-eject/)) {
       return;
     }
-    content =
-      content
-        // Remove dead code from .js files on eject
-        .replace(
-          /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/gm,
-          ''
-        )
-        // Remove dead code from .applescript files on eject
-        .replace(
-          /-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/gm,
-          ''
-        )
-        .trim() + '\n';
+    content = content
+      // Remove dead code from .js files on eject
+      .replace(
+        /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/gm,
+        ''
+      )
+      // Remove dead code from .applescript files on eject
+      .replace(
+        /-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/gm,
+        ''
+      )
+      .trim() + '\n';
     console.log(`  Adding ${cyan(file.replace(ownPath, ''))} to the project`);
     fs.writeFileSync(file.replace(ownPath, appPath), content);
   });
@@ -166,7 +168,7 @@ prompt(
   // Add stylelint config
   console.log(`  Adding ${cyan('stylelint')} configuration`);
   appPackage.stylelint = {
-    extends: 'stylelint-config-standard',
+    extends: 'stylelint-config-react-app',
   };
 
   fs.writeFileSync(
