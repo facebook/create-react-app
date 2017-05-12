@@ -161,11 +161,6 @@ function crash(error: Error, unhandledRejection = false) {
   consumeError(error, unhandledRejection, CONTEXT_SIZE)
     .then(ref => {
       if (ref == null) {
-        console.warn(
-          `react-error-overlay could not deduce if the previous error was from your code. Since we can't display anything useful, we're giving you this warning instead.
-This error is most likely a bug with the package you see in the stack trace, however, it may be caused indirectly by something you are calling within the package.
-Try searching or opening an issue with the relevant package.`
-        );
         return;
       }
       errorReferences.push(ref);
