@@ -14,7 +14,9 @@ function massage(
 
   let message = warning;
   const nIndex = message.indexOf('\n');
-  if (nIndex !== -1) message = message.substring(0, nIndex);
+  if (nIndex !== -1) {
+    message = message.substring(0, nIndex);
+  }
 
   for (const trim of removals) {
     message = message.replace(trim, '');
@@ -23,14 +25,11 @@ function massage(
   let stack = '';
   for (let index = 0; index < frames.length; ++index) {
     const { fileName, lineNumber } = frames[index];
-    if (fileName == null || lineNumber == null) continue;
-    let { functionName } = frames[index];
-    if (functionName == null && index === 0 && index + 1 < frames.length) {
-      functionName = frames[index + 1].functionName;
-      if (functionName !== null) functionName = `(${functionName})`;
+    if (fileName == null || lineNumber == null) {
+      continue;
     }
-    functionName = functionName || '(unknown function)';
-
+    let { functionName } = frames[index];
+    functionName = functionName || '(anonymous function)';
     stack += `in ${functionName} (at ${fileName}:${lineNumber})\n`;
   }
   return { message, stack };
