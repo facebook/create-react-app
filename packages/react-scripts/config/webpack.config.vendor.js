@@ -13,7 +13,7 @@ const vendorGlobalName = '[name]' + vendorHash.replace(/\./g, '');
 module.exports = {
   cache: true,
   entry: {
-    vendor: [paths.vendorPath],
+    vendor: [paths.vendorSrc],
   },
   output: {
     filename: vendorHash + '.js',

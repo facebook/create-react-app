@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/public/vendor
 
 # testing
 /coverage
@@ -15,4 +16,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-

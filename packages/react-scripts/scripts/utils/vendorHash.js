@@ -1,10 +1,9 @@
 'use strict';
 const crypto = require('crypto');
 const fs = require('fs');
-const path = require('path');
 const paths = require('../../config/paths');
 const hash = crypto.createHash('md5');
-const input = fs.readFileSync(path.join(paths.vendorPath, 'index.js'));
+const input = fs.readFileSync(paths.vendorSrc);
 const appPackageJson = fs.readFileSync(paths.appPackageJson);
 
 hash.update(input);

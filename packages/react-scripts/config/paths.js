@@ -85,6 +85,8 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths,
   vendorPath: resolveApp('public/vendor'),
+  vendorSrc: resolveApp('src/vendor.js'),
+
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
 };
@@ -108,6 +110,8 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths,
   vendorPath: resolveApp('public/vendor'),
+  vendorSrc: resolveApp('src/vendor.js'),
+
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
   // These properties only exist before ejecting:
@@ -138,6 +142,7 @@ if (
     appNodeModules: resolveOwn('node_modules'),
     nodePaths: nodePaths,
     vendorPath: resolveOwn('template/public/vendor'),
+    vendorSrc: resolveOwn('template/src/vendor.js'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
     // These properties only exist before ejecting:
