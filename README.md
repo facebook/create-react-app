@@ -23,6 +23,10 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Changelog
 
+### 1.4.0
+* Upgrade to typescript@2.3.2 - thanks to @patrick91
+* Add tests around react-scripts-ts - thanks to @migerh
+
 ### 1.3.0
 * Upgrade to typescript@2.2.2 - thanks to @jeremistadler
 
