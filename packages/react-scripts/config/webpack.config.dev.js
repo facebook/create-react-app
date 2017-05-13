@@ -19,11 +19,6 @@ var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeMod
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 
-// @remove-on-eject-begin
-// `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
-var path = require('path');
-// @remove-on-eject-end
-
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 var publicPath = '/';
