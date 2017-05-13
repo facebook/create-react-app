@@ -59,10 +59,13 @@ function createOverlay(
   finalMessage = finalMessage
     // TODO: maybe remove this prefix from fbjs?
     // It's just scaring people
-    .replace('Invariant Violation: ', '')
+    .replace(/^Invariant Violation:\s*/, '')
+    // This is not helpful either:
+    .replace(/^Warning:\s*/, '')
     // Break the actionable part to the next line.
     // AFAIK React 16+ should already do this.
-    .replace(' Check the render method', '\n\nCheck the render method');
+    .replace(' Check the render method', '\n\nCheck the render method')
+    .replace(' Check your code at', '\n\nCheck your code at');
 
   // Put it in the DOM
   header.appendChild(document.createTextNode(finalMessage));

@@ -10,10 +10,8 @@ function massage(
   frames: ReactFrame[]
 ): { message: string, stack: string } {
   let message = stripInlineStacktrace(warning);
-  if (message.indexOf('Warning: ') === 0) {
-    message = message.substring('Warning: '.length);
-  }
 
+  // Reassemble the stack with full filenames provided by React
   let stack = '';
   for (let index = 0; index < frames.length; ++index) {
     const { fileName, lineNumber } = frames[index];
