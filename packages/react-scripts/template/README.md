@@ -232,7 +232,7 @@ If you want to enforce a coding style for your project, consider using [Prettier
 
 **This feature is currently only supported by [Visual Studio Code](https://code.visualstudio.com) editor.**
 
-Visual Studio Code supports live-editing and debugging out of the box with Create React App. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.
+Visual Studio Code supports debugging out of the box with Create React App. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.
 
 You would need to have the latest version of [VS Code](https://code.visualstudio.com) and VS Code [Chrome Debugger Extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed.
 
@@ -398,15 +398,14 @@ Following this rule often makes CSS preprocessors less useful, as features like 
 First, let’s install the command-line interface for Sass:
 
 ```
-npm install node-sass --save-dev
+npm install node-sass-chokidar --save-dev
 ```
-
 Then in `package.json`, add the following lines to `scripts`:
 
 ```diff
    "scripts": {
-+    "build-css": "node-sass src/ -o src/",
-+    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
++    "build-css": "node-sass-chokidar src/ -o src/",
++    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
@@ -430,8 +429,8 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
 
 ```diff
    "scripts": {
-     "build-css": "node-sass src/ -o src/",
-     "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
+     "build-css": "node-sass-chokidar src/ -o src/",
+     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
 -    "start": "react-scripts start",
 -    "build": "react-scripts build",
 +    "start-js": "react-scripts start",
@@ -442,27 +441,19 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
    }
 ```
 
-Now running `npm start` and `npm run build` also builds Sass files. Note that `node-sass` seems to have an [issue recognizing newly created files on some systems](https://github.com/sass/node-sass/issues/1891) so you might need to restart the watcher when you create a file until it’s resolved.
+Now running `npm start` and `npm run build` also builds Sass files. 
 
-**Performance Note**
+**Why `node-sass-chokidar`?**
 
-`node-sass --watch` has been reported to have *performance issues* in certain conditions when used in a virtual machine or with docker. If you are experiencing high CPU usage with node-sass you can alternatively try [node-sass-chokidar](https://www.npmjs.com/package/node-sass-chokidar) which uses a different file-watcher. Usage remains the same, simply replace `node-sass` with `node-sass-chokidar`:
+`node-sass` has been reported as having the following issues:
 
-```
-npm uninstall node-sass --save-dev
-npm install node-sass-chokidar --save-dev
-```
+- `node-sass --watch` has been reported to have *performance issues* in certain conditions when used in a virtual machine or with docker.
 
-And in your scripts:
+- Infinite styles compiling [#1939](https://github.com/facebookincubator/create-react-app/issues/1939)
 
-```diff
-   "scripts": {
--    "build-css": "node-sass src/ -o src/",
--    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive"
-+    "build-css": "node-sass-chokidar src/ -o src/",
-+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
-   }
-```
+- `node-sass` has been reported as having issues with detecting new files in a directory [#1891](https://github.com/sass/node-sass/issues/1891)
+
+ `node-sass-chokidar` is used here as it addresses these issues.
 
 ## Adding Images, Fonts, and Files
 
@@ -747,6 +738,24 @@ To define permanent environment variables, create a file called `.env` in the ro
 ```
 REACT_APP_SECRET_CODE=abcdef
 ```
+
+<!--
+TODO: uncomment (and tweak) the doc for 0.10
+What .env* files are used?
+
+* `.env` - Default
+* `.env.development`, `.env.test`, `.env.production` - Environment-specific settings.
+* `.env.local` - Local overrides. This file is loaded for all environments except test.
+* `.env.development.local`, `.env.test.local`, `.env.production.local` - Local overrides of environment-specific settings.
+
+Files priority (file is skipped if does not exist):
+
+* npm test - `.env.test.local`, `env.test`, `.env.local`, `.env`
+* npm run build - `.env.production.local`, `env.production`, `.env.local`, `.env`
+* npm start - `.env.development.local`, `env.development`, `.env.local`, `.env`
+
+Priority from left to right.
+-->
 
 These variables will act as the defaults if the machine does not explicitly set them.<br>
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
