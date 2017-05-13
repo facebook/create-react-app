@@ -215,7 +215,9 @@ function createFrame(
           lineNumber,
           columnNumber,
           contextSize,
-          critical
+          critical,
+          frame._originalFileName,
+          frame._originalLineNumber
         )
       );
       hasSource = true;
@@ -232,7 +234,9 @@ function createFrame(
           sourceLineNumber,
           sourceColumnNumber,
           contextSize,
-          critical
+          critical,
+          frame._originalFileName,
+          frame._originalLineNumber
         )
       );
       hasSource = true;

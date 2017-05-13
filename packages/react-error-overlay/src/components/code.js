@@ -19,7 +19,9 @@ function createCode(
   lineNum: number,
   columnNum: number | null,
   contextSize: number,
-  main: boolean = false
+  main: boolean,
+  clickToOpenFileName: ?string,
+  clickToOpenLineNumber: ?number
 ) {
   const sourceCode = [];
   let whiteSpace = Infinity;
@@ -83,6 +85,19 @@ function createCode(
   const pre = document.createElement('pre');
   applyStyles(pre, preStyle);
   pre.appendChild(code);
+
+  if (clickToOpenFileName) {
+    pre.style.cursor = 'pointer';
+    pre.addEventListener('click', function() {
+      fetch(
+        '/__open-stack-frame-in-editor?fileName=' +
+          window.encodeURIComponent(clickToOpenFileName) +
+          '&lineNumber=' +
+          window.encodeURIComponent(clickToOpenLineNumber || 1)
+      ).then(() => {}, () => {});
+    });
+  }
+
   return pre;
 }
 
