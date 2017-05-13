@@ -26,17 +26,11 @@ module.exports = {
   plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
 
   env: {
+    browser: true,
     commonjs: true,
     es6: true,
     jest: true,
     node: true,
-  },
-
-  globals: {
-    document: true,
-    window: true,
-    console: true,
-    navigator: true
   },
 
   parserOptions: {
@@ -141,8 +135,6 @@ module.exports = {
     'no-unused-vars': [
       'warn',
       {
-        vars: 'local',
-        varsIgnorePattern: '^_',
         args: 'none',
         ignoreRestSiblings: true,
       },
