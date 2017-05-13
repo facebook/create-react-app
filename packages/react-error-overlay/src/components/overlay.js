@@ -12,7 +12,7 @@ import type { SwitchCallback } from './additional';
 
 function createOverlay(
   document: Document,
-  name: string,
+  name: ?string,
   message: string,
   frames: StackFrame[],
   contextSize: number,
@@ -52,14 +52,20 @@ function createOverlay(
   applyStyles(header, headerStyle);
 
   // Make message prettier
-  let finalMessage = message.match(/^\w*:/) ? message : name + ': ' + message;
+  let finalMessage = message.match(/^\w*:/) || !name
+    ? message
+    : name + ': ' + message;
+
   finalMessage = finalMessage
     // TODO: maybe remove this prefix from fbjs?
     // It's just scaring people
-    .replace('Invariant Violation: ', '')
+    .replace(/^Invariant Violation:\s*/, '')
+    // This is not helpful either:
+    .replace(/^Warning:\s*/, '')
     // Break the actionable part to the next line.
     // AFAIK React 16+ should already do this.
-    .replace(' Check the render method', '\n\nCheck the render method');
+    .replace(' Check the render method', '\n\nCheck the render method')
+    .replace(' Check your code at', '\n\nCheck your code at');
 
   // Put it in the DOM
   header.appendChild(document.createTextNode(finalMessage));

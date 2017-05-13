@@ -127,13 +127,12 @@ function createFrame(
   lastElement: boolean
 ) {
   const { compiled } = frameSetting;
-  let { functionName } = frame;
+  let { functionName, _originalFileName: sourceFileName } = frame;
   const {
     fileName,
     lineNumber,
     columnNumber,
     _scriptCode: scriptLines,
-    _originalFileName: sourceFileName,
     _originalLineNumber: sourceLineNumber,
     _originalColumnNumber: sourceColumnNumber,
     _originalScriptCode: sourceLines,
@@ -149,6 +148,12 @@ function createFrame(
 
   let url;
   if (!compiled && sourceFileName && sourceLineNumber) {
+    // Remove everything up to the first /src/
+    const trimMatch = /^[/|\\].*?[/|\\](src[/|\\].*)/.exec(sourceFileName);
+    if (trimMatch && trimMatch[1]) {
+      sourceFileName = trimMatch[1];
+    }
+
     url = sourceFileName + ':' + sourceLineNumber;
     if (sourceColumnNumber) {
       url += ':' + sourceColumnNumber;

@@ -19,6 +19,12 @@ import {
   register as registerStackTraceLimit,
   unregister as unregisterStackTraceLimit,
 } from './effects/stackTraceLimit';
+import {
+  permanentRegister as permanentRegisterConsole,
+  registerReactStack,
+  unregisterReactStack,
+} from './effects/proxyConsole';
+import { massage as massageWarning } from './utils/warnings';
 
 import {
   consume as consumeError,
@@ -66,7 +72,7 @@ const css = [
   '}',
 ].join('\n');
 
-function render(name: string, message: string, resolvedFrames: StackFrame[]) {
+function render(name: ?string, message: string, resolvedFrames: StackFrame[]) {
   disposeCurrentView();
 
   const iframe = window.document.createElement('iframe');
@@ -156,6 +162,9 @@ function crash(error: Error, unhandledRejection = false) {
   }
   consumeError(error, unhandledRejection, CONTEXT_SIZE)
     .then(ref => {
+      if (ref == null) {
+        return;
+      }
       errorReferences.push(ref);
       if (iframeReference !== null && additionalReference !== null) {
         updateAdditional(
@@ -205,6 +214,20 @@ function inject() {
   registerPromise(window, error => crash(error, true));
   registerShortcuts(window, shortcutHandler);
   registerStackTraceLimit();
+
+  registerReactStack();
+  permanentRegisterConsole('error', (warning, stack) => {
+    const data = massageWarning(warning, stack);
+    crash(
+      // $FlowFixMe
+      {
+        message: data.message,
+        stack: data.stack,
+        __unmap_source: '/static/js/bundle.js',
+      },
+      false
+    );
+  });
 }
 
 function uninject() {
@@ -212,6 +235,7 @@ function uninject() {
   unregisterShortcuts(window);
   unregisterPromise(window);
   unregisterError(window);
+  unregisterReactStack();
 }
 
 export { inject, uninject };
