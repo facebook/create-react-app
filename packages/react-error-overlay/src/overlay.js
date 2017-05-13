@@ -21,6 +21,8 @@ import {
 } from './effects/stackTraceLimit';
 import {
   permanentRegister as permanentRegisterConsole,
+  registerReactStack,
+  unregisterReactStack,
 } from './effects/proxyConsole';
 import { massage as massageWarning } from './utils/warnings';
 
@@ -213,8 +215,9 @@ function inject() {
   registerShortcuts(window, shortcutHandler);
   registerStackTraceLimit();
 
-  permanentRegisterConsole('error', warning => {
-    const data = massageWarning(warning);
+  registerReactStack();
+  permanentRegisterConsole('error', (warning, stack) => {
+    const data = massageWarning(warning, stack);
     if (data == null) return;
     crash(
       // $FlowFixMe
@@ -233,6 +236,7 @@ function uninject() {
   unregisterShortcuts(window);
   unregisterPromise(window);
   unregisterError(window);
+  unregisterReactStack();
 }
 
 export { inject, uninject };
