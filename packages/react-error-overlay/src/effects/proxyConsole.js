@@ -5,15 +5,15 @@ type ReactFrame = {
   lineNumber: number | null,
   functionName: string | null,
 };
-const ReactFrameStack: Array<ReactFrame[]> = [];
+const reactFrameStack: Array<ReactFrame[]> = [];
 
 export type { ReactFrame };
 
 const registerReactStack = () => {
   // $FlowFixMe
-  console.stack = frames => ReactFrameStack.push(frames);
+  console.stack = frames => reactFrameStack.push(frames);
   // $FlowFixMe
-  console.stackEnd = frames => ReactFrameStack.pop();
+  console.stackEnd = frames => reactFrameStack.pop();
 };
 
 const unregisterReactStack = () => {
@@ -33,8 +33,17 @@ const permanentRegister = function proxyConsole(
 ) {
   const orig = console[type];
   console[type] = function __stack_frame_overlay_proxy_console__() {
-    const message = [].slice.call(arguments).join(' ');
-    callback(message, ReactFrameStack[ReactFrameStack.length - 1]);
+    try {
+      const message = arguments[0];
+      if (typeof message === 'string' && reactFrameStack.length > 0) {
+        callback(message, reactFrameStack[reactFrameStack.length - 1]);
+      }
+    } catch (err) {
+      // Warnings must never crash. Rethrow with a clean stack.
+      setTimeout(function() {
+        throw err;
+      });
+    }
     return orig.apply(this, arguments);
   };
 };
