@@ -150,7 +150,9 @@ function createFrame(
   if (!compiled && sourceFileName && sourceLineNumber) {
     // Remove everything up to the first /src/
     const trimMatch = /^[/|\\].*?[/|\\](src[/|\\].*)/.exec(sourceFileName);
-    if (trimMatch && trimMatch[1]) sourceFileName = trimMatch[1];
+    if (trimMatch && trimMatch[1]) {
+      sourceFileName = trimMatch[1];
+    }
 
     url = sourceFileName + ':' + sourceLineNumber;
     if (sourceColumnNumber) {

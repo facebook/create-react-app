@@ -72,7 +72,7 @@ const css = [
   '}',
 ].join('\n');
 
-function render(name: string, message: string, resolvedFrames: StackFrame[]) {
+function render(name: ?string, message: string, resolvedFrames: StackFrame[]) {
   disposeCurrentView();
 
   const iframe = window.document.createElement('iframe');
@@ -218,7 +218,6 @@ function inject() {
   registerReactStack();
   permanentRegisterConsole('error', (warning, stack) => {
     const data = massageWarning(warning, stack);
-    if (data == null) return;
     crash(
       // $FlowFixMe
       {

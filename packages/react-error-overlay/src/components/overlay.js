@@ -12,7 +12,7 @@ import type { SwitchCallback } from './additional';
 
 function createOverlay(
   document: Document,
-  name: string,
+  name: ?string,
   message: string,
   frames: StackFrame[],
   contextSize: number,
@@ -52,7 +52,10 @@ function createOverlay(
   applyStyles(header, headerStyle);
 
   // Make message prettier
-  let finalMessage = message.match(/^\w*:/) ? message : name + ': ' + message;
+  let finalMessage = message.match(/^\w*:/) || !name
+    ? message
+    : name + ': ' + message;
+
   finalMessage = finalMessage
     // TODO: maybe remove this prefix from fbjs?
     // It's just scaring people
