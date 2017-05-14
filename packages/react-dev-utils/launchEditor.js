@@ -11,7 +11,8 @@
 var fs = require('fs');
 var path = require('path');
 var child_process = require('child_process');
-const shellQuote = require('shell-quote');
+var chalk = require('chalk');
+var shellQuote = require('shell-quote');
 
 function isTerminalEditor(editor) {
   switch (editor) {
@@ -110,6 +111,31 @@ function guessEditor() {
   return [null];
 }
 
+function printInstructions(fileName, errorMessage) {
+  console.log();
+  console.log(
+    chalk.red('Could not open ' + path.basename(fileName) + ' in the editor.')
+  );
+  if (errorMessage) {
+    if (errorMessage[errorMessage.length - 1] !== '.') {
+      errorMessage += '.';
+    }
+    console.log(
+      chalk.red('The editor process exited with an error: ' + errorMessage)
+    );
+  }
+  console.log();
+  console.log(
+    'To set up the editor integration, add something like ' +
+      chalk.cyan('REACT_EDITOR=atom') +
+      ' to the ' +
+      chalk.green('.env.local') +
+      ' file in your project folder ' +
+      'and restart the development server.'
+  );
+  console.log();
+}
+
 var _childProcess = null;
 function launchEditor(fileName, lineNumber) {
   if (!fs.existsSync(fileName)) {
@@ -124,6 +150,7 @@ function launchEditor(fileName, lineNumber) {
 
   let [editor, ...args] = guessEditor();
   if (!editor) {
+    printInstructions(fileName, null);
     return;
   }
 
@@ -154,8 +181,16 @@ function launchEditor(fileName, lineNumber) {
   } else {
     _childProcess = child_process.spawn(editor, args, { stdio: 'inherit' });
   }
-  _childProcess.on('exit', function() {
+  _childProcess.on('exit', function(errorCode) {
     _childProcess = null;
+
+    if (errorCode) {
+      printInstructions(fileName, '(code ' + errorCode + ')');
+    }
+  });
+
+  _childProcess.on('error', function(error) {
+    printInstructions(fileName, error.message);
   });
 }
 
