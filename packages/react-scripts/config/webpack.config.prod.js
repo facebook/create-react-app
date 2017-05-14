@@ -62,7 +62,6 @@ module.exports = {
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
   devtool: 'source-map',
-  // In production, we only want to load the polyfills and the app code.
   entry: [paths.appIndexJs],
   output: {
     // The build folder.

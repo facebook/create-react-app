@@ -13,7 +13,9 @@ const vendorGlobalName = '[name]' + vendorHash.replace(/\./g, '');
 module.exports = {
   cache: true,
   entry: (environment === 'production'
-    ? [require.resolve('./polyfills')]
+    ? [
+        require.resolve('./polyfills'), // In production, we only want to load the polyfills and the app code.
+      ]
     : [
         // Include an alternative client for WebpackDevServer. A client's job is to
         // connect to WebpackDevServer by a socket and get notified about changes.
