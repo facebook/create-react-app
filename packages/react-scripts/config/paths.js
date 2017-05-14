@@ -42,6 +42,8 @@ const nodePaths = (process.env.NODE_PATH || '')
   .filter(folder => !path.isAbsolute(folder))
   .map(resolveApp);
 
+const vendorPath = 'node_modules/.cache/vendor';
+
 const envPublicUrl = process.env.PUBLIC_URL;
 
 function ensureSlash(path, needsSlash) {
@@ -85,7 +87,7 @@ module.exports = {
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths,
-  vendorPath: resolveApp('public/vendor'),
+  vendorPath: resolveApp(vendorPath),
   vendorSrc: resolveApp('src/vendor.js'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
@@ -110,7 +112,7 @@ module.exports = {
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths,
-  vendorPath: resolveApp('public/vendor'),
+  vendorPath: resolveApp(vendorPath),
   vendorSrc: resolveApp('src/vendor.js'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
@@ -142,7 +144,7 @@ if (
     testsSetup: resolveOwn('template/src/setupTests.js'),
     appNodeModules: resolveOwn('node_modules'),
     nodePaths: nodePaths,
-    vendorPath: resolveOwn('template/public/vendor'),
+    vendorPath: resolveOwn(vendorPath),
     vendorSrc: resolveOwn('template/src/vendor.js'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
