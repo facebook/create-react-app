@@ -30,7 +30,7 @@ const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const getProcessForPort = require('react-dev-utils/getProcessForPort');
 const openBrowser = require('react-dev-utils/openBrowser');
-const prompt = require('react-dev-utils/prompt');
+const inquirer = require('inquirer');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
 const devServerConfig = require('../config/webpackDevServer.config');
@@ -114,13 +114,18 @@ detect(DEFAULT_PORT, HOST).then(port => {
   if (isInteractive) {
     clearConsole();
     const existingProcess = getProcessForPort(DEFAULT_PORT);
-    const question = chalk.yellow(
-      `Something is already running on port ${DEFAULT_PORT}.` +
-        `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
-    ) + '\n\nWould you like to run the app on another port instead?';
+    const question = {
+      type: 'confirm',
+      name: 'shouldChangePort',
+      message: chalk.yellow(
+        `Something is already running on port ${DEFAULT_PORT}.` +
+          `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
+      ) + '\n\nWould you like to run the app on another port instead?',
+      default: true,
+    };
 
-    prompt(question, true).then(shouldChangePort => {
-      if (shouldChangePort) {
+    inquirer.prompt(question).then(answer => {
+      if (answer.shouldChangePort) {
         run(port);
       }
     });
