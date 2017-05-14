@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-/public/vendor
 
 # testing
 /coverage
