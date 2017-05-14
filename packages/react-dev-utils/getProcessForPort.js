@@ -27,10 +27,10 @@ function isProcessAReactApp(processCommand) {
 }
 
 function getProcessIdOnPort(port) {
-  return execSync(
-    'lsof -i:' + port + ' -P -t -sTCP:LISTEN',
-    execOptions
-  ).trim();
+  let text = execSync('lsof -i:' + port + ' -P -t -sTCP:LISTEN', execOptions)
+    .split('\n')[0]
+    .trim();
+  return text;
 }
 
 function getPackageNameInDirectory(directory) {
