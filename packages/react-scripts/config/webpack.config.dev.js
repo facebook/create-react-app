@@ -11,6 +11,7 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+const cssnext = require('postcss-cssnext');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -200,6 +201,8 @@ module.exports = {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]',
             },
           },
           {
@@ -215,6 +218,7 @@ module.exports = {
                     'not ie < 9', // React doesn't support IE8 anyway
                   ],
                 }),
+                cssnext,
               ],
             },
           },
