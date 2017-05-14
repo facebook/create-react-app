@@ -14,6 +14,7 @@ const chalk = require('chalk');
 const dns = require('dns');
 const historyApiFallback = require('connect-history-api-fallback');
 const httpProxyMiddleware = require('http-proxy-middleware');
+const launchEditor = require('react-dev-utils/launchEditor');
 const url = require('url');
 const paths = require('../../config/paths');
 
@@ -145,10 +146,23 @@ function registerProxy(devServer, _proxy) {
   });
 }
 
+// This is used by the crash overlay.
+function launchEditorMiddleware() {
+  return function(req, res, next) {
+    if (req.url.startsWith('/__open-stack-frame-in-editor')) {
+      launchEditor(req.query.fileName, req.query.lineNumber);
+      res.end();
+    } else {
+      next();
+    }
+  };
+}
+
 module.exports = function addWebpackMiddleware(devServer) {
   // `proxy` lets you to specify a fallback server during development.
   // Every unrecognized request will be forwarded to it.
   const proxy = require(paths.appPackageJson).proxy;
+  devServer.use(launchEditorMiddleware());
   devServer.use(
     historyApiFallback({
       // Paths with dots should still use the history fallback.
