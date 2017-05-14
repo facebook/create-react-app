@@ -22,6 +22,7 @@
     "launchEditor.js",
     "openBrowser.js",
     "openChrome.applescript",
+    "prepareProxy.js",
     "WatchMissingNodeModulesPlugin.js",
     "webpackHotDevClient.js"
   ],

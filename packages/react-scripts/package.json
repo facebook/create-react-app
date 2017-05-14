@@ -67,6 +67,5 @@
   },
   "optionalDependencies": {
     "fsevents": "1.0.17"
-  },
-  "proxy": "http://localhost:5000"
+  }
 }

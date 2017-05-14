@@ -17,7 +17,9 @@ const url = require('url');
 function resolveLoopback(proxy) {
   const o = url.parse(proxy);
   o.host = undefined;
-  if (o.hostname !== 'localhost') return proxy;
+  if (o.hostname !== 'localhost') {
+    return proxy;
+  }
   try {
     o.hostname = address.ipv6() ? '::1' : '127.0.0.1';
   } catch (_ignored) {
@@ -108,10 +110,15 @@ module.exports = function prepareProxy(proxy) {
       process.exit(1);
     }
 
-    if (process.platform === 'win32') proxy = resolveLoopback(proxy);
+    let target;
+    if (process.platform === 'win32') {
+      target = resolveLoopback(proxy);
+    } else {
+      target = proxy;
+    }
     return [
       {
-        target: proxy,
+        target,
         logLevel: 'silent',
         // For single page apps, we generally want to fallback to /index.html.
         // However we also want to respect `proxy` for API calls.
@@ -130,10 +137,10 @@ module.exports = function prepareProxy(proxy) {
           // requests. To prevent CORS issues, we have to change
           // the Origin to match the target URL.
           if (proxyReq.getHeader('origin')) {
-            proxyReq.setHeader('origin', proxy);
+            proxyReq.setHeader('origin', target);
           }
         },
-        onError: onProxyError(proxy),
+        onError: onProxyError(target),
         secure: false,
         changeOrigin: true,
         ws: true,
@@ -153,8 +160,12 @@ module.exports = function prepareProxy(proxy) {
       );
       process.exit(1);
     }
-    let target = proxy[context].target;
-    if (process.platform === 'win32') target = resolveLoopback(target);
+    let target;
+    if (process.platform === 'win32') {
+      target = resolveLoopback(proxy[context].target);
+    } else {
+      target = proxy[context].target;
+    }
     return Object.assign({}, proxy[context], {
       context: function(pathname) {
         return mayProxy.test(pathname) && pathname.match(context);
