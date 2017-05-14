@@ -79,7 +79,13 @@ function insertBeforeBundle(
   parent.insertBefore(div, first);
 }
 
-function frameDiv(document: Document, functionName, url, internalUrl) {
+function frameDiv(
+  document: Document,
+  functionName,
+  url,
+  internalUrl,
+  onSourceClick: ?Function
+) {
   const frame = document.createElement('div');
   const frameFunctionName = document.createElement('div');
 
@@ -112,6 +118,14 @@ function frameDiv(document: Document, functionName, url, internalUrl) {
   frameLink.appendChild(frameAnchor);
   frame.appendChild(frameLink);
 
+  if (typeof onSourceClick === 'function') {
+    let handler = onSourceClick;
+    frameAnchor.style.cursor = 'pointer';
+    frameAnchor.addEventListener('click', function() {
+      handler();
+    });
+  }
+
   return frame;
 }
 
@@ -128,6 +142,43 @@ function isBultinErrorName(errorName: ?string) {
     default:
       return false;
   }
+}
+
+function getPrettyURL(
+  sourceFileName: ?string,
+  sourceLineNumber: ?number,
+  sourceColumnNumber: ?number,
+  fileName: ?string,
+  lineNumber: ?number,
+  columnNumber: ?number,
+  compiled: boolean
+): string {
+  let prettyURL;
+  if (!compiled && sourceFileName && typeof sourceLineNumber === 'number') {
+    // Remove everything up to the first /src/ or /node_modules/
+    const trimMatch = /^[/|\\].*?[/|\\]((src|node_modules)[/|\\].*)/.exec(
+      sourceFileName
+    );
+    if (trimMatch && trimMatch[1]) {
+      prettyURL = trimMatch[1];
+    } else {
+      prettyURL = sourceFileName;
+    }
+    prettyURL += ':' + sourceLineNumber;
+    // Note: we intentionally skip 0's because they're produced by cheap Webpack maps
+    if (sourceColumnNumber) {
+      prettyURL += ':' + sourceColumnNumber;
+    }
+  } else if (fileName && typeof lineNumber === 'number') {
+    prettyURL = fileName + ':' + lineNumber;
+    // Note: we intentionally skip 0's because they're produced by cheap Webpack maps
+    if (columnNumber) {
+      prettyURL += ':' + columnNumber;
+    }
+  } else {
+    prettyURL = 'unknown';
+  }
+  return prettyURL;
 }
 
 function createFrame(
@@ -165,29 +216,15 @@ function createFrame(
     functionName = '(anonymous function)';
   }
 
-  let prettyURL;
-  if (!compiled && sourceFileName && typeof sourceLineNumber === 'number') {
-    // Remove everything up to the first /src/ or /node_modules/
-    const trimMatch = /^[/|\\].*?[/|\\]((src|node_modules)[/|\\].*)/.exec(
-      sourceFileName
-    );
-    if (trimMatch && trimMatch[1]) {
-      prettyURL = trimMatch[1];
-    } else {
-      prettyURL = sourceFileName;
-    }
-    prettyURL += ':' + sourceLineNumber;
-    if (typeof sourceColumnNumber === 'number') {
-      prettyURL += ':' + sourceColumnNumber;
-    }
-  } else if (fileName && typeof lineNumber === 'number') {
-    prettyURL = fileName + ':' + lineNumber;
-    if (typeof columnNumber === 'number') {
-      prettyURL += ':' + columnNumber;
-    }
-  } else {
-    prettyURL = 'unknown';
-  }
+  const prettyURL = getPrettyURL(
+    sourceFileName,
+    sourceLineNumber,
+    sourceColumnNumber,
+    fileName,
+    lineNumber,
+    columnNumber,
+    compiled
+  );
 
   let needsHidden = false;
   const isInternalUrl = isInternalFile(sourceFileName, fileName);
@@ -228,7 +265,25 @@ function createFrame(
     omits.value = 0;
   }
 
-  const elem = frameDiv(document, functionName, prettyURL, shouldCollapse);
+  let onSourceClick = null;
+  if (sourceFileName) {
+    onSourceClick = () => {
+      fetch(
+        '/__open-stack-frame-in-editor?fileName=' +
+          window.encodeURIComponent(sourceFileName) +
+          '&lineNumber=' +
+          window.encodeURIComponent(sourceLineNumber || 1)
+      ).then(() => {}, () => {});
+    };
+  }
+
+  const elem = frameDiv(
+    document,
+    functionName,
+    prettyURL,
+    shouldCollapse,
+    onSourceClick
+  );
   if (needsHidden) {
     applyStyles(elem, hiddenStyle);
     elem.setAttribute('name', 'bundle-' + omitBundle);
@@ -247,8 +302,7 @@ function createFrame(
           columnNumber,
           contextSize,
           critical,
-          frame._originalFileName,
-          frame._originalLineNumber
+          onSourceClick
         )
       );
       hasSource = true;
@@ -266,8 +320,7 @@ function createFrame(
           sourceColumnNumber,
           contextSize,
           critical,
-          frame._originalFileName,
-          frame._originalLineNumber
+          onSourceClick
         )
       );
       hasSource = true;
