@@ -110,6 +110,36 @@ clearConsole();
 console.log('Just cleared the screen!');
 ```
 
+#### `eslintFormatter(results: Object): string`
+
+This is our custom ESLint formatter that integrates well with Create React App console output.  
+You can use the default one instead if you prefer so.
+
+```js
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
+
+// In your webpack config:
+// ...
+module: {
+   rules: [
+     {
+        test: /\.(js|jsx)$/,
+        include: paths.appSrc,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'eslint-loader',
+            options: {
+              // Pass the formatter:
+              formatter: eslintFormatter,
+            },
+          },
+        ],
+      }
+   ]
+}
+```
+
 #### `FileSizeReporter`
 
 ##### `measureFileSizesBeforeBuild(buildFolder: string): Promise<OpaqueFileSizes>`
@@ -164,42 +194,6 @@ compiler.plugin('done', function(stats) {
     messages.warnings.forEach(w => console.log(w));
   }
 });
-```
-
-#### `formatter(results: Object): string`
-
-This is our custom ESLint formatter that integrates well with Create React App console output. You can remove it and use the default one instead
-
-```js
-const formatter = require('react-dev-utils/formatter');
-const webpack = require('webpack');
-
-// Eslint loader in your webpack config
-module: {
-   strictExportPresence: true,
-   rules: [
-     { parser: { requireEnsure: false } },
-     {
-        test: /\.(js|jsx)$/,
-        enforce: 'pre',
-        use: [
-          {
-            // Point ESLint to our predefined config.
-            options: {
-              formatter,
-              baseConfig: {
-                extends: ['react-app'],
-              },
-              ignore: false,
-              useEslintrc: false,
-            },
-            loader: 'eslint-loader',
-          },
-        ],
-        include: paths.appSrc,
-      }
-   ]
-}
 ```
 
 #### `getProcessForPort(port: number): string`
