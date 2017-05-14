@@ -16,6 +16,7 @@
 // This is quite hacky and hopefully won't be needed when Webpack fixes this.
 // https://github.com/webpack/webpack/issues/2878
 
+var chalk = require('chalk');
 var friendlySyntaxErrorLabel = 'Syntax error:';
 
 function isLikelyASyntaxError(message) {
@@ -85,65 +86,8 @@ function formatMessage(message, isError) {
     );
   }
 
-  // TODO: Ideally we should write a custom ESLint formatter instead.
-
-  // If the second line already includes a filename, and it's a warning,
-  // this is likely coming from ESLint. Skip it because Webpack also prints it.
-  // Let's omit that in this case.
-  var BEGIN_ESLINT_FILENAME = String.fromCharCode(27) + '[4m';
-  // Also filter out ESLint summaries for each file
-  var BEGIN_ESLINT_WARNING_SUMMARY = String.fromCharCode(27) +
-    '[33m' +
-    String.fromCharCode(27) +
-    '[1m' +
-    String.fromCharCode(10006);
-  var BEGIN_ESLINT_ERROR_SUMMARY = String.fromCharCode(27) +
-    '[31m' +
-    String.fromCharCode(27) +
-    '[1m' +
-    String.fromCharCode(10006);
-  // ESLint puts separators like this between groups. We don't need them:
-  var ESLINT_EMPTY_SEPARATOR = String.fromCharCode(27) +
-    '[22m' +
-    String.fromCharCode(27) +
-    '[39m';
-  // Go!
-  lines = lines.filter(function(line) {
-    if (line === ESLINT_EMPTY_SEPARATOR) {
-      return false;
-    }
-    if (
-      line.indexOf(BEGIN_ESLINT_FILENAME) === 0 ||
-      line.indexOf(BEGIN_ESLINT_WARNING_SUMMARY) === 0 ||
-      line.indexOf(BEGIN_ESLINT_ERROR_SUMMARY) === 0
-    ) {
-      return false;
-    }
-    return true;
-  });
-
-  var ESLINT_WARNING_LABEL = String.fromCharCode(27) +
-    '[33m' +
-    'warning' +
-    String.fromCharCode(27) +
-    '[39m';
-  // If there were errors, omit any warnings.
-  if (isError) {
-    lines = lines.filter(function(line) {
-      return line.indexOf(ESLINT_WARNING_LABEL) === -1;
-    });
-  }
-
   // Prepend filename with an explanation.
-  lines[0] =
-    // Underline
-    String.fromCharCode(27) +
-    '[4m' +
-    // Filename
-    lines[0] +
-    // End underline
-    String.fromCharCode(27) +
-    '[24m' +
+  lines[0] = chalk.underline(lines[0]) +
     (isError ? ' contains errors.' : ' contains warnings.');
 
   // Reassemble the message.
