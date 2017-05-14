@@ -24,7 +24,7 @@ require('../config/env');
 
 const fs = require('fs');
 const chalk = require('chalk');
-const detect = require('react-dev-utils/detectPort');
+const detect = require('@timer/detect-port');
 const WebpackDevServer = require('webpack-dev-server');
 const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
