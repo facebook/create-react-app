@@ -13,9 +13,6 @@ function isError(message) {
 function formatter(results) {
   let output = '\n';
 
-  let hasErrors = false;
-  let hasWarnings = false;
-
   results.forEach(result => {
     let messages = result.messages;
     if (messages.length === 0) {
@@ -30,7 +27,6 @@ function formatter(results) {
         hasErrors = true;
       } else {
         messageType = 'warn';
-        hasWarnings = true;
       }
 
       let line = message.line || 0;
