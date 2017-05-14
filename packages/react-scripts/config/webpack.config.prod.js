@@ -264,7 +264,7 @@ module.exports = {
     }),
     new AddAssetHtmlPlugin({
       outputPath: path.join('static', 'js'),
-      publicPath: path.join(publicPath, 'static', 'js'),
+      publicPath: publicPath + path.join('static', 'js'),
       filepath: require.resolve(
         path.join(paths.vendorPath, vendorHash + '.js')
       ),
