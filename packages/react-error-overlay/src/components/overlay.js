@@ -73,7 +73,7 @@ function createOverlay(
 
   // Create trace
   container.appendChild(
-    createFrames(document, frames, frameSettings, contextSize)
+    createFrames(document, frames, frameSettings, contextSize, name)
   );
 
   // Show message

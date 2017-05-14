@@ -115,6 +115,21 @@ function frameDiv(document: Document, functionName, url, internalUrl) {
   return frame;
 }
 
+function isBultinErrorName(errorName: ?string) {
+  switch (errorName) {
+    case 'EvalError':
+    case 'InternalError':
+    case 'RangeError':
+    case 'ReferenceError':
+    case 'SyntaxError':
+    case 'TypeError':
+    case 'URIError':
+      return true;
+    default:
+      return false;
+  }
+}
+
 function createFrame(
   document: Document,
   frameSetting: FrameSetting,
@@ -124,7 +139,8 @@ function createFrame(
   omits: OmitsObject,
   omitBundle: number,
   parentContainer: HTMLDivElement,
-  lastElement: boolean
+  lastElement: boolean,
+  errorName: ?string
 ) {
   const { compiled } = frameSetting;
   let { functionName, _originalFileName: sourceFileName } = frame;
@@ -149,35 +165,47 @@ function createFrame(
     functionName = '(anonymous function)';
   }
 
-  let url;
-  if (!compiled && sourceFileName && sourceLineNumber) {
-    // Remove everything up to the first /src/
-    const trimMatch = /^[/|\\].*?[/|\\](src[/|\\].*)/.exec(sourceFileName);
+  let prettyURL;
+  if (!compiled && sourceFileName && typeof sourceLineNumber === 'number') {
+    // Remove everything up to the first /src/ or /node_modules/
+    const trimMatch = /^[/|\\].*?[/|\\]((src|node_modules)[/|\\].*)/.exec(
+      sourceFileName
+    );
     if (trimMatch && trimMatch[1]) {
-      sourceFileName = trimMatch[1];
+      prettyURL = trimMatch[1];
+    } else {
+      prettyURL = sourceFileName;
     }
-
-    url = sourceFileName + ':' + sourceLineNumber;
-    if (sourceColumnNumber) {
-      url += ':' + sourceColumnNumber;
+    prettyURL += ':' + sourceLineNumber;
+    if (typeof sourceColumnNumber === 'number') {
+      prettyURL += ':' + sourceColumnNumber;
     }
-  } else if (fileName && lineNumber) {
-    url = fileName + ':' + lineNumber;
-    if (columnNumber) {
-      url += ':' + columnNumber;
+  } else if (fileName && typeof lineNumber === 'number') {
+    prettyURL = fileName + ':' + lineNumber;
+    if (typeof columnNumber === 'number') {
+      prettyURL += ':' + columnNumber;
     }
   } else {
-    url = 'unknown';
+    prettyURL = 'unknown';
   }
 
   let needsHidden = false;
-  const internalUrl = isInternalFile(url, sourceFileName);
-  if (internalUrl) {
+  const isInternalUrl = isInternalFile(sourceFileName, fileName);
+  const isThrownIntentionally = !isBultinErrorName(errorName);
+  const shouldCollapse = isInternalUrl &&
+    (isThrownIntentionally || omits.hasReachedAppCode);
+
+  if (!isInternalUrl) {
+    omits.hasReachedAppCode = true;
+  }
+
+  if (shouldCollapse) {
     ++omits.value;
     needsHidden = true;
   }
+
   let collapseElement = null;
-  if (!internalUrl || lastElement) {
+  if (!shouldCollapse || lastElement) {
     if (omits.value > 0) {
       const capV = omits.value;
       const omittedFrames = getGroupToggle(document, capV, omitBundle);
@@ -190,7 +218,7 @@ function createFrame(
           omittedFrames
         );
       });
-      if (lastElement && internalUrl) {
+      if (lastElement && shouldCollapse) {
         collapseElement = omittedFrames;
       } else {
         parentContainer.appendChild(omittedFrames);
@@ -200,14 +228,14 @@ function createFrame(
     omits.value = 0;
   }
 
-  const elem = frameDiv(document, functionName, url, internalUrl);
+  const elem = frameDiv(document, functionName, prettyURL, shouldCollapse);
   if (needsHidden) {
     applyStyles(elem, hiddenStyle);
     elem.setAttribute('name', 'bundle-' + omitBundle);
   }
 
   let hasSource = false;
-  if (!internalUrl) {
+  if (!shouldCollapse) {
     if (
       compiled && scriptLines && scriptLines.length !== 0 && lineNumber != null
     ) {
