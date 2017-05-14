@@ -37,24 +37,26 @@ const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
-// Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
-  process.exit(1);
+function main() {
+  // Warn and crash if required files are missing
+  if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+    process.exit(1);
+  }
+
+  // First, read the current file sizes in build directory.
+  // This lets us display how much they changed later.
+  measureFileSizesBeforeBuild(paths.appBuild).then(previousFileSizes => {
+    // Remove all content but keep the directory so that
+    // if you're in it, you don't end up in Trash
+    fs.emptyDirSync(paths.appBuild);
+
+    // Start the webpack build
+    build(previousFileSizes);
+
+    // Merge with the public folder
+    copyPublicFolder();
+  });
 }
-
-// First, read the current file sizes in build directory.
-// This lets us display how much they changed later.
-measureFileSizesBeforeBuild(paths.appBuild).then(previousFileSizes => {
-  // Remove all content but keep the directory so that
-  // if you're in it, you don't end up in Trash
-  fs.emptyDirSync(paths.appBuild);
-
-  // Start the webpack build
-  build(previousFileSizes);
-
-  // Merge with the public folder
-  copyPublicFolder();
-});
 
 // Print out errors
 function printErrors(summary, errors) {
@@ -205,4 +207,10 @@ function copyPublicFolder() {
     dereference: true,
     filter: file => file !== paths.appHtml,
   });
+}
+
+module.exports = main;
+
+if (require.main === module) {
+  main();
 }
