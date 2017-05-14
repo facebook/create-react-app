@@ -9,6 +9,10 @@ const appPackageJson = fs.readFileSync(paths.appPackageJson);
 hash.update(input);
 hash.update(appPackageJson);
 
+if (fs.existsSync(paths.yarnLockFile)) {
+  hash.update(fs.readFileSync(paths.yarnLockFile));
+}
+
 const hashed = hash.digest('hex');
 module.exports = (process.env.REACT_APP_VENDOR_HASH = [
   process.env.NODE_ENV,
