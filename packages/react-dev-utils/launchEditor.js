@@ -8,7 +8,6 @@
  */
 'use strict';
 
-var chalk = require('chalk');
 var fs = require('fs');
 var path = require('path');
 var child_process = require('child_process');
@@ -112,7 +111,7 @@ function guessEditor() {
 }
 
 var _childProcess = null;
-function launchEditor(fileName, lineNumber, projectRoots) {
+function launchEditor(fileName, lineNumber) {
   if (!fs.existsSync(fileName)) {
     return;
   }
@@ -155,7 +154,7 @@ function launchEditor(fileName, lineNumber, projectRoots) {
   } else {
     _childProcess = child_process.spawn(editor, args, { stdio: 'inherit' });
   }
-  _childProcess.on('exit', function(errorCode) {
+  _childProcess.on('exit', function() {
     _childProcess = null;
   });
 }
