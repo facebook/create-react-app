@@ -23,9 +23,7 @@
 // This is dangerous as it hides accidentally undefined variables.
 // We blacklist the globals that we deem potentially confusing.
 // To use them, explicitly reference them, e.g. `window.name` or `window.status`.
-var globals = require('globals');
-var customGlobals = Object.assign({}, globals.browser);
-var excludedGlobals = [
+var restrictedGlobals = [
   'addEventListener',
   'blur',
   'close',
@@ -85,7 +83,6 @@ var excludedGlobals = [
   'toolbar',
   'top',
 ];
-excludedGlobals.forEach(global => delete customGlobals[global]);
 
 module.exports = {
   root: true,
@@ -95,13 +92,12 @@ module.exports = {
   plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
 
   env: {
+    browser: true,
     commonjs: true,
     es6: true,
     jest: true,
     node: true,
   },
-
-  globals: customGlobals,
 
   parserOptions: {
     ecmaVersion: 6,
@@ -191,7 +187,7 @@ module.exports = {
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
     'no-undef': 'error',
-    'no-restricted-globals': ['error', 'event'],
+    'no-restricted-globals': ['error'].concat(restrictedGlobals),
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
