@@ -21,7 +21,6 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "absolute-path": "0.0.0",
     "autoprefixer": "6.7.7",
     "babel-core": "6.23.1",
     "babel-eslint": "7.1.1",
@@ -31,7 +30,6 @@
     "babel-runtime": "^6.20.0",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
-    "child_process": "^1.0.2",
     "connect-history-api-fallback": "1.3.0",
     "cross-spawn": "4.0.2",
     "css-loader": "0.28.0",
