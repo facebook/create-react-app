@@ -18,45 +18,74 @@
 // In the future, we might create a separate list of rules for production.
 // It would probably be more strict.
 
-// The global scope is polluted with lots of confusing variables which are
-// likely to be used generally without being thought of as a global
-// For eg:- name, status
-// And as these globals are ignored by Eslint it would not warn user in case of
-// error, for example if user tries to do `console.log(name)` without ever
-// defining name, no error would be shown as `name` is a considered global by
-// eslint.
-// So we blacklist confusing globals.
+// The ESLint browser environment defines all browser globals as valid,
+// even though most people don't know some of them exist (e.g. `name` or `status`).
+// This is dangerous as it hides accidentally undefined variables.
+// We blacklist the globals that we deem potentially confusing.
+// To use them, explicitly reference them, e.g. `window.name` or `window.status`.
 var globals = require('globals');
 var customGlobals = Object.assign({}, globals.browser);
-var blackListedGlobals = [
+var excludedGlobals = [
+  'addEventListener',
+  'blur',
   'close',
   'closed',
+  'confirm',
+  'defaultStatus',
+  'defaultstatus',
+  'event',
+  'external',
+  'find',
   'focus',
+  'frameElement',
+  'frames',
   'history',
+  'innerHeight',
+  'innerWidth',
   'length',
   'location',
+  'locationbar',
   'menubar',
+  'moveBy',
+  'moveTo',
   'name',
-  'open',
   'onblur',
   'onerror',
   'onfocus',
   'onload',
   'onresize',
   'onunload',
+  'open',
   'opener',
   'opera',
+  'outerHeight',
+  'outerWidth',
+  'pageXOffset',
+  'pageYOffset',
   'parent',
-  'performance',
   'print',
+  'removeEventListener',
+  'resizeBy',
+  'resizeTo',
   'screen',
+  'screenLeft',
+  'screenTop',
+  'screenX',
+  'screenY',
+  'scroll',
+  'scrollbars',
+  'scrollBy',
+  'scrollTo',
+  'scrollX',
+  'scrollY',
   'self',
   'status',
   'statusbar',
   'stop',
+  'toolbar',
   'top',
 ];
-blackListedGlobals.forEach(global => delete customGlobals[global]);
+excludedGlobals.forEach(global => delete customGlobals[global]);
 
 module.exports = {
   root: true,
