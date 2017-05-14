@@ -57,6 +57,7 @@ var anserMap = {
   'ansi-red': 'red',
   'ansi-bright-magenta': 'magenta',
   'ansi-magenta': 'magenta',
+  'ansi-white': 'darkgrey',
 };
 
 function ansiHTML(txt) {

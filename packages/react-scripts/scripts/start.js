@@ -10,13 +10,17 @@
 // @remove-on-eject-end
 'use strict';
 
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
+process.on('unhandledRejection', err => {
+  throw err;
+});
+
 process.env.NODE_ENV = 'development';
 
-// Load environment variables from .env file. Suppress warnings using silent
-// if this file is missing. dotenv will never modify any environment variables
-// that have already been set.
-// https://github.com/motdotla/dotenv
-require('dotenv').config({ silent: true });
+// Ensure environment variables are read.
+require('../config/env');
 
 const fs = require('fs');
 const chalk = require('chalk');
@@ -47,7 +51,7 @@ const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 
 function run(port) {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-  const host = process.env.HOST || 'localhost';
+  const host = process.env.HOST || '0.0.0.0';
 
   // Create a webpack compiler that is configured with custom messages.
   const compiler = createWebpackCompiler(
@@ -73,22 +77,30 @@ function run(port) {
   const devServer = new WebpackDevServer(compiler, devServerConfig);
 
   // Our custom middleware proxies requests to /index.html or a remote API.
-  addWebpackMiddleware(devServer);
+  addWebpackMiddleware(devServer)
+    .then(() => {
+      // Launch WebpackDevServer.
+      devServer.listen(port, host, err => {
+        if (err) {
+          return console.log(err);
+        }
 
-  // Launch WebpackDevServer.
-  devServer.listen(port, err => {
-    if (err) {
-      return console.log(err);
-    }
+        if (isInteractive) {
+          clearConsole();
+        }
+        console.log(chalk.cyan('Starting the development server...'));
+        console.log();
 
-    if (isInteractive) {
-      clearConsole();
-    }
-    console.log(chalk.cyan('Starting the development server...'));
-    console.log();
-
-    openBrowser(`${protocol}://${host}:${port}/`);
-  });
+        openBrowser(`${protocol}://${host}:${port}/`);
+      });
+    })
+    .catch(e => {
+      console.log(
+        chalk.red('Failed to setup middleware, please report this error:')
+      );
+      console.log(e);
+      process.exit(1);
+    });
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to

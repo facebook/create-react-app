@@ -11,6 +11,7 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -18,11 +19,6 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-
-// @remove-on-eject-begin
-// `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
-const path = require('path');
-// @remove-on-eject-end
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -76,6 +72,9 @@ module.exports = {
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
+    // Point sourcemap entries to original disk location
+    devtoolModuleFilenameTemplate: info =>
+      path.relative(paths.appSrc, info.absoluteResourcePath),
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -83,7 +82,7 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules'].concat(paths.nodePaths),
+    modules: ['node_modules', paths.appNodeModules].concat(paths.nodePaths),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
@@ -107,6 +106,7 @@ module.exports = {
   },
   // @remove-on-eject-end
   module: {
+    strictExportPresence: true,
     rules: [
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
@@ -122,7 +122,9 @@ module.exports = {
             options: {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
-              configFile: path.join(__dirname, '../eslintrc'),
+              baseConfig: {
+                extends: ['react-app'],
+              },
               useEslintrc: false,
             },
             // @remove-on-eject-end
@@ -200,6 +202,7 @@ module.exports = {
                   loader: 'css-loader',
                   options: {
                     importLoaders: 1,
+                    minimize: true,
                   },
                 },
                 {
@@ -261,15 +264,10 @@ module.exports = {
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        screw_ie8: true, // React doesn't support IE8
         warnings: false,
-      },
-      mangle: {
-        screw_ie8: true,
       },
       output: {
         comments: false,
-        screw_ie8: true,
       },
       sourceMap: true,
     }),

@@ -110,6 +110,8 @@ if (env === 'test') {
           },
           // Disable polyfill transforms
           useBuiltIns: false,
+          // Do not transform modules to CJS
+          modules: false,
         },
       ],
       // JSX, Flow
@@ -120,7 +122,7 @@ if (env === 'test') {
       [
         require.resolve('babel-plugin-transform-regenerator'),
         {
-          // Async functions are converted to generators by babel-preset-latest
+          // Async functions are converted to generators by babel-preset-env
           async: false,
         },
       ],

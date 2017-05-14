@@ -9,6 +9,13 @@
  */
 'use strict';
 
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
+process.on('unhandledRejection', err => {
+  throw err;
+});
+
 const fs = require('fs-extra');
 const path = require('path');
 const spawn = require('cross-spawn');
@@ -149,13 +156,17 @@ module.exports = function(
   console.log(chalk.cyan(`  ${displayedCommand} start`));
   console.log('    Starts the development server.');
   console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} run build`));
+  console.log(
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)
+  );
   console.log('    Bundles the app into static files for production.');
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
   console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} run eject`));
+  console.log(
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}eject`)
+  );
   console.log(
     '    Removes this tool and copies build dependencies, configuration files'
   );
