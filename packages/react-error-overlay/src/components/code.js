@@ -20,8 +20,7 @@ function createCode(
   columnNum: number | null,
   contextSize: number,
   main: boolean,
-  clickToOpenFileName: ?string,
-  clickToOpenLineNumber: ?number
+  onSourceClick: ?Function
 ) {
   const sourceCode = [];
   let whiteSpace = Infinity;
@@ -86,15 +85,11 @@ function createCode(
   applyStyles(pre, preStyle);
   pre.appendChild(code);
 
-  if (clickToOpenFileName) {
+  if (typeof onSourceClick === 'function') {
+    let handler = onSourceClick;
     pre.style.cursor = 'pointer';
     pre.addEventListener('click', function() {
-      fetch(
-        '/__open-stack-frame-in-editor?fileName=' +
-          window.encodeURIComponent(clickToOpenFileName) +
-          '&lineNumber=' +
-          window.encodeURIComponent(clickToOpenLineNumber || 1)
-      ).then(() => {}, () => {});
+      handler();
     });
   }
 

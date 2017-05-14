@@ -1,10 +1,12 @@
 /* @flow */
-function isInternalFile(url: string, sourceFileName: string | null | void) {
-  return url.indexOf('/~/') !== -1 ||
-    url.indexOf('/node_modules/') !== -1 ||
-    url.trim().indexOf(' ') !== -1 ||
-    sourceFileName == null ||
-    sourceFileName.length === 0;
+function isInternalFile(sourceFileName: ?string, fileName: ?string) {
+  return sourceFileName == null ||
+    sourceFileName === '' ||
+    sourceFileName.indexOf('/~/') !== -1 ||
+    sourceFileName.indexOf('/node_modules/') !== -1 ||
+    sourceFileName.trim().indexOf(' ') !== -1 ||
+    fileName == null ||
+    fileName === '';
 }
 
 export { isInternalFile };
