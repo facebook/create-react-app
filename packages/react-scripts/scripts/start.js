@@ -78,7 +78,7 @@ function run(port) {
     const devServer = new WebpackDevServer(compiler, devServerConfig(proxy));
 
     // Launch WebpackDevServer.
-    devServer.listen(port, err => {
+    devServer.listen(port, host, err => {
       if (err) {
         return console.log(err);
       }

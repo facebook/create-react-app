@@ -68,9 +68,6 @@ module.exports = function(proxy) {
       disableDotRule: true,
     },
     proxy,
-    // TODO: figure out why we needed to add this.
-    // https://github.com/webpack/webpack-dev-server/issues/882
-    disableHostCheck: true,
     setup(app) {
       // This lets us open files from the crash overlay.
       app.use(function launchEditorMiddleware(req, res, next) {
