@@ -22,7 +22,6 @@
     "launchEditor.js",
     "openBrowser.js",
     "openChrome.applescript",
-    "prompt.js",
     "WatchMissingNodeModulesPlugin.js",
     "webpackHotDevClient.js"
   ],
