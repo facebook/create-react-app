@@ -11,11 +11,11 @@
     "node": ">=6"
   },
   "files": [
-    "formatter.js",
     "ansiHTML.js",
     "checkRequiredFiles.js",
     "clearConsole.js",
     "crashOverlay.js",
+    "eslintFormatter.js",
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",

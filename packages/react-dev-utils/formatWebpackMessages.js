@@ -16,6 +16,7 @@
 // This is quite hacky and hopefully won't be needed when Webpack fixes this.
 // https://github.com/webpack/webpack/issues/2878
 
+var chalk = require('chalk');
 var friendlySyntaxErrorLabel = 'Syntax error:';
 
 function isLikelyASyntaxError(message) {
@@ -86,15 +87,7 @@ function formatMessage(message, isError) {
   }
 
   // Prepend filename with an explanation.
-  lines[0] =
-    // Underline
-    String.fromCharCode(27) +
-    '[4m' +
-    // Filename
-    lines[0] +
-    // End underline
-    String.fromCharCode(27) +
-    '[24m' +
+  lines[0] = chalk.underline(lines[0]) +
     (isError ? ' contains errors.' : ' contains warnings.');
 
   // Reassemble the message.

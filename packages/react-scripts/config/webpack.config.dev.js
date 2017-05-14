@@ -17,9 +17,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
-const formatter = require('react-dev-utils/formatter');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -121,17 +121,16 @@ module.exports = {
         enforce: 'pre',
         use: [
           {
-            // @remove-on-eject-begin
-            // Point ESLint to our predefined config.
             options: {
-              formatter,
+              formatter: eslintFormatter,
+              // @remove-on-eject-begin
               baseConfig: {
                 extends: ['react-app'],
               },
               ignore: false,
               useEslintrc: false,
+              // @remove-on-eject-end
             },
-            // @remove-on-eject-end
             loader: 'eslint-loader',
           },
         ],

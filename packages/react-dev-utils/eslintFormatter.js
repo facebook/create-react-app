@@ -13,21 +13,26 @@ function isError(message) {
 function formatter(results) {
   let output = '\n';
 
+  let hasErrors = false;
+  let hasWarnings = false;
+
   results.forEach(result => {
     let messages = result.messages;
     if (messages.length === 0) {
-      return '';
+      return;
     }
 
-    let thereAreErrors = false;
+    let hasErrors = false;
     messages = messages.map(message => {
       let messageType;
       if (isError(message)) {
         messageType = 'error';
-        thereAreErrors = true;
+        hasErrors = true;
       } else {
         messageType = 'warn';
+        hasWarnings = true;
       }
+
       let line = message.line || 0;
       let column = message.column || 0;
       let position = chalk.dim(`${line}:${column}`);
@@ -39,21 +44,24 @@ function formatter(results) {
         chalk.dim(message.ruleId || ''),
       ];
     });
+
     // if there are error messages, we want to show only errors
-    if (thereAreErrors) {
+    if (hasErrors) {
       messages = messages.filter(m => m[2] === 'error');
     }
+
     // add color to messageTypes
-    messages = messages.map(m => {
+    messages.forEach(m => {
       m[2] = m[2] === 'error' ? chalk.red(m[2]) : chalk.yellow(m[2]);
-      return m;
     });
+
     let outputTable = table(messages, {
       align: ['l', 'l', 'l'],
       stringLength(str) {
         return chalk.stripColor(str).length;
       },
     });
+
     output += `${outputTable}\n\n`;
   });
 
