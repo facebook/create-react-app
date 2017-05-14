@@ -24,7 +24,7 @@ require('../config/env');
 
 const fs = require('fs');
 const chalk = require('chalk');
-const detect = require('detect-port');
+const detect = require('@timer/detect-port');
 const WebpackDevServer = require('webpack-dev-server');
 const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
@@ -48,10 +48,10 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 function run(port) {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-  const host = process.env.HOST || '0.0.0.0';
 
   // Create a webpack compiler that is configured with custom messages.
   const compiler = createWebpackCompiler(
@@ -63,7 +63,7 @@ function run(port) {
       console.log();
       console.log('The app is running at:');
       console.log();
-      console.log(`  ${chalk.cyan(`${protocol}://${host}:${port}/`)}`);
+      console.log(`  ${chalk.cyan(`${protocol}://${HOST}:${port}/`)}`);
       console.log();
       console.log('Note that the development build is not optimized.');
       console.log(
@@ -80,7 +80,7 @@ function run(port) {
   addWebpackMiddleware(devServer)
     .then(() => {
       // Launch WebpackDevServer.
-      devServer.listen(port, host, err => {
+      devServer.listen(port, HOST, err => {
         if (err) {
           return console.log(err);
         }
@@ -91,7 +91,7 @@ function run(port) {
         console.log(chalk.cyan('Starting the development server...'));
         console.log();
 
-        openBrowser(`${protocol}://${host}:${port}/`);
+        openBrowser(`${protocol}://${HOST}:${port}/`);
       });
     })
     .catch(e => {
@@ -105,7 +105,7 @@ function run(port) {
 
 // We attempt to use the default port but if it is busy, we offer the user to
 // run on a different port. `detect()` Promise resolves to the next free port.
-detect(DEFAULT_PORT).then(port => {
+detect(DEFAULT_PORT, HOST).then(port => {
   if (port === DEFAULT_PORT) {
     run(port);
     return;
