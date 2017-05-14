@@ -67,7 +67,9 @@ async function unmap(
       }))
       .sort((a, b) => {
         const s = Math.sign(a.seps - b.seps);
-        if (s !== 0) return s;
+        if (s !== 0) {
+          return s;
+        }
         return Math.sign(a.penalties - b.penalties);
       });
     if (source.length < 1 || lineNumber == null) {
