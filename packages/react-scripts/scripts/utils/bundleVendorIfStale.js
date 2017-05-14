@@ -72,8 +72,7 @@ function cleanUpStaleFiles(files) {
     files.filter(file => !file.indexOf(environment)).forEach(file => {
       fs.unlinkSync(path.join(paths.vendorPath, file));
     });
-  } catch (e) {
-    // Let the user knows that the stale file is not deleted
-    console.log(chalk.red('Failed to delete stale files'));
+  } catch (ignored) {
+    //ignored
   }
 }
