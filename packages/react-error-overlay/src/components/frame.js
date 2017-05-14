@@ -146,6 +146,20 @@ function createFrame(
     functionName = '(anonymous function)';
   }
 
+  let isTooClose = false;
+  if (
+    omits.lastFileName != null &&
+    sourceFileName === omits.lastFileName &&
+    omits.lastLineNumber != null &&
+    sourceLineNumber != null &&
+    Math.abs(sourceLineNumber - omits.lastLineNumber) < 3
+  ) {
+    isTooClose = true;
+  } else {
+    omits.lastFileName = sourceFileName;
+    omits.lastLineNumber = sourceLineNumber;
+  }
+
   let url;
   if (!compiled && sourceFileName && sourceLineNumber) {
     // Remove everything up to the first /src/
@@ -168,13 +182,18 @@ function createFrame(
   }
 
   let needsHidden = false;
-  const internalUrl = isInternalFile(url, sourceFileName);
-  if (internalUrl) {
+  let internalUrl = isInternalFile(url, sourceFileName);
+
+  let shouldCollapse = internalUrl || isTooClose;
+  let shouldSkipCode = internalUrl;
+
+  if (shouldCollapse) {
     ++omits.value;
     needsHidden = true;
   }
+
   let collapseElement = null;
-  if (!internalUrl || lastElement) {
+  if (!shouldCollapse || lastElement) {
     if (omits.value > 0) {
       const capV = omits.value;
       const omittedFrames = getGroupToggle(document, capV, omitBundle);
@@ -187,7 +206,7 @@ function createFrame(
           omittedFrames
         );
       });
-      if (lastElement && internalUrl) {
+      if (lastElement && shouldCollapse) {
         collapseElement = omittedFrames;
       } else {
         parentContainer.appendChild(omittedFrames);
@@ -197,14 +216,14 @@ function createFrame(
     omits.value = 0;
   }
 
-  const elem = frameDiv(document, functionName, url, internalUrl);
+  const elem = frameDiv(document, functionName, url, shouldCollapse);
   if (needsHidden) {
     applyStyles(elem, hiddenStyle);
     elem.setAttribute('name', 'bundle-' + omitBundle);
   }
 
   let hasSource = false;
-  if (!internalUrl) {
+  if (!shouldSkipCode) {
     if (
       compiled && scriptLines && scriptLines.length !== 0 && lineNumber != null
     ) {

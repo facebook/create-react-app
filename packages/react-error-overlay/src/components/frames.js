@@ -5,7 +5,12 @@ import { traceStyle, toggleStyle } from '../styles';
 import { enableTabClick } from '../utils/dom/enableTabClick';
 import { createFrame } from './frame';
 
-type OmitsObject = { value: number, bundle: number };
+type OmitsObject = {
+  value: number,
+  bundle: number,
+  lastFileName: ?string,
+  lastLineNumber: ?number,
+};
 type FrameSetting = { compiled: boolean };
 export type { OmitsObject, FrameSetting };
 
@@ -54,7 +59,7 @@ function createFrameWrapper(
       }
     });
     compiledDiv.appendChild(compiledText);
-    elemWrapper.appendChild(compiledDiv);
+    elem.appendChild(compiledDiv);
   }
 
   if (collapseElement != null) {
@@ -80,7 +85,12 @@ function createFrames(
 
   let index = 0;
   let critical = true;
-  const omits: OmitsObject = { value: 0, bundle: 1 };
+  const omits: OmitsObject = {
+    value: 0,
+    bundle: 1,
+    lastFileName: null,
+    lastLineNumber: null,
+  };
   resolvedFrames.forEach(function(frame) {
     const lIndex = index++;
     const elem = createFrameWrapper(
