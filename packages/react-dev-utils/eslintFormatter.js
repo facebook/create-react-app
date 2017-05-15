@@ -30,8 +30,7 @@ function formatter(results) {
       }
 
       let line = message.line || 0;
-      let column = message.column || 0;
-      let position = chalk.dim(`${line}:${column}`);
+      let position = chalk.dim(`Line ${line}:`);
       return [
         '',
         position,
