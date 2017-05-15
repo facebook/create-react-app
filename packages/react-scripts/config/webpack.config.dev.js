@@ -114,13 +114,13 @@ module.exports = {
               formatter: eslintFormatter,
               // @remove-on-eject-begin
               baseConfig: {
-                extends: ['react-app'],
+                extends: [require.resolve('eslint-config-react-app')],
               },
               ignore: false,
               useEslintrc: false,
               // @remove-on-eject-end
             },
-            loader: 'eslint-loader',
+            loader: require.resolve('eslint-loader'),
           },
         ],
         include: paths.appSrc,
@@ -145,7 +145,7 @@ module.exports = {
           /\.jpe?g$/,
           /\.png$/,
         ],
-        loader: 'file-loader',
+        loader: require.resolve('file-loader'),
         options: {
           name: 'static/media/[name].[hash:8].[ext]',
         },
@@ -155,7 +155,7 @@ module.exports = {
       // A missing `test` is equivalent to a match.
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: 'url-loader',
+        loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]',
@@ -165,7 +165,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
-        loader: 'babel-loader',
+        loader: require.resolve('babel-loader'),
         options: {
           // @remove-on-eject-begin
           babelrc: false,
@@ -185,15 +185,15 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          require.resolve('style-loader'),
           {
-            loader: 'css-loader',
+            loader: require.resolve('css-loader'),
             options: {
               importLoaders: 1,
             },
           },
           {
-            loader: 'postcss-loader',
+            loader: require.resolve('postcss-loader'),
             options: {
               ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
               plugins: () => [

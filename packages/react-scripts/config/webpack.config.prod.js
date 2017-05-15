@@ -113,13 +113,13 @@ module.exports = {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
               baseConfig: {
-                extends: ['react-app'],
+                extends: [require.resolve('eslint-config-react-app')],
               },
               ignore: false,
               useEslintrc: false,
               // @remove-on-eject-end
             },
-            loader: 'eslint-loader',
+            loader: require.resolve('eslint-loader'),
           },
         ],
         include: paths.appSrc,
@@ -143,7 +143,7 @@ module.exports = {
           /\.jpe?g$/,
           /\.png$/,
         ],
-        loader: 'file-loader',
+        loader: require.resolve('file-loader'),
         options: {
           name: 'static/media/[name].[hash:8].[ext]',
         },
@@ -152,7 +152,7 @@ module.exports = {
       // assets smaller than specified size as data URLs to avoid requests.
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: 'url-loader',
+        loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]',
@@ -162,7 +162,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
-        loader: 'babel-loader',
+        loader: require.resolve('babel-loader'),
         // @remove-on-eject-begin
         options: {
           babelrc: false,
@@ -187,17 +187,17 @@ module.exports = {
         loader: ExtractTextPlugin.extract(
           Object.assign(
             {
-              fallback: 'style-loader',
+              fallback: require.resolve('style-loader'),
               use: [
                 {
-                  loader: 'css-loader',
+                  loader: require.resolve('css-loader'),
                   options: {
                     importLoaders: 1,
                     minimize: true,
                   },
                 },
                 {
-                  loader: 'postcss-loader',
+                  loader: require.resolve('postcss-loader'),
                   options: {
                     ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
                     plugins: () => [
