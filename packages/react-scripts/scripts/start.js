@@ -36,6 +36,7 @@ const config = require('../config/webpack.config.dev');
 const devServerConfig = require('../config/webpackDevServer.config');
 const createWebpackCompiler = require('./utils/createWebpackCompiler');
 const prepareProxy = require('react-dev-utils/prepareProxy');
+const url = require('url');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const cli = useYarn ? 'yarn' : 'npm';
@@ -52,6 +53,12 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 function run(port) {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+  const formattedUrl = url.format({
+    protocol,
+    hostname: HOST,
+    port,
+    pathname: '/',
+  });
 
   // Create a webpack compiler that is configured with custom messages.
   const compiler = createWebpackCompiler(
@@ -63,7 +70,7 @@ function run(port) {
       console.log();
       console.log('The app is running at:');
       console.log();
-      console.log(`  ${chalk.cyan(`${protocol}://${HOST}:${port}/`)}`);
+      console.log(`  ${chalk.cyan(formattedUrl)}`);
       console.log();
       console.log('Note that the development build is not optimized.');
       console.log(
@@ -93,7 +100,7 @@ function run(port) {
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
 
-    openBrowser(`${protocol}://${HOST}:${port}/`);
+    openBrowser(formattedUrl);
   });
 }
 

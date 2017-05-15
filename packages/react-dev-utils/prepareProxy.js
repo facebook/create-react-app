@@ -73,7 +73,9 @@ module.exports = function prepareProxy(proxy) {
   // `proxy` lets you specify alternate servers for specific requests.
   // It can either be a string or an object conforming to the Webpack dev server proxy configuration
   // https://webpack.github.io/docs/webpack-dev-server.html
-  if (!proxy) return undefined;
+  if (!proxy) {
+    return undefined;
+  }
   if (typeof proxy !== 'object' && typeof proxy !== 'string') {
     console.log(
       chalk.red(
