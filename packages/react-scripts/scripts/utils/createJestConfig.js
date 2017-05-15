@@ -25,7 +25,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
-    testPathIgnorePatterns: [
+    testMatch: [
       // Ignore the following directories:
       // build
       //   - the build output directory
@@ -37,7 +37,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
       //   - ignore tests in dependencies
       // scripts
       //   - directory generated upon eject
-      '<rootDir>[/\\\\](build|\\.cache|docs|node_modules|scripts)[/\\\\]',
+      '<rootDir>/!(build|docs|node_modules|scripts)/**/__tests__/**/*.js?(x)',
+      '<rootDir>/!(build|docs|node_modules|scripts)/**/?(*.)(spec|test).js?(x)',
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
