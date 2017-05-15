@@ -8,7 +8,9 @@ Please refer to its documentation:
 
 ## Usage in Create React App Projects
 
-The easiest way to use this configuration is with [Create React App](https://github.com/facebookincubator/create-react-app), which includes it by default. **You don’t need to install it separately in Create React App projects.**
+The easiest way to use this configuration is with [Create React App](https://github.com/facebookincubator/create-react-app), which includes it by default.
+
+**You don’t need to install it separately in Create React App projects.**
 
 ## Usage Outside of Create React App
 
@@ -54,18 +56,13 @@ The following rules from the [eslint-plugin-jsx-a11y](https://github.com/evcohen
 - [role-supports-aria-props](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/role-supports-aria-props.md)
 - [scope](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/scope.md)
 
-All rules can be activated by overriding the settings as shown above and extending the configuration in your `.eslintrc` file with:
+If you want to enable even more accessibility rules, you can create an `.eslintrc` file in the root of your project with this content:
 
   ```json
   {
-    "extends": [
-        "react-app",
-        "plugin:jsx-a11y/recommended"
-      ],
-    "plugins": [
-        "jsx-a11y"
-      ]
+    "extends": ["react-app", "plugin:jsx-a11y/recommended"],
+    "plugins": ["jsx-a11y"]
   }
   ```
 
-In non-ejected [Create React App](https://github.com/facebookincubator/create-react-app) applications, this configurations allows you to view ESLint messages for all rules in your IDE (if supported).
+However, if you are using [Create React App](https://github.com/facebookincubator/create-react-app) and have not ejected, any additional rules will only be displayed in the [IDE integrations](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#displaying-lint-output-in-the-editor), but not in the browser or the terminal.
