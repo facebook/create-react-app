@@ -60,6 +60,19 @@ function run(port) {
     pathname: '/',
   });
 
+  let prettyHost;
+  if (HOST === '0.0.0.0' || HOST === '::') {
+    prettyHost = 'localhost';
+  } else {
+    prettyHost = HOST;
+  }
+  const prettyUrl = url.format({
+    protocol,
+    hostname: prettyHost,
+    port,
+    pathname: '/',
+  });
+
   // Create a webpack compiler that is configured with custom messages.
   const compiler = createWebpackCompiler(
     config,
@@ -100,7 +113,7 @@ function run(port) {
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
 
-    openBrowser(formattedUrl);
+    openBrowser(prettyUrl);
   });
 }
 
