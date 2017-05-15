@@ -17,7 +17,7 @@ const paths = require('./paths');
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
 
-module.exports = function(proxy) {
+module.exports = function(proxy, allowedHost) {
   return {
     // Enable gzip compression of generated files.
     compress: true,
@@ -67,6 +67,7 @@ module.exports = function(proxy) {
       // See https://github.com/facebookincubator/create-react-app/issues/387.
       disableDotRule: true,
     },
+    public: allowedHost,
     proxy,
     setup(app) {
       // This lets us open files from the crash overlay.
