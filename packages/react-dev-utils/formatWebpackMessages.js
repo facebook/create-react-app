@@ -86,17 +86,7 @@ function formatMessage(message, isError) {
     );
   }
 
-  // Make filename nicer.
-  var slashIndex = Math.max(
-    lines[0].lastIndexOf('/'),
-    lines[0].lastIndexOf('\\')
-  );
-  var fileName = lines[0].substring(slashIndex + 1);
-  var path = lines[0].substring(0, slashIndex + 1);
-  lines[0] = chalk.dim(isError ? 'Found errors in ' : 'Found warnings in ') +
-    path +
-    (isError ? chalk.red : chalk.yellow)(fileName) +
-    chalk.dim(':');
+  lines[0] = chalk.inverse(lines[0]);
 
   // Reassemble the message.
   message = lines.join('\n');

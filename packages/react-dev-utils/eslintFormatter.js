@@ -30,13 +30,13 @@ function formatter(results) {
       }
 
       let line = message.line || 0;
-      let position = chalk.dim(`Line ${line}:`);
+      let position = chalk.bold('Line ' + line + ':');
       return [
         '',
         position,
         messageType,
         message.message.replace(/\.$/, ''),
-        chalk.cyan(message.ruleId || ''),
+        chalk.underline(message.ruleId || ''),
       ];
     });
 
@@ -47,7 +47,8 @@ function formatter(results) {
 
     // add color to messageTypes
     messages.forEach(m => {
-      m[2] = m[2] === 'error' ? chalk.red(m[2]) : chalk.yellow(m[2]);
+      m[3] = m[2] === 'error' ? chalk.red(m[3]) : chalk.yellow(m[3]);
+      m.splice(2, 1);
     });
 
     let outputTable = table(messages, {
