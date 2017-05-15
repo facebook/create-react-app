@@ -1,5 +1,5 @@
 {
-  "name": "@clearcover/custom-react-scripts",
+  "name": "clearcover/custom-react-scripts",
   "version": "0.0.1",
   "description": "This is a custom configuration for react-scripts",
   "license": "BSD-3-Clause",
