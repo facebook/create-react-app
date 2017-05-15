@@ -1,7 +1,7 @@
 {
   "name": "@clearcover/web-build",
   "version": "0.0.1",
-  "upstream-version": "",
+  "upstream-version": "0.9.4",
   "description": "This is a custom configuration for react-scripts",
   "license": "BSD-3-Clause",
   "engines": {
