@@ -1,8 +1,7 @@
 {
-  "name": "react-scripts",
-  "version": "0.9.4",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "name": "@clearcover/custom-react-scripts",
+  "version": "0.0.1",
+  "description": "This is a custom configuration for react-scripts",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=6"
