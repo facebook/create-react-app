@@ -182,8 +182,13 @@ function handleWarnings(warnings) {
 
   function printWarnings() {
     // Print warnings to the console.
-    for (var i = 0; i < warnings.length; i++) {
-      console.warn(stripAnsi(warnings[i]));
+    var formatted = formatWebpackMessages({
+      warnings: warnings,
+      errors: [],
+    });
+
+    for (var i = 0; i < formatted.warnings.length; i++) {
+      console.warn(stripAnsi(formatted.warnings[i]));
     }
   }
 

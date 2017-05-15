@@ -18,6 +18,72 @@
 // In the future, we might create a separate list of rules for production.
 // It would probably be more strict.
 
+// The ESLint browser environment defines all browser globals as valid,
+// even though most people don't know some of them exist (e.g. `name` or `status`).
+// This is dangerous as it hides accidentally undefined variables.
+// We blacklist the globals that we deem potentially confusing.
+// To use them, explicitly reference them, e.g. `window.name` or `window.status`.
+var restrictedGlobals = [
+  'addEventListener',
+  'blur',
+  'close',
+  'closed',
+  'confirm',
+  'defaultStatus',
+  'defaultstatus',
+  'event',
+  'external',
+  'find',
+  'focus',
+  'frameElement',
+  'frames',
+  'history',
+  'innerHeight',
+  'innerWidth',
+  'length',
+  'location',
+  'locationbar',
+  'menubar',
+  'moveBy',
+  'moveTo',
+  'name',
+  'onblur',
+  'onerror',
+  'onfocus',
+  'onload',
+  'onresize',
+  'onunload',
+  'open',
+  'opener',
+  'opera',
+  'outerHeight',
+  'outerWidth',
+  'pageXOffset',
+  'pageYOffset',
+  'parent',
+  'print',
+  'removeEventListener',
+  'resizeBy',
+  'resizeTo',
+  'screen',
+  'screenLeft',
+  'screenTop',
+  'screenX',
+  'screenY',
+  'scroll',
+  'scrollbars',
+  'scrollBy',
+  'scrollTo',
+  'scrollX',
+  'scrollY',
+  'self',
+  'status',
+  'statusbar',
+  'stop',
+  'toolbar',
+  'top',
+];
+
 module.exports = {
   root: true,
 
@@ -83,7 +149,7 @@ module.exports = {
     'no-invalid-regexp': 'warn',
     'no-iterator': 'warn',
     'no-label-var': 'warn',
-    'no-labels': ['warn', { allowLoop: false, allowSwitch: false }],
+    'no-labels': ['warn', { allowLoop: true, allowSwitch: false }],
     'no-lone-blocks': 'warn',
     'no-loop-func': 'warn',
     'no-mixed-operators': [
@@ -110,7 +176,7 @@ module.exports = {
     'no-octal-escape': 'warn',
     'no-redeclare': 'warn',
     'no-regex-spaces': 'warn',
-    'no-restricted-syntax': ['warn', 'LabeledStatement', 'WithStatement'],
+    'no-restricted-syntax': ['warn', 'WithStatement'],
     'no-script-url': 'warn',
     'no-self-assign': 'warn',
     'no-self-compare': 'warn',
@@ -121,7 +187,7 @@ module.exports = {
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
     'no-undef': 'error',
-    'no-restricted-globals': ['error', 'event'],
+    'no-restricted-globals': ['error'].concat(restrictedGlobals),
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
@@ -135,8 +201,6 @@ module.exports = {
     'no-unused-vars': [
       'warn',
       {
-        vars: 'local',
-        varsIgnorePattern: '^_',
         args: 'none',
         ignoreRestSiblings: true,
       },
@@ -209,7 +273,6 @@ module.exports = {
     'import/no-webpack-loader-syntax': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
-    'react/jsx-equals-spacing': ['warn', 'never'],
     'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
     'react/jsx-no-undef': 'error',
     'react/jsx-pascal-case': [
@@ -230,10 +293,24 @@ module.exports = {
     'react/style-prop-object': 'warn',
 
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
+    'jsx-a11y/accessible-emoji': 'warn',
+    'jsx-a11y/alt-text': 'warn',
+    'jsx-a11y/anchor-has-content': 'warn',
+    'jsx-a11y/aria-activedescendant-has-tabindex': 'warn',
+    'jsx-a11y/aria-props': 'warn',
+    'jsx-a11y/aria-proptypes': 'warn',
     'jsx-a11y/aria-role': 'warn',
-    'jsx-a11y/img-has-alt': 'warn',
+    'jsx-a11y/aria-unsupported-elements': 'warn',
+    'jsx-a11y/heading-has-content': 'warn',
+    'jsx-a11y/href-no-hash': 'warn',
+    'jsx-a11y/iframe-has-title': 'warn',
     'jsx-a11y/img-redundant-alt': 'warn',
     'jsx-a11y/no-access-key': 'warn',
+    'jsx-a11y/no-distracting-elements': 'warn',
+    'jsx-a11y/no-redundant-roles': 'warn',
+    'jsx-a11y/role-has-required-aria-props': 'warn',
+    'jsx-a11y/role-supports-aria-props': 'warn',
+    'jsx-a11y/scope': 'warn',
 
     // https://github.com/gajus/eslint-plugin-flowtype
     'flowtype/define-flow-type': 'warn',
