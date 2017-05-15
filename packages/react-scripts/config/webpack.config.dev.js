@@ -98,17 +98,6 @@ module.exports = {
       'react-native': 'react-native-web',
     },
   },
-  // @remove-on-eject-begin
-  // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
-  // directory of `react-scripts` itself rather than the project directory.
-  resolveLoader: {
-    modules: [
-      paths.ownNodeModules,
-      // Lerna hoists everything, so we need to look in our app directory
-      paths.appNodeModules,
-    ],
-  },
-  // @remove-on-eject-end
   module: {
     strictExportPresence: true,
     rules: [
