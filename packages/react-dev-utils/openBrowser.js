@@ -9,6 +9,7 @@
 
 'use strict';
 
+var chalk = require('chalk');
 var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
 var opn = require('opn');
@@ -16,51 +17,49 @@ var opn = require('opn');
 // https://github.com/sindresorhus/opn#app
 var OSX_CHROME = 'google chrome';
 
+const Actions = Object.freeze({
+  NONE: 0,
+  BROWSER: 1,
+  SCRIPT: 2,
+});
 
-/**
- * Use an enum for the possible uses of the BROWSER environment variable
- * 'browser': open a browser specified by the user. if value is not specified,
- * use the system's default browser.
- * 'browser': open a browser.
- * 'none': Don't open anything.
- * 'script': run a node.js script.
- *
- */
-const BROWSER_TYPES = Object.freeze({
-  'browser': 0,
-  'none': 1,
-  'script': 2,
-})
-
-/**
- * Returns an object with the BROWSER environment variable's value and type
- */
 function getBrowserEnv() {
   // Attempt to honor this environment variable.
   // It is specific to the operating system.
   // See https://github.com/sindresorhus/opn#app for documentation.
-  const browserStr = process.env.BROWSER;
-  const result = { value: browserStr }
-  if (!browserStr)
-    result.type = BROWSER_TYPES.browser;
-  else if (browserStr && browserStr.endsWith('.js'))
-    result.type = BROWSER_TYPES.script;
-  else if (browserStr.toLowerCase() === 'none')
-    result.type = BROWSER_TYPES.none;
-  else
-    result.type = BROWSER_TYPES.browser;
-  return result
+  const value = process.env.BROWSER;
+  let action;
+  if (!value) {
+    // Default.
+    action = Actions.BROWSER;
+  } else if (value.toLowerCase().endsWith('.js')) {
+    action = Actions.SCRIPT;
+  } else if (value.toLowerCase() === 'none') {
+    action = Actions.NONE;
+  } else {
+    action = Actions.BROWSER;
+  }
+  return { action, value };
 }
 
-/**
- * spawns a new child process to execute a node.js script
- */
 function executeNodeScript(scriptPath, url) {
   const extraArgs = process.argv.slice(2);
-  const args = [scriptPath]
-                .concat(extraArgs) // add any extra flags
-                .concat(url); // add url last
-  spawn('node', args);
+  const child = spawn('node', [scriptPath, ...extraArgs, url], {
+    stdio: 'inherit',
+  });
+  child.on('close', code => {
+    if (code !== 0) {
+      console.log();
+      console.log(
+        chalk.red(
+          'The script specified as BROWSER environment variable failed.'
+        )
+      );
+      console.log(chalk.cyan(scriptPath) + ' exited with code ' + code + '.');
+      console.log();
+      return;
+    }
+  });
   return true;
 }
 
@@ -111,22 +110,18 @@ function startBrowserProcess(browser, url) {
  * true if it opened a browser or ran a node.js script, otherwise false.
  */
 function openBrowser(url) {
-  const browser = getBrowserEnv();
-
-  switch (browser.type) {
-    case BROWSER_TYPES.none:
+  const { action, value } = getBrowserEnv();
+  switch (action) {
+    case Actions.NONE:
       // Special case: BROWSER="none" will prevent opening completely.
       return false;
-    case BROWSER_TYPES.script:
-      return executeNodeScript(browser.value, url);
-    case BROWSER_TYPES.browser: {
-      return startBrowserProcess(browser.value, url);
-    }
-    default: {
-      throw new Error('Unknown Browser Type: ' + browser.type);
-    }
+    case Actions.SCRIPT:
+      return executeNodeScript(value, url);
+    case Actions.BROWSER:
+      return startBrowserProcess(value, url);
+    default:
+      throw new Error('Not implemented.');
   }
-
 }
 
 module.exports = openBrowser;
