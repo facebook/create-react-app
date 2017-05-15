@@ -267,14 +267,20 @@ function createFrame(
 
   let onSourceClick = null;
   if (sourceFileName) {
-    onSourceClick = () => {
-      fetch(
-        '/__open-stack-frame-in-editor?fileName=' +
-          window.encodeURIComponent(sourceFileName) +
-          '&lineNumber=' +
-          window.encodeURIComponent(sourceLineNumber || 1)
-      ).then(() => {}, () => {});
-    };
+    // e.g. "/path-to-my-app/webpack/bootstrap eaddeb46b67d75e4dfc1"
+    const isInternalWebpackBootstrapCode = sourceFileName
+      .trim()
+      .indexOf(' ') !== -1;
+    if (!isInternalWebpackBootstrapCode) {
+      onSourceClick = () => {
+        fetch(
+          '/__open-stack-frame-in-editor?fileName=' +
+            window.encodeURIComponent(sourceFileName) +
+            '&lineNumber=' +
+            window.encodeURIComponent(sourceLineNumber || 1)
+        ).then(() => {}, () => {});
+      };
+    }
   }
 
   const elem = frameDiv(
