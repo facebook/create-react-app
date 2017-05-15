@@ -3,24 +3,31 @@
 type ReactFrame = {
   fileName: string | null,
   lineNumber: number | null,
-  functionName: string | null,
+  name: string | null,
 };
 const reactFrameStack: Array<ReactFrame[]> = [];
 
 export type { ReactFrame };
 
+// This is a stripped down barebones version of this proposal:
+// https://gist.github.com/sebmarkbage/bdefa100f19345229d526d0fdd22830f
+// We're implementing just enough to get the invalid element type warnings
+// to display the component stack in React 15.6+:
+// https://github.com/facebook/react/pull/9679
+/// TODO: a more comprehensive implementation.
+
 const registerReactStack = () => {
   // $FlowFixMe
-  console.stack = frames => reactFrameStack.push(frames);
+  console.reactStack = frames => reactFrameStack.push(frames);
   // $FlowFixMe
-  console.stackEnd = frames => reactFrameStack.pop();
+  console.reactStackEnd = frames => reactFrameStack.pop();
 };
 
 const unregisterReactStack = () => {
   // $FlowFixMe
-  console.stack = undefined;
+  console.reactStack = undefined;
   // $FlowFixMe
-  console.stackEnd = undefined;
+  console.reactStackEnd = undefined;
 };
 
 type ConsoleProxyCallback = (message: string, frames: ReactFrame[]) => void;
