@@ -103,15 +103,20 @@ module.exports = function createWebpackCompiler(config, onReadyCallback) {
 
       // Teach some ESLint tricks.
       console.log(
-        'Search the ' +
-          chalk.dim('keywords') +
-          ' from the right column to learn more.'
+        chalk.dim(
+          'Search for the ' +
+            chalk.cyan('rule keywords') +
+            ' to learn more about each warning.'
+        )
       );
       console.log(
-        'To ignore, add ' +
-          chalk.yellow('// eslint-disable-next-line') +
-          ' to the line before.'
+        chalk.dim(
+          'To ignore, add ' +
+            chalk.yellow('// eslint-disable-next-line') +
+            ' to the previous line.'
+        )
       );
+      console.log();
     }
   });
 
