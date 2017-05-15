@@ -26,6 +26,17 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
+      // Ignore the following directories:
+      // build
+      //   - the build output directory
+      // .cache
+      //   - the yarn module cache on Ubuntu if $HOME === rootDir
+      // docs
+      //   - often used to publish to Github Pages
+      // node_modules
+      //   - ignore tests in dependencies
+      // scripts
+      //   - directory generated upon eject
       '<rootDir>/!(build|docs|node_modules|scripts)/**/__tests__/**/*.js?(x)',
       '<rootDir>/!(build|docs|node_modules|scripts)/**/?(*.)(spec|test).js?(x)',
     ],

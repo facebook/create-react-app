@@ -83,7 +83,11 @@ set -x
 cd ..
 root_path=$PWD
 
+# Prevent lerna bootstrap, we only want top-level dependencies
+cp package.json package.json.bak
+grep -v "lerna bootstrap" package.json > temp && mv temp package.json
 npm install
+mv package.json.bak package.json
 
 if [ "$USE_YARN" = "yes" ]
 then
@@ -91,6 +95,13 @@ then
   npm install -g yarn
   yarn cache clean
 fi
+
+# We removed the postinstall, so do it manually
+./node_modules/.bin/lerna bootstrap --concurrency=1
+
+cd packages/react-error-overlay/
+npm run build:prod
+cd ../..
 
 # ******************************************************************************
 # First, pack and install create-react-app.

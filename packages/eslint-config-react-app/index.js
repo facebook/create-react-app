@@ -18,6 +18,72 @@
 // In the future, we might create a separate list of rules for production.
 // It would probably be more strict.
 
+// The ESLint browser environment defines all browser globals as valid,
+// even though most people don't know some of them exist (e.g. `name` or `status`).
+// This is dangerous as it hides accidentally undefined variables.
+// We blacklist the globals that we deem potentially confusing.
+// To use them, explicitly reference them, e.g. `window.name` or `window.status`.
+var restrictedGlobals = [
+  'addEventListener',
+  'blur',
+  'close',
+  'closed',
+  'confirm',
+  'defaultStatus',
+  'defaultstatus',
+  'event',
+  'external',
+  'find',
+  'focus',
+  'frameElement',
+  'frames',
+  'history',
+  'innerHeight',
+  'innerWidth',
+  'length',
+  'location',
+  'locationbar',
+  'menubar',
+  'moveBy',
+  'moveTo',
+  'name',
+  'onblur',
+  'onerror',
+  'onfocus',
+  'onload',
+  'onresize',
+  'onunload',
+  'open',
+  'opener',
+  'opera',
+  'outerHeight',
+  'outerWidth',
+  'pageXOffset',
+  'pageYOffset',
+  'parent',
+  'print',
+  'removeEventListener',
+  'resizeBy',
+  'resizeTo',
+  'screen',
+  'screenLeft',
+  'screenTop',
+  'screenX',
+  'screenY',
+  'scroll',
+  'scrollbars',
+  'scrollBy',
+  'scrollTo',
+  'scrollX',
+  'scrollY',
+  'self',
+  'status',
+  'statusbar',
+  'stop',
+  'toolbar',
+  'top',
+];
+
 module.exports = {
   root: true,
 
@@ -83,7 +149,7 @@ module.exports = {
     'no-invalid-regexp': 'warn',
     'no-iterator': 'warn',
     'no-label-var': 'warn',
-    'no-labels': ['warn', { allowLoop: false, allowSwitch: false }],
+    'no-labels': ['warn', { allowLoop: true, allowSwitch: false }],
     'no-lone-blocks': 'warn',
     'no-loop-func': 'warn',
     'no-mixed-operators': [
@@ -110,7 +176,7 @@ module.exports = {
     'no-octal-escape': 'warn',
     'no-redeclare': 'warn',
     'no-regex-spaces': 'warn',
-    'no-restricted-syntax': ['warn', 'LabeledStatement', 'WithStatement'],
+    'no-restricted-syntax': ['warn', 'WithStatement'],
     'no-script-url': 'warn',
     'no-self-assign': 'warn',
     'no-self-compare': 'warn',
@@ -121,7 +187,7 @@ module.exports = {
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
     'no-undef': 'error',
-    'no-restricted-globals': ['error', 'event'],
+    'no-restricted-globals': ['error'].concat(restrictedGlobals),
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
@@ -135,8 +201,6 @@ module.exports = {
     'no-unused-vars': [
       'warn',
       {
-        vars: 'local',
-        varsIgnorePattern: '^_',
         args: 'none',
         ignoreRestSiblings: true,
       },

@@ -11,11 +11,13 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -71,6 +73,9 @@ module.exports = {
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
+    // Point sourcemap entries to original disk location
+    devtoolModuleFilenameTemplate: info =>
+      path.relative(paths.appSrc, info.absoluteResourcePath),
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -102,6 +107,7 @@ module.exports = {
   },
   // @remove-on-eject-end
   module: {
+    strictExportPresence: true,
     rules: [
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
@@ -112,17 +118,18 @@ module.exports = {
         enforce: 'pre',
         use: [
           {
-            // @remove-on-eject-begin
-            // Point ESLint to our predefined config.
             options: {
+              formatter: eslintFormatter,
+              // @remove-on-eject-begin
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
               baseConfig: {
                 extends: ['react-app'],
               },
+              ignore: false,
               useEslintrc: false,
+              // @remove-on-eject-end
             },
-            // @remove-on-eject-end
             loader: 'eslint-loader',
           },
         ],
@@ -197,6 +204,7 @@ module.exports = {
                   loader: 'css-loader',
                   options: {
                     importLoaders: 1,
+                    minimize: true,
                   },
                 },
                 {
@@ -258,15 +266,10 @@ module.exports = {
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        screw_ie8: true, // React doesn't support IE8
         warnings: false,
-      },
-      mangle: {
-        screw_ie8: true,
       },
       output: {
         comments: false,
-        screw_ie8: true,
       },
       sourceMap: true,
     }),
