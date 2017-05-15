@@ -57,7 +57,6 @@ function run(port) {
 
   const formatUrl = hostname =>
     url.format({ protocol, hostname, port, pathname: '/' });
-  const formattedUrl = formatUrl(HOST);
 
   const isUnspecifiedAddress = HOST === '0.0.0.0' || HOST === '::';
   let prettyHost, lanAddress;
@@ -71,6 +70,7 @@ function run(port) {
   } else {
     prettyHost = HOST;
   }
+  const prettyUrl = formatUrl(prettyHost);
 
   // Create a webpack compiler that is configured with custom messages.
   const compiler = createWebpackCompiler(
@@ -80,14 +80,20 @@ function run(port) {
         return;
       }
       console.log();
-      console.log('The app is running at:');
+      console.log(
+        `You can now view ${chalk.bold(require(paths.appPackageJson).name)} in the browser.`
+      );
       console.log();
 
       if (isUnspecifiedAddress && lanAddress) {
-        console.log(`  Local: ${chalk.cyan(formattedUrl)}`);
-        console.log(`  Network: ${chalk.cyan(formatUrl(lanAddress))}`);
+        console.log(
+          `  ${chalk.bold('Local:')}            ${chalk.cyan(prettyUrl)}`
+        );
+        console.log(
+          `  ${chalk.bold('On Your Network:')}  ${chalk.cyan(formatUrl(lanAddress))}`
+        );
       } else {
-        console.log(`  ${chalk.cyan(formattedUrl)}`);
+        console.log(`  ${chalk.cyan(prettyUrl)}`);
       }
 
       console.log();
