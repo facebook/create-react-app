@@ -41,7 +41,7 @@ function formatter(results) {
         position,
         messageType,
         message.message.replace(/\.$/, ''),
-        chalk.dim(message.ruleId || ''),
+        chalk.cyan(message.ruleId || ''),
       ];
     });
 
