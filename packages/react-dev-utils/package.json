@@ -23,10 +23,12 @@
     "launchEditor.js",
     "openBrowser.js",
     "openChrome.applescript",
+    "prepareProxy.js",
     "WatchMissingNodeModulesPlugin.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
+    "address": "1.0.1",
     "anser": "1.1.0",
     "babel-code-frame": "6.20.0",
     "chalk": "1.1.3",
