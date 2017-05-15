@@ -11,6 +11,7 @@
   },
   "rules": {
     "no-console": "off",
-    "strict": ["error", "global"]
+    "strict": ["error", "global"],
+    "curly": "warn"
   }
 }

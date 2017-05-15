@@ -40,11 +40,9 @@ Install it once globally:
 npm install -g create-react-app
 ```
 
-**You’ll need to have Node >= 4 on your machine**.
+**You’ll need to have Node >= 6 on your machine**. You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects.
 
-**We strongly recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage.** You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects.
-
-**This tool doesn’t assume a Node backend**. The Node installation is only required for the build tools that rely on it locally, such as Webpack and Babel.
+**This tool doesn’t assume a Node backend**. The Node installation is only required for Create React App itself.
 
 ### Creating an App
 
@@ -92,7 +90,7 @@ You will see the build errors and lint warnings in the console.
 ### `npm test` or `yarn test`
 
 Runs the test watcher in an interactive mode.<br>
-By default, runs tests related to files changes since the last commit.
+By default, runs tests related to files changed since the last commit.
 
 [Read more about testing.](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
 
@@ -209,6 +207,11 @@ All of them are transitive dependencies of the provided npm package.
 
 We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
+## React Native
+
+Looking for something similar, but for React Native?<br>
+Check out [Create React Native App](https://github.com/react-community/create-react-native-app/).
+
 ## Acknowledgements
 
 We are grateful to the authors of existing related projects for their ideas and collaboration:
@@ -239,6 +242,7 @@ Notable alternatives also include:
 * [react-app](https://github.com/kriasoft/react-app)
 * [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
 * [tarec](https://github.com/geowarin/tarec)
+* [sku](https://github.com/seek-oss/sku)
 
 You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
 React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
