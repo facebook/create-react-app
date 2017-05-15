@@ -95,7 +95,8 @@ function formatMessage(message, isError) {
   var path = lines[0].substring(0, slashIndex + 1);
   lines[0] = chalk.dim(isError ? 'Found errors in ' : 'Found warnings in ') +
     path +
-    (isError ? chalk.red : chalk.yellow)(fileName);
+    (isError ? chalk.red : chalk.yellow)(fileName) +
+    chalk.dim(':');
 
   // Reassemble the message.
   message = lines.join('\n');
