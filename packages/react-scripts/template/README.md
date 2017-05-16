@@ -46,6 +46,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
 - [Injecting Data from the Server into the Page](#injecting-data-from-the-server-into-the-page)
 - [Running Tests](#running-tests)
+  - [Configuring Jest](#configuring-jest)
   - [Filename Conventions](#filename-conventions)
   - [Command Line Interface](#command-line-interface)
   - [Version Control Integration](#version-control-integration)
@@ -908,6 +909,20 @@ Jest is a Node-based runner. This means that the tests always run in a Node envi
 While Jest provides browser globals such as `window` thanks to [jsdom](https://github.com/tmpvar/jsdom), they are only approximations of the real browser behavior. Jest is intended to be used for unit tests of your logic and your components rather than the DOM quirks.
 
 We recommend that you use a separate tool for browser end-to-end tests if you need them. They are beyond the scope of Create React App.
+
+
+### Configuring Jest
+
+To override default configurations of Jest, simply add a `jest` field to your `package.json`, for example:
+
+```js
+"jest": {
+  "verbose": true,
+  "testResultsProcessor": "./node_modules/jest-junit"
+},
+```
+
+See [Jest Configuration](https://facebook.github.io/jest/docs/configuration.html) for more.
 
 ### Filename Conventions
 

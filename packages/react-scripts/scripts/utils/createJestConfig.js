@@ -19,6 +19,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ? '<rootDir>/src/setupTests.js'
     : undefined;
 
+  const appJestConfig = require(paths.appPackageJson).jest;
+
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
@@ -46,5 +48,10 @@ module.exports = (resolve, rootDir, isEjecting) => {
   if (rootDir) {
     config.rootDir = rootDir;
   }
-  return config;
+
+  if (Object.prototype.toString.call(appJestConfig) === '[object Object]') {
+    return Object.assign({}, config, appJestConfig);
+  } else {
+    return config;
+  }
 };
