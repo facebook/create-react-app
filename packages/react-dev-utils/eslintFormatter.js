@@ -12,6 +12,7 @@ function isError(message) {
 
 function formatter(results) {
   let output = '\n';
+  let hasErrors = false;
 
   results.forEach(result => {
     let messages = result.messages;
@@ -19,7 +20,6 @@ function formatter(results) {
       return;
     }
 
-    let hasErrors = false;
     messages = messages.map(message => {
       let messageType;
       if (isError(message)) {
@@ -60,6 +60,19 @@ function formatter(results) {
 
     output += `${outputTable}\n\n`;
   });
+
+  if (hasErrors) {
+    // Unlike with warnings, we have to do it here.
+    // We have similar code in react-scripts for warnings,
+    // but warnings can appear in multiple files so we only
+    // print it once at the end. For errors, however, we print
+    // it here because we always show at most one error, and
+    // we can only be sure it's an ESLint error before exiting
+    // this function.
+    output += 'Search for the ' +
+      chalk.underline(chalk.red('rule keywords')) +
+      ' to learn more about each error.';
+  }
 
   return output;
 }
