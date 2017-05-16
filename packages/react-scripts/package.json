@@ -63,6 +63,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
+    "publish": "^0.6.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
