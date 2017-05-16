@@ -1,6 +1,6 @@
 {
   "name": "react-error-overlay",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "An overlay for displaying stack frames.",
   "main": "lib/index.js",
   "scripts": {
@@ -39,10 +39,10 @@
   "devDependencies": {
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
-    "babel-preset-react-app": "^2.1.1",
+    "babel-preset-react-app": "^3.0.0",
     "cross-env": "5.0.0",
     "eslint": "3.19.0",
-    "eslint-config-react-app": "^0.6.1",
+    "eslint-config-react-app": "^1.0.0",
     "eslint-plugin-flowtype": "2.33.0",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jsx-a11y": "5.0.1",
