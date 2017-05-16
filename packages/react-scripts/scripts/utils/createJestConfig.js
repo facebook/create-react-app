@@ -10,6 +10,7 @@
 'use strict';
 
 const fs = require('fs');
+const chalk = require('chalk');
 const paths = require('../../config/paths');
 
 module.exports = (resolve, rootDir, isEjecting) => {
@@ -27,7 +28,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.js?(x)',
-      '<rootDir>/src/**/?(*.)(spec|test).js?(x)'
+      '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
@@ -46,9 +47,44 @@ module.exports = (resolve, rootDir, isEjecting) => {
   if (rootDir) {
     config.rootDir = rootDir;
   }
-  const packageConfig = require(paths.appPackageJson).jest;
-  if (packageConfig) {
-    config.collectCoverageFrom = packageConfig.collectCoverageFrom || config.collectCoverageFrom;
+  const overrides = Object.assign({}, require(paths.appPackageJson).jest);
+  if (overrides) {
+    if (overrides.collectCoverageFrom) {
+      config.collectCoverageFrom = overrides.collectCoverageFrom;
+      delete overrides.collectCoverageFrom;
+    }
+    if (overrides.coverageReporters) {
+      config.coverageReporters = overrides.coverageReporters;
+      delete overrides.coverageReporters;
+    }
+    if (overrides.coverageThreshold) {
+      config.coverageThreshold = overrides.coverageThreshold;
+      delete overrides.coverageThreshold;
+    }
+    if (overrides.snapshotSerializers) {
+      config.snapshotSerializers = overrides.snapshotSerializers;
+      delete overrides.snapshotSerializers;
+    }
+    const unsupportedKeys = Object.keys(overrides);
+    if (unsupportedKeys.length) {
+      console.error(
+        chalk.red(
+          'By default, Create React App only supports overriding the following Jest options: ' +
+            chalk.bold('collectCoverageFrom') +
+            ', ' +
+            chalk.bold('coverageReporters') +
+            ', ' +
+            chalk.bold('coverageThreshold') +
+            ', and ' +
+            chalk.bold('snapshotSerializers') +
+            '\n\nIf you wish to override other options, you need to eject from the default setup. ' +
+            'You can do so by running ' +
+            chalk.bold('npm run eject') +
+            ' but remember that this is a one-way operation.\n'
+        )
+      );
+      process.exit(1);
+    }
   }
   return config;
 };
