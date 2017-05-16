@@ -1,5 +1,5 @@
 {
-  "name": "@clearcover/web-build",
+  "name": "@clearcoverinc/web-build",
   "version": "0.0.1",
   "upstream-version": "0.9.4",
   "description": "This is a custom configuration for react-scripts",
