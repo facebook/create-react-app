@@ -93,27 +93,27 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     extensions: ['.js', '.json', '.jsx'],
     alias: {
+      // @remove-on-eject-begin
+      // Resolve Babel runtime relative to react-scripts.
+      // It usually still works on npm 3 without this but it would be
+      // unfortunate to rely on, as react-scripts could be symlinked,
+      // and thus babel-runtime might not be resolvable from the source.
+      'babel-runtime': path.dirname(
+        require.resolve('babel-runtime/package.json')
+      ),
+      // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
     },
   },
-  // @remove-on-eject-begin
-  // Resolve loaders (webpack plugins for CSS, images, transpilation) from the
-  // directory of `react-scripts` itself rather than the project directory.
-  resolveLoader: {
-    modules: [
-      paths.ownNodeModules,
-      // Lerna hoists everything, so we need to look in our app directory
-      paths.appNodeModules,
-    ],
-  },
-  // @remove-on-eject-end
   module: {
     strictExportPresence: true,
     rules: [
-      // Disable require.ensure as it's not a standard language feature.
-      { parser: { requireEnsure: false } },
+      // TODO: Disable require.ensure as it's not a standard language feature.
+      // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
+      // { parser: { requireEnsure: false } },
+
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       {
@@ -125,13 +125,13 @@ module.exports = {
               formatter: eslintFormatter,
               // @remove-on-eject-begin
               baseConfig: {
-                extends: ['react-app'],
+                extends: [require.resolve('eslint-config-react-app')],
               },
               ignore: false,
               useEslintrc: false,
               // @remove-on-eject-end
             },
-            loader: 'eslint-loader',
+            loader: require.resolve('eslint-loader'),
           },
         ],
         include: paths.appSrc,
@@ -156,7 +156,7 @@ module.exports = {
           /\.jpe?g$/,
           /\.png$/,
         ],
-        loader: 'file-loader',
+        loader: require.resolve('file-loader'),
         options: {
           name: 'static/media/[name].[hash:8].[ext]',
         },
@@ -166,7 +166,7 @@ module.exports = {
       // A missing `test` is equivalent to a match.
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: 'url-loader',
+        loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]',
@@ -176,7 +176,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
-        loader: 'babel-loader',
+        loader: require.resolve('babel-loader'),
         options: {
           // @remove-on-eject-begin
           babelrc: false,
@@ -196,9 +196,9 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          require.resolve('style-loader'),
           {
-            loader: 'css-loader',
+            loader: require.resolve('css-loader'),
             options: {
               importLoaders: 1,
               modules: true,
@@ -207,10 +207,11 @@ module.exports = {
             },
           },
           {
-            loader: 'postcss-loader',
+            loader: require.resolve('postcss-loader'),
             options: {
               ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
               plugins: () => [
+                require('postcss-flexbugs-fixes'),
                 autoprefixer({
                   browsers: [
                     '>1%',
@@ -218,6 +219,7 @@ module.exports = {
                     'Firefox ESR',
                     'not ie < 9', // React doesn't support IE8 anyway
                   ],
+                  flexbox: 'no-2009',
                 }),
               ],
             },
