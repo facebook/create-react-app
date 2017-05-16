@@ -10,9 +10,11 @@
     "start": "node packages/react-scripts/scripts/start.js",
     "test": "node packages/react-scripts/scripts/test.js --env=jsdom",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "danger": "danger"
   },
   "devDependencies": {
+    "danger": "^0.11.5",
     "eslint": "3.16.1",
     "husky": "^0.13.2",
     "lerna": "2.0.0-beta.38",
