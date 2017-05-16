@@ -81,6 +81,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` silently fails](#npm-run-build-silently-fails)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
+  - [Moment.js locales are missing](#momentjs-locales-are-missing)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -1615,6 +1616,32 @@ It is reported that `npm run build` can fail on machines with no swap space, whi
 
 This may be a problem with case sensitive filenames.
 Please refer to [this section](#resolving-heroku-deployment-errors).
+
+### Moment.js locales are missing
+
+If you use a [Moment.js](https://momentjs.com/), you might notice that only the English locale is available by default. This is because the locale files are large, and you probably only need a subset of [all the locales provided by Moment.js](https://momentjs.com/#multiple-locale-support).
+
+To add a specific Moment.js locale to your bundle, you need to import it explicitly.<br>
+For example:
+
+```js
+import moment from 'moment';
+import 'moment/locale/fr';
+```
+
+If import multiple locales this way, you can later switch between them by calling `moment.locale()` with the locale name:
+
+```js
+import moment from 'moment';
+import 'moment/locale/fr';
+import 'moment/locale/es';
+
+// ...
+
+moment.locale('fr');
+```
+
+This will only work for locales that have been explicitly imported before.
 
 ## Something Missing?
 
