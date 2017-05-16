@@ -21,7 +21,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@timer/detect-port": "1.1.2",
+    "@timer/detect-port": "1.1.3",
     "address": "1.0.1",
     "autoprefixer": "7.1.0",
     "babel-core": "6.24.1",
