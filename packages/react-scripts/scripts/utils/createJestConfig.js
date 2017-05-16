@@ -77,6 +77,11 @@ module.exports = (resolve, rootDir, isEjecting) => {
             chalk.bold('coverageThreshold') +
             ', and ' +
             chalk.bold('snapshotSerializers') +
+            '.' +
+            '\n\nThe following options in your package.json Jest configuration are not currently supported by Create React App:\n\n' +
+            unsupportedKeys
+              .map(key => chalk.bold('  \u2022 ' + key))
+              .join('\n') +
             '\n\nIf you wish to override other options, you need to eject from the default setup. ' +
             'You can do so by running ' +
             chalk.bold('npm run eject') +
