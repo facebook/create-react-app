@@ -33,9 +33,9 @@ function massage(
     lastFilename = fileName;
     lastLineNumber = lineNumber;
 
-    let { functionName } = frames[index];
-    functionName = functionName || '(anonymous function)';
-    stack += `in ${functionName} (at ${fileName}:${lineNumber})\n`;
+    let { name } = frames[index];
+    name = name || '(anonymous function)';
+    stack += `in ${name} (at ${fileName}:${lineNumber})\n`;
   }
 
   return { message, stack };
