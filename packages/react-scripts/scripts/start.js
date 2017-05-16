@@ -55,22 +55,35 @@ const HOST = process.env.HOST || '0.0.0.0';
 function run(port) {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 
-  const formatUrl = hostname =>
-    url.format({ protocol, hostname, port, pathname: '/' });
+  const formatUrl = hostname => url.format({
+    protocol,
+    hostname,
+    port,
+    pathname: '/',
+  });
+  const prettyPrintUrl = hostname => url.format({
+    protocol,
+    hostname,
+    port: chalk.bold(port),
+    pathname: '/',
+  });
 
   const isUnspecifiedAddress = HOST === '0.0.0.0' || HOST === '::';
-  let prettyHost, lanAddress;
+  let prettyHost, lanAddress, prettyLanUrl;
   if (isUnspecifiedAddress) {
     prettyHost = 'localhost';
     try {
       lanAddress = address.ip();
+      if (lanAddress) {
+        prettyLanUrl = prettyPrintUrl(lanAddress);
+      }
     } catch (_e) {
       // ignored
     }
   } else {
     prettyHost = HOST;
   }
-  const prettyUrl = formatUrl(prettyHost);
+  const prettyLocalUrl = prettyPrintUrl(prettyHost);
 
   // Create a webpack compiler that is configured with custom messages.
   const compiler = createWebpackCompiler(
@@ -85,15 +98,11 @@ function run(port) {
       );
       console.log();
 
-      if (isUnspecifiedAddress && lanAddress) {
-        console.log(
-          `  ${chalk.bold('Local:')}            ${chalk.cyan(prettyUrl)}`
-        );
-        console.log(
-          `  ${chalk.bold('On Your Network:')}  ${chalk.cyan(formatUrl(lanAddress))}`
-        );
+      if (prettyLanUrl) {
+        console.log(`  ${chalk.bold('Local:')}            ${prettyLocalUrl}`);
+        console.log(`  ${chalk.bold('On Your Network:')}  ${prettyLanUrl}`);
       } else {
-        console.log(`  ${chalk.cyan(prettyUrl)}`);
+        console.log(`  ${prettyLocalUrl}`);
       }
 
       console.log();
