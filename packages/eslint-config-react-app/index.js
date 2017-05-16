@@ -220,11 +220,13 @@ module.exports = {
     'valid-typeof': 'warn',
     'no-restricted-properties': [
       'error',
-      {
-        object: 'require',
-        property: 'ensure',
-        message: 'Please use import() instead. More info: https://webpack.js.org/guides/code-splitting-import/#dynamic-import',
-      },
+      // TODO: reenable once import() is no longer slow.
+      // https://github.com/facebookincubator/create-react-app/issues/2176
+      // {
+      //   object: 'require',
+      //   property: 'ensure',
+      //   message: 'Please use import() instead. More info: https://webpack.js.org/guides/code-splitting-import/#dynamic-import',
+      // },
       {
         object: 'System',
         property: 'import',
