@@ -12,5 +12,8 @@
   "rules": {
     "no-console": "off",
     "strict": ["error", "global"]
+  },
+  "globals": {
+    "__": true
   }
 }

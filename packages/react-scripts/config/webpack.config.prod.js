@@ -18,6 +18,7 @@ var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
+var getLocalizations = require('./localizations');
 
 // @remove-on-eject-begin
 // `path` is not used after eject - see https://github.com/facebookincubator/create-react-app/issues/1174
@@ -36,6 +37,7 @@ var shouldUseRelativeAssetPaths = publicPath === './';
 var publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
+var { language, localizations } = getLocalizations()[0];
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -59,6 +61,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
 module.exports = {
+  name: language,
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
@@ -218,6 +221,9 @@ module.exports = {
     ];
   },
   plugins: [
+    // Adding internationalization plugin so we can compile
+    // our localizations
+    new I18nPlugin(localizations, { failOnMissing: true }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
