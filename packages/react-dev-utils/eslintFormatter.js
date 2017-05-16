@@ -45,9 +45,9 @@ function formatter(results) {
       messages = messages.filter(m => m[2] === 'error');
     }
 
-    // add color to messageTypes
+    // add color to rule keywords
     messages.forEach(m => {
-      m[3] = m[2] === 'error' ? chalk.red(m[3]) : chalk.yellow(m[3]);
+      m[4] = m[2] === 'error' ? chalk.red(m[4]) : chalk.yellow(m[4]);
       m.splice(2, 1);
     });
 
