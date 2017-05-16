@@ -109,16 +109,6 @@ module.exports = {
     },
   },
 
-  settings: {
-    'import/ignore': ['node_modules'],
-    'import/extensions': ['.js'],
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.json'],
-      },
-    },
-  },
-
   rules: {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',
@@ -242,38 +232,13 @@ module.exports = {
       },
     ],
 
-    // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/
-
-    // TODO: import rules are temporarily disabled because they don't play well
-    // with how eslint-loader only checks the file you change. So if module A
-    // imports module B, and B is missing a default export, the linter will
-    // record this as an issue in module A. Now if you fix module B, the linter
-    // will not be aware that it needs to re-lint A as well, so the error
-    // will stay until the next restart, which is really confusing.
-
-    // This is probably fixable with a patch to eslint-loader.
-    // When file A is saved, we want to invalidate all files that import it
-    // *and* that currently have lint errors. This should fix the problem.
-    // (As an exception, import/no-webpack-loader-syntax can be enabled already
-    // because it doesn't depend on whether the file exists, so this issue
-    // doesn't apply to it.)
-
-    // 'import/default': 'warn',
-    // 'import/export': 'warn',
-    // 'import/named': 'warn',
-    // 'import/namespace': 'warn',
-    // 'import/no-amd': 'warn',
-    // 'import/no-duplicates': 'warn',
-    // 'import/no-extraneous-dependencies': 'warn',
-    // 'import/no-named-as-default': 'warn',
-    // 'import/no-named-as-default-member': 'warn',
-    // 'import/no-unresolved': ['warn', { commonjs: true }],
-    // We don't support configuring Webpack using import source strings, so this
-    // is always an error.
+    // https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
     'import/no-webpack-loader-syntax': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
+    'react/jsx-no-comment-textnodes': 'warn',
     'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
+    'react/jsx-no-target-blank': 'warn',
     'react/jsx-no-undef': 'error',
     'react/jsx-pascal-case': [
       'warn',
@@ -289,7 +254,7 @@ module.exports = {
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
     'react/react-in-jsx-scope': 'error',
-    'react/require-render-return': 'warn',
+    'react/require-render-return': 'error',
     'react/style-prop-object': 'warn',
 
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
