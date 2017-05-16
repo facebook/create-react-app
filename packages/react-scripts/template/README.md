@@ -1619,9 +1619,9 @@ Please refer to [this section](#resolving-heroku-deployment-errors).
 
 ### Moment.js locales are missing
 
-If you use a [Moment.js](https://momentjs.com/), you might notice that by default only the English locale is bundled by default. This is because the locale files are large, and you probably only need a subset of [locales provided by Moment.js](https://momentjs.com/#multiple-locale-support).
+If you use a [Moment.js](https://momentjs.com/), you might notice that only the English locale is available by default. This is because the locale files are large, and you probably only need a subset of [all the locales provided by Moment.js](https://momentjs.com/#multiple-locale-support).
 
-To add a Moment.js locale to your bundle, you need to import it explicitly.<br>
+To add a specific Moment.js locale to your bundle, you need to import it explicitly.<br>
 For example:
 
 ```js
@@ -1629,7 +1629,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 ```
 
-If import multiple locales this way, you can later switch between them by calling `moment.locale()` with the name, for example:
+If import multiple locales this way, you can later switch between them by calling `moment.locale()` with the locale name:
 
 ```js
 import moment from 'moment';
