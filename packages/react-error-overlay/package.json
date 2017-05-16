@@ -30,26 +30,26 @@
     "lib/"
   ],
   "dependencies": {
-    "anser": "^1.2.5",
-    "babel-code-frame": "^6.22.0",
-    "babel-runtime": "^6.23.0",
+    "anser": "1.2.5",
+    "babel-code-frame": "6.22.0",
+    "babel-runtime": "6.23.0",
     "react-dev-utils": "^0.5.2",
-    "settle-promise": "^1.0.0"
+    "settle-promise": "1.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "7.x",
+    "babel-cli": "6.24.1",
+    "babel-eslint": "7.2.3",
     "babel-preset-react-app": "^2.1.1",
-    "cross-env": "^4.0.0",
-    "eslint": "^3.16.1",
+    "cross-env": "5.0.0",
+    "eslint": "3.19.0",
     "eslint-config-react-app": "^0.6.1",
-    "eslint-plugin-flowtype": "^2.21.0",
-    "eslint-plugin-import": "^2.0.1",
-    "eslint-plugin-jsx-a11y": "^5.0.0",
-    "eslint-plugin-react": "^6.4.1",
-    "flow-bin": "^0.46.0",
-    "jest": "19.x",
-    "jest-fetch-mock": "^1.1.1"
+    "eslint-plugin-flowtype": "2.33.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "5.0.1",
+    "eslint-plugin-react": "7.0.1",
+    "flow-bin": "0.46.0",
+    "jest": "19.0.2",
+    "jest-fetch-mock": "1.1.1"
   },
   "jest": {
     "setupFiles": [
