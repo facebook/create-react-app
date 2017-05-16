@@ -38,7 +38,7 @@ function openBrowser(url) {
       // Try our best to reuse existing tab
       // on OS X Google Chrome with AppleScript
       execSync('ps cax | grep "Google Chrome"');
-      execSync('osascript openChrome.applescript "' + url + '"', {
+      execSync('osascript openChrome.applescript "' + encodeURI(url) + '"', {
         cwd: __dirname,
         stdio: 'ignore',
       });
