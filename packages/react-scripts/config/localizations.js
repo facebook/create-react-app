@@ -12,7 +12,6 @@
  * @return {object} Localizations
  */
 
-const chalk = require('chalk');
 const glob = require('glob');
 const path = require('path');
 const argv = require('yargs').argv;
