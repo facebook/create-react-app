@@ -20,16 +20,16 @@ const overlayStyle = {
   width: '100%',
   height: '100%',
   'box-sizing': 'border-box',
-  'background-color': 'rgba(0,0,0,.5)',
-  padding: '0.5rem',
   'text-align': 'center',
+  'background-color': white,
 };
 
 const containerStyle = {
   position: 'relative',
   display: 'inline-flex',
   'flex-direction': 'column',
-  'max-height': '100%',
+  height: '100%',
+  width: '1024px',
   'max-width': '100%',
   'overflow-x': 'hidden',
   'overflow-y': 'auto',
@@ -41,10 +41,7 @@ const containerStyle = {
   'white-space': 'pre-wrap',
   'word-break': 'break-word',
   'line-height': 1.5,
-  'background-color': white,
   color: black,
-  'border-radius': '0.25rem',
-  'box-shadow': '0 0 10px 0 rgba(0, 0, 0, 0.15)',
 };
 
 const hintsStyle = {
@@ -73,12 +70,14 @@ const additionalStyle = {
 };
 
 const headerStyle = {
-  'font-size': '1.7em',
+  'font-size': '2em',
   'font-family': 'sans-serif',
   color: red,
   'white-space': 'pre-wrap',
   margin: '0.75rem 2rem 0 0', // Prevent overlap with close button
   flex: '0 0 auto',
+  'max-height': '35%',
+  overflow: 'auto',
 };
 
 const functionNameStyle = {

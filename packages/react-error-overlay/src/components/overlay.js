@@ -84,14 +84,6 @@ function createOverlay(
   // Show message
   container.appendChild(createFooter(document));
 
-  // Clicks to background overlay should dismiss error popup.
-  overlay.addEventListener('click', closeCallback);
-
-  // Clicks within the popup should not dismiss it.
-  container.addEventListener('click', function(event: Event) {
-    event.stopPropagation();
-  });
-
   return {
     overlay,
     additional,
