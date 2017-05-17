@@ -26,7 +26,7 @@ class BuiltEmitter extends Component {
   }
 
   handleReady() {
-    document.dispatchEvent(new Event('ReactFeatureDidMount'));
+    document.dispatchEvent(new window.Event('ReactFeatureDidMount'));
   }
 
   render() {
@@ -54,7 +54,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const feature = location.hash.slice(1);
+    const feature = window.location.hash.slice(1);
     switch (feature) {
       case 'array-destructuring':
         import(

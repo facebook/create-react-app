@@ -90,14 +90,14 @@ function build(previousFileSizes) {
     if (stats.compilation.errors.length) {
       printErrors('Failed to compile.', stats.compilation.errors);
       process.exit(1);
-    }
-
-    if (process.env.CI && stats.compilation.warnings.length) {
-      printErrors(
-        'Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.',
-        stats.compilation.warnings
-      );
-      process.exit(1);
+    } else {
+      if (stats.compilation.warnings.length) {
+        printErrors(
+          'Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.',
+          stats.compilation.warnings
+        );
+        if (process.env.CI) process.exit(1);
+      }
     }
 
     console.log(chalk.green('Compiled successfully.'));
