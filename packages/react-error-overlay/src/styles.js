@@ -37,7 +37,7 @@ const containerStyle = {
   'box-sizing': 'border-box',
   'text-align': 'start',
   'font-family': 'Consolas, Menlo, monospace',
-  'font-size': '10px',
+  'font-size': '11px',
   'white-space': 'pre-wrap',
   'word-break': 'break-word',
   'line-height': 1.5,
@@ -77,7 +77,7 @@ const headerStyle = {
   'font-family': 'sans-serif',
   color: red,
   'white-space': 'pre-wrap',
-  margin: '0.25rem 2rem 0 0', // Prevent overlap with close button
+  margin: '0.75rem 2rem 0 0', // Prevent overlap with close button
   flex: '0 0 auto',
 };
 
