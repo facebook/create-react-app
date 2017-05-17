@@ -93,7 +93,7 @@ fi
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn@0.22 # FIXME: this pin is temporary to work around a Yarn bug on CI
+  npm install -g yarn
   yarn cache clean
 fi
 

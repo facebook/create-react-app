@@ -56,6 +56,26 @@ module.exports = {
 }
 ```
 
+
+#### `new ModuleScopePlugin(appSrc: string)`
+
+This Webpack plugin ensures that relative imports from app's source directory don't reach outside of it.
+
+```js
+var path = require('path');
+var ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+
+
+module.exports = {
+  // ...
+  plugins: [
+    new ModuleScopePlugin(paths.appSrc),
+    // ...
+  ],
+  // ...
+}
+```
+
 #### `new WatchMissingNodeModulesPlugin(nodeModulesPath: string)`
 
 This Webpack plugin ensures `npm install <library>` forces a project rebuild.<br>
@@ -108,6 +128,36 @@ var clearConsole = require('react-dev-utils/clearConsole');
 
 clearConsole();
 console.log('Just cleared the screen!');
+```
+
+#### `eslintFormatter(results: Object): string`
+
+This is our custom ESLint formatter that integrates well with Create React App console output.  
+You can use the default one instead if you prefer so.
+
+```js
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
+
+// In your webpack config:
+// ...
+module: {
+   rules: [
+     {
+        test: /\.(js|jsx)$/,
+        include: paths.appSrc,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'eslint-loader',
+            options: {
+              // Pass the formatter:
+              formatter: eslintFormatter,
+            },
+          },
+        ],
+      }
+   ]
+}
 ```
 
 #### `FileSizeReporter`
@@ -196,29 +246,6 @@ var openBrowser = require('react-dev-utils/openBrowser');
 if (openBrowser('http://localhost:3000')) {
   console.log('The browser tab has been opened!');
 }
-```
-
-#### `prompt(message: string, isYesDefault: boolean): Promise<boolean>`
-
-This function displays a console prompt to the user.
-
-By convention, "no" should be the conservative choice.<br>
-If you mistype the answer, we'll always take it as a "no".<br>
-You can control the behavior on `<Enter>` with `isYesDefault`.
-
-```js
-var prompt = require('react-dev-utils/prompt');
-
-prompt(
-  'Are you sure you want to eat all the candy?',
-  /* isYesDefault */ false
-).then(shouldEat => {
-  if (shouldEat) {
-    console.log('You have successfully consumed all the candy.');
-  } else {
-    console.log('Phew, candy is still available!');
-  }
-});
 ```
 
 #### `webpackHotDevClient.js`
