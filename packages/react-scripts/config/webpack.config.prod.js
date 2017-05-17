@@ -243,7 +243,7 @@ module.exports = {
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
       // ** STOP ** Are you adding a new loader?
-      // Remember to add the new extension(s) to the "url" loader exclusion list.
+      // Remember to add the new extension(s) to the "file" loader exclusion list.
     ],
   },
   plugins: [
