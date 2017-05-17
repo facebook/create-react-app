@@ -55,22 +55,35 @@ const HOST = process.env.HOST || '0.0.0.0';
 function run(port) {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 
-  const formatUrl = hostname =>
-    url.format({ protocol, hostname, port, pathname: '/' });
+  const formatUrl = hostname => url.format({
+    protocol,
+    hostname,
+    port,
+    pathname: '/',
+  });
+  const prettyPrintUrl = hostname => url.format({
+    protocol,
+    hostname,
+    port: chalk.bold(port),
+    pathname: '/',
+  });
 
   const isUnspecifiedAddress = HOST === '0.0.0.0' || HOST === '::';
-  let prettyHost, lanAddress;
+  let prettyHost, lanAddress, prettyLanUrl;
   if (isUnspecifiedAddress) {
     prettyHost = 'localhost';
     try {
       lanAddress = address.ip();
+      if (lanAddress) {
+        prettyLanUrl = prettyPrintUrl(lanAddress);
+      }
     } catch (_e) {
       // ignored
     }
   } else {
     prettyHost = HOST;
   }
-  const prettyUrl = formatUrl(prettyHost);
+  const prettyLocalUrl = prettyPrintUrl(prettyHost);
 
   // Create a webpack compiler that is configured with custom messages.
   const compiler = createWebpackCompiler(
@@ -85,15 +98,11 @@ function run(port) {
       );
       console.log();
 
-      if (isUnspecifiedAddress && lanAddress) {
-        console.log(
-          `  ${chalk.bold('Local:')}            ${chalk.cyan(prettyUrl)}`
-        );
-        console.log(
-          `  ${chalk.bold('On Your Network:')}  ${chalk.cyan(formatUrl(lanAddress))}`
-        );
+      if (prettyLanUrl) {
+        console.log(`  ${chalk.bold('Local:')}            ${prettyLocalUrl}`);
+        console.log(`  ${chalk.bold('On Your Network:')}  ${prettyLanUrl}`);
       } else {
-        console.log(`  ${chalk.cyan(prettyUrl)}`);
+        console.log(`  ${prettyLocalUrl}`);
       }
 
       console.log();
@@ -131,33 +140,42 @@ function run(port) {
 
 // We attempt to use the default port but if it is busy, we offer the user to
 // run on a different port. `detect()` Promise resolves to the next free port.
-detect(DEFAULT_PORT, HOST).then(port => {
-  if (port === DEFAULT_PORT) {
-    run(port);
-    return;
-  }
+detect(DEFAULT_PORT, HOST).then(
+  port => {
+    if (port === DEFAULT_PORT) {
+      run(port);
+      return;
+    }
 
-  if (isInteractive) {
-    clearConsole();
-    const existingProcess = getProcessForPort(DEFAULT_PORT);
-    const question = {
-      type: 'confirm',
-      name: 'shouldChangePort',
-      message: chalk.yellow(
-        `Something is already running on port ${DEFAULT_PORT}.` +
-          `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
-      ) + '\n\nWould you like to run the app on another port instead?',
-      default: true,
-    };
+    if (isInteractive) {
+      clearConsole();
+      const existingProcess = getProcessForPort(DEFAULT_PORT);
+      const question = {
+        type: 'confirm',
+        name: 'shouldChangePort',
+        message: chalk.yellow(
+          `Something is already running on port ${DEFAULT_PORT}.` +
+            `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
+        ) + '\n\nWould you like to run the app on another port instead?',
+        default: true,
+      };
 
-    inquirer.prompt(question).then(answer => {
-      if (answer.shouldChangePort) {
-        run(port);
-      }
-    });
-  } else {
+      inquirer.prompt(question).then(answer => {
+        if (answer.shouldChangePort) {
+          run(port);
+        }
+      });
+    } else {
+      console.log(
+        chalk.red(`Something is already running on port ${DEFAULT_PORT}.`)
+      );
+    }
+  },
+  err => {
     console.log(
-      chalk.red(`Something is already running on port ${DEFAULT_PORT}.`)
+      chalk.red(`Could not find an open port at ${chalk.bold(HOST)}.`)
     );
+    console.log('Network error message: ' + err.message || err);
+    console.log();
   }
-});
+);
