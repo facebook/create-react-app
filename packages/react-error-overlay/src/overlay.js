@@ -35,7 +35,7 @@ import type { ErrorRecordReference } from './utils/errorRegister';
 
 import type { StackFrame } from './utils/stack-frame';
 import { iframeStyle } from './styles';
-import { injectCss, applyStyles } from './utils/dom/css';
+import { applyStyles } from './utils/dom/css';
 import { createOverlay } from './components/overlay';
 import { updateAdditional } from './components/additional';
 

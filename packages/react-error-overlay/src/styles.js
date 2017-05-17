@@ -1,7 +1,6 @@
 /* @flow */
 const black = '#293238',
   darkGray = '#878e91',
-  lightGray = '#fafafa',
   red = '#ce1126',
   lightRed = '#fccfcf',
   yellow = '#fbf5b4',
@@ -64,7 +63,6 @@ const hintStyle = {
 };
 
 const closeButtonStyle = {
-  'font-size': '26px',
   color: black,
   'line-height': '1rem',
   'font-size': '1.5rem',
@@ -120,17 +118,18 @@ const secondaryErrorStyle = {
 
 const omittedFramesStyle = {
   color: black,
-  margin: '1.5em 0',
   cursor: 'pointer',
 };
 
 const preStyle = {
   display: 'block',
   padding: '0.5em',
-  'margin-top': '1.5em',
-  'margin-bottom': '0px',
+  'margin-top': '0.5em',
+  'margin-bottom': '0.5em',
   'overflow-x': 'auto',
   'white-space': 'pre',
+  'border-radius': '0.25rem',
+  'background-color': 'rgba(206, 17, 38, .05)',
 };
 
 const toggleStyle = {
