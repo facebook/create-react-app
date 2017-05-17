@@ -1,5 +1,0 @@
-Edit this file to trigger a cache rebuild.
-http://help.appveyor.com/discussions/questions/1310-delete-cache
-
-----
-Just testing if this works.
