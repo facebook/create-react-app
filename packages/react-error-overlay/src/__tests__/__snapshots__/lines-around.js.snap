@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should return lines around from a string 1`] = `
+Array [
+  ScriptLine {
+    "content": "two",
+    "highlight": false,
+    "lineNumber": 2,
+  },
+  ScriptLine {
+    "content": "three",
+    "highlight": false,
+    "lineNumber": 3,
+  },
+  ScriptLine {
+    "content": "four",
+    "highlight": true,
+    "lineNumber": 4,
+  },
+  ScriptLine {
+    "content": "five",
+    "highlight": false,
+    "lineNumber": 5,
+  },
+  ScriptLine {
+    "content": "six",
+    "highlight": false,
+    "lineNumber": 6,
+  },
+]
+`;
+
+exports[`should return lines around from an array 1`] = `
+Array [
+  ScriptLine {
+    "content": "two",
+    "highlight": false,
+    "lineNumber": 2,
+  },
+  ScriptLine {
+    "content": "three",
+    "highlight": false,
+    "lineNumber": 3,
+  },
+  ScriptLine {
+    "content": "four",
+    "highlight": true,
+    "lineNumber": 4,
+  },
+  ScriptLine {
+    "content": "five",
+    "highlight": false,
+    "lineNumber": 5,
+  },
+  ScriptLine {
+    "content": "six",
+    "highlight": false,
+    "lineNumber": 6,
+  },
+]
+`;

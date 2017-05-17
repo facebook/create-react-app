@@ -8,7 +8,7 @@
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"

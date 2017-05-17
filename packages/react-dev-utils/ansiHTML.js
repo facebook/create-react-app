@@ -57,6 +57,7 @@ var anserMap = {
   'ansi-red': 'red',
   'ansi-bright-magenta': 'magenta',
   'ansi-magenta': 'magenta',
+  'ansi-white': 'darkgrey',
 };
 
 function ansiHTML(txt) {
@@ -81,7 +82,9 @@ function ansiHTML(txt) {
       if (color != null) {
         result += '<span style="color: #' + color + ';">' + part + '</span>';
       } else {
-        if (fg != null) console.log('Missing color mapping: ', fg);
+        if (fg != null) {
+          console.log('Missing color mapping: ', fg);
+        }
         result += '<span>' + part + '</span>';
       }
       if (_index < contentParts.length - 1) {
