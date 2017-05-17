@@ -122,7 +122,7 @@ const preStyle = {
   'margin-top': '0.5em',
   'margin-bottom': '0.5em',
   'overflow-x': 'auto',
-  'white-space': 'pre',
+  'white-space': 'pre-wrap',
   'border-radius': '0.25rem',
   'background-color': 'rgba(206, 17, 38, .05)',
 };
