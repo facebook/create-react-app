@@ -55,9 +55,9 @@ prompt(
   const status = statusSync();
   if (status && status.dirty) {
     console.error(
-      `Git repository has ${status.dirty} dirty ${status.dirty > 1 ? 'files' : 'file'}. ` +
-        'We cannot continue as you would lose all the changes in that file or directory. ' +
-        'Please push commit before and run this command again.'
+      `This git repository has ${status.dirty} ${status.dirty > 1 ? 'files' : 'file'} with uncommitted changes.` +
+        'Ejecting would cause these files to be overwritten. ' +
+        'Please commit your changes with `git commit` and then run this command again.'
     );
     process.exit(1);
   }
