@@ -56,6 +56,26 @@ module.exports = {
 }
 ```
 
+
+#### `new ModuleScopePlugin(appSrc: string)`
+
+This Webpack plugin ensures that relative imports from app's source directory don't reach outside of it.
+
+```js
+var path = require('path');
+var ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+
+
+module.exports = {
+  // ...
+  plugins: [
+    new ModuleScopePlugin(paths.appSrc),
+    // ...
+  ],
+  // ...
+}
+```
+
 #### `new WatchMissingNodeModulesPlugin(nodeModulesPath: string)`
 
 This Webpack plugin ensures `npm install <library>` forces a project rebuild.<br>
