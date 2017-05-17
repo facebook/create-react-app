@@ -20,6 +20,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const spawnSync = require('cross-spawn').sync;
 const chalk = require('chalk');
+const execSync = require('child_process').execSync;
 const inquirer = require('inquirer');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
@@ -35,6 +36,30 @@ inquirer
     default: false,
   })
   .then(answer => {
+    // Make sure there are no dirty git status
+    function statusSync() {
+      try {
+        let stdout = execSync(`git status --porcelain`).toString();
+        let status = stdout
+          .trim()
+          .split(/\r?\n/)
+          .filter(file => file.substr(0, 2) === '??').length;
+        return status;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    const dirtyStatus = statusSync();
+    if (dirtyStatus) {
+      console.error(
+        `This git repository has ${dirtyStatus} ${dirtyStatus > 1 ? 'files' : 'file'} with uncommitted changes.\n` +
+          'Ejecting would cause these files to be overwritten. \n' +
+          'Please commit your changes with `git commit` and then run this command again.'
+      );
+      answer.shouldEject = false;
+    }
+
     if (!answer.shouldEject) {
       console.log(cyan('Close one! Eject aborted.'));
       process.exit(1);
