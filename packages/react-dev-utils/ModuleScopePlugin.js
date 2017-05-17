@@ -26,6 +26,7 @@ class ModuleScopePlugin {
       if (
         // If this resolves to a node_module, we don't care what happens next
         request.descriptionFileRoot.indexOf('/node_modules/') !== -1 ||
+        request.descriptionFileRoot.indexOf('\\node_modules\\') !== -1 ||
         // Make sure this request was manual
         !request.__innerRequest_request
       ) {
