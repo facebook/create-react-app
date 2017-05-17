@@ -136,7 +136,7 @@ console.log('Just cleared the screen!');
 
 #### `eslintFormatter(results: Object): string`
 
-This is our custom ESLint formatter that integrates well with Create React App console output.
+This is our custom ESLint formatter that integrates well with Create React App console output.<br>
 You can use the default one instead if you prefer so.
 
 ```js
