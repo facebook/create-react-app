@@ -1392,6 +1392,9 @@ It will get copied to the `build` folder when you run `npm run build`.
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
+<!--
+TODO: uncomment for 1.0
+
 On a production build, and in a browser that supports [service workers](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers),
 the service worker will automatically handle all navigation requests, like for
 `/todos/42`, by serving the cached copy of your `index.html`. This
@@ -1400,6 +1403,7 @@ service worker navigation routing can be configured or disabled by
 [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
 options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
+-->
 
 ### Building for Relative Paths
 
