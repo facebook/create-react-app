@@ -34,10 +34,11 @@ class ModuleScopePlugin {
       // Resolve the issuer from our appSrc and make sure it's one of our files
       // Maybe an indexOf === 0 would be better?
       const relative = path.relative(appSrc, request.context.issuer);
-      // If we go back, not our request!
+      // If it's not in src/ or a subdirectory, not our request!
       if (relative[0] === '.') {
         return callback();
       }
+      // Find path from src to the requested file
       const requestRelative = path.relative(
         appSrc,
         path.resolve(
@@ -45,6 +46,7 @@ class ModuleScopePlugin {
           request.__innerRequest_request
         )
       );
+      // Error if in a parent directory of src/
       if (requestRelative[0] === '.') {
         callback(
           new Error(
