@@ -79,8 +79,10 @@ function render(name: ?string, message: string, resolvedFrames: StackFrame[]) {
       };
     }
     if (document.body != null) {
-      document.body.style.margin = 0;
+      document.body.style.margin = '0';
       document.body.appendChild(overlay);
+      // Clicks to background overlay should dismiss error popup
+      (document.body: any).addEventListener('click', unmount);
     }
     additionalReference = additional;
   };

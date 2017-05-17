@@ -32,6 +32,11 @@ function createOverlay(
   const frameSettings: FrameSetting[] = frames.map(() => ({ compiled: false }));
   // Create overlay
   const overlay = document.createElement('div');
+  overlay.addEventListener('click', function(event: Event) {
+    // Clicks to background layer dismiss the popup
+    // Prevent clicks within the panel from accidentally dismissing
+    event.stopPropagation();
+  });
   applyStyles(overlay, overlayStyle);
   overlay.appendChild(createClose(document, closeCallback));
 
