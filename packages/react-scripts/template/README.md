@@ -61,8 +61,10 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Editor Integration](#editor-integration)
 - [Developing Components in Isolation](#developing-components-in-isolation)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
+<!-- todo: uncomment
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
+-->
 - [Deployment](#deployment)
   - [Static Server](#static-server)
   - [Other Solutions](#other-solutions)
@@ -1216,6 +1218,10 @@ Learn more about React Storybook:
 
 ## Making a Progressive Web App
 
+You can turn your React app into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) by following the steps in [this repository](https://github.com/jeffposnick/create-react-pwa).
+
+<!--
+TODO: uncomment
 By default, the production build is a fully functional, offline-first
 [Progressive Web App](https://developers.google.com/web/progressive-web-apps/).
 
@@ -1308,6 +1314,8 @@ icons, names, and branding colors to use when the web app is displayed.
 [The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations
 will affect your users' experience.
+
+-->
 
 ## Deployment
 
