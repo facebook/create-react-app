@@ -104,13 +104,13 @@ module.exports = function createWebpackCompiler(config, onReadyCallback) {
       // Teach some ESLint tricks.
       console.log(
         'Search for the ' +
-          chalk.underline('rule keywords') +
+          chalk.underline(chalk.yellow('rule keywords')) +
           ' to learn more about each warning.'
       );
       console.log(
         'To ignore, add ' +
-          chalk.yellow('// eslint-disable-next-line') +
-          ' to the previous line.'
+          chalk.cyan('// eslint-disable-next-line') +
+          ' to the line before.'
       );
       console.log();
     }
