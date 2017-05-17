@@ -7,50 +7,44 @@ const black = '#293238',
   white = '#ffffff';
 
 const iframeStyle = {
-  'background-color': 'rgba(0,0,0,.5)',
   position: 'fixed',
-  top: '1em',
-  left: '1em',
-  bottom: '1em',
-  right: '1em',
-  width: 'calc(100% - 2em)',
-  height: 'calc(100% - 2em)',
+  top: '0',
+  left: '0',
+  width: '100%',
+  height: '100%',
   border: 'none',
-  'border-radius': '3px',
-  'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
   'z-index': 1337,
 };
 
 const overlayStyle = {
-  position: 'absolute',
-  top: '0.5rem',
-  left: '50%',
-  'margin-left': '0',
-  'margin-right': '-50%',
-  transform: 'translate(-50%, 0)',
-  display: 'inline-block',
-  margin: '0.5rem',
-  'max-height': 'calc(100% - 1rem)',
-  'max-width': 'calc(100% - 1rem)',
+  width: '100%',
+  height: '100%',
   'box-sizing': 'border-box',
-  padding: '0 1rem',
+  'background-color': 'rgba(0,0,0,.5)',
+  padding: '0.5rem',
+  'text-align': 'center',
+};
+
+const containerStyle = {
+  position: 'relative',
+  display: 'inline-flex',
+  'flex-direction': 'column',
+  'max-height': '100%',
+  'max-width': '100%',
+  'overflow-x': 'hidden',
+  'overflow-y': 'auto',
+  padding: '0.5rem',
+  'box-sizing': 'border-box',
+  'text-align': 'start',
   'font-family': 'Consolas, Menlo, monospace',
   'font-size': '10px',
-  color: black,
   'white-space': 'pre-wrap',
-  overflow: 'auto',
-  'overflow-x': 'hidden',
   'word-break': 'break-word',
   'line-height': 1.5,
   'background-color': white,
+  color: black,
   'border-radius': '0.25rem',
   'box-shadow': '0 0 10px 0 rgba(0, 0, 0, 0.15)',
-};
-
-const craContainer = {
-  display: 'flex',
-  'flex-direction': 'column',
-  'max-height': '100%',
 };
 
 const hintsStyle = {
@@ -83,8 +77,8 @@ const headerStyle = {
   'font-family': 'sans-serif',
   color: red,
   'white-space': 'pre-wrap',
+  margin: '0.75rem 2rem 0 0', // Prevent overlap with close button
   flex: '0 0 auto',
-  margin: '0.75rem 0 0',
 };
 
 const functionNameStyle = {
@@ -102,8 +96,9 @@ const anchorStyle = {
 
 const traceStyle = {
   'font-size': '1em',
+  flex: '0 1 auto',
+  'min-height': '0px',
   overflow: 'auto',
-  flex: '1 1 auto',
 };
 
 const depStyle = {};
@@ -175,13 +170,13 @@ const groupElemRight = Object.assign({}, _groupElemStyle, {
 const footerStyle = {
   'font-family': 'sans-serif',
   color: darkGray,
-  flex: '0 0 auto',
   'margin-top': '0.5rem',
   'margin-bottom': '1rem',
+  flex: '0 0 auto',
 };
 
 export {
-  craContainer,
+  containerStyle,
   iframeStyle,
   overlayStyle,
   hintsStyle,

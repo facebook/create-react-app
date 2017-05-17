@@ -1,7 +1,7 @@
 /* @flow */
 import { applyStyles } from '../utils/dom/css';
 import {
-  craContainer,
+  containerStyle,
   overlayStyle,
   headerStyle,
   additionalStyle,
@@ -32,19 +32,13 @@ function createOverlay(
   const frameSettings: FrameSetting[] = frames.map(() => ({ compiled: false }));
   // Create overlay
   const overlay = document.createElement('div');
-  overlay.addEventListener('click', function(event: Event) {
-    // Clicks to background layer dismiss the popup
-    // Prevent clicks within the panel from accidentally dismissing
-    event.stopPropagation();
-  });
   applyStyles(overlay, overlayStyle);
-  overlay.appendChild(createClose(document, closeCallback));
 
   // Create container
   const container = document.createElement('div');
-  applyStyles(container, craContainer);
-  container.className = 'cra-container';
+  applyStyles(container, containerStyle);
   overlay.appendChild(container);
+  container.appendChild(createClose(document, closeCallback));
 
   // Create additional
   const additional = document.createElement('div');
@@ -89,6 +83,14 @@ function createOverlay(
 
   // Show message
   container.appendChild(createFooter(document));
+
+  // Clicks to background overlay should dismiss error popup.
+  overlay.addEventListener('click', closeCallback);
+
+  // Clicks within the popup should not dismiss it.
+  container.addEventListener('click', function(event: Event) {
+    event.stopPropagation();
+  });
 
   return {
     overlay,

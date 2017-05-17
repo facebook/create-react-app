@@ -80,9 +80,11 @@ function render(name: ?string, message: string, resolvedFrames: StackFrame[]) {
     }
     if (document.body != null) {
       document.body.style.margin = '0';
-      document.body.appendChild(overlay);
-      // Clicks to background overlay should dismiss error popup
-      (document.body: any).addEventListener('click', unmount);
+      // Keep popup within body boundaries for iOS Safari
+      // $FlowFixMe
+      document.body.style['max-width'] = '100vw';
+
+      (document.body: any).appendChild(overlay);
     }
     additionalReference = additional;
   };
