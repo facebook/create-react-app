@@ -39,7 +39,6 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1;
 fi
 
-
 # Update deps
 cd packages/react-scripts
 
