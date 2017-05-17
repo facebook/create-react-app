@@ -1,6 +1,11 @@
 /* @flow */
 import { applyStyles } from '../utils/dom/css';
-import { overlayStyle, headerStyle, additionalStyle } from '../styles';
+import {
+  containerStyle,
+  overlayStyle,
+  headerStyle,
+  additionalStyle,
+} from '../styles';
 import { createClose } from './close';
 import { createFrames } from './frames';
 import { createFooter } from './footer';
@@ -28,24 +33,12 @@ function createOverlay(
   // Create overlay
   const overlay = document.createElement('div');
   applyStyles(overlay, overlayStyle);
-  overlay.appendChild(createClose(document, closeCallback));
 
   // Create container
   const container = document.createElement('div');
-  container.className = 'cra-container';
+  applyStyles(container, containerStyle);
   overlay.appendChild(container);
-
-  // Create additional
-  const additional = document.createElement('div');
-  applyStyles(additional, additionalStyle);
-  container.appendChild(additional);
-  updateAdditional(
-    document,
-    additional,
-    currentError,
-    totalErrors,
-    switchCallback
-  );
+  container.appendChild(createClose(document, closeCallback));
 
   // Create header
   const header = document.createElement('div');
@@ -70,6 +63,18 @@ function createOverlay(
   // Put it in the DOM
   header.appendChild(document.createTextNode(finalMessage));
   container.appendChild(header);
+
+  // Create "Errors X of Y" in case of multiple errors
+  const additional = document.createElement('div');
+  applyStyles(additional, additionalStyle);
+  updateAdditional(
+    document,
+    additional,
+    currentError,
+    totalErrors,
+    switchCallback
+  );
+  container.appendChild(additional);
 
   // Create trace
   container.appendChild(

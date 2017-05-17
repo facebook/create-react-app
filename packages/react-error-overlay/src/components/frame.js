@@ -120,6 +120,7 @@ function frameDiv(
 
   if (typeof onSourceClick === 'function') {
     let handler = onSourceClick;
+    enableTabClick(frameAnchor);
     frameAnchor.style.cursor = 'pointer';
     frameAnchor.addEventListener('click', function() {
       handler();

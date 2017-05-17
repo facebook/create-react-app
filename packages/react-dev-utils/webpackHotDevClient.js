@@ -26,8 +26,6 @@ var Entities = require('html-entities').AllHtmlEntities;
 var ansiHTML = require('./ansiHTML');
 var entities = new Entities();
 
-var red = '#E36049';
-
 function createOverlayIframe(onIframeLoad) {
   var iframe = document.createElement('iframe');
   iframe.id = 'react-dev-utils-webpack-hot-dev-client-overlay';
@@ -46,26 +44,51 @@ function createOverlayIframe(onIframeLoad) {
 }
 
 function addOverlayDivTo(iframe) {
+  // TODO: unify these styles with react-error-overlay
+  iframe.contentDocument.body.style.margin = 0;
+  iframe.contentDocument.body.style.maxWidth = '100vw';
+
+  var outerDiv = iframe.contentDocument.createElement('div');
+  outerDiv.id = 'react-dev-utils-webpack-hot-dev-client-overlay-div';
+  outerDiv.style.width = '100%';
+  outerDiv.style.height = '100%';
+  outerDiv.style.boxSizing = 'border-box';
+  outerDiv.style.textAlign = 'center';
+  outerDiv.style.backgroundColor = 'rgb(255, 255, 255)';
+
   var div = iframe.contentDocument.createElement('div');
-  div.id = 'react-dev-utils-webpack-hot-dev-client-overlay-div';
-  div.style.position = 'fixed';
+  div.style.position = 'relative';
+  div.style.display = 'inline-flex';
+  div.style.flexDirection = 'column';
+  div.style.height = '100%';
+  div.style.width = '1024px';
+  div.style.maxWidth = '100%';
+  div.style.overflowX = 'hidden';
+  div.style.overflowY = 'auto';
+  div.style.padding = '0.5rem';
   div.style.boxSizing = 'border-box';
-  div.style.left = 0;
-  div.style.top = 0;
-  div.style.right = 0;
-  div.style.bottom = 0;
-  div.style.width = '100vw';
-  div.style.height = '100vh';
-  div.style.backgroundColor = '#fafafa';
-  div.style.color = '#333';
-  div.style.fontFamily = 'Menlo, Consolas, monospace';
-  div.style.fontSize = 'large';
-  div.style.padding = '2rem';
-  div.style.lineHeight = '1.2';
+  div.style.textAlign = 'start';
+  div.style.fontFamily = 'Consolas, Menlo, monospace';
+  div.style.fontSize = '11px';
   div.style.whiteSpace = 'pre-wrap';
-  div.style.overflow = 'auto';
-  iframe.contentDocument.body.appendChild(div);
+  div.style.wordBreak = 'break-word';
+  div.style.lineHeight = '1.5';
+  div.style.color = 'rgb(41, 50, 56)';
+
+  outerDiv.appendChild(div);
+  iframe.contentDocument.body.appendChild(outerDiv);
   return div;
+}
+
+function overlayHeaderStyle() {
+  return 'font-size: 2em;' +
+    'font-family: sans-serif;' +
+    'color: rgb(206, 17, 38);' +
+    'white-space: pre-wrap;' +
+    'margin: 0.75rem 2rem 0px 0px;' +
+    'flex: 0 0 auto;' +
+    'max-height: 35%;' +
+    'overflow: auto;';
 }
 
 var overlayIframe = null;
@@ -103,11 +126,21 @@ function ensureOverlayDivExists(onOverlayDivReady) {
 
 function showErrorOverlay(message) {
   ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
-    // Make it look similar to our terminal.
-    overlayDiv.innerHTML = '<span style="color: ' +
-      red +
-      '">Failed to compile.</span><br><br>' +
-      ansiHTML(entities.encode(message));
+    // TODO: unify this with our runtime overlay
+    overlayDiv.innerHTML = '<div style="' +
+      overlayHeaderStyle() +
+      '">Failed to compile</div><br><br>' +
+      '<pre style="' +
+      'display: block; padding: 0.5em; margin-top: 0.5em; ' +
+      'margin-bottom: 0.5em; overflow-x: auto; white-space: pre-wrap; ' +
+      'border-radius: 0.25rem; background-color: rgba(206, 17, 38, 0.05)">' +
+      '<code style="font-family: Consolas, Menlo, monospace;">' +
+      ansiHTML(entities.encode(message)) +
+      '</code></pre>' +
+      '<div style="' +
+      'font-family: sans-serif; color: rgb(135, 142, 145); margin-top: 0.5rem; ' +
+      'flex: 0 0 auto">' +
+      'This error occurred during the build time and cannot be dismissed.</div>';
   });
 }
 
