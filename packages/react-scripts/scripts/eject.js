@@ -41,22 +41,21 @@ prompt(
   function statusSync() {
     try {
       let stdout = execSync(`git status --porcelain`).toString();
-      let status = { dirty: 0, untracked: 0 };
-      stdout.trim().split(/\r?\n/).forEach(file => {
-        if (file.substr(0, 2) === '??') status.untracked++;
-        else status.dirty++;
-      });
+      let status = stdout
+        .trim()
+        .split(/\r?\n/)
+        .filter(file => file.substr(0, 2) === '??').length;
       return status;
     } catch (e) {
       return false;
     }
   }
 
-  const status = statusSync();
-  if (status && status.dirty) {
+  const dirtyStatus = statusSync();
+  if (dirtyStatus) {
     console.error(
-      `This git repository has ${status.dirty} ${status.dirty > 1 ? 'files' : 'file'} with uncommitted changes.` +
-        'Ejecting would cause these files to be overwritten. ' +
+      `This git repository has ${dirtyStatus} ${dirtyStatus > 1 ? 'files' : 'file'} with uncommitted changes.\n` +
+        'Ejecting would cause these files to be overwritten. \n' +
         'Please commit your changes with `git commit` and then run this command again.'
     );
     process.exit(1);
