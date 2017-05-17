@@ -78,6 +78,13 @@ inquirer
     folders.forEach(verifyAbsent);
     files.forEach(verifyAbsent);
 
+    // Prepare Jest config early in case it throws
+    const jestConfig = createJestConfig(
+      filePath => path.posix.join('<rootDir>', filePath),
+      null,
+      true
+    );
+
     console.log();
     console.log(cyan(`Copying files into ${appPath}`));
 
@@ -151,11 +158,7 @@ inquirer
     console.log(cyan('Configuring package.json'));
     // Add Jest config
     console.log(`  Adding ${cyan('Jest')} configuration`);
-    appPackage.jest = createJestConfig(
-      filePath => path.posix.join('<rootDir>', filePath),
-      null,
-      true
-    );
+    appPackage.jest = jestConfig;
 
     // Add Babel config
     console.log(`  Adding ${cyan('Babel')} preset`);
