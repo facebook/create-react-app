@@ -77,7 +77,7 @@ const headerStyle = {
   'font-family': 'sans-serif',
   color: red,
   'white-space': 'pre-wrap',
-  margin: '0.75rem 2rem 0 0', // Prevent overlap with close button
+  margin: '0.25rem 2rem 0 0', // Prevent overlap with close button
   flex: '0 0 auto',
 };
 
@@ -171,7 +171,6 @@ const footerStyle = {
   'font-family': 'sans-serif',
   color: darkGray,
   'margin-top': '0.5rem',
-  'margin-bottom': '1rem',
   flex: '0 0 auto',
 };
 
