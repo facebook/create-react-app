@@ -13,5 +13,8 @@
   "peerDependencies": {
     "stylelint": "^7.10.1",
     "stylelint-csstree-validator": "^1.1.1"
+  },
+  "devDependencies": {
+    "stylelint-csstree-validator": "^1.1.1"
   }
 }
