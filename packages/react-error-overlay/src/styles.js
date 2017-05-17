@@ -83,6 +83,7 @@ const functionNameStyle = {
 
 const linkStyle = {
   'font-size': '0.9em',
+  'margin-bottom': '0.9em',
 };
 
 const anchorStyle = {
