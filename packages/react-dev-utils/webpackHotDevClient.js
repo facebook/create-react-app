@@ -26,7 +26,7 @@ var Entities = require('html-entities').AllHtmlEntities;
 var ansiHTML = require('./ansiHTML');
 var entities = new Entities();
 
-var red = '#E36049';
+var red = '#ce1126';
 
 function createOverlayIframe(onIframeLoad) {
   var iframe = document.createElement('iframe');
@@ -59,13 +59,22 @@ function addOverlayDivTo(iframe) {
   div.style.backgroundColor = '#fafafa';
   div.style.color = '#333';
   div.style.fontFamily = 'Menlo, Consolas, monospace';
-  div.style.fontSize = 'large';
+  div.style.fontSize = '10px';
   div.style.padding = '2rem';
   div.style.lineHeight = '1.2';
-  div.style.whiteSpace = 'pre-wrap';
+  div.style.whiteSpace = 'pre';
   div.style.overflow = 'auto';
   iframe.contentDocument.body.appendChild(div);
   return div;
+}
+
+function overlayHeaderStyle() {
+  return 'font-size: 1.7em;' +
+    'font-family: sans-serif;' +
+    'color: ' +
+    red +
+    ';' +
+    'white-space: pre-wrap;';
 }
 
 var overlayIframe = null;
@@ -104,8 +113,8 @@ function ensureOverlayDivExists(onOverlayDivReady) {
 function showErrorOverlay(message) {
   ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
     // Make it look similar to our terminal.
-    overlayDiv.innerHTML = '<span style="color: ' +
-      red +
+    overlayDiv.innerHTML = '<span style="' +
+      overlayHeaderStyle() +
       '">Failed to compile.</span><br><br>' +
       ansiHTML(entities.encode(message));
   });

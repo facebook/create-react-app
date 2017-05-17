@@ -4,10 +4,11 @@ const black = '#293238',
   lightGray = '#fafafa',
   red = '#ce1126',
   lightRed = '#fccfcf',
-  yellow = '#fbf5b4';
+  yellow = '#fbf5b4',
+  white = '#ffffff';
 
 const iframeStyle = {
-  'background-color': lightGray,
+  'background-color': 'rgba(0,0,0,.5)',
   position: 'fixed',
   top: '1em',
   left: '1em',
@@ -22,22 +23,38 @@ const iframeStyle = {
 };
 
 const overlayStyle = {
+  position: 'absolute',
+  top: '0.5rem',
+  left: '50%',
+  'margin-left': '0',
+  'margin-right': '-50%',
+  transform: 'translate(-50%, 0)',
+  display: 'inline-block',
+  margin: '0.5rem',
+  'max-height': 'calc(100% - 1rem)',
+  'max-width': 'calc(100% - 1rem)',
   'box-sizing': 'border-box',
-  padding: '4rem',
+  padding: '0 1rem',
   'font-family': 'Consolas, Menlo, monospace',
+  'font-size': '10px',
   color: black,
   'white-space': 'pre-wrap',
   overflow: 'auto',
   'overflow-x': 'hidden',
   'word-break': 'break-word',
   'line-height': 1.5,
+  'background-color': white,
+  'border-radius': '0.25rem',
+  'box-shadow': '0 0 10px 0 rgba(0, 0, 0, 0.15)',
+};
+
+const craContainer = {
+  display: 'flex',
+  'flex-direction': 'column',
+  'max-height': '100%',
 };
 
 const hintsStyle = {
-  'font-size': '0.8em',
-  'margin-top': '-3em',
-  'margin-bottom': '3em',
-  'text-align': 'right',
   color: darkGray,
 };
 
@@ -49,7 +66,9 @@ const hintStyle = {
 const closeButtonStyle = {
   'font-size': '26px',
   color: black,
-  padding: '0.5em 1em',
+  'line-height': '1rem',
+  'font-size': '1.5rem',
+  padding: '1rem',
   cursor: 'pointer',
   position: 'absolute',
   right: 0,
@@ -63,14 +82,15 @@ const additionalStyle = {
 
 const headerStyle = {
   'font-size': '1.7em',
-  'font-weight': 'bold',
+  'font-family': 'sans-serif',
   color: red,
   'white-space': 'pre-wrap',
+  flex: '0 0 auto',
+  margin: '0.75rem 0 0',
 };
 
 const functionNameStyle = {
   'margin-top': '1em',
-  'font-size': '1.2em',
 };
 
 const linkStyle = {
@@ -84,11 +104,11 @@ const anchorStyle = {
 
 const traceStyle = {
   'font-size': '1em',
+  overflow: 'auto',
+  flex: '1 1 auto',
 };
 
-const depStyle = {
-  'font-size': '1.2em',
-};
+const depStyle = {};
 
 const primaryErrorStyle = {
   'background-color': lightRed,
@@ -100,7 +120,6 @@ const secondaryErrorStyle = {
 
 const omittedFramesStyle = {
   color: black,
-  'font-size': '0.9em',
   margin: '1.5em 0',
   cursor: 'pointer',
 };
@@ -111,7 +130,6 @@ const preStyle = {
   'margin-top': '1.5em',
   'margin-bottom': '0px',
   'overflow-x': 'auto',
-  'font-size': '1.1em',
   'white-space': 'pre',
 };
 
@@ -156,11 +174,15 @@ const groupElemRight = Object.assign({}, _groupElemStyle, {
 });
 
 const footerStyle = {
-  'text-align': 'center',
+  'font-family': 'sans-serif',
   color: darkGray,
+  flex: '0 0 auto',
+  'margin-top': '0.5rem',
+  'margin-bottom': '1rem',
 };
 
 export {
+  craContainer,
   iframeStyle,
   overlayStyle,
   hintsStyle,

@@ -1,6 +1,11 @@
 /* @flow */
 import { applyStyles } from '../utils/dom/css';
-import { overlayStyle, headerStyle, additionalStyle } from '../styles';
+import {
+  craContainer,
+  overlayStyle,
+  headerStyle,
+  additionalStyle,
+} from '../styles';
 import { createClose } from './close';
 import { createFrames } from './frames';
 import { createFooter } from './footer';
@@ -32,6 +37,7 @@ function createOverlay(
 
   // Create container
   const container = document.createElement('div');
+  applyStyles(container, craContainer);
   container.className = 'cra-container';
   overlay.appendChild(container);
 
