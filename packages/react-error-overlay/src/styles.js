@@ -64,10 +64,7 @@ const closeButtonStyle = {
   top: 0,
 };
 
-const additionalStyle = {
-  'margin-bottom': '1.5em',
-  'margin-top': '-4em',
-};
+const additionalStyle = {};
 
 const headerStyle = {
   'font-size': '2em',
@@ -141,7 +138,7 @@ const hiddenStyle = {
 };
 
 const groupStyle = {
-  'margin-left': '1em',
+  'margin-right': '1em',
 };
 
 const _groupElemStyle = {
@@ -163,7 +160,7 @@ const groupElemLeft = Object.assign({}, _groupElemStyle, {
 const groupElemRight = Object.assign({}, _groupElemStyle, {
   'border-top-left-radius': '0px',
   'border-bottom-left-radius': '0px',
-  'margin-left': '-1px',
+  'margin-right': '-1px',
 });
 
 const footerStyle = {
