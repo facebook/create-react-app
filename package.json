@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "cd packages/react-scripts && node scripts/build.js",
+    "build": "node packages/react-scripts/scripts/build.js",
     "changelog": "lerna-changelog",
     "create-react-app": "tasks/cra.sh",
     "e2e": "tasks/e2e-simple.sh",
@@ -18,7 +18,8 @@
     "lerna": "2.0.0-beta.38",
     "lerna-changelog": "^0.2.3",
     "lint-staged": "^3.3.1",
-    "prettier": "^0.21.0"
+    "prettier": "^0.21.0",
+    "stylelint-csstree-validator": "^1.1.1"
   },
   "lint-staged": {
     "*.js": [
