@@ -26,7 +26,7 @@ class BuiltEmitter extends Component {
   }
 
   handleReady() {
-    document.dispatchEvent(new window.Event('ReactFeatureDidMount'));
+    document.dispatchEvent(new Event('ReactFeatureDidMount'));
   }
 
   render() {

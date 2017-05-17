@@ -76,8 +76,11 @@ cd "$root_path"/packages/create-react-app
 npm install
 cd "$root_path"
 
-# If the node version is < 4, the script should just give an error.
-if [[ `node --version | sed -e 's/^v//' -e 's/\..*//g'` -lt 4 ]]
+# If the node version is < 6, the script should just give an error.
+nodeVersion=`node --version | cut -d v -f2`
+nodeMajor=`echo $nodeVersion | cut -d. -f1`
+nodeMinor=`echo $nodeVersion | cut -d. -f2`
+if [[ nodeMajor -lt 6 ]]
 then
   cd $temp_app_path
   err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
@@ -90,12 +93,21 @@ fi
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn@0.22 # FIXME: this pin is temporary to work around a Yarn bug on CI
+  npm install -g yarn
   yarn cache clean
 fi
 
 # Lint own code
-./node_modules/.bin/eslint --max-warnings 0 .
+./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
+cd packages/react-error-overlay/
+./node_modules/.bin/eslint --max-warnings 0 src/
+npm test
+npm run build:prod
+cd ../..
 
 # ******************************************************************************
 # First, test the create-react-app development environment.
