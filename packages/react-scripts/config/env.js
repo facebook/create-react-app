@@ -10,10 +10,10 @@
 // @remove-on-eject-end
 'use strict';
 
-var fs = require('fs');
-var paths = require('./paths');
+const fs = require('fs');
+const paths = require('./paths');
 
-var NODE_ENV = process.env.NODE_ENV;
+const NODE_ENV = process.env.NODE_ENV;
 if (!NODE_ENV) {
   throw new Error(
     'The NODE_ENV environment variable is required but was not specified.'
@@ -22,9 +22,9 @@ if (!NODE_ENV) {
 
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 var dotenvFiles = [
-  paths.dotenv + '.' + NODE_ENV + '.local',
-  paths.dotenv + '.' + NODE_ENV,
-  paths.dotenv + '.local',
+  `${paths.dotenv}.${NODE_ENV}.local`,
+  `${paths.dotenv}.${NODE_ENV}`,
+  `${paths.dotenv}.local`,
   paths.dotenv,
 ];
 // Load environment variables from .env* files. Suppress warnings using silent
