@@ -37,7 +37,7 @@ const containerStyle = {
   'overflow-y': 'auto',
   padding: '0.5rem',
   'box-sizing': 'border-box',
-  'text-align': 'start',
+  'text-align': 'left',
   'font-family': 'Consolas, Menlo, monospace',
   'font-size': '11px',
   'white-space': 'pre-wrap',

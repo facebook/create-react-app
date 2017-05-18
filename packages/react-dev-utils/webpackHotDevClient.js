@@ -67,7 +67,7 @@ function addOverlayDivTo(iframe) {
   div.style.overflowY = 'auto';
   div.style.padding = '0.5rem';
   div.style.boxSizing = 'border-box';
-  div.style.textAlign = 'start';
+  div.style.textAlign = 'left';
   div.style.fontFamily = 'Consolas, Menlo, monospace';
   div.style.fontSize = '11px';
   div.style.whiteSpace = 'pre-wrap';
