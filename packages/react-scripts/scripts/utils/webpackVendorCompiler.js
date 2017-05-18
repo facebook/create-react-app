@@ -4,7 +4,6 @@ const path = require('path');
 const webpack = require('webpack');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const paths = require('../../config/paths');
-const vendorConfig = require('../../config/webpack.config.vendor');
 const clearConsole = require('react-dev-utils/clearConsole');
 const chalk = require('chalk');
 const printErrors = require('./printErrors');
@@ -12,6 +11,11 @@ const environment = process.env.NODE_ENV;
 const vendorHash = require('./vendorHash');
 
 module.exports = config => new Promise(resolve => {
+  if (!vendorHash) {
+    // bail if no vendorHash
+    return resolve(config);
+  }
+  const vendorConfig = require('../../config/webpack.config.vendor');
   if (shouldVendorBundleUpdate()) {
     // Read vendor path for stale files
     return fs.readdir(paths.vendorPath, (err, files) => {
@@ -79,7 +83,7 @@ function cleanUpStaleFiles(files) {
 }
 
 function resolveConfig(config) {
-  return Object.assign(config, {
+  return Object.assign({}, config, {
     plugins: config.plugins.concat([
       new webpack.DllReferencePlugin({
         context: '.',
