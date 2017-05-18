@@ -64,7 +64,9 @@ const closeButtonStyle = {
   top: 0,
 };
 
-const additionalStyle = {};
+const additionalStyle = {
+  'margin-bottom': '0.5rem',
+};
 
 const headerStyle = {
   'font-size': '2em',
