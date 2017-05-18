@@ -13,4 +13,5 @@ const babelJest = require('babel-jest');
 module.exports = babelJest.createTransformer({
   presets: [require.resolve('babel-preset-react-app')],
   babelrc: false,
+  sourceMaps: process.env.REACT_APP_DEBUG_JEST ? 'inline' : false,
 });

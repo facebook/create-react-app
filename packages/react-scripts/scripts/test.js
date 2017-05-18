@@ -8,7 +8,15 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 // @remove-on-eject-end
+
+/**
+  * Greetings! If you are here attempting to start a debugging session, please
+  * ensure that your debugger of choice is configured to enable source maps,
+  * otherwise your code may appear mangled by babel!
+  */
 'use strict';
+
+var debugArgs = require('./utils/debugArgs');
 
 process.env.NODE_ENV = 'test';
 process.env.PUBLIC_URL = '';
@@ -24,11 +32,21 @@ process.on('unhandledRejection', err => {
 require('../config/env');
 
 const jest = require('jest');
-const argv = process.argv.slice(2);
+let argv = process.argv.slice(2);
+const isDebug = !!process.env.REACT_APP_DEBUG_JEST;
+const isRunInBand = argv.indexOf('--runInBand') > -1 || argv.indexOf('-i') > -1;
 
 // Watch unless on CI or in coverage mode
 if (!process.env.CI && argv.indexOf('--coverage') < 0) {
   argv.push('--watch');
+}
+
+// Force debug into single worker
+if (isDebug) {
+  if (!isRunInBand) {
+    argv.push('--runInBand');
+  }
+  argv = debugArgs.removeFrom(argv);
 }
 
 // @remove-on-eject-begin
