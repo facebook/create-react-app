@@ -64,7 +64,7 @@ const closeButtonStyle = {
   top: 0,
 };
 
-const additionalStyle = {
+const additionalChildStyle = {
   'margin-bottom': '0.5rem',
 };
 
@@ -197,7 +197,7 @@ export {
   hintsStyle,
   hintStyle,
   closeButtonStyle,
-  additionalStyle,
+  additionalChildStyle,
   headerStyle,
   functionNameStyle,
   linkStyle,

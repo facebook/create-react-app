@@ -1,11 +1,6 @@
 /* @flow */
 import { applyStyles } from '../utils/dom/css';
-import {
-  containerStyle,
-  overlayStyle,
-  headerStyle,
-  additionalStyle,
-} from '../styles';
+import { containerStyle, overlayStyle, headerStyle } from '../styles';
 import { createClose } from './close';
 import { createFrames } from './frames';
 import { createFooter } from './footer';
@@ -42,7 +37,6 @@ function createOverlay(
 
   // Create "Errors X of Y" in case of multiple errors
   const additional = document.createElement('div');
-  applyStyles(additional, additionalStyle);
   updateAdditional(
     document,
     additional,
