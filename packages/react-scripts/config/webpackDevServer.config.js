@@ -10,7 +10,7 @@
 // @remove-on-eject-end
 'use strict';
 
-const launchEditor = require('react-dev-utils/launchEditor');
+const errorOverlayMiddleware = require('react-error-overlay/middleware');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
 
@@ -70,15 +70,8 @@ module.exports = function(proxy, allowedHost) {
     public: allowedHost,
     proxy,
     setup(app) {
-      // This lets us open files from the crash overlay.
-      app.use(function launchEditorMiddleware(req, res, next) {
-        if (req.url.startsWith('/__open-stack-frame-in-editor')) {
-          launchEditor(req.query.fileName, req.query.lineNumber);
-          res.end();
-        } else {
-          next();
-        }
-      });
+      // This lets us open files from the runtime error overlay.
+      app.use(errorOverlayMiddleware());
     },
   };
 };
