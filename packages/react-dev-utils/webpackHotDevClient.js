@@ -38,7 +38,7 @@ function createOverlayIframe(onIframeLoad) {
   iframe.style.width = '100vw';
   iframe.style.height = '100vh';
   iframe.style.border = 'none';
-  iframe.style.zIndex = 9999999999;
+  iframe.style.zIndex = 2147483647;
   iframe.onload = onIframeLoad;
   return iframe;
 }
@@ -192,7 +192,6 @@ function clearOutdatedErrors() {
 // Successful compilation.
 function handleSuccess() {
   clearOutdatedErrors();
-  destroyErrorOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
@@ -200,14 +199,17 @@ function handleSuccess() {
 
   // Attempt to apply hot updates or reload.
   if (isHotUpdate) {
-    tryApplyUpdates();
+    tryApplyUpdates(function onHotUpdateSuccess() {
+      // Only destroy it when we're sure it's a hot update.
+      // Otherwise it would flicker right before the reload.
+      destroyErrorOverlay();
+    });
   }
 }
 
 // Compilation with warnings (e.g. ESLint).
 function handleWarnings(warnings) {
   clearOutdatedErrors();
-  destroyErrorOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
@@ -231,6 +233,9 @@ function handleWarnings(warnings) {
       // Only print warnings if we aren't refreshing the page.
       // Otherwise they'll disappear right away anyway.
       printWarnings();
+      // Only destroy it when we're sure it's a hot update.
+      // Otherwise it would flicker right before the reload.
+      destroyErrorOverlay();
     });
   } else {
     // Print initial warnings immediately.
