@@ -252,6 +252,19 @@ if (openBrowser('http://localhost:3000')) {
 }
 ```
 
+#### `printHostingInstructions(appPackage: Object, publicUrl: string, publicPath: string, buildFolder: string, useYarn: boolean): void`
+
+Prints hosting instructions after the project is built.
+
+Pass your parsed `package.json` object as `appPackage`, your the URL where you plan to host the app as `publicUrl`, `output.publicPath` from your Webpack configuration as `publicPath`, the `buildFolder` name, and whether to `useYarn` in instructions.
+
+```js
+const appPackage = require(paths.appPackageJson);
+const publicUrl = paths.publicUrl;
+const publicPath = config.output.publicPath;
+printHostingInstructions(appPackage, publicUrl, publicPath, 'build', true);
+```
+
 #### `webpackHotDevClient.js`
 
 This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.

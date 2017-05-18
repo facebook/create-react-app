@@ -13,6 +13,7 @@ function isError(message) {
 function formatter(results) {
   let output = '\n';
   let hasErrors = false;
+  let reportContainsErrorRuleIDs = false;
 
   results.forEach(result => {
     let messages = result.messages;
@@ -25,6 +26,9 @@ function formatter(results) {
       if (isError(message)) {
         messageType = 'error';
         hasErrors = true;
+        if (message.ruleId) {
+          reportContainsErrorRuleIDs = true;
+        }
       } else {
         messageType = 'warn';
       }
@@ -61,7 +65,7 @@ function formatter(results) {
     output += `${outputTable}\n\n`;
   });
 
-  if (hasErrors) {
+  if (reportContainsErrorRuleIDs) {
     // Unlike with warnings, we have to do it here.
     // We have similar code in react-scripts for warnings,
     // but warnings can appear in multiple files so we only

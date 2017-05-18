@@ -23,14 +23,15 @@ process.on('unhandledRejection', err => {
 // Ensure environment variables are read.
 require('../config/env');
 
+const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
-const path = require('path');
-const url = require('url');
 const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 
 const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
@@ -44,159 +45,74 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 // First, read the current file sizes in build directory.
 // This lets us display how much they changed later.
-measureFileSizesBeforeBuild(paths.appBuild).then(previousFileSizes => {
-  // Remove all content but keep the directory so that
-  // if you're in it, you don't end up in Trash
-  fs.emptyDirSync(paths.appBuild);
+measureFileSizesBeforeBuild(paths.appBuild)
+  .then(previousFileSizes => {
+    // Remove all content but keep the directory so that
+    // if you're in it, you don't end up in Trash
+    fs.emptyDirSync(paths.appBuild);
+    // Merge with the public folder
+    copyPublicFolder();
+    // Start the webpack build
+    return build(previousFileSizes);
+  })
+  .then(
+    ({ stats, previousFileSizes }) => {
+      console.log(chalk.green('Compiled successfully.'));
+      console.log();
 
-  // Start the webpack build
-  build(previousFileSizes);
+      console.log('File sizes after gzip:');
+      console.log();
+      printFileSizesAfterBuild(stats, previousFileSizes);
+      console.log();
 
-  // Merge with the public folder
-  copyPublicFolder();
-});
-
-// Print out errors
-function printErrors(summary, errors) {
-  console.log(chalk.red(summary));
-  console.log();
-  errors.forEach(err => {
-    console.log(err.message || err);
-    console.log();
-  });
-}
+      const appPackage = require(paths.appPackageJson);
+      const publicUrl = paths.publicUrl;
+      const publicPath = config.output.publicPath;
+      const buildFolder = path.relative(process.cwd(), paths.appBuild);
+      printHostingInstructions(
+        appPackage,
+        publicUrl,
+        publicPath,
+        buildFolder,
+        useYarn
+      );
+    },
+    err => {
+      console.log(chalk.red('Failed to compile.'));
+      console.log();
+      console.log(err.message || err);
+      console.log();
+      process.exit(1);
+    }
+  );
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
-  let compiler;
-  try {
-    compiler = webpack(config);
-  } catch (err) {
-    printErrors('Failed to compile.', [err]);
-    process.exit(1);
-  }
-
-  compiler.run((err, stats) => {
-    if (err) {
-      printErrors('Failed to compile.', [err]);
-      process.exit(1);
-    }
-
-    if (stats.compilation.errors.length) {
-      printErrors('Failed to compile.', stats.compilation.errors);
-      process.exit(1);
-    }
-
-    if (process.env.CI && stats.compilation.warnings.length) {
-      printErrors(
-        'Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.',
-        stats.compilation.warnings
-      );
-      process.exit(1);
-    }
-
-    console.log(chalk.green('Compiled successfully.'));
-    console.log();
-
-    console.log('File sizes after gzip:');
-    console.log();
-    printFileSizesAfterBuild(stats, previousFileSizes);
-    console.log();
-
-    const appPackage = require(paths.appPackageJson);
-    const publicUrl = paths.publicUrl;
-    const publicPath = config.output.publicPath;
-    const publicPathname = url.parse(publicPath).pathname;
-    if (publicUrl && publicUrl.indexOf('.github.io/') !== -1) {
-      // "homepage": "http://user.github.io/project"
-      console.log(
-        `The project was built assuming it is hosted at ${chalk.green(publicPathname)}.`
-      );
-      console.log(
-        `You can control this with the ${chalk.green('homepage')} field in your ${chalk.cyan('package.json')}.`
-      );
-      console.log();
-      console.log(`The ${chalk.cyan('build')} folder is ready to be deployed.`);
-      console.log(`To publish it at ${chalk.green(publicUrl)}, run:`);
-      // If script deploy has been added to package.json, skip the instructions
-      if (typeof appPackage.scripts.deploy === 'undefined') {
-        console.log();
-        if (useYarn) {
-          console.log(`  ${chalk.cyan('yarn')} add --dev gh-pages`);
-        } else {
-          console.log(`  ${chalk.cyan('npm')} install --save-dev gh-pages`);
-        }
-        console.log();
-        console.log(
-          `Add the following script in your ${chalk.cyan('package.json')}.`
-        );
-        console.log();
-        console.log(`    ${chalk.dim('// ...')}`);
-        console.log(`    ${chalk.yellow('"scripts"')}: {`);
-        console.log(`      ${chalk.dim('// ...')}`);
-        console.log(
-          `      ${chalk.yellow('"predeploy"')}: ${chalk.yellow('"npm run build",')}`
-        );
-        console.log(
-          `      ${chalk.yellow('"deploy"')}: ${chalk.yellow('"gh-pages -d build"')}`
-        );
-        console.log('    }');
-        console.log();
-        console.log('Then run:');
+  let compiler = webpack(config);
+  return new Promise((resolve, reject) => {
+    compiler.run((err, stats) => {
+      if (err) {
+        return reject(err);
       }
-      console.log();
-      console.log(`  ${chalk.cyan(useYarn ? 'yarn' : 'npm')} run deploy`);
-      console.log();
-    } else if (publicPath !== '/') {
-      // "homepage": "http://mywebsite.com/project"
-      console.log(
-        `The project was built assuming it is hosted at ${chalk.green(publicPath)}.`
-      );
-      console.log(
-        `You can control this with the ${chalk.green('homepage')} field in your ${chalk.cyan('package.json')}.`
-      );
-      console.log();
-      console.log(`The ${chalk.cyan('build')} folder is ready to be deployed.`);
-      console.log();
-    } else {
-      if (publicUrl) {
-        // "homepage": "http://mywebsite.com"
-        console.log(
-          `The project was built assuming it is hosted at ${chalk.green(publicUrl)}.`
-        );
-        console.log(
-          `You can control this with the ${chalk.green('homepage')} field in your ${chalk.cyan('package.json')}.`
-        );
-        console.log();
-      } else {
-        // no homepage
-        console.log(
-          'The project was built assuming it is hosted at the server root.'
-        );
-        console.log(
-          `To override this, specify the ${chalk.green('homepage')} in your ${chalk.cyan('package.json')}.`
-        );
-        console.log('For example, add this to build it for GitHub Pages:');
-        console.log();
-        console.log(
-          `  ${chalk.green('"homepage"')} ${chalk.cyan(':')} ${chalk.green('"http://myname.github.io/myapp"')}${chalk.cyan(',')}`
-        );
-        console.log();
+      const messages = formatWebpackMessages(stats.toJson({}, true));
+      if (messages.errors.length) {
+        return reject(new Error(messages.errors.join('\n\n')));
       }
-      const build = path.relative(process.cwd(), paths.appBuild);
-      console.log(`The ${chalk.cyan(build)} folder is ready to be deployed.`);
-      console.log('You may serve it with a static server:');
-      console.log();
-      if (useYarn) {
-        console.log(`  ${chalk.cyan('yarn')} global add serve`);
-      } else {
-        console.log(`  ${chalk.cyan('npm')} install -g serve`);
+      if (process.env.CI && messages.warnings.length) {
+        console.log();
+        console.log(
+          chalk.yellow(
+            'Treating warnings as errors because process.env.CI = true.\n' +
+              'Most CI servers set it automatically.'
+          )
+        );
+        console.log();
+        return reject(new Error(messages.warnings.join('\n\n')));
       }
-      console.log(`  ${chalk.cyan('serve')} -s build`);
-      console.log();
-    }
+      return resolve({ stats, previousFileSizes });
+    });
   });
 }
 
