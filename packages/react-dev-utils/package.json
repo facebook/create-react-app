@@ -25,6 +25,7 @@
     "openBrowser.js",
     "openChrome.applescript",
     "prepareProxy.js",
+    "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
     "webpackHotDevClient.js"
   ],
