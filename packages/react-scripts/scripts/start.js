@@ -33,8 +33,9 @@ const getProcessForPort = require('react-dev-utils/getProcessForPort');
 const openBrowser = require('react-dev-utils/openBrowser');
 const inquirer = require('inquirer');
 const paths = require('../config/paths');
+const config = require('../config/webpack.config.dev');
 const createWebpackCompiler = require('./utils/createWebpackCompiler');
-const bundleVendorIfStale = require('./utils/bundleVendorIfStale');
+const webpackVendorCompiler = require('./utils/webpackVendorCompiler');
 const prepareProxy = require('react-dev-utils/prepareProxy');
 const url = require('url');
 
@@ -52,7 +53,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 
-function run(port) {
+function run(port, config) {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 
   const formatUrl = hostname => url.format({
@@ -84,7 +85,6 @@ function run(port) {
     prettyHost = HOST;
   }
   const prettyLocalUrl = prettyPrintUrl(prettyHost);
-  const config = require('../config/webpack.config.dev');
   const devServerConfig = require('../config/webpackDevServer.config');
 
   // Create a webpack compiler that is configured with custom messages.
@@ -139,13 +139,13 @@ function run(port) {
     openBrowser(formatUrl(prettyHost));
   });
 }
-bundleVendorIfStale().then(() => {
+webpackVendorCompiler(config).then(config => {
   // We attempt to use the default port but if it is busy, we offer the user to
   // run on a different port. `detect()` Promise resolves to the next free port.
   detect(DEFAULT_PORT, HOST).then(
     port => {
       if (port === DEFAULT_PORT) {
-        run(port);
+        run(port, config);
         return;
       }
 
@@ -164,7 +164,7 @@ bundleVendorIfStale().then(() => {
 
         inquirer.prompt(question).then(answer => {
           if (answer.shouldChangePort) {
-            run(port);
+            run(port, config);
           }
         });
       } else {

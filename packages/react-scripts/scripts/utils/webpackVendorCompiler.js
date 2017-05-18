@@ -2,32 +2,33 @@
 const fs = require('fs-extra');
 const path = require('path');
 const webpack = require('webpack');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const paths = require('../../config/paths');
-const config = require('../../config/webpack.config.vendor');
+const vendorConfig = require('../../config/webpack.config.vendor');
 const clearConsole = require('react-dev-utils/clearConsole');
 const chalk = require('chalk');
 const printErrors = require('./printErrors');
 const environment = process.env.NODE_ENV;
 const vendorHash = require('./vendorHash');
 
-module.exports = () => new Promise(resolve => {
+module.exports = config => new Promise(resolve => {
   if (shouldVendorBundleUpdate()) {
     // Read vendor path for stale files
     return fs.readdir(paths.vendorPath, (err, files) => {
       cleanUpStaleFiles(files);
 
       console.log('Compiling vendor bundle for faster rebuilds...');
-      webpack(config).run((err, stats) => {
+      webpack(vendorConfig).run((err, stats) => {
         checkForErrors(err, stats);
 
         // When the process still run until here, there are no errors :)
         console.log(chalk.green('Vendor bundle compiled successfully!'));
-        resolve(); // Let the main compiler do its job
+        resolve(resolveConfig(config)); // Let the main compiler do its job
       });
     });
   }
   // Just run the main compiler if vendor bundler is up to date
-  return resolve();
+  return resolve(resolveConfig(config));
 });
 
 function checkForErrors(err, stats) {
@@ -75,4 +76,22 @@ function cleanUpStaleFiles(files) {
   } catch (ignored) {
     //ignored
   }
+}
+
+function resolveConfig(config) {
+  return Object.assign(config, {
+    plugins: config.plugins.concat([
+      new webpack.DllReferencePlugin({
+        context: '.',
+        manifest: require(path.join(paths.vendorPath, vendorHash + '.json')),
+      }),
+      new AddAssetHtmlPlugin({
+        outputPath: path.join('static', 'js'),
+        publicPath: config.output.publicPath + path.join('static', 'js'),
+        filepath: require.resolve(
+          path.join(paths.vendorPath, vendorHash + '.js')
+        ),
+      }),
+    ]),
+  });
 }

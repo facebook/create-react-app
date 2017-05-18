@@ -28,23 +28,24 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const paths = require('../config/paths');
+const config = require('../config/webpack.config.prod');
+
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
+const webpackVendorCompiler = require('./utils/webpackVendorCompiler');
 
 const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
-const bundleVendorIfStale = require('./utils/bundleVendorIfStale');
-
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
-bundleVendorIfStale().then(() => {
-  const config = require('../config/webpack.config.prod');
+
+webpackVendorCompiler(config).then(config => {
   // First, read the current file sizes in build directory.
   // This lets us display how much they changed later.
   measureFileSizesBeforeBuild(paths.appBuild)
