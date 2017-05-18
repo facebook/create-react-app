@@ -108,9 +108,16 @@ const secondaryErrorStyle = {
   'background-color': yellow,
 };
 
-const omittedFramesStyle = {
+const omittedFramesCollapsedStyle = {
   color: black,
   cursor: 'pointer',
+  'margin-bottom': '1.5em',
+};
+
+const omittedFramesExpandedStyle = {
+  color: black,
+  cursor: 'pointer',
+  'margin-bottom': '0.6em',
 };
 
 const primaryPreStyle = {
@@ -199,7 +206,8 @@ export {
   primaryPreStyle,
   secondaryErrorStyle,
   secondaryPreStyle,
-  omittedFramesStyle,
+  omittedFramesCollapsedStyle,
+  omittedFramesExpandedStyle,
   toggleStyle,
   codeStyle,
   hiddenStyle,
