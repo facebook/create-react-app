@@ -83,36 +83,27 @@ module.exports = function createWebpackCompiler(config, onReadyCallback) {
 
     // If errors exist, only show errors.
     if (messages.errors.length) {
-      console.log(chalk.red('Failed to compile.'));
-      console.log();
-      messages.errors.forEach(message => {
-        console.log(message);
-        console.log();
-      });
+      console.log(chalk.red('Failed to compile.\n'));
+      console.log(messages.errors.join('\n\n'));
       return;
     }
 
     // Show warnings if no errors were found.
     if (messages.warnings.length) {
-      console.log(chalk.yellow('Compiled with warnings.'));
-      console.log();
-      messages.warnings.forEach(message => {
-        console.log(message);
-        console.log();
-      });
+      console.log(chalk.yellow('Compiled with warnings.\n'));
+      console.log(messages.warnings.join('\n\n'));
 
       // Teach some ESLint tricks.
       console.log(
-        'Search for the ' +
+        '\nSearch for the ' +
           chalk.underline(chalk.yellow('rule keywords')) +
           ' to learn more about each warning.'
       );
       console.log(
         'To ignore, add ' +
           chalk.cyan('// eslint-disable-next-line') +
-          ' to the line before.'
+          ' to the line before.\n'
       );
-      console.log();
     }
   });
 

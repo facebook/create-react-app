@@ -56,12 +56,25 @@ measureFileSizesBeforeBuild(paths.appBuild)
     return build(previousFileSizes);
   })
   .then(
-    ({ stats, previousFileSizes }) => {
-      console.log(chalk.green('Compiled successfully.'));
-      console.log();
+    ({ stats, previousFileSizes, warnings }) => {
+      if (warnings.length) {
+        console.log(chalk.yellow('Compiled with warnings.\n'));
+        console.log(warnings.join('\n\n'));
+        console.log(
+          '\nSearch for the ' +
+            chalk.underline(chalk.yellow('rule keywords')) +
+            ' to learn more about each warning.'
+        );
+        console.log(
+          'To ignore, add ' +
+            chalk.cyan('// eslint-disable-next-line') +
+            ' to the line before.\n'
+        );
+      } else {
+        console.log(chalk.green('Compiled successfully.\n'));
+      }
 
-      console.log('File sizes after gzip:');
-      console.log();
+      console.log('File sizes after gzip:\n');
       printFileSizesAfterBuild(stats, previousFileSizes);
       console.log();
 
@@ -78,10 +91,8 @@ measureFileSizesBeforeBuild(paths.appBuild)
       );
     },
     err => {
-      console.log(chalk.red('Failed to compile.'));
-      console.log();
-      console.log(err.message || err);
-      console.log();
+      console.log(chalk.red('Failed to compile.\n'));
+      console.log((err.message || err) + '\n');
       process.exit(1);
     }
   );
@@ -101,17 +112,19 @@ function build(previousFileSizes) {
         return reject(new Error(messages.errors.join('\n\n')));
       }
       if (process.env.CI && messages.warnings.length) {
-        console.log();
         console.log(
           chalk.yellow(
-            'Treating warnings as errors because process.env.CI = true.\n' +
-              'Most CI servers set it automatically.'
+            '\nTreating warnings as errors because process.env.CI = true.\n' +
+              'Most CI servers set it automatically.\n'
           )
         );
-        console.log();
         return reject(new Error(messages.warnings.join('\n\n')));
       }
-      return resolve({ stats, previousFileSizes });
+      return resolve({
+        stats,
+        previousFileSizes,
+        warnings: messages.warnings,
+      });
     });
   });
 }
