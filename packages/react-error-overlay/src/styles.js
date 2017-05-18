@@ -71,15 +71,15 @@ const headerStyle = {
   'font-family': 'sans-serif',
   color: red,
   'white-space': 'pre-wrap',
-  margin: '0.75rem 2rem 0 0', // Prevent overlap with close button
+  // Top bottom margin spaces header
+  // Right margin revents overlap with close button
+  margin: '0 2rem 0.75rem 0',
   flex: '0 0 auto',
-  'max-height': '35%',
+  'max-height': '50%',
   overflow: 'auto',
 };
 
-const functionNameStyle = {
-  'margin-top': '1em',
-};
+const functionNameStyle = {};
 
 const linkStyle = {
   'font-size': '0.9em',
@@ -113,7 +113,7 @@ const omittedFramesStyle = {
   cursor: 'pointer',
 };
 
-const preStyle = {
+const primaryPreStyle = {
   display: 'block',
   padding: '0.5em',
   'margin-top': '0.5em',
@@ -122,6 +122,16 @@ const preStyle = {
   'white-space': 'pre-wrap',
   'border-radius': '0.25rem',
   'background-color': 'rgba(206, 17, 38, .05)',
+};
+const secondaryPreStyle = {
+  display: 'block',
+  padding: '0.5em',
+  'margin-top': '0.5em',
+  'margin-bottom': '0.5em',
+  'overflow-x': 'auto',
+  'white-space': 'pre-wrap',
+  'border-radius': '0.25rem',
+  'background-color': 'rgba(251, 245, 180,.3)',
 };
 
 const toggleStyle = {
@@ -186,9 +196,10 @@ export {
   traceStyle,
   depStyle,
   primaryErrorStyle,
+  primaryPreStyle,
   secondaryErrorStyle,
+  secondaryPreStyle,
   omittedFramesStyle,
-  preStyle,
   toggleStyle,
   codeStyle,
   hiddenStyle,

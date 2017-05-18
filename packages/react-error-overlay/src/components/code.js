@@ -3,10 +3,11 @@ import type { ScriptLine } from '../utils/stack-frame';
 import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
 import {
-  preStyle,
   codeStyle,
   primaryErrorStyle,
+  primaryPreStyle,
   secondaryErrorStyle,
+  secondaryPreStyle,
 } from '../styles';
 
 import generateAnsiHtml from 'react-dev-utils/ansiHTML';
@@ -82,7 +83,7 @@ function createCode(
     }
   }
   const pre = document.createElement('pre');
-  applyStyles(pre, preStyle);
+  applyStyles(pre, main ? primaryPreStyle : secondaryPreStyle);
   pre.appendChild(code);
 
   if (typeof onSourceClick === 'function') {
