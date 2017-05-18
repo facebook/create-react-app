@@ -1,4 +1,5 @@
 [ignore]
+<PROJECT_ROOT>/node_modules/eslint-plugin-jsx-a11y/.*
 
 [include]
 src/**/*.js

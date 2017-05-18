@@ -34,7 +34,7 @@ var publicUrl = '/my-custom-url';
 module.exports = {
   output: {
     // ...
-    publicPath: publicUrl + '/' 
+    publicPath: publicUrl + '/'
   },
   // ...
   plugins: [
@@ -52,6 +52,30 @@ module.exports = {
     }),
     // ...
   ],
+  // ...
+}
+```
+
+
+#### `new ModuleScopePlugin(appSrc: string)`
+
+This Webpack plugin ensures that relative imports from app's source directory don't reach outside of it.
+
+```js
+var path = require('path');
+var ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+
+
+module.exports = {
+  // ...
+  resolve: {
+    // ...
+    plugins: [
+      new ModuleScopePlugin(paths.appSrc),
+      // ...
+    ],
+    // ...
+  },
   // ...
 }
 ```
@@ -108,6 +132,36 @@ var clearConsole = require('react-dev-utils/clearConsole');
 
 clearConsole();
 console.log('Just cleared the screen!');
+```
+
+#### `eslintFormatter(results: Object): string`
+
+This is our custom ESLint formatter that integrates well with Create React App console output.<br>
+You can use the default one instead if you prefer so.
+
+```js
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
+
+// In your webpack config:
+// ...
+module: {
+   rules: [
+     {
+        test: /\.(js|jsx)$/,
+        include: paths.appSrc,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'eslint-loader',
+            options: {
+              // Pass the formatter:
+              formatter: eslintFormatter,
+            },
+          },
+        ],
+      }
+   ]
+}
 ```
 
 #### `FileSizeReporter`
@@ -198,27 +252,17 @@ if (openBrowser('http://localhost:3000')) {
 }
 ```
 
-#### `prompt(message: string, isYesDefault: boolean): Promise<boolean>`
+#### `printHostingInstructions(appPackage: Object, publicUrl: string, publicPath: string, buildFolder: string, useYarn: boolean): void`
 
-This function displays a console prompt to the user.
+Prints hosting instructions after the project is built.
 
-By convention, "no" should be the conservative choice.<br>
-If you mistype the answer, we'll always take it as a "no".<br>
-You can control the behavior on `<Enter>` with `isYesDefault`.
+Pass your parsed `package.json` object as `appPackage`, your the URL where you plan to host the app as `publicUrl`, `output.publicPath` from your Webpack configuration as `publicPath`, the `buildFolder` name, and whether to `useYarn` in instructions.
 
 ```js
-var prompt = require('react-dev-utils/prompt');
-
-prompt(
-  'Are you sure you want to eat all the candy?',
-  /* isYesDefault */ false
-).then(shouldEat => {
-  if (shouldEat) {
-    console.log('You have successfully consumed all the candy.');
-  } else {
-    console.log('Phew, candy is still available!');
-  }
-});
+const appPackage = require(paths.appPackageJson);
+const publicUrl = paths.publicUrl;
+const publicPath = config.output.publicPath;
+printHostingInstructions(appPackage, publicUrl, publicPath, 'build', true);
 ```
 
 #### `webpackHotDevClient.js`

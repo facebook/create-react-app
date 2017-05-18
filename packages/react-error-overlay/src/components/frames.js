@@ -5,7 +5,11 @@ import { traceStyle, toggleStyle } from '../styles';
 import { enableTabClick } from '../utils/dom/enableTabClick';
 import { createFrame } from './frame';
 
-type OmitsObject = { value: number, bundle: number };
+type OmitsObject = {
+  value: number,
+  bundle: number,
+  hasReachedAppCode: boolean,
+};
 type FrameSetting = { compiled: boolean };
 export type { OmitsObject, FrameSetting };
 
@@ -68,7 +72,8 @@ function createFrames(
   document: Document,
   resolvedFrames: StackFrame[],
   frameSettings: FrameSetting[],
-  contextSize: number
+  contextSize: number,
+  errorName: ?string
 ) {
   if (resolvedFrames.length !== frameSettings.length) {
     throw new Error(
@@ -80,7 +85,7 @@ function createFrames(
 
   let index = 0;
   let critical = true;
-  const omits: OmitsObject = { value: 0, bundle: 1 };
+  const omits: OmitsObject = { value: 0, bundle: 1, hasReachedAppCode: false };
   resolvedFrames.forEach(function(frame) {
     const lIndex = index++;
     const elem = createFrameWrapper(
@@ -96,7 +101,8 @@ function createFrames(
         omits,
         omits.bundle,
         trace,
-        index === resolvedFrames.length
+        index === resolvedFrames.length,
+        errorName
       ),
       lIndex,
       frameSettings,

@@ -16,16 +16,14 @@ function updateAdditional(
     additionalReference.removeChild(additionalReference.lastChild);
   }
 
-  let text = ' ';
   if (totalErrors <= 1) {
-    additionalReference.appendChild(document.createTextNode(text));
     return;
   }
-  text = `Errors ${currentError} of ${totalErrors}`;
+
   const span = document.createElement('span');
-  span.appendChild(document.createTextNode(text));
   const group = document.createElement('span');
   applyStyles(group, groupStyle);
+
   const left = document.createElement('button');
   applyStyles(left, groupElemLeft);
   left.addEventListener('click', function(e: MouseEvent) {
@@ -34,6 +32,7 @@ function updateAdditional(
   });
   left.appendChild(document.createTextNode('←'));
   enableTabClick(left);
+
   const right = document.createElement('button');
   applyStyles(right, groupElemRight);
   right.addEventListener('click', function(e: MouseEvent) {
@@ -42,9 +41,14 @@ function updateAdditional(
   });
   right.appendChild(document.createTextNode('→'));
   enableTabClick(right);
+
   group.appendChild(left);
   group.appendChild(right);
   span.appendChild(group);
+
+  const text = `${currentError} of ${totalErrors} errors on the page`;
+  span.appendChild(document.createTextNode(text));
+
   additionalReference.appendChild(span);
 }
 

@@ -100,18 +100,19 @@ module.exports = function createWebpackCompiler(config, onReadyCallback) {
         console.log(message);
         console.log();
       });
+
       // Teach some ESLint tricks.
-      console.log('You may use special comments to disable some warnings.');
       console.log(
-        'Use ' +
-          chalk.yellow('// eslint-disable-next-line') +
-          ' to ignore the next line.'
+        'Search for the ' +
+          chalk.underline(chalk.yellow('rule keywords')) +
+          ' to learn more about each warning.'
       );
       console.log(
-        'Use ' +
-          chalk.yellow('/* eslint-disable */') +
-          ' to ignore all warnings in a file.'
+        'To ignore, add ' +
+          chalk.cyan('// eslint-disable-next-line') +
+          ' to the line before.'
       );
+      console.log();
     }
   });
 
