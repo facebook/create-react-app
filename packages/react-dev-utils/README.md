@@ -265,7 +265,25 @@ const publicPath = config.output.publicPath;
 printHostingInstructions(appPackage, publicUrl, publicPath, 'build', true);
 ```
 
-#### `webpackHotDevClient.js`
+#### `WebpackDevServerUtils`
+
+##### `choosePort(host: string, defaultPort: number): Promise<number | null>`
+
+Returns a Promise resolving to either `defaultPort` or next available port if the user confirms it is okay to do. If the port is taken and the user has refused to use another port, or if the terminal is not interactive and can’t present user with the choice, resolves to `null`.
+
+##### `createCompiler(webpack: Function, config: Object, appName: string, urls: Object, useYarn: boolean): WebpackCompiler`
+
+Creates a Webpack compiler instance for WebpackDevServer with built-in helpful messages. Takes the `require('webpack')` entry point as the first argument. To provide the `urls` argument, use `prepareUrls()` described below.
+
+##### `prepareProxy(proxySetting: string): Object`
+
+Creates a WebpackDevServer `proxy` configuration object from the `proxy` setting in `package.json`.
+
+##### `prepareUrls(protocol: string, host: string, port: number): Object`
+
+Returns an object with local and remote URLs for the development server. Pass this object to `createCompiler()` described above.
+
+#### `webpackHotDevClient`
 
 This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.
 
