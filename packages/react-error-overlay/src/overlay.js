@@ -35,7 +35,7 @@ import type { ErrorRecordReference } from './utils/errorRegister';
 
 import type { StackFrame } from './utils/stack-frame';
 import { iframeStyle } from './styles';
-import { injectCss, applyStyles } from './utils/dom/css';
+import { applyStyles } from './utils/dom/css';
 import { createOverlay } from './components/overlay';
 import { updateAdditional } from './components/additional';
 
@@ -44,33 +44,6 @@ let iframeReference: HTMLIFrameElement | null = null;
 let additionalReference = null;
 let errorReferences: ErrorRecordReference[] = [];
 let currReferenceIndex: number = -1;
-
-const css = [
-  '.cra-container {',
-  '  padding-right: 15px;',
-  '  padding-left: 15px;',
-  '  margin-right: auto;',
-  '  margin-left: auto;',
-  '}',
-  '',
-  '@media (min-width: 768px) {',
-  '  .cra-container {',
-  '    width: calc(750px - 6em);',
-  '  }',
-  '}',
-  '',
-  '@media (min-width: 992px) {',
-  '  .cra-container {',
-  '    width: calc(970px - 6em);',
-  '  }',
-  '}',
-  '',
-  '@media (min-width: 1200px) {',
-  '  .cra-container {',
-  '    width: calc(1170px - 6em);',
-  '  }',
-  '}',
-].join('\n');
 
 function render(name: ?string, message: string, resolvedFrames: StackFrame[]) {
   disposeCurrentView();
@@ -105,9 +78,13 @@ function render(name: ?string, message: string, resolvedFrames: StackFrame[]) {
         keyEventHandler(type => shortcutHandler(type), event);
       };
     }
-    injectCss(iframeReference.contentDocument, css);
     if (document.body != null) {
-      document.body.appendChild(overlay);
+      document.body.style.margin = '0';
+      // Keep popup within body boundaries for iOS Safari
+      // $FlowFixMe
+      document.body.style['max-width'] = '100vw';
+
+      (document.body: any).appendChild(overlay);
     }
     additionalReference = additional;
   };

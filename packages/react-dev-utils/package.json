@@ -21,9 +21,11 @@
     "getProcessForPort.js",
     "InterpolateHtmlPlugin.js",
     "launchEditor.js",
+    "ModuleScopePlugin.js",
     "openBrowser.js",
     "openChrome.applescript",
     "prepareProxy.js",
+    "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
     "webpackHotDevClient.js"
   ],

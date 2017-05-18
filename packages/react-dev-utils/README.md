@@ -34,7 +34,7 @@ var publicUrl = '/my-custom-url';
 module.exports = {
   output: {
     // ...
-    publicPath: publicUrl + '/' 
+    publicPath: publicUrl + '/'
   },
   // ...
   plugins: [
@@ -52,6 +52,30 @@ module.exports = {
     }),
     // ...
   ],
+  // ...
+}
+```
+
+
+#### `new ModuleScopePlugin(appSrc: string)`
+
+This Webpack plugin ensures that relative imports from app's source directory don't reach outside of it.
+
+```js
+var path = require('path');
+var ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+
+
+module.exports = {
+  // ...
+  resolve: {
+    // ...
+    plugins: [
+      new ModuleScopePlugin(paths.appSrc),
+      // ...
+    ],
+    // ...
+  },
   // ...
 }
 ```
@@ -112,7 +136,7 @@ console.log('Just cleared the screen!');
 
 #### `eslintFormatter(results: Object): string`
 
-This is our custom ESLint formatter that integrates well with Create React App console output.  
+This is our custom ESLint formatter that integrates well with Create React App console output.<br>
 You can use the default one instead if you prefer so.
 
 ```js
@@ -226,6 +250,19 @@ var openBrowser = require('react-dev-utils/openBrowser');
 if (openBrowser('http://localhost:3000')) {
   console.log('The browser tab has been opened!');
 }
+```
+
+#### `printHostingInstructions(appPackage: Object, publicUrl: string, publicPath: string, buildFolder: string, useYarn: boolean): void`
+
+Prints hosting instructions after the project is built.
+
+Pass your parsed `package.json` object as `appPackage`, your the URL where you plan to host the app as `publicUrl`, `output.publicPath` from your Webpack configuration as `publicPath`, the `buildFolder` name, and whether to `useYarn` in instructions.
+
+```js
+const appPackage = require(paths.appPackageJson);
+const publicUrl = paths.publicUrl;
+const publicPath = config.output.publicPath;
+printHostingInstructions(appPackage, publicUrl, publicPath, 'build', true);
 ```
 
 #### `webpackHotDevClient.js`
