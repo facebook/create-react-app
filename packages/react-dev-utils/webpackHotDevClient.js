@@ -85,7 +85,7 @@ function overlayHeaderStyle() {
     'font-family: sans-serif;' +
     'color: rgb(206, 17, 38);' +
     'white-space: pre-wrap;' +
-    'margin: 0.75rem 2rem 0px 0px;' +
+    'margin: 0 2rem 0.75rem 0px;' +
     'flex: 0 0 auto;' +
     'max-height: 35%;' +
     'overflow: auto;';
@@ -129,9 +129,9 @@ function showErrorOverlay(message) {
     // TODO: unify this with our runtime overlay
     overlayDiv.innerHTML = '<div style="' +
       overlayHeaderStyle() +
-      '">Failed to compile</div><br><br>' +
+      '">Failed to compile</div>' +
       '<pre style="' +
-      'display: block; padding: 0.5em; margin-top: 0.5em; ' +
+      'display: block; padding: 0.5em; margin-top: 0; ' +
       'margin-bottom: 0.5em; overflow-x: auto; white-space: pre-wrap; ' +
       'border-radius: 0.25rem; background-color: rgba(206, 17, 38, 0.05)">' +
       '<code style="font-family: Consolas, Menlo, monospace;">' +

@@ -40,6 +40,18 @@ function createOverlay(
   overlay.appendChild(container);
   container.appendChild(createClose(document, closeCallback));
 
+  // Create "Errors X of Y" in case of multiple errors
+  const additional = document.createElement('div');
+  applyStyles(additional, additionalStyle);
+  updateAdditional(
+    document,
+    additional,
+    currentError,
+    totalErrors,
+    switchCallback
+  );
+  container.appendChild(additional);
+
   // Create header
   const header = document.createElement('div');
   applyStyles(header, headerStyle);
@@ -63,18 +75,6 @@ function createOverlay(
   // Put it in the DOM
   header.appendChild(document.createTextNode(finalMessage));
   container.appendChild(header);
-
-  // Create "Errors X of Y" in case of multiple errors
-  const additional = document.createElement('div');
-  applyStyles(additional, additionalStyle);
-  updateAdditional(
-    document,
-    additional,
-    currentError,
-    totalErrors,
-    switchCallback
-  );
-  container.appendChild(additional);
 
   // Create trace
   container.appendChild(
