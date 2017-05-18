@@ -2,8 +2,10 @@
 const black = '#293238',
   darkGray = '#878e91',
   red = '#ce1126',
+  redTransparent = 'rgba(206, 17, 38, 0.05)',
   lightRed = '#fccfcf',
   yellow = '#fbf5b4',
+  yellowTransparent = 'rgba(251, 245, 180, 0.3)',
   white = '#ffffff';
 
 const iframeStyle = {
@@ -122,7 +124,7 @@ const omittedFramesExpandedStyle = {
   'margin-bottom': '0.6em',
 };
 
-const primaryPreStyle = {
+const _preStyle = {
   display: 'block',
   padding: '0.5em',
   'margin-top': '0.5em',
@@ -130,18 +132,13 @@ const primaryPreStyle = {
   'overflow-x': 'auto',
   'white-space': 'pre-wrap',
   'border-radius': '0.25rem',
-  'background-color': 'rgba(206, 17, 38, .05)',
 };
-const secondaryPreStyle = {
-  display: 'block',
-  padding: '0.5em',
-  'margin-top': '0.5em',
-  'margin-bottom': '0.5em',
-  'overflow-x': 'auto',
-  'white-space': 'pre-wrap',
-  'border-radius': '0.25rem',
-  'background-color': 'rgba(251, 245, 180,.3)',
-};
+const primaryPreStyle = Object.assign({}, _preStyle, {
+  'background-color': redTransparent,
+});
+const secondaryPreStyle = Object.assign({}, _preStyle, {
+  'background-color': yellowTransparent,
+});
 
 const toggleStyle = {
   'margin-bottom': '1.5em',
@@ -162,11 +159,10 @@ const groupStyle = {
 };
 
 const _groupElemStyle = {
-  'background-color': 'inherit',
-  'border-color': '#ddd',
-  'border-width': '1px',
+  'background-color': redTransparent,
+  color: red,
+  border: 'none',
   'border-radius': '4px',
-  'border-style': 'solid',
   padding: '3px 6px',
   cursor: 'pointer',
 };
@@ -174,13 +170,12 @@ const _groupElemStyle = {
 const groupElemLeft = Object.assign({}, _groupElemStyle, {
   'border-top-right-radius': '0px',
   'border-bottom-right-radius': '0px',
-  'margin-right': '0px',
+  'margin-right': '1px',
 });
 
 const groupElemRight = Object.assign({}, _groupElemStyle, {
   'border-top-left-radius': '0px',
   'border-bottom-left-radius': '0px',
-  'margin-right': '-1px',
 });
 
 const footerStyle = {
