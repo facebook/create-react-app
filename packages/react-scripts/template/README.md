@@ -61,9 +61,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Disabling jsdom](#disabling-jsdom)
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
-<!--
-- [Developing Components in Isolation](#developing-components-in-isolation)
--->
 - [Making a Progressive Web App](#making-a-progressive-web-app)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
