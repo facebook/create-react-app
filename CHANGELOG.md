@@ -354,3 +354,5 @@ Please [file an issue](https://github.com/facebookincubator/create-react-app/iss
 
 
 ## Releases Before 0.x
+
+Please refer to [CHANGELOG-0.x.md](./CHANGELOG-0.x.md) for earlier versions.
