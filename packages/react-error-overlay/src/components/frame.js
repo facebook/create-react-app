@@ -277,6 +277,7 @@ function createFrame(
       .indexOf(' ') !== -1;
     if (!isInternalWebpackBootstrapCode) {
       onSourceClick = () => {
+        // Keep this in sync with react-error-overlay/middleware.js
         fetch(
           '/__open-stack-frame-in-editor?fileName=' +
             window.encodeURIComponent(sourceFileName) +

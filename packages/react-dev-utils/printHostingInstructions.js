@@ -106,7 +106,7 @@ function printHostingInstructions(
     } else {
       console.log(`  ${chalk.cyan('npm')} install -g serve`);
     }
-    console.log(`  ${chalk.cyan('serve')} -s build`);
+    console.log(`  ${chalk.cyan('serve')} -s ${buildFolder}`);
     console.log();
   }
 }

@@ -1,6 +1,11 @@
 /* @flow */
 import { applyStyles } from '../utils/dom/css';
-import { groupStyle, groupElemLeft, groupElemRight } from '../styles';
+import {
+  additionalChildStyle,
+  groupStyle,
+  groupElemLeft,
+  groupElemRight,
+} from '../styles';
 import { consumeEvent } from '../utils/dom/consumeEvent';
 import { enableTabClick } from '../utils/dom/enableTabClick';
 
@@ -20,7 +25,9 @@ function updateAdditional(
     return;
   }
 
-  const span = document.createElement('span');
+  const div = document.createElement('div');
+  applyStyles(div, additionalChildStyle);
+
   const group = document.createElement('span');
   applyStyles(group, groupStyle);
 
@@ -44,12 +51,12 @@ function updateAdditional(
 
   group.appendChild(left);
   group.appendChild(right);
-  span.appendChild(group);
+  div.appendChild(group);
 
   const text = `${currentError} of ${totalErrors} errors on the page`;
-  span.appendChild(document.createTextNode(text));
+  div.appendChild(document.createTextNode(text));
 
-  additionalReference.appendChild(span);
+  additionalReference.appendChild(div);
 }
 
 export type { SwitchCallback };

@@ -74,7 +74,7 @@ function formatter(results) {
     // we can only be sure it's an ESLint error before exiting
     // this function.
     output += 'Search for the ' +
-      chalk.underline(chalk.red('rule keywords')) +
+      chalk.underline(chalk.red('keywords')) +
       ' to learn more about each error.';
   }
 

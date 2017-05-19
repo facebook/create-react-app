@@ -71,7 +71,7 @@ webpackAutoDllCompiler({
         console.log(warnings.join('\n\n'));
         console.log(
           '\nSearch for the ' +
-            chalk.underline(chalk.yellow('rule keywords')) +
+            chalk.underline(chalk.yellow('keywords')) +
             ' to learn more about each warning.'
         );
         console.log(

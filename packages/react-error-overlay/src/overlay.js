@@ -110,10 +110,18 @@ function renderErrorByIndex(index: number) {
 }
 
 function switchError(offset) {
-  const nextView = currReferenceIndex + offset;
-  if (nextView < 0 || nextView >= errorReferences.length) {
+  if (errorReferences.length === 0) {
     return;
   }
+
+  let nextView = currReferenceIndex + offset;
+
+  if (nextView < 0) {
+    nextView = errorReferences.length - 1;
+  } else if (nextView >= errorReferences.length) {
+    nextView = 0;
+  }
+
   renderErrorByIndex(nextView);
 }
 
