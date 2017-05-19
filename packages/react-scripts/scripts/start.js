@@ -87,7 +87,6 @@ choosePort(HOST, DEFAULT_PORT)
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {
       process.on(sig, function() {
-        console.log(`Gracefully shutting down server after ${sig}...`);
         devServer.close();
         process.exit();
       });
