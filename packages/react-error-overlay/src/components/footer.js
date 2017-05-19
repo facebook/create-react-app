@@ -7,7 +7,7 @@ function createFooter(document: Document) {
   applyStyles(div, footerStyle);
   div.appendChild(
     document.createTextNode(
-      'This screen is visible only in development. It will not appear when the app crashes in production.'
+      'This screen is visible only in development. It will not appear if the app crashes in production.'
     )
   );
   div.appendChild(document.createElement('br'));

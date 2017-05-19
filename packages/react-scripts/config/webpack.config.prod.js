@@ -17,7 +17,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
+const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -103,6 +105,14 @@ module.exports = {
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
     },
+    plugins: [
+      // Prevents users from importing files from outside of src/ (or node_modules/).
+      // This often causes confusion because we only process files within src/ with babel.
+      // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
+      // please link the files into your node_modules/ and let module-resolution kick in.
+      // Make sure your source files are compiled, as they will not be processed in any way.
+      new ModuleScopePlugin(paths.appSrc),
+    ],
   },
   module: {
     strictExportPresence: true,
@@ -136,10 +146,10 @@ module.exports = {
         include: paths.appSrc,
       },
       // ** ADDING/UPDATING LOADERS **
-      // The "url" loader handles all assets unless explicitly excluded.
+      // The "file" loader handles all assets unless explicitly excluded.
       // The `exclude` list *must* be updated with every change to loader extensions.
       // When adding a new loader, you must add its `test`
-      // as a new entry in the `exclude` list in the "url" loader.
+      // as a new entry in the `exclude` list in the "file" loader.
 
       // "file" loader makes sure those assets end up in the `build` folder.
       // When you `import` an asset, you get its filename.
@@ -234,7 +244,7 @@ module.exports = {
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
       // ** STOP ** Are you adding a new loader?
-      // Remember to add the new extension(s) to the "url" loader exclusion list.
+      // Remember to add the new extension(s) to the "file" loader exclusion list.
     ],
   },
   plugins: [
@@ -270,6 +280,10 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
+        // This feature has been reported as buggy a few times, such as:
+        // https://github.com/mishoo/UglifyJS2/issues/1964
+        // We'll wait with enabling it by default until it is more solid.
+        reduce_vars: false,
       },
       output: {
         comments: false,
@@ -285,6 +299,26 @@ module.exports = {
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
+    }),
+    // Generate a service worker script that will precache, and keep up to date,
+    // the HTML & assets that are part of the Webpack build.
+    new SWPrecacheWebpackPlugin({
+      // By default, a cache-busting query parameter is appended to requests
+      // used to populate the caches, to ensure the responses are fresh.
+      // If a URL is already hashed by Webpack, then there is no concern
+      // about it being stale, and the cache-busting can be skipped.
+      dontCacheBustUrlsMatching: /\.\w{8}\./,
+      filename: 'service-worker.js',
+      logger(message) {
+        if (message.indexOf('Total precache size is') === 0) {
+          // This message occurs for every build and is a bit too noisy.
+          return;
+        }
+        console.log(message);
+      },
+      minify: true,
+      navigateFallback: publicUrl + '/index.html',
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical

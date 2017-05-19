@@ -1,6 +1,6 @@
 /* @flow */
 import { applyStyles } from '../utils/dom/css';
-import { overlayStyle, headerStyle, additionalStyle } from '../styles';
+import { containerStyle, overlayStyle, headerStyle } from '../styles';
 import { createClose } from './close';
 import { createFrames } from './frames';
 import { createFooter } from './footer';
@@ -28,17 +28,15 @@ function createOverlay(
   // Create overlay
   const overlay = document.createElement('div');
   applyStyles(overlay, overlayStyle);
-  overlay.appendChild(createClose(document, closeCallback));
 
   // Create container
   const container = document.createElement('div');
-  container.className = 'cra-container';
+  applyStyles(container, containerStyle);
   overlay.appendChild(container);
+  container.appendChild(createClose(document, closeCallback));
 
-  // Create additional
+  // Create "Errors X of Y" in case of multiple errors
   const additional = document.createElement('div');
-  applyStyles(additional, additionalStyle);
-  container.appendChild(additional);
   updateAdditional(
     document,
     additional,
@@ -46,6 +44,7 @@ function createOverlay(
     totalErrors,
     switchCallback
   );
+  container.appendChild(additional);
 
   // Create header
   const header = document.createElement('div');
