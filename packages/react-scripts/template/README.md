@@ -61,7 +61,9 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Disabling jsdom](#disabling-jsdom)
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
+<!--
 - [Developing Components in Isolation](#developing-components-in-isolation)
+-->
 - [Making a Progressive Web App](#making-a-progressive-web-app)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
@@ -1282,6 +1284,7 @@ If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
+<!--
 ## Developing Components in Isolation
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states.
@@ -1321,6 +1324,7 @@ Learn more about React Storybook:
 * [GitHub Repo](https://github.com/kadirahq/react-storybook)
 * [Documentation](https://storybooks.js.org/docs/react-storybook/basics/introduction/)
 * [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
+-->
 
 ## Making a Progressive Web App
 
