@@ -181,6 +181,17 @@ The old, 2009 specification for Flexbox is [deprecated and is 2.3x slower than t
 
 We are no longer polyfilling it automatically.
 
+#### I see "Definition for rule 'jsx-a11y/alt-text' was not found (jsx-a11y/alt-text)" in the editor
+
+Follow these steps if you see errors about missing lint rules in the editor.
+
+1. Ensure that in your editor ESLint settings you have "Use Global ESLint" turned off
+2. Run `npm install` in your project (or `yarn`)
+3. Quit your editor completely (ensure its process doesn't hang around)
+4. Start the editor again
+
+If you still have the problem please file an issue.
+
 #### How to turn my app into a [Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
 
 After the regular update procedure above, add these line to `<head>` in `public/index.html`:
