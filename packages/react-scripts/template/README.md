@@ -1222,7 +1222,7 @@ Progressive Web Apps are faster and more reliable than traditional web pages, an
 
  * All static site assets are cached so that your page loads fast, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
  * Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the Subway.
- * On mobile devices, your app can be added directly to the users home screen, app icon and all. You can also re-engage users using web **push notifications**. This eliminates the need for the app store.
+ * On mobile devices, your app can be added directly to the user's home screen, app icon and all. You can also re-engage users using web **push notifications**. This eliminates the need for the app store.
 
 The [`sw-precache-webpack-plugin`](https://github.com/goldhand/sw-precache-webpack-plugin)
 is integrated into production configuration,
