@@ -1218,7 +1218,7 @@ Learn more about React Storybook:
 
 ## Making a Progressive Web App
 
-You can turn your React app into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) by following the steps in [this repository](https://github.com/jeffposnick/create-react-pwa).
+You can turn your React app into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) by following the steps in [this repository](https://github.com/jeffposnick/create-react-pwa). Or you can take a look at a simple demo [here](https://github.com/nndung179/create-react-pwa-demo)
 
 <!--
 TODO: uncomment
