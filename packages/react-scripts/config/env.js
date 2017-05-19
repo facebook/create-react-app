@@ -28,6 +28,7 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 let dotenvPath = resolveApp('.env');
 
 // @remove-on-eject-begin
+// NOTE: Keep this in sync with paths.js
 const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 
 const ownPackageJson = require('../package.json');
@@ -42,7 +43,6 @@ if (
 ) {
   dotenvPath = resolveOwn('template/.env');
 }
-
 // @remove-on-eject-end
 
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
