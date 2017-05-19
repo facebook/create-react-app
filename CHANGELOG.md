@@ -111,6 +111,41 @@ The old, 2009 specification for Flexbox is [deprecated and is 2.3x slower than t
 
 We are no longer polyfilling it automatically.
 
+#### How to turn my app into a [Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
+
+After the regular update procedure above, add these line to `<head>` in `public/index.html`:
+
+```html
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+```
+
+Then create a file called `public/manifest.json` that looks like this:
+
+```js
+{
+  "short_name": "React App",
+  "name": "Create React App Sample",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+```
+
+Finally, create `src/registerServiceWorker.js` with [this template](https://github.com/facebookincubator/create-react-app/blob/bf9eca25f519c73f69cff20ac49ce9500e578fe0/packages/react-scripts/template/src/registerServiceWorker.js), [import it](https://github.com/facebookincubator/create-react-app/blob/bf9eca25f519c73f69cff20ac49ce9500e578fe0/packages/react-scripts/template/src/index.js#L4) from `src/index.js` and [call the function it exports](https://github.com/facebookincubator/create-react-app/blob/bf9eca25f519c73f69cff20ac49ce9500e578fe0/packages/react-scripts/template/src/index.js#L8).
+
 #### Anything missing?
 
 This was a large release, and we might have missed something.
@@ -357,7 +392,6 @@ Please [file an issue](https://github.com/facebookincubator/create-react-app/iss
 - anraka ([anilreddykatta](https://github.com/anilreddykatta))
 - moniuch ([moniuch](https://github.com/moniuch))
 - pd4d10 ([pd4d10](https://github.com/pd4d10))
-
 
 ## Releases Before 0.x
 
