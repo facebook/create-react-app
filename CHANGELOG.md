@@ -1,3 +1,73 @@
+## 1.0.1 (May 19, 2017)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+  * [#2242](https://github.com/facebookincubator/create-react-app/pull/2242) Fix `NODE_PATH=src` for `npm start` and `npm run build`. ([@ApacheEx](https://github.com/ApacheEx))
+  * [#2261](https://github.com/facebookincubator/create-react-app/pull/2261) Fix `NODE_PATH=src` for Jest. ([@gaearon](https://github.com/gaearon))
+  * [#2255](https://github.com/facebookincubator/create-react-app/pull/2255) Fix Windows path issue for generated service worker. ([@gaearon](https://github.com/gaearon))
+  * [#2262](https://github.com/facebookincubator/create-react-app/pull/2262) Additional fix to service worker config for `"homepage"` field. ([@gaearon](https://github.com/gaearon))
+  * [#2250](https://github.com/facebookincubator/create-react-app/pull/2250) Ignore `.env.local` in `test` environment. ([@gaearon](https://github.com/gaearon))
+  * [#2246](https://github.com/facebookincubator/create-react-app/pull/2246) Gracefully shut down the development server on signals. ([@gaearon](https://github.com/gaearon))
+
+* `react-dev-utils`
+  * [#2229](https://github.com/facebookincubator/create-react-app/pull/2229) Show customized build path for serve instruction. ([@chyipin](https://github.com/chyipin))
+
+* `react-dev-utils`, `react-error-overlay`
+  * [#2243](https://github.com/facebookincubator/create-react-app/pull/2243) Add missing package dependency. ([@Timer](https://github.com/Timer))
+
+* `react-error-overlay`
+  * [#2238](https://github.com/facebookincubator/create-react-app/pull/2238) Fix a crash when switching errors with arrow keys. ([@Gandem](https://github.com/Gandem))
+
+#### :nail_care: Enhancement
+
+* `eslint-config-react-app`
+  * [#2256](https://github.com/facebookincubator/create-react-app/pull/2256) Turn off `operator-assignment` stylistic rule. ([@gaearon](https://github.com/gaearon))
+
+* `react-scripts`
+  * [#2224](https://github.com/facebookincubator/create-react-app/pull/2224) Add `<noscript>` to template's `index.html`. ([@viankakrisna](https://github.com/viankakrisna))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#2259](https://github.com/facebookincubator/create-react-app/pull/2259) Fix broken links. ([@enguerran](https://github.com/enguerran))
+  * [#2258](https://github.com/facebookincubator/create-react-app/pull/2258) Update readme with example of Sass include path. ([@kellyrmilligan](https://github.com/kellyrmilligan))
+  * [#2252](https://github.com/facebookincubator/create-react-app/pull/2252) Hide React Storybook from the User Guide while it's incompatible. ([@gaearon](https://github.com/gaearon))
+  * [#2247](https://github.com/facebookincubator/create-react-app/pull/2247) Correct docs on which `.env.*` files are supported. ([@AJamesPhillips](https://github.com/AJamesPhillips))
+
+#### :house: Internal
+
+* `react-scripts`
+
+  * [#2264](https://github.com/facebookincubator/create-react-app/pull/2264) Fix a bug for empty `NODE_PATH`. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 9
+
+- Ade Viankakrisna Fadlil ([viankakrisna](https://github.com/viankakrisna))
+- Alexander James Phillips ([AJamesPhillips](https://github.com/AJamesPhillips))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Enguerran ([enguerran](https://github.com/enguerran))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Kelly ([kellyrmilligan](https://github.com/kellyrmilligan))
+- Nayef Ghattas ([Gandem](https://github.com/Gandem))
+- Oleg Kuzava ([ApacheEx](https://github.com/ApacheEx))
+- [chyipin](https://github.com/chyipin)
+
+### Migrating from 1.0.0 to 1.0.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.1
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.1
+```
+
 ## 1.0.0 (May 18, 2017)
 
 We’ve been working on this release for the past few months, and there are many big impovements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
