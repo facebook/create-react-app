@@ -838,7 +838,7 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
 >Note: this feature is available with `react-scripts@1.0.0` and higher.
 
-If the `proxy` option is **not** flexible enough for you, you can specify an object in the following form.<br>
+If the `proxy` option is **not** flexible enough for you, you can also specify an object in the following form (in `package.json`).<br>
 You may also specify any configuration value [supported by `http-proxy-middleware`](https://github.com/chimurai/http-proxy-middleware#options) and [`http-proxy`](https://github.com/nodejitsu/node-http-proxy#options).
 ```json
 {
