@@ -104,6 +104,10 @@ module.exports = {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
+      // Useful to import modules from the src folder.
+      '~': paths.appSrc,
+      // This path will be changed in the 'npm run deploy' process.
+      '~customize': path.join(paths.appSrc, 'customize/index'),
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
