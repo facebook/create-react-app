@@ -110,6 +110,10 @@ function renderErrorByIndex(index: number) {
 }
 
 function switchError(offset) {
+  if (errorReferences.length < 1) {
+    return;
+  }
+
   let nextView = currReferenceIndex + offset;
 
   if (nextView < 0) {
