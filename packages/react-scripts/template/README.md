@@ -213,7 +213,7 @@ To configure the syntax highlighting in your favorite text editor, head to the [
 
 ## Displaying Lint Output in the Editor
 
->Note: this feature is available with `react-scripts@0.2.0` and higher.  
+>Note: this feature is available with `react-scripts@0.2.0` and higher.
 >It also only works with npm 3 or higher.
 
 Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
@@ -332,9 +332,10 @@ Learn more about ES6 modules:
 
 ## Code Splitting
 
-Instead of downloading the entire app before users can use it, code splitting allows you to split your code into small chunks which you can then load on demand when a specific event triggered. This project setup supports code splitting with `import()` dynamic module loading syntax [using webpack2](https://webpack.js.org/guides/code-splitting-import/) and babel. Dynamic `import()` is currently an ECMAScript [proposal](https://github.com/tc39/proposal-dynamic-import) in stage 3.
+Instead of downloading the entire app before users can use it, code splitting allows you to split your code into small chunks which you can then load on demand.<br>
+This project setup supports code splitting via [dynamic `import()`](http://2ality.com/2017/01/import-operator.html#loading-code-on-demand). Its [proposal](https://github.com/tc39/proposal-dynamic-import) is in stage 3.
 
-`import()` takes the module name as an argument and returns a promise which always resolves to the namespace object of the module.
+`import()` takes the module name as an argument and returns a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which always resolves to the namespace object of the module.
 
 Here is an example:
 
@@ -351,13 +352,14 @@ export { moduleA };
 import React, { Component } from 'react';
 
 class App extends Component {
-
-  handleClick(){
-    import('./moduleA').then(function({ moduleA }) {
-      // Use moduleA
-    }).catch(function(err) {
-      // Handle failure
-    });
+  handleClick = () => {
+    import('./moduleA')
+      .then(({ moduleA }) => {
+        // Use moduleA
+      })
+      .catch(err => {
+        // Handle failure
+      });
   }
 
   render() {
@@ -372,7 +374,7 @@ class App extends Component {
 export default App;
 ```
 
-This will make `moduleA.js` and all its unique dependencies as a separate chunk that only loads after the user clicks 'Load' button.
+This will make `moduleA.js` and all its unique dependencies as a separate chunk that only loads after the user clicks the 'Load' button.
 
 ## Adding a Stylesheet
 
@@ -491,7 +493,7 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
    }
 ```
 
-Now running `npm start` and `npm run build` also builds Sass files. 
+Now running `npm start` and `npm run build` also builds Sass files.
 
 **Why `node-sass-chokidar`?**
 
