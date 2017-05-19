@@ -1,8 +1,8 @@
 {
-  "name": "react-scripts",
+  "name": "react-scripts-wizard",
   "version": "1.0.0",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "xsky-fe/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=6"
