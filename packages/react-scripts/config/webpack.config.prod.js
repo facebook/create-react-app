@@ -319,6 +319,9 @@ module.exports = {
       minify: true,
       navigateFallback: publicUrl + '/index.html',
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+      // Work around Windows path issue in SWPrecacheWebpackPlugin:
+      // https://github.com/facebookincubator/create-react-app/issues/2235
+      stripPrefix: path.join(paths.appBuild).replace(/\\/g, '/'),
     }),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
