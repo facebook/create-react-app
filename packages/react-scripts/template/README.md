@@ -830,8 +830,67 @@ Keep in mind that `proxy` only has effect in development (with `npm start`), and
 The `proxy` option supports HTTP, HTTPS and WebSocket connections.<br>
 If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
+* [Configure the proxy yourself](#configuring-the-proxy-manually)
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
 * Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+
+#### Configuring the Proxy Manually
+
+>Note: this feature is available with `react-scripts@1.0.0` and higher.
+
+If the `proxy` option is **not** flexible enough for you, you can specify an object in the following form.<br>
+You may also specify any configuration value [supported by `http-proxy-middleware`](https://github.com/chimurai/http-proxy-middleware#options) and [`http-proxy`](https://github.com/nodejitsu/node-http-proxy#options).
+```json
+{
+  // ...
+  "proxy": {
+    "/api": {
+      "target": "<url>",
+      "ws": true
+      // ...
+    }
+  }
+  // ...
+}
+```
+
+All requests matching this path will be proxies, no exceptions. This includes requests for `text/html`, which the standard `proxy` option does not proxy.
+
+If you need to specify multiple proxies, you may do so by specifying additional entries.
+You may also narrow down matches using `*` and/or `**`, to match the path exactly or any subpath.
+```json
+{
+  // ...
+  "proxy": {
+    // Matches any request starting with /api
+    "/api": {
+      "target": "<url_1>",
+      "ws": true
+      // ...
+    },
+    // Matches any request starting with /foo
+    "/foo": {
+      "target": "<url_2>",
+      "ssl": true,
+      "pathRewrite": {
+        "^/foo": "/foo/beta"
+      }
+      // ...
+    },
+    // Matches /bar/abc.html but not /bar/sub/def.html
+    "/bar/*.html": {
+      "target": "<url_3>",
+      // ...
+    },
+    // Matches /bar/abc.html and /bar/sub/def.html
+    "/baz/**/*.html": {
+      "target": "<url_4>"
+      // ...
+    }
+  }
+  // ...
+}
+```
 
 ## Using HTTPS in Development
 
