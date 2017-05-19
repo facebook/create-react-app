@@ -192,6 +192,7 @@ In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, 
 * [Exponentiation Operator](https://github.com/rwaldron/exponentiation-operator) (ES2016).
 * [Async/await](https://github.com/tc39/ecmascript-asyncawait) (ES2017).
 * [Object Rest/Spread Properties](https://github.com/sebmarkbage/ecmascript-rest-spread) (stage 3 proposal).
+* [Dynamic import()](https://github.com/tc39/proposal-dynamic-import) (stage 3 proposal)
 * [Class Fields and Static Properties](https://github.com/tc39/proposal-class-public-fields) (stage 2 proposal).
 * [JSX](https://facebook.github.io/react/docs/introducing-jsx.html) and [Flow](https://flowtype.org/) syntax.
 
@@ -342,7 +343,7 @@ Here is an example:
 ### `moduleA.js`
 
 ```js
-const moduleA = // ...
+const moduleA = 'Hello';
 
 export { moduleA };
 ```
@@ -360,7 +361,7 @@ class App extends Component {
       .catch(err => {
         // Handle failure
       });
-  }
+  };
 
   render() {
     return (
@@ -375,6 +376,8 @@ export default App;
 ```
 
 This will make `moduleA.js` and all its unique dependencies as a separate chunk that only loads after the user clicks the 'Load' button.
+
+You can also use it with `async` / `await` syntax if you prefer it.
 
 ## Adding a Stylesheet
 
