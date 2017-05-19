@@ -105,6 +105,12 @@ Please refer to the [Jest 19](https://facebook.github.io/jest/blog/2017/02/21/je
 
 If you use snapshots, you will likely need to update them once because of the change in format.
 
+#### Flexbox 2009 spec is no longer polyfilled
+
+The old, 2009 specification for Flexbox is [deprecated and is 2.3x slower than the latest specification](https://developers.google.com/web/tools/lighthouse/audits/old-flexbox).
+
+We are no longer polyfilling it automatically.
+
 #### Anything missing?
 
 This was a large release, and we might have missed something.
