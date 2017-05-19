@@ -798,16 +798,16 @@ REACT_APP_SECRET_CODE=abcdef
 
 >Note: this feature is **available with `react-scripts@1.0.0` and higher**.
 
-* `.env` - Default
-* `.env.development`, `.env.test`, `.env.production` - Environment-specific settings.
-* `.env.local` - Local overrides. This file is loaded for all environments except test.
-* `.env.development.local`, `.env.test.local`, `.env.production.local` - Local overrides of environment-specific settings.
+* `.env` — Default.
+* `.env.local` — Local overrides. This file is loaded for all environments except test.
+* `.env.development`, `.env.test`, `.env.production` — Environment-specific settings.
+* `.env.development.local`, `.env.test.local`, `.env.production.local` — Local overrides of environment-specific settings.
 
 File priority, from left to right:
 
-* npm test - `.env.test.local`, `.env.test`, `.env.local`, `.env`
-* npm run build - `.env.production.local`, `.env.production`, `.env.local`, `.env`
-* npm start - `.env.development.local`, `.env.development`, `.env.local`, `.env`
+* `npm start` — `.env.development.local`, `.env.development`, `.env.local`, `.env`
+* `npm run build` — `.env.production.local`, `.env.production`, `.env.local`, `.env`
+* `npm test` — `.env.test.local`, `.env.test`, `.env.local`, `.env`
 
 These variables will act as the defaults if the machine does not explicitly set them.<br>
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
