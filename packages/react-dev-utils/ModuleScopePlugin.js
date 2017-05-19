@@ -18,7 +18,7 @@ class ModuleScopePlugin {
   }
 
   apply(resolver) {
-    const { appSrc } = this;
+    const appSrc = this.appSrc;
     resolver.plugin('file', (request, callback) => {
       // Unknown issuer, probably webpack internals
       if (!request.context.issuer) {
