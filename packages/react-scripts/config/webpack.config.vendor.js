@@ -2,17 +2,17 @@
 const webpack = require('webpack');
 const paths = require('./paths');
 const path = require('path');
-const environment = process.env.NODE_ENV;
 const getClientEnvironment = require('./env');
 const publicPath = paths.servedPath;
 const publicUrl = publicPath.slice(0, -1);
 const env = getClientEnvironment(publicUrl);
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = vendorHash => {
   const vendorGlobalName = '[name]' + vendorHash.replace(/\./g, '');
   return {
     cache: true,
-    entry: (environment === 'production'
+    entry: (isProduction
       ? [
           require.resolve('./polyfills'), // In production, we only want to load the polyfills and the app code.
         ]
@@ -79,10 +79,8 @@ module.exports = vendorHash => {
         // output.library option above
         name: vendorGlobalName,
       }),
-      environment === 'production'
-        ? new webpack.DefinePlugin(env.stringified)
-        : null,
-      environment === 'production'
+      isProduction ? new webpack.DefinePlugin(env.stringified) : null,
+      isProduction
         ? new webpack.optimize.UglifyJsPlugin({
             compress: {
               screw_ie8: true, // React doesn't support IE8

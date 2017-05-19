@@ -21,7 +21,6 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "add-asset-html-webpack-plugin": "^2.0.1",
     "autoprefixer": "7.1.0",
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.3",

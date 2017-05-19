@@ -35,10 +35,11 @@ const {
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
+const webpackAutoDllCompiler = require('react-dev-utils/webpackAutoDllCompiler');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
+const vendorConfig = require('../config/webpack.config.vendor');
 const createDevServerConfig = require('../config/webpackDevServer.config');
-const webpackVendorCompiler = require('./utils/webpackVendorCompiler');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
@@ -47,7 +48,11 @@ const isInteractive = process.stdout.isTTY;
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
-webpackVendorCompiler(config).then(config => {
+webpackAutoDllCompiler({
+  mainConfig: config,
+  vendorConfig,
+  paths,
+}).then(config => {
   // Tools like Cloud9 rely on this.
   const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
   const HOST = process.env.HOST || '0.0.0.0';
