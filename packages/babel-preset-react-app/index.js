@@ -8,8 +8,6 @@
  */
 'use strict';
 
-var path = require('path');
-
 const plugins = [
   // class { handleClick = () => { } }
   require.resolve('babel-plugin-transform-class-properties'),
@@ -36,8 +34,6 @@ const plugins = [
       helpers: false,
       polyfill: false,
       regenerator: true,
-      // Resolve the Babel runtime relative to the config.
-      moduleName: path.dirname(require.resolve('babel-runtime/package')),
     },
   ],
 ];
@@ -110,6 +106,8 @@ if (env === 'test') {
           },
           // Disable polyfill transforms
           useBuiltIns: false,
+          // Do not transform modules to CJS
+          modules: false,
         },
       ],
       // JSX, Flow

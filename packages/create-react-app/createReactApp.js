@@ -6,6 +6,34 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//   /!\ DO NOT MODIFY THIS FILE /!\
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// create-react-app is installed globally on people's computers. This means
+// that it is extremely difficult to have them upgrade the version and
+// because there's only one global version installed, it is very prone to
+// breaking changes.
+//
+// The only job of create-react-app is to init the repository and then
+// forward all the commands to the local version of create-react-app.
+//
+// If you need to add a new command, please add it to the scripts/ folder.
+//
+// The only reason to modify this file is to add more warnings and
+// troubleshooting information for the `create-react-app` command.
+//
+// Do not make breaking changes! We absolutely don't want to have to
+// tell people to update their global version of create-react-app.
+//
+// Also be careful with new language features.
+// This file must work on Node 6+.
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//   /!\ DO NOT MODIFY THIS FILE /!\
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 'use strict';
 
 const validateProjectName = require('validate-npm-package-name');
@@ -21,10 +49,12 @@ const tmp = require('tmp');
 const unpack = require('tar-pack').unpack;
 const hyperquest = require('hyperquest');
 
+const packageJson = require('./package.json');
+
 let projectName;
 
-const program = commander
-  .version(require('./package.json').version)
+const program = new commander.Command(packageJson.name)
+  .version(packageJson.version)
   .arguments('<project-directory>')
   .usage(`${chalk.green('<project-directory>')} [options]`)
   .action(name => {
@@ -130,7 +160,34 @@ function createApp(name, verbose, version, template) {
   const originalDirectory = process.cwd();
   process.chdir(root);
 
-  run(root, appName, version, verbose, originalDirectory, template);
+  if (!semver.satisfies(process.version, '>=6.0.0')) {
+    console.log(
+      chalk.yellow(
+        `You are using Node ${process.version} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
+          `Please update to Node 6 or higher for a better, fully supported experience.\n`
+      )
+    );
+    // Fall back to latest supported react-scripts on Node 4
+    version = 'react-scripts@0.9.x';
+  }
+
+  const useYarn = shouldUseYarn();
+  if (!useYarn) {
+    const npmInfo = checkNpmVersion();
+    if (!npmInfo.hasMinNpm) {
+      if (npmInfo.npmVersion) {
+        console.log(
+          chalk.yellow(
+            `You are using npm ${npmInfo.npmVersion} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
+              `Please update to npm 3 or higher for a better, fully supported experience.\n`
+          )
+        );
+      }
+      // Fall back to latest supported react-scripts for npm 3
+      version = 'react-scripts@0.9.x';
+    }
+  }
+  run(root, appName, version, verbose, originalDirectory, template, useYarn);
 }
 
 function shouldUseYarn() {
@@ -160,7 +217,6 @@ function install(useYarn, dependencies, verbose, isOnline) {
         console.log();
       }
     } else {
-      checkNpmVersion();
       command = 'npm';
       args = ['install', '--save', '--save-exact'].concat(dependencies);
     }
@@ -182,13 +238,19 @@ function install(useYarn, dependencies, verbose, isOnline) {
   });
 }
 
-function run(root, appName, version, verbose, originalDirectory, template) {
+function run(
+  root,
+  appName,
+  version,
+  verbose,
+  originalDirectory,
+  template,
+  useYarn
+) {
   const packageToInstall = getInstallPackage(version);
   const allDependencies = ['react', 'react-dom', packageToInstall];
 
   console.log('Installing packages. This might take a couple minutes.');
-
-  const useYarn = shouldUseYarn();
   getPackageName(packageToInstall)
     .then(packageName => checkIfOnline(useYarn).then(isOnline => ({
       isOnline: isOnline,
@@ -223,6 +285,15 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       );
       const init = require(scriptsPath);
       init(root, appName, verbose, originalDirectory, template);
+
+      if (version === 'react-scripts@0.9.x') {
+        console.log(
+          chalk.yellow(
+            `\nNote: the project was boostrapped with an old unsupported version of tools.\n` +
+              `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
+          )
+        );
+      }
     })
     .catch(reason => {
       console.log();
@@ -368,24 +439,18 @@ function getPackageName(installPackage) {
 }
 
 function checkNpmVersion() {
-  let isNpm2 = false;
+  let hasMinNpm = false;
+  let npmVersion = null;
   try {
-    const npmVersion = execSync('npm --version').toString();
-    isNpm2 = semver.lt(npmVersion, '3.0.0');
+    npmVersion = execSync('npm --version').toString().trim();
+    hasMinNpm = semver.gte(npmVersion, '3.0.0');
   } catch (err) {
-    return;
+    // ignore
   }
-  if (!isNpm2) {
-    return;
-  }
-  console.log(chalk.yellow('It looks like you are using npm 2.'));
-  console.log(
-    chalk.yellow(
-      'We suggest using npm 3 or Yarn for faster install times ' +
-        'and less disk space usage.'
-    )
-  );
-  console.log();
+  return {
+    hasMinNpm: hasMinNpm,
+    npmVersion: npmVersion,
+  };
 }
 
 function checkNodeVersion(packageName) {
@@ -501,6 +566,9 @@ function isSafeToCreateProjectIn(root) {
     'README.md',
     'LICENSE',
     'web.iml',
+    '.hg',
+    '.hgignore',
+    '.hgcheck',
   ];
   return fs.readdirSync(root).every(file => validFiles.indexOf(file) >= 0);
 }
@@ -513,7 +581,7 @@ function checkIfOnline(useYarn) {
   }
 
   return new Promise(resolve => {
-    dns.resolve('registry.yarnpkg.com', err => {
+    dns.lookup('registry.yarnpkg.com', err => {
       resolve(err === null);
     });
   });

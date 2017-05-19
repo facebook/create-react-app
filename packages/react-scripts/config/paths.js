@@ -17,9 +17,7 @@ const url = require('url');
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
-function resolveApp(relativePath) {
-  return path.resolve(appDirectory, relativePath);
-}
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
 // We support resolving modules according to `NODE_PATH`.
 // This lets you use absolute paths in imports inside large monorepos:
@@ -55,9 +53,7 @@ function ensureSlash(path, needsSlash) {
   }
 }
 
-function getPublicUrl(appPackageJson) {
-  return envPublicUrl || require(appPackageJson).homepage;
-}
+const getPublicUrl = (appPackageJson) => envPublicUrl || require(appPackageJson).homepage;
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
 // "public path" at which the app is served.
@@ -74,6 +70,7 @@ function getServedPath(appPackageJson) {
 
 // config after eject: we're in ./config/
 module.exports = {
+  dotenv: resolveApp('.env'),
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
@@ -89,12 +86,11 @@ module.exports = {
 };
 
 // @remove-on-eject-begin
-function resolveOwn(relativePath) {
-  return path.resolve(__dirname, '..', relativePath);
-}
+const resolveOwn = (relativePath) => path.resolve(__dirname, '..', relativePath);
 
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
+  dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
@@ -124,6 +120,7 @@ if (
   __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
 ) {
   module.exports = {
+    dotenv: resolveOwn('template/.env'),
     appPath: resolveApp('.'),
     appBuild: resolveOwn('../../build'),
     appPublic: resolveOwn('template/public'),

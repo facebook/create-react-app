@@ -62,6 +62,10 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Editor Integration](#editor-integration)
 - [Developing Components in Isolation](#developing-components-in-isolation)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
+<!-- todo: uncomment
+  - [Offline-First Considerations](#offline-first-considerations)
+  - [Progressive Web App Metadata](#progressive-web-app-metadata)
+-->
 - [Deployment](#deployment)
   - [Static Server](#static-server)
   - [Other Solutions](#other-solutions)
@@ -82,6 +86,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` silently fails](#npm-run-build-silently-fails)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
+  - [Moment.js locales are missing](#momentjs-locales-are-missing)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -208,56 +213,32 @@ To configure the syntax highlighting in your favorite text editor, head to the [
 
 ## Displaying Lint Output in the Editor
 
->Note: this feature is available with `react-scripts@0.2.0` and higher.
+>Note: this feature is available with `react-scripts@0.2.0` and higher.  
+>It also only works with npm 3 or higher.
 
 Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
 
 They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
 
-You would need to install an ESLint plugin for your editor first.
+You would need to install an ESLint plugin for your editor first. Then, add a file called `.eslintrc` to the project root:
 
->**A note for Atom `linter-eslint` users**
-
->If you are using the Atom `linter-eslint` plugin, make sure that **Use global ESLint installation** option is checked:
-
-><img src="http://i.imgur.com/yVNNHJM.png" width="300">
-
-
->**For Visual Studio Code users**
-
->VS Code ESLint plugin automatically detects Create React App's configuration file. So you do not need to create `eslintrc.json` at the root directory, except when you want to add your own rules. In that case, you should include CRA's config by adding this line:
-
->```js
+```js
 {
-  // ...
   "extends": "react-app"
 }
 ```
 
-Then add this block to the `package.json` file of your project:
+Now your editor should report the linting warnings.
 
-```js
-{
-  // ...
-  "eslintConfig": {
-    "extends": "react-app"
-  }
-}
-```
+Note that even if you edit your `.eslintrc` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
 
-Finally, you will need to install some packages *globally*:
-
-```sh
-npm install -g eslint-config-react-app@0.3.0 eslint@3.8.1 babel-eslint@7.0.0 eslint-plugin-react@6.4.1 eslint-plugin-import@2.0.1 eslint-plugin-jsx-a11y@4.0.0 eslint-plugin-flowtype@2.21.0
-```
-
-We recognize that this is suboptimal, but it is currently required due to the way we hide the ESLint dependency. The ESLint team is already [working on a solution to this](https://github.com/eslint/eslint/issues/3458) so this may become unnecessary in a couple of months.
+If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
 
 ## Debugging in the Editor
 
 **This feature is currently only supported by [Visual Studio Code](https://code.visualstudio.com) editor.**
 
-Visual Studio Code supports live-editing and debugging out of the box with Create React App. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.
+Visual Studio Code supports debugging out of the box with Create React App. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.
 
 You would need to have the latest version of [VS Code](https://code.visualstudio.com) and VS Code [Chrome Debugger Extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed.
 
@@ -467,15 +448,14 @@ Following this rule often makes CSS preprocessors less useful, as features like 
 First, let’s install the command-line interface for Sass:
 
 ```
-npm install node-sass --save-dev
+npm install node-sass-chokidar --save-dev
 ```
-
 Then in `package.json`, add the following lines to `scripts`:
 
 ```diff
    "scripts": {
-+    "build-css": "node-sass src/ -o src/",
-+    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
++    "build-css": "node-sass-chokidar src/ -o src/",
++    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
@@ -499,8 +479,8 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
 
 ```diff
    "scripts": {
-     "build-css": "node-sass src/ -o src/",
-     "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
+     "build-css": "node-sass-chokidar src/ -o src/",
+     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
 -    "start": "react-scripts start",
 -    "build": "react-scripts build",
 +    "start-js": "react-scripts start",
@@ -511,7 +491,19 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
    }
 ```
 
-Now running `npm start` and `npm run build` also builds Sass files. Note that `node-sass` seems to have an [issue recognizing newly created files on some systems](https://github.com/sass/node-sass/issues/1891) so you might need to restart the watcher when you create a file until it’s resolved.
+Now running `npm start` and `npm run build` also builds Sass files. 
+
+**Why `node-sass-chokidar`?**
+
+`node-sass` has been reported as having the following issues:
+
+- `node-sass --watch` has been reported to have *performance issues* in certain conditions when used in a virtual machine or with docker.
+
+- Infinite styles compiling [#1939](https://github.com/facebookincubator/create-react-app/issues/1939)
+
+- `node-sass` has been reported as having issues with detecting new files in a directory [#1891](https://github.com/sass/node-sass/issues/1891)
+
+ `node-sass-chokidar` is used here as it addresses these issues.
 
 ## Adding Images, Fonts, and Files
 
@@ -797,6 +789,24 @@ To define permanent environment variables, create a file called `.env` in the ro
 REACT_APP_SECRET_CODE=abcdef
 ```
 
+<!--
+TODO: uncomment (and tweak) the doc for 0.10
+What .env* files are used?
+
+* `.env` - Default
+* `.env.development`, `.env.test`, `.env.production` - Environment-specific settings.
+* `.env.local` - Local overrides. This file is loaded for all environments except test.
+* `.env.development.local`, `.env.test.local`, `.env.production.local` - Local overrides of environment-specific settings.
+
+Files priority (file is skipped if does not exist):
+
+* npm test - `.env.test.local`, `env.test`, `.env.local`, `.env`
+* npm run build - `.env.production.local`, `env.production`, `.env.local`, `.env`
+* npm start - `.env.development.local`, `env.development`, `.env.local`, `.env`
+
+Priority from left to right.
+-->
+
 These variables will act as the defaults if the machine does not explicitly set them.<br>
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
 
@@ -1019,7 +1029,7 @@ When you encounter bugs caused by changing components, you will gain a deeper in
 If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). You can write a smoke test with it too:
 
 ```sh
-npm install --save-dev enzyme react-addons-test-utils
+npm install --save-dev enzyme react-test-renderer
 ```
 
 ```js
@@ -1060,10 +1070,10 @@ Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzym
 expect(wrapper).toContainReact(welcome)
 ```
 
-To setup jest-enzyme with Create React App, follow the instructions for [initializing your test environment](#initializing-test-environment) to import `jest-enzyme`.
+To setup jest-enzyme with Create React App, follow the instructions for [initializing your test environment](#initializing-test-environment) to import `jest-enzyme`. **Note that currently only version 2.x is compatible with Create React App.**
 
 ```sh
-npm install --save-dev jest-enzyme
+npm install --save-dev jest-enzyme@2.x
 ```
 
 ```js
@@ -1248,12 +1258,109 @@ Learn more about React Storybook:
 
 * Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
 * [GitHub Repo](https://github.com/kadirahq/react-storybook)
-* [Documentation](https://getstorybook.io/docs)
+* [Documentation](https://storybooks.js.org/docs/react-storybook/basics/introduction/)
 * [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
 
 ## Making a Progressive Web App
 
 You can turn your React app into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) by following the steps in [this repository](https://github.com/jeffposnick/create-react-pwa).
+
+<!--
+TODO: uncomment
+By default, the production build is a fully functional, offline-first
+[Progressive Web App](https://developers.google.com/web/progressive-web-apps/).
+
+The [`sw-precache-webpack-plugin`](https://github.com/goldhand/sw-precache-webpack-plugin)
+is integrated into [`webpack.config.prod.js`](../config/webpack.config.prod.js),
+and it will take care of generating a service worker file that will automatically
+precache all of your local assets and keep them up to date as you deploy updates.
+The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
+for handling all requests for local assets, including the initial HTML, ensuring
+that you web app is reliably fast, even on a slow or unreliable network.
+
+If you would prefer not to enable service workers prior to your initial
+production deployment, then remove the call to `serviceWorkerRegistration.register()`
+from [`src/index.js`](src/index.js).
+
+If you had previously enabled service workers in your production deployment and
+have decided that you would like to disable them for all your existing users,
+you can swap out the call to `serviceWorkerRegistration.register()` in
+[`src/index.js`](src/index.js) with a call to `serviceWorkerRegistration.unregister()`.
+After the user visits a page that has `serviceWorkerRegistration.unregister()`,
+the service worker will be uninstalled.
+
+### Offline-First Considerations
+
+1. Service workers [require HTTPS](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers#you_need_https),
+although to facilitate local testing, that policy
+[does not apply to `localhost`](http://stackoverflow.com/questions/34160509/options-for-testing-service-workers-via-http/34161385#34161385).
+If your production web server does not support HTTPS, then the service worker
+registration will fail, but the rest of your web app will remain functional.
+
+1. Service workers are [not currently supported](https://jakearchibald.github.io/isserviceworkerready/)
+in all web browsers. Service worker registration [won't be attempted](src/service-worker-registration.js)
+on browsers that lack support.
+
+1. The service worker is only enabled in the [production environment](#deployment),
+e.g. the output of `npm run build`. It's recommended that you do not enable an
+offline-first service worker in a development environment, as it can lead to
+frustration when previously cached assets are used and do not include the latest
+changes you've made locally.
+
+1. If you *need* to test your offline-first service worker locally, build
+the application (using `npm run build`) and run a simple http server from your
+build directory. After running the build script, `create-react-app` will give
+instructions for one way to test your production build locally using
+`pushstate-server` and the [deployment instructions](#deployment) have
+instructions for using the python `SimpleHTTPServer`. *Be sure to always use an
+incognito window to avoid complications with your browser cache.*
+
+1. If possible,configure your production environment to serve the generated
+`service-worker.js` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
+If that's not possible—[GitHub Pages](#github-pages), for instance, does not
+allow you to change the default 10 minute HTTP cache lifetime—then be aware
+that if you visit your production site, and then revisit again before
+`service-worker.js` has expired from your HTTP cache, you'll continue to get
+the previously cached assets from the service worker. If you have an immediate
+need to view your updated production deployment, performing a shift-refresh
+will temporarily disable the service worker and retrieve all assets from the
+network.
+
+1. Users aren't always familiar with offline-first web apps. It can be useful to
+[let the user know](https://developers.google.com/web/fundamentals/instant-and-offline/offline-ux#inform_the_user_when_the_app_is_ready_for_offline_consumption)
+when the service worker has finished populating your caches (showing a "This web
+app works offline!" message) and also let them know when the service worker has
+fetched the latest updates that will be available the next time they load the
+page (showing a "New content is available; please refresh." message). Showing
+this messages is currently left as an exercise to the developer, but as a
+starting point, you can make use of the logic included in [`src/service-worker-registration.js`](src/service-worker-registration.js), which
+demonstrates which service worker lifecycle events to listen for to detect each
+scenario, and which as a default, just logs appropriate messages to the
+JavaScript console.
+
+1. By default, the generated service worker file will not intercept or cache any
+cross-origin traffic, like HTTP [API requests](#integrating-with-an-api-backend),
+images, or embeds loaded from a different domain. If you would like to use a
+runtime caching strategy for those requests, you can [`eject`](#npm-run-eject)
+and then configure the
+[`runtimeCaching`](https://github.com/GoogleChrome/sw-precache#runtimecaching-arrayobject)
+option in the `SWPrecacheWebpackPlugin` section of
+[`webpack.config.prod.js`](../config/webpack.config.prod.js).
+
+### Progressive Web App Metadata
+
+The default configuration includes a web app manifest located at
+[`public/manifest.json`](public/manifest.json), that you can customize with
+details specific to your web application.
+
+When a user adds a web app to their homescreen using Chrome or Firefox on
+Android, the metadata in [`manifest.json`](public/manifest.json) determines what
+icons, names, and branding colors to use when the web app is displayed.
+[The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
+provides more context about what each field means, and how your customizations
+will affect your users' experience.
+
+-->
 
 ## Deployment
 
@@ -1287,10 +1394,10 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-app.use(express.static('./build'));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, './build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.listen(9000);
@@ -1309,11 +1416,11 @@ If you use routers that use the HTML5 [`pushState` history API](https://develope
 This is because when there is a fresh page load for a `/todos/42`, the server looks for the file `build/todos/42` and does not find it. The server needs to be configured to respond to a request to `/todos/42` by serving `index.html`. For example, we can amend our Express example above to serve `index.html` for any unknown paths:
 
 ```diff
- app.use(express.static('./build'));
+ app.use(express.static(path.join(__dirname, 'build')));
 
 -app.get('/', function (req, res) {
 +app.get('/*', function (req, res) {
-   res.sendFile(path.join(__dirname, './build', 'index.html'));
+   res.sendFile(path.join(__dirname, 'build', 'index.html'));
  });
 ```
 
@@ -1329,6 +1436,19 @@ If you’re using [Apache](https://httpd.apache.org/), you need to create a `.ht
 It will get copied to the `build` folder when you run `npm run build`.
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
+
+<!--
+TODO: uncomment for 1.0
+
+On a production build, and in a browser that supports [service workers](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers),
+the service worker will automatically handle all navigation requests, like for
+`/todos/42`, by serving the cached copy of your `index.html`. This
+service worker navigation routing can be configured or disabled by
+[`eject`ing](#npm-run-eject) and then modifying the
+[`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
+and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
+options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
+-->
 
 ### Building for Relative Paths
 
@@ -1525,7 +1645,7 @@ In this case, ensure that the file is there with the proper lettercase and that�
 
 See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modulus) on how to deploy your react app to Modulus.
 
-## Netlify
+### Netlify
 
 **To do a manual deploy to Netlify’s CDN:**
 
@@ -1563,17 +1683,17 @@ When you build the project, Create React App will place the `public` folder cont
 2. Install `serve` by running `npm install --save serve`.
 
 3. Add this line to `scripts` in `package.json`:
-    
+
     ```
-    "now-start": "serve build/",
+    "now-start": "serve -s build/",
     ```
-    
+
 4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
-    
+
     ```
     > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
     ```
-    
+
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
 Details are available in [this article.](https://zeit.co/blog/now-static)
@@ -1584,21 +1704,12 @@ See this [blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-t
 
 ### Surge
 
-Install the Surge CLI if you haven’t already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account. You just need to specify the *build* folder and your custom domain, and you are done.
+Install the Surge CLI if you haven’t already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account.
+
+When asked about the project path, make sure to specify the `build` folder, for example:
 
 ```sh
-              email: email@domain.com
-           password: ********
        project path: /path/to/project/build
-               size: 7 files, 1.8 MB
-             domain: create-react-app.surge.sh
-             upload: [====================] 100%, eta: 0.0s
-   propagate on CDN: [====================] 100%
-               plan: Free
-              users: email@domain.com
-         IP Address: X.X.X.X
-
-    Success! Project is published and running at create-react-app.surge.sh
 ```
 
 Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
@@ -1609,7 +1720,7 @@ You can adjust various development and production settings by setting environmen
 
 Variable | Development | Production | Usage
 :--- | :---: | :---: | :---
-BROWSER | :white_check_mark: | :x: | By default, Create React App will open the default system browser, favoring Chrome on macOS. Specify a [browser](https://github.com/sindresorhus/opn#app) to override this behavior, or set it to `none` to disable it completely.
+BROWSER | :white_check_mark: | :x: | By default, Create React App will open the default system browser, favoring Chrome on macOS. Specify a [browser](https://github.com/sindresorhus/opn#app) to override this behavior, or set it to `none` to disable it completely. <!-- TODO: enable with 0.10: If you need to customize the way the browser is launched, you can specify a node script instead. Any arguments passed to `npm start` will also be passed to this script, and the url where your app is served will be the last argument. Your script's file name must have the `.js` extension. -->
 HOST | :white_check_mark: | :x: | By default, the development web server binds to `localhost`. You may use this variable to specify a different host.
 PORT | :white_check_mark: | :x: | By default, the development web server will attempt to listen on port 3000 or prompt you to attempt the next available port. You may use this variable to specify a different port.
 HTTPS | :white_check_mark: | :x: | When set to `true`, Create React App will run the development server in `https` mode.
@@ -1664,6 +1775,32 @@ It is reported that `npm run build` can fail on machines with no swap space, whi
 
 This may be a problem with case sensitive filenames.
 Please refer to [this section](#resolving-heroku-deployment-errors).
+
+### Moment.js locales are missing
+
+If you use a [Moment.js](https://momentjs.com/), you might notice that only the English locale is available by default. This is because the locale files are large, and you probably only need a subset of [all the locales provided by Moment.js](https://momentjs.com/#multiple-locale-support).
+
+To add a specific Moment.js locale to your bundle, you need to import it explicitly.<br>
+For example:
+
+```js
+import moment from 'moment';
+import 'moment/locale/fr';
+```
+
+If import multiple locales this way, you can later switch between them by calling `moment.locale()` with the locale name:
+
+```js
+import moment from 'moment';
+import 'moment/locale/fr';
+import 'moment/locale/es';
+
+// ...
+
+moment.locale('fr');
+```
+
+This will only work for locales that have been explicitly imported before.
 
 ## Something Missing?
 
