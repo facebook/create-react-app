@@ -1,4 +1,4 @@
-## 1.0.0 (March 18, 2017)
+## 1.0.0 (May 18, 2017)
 
 We’ve been working on this release for the past few months, and there are many big impovements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
 
