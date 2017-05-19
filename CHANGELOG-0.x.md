@@ -1,3 +1,7 @@
+## 1.0.0 and Newer Versions
+
+**Please refer to [CHANGELOG.md](./CHANGELOG.md) for the newer versions.**
+
 ## 0.9.5 (March 9, 2017)
 
 #### :bug: Bug Fix
