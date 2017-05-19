@@ -20,6 +20,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
+- [Code Splitting](#code-splitting)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
 - [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
@@ -190,6 +191,7 @@ In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, 
 * [Exponentiation Operator](https://github.com/rwaldron/exponentiation-operator) (ES2016).
 * [Async/await](https://github.com/tc39/ecmascript-asyncawait) (ES2017).
 * [Object Rest/Spread Properties](https://github.com/sebmarkbage/ecmascript-rest-spread) (stage 3 proposal).
+* [Dynamic import()](https://github.com/tc39/proposal-dynamic-import) (stage 3 proposal)
 * [Class Fields and Static Properties](https://github.com/tc39/proposal-class-public-fields) (stage 2 proposal).
 * [JSX](https://facebook.github.io/react/docs/introducing-jsx.html) and [Flow](https://flowtype.org/) syntax.
 
@@ -327,6 +329,53 @@ Learn more about ES6 modules:
 * [When to use the curly braces?](http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281)
 * [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
 * [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
+
+## Code Splitting
+
+Instead of downloading the entire app before users can use it, code splitting allows you to split your code into small chunks which you can then load on demand.
+
+This project setup supports code splitting via [dynamic `import()`](http://2ality.com/2017/01/import-operator.html#loading-code-on-demand). Its [proposal](https://github.com/tc39/proposal-dynamic-import) is in stage 3. The `import()` function-like form takes the module name as an argument and returns a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which always resolves to the namespace object of the module.
+
+Here is an example:
+
+### `moduleA.js`
+
+```js
+const moduleA = 'Hello';
+
+export { moduleA };
+```
+### `App.js`
+
+```js
+import React, { Component } from 'react';
+
+class App extends Component {
+  handleClick = () => {
+    import('./moduleA')
+      .then(({ moduleA }) => {
+        // Use moduleA
+      })
+      .catch(err => {
+        // Handle failure
+      });
+  };
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleClick}>Load</button>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+This will make `moduleA.js` and all its unique dependencies as a separate chunk that only loads after the user clicks the 'Load' button.
+
+You can also use it with `async` / `await` syntax if you prefer it.
 
 ## Adding a Stylesheet
 
