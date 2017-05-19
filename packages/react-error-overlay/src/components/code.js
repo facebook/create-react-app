@@ -3,10 +3,11 @@ import type { ScriptLine } from '../utils/stack-frame';
 import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
 import {
-  preStyle,
   codeStyle,
   primaryErrorStyle,
+  primaryPreStyle,
   secondaryErrorStyle,
+  secondaryPreStyle,
 } from '../styles';
 
 import generateAnsiHtml from 'react-dev-utils/ansiHTML';
@@ -19,7 +20,8 @@ function createCode(
   lineNum: number,
   columnNum: number | null,
   contextSize: number,
-  main: boolean = false
+  main: boolean,
+  onSourceClick: ?Function
 ) {
   const sourceCode = [];
   let whiteSpace = Infinity;
@@ -81,8 +83,17 @@ function createCode(
     }
   }
   const pre = document.createElement('pre');
-  applyStyles(pre, preStyle);
+  applyStyles(pre, main ? primaryPreStyle : secondaryPreStyle);
   pre.appendChild(code);
+
+  if (typeof onSourceClick === 'function') {
+    let handler = onSourceClick;
+    pre.style.cursor = 'pointer';
+    pre.addEventListener('click', function() {
+      handler();
+    });
+  }
+
   return pre;
 }
 

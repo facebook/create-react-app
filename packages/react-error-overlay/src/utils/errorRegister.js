@@ -19,7 +19,7 @@ function consume(
   error: Error,
   unhandledRejection: boolean = false,
   contextSize: number = 3
-): Promise<ErrorRecordReference> {
+): Promise<ErrorRecordReference | null> {
   const parsedFrames = parse(error);
   let enhancedFramesPromise;
   if (error.__unmap_source) {
@@ -33,6 +33,13 @@ function consume(
     enhancedFramesPromise = map(parsedFrames, contextSize);
   }
   return enhancedFramesPromise.then(enhancedFrames => {
+    if (
+      enhancedFrames
+        .map(f => f._originalFileName)
+        .filter(f => f != null && f.indexOf('node_modules') === -1).length === 0
+    ) {
+      return null;
+    }
     enhancedFrames = enhancedFrames.filter(
       ({ functionName }) =>
         functionName == null ||

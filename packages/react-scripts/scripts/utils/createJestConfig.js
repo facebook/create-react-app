@@ -10,6 +10,7 @@
 'use strict';
 
 const fs = require('fs');
+const chalk = require('chalk');
 const paths = require('../../config/paths');
 
 module.exports = (resolve, rootDir, isEjecting) => {
@@ -25,19 +26,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
-    testPathIgnorePatterns: [
-      // Ignore the following directories:
-      // build
-      //   - the build output directory
-      // .cache
-      //   - the yarn module cache on Ubuntu if $HOME === rootDir
-      // docs
-      //   - often used to publish to Github Pages
-      // node_modules
-      //   - ignore tests in dependencies
-      // scripts
-      //   - directory generated upon eject
-      '<rootDir>[/\\\\](build|\\.cache|docs|node_modules|scripts)[/\\\\]',
+    testMatch: [
+      '<rootDir>/src/**/__tests__/**/*.js?(x)',
+      '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
@@ -55,6 +46,44 @@ module.exports = (resolve, rootDir, isEjecting) => {
   };
   if (rootDir) {
     config.rootDir = rootDir;
+  }
+  const overrides = Object.assign({}, require(paths.appPackageJson).jest);
+  const supportedKeys = [
+    'collectCoverageFrom',
+    'coverageReporters',
+    'coverageThreshold',
+    'snapshotSerializers',
+  ];
+  if (overrides) {
+    supportedKeys.forEach(key => {
+      if (overrides.hasOwnProperty(key)) {
+        config[key] = overrides[key];
+        delete overrides[key];
+      }
+    });
+    const unsupportedKeys = Object.keys(overrides);
+    if (unsupportedKeys.length) {
+      console.error(
+        chalk.red(
+          'Out of the box, Create React App only supports overriding ' +
+            'these Jest options:\n\n' +
+            supportedKeys.map(key => chalk.bold('  \u2022 ' + key)).join('\n') +
+            '.\n\n' +
+            'These options in your package.json Jest configuration ' +
+            'are not currently supported by Create React App:\n\n' +
+            unsupportedKeys
+              .map(key => chalk.bold('  \u2022 ' + key))
+              .join('\n') +
+            '\n\nIf you wish to override other Jest options, you need to ' +
+            'eject from the default setup. You can do so by running ' +
+            chalk.bold('npm run eject') +
+            ' but remember that this is a one-way operation. ' +
+            'You may also file an issue with Create React App to discuss ' +
+            'supporting more options out of the box.\n'
+        )
+      );
+      process.exit(1);
+    }
   }
   return config;
 };

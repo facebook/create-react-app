@@ -1,6 +1,6 @@
 /* @flow */
 import { applyStyles } from '../utils/dom/css';
-import { overlayStyle, headerStyle, additionalStyle } from '../styles';
+import { containerStyle, overlayStyle, headerStyle } from '../styles';
 import { createClose } from './close';
 import { createFrames } from './frames';
 import { createFooter } from './footer';
@@ -12,7 +12,7 @@ import type { SwitchCallback } from './additional';
 
 function createOverlay(
   document: Document,
-  name: string,
+  name: ?string,
   message: string,
   frames: StackFrame[],
   contextSize: number,
@@ -28,17 +28,15 @@ function createOverlay(
   // Create overlay
   const overlay = document.createElement('div');
   applyStyles(overlay, overlayStyle);
-  overlay.appendChild(createClose(document, closeCallback));
 
   // Create container
   const container = document.createElement('div');
-  container.className = 'cra-container';
+  applyStyles(container, containerStyle);
   overlay.appendChild(container);
+  container.appendChild(createClose(document, closeCallback));
 
-  // Create additional
+  // Create "Errors X of Y" in case of multiple errors
   const additional = document.createElement('div');
-  applyStyles(additional, additionalStyle);
-  container.appendChild(additional);
   updateAdditional(
     document,
     additional,
@@ -46,20 +44,27 @@ function createOverlay(
     totalErrors,
     switchCallback
   );
+  container.appendChild(additional);
 
   // Create header
   const header = document.createElement('div');
   applyStyles(header, headerStyle);
 
   // Make message prettier
-  let finalMessage = message.match(/^\w*:/) ? message : name + ': ' + message;
+  let finalMessage = message.match(/^\w*:/) || !name
+    ? message
+    : name + ': ' + message;
+
   finalMessage = finalMessage
     // TODO: maybe remove this prefix from fbjs?
     // It's just scaring people
-    .replace('Invariant Violation: ', '')
+    .replace(/^Invariant Violation:\s*/, '')
+    // This is not helpful either:
+    .replace(/^Warning:\s*/, '')
     // Break the actionable part to the next line.
     // AFAIK React 16+ should already do this.
-    .replace(' Check the render method', '\n\nCheck the render method');
+    .replace(' Check the render method', '\n\nCheck the render method')
+    .replace(' Check your code at', '\n\nCheck your code at');
 
   // Put it in the DOM
   header.appendChild(document.createTextNode(finalMessage));
@@ -67,7 +72,7 @@ function createOverlay(
 
   // Create trace
   container.appendChild(
-    createFrames(document, frames, frameSettings, contextSize)
+    createFrames(document, frames, frameSettings, contextSize, name)
   );
 
   // Show message

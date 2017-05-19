@@ -166,7 +166,7 @@ PORT=3001 \
   nohup npm start &>$tmp_server_log &
 while true
 do
-  if grep -q 'The app is running at:' $tmp_server_log; then
+  if grep -q 'You can now view' $tmp_server_log; then
     break
   else
     sleep 1
@@ -230,7 +230,7 @@ PORT=3002 \
   nohup npm start &>$tmp_server_log &
 while true
 do
-  if grep -q 'The app is running at:' $tmp_server_log; then
+  if grep -q 'You can now view' $tmp_server_log; then
     break
   else
     sleep 1
