@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component } from 'react';
+import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 
 function load(id = 0) {

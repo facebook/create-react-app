@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react';
+import { h } from 'preact';
 import tiniestCat from './assets/tiniest-cat.jpg';
 
 export default () => (

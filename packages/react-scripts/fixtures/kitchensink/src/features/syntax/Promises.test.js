@@ -7,15 +7,14 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { h, render } from 'preact';
 
 describe('promises', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return import('./Promises').then(({ default: Promises }) => {
       return new Promise(resolve => {
-        ReactDOM.render(<Promises onReady={resolve} />, div);
+        render(<Promises onReady={resolve} />, div);
       });
     });
   });

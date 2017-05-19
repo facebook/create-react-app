@@ -7,15 +7,14 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { h, render } from 'preact';
 import AsyncAwait from './AsyncAwait';
 
 describe('async/await', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<AsyncAwait onReady={resolve} />, div);
+      render(<AsyncAwait onReady={resolve} />, div);
     });
   });
 });

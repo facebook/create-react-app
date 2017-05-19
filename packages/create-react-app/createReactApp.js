@@ -248,7 +248,7 @@ function run(
   useYarn
 ) {
   const packageToInstall = getInstallPackage(version);
-  const allDependencies = ['react', 'react-dom', packageToInstall];
+  const allDependencies = ['preact', packageToInstall];
 
   console.log('Installing packages. This might take a couple minutes.');
   getPackageName(packageToInstall)
@@ -260,7 +260,7 @@ function run(
       const isOnline = info.isOnline;
       const packageName = info.packageName;
       console.log(
-        `Installing ${chalk.cyan('react')}, ${chalk.cyan('react-dom')}, and ${chalk.cyan(packageName)}...`
+        `Installing ${chalk.cyan('preact')} and ${chalk.cyan(packageName)}...`
       );
       console.log();
 
@@ -491,7 +491,7 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom'];
+  const dependencies = ['preact'];
   const devDependencies = ['react-scripts'];
   const allDependencies = dependencies.concat(devDependencies).sort();
   if (allDependencies.indexOf(appName) >= 0) {
@@ -547,8 +547,7 @@ function fixDependencies(packageName) {
   packageJson.devDependencies[packageName] = packageVersion;
   delete packageJson.dependencies[packageName];
 
-  makeCaretRange(packageJson.dependencies, 'react');
-  makeCaretRange(packageJson.dependencies, 'react-dom');
+  makeCaretRange(packageJson.dependencies, 'preact');
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }

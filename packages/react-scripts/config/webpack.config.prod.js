@@ -106,6 +106,9 @@ module.exports = {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
+      // Preact-compat aliases
+      react: 'preact-compat',
+      'react-dom': 'preact-compat',
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -137,6 +140,11 @@ module.exports = {
               // e.g. to enable no-console and no-debugger only in production.
               baseConfig: {
                 extends: [require.resolve('eslint-config-react-app')],
+                settings: {
+                  react: {
+                    pragma: 'h',
+                  },
+                },
               },
               ignore: false,
               useEslintrc: false,
@@ -190,6 +198,12 @@ module.exports = {
         options: {
           babelrc: false,
           presets: [require.resolve('babel-preset-react-app')],
+          plugins: [
+            [
+              require.resolve('babel-plugin-transform-react-jsx'),
+              { pragma: 'h' },
+            ],
+          ],
         },
         // @remove-on-eject-end
       },

@@ -7,15 +7,14 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { h, render } from 'preact';
 import ObjectDestructuring from './ObjectDestructuring';
 
 describe('object destructuring', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<ObjectDestructuring onReady={resolve} />, div);
+      render(<ObjectDestructuring onReady={resolve} />, div);
     });
   });
 });

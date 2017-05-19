@@ -7,13 +7,12 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { h, render } from 'preact';
 import ShellEnvVariables from './ShellEnvVariables';
 
 describe('shell env variables', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<ShellEnvVariables />, div);
+    render(<ShellEnvVariables />, div);
   });
 });

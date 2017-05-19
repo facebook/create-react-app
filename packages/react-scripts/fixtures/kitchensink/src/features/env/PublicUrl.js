@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react';
+import { h } from 'preact';
 
 export default () => (
   <span id="feature-public-url">{process.env.PUBLIC_URL}.</span>

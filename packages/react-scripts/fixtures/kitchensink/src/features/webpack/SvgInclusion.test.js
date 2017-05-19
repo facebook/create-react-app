@@ -7,13 +7,12 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { h, render } from 'preact';
 import SvgInclusion from './SvgInclusion';
 
 describe('svg inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<SvgInclusion />, div);
+    render(<SvgInclusion />, div);
   });
 });

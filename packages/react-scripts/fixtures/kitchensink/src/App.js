@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component, createElement } from 'react';
+import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 
 class BuiltEmitter extends Component {
@@ -36,7 +36,7 @@ class BuiltEmitter extends Component {
     } = this;
     return (
       <div>
-        {createElement(feature, {
+        {h(feature, {
           onReady: handleReady,
         })}
       </div>

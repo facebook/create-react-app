@@ -1,5 +1,5 @@
 {
-  "name": "react-scripts",
+  "name": "@just-boris/preact-scripts",
   "version": "1.0.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
@@ -26,6 +26,7 @@
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.0.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-react-app": "^3.0.0",
     "babel-runtime": "6.23.0",
     "case-sensitive-paths-webpack-plugin": "2.0.0",
@@ -62,8 +63,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "preact": "^8.1.0"
   },
   "optionalDependencies": {
     "fsevents": "1.0.17"

@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react';
+import { h } from 'preact';
 import './assets/style.css';
 import { test, version } from 'test-integrity';
 
