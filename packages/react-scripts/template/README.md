@@ -472,6 +472,20 @@ Now you can rename `src/App.css` to `src/App.scss` and run `npm run watch-css`. 
 
 To share variables between Sass files, you can use Sass imports. For example, `src/App.scss` and other component style files could include `@import "./shared.scss";` with variable definitions.
 
+To enable importing files without using relative paths, you can add the  `--include-path` option to the command in `package.json`.
+
+```
+"build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+"watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+```
+
+This will allow you to do imports like
+
+```scss
+@import 'styles/_colors.scss'; // assuming a styles directory under src/
+@import 'nprogress/nprogress'; // importing a css file from the nprogress node module
+```
+
 At this point you might want to remove all CSS files from the source control, and add `src/**/*.css` to your `.gitignore` file. It is generally a good practice to keep the build products outside of the source control.
 
 As a final step, you may find it convenient to run `watch-css` automatically with `npm start`, and run `build-css` as a part of `npm run build`. You can use the `&&` operator to execute two scripts sequentially. However, there is no cross-platform way to run two scripts in parallel, so we will install a package for this:
