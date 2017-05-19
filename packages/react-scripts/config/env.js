@@ -11,7 +11,7 @@
 'use strict';
 
 const fs = require('fs');
-const paths = require('./paths');
+const path = require('path');
 
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./paths')];
@@ -23,12 +23,37 @@ if (!NODE_ENV) {
   );
 }
 
+// Make sure any symlinks in the project folder are resolved:
+// https://github.com/facebookincubator/create-react-app/issues/637
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+
+let dotenvPath = resolveApp('.env');
+
+// @remove-on-eject-begin
+// NOTE: Keep this in sync with paths.js
+const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
+
+const ownPackageJson = require('../package.json');
+const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
+const reactScriptsLinked = fs.existsSync(reactScriptsPath) &&
+  fs.lstatSync(reactScriptsPath).isSymbolicLink();
+
+// config before publish: we're in ./packages/react-scripts/config/
+if (
+  !reactScriptsLinked &&
+  __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
+) {
+  dotenvPath = resolveOwn('template/.env');
+}
+// @remove-on-eject-end
+
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 var dotenvFiles = [
-  `${paths.dotenv}.${NODE_ENV}.local`,
-  `${paths.dotenv}.${NODE_ENV}`,
-  `${paths.dotenv}.local`,
-  paths.dotenv,
+  `${dotenvPath}.${NODE_ENV}.local`,
+  `${dotenvPath}.${NODE_ENV}`,
+  `${dotenvPath}.local`,
+  dotenvPath,
 ];
 // Load environment variables from .env* files. Suppress warnings using silent
 // if this file is missing. dotenv will never modify any environment variables
