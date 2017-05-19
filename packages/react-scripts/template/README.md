@@ -805,9 +805,9 @@ What other `.env` files are can be used?
 
 File priority, from left to right:
 
-* npm test - `.env.test.local`, `env.test`, `.env.local`, `.env`
-* npm run build - `.env.production.local`, `env.production`, `.env.local`, `.env`
-* npm start - `.env.development.local`, `env.development`, `.env.local`, `.env`
+* npm test - `.env.test.local`, `.env.test`, `.env.local`, `.env`
+* npm run build - `.env.production.local`, `.env.production`, `.env.local`, `.env`
+* npm start - `.env.development.local`, `.env.development`, `.env.local`, `.env`
 
 These variables will act as the defaults if the machine does not explicitly set them.<br>
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
