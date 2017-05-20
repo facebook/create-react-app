@@ -1,0 +1,21 @@
+{
+  "name": "eslint-restricted-globals",
+  "version": "0.1.1",
+  "description": "A list of confusing globals that should be restricted to be used as globals",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": "facebookincubator/create-react-app",
+  "keywords": [
+    "eslint",
+    "globals"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "mocha": "^3.4.1"
+  }
+}
