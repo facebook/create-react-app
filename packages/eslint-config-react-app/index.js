@@ -21,7 +21,7 @@
 // This is dangerous as it hides accidentally undefined variables.
 // We blacklist the globals that we deem potentially confusing.
 // To use them, explicitly reference them, e.g. `window.name` or `window.status`.
-var restrictedGlobals = require('eslint-restricted-globals');
+var restrictedGlobals = require('confusing-browser-globals');
 
 module.exports = {
   root: true,

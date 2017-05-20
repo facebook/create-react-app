@@ -13,14 +13,12 @@ And because eslint thinks of them as valid global variables, it does not warn in
 
 For eg:
 ```js
-function foo(nama) {
-    if (nama) {
-        console.log(name)
-    }
+function logStats(stats) {
+    console.log(status)
 }
 ```
 
-Here we try to log variable `nama` if it is truthy, but by mistake we are logging `name` and as `name` is a valid global, no eslint warning is shown.
+Here we try to log variable `stats`, but by mistake we are logging `status` and as `status` is a valid global, no eslint warning is shown.
 
 To avoid this, we blacklist such confusing globals which are exported from this package. It contains the list of variables that we think should not be used without `window.` qualifier. But as this is just a javascript array you can add, remove variables or even make your own list of variables.
 
