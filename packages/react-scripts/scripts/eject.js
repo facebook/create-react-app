@@ -20,9 +20,9 @@ const fs = require('fs-extra');
 const path = require('path');
 const spawnSync = require('cross-spawn').sync;
 const chalk = require('chalk');
-const inquirer = require('inquirer');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
+const inquirer = require('react-dev-utils/inquirer');
 
 const green = chalk.green;
 const cyan = chalk.cyan;

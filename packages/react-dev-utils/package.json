@@ -25,6 +25,7 @@
     "openBrowser.js",
     "openChrome.applescript",
     "printHostingInstructions.js",
+    "inquirer.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
     "webpackHotDevClient.js"
