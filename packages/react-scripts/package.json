@@ -45,7 +45,6 @@
     "file-loader": "0.11.1",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.28.0",
-    "inquirer": "3.0.6",
     "jest": "20.0.3",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",

@@ -19,6 +19,7 @@
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
+    "inquirer.js",
     "InterpolateHtmlPlugin.js",
     "launchEditor.js",
     "noopServiceWorkerMiddleware.js",
