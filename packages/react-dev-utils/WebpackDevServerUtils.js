@@ -52,9 +52,17 @@ function prepareUrls(protocol, host, port) {
   if (isUnspecifiedHost) {
     prettyHost = 'localhost';
     try {
+      // This can only return an IPv4 address
       lanUrlForConfig = address.ip();
       if (lanUrlForConfig) {
-        lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig);
+        // Check if the address is a private ip
+        if (/^(10|172|192)[.]/.test(lanUrlForConfig)) {
+          // Address is private, format it for later use
+          lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig);
+        } else {
+          // Address is not private, so we will discard it
+          lanUrlForConfig = undefined;
+        }
       }
     } catch (_e) {
       // ignored
