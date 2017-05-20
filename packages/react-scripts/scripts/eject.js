@@ -43,8 +43,9 @@ inquirer
         let status = stdout
           .trim()
           .split(/\r?\n/)
-          .filter(file => file.substr(0, 2) === '??').length;
-        return status;
+          .filter(file => file.substr(0, 2) === '??')
+          .length;
+        return status > 0;
       } catch (e) {
         return false;
       }
