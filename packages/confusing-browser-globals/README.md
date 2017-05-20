@@ -1,4 +1,4 @@
-# eslint-restricted-globals
+# confusing-browser-globals
 
 > A list of confusing globals that should be restricted to be used as globals
 

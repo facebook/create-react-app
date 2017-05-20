@@ -4,7 +4,7 @@
   "description": "A list of confusing globals that should be restricted to be used as globals",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "jest"
   },
   "repository": "facebookincubator/create-react-app",
   "keywords": [
@@ -16,6 +16,6 @@
   ],
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "mocha": "^3.4.1"
+    "jest": "^20.0.3"
   }
 }
