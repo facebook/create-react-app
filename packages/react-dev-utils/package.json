@@ -21,6 +21,7 @@
     "getProcessForPort.js",
     "InterpolateHtmlPlugin.js",
     "launchEditor.js",
+    "noopServiceWorkerMiddleware.js",
     "ModuleScopePlugin.js",
     "openBrowser.js",
     "openChrome.applescript",
