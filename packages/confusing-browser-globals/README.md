@@ -1,11 +1,11 @@
-# eslint-restricted-globals [![npm](https://img.shields.io/npm/v/eslint-restricted-globals.svg?style=plastic)](https://www.npmjs.com/package/eslint-restricted-globals) [![npm](https://img.shields.io/npm/l/eslint-restricted-globals.svg?style=plastic)](https://www.npmjs.com/package/eslint-restricted-globals)
+# eslint-restricted-globals
 
 > A list of confusing globals that should be restricted to be used as globals
 
 ## Install
 
 ```
-$ npm install --save eslint-restricted-globals
+$ npm install --save confusing-browser-globals
 ```
 
 Some global variables in browser are likely to be used by people without the intent of using them as globals, such as `status`, `name` etc. 
@@ -14,7 +14,7 @@ And because eslint thinks of them as valid global variables, it does not warn in
 For eg:
 ```js
 function logStats(stats) {
-    console.log(status)
+  console.log(status);
 }
 ```
 
@@ -27,13 +27,13 @@ To avoid this, we blacklist such confusing globals which are exported from this 
 Add this in your eslint config in rules property:
 
 ```js
-var restrictedGlobals = require('eslint-restricted-globals')
+var restrictedGlobals = require('eslint-restricted-globals');
 
 module.exports = {
-    rules: {
-        'no-restricted-globals': ['error'].concat(restrictedGlobals),
-    }
-}
+  rules: {
+    'no-restricted-globals': ['error'].concat(restrictedGlobals),
+  }
+};
 ```
 
 
