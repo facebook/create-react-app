@@ -42,6 +42,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Node](#node)
   - [Ruby on Rails](#ruby-on-rails)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
+  - ["Invalid Host Header" Errors After Configuring Proxy](#invalid-host-header-errors-after-configuring-proxy)
   - [Configuring the Proxy Manually](#configuring-the-proxy-manually)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
@@ -896,6 +897,32 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 * [Configure the proxy yourself](#configuring-the-proxy-manually)
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
 * Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+
+### "Invalid Host Header" Errors After Configuring Proxy
+
+When you enable the `proxy` option, you opt into a more strict set of host checks. This is necessary because leaving the backend open to remote hosts makes your computer vulnerable to DNS rebinding attacks. The issue is explained in [this article](https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a) and [this issue](https://github.com/webpack/webpack-dev-server/issues/887).
+
+This shouldn’t affect you when developing on `localhost`, but if you develop remotely like [described here](https://github.com/facebookincubator/create-react-app/issues/2271), you will see this error in the browser after enabling the `proxy` option:
+
+>Invalid Host header
+
+To work around it, you can specify your public development host in a file called `.env.development` in the root of your project:
+
+```
+HOST=mypublicdevhost.com
+```
+
+If you restart the development server now and load the app from the specified host, it should work.
+
+If you are still having issues or if you’re using a more exotic environment like a cloud editor, you can bypass the host check completely by adding a line to `.env.development.local`. **Note that this is dangerous and exposes your machine to remote code execution from malicious websites:**
+
+```
+# NOTE: THIS IS DANGEROUS!
+# It exposes your machine to attacks from the websites you visit.
+DANGEROUSLY_DISABLE_HOST_CHECK=true
+```
+
+We don’t recommend this approach.
 
 ### Configuring the Proxy Manually
 
