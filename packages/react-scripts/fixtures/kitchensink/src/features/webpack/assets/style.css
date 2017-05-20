@@ -2,3 +2,8 @@
   background: palevioletred;
   color: papayawhip;
 }
+
+.cssModuleInclusion {
+  color: green;
+  background: red;
+}
