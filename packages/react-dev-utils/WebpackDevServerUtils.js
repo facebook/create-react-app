@@ -56,6 +56,7 @@ function prepareUrls(protocol, host, port) {
       lanUrlForConfig = address.ip();
       if (lanUrlForConfig) {
         // Check if the address is a private ip
+        // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
         if (
           /^10[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(
             lanUrlForConfig
