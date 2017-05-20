@@ -18,6 +18,7 @@ process.on('unhandledRejection', err => {
 
 const fs = require('fs-extra');
 const path = require('path');
+const execSync = require('child_process').execSync;
 const spawnSync = require('cross-spawn').sync;
 const chalk = require('chalk');
 const inquirer = require('inquirer');
@@ -26,6 +27,17 @@ const createJestConfig = require('./utils/createJestConfig');
 
 const green = chalk.green;
 const cyan = chalk.cyan;
+
+function getGitStatus() {
+  try {
+    let stdout = execSync(`git status --porcelain`, {
+      stdio: ['pipe', 'pipe', 'ignore'],
+    }).toString();
+    return stdout.trim();
+  } catch (e) {
+    return '';
+  }
+}
 
 inquirer
   .prompt({
@@ -37,6 +49,19 @@ inquirer
   .then(answer => {
     if (!answer.shouldEject) {
       console.log(cyan('Close one! Eject aborted.'));
+      return;
+    }
+
+    const gitStatus = getGitStatus();
+    if (gitStatus) {
+      console.error(
+        chalk.red(
+          `This git repository has untracked files or uncommitted changes:\n\n` +
+            gitStatus.split('\n').map(line => '  ' + line) +
+            '\n\n' +
+            'Remove untracked files, stash or commit any changes, and try again.'
+        )
+      );
       process.exit(1);
     }
 
