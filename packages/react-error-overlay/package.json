@@ -1,6 +1,6 @@
 {
   "name": "react-error-overlay",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An overlay for displaying stack frames.",
   "main": "lib/index.js",
   "scripts": {
@@ -34,7 +34,7 @@
     "anser": "1.2.5",
     "babel-code-frame": "6.22.0",
     "babel-runtime": "6.23.0",
-    "react-dev-utils": "^1.0.1",
+    "react-dev-utils": "^1.0.2",
     "settle-promise": "1.0.0",
     "source-map": "0.5.6"
   },
