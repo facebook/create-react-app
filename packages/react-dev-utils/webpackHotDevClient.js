@@ -172,7 +172,7 @@ var connection = new SockJS(
 // to avoid spamming the console. Disconnect usually happens
 // when developer stops the server.
 connection.onclose = function() {
-  if (typeof console !== 'undefined') {
+  if (typeof console !== 'undefined' && typeof console.info === 'function') {
     console.info(
       'The development server has disconnected.\nRefresh the page if necessary.'
     );
@@ -186,8 +186,8 @@ var hasCompileErrors = false;
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
-  if (typeof console !== 'undefined') {
-    if (hasCompileErrors && typeof console.clear === 'function') {
+  if (typeof console !== 'undefined' && typeof console.clear === 'function') {
+    if (hasCompileErrors) {
       console.clear();
     }
   }
@@ -226,7 +226,7 @@ function handleWarnings(warnings) {
       errors: [],
     });
 
-    if (typeof console !== 'undefined') {
+    if (typeof console !== 'undefined' && typeof console.warn === 'function') {
       for (var i = 0; i < formatted.warnings.length; i++) {
         console.warn(stripAnsi(formatted.warnings[i]));
       }
@@ -266,7 +266,7 @@ function handleErrors(errors) {
   showErrorOverlay(formatted.errors[0]);
 
   // Also log them to the console.
-  if (typeof console !== 'undefined') {
+  if (typeof console !== 'undefined' && typeof console.error === 'function') {
     for (var i = 0; i < formatted.errors.length; i++) {
       console.error(stripAnsi(formatted.errors[i]));
     }
