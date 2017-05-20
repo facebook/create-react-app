@@ -192,7 +192,7 @@ function createApp(name, verbose, version, template) {
 
 function shouldUseYarn() {
   try {
-    execSync('yarnpkg --version', { stdio: 'ignore' });
+    execSync('yarn version', { stdio: 'ignore' });
     return true;
   } catch (e) {
     return false;
