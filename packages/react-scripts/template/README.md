@@ -408,6 +408,51 @@ In development, expressing dependencies this way allows your styles to be reload
 
 If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
 
+## Adding a CSS Modules based stylesheet.
+
+This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].modules.css** file naming convention. CSS Modules allows the scoping of CSS by automatically prefixing class names with a unique name and hash.
+
+An advantge of this,is the ability to repeat the same classname within many CSS files without worrying about a clash.
+
+### `Button.modules.css`
+
+```css
+.button {
+  padding: 20px;
+}
+```
+
+### `another-stylesheet.css`
+
+```css
+.button {
+  color: green;
+}
+```
+
+### `Button.js`
+
+```js
+import React, { Component } from 'react';
+import styles from './Button.modules.css'; // Import stylesheet as styles
+
+class Button extends Component {
+  render() {
+    // You can use them as regular CSS styles
+    return <div className={styles.button} />;
+  }
+}
+```
+### `exported HTML`
+No clashes from other `.button` classnames
+
+```html
+<div class="Button-modules__button___1o1Ru"></div>;
+}
+```
+
+**This is an optional feature.** Regular stylesheets and imported stylesheets are fully supported. CSS Modules are only added when explicted named as a css module stylesheet. 
+
 ## Post-Processing CSS
 
 This project setup minifies your CSS and adds vendor prefixes to it automatically through [Autoprefixer](https://github.com/postcss/autoprefixer) so you don’t need to worry about it.
