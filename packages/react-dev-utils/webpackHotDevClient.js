@@ -172,9 +172,11 @@ var connection = new SockJS(
 // to avoid spamming the console. Disconnect usually happens
 // when developer stops the server.
 connection.onclose = function() {
-  console.info(
-    'The development server has disconnected.\nRefresh the page if necessary.'
-  );
+  if (typeof console !== 'undefined') {
+    console.info(
+      'The development server has disconnected.\nRefresh the page if necessary.'
+    );
+  }
 };
 
 // Remember some state related to hot module replacement.
@@ -184,8 +186,10 @@ var hasCompileErrors = false;
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
-  if (hasCompileErrors && typeof console.clear === 'function') {
-    console.clear();
+  if (typeof console !== 'undefined') {
+    if (hasCompileErrors && typeof console.clear === 'function') {
+      console.clear();
+    }
   }
 }
 
@@ -222,8 +226,10 @@ function handleWarnings(warnings) {
       errors: [],
     });
 
-    for (var i = 0; i < formatted.warnings.length; i++) {
-      console.warn(stripAnsi(formatted.warnings[i]));
+    if (typeof console !== 'undefined') {
+      for (var i = 0; i < formatted.warnings.length; i++) {
+        console.warn(stripAnsi(formatted.warnings[i]));
+      }
     }
   }
 
@@ -260,8 +266,10 @@ function handleErrors(errors) {
   showErrorOverlay(formatted.errors[0]);
 
   // Also log them to the console.
-  for (var i = 0; i < formatted.errors.length; i++) {
-    console.error(stripAnsi(formatted.errors[i]));
+  if (typeof console !== 'undefined') {
+    for (var i = 0; i < formatted.errors.length; i++) {
+      console.error(stripAnsi(formatted.errors[i]));
+    }
   }
 
   // Do not attempt to reload now.
