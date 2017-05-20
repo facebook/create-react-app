@@ -37,7 +37,7 @@ inquirer
   })
   .then(answer => {
     // Make sure there are no dirty git status
-    function statusSync() {
+    function hasUncommitedGitChanges() {
       try {
         let stdout = execSync(`git status --porcelain`).toString();
         let status = stdout
@@ -50,7 +50,7 @@ inquirer
       }
     }
 
-    const dirtyStatus = statusSync();
+    const dirtyStatus = hasUncommitedGitChanges();
     if (dirtyStatus) {
       console.error(
         `This git repository has ${dirtyStatus} ${dirtyStatus > 1 ? 'files' : 'file'} with uncommitted changes.\n` +
