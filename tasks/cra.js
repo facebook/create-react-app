@@ -65,10 +65,8 @@ const scriptsFileName = cp
   .execSync(`npm pack`, { cwd: reactScriptsDir })
   .toString()
   .trim();
-// CRA can run into issues if the .tgz path is absolute (especially on Windows)
-// Use a relative path to be safe
 const scriptsPath = path.join(
-  '..',
+  rootDir,
   'packages',
   'react-scripts',
   scriptsFileName
