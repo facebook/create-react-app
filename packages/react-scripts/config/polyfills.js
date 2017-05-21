@@ -28,3 +28,63 @@ Object.assign = require('object-assign');
 if (process.env.NODE_ENV === 'test') {
   require('raf').polyfill(global);
 }
+
+// TODO: make this dev-only
+// and move to a better place:
+
+let forceUpdateCallbacks = [];
+let forceUpdateTimeout = null;
+window.__enqueueForceUpdate = function(onSuccess) {
+  forceUpdateCallbacks.push(onSuccess);
+  if (forceUpdateTimeout) {
+    return;
+  }
+  forceUpdateTimeout = setTimeout(() => {
+    forceUpdateTimeout = null;
+    let callbacks = forceUpdateCallbacks;
+    forceUpdateCallbacks = [];
+    forceUpdateAll();
+    callbacks.forEach(cb => cb());
+  });
+};
+function forceUpdateAll() {
+  const hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+  if (!hook) {
+    return;
+  }
+  const renderersById = hook._renderers;
+  const ids = Object.keys(renderersById);
+  const renderers = ids.map(id => renderersById[id]);
+  // TODO: support Fiber
+  renderers.forEach(renderer => {
+    const roots = renderer.Mount && renderer.Mount._instancesByReactRootID;
+    if (!roots) {
+      return;
+    }
+    Object.keys(roots).forEach(key => {
+      function traverseDeep(ins, cb) {
+        cb(ins);
+        if (ins._renderedComponent) {
+          traverseDeep(ins._renderedComponent, cb);
+        } else {
+          for (let key in ins._renderedChildren) {
+            if (ins._renderedChildren.hasOwnProperty(key)) {
+              traverseDeep(ins._renderedChildren[key], cb);
+            }
+          }
+        }
+      }
+      const root = roots[key];
+      traverseDeep(root, inst => {
+        if (!inst._instance) {
+          return;
+        }
+        const updater = inst._instance.updater;
+        if (!updater || typeof updater.enqueueForceUpdate !== 'function') {
+          return;
+        }
+        updater.enqueueForceUpdate(inst._instance);
+      });
+    });
+  });
+}
