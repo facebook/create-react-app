@@ -12,7 +12,9 @@
 
 const autoprefixer = require('autoprefixer');
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
+const WebpackMd5Hash = require('webpack-md5-hash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -53,6 +55,18 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
     { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
+// Check if vendor file exists
+const checkIfVendorFileExists = fs.existsSync(paths.appVendorJs);
+// If the vendor file exists, add an entry point for vendor,
+// and a seperate entry for polyfills and app index file,
+// otherwise keep only polyfills and app index.
+const appEntryFiles = [require.resolve('./polyfills'), paths.appIndexJs];
+const entryFiles = checkIfVendorFileExists
+  ? {
+      vendor: paths.appVendorJs,
+      main: appEntryFiles,
+    }
+  : appEntryFiles;
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -63,8 +77,8 @@ module.exports = {
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
   devtool: 'source-map',
-  // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  // Add the entry point based on whether vendor file exists.
+  entry: entryFiles,
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -278,6 +292,17 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
+    // We need to extract out the runtime into a separate manifest file.
+    // more info: https://webpack.js.org/guides/code-splitting-libraries/#manifest-file
+    new webpack.optimize.CommonsChunkPlugin({
+      // Check if vendor file exists, if it does,
+      // generate a seperate chucks for vendor and manifest file
+      // else don't generate any common chunck
+      names: checkIfVendorFileExists ? ['vendor', 'manifest'] : [],
+    }),
+    // Need this plugin for deterministic hashing
+    // until this issue is resolved: https://github.com/webpack/webpack/issues/1315
+    new WebpackMd5Hash(),
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
