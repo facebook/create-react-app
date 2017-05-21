@@ -1,3 +1,39 @@
+## 1.0.3 (May 21, 2017)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`
+  * [#2297](https://github.com/facebookincubator/create-react-app/pull/2297) Don’t serve the development version from public IPs by default. ([@Timer](https://github.com/Timer))
+
+* `eslint-config-react-app`
+  * [#2311](https://github.com/facebookincubator/create-react-app/pull/2311) Disable `flowtype/require-valid-file-annotation` lint rule due to false positives. ([@Robdel12](https://github.com/Robdel12))
+
+* `react-dev-utils`, `react-error-overlay`
+  * [#2301](https://github.com/facebookincubator/create-react-app/pull/2301) Wrap more `console` calls into a check. ([@BrodaNoel](https://github.com/BrodaNoel))
+
+* `react-scripts`
+  * [#2314](https://github.com/facebookincubator/create-react-app/pull/2314) Fix a "File not found" false positive. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 4
+- Broda Noel ([BrodaNoel](https://github.com/BrodaNoel))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Robert DeLuca ([Robdel12](https://github.com/Robdel12))
+
+### Migrating from 1.0.2 to 1.0.3
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.3
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.3
+```
+
 ## 1.0.2 (May 20, 2017)
 
 #### :bug: Bug Fix
