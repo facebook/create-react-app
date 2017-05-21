@@ -46,6 +46,5 @@ argv.push(
     )
   )
 );
-console.log(argv);
 // @remove-on-eject-end
 jest.run(argv);

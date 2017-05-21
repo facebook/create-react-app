@@ -43,11 +43,13 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test --env=jsdom',
-    eject: 'react-scripts eject',
+    start: 'react-scripts-ts start',
+    build: 'react-scripts-ts build',
+    test: 'react-scripts-ts test --env=jsdom',
+    eject: 'react-scripts-ts eject',
   };
+
+  console.log(appPackage);
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
@@ -105,7 +107,14 @@ module.exports = function(
     command = 'npm';
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
-  args.push('react', 'react-dom', '@types/node', '@types/react', '@types/react-dom', '@types/jest');
+  args.push(
+    'react',
+    'react-dom',
+    '@types/node',
+    '@types/react',
+    '@types/react-dom',
+    '@types/jest'
+  );
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -125,16 +134,16 @@ module.exports = function(
   // Install react and react-dom for backward compatibility with old CRA cli
   // which doesn't install react and react-dom along with react-scripts
   // or template is presetend (via --internal-testing-template)
-  if (!isReactInstalled(appPackage) || template) {
-    console.log(`Installing react and react-dom using ${command}...`);
-    console.log();
+  // if (!isReactInstalled(appPackage) || template) {
+  console.log(`Installing react and react-dom using ${command}...`);
+  console.log();
 
-    const proc = spawn.sync(command, args, { stdio: 'inherit' });
-    if (proc.status !== 0) {
-      console.error(`\`${command} ${args.join(' ')}\` failed`);
-      return;
-    }
+  const proc = spawn.sync(command, args, { stdio: 'inherit' });
+  if (proc.status !== 0) {
+    console.error(`\`${command} ${args.join(' ')}\` failed`);
+    return;
   }
+  // }
 
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for

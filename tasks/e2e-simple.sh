@@ -253,6 +253,7 @@ cd test-app
 # Test the build
 npm run build
 # Check for expected output
+pwd
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
