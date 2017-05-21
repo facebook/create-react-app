@@ -1,3 +1,5 @@
+image: Visual Studio 2017
+
 environment:
   matrix:
     - nodejs_version: 7
@@ -11,12 +13,6 @@ environment:
     - nodejs_version: 6
       test_suite: "installs"
     - nodejs_version: 6
-      test_suite: "kitchensink"
-    - nodejs_version: 4
-      test_suite: "simple"
-    - nodejs_version: 4
-      test_suite: "installs"
-    - nodejs_version: 4
       test_suite: "kitchensink"
 
 cache:
@@ -32,6 +28,8 @@ platform:
   - x64
 
 install:
+  # TODO: Remove after https://github.com/appveyor/ci/issues/1426 is fixed
+  - set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
   - ps: Install-Product node $env:nodejs_version $env:platform
 
 build: off

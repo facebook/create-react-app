@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "0.5.2",
+  "version": "1.0.2",
   "description": "Webpack utilities used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -8,31 +8,46 @@
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "files": [
+    "ansiHTML.js",
     "checkRequiredFiles.js",
     "clearConsole.js",
+    "crashOverlay.js",
+    "eslintFormatter.js",
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
+    "inquirer.js",
     "InterpolateHtmlPlugin.js",
+    "launchEditor.js",
+    "noopServiceWorkerMiddleware.js",
+    "ModuleScopePlugin.js",
     "openBrowser.js",
     "openChrome.applescript",
-    "prompt.js",
+    "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
+    "WebpackDevServerUtils.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "ansi-html": "0.0.5",
+    "@timer/detect-port": "1.1.3",
+    "address": "1.0.1",
+    "anser": "1.3.0",
+    "babel-code-frame": "6.22.0",
     "chalk": "1.1.3",
+    "cross-spawn": "4.0.2",
     "escape-string-regexp": "1.0.5",
     "filesize": "3.3.0",
     "gzip-size": "3.0.0",
-    "html-entities": "1.2.0",
-    "opn": "4.0.2",
-    "recursive-readdir": "2.1.1",
-    "sockjs-client": "1.0.1",
-    "strip-ansi": "3.0.1"
+    "html-entities": "1.2.1",
+    "inquirer": "3.0.6",
+    "opn": "5.0.0",
+    "recursive-readdir": "2.2.1",
+    "shell-quote": "1.6.1",
+    "sockjs-client": "1.1.4",
+    "strip-ansi": "3.0.1",
+    "text-table": "0.2.0"
   }
 }
