@@ -1,3 +1,28 @@
+## 1.0.5 (May 22, 2017)
+
+#### :bug: Bug Fix
+* `react-dev-utils`, `react-scripts`
+
+  * [#2326](https://github.com/facebookincubator/create-react-app/pull/2326) Files in `public/` folder should not be requested through proxy. ([@gaearon](https://github.com/gaearon))
+
+#### :nail_care: Enhancement
+* `react-dev-utils`
+
+  * [#2327](https://github.com/facebookincubator/create-react-app/pull/2327) Limit console warnings to 5 files at most. ([@gaearon](https://github.com/gaearon))
+
+* `eslint-config-react-app`
+
+  * [#2325](https://github.com/facebookincubator/create-react-app/pull/2325) Allow declaring variables before use in a scope above. ([@gaearon](https://github.com/gaearon))
+
+#### :house: Internal
+* `react-dev-utils`, `react-scripts`
+
+  * [#2320](https://github.com/facebookincubator/create-react-app/pull/2320) Remove unnecessary dependencies. ([@pmadar](https://github.com/pmadar))
+
+#### Committers: 2
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Pavol Madar ([pmadar](https://github.com/pmadar))
+
 ## 1.0.4 (May 22, 2017)
 
 #### :bug: Bug Fix
