@@ -87,7 +87,7 @@ const program = new commander.Command(packageJson.name)
       `    If you have any problems, do not hesitate to file an issue:`
     );
     console.log(
-      `      ${chalk.cyan('https://github.com/facebookincubator/create-react-app/issues/new')}`
+      `      ${chalk.cyan('https://github.com/webstronauts/create-react-app/issues/new')}`
     );
     console.log();
   })

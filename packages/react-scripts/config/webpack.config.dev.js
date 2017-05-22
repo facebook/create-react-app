@@ -31,6 +31,9 @@ const publicPath = '/';
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+// Local ident name is used to generate class names for CSS modules.
+// See https://github.com/css-modules/postcss-modules#generating-scoped-names
+const localIdentName = '[path][name]__[local]__[hash:base64:5]';
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -212,6 +215,8 @@ module.exports = {
             loader: require.resolve('css-loader'),
             options: {
               importLoaders: 1,
+              modules: true,
+              localIdentName,
             },
           },
           {

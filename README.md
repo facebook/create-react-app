@@ -1,12 +1,12 @@
-# Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
+# Create React App [![Build Status](https://travis-ci.org/webstronauts/create-react-app.svg?branch=master)](https://travis-ci.org/webstronauts/create-react-app)
 
 Create React apps with no build configuration.
 
 * [Getting Started](#getting-started) – How to create a new app.
-* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+* [User Guide](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
 
 Create React App works on macOS, Windows, and Linux.<br>
-If something doesn’t work please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new).
+If something doesn’t work please [file an issue](https://github.com/webstronauts/create-react-app/issues/new).
 
 ## Quick Overview
 
@@ -92,7 +92,7 @@ You will see the build errors and lint warnings in the console.
 Runs the test watcher in an interactive mode.<br>
 By default, runs tests related to files changed since the last commit.
 
-[Read more about testing.](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
+[Read more about testing.](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
 
 ### `npm run build` or `yarn build`
 
@@ -100,51 +100,51 @@ Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br>
-By default, it also [includes a service worker](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app) so that your app loads from local cache on future visits.
+By default, it also [includes a service worker](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app) so that your app loads from local cache on future visits.
 
 Your app is ready to be deployed.
 
 ## User Guide
 
-The [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) includes information on different topics, such as:
+The [User Guide](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md) includes information on different topics, such as:
 
-- [Updating to New Releases](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases)
-- [Folder Structure](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#folder-structure)
-- [Available Scripts](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#available-scripts)
-- [Supported Language Features and Polyfills](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#supported-language-features-and-polyfills)
-- [Syntax Highlighting in the Editor](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#syntax-highlighting-in-the-editor)
-- [Displaying Lint Output in the Editor](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#displaying-lint-output-in-the-editor)
-- [Debugging in the Editor](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#debugging-in-the-editor)
-- [Changing the Page `<title>`](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#changing-the-page-title)
-- [Installing a Dependency](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#installing-a-dependency)
-- [Importing a Component](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#importing-a-component)
-- [Code Splitting](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting)
-- [Adding a Stylesheet](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet)
-- [Post-Processing CSS](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#post-processing-css)
-- [Adding a CSS Preprocessor (Sass, Less etc.)](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)
-- [Adding Images, Fonts, and Files](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-images-fonts-and-files)
-- [Using the `public` Folder](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-the-public-folder)
-- [Using Global Variables](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-global-variables)
-- [Adding Bootstrap](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-bootstrap)
-- [Adding Flow](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-flow)
-- [Adding Custom Environment Variables](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)
-- [Can I Use Decorators?](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#can-i-use-decorators)
-- [Integrating with an API Backend](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#integrating-with-an-api-backend)
-- [Proxying API Requests in Development](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#proxying-api-requests-in-development)
-- [Using HTTPS in Development](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-https-in-development)
-- [Generating Dynamic `<meta>` Tags on the Server](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#generating-dynamic-meta-tags-on-the-server)
-- [Pre-Rendering into Static HTML Files](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#pre-rendering-into-static-html-files)
-- [Running Tests](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
-- [Making a Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)
-- [Deployment](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment)
-- [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration)
-- [Troubleshooting](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#troubleshooting)
+- [Updating to New Releases](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases)
+- [Folder Structure](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#folder-structure)
+- [Available Scripts](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#available-scripts)
+- [Supported Language Features and Polyfills](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#supported-language-features-and-polyfills)
+- [Syntax Highlighting in the Editor](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#syntax-highlighting-in-the-editor)
+- [Displaying Lint Output in the Editor](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#displaying-lint-output-in-the-editor)
+- [Debugging in the Editor](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#debugging-in-the-editor)
+- [Changing the Page `<title>`](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#changing-the-page-title)
+- [Installing a Dependency](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#installing-a-dependency)
+- [Importing a Component](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#importing-a-component)
+- [Code Splitting](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting)
+- [Adding a Stylesheet](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet)
+- [Post-Processing CSS](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#post-processing-css)
+- [Adding a CSS Preprocessor (Sass, Less etc.)](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)
+- [Adding Images, Fonts, and Files](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-images-fonts-and-files)
+- [Using the `public` Folder](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#using-the-public-folder)
+- [Using Global Variables](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#using-global-variables)
+- [Adding Bootstrap](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-bootstrap)
+- [Adding Flow](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-flow)
+- [Adding Custom Environment Variables](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)
+- [Can I Use Decorators?](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#can-i-use-decorators)
+- [Integrating with an API Backend](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#integrating-with-an-api-backend)
+- [Proxying API Requests in Development](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#proxying-api-requests-in-development)
+- [Using HTTPS in Development](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#using-https-in-development)
+- [Generating Dynamic `<meta>` Tags on the Server](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#generating-dynamic-meta-tags-on-the-server)
+- [Pre-Rendering into Static HTML Files](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#pre-rendering-into-static-html-files)
+- [Running Tests](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
+- [Making a Progressive Web App](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)
+- [Deployment](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment)
+- [Advanced Configuration](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration)
+- [Troubleshooting](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#troubleshooting)
 
 A copy of the user guide will be created as `README.md` in your project folder.
 
 ## How to Update to New Versions?
 
-Please refer to the [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases) for this and other information.
+Please refer to the [User Guide](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases) for this and other information.
 
 ## Philosophy
 
@@ -164,7 +164,7 @@ Please refer to the [User Guide](https://github.com/facebookincubator/create-rea
 * Import CSS and image files directly from JavaScript.
 * Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
 * A `build` script to bundle JS, CSS, and images for production, with sourcemaps.
-* An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app) criteria.
+* An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app) criteria.
 
 **The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 
@@ -187,7 +187,7 @@ Some features are currently **not supported**:
 * Server rendering.
 * Some experimental syntax extensions (e.g. decorators).
 * CSS Modules.
-* Importing LESS or Sass directly ([but you still can use them](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)).
+* Importing LESS or Sass directly ([but you still can use them](https://github.com/webstronauts/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)).
 * Hot reloading of components.
 
 Some of them might get added in the future if they are stable, are useful to majority of React apps, don’t conflict with existing tools, and don’t introduce additional configuration.

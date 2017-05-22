@@ -35,6 +35,9 @@ const shouldUseRelativeAssetPaths = publicPath === './';
 const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+// Local ident name is used to generate class names for CSS modules.
+// See https://github.com/css-modules/postcss-modules#generating-scoped-names
+const localIdentName = '[local]__[hash:base64:5]';
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -218,6 +221,8 @@ module.exports = {
                     importLoaders: 1,
                     minimize: true,
                     sourceMap: true,
+                    modules: true,
+                    localIdentName,
                   },
                 },
                 {

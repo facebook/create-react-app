@@ -1,11 +1,11 @@
 {
-  "name": "babel-preset-react-app",
-  "version": "3.0.0",
+  "name": "@webstronauts/babel-preset-react-app",
+  "version": "0.1.0",
   "description": "Babel preset used by Create React App",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "webstronauts/create-react-app",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/webstronauts/create-react-app/issues"
   },
   "files": [
     "index.js"

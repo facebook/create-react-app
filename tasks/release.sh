@@ -10,7 +10,7 @@
 # This releases an update to the `react-scripts` package.
 # Don't use `npm publish` for it.
 # Read the release instructions:
-# https://github.com/facebookincubator/create-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
+# https://github.com/webstronauts/create-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
 # ******************************************************************************
 
 # Start in tasks/ even if run from root directory

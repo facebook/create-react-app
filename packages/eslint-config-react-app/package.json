@@ -1,11 +1,11 @@
 {
-  "name": "eslint-config-react-app",
-  "version": "1.0.2",
+  "name": "@webstronauts/eslint-config-react-app",
+  "version": "0.0.0",
   "description": "ESLint configuration used by Create React App",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "webstronauts/create-react-app",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/webstronauts/create-react-app/issues"
   },
   "files": [
     "index.js"

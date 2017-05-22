@@ -10,6 +10,8 @@
 // @remove-on-eject-end
 'use strict';
 
+'use strict';
+
 process.env.NODE_ENV = 'test';
 process.env.PUBLIC_URL = '';
 

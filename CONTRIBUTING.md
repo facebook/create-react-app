@@ -43,7 +43,7 @@ Please also provide a **test plan**, i.e. specify how you verified that your add
 
 ## Folder Structure of Create React App
 `create-react-app` is a monorepo, meaning it is divided into independent sub-packages.<br>
-These packages can be found in the [`packages/`](https://github.com/facebookincubator/create-react-app/tree/master/packages) directory.
+These packages can be found in the [`packages/`](https://github.com/webstronauts/create-react-app/tree/master/packages) directory.
 
 ### Overview of directory structure
 ```
@@ -55,27 +55,29 @@ packages/
   react-scripts/
 ```
 ### Package Descriptions
-#### [babel-preset-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/babel-preset-react-app)
+#### [babel-preset-react-app](https://github.com/webstronauts/create-react-app/tree/master/packages/babel-preset-react-app)
 This package is a babel preset intended to be used with `react-scripts`.<br>
 It targets platforms that React is designed to support (IE 9+) and enables experimental features used heavily at Facebook.<br>
 This package is enabled by default for all `create-react-app` scaffolded applications.
-#### [create-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/create-react-app)
+#### [create-react-app](https://github.com/webstronauts/create-react-app/tree/master/packages/create-react-app)
 The global CLI command code can be found in this directory, and shouldn't often be changed. It should run on Node 0.10+.
-#### [eslint-config-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/eslint-config-react-app)
+#### [eslint-config-react-app](https://github.com/webstronauts/create-react-app/tree/master/packages/eslint-config-react-app)
 This package contains a conservative set of rules focused on making errors apparent and enforces no style rules.<br>
 This package is enabled by default for all `create-react-app` scaffolded applications.
-#### [react-dev-utils](https://github.com/facebookincubator/create-react-app/tree/master/packages/react-dev-utils)
+#### [react-dev-utils](https://github.com/webstronauts/create-react-app/tree/master/packages/react-dev-utils)
 This package contains utilities used for `react-scripts` and sister packages.<br>
 Its main purpose is to conceal code which the user shouldn't be burdened with upon ejecting.
-#### [react-scripts](https://github.com/facebookincubator/create-react-app/tree/master/packages/react-scripts)
+#### [react-scripts](https://github.com/webstronauts/create-react-app/tree/master/packages/react-scripts)
 This package is the heart of the project, which contains the scripts for setting up the development server, building production builds, configuring all software used, etc.<br>
 All functionality must be retained (and configuration given to the user) if they choose to eject.
 
 ## Setting Up a Local Copy
 
-1. Clone the repo with `git clone https://github.com/facebookincubator/create-react-app`
+1. Clone the repo with `git clone https://github.com/webstronauts/create-react-app`
 
 2. Run `npm install` in the root `create-react-app` folder.
+
+3. *(Only for macOS Sierra)*: Until [0.10.0](https://github.com/facebookincubator/create-react-app/milestone/23) is released, you may need to install [Watchman](https://facebook.github.io/watchman/docs/install.html) (e.g. `brew install watchman`).
 
 Once it is done, you can modify any file locally and run `npm start`, `npm test` or `npm run build` just like in a generated project.
 

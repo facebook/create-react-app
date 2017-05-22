@@ -1,0 +1,4 @@
+{
+  "presets": ["react-app"],
+  "plugins": [["react-css-modules", { "context": "src", "generateScopedName": "[path][name]__[local]___[hash:base64:5]" }]]
+}
