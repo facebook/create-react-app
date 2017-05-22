@@ -233,18 +233,18 @@ function verify_module_scope {
   echo "{}" >> sample.json
 
   # Save App.js, we're going to modify it
-  cp src/App.js src/App.js.bak
+  cp src/App.tsx src/App.tsx.bak
 
   # Add an out of scope import
-  echo "import sampleJson from '../sample'" | cat - src/App.js > src/App.js.temp && mv src/App.js.temp src/App.js
+  echo "import sampleJson from '../sample.json'" | cat - src/App.tsx > src/App.tsx.temp && mv src/App.tsx.temp src/App.tsx
 
   # Make sure the build fails
   npm run build; test $? -eq 1 || exit 1
   # TODO: check for error message
 
-  # Restore App.js
-  rm src/App.js
-  mv src/App.js.bak src/App.js
+  # Restore App.tsx
+  rm src/App.tsx
+  mv src/App.tsx.bak src/App.tsx
 }
 
 # Enter the app directory
@@ -263,7 +263,7 @@ exists build/favicon.ico
 # Run tests with CI flag
 CI=true npm test
 # Uncomment when snapshot testing is enabled by default:
-# exists src/__snapshots__/App.test.js.snap
+# exists src/__snapshots__/App.test.tsx.snap
 
 # Test the server
 npm start -- --smoke-test
@@ -285,7 +285,7 @@ echo yes | npm run eject
 npm link "$root_path"/packages/babel-preset-react-app
 npm link "$root_path"/packages/eslint-config-react-app
 npm link "$root_path"/packages/react-dev-utils
-npm link "$root_path"/packages/react-scripts
+npm link "$root_path"/packages/react-scripts-ts
 
 # Test the build
 npm run build
