@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const clearConsole = require('./clearConsole');
 const chalk = require('chalk');
+// const ManifestPlugin = require('webpack-manifest-plugin');
 const environment = process.env.NODE_ENV;
 
 // inspired by https://github.com/erm0l0v/webpack-md5-hash/blob/da8efa2fc7fe5c373c95f9ba859dbe208a8b844b/plugin/webpack_md5_hash.js
@@ -64,23 +65,37 @@ module.exports = ({ mainConfig, vendorConfig, paths }) =>
 
     function resolveConfig(mainConfig) {
       return Object.assign({}, mainConfig, {
-        plugins: mainConfig.plugins.concat([
-          new WebpackAdditionalSourceHashPlugin({
-            additionalSourceHash: vendorHash,
+        plugins: mainConfig.plugins
+          .concat([
+            new WebpackAdditionalSourceHashPlugin({
+              additionalSourceHash: vendorHash,
+            }),
+            new webpack.DllReferencePlugin({
+              context: '.',
+              manifest: require(path.join(vendorPath, vendorHash + '.json')),
+            }),
+            new AddAssetHtmlPlugin({
+              outputPath: path.join('static', 'js'),
+              publicPath: mainConfig.output.publicPath +
+                path.join('static', 'js'),
+              filepath: require.resolve(
+                path.join(vendorPath, vendorHash + '.js')
+              ),
+            }),
+          ])
+          .map(plugin => {
+            if (plugin.constructor.name === 'ManifestPlugin') {
+              plugin.opts.cache = {
+                'vendor.js': path.join('static', 'js', vendorHash + '.js'),
+                'vendor.js.map': path.join(
+                  'static',
+                  'js',
+                  vendorHash + '.js.map'
+                ),
+              };
+            }
+            return plugin;
           }),
-          new webpack.DllReferencePlugin({
-            context: '.',
-            manifest: require(path.join(vendorPath, vendorHash + '.json')),
-          }),
-          new AddAssetHtmlPlugin({
-            outputPath: path.join('static', 'js'),
-            publicPath: mainConfig.output.publicPath +
-              path.join('static', 'js'),
-            filepath: require.resolve(
-              path.join(vendorPath, vendorHash + '.js')
-            ),
-          }),
-        ]),
       });
     }
 
