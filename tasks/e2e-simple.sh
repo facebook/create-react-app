@@ -285,7 +285,7 @@ echo yes | npm run eject
 npm link "$root_path"/packages/babel-preset-react-app
 npm link "$root_path"/packages/eslint-config-react-app
 npm link "$root_path"/packages/react-dev-utils
-npm link "$root_path"/packages/react-scripts-ts
+npm link "$root_path"/packages/react-scripts
 
 # Test the build
 npm run build
