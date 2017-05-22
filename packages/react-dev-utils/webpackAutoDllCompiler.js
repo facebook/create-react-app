@@ -34,6 +34,7 @@ module.exports = ({ mainConfig, dllConfig, paths }) => new Promise(resolve => {
   const dllPath = paths.dllPath;
   const dllBundleFilePath = path.join(dllPath, dllHash + '.js');
   const dllManifestFilePath = path.join(dllPath, dllHash + '.json');
+  const config = dllConfig(dllHash);
 
   function shouldDllBundleUpdate() {
     clearConsole();
@@ -65,6 +66,7 @@ module.exports = ({ mainConfig, dllConfig, paths }) => new Promise(resolve => {
 
   function resolveConfig(mainConfig) {
     return Object.assign({}, mainConfig, {
+      entry: mainConfig.entry.filter(path => !config.entry.includes(path)),
       plugins: mainConfig.plugins
         .concat([
           new WebpackAdditionalSourceHashPlugin({
@@ -123,7 +125,7 @@ module.exports = ({ mainConfig, dllConfig, paths }) => new Promise(resolve => {
       cleanUpStaleFiles(files);
 
       console.log('Compiling dll bundle for faster rebuilds...');
-      webpack(dllConfig(dllHash)).run((err, stats) => {
+      webpack(config).run((err, stats) => {
         checkForErrors(err, stats);
 
         // When the process still run until here, there are no errors :)
