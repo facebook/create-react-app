@@ -28,7 +28,7 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
-const vendorConfig = require('../config/webpack.config.vendor');
+const dllConfig = require('../config/webpack.config.dll');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -48,7 +48,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // check dll for updates
 webpackAutoDllCompiler({
   mainConfig: config,
-  vendorConfig,
+  dllConfig,
   paths,
 }).then(config => measureFileSizesBeforeBuild(
   // First, read the current file sizes in build directory.

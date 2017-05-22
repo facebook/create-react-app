@@ -19,7 +19,7 @@ const url = require('url');
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
-const vendorPath = 'node_modules/.cache/vendor';
+const dllPath = 'node_modules/.cache/dll';
 
 const envPublicUrl = process.env.PUBLIC_URL;
 
@@ -62,8 +62,8 @@ module.exports = {
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
-  vendorPath: resolveApp(vendorPath),
-  vendorSrc: resolveApp('src/vendor.js'),
+  dllPath: resolveApp(dllPath),
+  dllSrc: resolveApp('src/dll.js'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
 };
@@ -84,8 +84,8 @@ module.exports = {
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
-  vendorPath: resolveApp(vendorPath),
-  vendorSrc: resolveApp('src/vendor.js'),
+  dllPath: resolveApp(dllPath),
+  dllSrc: resolveApp('src/dll.js'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
   // These properties only exist before ejecting:
@@ -115,8 +115,8 @@ if (
     yarnLockFile: resolveOwn('template/yarn.lock'),
     testsSetup: resolveOwn('template/src/setupTests.js'),
     appNodeModules: resolveOwn('node_modules'),
-    vendorPath: resolveOwn(vendorPath),
-    vendorSrc: resolveOwn('template/src/vendor.js'),
+    dllPath: resolveOwn(dllPath),
+    dllSrc: resolveOwn('template/src/dll.js'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
     // These properties only exist before ejecting:
