@@ -200,7 +200,7 @@ E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+  node_modules/.bin/jest "integration(/|\\)*.test.*"
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
@@ -208,7 +208,7 @@ E2E_FILE=./build/index.html \
   NODE_PATH=src \
   NODE_ENV=production \
   PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+  node_modules/.bin/jest "integration(/|\\)*.test.*"
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -264,7 +264,7 @@ E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+  node_modules/.bin/jest "integration(/|\\)*.test.*"
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
@@ -272,7 +272,7 @@ E2E_FILE=./build/index.html \
   NODE_ENV=production \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+  node_modules/.bin/jest "integration(/|\\)*.test.*"
 
 # Cleanup
 cleanup
