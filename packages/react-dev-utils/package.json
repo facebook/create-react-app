@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Webpack utilities used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -19,8 +19,10 @@
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
+    "inquirer.js",
     "InterpolateHtmlPlugin.js",
     "launchEditor.js",
+    "noopServiceWorkerMiddleware.js",
     "ModuleScopePlugin.js",
     "openBrowser.js",
     "openChrome.applescript",
@@ -49,6 +51,7 @@
     "shell-quote": "1.6.1",
     "sockjs-client": "1.1.4",
     "strip-ansi": "3.0.1",
-    "webpack": "2.5.1"
+    "webpack": "2.5.1",
+    "text-table": "0.2.0"
   }
 }
