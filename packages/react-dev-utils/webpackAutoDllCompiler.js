@@ -6,7 +6,6 @@ const crypto = require('crypto');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const clearConsole = require('./clearConsole');
 const chalk = require('chalk');
-// const ManifestPlugin = require('webpack-manifest-plugin');
 const environment = process.env.NODE_ENV;
 
 // inspired by https://github.com/erm0l0v/webpack-md5-hash/blob/da8efa2fc7fe5c373c95f9ba859dbe208a8b844b/plugin/webpack_md5_hash.js
