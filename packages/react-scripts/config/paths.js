@@ -63,7 +63,7 @@ module.exports = {
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   dllPath: resolveApp(dllPath),
-  dllSrc: resolveApp('src/dll.js'),
+  dllSrc: resolveApp('src/index.dll.js'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
 };
@@ -85,7 +85,7 @@ module.exports = {
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   dllPath: resolveApp(dllPath),
-  dllSrc: resolveApp('src/dll.js'),
+  dllSrc: resolveApp('src/index.dll.js'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
   // These properties only exist before ejecting:
@@ -116,7 +116,7 @@ if (
     testsSetup: resolveOwn('template/src/setupTests.js'),
     appNodeModules: resolveOwn('node_modules'),
     dllPath: resolveOwn(dllPath),
-    dllSrc: resolveOwn('template/src/dll.js'),
+    dllSrc: resolveOwn('template/src/index.dll.js'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
     // These properties only exist before ejecting:
