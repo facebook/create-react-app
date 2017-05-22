@@ -36,19 +36,7 @@ module.exports = ({ mainConfig, dllConfig, paths }) => new Promise(resolve => {
   const dllManifestFilePath = path.join(dllPath, dllHash + '.json');
   const config = dllConfig(dllHash);
 
-  function shouldDllBundleUpdate() {
-    clearConsole();
-    console.log('Checking if ' + dllHash + ' dll bundle exists');
-    if (dllBundleExist()) {
-      clearConsole();
-      console.log(chalk.green('Dll bundle is up to date and safe to use!'));
-      return false;
-    }
-    console.log('Dll bundle needs to be compiled...');
-    return true;
-  }
-
-  function dllBundleExist() {
+  function dllExists() {
     return fs.existsSync(dllManifestFilePath) &&
       fs.existsSync(dllBundleFilePath);
   }
@@ -119,23 +107,27 @@ module.exports = ({ mainConfig, dllConfig, paths }) => new Promise(resolve => {
     // continue without enabling dll feature.
     return resolve(mainConfig);
   }
-  if (shouldDllBundleUpdate()) {
-    // Read dll path for stale files
-    return fs.readdir(dllPath, (err, files) => {
-      cleanUpStaleFiles(files);
-
-      console.log('Compiling dll bundle for faster rebuilds...');
-      webpack(config).run((err, stats) => {
-        checkForErrors(err, stats);
-
-        // When the process still run until here, there are no errors :)
-        console.log(chalk.green('Dll bundle compiled successfully!'));
-        resolve(resolveConfig(mainConfig)); // Let the main compiler do its job
-      });
-    });
+  clearConsole();
+  console.log('Checking if ' + dllHash + ' dll bundle exists');
+  if (dllExists()) {
+    console.log(chalk.green('Dll bundle is up to date and safe to use!'));
+    // Just run the main compiler if dll bundler is up to date
+    return resolve(resolveConfig(mainConfig));
   }
-  // Just run the main compiler if dll bundler is up to date
-  return resolve(resolveConfig(mainConfig));
+  console.log('Dll bundle needs to be compiled...');
+  // Read dll path for stale files
+  return fs.readdir(dllPath, (err, files) => {
+    cleanUpStaleFiles(files);
+
+    console.log('Compiling dll bundle for faster rebuilds...');
+    webpack(config).run((err, stats) => {
+      checkForErrors(err, stats);
+
+      // When the process still run until here, there are no errors :)
+      console.log(chalk.green('Dll bundle compiled successfully!'));
+      resolve(resolveConfig(mainConfig)); // Let the main compiler do its job
+    });
+  });
 });
 
 function printErrors(summary, errors) {
