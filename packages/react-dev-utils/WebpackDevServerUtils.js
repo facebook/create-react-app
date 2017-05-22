@@ -9,6 +9,8 @@
 'use strict';
 
 const address = require('address');
+const fs = require('fs');
+const path = require('path');
 const url = require('url');
 const chalk = require('chalk');
 const detect = require('@timer/detect-port');
@@ -240,7 +242,7 @@ function onProxyError(proxy) {
   };
 }
 
-function prepareProxy(proxy) {
+function prepareProxy(proxy, appPublicFolder) {
   // `proxy` lets you specify alternate servers for specific requests.
   // It can either be a string or an object conforming to the Webpack dev server proxy configuration
   // https://webpack.github.io/docs/webpack-dev-server.html
@@ -264,13 +266,11 @@ function prepareProxy(proxy) {
     process.exit(1);
   }
 
-  // Otherwise, if proxy is specified, we will let it handle any request.
-  // There are a few exceptions which we won't send to the proxy:
-  // - /index.html (served as HTML5 history API fallback)
-  // - /*.hot-update.json (WebpackDevServer uses this too for hot reloading)
-  // - /sockjs-node/* (WebpackDevServer uses this for hot reloading)
-  // Tip: use https://jex.im/regulex/ to visualize the regex
-  const mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
+  // Otherwise, if proxy is specified, we will let it handle any request except for files in the public folder.
+  function mayProxy(pathname) {
+    const maybePublicPath = path.resolve(appPublicFolder, pathname.slice(1));
+    return !fs.existsSync(maybePublicPath);
+  }
 
   // Support proxy as a string for those who are using the simple proxy option
   if (typeof proxy === 'string') {
@@ -301,7 +301,7 @@ function prepareProxy(proxy) {
         // However API calls like `fetch()` won’t generally accept text/html.
         // If this heuristic doesn’t work well for you, use a custom `proxy` object.
         context: function(pathname, req) {
-          return mayProxy.test(pathname) &&
+          return mayProxy(pathname) &&
             req.headers.accept &&
             req.headers.accept.indexOf('text/html') === -1;
         },
@@ -341,7 +341,7 @@ function prepareProxy(proxy) {
     }
     return Object.assign({}, proxy[context], {
       context: function(pathname) {
-        return mayProxy.test(pathname) && pathname.match(context);
+        return mayProxy(pathname) && pathname.match(context);
       },
       onProxyReq: proxyReq => {
         // Browers may send Origin headers even with same-origin
