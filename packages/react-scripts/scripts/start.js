@@ -38,7 +38,7 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const webpackAutoDllCompiler = require('react-dev-utils/webpackAutoDllCompiler');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
-const vendorConfig = require('../config/webpack.config.vendor');
+const dllConfig = require('../config/webpack.config.dll');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
@@ -50,7 +50,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 webpackAutoDllCompiler({
   mainConfig: config,
-  vendorConfig,
+  dllConfig,
   paths,
 }).then(config => {
   // Tools like Cloud9 rely on this.

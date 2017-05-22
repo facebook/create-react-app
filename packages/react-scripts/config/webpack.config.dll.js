@@ -8,8 +8,8 @@ const publicUrl = publicPath.slice(0, -1);
 const env = getClientEnvironment(publicUrl);
 const isProduction = process.env.NODE_ENV === 'production';
 
-module.exports = vendorHash => {
-  const vendorGlobalName = '[name]' + vendorHash.replace(/\./g, '');
+module.exports = dllHash => {
+  const dllGlobalName = '[name]' + dllHash.replace(/\./g, '');
   return {
     cache: true,
     entry: (isProduction
@@ -35,9 +35,9 @@ module.exports = vendorHash => {
         ]).concat(paths.vendorSrc),
     devtool: 'source-map',
     output: {
-      filename: vendorHash + '.js',
+      filename: dllHash + '.js',
       path: paths.vendorPath,
-      library: vendorGlobalName,
+      library: dllGlobalName,
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
@@ -73,11 +73,11 @@ module.exports = vendorHash => {
         // The path to the manifest file which maps between
         // modules included in a bundle and the internal IDs
         // within that bundle
-        path: path.join(paths.vendorPath, vendorHash + '.json'),
+        path: path.join(paths.vendorPath, dllHash + '.json'),
         // The name of the global variable which the library's
         // require function has been assigned to. This must match the
         // output.library option above
-        name: vendorGlobalName,
+        name: dllGlobalName,
       }),
       isProduction ? new webpack.DefinePlugin(env.stringified) : null,
       isProduction
