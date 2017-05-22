@@ -23,6 +23,20 @@
 - Dan Abramov ([gaearon](https://github.com/gaearon))
 - Pavol Madar ([pmadar](https://github.com/pmadar))
 
+### Migrating from 1.0.4 to 1.0.5
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.5
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.5
+```
+
 ## 1.0.4 (May 22, 2017)
 
 #### :bug: Bug Fix
