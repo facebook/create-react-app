@@ -32,11 +32,11 @@ module.exports = dllHash => {
           require.resolve('./polyfills'),
           // Errors should be considered fatal in development
           require.resolve('react-error-overlay'),
-        ]).concat(paths.vendorSrc),
+        ]).concat(paths.dllSrc),
     devtool: 'source-map',
     output: {
       filename: dllHash + '.js',
-      path: paths.vendorPath,
+      path: paths.dllPath,
       library: dllGlobalName,
     },
     resolve: {
@@ -73,7 +73,7 @@ module.exports = dllHash => {
         // The path to the manifest file which maps between
         // modules included in a bundle and the internal IDs
         // within that bundle
-        path: path.join(paths.vendorPath, dllHash + '.json'),
+        path: path.join(paths.dllPath, dllHash + '.json'),
         // The name of the global variable which the library's
         // require function has been assigned to. This must match the
         // output.library option above
