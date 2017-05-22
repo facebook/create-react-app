@@ -76,18 +76,19 @@ cd "$root_path"/packages/create-react-app
 npm install
 cd "$root_path"
 
-# If the node version is < 4, the script should just give an error.
-if [[ `node --version | sed -e 's/^v//' -e 's/\..*//g'` -lt 4 ]]
+# If the node version is < 6, the script should just give an error.
+nodeVersion=`node --version | cut -d v -f2`
+nodeMajor=`echo $nodeVersion | cut -d. -f1`
+nodeMinor=`echo $nodeVersion | cut -d. -f2`
+if [[ nodeMajor -lt 6 ]]
 then
   cd $temp_app_path
   err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
   [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 fi
 
-# Still use npm install instead of directly calling lerna bootstrap to test
-# postinstall script functionality (one npm install should result in a working
-# project)
-npm install
+# We removed the postinstall, so do it manually here
+./node_modules/.bin/lerna bootstrap --concurrency=1
 
 if [ "$USE_YARN" = "yes" ]
 then
@@ -97,44 +98,38 @@ then
 fi
 
 # Lint own code
-./node_modules/.bin/eslint --max-warnings 0 .
+./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
+cd packages/react-error-overlay/
+./node_modules/.bin/eslint --max-warnings 0 src/
+npm test
+npm run build:prod
+cd ../..
 
 # ******************************************************************************
 # First, test the create-react-app development environment.
 # This does not affect our users but makes sure we can develop it.
 # ******************************************************************************
 
-# This does not work with TypeScript because for some reason it
-# can't find the @types/node and @types/jest types which are installed
-# in the templates parent folder ./packages/react-scripts/. Thus
-#
-#     npm run build
-#
-# fails because TypeScript has no definition for `require` and `it`.
-# The only fix would be to explicitly add the parent folder as the
-# typeRoot and add "node" and "jest" as automatically loaded types
-# in the tsconfig but that would affect all apps created with it.
-#
-# Since this only tests the dev environment, it should be ok to just
-# omit this test.
+# Test local build command
+npm run build
+# Check for expected output
+exists build/*.html
+exists build/static/js/*.js
+exists build/static/css/*.css
+exists build/static/media/*.svg
+exists build/favicon.ico
 
-# # Test local build command
-# npm run build
+# Run tests with CI flag
+CI=true npm test
+# Uncomment when snapshot testing is enabled by default:
+# exists template/src/__snapshots__/App.test.js.snap
 
-# # Check for expected output
-# exists build/*.html
-# exists build/static/js/*.js
-# exists build/static/css/*.css
-# exists build/static/media/*.svg
-# exists build/favicon.ico
-
-# # Run tests with CI flag
-# CI=true npm test
-# # Uncomment when snapshot testing is enabled by default:
-# # exists template/src/__snapshots__/App.test.js.snap
-
-# # Test local start command
-# npm start -- --smoke-test
+# Test local start command
+npm start -- --smoke-test
 
 # ******************************************************************************
 # Next, pack react-scripts and create-react-app so we can verify they work.
@@ -233,12 +228,32 @@ function verify_env_url {
   mv package.json.orig package.json
 }
 
+function verify_module_scope {
+  # Create stub json file
+  echo "{}" >> sample.json
+
+  # Save App.js, we're going to modify it
+  cp src/App.tsx src/App.tsx.bak
+
+  # Add an out of scope import
+  echo "import sampleJson from '../sample.json'" | cat - src/App.tsx > src/App.tsx.temp && mv src/App.tsx.temp src/App.tsx
+
+  # Make sure the build fails
+  npm run build; test $? -eq 1 || exit 1
+  # TODO: check for error message
+
+  # Restore App.tsx
+  rm src/App.tsx
+  mv src/App.tsx.bak src/App.tsx
+}
+
 # Enter the app directory
 cd test-app
 
 # Test the build
 npm run build
 # Check for expected output
+pwd
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
@@ -248,13 +263,16 @@ exists build/favicon.ico
 # Run tests with CI flag
 CI=true npm test
 # Uncomment when snapshot testing is enabled by default:
-# exists src/__snapshots__/App.test.js.snap
+# exists src/__snapshots__/App.test.tsx.snap
 
 # Test the server
 npm start -- --smoke-test
 
 # Test environment handling
 verify_env_url
+
+# Test reliance on webpack internals
+verify_module_scope
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -267,7 +285,7 @@ echo yes | npm run eject
 npm link "$root_path"/packages/babel-preset-react-app
 npm link "$root_path"/packages/eslint-config-react-app
 npm link "$root_path"/packages/react-dev-utils
-npm link "$root_path"/packages/react-scripts
+npm link "$root_path"/packages/react-scripts-ts
 
 # Test the build
 npm run build
@@ -291,6 +309,9 @@ npm start -- --smoke-test
 
 # Test environment handling
 verify_env_url
+
+# Test reliance on webpack internals
+verify_module_scope
 
 # Cleanup
 cleanup

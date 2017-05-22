@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-react-app",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Babel preset used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -11,16 +11,20 @@
     "index.js"
   ],
   "dependencies": {
-    "babel-plugin-transform-class-properties": "6.22.0",
-    "babel-plugin-transform-object-rest-spread": "6.22.0",
-    "babel-plugin-transform-react-constant-elements": "6.22.0",
-    "babel-plugin-transform-react-jsx": "6.22.0",
+    "babel-plugin-dynamic-import-node": "1.0.2",
+    "babel-plugin-syntax-dynamic-import": "6.18.0",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-plugin-transform-object-rest-spread": "6.23.0",
+    "babel-plugin-transform-react-constant-elements": "6.23.0",
+    "babel-plugin-transform-react-jsx": "6.24.1",
     "babel-plugin-transform-react-jsx-self": "6.22.0",
     "babel-plugin-transform-react-jsx-source": "6.22.0",
-    "babel-plugin-transform-regenerator": "6.22.0",
-    "babel-plugin-transform-runtime": "6.22.0",
-    "babel-preset-env": "1.2.1",
-    "babel-preset-react": "6.22.0",
-    "babel-runtime": "6.22.0"
+    "babel-plugin-transform-regenerator": "6.24.1",
+    "babel-plugin-transform-runtime": "6.23.0",
+    "babel-preset-env": "1.4.0",
+    "babel-preset-react": "6.24.1"
+  },
+  "peerDependencies": {
+    "babel-runtime": "^6.23.0"
   }
 }

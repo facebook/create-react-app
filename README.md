@@ -23,6 +23,9 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Changelog
 
+### 2.0.0
+* Upgrade to [`react-scripts@1.x.x`](https://github.com/facebookincubator/create-react-app/blob/0d1521aabf5a0201ea1bcccc33e286afe048f820/CHANGELOG.md)
+
 ### 1.4.0
 * Upgrade to typescript@2.3.2 - thanks to @patrick91
 * Add tests around react-scripts-ts - thanks to @migerh
