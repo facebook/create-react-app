@@ -1,3 +1,24 @@
+## 1.0.4 (May 22, 2017)
+
+#### :bug: Bug Fix
+
+* `react-error-overlay`
+  * Fix a regression in published package.
+
+### Migrating from 1.0.3 to 1.0.4
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.4
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.4
+```
+
 ## 1.0.3 (May 21, 2017)
 
 #### :bug: Bug Fix
