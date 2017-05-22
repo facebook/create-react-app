@@ -82,6 +82,10 @@ fi
 # We removed the postinstall, so do it manually
 ./node_modules/.bin/lerna bootstrap --concurrency=1
 
+cd packages/react-error-overlay/
+npm run build:prod
+cd ../..
+
 # ******************************************************************************
 # First, pack react-scripts and create-react-app so we can use them.
 # ******************************************************************************
@@ -162,7 +166,7 @@ PORT=3001 \
   nohup npm start &>$tmp_server_log &
 while true
 do
-  if grep -q 'The app is running at:' $tmp_server_log; then
+  if grep -q 'You can now view' $tmp_server_log; then
     break
   else
     sleep 1
@@ -226,7 +230,7 @@ PORT=3002 \
   nohup npm start &>$tmp_server_log &
 while true
 do
-  if grep -q 'The app is running at:' $tmp_server_log; then
+  if grep -q 'You can now view' $tmp_server_log; then
     break
   else
     sleep 1
