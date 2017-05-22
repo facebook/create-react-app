@@ -43,7 +43,7 @@ function handle_exit {
 }
 
 function create_react_app {
-  node "$temp_cli_path"/node_modules/@webstronauts/create-react-app/index.js "$@"
+  node "$temp_cli_path"/node_modules/create-react-app/index.js "$@"
 }
 
 # Check for the existence of one or more files.
@@ -66,7 +66,11 @@ set -x
 cd ..
 root_path=$PWD
 
+# Prevent lerna bootstrap, we only want top-level dependencies
+cp package.json package.json.bak
+grep -v "lerna bootstrap" package.json > temp && mv temp package.json
 npm install
+mv package.json.bak package.json
 
 if [ "$USE_YARN" = "yes" ]
 then
@@ -74,6 +78,13 @@ then
   npm install -g yarn
   yarn cache clean
 fi
+
+# We removed the postinstall, so do it manually
+./node_modules/.bin/lerna bootstrap --concurrency=1
+
+cd packages/react-error-overlay/
+npm run build:prod
+cd ../..
 
 # ******************************************************************************
 # First, pack react-scripts and create-react-app so we can use them.
@@ -155,7 +166,7 @@ PORT=3001 \
   nohup npm start &>$tmp_server_log &
 while true
 do
-  if grep -q 'The app is running at:' $tmp_server_log; then
+  if grep -q 'You can now view' $tmp_server_log; then
     break
   else
     sleep 1
@@ -191,8 +202,6 @@ npm link "$root_path"/packages/eslint-config-react-app
 npm link "$root_path"/packages/react-dev-utils
 npm link "$root_path"/packages/react-scripts
 
-# ...and we need to remove template's .babelrc
-rm .babelrc
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
 
@@ -221,7 +230,7 @@ PORT=3002 \
   nohup npm start &>$tmp_server_log &
 while true
 do
-  if grep -q 'The app is running at:' $tmp_server_log; then
+  if grep -q 'You can now view' $tmp_server_log; then
     break
   else
     sleep 1

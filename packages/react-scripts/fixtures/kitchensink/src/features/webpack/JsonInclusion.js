@@ -7,9 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react'
-import { abstract } from './assets/abstract.json'
+import React from 'react';
+import { abstract } from './assets/abstract.json';
 
-export default () => (
-  <summary id="feature-json-inclusion">{abstract}</summary>
-)
+export default () => <summary id="feature-json-inclusion">{abstract}</summary>;
