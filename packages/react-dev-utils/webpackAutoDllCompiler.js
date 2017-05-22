@@ -8,6 +8,26 @@ const clearConsole = require('./clearConsole');
 const chalk = require('chalk');
 const environment = process.env.NODE_ENV;
 
+// inspired by https://github.com/erm0l0v/webpack-md5-hash/blob/da8efa2fc7fe5c373c95f9ba859dbe208a8b844b/plugin/webpack_md5_hash.js
+class WebpackAdditionalSourceHashPlugin {
+  constructor({ additionalSourceHash }) {
+    this.additionalSourceHash = additionalSourceHash;
+  }
+  apply(compiler) {
+    compiler.plugin('compilation', compilation => {
+      compilation.plugin('chunk-hash', (chunk, chunkHash) => {
+        const oldHash = chunkHash.digest();
+        chunkHash.digest = () => {
+          const hash = crypto.createHash('md5');
+          hash.update(this.additionalSourceHash);
+          hash.update(oldHash);
+          return hash.digest('hex');
+        };
+      });
+    });
+  }
+}
+
 module.exports = ({ mainConfig, vendorConfig, paths }) =>
   new Promise(resolve => {
     const vendorHash = getVendorHash(paths.vendorSrc);
@@ -45,6 +65,9 @@ module.exports = ({ mainConfig, vendorConfig, paths }) =>
     function resolveConfig(mainConfig) {
       return Object.assign({}, mainConfig, {
         plugins: mainConfig.plugins.concat([
+          new WebpackAdditionalSourceHashPlugin({
+            additionalSourceHash: vendorHash,
+          }),
           new webpack.DllReferencePlugin({
             context: '.',
             manifest: require(path.join(vendorPath, vendorHash + '.json')),
@@ -74,10 +97,7 @@ module.exports = ({ mainConfig, vendorConfig, paths }) =>
           hash.update(fs.readFileSync(paths.yarnLockFile));
         }
 
-        return (process.env.REACT_APP_VENDOR_HASH = [
-          environment,
-          hash.digest('hex'),
-        ].join('.'));
+        return [environment, hash.digest('hex').substring(0, 8)].join('.');
       } else {
         return false;
       }
