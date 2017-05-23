@@ -18,8 +18,8 @@ process.on('unhandledRejection', err => {
 
 const fs = require('fs-extra');
 const path = require('path');
-const spawn = require('cross-spawn');
 const chalk = require('chalk');
+const spawn = require('react-dev-utils/crossSpawn');
 
 module.exports = function(
   appPath,

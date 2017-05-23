@@ -7,4 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-global.fetch = require('jest-fetch-mock');
+'use strict';
+
+var inquirer = require('inquirer');
+
+module.exports = inquirer;

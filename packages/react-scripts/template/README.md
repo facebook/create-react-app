@@ -42,6 +42,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Node](#node)
   - [Ruby on Rails](#ruby-on-rails)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
+  - ["Invalid Host Header" Errors After Configuring Proxy](#invalid-host-header-errors-after-configuring-proxy)
   - [Configuring the Proxy Manually](#configuring-the-proxy-manually)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
@@ -61,7 +62,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Disabling jsdom](#disabling-jsdom)
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
-- [Developing Components in Isolation](#developing-components-in-isolation)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
@@ -470,6 +470,20 @@ Now you can rename `src/App.css` to `src/App.scss` and run `npm run watch-css`. 
 
 To share variables between Sass files, you can use Sass imports. For example, `src/App.scss` and other component style files could include `@import "./shared.scss";` with variable definitions.
 
+To enable importing files without using relative paths, you can add the  `--include-path` option to the command in `package.json`.
+
+```
+"build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+"watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+```
+
+This will allow you to do imports like
+
+```scss
+@import 'styles/_colors.scss'; // assuming a styles directory under src/
+@import 'nprogress/nprogress'; // importing a css file from the nprogress node module
+```
+
 At this point you might want to remove all CSS files from the source control, and add `src/**/*.css` to your `.gitignore` file. It is generally a good practice to keep the build products outside of the source control.
 
 As a final step, you may find it convenient to run `watch-css` automatically with `npm start`, and run `build-css` as a part of `npm run build`. You can use the `&&` operator to execute two scripts sequentially. However, there is no cross-platform way to run two scripts in parallel, so we will install a package for this:
@@ -563,7 +577,7 @@ The `<script>` tag with the compiled code will be added to it automatically duri
 You can also add other assets to the `public` folder.
 
 Note that we normally encourage you to `import` assets in JavaScript files instead.
-For example, see the sections on [adding a stylesheet](#adding-a-stylesheet) and [adding images and fonts](#adding-images-and-fonts).
+For example, see the sections on [adding a stylesheet](#adding-a-stylesheet) and [adding images and fonts](#adding-images-fonts-and-files).
 This mechanism provides a number of benefits:
 
 * Scripts and stylesheets get minified and bundled together to avoid extra network requests.
@@ -603,7 +617,7 @@ Keep in mind the downsides of this approach:
 
 ### When to Use the `public` Folder
 
-Normally we recommend importing [stylesheets](#adding-a-stylesheet), [images, and fonts](#adding-images-and-fonts) from JavaScript.
+Normally we recommend importing [stylesheets](#adding-a-stylesheet), [images, and fonts](#adding-images-fonts-and-files) from JavaScript.
 The `public` folder is useful as a workaround for a number of less common cases:
 
 * You need a file with a specific name in the build output, such as [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
@@ -794,20 +808,20 @@ REACT_APP_SECRET_CODE=abcdef
 
 `.env` files **should be** checked into source control (with the exclusion of `.env*.local`).
 
-What other `.env` files are can be used?
+#### What other `.env` files are can be used?
 
->Note: this feature is available with `react-scripts@1.0.0` and higher.
+>Note: this feature is **available with `react-scripts@1.0.0` and higher**.
 
-* `.env` - Default
-* `.env.development`, `.env.test`, `.env.production` - Environment-specific settings.
-* `.env.local` - Local overrides. This file is loaded for all environments except test.
-* `.env.development.local`, `.env.test.local`, `.env.production.local` - Local overrides of environment-specific settings.
+* `.env`: Default.
+* `.env.local`: Local overrides. **This file is loaded for all environments except test.**
+* `.env.development`, `.env.test`, `.env.production`: Environment-specific settings.
+* `.env.development.local`, `.env.test.local`, `.env.production.local`: Local overrides of environment-specific settings.
 
-File priority, from left to right:
+Files on the left have more priority than files on the right:
 
-* npm test - `.env.test.local`, `env.test`, `.env.local`, `.env`
-* npm run build - `.env.production.local`, `env.production`, `.env.local`, `.env`
-* npm start - `.env.development.local`, `env.development`, `.env.local`, `.env`
+* `npm start`: `.env.development.local`, `.env.development`, `.env.local`, `.env`
+* `npm run build`: `.env.production.local`, `.env.production`, `.env.local`, `.env`
+* `npm test`: `.env.test.local`, `.env.test`, `.env` (note `.env.local` is missing)
 
 These variables will act as the defaults if the machine does not explicitly set them.<br>
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
@@ -883,6 +897,32 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 * [Configure the proxy yourself](#configuring-the-proxy-manually)
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
 * Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+
+### "Invalid Host Header" Errors After Configuring Proxy
+
+When you enable the `proxy` option, you opt into a more strict set of host checks. This is necessary because leaving the backend open to remote hosts makes your computer vulnerable to DNS rebinding attacks. The issue is explained in [this article](https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a) and [this issue](https://github.com/webpack/webpack-dev-server/issues/887).
+
+This shouldn’t affect you when developing on `localhost`, but if you develop remotely like [described here](https://github.com/facebookincubator/create-react-app/issues/2271), you will see this error in the browser after enabling the `proxy` option:
+
+>Invalid Host header
+
+To work around it, you can specify your public development host in a file called `.env.development` in the root of your project:
+
+```
+HOST=mypublicdevhost.com
+```
+
+If you restart the development server now and load the app from the specified host, it should work.
+
+If you are still having issues or if you’re using a more exotic environment like a cloud editor, you can bypass the host check completely by adding a line to `.env.development.local`. **Note that this is dangerous and exposes your machine to remote code execution from malicious websites:**
+
+```
+# NOTE: THIS IS DANGEROUS!
+# It exposes your machine to attacks from the websites you visit.
+DANGEROUSLY_DISABLE_HOST_CHECK=true
+```
+
+We don’t recommend this approach.
 
 ### Configuring the Proxy Manually
 
@@ -1282,6 +1322,7 @@ If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
+<!--
 ## Developing Components in Isolation
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states.
@@ -1321,6 +1362,7 @@ Learn more about React Storybook:
 * [GitHub Repo](https://github.com/kadirahq/react-storybook)
 * [Documentation](https://storybooks.js.org/docs/react-storybook/basics/introduction/)
 * [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
+-->
 
 ## Making a Progressive Web App
 
