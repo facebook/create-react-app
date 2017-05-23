@@ -193,8 +193,8 @@ function resolveLoopback(proxy) {
   if (o.hostname !== 'localhost') {
     return proxy;
   }
-  // Unfortunately, many languages (unlike node) do not yet support IPv6
-  // this means even though localhost resolves to ::1, the application
+  // Unfortunately, many languages (unlike node) do not yet support IPv6.
+  // This means even though localhost resolves to ::1, the application
   // must fall back to IPv4 (on 127.0.0.1).
   // We can re-enable this in a few years.
   /*try {
