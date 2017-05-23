@@ -62,7 +62,6 @@ my-app/
   node_modules/
   package.json
   .gitignore
-  yarn.lock
   public/
     favicon.ico
     index.html
