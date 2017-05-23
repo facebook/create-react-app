@@ -17,11 +17,7 @@ env:
     - USE_YARN=no
   matrix:
     - TEST_SUITE=simple
-    - TEST_SUITE=installs
-matrix:
-  include:
-    - node_js: 0.10
-      env: TEST_SUITE=simple
+    - TEST_SUITE=install
 # There's a weird Yarn/Lerna bug related to prerelease versions.
 # TODO: reenable after we ship 1.0.
 #    - node_js: 6
