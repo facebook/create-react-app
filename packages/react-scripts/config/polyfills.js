@@ -32,10 +32,18 @@ if (process.env.NODE_ENV === 'test') {
 // TODO: make this dev-only
 // and move to a better place:
 
+let nodes = [];
+function flashNodes() {
+  //TODO: flash nodes
+  nodes = [];
+}
+
 let forceUpdateCallbacks = [];
+let forceUpdateTypes = [];
 let forceUpdateTimeout = null;
-window.__enqueueForceUpdate = function(onSuccess) {
+window.__enqueueForceUpdate = function(onSuccess, type) {
   forceUpdateCallbacks.push(onSuccess);
+  forceUpdateTypes.push(type);
   if (forceUpdateTimeout) {
     return;
   }
@@ -43,11 +51,14 @@ window.__enqueueForceUpdate = function(onSuccess) {
     forceUpdateTimeout = null;
     let callbacks = forceUpdateCallbacks;
     forceUpdateCallbacks = [];
-    forceUpdateAll();
+    let types = forceUpdateTypes;
+    forceUpdateTypes = [];
+    forceUpdateAll(types);
     callbacks.forEach(cb => cb());
+    flashNodes();
   });
 };
-function forceUpdateAll() {
+function forceUpdateAll(types) {
   const hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
   if (!hook) {
     return;
@@ -58,6 +69,7 @@ function forceUpdateAll() {
   // TODO: support Fiber
   renderers.forEach(renderer => {
     const roots = renderer.Mount && renderer.Mount._instancesByReactRootID;
+    const { getNodeFromInstance } = renderer.ComponentTree;
     if (!roots) {
       return;
     }
@@ -78,6 +90,9 @@ function forceUpdateAll() {
       traverseDeep(root, inst => {
         if (!inst._instance) {
           return;
+        }
+        if (types.indexOf(inst._currentElement.type) !== -1) {
+          nodes.push(getNodeFromInstance(inst));
         }
         const updater = inst._instance.updater;
         if (!updater || typeof updater.enqueueForceUpdate !== 'function') {

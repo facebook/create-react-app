@@ -106,10 +106,10 @@ module.exports = function({ types: t }) {
                 if (typeof data.acceptNext === 'function') {
                   data.acceptNext();
                 }
-              });
+              }, NAME);
             });
             `
-          )({}),
+          )({ NAME: t.Identifier(name) }),
         ]);
       },
     },
