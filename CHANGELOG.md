@@ -342,6 +342,10 @@ Follow these steps if you see errors about missing lint rules in the editor.
 
 If you still have the problem please file an issue.
 
+#### Some of my tests started crashing because of unhandled rejections
+
+Unhandled Promise rejections will now crash tests. You can fix them by explicitly catching the errors you don’t care about.
+
 #### How to turn my app into a [Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
 
 After the regular update procedure above, add these line to `<head>` in `public/index.html`:
