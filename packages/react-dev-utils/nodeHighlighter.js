@@ -9,6 +9,8 @@
 
 'use strict';
 
+const REFRESH_RATE = 1000 / 60;
+
 const OUTLINE_COLOR = '#f0f0f0';
 
 const COLORS = [
@@ -34,7 +36,7 @@ function mount() {
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 1000000000;
+    z-index: ${2147483647 - 2};
     `;
 
   const root = window.document.documentElement;
@@ -43,8 +45,6 @@ function mount() {
 }
 
 function unmount(canvas) {
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
   canvas.parentNode.removeChild(canvas);
 }
 
@@ -85,9 +85,9 @@ function drawBorder(ctx, measurement, borderWidth, borderColor) {
   ctx.setLineDash([0]);
 }
 
-function highlight(nodes, { borderWidth = 3, duration = 250 } = {}) {
-  const canvas = mount();
-  const ctx = canvas.getContext('2d');
+function draw(canvas, ctx, nodes, borderWidth, duration, elapsed = 0) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.globalAlpha = Math.max(0, (duration - elapsed) / duration);
   let count = 0;
   for (const node of nodes) {
     drawBorder(
@@ -97,7 +97,23 @@ function highlight(nodes, { borderWidth = 3, duration = 250 } = {}) {
       COLORS[count++ % COLORS.length]
     );
   }
-  setTimeout(() => unmount(canvas), duration);
+
+  if (elapsed >= duration) {
+    return;
+  }
+
+  setTimeout(
+    () => {
+      draw(canvas, ctx, nodes, borderWidth, duration, elapsed + REFRESH_RATE);
+    },
+    REFRESH_RATE
+  );
+}
+
+function highlight(nodes, { borderWidth = 4, duration = 1500 } = {}) {
+  const canvas = mount();
+  const ctx = canvas.getContext('2d');
+  draw(canvas, ctx, nodes, borderWidth, duration);
 }
 
 module.exports = highlight;
