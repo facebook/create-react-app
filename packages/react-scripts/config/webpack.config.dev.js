@@ -224,7 +224,7 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       // By default we support CSS Modules with the extension .modules.css
       {
-        test: /[^\.modules]\.css$/,
+        test: input => !/\.modules.css$/.test(input),
         use: [
           require.resolve('style-loader'),
           {

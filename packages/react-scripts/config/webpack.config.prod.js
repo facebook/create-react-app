@@ -225,7 +225,7 @@ module.exports = {
       // in the main CSS file.
       // By default we support CSS Modules with the extension .modules.css
       {
-        test: /[^\.modules]\.css$/,
+        test: input => !/\.modules.css$/.test(input),
         loader: ExtractTextPlugin.extract(
           Object.assign(
             {
