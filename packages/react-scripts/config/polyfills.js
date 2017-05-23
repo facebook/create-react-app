@@ -32,9 +32,100 @@ if (process.env.NODE_ENV === 'test') {
 // TODO: make this dev-only
 // and move to a better place:
 
+const CANVAS_NODE_ID = 'ReactHotReloadUpdateTrace';
+
+function createCanvas() {
+  let canvas = window.document.getElementById(CANVAS_NODE_ID) ||
+    window.document.createElement('canvas');
+  canvas.id = CANVAS_NODE_ID;
+  canvas.width = window.screen.availWidth;
+  canvas.height = window.screen.availHeight;
+  canvas.style.cssText = `
+        xx-background-color: red;
+        xx-opacity: 0.5;
+        bottom: 0;
+        left: 0;
+        pointer-events: none;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 1000000000;
+      `;
+  if (!canvas.parentNode) {
+    const root = window.document.documentElement;
+    root.insertBefore(canvas, root.firstChild);
+  }
+  return canvas;
+}
+
+function removeCanvas(canvas) {
+  canvas.parentNode.removeChild(canvas);
+}
+
+const OUTLINE_COLOR = '#f0f0f0';
+
+const COLORS = [
+  // coolest
+  '#55cef6',
+  '#55f67b',
+  '#a5f655',
+  '#f4f655',
+  '#f6a555',
+  '#f66855',
+  // hottest
+  '#ff0000',
+];
+
+function drawBorder(ctx, measurement, borderWidth, borderColor) {
+  // outline
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = OUTLINE_COLOR;
+
+  ctx.strokeRect(
+    measurement.left - 1,
+    measurement.top - 1,
+    measurement.width + 2,
+    measurement.height + 2
+  );
+
+  // inset
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = OUTLINE_COLOR;
+  ctx.strokeRect(
+    measurement.left + borderWidth,
+    measurement.top + borderWidth,
+    measurement.width - borderWidth,
+    measurement.height - borderWidth
+  );
+  ctx.strokeStyle = borderColor;
+
+  ctx.setLineDash([0]);
+
+  // border
+  ctx.lineWidth = '' + borderWidth;
+  ctx.strokeRect(
+    measurement.left + Math.floor(borderWidth / 2),
+    measurement.top + Math.floor(borderWidth / 2),
+    measurement.width - borderWidth,
+    measurement.height - borderWidth
+  );
+
+  ctx.setLineDash([0]);
+}
+
 let nodes = [];
 function flashNodes() {
-  //TODO: flash nodes
+  const canvas = createCanvas();
+  let count = 0;
+  for (const node of nodes) {
+    drawBorder(
+      canvas.getContext('2d'),
+      node.getBoundingClientRect(),
+      3,
+      COLORS[count++ % COLORS.length]
+    );
+  }
+  setTimeout(() => removeCanvas(canvas), 250);
   nodes = [];
 }
 
@@ -91,7 +182,8 @@ function forceUpdateAll(types) {
         if (!inst._instance) {
           return;
         }
-        if (types.indexOf(inst._currentElement.type) !== -1) {
+        const { type, type: { name } } = inst._currentElement;
+        if (types.find(t => t === type || t.name === name)) {
           nodes.push(getNodeFromInstance(inst));
         }
         const updater = inst._instance.updater;
