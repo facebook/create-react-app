@@ -99,6 +99,7 @@ function draw(canvas, ctx, nodes, borderWidth, duration, elapsed = 0) {
   }
 
   if (elapsed >= duration) {
+    unmount(canvas);
     return;
   }
 
