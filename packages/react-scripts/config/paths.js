@@ -17,28 +17,7 @@ const url = require('url');
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
-
-// We support resolving modules according to `NODE_PATH`.
-// This lets you use absolute paths in imports inside large monorepos:
-// https://github.com/facebookincubator/create-react-app/issues/253.
-
-// It works similar to `NODE_PATH` in Node itself:
-// https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders
-
-// We will export `nodePaths` as an array of absolute paths.
-// It will then be used by Webpack configs.
-// Jest doesn’t need this because it already handles `NODE_PATH` out of the box.
-
-// Note that unlike in Node, only *relative* paths from `NODE_PATH` are honored.
-// Otherwise, we risk importing Node.js core modules into an app instead of Webpack shims.
-// https://github.com/facebookincubator/create-react-app/issues/1023#issuecomment-265344421
-
-const nodePaths = (process.env.NODE_PATH || '')
-  .split(process.platform === 'win32' ? ';' : ':')
-  .filter(Boolean)
-  .filter(folder => !path.isAbsolute(folder))
-  .map(resolveApp);
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 const envPublicUrl = process.env.PUBLIC_URL;
 
@@ -53,7 +32,8 @@ function ensureSlash(path, needsSlash) {
   }
 }
 
-const getPublicUrl = (appPackageJson) => envPublicUrl || require(appPackageJson).homepage;
+const getPublicUrl = appPackageJson =>
+  envPublicUrl || require(appPackageJson).homepage;
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
 // "public path" at which the app is served.
@@ -80,13 +60,12 @@ module.exports = {
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
-  nodePaths: nodePaths,
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
 };
 
 // @remove-on-eject-begin
-const resolveOwn = (relativePath) => path.resolve(__dirname, '..', relativePath);
+const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
@@ -101,7 +80,6 @@ module.exports = {
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
-  nodePaths: nodePaths,
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
   // These properties only exist before ejecting:
@@ -131,7 +109,6 @@ if (
     yarnLockFile: resolveOwn('template/yarn.lock'),
     testsSetup: resolveOwn('template/src/setupTests.js'),
     appNodeModules: resolveOwn('node_modules'),
-    nodePaths: nodePaths,
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
     // These properties only exist before ejecting:

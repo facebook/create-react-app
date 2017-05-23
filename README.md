@@ -65,6 +65,7 @@ my-app/
   public/
     favicon.ico
     index.html
+    manifest.json
   src/
     App.css
     App.js
@@ -72,6 +73,7 @@ my-app/
     index.css
     index.js
     logo.svg
+    registerServiceWorker.js
 ```
 
 No configuration or complicated folder structures, just the files you need to build your app.<br>
@@ -100,8 +102,9 @@ Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br>
-A [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) using an [offline-first caching strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network) is automatically generated.<br>
-Your ([progressive web](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)) app is ready to be deployed
+By default, it also [includes a service worker](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app) so that your app loads from local cache on future visits.
+
+Your app is ready to be deployed.
 
 ## User Guide
 
@@ -134,7 +137,6 @@ The [User Guide](https://github.com/facebookincubator/create-react-app/blob/mast
 - [Generating Dynamic `<meta>` Tags on the Server](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#pre-rendering-into-static-html-files)
 - [Running Tests](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
-- [Developing Components in Isolation](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#developing-components-in-isolation)
 - [Making a Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)
 - [Deployment](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment)
 - [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration)
@@ -244,7 +246,6 @@ Notable alternatives also include:
 * [aik](https://github.com/d4rkr00t/aik)
 * [react-app](https://github.com/kriasoft/react-app)
 * [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
-* [tarec](https://github.com/geowarin/tarec)
 * [sku](https://github.com/seek-oss/sku)
 
 You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>

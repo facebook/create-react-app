@@ -1,4 +1,224 @@
-## 1.0.0 (March 18, 2017)
+## 1.0.5 (May 22, 2017)
+
+#### :bug: Bug Fix
+* `react-dev-utils`, `react-scripts`
+
+  * [#2326](https://github.com/facebookincubator/create-react-app/pull/2326) Files in `public/` folder should not be requested through proxy. ([@gaearon](https://github.com/gaearon))
+
+#### :nail_care: Enhancement
+* `react-dev-utils`
+
+  * [#2327](https://github.com/facebookincubator/create-react-app/pull/2327) Limit console warnings to 5 files at most. ([@gaearon](https://github.com/gaearon))
+
+* `eslint-config-react-app`
+
+  * [#2325](https://github.com/facebookincubator/create-react-app/pull/2325) Allow declaring variables before use in a scope above. ([@gaearon](https://github.com/gaearon))
+
+#### :house: Internal
+* `react-dev-utils`, `react-scripts`
+
+  * [#2320](https://github.com/facebookincubator/create-react-app/pull/2320) Remove unnecessary dependencies. ([@pmadar](https://github.com/pmadar))
+
+#### Committers: 2
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Pavol Madar ([pmadar](https://github.com/pmadar))
+
+### Migrating from 1.0.4 to 1.0.5
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.5
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.5
+```
+
+## 1.0.4 (May 22, 2017)
+
+#### :bug: Bug Fix
+
+* `react-error-overlay`
+  * Fix a regression in published package.
+
+### Migrating from 1.0.3 to 1.0.4
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.4
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.4
+```
+
+## 1.0.3 (May 21, 2017)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`
+  * [#2297](https://github.com/facebookincubator/create-react-app/pull/2297) Don’t serve the development version from public IPs by default. ([@Timer](https://github.com/Timer))
+
+* `eslint-config-react-app`
+  * [#2311](https://github.com/facebookincubator/create-react-app/pull/2311) Disable `flowtype/require-valid-file-annotation` lint rule due to false positives. ([@Robdel12](https://github.com/Robdel12))
+
+* `react-dev-utils`, `react-error-overlay`
+  * [#2301](https://github.com/facebookincubator/create-react-app/pull/2301) Wrap more `console` calls into a check. ([@BrodaNoel](https://github.com/BrodaNoel))
+
+* `react-scripts`
+  * [#2314](https://github.com/facebookincubator/create-react-app/pull/2314) Fix a "File not found" false positive. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 4
+- Broda Noel ([BrodaNoel](https://github.com/BrodaNoel))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Robert DeLuca ([Robdel12](https://github.com/Robdel12))
+
+### Migrating from 1.0.2 to 1.0.3
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.3
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.3
+```
+
+## 1.0.2 (May 20, 2017)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`, `react-scripts`
+
+  * [#2276](https://github.com/facebookincubator/create-react-app/pull/2276) Serve a no-op service worker in development to ensure it doesn't cache the production build even if it was served on the same port. ([@jeffposnick](https://github.com/jeffposnick))
+
+* `react-dev-utils`, `react-error-overlay`
+
+  * [#2290](https://github.com/facebookincubator/create-react-app/pull/2290) Wrap console calls into a check for IE9. ([@gaearon](https://github.com/gaearon))
+
+* `react-dev-utils`
+
+  * [#2282](https://github.com/facebookincubator/create-react-app/pull/2282) Add Windows Subsystem for Linux support to the error overlay. ([@noinkling](https://github.com/noinkling))
+  * [#2269](https://github.com/facebookincubator/create-react-app/pull/2269) Fix a missing package dependency. ([@GreenGremlin](https://github.com/GreenGremlin))
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#2221](https://github.com/facebookincubator/create-react-app/pull/2221) Ejecting should ensure you have clean `git status`. ([@milocosmopolitan](https://github.com/milocosmopolitan))
+  * [#2288](https://github.com/facebookincubator/create-react-app/pull/2288) Only enable host check if you use proxy, and add a way to opt out of it. ([@gaearon](https://github.com/gaearon))
+
+#### :house: Internal
+
+* `react-dev-utils`, `react-scripts`
+
+  * [#2283](https://github.com/facebookincubator/create-react-app/pull/2283) Remove unnecessary dependencies(#751). ([@pmadar](https://github.com/pmadar))
+
+#### Committers: 6
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Jeffrey Posnick ([jeffposnick](https://github.com/jeffposnick))
+- Jonathan ([GreenGremlin](https://github.com/GreenGremlin))
+- Malcolm ([noinkling](https://github.com/noinkling))
+- Milo Kang ([milocosmopolitan](https://github.com/milocosmopolitan))
+- [pmadar](https://github.com/pmadar)
+
+### Migrating from 1.0.1 to 1.0.2
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.2
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.2
+```
+
+If you previously had issues with an `Invalid Host Header` error, [follow these new instructions](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#invalid-host-header-errors-after-configuring-proxy) to fix it.
+
+## 1.0.1 (May 19, 2017)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+  * [#2242](https://github.com/facebookincubator/create-react-app/pull/2242) Fix `NODE_PATH=src` for `npm start` and `npm run build`. ([@ApacheEx](https://github.com/ApacheEx))
+  * [#2261](https://github.com/facebookincubator/create-react-app/pull/2261) Fix `NODE_PATH=src` for Jest. ([@gaearon](https://github.com/gaearon))
+  * [#2255](https://github.com/facebookincubator/create-react-app/pull/2255) Fix Windows path issue for generated service worker. ([@gaearon](https://github.com/gaearon))
+  * [#2262](https://github.com/facebookincubator/create-react-app/pull/2262) Additional fix to service worker config for `"homepage"` field. ([@gaearon](https://github.com/gaearon))
+  * [#2250](https://github.com/facebookincubator/create-react-app/pull/2250) Ignore `.env.local` in `test` environment. ([@gaearon](https://github.com/gaearon))
+  * [#2246](https://github.com/facebookincubator/create-react-app/pull/2246) Gracefully shut down the development server on signals. ([@gaearon](https://github.com/gaearon))
+
+* `react-dev-utils`
+  * [#2229](https://github.com/facebookincubator/create-react-app/pull/2229) Show customized build path for serve instruction. ([@chyipin](https://github.com/chyipin))
+
+* `react-dev-utils`, `react-error-overlay`
+  * [#2243](https://github.com/facebookincubator/create-react-app/pull/2243) Add missing package dependency. ([@Timer](https://github.com/Timer))
+
+* `react-error-overlay`
+  * [#2238](https://github.com/facebookincubator/create-react-app/pull/2238) Fix a crash when switching errors with arrow keys. ([@Gandem](https://github.com/Gandem))
+
+#### :nail_care: Enhancement
+
+* `eslint-config-react-app`
+  * [#2256](https://github.com/facebookincubator/create-react-app/pull/2256) Turn off `operator-assignment` stylistic rule. ([@gaearon](https://github.com/gaearon))
+
+* `react-scripts`
+  * [#2224](https://github.com/facebookincubator/create-react-app/pull/2224) Add `<noscript>` to template's `index.html`. ([@viankakrisna](https://github.com/viankakrisna))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#2259](https://github.com/facebookincubator/create-react-app/pull/2259) Fix broken links. ([@enguerran](https://github.com/enguerran))
+  * [#2258](https://github.com/facebookincubator/create-react-app/pull/2258) Update readme with example of Sass include path. ([@kellyrmilligan](https://github.com/kellyrmilligan))
+  * [#2252](https://github.com/facebookincubator/create-react-app/pull/2252) Hide React Storybook from the User Guide while it's incompatible. ([@gaearon](https://github.com/gaearon))
+  * [#2247](https://github.com/facebookincubator/create-react-app/pull/2247) Correct docs on which `.env.*` files are supported. ([@AJamesPhillips](https://github.com/AJamesPhillips))
+
+#### :house: Internal
+
+* `react-scripts`
+
+  * [#2264](https://github.com/facebookincubator/create-react-app/pull/2264) Fix a bug for empty `NODE_PATH`. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 9
+
+- Ade Viankakrisna Fadlil ([viankakrisna](https://github.com/viankakrisna))
+- Alexander James Phillips ([AJamesPhillips](https://github.com/AJamesPhillips))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Enguerran ([enguerran](https://github.com/enguerran))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Kelly ([kellyrmilligan](https://github.com/kellyrmilligan))
+- Nayef Ghattas ([Gandem](https://github.com/Gandem))
+- Oleg Kuzava ([ApacheEx](https://github.com/ApacheEx))
+- [chyipin](https://github.com/chyipin)
+
+### Migrating from 1.0.0 to 1.0.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.1
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.1
+```
+
+## 1.0.0 (May 18, 2017)
 
 We’ve been working on this release for the past few months, and there are many big impovements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
 
@@ -110,6 +330,17 @@ If you use snapshots, you will likely need to update them once because of the ch
 The old, 2009 specification for Flexbox is [deprecated and is 2.3x slower than the latest specification](https://developers.google.com/web/tools/lighthouse/audits/old-flexbox).
 
 We are no longer polyfilling it automatically.
+
+#### I see "Definition for rule 'jsx-a11y/alt-text' was not found (jsx-a11y/alt-text)" in the editor
+
+Follow these steps if you see errors about missing lint rules in the editor.
+
+1. Ensure that in your editor ESLint settings you have "Use Global ESLint" turned off
+2. Run `npm install` in your project (or `yarn`)
+3. Quit your editor completely (ensure its process doesn't hang around)
+4. Start the editor again
+
+If you still have the problem please file an issue.
 
 #### How to turn my app into a [Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
 
