@@ -1,7 +1,5 @@
 'use strict';
 
-const crypto = require('crypto');
-
 function functionReturnsElement(path) {
   const { body } = path.body;
   const last = body[body.length - 1];
@@ -16,13 +14,20 @@ function functionReturnsElement(path) {
 }
 
 function createMemberExpression(t, path) {
+  const last = path[path.length - 1];
+  const computed = last.type === 'StringLiteral';
   if (path.length > 2) {
     return t.MemberExpression(
       createMemberExpression(t, path.slice(0, -1)),
-      t.Identifier(path[path.length - 1])
+      computed ? last : t.Identifier(last),
+      computed
     );
   } else if (path.length === 2) {
-    return t.MemberExpression(t.Identifier(path[0]), t.Identifier(path[1]));
+    return t.MemberExpression(
+      t.Identifier(path[0]),
+      computed ? last : t.Identifier(last),
+      computed
+    );
   } else {
     return t.Identifier(path[0]);
   }
@@ -32,12 +37,18 @@ function createFunctionCall(t, path, args = []) {
   return t.CallExpression(createMemberExpression(t, path), args);
 }
 
-function hoistFunctionalComponentToWindow(t, generatedName, params, body) {
+function hoistFunctionalComponentToWindow(
+  t,
+  name,
+  generatedName,
+  params,
+  body
+) {
   return t.ExpressionStatement(
     t.AssignmentExpression(
       '=',
-      createMemberExpression(t, ['window', generatedName]),
-      t.FunctionExpression(t.Identifier(generatedName), params, body)
+      createMemberExpression(t, ['window', t.StringLiteral(generatedName)]),
+      t.FunctionExpression(t.Identifier(`__hot__${name}__`), params, body)
     )
   );
 }
@@ -50,7 +61,10 @@ function decorateFunctionName(t, name, generatedName) {
           t,
           ['Object', 'defineProperty'],
           [
-            createMemberExpression(t, ['window', generatedName]),
+            createMemberExpression(t, [
+              'window',
+              t.StringLiteral(generatedName),
+            ]),
             t.StringLiteral('name'),
             t.ObjectExpression([
               t.ObjectProperty(t.Identifier('value'), t.StringLiteral(name)),
@@ -72,7 +86,7 @@ function exportHoistedFunctionCallProxy(t, name, generatedName) {
         t.ReturnStatement(
           createFunctionCall(
             t,
-            ['window', generatedName, 'apply'],
+            ['window', t.StringLiteral(generatedName), 'apply'],
             [t.ThisExpression(), t.Identifier('arguments')]
           )
         ),
@@ -94,15 +108,16 @@ module.exports = function({ types: t }) {
         }
         const { id: { name }, params, body } = path.node.declaration;
 
-        const fileHash = crypto
-          .createHash('md5')
-          .update(state.file.opts.filename)
-          .digest('hex');
-
-        const generatedName = `${name}$$${fileHash}`;
+        const generatedName = `__hot__${state.file.opts.filename}$$${name}`;
 
         path.replaceWithMultiple([
-          hoistFunctionalComponentToWindow(t, generatedName, params, body),
+          hoistFunctionalComponentToWindow(
+            t,
+            name,
+            generatedName,
+            params,
+            body
+          ),
           decorateFunctionName(t, name, generatedName),
           exportHoistedFunctionCallProxy(t, name, generatedName),
           t.IfStatement(
