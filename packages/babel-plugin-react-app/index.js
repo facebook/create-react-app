@@ -1,5 +1,7 @@
 'use strict';
 
+const crypto = require('crypto');
+
 function functionReturnsElement(path) {
   const { body } = path.body;
   const last = body[body.length - 1];
@@ -30,17 +32,17 @@ function createFunctionCall(t, path, args = []) {
   return t.CallExpression(createMemberExpression(t, path), args);
 }
 
-function hoistFunctionalComponentToWindow(t, name, params, body) {
+function hoistFunctionalComponentToWindow(t, generatedName, params, body) {
   return t.ExpressionStatement(
     t.AssignmentExpression(
       '=',
-      createMemberExpression(t, ['window', `__${name}__`]),
-      t.FunctionExpression(t.Identifier(`__${name}__`), params, body)
+      createMemberExpression(t, ['window', generatedName]),
+      t.FunctionExpression(t.Identifier(generatedName), params, body)
     )
   );
 }
 
-function decorateFunctionName(t, name) {
+function decorateFunctionName(t, name, generatedName) {
   return t.TryStatement(
     t.BlockStatement([
       t.ExpressionStatement(
@@ -48,7 +50,7 @@ function decorateFunctionName(t, name) {
           t,
           ['Object', 'defineProperty'],
           [
-            createMemberExpression(t, ['window', `__${name}__`]),
+            createMemberExpression(t, ['window', generatedName]),
             t.StringLiteral('name'),
             t.ObjectExpression([
               t.ObjectProperty(t.Identifier('value'), t.StringLiteral(name)),
@@ -61,7 +63,7 @@ function decorateFunctionName(t, name) {
   );
 }
 
-function exportHoistedFunctionCallProxy(t, name) {
+function exportHoistedFunctionCallProxy(t, name, generatedName) {
   return t.ExportDefaultDeclaration(
     t.FunctionDeclaration(
       t.Identifier(name),
@@ -70,7 +72,7 @@ function exportHoistedFunctionCallProxy(t, name) {
         t.ReturnStatement(
           createFunctionCall(
             t,
-            ['window', `__${name}__`, 'apply'],
+            ['window', generatedName, 'apply'],
             [t.ThisExpression(), t.Identifier('arguments')]
           )
         ),
@@ -82,7 +84,7 @@ function exportHoistedFunctionCallProxy(t, name) {
 module.exports = function({ types: t }) {
   return {
     visitor: {
-      ExportDefaultDeclaration(path) {
+      ExportDefaultDeclaration(path, state) {
         const { type } = path.node.declaration;
         if (
           type !== 'FunctionDeclaration' ||
@@ -92,10 +94,17 @@ module.exports = function({ types: t }) {
         }
         const { id: { name }, params, body } = path.node.declaration;
 
+        const fileHash = crypto
+          .createHash('md5')
+          .update(state.file.opts.filename)
+          .digest('hex');
+
+        const generatedName = `${name}$$${fileHash}`;
+
         path.replaceWithMultiple([
-          hoistFunctionalComponentToWindow(t, name, params, body),
-          decorateFunctionName(t, name),
-          exportHoistedFunctionCallProxy(t, name),
+          hoistFunctionalComponentToWindow(t, generatedName, params, body),
+          decorateFunctionName(t, name, generatedName),
+          exportHoistedFunctionCallProxy(t, name, generatedName),
           t.IfStatement(
             t.UnaryExpression(
               '!',
