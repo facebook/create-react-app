@@ -9,6 +9,13 @@
 'use strict';
 
 const plugins = [
+  // enable relay
+  require.resolve('babel-plugin-react-relay'),
+  // enable export extension experimental feature
+  require.resolve('babel-plugin-transform-export-extensions'),
+  // load decorators before class plugin
+  require.resolve('babel-plugin-transform-decorators-legacy'),
+
   // class { handleClick = () => { } }
   require.resolve('babel-plugin-transform-class-properties'),
   // The following two plugins use Object.assign directly, instead of Babel's
