@@ -240,6 +240,10 @@ getProcessForPort(3000);
 
 On macOS, tries to find a known running editor process and opens the file in it. It can also be explicitly configured by `REACT_EDITOR`, `VISUAL`, or `EDITOR` environment variables. For example, you can put `REACT_EDITOR=atom` in your `.env.local` file, and Create React App will respect that.
 
+#### `noopServiceWorkerMiddleware(): ExpressMiddleware`
+
+Returns Express middleware that serves a `/service-worker.js` that resets any previously set service worker configuration. Useful for development.
+
 #### `openBrowser(url: string): boolean`
 
 Attempts to open the browser with a given URL.<br>
@@ -279,7 +283,7 @@ Returns a Promise resolving to either `defaultPort` or next available port if th
 
 Creates a Webpack compiler instance for WebpackDevServer with built-in helpful messages. Takes the `require('webpack')` entry point as the first argument. To provide the `urls` argument, use `prepareUrls()` described below.
 
-##### `prepareProxy(proxySetting: string): Object`
+##### `prepareProxy(proxySetting: string, appPublicFolder: string): Object`
 
 Creates a WebpackDevServer `proxy` configuration object from the `proxy` setting in `package.json`.
 
