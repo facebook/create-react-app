@@ -66,8 +66,12 @@ function forceUpdateAll(types) {
         if (!inst._instance) {
           return;
         }
-        const { type, type: { name } } = inst._currentElement;
-        if (types.find(t => t === type || t.name === name)) {
+        const { type, type: { __hot__id } } = inst._currentElement;
+        if (
+          types.find(
+            t => t === type || (__hot__id && t.__hot__id === __hot__id)
+          )
+        ) {
           nodes.push(getNodeFromInstance(inst));
         }
         const updater = inst._instance.updater;

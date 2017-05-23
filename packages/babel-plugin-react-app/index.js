@@ -65,6 +65,21 @@ function exportHoistedFunctionCallProxy(t, name, generatedName) {
   });
 }
 
+function decorateFunctionId(t, name, generatedName) {
+  return template(
+    `
+    try {
+      Object.defineProperty(NAME, '__hot__id', {
+        value: GEN_NAME
+      });
+    } catch (_ignored) {}
+    `
+  )({
+    GEN_NAME: t.StringLiteral(generatedName),
+    NAME: t.Identifier(name),
+  });
+}
+
 module.exports = function({ types: t }) {
   return {
     visitor: {
@@ -90,6 +105,7 @@ module.exports = function({ types: t }) {
           ),
           decorateFunctionName(t, name, generatedName),
           exportHoistedFunctionCallProxy(t, name, generatedName),
+          decorateFunctionId(t, name, generatedName),
           template(
             `
             if (!module.hot.data) {
