@@ -14,7 +14,7 @@ const autoprefixer = require('autoprefixer');
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
-const WebpackMd5Hash = require('webpack-md5-hash');
+const NameAllModulesPlugin = require('name-all-modules-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -264,6 +264,41 @@ module.exports = {
     ],
   },
   plugins: [
+    // configuration for vendor splitting and long term caching
+    // more info: https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
+    new webpack.NamedModulesPlugin(),
+    new webpack.NamedChunksPlugin(chunk => {
+      if (chunk.name) {
+        return chunk.name;
+      }
+      return chunk.modules
+        .map(m => path.relative(m.context, m.request))
+        .join('_');
+    }),
+    new webpack.optimize.CommonsChunkPlugin(
+      // Check if vendor file exists, if it does,
+      // generate a seperate chucks for vendor
+      // else don't generate any common chunck
+      checkIfVendorFileExists
+        ? {
+            name: 'vendor',
+            minChunks: Infinity,
+          }
+        : { names: [] }
+    ),
+    // We need to extract out the runtime into a separate manifest file.
+    // more info: https://webpack.js.org/guides/code-splitting-libraries/#manifest-file
+    new webpack.optimize.CommonsChunkPlugin(
+      // Check if vendor file exists, if it does,
+      // generate a seperate chucks for manifest file
+      // else don't generate any common chunck
+      checkIfVendorFileExists
+        ? {
+            name: 'manifest',
+          }
+        : { names: [] }
+    ),
+    new NameAllModulesPlugin(),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -292,17 +327,6 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
-    // We need to extract out the runtime into a separate manifest file.
-    // more info: https://webpack.js.org/guides/code-splitting-libraries/#manifest-file
-    new webpack.optimize.CommonsChunkPlugin({
-      // Check if vendor file exists, if it does,
-      // generate a seperate chucks for vendor and manifest file
-      // else don't generate any common chunck
-      names: checkIfVendorFileExists ? ['vendor', 'manifest'] : [],
-    }),
-    // Need this plugin for deterministic hashing
-    // until this issue is resolved: https://github.com/webpack/webpack/issues/1315
-    new WebpackMd5Hash(),
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
