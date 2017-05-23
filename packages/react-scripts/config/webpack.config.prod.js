@@ -197,6 +197,12 @@ module.exports = {
         },
         // @remove-on-eject-end
       },
+      // "css-object" loader for css-vars.js
+      {
+        test: /\.css$/,
+        use: [require.resolve('css-object-loader')],
+        include: paths.cssVarsJs,
+      },
       // The notation here is somewhat confusing.
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
