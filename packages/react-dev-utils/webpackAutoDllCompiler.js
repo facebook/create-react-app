@@ -30,10 +30,38 @@ class WebpackAdditionalSourceHashPlugin {
 
 module.exports = ({ mainConfig, dllConfig, paths }) => new Promise(resolve => {
   const dllHash = getDllHash(paths.dllSrc);
+  if (dllHash === false) {
+    // we cannot find dllSrc.
+    // continue without enabling dll feature.
+    return resolve(mainConfig);
+  }
+
+  //start the procedure for building dll bundle
+  clearConsole();
   const dllPath = paths.dllPath;
   const dllBundleFilePath = path.join(dllPath, dllHash + '.js');
   const dllManifestFilePath = path.join(dllPath, dllHash + '.json');
   const config = dllConfig(dllHash);
+  console.log('Checking if ' + dllHash + ' dll bundle exists');
+  if (dllExists()) {
+    console.log(chalk.green('Dll bundle is up to date and safe to use!'));
+    // Just run the main compiler if dll bundler is up to date
+    return resolve(resolveConfig(mainConfig));
+  }
+  console.log('Dll bundle needs to be compiled...');
+  // Read dll path for stale files
+  fs.readdir(dllPath, (err, files) => {
+    cleanUpStaleFiles(files);
+
+    console.log('Compiling dll bundle for faster rebuilds...');
+    webpack(config).run((err, stats) => {
+      checkForErrors(err, stats);
+
+      // When the process still run until here, there are no errors :)
+      console.log(chalk.green('Dll bundle compiled successfully!'));
+      resolve(resolveConfig(mainConfig)); // Let the main compiler do its job
+    });
+  });
 
   function dllExists() {
     return fs.existsSync(dllManifestFilePath) &&
@@ -100,33 +128,6 @@ module.exports = ({ mainConfig, dllConfig, paths }) => new Promise(resolve => {
       return false;
     }
   }
-
-  if (!dllHash) {
-    // false dllHash means that we cannot find dllSrc.
-    // continue without enabling dll feature.
-    return resolve(mainConfig);
-  }
-  clearConsole();
-  console.log('Checking if ' + dllHash + ' dll bundle exists');
-  if (dllExists()) {
-    console.log(chalk.green('Dll bundle is up to date and safe to use!'));
-    // Just run the main compiler if dll bundler is up to date
-    return resolve(resolveConfig(mainConfig));
-  }
-  console.log('Dll bundle needs to be compiled...');
-  // Read dll path for stale files
-  return fs.readdir(dllPath, (err, files) => {
-    cleanUpStaleFiles(files);
-
-    console.log('Compiling dll bundle for faster rebuilds...');
-    webpack(config).run((err, stats) => {
-      checkForErrors(err, stats);
-
-      // When the process still run until here, there are no errors :)
-      console.log(chalk.green('Dll bundle compiled successfully!'));
-      resolve(resolveConfig(mainConfig)); // Let the main compiler do its job
-    });
-  });
 });
 
 function printErrors(summary, errors) {
