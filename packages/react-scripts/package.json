@@ -53,6 +53,7 @@
     "promise": "7.1.1",
     "react-dev-utils": "^1.0.3",
     "react-error-overlay": "^1.0.3",
+    "script-ext-html-webpack-plugin": "^1.8.0",
     "style-loader": "0.17.0",
     "sw-precache-webpack-plugin": "0.9.1",
     "url-loader": "0.5.8",
