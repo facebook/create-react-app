@@ -1,3 +1,63 @@
+## 1.0.5 (May 22, 2017)
+
+#### :bug: Bug Fix
+* `react-dev-utils`, `react-scripts`
+
+  * [#2326](https://github.com/facebookincubator/create-react-app/pull/2326) Files in `public/` folder should not be requested through proxy. ([@gaearon](https://github.com/gaearon))
+
+#### :nail_care: Enhancement
+* `react-dev-utils`
+
+  * [#2327](https://github.com/facebookincubator/create-react-app/pull/2327) Limit console warnings to 5 files at most. ([@gaearon](https://github.com/gaearon))
+
+* `eslint-config-react-app`
+
+  * [#2325](https://github.com/facebookincubator/create-react-app/pull/2325) Allow declaring variables before use in a scope above. ([@gaearon](https://github.com/gaearon))
+
+#### :house: Internal
+* `react-dev-utils`, `react-scripts`
+
+  * [#2320](https://github.com/facebookincubator/create-react-app/pull/2320) Remove unnecessary dependencies. ([@pmadar](https://github.com/pmadar))
+
+#### Committers: 2
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Pavol Madar ([pmadar](https://github.com/pmadar))
+
+### Migrating from 1.0.4 to 1.0.5
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.5
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.5
+```
+
+## 1.0.4 (May 22, 2017)
+
+#### :bug: Bug Fix
+
+* `react-error-overlay`
+  * Fix a regression in published package.
+
+### Migrating from 1.0.3 to 1.0.4
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.4
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.4
+```
+
 ## 1.0.3 (May 21, 2017)
 
 #### :bug: Bug Fix

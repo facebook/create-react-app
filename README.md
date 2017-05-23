@@ -65,6 +65,7 @@ my-app/
   public/
     favicon.ico
     index.html
+    manifest.json
   src/
     App.css
     App.js
@@ -72,6 +73,7 @@ my-app/
     index.css
     index.js
     logo.svg
+    registerServiceWorker.js
 ```
 
 No configuration or complicated folder structures, just the files you need to build your app.<br>
@@ -244,7 +246,6 @@ Notable alternatives also include:
 * [aik](https://github.com/d4rkr00t/aik)
 * [react-app](https://github.com/kriasoft/react-app)
 * [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
-* [tarec](https://github.com/geowarin/tarec)
 * [sku](https://github.com/seek-oss/sku)
 
 You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
