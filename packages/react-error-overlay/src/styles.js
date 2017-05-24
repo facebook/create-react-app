@@ -1,43 +1,61 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 /* @flow */
 const black = '#293238',
   darkGray = '#878e91',
-  lightGray = '#fafafa',
   red = '#ce1126',
+  redTransparent = 'rgba(206, 17, 38, 0.05)',
   lightRed = '#fccfcf',
-  yellow = '#fbf5b4';
+  yellow = '#fbf5b4',
+  yellowTransparent = 'rgba(251, 245, 180, 0.3)',
+  white = '#ffffff';
 
 const iframeStyle = {
-  'background-color': lightGray,
   position: 'fixed',
-  top: '1em',
-  left: '1em',
-  bottom: '1em',
-  right: '1em',
-  width: 'calc(100% - 2em)',
-  height: 'calc(100% - 2em)',
+  top: '0',
+  left: '0',
+  width: '100%',
+  height: '100%',
   border: 'none',
-  'border-radius': '3px',
-  'box-shadow': '0 0 6px 0 rgba(0, 0, 0, 0.5)',
-  'z-index': 1337,
+  'z-index': 2147483647 - 1, // below the compile error overlay
 };
 
 const overlayStyle = {
+  width: '100%',
+  height: '100%',
   'box-sizing': 'border-box',
-  padding: '4rem',
-  'font-family': 'Consolas, Menlo, monospace',
-  color: black,
-  'white-space': 'pre-wrap',
-  overflow: 'auto',
+  'text-align': 'center',
+  'background-color': white,
+};
+
+const containerStyle = {
+  position: 'relative',
+  display: 'inline-flex',
+  'flex-direction': 'column',
+  height: '100%',
+  width: '1024px',
+  'max-width': '100%',
   'overflow-x': 'hidden',
+  'overflow-y': 'auto',
+  padding: '0.5rem',
+  'box-sizing': 'border-box',
+  'text-align': 'left',
+  'font-family': 'Consolas, Menlo, monospace',
+  'font-size': '11px',
+  'white-space': 'pre-wrap',
   'word-break': 'break-word',
   'line-height': 1.5,
+  color: black,
 };
 
 const hintsStyle = {
-  'font-size': '0.8em',
-  'margin-top': '-3em',
-  'margin-bottom': '3em',
-  'text-align': 'right',
   color: darkGray,
 };
 
@@ -47,34 +65,38 @@ const hintStyle = {
 };
 
 const closeButtonStyle = {
-  'font-size': '26px',
   color: black,
-  padding: '0.5em 1em',
+  'line-height': '1rem',
+  'font-size': '1.5rem',
+  padding: '1rem',
   cursor: 'pointer',
   position: 'absolute',
   right: 0,
   top: 0,
 };
 
-const additionalStyle = {
-  'margin-bottom': '1.5em',
-  'margin-top': '-4em',
+const additionalChildStyle = {
+  'margin-bottom': '0.5rem',
 };
 
 const headerStyle = {
-  'font-size': '1.7em',
-  'font-weight': 'bold',
+  'font-size': '2em',
+  'font-family': 'sans-serif',
   color: red,
   'white-space': 'pre-wrap',
+  // Top bottom margin spaces header
+  // Right margin revents overlap with close button
+  margin: '0 2rem 0.75rem 0',
+  flex: '0 0 auto',
+  'max-height': '50%',
+  overflow: 'auto',
 };
 
-const functionNameStyle = {
-  'margin-top': '1em',
-  'font-size': '1.2em',
-};
+const functionNameStyle = {};
 
 const linkStyle = {
   'font-size': '0.9em',
+  'margin-bottom': '0.9em',
 };
 
 const anchorStyle = {
@@ -84,11 +106,12 @@ const anchorStyle = {
 
 const traceStyle = {
   'font-size': '1em',
+  flex: '0 1 auto',
+  'min-height': '0px',
+  overflow: 'auto',
 };
 
-const depStyle = {
-  'font-size': '1.2em',
-};
+const depStyle = {};
 
 const primaryErrorStyle = {
   'background-color': lightRed,
@@ -98,22 +121,33 @@ const secondaryErrorStyle = {
   'background-color': yellow,
 };
 
-const omittedFramesStyle = {
+const omittedFramesCollapsedStyle = {
   color: black,
-  'font-size': '0.9em',
-  margin: '1.5em 0',
   cursor: 'pointer',
+  'margin-bottom': '1.5em',
 };
 
-const preStyle = {
+const omittedFramesExpandedStyle = {
+  color: black,
+  cursor: 'pointer',
+  'margin-bottom': '0.6em',
+};
+
+const _preStyle = {
   display: 'block',
   padding: '0.5em',
-  'margin-top': '1.5em',
-  'margin-bottom': '0px',
+  'margin-top': '0.5em',
+  'margin-bottom': '0.5em',
   'overflow-x': 'auto',
-  'font-size': '1.1em',
-  'white-space': 'pre',
+  'white-space': 'pre-wrap',
+  'border-radius': '0.25rem',
 };
+const primaryPreStyle = Object.assign({}, _preStyle, {
+  'background-color': redTransparent,
+});
+const secondaryPreStyle = Object.assign({}, _preStyle, {
+  'background-color': yellowTransparent,
+});
 
 const toggleStyle = {
   'margin-bottom': '1.5em',
@@ -130,15 +164,14 @@ const hiddenStyle = {
 };
 
 const groupStyle = {
-  'margin-left': '1em',
+  'margin-right': '1em',
 };
 
 const _groupElemStyle = {
-  'background-color': 'inherit',
-  'border-color': '#ddd',
-  'border-width': '1px',
+  'background-color': redTransparent,
+  color: red,
+  border: 'none',
   'border-radius': '4px',
-  'border-style': 'solid',
   padding: '3px 6px',
   cursor: 'pointer',
 };
@@ -146,27 +179,29 @@ const _groupElemStyle = {
 const groupElemLeft = Object.assign({}, _groupElemStyle, {
   'border-top-right-radius': '0px',
   'border-bottom-right-radius': '0px',
-  'margin-right': '0px',
+  'margin-right': '1px',
 });
 
 const groupElemRight = Object.assign({}, _groupElemStyle, {
   'border-top-left-radius': '0px',
   'border-bottom-left-radius': '0px',
-  'margin-left': '-1px',
 });
 
 const footerStyle = {
-  'text-align': 'center',
+  'font-family': 'sans-serif',
   color: darkGray,
+  'margin-top': '0.5rem',
+  flex: '0 0 auto',
 };
 
 export {
+  containerStyle,
   iframeStyle,
   overlayStyle,
   hintsStyle,
   hintStyle,
   closeButtonStyle,
-  additionalStyle,
+  additionalChildStyle,
   headerStyle,
   functionNameStyle,
   linkStyle,
@@ -174,9 +209,11 @@ export {
   traceStyle,
   depStyle,
   primaryErrorStyle,
+  primaryPreStyle,
   secondaryErrorStyle,
-  omittedFramesStyle,
-  preStyle,
+  secondaryPreStyle,
+  omittedFramesCollapsedStyle,
+  omittedFramesExpandedStyle,
   toggleStyle,
   codeStyle,
   hiddenStyle,

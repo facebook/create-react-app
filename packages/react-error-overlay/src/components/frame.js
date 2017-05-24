@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 /* @flow */
 import { enableTabClick } from '../utils/dom/enableTabClick';
 import { createCode } from './code';
@@ -6,7 +15,8 @@ import type { StackFrame } from '../utils/stack-frame';
 import type { FrameSetting, OmitsObject } from './frames';
 import { applyStyles } from '../utils/dom/css';
 import {
-  omittedFramesStyle,
+  omittedFramesExpandedStyle,
+  omittedFramesCollapsedStyle,
   functionNameStyle,
   depStyle,
   linkStyle,
@@ -39,12 +49,14 @@ function getGroupToggle(
     if (hide) {
       text1.textContent = text1.textContent.replace(/▲/, '▶');
       text1.textContent = text1.textContent.replace(/expanded/, 'collapsed');
+      applyStyles(omittedFrames, omittedFramesCollapsedStyle);
     } else {
       text1.textContent = text1.textContent.replace(/▶/, '▲');
       text1.textContent = text1.textContent.replace(/collapsed/, 'expanded');
+      applyStyles(omittedFrames, omittedFramesExpandedStyle);
     }
   });
-  applyStyles(omittedFrames, omittedFramesStyle);
+  applyStyles(omittedFrames, omittedFramesCollapsedStyle);
   return omittedFrames;
 }
 
@@ -73,7 +85,7 @@ function insertBeforeBundle(
   div.addEventListener('click', function() {
     return actionElement.click();
   });
-  applyStyles(div, omittedFramesStyle);
+  applyStyles(div, omittedFramesExpandedStyle);
   div.style.display = 'none';
 
   parent.insertBefore(div, first);
@@ -120,6 +132,7 @@ function frameDiv(
 
   if (typeof onSourceClick === 'function') {
     let handler = onSourceClick;
+    enableTabClick(frameAnchor);
     frameAnchor.style.cursor = 'pointer';
     frameAnchor.addEventListener('click', function() {
       handler();
@@ -273,6 +286,7 @@ function createFrame(
       .indexOf(' ') !== -1;
     if (!isInternalWebpackBootstrapCode) {
       onSourceClick = () => {
+        // Keep this in sync with react-error-overlay/middleware.js
         fetch(
           '/__open-stack-frame-in-editor?fileName=' +
             window.encodeURIComponent(sourceFileName) +

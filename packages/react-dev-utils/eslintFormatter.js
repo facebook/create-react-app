@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 'use strict';
 
 const chalk = require('chalk');
@@ -13,6 +22,7 @@ function isError(message) {
 function formatter(results) {
   let output = '\n';
   let hasErrors = false;
+  let reportContainsErrorRuleIDs = false;
 
   results.forEach(result => {
     let messages = result.messages;
@@ -25,6 +35,9 @@ function formatter(results) {
       if (isError(message)) {
         messageType = 'error';
         hasErrors = true;
+        if (message.ruleId) {
+          reportContainsErrorRuleIDs = true;
+        }
       } else {
         messageType = 'warn';
       }
@@ -61,7 +74,7 @@ function formatter(results) {
     output += `${outputTable}\n\n`;
   });
 
-  if (hasErrors) {
+  if (reportContainsErrorRuleIDs) {
     // Unlike with warnings, we have to do it here.
     // We have similar code in react-scripts for warnings,
     // but warnings can appear in multiple files so we only
@@ -70,7 +83,7 @@ function formatter(results) {
     // we can only be sure it's an ESLint error before exiting
     // this function.
     output += 'Search for the ' +
-      chalk.underline(chalk.red('rule keywords')) +
+      chalk.underline(chalk.red('keywords')) +
       ' to learn more about each error.';
   }
 

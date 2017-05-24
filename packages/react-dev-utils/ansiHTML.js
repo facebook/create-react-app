@@ -15,18 +15,18 @@ var Anser = require('anser');
 // var base00 = 'ffffff'; // Default Background
 var base01 = 'f5f5f5'; // Lighter Background (Used for status bars)
 // var base02 = 'c8c8fa'; // Selection Background
-var base03 = '969896'; // Comments, Invisibles, Line Highlighting
+var base03 = '6e6e6e'; // Comments, Invisibles, Line Highlighting
 // var base04 = 'e8e8e8'; // Dark Foreground (Used for status bars)
 var base05 = '333333'; // Default Foreground, Caret, Delimiters, Operators
 // var base06 = 'ffffff'; // Light Foreground (Not often used)
 // var base07 = 'ffffff'; // Light Background (Not often used)
-var base08 = 'ed6a43'; // Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+var base08 = '881280'; // Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
 // var base09 = '0086b3'; // Integers, Boolean, Constants, XML Attributes, Markup Link Url
 // var base0A = '795da3'; // Classes, Markup Bold, Search Text Background
-var base0B = '183691'; // Strings, Inherited Class, Markup Code, Diff Inserted
-var base0C = '183691'; // Support, Regular Expressions, Escape Characters, Markup Quotes
+var base0B = '1155cc'; // Strings, Inherited Class, Markup Code, Diff Inserted
+var base0C = '994500'; // Support, Regular Expressions, Escape Characters, Markup Quotes
 // var base0D = '795da3'; // Functions, Methods, Attribute IDs, Headings
-var base0E = 'a71d5d'; // Keywords, Storage, Selector, Markup Italic, Diff Changed
+var base0E = 'c80000'; // Keywords, Storage, Selector, Markup Italic, Diff Changed
 // var base0F = '333333'; // Deprecated, Opening/Closing Embedded Language Tags e.g. <?php ?>
 
 // Map ANSI colors from what babel-code-frame uses to base16-github

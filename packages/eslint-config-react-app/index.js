@@ -195,7 +195,14 @@ module.exports = {
         ignoreRestSiblings: true,
       },
     ],
-    'no-use-before-define': ['warn', 'nofunc'],
+    'no-use-before-define': [
+      'warn',
+      {
+        functions: false,
+        classes: false,
+        variables: false,
+      },
+    ],
     'no-useless-computed-key': 'warn',
     'no-useless-concat': 'warn',
     'no-useless-constructor': 'warn',
@@ -210,7 +217,6 @@ module.exports = {
     ],
     'no-with': 'warn',
     'no-whitespace-before-property': 'warn',
-    'operator-assignment': ['warn', 'always'],
     radix: 'warn',
     'require-yield': 'warn',
     'rest-spread-spacing': ['warn', 'never'],
@@ -225,12 +231,12 @@ module.exports = {
       // {
       //   object: 'require',
       //   property: 'ensure',
-      //   message: 'Please use import() instead. More info: https://webpack.js.org/guides/code-splitting-import/#dynamic-import',
+      //   message: 'Please use import() instead. More info: https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting',
       // },
       {
         object: 'System',
         property: 'import',
-        message: 'Please use import() instead. More info: https://webpack.js.org/guides/code-splitting-import/#dynamic-import',
+        message: 'Please use import() instead. More info: https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting',
       },
     ],
 
@@ -283,7 +289,8 @@ module.exports = {
 
     // https://github.com/gajus/eslint-plugin-flowtype
     'flowtype/define-flow-type': 'warn',
-    'flowtype/require-valid-file-annotation': 'warn',
+    // TODO: Reenable once https://github.com/gajus/eslint-plugin-flowtype/issues/165 is fixed
+    //'flowtype/require-valid-file-annotation': 'warn',
     'flowtype/use-flow-type': 'warn',
   },
 };

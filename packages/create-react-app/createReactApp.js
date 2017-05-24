@@ -160,7 +160,34 @@ function createApp(name, verbose, version, template) {
   const originalDirectory = process.cwd();
   process.chdir(root);
 
-  run(root, appName, version, verbose, originalDirectory, template);
+  if (!semver.satisfies(process.version, '>=6.0.0')) {
+    console.log(
+      chalk.yellow(
+        `You are using Node ${process.version} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
+          `Please update to Node 6 or higher for a better, fully supported experience.\n`
+      )
+    );
+    // Fall back to latest supported react-scripts on Node 4
+    version = 'react-scripts@0.9.x';
+  }
+
+  const useYarn = shouldUseYarn();
+  if (!useYarn) {
+    const npmInfo = checkNpmVersion();
+    if (!npmInfo.hasMinNpm) {
+      if (npmInfo.npmVersion) {
+        console.log(
+          chalk.yellow(
+            `You are using npm ${npmInfo.npmVersion} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
+              `Please update to npm 3 or higher for a better, fully supported experience.\n`
+          )
+        );
+      }
+      // Fall back to latest supported react-scripts for npm 3
+      version = 'react-scripts@0.9.x';
+    }
+  }
+  run(root, appName, version, verbose, originalDirectory, template, useYarn);
 }
 
 function shouldUseYarn() {
@@ -190,7 +217,6 @@ function install(useYarn, dependencies, verbose, isOnline) {
         console.log();
       }
     } else {
-      checkNpmVersion();
       command = 'npm';
       args = ['install', '--save', '--save-exact'].concat(dependencies);
     }
@@ -212,13 +238,19 @@ function install(useYarn, dependencies, verbose, isOnline) {
   });
 }
 
-function run(root, appName, version, verbose, originalDirectory, template) {
+function run(
+  root,
+  appName,
+  version,
+  verbose,
+  originalDirectory,
+  template,
+  useYarn
+) {
   const packageToInstall = getInstallPackage(version);
   const allDependencies = ['react', 'react-dom', packageToInstall];
 
   console.log('Installing packages. This might take a couple minutes.');
-
-  const useYarn = shouldUseYarn();
   getPackageName(packageToInstall)
     .then(packageName => checkIfOnline(useYarn).then(isOnline => ({
       isOnline: isOnline,
@@ -253,6 +285,15 @@ function run(root, appName, version, verbose, originalDirectory, template) {
       );
       const init = require(scriptsPath);
       init(root, appName, verbose, originalDirectory, template);
+
+      if (version === 'react-scripts@0.9.x') {
+        console.log(
+          chalk.yellow(
+            `\nNote: the project was boostrapped with an old unsupported version of tools.\n` +
+              `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
+          )
+        );
+      }
     })
     .catch(reason => {
       console.log();
@@ -399,22 +440,17 @@ function getPackageName(installPackage) {
 
 function checkNpmVersion() {
   let hasMinNpm = false;
+  let npmVersion = null;
   try {
-    const npmVersion = execSync('npm --version').toString();
+    npmVersion = execSync('npm --version').toString().trim();
     hasMinNpm = semver.gte(npmVersion, '3.0.0');
   } catch (err) {
-    return;
+    // ignore
   }
-
-  if (!hasMinNpm) {
-    console.error(
-      chalk.red(
-        'Create React App requires npm 3 or higher. \n' +
-          'Please update your version of npm.'
-      )
-    );
-    process.exit(1);
-  }
+  return {
+    hasMinNpm: hasMinNpm,
+    npmVersion: npmVersion,
+  };
 }
 
 function checkNodeVersion(packageName) {

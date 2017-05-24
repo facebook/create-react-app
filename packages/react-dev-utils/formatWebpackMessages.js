@@ -65,7 +65,8 @@ function formatMessage(message, isError) {
       lines[1]
         .replace("Cannot resolve 'file' or 'directory' ", '')
         .replace('Cannot resolve module ', '')
-        .replace('Error: ', ''),
+        .replace('Error: ', '')
+        .replace('[CaseSensitivePathsPlugin] ', ''),
     ];
   }
 

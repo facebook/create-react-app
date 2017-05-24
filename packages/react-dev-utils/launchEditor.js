@@ -11,6 +11,7 @@
 var fs = require('fs');
 var path = require('path');
 var child_process = require('child_process');
+var os = require('os');
 var chalk = require('chalk');
 var shellQuote = require('shell-quote');
 
@@ -43,7 +44,8 @@ function addWorkspaceToArgumentsIfExists(args, workspace) {
 }
 
 function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
-  switch (path.basename(editor)) {
+  var editorBasename = path.basename(editor).replace(/\.(exe|cmd|bat)$/i, '');
+  switch (editorBasename) {
     case 'vim':
     case 'mvim':
       return [fileName, '+' + lineNumber];
@@ -152,6 +154,20 @@ function launchEditor(fileName, lineNumber) {
   if (!editor) {
     printInstructions(fileName, null);
     return;
+  }
+
+  if (
+    process.platform === 'linux' &&
+    fileName.startsWith('/mnt/') &&
+    /Microsoft/i.test(os.release())
+  ) {
+    // Assume WSL / "Bash on Ubuntu on Windows" is being used, and
+    // that the file exists on the Windows file system.
+    // `os.release()` is "4.4.0-43-Microsoft" in the current release
+    // build of WSL, see: https://github.com/Microsoft/BashOnWindows/issues/423#issuecomment-221627364
+    // When a Windows editor is specified, interop functionality can
+    // handle the path translation, but only if a relative path is used.
+    fileName = path.relative('', fileName);
   }
 
   var workspace = null;
