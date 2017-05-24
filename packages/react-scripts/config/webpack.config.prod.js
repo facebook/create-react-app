@@ -12,8 +12,11 @@
 
 const autoprefixer = require('autoprefixer');
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
+const NameAllModulesPlugin = require('name-all-modules-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
@@ -53,6 +56,18 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
     { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
+// Check if vendor file exists
+const checkIfVendorFileExists = fs.existsSync(paths.appVendorJs);
+// If the vendor file exists, add an entry point for vendor,
+// and a seperate entry for polyfills and app index file,
+// otherwise keep only polyfills and app index.
+const appEntryFiles = [require.resolve('./polyfills'), paths.appIndexJs];
+const entryFiles = checkIfVendorFileExists
+  ? {
+      vendor: paths.appVendorJs,
+      main: appEntryFiles,
+    }
+  : appEntryFiles;
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -63,8 +78,8 @@ module.exports = {
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
   devtool: 'source-map',
-  // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  // Add the entry point based on whether vendor file exists.
+  entry: entryFiles,
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -250,6 +265,41 @@ module.exports = {
     ],
   },
   plugins: [
+    // configuration for vendor splitting and long term caching
+    // more info: https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
+    new webpack.NamedModulesPlugin(),
+    new webpack.NamedChunksPlugin(chunk => {
+      if (chunk.name) {
+        return chunk.name;
+      }
+      return chunk.modules
+        .map(m => path.relative(m.context, m.request))
+        .join('_');
+    }),
+    new webpack.optimize.CommonsChunkPlugin(
+      // Check if vendor file exists, if it does,
+      // generate a seperate chucks for vendor
+      // else don't generate any common chunck
+      checkIfVendorFileExists
+        ? {
+            name: 'vendor',
+            minChunks: Infinity,
+          }
+        : { names: [] }
+    ),
+    // We need to extract out the runtime into a separate manifest file.
+    // more info: https://webpack.js.org/guides/code-splitting-libraries/#manifest-file
+    new webpack.optimize.CommonsChunkPlugin(
+      // Check if vendor file exists, if it does,
+      // generate a seperate chucks for manifest file
+      // else don't generate any common chunck
+      checkIfVendorFileExists
+        ? {
+            name: 'manifest',
+          }
+        : { names: [] }
+    ),
+    new NameAllModulesPlugin(),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -272,6 +322,11 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true,
       },
+    }),
+    // This ensures that the browser will load the scripts in parallel,
+    // but execute them in the order they appear in the document.
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'defer',
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
