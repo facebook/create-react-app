@@ -11,5 +11,5 @@ import React from 'react';
 import styles from './assets/style.module.css';
 
 export default () => (
-  <p className={styles.cssModuleInclusion}>We love useless text.</p>
+  <p className={styles.cssModulesInclusion}>CSS Modules are working!</p>
 );
