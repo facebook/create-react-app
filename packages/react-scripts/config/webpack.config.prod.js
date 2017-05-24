@@ -320,6 +320,7 @@ module.exports = {
       },
       minify: true,
       navigateFallback: publicUrl + '/index.html',
+      navigateFallbackWhitelist: [/^(?!\/__).*/],
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
       // Work around Windows path issue in SWPrecacheWebpackPlugin:
       // https://github.com/facebookincubator/create-react-app/issues/2235
