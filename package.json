@@ -5,14 +5,29 @@
     "changelog": "lerna-changelog",
     "create-react-app": "tasks/cra.sh",
     "e2e": "tasks/e2e-simple.sh",
-    "postinstall": "lerna bootstrap",
+    "postinstall": "lerna bootstrap && cd packages/react-error-overlay/ && npm run build:prod",
     "publish": "tasks/release.sh",
     "start": "node packages/react-scripts/scripts/start.js",
-    "test": "node packages/react-scripts/scripts/test.js --env=jsdom"
+    "test": "node packages/react-scripts/scripts/test.js --env=jsdom",
+    "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
-    "eslint": "3.16.1",
+    "@types/jest": "^19.2.3",
+    "@types/node": "^7.0.21",
+    "@types/react": "^15.0.24",
+    "@types/react-dom": "^15.5.0",
+    "eslint": "3.19.0",
+    "husky": "^0.13.2",
     "lerna": "2.0.0-beta.38",
-    "lerna-changelog": "^0.2.3"
+    "lerna-changelog": "^0.2.3",
+    "lint-staged": "^3.3.1",
+    "prettier": "^0.21.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --trailing-comma es5 --single-quote --write",
+      "git add"
+    ]
   }
 }

@@ -1,4 +1,4 @@
-# `react-scripts-ts` [![npm version](https://badge.fury.io/js/react-scripts-ts.svg)](https://badge.fury.io/js/react-scripts-ts)
+# `react-scripts-ts` [![npm version](https://badge.fury.io/js/react-scripts-ts.svg)](https://badge.fury.io/js/react-scripts-ts) [![Build Status](https://travis-ci.org/wmonk/create-react-app-typescript.svg?branch=master)](https://travis-ci.org/wmonk/create-react-app-typescript)
 
 Create React apps (with Typescript) with no build configuration.
 
@@ -22,6 +22,12 @@ When you run `npm run build` the terminal will output the error, including the h
 ![CodeHighlight](https://cloud.githubusercontent.com/assets/175278/22310149/1ee66ccc-e346-11e6-83ff-e3a053701fb4.gif)
 
 ## Changelog
+
+### 2.0.1
+* Fix issue with jest finding test files
+
+### 2.0.0
+* Upgrade to [`react-scripts@1.x.x`](https://github.com/facebookincubator/create-react-app/blob/0d1521aabf5a0201ea1bcccc33e286afe048f820/CHANGELOG.md)
 
 ### 1.4.0
 * Upgrade to typescript@2.3.2 - thanks to @patrick91

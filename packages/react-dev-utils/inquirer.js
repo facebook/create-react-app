@@ -1,5 +1,6 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
@@ -8,9 +9,6 @@
 
 'use strict';
 
-const babelJest = require('babel-jest');
+var inquirer = require('inquirer');
 
-module.exports = babelJest.createTransformer({
-  presets: [require.resolve('babel-preset-react-app')],
-  babelrc: false
-});
+module.exports = inquirer;
