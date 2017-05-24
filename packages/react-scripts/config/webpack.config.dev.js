@@ -203,12 +203,6 @@ module.exports = {
           cacheDirectory: true,
         },
       },
-      // "css-object" loader for css-vars.js
-      {
-        test: /\.css$/,
-        use: [require.resolve('css-object-loader')],
-        include: paths.cssVarsJs,
-      },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
       // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -230,8 +224,10 @@ module.exports = {
               ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
               plugins: () => [
                 require('postcss-import'),
-                require('postcss-cssnext'),
                 require('postcss-flexbugs-fixes'),
+                require('postcss-custom-properties'),
+                require('postcss-nested'),
+                require('postcss-color-function'),
                 autoprefixer({
                   browsers: [
                     '>1%',
