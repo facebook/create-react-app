@@ -10,7 +10,7 @@ Following these guidelines helps to communicate that you respect the time of the
 
 As much as possible, we try to avoid adding configuration and flags. The purpose of this tool is to provide the best experience for people getting started with React, and this will always be our first priority. This means that sometimes we [sacrifice additional functionality](https://gettingreal.37signals.com/ch05_Half_Not_Half_Assed.php) (such as server rendering) because it is too hard to solve it in a way that wouldn’t require any configuration.
 
-We prefer **convention, heuristics, or interactivity** over configuration.  
+We prefer **convention, heuristics, or interactivity** over configuration.<br>
 Here’s a few examples of them in action.
 
 ### Convention
@@ -41,6 +41,36 @@ Please **ask first** if somebody else is already working on this or the core dev
 
 Please also provide a **test plan**, i.e. specify how you verified that your addition works.
 
+## Folder Structure of Create React App
+`create-react-app` is a monorepo, meaning it is divided into independent sub-packages.<br>
+These packages can be found in the [`packages/`](https://github.com/facebookincubator/create-react-app/tree/master/packages) directory.
+
+### Overview of directory structure
+```
+packages/
+  babel-preset-react-app/
+  create-react-app/
+  eslint-config-react-app/
+  react-dev-utils/
+  react-scripts/
+```
+### Package Descriptions
+#### [babel-preset-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/babel-preset-react-app)
+This package is a babel preset intended to be used with `react-scripts`.<br>
+It targets platforms that React is designed to support (IE 9+) and enables experimental features used heavily at Facebook.<br>
+This package is enabled by default for all `create-react-app` scaffolded applications.
+#### [create-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/create-react-app)
+The global CLI command code can be found in this directory, and shouldn't often be changed. It should run on Node 0.10+.
+#### [eslint-config-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/eslint-config-react-app)
+This package contains a conservative set of rules focused on making errors apparent and enforces no style rules.<br>
+This package is enabled by default for all `create-react-app` scaffolded applications.
+#### [react-dev-utils](https://github.com/facebookincubator/create-react-app/tree/master/packages/react-dev-utils)
+This package contains utilities used for `react-scripts` and sister packages.<br>
+Its main purpose is to conceal code which the user shouldn't be burdened with upon ejecting.
+#### [react-scripts](https://github.com/facebookincubator/create-react-app/tree/master/packages/react-scripts)
+This package is the heart of the project, which contains the scripts for setting up the development server, building production builds, configuring all software used, etc.<br>
+All functionality must be retained (and configuration given to the user) if they choose to eject.
+
 ## Setting Up a Local Copy
 
 1. Clone the repo with `git clone https://github.com/facebookincubator/create-react-app`
@@ -57,6 +87,8 @@ cd my-app
 ```
 
 and then run `npm start` or `npm run build`.
+
+*Note: if you are using yarn, we suggest that you use `yarn install --no-lockfile` instead of the bare `yarn` or `yarn install` because we [intentionally](https://github.com/facebookincubator/create-react-app/pull/2014#issuecomment-300811661) do not ignore or add yarn.lock to our repo.*
 
 ## Cutting a Release
 

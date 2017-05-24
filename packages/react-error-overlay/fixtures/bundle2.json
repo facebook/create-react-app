@@ -1,0 +1,122 @@
+[
+  {
+    "functionName": "div",
+    "fileName": "/static/js/bundle.js",
+    "lineNumber": 41466,
+    "columnNumber": null,
+    "_originalFunctionName": "div",
+    "_originalFileName": "B.js",
+    "_originalLineNumber": 8,
+    "_originalColumnNumber": null,
+    "_scriptCode": [
+      {
+        "lineNumber": 41466,
+        "content": "            'div',",
+        "highlight": true
+      }
+    ],
+    "_originalScriptCode": [
+      {
+        "lineNumber": 8,
+        "content": "          <div>{v}</div>",
+        "highlight": true
+      }
+    ]
+  },
+  {
+    "functionName": "B",
+    "fileName": "/static/js/bundle.js",
+    "lineNumber": 41395,
+    "columnNumber": null,
+    "_originalFunctionName": "B",
+    "_originalFileName": "A.js",
+    "_originalLineNumber": 6,
+    "_originalColumnNumber": null,
+    "_scriptCode": [
+      {
+        "lineNumber": 41395,
+        "content": "      return _react2.default.createElement(_B2.default, {",
+        "highlight": true
+      }
+    ],
+    "_originalScriptCode": [
+      {
+        "lineNumber": 6,
+        "content": "    return (<B/>)",
+        "highlight": true
+      }
+    ]
+  },
+  {
+    "functionName": "A",
+    "fileName": "/static/js/bundle.js",
+    "lineNumber": 26009,
+    "columnNumber": null,
+    "_originalFunctionName": "A",
+    "_originalFileName": "App.js",
+    "_originalLineNumber": 8,
+    "_originalColumnNumber": null,
+    "_scriptCode": [
+      {
+        "lineNumber": 26009,
+        "content": "      var Ac = _react2.default.createElement(_A2.default, {",
+        "highlight": true
+      }
+    ],
+    "_originalScriptCode": [
+      {
+        "lineNumber": 8,
+        "content": "    const Ac = <A />",
+        "highlight": true
+      }
+    ]
+  },
+  {
+    "functionName": "div",
+    "fileName": "/static/js/bundle.js",
+    "lineNumber": 26017,
+    "columnNumber": null,
+    "_originalFunctionName": "div",
+    "_originalFileName": "App.js",
+    "_originalLineNumber": 10,
+    "_originalColumnNumber": null,
+    "_scriptCode": [
+      {
+        "lineNumber": 26017,
+        "content": "        'div',",
+        "highlight": true
+      }
+    ],
+    "_originalScriptCode": [
+      {
+        "lineNumber": 10,
+        "content": "      <div className=\"App\">",
+        "highlight": true
+      }
+    ]
+  },
+  {
+    "functionName": "App",
+    "fileName": "/static/js/bundle.js",
+    "lineNumber": 17412,
+    "columnNumber": null,
+    "_originalFunctionName": "App",
+    "_originalFileName": "index.js",
+    "_originalLineNumber": 6,
+    "_originalColumnNumber": null,
+    "_scriptCode": [
+      {
+        "lineNumber": 17412,
+        "content": "_reactDom2.default.render(_react2.default.createElement(_App2.default, {",
+        "highlight": true
+      }
+    ],
+    "_originalScriptCode": [
+      {
+        "lineNumber": 6,
+        "content": "ReactDOM.render(<App />, document.getElementById('root'));",
+        "highlight": true
+      }
+    ]
+  }
+]
