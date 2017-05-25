@@ -1,3 +1,46 @@
+## 1.0.6 (May 24, 2017)
+
+#### :bug: Bug Fix
+
+* `eslint-config-react-app`, `react-error-overlay`, `react-scripts`
+
+  * [#2346](https://github.com/facebookincubator/create-react-app/pull/2346) Resolve Flow errors in an ESLint plugin. ([@iainbeeston](https://github.com/iainbeeston))
+
+* `react-dev-utils`
+
+  * [#2332](https://github.com/facebookincubator/create-react-app/pull/2332) Fix proxying issues with backends that don't support IPv6. ([@Timer](https://github.com/Timer))
+
+#### :nail_care: Enhancement
+* `react-scripts`
+
+  * [#2347](https://github.com/facebookincubator/create-react-app/pull/2347) Don't precache `/__*` URLs to fix Firebase hosting. ([@ryansully](https://github.com/ryansully))
+
+#### :memo: Documentation
+
+* README
+
+  * [#2334](https://github.com/facebookincubator/create-react-app/pull/2334) Add missing files to the list. ([@jesselpalmer](https://github.com/jesselpalmer))
+
+#### Committers: 4
+- Iain Beeston ([iainbeeston](https://github.com/iainbeeston))
+- Jesse Palmer ([jesselpalmer](https://github.com/jesselpalmer))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Ryan Sullivan ([ryansully](https://github.com/ryansully))
+
+### Migrating from 1.0.5 to 1.0.6
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.6
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.6
+```
+
 ## 1.0.5 (May 22, 2017)
 
 #### :bug: Bug Fix
@@ -341,6 +384,10 @@ Follow these steps if you see errors about missing lint rules in the editor.
 4. Start the editor again
 
 If you still have the problem please file an issue.
+
+#### Some of my tests started crashing because of unhandled rejections
+
+Unhandled Promise rejections will now crash tests. You can fix them by explicitly catching the errors you don’t care about.
 
 #### How to turn my app into a [Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
 
