@@ -1700,6 +1700,7 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
+* Use of `process.env.PUBLIC_URL` with `browserHistory` for matching root path of router to `homepage` can be seen & explained in this [repository](https://github.com/rockchalkwushock/CRA-gh-pages-deployment).
 
 ### Heroku
 
