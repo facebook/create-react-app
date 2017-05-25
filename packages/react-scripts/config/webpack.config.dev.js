@@ -257,6 +257,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      title: `${oem.reactAppOem} Dashboard`,
+      favicon: path.join(paths.appSrc, 'customize', oem.reactAppOem, 'favicon.ico'),
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.

@@ -269,6 +269,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      title: `${oem.reactAppOem} Dashboard`,
+      favicon: path.join(paths.appSrc, 'customize', oem.reactAppOem, 'favicon.ico'),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
