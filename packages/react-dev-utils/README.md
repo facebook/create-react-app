@@ -283,7 +283,7 @@ Returns a Promise resolving to either `defaultPort` or next available port if th
 
 Creates a Webpack compiler instance for WebpackDevServer with built-in helpful messages. Takes the `require('webpack')` entry point as the first argument. To provide the `urls` argument, use `prepareUrls()` described below.
 
-##### `prepareProxy(proxySetting: string): Object`
+##### `prepareProxy(proxySetting: string, appPublicFolder: string): Object`
 
 Creates a WebpackDevServer `proxy` configuration object from the `proxy` setting in `package.json`.
 

@@ -195,7 +195,14 @@ module.exports = {
         ignoreRestSiblings: true,
       },
     ],
-    'no-use-before-define': ['warn', 'nofunc'],
+    'no-use-before-define': [
+      'warn',
+      {
+        functions: false,
+        classes: false,
+        variables: false,
+      },
+    ],
     'no-useless-computed-key': 'warn',
     'no-useless-concat': 'warn',
     'no-useless-constructor': 'warn',
