@@ -21,7 +21,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "autoprefixer": "7.1.0",
+    "autoprefixer": "7.1.1",
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
