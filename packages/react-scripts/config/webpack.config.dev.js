@@ -21,6 +21,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const oem = require('./oem');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -111,7 +112,7 @@ module.exports = {
       // Useful to import modules from the src folder.
       '~': paths.appSrc,
       // This path will be changed in the 'npm run deploy' process.
-      '~customize': path.join(paths.appSrc, 'customize/index'),
+      '~customize': path.join(paths.appSrc, `customize/${oem.customizeEntry}`),
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).

@@ -38,6 +38,10 @@ const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
+// Change customize alias for oem
+const oem = require('../config/oem');
+config.resolve.alias['~customize'] = path.join(paths.appSrc, 'customize', oem.customizeEntry);
+
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
