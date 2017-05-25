@@ -23,6 +23,12 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Changelog
 
+### 2.1.0
+* Update to `tslint@5.2.0` - thanks to @mindjuice
+* Fix test setup issue - thanks to @jonmpqts
+* Add `source-map-loader` - thanks to @Place1
+* Update to `typescript@2.3.3` - thanks to @sjdweb
+
 ### 2.0.1
 * Fix issue with jest finding test files
 
