@@ -9,6 +9,11 @@
 
 'use strict';
 
+// TODO: this is noisy when client is not running
+// but it still gets the job done. Add a silent mode
+// that won't attempt to connect maybe?
+require('react-devtools-core').connectToDevTools();
+
 const highlight = require('./nodeHighlighter');
 
 let forceUpdateCallbacks = [];
@@ -35,9 +40,6 @@ window.__enqueueForceUpdate = function(onSuccess, type) {
 };
 function forceUpdateAll(types) {
   const hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-  if (!hook) {
-    return;
-  }
   const renderersById = hook._renderers;
   const ids = Object.keys(renderersById);
   const renderers = ids.map(id => renderersById[id]);
