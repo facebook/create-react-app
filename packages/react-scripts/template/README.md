@@ -32,6 +32,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
   - [Using a Custom Theme](#using-a-custom-theme)
+- [Adding Internationalization](#adding-internationalization)
+  - [Integrating with React-Intl](#integrating-with-react-intl)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
@@ -679,6 +681,34 @@ We suggest the following approach:
 * Install your own theme npm package as a dependency of your app.
 
 Here is an example of adding a [customized Bootstrap](https://medium.com/@tacomanator/customizing-create-react-app-aa9ffb88165) that follows these steps.
+
+## Adding Internationalization
+
+### Integrating with React-Intl
+
+[React-Intl](https://github.com/yahoo/react-intl) is a popular library for internationalizing React apps. There is also a [babel-plugin](babel-plugin-react-intl) to extract string messages for translation. If you want to add it to Babel configuration, you will need to [eject](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-run-eject) the Create React App project.
+
+Instead of ejecting, you can write some simple scripts to do the same work. Or, just use [react-intl-cra](https://www.npmjs.com/package/react-intl-cra) that simply extracts messages from the command line.
+
+First, let’s install the command-line interface from the npm:
+
+```bash
+npm i react-intl-cra --save-dev
+```
+
+Then in `package.json`, add the following lines to `scripts`:
+
+```diff
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
++   "extract": "react-intl-cra 'src/**/*.js' 'output/messages.json'",
+```
+
+Now, whenever you run `npm run extract`, you will get an output message file as JSON format.
+
+> Note: You can also take a look at [this](https://github.com/evenchange4/react-intl-po-example/blob/master/package.json#L20) demo repository for using react-intl-cra with Creact React App project.
 
 ## Adding Flow
 
