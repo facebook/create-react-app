@@ -204,7 +204,9 @@ module.exports = {
       // for dependencies as we develop our app.
       {
         test: /\.js$/,
-        use: ["source-map-loader"],
+        use: [
+          require.resolve("source-map-loader"),
+        ],
         enforce: "pre"
       },
       // "postcss" loader applies autoprefixer to our CSS.
