@@ -1774,27 +1774,23 @@ When you build the project, Create React App will place the `public` folder cont
 
 ### Now
 
-[now](https://zeit.co/now) offers a zero-configuration single-command deployment.
+[now](https://zeit.co/now) offers a zero-configuration single-command deployment. You can use `now` to deploy your app for free.
 
 1. Install the `now` command-line tool either via the recommended [desktop tool](https://zeit.co/download) or via node with `npm install -g now`.
 
-2. Install `serve` by running `npm install --save serve`.
+2. Build your app by running `npm run build`.
 
-3. Add this line to `scripts` in `package.json`:
+3. Move into the build directory by running `cd build`.
 
-    ```
-    "now-start": "serve -s build/",
-    ```
-
-4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
+4. Run `now --name your-project-name` from within the build directory. You will see a **now.sh** URL in your output like this:
 
     ```
-    > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
+    > Ready! https://your-project-name-tpspyhtdtk.now.sh (copied to clipboard)
     ```
 
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
-Details are available in [this article.](https://zeit.co/blog/now-static)
+Details are available in [this article.](https://zeit.co/blog/unlimited-static)
 
 ### S3 and CloudFront
 
