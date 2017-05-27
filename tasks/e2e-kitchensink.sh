@@ -62,9 +62,6 @@ trap 'set +x; handle_exit' SIGQUIT SIGTERM SIGINT SIGKILL SIGHUP
 # Echo every command being executed
 set -x
 
-# Don't expand globs
-set -f
-
 # Go to root
 cd ..
 root_path=$PWD
@@ -159,13 +156,13 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  npm test -- --no-cache --testPathPattern="/src/"
+  npm test -- --no-cache --testPathPattern=src
 
 # Catch when no tests are detected
 testsList=$(REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
-  npm test -- --no-cache --testPathPattern="/src/" --listTests)
+  npm test -- --no-cache --testPathPattern=src --listTests)
 
 if [[ ${testsList} =~ "[]" ]]; then
   exit 1
@@ -233,7 +230,7 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  npm test -- --no-cache --testPathPattern='/src/'
+  npm test -- --no-cache --testPathPattern=src
 
 # Test "development" environment
 tmp_server_log=`mktemp`
