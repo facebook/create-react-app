@@ -62,6 +62,9 @@ trap 'set +x; handle_exit' SIGQUIT SIGTERM SIGINT SIGKILL SIGHUP
 # Echo every command being executed
 set -x
 
+# Don't expand globs
+set -f
+
 # Go to root
 cd ..
 root_path=$PWD
