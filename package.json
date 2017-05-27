@@ -5,7 +5,8 @@
     "changelog": "lerna-changelog",
     "create-react-app": "tasks/cra.sh",
     "e2e": "tasks/e2e-simple.sh",
-    "postinstall": "lerna bootstrap && cd packages/react-error-overlay/ && npm run build:prod",
+    "e2e:docker": "tasks/local-test.sh",
+    "postinstall": "node bootstrap.js && cd packages/react-error-overlay/ && npm run build:prod",
     "publish": "tasks/release.sh",
     "start": "node packages/react-scripts/scripts/start.js",
     "test": "node packages/react-scripts/scripts/test.js --env=jsdom",
@@ -19,10 +20,10 @@
     "@types/react-dom": "^15.5.0",
     "eslint": "3.19.0",
     "husky": "^0.13.2",
-    "lerna": "2.0.0-beta.38",
+    "lerna": "2.0.0-rc.5",
     "lerna-changelog": "^0.2.3",
     "lint-staged": "^3.3.1",
-    "prettier": "^0.21.0"
+    "prettier": "^1.5.2"
   },
   "lint-staged": {
     "*.js": [
