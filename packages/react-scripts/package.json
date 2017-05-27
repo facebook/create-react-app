@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -48,8 +48,8 @@
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.5",
     "promise": "7.1.1",
-    "react-dev-utils": "^2.0.1",
-    "react-error-overlay": "^1.0.6",
+    "react-dev-utils": "^3.0.0",
+    "react-error-overlay": "^1.0.7",
     "style-loader": "0.17.0",
     "sw-precache-webpack-plugin": "0.9.1",
     "url-loader": "0.5.8",
