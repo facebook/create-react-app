@@ -83,6 +83,17 @@ set -x
 cd ..
 root_path=$PWD
 
+# Clear cache to avoid issues with incorrect packages being used
+if hash yarnpkg 2>/dev/null
+then
+  yarn cache clean
+fi
+
+if hash npm 2>/dev/null
+then
+  npm cache clean
+fi
+
 # Prevent lerna bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
 grep -v "lerna bootstrap" package.json > temp && mv temp package.json
