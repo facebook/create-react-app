@@ -36,6 +36,7 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const webpackAutoDllCompiler = require('react-dev-utils/webpackAutoDllCompiler');
+const compose = require('promise-compose');
 
 const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
@@ -46,12 +47,17 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
-// check dll for updates
-webpackAutoDllCompiler({
-  mainConfig: config,
-  dllConfig,
-  paths,
-}).then(config => measureFileSizesBeforeBuild(
+// This is Promise based composer, it accepts functions that returns
+// function that accepts webpack configuration object
+const configComposer = compose(
+  // check dll for updates
+  webpackAutoDllCompiler({
+    dllConfig,
+    paths,
+  })
+);
+
+configComposer(config).then(config => measureFileSizesBeforeBuild(
   // First, read the current file sizes in build directory.
   // This lets us display how much they changed later.
   paths.appBuild

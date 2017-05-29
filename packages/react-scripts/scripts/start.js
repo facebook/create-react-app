@@ -27,6 +27,7 @@ require('../config/env');
 const fs = require('fs');
 const chalk = require('chalk');
 const webpack = require('webpack');
+const compose = require('promise-compose');
 const WebpackDevServer = require('webpack-dev-server');
 const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
@@ -50,11 +51,15 @@ const isInteractive = process.stdout.isTTY;
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
-webpackAutoDllCompiler({
-  mainConfig: config,
-  dllConfig,
-  paths,
-}).then(config => {
+
+const configComposer = compose(
+  webpackAutoDllCompiler({
+    dllConfig,
+    paths,
+  })
+);
+
+configComposer(config).then(config => {
   // Tools like Cloud9 rely on this.
   const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
   const HOST = process.env.HOST || '0.0.0.0';
