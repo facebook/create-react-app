@@ -22,7 +22,7 @@ temp_module_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_module_path'`
 
 function cleanup {
   echo 'Cleaning up.'
-  ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -s 9
+  ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
   rm -rf "$temp_cli_path" "$temp_app_path" "$temp_module_path" || $CI
