@@ -12,7 +12,7 @@
 // TODO: this is noisy when client is not running
 // but it still gets the job done. Add a silent mode
 // that won't attempt to connect maybe?
-require('react-devtools-core').connectToDevTools();
+require('react-devtools-core');
 
 const highlight = require('./nodeHighlighter');
 
@@ -36,6 +36,21 @@ window.__enqueueForceUpdate = function(onSuccess, type) {
     callbacks.forEach(cb => cb());
     highlight(nodes);
     nodes = [];
+    if (console != null) {
+      if (typeof console.clear === 'function') {
+        console.clear();
+      }
+      if (typeof console.info === 'function') {
+        const names = types
+          .map(type => type.displayName || type.name)
+          .filter(Boolean);
+        if (names.length > 0) {
+          console.info(
+            'Components have been reloaded: ' + names.join(',') + '.'
+          );
+        }
+      }
+    }
   });
 };
 function forceUpdateAll(types) {
