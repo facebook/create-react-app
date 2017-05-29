@@ -1403,7 +1403,7 @@ If your production web server does not support HTTPS, then the service worker
 registration will fail, but the rest of your web app will remain functional.
 
 1. Service workers are [not currently supported](https://jakearchibald.github.io/isserviceworkerready/)
-in all web browsers. Service worker registration [won't be attempted](src/service-worker-registration.js)
+in all web browsers. Service worker registration [won't be attempted](src/registerServiceWorker.js)
 on browsers that lack support.
 
 1. The service worker is only enabled in the [production environment](#deployment),
@@ -1419,7 +1419,7 @@ instructions for one way to test your production build locally and the [deployme
 instructions for using other methods. *Be sure to always use an
 incognito window to avoid complications with your browser cache.*
 
-1. If possible,configure your production environment to serve the generated
+1. If possible, configure your production environment to serve the generated
 `service-worker.js` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
 If that's not possible—[GitHub Pages](#github-pages), for instance, does not
 allow you to change the default 10 minute HTTP cache lifetime—then be aware
@@ -1437,7 +1437,7 @@ app works offline!" message) and also let them know when the service worker has
 fetched the latest updates that will be available the next time they load the
 page (showing a "New content is available; please refresh." message). Showing
 this messages is currently left as an exercise to the developer, but as a
-starting point, you can make use of the logic included in [`src/service-worker-registration.js`](src/service-worker-registration.js), which
+starting point, you can make use of the logic included in [`src/registerServiceWorker.js`](src/registerServiceWorker.js), which
 demonstrates which service worker lifecycle events to listen for to detect each
 scenario, and which as a default, just logs appropriate messages to the
 JavaScript console.
@@ -1774,27 +1774,23 @@ When you build the project, Create React App will place the `public` folder cont
 
 ### Now
 
-[now](https://zeit.co/now) offers a zero-configuration single-command deployment.
+[now](https://zeit.co/now) offers a zero-configuration single-command deployment. You can use `now` to deploy your app for free.
 
 1. Install the `now` command-line tool either via the recommended [desktop tool](https://zeit.co/download) or via node with `npm install -g now`.
 
-2. Install `serve` by running `npm install --save serve`.
+2. Build your app by running `npm run build`.
 
-3. Add this line to `scripts` in `package.json`:
+3. Move into the build directory by running `cd build`.
 
-    ```
-    "now-start": "serve -s build/",
-    ```
-
-4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
+4. Run `now --name your-project-name` from within the build directory. You will see a **now.sh** URL in your output like this:
 
     ```
-    > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
+    > Ready! https://your-project-name-tpspyhtdtk.now.sh (copied to clipboard)
     ```
 
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
-Details are available in [this article.](https://zeit.co/blog/now-static)
+Details are available in [this article.](https://zeit.co/blog/unlimited-static)
 
 ### S3 and CloudFront
 
