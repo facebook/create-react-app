@@ -139,6 +139,29 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
 
   let isFirstCompile = true;
 
+  compiler.plugin('after-compile', (compilation, callback) => {
+    // Order compilation warnings by most recently modified
+    compilation.warnings = [
+      ...compilation.warnings,
+    ].sort((warning1, warning2) => {
+      if (!warning1._lastModifiedDate) {
+        warning1._lastModifiedDate = fs.statSync(
+          warning1.module.resource
+        ).mtime;
+      }
+
+      if (!warning2._lastModifiedDate) {
+        warning2._lastModifiedDate = fs.statSync(
+          warning2.module.resource
+        ).mtime;
+      }
+
+      return warning1._lastModifiedDate < warning2._lastModifiedDate ? 1 : -1;
+    });
+
+    callback();
+  });
+
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
   compiler.plugin('done', stats => {
