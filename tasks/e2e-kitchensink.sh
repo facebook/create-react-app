@@ -69,10 +69,20 @@ root_path=$PWD
 # Clear cache to avoid issues with incorrect packages being used
 if hash yarnpkg 2>/dev/null
 then
-  # AppVeyor uses old version on yarn.
-  # Once updated to 0.24.3 or above install can be removed.
-  npm install -g yarn@latest
-  yarnpkg cache clean
+  # AppVeyor uses an old version of yarn.
+  # Once updated to 0.24.3 or above, the workaround can be removed
+  # and replaced with `yarnpkg cache clean`
+  # Issues: 
+  #    https://github.com/yarnpkg/yarn/issues/2591
+  #    https://github.com/appveyor/ci/issues/1576
+  #    https://github.com/facebookincubator/create-react-app/pull/2400
+  # When removing workaround, you may run into
+  #    https://github.com/facebookincubator/create-react-app/issues/2030
+  case "$(uname -s)" in
+    *CYGWIN*|MSYS*|MINGW*) yarn=yarn.cmd;;
+    *) yarn=yarnpkg;;
+  esac
+  $yarn cache clean
 fi
 
 if hash npm 2>/dev/null
