@@ -68,7 +68,10 @@ root_path=$PWD
 # Clear cache to avoid issues with incorrect packages being used
 if hash yarnpkg 2>/dev/null
 then
-  yarn cache clean
+  # AppVeyor uses old version on yarn.
+  # Once updated to 0.24.3 or above install can be removed.
+  npm install -g yarn@latest
+  yarnpkg cache clean
 fi
 
 if hash npm 2>/dev/null
