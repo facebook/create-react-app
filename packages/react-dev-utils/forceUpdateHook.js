@@ -45,9 +45,7 @@ window.__enqueueForceUpdate = function(onSuccess, type) {
           .map(type => type.displayName || type.name)
           .filter(Boolean);
         if (names.length > 0) {
-          console.info(
-            'Components have been reloaded: ' + names.join(',') + '.'
-          );
+          console.info('Reloaded components: ' + names.join(',') + '.');
         }
       }
     }
