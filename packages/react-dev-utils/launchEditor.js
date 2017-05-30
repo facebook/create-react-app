@@ -72,6 +72,12 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
         ['-g', fileName + ':' + lineNumber],
         workspace
       );
+    case 'webstorm':
+    case 'webstorm64':
+      return addWorkspaceToArgumentsIfExists(
+        ['--line', lineNumber, fileName],
+        workspace
+      );
   }
 
   // For all others, drop the lineNumber until we have
