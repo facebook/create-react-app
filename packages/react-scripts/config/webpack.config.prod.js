@@ -11,6 +11,7 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+const chalk = require('chalk');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -22,6 +23,24 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+
+// Get supported browsers list
+const supportedBrowsers = require(paths.appPackageJson).browserslist;
+if (!supportedBrowsers) {
+  console.error(
+    chalk.red(
+      'Please specify targeted browsers in "package.json" with "browserslist" key'
+    )
+  );
+  process.exit(1);
+} else if (!Array.isArray(supportedBrowsers.production)) {
+  console.error(
+    chalk.red(
+      'Please specify the "production" browser array with "browserslist" key in "package.json"'
+    )
+  );
+  process.exit(1);
+}
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.

@@ -11,6 +11,7 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+const chalk = require('chalk');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -31,6 +32,24 @@ const publicPath = '/';
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+
+// Get supported browsers list
+const supportedBrowsers = require(paths.appPackageJson).browserslist;
+if (!supportedBrowsers) {
+  console.error(
+    chalk.red(
+      'Please specify targeted browsers in "package.json" with "browserslist" key'
+    )
+  );
+  process.exit(1);
+} else if (!Array.isArray(supportedBrowsers.development)) {
+  console.error(
+    chalk.red(
+      'Please specify the "development" browser array with "browserslist" key in "package.json"'
+    )
+  );
+  process.exit(1);
+}
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
