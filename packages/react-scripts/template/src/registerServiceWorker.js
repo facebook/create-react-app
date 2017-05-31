@@ -24,7 +24,7 @@ if (!dom) {
 function showMessage(message) {
   if (useToast) {
     ReactDOM.render(
-      <Toast timeout={3000}>
+      <Toast>
         {message}
       </Toast>,
       dom

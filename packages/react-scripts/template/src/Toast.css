@@ -3,17 +3,15 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
-	max-width: 100%;
-	width: 240px;
 	padding: 16px;
 	margin: auto;
 	transition: 250ms;
 	background: #222;
 	color: white;
-	text-align: center;
 	line-height: 24px;
 	border-top-left-radius: 2px;
 	border-top-right-radius: 2px;
+	display: flex;
 }
 
 .Toast.active {
@@ -22,4 +20,20 @@
 
 .Toast.inactive {
 	transform: translateY(100%);
+}
+
+.Toast-button {
+	padding: 0;
+	background: transparent;
+	border: 0;
+	display: inline-block;
+	color: #61dafb;
+	font-size: inherit;
+	line-height: inherit;
+	text-transform: uppercase;
+	flex: 0 0 0;
+}
+
+.Toast-text {
+	flex: 1;
 }

@@ -5,8 +5,15 @@ export default class Toast extends React.Component {
   state = {
     active: true,
   };
+
+  close = () => {
+    clearTimeout(this.timeout);
+    this.setState({
+      active: false,
+    });
+  };
   componentDidMount() {
-    setTimeout(
+    this.timeout = setTimeout(
       () => {
         this.setState({
           active: false,
@@ -15,10 +22,16 @@ export default class Toast extends React.Component {
       this.props.timeout
     );
   }
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
   render() {
     return (
       <div className={`Toast ${this.state.active ? 'active' : 'inactive'}`}>
-        {this.props.children}
+        <span className="Toast-text">
+          {this.props.children}
+        </span>
+        <button className="Toast-button" onClick={this.close}>Dismiss</button>
       </div>
     );
   }
