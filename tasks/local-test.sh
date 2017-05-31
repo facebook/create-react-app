@@ -8,6 +8,7 @@ function print_help {
   echo "  --git-branch <branch>     the git branch to checkout for testing [the current one]"
   echo "  --test-suite <suite>      which test suite to use ('simple', installs', 'kitchensink', 'all') ['all']"
   echo "  --yarn                    if present, use yarn as the package manager"
+  echo "  --interactive             gain a bash shell after the test run"
   echo "  --help                    print this message and exit"
   echo ""
 }
@@ -18,6 +19,7 @@ node_version=6
 git_branch=`git rev-parse --abbrev-ref HEAD`
 use_yarn=no
 test_suite=all
+interactive=false
 
 while [ "$1" != "" ]; do
   case $1 in
@@ -35,6 +37,9 @@ while [ "$1" != "" ]; do
     "--test-suite")
       shift
       test_suite=$1
+      ;;
+    "--interactive")
+      interactive=true
       ;;
     "--help")
       print_help
@@ -73,6 +78,7 @@ npm --version
 npm install
 set +x
 ${test_command} && echo -e "\n\e[1;32m✔ Job passed\e[0m" || echo -e "\n\e[1;31m✘ Job failes\e[0m"
+$([[ ${interactive} == 'true' ]] && echo 'bash')
 CMD
 
 docker run \
@@ -83,5 +89,6 @@ docker run \
   --user node \
   --volume ${PWD}/..:/var/create-react-app \
   --workdir /home/node \
+  $([[ ${interactive} == 'true' ]] && echo '--interactive') \
   node:${node_version} \
   bash -c "${command}"
