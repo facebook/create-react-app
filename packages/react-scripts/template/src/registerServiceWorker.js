@@ -11,6 +11,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Toast from './Toast';
 
+const useToast = true;
 const domId = 'create-react-app-toast';
 let dom = document.getElementById(domId);
 
@@ -20,13 +21,17 @@ if (!dom) {
   document.body.appendChild(dom);
 }
 
-function renderToast(message) {
-  ReactDOM.render(
-    <Toast timeout={3000}>
-      {message}
-    </Toast>,
-    dom
-  );
+function showMessage(message) {
+  if (useToast) {
+    ReactDOM.render(
+      <Toast timeout={3000}>
+        {message}
+      </Toast>,
+      dom
+    );
+  } else {
+    console.log(message);
+  }
 }
 
 const isLocalhost = Boolean(
@@ -62,7 +67,7 @@ export default function register() {
       }
     });
   } else {
-    renderToast('Development mode started.');
+    showMessage('Development mode started.');
   }
 }
 
@@ -79,12 +84,12 @@ function registerValidSW(swUrl) {
               // the fresh content will have been added to the cache.
               // It's the perfect time to display a "New content is
               // available; please refresh." message in your web app.
-              renderToast('New content is available; please refresh.');
+              showMessage('New content is available; please refresh.');
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
-              renderToast('Content is cached for offline use.');
+              showMessage('Content is cached for offline use.');
             }
           }
         };
@@ -116,7 +121,7 @@ function checkValidServiceWorker(swUrl) {
       }
     })
     .catch(() => {
-      renderToast(
+      showMessage(
         'No internet connection found. App is running in offline mode.'
       );
     });
