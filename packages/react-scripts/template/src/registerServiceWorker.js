@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 import Toast from './Toast';
 
 const useToast = true;
-const domId = 'create-react-app-toast';
+const domId = 'toast';
 let dom = document.getElementById(domId);
 
 if (!dom) {
