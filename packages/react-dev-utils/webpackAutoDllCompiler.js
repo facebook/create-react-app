@@ -124,6 +124,10 @@ module.exports = ({ dllConfig, paths }) =>
           hash.update(fs.readFileSync(paths.yarnLockFile));
         }
 
+        if (fs.existsSync(paths.packageLockFile)) {
+          hash.update(fs.readFileSync(paths.packageLockFile));
+        }
+
         return [environment, hash.digest('hex').substring(0, 8)].join('.');
       } else {
         return false;
