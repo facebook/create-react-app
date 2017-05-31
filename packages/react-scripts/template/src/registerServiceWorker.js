@@ -69,7 +69,16 @@ export default function register() {
   }
 
   if (process.env.NODE_ENV !== 'production') {
-    showMessage('Development mode started.');
+    showMessage(
+      <span>
+        Development mode started.{' '}
+        <a
+          href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md"
+        >
+          Read Me
+        </a>
+      </span>
+    );
   }
 }
 
