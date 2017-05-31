@@ -90,6 +90,10 @@ and then run `npm start` or `npm run build`.
 
 *Note: if you are using yarn, we suggest that you use `yarn install --no-lockfile` instead of the bare `yarn` or `yarn install` because we [intentionally](https://github.com/facebookincubator/create-react-app/pull/2014#issuecomment-300811661) do not ignore or add yarn.lock to our repo.*
 
+## Contributing to E2E (end to end) tests
+
+All information are in the dedicated [README](/packages/react-scripts/fixtures/kitchensink/README.md).
+
 ## Cutting a Release
 
 1. Tag all merged pull requests that go into the release with the relevant milestone. Each merged PR should also be labeled with one of the [labels](https://github.com/facebookincubator/create-react-app/labels) named `tag: ...` to indicate what kind of change it is.
