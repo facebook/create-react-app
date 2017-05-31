@@ -66,7 +66,9 @@ export default function register() {
         checkValidServiceWorker(swUrl);
       }
     });
-  } else {
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
     showMessage('Development mode started.');
   }
 }
