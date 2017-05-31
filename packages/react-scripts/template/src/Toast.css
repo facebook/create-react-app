@@ -27,13 +27,11 @@
 	padding: 0;
 	background: transparent;
 	border: 0;
-	display: inline-block;
 	color: #61dafb;
 	font-size: inherit;
 	line-height: inherit;
 	text-transform: uppercase;
 	text-decoration: none;
-	flex: 0 0 0;
 }
 
 .Toast-text {
