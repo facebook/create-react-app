@@ -1820,6 +1820,7 @@ PORT | :white_check_mark: | :x: | By default, the development web server will at
 HTTPS | :white_check_mark: | :x: | When set to `true`, Create React App will run the development server in `https` mode.
 PUBLIC_URL | :x: | :white_check_mark: | Create React App assumes your application is hosted at the serving web server's root or a subpath as specified in [`package.json` (`homepage`)](#building-for-relative-paths). Normally, Create React App ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included). This may be particularly useful when using a CDN to host your application.
 CI | :large_orange_diamond: | :white_check_mark: | When set to `true`, Create React App treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.
+REACT_EDITOR | :white_check_mark: | :x: | When this environment variable is set to a shell command that opens your editor, clicking on the error overlay will open the file in your editor. Make sure your systems [PATH](https://en.wikipedia.org/wiki/PATH_(variable)) environment variable points to your editors bin Folder. On macOS Create React App will automatically detect the editor you are using.
 
 ## Troubleshooting
 
