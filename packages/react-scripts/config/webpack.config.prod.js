@@ -33,10 +33,11 @@ const shouldUseRelativeAssetPaths = publicPath === './';
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
 const publicUrl = publicPath.slice(0, -1);
-// Get environment variables to inject into our app.
-const env = getClientEnvironment(publicUrl);
 // Get packageName from package.json
 const packageName = require(paths.appPackageJson).name;
+
+// Get environment variables to inject into our app.
+const env = getClientEnvironment(publicUrl, packageName);
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.

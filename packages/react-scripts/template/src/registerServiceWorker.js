@@ -12,7 +12,7 @@ export default function register() {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       // this would become service-work-hash.js
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      const swUrl = `${process.env.PUBLIC_URL}/service-worker-${process.env.PACKAGE_NAME}.js`;
       if (!navigator.serviceWorker.controller) {
         // No service worker yet
         registerServiceWorker(swUrl);
