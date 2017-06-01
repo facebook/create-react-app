@@ -10,8 +10,6 @@ In order to run them locally, without having to manually install and configure e
 This is a simple script that runs a **Docker** container, where the node version, git branch to clone, test suite, and whether to run it with `yarn` or `npm` can be chosen.  
 Simply run `yarn e2e:docker -- --help` to get additional info.
 
-N.B.: this command will clone the local repository in the docker container, so any uncommitted changes are ignored.
-
 ## Writing tests
 
 Each time a new feature is added, it is advised to add at least one test covering it.
