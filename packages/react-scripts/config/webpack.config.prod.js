@@ -35,6 +35,8 @@ const shouldUseRelativeAssetPaths = publicPath === './';
 const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+// Get packageName from package.json
+const packageName = require(paths.appPackageJson).name;
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -311,7 +313,7 @@ module.exports = {
       // If a URL is already hashed by Webpack, then there is no concern
       // about it being stale, and the cache-busting can be skipped.
       dontCacheBustUrlsMatching: /\.\w{8}\./,
-      filename: 'service-worker.js',
+      filename: `service-worker-${packageName}.js`,
       logger(message) {
         if (message.indexOf('Total precache size is') === 0) {
           // This message occurs for every build and is a bit too noisy.
