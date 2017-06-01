@@ -972,7 +972,7 @@ You may also narrow down matches using `*` and/or `**`, to match the path exactl
       "target": "<url_3>",
       // ...
     },
-    // Matches /bar/abc.html and /bar/sub/def.html
+    // Matches /baz/abc.html and /baz/sub/def.html
     "/baz/**/*.html": {
       "target": "<url_4>"
       // ...
