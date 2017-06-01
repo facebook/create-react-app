@@ -273,6 +273,21 @@ const publicPath = config.output.publicPath;
 printHostingInstructions(appPackage, publicUrl, publicPath, 'build', true);
 ```
 
+#### `webpackDevServer.config.js`
+
+Generate a config to pass to WebpackDevServer
+
+```js
+const createDevServerConfig = require('react-dev-utils/webpackDevServer.config.js');
+const serverConfig = createDevServerConfig({
+  proxy: proxyConfig,
+  allowedHost: lanUrlForConfig,
+  appPublic: paths.appPublic,
+  publicPath: config.output.publicPath,
+});
+const devServer = new WebpackDevServer(compiler, serverConfig);
+```
+
 #### `WebpackDevServerUtils`
 
 ##### `choosePort(host: string, defaultPort: number): Promise<number | null>`

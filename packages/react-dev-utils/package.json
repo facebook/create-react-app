@@ -29,6 +29,7 @@
     "openChrome.applescript",
     "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
+    "webpackDevServer.config.js",
     "WebpackDevServerUtils.js",
     "webpackHotDevClient.js"
   ],
