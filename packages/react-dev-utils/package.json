@@ -27,6 +27,7 @@
     "ModuleScopePlugin.js",
     "openBrowser.js",
     "openChrome.applescript",
+    "PathUtils.js",
     "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",

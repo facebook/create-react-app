@@ -312,3 +312,31 @@ module.exports = {
   // ...
 }
 ```
+
+#### `PathUtils`
+
+PathUtils provides utils for resolving paths relative to the current working directory, and extracting the url config
+from package.json.
+
+```js
+const {
+  getServedPath,
+  getPublicUrl,
+  resolveApp,
+} = require('react-dev-utils/PathUtils');
+
+module.exports = {
+  dotenv: resolveApp('.env'),
+  appBuild: resolveApp('build'),
+  appPublic: resolveApp('public'),
+  appHtml: resolveApp('public/index.html'),
+  appIndexJs: resolveApp('src/index.js'),
+  appPackageJson: resolveApp('package.json'),
+  appSrc: resolveApp('src'),
+  yarnLockFile: resolveApp('yarn.lock'),
+  testsSetup: resolveApp('src/setupTests.js'),
+  appNodeModules: resolveApp('node_modules'),
+  publicUrl: getPublicUrl(resolveApp('package.json')),
+  servedPath: getServedPath(resolveApp('package.json')),
+};
+```
