@@ -17,27 +17,38 @@ export default function register() {
         // No service worker yet
         registerServiceWorker(swUrl);
       } else {
-        fetch(swUrl).then(res => {
-          // Check to see if the SW URL is valid
-          if (res.ok) {
-            // Matches. All good. Continue with registering SW
-            registerServiceWorker(swUrl);
-          } else {
-            // SW URL was invalid.
-            fetch(
-              `${window.location.protocol}//${window.location.host}`
-            ).then(res2 => {
-              // Just check if online
-              if (res2.ok) {
-                // Unregister and refresh page
-                unregister();
-                window.location.reload(true);
-              } else {
-                console.log('Offline. Using cached copy');
-              }
-            });
-          }
-        });
+        fetch(swUrl)
+          .then(res => {
+            // Check to see if the SW URL is valid
+            if (res.ok) {
+              // Matches. All good. Continue with registering SW
+              registerServiceWorker(swUrl);
+            } else {
+              // SW URL was invalid.
+              fetch(`${window.location.protocol}//${window.location.host}`)
+                .then(res2 => {
+                  // Just check if online
+                  if (res2.ok) {
+                    // Unregister and refresh page
+                    unregister();
+                    window.location.reload(true);
+                  } else {
+                    console.log('Offline. Using cached copy');
+                  }
+                })
+                .catch(err => {
+                  // Host down. Do nothing.
+                  console.log(
+                    `Caught - fetch ${window.location.protocol}//${window.location.host}`,
+                    err
+                  );
+                });
+            }
+          })
+          .catch(err => {
+            // Couldn't access service worker url becaose of timeout/fetch error. Do nothing.
+            console.log(`Caught - fetch ${swUrl}`, err);
+          });
       }
     });
   }
@@ -47,7 +58,7 @@ function registerServiceWorker(url) {
   navigator.serviceWorker
     .register(url)
     .then(registration => {
-      console.log('reg.scope', registration.scope);
+      console.log('register', registration);
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         installingWorker.onstatechange = () => {
