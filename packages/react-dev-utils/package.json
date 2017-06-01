@@ -27,6 +27,7 @@
     "ModuleScopePlugin.js",
     "openBrowser.js",
     "openChrome.applescript",
+    "polyfills.js",
     "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
@@ -44,11 +45,14 @@
     "gzip-size": "3.0.0",
     "html-entities": "1.2.1",
     "inquirer": "3.0.6",
+    "object-assign": "4.1.1",
     "opn": "5.0.0",
+    "promise": "7.1.1",
     "recursive-readdir": "2.2.1",
     "shell-quote": "1.6.1",
     "sockjs-client": "1.1.4",
     "strip-ansi": "3.0.1",
-    "text-table": "0.2.0"
+    "text-table": "0.2.0",
+    "whatwg-fetch": "2.0.3"
   }
 }
