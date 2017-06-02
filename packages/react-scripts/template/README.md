@@ -1244,7 +1244,6 @@ Popular CI servers already set the environment variable `CI` by default but you 
 ```
 language: node_js
 node_js:
-  - 4
   - 6
 cache:
   directories:
