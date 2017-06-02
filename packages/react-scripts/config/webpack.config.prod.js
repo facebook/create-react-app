@@ -25,21 +25,15 @@ const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
 // Get supported browsers list
-const supportedBrowsers = require(paths.appPackageJson).browserslist;
-if (!supportedBrowsers) {
-  console.error(
-    chalk.red(
-      'Please specify targeted browsers in "package.json" with "browserslist" key'
+let supportedBrowsers = require(paths.appPackageJson).browserslist;
+if (!supportedBrowsers || Object.keys(supportedBrowsers).length === 0) {
+  console.log(
+    chalk.yellow(
+      'You can now specify targeted browsers by adding "browserslist" key in "package.json" as per User Documentation'
     )
   );
-  process.exit(1);
-} else if (!Array.isArray(supportedBrowsers.production)) {
-  console.error(
-    chalk.red(
-      'Please specify the "production" browser array with "browserslist" key in "package.json"'
-    )
-  );
-  process.exit(1);
+  // Assign default browsers when browserslist is not specified
+  supportedBrowsers = "browsers: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9', // React doesn't support IE8 anyway]";
 }
 
 // Webpack uses `publicPath` to determine where the app is being served from.
