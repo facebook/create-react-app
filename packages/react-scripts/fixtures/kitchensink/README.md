@@ -1,6 +1,6 @@
 # Contributing to Create React App's E2E tests
 
-This test suite is a [kitchensink](FIXME: link needed), but has multiple usages in it.
+This is an end to end kitchensink test suite, but has multiple usages in it.
 
 ## Running the test suite
 
