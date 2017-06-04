@@ -33,6 +33,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Bootstrap](#adding-bootstrap)
   - [Using a Custom Theme](#using-a-custom-theme)
 - [Adding Flow](#adding-flow)
+  - [Jest tests and dependency support](#jest-tests-and-dependency-support)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
   - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
@@ -698,6 +699,39 @@ You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/f
 In the future we plan to integrate it into Create React App even more closely.
 
 To learn more about Flow, check out [its documentation](https://flowtype.org/).
+
+### Jest tests and dependency support
+
+Flow by itself is not aware of the test runner (jest) and the dependencies you will be using.
+
+In order to load type annotations on those dependencies, you should use [`flow-typed`](https://github.com/flowtype/flow-typed).
+
+First, you need to make `flow-typed` aware of which version of flow you are using, add `flow-bin` to your `package.json`:
+
+```
+npm install --save-dev flow-bin
+```
+
+Then, install `flow-typed` globally:
+
+```
+npm install -g flow-typed
+```
+
+You can now install the type definitions:
+
+```
+flow-typed install
+```
+
+You can re-run this command after each new dependency you add to your project in order to get these annotations.
+
+Now, indicate to flow where to get those annotations by adding the following `[libs]` section to your `.flowconfig`:
+
+```ini
+[libs]
+./flow-typed
+```
 
 ## Adding Custom Environment Variables
 
