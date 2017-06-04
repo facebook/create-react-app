@@ -1321,30 +1321,30 @@ If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
-<!--
 ## Developing Components in Isolation
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states.
 For an example, a simple button component could have following states:
 
-* With a text label.
-* With an emoji.
+* In a regular state, with a text label.
 * In the disabled mode.
+* In a loading state.
 
 Usually, it’s hard to see these states without running a sample app or some examples.
 
-Create React App doesn’t include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
+Create React App doesn’t include any tools for this by default, but you can easily add [Storybook for React](https://storybook.js.org) ([source](https://github.com/storybooks/storybook)) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
 
-![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
+![Storybook for React Demo](http://i.imgur.com/7CIAWpB.gif)
 
-You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+A storybook can also be deployed as a static app.
+This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
 
-**Here’s how to setup your app with Storybook:**
+### Setup your app with Storybook
 
 First, install the following npm package globally:
 
 ```sh
-npm install -g getstorybook
+npm install -g @storybook/cli
 ```
 
 Then, run the following command inside your app’s directory:
@@ -1358,10 +1358,9 @@ After that, follow the instructions on the screen.
 Learn more about React Storybook:
 
 * Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
-* [GitHub Repo](https://github.com/kadirahq/react-storybook)
-* [Documentation](https://storybooks.js.org/docs/react-storybook/basics/introduction/)
-* [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
--->
+* [GitHub Repo](https://github.com/storybooks/storybook)
+* [Documentation](https://storybook.js.org/docs/react-storybook/basics/introduction/)
+* [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
 
 ## Making a Progressive Web App
 
