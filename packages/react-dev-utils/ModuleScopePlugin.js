@@ -37,10 +37,14 @@ class ModuleScopePlugin {
       // Maybe an indexOf === 0 would be better?
       const relative = path.relative(appSrc, request.context.issuer);
       // If it's not in src/ or a subdirectory, not our request!
-      if (
-        relative.startsWith('../') ||
-        relative.startsWith('..\\')
-      ) {
+      if (relative.startsWith('../') || relative.startsWith('..\\')) {
+        return callback();
+      }
+      const descriptionFileRelativeToRoot = path.relative(
+        request.descriptionFileRoot,
+        request.descriptionFilePath
+      );
+      if (descriptionFileRelativeToRoot === 'package.json') {
         return callback();
       }
       // Find path from src to the requested file
@@ -53,8 +57,7 @@ class ModuleScopePlugin {
       );
       // Error if in a parent directory of src/
       if (
-        requestRelative.startsWith('../') ||
-        requestRelative.startsWith('..\\')
+        requestRelative.startsWith('../') || requestRelative.startsWith('..\\')
       ) {
         callback(
           new Error(
