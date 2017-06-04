@@ -1364,10 +1364,12 @@ Learn more about React Storybook:
 
 ## Making a Progressive Web App
 
-By default, the production build is a fully functional, offline-first
-[Progressive Web App](https://developers.google.com/web/progressive-web-apps/).
+**The Progressive Web App and Service Workers feature is currently disabled and will re-enabled after modificatioons.**
 
-Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
+~~By default, the production build is a fully functional, offline-first
+Progressive Web App.~~
+
+[Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
 
  * All static site assets are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
  * Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the Subway.
@@ -1450,6 +1452,8 @@ option in the `SWPrecacheWebpackPlugin` section of
 [`webpack.config.prod.js`](../config/webpack.config.prod.js).
 
 ### Progressive Web App Metadata
+
+**The Progressive Web App and Service Workers feature is currently disabled and will re-enabled at a later date**
 
 The default configuration includes a web app manifest located at
 [`public/manifest.json`](public/manifest.json), that you can customize with
