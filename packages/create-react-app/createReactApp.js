@@ -349,7 +349,7 @@ function getInstallPackage(version) {
     packageToInstall += `@${validSemver}`;
   } else if (version) {
     // for tar.gz or alternative paths
-    packageToInstall = version;
+    packageToInstall = 'file://' + version;
   }
   return packageToInstall;
 }
