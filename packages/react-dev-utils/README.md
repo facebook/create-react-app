@@ -312,3 +312,24 @@ module.exports = {
   // ...
 }
 ```
+
+#### `webpackAutoDllCompiler`
+Use this to automatically generate dll bundle based on the hash of yarn.lock (if exists), package.json, and a dll entry point defined in your paths.
+
+usage:
+```
+webpackAutoDllCompiler({
+  mainConfig: config, 
+  dllConfig, // a function that returns dll webpack config
+  paths: {
+    // dll entry point, import all your dependencies here
+    dllSrc: './src/dll.js',
+    // dll cache path
+    dllPath: './node_modules/.cache/dll',
+    appPackageJson // path to your package json
+    yarnLockFile: // path to your yarn lock file
+  },
+}).then(config => {
+  webpack(config) // or do anything else
+})
+```

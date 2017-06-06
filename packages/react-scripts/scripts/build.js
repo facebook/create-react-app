@@ -29,11 +29,14 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
+const dllConfig = require('../config/webpack.config.dll');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
+const webpackAutoDllCompiler = require('react-dev-utils/webpackAutoDllCompiler');
+const compose = require('promise-compose');
 
 const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
@@ -44,9 +47,21 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
-// First, read the current file sizes in build directory.
-// This lets us display how much they changed later.
-measureFileSizesBeforeBuild(paths.appBuild)
+// This is Promise based composer, it accepts functions that returns
+// function that accepts webpack configuration object
+const configComposer = compose(
+  // check dll for updates
+  webpackAutoDllCompiler({
+    dllConfig,
+    paths,
+  })
+);
+
+configComposer(config).then(config => measureFileSizesBeforeBuild(
+  // First, read the current file sizes in build directory.
+  // This lets us display how much they changed later.
+  paths.appBuild
+)
   .then(previousFileSizes => {
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
@@ -54,7 +69,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
-    return build(previousFileSizes);
+    return build(previousFileSizes, config);
   })
   .then(
     ({ stats, previousFileSizes, warnings }) => {
@@ -96,10 +111,10 @@ measureFileSizesBeforeBuild(paths.appBuild)
       console.log((err.message || err) + '\n');
       process.exit(1);
     }
-  );
+  ));
 
 // Create the production build and print the deployment instructions.
-function build(previousFileSizes) {
+function build(previousFileSizes, config) {
   console.log('Creating an optimized production build...');
 
   let compiler = webpack(config);
