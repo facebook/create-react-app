@@ -115,6 +115,12 @@ module.exports = {
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc),
     ],
+    // webpack includes 'module' by default. However, this corresponds to ES6+ modules,
+    // which are unsupported by uglify. Should be reverted if/when ES6+ is targeted and/or
+    // uglify-es used, see:
+    // https://webpack.js.org/configuration/resolve/#resolve-mainfields
+    // https://github.com/facebookincubator/create-react-app/issues/2108
+    mainFields: ['browser', 'main'],
   },
   module: {
     strictExportPresence: true,
