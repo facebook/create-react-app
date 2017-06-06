@@ -57,6 +57,8 @@ module.exports = {
     require.resolve('react-dev-utils/webpackHotDevClient'),
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
+    // Shipping babel-polyfill also
+    require.resolve('./babel-polyfill'),
     // Errors should be considered fatal in development
     require.resolve('react-error-overlay'),
     // Finally, this is your app's code:
@@ -191,7 +193,10 @@ module.exports = {
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: paths.appSrc,
+        include: [
+          paths.appSrc,
+          path.join(paths.appNodeModules, 'redux-demon'),
+        ],
         loader: require.resolve('babel-loader'),
         options: {
           // @remove-on-eject-begin

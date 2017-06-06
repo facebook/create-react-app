@@ -65,7 +65,11 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: 'source-map',
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: [
+    require.resolve('./polyfills'),
+    require.resolve('./babel-polyfill'),
+    paths.appIndexJs,
+  ],
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -189,7 +193,10 @@ module.exports = {
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: paths.appSrc,
+        include: [
+          paths.appSrc,
+          path.join(paths.appNodeModules, 'redux-demon'),
+        ],
         loader: require.resolve('babel-loader'),
         // @remove-on-eject-begin
         options: {
