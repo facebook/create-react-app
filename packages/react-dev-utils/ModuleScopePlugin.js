@@ -37,7 +37,10 @@ class ModuleScopePlugin {
       // Maybe an indexOf === 0 would be better?
       const relative = path.relative(appSrc, request.context.issuer);
       // If it's not in src/ or a subdirectory, not our request!
-      if (relative[0] === '.') {
+      if (
+        relative.startsWith('../') ||
+        relative.startsWith('..\\')
+      ) {
         return callback();
       }
       // Find path from src to the requested file
@@ -49,7 +52,10 @@ class ModuleScopePlugin {
         )
       );
       // Error if in a parent directory of src/
-      if (requestRelative[0] === '.') {
+      if (
+        requestRelative.startsWith('../') ||
+        requestRelative.startsWith('..\\')
+      ) {
         callback(
           new Error(
             `You attempted to import ${chalk.cyan(request.__innerRequest_request)} which falls outside of the project ${chalk.cyan('src/')} directory. ` +

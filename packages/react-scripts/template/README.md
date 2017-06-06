@@ -1171,10 +1171,10 @@ Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzym
 expect(wrapper).toContainReact(welcome)
 ```
 
-To setup jest-enzyme with Create React App, follow the instructions for [initializing your test environment](#initializing-test-environment) to import `jest-enzyme`. **Note that currently only version 2.x is compatible with Create React App.**
+To setup jest-enzyme with Create React App, follow the instructions for [initializing your test environment](#initializing-test-environment) to import `jest-enzyme`.
 
 ```sh
-npm install --save-dev jest-enzyme@2.x
+npm install --save-dev jest-enzyme
 ```
 
 ```js
@@ -1244,7 +1244,6 @@ Popular CI servers already set the environment variable `CI` by default but you 
 ```
 language: node_js
 node_js:
-  - 4
   - 6
 cache:
   directories:
@@ -1322,30 +1321,30 @@ If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
-<!--
 ## Developing Components in Isolation
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states.
 For an example, a simple button component could have following states:
 
-* With a text label.
-* With an emoji.
+* In a regular state, with a text label.
 * In the disabled mode.
+* In a loading state.
 
 Usually, it’s hard to see these states without running a sample app or some examples.
 
-Create React App doesn’t include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
+Create React App doesn’t include any tools for this by default, but you can easily add [Storybook for React](https://storybook.js.org) ([source](https://github.com/storybooks/storybook)) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
 
-![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
+![Storybook for React Demo](http://i.imgur.com/7CIAWpB.gif)
 
-You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+A storybook can also be deployed as a static app.
+This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
 
-**Here’s how to setup your app with Storybook:**
+### Setup your app with Storybook
 
 First, install the following npm package globally:
 
 ```sh
-npm install -g getstorybook
+npm install -g @storybook/cli
 ```
 
 Then, run the following command inside your app’s directory:
@@ -1359,10 +1358,9 @@ After that, follow the instructions on the screen.
 Learn more about React Storybook:
 
 * Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
-* [GitHub Repo](https://github.com/kadirahq/react-storybook)
-* [Documentation](https://storybooks.js.org/docs/react-storybook/basics/introduction/)
-* [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
--->
+* [GitHub Repo](https://github.com/storybooks/storybook)
+* [Documentation](https://storybook.js.org/docs/react-storybook/basics/introduction/)
+* [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
 
 ## Making a Progressive Web App
 
@@ -1381,7 +1379,7 @@ and it will take care of generating a service worker file that will automaticall
 precache all of your local assets and keep them up to date as you deploy updates.
 The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
 for handling all requests for local assets, including the initial HTML, ensuring
-that you web app is reliably fast, even on a slow or unreliable network.
+that your web app is reliably fast, even on a slow or unreliable network.
 
 If you would prefer not to enable service workers prior to your initial
 production deployment, then remove the call to `serviceWorkerRegistration.register()`
@@ -1403,7 +1401,7 @@ If your production web server does not support HTTPS, then the service worker
 registration will fail, but the rest of your web app will remain functional.
 
 1. Service workers are [not currently supported](https://jakearchibald.github.io/isserviceworkerready/)
-in all web browsers. Service worker registration [won't be attempted](src/service-worker-registration.js)
+in all web browsers. Service worker registration [won't be attempted](src/registerServiceWorker.js)
 on browsers that lack support.
 
 1. The service worker is only enabled in the [production environment](#deployment),
@@ -1419,7 +1417,7 @@ instructions for one way to test your production build locally and the [deployme
 instructions for using other methods. *Be sure to always use an
 incognito window to avoid complications with your browser cache.*
 
-1. If possible,configure your production environment to serve the generated
+1. If possible, configure your production environment to serve the generated
 `service-worker.js` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
 If that's not possible—[GitHub Pages](#github-pages), for instance, does not
 allow you to change the default 10 minute HTTP cache lifetime—then be aware
@@ -1437,7 +1435,7 @@ app works offline!" message) and also let them know when the service worker has
 fetched the latest updates that will be available the next time they load the
 page (showing a "New content is available; please refresh." message). Showing
 this messages is currently left as an exercise to the developer, but as a
-starting point, you can make use of the logic included in [`src/service-worker-registration.js`](src/service-worker-registration.js), which
+starting point, you can make use of the logic included in [`src/registerServiceWorker.js`](src/registerServiceWorker.js), which
 demonstrates which service worker lifecycle events to listen for to detect each
 scenario, and which as a default, just logs appropriate messages to the
 JavaScript console.
@@ -1774,27 +1772,23 @@ When you build the project, Create React App will place the `public` folder cont
 
 ### Now
 
-[now](https://zeit.co/now) offers a zero-configuration single-command deployment.
+[now](https://zeit.co/now) offers a zero-configuration single-command deployment. You can use `now` to deploy your app for free.
 
 1. Install the `now` command-line tool either via the recommended [desktop tool](https://zeit.co/download) or via node with `npm install -g now`.
 
-2. Install `serve` by running `npm install --save serve`.
+2. Build your app by running `npm run build`.
 
-3. Add this line to `scripts` in `package.json`:
+3. Move into the build directory by running `cd build`.
 
-    ```
-    "now-start": "serve -s build/",
-    ```
-
-4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
+4. Run `now --name your-project-name` from within the build directory. You will see a **now.sh** URL in your output like this:
 
     ```
-    > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
+    > Ready! https://your-project-name-tpspyhtdtk.now.sh (copied to clipboard)
     ```
 
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
-Details are available in [this article.](https://zeit.co/blog/now-static)
+Details are available in [this article.](https://zeit.co/blog/unlimited-static)
 
 ### S3 and CloudFront
 

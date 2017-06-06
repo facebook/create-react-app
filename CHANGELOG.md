@@ -1,3 +1,96 @@
+## 1.0.7 (May 27, 2017)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#2382](https://github.com/facebookincubator/create-react-app/pull/2382) Consistently set environment variables. ([@gaearon](https://github.com/gaearon))
+  * [#2379](https://github.com/facebookincubator/create-react-app/pull/2379) Temporarily disable `comparisons` feature in uglify compression. ([@davidascher](https://github.com/davidascher))
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#2383](https://github.com/facebookincubator/create-react-app/pull/2383) Update webpack to 2.6.1. ([@gaearon](https://github.com/gaearon))
+  * [#2349](https://github.com/facebookincubator/create-react-app/pull/2349) Update webpack to v2.6.0. ([@ingro](https://github.com/ingro))
+  * [#2351](https://github.com/facebookincubator/create-react-app/pull/2351) Removed the overriding of `reduce_vars` since webpack v2.6.0 included fix of Uglify. ([@Zaccc123](https://github.com/Zaccc123))
+
+* `react-dev-utils`, `react-scripts`
+
+  * [#2361](https://github.com/facebookincubator/create-react-app/pull/2361) Print file sizes with correct build folder path. ([@fezhengjin](https://github.com/fezhengjin))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#2372](https://github.com/facebookincubator/create-react-app/pull/2372) Update README.md for `now` deployments. ([@purplecones](https://github.com/purplecones))
+  * [#2350](https://github.com/facebookincubator/create-react-app/pull/2350) Fix broken links. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 6
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- David Ascher ([davidascher](https://github.com/davidascher))
+- Emanuele Ingrosso ([ingro](https://github.com/ingro))
+- Jin Zheng ([fezhengjin](https://github.com/fezhengjin))
+- Mirza Joldic ([purplecones](https://github.com/purplecones))
+- Zac Kwan ([Zaccc123](https://github.com/Zaccc123))
+
+### Migrating from 1.0.6 to 1.0.7
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.7
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.7
+```
+
+## 1.0.6 (May 24, 2017)
+
+#### :bug: Bug Fix
+
+* `eslint-config-react-app`, `react-error-overlay`, `react-scripts`
+
+  * [#2346](https://github.com/facebookincubator/create-react-app/pull/2346) Resolve Flow errors in an ESLint plugin. ([@iainbeeston](https://github.com/iainbeeston))
+
+* `react-dev-utils`
+
+  * [#2332](https://github.com/facebookincubator/create-react-app/pull/2332) Fix proxying issues with backends that don't support IPv6. ([@Timer](https://github.com/Timer))
+
+#### :nail_care: Enhancement
+* `react-scripts`
+
+  * [#2347](https://github.com/facebookincubator/create-react-app/pull/2347) Don't precache `/__*` URLs to fix Firebase hosting. ([@ryansully](https://github.com/ryansully))
+
+#### :memo: Documentation
+
+* README
+
+  * [#2334](https://github.com/facebookincubator/create-react-app/pull/2334) Add missing files to the list. ([@jesselpalmer](https://github.com/jesselpalmer))
+
+#### Committers: 4
+- Iain Beeston ([iainbeeston](https://github.com/iainbeeston))
+- Jesse Palmer ([jesselpalmer](https://github.com/jesselpalmer))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Ryan Sullivan ([ryansully](https://github.com/ryansully))
+
+### Migrating from 1.0.5 to 1.0.6
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.6
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.6
+```
+
 ## 1.0.5 (May 22, 2017)
 
 #### :bug: Bug Fix
@@ -341,6 +434,10 @@ Follow these steps if you see errors about missing lint rules in the editor.
 4. Start the editor again
 
 If you still have the problem please file an issue.
+
+#### Some of my tests started crashing because of unhandled rejections
+
+Unhandled Promise rejections will now crash tests. You can fix them by explicitly catching the errors you don’t care about.
 
 #### How to turn my app into a [Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
 
