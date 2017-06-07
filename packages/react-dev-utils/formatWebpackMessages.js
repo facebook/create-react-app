@@ -70,7 +70,7 @@ function formatMessage(message, isError) {
     ];
   }
 
-  // Cleans up syntax error messages.
+  // brush up the error message a little.
   if (lines[1].indexOf('Module build failed: ') === 0) {
     lines[1] = lines[1].replace(
       'Module build failed: SyntaxError:',
