@@ -1,6 +1,6 @@
 {
   "name": "@timelab/react-scripts",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -21,7 +21,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@timelab/babel-preset-react-app": "^3.1.0",
+    "@timelab/babel-preset-react-app": "^3.1.2",
     "autoprefixer": "7.1.0",
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.3",
