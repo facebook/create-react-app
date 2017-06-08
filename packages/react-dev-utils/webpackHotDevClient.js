@@ -159,13 +159,13 @@ function destroyErrorOverlay() {
 
 // Connect to WebpackDevServer via a socket.
 var connection = new SockJS(
-  url.format({
+  url.format(Object.assign({
     protocol: window.location.protocol,
     hostname: window.location.hostname,
     port: window.location.port,
     // Hardcoded in WebpackDevServer
     pathname: '/sockjs-node',
-  })
+  }, window.webpackHotDevClientURL || {}))
 );
 
 // Unlike WebpackDevServer client, we won't try to reconnect
