@@ -23796,7 +23796,7 @@ function BasicSourceMapConsumer(aSourceMap) {
     // Always ensure that absolute sources are internally stored relative to
     // the source root, if the source root is absolute. Not doing this would
     // be particularly problematic when the source root is a prefix of the
-    // source (valid, but why??). See github issue #199 and bugzil.la/1188982.
+    // source (valid, but why??). See GitHub issue #199 and bugzil.la/1188982.
     .map(function (source) {
       return sourceRoot && util.isAbsolute(sourceRoot) && util.isAbsolute(source)
         ? util.relative(sourceRoot, source)
@@ -23805,7 +23805,7 @@ function BasicSourceMapConsumer(aSourceMap) {
 
   // Pass `true` below to allow duplicate names and sources. While source maps
   // are intended to be compressed and deduplicated, the TypeScript compiler
-  // sometimes generates source maps with duplicates in them. See Github issue
+  // sometimes generates source maps with duplicates in them. See GitHub issue
   // #72 and bugzil.la/889492.
   this._names = ArraySet.fromArray(names.map(String), true);
   this._sources = ArraySet.fromArray(sources, true);
@@ -23840,7 +23840,7 @@ BasicSourceMapConsumer.fromSourceMap =
     // Because we are modifying the entries (by converting string sources and
     // names to indices into the sources and names ArraySets), we have to make
     // a copy of the entry or else bad things happen. Shared mutable state
-    // strikes again! See github issue #191.
+    // strikes again! See GitHub issue #191.
 
     var generatedMappings = aSourceMap._mappings.toArray().slice();
     var destGeneratedMappings = smc.__generatedMappings = [];
