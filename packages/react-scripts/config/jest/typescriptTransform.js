@@ -9,26 +9,24 @@ const tsconfigPath = require('app-root-path').resolve('/tsconfig.json');
 let compilerConfig = {
   module: tsc.ModuleKind.CommonJS,
   jsx: tsc.JsxEmit.React,
-}
+};
 
 if (fs.existsSync(tsconfigPath)) {
   try {
-    const tsconfig = require(tsconfigPath);
+    const tsconfig = tsc.readConfigFile(tsconfigPath).config;
 
     if (tsconfig && tsconfig.compilerOptions) {
       compilerConfig = tsconfig.compilerOptions;
     }
-  } catch (e) { /* Do nothing - default is set */ }
+  } catch (e) {
+    /* Do nothing - default is set */
+  }
 }
 
 module.exports = {
   process(src, path) {
     if (path.endsWith('.ts') || path.endsWith('.tsx')) {
-      return tsc.transpile(
-        src,
-        compilerConfig,
-        path, []
-      );
+      return tsc.transpile(src, compilerConfig, path, []);
     }
     return src;
   },
