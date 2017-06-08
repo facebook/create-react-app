@@ -8,7 +8,39 @@
  */
 'use strict';
 
+const { join } = require('path');
+const { existsSync } = require('fs');
+
+const path = join(
+  __dirname,
+  '..',
+  '..',
+  '..',
+  'resources',
+  'graphql',
+  'schema.json'
+);
+
+if (!existsSync(path)) {
+  throw new Error(
+    'Your graphql schema must be in ./resources/graphql/schema.json'
+  );
+}
+
 const plugins = [
+  // Support for Relay modern.
+  [
+    require.resolve('babel-plugin-relay'),
+    {
+      compat: true,
+      schema: path,
+    },
+  ],
+  // enable export extension experimental feature
+  require.resolve('babel-plugin-transform-export-extensions'),
+  // load decorators before class plugin
+  require.resolve('babel-plugin-transform-decorators-legacy'),
+
   // class { handleClick = () => { } }
   require.resolve('babel-plugin-transform-class-properties'),
   // The following two plugins use Object.assign directly, instead of Babel's

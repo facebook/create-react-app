@@ -41,7 +41,7 @@
   "devDependencies": {
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
-    "babel-preset-react-app": "^3.0.0",
+    "@timelab/babel-preset-react-app": "^3.1.0",
     "cross-env": "5.0.0",
     "eslint": "3.19.0",
     "eslint-config-react-app": "^1.0.4",
