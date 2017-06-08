@@ -302,6 +302,34 @@ class Button extends Component {
 export default Button; // Don’t forget to use export default!
 ```
 
+To import your own modules into other files, you can use relative paths by default. For example:
+```js
+import Banana from '../../Banana';
+```
+You can also enable absolute paths by adding a NODE_PATH environment variable. This is a bit of a stop-gap measure for now. Here is an example absolute import and the commands you would need to run for it to work:
+
+```js
+import Banana from 'fruits/Banana'; // fruits is a subdirectory of src
+```
+
+If you use Bash on OS X or Linux:
+
+```js
+NODE_PATH=./src npm start
+NODE_PATH=./src npm run build
+NODE_PATH=./src npm test
+```
+
+If you use Cmd on Windows:
+
+```js
+NODE_PATH=./src&&npm start
+NODE_PATH=./src&&npm run build
+NODE_PATH=./src&&npm test
+```
+
+Note that lack of whitespace on Windows is intentional.
+
 ### `DangerButton.js`
 
 
