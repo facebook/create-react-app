@@ -1,4 +1,6 @@
 {
+  "name": "create-react-app",
+  "version": "0.9.5",
   "private": true,
   "scripts": {
     "build": "node packages/react-scripts/scripts/build.js",
