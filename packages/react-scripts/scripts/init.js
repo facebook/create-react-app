@@ -34,6 +34,9 @@ module.exports = function(
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
+  appPackage.devDependencies = appPackage.devDependencies || {};
+  appPackage.main = 'index.html';
+  appPackage.backend = 'https://io.vtex.com.br/';
 
   // Setup the script rules
   appPackage.scripts = {
@@ -41,11 +44,26 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    deploy: 'react-scripts deploy',
   };
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
+  );
+
+  fs.writeFileSync(
+    path.join(appPath, 'pachamama.config'),
+    JSON.stringify(
+      {
+        product: 'front',
+        acronym: appName,
+        layer: 'react_app',
+        application: appName,
+      },
+      null,
+      2
+    )
   );
 
   const readmeExists = fs.existsSync(path.join(appPath, 'README.md'));
@@ -93,7 +111,7 @@ module.exports = function(
   let args;
 
   if (useYarn) {
-    command = 'yarnpkg';
+    command = 'yarn';
     args = ['add'];
   } else {
     command = 'npm';
@@ -116,18 +134,41 @@ module.exports = function(
     fs.unlinkSync(templateDependenciesPath);
   }
 
-  // Install react and react-dom for backward compatibility with old CRA cli
-  // which doesn't install react and react-dom along with react-scripts
-  // or template is presetend (via --internal-testing-template)
-  if (!isReactInstalled(appPackage) || template) {
-    console.log(`Installing react and react-dom using ${command}...`);
-    console.log();
+  args = args.concat([
+    'prop-types',
+    'vtex-tachyons',
+    'redux',
+    'react-redux',
+    'redux-thunk',
+    'lodash',
+    'axios',
+    'react-intl',
+  ]);
 
-    const proc = spawn.sync(command, args, { stdio: 'inherit' });
-    if (proc.status !== 0) {
-      console.error(`\`${command} ${args.join(' ')}\` failed`);
-      return;
-    }
+  console.log(args);
+
+  console.log(`Installing dependencies using ${command}...`);
+  console.log();
+
+  const proc = spawn.sync(command, args, { stdio: 'inherit' });
+  if (proc.status !== 0) {
+    console.error(`\`${command} ${args.join(' ')}\` failed`);
+    return;
+  }
+
+  const procEslint = spawn.sync(
+    path.join(ownPath, 'node_modules', '.bin', 'eslint'),
+    [
+      '-c',
+      require.resolve('../config/eslint.js'),
+      '--fix',
+      path.join(appPath, 'src'),
+    ],
+    { stdio: 'inherit' }
+  );
+  if (procEslint.status !== 0) {
+    console.error(`\`eslint fix\` failed`);
+    return;
   }
 
   // Display the most elegant way to cd.
