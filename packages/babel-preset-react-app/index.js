@@ -33,7 +33,6 @@ const plugins = [
     {
       helpers: false,
       polyfill: false,
-      regenerator: true,
     },
   ],
 ];
@@ -104,8 +103,6 @@ if (env === 'test') {
             // Remove after https://github.com/mishoo/UglifyJS2/issues/448
             uglify: true,
           },
-          // Disable polyfill transforms
-          useBuiltIns: false,
           // Do not transform modules to CJS
           modules: false,
         },
