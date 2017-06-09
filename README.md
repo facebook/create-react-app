@@ -11,7 +11,7 @@ If something doesn’t work, please [file an issue](https://github.com/facebooki
 ## Quick Overview
 
 ```sh
-npx create-react-app my-app
+npx create-react-app --scripts-version @vtex/react-scripts my-app
 cd my-app
 npm start
 ```
