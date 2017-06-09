@@ -1,11 +1,11 @@
 {
-  "name": "eslint-config-react-app",
-  "version": "2.1.0",
-  "description": "ESLint configuration used by Create React App",
-  "repository": "facebookincubator/create-react-app",
+  "name": "eslint-config-vtex-react-app",
+  "version": "2.0.0",
+  "description": "ESLint configuration used by VTEX Create React App",
+  "repository": "vtex/create-react-app",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/vtex/create-react-app/issues"
   },
   "files": [
     "index.js"
@@ -16,6 +16,8 @@
     "eslint-plugin-flowtype": "^2.34.1",
     "eslint-plugin-import": "^2.6.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0"
+    "eslint-plugin-react": "^7.1.0",
+    "eslint-config-vtex": "6.0.1",
+    "eslint-config-vtex-react": "3.0.2"
   }
 }
