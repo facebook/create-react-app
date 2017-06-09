@@ -72,7 +72,15 @@ function getClientEnvironment(publicUrl) {
     .filter(key => REACT_APP.test(key))
     .reduce(
       (env, key) => {
-        env[key] = process.env[key];
+        var value = process.env[key];
+        // Convert any string containing only digits to int or float
+        if (value.match(/^[0-9]+$/)) {
+          value = parseInt(value, 10);
+        }
+        else if (value.match(/^([0-9]+.?[0-9]*)|([0-9]*.?[0-9]+)$/)) {
+          value = parseFloat(value);
+        }
+        env[key] = value;
         return env;
       },
       {
