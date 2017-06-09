@@ -145,7 +145,7 @@ module.exports = function(
     'react-intl',
   ]);
 
-  console.log(`Installing dependencies using ${command}...`);
+  console.log(`\nInstalling dependencies using ${command}...`);
   console.log();
 
   const proc = spawn.sync(command, args, { stdio: 'inherit' });
