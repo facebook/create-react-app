@@ -135,7 +135,9 @@ module.exports = {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
               // @remove-on-eject-begin
-              baseConfig: require('./eslint'),
+              baseConfig: {
+                extends: [require.resolve('eslint-config-vtex-react-app')],
+              },
               ignore: false,
               useEslintrc: false,
               // @remove-on-eject-end
@@ -213,6 +215,8 @@ module.exports = {
                   ],
                 },
               },
+            ],
+          },
           {
             test: /\.css$/,
             include: paths.appSrc,

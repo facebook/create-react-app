@@ -143,7 +143,9 @@ module.exports = {
               // @remove-on-eject-begin
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
-              baseConfig: require('./eslint'),
+              baseConfig: {
+                extends: [require.resolve('eslint-config-vtex-react-app')],
+              },
               ignore: false,
               useEslintrc: false,
               // @remove-on-eject-end
