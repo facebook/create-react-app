@@ -37,6 +37,7 @@ module.exports = function(
   appPackage.devDependencies = appPackage.devDependencies || {};
   appPackage.main = 'index.html';
   appPackage.backend = 'https://io.vtex.com.br/';
+  delete appPackage.private;
 
   // Setup the script rules
   appPackage.scripts = {
