@@ -8,6 +8,8 @@
  */
 
 /* @flow */
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {
   register as registerError,
   unregister as unregisterError,
@@ -16,14 +18,6 @@ import {
   register as registerPromise,
   unregister as unregisterPromise,
 } from './effects/unhandledRejection';
-import {
-  register as registerShortcuts,
-  unregister as unregisterShortcuts,
-  handler as keyEventHandler,
-  SHORTCUT_ESCAPE,
-  SHORTCUT_LEFT,
-  SHORTCUT_RIGHT,
-} from './effects/shortcuts';
 import {
   register as registerStackTraceLimit,
   unregister as unregisterStackTraceLimit,
@@ -34,179 +28,96 @@ import {
   unregisterReactStack,
 } from './effects/proxyConsole';
 import { massage as massageWarning } from './utils/warnings';
-
-import {
-  consume as consumeError,
-  getErrorRecord,
-  drain as drainErrors,
-} from './utils/errorRegister';
-import type { ErrorRecordReference } from './utils/errorRegister';
-
-import type { StackFrame } from './utils/stack-frame';
-import { iframeStyle } from './styles';
+import { iframeStyle, overlayStyle } from './styles';
 import { applyStyles } from './utils/dom/css';
-import { createOverlay } from './components/overlay';
-import { updateAdditional } from './components/additional';
+import getStackFrames from './utils/getStackFrames';
+import ErrorOverlay from './components/ErrorOverlay';
 
 const CONTEXT_SIZE: number = 3;
+
+let errorRecords = [];
+
+let container: HTMLDivElement | null = null;
 let iframeReference: HTMLIFrameElement | null = null;
-let additionalReference = null;
-let errorReferences: ErrorRecordReference[] = [];
-let currReferenceIndex: number = -1;
 
-function render(name: ?string, message: string, resolvedFrames: StackFrame[]) {
-  disposeCurrentView();
-
-  const iframe = window.document.createElement('iframe');
-  applyStyles(iframe, iframeStyle);
-  iframeReference = iframe;
-  iframe.onload = () => {
+// Mount overlay container
+function mount(callback) {
+  iframeReference = window.document.createElement('iframe');
+  applyStyles(iframeReference, iframeStyle);
+  iframeReference.onload = () => {
     if (iframeReference == null) {
       return;
     }
-    const w = iframeReference.contentWindow;
     const document = iframeReference.contentDocument;
-
-    const { overlay, additional } = createOverlay(
-      document,
-      name,
-      message,
-      resolvedFrames,
-      CONTEXT_SIZE,
-      currReferenceIndex + 1,
-      errorReferences.length,
-      offset => {
-        switchError(offset);
-      },
-      () => {
-        unmount();
-      }
-    );
-    if (w != null) {
-      w.onkeydown = event => {
-        keyEventHandler(type => shortcutHandler(type), event);
-      };
-    }
-    if (document.body != null) {
+    if (document != null && document.body != null) {
       document.body.style.margin = '0';
       // Keep popup within body boundaries for iOS Safari
       // $FlowFixMe
       document.body.style['max-width'] = '100vw';
-
-      (document.body: any).appendChild(overlay);
+      container = document.createElement('div');
+      applyStyles(container, overlayStyle);
+      (document.body: any).appendChild(container);
+      callback();
     }
-    additionalReference = additional;
   };
-  window.document.body.appendChild(iframe);
+  window.document.body.appendChild(iframeReference);
 }
 
-function renderErrorByIndex(index: number) {
-  currReferenceIndex = index;
-
-  const { error, unhandledRejection, enhancedFrames } = getErrorRecord(
-    errorReferences[index]
-  );
-
-  if (unhandledRejection) {
-    render(
-      'Unhandled Rejection (' + error.name + ')',
-      error.message,
-      enhancedFrames
-    );
-  } else {
-    render(error.name, error.message, enhancedFrames);
-  }
-}
-
-function switchError(offset) {
-  if (errorReferences.length === 0) {
-    return;
-  }
-
-  let nextView = currReferenceIndex + offset;
-
-  if (nextView < 0) {
-    nextView = errorReferences.length - 1;
-  } else if (nextView >= errorReferences.length) {
-    nextView = 0;
-  }
-
-  renderErrorByIndex(nextView);
-}
-
-function disposeCurrentView() {
+// Unmount overlay container
+function unmount() {
+  ReactDOM.unmountComponentAtNode(container);
   if (iframeReference === null) {
     return;
   }
   window.document.body.removeChild(iframeReference);
   iframeReference = null;
-  additionalReference = null;
+  container = null;
+  errorRecords = [];
 }
 
-function unmount() {
-  disposeCurrentView();
-  drainErrors();
-  errorReferences = [];
-  currReferenceIndex = -1;
+function render() {
+  ReactDOM.render(
+    <ErrorOverlay errorRecords={errorRecords} close={unmount} />,
+    container
+  );
 }
 
 function crash(error: Error, unhandledRejection = false) {
   if (module.hot && typeof module.hot.decline === 'function') {
     module.hot.decline();
   }
-  consumeError(error, unhandledRejection, CONTEXT_SIZE)
-    .then(ref => {
-      if (ref == null) {
+
+  getStackFrames(error, unhandledRejection, CONTEXT_SIZE)
+    .then(stackFrames => {
+      if (stackFrames == null) {
         return;
       }
-      errorReferences.push(ref);
-      if (iframeReference !== null && additionalReference !== null) {
-        updateAdditional(
-          iframeReference.contentDocument,
-          additionalReference,
-          currReferenceIndex + 1,
-          errorReferences.length,
-          offset => {
-            switchError(offset);
-          }
-        );
-      } else {
-        if (errorReferences.length !== 1) {
-          throw new Error('Something is *really* wrong.');
+      errorRecords = [
+        ...errorRecords,
+        {
+          error,
+          unhandledRejection,
+          contextSize: CONTEXT_SIZE,
+          stackFrames,
+        },
+      ];
+
+      if (errorRecords.length > 0) {
+        if (container == null) {
+          mount(() => render());
+        } else {
+          render();
         }
-        renderErrorByIndex((currReferenceIndex = 0));
       }
     })
     .catch(e => {
-      console.log('Could not consume error:', e);
+      console.log('Could not get the stack frames of error:', e);
     });
-}
-
-function shortcutHandler(type: string) {
-  switch (type) {
-    case SHORTCUT_ESCAPE: {
-      unmount();
-      break;
-    }
-    case SHORTCUT_LEFT: {
-      switchError(-1);
-      break;
-    }
-    case SHORTCUT_RIGHT: {
-      switchError(1);
-      break;
-    }
-    default: {
-      //TODO: this
-      break;
-    }
-  }
 }
 
 function inject() {
   registerError(window, error => crash(error));
   registerPromise(window, error => crash(error, true));
-  registerShortcuts(window, shortcutHandler);
   registerStackTraceLimit();
 
   registerReactStack();
@@ -226,7 +137,6 @@ function inject() {
 
 function uninject() {
   unregisterStackTraceLimit();
-  unregisterShortcuts(window);
   unregisterPromise(window);
   unregisterError(window);
   unregisterReactStack();
