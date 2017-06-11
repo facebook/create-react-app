@@ -35,7 +35,9 @@ const env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
-module.exports = {
+const configure = indexName => ({
+  // Name in compilation output log when multiple entry files are used.
+  name: `${indexName}.html`,
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
@@ -58,8 +60,8 @@ module.exports = {
     require.resolve('./polyfills'),
     // Errors should be considered fatal in development
     require.resolve('react-error-overlay'),
-    // Finally, this is your app's code:
-    paths.appIndexJs,
+    // Finally, this is your app's code, depending on entry index file:
+    paths.appIndexJs.replace('index', indexName),
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
@@ -72,9 +74,13 @@ module.exports = {
     // This does not produce a real file. It's just the virtual path that is
     // served by WebpackDevServer in development. This is the JS bundle
     // containing code from all our entry points, and the Webpack runtime.
-    filename: 'static/js/bundle.js',
+    filename: indexName === 'index'
+      ? 'static/js/bundle.js'
+      : `static/js/${indexName}-bundle.js`,
     // There are also additional JS chunk files if you use code splitting.
-    chunkFilename: 'static/js/[name].chunk.js',
+    chunkFilename: indexName === 'index'
+      ? 'static/js/[name].chunk.js'
+      : `static/js/${indexName}-[name].chunk.js`,
     // This is the URL that app is served from. We use "/" in development.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location
@@ -246,6 +252,7 @@ module.exports = {
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
+      filename: `${indexName}.html`,
       inject: true,
       template: paths.appHtml,
     }),
@@ -285,4 +292,16 @@ module.exports = {
   performance: {
     hints: false,
   },
-};
+});
+
+// Read potential indexXX.js candidates from src/ at this point.
+const fs = require('fs');
+const indexFiles = fs.readdirSync(paths.appSrc).filter(file => {
+  // Takes all indexXX.js files. Does not check validity at this point, could be a directory and crash.
+  return path.basename(file).startsWith('index') &&
+    path.extname(file) === '.js';
+});
+
+// Returns an array of configurations to trigger webpack multicompilation
+module.exports = indexFiles.map(indexFile =>
+  configure(path.parse(indexFile).name));

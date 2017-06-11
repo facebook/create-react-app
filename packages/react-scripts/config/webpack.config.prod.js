@@ -57,14 +57,19 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = {
+const configure = indexName => ({
+  // Name in compilation output log when multiple entry files are used.
+  name: `${indexName}.html`,
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
   devtool: 'source-map',
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: [
+    require.resolve('./polyfills'),
+    paths.appIndexJs.replace('index', indexName),
+  ],
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -258,6 +263,7 @@ module.exports = {
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
+      filename: `${indexName}.html`,
       inject: true,
       template: paths.appHtml,
       minify: {
@@ -301,7 +307,9 @@ module.exports = {
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
     new ManifestPlugin({
-      fileName: 'asset-manifest.json',
+      fileName: indexName === 'index'
+        ? 'asset-manifest.json'
+        : `${indexName}-asset-manifest.json`,
     }),
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
@@ -311,7 +319,9 @@ module.exports = {
       // If a URL is already hashed by Webpack, then there is no concern
       // about it being stale, and the cache-busting can be skipped.
       dontCacheBustUrlsMatching: /\.\w{8}\./,
-      filename: 'service-worker.js',
+      fileName: indexName === 'index'
+        ? 'service-worker.js'
+        : `${indexName}-service-worker.js`,
       logger(message) {
         if (message.indexOf('Total precache size is') === 0) {
           // This message occurs for every build and is a bit too noisy.
@@ -321,7 +331,7 @@ module.exports = {
       },
       minify: true,
       // For unknown URLs, fallback to the index page
-      navigateFallback: publicUrl + '/index.html',
+      navigateFallback: `${publicUrl}/${indexName}.html`,
       // Ignores URLs starting from /__ (useful for Firebase):
       // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
       navigateFallbackWhitelist: [/^(?!\/__).*/],
@@ -345,4 +355,16 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
   },
-};
+});
+
+// Read potential indexXX.js candidates from src/ at this point.
+const fs = require('fs');
+const indexFiles = fs.readdirSync(paths.appSrc).filter(file => {
+  // Takes all indexXX.js files. Does not check validity at this point, could be a directory and crash.
+  return path.basename(file).startsWith('index') &&
+    path.extname(file) === '.js';
+});
+
+// Returns an array of configurations to trigger webpack multicompilation
+module.exports = indexFiles.map(indexFile =>
+  configure(path.parse(indexFile).name));
