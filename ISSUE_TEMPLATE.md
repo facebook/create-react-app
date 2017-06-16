@@ -36,7 +36,7 @@ Tell us what actually happens.
 
 Run these commands in the project folder and fill in their results:
 
-1. `npm ls react-scripts` (if you haven’t ejected): 
+1. `npm ls react-scripts-ts` (if you haven’t ejected): 
 2. `node -v`: 
 3. `npm -v`:
 
