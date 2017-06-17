@@ -24,6 +24,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Importing a Component](#importing-a-component)
 - [Code Splitting](#code-splitting)
 - [Adding a Stylesheet](#adding-a-stylesheet)
+- [Adding a CSS Modules stylesheet](#adding-a-css-modules-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
 - [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
 - [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
@@ -513,11 +514,11 @@ In development, expressing dependencies this way allows your styles to be reload
 
 If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
 
-## Adding a CSS Modules based stylesheet.
+## Adding a CSS Modules stylesheet
 
 This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically prefixing class names with a unique name and hash.
 
-An advantge of this,is the ability to repeat the same classname within many CSS files without worrying about a clash.
+An advantage of this is the ability to repeat the same classname within many CSS files without worrying about a clash.
 
 ### `Button.module.css`
 
@@ -555,7 +556,7 @@ No clashes from other `.button` classnames
 <div class="Button-module__button___1o1Ru"></div>
 ```
 
-**This is an optional feature.** Regular stylesheets and imported stylesheets are fully supported. CSS Modules are only added when explicted named as a css module stylesheet. 
+**This is an optional feature.** Regular stylesheets and imported stylesheets are fully supported. CSS Modules are only added when explictly named as a css module stylesheet using the extension `.module.css`.
 
 ## Post-Processing CSS
 
