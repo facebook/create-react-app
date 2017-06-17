@@ -11,35 +11,78 @@
 export default function register() {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
-      navigator.serviceWorker
-        .register(swUrl)
-        .then(registration => {
-          registration.onupdatefound = () => {
-            const installingWorker = registration.installing;
-            installingWorker.onstatechange = () => {
-              if (installingWorker.state === 'installed') {
-                if (navigator.serviceWorker.controller) {
-                  // At this point, the old content will have been purged and
-                  // the fresh content will have been added to the cache.
-                  // It's the perfect time to display a "New content is
-                  // available; please refresh." message in your web app.
-                  console.log('New content is available; please refresh.');
-                } else {
-                  // At this point, everything has been precached.
-                  // It's the perfect time to display a
-                  // "Content is cached for offline use." message.
-                  console.log('Content is cached for offline use.');
-                }
-              }
-            };
-          };
-        })
-        .catch(error => {
-          console.error('Error during service worker registration:', error);
-        });
+      // this would become service-work-hash.js
+      const swUrl = `${process.env.PUBLIC_URL}/service-worker-${process.env.PACKAGE_NAME}.js`;
+      if (!navigator.serviceWorker.controller) {
+        // No service worker yet
+        registerServiceWorker(swUrl);
+      } else {
+        fetch(swUrl)
+          .then(res => {
+            // Check to see if the SW URL is valid
+            if (res.ok) {
+              // Matches. All good. Continue with registering SW
+              registerServiceWorker(swUrl);
+            } else {
+              // SW URL was invalid.
+              fetch(`${window.location.protocol}//${window.location.host}`)
+                .then(res2 => {
+                  // Just check if online
+                  if (res2.ok) {
+                    // Unregister and refresh page
+                    unregister();
+                    window.location.reload(true);
+                  } else {
+                    console.log('Offline. Using cached copy');
+                  }
+                })
+                .catch(err => {
+                  // Host down. Do nothing.
+                  console.log(
+                    `Caught - fetch ${window.location.protocol}//${window.location.host}`,
+                    err
+                  );
+                });
+            }
+          })
+          .catch(err => {
+            // Couldn't access service worker url becaose of timeout/fetch error. Do nothing.
+            console.log(`Caught - fetch ${swUrl}`, err);
+          });
+      }
     });
   }
+}
+
+function registerServiceWorker(url) {
+  navigator.serviceWorker
+    .register(url)
+    .then(registration => {
+      console.log('register', registration);
+      registration.onupdatefound = () => {
+        const installingWorker = registration.installing;
+        installingWorker.onstatechange = () => {
+          if (installingWorker.state === 'installed') {
+            if (navigator.serviceWorker.controller) {
+              // At this point, the old content will have been purged and
+              // the fresh content will have been added to the cache.
+              // It's the perfect time to display a "New content is
+              // available; please refresh." message in your web app.
+              console.log('New content is available; please refresh.');
+            } else {
+              // At this point, everything has been precached.
+              // It's the perfect time to display a
+              // "Content is cached for offline use." message.
+              console.log('Content is cached for offline use.');
+            }
+          }
+        };
+      };
+    })
+    .catch(error => {
+      console.log('No service worker found');
+      console.error('Error during service worker registration:', error);
+    });
 }
 
 export function unregister() {
