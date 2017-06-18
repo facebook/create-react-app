@@ -63,6 +63,6 @@
     "react-dom": "^15.5.4"
   },
   "optionalDependencies": {
-    "fsevents": "1.0.17"
+    "fsevents": "1.1.2"
   }
 }
