@@ -43,6 +43,8 @@ module.exports = {
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
   entry: [
+    // React Hot Loader v3
+    require.resolve('react-hot-loader/patch'),
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
     // When you save a file, the client will either apply hot updates (in case
@@ -86,7 +88,7 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', paths.appNodeModules].concat(
+    modules: ['node_modules', paths.appNodeModules, paths.appSrc].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
@@ -135,11 +137,8 @@ module.exports = {
             options: {
               formatter: eslintFormatter,
               // @remove-on-eject-begin
-              baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
-              },
               ignore: false,
-              useEslintrc: false,
+              configFile: require.resolve(paths.appPath + '/.eslintrc.js'),
               // @remove-on-eject-end
             },
             loader: require.resolve('eslint-loader'),
@@ -160,7 +159,7 @@ module.exports = {
         exclude: [
           /\.html$/,
           /\.(js|jsx)$/,
-          /\.css$/,
+          /\.(css|scss)$/,
           /\.json$/,
           /\.bmp$/,
           /\.gif$/,
@@ -187,17 +186,21 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
-        loader: require.resolve('babel-loader'),
-        options: {
-          // @remove-on-eject-begin
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
-          // @remove-on-eject-end
-          // This is a feature of `babel-loader` for webpack (not Babel itself).
-          // It enables caching results in ./node_modules/.cache/babel-loader/
-          // directory for faster rebuilds.
-          cacheDirectory: true,
-        },
+        use: [
+          require.resolve('react-hot-loader/webpack'),
+          {
+            loader: require.resolve('babel-loader'),
+            options: {
+              // @remove-on-eject-begin
+              extends: require.resolve(paths.appPath + '/.babelrc'),
+              // @remove-on-eject-end
+              // This is a feature of `babel-loader` for webpack (not Babel itself).
+              // It enables caching results in ./node_modules/.cache/babel-loader/
+              // directory for faster rebuilds.
+              cacheDirectory: true,
+            },
+          }
+        ]
       },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -205,14 +208,19 @@ module.exports = {
       // In production, we use a plugin to extract that CSS to a file, but
       // in development "style" loader enables hot editing of CSS.
       {
-        test: /\.css$/,
+        test: /\.(css|scss)$/,
         use: [
           require.resolve('style-loader'),
           {
             loader: require.resolve('css-loader'),
             options: {
-              importLoaders: 1,
+              importLoaders: 2,
+              modules: process.env.CSS_MODULES ? process.env.CSS_MODULES == 'true' : true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]',
             },
+          },
+          {
+            loader: require.resolve('sass-loader'),
           },
           {
             loader: require.resolve('postcss-loader'),
