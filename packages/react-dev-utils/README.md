@@ -312,3 +312,11 @@ module.exports = {
   // ...
 }
 ```
+
+#### polyfills
+
+The polyfills files can be included in order to add polyfills for:
+
+ - `Promise` (including automated rejection tracking)
+ - `fetch`
+ - `Object.assign`
