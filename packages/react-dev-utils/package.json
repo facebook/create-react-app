@@ -44,6 +44,7 @@
     "gzip-size": "3.0.0",
     "html-entities": "1.2.1",
     "inquirer": "3.0.6",
+    "is-root": "1.0.0",
     "opn": "5.0.0",
     "recursive-readdir": "2.2.1",
     "shell-quote": "1.6.1",
