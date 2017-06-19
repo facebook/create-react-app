@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "lodash": "4.17.4",
+    "prop-types": "15.5.10",
+    "react-redux": "5.0.5",
+    "react-router": "4.1.1",
+    "react-router-dom": "4.1.1",
+    "redux": "3.6.0",
+    "redux-mock-store": "1.2.3",
+    "redux-promise": "0.5.3",
+    "redux-thunk": "2.2.0"
+  }
+}

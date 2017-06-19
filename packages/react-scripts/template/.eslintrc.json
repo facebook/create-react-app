@@ -1,0 +1,34 @@
+{
+  "env": {
+    "browser": true
+  },
+  "extends": [
+    "react-app",
+    "airbnb"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-debugger": "warn",
+    "no-console": "warn",
+    "import/no-named-as-default": "off",
+    "import/prefer-default-export": "off",
+    "import/first": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prefer-stateless-function": "off",
+    "react/jsx-closing-bracket-location": [1, "props-aligned"],
+    "react/require-default-props": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  }
+}

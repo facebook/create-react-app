@@ -35,7 +35,8 @@ module.exports = function(
   )).name;
   const ownPath = path.join(appPath, 'node_modules', ownPackageName);
   const appPackage = require(path.join(appPath, 'package.json'));
-  const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
+  // ServiceMax Note: we prefer npm, for now
+  const useYarn = false; //fs.existsSync(path.join(appPath, 'yarn.lock'));
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
@@ -47,6 +48,8 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    lint: 'NODE_ENV=development eslint js test *.js',
+    prettier: 'NODE_ENV=development prettier-eslint --write \"src/**/*.js\"',
   };
 
   fs.writeFileSync(
@@ -125,8 +128,9 @@ module.exports = function(
   // Install react and react-dom for backward compatibility with old CRA cli
   // which doesn't install react and react-dom along with react-scripts
   // or template is presetend (via --internal-testing-template)
-  if (!isReactInstalled(appPackage) || template) {
-    console.log(`Installing react and react-dom using ${command}...`);
+  // ServiceMax Note: always do this because we need template dependencies
+  if (true || !isReactInstalled(appPackage) || template) {
+    console.log(`Installing template dependencies using ${command}...`);
     console.log();
 
     const proc = spawn.sync(command, args, { stdio: 'inherit' });

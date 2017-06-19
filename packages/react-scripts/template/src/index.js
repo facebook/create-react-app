@@ -1,8 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import './index.css';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { makeStore } from 'store';
+import AppContainer from 'containers/AppContainer';
+import './theme/index.scss';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+const store = makeStore();
+
+ReactDOM.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>
+  </BrowserRouter>,
+  document.getElementById('root'),
+);
