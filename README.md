@@ -40,7 +40,7 @@ Install it once globally:
 npm install -g create-react-app
 ```
 
-**You’ll need to have Node >= 6 on your machine**. You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects.
+**You’ll need to have Node >= 6 on your machine**. You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects. We recommend you to use the latest LTS released version of node, because the newest one can be buggy. You can check the latest LTS [here](https://nodejs.org/en/download/)
 
 **This tool doesn’t assume a Node backend**. The Node installation is only required for Create React App itself.
 
