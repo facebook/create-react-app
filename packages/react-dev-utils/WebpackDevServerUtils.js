@@ -14,6 +14,7 @@ const path = require('path');
 const url = require('url');
 const chalk = require('chalk');
 const detect = require('detect-port-alt');
+const isRoot = require('is-root');
 const inquirer = require('inquirer');
 const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
@@ -378,6 +379,11 @@ function choosePort(host, defaultPort) {
       if (port === defaultPort) {
         return resolve(port);
       }
+      const message = process.platform !== 'win32' &&
+        defaultPort < 1024 &&
+        !isRoot()
+        ? `Admin permissions are required to run a server on a port below 1024.`
+        : `Something is already running on port ${defaultPort}.`;
       if (isInteractive) {
         clearConsole();
         const existingProcess = getProcessForPort(defaultPort);
@@ -385,7 +391,7 @@ function choosePort(host, defaultPort) {
           type: 'confirm',
           name: 'shouldChangePort',
           message: chalk.yellow(
-            `Something is already running on port ${defaultPort}.` +
+            message +
               `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
           ) + '\n\nWould you like to run the app on another port instead?',
           default: true,
@@ -398,9 +404,7 @@ function choosePort(host, defaultPort) {
           }
         });
       } else {
-        console.log(
-          chalk.red(`Something is already running on port ${defaultPort}.`)
-        );
+        console.log(chalk.red(message));
         resolve(null);
       }
     }),
