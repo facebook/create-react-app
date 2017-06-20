@@ -18,7 +18,7 @@ var stripAnsi = require('strip-ansi');
 var gzipSize = require('gzip-size').sync;
 
 // Prints a detailed summary of build files.
-function printFileSizesAfterBuild(webpackStats, previousSizeMap) {
+function printFileSizesAfterBuild(webpackStats, previousSizeMap, buildFolder) {
   var root = previousSizeMap.root;
   var sizes = previousSizeMap.sizes;
   var assets = webpackStats
@@ -30,7 +30,7 @@ function printFileSizesAfterBuild(webpackStats, previousSizeMap) {
       var previousSize = sizes[removeFileNameHash(root, asset.name)];
       var difference = getDifferenceLabel(size, previousSize);
       return {
-        folder: path.join('build', path.dirname(asset.name)),
+        folder: path.join(path.basename(buildFolder), path.dirname(asset.name)),
         name: path.basename(asset.name),
         size: size,
         sizeLabel: filesize(size) + (difference ? ' (' + difference + ')' : ''),

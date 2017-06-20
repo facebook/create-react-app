@@ -1,3 +1,53 @@
+## 1.0.7 (May 27, 2017)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#2382](https://github.com/facebookincubator/create-react-app/pull/2382) Consistently set environment variables. ([@gaearon](https://github.com/gaearon))
+  * [#2379](https://github.com/facebookincubator/create-react-app/pull/2379) Temporarily disable `comparisons` feature in uglify compression. ([@davidascher](https://github.com/davidascher))
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#2383](https://github.com/facebookincubator/create-react-app/pull/2383) Update webpack to 2.6.1. ([@gaearon](https://github.com/gaearon))
+  * [#2349](https://github.com/facebookincubator/create-react-app/pull/2349) Update webpack to v2.6.0. ([@ingro](https://github.com/ingro))
+  * [#2351](https://github.com/facebookincubator/create-react-app/pull/2351) Removed the overriding of `reduce_vars` since webpack v2.6.0 included fix of Uglify. ([@Zaccc123](https://github.com/Zaccc123))
+
+* `react-dev-utils`, `react-scripts`
+
+  * [#2361](https://github.com/facebookincubator/create-react-app/pull/2361) Print file sizes with correct build folder path. ([@fezhengjin](https://github.com/fezhengjin))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#2372](https://github.com/facebookincubator/create-react-app/pull/2372) Update README.md for `now` deployments. ([@purplecones](https://github.com/purplecones))
+  * [#2350](https://github.com/facebookincubator/create-react-app/pull/2350) Fix broken links. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 6
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- David Ascher ([davidascher](https://github.com/davidascher))
+- Emanuele Ingrosso ([ingro](https://github.com/ingro))
+- Jin Zheng ([fezhengjin](https://github.com/fezhengjin))
+- Mirza Joldic ([purplecones](https://github.com/purplecones))
+- Zac Kwan ([Zaccc123](https://github.com/Zaccc123))
+
+### Migrating from 1.0.6 to 1.0.7
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.7
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.7
+```
+
 ## 1.0.6 (May 24, 2017)
 
 #### :bug: Bug Fix
