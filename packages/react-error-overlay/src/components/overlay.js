@@ -1,6 +1,15 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 /* @flow */
 import { applyStyles } from '../utils/dom/css';
-import { overlayStyle, headerStyle, additionalStyle } from '../styles';
+import { containerStyle, overlayStyle, headerStyle } from '../styles';
 import { createClose } from './close';
 import { createFrames } from './frames';
 import { createFooter } from './footer';
@@ -28,17 +37,15 @@ function createOverlay(
   // Create overlay
   const overlay = document.createElement('div');
   applyStyles(overlay, overlayStyle);
-  overlay.appendChild(createClose(document, closeCallback));
 
   // Create container
   const container = document.createElement('div');
-  container.className = 'cra-container';
+  applyStyles(container, containerStyle);
   overlay.appendChild(container);
+  container.appendChild(createClose(document, closeCallback));
 
-  // Create additional
+  // Create "Errors X of Y" in case of multiple errors
   const additional = document.createElement('div');
-  applyStyles(additional, additionalStyle);
-  container.appendChild(additional);
   updateAdditional(
     document,
     additional,
@@ -46,6 +53,7 @@ function createOverlay(
     totalErrors,
     switchCallback
   );
+  container.appendChild(additional);
 
   // Create header
   const header = document.createElement('div');
@@ -73,7 +81,7 @@ function createOverlay(
 
   // Create trace
   container.appendChild(
-    createFrames(document, frames, frameSettings, contextSize)
+    createFrames(document, frames, frameSettings, contextSize, name)
   );
 
   // Show message

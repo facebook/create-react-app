@@ -1,12 +1,22 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 /* @flow */
 import type { ScriptLine } from '../utils/stack-frame';
 import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
 import {
-  preStyle,
   codeStyle,
   primaryErrorStyle,
+  primaryPreStyle,
   secondaryErrorStyle,
+  secondaryPreStyle,
 } from '../styles';
 
 import generateAnsiHtml from 'react-dev-utils/ansiHTML';
@@ -19,7 +29,8 @@ function createCode(
   lineNum: number,
   columnNum: number | null,
   contextSize: number,
-  main: boolean = false
+  main: boolean,
+  onSourceClick: ?Function
 ) {
   const sourceCode = [];
   let whiteSpace = Infinity;
@@ -81,8 +92,17 @@ function createCode(
     }
   }
   const pre = document.createElement('pre');
-  applyStyles(pre, preStyle);
+  applyStyles(pre, main ? primaryPreStyle : secondaryPreStyle);
   pre.appendChild(code);
+
+  if (typeof onSourceClick === 'function') {
+    let handler = onSourceClick;
+    pre.style.cursor = 'pointer';
+    pre.addEventListener('click', function() {
+      handler();
+    });
+  }
+
   return pre;
 }
 

@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 // @flow
 import StackFrame from './stack-frame';
 import { getSourceMap } from './getSourceMap';
@@ -67,7 +76,9 @@ async function unmap(
       }))
       .sort((a, b) => {
         const s = Math.sign(a.seps - b.seps);
-        if (s !== 0) return s;
+        if (s !== 0) {
+          return s;
+        }
         return Math.sign(a.penalties - b.penalties);
       });
     if (source.length < 1 || lineNumber == null) {

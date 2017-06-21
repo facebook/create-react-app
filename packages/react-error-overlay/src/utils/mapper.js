@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 // @flow
 import StackFrame from './stack-frame';
 import { getSourceMap } from './getSourceMap';
@@ -17,7 +26,9 @@ async function map(
   const files: string[] = [];
   frames.forEach(frame => {
     const { fileName } = frame;
-    if (fileName == null) return;
+    if (fileName == null) {
+      return;
+    }
     if (files.indexOf(fileName) !== -1) {
       return;
     }

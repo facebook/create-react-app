@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
 /* @flow */
 import {
   register as registerError,
@@ -35,7 +44,7 @@ import type { ErrorRecordReference } from './utils/errorRegister';
 
 import type { StackFrame } from './utils/stack-frame';
 import { iframeStyle } from './styles';
-import { injectCss, applyStyles } from './utils/dom/css';
+import { applyStyles } from './utils/dom/css';
 import { createOverlay } from './components/overlay';
 import { updateAdditional } from './components/additional';
 
@@ -44,33 +53,6 @@ let iframeReference: HTMLIFrameElement | null = null;
 let additionalReference = null;
 let errorReferences: ErrorRecordReference[] = [];
 let currReferenceIndex: number = -1;
-
-const css = [
-  '.cra-container {',
-  '  padding-right: 15px;',
-  '  padding-left: 15px;',
-  '  margin-right: auto;',
-  '  margin-left: auto;',
-  '}',
-  '',
-  '@media (min-width: 768px) {',
-  '  .cra-container {',
-  '    width: calc(750px - 6em);',
-  '  }',
-  '}',
-  '',
-  '@media (min-width: 992px) {',
-  '  .cra-container {',
-  '    width: calc(970px - 6em);',
-  '  }',
-  '}',
-  '',
-  '@media (min-width: 1200px) {',
-  '  .cra-container {',
-  '    width: calc(1170px - 6em);',
-  '  }',
-  '}',
-].join('\n');
 
 function render(name: ?string, message: string, resolvedFrames: StackFrame[]) {
   disposeCurrentView();
@@ -105,9 +87,13 @@ function render(name: ?string, message: string, resolvedFrames: StackFrame[]) {
         keyEventHandler(type => shortcutHandler(type), event);
       };
     }
-    injectCss(iframeReference.contentDocument, css);
     if (document.body != null) {
-      document.body.appendChild(overlay);
+      document.body.style.margin = '0';
+      // Keep popup within body boundaries for iOS Safari
+      // $FlowFixMe
+      document.body.style['max-width'] = '100vw';
+
+      (document.body: any).appendChild(overlay);
     }
     additionalReference = additional;
   };
@@ -133,10 +119,18 @@ function renderErrorByIndex(index: number) {
 }
 
 function switchError(offset) {
-  const nextView = currReferenceIndex + offset;
-  if (nextView < 0 || nextView >= errorReferences.length) {
+  if (errorReferences.length === 0) {
     return;
   }
+
+  let nextView = currReferenceIndex + offset;
+
+  if (nextView < 0) {
+    nextView = errorReferences.length - 1;
+  } else if (nextView >= errorReferences.length) {
+    nextView = 0;
+  }
+
   renderErrorByIndex(nextView);
 }
 
