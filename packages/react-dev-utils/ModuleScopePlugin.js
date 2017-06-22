@@ -44,11 +44,11 @@ class ModuleScopePlugin {
         path.dirname(request.context.issuer),
         request.__innerRequest_request
       );
-      const descriptionFileRelativeToRoot = path.relative(
+      const requestRelativeToRoot = path.relative(
         request.descriptionFileRoot,
         requestFullPath
       );
-      if (descriptionFileRelativeToRoot === 'package.json') {
+      if (requestRelativeToRoot === 'package.json') {
         return callback();
       }
       // Find path from src to the requested file
