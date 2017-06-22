@@ -48,7 +48,10 @@ class ModuleScopePlugin {
         request.descriptionFileRoot,
         requestFullPath
       );
-      if (requestRelativeToRoot === 'package.json') {
+      if (
+        requestRelativeToRoot === 'package.json' ||
+        requestRelativeToRoot === 'package'
+      ) {
         return callback();
       }
       // Find path from src to the requested file
