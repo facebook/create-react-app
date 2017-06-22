@@ -44,18 +44,11 @@ class ModuleScopePlugin {
         path.dirname(request.context.issuer),
         request.__innerRequest_request
       );
-      const requestRelativeToRoot = path.relative(
-        request.descriptionFileRoot,
-        requestFullPath
-      );
-      if (
-        requestRelativeToRoot === 'package.json' ||
-        requestRelativeToRoot === 'package'
-      ) {
+      const requestRelative = path.relative(appSrc, requestFullPath);
+      if (/^(..[/|\\])+package(.json)?$/.test(requestRelative)) {
         return callback();
       }
       // Find path from src to the requested file
-      const requestRelative = path.relative(appSrc, requestFullPath);
       // Error if in a parent directory of src/
       if (
         requestRelative.startsWith('../') || requestRelative.startsWith('..\\')
