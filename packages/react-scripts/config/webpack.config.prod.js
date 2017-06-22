@@ -293,6 +293,7 @@ module.exports = {
       },
       sourceMap: true,
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,
