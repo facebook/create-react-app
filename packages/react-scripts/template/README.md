@@ -1787,6 +1787,8 @@ When you build the project, Create React App will place the `public` folder cont
     ```
 
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
+    
+Please note: Your deploy will fail if you have `NODE_ENV` set to production in `now.json` as `devDependencies` will not install.
 
 Details are available in [this article.](https://zeit.co/blog/unlimited-static)
 
