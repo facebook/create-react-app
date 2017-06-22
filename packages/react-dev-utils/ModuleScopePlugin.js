@@ -40,21 +40,19 @@ class ModuleScopePlugin {
       if (relative.startsWith('../') || relative.startsWith('..\\')) {
         return callback();
       }
+      const requestFullPath = path.resolve(
+        path.dirname(request.context.issuer),
+        request.__innerRequest_request
+      );
       const descriptionFileRelativeToRoot = path.relative(
         request.descriptionFileRoot,
-        request.descriptionFilePath
+        requestFullPath
       );
       if (descriptionFileRelativeToRoot === 'package.json') {
         return callback();
       }
       // Find path from src to the requested file
-      const requestRelative = path.relative(
-        appSrc,
-        path.resolve(
-          path.dirname(request.context.issuer),
-          request.__innerRequest_request
-        )
-      );
+      const requestRelative = path.relative(appSrc, requestFullPath);
       // Error if in a parent directory of src/
       if (
         requestRelative.startsWith('../') || requestRelative.startsWith('..\\')
