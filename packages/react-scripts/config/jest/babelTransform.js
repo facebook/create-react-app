@@ -12,5 +12,21 @@ const babelJest = require('babel-jest');
 
 module.exports = babelJest.createTransformer({
   presets: [require.resolve('babel-preset-react-app')],
+  plugins: [
+    ["module-resolver", {
+      // "root": ["./"],
+      "alias": {
+        "src": "./src",
+      }
+    }],
+    "css-modules-transform",
+    // [require.resolve('babel-plugin-react-intl'), {
+    //   messagesDir: './build/messages/',
+    //   // enforceDescriptions: true,
+    //   extractSourceLocation: true,
+    // }],
+    'transform-function-bind',
+    ['transform-decorators-legacy']
+  ],
   babelrc: false,
 });

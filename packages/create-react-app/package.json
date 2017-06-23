@@ -1,17 +1,17 @@
 {
-  "name": "create-react-app",
-  "version": "1.4.0",
+  "name": "@brickwork-software/create-react-app",
+  "version": "1.0.0",
   "keywords": [
     "react"
   ],
-  "description": "Create React apps with no build configuration.",
-  "repository": "facebookincubator/create-react-app",
+  "description": "Brickwork build configuration for all our react apps",
+  "repository": "brickwork-software/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/brickworksoftware/create-react-app/issues"
   },
   "files": [
     "index.js",

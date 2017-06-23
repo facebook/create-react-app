@@ -27,7 +27,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.js?(x)',
+      '<rootDir>/src/**/(__tests__|__specs__)/**/*.js?(x)',
       '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
     ],
     testEnvironment: 'node',
@@ -50,6 +50,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
+    'json',
+    'outputFile',
+    'coverageDirectory',
     'collectCoverageFrom',
     'coverageReporters',
     'coverageThreshold',
