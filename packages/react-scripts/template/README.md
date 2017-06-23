@@ -1145,6 +1145,39 @@ The test command will force Jest to run tests once instead of launching the watc
 
 The build command will check for linter warnings and fail if any are found.
 
+### Pre-commit Hook
+
+You can run tests against "staged" files before each Git commit by integrating the test script in pre-commit hook.
+
+First, install [husky](https://github.com/typicode/husky) & [lint-staged](https://github.com/okonet/lint-staged):
+```sh
+npm install --save-dev husky lint-staged
+```
+
+Because we don't need the tests to run in watch mode, we need to set `CI` environment variable to `true`. As described in section [Continuous Integration](#continuous-integration).
+
+To make sure it's cross-platform, let's install [cross-env](https://github.com/kentcdodds/cross-env):
+```sh
+npm install --save-dev cross-env
+```
+
+Then add this config to `package.json`:
+```
+"scripts": {
+  ...
+  "precommit": "lint-staged",
+  "test:staged": "CI=true react-scripts test --env=jsdom --findRelatedTests"
+},
+"lint-staged": {
+  "src/**/*.js": [
+    "test:staged",
+    "git add"
+  ]
+}
+```
+
+This way, instead of running all tests, passing `--findRelatedTests` flag in test script will save our times a lot because Jest will run only the minimal amount of tests related to changes in your staging area.
+
 ### Writing Tests
 
 To create tests, add `it()` (or `test()`) blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping but this is neither required nor recommended.
