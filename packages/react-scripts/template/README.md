@@ -1166,7 +1166,7 @@ Then add this config to `package.json`:
 "scripts": {
   ...
   "precommit": "lint-staged",
-  "test:staged": "CI=true react-scripts test --env=jsdom --findRelatedTests"
+  "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests"
 },
 "lint-staged": {
   "src/**/*.js": [
