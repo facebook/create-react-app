@@ -23,6 +23,9 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Changelog
 
+### 2.3.1
+* Fix issue with new @types/react
+
 ### 2.3.0
 * All tsc to parse config (for `extend`) - Thanks to @DorianGrey
 * Fix various jest issues - thanks to @zinserjan
