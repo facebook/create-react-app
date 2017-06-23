@@ -1,20 +1,20 @@
 If you are reporting a bug, please fill in below. Otherwise feel free to remove this template entirely.
 
-### Can you reproduce the problem with latest npm?
+### Can you reproduce the problem with npm 4.x?
 
 Many errors, especially related to "missing modules", are due to npm bugs.
 
-If you're using Windows, [follow these instructions to update npm](https://github.com/npm/npm/wiki/Troubleshooting#upgrading-on-windows).
-
-If you're using OS X or Linux, run this to update npm:
+Try to update npm to 4.x first:
 
 ```
-npm install -g npm@latest
+npm install -g npm@4
 
 cd your_project_directory
 rm -rf node_modules
 npm install
 ```
+
+**This is especially important if `npm -v` gives you 5 because npm 5 is [known to have many issues](https://github.com/npm/npm/issues/16991).**
 
 Then try to reproduce the issue again.
 
