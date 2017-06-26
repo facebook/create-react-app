@@ -46,11 +46,6 @@ inquirer
     default: false,
   })
   .then(answer => {
-  
-  
-    // LOL
-    return
-  
     if (!answer.shouldEject) {
       console.log(cyan('Close one! Eject aborted.'));
       return;
@@ -222,10 +217,10 @@ inquirer
   
     if (fs.existsSync(paths.yarnLockFile)) {
       console.log(cyan('Running yarn...'));
-      execSync('yarnpkg');
+      //execSync('yarnpkg');
     } else {
       console.log(cyan('Running npm install...'));
-      execSync('npm install');
+      //execSync('npm install');
     }
 
     console.log(green('Ejected successfully!'));
