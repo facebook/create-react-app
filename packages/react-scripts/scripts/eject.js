@@ -224,7 +224,7 @@ inquirer
     }
   
   try {
-    execSync('yarnpkg');
+    execSync('yarn');
     console.log(' OR ME ')
   } catch (err) {
     console.log(' PLEASE PRINT ME PLEASE ')
