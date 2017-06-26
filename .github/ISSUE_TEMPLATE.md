@@ -2,6 +2,8 @@
   PLEASE DON'T DELETE THIS TEMPLATE UNTIL YOU HAVE READ THE FIRST SECTION.
 -->
 
+
+
 ### Is this a bug report?
 
 (write your answer here)
@@ -19,8 +21,9 @@
     Note that we don't provide help for webpack questions after ejecting.
     You can find webpack docs at https://webpack.js.org/.
 
-  Now let's get started!
+  Now scroll below!
 -->
+
 
 ### Can you reproduce the problem with npm 4.x?
 
@@ -46,6 +49,7 @@
 
 (Write your answer here.)
 
+
 ### Have you read the Troubleshooting section and searched the User Guide?
 
 <!--
@@ -59,6 +63,7 @@
 -->
 
 (Write your answer here.)
+
 
 ### Environment
 
@@ -77,6 +82,7 @@ Then, specify:
 1. Operating system:
 2. Browser and version (if relevant):
 
+
 ### Steps to Reproduce
 
 <!--
@@ -90,6 +96,7 @@ Then, specify:
 2. 
 3. 
 
+
 ### Expected Behavior
 
 <!--
@@ -100,6 +107,7 @@ Then, specify:
 
 (Write what you thought would happen.)
 
+
 ### Actual Behavior
 
 <!--
@@ -109,6 +117,7 @@ Then, specify:
 -->
 
 (Write what happened. Add screenshots!)
+
 
 ### Reproducible Demo
 
