@@ -2,7 +2,6 @@
   PLEASE DON'T DELETE THIS TEMPLATE UNTIL YOU HAVE READ THE FIRST SECTION.
 -->
 
-
 ### Is this a bug report?
 
 (write your answer here)
