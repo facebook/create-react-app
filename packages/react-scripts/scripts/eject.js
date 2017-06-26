@@ -46,6 +46,11 @@ inquirer
     default: false,
   })
   .then(answer => {
+  
+  
+    // LOL
+    return
+  
     if (!answer.shouldEject) {
       console.log(cyan('Close one! Eject aborted.'));
       return;
