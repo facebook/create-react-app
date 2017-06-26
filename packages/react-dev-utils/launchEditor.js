@@ -74,6 +74,8 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
       );
     case 'webstorm':
     case 'webstorm64':
+    case 'phpstorm':
+    case 'phpstorm64':
       return addWorkspaceToArgumentsIfExists(
         ['--line', lineNumber, fileName],
         workspace
