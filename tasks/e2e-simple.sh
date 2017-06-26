@@ -175,6 +175,7 @@ create_react_app --scripts-version="$scripts_path" test-app
 # ******************************************************************************
 
 # Eject...
+cd test-app
 echo yes | npm run eject
 
 
