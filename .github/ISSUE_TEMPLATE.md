@@ -60,7 +60,7 @@
   Please write the answer below:
 -->
 
-(Write your answer here.)
+(Write the terms you searched for on the User Guide page.)
 
 
 ### Environment
