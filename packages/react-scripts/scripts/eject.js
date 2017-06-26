@@ -222,6 +222,13 @@ inquirer
       console.log(cyan('Running npm install...'));
       //execSync('npm install');
     }
+  
+  try {
+    execSync('npm install');
+    console.log(' OR ME ')
+  } catch (err) {
+    console.log(' PLEASE PRINT ME PLEASE ')
+  }
 
     console.log(green('Ejected successfully!'));
     console.log();
