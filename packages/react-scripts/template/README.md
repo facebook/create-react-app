@@ -1258,8 +1258,7 @@ script:
 
 #### CircleCI
 
-Example of setting up CircleCI and now.sh for CI and CD:
-- https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1
+Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React App project.
 
 ### On your own environment
 ##### Windows (cmd.exe)
