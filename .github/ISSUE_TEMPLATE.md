@@ -1,5 +1,5 @@
 <!--
-  DON'T DELETE THIS TEMPLATE UNTIL YOU READ THE FIRST SECTION.
+  PLEASE DON'T DELETE THIS TEMPLATE UNTIL YOU HAVE READ THE FIRST SECTION.
 -->
 
 ### Is this a bug report?
@@ -11,7 +11,7 @@
 
     We expect that it will take you about 30 minutes to produce a high-quality bug report.
     While this may seem like a lot, putting care into issues helps us fix them faster.
-    NOTE: for bug reports, it is required to fill the rest of this template, or the issue will be closed.
+    For bug reports, it is REQUIRED to fill the rest of this template, or the issue will be closed.
 
   If you answered "No":
 
