@@ -217,7 +217,6 @@ module.exports = {
           {
             loader: require.resolve('postcss-loader'),
             options: {
-              ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
               plugins: () => [
                 require('postcss-flexbugs-fixes'),
                 autoprefixer({
