@@ -1,11 +1,14 @@
 {
-  "name": "react-scripts",
+  "name": "@zendesk/react-scripts",
   "version": "1.0.7",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=6"
+  },
+  "publishConfig": {
+    "registry":"https://zdrepo.jfrog.io/zdrepo/api/npm/npm"
   },
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
