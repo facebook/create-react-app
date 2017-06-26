@@ -47,6 +47,7 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    eslint: 'node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react-app/index.js',
   };
 
   fs.writeFileSync(
