@@ -23,7 +23,6 @@ const chalk = require('chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
-const spawn = require('react-dev-utils/crossSpawn');
 
 const green = chalk.green;
 const cyan = chalk.cyan;
@@ -216,27 +215,20 @@ inquirer
       }
     }
   
-    let child = null;
-    const useYarn = fs.existsSync(paths.yarnLockFile);
-    if (useYarn) {
+    if (fs.existsSync(paths.yarnLockFile)) {
       console.log(cyan('Running yarn...'));
-      child = spawn('yarnpkg', [], { stdio: 'inherit' });
+      execSync('yarnpkg');
     } else {
       console.log(cyan('Running npm install...'));
-      child = spawn('npm', ['install'], { stdio: 'inherit' });
+      execSync('npm install');
     }
 
-    child.on('close', code => {
-      console.log(green('Ejected successfully!'));
-      if (code !== 0) {
-        // Ignore?
-      }
-      console.log();
+    console.log(green('Ejected successfully!'));
+    console.log();
 
-      console.log(
-        green('Please consider sharing why you ejected in this survey:')
-      );
-      console.log(green('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
-      console.log();
-    });
+    console.log(
+      green('Please consider sharing why you ejected in this survey:')
+    );
+    console.log(green('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
+    console.log();
   });
