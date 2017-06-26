@@ -242,6 +242,6 @@ inquirer
   });
 
 
-process.on('beforeExit', code => {
+process.on('exit', code => {
   console.log('OH OH NO GONNA EXIT!!!!', code)
 });
