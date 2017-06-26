@@ -68,7 +68,7 @@ root_path=$PWD
 # Clear cache to avoid issues with incorrect packages being used
 if hash yarnpkg 2>/dev/null
 then
-  $yarn cache clean
+  yarnpkg cache clean
 fi
 if hash npm 2>/dev/null
 then
