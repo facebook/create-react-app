@@ -122,6 +122,7 @@ then
 fi
 
 # Lint own code
+cd packages/react-error-overlay/
 npm run build:prod
 cd ../..
 
