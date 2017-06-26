@@ -23,7 +23,7 @@ const chalk = require('chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
-const spawnSync = require('react-dev-utils/crossSpawn').sync;
+const spawn = require('react-dev-utils/crossSpawn');
 
 const green = chalk.green;
 const cyan = chalk.cyan;
@@ -215,20 +215,28 @@ inquirer
         // It's not essential that this succeeds
       }
     }
-
-    if (fs.existsSync(paths.yarnLockFile)) {
+  
+    let child = null;
+    const useYarn = fs.existsSync(paths.yarnLockFile);
+    if (useYarn) {
       console.log(cyan('Running yarn...'));
-      spawnSync('yarnpkg', [], { stdio: 'inherit' });
+      child = spawn('yarnpkg', [], { stdio: 'inherit' });
     } else {
       console.log(cyan('Running npm install...'));
-      spawnSync('npm', ['install'], { stdio: 'inherit' });
+      child = spawn('npm', ['install'], { stdio: 'inherit' });
     }
-    console.log(green('Ejected successfully!'));
-    console.log();
 
-    console.log(
-      green('Please consider sharing why you ejected in this survey:')
-    );
-    console.log(green('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
-    console.log();
+    child.on('close', code => {
+      console.log(green('Ejected successfully!'));
+      if (code !== 0) {
+        // Ignore?
+      }
+      console.log();
+
+      console.log(
+        green('Please consider sharing why you ejected in this survey:')
+      );
+      console.log(green('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
+      console.log();
+    });
   });
