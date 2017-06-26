@@ -224,7 +224,7 @@ inquirer
     }
   
   try {
-    execSync('yarn.cmd');
+    execSync('yarn.cmd', {stdio: 'inherit'});
     console.log(' OR ME ')
   } catch (err) {
     console.log(' PLEASE PRINT ME PLEASE ')
