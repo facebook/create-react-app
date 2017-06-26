@@ -12,9 +12,9 @@
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', err => {
-  throw err;
-});
+// process.on('unhandledRejection', err => {
+//   throw err;
+// });
 
 const fs = require('fs-extra');
 const path = require('path');
@@ -238,4 +238,10 @@ inquirer
     );
     console.log(green('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
     console.log();
+  
   });
+
+
+process.on('beforeExit', code => {
+  console.log('OH OH NO GONNA EXIT!!!!', code)
+});
