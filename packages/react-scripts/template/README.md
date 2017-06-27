@@ -281,6 +281,12 @@ The generated project includes React and ReactDOM as dependencies. It also inclu
 npm install --save <library-name>
 ```
 
+Alternatively you may also use `yarn`:
+
+```
+yarn add <library-name>
+```
+
 ## Importing a Component
 
 This project setup supports ES6 modules thanks to Babel.<br>
