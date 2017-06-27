@@ -36,11 +36,7 @@ const COMMON_EDITORS_OSX = {
   '/Applications/Visual Studio Code.app/Contents/MacOS/Electron': 'code',
 };
 
-const COMMON_EDITORS_WIN = [
-  'Code.exe',
-  'atom.exe',
-  'sublime_text.exe'
-];
+const COMMON_EDITORS_WIN = ['Code.exe', 'atom.exe', 'sublime_text.exe'];
 
 function addWorkspaceToArgumentsIfExists(args, workspace) {
   if (workspace) {
@@ -113,12 +109,16 @@ function guessEditor() {
         }
       }
     } else if (process.platform === 'win32') {
-      const output = child_process.execSync('powershell -Command "Get-Process | Select-Object Path"').toString();
+      const output = child_process
+        .execSync('powershell -Command "Get-Process | Select-Object Path"', {
+          stdio: ['pipe', 'pipe', 'ignore'],
+        })
+        .toString();
       const runningProcesses = output.split('\r\n');
       for (let i = 0; i < runningProcesses.length; i++) {
         // `Get-Process` sometimes returns empty lines
         if (!runningProcesses[i]) {
-          continue; 
+          continue;
         }
 
         const fullProcessPath = runningProcesses[i].trim();
