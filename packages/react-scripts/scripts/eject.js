@@ -12,9 +12,9 @@
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', err => {
-  throw err;
-});
+// process.on('unhandledRejection', err => {
+//   throw err;
+// });
 
 const fs = require('fs-extra');
 const path = require('path');
@@ -23,7 +23,6 @@ const chalk = require('chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
-const spawnSync = require('react-dev-utils/crossSpawn').sync;
 
 const green = chalk.green;
 const cyan = chalk.cyan;
@@ -218,14 +217,22 @@ inquirer
         // It's not essential that this succeeds
       }
     }
-
+  
     if (fs.existsSync(paths.yarnLockFile)) {
       console.log(cyan('Running yarn...'));
-      spawnSync('yarnpkg', [], { stdio: 'inherit' });
+      //execSync('yarnpkg');
     } else {
       console.log(cyan('Running npm install...'));
-      spawnSync('npm', ['install'], { stdio: 'inherit' });
+      //execSync('npm install');
     }
+  
+  try {
+    execSync('yarn.cmd', {stdio: 'inherit'});
+    console.log(' OR ME ')
+  } catch (err) {
+    console.log(' PLEASE PRINT ME PLEASE ')
+  }
+
     console.log(green('Ejected successfully!'));
     console.log();
 
@@ -234,4 +241,10 @@ inquirer
     );
     console.log(green('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
     console.log();
+  
   });
+
+
+process.on('exit', code => {
+  console.log('OH OH NO GONNA EXIT!!!!', code)
+});
