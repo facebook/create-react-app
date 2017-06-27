@@ -51,7 +51,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
   - [Command Line Interface](#command-line-interface)
-  - [Pre-commit Hook](#pre-commit-hook)
   - [Writing Tests](#writing-tests)
   - [Testing Components](#testing-components)
   - [Using Third Party Assertion Libraries](#using-third-party-assertion-libraries)
@@ -60,6 +59,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Coverage Reporting](#coverage-reporting)
   - [Version Control Integration](#version-control-integration)
   - [Continuous Integration](#continuous-integration)
+  - [Pre-commit Hook](#pre-commit-hook)
   - [Disabling jsdom](#disabling-jsdom)
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
@@ -1085,39 +1085,6 @@ The watcher includes an interactive command-line interface with the ability to r
 
 ![Jest watch mode](http://facebook.github.io/jest/img/blog/15-watch.gif)
 
-### Pre-commit Hook
-
-You can run tests against "staged" files before each Git commit by integrating the test script in pre-commit hook.
-
-First, install [husky](https://github.com/typicode/husky) & [lint-staged](https://github.com/okonet/lint-staged):
-```sh
-npm install --save-dev husky lint-staged
-```
-
-Because we don't need the tests to run in watch mode, we need to set `CI` environment variable to `true`. As described in section [Continuous Integration](#continuous-integration).
-
-To make sure it's cross-platform, let's install [cross-env](https://github.com/kentcdodds/cross-env):
-```sh
-npm install --save-dev cross-env
-```
-
-Then add this config to `package.json`:
-```
-"scripts": {
-  ...
-  "precommit": "lint-staged",
-  "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests"
-},
-"lint-staged": {
-  "src/**/*.js": [
-    "test:staged",
-    "git add"
-  ]
-}
-```
-
-This way, instead of running all tests, passing `--findRelatedTests` flag in test script will save our times a lot because Jest will run only the minimal amount of tests related to changes in your staging area.
-
 ### Writing Tests
 
 To create tests, add `it()` (or `test()`) blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping but this is neither required nor recommended.
@@ -1326,6 +1293,39 @@ The test command will force Jest to run tests once instead of launching the watc
 >  If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
 
 The build command will check for linter warnings and fail if any are found.
+
+### Pre-commit Hook
+
+You can run tests against "staged" files before each Git commit by integrating the test script in pre-commit hook.
+
+First, install [husky](https://github.com/typicode/husky) & [lint-staged](https://github.com/okonet/lint-staged):
+```sh
+npm install --save-dev husky lint-staged
+```
+
+Because we don't need the tests to run in watch mode, we need to set `CI` environment variable to `true`. As described in section [Continuous Integration](#continuous-integration).
+
+To make sure it's cross-platform, let's install [cross-env](https://github.com/kentcdodds/cross-env):
+```sh
+npm install --save-dev cross-env
+```
+
+Then add this config to `package.json`:
+```
+"scripts": {
+  ...
+  "precommit": "lint-staged",
+  "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests"
+},
+"lint-staged": {
+  "src/**/*.js": [
+    "test:staged",
+    "git add"
+  ]
+}
+```
+
+This way, instead of running all tests, passing `--findRelatedTests` flag in test script will save our times a lot because Jest will run only the minimal amount of tests related to changes in your staging area.
 
 ### Disabling jsdom
 
