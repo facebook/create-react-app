@@ -139,7 +139,7 @@ function printInstructions(fileName, errorMessage) {
       ' to the ' +
       chalk.green('.env.local') +
       ' file in your project folder ' +
-      'and restart the development server. More info: ' +
+      'and restart the development server. Learn more: ' +
       chalk.green('https://goo.gl/MMTaZt')
   );
   console.log();
