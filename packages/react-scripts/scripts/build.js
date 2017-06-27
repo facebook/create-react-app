@@ -34,6 +34,7 @@ const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
+const get = require('lodash/get');
 
 const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
@@ -93,7 +94,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
     },
     err => {
       console.log(chalk.red('Failed to compile.\n'));
-      console.log((err.message || err) + '\n');
+      formatError(err);
       process.exit(1);
     }
   );
@@ -140,4 +141,31 @@ function copyPublicFolder() {
     dereference: true,
     filter: file => file !== paths.appHtml,
   });
+}
+
+function formatError(err) {
+  const message = get(err, 'message');
+
+  // Add more helpful message for UglifyJs error
+  if (typeof message === 'string' && message.indexOf('from UglifyJs') !== -1) {
+    try {
+      console.log(
+        'UglifyJs could not parse the code from \n\n',
+        chalk.yellow(
+          err.stack.split('\n')[1].split('[')[1].split('][')[0].replace(']', '')
+        ),
+        '\n'
+      );
+    } catch (e) {
+      console.log('UglifyJs could not process the code.', err);
+    }
+    console.log(
+      'Please check your dependencies for any untranspiled es6 code and raise an issue with \n' +
+        'the author. \n' +
+        '\nIf you need to use the module right now, you can try placing the source in ./src \n' +
+        'and we will transpile it for you.'
+    );
+  } else {
+    console.log((message || err) + '\n');
+  }
 }
