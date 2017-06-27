@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stack with eval 1`] = `
+Array [
+  StackFrame {
+    "_originalColumnNumber": null,
+    "_originalFileName": null,
+    "_originalFunctionName": null,
+    "_originalLineNumber": null,
+    "_originalScriptCode": null,
+    "_scriptCode": null,
+    "columnNumber": 18,
+    "fileName": "file:///Users/joe/Documents/Development/OSS/stack-frame/index.html",
+    "functionName": "e",
+    "lineNumber": 25,
+  },
+  StackFrame {
+    "_originalColumnNumber": null,
+    "_originalFileName": null,
+    "_originalFunctionName": null,
+    "_originalLineNumber": null,
+    "_originalScriptCode": null,
+    "_scriptCode": null,
+    "columnNumber": 9,
+    "fileName": "file:///Users/joe/Documents/Development/OSS/stack-frame/index.html",
+    "functionName": "eval",
+    "lineNumber": 12,
+  },
+  StackFrame {
+    "_originalColumnNumber": null,
+    "_originalFileName": null,
+    "_originalFunctionName": null,
+    "_originalLineNumber": null,
+    "_originalScriptCode": null,
+    "_scriptCode": null,
+    "columnNumber": 9,
+    "fileName": "file:///Users/joe/Documents/Development/OSS/stack-frame/index.html",
+    "functionName": "a",
+    "lineNumber": 8,
+  },
+  StackFrame {
+    "_originalColumnNumber": null,
+    "_originalFileName": null,
+    "_originalFunctionName": null,
+    "_originalLineNumber": null,
+    "_originalScriptCode": null,
+    "_scriptCode": null,
+    "columnNumber": 7,
+    "fileName": "file:///Users/joe/Documents/Development/OSS/stack-frame/index.html",
+    "functionName": null,
+    "lineNumber": 32,
+  },
+]
+`;

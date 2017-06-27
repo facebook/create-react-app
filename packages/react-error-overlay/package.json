@@ -1,0 +1,74 @@
+{
+  "name": "react-error-overlay",
+  "version": "1.0.7",
+  "description": "An overlay for displaying stack frames.",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepublishOnly": "npm run build:prod && npm test",
+    "start": "cross-env NODE_ENV=development npm run build -- --watch",
+    "test": "flow && jest",
+    "build": "babel src/ -d lib/",
+    "build:prod": "cross-env NODE_ENV=production babel src/ -d lib/"
+  },
+  "repository": "facebookincubator/create-react-app",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/facebookincubator/create-react-app/issues"
+  },
+  "keywords": [
+    "overlay",
+    "syntax",
+    "error",
+    "red",
+    "box",
+    "redbox",
+    "crash",
+    "warning"
+  ],
+  "author": "Joe Haddad <timer150@gmail.com>",
+  "files": [
+    "lib/",
+    "middleware.js"
+  ],
+  "dependencies": {
+    "anser": "1.2.5",
+    "babel-code-frame": "6.22.0",
+    "babel-runtime": "6.23.0",
+    "react-dev-utils": "^3.0.0",
+    "settle-promise": "1.0.0",
+    "source-map": "0.5.6"
+  },
+  "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-eslint": "7.2.3",
+    "babel-preset-react-app": "^3.0.0",
+    "cross-env": "5.0.0",
+    "eslint": "3.19.0",
+    "eslint-config-react-app": "^1.0.4",
+    "eslint-plugin-flowtype": "2.33.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "5.0.3",
+    "eslint-plugin-react": "7.0.1",
+    "flow-bin": "0.46.0",
+    "jest": "20.0.1",
+    "jest-fetch-mock": "1.1.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "./src/__tests__/setupJest.js"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.js?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/fixtures/",
+      "setupJest.js"
+    ]
+  }
+}
