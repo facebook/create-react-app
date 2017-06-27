@@ -25,7 +25,7 @@
 -->
 
 
-### Can you reproduce the problem with npm 4.x?
+### Can you also reproduce the problem with npm 4.x?
 
 <!--
   Many errors, especially related to "missing modules", are due to npm bugs.
