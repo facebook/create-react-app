@@ -1867,9 +1867,9 @@ If this still doesn’t help, try running `launchctl unload -F ~/Library/LaunchA
 
 There are also reports that *uninstalling* Watchman fixes the issue. So if nothing else helps, remove it from your system and try again.
 
-### `npm run build` silently fails
+### `npm run build`, `npm install` or any command silently fails
 
-It is reported that `npm run build` can fail on machines with no swap space, which is common in cloud environments. If [the symptoms are matching](https://github.com/facebookincubator/create-react-app/issues/1133#issuecomment-264612171), consider adding some swap space to the machine you’re building on, or build the project locally.
+It is reported that `npm run build`, `npm install`, or any command can fail on machines with no swap space and have a limited memory, which is common in cloud environments. If [the symptoms are matching](https://github.com/facebookincubator/create-react-app/issues/1133#issuecomment-264612171), consider adding some swap space to the machine you’re building on, or build the project locally.
 
 ### `npm run build` fails on Heroku
 
