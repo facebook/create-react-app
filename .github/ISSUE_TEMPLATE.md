@@ -49,6 +49,29 @@
 
 (Write your answer here.)
 
+### Can you reproduce the problem with the active LTS of node?
+
+<!--
+  A non-LTS node version can be problematic. We try to keep up with the latest node,
+  But if it's near the release date we / our dependencies may still have unfixed bugs. 
+  You can find out which version of node that you are running by doing:
+
+    node -v
+
+  If it's not an LTS according to https://github.com/nodejs/LTS, you can install the
+  LTS from https://nodejs.org/en/download/ or use something like https://github.com/creationix/nvm/ 
+  or https://github.com/tj/n 
+
+  Then try to reproduce the issue again.
+  Can you still reproduce it? 
+  
+  If you cannot, then it's related to node. You can still report it here, 
+  but please share a reproducible project example.
+
+-->
+
+(Write your answer here.)
+
 
 ### Which terms did you search for in User Guide?
 
