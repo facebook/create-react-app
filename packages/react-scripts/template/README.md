@@ -17,6 +17,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
 - [Debugging in the Editor](#debugging-in-the-editor)
+- [Formatting Code Automatically](#formatting-code-automatically)
 - [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
@@ -263,6 +264,59 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
 ```
 
 Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
+
+## Formatting Code Automatically
+
+Prettier is an opinionated JavaScript formatter. With Prettier you can format the code you write automatically to ensure a code style within your project. See the [Prettier's GitHub page](https://github.com/prettier/prettier) for more information, and look at this [page to see it in action](https://prettier.github.io/prettier/).
+
+To format our code whenever we make a commit in git, we need to install the following dependencies:
+
+```
+npm install --save-dev husky lint-staged prettier
+```
+
+or if you use Yarn:
+
+```
+yarn add --dev husky lint-staged prettier
+```
+
+* `husky` makes it easy to use githooks as if they are npm scripts.
+* `lint-staged` allows us to run scripts on staged files in git. See this [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
+* `prettier` is the JavaScript formatter we will run before commits.
+
+Now we can make sure every file is formatted correctly by adding a few lines to the `package.json` in the project root.
+
+Add the following line to `scripts` section:
+
+```js
+{
+  // ...
+  "scripts": {
+    // ...
+    "precommit": "lint-staged"
+  },
+  // ...
+}
+```
+
+Next we add a 'lint-staged' field to the `package.json`, for example:
+
+```js
+{
+  // ...
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  }
+}
+```
+
+Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
+
+Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://github.com/prettier/prettier#editor-integration) on the Prettier GitHub page.
 
 ## Changing the Page `<title>`
 
