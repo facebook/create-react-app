@@ -237,7 +237,9 @@ inquirer
       // spawnSync('yarnpkg', [], { stdio: 'inherit' });
     } else {
       console.log(cyan('Running npm install...'));
-      spawnSync('npm', ['install'], { stdio: 'inherit' });
+      spawnSync('npm', ['install', '--loglevel', 'error'], {
+        stdio: 'inherit',
+      });
     }
     console.log(green('Ejected successfully!'));
     console.log();
