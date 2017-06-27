@@ -36,7 +36,12 @@ const COMMON_EDITORS_OSX = {
   '/Applications/Visual Studio Code.app/Contents/MacOS/Electron': 'code',
 };
 
-const COMMON_EDITORS_WIN = ['Code.exe', 'atom.exe', 'sublime_text.exe'];
+const COMMON_EDITORS_WIN = [
+  'Code.exe',
+  'atom.exe',
+  'sublime_text.exe',
+  'notepad++.exe',
+];
 
 function addWorkspaceToArgumentsIfExists(args, workspace) {
   if (workspace) {
@@ -62,6 +67,8 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
     case 'charm':
     case 'idea':
       return [fileName + ':' + lineNumber];
+    case 'notepad++':
+      return ['-n' + lineNumber, fileName];
     case 'joe':
     case 'emacs':
     case 'emacsclient':
