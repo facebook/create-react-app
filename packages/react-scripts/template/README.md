@@ -1068,7 +1068,8 @@ and then use them in your tests like you normally do.
 ### Initializing Test Environment
 
 >Note: this feature is available with `react-scripts@0.4.0` and higher.
->Note: After ejecting you need to manually add [setupTestFrameworkScriptFile](https://facebook.github.io/jest/docs/configuration.html#setuptestframeworkscriptfile-string) in package.json. 
+
+>Note: After [ejecting](#npm-run-eject) you need to manually add [setupTestFrameworkScriptFile](https://facebook.github.io/jest/docs/configuration.html#setuptestframeworkscriptfile-string) in package.json. 
 
 If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests. 
 
