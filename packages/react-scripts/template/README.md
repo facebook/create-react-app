@@ -51,6 +51,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
   - [Command Line Interface](#command-line-interface)
+  - [Pre-commit Hook](#pre-commit-hook)
   - [Writing Tests](#writing-tests)
   - [Testing Components](#testing-components)
   - [Using Third Party Assertion Libraries](#using-third-party-assertion-libraries)
