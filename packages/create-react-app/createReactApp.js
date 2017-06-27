@@ -218,7 +218,13 @@ function install(useYarn, dependencies, verbose, isOnline) {
       }
     } else {
       command = 'npm';
-      args = ['install', '--save', '--save-exact'].concat(dependencies);
+      args = [
+        'install',
+        '--save',
+        '--save-exact',
+        '--loglevel',
+        'error',
+      ].concat(dependencies);
     }
 
     if (verbose) {
