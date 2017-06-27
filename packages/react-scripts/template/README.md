@@ -274,6 +274,12 @@ To format our code whenever we make a commit in git, we need to install the foll
 npm install --save-dev husky lint-staged prettier
 ```
 
+or if you use Yarn:
+
+```
+yarn add --dev husky lint-staged prettier
+```
+
 * `husky` makes it easy to use githooks as if they are npm scripts.
 * `lint-staged` allows us to run scripts on staged files in git. See this [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
 * `prettier` is the JavaScript formatter we will run before commits.
