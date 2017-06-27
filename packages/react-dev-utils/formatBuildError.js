@@ -21,7 +21,7 @@ module.exports = function formatBuildError(err) {
       console.log(
         'Failed to minify the code from \n\n',
         chalk.yellow(
-          err.stack.split('\n')[1].split('[')[1].split('][')[0].replace(']', '')
+          /Unexpected token:(.+)\[(.+)\]\[(.+)\]/.exec(err.stack)[2]
         ),
         '\n'
       );
