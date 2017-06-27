@@ -64,6 +64,9 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Disabling jsdom](#disabling-jsdom)
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
+- [Developing Components in Isolation](#developing-components-in-isolation)
+  - [Getting Started with Storybook](#getting-started-with-storybook)
+  - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
@@ -1431,14 +1434,15 @@ For an example, a simple button component could have following states:
 
 Usually, it’s hard to see these states without running a sample app or some examples.
 
-Create React App doesn’t include any tools for this by default, but you can easily add [Storybook for React](https://storybook.js.org) ([source](https://github.com/storybooks/storybook)) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
+Create React App doesn’t include any tools for this by default, but you can easily add [Storybook for React](https://storybook.js.org) ([source](https://github.com/storybooks/storybook)) or [React Styleguidist](https://react-styleguidist.js.org/) ([source](https://github.com/styleguidist/react-styleguidist)) to your project. **These are third-party tools that let you develop components and see all their states in isolation from your app**.
 
 ![Storybook for React Demo](http://i.imgur.com/7CIAWpB.gif)
 
-A storybook can also be deployed as a static app.
-This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+You can also deploy your Storybook or style guide as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
 
-### Setup your app with Storybook
+### Getting Started with Storybook
+
+Storybook is a development environment for React UI components. It allows you to browse a component library, view the different states of each component, and interactively develop and test components.
 
 First, install the following npm package globally:
 
@@ -1460,6 +1464,40 @@ Learn more about React Storybook:
 * [GitHub Repo](https://github.com/storybooks/storybook)
 * [Documentation](https://storybook.js.org/basics/introduction/)
 * [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
+
+### Getting Started with Styleguidist
+
+Styleguidist combines of a style guide, where all your components are presented on a single page with their props documentation and usage examples, with an environment for developing components in isolation, similar to Storybook. In Styleguidist you write examples in Markdown, where each code snippet is rendered as a live editable playground.
+
+First install Styleguidist and peer dependencies from npm:
+
+```sh
+npm install --save-dev react-styleguidist webpack
+```
+
+Then, add these scripts to your `package.json`:
+
+```sh
+{
+  "scripts": {
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build"
+  }
+}
+```
+
+Then, run the following command inside your app’s directory:
+
+```sh
+npm run styleguide
+```
+
+After that, follow the instructions on the screen.
+
+Learn more about React Styleguidist:
+
+* [GitHub Repo](https://github.com/styleguidist/react-styleguidist)
+* [Documentation](https://react-styleguidist.js.org/docs/getting-started.html)
 
 ## Making a Progressive Web App
 
