@@ -270,27 +270,13 @@ Prettier is an opinionated JavaScript formatter. With Prettier you can format th
 
 To format our code whenever we make a commit in git, we need to install the following dependencies:
 
-[Husky](https://github.com/typicode/husky) with npm:
-
 ```
-npm install --save-dev husky
+npm install --save-dev husky lint-staged prettier
 ```
 
-Husky makes it easy to use githooks as if they are npm scripts.
-
-Next we need to install [lint-staged](https://github.com/okonet/lint-staged) with npm:
-
-```
-npm install --save-dev lint-staged
-``` 
-
-lint-staged allows us to run scripts on staged files in git. See this [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
-
-Now we can add Prettier itself with npm: 
-
-```
-npm install --save-dev prettier
-``` 
+* `husky` makes it easy to use githooks as if they are npm scripts.
+* `lint-staged` allows us to run scripts on staged files in git. See this [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
+* `prettier` is the JavaScript formatter we will run before commits.
 
 Now we can make sure every file is formatted correctly by adding a few lines to the `package.json` in the project root.
 
@@ -320,6 +306,8 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
   }
 }
 ```
+
+Now, when you make a commit, Prettier will format the code automatically.
 
 Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://github.com/prettier/prettier#editor-integration) on the Prettier GitHub page.
 
