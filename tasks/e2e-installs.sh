@@ -83,7 +83,35 @@ set -x
 cd ..
 root_path=$PWD
 
+# Clear cache to avoid issues with incorrect packages being used
+if hash yarnpkg 2>/dev/null
+then
+  # AppVeyor uses an old version of yarn.
+  # Once updated to 0.24.3 or above, the workaround can be removed
+  # and replaced with `yarnpkg cache clean`
+  # Issues: 
+  #    https://github.com/yarnpkg/yarn/issues/2591
+  #    https://github.com/appveyor/ci/issues/1576
+  #    https://github.com/facebookincubator/create-react-app/pull/2400
+  # When removing workaround, you may run into
+  #    https://github.com/facebookincubator/create-react-app/issues/2030
+  case "$(uname -s)" in
+    *CYGWIN*|MSYS*|MINGW*) yarn=yarn.cmd;;
+    *) yarn=yarnpkg;;
+  esac
+  $yarn cache clean
+fi
+
+if hash npm 2>/dev/null
+then
+  npm cache clean
+fi
+
+# Prevent lerna bootstrap, we only want top-level dependencies
+cp package.json package.json.bak
+grep -v "lerna bootstrap" package.json > temp && mv temp package.json
 npm install
+mv package.json.bak package.json
 
 if [ "$USE_YARN" = "yes" ]
 then
@@ -91,6 +119,13 @@ then
   npm install -g yarn
   yarn cache clean
 fi
+
+# We removed the postinstall, so do it manually
+./node_modules/.bin/lerna bootstrap --concurrency=1
+
+cd packages/react-error-overlay/
+npm run build:prod
+cd ../..
 
 # ******************************************************************************
 # First, pack and install create-react-app.

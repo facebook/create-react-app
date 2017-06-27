@@ -65,6 +65,30 @@ set -x
 cd ..
 root_path=$PWD
 
+# Clear cache to avoid issues with incorrect packages being used
+if hash yarnpkg 2>/dev/null
+then
+  # AppVeyor uses an old version of yarn.
+  # Once updated to 0.24.3 or above, the workaround can be removed
+  # and replaced with `yarnpkg cache clean`
+  # Issues: 
+  #    https://github.com/yarnpkg/yarn/issues/2591
+  #    https://github.com/appveyor/ci/issues/1576
+  #    https://github.com/facebookincubator/create-react-app/pull/2400
+  # When removing workaround, you may run into
+  #    https://github.com/facebookincubator/create-react-app/issues/2030
+  case "$(uname -s)" in
+    *CYGWIN*|MSYS*|MINGW*) yarn=yarn.cmd;;
+    *) yarn=yarnpkg;;
+  esac
+  $yarn cache clean
+fi
+
+if hash npm 2>/dev/null
+then
+  npm cache clean
+fi
+
 # Prevent lerna bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
 grep -v "lerna bootstrap" package.json > temp && mv temp package.json
@@ -76,18 +100,19 @@ cd "$root_path"/packages/create-react-app
 npm install
 cd "$root_path"
 
-# If the node version is < 4, the script should just give an error.
-if [[ `node --version | sed -e 's/^v//' -e 's/\..*//g'` -lt 4 ]]
+# If the node version is < 6, the script should just give an error.
+nodeVersion=`node --version | cut -d v -f2`
+nodeMajor=`echo $nodeVersion | cut -d. -f1`
+nodeMinor=`echo $nodeVersion | cut -d. -f2`
+if [[ nodeMajor -lt 6 ]]
 then
   cd $temp_app_path
   err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
   [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 fi
 
-# Still use npm install instead of directly calling lerna bootstrap to test
-# postinstall script functionality (one npm install should result in a working
-# project)
-npm install
+# We removed the postinstall, so do it manually here
+./node_modules/.bin/lerna bootstrap --concurrency=1
 
 if [ "$USE_YARN" = "yes" ]
 then
@@ -97,7 +122,16 @@ then
 fi
 
 # Lint own code
-./node_modules/.bin/eslint --max-warnings 0 .
+./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
+cd packages/react-error-overlay/
+./node_modules/.bin/eslint --max-warnings 0 src/
+npm test
+npm run build:prod
+cd ../..
 
 # ******************************************************************************
 # First, test the create-react-app development environment.
@@ -218,6 +252,25 @@ function verify_env_url {
   mv package.json.orig package.json
 }
 
+function verify_module_scope {
+  # Create stub json file
+  echo "{}" >> sample.json
+
+  # Save App.js, we're going to modify it
+  cp src/App.js src/App.js.bak
+
+  # Add an out of scope import
+  echo "import sampleJson from '../sample'" | cat - src/App.js > src/App.js.temp && mv src/App.js.temp src/App.js
+
+  # Make sure the build fails
+  npm run build; test $? -eq 1 || exit 1
+  # TODO: check for error message
+
+  # Restore App.js
+  rm src/App.js
+  mv src/App.js.bak src/App.js
+}
+
 # Enter the app directory
 cd test-app
 
@@ -240,6 +293,9 @@ npm start -- --smoke-test
 
 # Test environment handling
 verify_env_url
+
+# Test reliance on webpack internals
+verify_module_scope
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -276,6 +332,9 @@ npm start -- --smoke-test
 
 # Test environment handling
 verify_env_url
+
+# Test reliance on webpack internals
+verify_module_scope
 
 # Cleanup
 cleanup
