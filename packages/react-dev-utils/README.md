@@ -187,7 +187,7 @@ measureFileSizesBeforeBuild(buildFolder).then(previousFileSizes => {
 });
 ```
 
-#### `formatWebpackMessages({errors: Array<string>, warnings: Array<string>}): {errors: Array<string>, warnings: Array<string>}`
+#### `formatwebpackmessages({errors: Array<string>, warnings: Array<string>}): {errors: Array<string>, warnings: Array<string>}`
 
 Extracts and prettifies warning and error messages from webpack [stats](https://github.com/webpack/docs/wiki/node.js-api#stats) object.
 
@@ -219,6 +219,16 @@ compiler.plugin('done', function(stats) {
   }
 });
 ```
+
+#### `formatBuildError(error: Object): String`
+
+Prettify some known build errors.
+Pass an Error object to log a prettified error message in the console
+
+```
+
+```
+
 
 #### `getProcessForPort(port: number): string`
 
