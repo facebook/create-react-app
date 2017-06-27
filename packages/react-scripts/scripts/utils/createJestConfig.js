@@ -26,10 +26,11 @@ module.exports = (resolve, rootDir, isEjecting) => {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
-    testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.js?(x)',
-      '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
-    ],
+    // the `testMatches` option currently watches node_modules
+    // Which causes crashes on large projects on MacOS.
+    // Once this is fixes we can change from `modulePathIgnorePatterns` to `testMatches`.
+    // See facebook/jest/issues/1767 & facebookincubator/create-react-app/pull/2395
+    modulePathIgnorePatterns: ['<rootDir>\/(?!src).*\/.*'],
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
