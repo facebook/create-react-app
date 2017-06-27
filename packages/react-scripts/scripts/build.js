@@ -76,12 +76,16 @@ measureFileSizesBeforeBuild(paths.appBuild)
       }
 
       console.log('File sizes after gzip:\n');
-      printFileSizesAfterBuild(stats, previousFileSizes, paths.appBuild);
+      // Webpack multicompilation produces an array of stats
+      (stats.stats || [stats]).forEach(stats => {
+        console.log(`  ${stats.compilation.name}:`);
+        printFileSizesAfterBuild(stats, previousFileSizes, paths.appBuild);
+      });
       console.log();
 
       const appPackage = require(paths.appPackageJson);
       const publicUrl = paths.publicUrl;
-      const publicPath = config.output.publicPath;
+      const publicPath = (config[0] || config).output.publicPath;
       const buildFolder = path.relative(process.cwd(), paths.appBuild);
       printHostingInstructions(
         appPackage,
