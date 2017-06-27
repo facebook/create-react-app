@@ -45,7 +45,7 @@
     "tslint": "^5.2.0",
     "tslint-loader": "^3.5.3",
     "tslint-react": "^3.0.0",
-    "typescript": "^2.3.3",
+    "typescript": "~2.3.3",
     "source-map-loader": "^0.2.1",
     "sw-precache-webpack-plugin": "0.9.1",
     "url-loader": "0.5.8",
