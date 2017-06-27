@@ -218,7 +218,11 @@ inquirer
 
     if (fs.existsSync(paths.yarnLockFile)) {
       console.log(cyan('Running yarn...'));
-      spawnSync('yarnpkg', [], { stdio: 'inherit' });
+      if (/^win/.test(process.platform)) {
+        spawnSync('yarnpkg.cmd', [], { stdio: 'inherit' });
+      } else {
+        spawnSync('yarnpkg', [], { stdio: 'inherit' });
+      }
     } else {
       console.log(cyan('Running npm install...'));
       spawnSync('npm', ['install'], { stdio: 'inherit' });
