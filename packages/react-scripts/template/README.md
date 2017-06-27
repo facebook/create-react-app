@@ -51,14 +51,14 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
   - [Command Line Interface](#command-line-interface)
-  - [Version Control Integration](#version-control-integration)
-  - [Continuous Integration](#continuous-integration)
   - [Writing Tests](#writing-tests)
   - [Testing Components](#testing-components)
   - [Using Third Party Assertion Libraries](#using-third-party-assertion-libraries)
   - [Initializing Test Environment](#initializing-test-environment)
   - [Focusing and Excluding Tests](#focusing-and-excluding-tests)
   - [Coverage Reporting](#coverage-reporting)
+  - [Version Control Integration](#version-control-integration)
+  - [Continuous Integration](#continuous-integration)
   - [Disabling jsdom](#disabling-jsdom)
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
@@ -1084,75 +1084,6 @@ The watcher includes an interactive command-line interface with the ability to r
 
 ![Jest watch mode](http://facebook.github.io/jest/img/blog/15-watch.gif)
 
-### Version Control Integration
-
-By default, when you run `npm test`, Jest will only run the tests related to files changed since the last commit. This is an optimization designed to make your tests run fast regardless of how many tests you have. However it assumes that you don’t often commit the code that doesn’t pass the tests.
-
-Jest will always explicitly mention that it only ran tests related to the files changed since the last commit. You can also press `a` in the watch mode to force Jest to run all tests.
-
-Jest will always run all tests on a [continuous integration](#continuous-integration) server or if the project is not inside a Git or Mercurial repository.
-
-### Continuous Integration
-
-By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`.
-
-When creating a build of your application with `npm run build` linter warnings are not checked by default. Like `npm test`, you can force the build to perform a linter warning check by setting the environment variable `CI`. If any warnings are encountered then the build fails.
-
-Popular CI servers already set the environment variable `CI` by default but you can do this yourself too:
-
-### On CI servers
-#### Travis CI
-
-1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis.  You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
-1. Add a `.travis.yml` file to your git repository.
-```
-language: node_js
-node_js:
-  - 4
-  - 6
-cache:
-  directories:
-    - node_modules
-script:
-  - npm test
-  - npm run build
-```
-1. Trigger your first build with a git push.
-1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
-
-#### CircleCI
-
-Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React App project.
-
-### On your own environment
-##### Windows (cmd.exe)
-
-```cmd
-set CI=true&&npm test
-```
-
-```cmd
-set CI=true&&npm run build
-```
-
-(Note: the lack of whitespace is intentional.)
-
-##### Linux, macOS (Bash)
-
-```bash
-CI=true npm test
-```
-
-```bash
-CI=true npm run build
-```
-
-The test command will force Jest to run tests once instead of launching the watcher.
-
->  If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
-
-The build command will check for linter warnings and fail if any are found.
-
 ### Pre-commit Hook
 
 You can run tests against "staged" files before each Git commit by integrating the test script in pre-commit hook.
@@ -1325,6 +1256,75 @@ Run `npm test -- --coverage` (note extra `--` in the middle) to include a covera
 ![coverage report](http://i.imgur.com/5bFhnTS.png)
 
 Note that tests run much slower with coverage so it is recommended to run it separately from your normal workflow.
+
+### Version Control Integration
+
+By default, when you run `npm test`, Jest will only run the tests related to files changed since the last commit. This is an optimization designed to make your tests run fast regardless of how many tests you have. However it assumes that you don’t often commit the code that doesn’t pass the tests.
+
+Jest will always explicitly mention that it only ran tests related to the files changed since the last commit. You can also press `a` in the watch mode to force Jest to run all tests.
+
+Jest will always run all tests on a [continuous integration](#continuous-integration) server or if the project is not inside a Git or Mercurial repository.
+
+### Continuous Integration
+
+By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`.
+
+When creating a build of your application with `npm run build` linter warnings are not checked by default. Like `npm test`, you can force the build to perform a linter warning check by setting the environment variable `CI`. If any warnings are encountered then the build fails.
+
+Popular CI servers already set the environment variable `CI` by default but you can do this yourself too:
+
+### On CI servers
+#### Travis CI
+
+1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis.  You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
+1. Add a `.travis.yml` file to your git repository.
+```
+language: node_js
+node_js:
+  - 4
+  - 6
+cache:
+  directories:
+    - node_modules
+script:
+  - npm test
+  - npm run build
+```
+1. Trigger your first build with a git push.
+1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
+
+#### CircleCI
+
+Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React App project.
+
+### On your own environment
+##### Windows (cmd.exe)
+
+```cmd
+set CI=true&&npm test
+```
+
+```cmd
+set CI=true&&npm run build
+```
+
+(Note: the lack of whitespace is intentional.)
+
+##### Linux, macOS (Bash)
+
+```bash
+CI=true npm test
+```
+
+```bash
+CI=true npm run build
+```
+
+The test command will force Jest to run tests once instead of launching the watcher.
+
+>  If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
+
+The build command will check for linter warnings and fail if any are found.
 
 ### Disabling jsdom
 
