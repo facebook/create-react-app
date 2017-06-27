@@ -24,6 +24,8 @@ switch (script) {
       [require.resolve('../scripts/' + script)].concat(args),
       { stdio: 'inherit' }
     );
+    console.log('Okay now status: ', result.status)
+    console.log(result)
     if (result.signal) {
       if (result.signal === 'SIGKILL') {
         console.log(
