@@ -70,6 +70,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Making a Progressive Web App](#making-a-progressive-web-app)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
+- [Analyzing the Bundle Size](#analyzing-the-bundle-size)
 - [Deployment](#deployment)
   - [Static Server](#static-server)
   - [Other Solutions](#other-solutions)
@@ -1598,6 +1599,37 @@ icons, names, and branding colors to use when the web app is displayed.
 [The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations
 will affect your users' experience.
+
+## Analyzing the Bundle Size
+
+[Source map explorer](https://www.npmjs.com/package/source-map-explorer) analyzes
+JavaScript bundles using the source maps. This helps you understand where code
+bloat is coming from.
+
+To add Source map explorer to a Create React App project, follow these steps:
+
+```
+npm install source-map-explorer --save-dev
+```
+
+Then in `package.json`, add the following line to `scripts`
+On Windows you will have to type the full file path out.
+
+```diff
+   "scripts": {
+     "start": "react-scripts start",
+     "build": "react-scripts build",
+     "test": "react-scripts test --env=jsdom",
++    "analyze": "source-map-explorer build/static/js/main.* "
+```
+
+Then to analyze the bundle run the production build then run the analyze
+script.
+
+```
+npm run build
+npm run analyze
+```
 
 ## Deployment
 
