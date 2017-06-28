@@ -75,7 +75,9 @@ module.exports = function(proxy, allowedHost) {
     // Reportedly, this avoids CPU overload on some systems.
     // https://github.com/facebookincubator/create-react-app/issues/293
     watchOptions: {
+      aggregateTimeout: parseInt(process.env.WEBPACK_WATCH_AGGREGATE_TIMEOUT) || 300,
       ignored: /node_modules/,
+      poll: parseInt(process.env.WEBPACK_WATCH_POLL) || false
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === 'https',
