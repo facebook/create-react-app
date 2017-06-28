@@ -87,7 +87,7 @@ fi
 
 if hash npm 2>/dev/null
 then
-  npm cache clean
+  npm cache clean || npm cache verify
 fi
 
 # Prevent lerna bootstrap, we only want top-level dependencies
