@@ -334,14 +334,16 @@ If you use a custom server for your app in production and want to modify the tit
 The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
 
 ```sh
-npm install --save <library-name>
+npm install --save react-router
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add <library-name>
+yarn add react-router
 ```
+
+This works for any library, not just `react-router`.
 
 ## Importing a Component
 
