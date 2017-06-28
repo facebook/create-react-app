@@ -271,7 +271,7 @@ Start your app by running `npm start`, and start debugging in VS Code by pressin
 
 ## Formatting Code Automatically
 
-Prettier is an opinionated JavaScript formatter. With Prettier you can format the code you write automatically to ensure a code style within your project. See the [Prettier's GitHub page](https://github.com/prettier/prettier) for more information, and look at this [page to see it in action](https://prettier.github.io/prettier/).
+Prettier is an opinionated code formatter with support for JavaScript, CSS and JSON. With Prettier you can format the code you write automatically to ensure a code style within your project. See the [Prettier's GitHub page](https://github.com/prettier/prettier) for more information, and look at this [page to see it in action](https://prettier.github.io/prettier/).
 
 To format our code whenever we make a commit in git, we need to install the following dependencies:
 
@@ -307,7 +307,7 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
     // ...
   },
 + "lint-staged": {
-+   "src/**/*.{js,jsx}": [
++   "src/**/*.{js,jsx,json,css}": [
 +     "prettier --single-quote --write",
 +     "git add"
 +   ]
@@ -2094,7 +2094,7 @@ There are also reports that *uninstalling* Watchman fixes the issue. So if nothi
 
 ### `npm run build` exits too early
 
-It is reported that `npm run build` can fail on machines with limited memory and no swap space, which is common in cloud environments. Even with small projects this command can increase RAM usage in your system by hundreds of megabytes, so if you have less than 1 GB of available memory your build is likely to fail with the following message: 
+It is reported that `npm run build` can fail on machines with limited memory and no swap space, which is common in cloud environments. Even with small projects this command can increase RAM usage in your system by hundreds of megabytes, so if you have less than 1 GB of available memory your build is likely to fail with the following message:
 
 >  The build failed because the process exited too early. This probably means the system ran out of memory or someone called `kill -9` on the process.
 
