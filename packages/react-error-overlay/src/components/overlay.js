@@ -60,9 +60,8 @@ function createOverlay(
   applyStyles(header, headerStyle);
 
   // Make message prettier
-  let finalMessage = message.match(/^\w*:/) || !name
-    ? message
-    : name + ': ' + message;
+  let finalMessage =
+    message.match(/^\w*:/) || !name ? message : name + ': ' + message;
 
   finalMessage = finalMessage
     // TODO: maybe remove this prefix from fbjs?

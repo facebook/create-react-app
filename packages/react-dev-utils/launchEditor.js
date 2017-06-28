@@ -30,10 +30,13 @@ function isTerminalEditor(editor) {
 // of the app every time
 const COMMON_EDITORS_OSX = {
   '/Applications/Atom.app/Contents/MacOS/Atom': 'atom',
-  '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta': '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta',
+  '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta':
+    '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta',
   '/Applications/Brackets.app/Contents/MacOS/Brackets': 'brackets',
-  '/Applications/Sublime Text.app/Contents/MacOS/Sublime Text': '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl',
-  '/Applications/Sublime Text 2.app/Contents/MacOS/Sublime Text 2': '/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl',
+  '/Applications/Sublime Text.app/Contents/MacOS/Sublime Text':
+    '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl',
+  '/Applications/Sublime Text 2.app/Contents/MacOS/Sublime Text 2':
+    '/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl',
   '/Applications/Visual Studio Code.app/Contents/MacOS/Electron': 'code',
 };
 
