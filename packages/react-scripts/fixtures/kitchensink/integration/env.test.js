@@ -50,9 +50,10 @@ describe('Integration', () => {
     it('PUBLIC_URL', async () => {
       const doc = await initDOM('public-url');
 
-      const prefix = process.env.NODE_ENV === 'development'
-        ? ''
-        : 'http://www.example.org/spa';
+      const prefix =
+        process.env.NODE_ENV === 'development'
+          ? ''
+          : 'http://www.example.org/spa';
       expect(doc.getElementById('feature-public-url').textContent).to.equal(
         `${prefix}.`
       );

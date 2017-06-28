@@ -82,7 +82,8 @@ function formatter(results) {
     // it here because we always show at most one error, and
     // we can only be sure it's an ESLint error before exiting
     // this function.
-    output += 'Search for the ' +
+    output +=
+      'Search for the ' +
       chalk.underline(chalk.red('keywords')) +
       ' to learn more about each error.';
   }
