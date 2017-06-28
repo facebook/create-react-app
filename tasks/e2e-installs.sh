@@ -105,6 +105,10 @@ fi
 if hash npm 2>/dev/null
 then
   npm cache clean || npm cache verify
+  # npm 5 versions before 5.0.4 are way too buggy
+  if [ $(npm -v | head -c 1) -lt 5 ]; then
+    npm i -g npm@^5.0.4
+  fi;
 fi
 
 # Prevent lerna bootstrap, we only want top-level dependencies
