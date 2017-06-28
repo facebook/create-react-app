@@ -87,9 +87,9 @@ fi
 
 if hash npm 2>/dev/null
 then
-  # npm 5 versions before 5.0.4 are way too buggy
-  if [ $(npm -v | head -c 1) -lt 5 ]; then
-    npm i -g npm@^5.0.4
+  # npm 5 is too buggy right now
+  if [ $(npm -v | head -c 1) -eq 5 ]; then
+    npm i -g npm@^4.x
   fi;
   npm cache clean || npm cache verify
 fi
