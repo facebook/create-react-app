@@ -26,7 +26,14 @@ function shouldUseNpmConcurrently() {
 }
 
 const yarn = shouldUseYarn();
-const lerna = resolve(__dirname, 'node_modules', '.bin', 'lerna');
+const windows = platform() === 'win32';
+const lerna = resolve(
+  __dirname,
+  'node_modules',
+  '.bin',
+  windows ? 'lerna.cmd' : 'lerna'
+);
+
 if (!existsSync(lerna)) {
   if (yarn) {
     console.log('Cannot find lerna. Please run `yarn --check-files`.');
@@ -48,7 +55,7 @@ if (yarn) {
   let args = ['bootstrap'];
   if (
     // The Window's filesystem does not handle concurrency well
-    platform() === 'win32' ||
+    windows ||
     // Only certain npm versions support concurrency
     !shouldUseNpmConcurrently()
   ) {
