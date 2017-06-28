@@ -54,9 +54,9 @@ if (yarn) {
 } else {
   let args = ['bootstrap'];
   if (
-    // The Window's filesystem does not handle concurrency well
+    // The Windows filesystem does not handle concurrency well
     windows ||
-    // Only certain npm versions support concurrency
+    // Only newer npm versions support concurrency
     !shouldUseNpmConcurrently()
   ) {
     args.push('--concurrency=1');
