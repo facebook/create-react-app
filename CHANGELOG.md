@@ -2,44 +2,58 @@
 
 #### :bug: Bug Fix
 * `react-scripts`
+
   * [#2550](https://github.com/facebookincubator/create-react-app/pull/2550) Fix Node 8 compatibility. ([@josephfrazier](https://github.com/josephfrazier))
-  * [#2610](https://github.com/facebookincubator/create-react-app/pull/2610) Fix sourcemap directory organizing on Windows. ([@plusCubed](https://github.com/plusCubed))
+  * [#2610](https://github.com/facebookincubator/create-react-app/pull/2610) Fix sourcemap directory organization on Windows. ([@plusCubed](https://github.com/plusCubed))
   * [#2596](https://github.com/facebookincubator/create-react-app/pull/2596) Fix an issue with minifying emojis. ([@viankakrisna](https://github.com/viankakrisna))
-  * [#2432](https://github.com/facebookincubator/create-react-app/pull/2432) Don't register service worker for projects using `PUBLIC_URL` for CDN. ([@jeffposnick](https://github.com/jeffposnick))
   * [#2501](https://github.com/facebookincubator/create-react-app/pull/2501) Fix incorrect check if `CI` variable is set to true. ([@varnav](https://github.com/varnav))
-  * [#2470](https://github.com/facebookincubator/create-react-app/pull/2470) Prioritize `index.css` over `App.css` in new projects. ([@bryankang](https://github.com/bryankang))
+  * [#2432](https://github.com/facebookincubator/create-react-app/pull/2432) In new projects, don't register service worker for projects using `PUBLIC_URL` for CDN. ([@jeffposnick](https://github.com/jeffposnick))
+  * [#2470](https://github.com/facebookincubator/create-react-app/pull/2470) In new projects, prioritize `index.css` over `App.css`. ([@bryankang](https://github.com/bryankang))
+
 * `react-dev-utils`
+
   * [#2405](https://github.com/facebookincubator/create-react-app/pull/2405) Fix detection of parent directory in `ModuleScopePlugin`. ([@diligiant](https://github.com/diligiant))
   * [#2562](https://github.com/facebookincubator/create-react-app/pull/2562) Fix eject command output. ([@paweljedrzejczyk](https://github.com/paweljedrzejczyk))
 
 #### :nail_care: Enhancement
+
 * `react-scripts`
+
+  * [#2648](https://github.com/facebookincubator/create-react-app/pull/2648) Warn about large bundle sizes. ([@gaearon](https://github.com/gaearon))
   * [#2511](https://github.com/facebookincubator/create-react-app/pull/2511) Support `.web.js` extension for React Native Web. ([@mini-eggs](https://github.com/mini-eggs))
   * [#2645](https://github.com/facebookincubator/create-react-app/pull/2645) Hide confusing "Skipping static resource" message. ([@gaearon](https://github.com/gaearon))
-  * [#2551](https://github.com/facebookincubator/create-react-app/pull/2551) Unregister service worker and force reload if `service-worker.js` is not found. ([@ro-savage](https://github.com/ro-savage))
   * [#2389](https://github.com/facebookincubator/create-react-app/pull/2389) Silence unnecessary warning from Babel. ([@gaearon](https://github.com/gaearon))
   * [#2429](https://github.com/facebookincubator/create-react-app/pull/2429) Update `sw-precache-webpack-plugin` to lastest version. ([@goldhand](https://github.com/goldhand))
   * [#2600](https://github.com/facebookincubator/create-react-app/pull/2600) Add empty mock for `dgram` Node module. ([@micopiira](https://github.com/micopiira))
   * [#2458](https://github.com/facebookincubator/create-react-app/pull/2458) Add names to module factories in development. ([@Zaccc123](https://github.com/Zaccc123))
+  * [#2551](https://github.com/facebookincubator/create-react-app/pull/2551) In new projects, unregister service worker and force reload if `service-worker.js` is not found. ([@ro-savage](https://github.com/ro-savage))
+  
 * `babel-preset-react-app`, `react-dev-utils`, `react-scripts`
+
   * [#2658](https://github.com/facebookincubator/create-react-app/pull/2658) Bump dependencies. ([@gaearon](https://github.com/gaearon))
+
 * `create-react-app`, `react-scripts`
+
   * [#2657](https://github.com/facebookincubator/create-react-app/pull/2657) Put `react-scripts` in `dependencies`, not `devDependencies`. ([@gaearon](https://github.com/gaearon))
   * [#2635](https://github.com/facebookincubator/create-react-app/pull/2635) Silence unhelpful npm warnings. ([@gaearon](https://github.com/gaearon))
-* `react-dev-utils`, `react-scripts`
-  * [#2648](https://github.com/facebookincubator/create-react-app/pull/2648) Warn about large bundle sizes. ([@gaearon](https://github.com/gaearon))
+  
 * `react-dev-utils`
+
   * [#2637](https://github.com/facebookincubator/create-react-app/pull/2637) Auto-detect Brackets editor from error overlay. ([@petetnt](https://github.com/petetnt))
   * [#2552](https://github.com/facebookincubator/create-react-app/pull/2552) Auto-detect running editor on Windows for error overlay. ([@levrik](https://github.com/levrik))
   * [#2622](https://github.com/facebookincubator/create-react-app/pull/2622) Support opening PhpStorm for error overlay. ([@miraage](https://github.com/miraage))
   * [#2414](https://github.com/facebookincubator/create-react-app/pull/2414) Support opening WebStorm 2017+ from error overlay. ([@wirmar](https://github.com/wirmar))
-  * [#2518](https://github.com/facebookincubator/create-react-app/pull/2518) Show warning when trying to run on port below 1024 without admin permissions under Linux/macOS. ([@levrik](https://github.com/levrik))
+  * [#2518](https://github.com/facebookincubator/create-react-app/pull/2518) Warn when trying to run on port below 1024 without admin permissions under Linux/macOS. ([@levrik](https://github.com/levrik))
   * [#2385](https://github.com/facebookincubator/create-react-app/pull/2385) Suggest just `yarn build` in output. ([@gaearon](https://github.com/gaearon))
+
 * `create-react-app`
+
   * [#1945](https://github.com/facebookincubator/create-react-app/pull/1945) Fix grammar in CLI output. ([@ColinEberhardt](https://github.com/ColinEberhardt))
 
 #### :memo: Documentation
+
 * User Guide
+
   * [#2662](https://github.com/facebookincubator/create-react-app/pull/2662) Local testing docker links. ([@EnoahNetzach](https://github.com/EnoahNetzach))
   * [#2660](https://github.com/facebookincubator/create-react-app/pull/2660) Minor code style edits to user guide. ([@gaearon](https://github.com/gaearon))
   * [#2656](https://github.com/facebookincubator/create-react-app/pull/2656) Don't ask to install webpack for using Styleguidist. ([@gaearon](https://github.com/gaearon))
@@ -64,6 +78,7 @@
   * [#2392](https://github.com/facebookincubator/create-react-app/pull/2392) Update `jest-enzyme` section. ([@luftywiranda13](https://github.com/luftywiranda13))
 
 * README
+
   * [#2517](https://github.com/facebookincubator/create-react-app/pull/2517) Add Razzle to the alternatives. ([@kireerik](https://github.com/kireerik))
   * [#1931](https://github.com/facebookincubator/create-react-app/pull/1931) Updated README. ([@shaunwallace](https://github.com/shaunwallace))
   * [#2492](https://github.com/facebookincubator/create-react-app/pull/2492) Update webpack links to point to webpack 2. ([@laruiss](https://github.com/laruiss))
@@ -71,18 +86,22 @@
 #### :house: Internal
 
 * Other
+
   * [#2465](https://github.com/facebookincubator/create-react-app/pull/2465) Update Prettier to v1. ([@ianschmitz](https://github.com/ianschmitz))
   * [#2489](https://github.com/facebookincubator/create-react-app/pull/2489) chore(templates): Move GitHub templates to hidden .github folder. ([@glennreyes](https://github.com/glennreyes))
   * [#2400](https://github.com/facebookincubator/create-react-app/pull/2400) Added cache clear to e2e scripts. ([@ro-savage](https://github.com/ro-savage))
   * [#2397](https://github.com/facebookincubator/create-react-app/pull/2397) Fix command in e2e-kitchensink.sh cleanup. ([@ro-savage](https://github.com/ro-savage))
   * [#2388](https://github.com/facebookincubator/create-react-app/pull/2388) Fix wrong path expansion in end-to-end test. ([@gaearon](https://github.com/gaearon))
   * [#2387](https://github.com/facebookincubator/create-react-app/pull/2387) Catch "No tests found" during CI. ([@EnoahNetzach](https://github.com/EnoahNetzach))
+  
 * `react-scripts`
+
   * [#2408](https://github.com/facebookincubator/create-react-app/pull/2408) E2E testing enhancements. ([@EnoahNetzach](https://github.com/EnoahNetzach))
   * [#2430](https://github.com/facebookincubator/create-react-app/pull/2430) webpack no need for `ident` if using complex options anymore. ([@andykenward](https://github.com/andykenward))
 
 * `react-dev-utils`
-  * [#2483](https://github.com/facebookincubator/create-react-app/pull/2483) Unscope detect-port. ([@Timer](https://github.com/Timer))
+
+  * [#2483](https://github.com/facebookincubator/create-react-app/pull/2483) Remove a scoped package dependency. ([@Timer](https://github.com/Timer))
 
 #### Committers: 46
 - Ade Viankakrisna Fadlil ([viankakrisna](https://github.com/viankakrisna))
@@ -131,6 +150,24 @@
 - [bryankang](https://github.com/bryankang)
 - [varnav](https://github.com/varnav)
 - shaun wallace ([shaunwallace](https://github.com/shaunwallace))
+
+### Migrating from 1.0.7 to 1.0.8
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.8
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.8
+```
+
+You may optionally then move `react-scripts` from `devDependencies` to `dependencies` since that’s how we’ll structure newly created projects. It is not necessary though.
+
+If you left the service worker integration enabled and didn’t change how it works, you can replace `src/registerServiceWorker.js` with [this updated version](https://raw.githubusercontent.com/facebookincubator/create-react-app/895c475d3fc218c65dcac9a3ef3f2c0ea746a1ed/packages/react-scripts/template/src/registerServiceWorker.js).
 
 ## 1.0.7 (May 27, 2017)
 
