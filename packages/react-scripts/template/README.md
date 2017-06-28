@@ -1526,7 +1526,7 @@ Then, add these scripts to your `package.json`:
 ```diff
    "scripts": {
 +    "styleguide": "styleguidist server",
-+    "styleguide:build": "styleguidist build"
++    "styleguide:build": "styleguidist build",
      "start": "react-scripts start",
 ```
 
