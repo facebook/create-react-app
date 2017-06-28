@@ -71,7 +71,7 @@ then
   # AppVeyor uses an old version of yarn.
   # Once updated to 0.24.3 or above, the workaround can be removed
   # and replaced with `yarnpkg cache clean`
-  # Issues: 
+  # Issues:
   #    https://github.com/yarnpkg/yarn/issues/2591
   #    https://github.com/appveyor/ci/issues/1576
   #    https://github.com/facebookincubator/create-react-app/pull/2400
@@ -89,9 +89,9 @@ then
   npm cache clean
 fi
 
-# Prevent lerna bootstrap, we only want top-level dependencies
+# Prevent bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
-grep -v "lerna bootstrap" package.json > temp && mv temp package.json
+grep -v "postinstall" package.json > temp && mv temp package.json
 npm install
 mv package.json.bak package.json
 
@@ -112,7 +112,7 @@ then
 fi
 
 # We removed the postinstall, so do it manually here
-./node_modules/.bin/lerna bootstrap --concurrency=1
+node bootstrap.js
 
 if [ "$USE_YARN" = "yes" ]
 then
