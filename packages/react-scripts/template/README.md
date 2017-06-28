@@ -1473,7 +1473,7 @@ Styleguidist combines of a style guide, where all your components are presented 
 First install Styleguidist and peer dependencies from npm:
 
 ```sh
-npm install --save-dev react-styleguidist webpack
+npm install --save-dev react-styleguidist
 ```
 
 Then, add these scripts to your `package.json`:
