@@ -146,24 +146,34 @@ inquirer
 
     console.log(cyan('Updating the dependencies'));
     const ownPackageName = ownPackage.name;
-    if (appPackage.devDependencies[ownPackageName]) {
-      console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
-      delete appPackage.devDependencies[ownPackageName];
+    if (appPackage.devDependencies) {
+      // We used to put react-scripts in devDependencies
+      if (appPackage.devDependencies[ownPackageName]) {
+        console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
+        delete appPackage.devDependencies[ownPackageName];
+      }
     }
+    appPackage.dependencies = appPackage.dependencies || {};
     if (appPackage.dependencies[ownPackageName]) {
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
       delete appPackage.dependencies[ownPackageName];
     }
-
     Object.keys(ownPackage.dependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
       if (ownPackage.optionalDependencies[key]) {
         return;
       }
-      console.log(`  Adding ${cyan(key)} to devDependencies`);
-      appPackage.devDependencies[key] = ownPackage.dependencies[key];
+      console.log(`  Adding ${cyan(key)} to dependencies`);
+      appPackage.dependencies[key] = ownPackage.dependencies[key];
+    });
+    // Sort the deps
+    const unsortedDependencies = appPackage.dependencies;
+    appPackage.dependencies = {};
+    Object.keys(unsortedDependencies).sort().forEach(key => {
+      appPackage.dependencies[key] = unsortedDependencies[key];
     });
     console.log();
+
     console.log(cyan('Updating the scripts'));
     delete appPackage.scripts['eject'];
     Object.keys(appPackage.scripts).forEach(key => {
