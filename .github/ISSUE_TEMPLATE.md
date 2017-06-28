@@ -33,6 +33,9 @@
 
     npm -v
 
+  If it is 5.x, please be aware that it has more than 50 known bugs, and
+  is not guaranteed to work with Create React App.
+
   If it's not starting with 4, try to install npm 4.x:
 
     npm install -g npm@4
