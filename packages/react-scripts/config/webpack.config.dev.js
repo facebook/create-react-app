@@ -199,6 +199,16 @@ module.exports = {
           cacheDirectory: true,
         },
       },
+      // "source-map-loader" will look for .js.map files within dependencies and
+      // use the maps during development. This allows us to see the source code
+      // for dependencies as we develop our app.
+      {
+        test: /\.js$/,
+        use: [
+          require.resolve("source-map-loader"),
+        ],
+        enforce: "pre"
+      },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
       // "style" loader turns CSS into JS modules that inject <style> tags.
