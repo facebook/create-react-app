@@ -55,15 +55,6 @@ function checkDependencies {
    echo "There are extraneous dependencies in package.json"
    exit 1
   fi
-
-
-  if ! awk '/"devDependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-  grep -v -q -E '^\s*"react(-dom|-scripts)?"'; then
-   echo "Dev Dependencies are correct"
-  else
-   echo "There are extraneous devDependencies in package.json"
-   exit 1
-  fi
 }
 
 function create_react_app {
