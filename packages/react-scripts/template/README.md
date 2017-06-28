@@ -275,14 +275,14 @@ Prettier is an opinionated JavaScript formatter. With Prettier you can format th
 
 To format our code whenever we make a commit in git, we need to install the following dependencies:
 
-```
-npm install --save-dev husky lint-staged prettier
+```sh
+npm install --save husky lint-staged prettier
 ```
 
-or if you use Yarn:
+Alternatively you may use `yarn`:
 
-```
-yarn add --dev husky lint-staged prettier
+```sh
+yarn add husky lint-staged prettier
 ```
 
 * `husky` makes it easy to use githooks as if they are npm scripts.
@@ -293,29 +293,26 @@ Now we can make sure every file is formatted correctly by adding a few lines to 
 
 Add the following line to `scripts` section:
 
-```js
-{
-  // ...
+```diff
   "scripts": {
-    // ...
-    "precommit": "lint-staged"
-  },
-  // ...
-}
++   "precommit": "lint-staged",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
 ```
 
 Next we add a 'lint-staged' field to the `package.json`, for example:
 
-```js
-{
-  // ...
-  "lint-staged": {
-    "src/**/*.{js,jsx}": [
-      "prettier --single-quote --write",
-      "git add"
-    ]
-  }
-}
+```diff
+  "dependencies": {
+    // ...
+  },
++ "lint-staged": {
++   "src/**/*.{js,jsx}": [
++     "prettier --single-quote --write",
++     "git add"
++   ]
++ },
+  "scripts": {
 ```
 
 Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
@@ -336,15 +333,17 @@ If you use a custom server for your app in production and want to modify the tit
 
 The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
 
-```
-npm install --save <library-name>
+```sh
+npm install --save react-router
 ```
 
-Alternatively you may also use `yarn`:
+Alternatively you may use `yarn`:
 
+```sh
+yarn add react-router
 ```
-yarn add <library-name>
-```
+
+This works for any library, not just `react-router`.
 
 ## Importing a Component
 
@@ -519,9 +518,16 @@ Following this rule often makes CSS preprocessors less useful, as features like 
 
 First, let’s install the command-line interface for Sass:
 
+```sh
+npm install --save node-sass-chokidar
 ```
-npm install node-sass-chokidar --save-dev
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add node-sass-chokidar
 ```
+
 Then in `package.json`, add the following lines to `scripts`:
 
 ```diff
@@ -557,8 +563,14 @@ At this point you might want to remove all CSS files from the source control, an
 
 As a final step, you may find it convenient to run `watch-css` automatically with `npm start`, and run `build-css` as a part of `npm run build`. You can use the `&&` operator to execute two scripts sequentially. However, there is no cross-platform way to run two scripts in parallel, so we will install a package for this:
 
+```sh
+npm install --save npm-run-all
 ```
-npm install --save-dev npm-run-all
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add npm-run-all
 ```
 
 Then we can change `start` and `build` scripts to include the CSS preprocessor commands:
@@ -716,9 +728,14 @@ You don’t have to use [React Bootstrap](https://react-bootstrap.github.io) tog
 
 Install React Bootstrap and Bootstrap from npm. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well:
 
+```sh
+npm install --save react-bootstrap bootstrap@3
 ```
-npm install react-bootstrap --save
-npm install bootstrap@3 --save
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add react-bootstrap bootstrap@3
 ```
 
 Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
@@ -757,7 +774,7 @@ Recent versions of [Flow](http://flowtype.org/) work with Create React App proje
 
 To add Flow to a Create React App project, follow these steps:
 
-1. Run `npm install --save-dev flow-bin` (or `yarn add --dev flow-bin`).
+1. Run `npm install --save flow-bin` (or `yarn add flow-bin`).
 2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
 3. Run `npm run flow init` (or `yarn flow init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
 4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
@@ -1226,11 +1243,19 @@ This test mounts a component and makes sure that it didn’t throw during render
 
 When you encounter bugs caused by changing components, you will gain a deeper insight into which parts of them are worth testing in your application. This might be a good time to introduce more specific tests asserting specific expected output or behavior.
 
-If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). You can write a smoke test with it too:
+If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). To install it, run:
 
 ```sh
-npm install --save-dev enzyme react-test-renderer
+npm install --save enzyme react-test-renderer
 ```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add enzyme react-test-renderer
+```
+
+You can write a smoke test with it too:
 
 ```js
 import React from 'react';
@@ -1270,17 +1295,23 @@ Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzym
 expect(wrapper).toContainReact(welcome)
 ```
 
-To setup jest-enzyme with Create React App, follow the instructions for [initializing your test environment](#initializing-test-environment) to import `jest-enzyme`.
+To enable this, install `jest-enzyme`:
 
 ```sh
-npm install --save-dev jest-enzyme
+npm install --save jest-enzyme
 ```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add jest-enzyme
+```
+
+Import it in [`src/setupTests.js`](#initializing-test-environment) to make its matchers available in every test:
 
 ```js
-// src/setupTests.js
 import 'jest-enzyme';
 ```
-
 
 ### Using Third Party Assertion Libraries
 
@@ -1392,14 +1423,22 @@ The build command will check for linter warnings and fail if any are found.
 By default, the `package.json` of the generated project looks like this:
 
 ```js
-  // ...
   "scripts": {
-    // ...
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom"
-  }
 ```
 
-If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/jsdom), you can safely remove `--env=jsdom`, and your tests will run faster.<br>
+If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/jsdom), you can safely remove `--env=jsdom`, and your tests will run faster:
+
+```diff
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+-   "test": "react-scripts test --env=jsdom"
++   "test": "react-scripts test"
+```
+
 To help you make up your mind, here is a list of APIs that **need jsdom**:
 
 * Any browser globals like `window` and `document`
@@ -1473,18 +1512,22 @@ Styleguidist combines of a style guide, where all your components are presented 
 First, install Styleguidist:
 
 ```sh
-npm install --save-dev react-styleguidist
+npm install --save react-styleguidist
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add react-styleguidist
 ```
 
 Then, add these scripts to your `package.json`:
 
-```sh
-{
-  "scripts": {
-    "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build"
-  }
-}
+```diff
+   "scripts": {
++    "styleguide": "styleguidist server",
++    "styleguide:build": "styleguidist build",
+     "start": "react-scripts start",
 ```
 
 Then, run the following command inside your app’s directory:
@@ -1608,20 +1651,35 @@ bloat is coming from.
 
 To add Source map explorer to a Create React App project, follow these steps:
 
-```
-npm install source-map-explorer --save-dev
+```sh
+npm install --save source-map-explorer
 ```
 
-Then in `package.json`, add the following line to `scripts`
-On Windows you will have to type the full file path out.
+Alternatively you may use `yarn`:
+
+```sh
+yarn add source-map-explorer
+```
+
+Then in `package.json`, add the following line to `scripts`:
 
 ```diff
    "scripts": {
++    "analyze": "source-map-explorer build/static/js/main.*",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
-+    "analyze": "source-map-explorer build/static/js/main.* "
 ```
+
+>**Note:**
+>
+>This doesn't quite work on Windows because it doesn't automatically expand `*` in the filepath. For now, the workaround is to look at the full hashed filename in `build/static/js` (e.g. `main.89b7e95a.js`) and copy it into `package.json` when you're running the analyzer. For example:
+>
+>```diff
+>+    "analyze": "source-map-explorer build/static/js/main.89b7e95a.js",
+>```
+>
+>Unfortunately it will be different after every build. You can express support for fixing this on Windows [in this issue](https://github.com/danvk/source-map-explorer/issues/52).
 
 Then to analyze the bundle run the production build then run the analyze
 script.
@@ -1827,18 +1885,23 @@ Now, whenever you run `npm run build`, you will see a cheat sheet with instructi
 To publish it at [https://myusername.github.io/my-app](https://myusername.github.io/my-app), run:
 
 ```sh
-npm install --save-dev gh-pages
+npm install --save gh-pages
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add gh-pages
 ```
 
 Add the following scripts in your `package.json`:
 
-```js
-  // ...
+```diff
   "scripts": {
-    // ...
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  }
++   "predeploy": "npm run build",
++   "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
 ```
 
 The `predeploy` script will run automatically before `deploy` is run.
