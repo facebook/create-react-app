@@ -97,7 +97,7 @@
 * `react-scripts`
 
   * [#2408](https://github.com/facebookincubator/create-react-app/pull/2408) E2E testing enhancements. ([@EnoahNetzach](https://github.com/EnoahNetzach))
-  * [#2430](https://github.com/facebookincubator/create-react-app/pull/2430) webpack no need for `ident` if using complex options anymore. ([@andykenward](https://github.com/andykenward))
+  * [#2430](https://github.com/facebookincubator/create-react-app/pull/2430) Remove an unnecessary webpack option. ([@andykenward](https://github.com/andykenward))
 
 * `react-dev-utils`
 
