@@ -276,11 +276,7 @@ function run(
     })
     .then(packageName => {
       checkNodeVersion(packageName);
-
-      // Since react-scripts has been installed with --save
-      // we need to move it into devDependencies and rewrite package.json
-      // also ensure react dependencies have caret version range
-      fixDependencies(packageName);
+      setCaretRangeForRuntimeDeps(packageName);
 
       const scriptsPath = path.resolve(
         process.cwd(),
@@ -497,16 +493,14 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom'];
-  const devDependencies = ['react-scripts'];
-  const allDependencies = dependencies.concat(devDependencies).sort();
-  if (allDependencies.indexOf(appName) >= 0) {
+  const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
+  if (dependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
         `We cannot create a project called ${chalk.green(appName)} because a dependency with the same name exists.\n` +
           `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
-        chalk.cyan(allDependencies.map(depName => `  ${depName}`).join('\n')) +
+        chalk.cyan(dependencies.map(depName => `  ${depName}`).join('\n')) +
         chalk.red('\n\nPlease choose a different project name.')
     );
     process.exit(1);
@@ -533,7 +527,7 @@ function makeCaretRange(dependencies, name) {
   dependencies[name] = patchedVersion;
 }
 
-function fixDependencies(packageName) {
+function setCaretRangeForRuntimeDeps(packageName) {
   const packagePath = path.join(process.cwd(), 'package.json');
   const packageJson = require(packagePath);
 
@@ -543,15 +537,10 @@ function fixDependencies(packageName) {
   }
 
   const packageVersion = packageJson.dependencies[packageName];
-
   if (typeof packageVersion === 'undefined') {
     console.error(chalk.red(`Unable to find ${packageName} in package.json`));
     process.exit(1);
   }
-
-  packageJson.devDependencies = packageJson.devDependencies || {};
-  packageJson.devDependencies[packageName] = packageVersion;
-  delete packageJson.dependencies[packageName];
 
   makeCaretRange(packageJson.dependencies, 'react');
   makeCaretRange(packageJson.dependencies, 'react-dom');

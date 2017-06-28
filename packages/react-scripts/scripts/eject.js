@@ -146,10 +146,14 @@ inquirer
 
     console.log(cyan('Updating the dependencies'));
     const ownPackageName = ownPackage.name;
-    if (appPackage.devDependencies[ownPackageName]) {
-      console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
-      delete appPackage.devDependencies[ownPackageName];
+    if (appPackage.devDependencies) {
+      // We used to put react-scripts in devDependencies
+      if (appPackage.devDependencies[ownPackageName]) {
+        console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
+        delete appPackage.devDependencies[ownPackageName];
+      }
     }
+    appPackage.dependencies = appPackage.dependencies || {};
     if (appPackage.dependencies[ownPackageName]) {
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
       delete appPackage.dependencies[ownPackageName];
@@ -160,8 +164,8 @@ inquirer
       if (ownPackage.optionalDependencies[key]) {
         return;
       }
-      console.log(`  Adding ${cyan(key)} to devDependencies`);
-      appPackage.devDependencies[key] = ownPackage.dependencies[key];
+      console.log(`  Adding ${cyan(key)} to dependencies`);
+      appPackage.dependencies[key] = ownPackage.dependencies[key];
     });
     console.log();
     console.log(cyan('Updating the scripts'));
