@@ -55,15 +55,6 @@ function checkDependencies {
    echo "There are extraneous dependencies in package.json"
    exit 1
   fi
-
-
-  if ! awk '/"devDependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-  grep -v -q -E '^\s*"react(-dom|-scripts)?"'; then
-   echo "Dev Dependencies are correct"
-  else
-   echo "There are extraneous devDependencies in package.json"
-   exit 1
-  fi
 }
 
 function create_react_app {
@@ -104,7 +95,11 @@ fi
 
 if hash npm 2>/dev/null
 then
-  npm cache clean
+  # npm 5 is too buggy right now
+  if [ $(npm -v | head -c 1) -eq 5 ]; then
+    npm i -g npm@^4.x
+  fi;
+  npm cache clean || npm cache verify
 fi
 
 # Prevent lerna bootstrap, we only want top-level dependencies
