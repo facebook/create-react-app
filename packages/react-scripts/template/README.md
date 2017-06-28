@@ -303,8 +303,6 @@ Add the following line to `scripts` section:
 Next we add a 'lint-staged' field to the `package.json`, for example:
 
 ```diff
-{
-  // ...
   "dependencies": {
     // ...
   },
@@ -315,10 +313,6 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
 +   ]
 + },
   "scripts": {
-    // ...
-  },
-  // ...
-}
 ```
 
 Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
