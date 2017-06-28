@@ -27,7 +27,7 @@ module.exports = (resolve, rootDir) => {
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
-    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+    moduleFileExtensions: ['web.ts', 'ts', 'web.tsx', 'tsx', 'js', 'jsx', 'json'],
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.ts?(x)',
       '<rootDir>/src/**/?(*.)(spec|test).ts?(x)',
@@ -49,7 +49,7 @@ module.exports = (resolve, rootDir) => {
       'ts-jest': {
         tsConfigFile: paths.appTsTestConfig,
       },
-    },
+    }
   };
   if (rootDir) {
     config.rootDir = rootDir;

@@ -93,7 +93,9 @@ module.exports = {
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
     // https://github.com/facebookincubator/create-react-app/issues/290
-    extensions: ['.ts', '.tsx', '.js', '.json', '.jsx'],
+    // `web` extension prefixes have been added for better support
+    // for React Native Web.
+    extensions: ['.web.ts', '.ts', '.tsx', '.web.tsx', '.web.js', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
       // @remove-on-eject-begin
       // Resolve Babel runtime relative to react-scripts.
