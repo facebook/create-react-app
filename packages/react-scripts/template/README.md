@@ -302,15 +302,22 @@ Add the following line to `scripts` section:
 
 Next we add a 'lint-staged' field to the `package.json`, for example:
 
-```js
+```diff
 {
   // ...
-  "lint-staged": {
-    "src/**/*.{js,jsx}": [
-      "prettier --single-quote --write",
-      "git add"
-    ]
-  }
+  "dependencies": {
+    // ...
+  },
++ "lint-staged": {
++   "src/**/*.{js,jsx}": [
++     "prettier --single-quote --write",
++     "git add"
++   ]
++ },
+  "scripts": {
+    // ...
+  },
+  // ...
 }
 ```
 
