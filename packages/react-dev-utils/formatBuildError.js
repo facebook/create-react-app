@@ -14,18 +14,32 @@ const chalk = require('chalk');
 
 module.exports = function formatBuildError(err) {
   const message = get(err, 'message');
+  const stack = get(err, 'stack');
 
   // Add more helpful message for UglifyJs error
-  if (typeof message === 'string' && message.indexOf('from UglifyJs') !== -1) {
+  if (
+    stack &&
+    typeof message === 'string' &&
+    message.indexOf('from UglifyJs') !== -1
+  ) {
     try {
+      const matched = /Unexpected token:(.+)\[(.+)\:(.+)\,(.+)\]\[.+\]/.exec(
+        stack
+      );
+      if (!matched) {
+        throw new Error(
+          "The regex pattern is not matched. Maybe UglifyJs changed it's message?"
+        );
+      }
+      const problemPath = matched[2];
+      const line = matched[3];
+      const column = matched[4];
       console.log(
-        'Failed to minify the code from \n\n',
-        chalk.yellow(
-          /Unexpected token:(.+)\[(.+)\]\[(.+)\]/.exec(err.stack)[2]
-        ),
+        'Failed to minify the code from this file: \n\n',
+        chalk.yellow(`${problemPath} line ${line}:${column}`),
         '\n'
       );
-    } catch (e) {
+    } catch (ignored) {
       console.log('Failed to minify the code.', err);
     }
     console.log(
