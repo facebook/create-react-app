@@ -38,7 +38,11 @@ export default class extends Component {
       <div id="feature-array-destructuring">
         {this.state.users.map(user => {
           const [id, name] = user;
-          return <div key={id}>{name}</div>;
+          return (
+            <div key={id}>
+              {name}
+            </div>
+          );
         })}
       </div>
     );

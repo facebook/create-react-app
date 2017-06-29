@@ -18,7 +18,13 @@ var stripAnsi = require('strip-ansi');
 var gzipSize = require('gzip-size').sync;
 
 // Prints a detailed summary of build files.
-function printFileSizesAfterBuild(webpackStats, previousSizeMap, buildFolder) {
+function printFileSizesAfterBuild(
+  webpackStats,
+  previousSizeMap,
+  buildFolder,
+  maxBundleGzipSize,
+  maxChunkGzipSize
+) {
   var root = previousSizeMap.root;
   var sizes = previousSizeMap.sizes;
   var assets = webpackStats
@@ -41,6 +47,7 @@ function printFileSizesAfterBuild(webpackStats, previousSizeMap, buildFolder) {
     null,
     assets.map(a => stripAnsi(a.sizeLabel).length)
   );
+  var suggestBundleSplitting = false;
   assets.forEach(asset => {
     var sizeLabel = asset.sizeLabel;
     var sizeLength = stripAnsi(sizeLabel).length;
@@ -48,14 +55,38 @@ function printFileSizesAfterBuild(webpackStats, previousSizeMap, buildFolder) {
       var rightPadding = ' '.repeat(longestSizeLabelLength - sizeLength);
       sizeLabel += rightPadding;
     }
+    var isMainBundle = asset.name.indexOf('main.') === 0;
+    var maxRecommendedSize = isMainBundle
+      ? maxBundleGzipSize
+      : maxChunkGzipSize;
+    var isLarge = maxRecommendedSize && asset.size > maxRecommendedSize;
+    if (isLarge && path.extname(asset.name) === '.js') {
+      suggestBundleSplitting = true;
+    }
     console.log(
       '  ' +
-        sizeLabel +
+        (isLarge ? chalk.yellow(sizeLabel) : sizeLabel) +
         '  ' +
         chalk.dim(asset.folder + path.sep) +
         chalk.cyan(asset.name)
     );
   });
+  if (suggestBundleSplitting) {
+    console.log();
+    console.log(
+      chalk.yellow('The bundle size is significantly larger than recommended.')
+    );
+    console.log(
+      chalk.yellow(
+        'Consider reducing it with code splitting: https://goo.gl/9VhYWB'
+      )
+    );
+    console.log(
+      chalk.yellow(
+        'You can also analyze the project dependencies: https://goo.gl/LeUzfb'
+      )
+    );
+  }
 }
 
 function removeFileNameHash(buildFolder, fileName) {
@@ -88,15 +119,12 @@ function measureFileSizesBeforeBuild(buildFolder) {
       if (!err && fileNames) {
         sizes = fileNames
           .filter(fileName => /\.(js|css)$/.test(fileName))
-          .reduce(
-            (memo, fileName) => {
-              var contents = fs.readFileSync(fileName);
-              var key = removeFileNameHash(buildFolder, fileName);
-              memo[key] = gzipSize(contents);
-              return memo;
-            },
-            {}
-          );
+          .reduce((memo, fileName) => {
+            var contents = fs.readFileSync(fileName);
+            var key = removeFileNameHash(buildFolder, fileName);
+            memo[key] = gzipSize(contents);
+            return memo;
+          }, {});
       }
       resolve({
         root: buildFolder,

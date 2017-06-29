@@ -55,9 +55,19 @@ class ModuleScopePlugin {
       ) {
         callback(
           new Error(
-            `You attempted to import ${chalk.cyan(request.__innerRequest_request)} which falls outside of the project ${chalk.cyan('src/')} directory. ` +
-              `Relative imports outside of ${chalk.cyan('src/')} are not supported. ` +
-              `You can either move it inside ${chalk.cyan('src/')}, or add a symlink to it from project's ${chalk.cyan('node_modules/')}.`
+            `You attempted to import ${chalk.cyan(
+              request.__innerRequest_request
+            )} which falls outside of the project ${chalk.cyan(
+              'src/'
+            )} directory. ` +
+              `Relative imports outside of ${chalk.cyan(
+                'src/'
+              )} are not supported. ` +
+              `You can either move it inside ${chalk.cyan(
+                'src/'
+              )}, or add a symlink to it from project's ${chalk.cyan(
+                'node_modules/'
+              )}.`
           ),
           request
         );
