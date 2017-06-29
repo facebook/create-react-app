@@ -111,15 +111,15 @@ then
   [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 fi
 
-# We removed the postinstall, so do it manually here
-node bootstrap.js
-
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
   npm install -g yarn
   yarn cache clean
 fi
+
+# We removed the postinstall, so do it manually here
+node bootstrap.js
 
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
