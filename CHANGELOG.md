@@ -34,13 +34,13 @@
 Inside any created project that has not been ejected, run:
 
 ```
-npm install --save-dev --save-exact react-scripts@1.0.9
+npm install --save --save-exact react-scripts@1.0.9
 ```
 
 or
 
 ```
-yarn add --dev --exact react-scripts@1.0.9
+yarn add --exact react-scripts@1.0.9
 ```
 
 ## 1.0.8 (June 28, 2017)
