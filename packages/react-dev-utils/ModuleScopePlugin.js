@@ -45,7 +45,7 @@ class ModuleScopePlugin {
         request.__innerRequest_request
       );
       const requestRelative = path.relative(appSrc, requestFullPath);
-      if (/^(..[/|\\])+package(.json)?$/.test(requestRelative)) {
+      if (/^(..[/|\\])+package\.json$/.test(requestRelative)) {
         return callback();
       }
       // Find path from src to the requested file
