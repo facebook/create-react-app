@@ -169,7 +169,7 @@ function createApp(name, verbose, version, template) {
   if (!semver.satisfies(process.version, '>=6.0.0')) {
     console.log(
       chalk.yellow(
-        `You are using Node ${process.version} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
+        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
           `Please update to Node 6 or higher for a better, fully supported experience.\n`
       )
     );
