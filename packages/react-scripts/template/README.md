@@ -20,6 +20,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Formatting Code Automatically](#formatting-code-automatically)
 - [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
+- [Generating new Component](#generating-new-component)
 - [Importing a Component](#importing-a-component)
 - [Code Splitting](#code-splitting)
 - [Adding a Stylesheet](#adding-a-stylesheet)
@@ -344,6 +345,28 @@ yarn add react-router
 ```
 
 This works for any library, not just `react-router`.
+
+## Generating new Component
+
+Instead of creating component files by hand, you can use [`generact`](https://github.com/diegohaz/generact) to generate new components based on existing ones.
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/3068563/27687316-bb5bd832-5cac-11e7-9761-c489e5a3a9f0.gif" alt="Showing generact usage" width="640" />
+</p>
+
+Optionally, you can add it to `devDependencies` (`yarn add --dev generact`) and add an npm script to easily generate new components based on another specific one (e.g. `src/components/MySimpleBaseComponent/MySimpleBaseComponent.js`):
+
+```diff
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
++   "component": "generact src/components/MySimpleBaseComponent/MySimpleBaseComponent.js"
+  }
+```
+
+Then, just run `yarn component`.
 
 ## Importing a Component
 
