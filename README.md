@@ -251,6 +251,7 @@ Notable alternatives also include:
 * [react-app](https://github.com/kriasoft/react-app)
 * [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
 * [sku](https://github.com/seek-oss/sku)
+* [gluestick](https://github.com/TrueCar/gluestick)
 
 You can also use module bundlers like [webpack](http://webpack.js.org) and [Browserify](http://browserify.org/) directly.<br>
 React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
