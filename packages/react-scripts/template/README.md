@@ -1762,7 +1762,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
 
 It will get copied to the `build` folder when you run `npm run build`. 
 
-If your `.htaccess` not working or you are using [Apache Tomcat](http://tomcat.apache.org/), you can learn more about it from [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474)
+If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
