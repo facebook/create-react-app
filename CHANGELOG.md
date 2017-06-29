@@ -12,6 +12,7 @@
 #### :memo: Documentation
 
 * README
+
   * [#2402](https://github.com/facebookincubator/create-react-app/pull/2402) Added `gluestick` to the alternatives section. ([@JoeCortopassi](https://github.com/JoeCortopassi))
 
 #### Committers: 5
@@ -20,7 +21,6 @@
 - Joe Haddad ([Timer](https://github.com/Timer))
 - Patrick Hooper ([pdhoopr](https://github.com/pdhoopr))
 - [JoeCortopassi](https://github.com/JoeCortopassi)
-create-react-app) 
 
 ### Migrating from 1.0.9 to 1.0.10
 
