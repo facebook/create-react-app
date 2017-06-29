@@ -13,7 +13,7 @@ const chalk = require('chalk');
 const path = require('path');
 
 class ModuleScopePlugin {
-  constructor(appSrc, allowedPaths) {
+  constructor(appSrc, allowedPaths = []) {
     this.appSrc = appSrc;
     this.allowedPaths = new Set(allowedPaths);
   }
