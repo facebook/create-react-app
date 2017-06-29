@@ -11,7 +11,6 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
-const chalk = require('chalk');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -36,13 +35,9 @@ const env = getClientEnvironment(publicUrl);
 // Get supported browsers list
 let supportedBrowsers = require(paths.appPackageJson).browserslist;
 if (!supportedBrowsers || Object.keys(supportedBrowsers).length === 0) {
-  console.log(
-    chalk.yellow(
-      'You can now specify targeted browsers by adding "browserslist" key in "package.json" as per User Documentation'
-    )
-  );
   // Assign default browsers when browserslist is not specified
-  supportedBrowsers = "browsers: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9', // React doesn't support IE8 anyway]";
+  supportedBrowsers =
+    "browsers: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9', // React doesn't support IE8 anyway]";
 }
 
 // This is the development configuration.
@@ -90,9 +85,9 @@ module.exports = {
     chunkFilename: 'static/js/[name].chunk.js',
     // This is the URL that app is served from. We use "/" in development.
     publicPath: publicPath,
-    // Point sourcemap entries to original disk location
+    // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
-      path.resolve(info.absoluteResourcePath),
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -107,7 +102,9 @@ module.exports = {
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
     // https://github.com/facebookincubator/create-react-app/issues/290
-    extensions: ['.js', '.json', '.jsx'],
+    // `web` extension prefixes have been added for better support
+    // for React Native Web.
+    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
       // @remove-on-eject-begin
       // Resolve Babel runtime relative to react-scripts.
@@ -230,12 +227,11 @@ module.exports = {
           {
             loader: require.resolve('postcss-loader'),
             options: {
-              ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
               plugins: () => [
                 require('postcss-flexbugs-fixes'),
                 autoprefixer({
-                  flexbox: 'no-2009',
                   supportedBrowsers,
+                  flexbox: 'no-2009',
                 }),
               ],
             },
@@ -257,6 +253,8 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
     }),
+    // Add module names to factory functions so they appear in browser profiler.
+    new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
     new webpack.DefinePlugin(env.stringified),
@@ -281,6 +279,7 @@ module.exports = {
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
+    dgram: 'empty',
     fs: 'empty',
     net: 'empty',
     tls: 'empty',
