@@ -274,7 +274,9 @@ module.exports = {
     'jsx-a11y/anchor-has-content': 'warn',
     'jsx-a11y/anchor-is-valid': [
       'warn',
-      aspects: ['noHref', 'invalidHref']
+      {
+        aspects: ['noHref', 'invalidHref'],
+      },
     ],
     'jsx-a11y/aria-activedescendant-has-tabindex': 'warn',
     'jsx-a11y/aria-props': 'warn',
