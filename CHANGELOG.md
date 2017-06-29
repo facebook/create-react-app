@@ -27,13 +27,13 @@ create-react-app)
 Inside any created project that has not been ejected, run:
 
 ```
-npm install --save-dev --save-exact react-scripts@1.0.10
+npm install --save --save-exact react-scripts@1.0.10
 ```
 
 or
 
 ```
-yarn add --dev --exact react-scripts@1.0.10
+yarn add --exact react-scripts@1.0.10
 ```
 
 ## 1.0.9 (June 29, 2017)
