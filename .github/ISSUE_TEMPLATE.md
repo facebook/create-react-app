@@ -64,7 +64,7 @@
   Please scan these few sections for common problems.
   Additionally, you can search the User Guide itself for something you're having issues with:
   
-  https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.me
+  https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md
   
   If you didn't find the solution, please share which words you searched for.
   This helps us improve documentation for future readers who might encounter the same problem.
