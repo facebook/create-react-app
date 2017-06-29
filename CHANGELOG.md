@@ -1,3 +1,41 @@
+## 1.0.10 (June 29, 2017)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`
+
+  * [#2692](https://github.com/facebookincubator/create-react-app/pull/2692) Fix IE11 crash in development. ([@pdhoopr](https://github.com/pdhoopr))
+
+* `create-react-app`
+  * [#2683](https://github.com/facebookincubator/create-react-app/pull/2683) Fix a typo. ([@BenBrostoff](https://github.com/BenBrostoff))
+
+#### :memo: Documentation
+
+* README
+
+  * [#2402](https://github.com/facebookincubator/create-react-app/pull/2402) Added `gluestick` to the alternatives section. ([@JoeCortopassi](https://github.com/JoeCortopassi))
+
+#### Committers: 5
+- Ben Brostoff ([BenBrostoff](https://github.com/BenBrostoff))
+- Forbes Lindesay ([ForbesLindesay](https://github.com/ForbesLindesay))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Patrick Hooper ([pdhoopr](https://github.com/pdhoopr))
+- [JoeCortopassi](https://github.com/JoeCortopassi)
+
+### Migrating from 1.0.9 to 1.0.10
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.10
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.10
+```
+
 ## 1.0.9 (June 29, 2017)
 
 #### :bug: Bug Fix
