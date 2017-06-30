@@ -77,6 +77,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [Azure](#azure)
+  - [CodeSandbox](#codesandbox)
   - [Firebase](#firebase)
   - [GitHub Pages](#github-pages)
   - [Heroku](#heroku)
@@ -1801,6 +1802,26 @@ This will make sure that all the asset paths are relative to `index.html`. You w
 ### Azure
 
 See [this](https://medium.com/@to_pe/deploying-create-react-app-on-microsoft-azure-c0f6686a4321) blog post on how to deploy your React app to [Microsoft Azure](https://azure.microsoft.com/).
+
+### CodeSandbox
+
+You can show an interactive version of your source code online using [CodeSandbox][https://codesandbox.io]. This is very useful if you want to show something or need help with your create-react-app application. You can either deploy your application using the [CLI](https://github.com/CompuIves/codesandbox-cli) or by importing your GitHub repository.
+
+#### Using the CLI
+
+```sh
+# You can install the CLI with npm or yarn
+npm i -g codesandbox
+# Then go to the directory of your create-react-app and deploy!
+cd [your project directory]
+codesandbox ./
+```
+
+#### Using GitHub
+
+> Note that this only works with **public** GitHub repositories
+
+You can open a synced CodeSandbox project from GitHub by converting the URL of your GitHub project [here](https://codesandbox.io/s/github). The generated project will stay in sync with your commits and changes.
 
 ### Firebase
 
