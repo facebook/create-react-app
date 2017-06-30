@@ -35,7 +35,7 @@ const env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
-module.exports = {
+const config = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
@@ -291,3 +291,14 @@ module.exports = {
     hints: false,
   },
 };
+
+const configPath = path.resolve(paths.appPath, 'config', 'webpack.config.patch.js');
+let customizeConfig = null;
+
+try {
+  customizeConfig = require(configPath);
+} catch (ex) {
+  console.error("No custom config file found:", configPath.slice(paths.appPath.length + 1));
+}
+
+module.exports = customizeConfig ?  customizeConfig(config, 'dev', paths) : config;

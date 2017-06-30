@@ -57,7 +57,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = {
+const config = {
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
@@ -359,3 +359,14 @@ module.exports = {
     tls: 'empty',
   },
 };
+
+const configPath = path.resolve(paths.appPath, 'config', 'webpack.config.patch.js');
+let customizeConfig = null;
+
+try {
+  customizeConfig = require(configPath);
+} catch (ex) {
+  console.error("No custom config file found:", configPath.slice(paths.appPath.length + 1));
+}
+
+module.exports = customizeConfig ?  customizeConfig(config, 'prod', paths) : config;
