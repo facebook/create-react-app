@@ -144,19 +144,14 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
     compilation.warnings = [
       ...compilation.warnings,
     ].sort((warning1, warning2) => {
-      if (!warning1._lastModifiedDate) {
-        warning1._lastModifiedDate = fs.statSync(
-          warning1.module.resource
-        ).mtime;
-      }
+      const warning1Time = compilation.fileTimestamps[
+        warning1.module.resource
+      ] || fs.statSync(warning1.module.resource).mtime.getTime();
+      const warning2Time = compilation.fileTimestamps[
+        warning2.module.resource
+      ] || fs.statSync(warning2.module.resource).mtime.getTime();
 
-      if (!warning2._lastModifiedDate) {
-        warning2._lastModifiedDate = fs.statSync(
-          warning2.module.resource
-        ).mtime;
-      }
-
-      return warning1._lastModifiedDate < warning2._lastModifiedDate ? 1 : -1;
+      return warning1Time < warning2Time ? 1 : -1;
     });
 
     callback();
