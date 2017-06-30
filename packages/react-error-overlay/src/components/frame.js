@@ -242,8 +242,8 @@ function createFrame(
   let needsHidden = false;
   const isInternalUrl = isInternalFile(sourceFileName, fileName);
   const isThrownIntentionally = !isBultinErrorName(errorName);
-  const shouldCollapse = isInternalUrl &&
-    (isThrownIntentionally || omits.hasReachedAppCode);
+  const shouldCollapse =
+    isInternalUrl && (isThrownIntentionally || omits.hasReachedAppCode);
 
   if (!isInternalUrl) {
     omits.hasReachedAppCode = true;
@@ -281,9 +281,8 @@ function createFrame(
   let onSourceClick = null;
   if (sourceFileName) {
     // e.g. "/path-to-my-app/webpack/bootstrap eaddeb46b67d75e4dfc1"
-    const isInternalWebpackBootstrapCode = sourceFileName
-      .trim()
-      .indexOf(' ') !== -1;
+    const isInternalWebpackBootstrapCode =
+      sourceFileName.trim().indexOf(' ') !== -1;
     if (!isInternalWebpackBootstrapCode) {
       onSourceClick = () => {
         // Keep this in sync with react-error-overlay/middleware.js
@@ -312,7 +311,10 @@ function createFrame(
   let hasSource = false;
   if (!shouldCollapse) {
     if (
-      compiled && scriptLines && scriptLines.length !== 0 && lineNumber != null
+      compiled &&
+      scriptLines &&
+      scriptLines.length !== 0 &&
+      lineNumber != null
     ) {
       elem.appendChild(
         createCode(
