@@ -169,21 +169,20 @@ module.exports = {
           /\.gif$/,
           /\.jpe?g$/,
           /\.png$/,
-          /\.svg$/,
         ],
         loader: require.resolve('file-loader'),
         options: {
-          name: 'agent/assets/react/media/[name].[hash:8].[ext]',
+          name: 'static/media/[name].[hash:8].[ext]',
         },
       },
       // "url" loader works just like "file" loader but it also embeds
       // assets smaller than specified size as data URLs to avoid requests.
       {
-        test: [/\.bmp$/, /\.svg$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
         loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
-          name: 'agent/assets/react/media/[name].[hash:8].[ext]',
+          name: 'static/media/[name].[hash:8].[ext]',
         },
       },
       // Process JS with Babel.
@@ -224,8 +223,6 @@ module.exports = {
                     importLoaders: 1,
                     minimize: true,
                     sourceMap: true,
-                    modules: true,
-                    localIdentName: '[name]__[local]___[hash:base64:5]',
                   },
                 },
                 {
