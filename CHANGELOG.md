@@ -1,3 +1,86 @@
+## 1.0.10 (June 29, 2017)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`
+
+  * [#2692](https://github.com/facebookincubator/create-react-app/pull/2692) Fix IE11 crash in development. ([@pdhoopr](https://github.com/pdhoopr))
+
+* `create-react-app`
+  * [#2683](https://github.com/facebookincubator/create-react-app/pull/2683) Fix a typo. ([@BenBrostoff](https://github.com/BenBrostoff))
+
+#### :memo: Documentation
+
+* README
+
+  * [#2402](https://github.com/facebookincubator/create-react-app/pull/2402) Added `gluestick` to the alternatives section. ([@JoeCortopassi](https://github.com/JoeCortopassi))
+
+#### Committers: 5
+- Ben Brostoff ([BenBrostoff](https://github.com/BenBrostoff))
+- Forbes Lindesay ([ForbesLindesay](https://github.com/ForbesLindesay))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Patrick Hooper ([pdhoopr](https://github.com/pdhoopr))
+- [JoeCortopassi](https://github.com/JoeCortopassi)
+
+### Migrating from 1.0.9 to 1.0.10
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.10
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.10
+```
+
+## 1.0.9 (June 29, 2017)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#2680](https://github.com/facebookincubator/create-react-app/pull/2680) Fix external CSS imports. ([@gaearon](https://github.com/gaearon))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#2679](https://github.com/facebookincubator/create-react-app/pull/2679) Fix minor typo. ([@dbanck](https://github.com/dbanck))
+  * [#2666](https://github.com/facebookincubator/create-react-app/pull/2666) Add more info about Apache client side routing. ([@viankakrisna](https://github.com/viankakrisna))
+  * [#2671](https://github.com/facebookincubator/create-react-app/pull/2671) Add JSON and CSS to Prettier instructions. ([@jbovenschen](https://github.com/jbovenschen))
+
+#### :house: Internal
+
+* Other
+
+  * [#2673](https://github.com/facebookincubator/create-react-app/pull/2673) Bootstrap with Yarn. ([@Timer](https://github.com/Timer))
+  * [#2659](https://github.com/facebookincubator/create-react-app/pull/2659) Test Node 8 on Travis. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 5
+
+- Ade Viankakrisna Fadlil ([viankakrisna](https://github.com/viankakrisna))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Daniel Banck ([dbanck](https://github.com/dbanck))
+- Jaco Bovenschen ([jbovenschen](https://github.com/jbovenschen))
+- Joe Haddad ([Timer](https://github.com/Timer))
+
+### Migrating from 1.0.8 to 1.0.9
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.9
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.9
+```
+
 ## 1.0.8 (June 28, 2017)
 
 #### :bug: Bug Fix
