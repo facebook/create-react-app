@@ -21,6 +21,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "autodll-webpack-plugin": "^0.0.2",
     "autoprefixer": "7.1.0",
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.3",
@@ -44,6 +45,7 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.28.0",
     "jest": "20.0.3",
+    "lodash.defaults": "^4.2.0",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.5",
