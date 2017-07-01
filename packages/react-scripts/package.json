@@ -21,7 +21,6 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "autodll-webpack-plugin": "^0.0.2",
     "autoprefixer": "7.1.0",
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.3",
@@ -58,7 +57,8 @@
     "webpack": "2.6.1",
     "webpack-dev-server": "2.4.5",
     "webpack-manifest-plugin": "1.1.0",
-    "whatwg-fetch": "2.0.3"
+    "whatwg-fetch": "2.0.3",
+    "autodll-webpack-plugin": "^0.0.6"
   },
   "devDependencies": {
     "react": "^15.5.4",
