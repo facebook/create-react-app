@@ -185,6 +185,7 @@ module.exports = {
       {
         allowShortCircuit: true,
         allowTernary: true,
+        allowTaggedTemplates: true,
       },
     ],
     'no-unused-labels': 'warn',
@@ -236,7 +237,8 @@ module.exports = {
       {
         object: 'System',
         property: 'import',
-        message: 'Please use import() instead. More info: https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting',
+        message:
+          'Please use import() instead. More info: https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting',
       },
     ],
 

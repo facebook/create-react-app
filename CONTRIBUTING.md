@@ -92,7 +92,7 @@ and then run `npm start` or `npm run build`.
 
 ## Contributing to E2E (end to end) tests
 
-**TL;DR** use the command yarn e2e:docker to run unit and e2e tests.
+**TL;DR** use the command `yarn e2e:docker` to run unit and e2e tests.
 
 More detailed information are in the dedicated [README](/packages/react-scripts/fixtures/kitchensink/README.md).
 
