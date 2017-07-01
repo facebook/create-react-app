@@ -185,6 +185,7 @@ module.exports = {
       {
         allowShortCircuit: true,
         allowTernary: true,
+        allowTaggedTemplates: true,
       },
     ],
     'no-unused-labels': 'warn',
