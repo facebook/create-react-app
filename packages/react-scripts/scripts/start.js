@@ -85,6 +85,12 @@ choosePort(HOST, DEFAULT_PORT)
       }
       console.log(chalk.cyan('Starting the development server...\n'));
       openBrowser(urls.localUrlForBrowser);
+      if (process.platform === 'win32') {
+        const {
+          launchPowerShellAgent,
+        } = require('react-dev-utils/launchEditor');
+        launchPowerShellAgent();
+      }
     });
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {

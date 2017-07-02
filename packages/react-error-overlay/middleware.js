@@ -8,7 +8,7 @@
  */
 'use strict';
 
-const launchEditor = require('react-dev-utils/launchEditor');
+const { launchEditor } = require('react-dev-utils/launchEditor');
 
 module.exports = function createLaunchEditorMiddleware() {
   return function launchEditorMiddleware(req, res, next) {
