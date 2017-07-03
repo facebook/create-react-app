@@ -17,7 +17,7 @@ npm start
 ## Features
 
 ### Code highlighting on error
-When you run `npm run build` the terminal will output the error, including the highlighted sourecode (like babel)!
+When you run `npm run build` the terminal will output the error, including the highlighted sourcecode (like babel)!
 
 ![CodeHighlight](https://cloud.githubusercontent.com/assets/175278/22310149/1ee66ccc-e346-11e6-83ff-e3a053701fb4.gif)
 
