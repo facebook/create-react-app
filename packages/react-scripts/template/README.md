@@ -1671,16 +1671,6 @@ Then in `package.json`, add the following line to `scripts`:
      "test": "react-scripts test --env=jsdom",
 ```
 
->**Note:**
->
->This doesn't quite work on Windows because it doesn't automatically expand `*` in the filepath. For now, the workaround is to look at the full hashed filename in `build/static/js` (e.g. `main.89b7e95a.js`) and copy it into `package.json` when you're running the analyzer. For example:
->
->```diff
->+    "analyze": "source-map-explorer build/static/js/main.89b7e95a.js",
->```
->
->Unfortunately it will be different after every build. You can express support for fixing this on Windows [in this issue](https://github.com/danvk/source-map-explorer/issues/52).
-
 Then to analyze the bundle run the production build then run the analyze
 script.
 
