@@ -15,7 +15,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm run eject](#npm-run-eject)
 - [Useful Hooks](#useful-hooks)
   - [Formatting Code Automatically](#formatting-code-automatically)
-  - [Pre-commit Hook](#pre-commit-hook)
+  - [Running Tests Against Staged Files](#running-tests-against-staged-files)
 - [Supported Language Features and Polyfills](#supported-language-features-and-polyfills)
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
@@ -249,7 +249,7 @@ Now, whenever you make a commit, Prettier will format the changed files automati
 
 Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://github.com/prettier/prettier#editor-integration) on the Prettier GitHub page.
 
-### Pre-commit Hook
+### Running Tests Against Staged Files
 
 You can run tests against "staged" files before each Git commit by integrating the test script in pre-commit hook.
 
