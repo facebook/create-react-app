@@ -15,6 +15,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm run eject](#npm-run-eject)
 - [Useful Hooks](#useful-hooks)
   - [Formatting Code Automatically](#formatting-code-automatically)
+  - [Pre-commit Hook](#pre-commit-hook)
 - [Supported Language Features and Polyfills](#supported-language-features-and-polyfills)
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
@@ -62,7 +63,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Coverage Reporting](#coverage-reporting)
   - [Version Control Integration](#version-control-integration)
   - [Continuous Integration](#continuous-integration)
-  - [Pre-commit Hook](#pre-commit-hook)
   - [Disabling jsdom](#disabling-jsdom)
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
@@ -248,6 +248,39 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
 Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
 
 Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://github.com/prettier/prettier#editor-integration) on the Prettier GitHub page.
+
+### Pre-commit Hook
+
+You can run tests against "staged" files before each Git commit by integrating the test script in pre-commit hook.
+
+First, install [husky](https://github.com/typicode/husky) & [lint-staged](https://github.com/okonet/lint-staged):
+```sh
+npm install --save-dev husky lint-staged
+```
+
+Because we don't need the tests to run in watch mode, we need to set `CI` environment variable to `true`. As described in section [Continuous Integration](#continuous-integration).
+
+To make sure it's cross-platform, let's install [cross-env](https://github.com/kentcdodds/cross-env):
+```sh
+npm install --save-dev cross-env
+```
+
+Then add this config to `package.json`:
+```
+"scripts": {
+  ...
+  "precommit": "lint-staged",
+  "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests"
+},
+"lint-staged": {
+  "src/**/*.js": [
+    "test:staged",
+    "git add"
+  ]
+}
+```
+
+This way, instead of running all tests, passing `--findRelatedTests` flag in test script will save our times a lot because Jest will run only the minimal amount of tests related to changes in your staging area.
 
 ## Supported Language Features and Polyfills
 
@@ -1428,39 +1461,6 @@ The test command will force Jest to run tests once instead of launching the watc
 >  If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
 
 The build command will check for linter warnings and fail if any are found.
-
-### Pre-commit Hook
-
-You can run tests against "staged" files before each Git commit by integrating the test script in pre-commit hook.
-
-First, install [husky](https://github.com/typicode/husky) & [lint-staged](https://github.com/okonet/lint-staged):
-```sh
-npm install --save-dev husky lint-staged
-```
-
-Because we don't need the tests to run in watch mode, we need to set `CI` environment variable to `true`. As described in section [Continuous Integration](#continuous-integration).
-
-To make sure it's cross-platform, let's install [cross-env](https://github.com/kentcdodds/cross-env):
-```sh
-npm install --save-dev cross-env
-```
-
-Then add this config to `package.json`:
-```
-"scripts": {
-  ...
-  "precommit": "lint-staged",
-  "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests"
-},
-"lint-staged": {
-  "src/**/*.js": [
-    "test:staged",
-    "git add"
-  ]
-}
-```
-
-This way, instead of running all tests, passing `--findRelatedTests` flag in test script will save our times a lot because Jest will run only the minimal amount of tests related to changes in your staging area.
 
 ### Disabling jsdom
 
