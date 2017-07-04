@@ -13,6 +13,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
+- [Useful Hooks](#useful-hooks)
 - [Supported Language Features and Polyfills](#supported-language-features-and-polyfills)
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
@@ -183,6 +184,14 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Useful Hooks
+
+Git Hooks are event-based scripts that get executed before or after certain events, such as: commit, push, receive, etc.
+
+There are many benefits you can get by adding/integrating Hooks to a repository. For example: make sure changes you made passed the tests before committing, make sure commit message follow the conventions, format code automatically before committing, and so on.
+
+To learn more about Git Hooks, read [the official documentation](https://git-scm.com/docs/githooks).
 
 ## Supported Language Features and Polyfills
 
