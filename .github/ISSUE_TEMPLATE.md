@@ -1,5 +1,5 @@
 <!--
-  PLEASE DON'T DELETE THIS TEMPLATE UNTIL YOU HAVE READ THE FIRST SECTION.
+  PLEASE READ THE FIRST SECTION :-)
 -->
 
 ### Is this a bug report?
@@ -8,28 +8,33 @@
 
 <!--
   If you answered "Yes":
+  
+    Please note that your issue will be fixed much faster if you spend about
+    half an hour preparing it, including the exact reproduction steps and a demo.
+    
+    If you're in a hurry or don't feel confident, it's fine to report bugs with
+    less details, but this makes it less likely they'll get fixed soon.
 
-    We expect that it will take you about 30 minutes to produce a high-quality bug report.
-    While this may seem like a lot, putting care into issues helps us fix them faster.
-    For bug reports, it is REQUIRED to fill the rest of this template, or the issue will be closed.
+    In either case, please fill as many fields below as you can.
 
   If you answered "No":
 
     If this is a question or a discussion, you may delete this template and write in a free form.
     Note that we don't provide help for webpack questions after ejecting.
     You can find webpack docs at https://webpack.js.org/.
-
-  Now scroll below!
 -->
 
 
-### Can you reproduce the problem with npm 4.x?
+### Can you also reproduce the problem with npm 4.x?
 
 <!--
   Many errors, especially related to "missing modules", are due to npm bugs.
   Which version of npm are you running? You can find out by checking:
 
     npm -v
+
+  If it is 5.x, please be aware that it has more than 50 known bugs, and
+  is not guaranteed to work with Create React App.
 
   If it's not starting with 4, try to install npm 4.x:
 
@@ -42,25 +47,30 @@
   Then try to reproduce the issue again.
   Can you still reproduce it?
 
-  Note: Please try this even if you are using Yarn. Yarn also has bugs.
+  Note: Please try this even if you are using Yarn so that we know whether it's a Yarn-only bug.
 -->
 
 (Write your answer here.)
 
 
-### Have you read the Troubleshooting section and searched the User Guide?
+### Which terms did you search for in User Guide?
 
 <!--
-  There are a few common documented problems, such as watcher not detecting changes.
+  There are a few common documented problems, such as watcher not detecting changes, or build failing.
   They are described in the Troubleshooting section of the User Guide:
 
   https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#troubleshooting
 
-  Have you read that section, and have you searched the User Guide for symptoms of your problem?
-  Please write the answer below:
+  Please scan these few sections for common problems.
+  Additionally, you can search the User Guide itself for something you're having issues with:
+  
+  https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md
+  
+  If you didn't find the solution, please share which words you searched for.
+  This helps us improve documentation for future readers who might encounter the same problem.
 -->
 
-(Write the terms you searched for on the User Guide page.)
+(Write your answer here if relevant.)
 
 
 ### Environment
@@ -71,8 +81,8 @@
 
 1. `node -v`: 
 2. `npm -v`:
-4. `yarn --version` (if you use Yarn):
-3. `npm ls react-scripts` (if you haven’t ejected): 
+3. `yarn --version` (if you use Yarn):
+4. `npm ls react-scripts` (if you haven’t ejected): 
 
 Then, specify:
 
@@ -110,16 +120,18 @@ Then, specify:
 <!--
   Did something go wrong?
   Is something broken, or not behaving as you expected?
-  Describe this section in detail, and attach screenshots if possible.
+  Please attach screenshots if possible! They are extremely helpful for diagnosing issues.
 -->
 
-(Write what happened. Add screenshots!)
+(Write what happened. Please add screenshots!)
 
 
 ### Reproducible Demo
 
 <!--
-  Please share a project that reproduces the issue.
+  If you can, please share a project that reproduces the issue.
+  This is the single most effective way to get an issue fixed soon.
+
   There are two ways to do it:
 
     * Create a new app and try to reproduce the issue in it.
@@ -136,16 +148,13 @@ Then, specify:
 
 <!--
   What happens if you skip this step?
-
-  Someone will read your bug report, and maybe will be able to help you,
-  but it’s unlikely that it will get much attention from the team. Eventually,
-  the issue will likely get closed in favor of issues that have reproducible demos.
-
-  Please remember that:
-
-    * Issues without reproducible demos have a very low priority.
-    * The person fixing the bug would have to do that anyway. Please be respectful of their time.
-    * You might figure out the issues yourself as you work on extracting it.
+  
+  We will try to help you, but in many cases it is impossible because crucial
+  information is missing. In that case we'll tag an issue as having a low priority,
+  and eventually close it if there is no clear direction.
+  
+  We still appreciate the report though, as eventually somebody else might
+  create a reproducible example for it.
 
   Thanks for helping us help you!
 -->
