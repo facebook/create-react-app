@@ -41,6 +41,7 @@
     "react-dev-utils": "^2.0.1",
     "react-error-overlay": "^1.0.6",
     "style-loader": "0.17.0",
+    "ts-jest": "^20.0.7",
     "ts-loader": "^2.2.1",
     "tslint": "^5.2.0",
     "tslint-loader": "^3.5.3",

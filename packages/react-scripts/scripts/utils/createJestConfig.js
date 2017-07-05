@@ -45,6 +45,11 @@ module.exports = (resolve, rootDir) => {
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
     },
+    globals: {
+      'ts-jest': {
+        tsConfigFile: paths.appTsConfig,
+      },
+    },
   };
   if (rootDir) {
     config.rootDir = rootDir;
