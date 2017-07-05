@@ -254,6 +254,7 @@ Next you might want to integrate Prettier in your favorite editor. Read the sect
 You can run tests against "staged" files before each Git commit by integrating the test script in pre-commit hook.
 
 First, install [husky](https://github.com/typicode/husky) & [lint-staged](https://github.com/okonet/lint-staged):
+
 ```sh
 npm install --save-dev husky lint-staged
 ```
@@ -261,11 +262,13 @@ npm install --save-dev husky lint-staged
 Because we don't need the tests to run in watch mode, we need to set `CI` environment variable to `true`. As described in section [Continuous Integration](#continuous-integration).
 
 To make sure it's cross-platform, let's install [cross-env](https://github.com/kentcdodds/cross-env):
+
 ```sh
 npm install --save-dev cross-env
 ```
 
 Then add this config to `package.json`:
+
 ```
 "scripts": {
   ...
