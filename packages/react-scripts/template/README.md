@@ -1379,8 +1379,8 @@ cache:
   directories:
     - node_modules
 script:
-  - npm test
   - npm run build
+  - npm test
 ```
 1. Trigger your first build with a git push.
 1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
