@@ -34,7 +34,7 @@
     "dotenv": "4.0.0",
     "eslint": "3.19.0",
     "eslint-config-react-app": "^1.0.5",
-    "eslint-loader": "1.7.1",
+    "eslint-loader": "1.9.0",
     "eslint-plugin-flowtype": "2.34.0",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jsx-a11y": "5.0.3",
