@@ -278,6 +278,9 @@ function verify_module_scope {
 # Enter the app directory
 cd test-app
 
+# Test lint
+./node_modules/.bin/react-scripts lint
+
 # Test the build
 npm run build
 # Check for expected output
@@ -313,6 +316,9 @@ npm link "$root_path"/packages/babel-preset-react-app
 npm link "$root_path"/packages/eslint-config-react-app
 npm link "$root_path"/packages/react-dev-utils
 npm link "$root_path"/packages/react-scripts
+
+# Test lint
+"$root_path"/packages/react-scripts/bin/react-scripts.js lint
 
 # Test the build
 npm run build
