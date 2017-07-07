@@ -136,6 +136,7 @@ module.exports = {
           {
             options: {
               formatter: eslintFormatter,
+              eslintPath: require.resolve('eslint'),
               // @remove-on-eject-begin
               baseConfig: {
                 extends: [require.resolve('eslint-config-react-app')],
