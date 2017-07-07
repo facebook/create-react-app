@@ -27,6 +27,23 @@ module.exports = (resolve, rootDir) => {
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
+    testMatch: [
+      '<rootDir>/src/**/__tests__/**/*.ts?(x)',
+      '<rootDir>/src/**/?(*.)(spec|test).ts?(x)',
+    ],
+    testEnvironment: 'node',
+    testURL: 'http://localhost',
+    transform: {
+      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
+      '^.+\\.tsx?$': resolve('config/jest/typescriptTransform.js'),
+      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
+    },
+    transformIgnorePatterns: [
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
+    ],
+    moduleNameMapper: {
+      '^react-native$': 'react-native-web',
+    },
     moduleFileExtensions: [
       'web.ts',
       'ts',
@@ -37,24 +54,8 @@ module.exports = (resolve, rootDir) => {
       'web.jsx',
       'jsx',
       'json',
+      'node'
     ],
-    testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.ts?(x)',
-      '<rootDir>/src/**/?(*.)(spec|test).ts?(x)',
-    ],
-    testEnvironment: 'node',
-    testURL: 'http://localhost',
-    transform: {
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^.+\\.tsx?$': resolve('config/jest/typescriptTransform.js'),
-      '^(?!.*\\.(css|json)$)': resolve('config/jest/fileTransform.js'),
-    },
-    transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
-    ],
-    moduleNameMapper: {
-      '^react-native$': 'react-native-web',
-    },
     globals: {
       'ts-jest': {
         tsConfigFile: paths.appTsTestConfig,
