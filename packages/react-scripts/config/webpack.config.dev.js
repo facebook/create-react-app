@@ -32,6 +32,14 @@ const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
+// Get supported browsers list
+let supportedBrowsers = require(paths.appPackageJson).browserslist;
+if (!supportedBrowsers || Object.keys(supportedBrowsers).length === 0) {
+  // Assign default browsers when browserslist is not specified
+  supportedBrowsers =
+    "browsers: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9', // React doesn't support IE8 anyway]";
+}
+
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
@@ -226,12 +234,7 @@ module.exports = {
               plugins: () => [
                 require('postcss-flexbugs-fixes'),
                 autoprefixer({
-                  browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9', // React doesn't support IE8 anyway
-                  ],
+                  supportedBrowsers,
                   flexbox: 'no-2009',
                 }),
               ],
