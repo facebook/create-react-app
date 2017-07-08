@@ -243,7 +243,7 @@ module.exports = {
             // For some reason files loaded by babel still fall through so we
             // need to exclude them explicitly.
             // We need to invastigate this further to find out why this happens.
-            exclude: [/\.(js|jsx)$/],
+            exclude: [/\.(js|jsx)$/, /\.html$/, /\.json$/],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },
