@@ -1,59 +1,160 @@
-If you are reporting a bug, please fill in below. Otherwise feel free to remove this template entirely.
+<!--
+  PLEASE READ THE FIRST SECTION :-)
+-->
 
-### Can you reproduce the problem with latest npm?
+### Is this a bug report?
 
-Many errors, especially related to "missing modules", are due to npm bugs.
+(write your answer here)
 
-If you're using Windows, [follow these instructions to update npm](https://github.com/npm/npm/wiki/Troubleshooting#upgrading-on-windows).
+<!--
+  If you answered "Yes":
+  
+    Please note that your issue will be fixed much faster if you spend about
+    half an hour preparing it, including the exact reproduction steps and a demo.
+    
+    If you're in a hurry or don't feel confident, it's fine to report bugs with
+    less details, but this makes it less likely they'll get fixed soon.
 
-If you're using OS X or Linux, run this to update npm:
+    In either case, please fill as many fields below as you can.
 
-```
-npm install -g npm@latest
+  If you answered "No":
 
-cd your_project_directory
-rm -rf node_modules
-npm install
-```
+    If this is a question or a discussion, you may delete this template and write in a free form.
+    Note that we don't provide help for webpack questions after ejecting.
+    You can find webpack docs at https://webpack.js.org/.
+-->
 
-Then try to reproduce the issue again.
 
-Can you still reproduce it?
+### Can you also reproduce the problem with npm 4.x?
 
-### Description
+<!--
+  Many errors, especially related to "missing modules", are due to npm bugs.
+  Which version of npm are you running? You can find out by checking:
 
-What are you reporting?
+    npm -v
 
-### Expected behavior
+  If it is 5.x, please be aware that it has more than 50 known bugs, and
+  is not guaranteed to work with Create React App.
 
-Tell us what you think should happen.
+  If it's not starting with 4, try to install npm 4.x:
 
-### Actual behavior
+    npm install -g npm@4
+    cd your_project_directory
+    rm -rf node_modules
+    npm cache clear
+    npm install
 
-Tell us what actually happens.
+  Then try to reproduce the issue again.
+  Can you still reproduce it?
+
+  Note: Please try this even if you are using Yarn so that we know whether it's a Yarn-only bug.
+-->
+
+(Write your answer here.)
+
+
+### Which terms did you search for in User Guide?
+
+<!--
+  There are a few common documented problems, such as watcher not detecting changes, or build failing.
+  They are described in the Troubleshooting section of the User Guide:
+
+  https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#troubleshooting
+
+  Please scan these few sections for common problems.
+  Additionally, you can search the User Guide itself for something you're having issues with:
+  
+  https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md
+  
+  If you didn't find the solution, please share which words you searched for.
+  This helps us improve documentation for future readers who might encounter the same problem.
+-->
+
+(Write your answer here if relevant.)
+
 
 ### Environment
 
-Run these commands in the project folder and fill in their results:
+<!--
+  Please fill in all the relevant fields by running these commands in terminal.
+-->
 
-1. `npm ls react-scripts` (if you haven’t ejected): 
-2. `node -v`: 
-3. `npm -v`:
+1. `node -v`: 
+2. `npm -v`:
+3. `yarn --version` (if you use Yarn):
+4. `npm ls react-scripts` (if you haven’t ejected): 
 
 Then, specify:
 
 1. Operating system:
-2. Browser and version:
+2. Browser and version (if relevant):
+
+
+### Steps to Reproduce
+
+<!--
+  How would you describe your issue to someone who doesn’t know you or your project?
+  Try to write a sequence of steps that anybody can repeat to see the issue.
+-->
+
+(Write your steps here:)
+
+1. 
+2. 
+3. 
+
+
+### Expected Behavior
+
+<!--
+  How did you expect the tool to behave?
+  It’s fine if you’re not sure your understanding is correct.
+  Just write down what you thought would happen.
+-->
+
+(Write what you thought would happen.)
+
+
+### Actual Behavior
+
+<!--
+  Did something go wrong?
+  Is something broken, or not behaving as you expected?
+  Please attach screenshots if possible! They are extremely helpful for diagnosing issues.
+-->
+
+(Write what happened. Please add screenshots!)
+
 
 ### Reproducible Demo
 
-Please take the time to create a new app that reproduces the issue.
+<!--
+  If you can, please share a project that reproduces the issue.
+  This is the single most effective way to get an issue fixed soon.
 
-Alternatively, you could copy your app that experiences the problem and start removing things until you’re left with the minimal reproducible demo.
+  There are two ways to do it:
 
-(Accidentally, you might get to the root of your problem during that process.)
+    * Create a new app and try to reproduce the issue in it.
+      This is useful if you roughly know where the problem is, or can’t share the real code.
 
-Push to GitHub and paste the link here.
+    * Or, copy your app and remove things until you’re left with the minimal reproducible demo.
+      This is useful for finding the root cause. You may then optionally create a new project.
 
-By doing this, you're helping the Create React App contributors a big time!
-Demonstrable issues gets fixed faster.
+  This is a good guide to creating bug demos: https://stackoverflow.com/help/mcve
+  Once you’re done, push the project to GitHub and paste the link to it below:
+-->
+
+(Paste the link to an example project and exact instructions to reproduce the issue.)
+
+<!--
+  What happens if you skip this step?
+  
+  We will try to help you, but in many cases it is impossible because crucial
+  information is missing. In that case we'll tag an issue as having a low priority,
+  and eventually close it if there is no clear direction.
+  
+  We still appreciate the report though, as eventually somebody else might
+  create a reproducible example for it.
+
+  Thanks for helping us help you!
+-->
