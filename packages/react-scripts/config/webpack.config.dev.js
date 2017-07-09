@@ -225,10 +225,11 @@ module.exports = {
           // This loader don't uses a "test" so it will catch all modules
           // that fall through the other loaders.
           {
-            // For some reason files loaded by babel still fall through so we
-            // need to exclude them explicitly.
-            // We need to invastigate this further to find out why this happens.
-            exclude: [/\.(js|jsx)$/, /\.html$/, /\.json$/],
+            // Exclude `js` files to keep "css" loader working as it injects
+            // it's runtime that would otherwise processed through "file" loader.
+            // Also exclude `html` and `json` extensions so they get processed
+            // by webpacks internal loaders.
+            exclude: [/\.js$/, /\.html$/, /\.json$/],
             loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
