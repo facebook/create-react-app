@@ -3,11 +3,11 @@
 const merge = require('lodash.merge');
 const invariant = require('invariant');
 
-// arr: [[afterExt, regexExts, strExt1, strExt2, ...], ...]
+// arr: [[afterExt, strExt1, strExt2, ...], ...]
 function pushExtensions(config, arr) {
-  const { resolve: { extensions }, module: { rules } } = config;
+  const { resolve: { extensions } } = config;
 
-  for (const [after, , ...exts] of arr) {
+  for (const [after, ...exts] of arr) {
     // Find the extension we want to add after
     const index = extensions.findIndex(s => s === after);
     invariant(
@@ -17,26 +17,15 @@ function pushExtensions(config, arr) {
     // Push the extensions into array in the order we specify
     extensions.splice(index + 1, 0, ...exts);
   }
-
-  // Exclude the new extensions
-  for (const { exclude } of rules) {
-    if (exclude == null) {
-      continue;
-    }
-
-    for (const [, regexExts] of arr) {
-      exclude.push(regexExts);
-    }
-  }
 }
 
 function apply(config, { paths }) {
   // Deep copy configuration
   config = merge({}, config);
 
-  pushExtensions(config, [['.js', /\.(ts|tsx)$/, '.tsx', '.ts']]);
+  pushExtensions(config, [['.js', '.tsx', '.ts']]);
 
-  const { module: { rules } } = config;
+  const { module: { rules: [, { oneOf: rules }] } } = config;
 
   // Find babel loader
   const jsTransformIndex = rules.findIndex(
