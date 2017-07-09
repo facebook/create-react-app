@@ -9,7 +9,7 @@
 
 /* @flow */
 import React from 'react';
-import Header from './Header';
+import Header from '../components/Header';
 import StackTrace from './StackTrace';
 import type { StackFrame } from '../utils/stack-frame';
 
@@ -25,15 +25,31 @@ type ErrorRecord = {
   stackFrames: StackFrame[],
 };
 
-function ErrorView({ errorRecord }: { errorRecord: ErrorRecord }) {
+function RuntimeError({ errorRecord }: { errorRecord: ErrorRecord }) {
   const { error, unhandledRejection, contextSize, stackFrames } = errorRecord;
   const errorName = unhandledRejection
     ? 'Unhandled Rejection (' + error.name + ')'
     : error.name;
 
+  // Make header prettier
+  const message = error.message;
+  let headerText =
+    message.match(/^\w*:/) || !errorName ? message : errorName + ': ' + message;
+
+  headerText = headerText
+    // TODO: maybe remove this prefix from fbjs?
+    // It's just scaring people
+    .replace(/^Invariant Violation:\s*/, '')
+    // This is not helpful either:
+    .replace(/^Warning:\s*/, '')
+    // Break the actionable part to the next line.
+    // AFAIK React 16+ should already do this.
+    .replace(' Check the render method', '\n\nCheck the render method')
+    .replace(' Check your code at', '\n\nCheck your code at');
+
   return (
     <div style={wrapperStyle}>
-      <Header name={errorName} message={error.message} />
+      <Header headerText={headerText} />
       <StackTrace
         stackFrames={stackFrames}
         errorName={errorName}
@@ -43,4 +59,4 @@ function ErrorView({ errorRecord }: { errorRecord: ErrorRecord }) {
   );
 }
 
-export default ErrorView;
+export default RuntimeError;

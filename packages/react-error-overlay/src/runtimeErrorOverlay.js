@@ -28,10 +28,9 @@ import {
   unregisterReactStack,
 } from './effects/proxyConsole';
 import { massage as massageWarning } from './utils/warnings';
-import { iframeStyle, overlayStyle } from './styles';
-import { applyStyles } from './utils/dom/css';
+import { mountOverlayIframe } from './utils/dom/mountOverlayIframe';
 import getStackFrames from './utils/getStackFrames';
-import ErrorOverlay from './components/ErrorOverlay';
+import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
 
 const CONTEXT_SIZE: number = 3;
 
@@ -42,33 +41,20 @@ let iframeReference: HTMLIFrameElement | null = null;
 
 // Mount overlay container
 function mount(callback) {
-  iframeReference = window.document.createElement('iframe');
-  applyStyles(iframeReference, iframeStyle);
-  iframeReference.onload = () => {
-    if (iframeReference == null) {
-      return;
-    }
-    const document = iframeReference.contentDocument;
-    if (document != null && document.body != null) {
-      document.body.style.margin = '0';
-      // Keep popup within body boundaries for iOS Safari
-      // $FlowFixMe
-      document.body.style['max-width'] = '100vw';
-      container = document.createElement('div');
-      applyStyles(container, overlayStyle);
-      (document.body: any).appendChild(container);
-      callback();
-    }
-  };
-  window.document.body.appendChild(iframeReference);
+  iframeReference = mountOverlayIframe(containerDiv => {
+    container = containerDiv;
+    callback();
+  });
+  // below the compile error overlay
+  iframeReference.style.zIndex = String(2147483647 - 1);
 }
 
 // Unmount overlay container
 function unmount() {
-  ReactDOM.unmountComponentAtNode(container);
   if (iframeReference === null) {
     return;
   }
+  ReactDOM.unmountComponentAtNode(container);
   window.document.body.removeChild(iframeReference);
   iframeReference = null;
   container = null;
@@ -77,7 +63,7 @@ function unmount() {
 
 function render() {
   ReactDOM.render(
-    <ErrorOverlay errorRecords={errorRecords} close={unmount} />,
+    <RuntimeErrorContainer errorRecords={errorRecords} close={unmount} />,
     container
   );
 }

@@ -24,7 +24,7 @@ const iframeStyle = {
   width: '100%',
   height: '100%',
   border: 'none',
-  'z-index': 2147483647 - 1, // below the compile error overlay
+  'z-index': 2147483647,
 };
 
 const overlayStyle = {

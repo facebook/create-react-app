@@ -9,7 +9,7 @@
 
 /* @flow */
 import React, { Component } from 'react';
-import CodeBlock from './CodeBlock';
+import CodeBlock from './StackFrameCodeBlock';
 import { getPrettyURL } from '../utils/getPrettyURL';
 import { darkGray } from '../styles';
 
@@ -57,9 +57,8 @@ class StackFrame extends Component {
     } = this.props.frame;
     if (sourceFileName) {
       // e.g. "/path-to-my-app/webpack/bootstrap eaddeb46b67d75e4dfc1"
-      const isInternalWebpackBootstrapCode = sourceFileName
-        .trim()
-        .indexOf(' ') !== -1;
+      const isInternalWebpackBootstrapCode =
+        sourceFileName.trim().indexOf(' ') !== -1;
       if (!isInternalWebpackBootstrapCode) {
         // Keep this in sync with react-error-overlay/middleware.js
         fetch(
@@ -150,7 +149,9 @@ class StackFrame extends Component {
 
     return (
       <div>
-        <div>{functionName}</div>
+        <div>
+          {functionName}
+        </div>
         <div style={linkStyle}>
           <a
             style={anchorStyle}

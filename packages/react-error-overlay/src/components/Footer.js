@@ -18,12 +18,17 @@ const footerStyle = {
   flex: '0 0 auto',
 };
 
-function Footer() {
+type FooterPropsType = {
+  line1: string,
+  line2?: string,
+};
+
+function Footer(props: FooterPropsType) {
   return (
     <div style={footerStyle}>
-      This screen is visible only in development. It will not appear if the app crashes in production.
+      {props.line1}
       <br />
-      Open your browser’s developer console to further inspect this error.
+      {props.line2}
     </div>
   );
 }

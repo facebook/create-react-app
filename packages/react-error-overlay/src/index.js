@@ -8,7 +8,7 @@
  */
 
 /* @flow */
-import { inject, uninject } from './overlay';
+import { inject, uninject } from './runtimeErrorOverlay';
 
 inject();
 if (module.hot && typeof module.hot.dispose === 'function') {
@@ -16,3 +16,5 @@ if (module.hot && typeof module.hot.dispose === 'function') {
     uninject();
   });
 }
+
+export { showCompileErrorOverlay } from './compileErrorOverlay';

@@ -24,26 +24,14 @@ const headerStyle = {
   overflow: 'auto',
 };
 
-function Header({ name, message }: { name: string, message: string }) {
-  // Make message prettier
-  let finalMessage = message.match(/^\w*:/) || !name
-    ? message
-    : name + ': ' + message;
+type HeaderPropType = {
+  headerText: string,
+};
 
-  finalMessage = finalMessage
-    // TODO: maybe remove this prefix from fbjs?
-    // It's just scaring people
-    .replace(/^Invariant Violation:\s*/, '')
-    // This is not helpful either:
-    .replace(/^Warning:\s*/, '')
-    // Break the actionable part to the next line.
-    // AFAIK React 16+ should already do this.
-    .replace(' Check the render method', '\n\nCheck the render method')
-    .replace(' Check your code at', '\n\nCheck your code at');
-
+function Header(props: HeaderPropType) {
   return (
     <div style={headerStyle}>
-      {finalMessage}
+      {props.headerText}
     </div>
   );
 }
