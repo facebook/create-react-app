@@ -6,7 +6,7 @@
     "create-react-app": "node tasks/cra.js",
     "e2e": "tasks/e2e-simple.sh",
     "e2e:docker": "tasks/local-test.sh",
-    "postinstall": "node bootstrap.js && cd packages/react-error-overlay/ && npm run build:prod",
+    "postinstall": "node bootstrap.js && cd packages/react-dev-utils/ && npm run build:prod && cd ../react-error-overlay/ && npm run build:prod",
     "publish": "tasks/release.sh",
     "start": "node packages/react-scripts/scripts/start.js",
     "screencast": "svg-term --cast hItN7sl5yfCPTHxvFg5glhhfp --out screencast.svg --window",

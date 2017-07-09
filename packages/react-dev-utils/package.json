@@ -4,6 +4,14 @@
   "description": "Webpack utilities used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "prepublish": "npm run build:prod",
+    "babel": "rimraf *.js && babel src/ -d ./",
+    "build": "cross-env NODE_ENV=development npm run babel",
+    "watch": "cross-env NODE_ENV=development npm run babel -- -w",
+    "build:prod": "cross-env NODE_ENV=production npm run babel"
+  },
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
@@ -56,9 +64,10 @@
     "text-table": "0.2.0"
   },
   "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-preset-react-app": "3.0.2",
+    "cross-env": "5.0.5",
+    "rimraf": "^2.6.1",
     "jest": "20.0.4"
-  },
-  "scripts": {
-    "test": "jest"
   }
 }
