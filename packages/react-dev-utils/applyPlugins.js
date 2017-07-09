@@ -19,7 +19,6 @@ function applyPlugins(config, plugins, { paths }) {
       }
     })
     .filter(e => e != null);
-  console.log(pluginPaths);
   for (const pluginPath of pluginPaths) {
     const { apply } = require(pluginPath);
     config = apply(config, { paths });
