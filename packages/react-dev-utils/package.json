@@ -12,7 +12,6 @@
   },
   "files": [
     "ansiHTML.js",
-    "applyPlugins.js",
     "checkRequiredFiles.js",
     "clearConsole.js",
     "crashOverlay.js",
@@ -28,6 +27,7 @@
     "ModuleScopePlugin.js",
     "openBrowser.js",
     "openChrome.applescript",
+    "plugins.js",
     "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",

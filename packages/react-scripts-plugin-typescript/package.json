@@ -18,9 +18,13 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "awesome-typescript-loader": "^3.2.1",
-    "invariant": "^2.2.2",
-    "lodash.merge": "^4.6.0",
     "tsconfig-react-app": "^1.0.0",
     "typescript": "^2.4.1"
+  },
+  "devDependencies": {
+    "react-dev-utils": "^3.0.2"
+  },
+  "peerDependencies": {
+    "react-dev-utils": "^3.0.2"
   }
 }
