@@ -1,0 +1,26 @@
+{
+  "name": "react-scripts-plugin-typescript",
+  "version": "0.1.0",
+  "description": "A plugin for react-scripts which enables TypeScript support.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-scripts",
+    "typescript",
+    "cra",
+    "create",
+    "react",
+    "app",
+    "plugin"
+  ],
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "awesome-typescript-loader": "^3.2.1",
+    "invariant": "^2.2.2",
+    "lodash.merge": "^4.6.0",
+    "tsconfig-react-app": "^1.0.0",
+    "typescript": "^2.4.1"
+  }
+}

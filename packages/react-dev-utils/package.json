@@ -12,6 +12,7 @@
   },
   "files": [
     "ansiHTML.js",
+    "applyPlugins.js",
     "checkRequiredFiles.js",
     "clearConsole.js",
     "crashOverlay.js",
