@@ -32,7 +32,8 @@ function apply(config, { paths }) {
     rule => rule.test.toString() === '/\\.(js|jsx)$/'
   );
   invariant(jsTransformIndex !== -1, 'Unable to find babel transform.');
-  // Push typescript loader after babel-loader since they're related
+  // Push typescript loader after babel-loader since they're related (this
+  //  matters for ejecting)
   rules.splice(jsTransformIndex + 1, 0, {
     test: /\.(ts|tsx)$/,
     include: paths.appSrc,
