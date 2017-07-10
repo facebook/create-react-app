@@ -122,6 +122,13 @@ inquirer
       if (content.match(/\/\/ @remove-file-on-eject/)) {
         return;
       }
+      // Inline plugins
+      if (
+        file.endsWith('webpack.config.dev.js') ||
+        file.endsWith('webpack.config.prod.js')
+      ) {
+        content = ejectFile({ code: content });
+      }
       content =
         content
           // Remove dead code from .js files on eject
@@ -136,12 +143,6 @@ inquirer
           )
           .trim() + '\n';
       console.log(`  Adding ${cyan(file.replace(ownPath, ''))} to the project`);
-      if (
-        file.endsWith('webpack.config.dev.js') ||
-        file.endsWith('webpack.config.prod.js')
-      ) {
-        content = ejectFile({ code: content });
-      }
       fs.writeFileSync(file.replace(ownPath, appPath), content);
     });
     console.log();
