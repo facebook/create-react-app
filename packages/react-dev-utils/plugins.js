@@ -135,8 +135,10 @@ function pushExclusiveLoader({ config, ast }, testStr, loader) {
   }
 }
 
-function ejectFile(filename) {
-  let code = readFileSync(filename, 'utf8');
+function ejectFile({ filename, code }) {
+  if (filename != null) {
+    code = readFileSync(filename, 'utf8');
+  }
   let ast = babylon.parse(code);
 
   let plugins = [];

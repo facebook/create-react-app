@@ -24,6 +24,7 @@ const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
 const spawnSync = require('react-dev-utils/crossSpawn').sync;
+const { ejectFile } = require('react-dev-utils/plugins');
 
 const green = chalk.green;
 const cyan = chalk.cyan;
@@ -135,6 +136,12 @@ inquirer
           )
           .trim() + '\n';
       console.log(`  Adding ${cyan(file.replace(ownPath, ''))} to the project`);
+      if (
+        file.endsWith('webpack.config.dev.js') ||
+        file.endsWith('webpack.config.prod.js')
+      ) {
+        content = ejectFile(content);
+      }
       fs.writeFileSync(file.replace(ownPath, appPath), content);
     });
     console.log();
