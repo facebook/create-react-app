@@ -50,7 +50,7 @@ function pushExtensions(config, arr) {
 function pushExclusiveLoader(config, testStr, loader) {
   const { module: { rules: [, { oneOf: rules }] } } = config;
   const jsTransformIndex = rules.findIndex(
-    rule => rule.test.toString() === '/\\.(js|jsx)$/'
+    rule => rule.test.toString() === testStr
   );
   if (jsTransformIndex === -1) {
     throw new Error('Unable to find babel transform.');
