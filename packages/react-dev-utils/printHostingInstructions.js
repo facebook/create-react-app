@@ -11,7 +11,7 @@
 
 const chalk = require('chalk');
 const url = require('url');
-const modules = require('global-modules');
+const globalModules = require('global-modules');
 const fs = require('fs');
 
 function printHostingInstructions(
@@ -123,7 +123,7 @@ function printHostingInstructions(
     );
     console.log('You may serve it with a static server:');
     console.log();
-    if (!fs.existsSync(`${modules}/serve`)) {
+    if (!fs.existsSync(`${globalModules}/serve`)) {
       if (useYarn) {
         console.log(`  ${chalk.cyan('yarn')} global add serve`);
       } else {
