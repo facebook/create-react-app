@@ -36,10 +36,10 @@ function applyPlugins(config, plugins, { paths }) {
 function _getArrayValues(arr) {
   const { elements } = arr;
   return elements.map(e => {
-    if (e.type !== 'StringLiteral') {
-      throw new Error('Must be a string.');
+    if (e.type === 'StringLiteral') {
+      return e.value;
     }
-    return e.value;
+    return e;
   });
 }
 
@@ -94,14 +94,41 @@ function pushExtensions({ config, ast }, arr) {
 
 function pushExclusiveLoader({ config, ast }, testStr, loader) {
   if (ast != null) {
-    console.log('push excl loader', testStr, loader);
+    traverse(ast, {
+      enter(path) {
+        const { type } = path;
+        if (type !== 'ArrayExpression') {
+          return;
+        }
+        const { key } = path.parent;
+        if (key == null || key.name !== 'oneOf') {
+          return;
+        }
+        const entries = _getArrayValues(path.node);
+        const afterIndex = entries.findIndex(entry => {
+          const { properties } = entry;
+          return (
+            properties.find(property => {
+              if (property.value.type !== 'RegExpLiteral') {
+                return false;
+              }
+              return property.value.pattern === testStr.slice(1, -1);
+            }) != null
+          );
+        });
+        if (afterIndex === -1) {
+          throw new Error('Unable to match pre-transform.');
+        }
+        entries.splice(afterIndex + 1, 0, loader);
+      },
+    });
   } else if (config != null) {
     const { module: { rules: [, { oneOf: rules }] } } = config;
     const jsTransformIndex = rules.findIndex(
       rule => rule.test.toString() === testStr
     );
     if (jsTransformIndex === -1) {
-      throw new Error('Unable to find babel transform.');
+      throw new Error('Unable to match pre-transform.');
     }
     rules.splice(jsTransformIndex + 1, 0, loader);
   }
@@ -138,7 +165,6 @@ function ejectFile(filename) {
       }
     },
   });
-  console.log(transforms);
   return generator(
     ast,
     { sourceMaps: false, quotes: 'single', comments: true, retainLines: false },
