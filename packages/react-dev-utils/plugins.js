@@ -15,6 +15,7 @@ const template = require('babel-template');
 const generator = require('babel-generator').default;
 const t = require('babel-types');
 const { readFileSync } = require('fs');
+const prettier = require('prettier');
 
 function applyPlugins(config, plugins, { paths }) {
   const pluginPaths = plugins
@@ -215,11 +216,16 @@ function ejectFile({ filename, code }) {
   for (const transform of deferredTransforms) {
     transform();
   }
-  return generator(
+  let { code: outCode } = generator(
     ast,
-    { sourceMaps: false, quotes: 'single', comments: true, retainLines: false },
+    { sourceMaps: false, comments: true, retainLines: false },
     code
-  ).code;
+  );
+  outCode = prettier.format(outCode, {
+    singleQuote: true,
+    trailingComma: 'es5',
+  });
+  return outCode;
 }
 
 module.exports = {

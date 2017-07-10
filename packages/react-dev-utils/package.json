@@ -52,6 +52,7 @@
     "inquirer": "3.1.1",
     "is-root": "1.0.0",
     "opn": "5.1.0",
+    "prettier": "^1.5.2",
     "recursive-readdir": "2.2.1",
     "shell-quote": "1.6.1",
     "sockjs-client": "1.1.4",
