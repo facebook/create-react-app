@@ -8,6 +8,7 @@ const {
 function apply(config, { paths }) {
   pushExtensions({ config }, [['.js', '.tsx', '.ts']]);
   pushExclusiveLoader({ config }, '/\\.(js|jsx)$/', {
+    // Process TypeScript with `at-loader`
     test: /\.(ts|tsx)$/,
     include: paths.appSrc,
     loader: require.resolve('awesome-typescript-loader'),

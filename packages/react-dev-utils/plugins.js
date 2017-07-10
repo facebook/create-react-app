@@ -117,20 +117,21 @@ function pushExclusiveLoader({ config, ast }, testStr, loader) {
           );
         });
         if (afterIndex === -1) {
-          throw new Error('Unable to match pre-transform.');
+          throw new Error('Unable to match pre-loader.');
         }
-        entries.splice(afterIndex + 1, 0, loader);
+        console.log('holy shit it works');
+        path.node.elements.splice(afterIndex + 1, 0, loader);
       },
     });
   } else if (config != null) {
     const { module: { rules: [, { oneOf: rules }] } } = config;
-    const jsTransformIndex = rules.findIndex(
+    const loaderIndex = rules.findIndex(
       rule => rule.test.toString() === testStr
     );
-    if (jsTransformIndex === -1) {
-      throw new Error('Unable to match pre-transform.');
+    if (loaderIndex === -1) {
+      throw new Error('Unable to match pre-loader.');
     }
-    rules.splice(jsTransformIndex + 1, 0, loader);
+    rules.splice(loaderIndex + 1, 0, loader);
   }
 }
 
@@ -138,7 +139,7 @@ function ejectFile(filename) {
   let code = readFileSync(filename, 'utf8');
   let ast = babylon.parse(code);
 
-  let transforms = [];
+  let plugins = [];
   traverse(ast, {
     enter(path) {
       const { type } = path;
@@ -160,11 +161,58 @@ function ejectFile(filename) {
         if (name !== 'applyPlugins') {
           return;
         }
-        transforms = _getArrayValues(args[1]);
+        plugins = _getArrayValues(args[1]);
         path.parentPath.remove();
       }
     },
   });
+  let deferredTransforms = [];
+  plugins.forEach(p => {
+    let path;
+    try {
+      path = require.resolve(`react-scripts-plugin-${p}`);
+    } catch (e) {
+      return;
+    }
+    const pluginCode = readFileSync(path, 'utf8');
+    const pluginAst = babylon.parse(pluginCode);
+    traverse(pluginAst, {
+      enter(path) {
+        const { type } = path;
+        if (type !== 'CallExpression') {
+          return;
+        }
+        const { node: { callee: { name }, arguments: pluginArgs } } = path;
+        switch (name) {
+          case 'pushExtensions': {
+            const [, _exts] = pluginArgs;
+            const exts = _getArrayValues(_exts).map(entry =>
+              _getArrayValues(entry)
+            );
+            deferredTransforms.push(
+              pushExtensions.bind(undefined, { ast }, exts)
+            );
+            break;
+          }
+          case 'pushExclusiveLoader': {
+            const [, { value: testStr }, _loader] = pluginArgs;
+            deferredTransforms.push(
+              pushExclusiveLoader.bind(undefined, { ast }, testStr, _loader)
+            );
+            break;
+          }
+          default: {
+            // Not a call we care about
+            break;
+          }
+        }
+      },
+    });
+  });
+  // Execute 'em!
+  for (const transform of deferredTransforms) {
+    transform();
+  }
   return generator(
     ast,
     { sourceMaps: false, quotes: 'single', comments: true, retainLines: false },
