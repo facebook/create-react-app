@@ -9,6 +9,12 @@
 
 'use strict';
 
+const babylon = require('babylon');
+const traverse = require('babel-traverse').default;
+const template = require('babel-template');
+const generator = require('babel-generator').default;
+const { readFileSync } = require('fs');
+
 function applyPlugins(config, plugins, { paths }) {
   const pluginPaths = plugins
     .map(p => {
@@ -52,4 +58,58 @@ function pushExclusiveLoader(config, testStr, loader) {
   rules.splice(jsTransformIndex + 1, 0, loader);
 }
 
-module.exports = { applyPlugins, pushExtensions, pushExclusiveLoader };
+function _getArrayValues(arr) {
+  const { elements } = arr;
+  return elements.map(e => {
+    if (e.type !== 'StringLiteral') {
+      throw new Error('Must be a string.');
+    }
+    return e.value;
+  });
+}
+
+function ejectFile(filename) {
+  let code = readFileSync(filename, 'utf8');
+  let ast = babylon.parse(code);
+
+  let transforms = [];
+  traverse(ast, {
+    enter(path) {
+      const { type } = path;
+      if (type === 'VariableDeclaration') {
+        const { node: { declarations: [{ id: { name }, init }] } } = path;
+        if (name !== 'base') {
+          return;
+        }
+        path.replaceWith(template('module.exports = RIGHT;')({ RIGHT: init }));
+      } else if (type === 'AssignmentExpression') {
+        const { node: { left, right } } = path;
+        if (left.type !== 'MemberExpression') {
+          return;
+        }
+        if (right.type !== 'CallExpression') {
+          return;
+        }
+        const { callee: { name }, arguments: args } = right;
+        if (name !== 'applyPlugins') {
+          return;
+        }
+        transforms = _getArrayValues(args[1]);
+        path.parentPath.remove();
+      }
+    },
+  });
+  console.log(transforms);
+  return generator(
+    ast,
+    { sourceMaps: false, quotes: 'single', comments: true, retainLines: false },
+    code
+  ).code;
+}
+
+module.exports = {
+  applyPlugins,
+  pushExtensions,
+  pushExclusiveLoader,
+  ejectFile,
+};
