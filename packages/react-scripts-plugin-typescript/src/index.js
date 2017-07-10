@@ -6,8 +6,8 @@ const {
 } = require('react-dev-utils/plugins');
 
 function apply(config, { paths }) {
-  pushExtensions(config, [['.js', '.tsx', '.ts']]);
-  pushExclusiveLoader(config, '/\\.(js|jsx)$/', {
+  pushExtensions({ config }, [['.js', '.tsx', '.ts']]);
+  pushExclusiveLoader({ config }, '/\\.(js|jsx)$/', {
     test: /\.(ts|tsx)$/,
     include: paths.appSrc,
     loader: require.resolve('awesome-typescript-loader'),

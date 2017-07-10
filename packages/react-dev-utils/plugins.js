@@ -13,6 +13,7 @@ const babylon = require('babylon');
 const traverse = require('babel-traverse').default;
 const template = require('babel-template');
 const generator = require('babel-generator').default;
+const t = require('babel-types');
 const { readFileSync } = require('fs');
 
 function applyPlugins(config, plugins, { paths }) {
@@ -32,32 +33,6 @@ function applyPlugins(config, plugins, { paths }) {
   return config;
 }
 
-// arr: [[afterExt, strExt1, strExt2, ...], ...]
-function pushExtensions(config, arr) {
-  const { resolve: { extensions } } = config;
-
-  for (const [after, ...exts] of arr) {
-    // Find the extension we want to add after
-    const index = extensions.findIndex(s => s === after);
-    if (index === -1) {
-      throw new Error(`Unable to find extension ${after} in configuration.`);
-    }
-    // Push the extensions into array in the order we specify
-    extensions.splice(index + 1, 0, ...exts);
-  }
-}
-
-function pushExclusiveLoader(config, testStr, loader) {
-  const { module: { rules: [, { oneOf: rules }] } } = config;
-  const jsTransformIndex = rules.findIndex(
-    rule => rule.test.toString() === testStr
-  );
-  if (jsTransformIndex === -1) {
-    throw new Error('Unable to find babel transform.');
-  }
-  rules.splice(jsTransformIndex + 1, 0, loader);
-}
-
 function _getArrayValues(arr) {
   const { elements } = arr;
   return elements.map(e => {
@@ -66,6 +41,70 @@ function _getArrayValues(arr) {
     }
     return e.value;
   });
+}
+
+// arr: [[afterExt, strExt1, strExt2, ...], ...]
+function pushExtensions({ config, ast }, arr) {
+  if (ast != null) {
+    traverse(ast, {
+      enter(path) {
+        const { type } = path;
+        if (type !== 'ArrayExpression') {
+          return;
+        }
+        const { key } = path.parent;
+        if (key == null || key.name !== 'extensions') {
+          return;
+        }
+        const { elements } = path.node;
+        const extensions = _getArrayValues(path.node);
+        for (const [after, ...exts] of arr) {
+          // Find the extension we want to add after
+          const index = extensions.findIndex(s => s === after);
+          if (index === -1) {
+            throw new Error(
+              `Unable to find extension ${after} in configuration.`
+            );
+          }
+          // Push the extensions into array in the order we specify
+          elements.splice(
+            index + 1,
+            0,
+            ...exts.map(ext => t.stringLiteral(ext))
+          );
+          // Simulate into our local copy of the array to keep proper indices
+          extensions.splice(index + 1, 0, ...exts);
+        }
+      },
+    });
+  } else if (config != null) {
+    const { resolve: { extensions } } = config;
+
+    for (const [after, ...exts] of arr) {
+      // Find the extension we want to add after
+      const index = extensions.findIndex(s => s === after);
+      if (index === -1) {
+        throw new Error(`Unable to find extension ${after} in configuration.`);
+      }
+      // Push the extensions into array in the order we specify
+      extensions.splice(index + 1, 0, ...exts);
+    }
+  }
+}
+
+function pushExclusiveLoader({ config, ast }, testStr, loader) {
+  if (ast != null) {
+    console.log('push excl loader', testStr, loader);
+  } else if (config != null) {
+    const { module: { rules: [, { oneOf: rules }] } } = config;
+    const jsTransformIndex = rules.findIndex(
+      rule => rule.test.toString() === testStr
+    );
+    if (jsTransformIndex === -1) {
+      throw new Error('Unable to find babel transform.');
+    }
+    rules.splice(jsTransformIndex + 1, 0, loader);
+  }
 }
 
 function ejectFile(filename) {
