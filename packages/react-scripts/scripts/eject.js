@@ -140,7 +140,7 @@ inquirer
         file.endsWith('webpack.config.dev.js') ||
         file.endsWith('webpack.config.prod.js')
       ) {
-        content = ejectFile(content);
+        content = ejectFile({ code: content });
       }
       fs.writeFileSync(file.replace(ownPath, appPath), content);
     });
