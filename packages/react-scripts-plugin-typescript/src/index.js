@@ -14,7 +14,9 @@ function apply(config, { paths }) {
     loader: require.resolve('awesome-typescript-loader'),
     options: {
       silent: true,
+      // @remove-on-eject-begin
       configFileName: require.resolve('tsconfig-react-app'),
+      // @remove-on-eject-end
     },
   });
   return config;
