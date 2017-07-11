@@ -15,5 +15,7 @@ const text = aFileWithoutExt.includes('base64')
   : aFileWithoutExt;
 
 export default () => (
-  <a id="feature-no-ext-inclusion" href={text}>aFileWithoutExt</a>
+  <a id="feature-no-ext-inclusion" href={text}>
+    aFileWithoutExt
+  </a>
 );

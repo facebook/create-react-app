@@ -54,7 +54,9 @@ export default class extends Component {
     return (
       <div id="feature-custom-interpolation">
         {this.state.users.map(user => (
-          <div key={user.id} style={veryInlineStyle}>{user.name}</div>
+          <div key={user.id} style={veryInlineStyle}>
+            {user.name}
+          </div>
         ))}
       </div>
     );

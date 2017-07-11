@@ -65,9 +65,37 @@ set -x
 cd ..
 root_path=$PWD
 
-# Prevent lerna bootstrap, we only want top-level dependencies
+# Clear cache to avoid issues with incorrect packages being used
+if hash yarnpkg 2>/dev/null
+then
+  # AppVeyor uses an old version of yarn.
+  # Once updated to 0.24.3 or above, the workaround can be removed
+  # and replaced with `yarnpkg cache clean`
+  # Issues:
+  #    https://github.com/yarnpkg/yarn/issues/2591
+  #    https://github.com/appveyor/ci/issues/1576
+  #    https://github.com/facebookincubator/create-react-app/pull/2400
+  # When removing workaround, you may run into
+  #    https://github.com/facebookincubator/create-react-app/issues/2030
+  case "$(uname -s)" in
+    *CYGWIN*|MSYS*|MINGW*) yarn=yarn.cmd;;
+    *) yarn=yarnpkg;;
+  esac
+  $yarn cache clean
+fi
+
+if hash npm 2>/dev/null
+then
+  # npm 5 is too buggy right now
+  if [ $(npm -v | head -c 1) -eq 5 ]; then
+    npm i -g npm@^4.x
+  fi;
+  npm cache clean || npm cache verify
+fi
+
+# Prevent bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
-grep -v "lerna bootstrap" package.json > temp && mv temp package.json
+grep -v "postinstall" package.json > temp && mv temp package.json
 npm install
 mv package.json.bak package.json
 
@@ -87,15 +115,15 @@ then
   [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 fi
 
-# We removed the postinstall, so do it manually here
-./node_modules/.bin/lerna bootstrap --concurrency=1
-
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
   npm install -g yarn
   yarn cache clean
 fi
+
+# We removed the postinstall, so do it manually here
+node bootstrap.js
 
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/

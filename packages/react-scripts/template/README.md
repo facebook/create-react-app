@@ -17,6 +17,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
 - [Debugging in the Editor](#debugging-in-the-editor)
+- [Formatting Code Automatically](#formatting-code-automatically)
 - [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
@@ -44,6 +45,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
   - ["Invalid Host Header" Errors After Configuring Proxy](#invalid-host-header-errors-after-configuring-proxy)
   - [Configuring the Proxy Manually](#configuring-the-proxy-manually)
+  - [Configuring a WebSocket Proxy](#configuring-a-websocket-proxy)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
@@ -62,9 +64,13 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Disabling jsdom](#disabling-jsdom)
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
+- [Developing Components in Isolation](#developing-components-in-isolation)
+  - [Getting Started with Storybook](#getting-started-with-storybook)
+  - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
+- [Analyzing the Bundle Size](#analyzing-the-bundle-size)
 - [Deployment](#deployment)
   - [Static Server](#static-server)
   - [Other Solutions](#other-solutions)
@@ -83,7 +89,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Troubleshooting](#troubleshooting)
   - [`npm start` doesn’t detect changes](#npm-start-doesnt-detect-changes)
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
-  - [`npm run build` silently fails](#npm-run-build-silently-fails)
+  - [`npm run build` exits too early](#npm-run-build-exits-too-early)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
   - [Moment.js locales are missing](#momentjs-locales-are-missing)
 - [Something Missing?](#something-missing)
@@ -138,7 +144,7 @@ For the project to build, **these files must exist with exact filenames**:
 You can delete or rename the other files.
 
 You may create subdirectories inside `src`. For faster rebuilds, only files inside `src` are processed by Webpack.<br>
-You need to **put any JS and CSS files inside `src`**, or Webpack won’t see them.
+You need to **put any JS and CSS files inside `src`**, otherwise Webpack won’t see them.
 
 Only files inside `public` can be used from `public/index.html`.<br>
 Read instructions below for using assets from JavaScript and HTML.
@@ -263,6 +269,56 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
 
 Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
 
+## Formatting Code Automatically
+
+Prettier is an opinionated code formatter with support for JavaScript, CSS and JSON. With Prettier you can format the code you write automatically to ensure a code style within your project. See the [Prettier's GitHub page](https://github.com/prettier/prettier) for more information, and look at this [page to see it in action](https://prettier.github.io/prettier/).
+
+To format our code whenever we make a commit in git, we need to install the following dependencies:
+
+```sh
+npm install --save husky lint-staged prettier
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add husky lint-staged prettier
+```
+
+* `husky` makes it easy to use githooks as if they are npm scripts.
+* `lint-staged` allows us to run scripts on staged files in git. See this [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
+* `prettier` is the JavaScript formatter we will run before commits.
+
+Now we can make sure every file is formatted correctly by adding a few lines to the `package.json` in the project root.
+
+Add the following line to `scripts` section:
+
+```diff
+  "scripts": {
++   "precommit": "lint-staged",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+```
+
+Next we add a 'lint-staged' field to the `package.json`, for example:
+
+```diff
+  "dependencies": {
+    // ...
+  },
++ "lint-staged": {
++   "src/**/*.{js,jsx,json,css}": [
++     "prettier --single-quote --write",
++     "git add"
++   ]
++ },
+  "scripts": {
+```
+
+Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
+
+Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://github.com/prettier/prettier#editor-integration) on the Prettier GitHub page.
+
 ## Changing the Page `<title>`
 
 You can find the source HTML file in the `public` folder of the generated project. You may edit the `<title>` tag in it to change the title from “React App” to anything else.
@@ -277,9 +333,17 @@ If you use a custom server for your app in production and want to modify the tit
 
 The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
 
+```sh
+npm install --save react-router
 ```
-npm install --save <library-name>
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add react-router
 ```
+
+This works for any library, not just `react-router`.
 
 ## Importing a Component
 
@@ -377,6 +441,10 @@ This will make `moduleA.js` and all its unique dependencies as a separate chunk 
 
 You can also use it with `async` / `await` syntax if you prefer it.
 
+### With React Router
+
+If you are using React Router check out [this tutorial](http://serverless-stack.com/chapters/code-splitting-in-create-react-app.html) on how to use code splitting with it. You can find the companion GitHub repository [here](https://github.com/AnomalyInnovations/serverless-stack-demo-client/tree/code-splitting-in-create-react-app).
+
 ## Adding a Stylesheet
 
 This project setup uses [Webpack](https://webpack.js.org/) for handling all assets. Webpack offers a custom way of “extending” the concept of `import` beyond JavaScript. To express that a JavaScript file depends on a CSS file, you need to **import the CSS from the JavaScript file**:
@@ -450,9 +518,16 @@ Following this rule often makes CSS preprocessors less useful, as features like 
 
 First, let’s install the command-line interface for Sass:
 
+```sh
+npm install --save node-sass-chokidar
 ```
-npm install node-sass-chokidar --save-dev
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add node-sass-chokidar
 ```
+
 Then in `package.json`, add the following lines to `scripts`:
 
 ```diff
@@ -488,8 +563,14 @@ At this point you might want to remove all CSS files from the source control, an
 
 As a final step, you may find it convenient to run `watch-css` automatically with `npm start`, and run `build-css` as a part of `npm run build`. You can use the `&&` operator to execute two scripts sequentially. However, there is no cross-platform way to run two scripts in parallel, so we will install a package for this:
 
+```sh
+npm install --save npm-run-all
 ```
-npm install --save-dev npm-run-all
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add npm-run-all
 ```
 
 Then we can change `start` and `build` scripts to include the CSS preprocessor commands:
@@ -647,9 +728,14 @@ You don’t have to use [React Bootstrap](https://react-bootstrap.github.io) tog
 
 Install React Bootstrap and Bootstrap from npm. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well:
 
+```sh
+npm install --save react-bootstrap bootstrap@3
 ```
-npm install react-bootstrap --save
-npm install bootstrap@3 --save
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add react-bootstrap bootstrap@3
 ```
 
 Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
@@ -688,9 +774,9 @@ Recent versions of [Flow](http://flowtype.org/) work with Create React App proje
 
 To add Flow to a Create React App project, follow these steps:
 
-1. Run `npm install --save-dev flow-bin` (or `yarn add --dev flow-bin`).
+1. Run `npm install --save flow-bin` (or `yarn add flow-bin`).
 2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
-3. Run `npm run flow -- init` (or `yarn flow -- init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
+3. Run `npm run flow init` (or `yarn flow init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
 4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
 
 Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
@@ -972,9 +1058,39 @@ You may also narrow down matches using `*` and/or `**`, to match the path exactl
       "target": "<url_3>",
       // ...
     },
-    // Matches /bar/abc.html and /bar/sub/def.html
+    // Matches /baz/abc.html and /baz/sub/def.html
     "/baz/**/*.html": {
       "target": "<url_4>"
+      // ...
+    }
+  }
+  // ...
+}
+```
+
+### Configuring a WebSocket Proxy
+
+When setting up a WebSocket proxy, there are a some extra considerations to be aware of.
+
+If you’re using a WebSocket engine like [Socket.io](https://socket.io/), you must have a Socket.io server running that you can use as the proxy target. Socket.io will not work with a standard WebSocket server. Specifically, don't expect Socket.io to work with [the websocket.org echo test](http://websocket.org/echo.html).
+
+There’s some good documentation available for [setting up a Socket.io server](https://socket.io/docs/).
+
+Standard WebSockets **will** work with a standard WebSocket server as well as the websocket.org echo test. You can use libraries like [ws](https://github.com/websockets/ws) for the server, with [native WebSockets in the browser](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
+
+Either way, you can proxy WebSocket requests manually in `package.json`:
+
+```js
+{
+  // ...
+  "proxy": {
+    "/socket": {
+      // Your compatible WebSocket server
+      "target": "ws://<socket_url>",
+      // Tell http-proxy-middleware that this is a WebSocket proxy.
+      // Also allows you to proxy WebSocket requests without an additional HTTP request
+      // https://github.com/chimurai/http-proxy-middleware#external-websocket-upgrade
+      "ws": true
       // ...
     }
   }
@@ -1082,7 +1198,7 @@ The watcher includes an interactive command-line interface with the ability to r
 
 ### Version Control Integration
 
-By default, when you run `npm test`, Jest will only run the tests related to files changed since the last commit. This is an optimization designed to make your tests runs fast regardless of how many tests you have. However it assumes that you don’t often commit the code that doesn’t pass the tests.
+By default, when you run `npm test`, Jest will only run the tests related to files changed since the last commit. This is an optimization designed to make your tests run fast regardless of how many tests you have. However it assumes that you don’t often commit the code that doesn’t pass the tests.
 
 Jest will always explicitly mention that it only ran tests related to the files changed since the last commit. You can also press `a` in the watch mode to force Jest to run all tests.
 
@@ -1127,11 +1243,19 @@ This test mounts a component and makes sure that it didn’t throw during render
 
 When you encounter bugs caused by changing components, you will gain a deeper insight into which parts of them are worth testing in your application. This might be a good time to introduce more specific tests asserting specific expected output or behavior.
 
-If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). You can write a smoke test with it too:
+If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). To install it, run:
 
 ```sh
-npm install --save-dev enzyme react-test-renderer
+npm install --save enzyme react-test-renderer
 ```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add enzyme react-test-renderer
+```
+
+You can write a smoke test with it too:
 
 ```js
 import React from 'react';
@@ -1171,17 +1295,23 @@ Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzym
 expect(wrapper).toContainReact(welcome)
 ```
 
-To setup jest-enzyme with Create React App, follow the instructions for [initializing your test environment](#initializing-test-environment) to import `jest-enzyme`. **Note that currently only version 2.x is compatible with Create React App.**
+To enable this, install `jest-enzyme`:
 
 ```sh
-npm install --save-dev jest-enzyme@2.x
+npm install --save jest-enzyme
 ```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add jest-enzyme
+```
+
+Import it in [`src/setupTests.js`](#initializing-test-environment) to make its matchers available in every test:
 
 ```js
-// src/setupTests.js
 import 'jest-enzyme';
 ```
-
 
 ### Using Third Party Assertion Libraries
 
@@ -1244,7 +1374,6 @@ Popular CI servers already set the environment variable `CI` by default but you 
 ```
 language: node_js
 node_js:
-  - 4
   - 6
 cache:
   directories:
@@ -1255,6 +1384,10 @@ script:
 ```
 1. Trigger your first build with a git push.
 1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
+
+#### CircleCI
+
+Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React App project.
 
 ### On your own environment
 ##### Windows (cmd.exe)
@@ -1290,14 +1423,22 @@ The build command will check for linter warnings and fail if any are found.
 By default, the `package.json` of the generated project looks like this:
 
 ```js
-  // ...
   "scripts": {
-    // ...
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom"
-  }
 ```
 
-If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/jsdom), you can safely remove `--env=jsdom`, and your tests will run faster.<br>
+If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/jsdom), you can safely remove `--env=jsdom`, and your tests will run faster:
+
+```diff
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+-   "test": "react-scripts test --env=jsdom"
++   "test": "react-scripts test"
+```
+
 To help you make up your mind, here is a list of APIs that **need jsdom**:
 
 * Any browser globals like `window` and `document`
@@ -1322,30 +1463,31 @@ If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
-<!--
 ## Developing Components in Isolation
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states.
 For an example, a simple button component could have following states:
 
-* With a text label.
-* With an emoji.
+* In a regular state, with a text label.
 * In the disabled mode.
+* In a loading state.
 
 Usually, it’s hard to see these states without running a sample app or some examples.
 
-Create React App doesn’t include any tools for this by default, but you can easily add [React Storybook](https://github.com/kadirahq/react-storybook) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
+Create React App doesn’t include any tools for this by default, but you can easily add [Storybook for React](https://storybook.js.org) ([source](https://github.com/storybooks/storybook)) or [React Styleguidist](https://react-styleguidist.js.org/) ([source](https://github.com/styleguidist/react-styleguidist)) to your project. **These are third-party tools that let you develop components and see all their states in isolation from your app**.
 
-![React Storybook Demo](http://i.imgur.com/7CIAWpB.gif)
+![Storybook for React Demo](http://i.imgur.com/7CIAWpB.gif)
 
-You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+You can also deploy your Storybook or style guide as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
 
-**Here’s how to setup your app with Storybook:**
+### Getting Started with Storybook
+
+Storybook is a development environment for React UI components. It allows you to browse a component library, view the different states of each component, and interactively develop and test components.
 
 First, install the following npm package globally:
 
 ```sh
-npm install -g getstorybook
+npm install -g @storybook/cli
 ```
 
 Then, run the following command inside your app’s directory:
@@ -1359,10 +1501,47 @@ After that, follow the instructions on the screen.
 Learn more about React Storybook:
 
 * Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
-* [GitHub Repo](https://github.com/kadirahq/react-storybook)
-* [Documentation](https://storybooks.js.org/docs/react-storybook/basics/introduction/)
-* [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
--->
+* [GitHub Repo](https://github.com/storybooks/storybook)
+* [Documentation](https://storybook.js.org/basics/introduction/)
+* [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
+
+### Getting Started with Styleguidist
+
+Styleguidist combines a style guide, where all your components are presented on a single page with their props documentation and usage examples, with an environment for developing components in isolation, similar to Storybook. In Styleguidist you write examples in Markdown, where each code snippet is rendered as a live editable playground.
+
+First, install Styleguidist:
+
+```sh
+npm install --save react-styleguidist
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add react-styleguidist
+```
+
+Then, add these scripts to your `package.json`:
+
+```diff
+   "scripts": {
++    "styleguide": "styleguidist server",
++    "styleguide:build": "styleguidist build",
+     "start": "react-scripts start",
+```
+
+Then, run the following command inside your app’s directory:
+
+```sh
+npm run styleguide
+```
+
+After that, follow the instructions on the screen.
+
+Learn more about React Styleguidist:
+
+* [GitHub Repo](https://github.com/styleguidist/react-styleguidist)
+* [Documentation](https://react-styleguidist.js.org/docs/getting-started.html)
 
 ## Making a Progressive Web App
 
@@ -1381,7 +1560,7 @@ and it will take care of generating a service worker file that will automaticall
 precache all of your local assets and keep them up to date as you deploy updates.
 The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
 for handling all requests for local assets, including the initial HTML, ensuring
-that you web app is reliably fast, even on a slow or unreliable network.
+that your web app is reliably fast, even on a slow or unreliable network.
 
 If you would prefer not to enable service workers prior to your initial
 production deployment, then remove the call to `serviceWorkerRegistration.register()`
@@ -1464,6 +1643,52 @@ icons, names, and branding colors to use when the web app is displayed.
 provides more context about what each field means, and how your customizations
 will affect your users' experience.
 
+## Analyzing the Bundle Size
+
+[Source map explorer](https://www.npmjs.com/package/source-map-explorer) analyzes
+JavaScript bundles using the source maps. This helps you understand where code
+bloat is coming from.
+
+To add Source map explorer to a Create React App project, follow these steps:
+
+```sh
+npm install --save source-map-explorer
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add source-map-explorer
+```
+
+Then in `package.json`, add the following line to `scripts`:
+
+```diff
+   "scripts": {
++    "analyze": "source-map-explorer build/static/js/main.*",
+     "start": "react-scripts start",
+     "build": "react-scripts build",
+     "test": "react-scripts test --env=jsdom",
+```
+
+>**Note:**
+>
+>This doesn't quite work on Windows because it doesn't automatically expand `*` in the filepath. For now, the workaround is to look at the full hashed filename in `build/static/js` (e.g. `main.89b7e95a.js`) and copy it into `package.json` when you're running the analyzer. For example:
+>
+>```diff
+>+    "analyze": "source-map-explorer build/static/js/main.89b7e95a.js",
+>```
+>
+>Unfortunately it will be different after every build. You can express support for fixing this on Windows [in this issue](https://github.com/danvk/source-map-explorer/issues/52).
+
+Then to analyze the bundle run the production build then run the analyze
+script.
+
+```
+npm run build
+npm run analyze
+```
+
 ## Deployment
 
 `npm run build` creates a `build` directory with a production build of your app. Set up your favourite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file.
@@ -1526,7 +1751,7 @@ This is because when there is a fresh page load for a `/todos/42`, the server lo
  });
 ```
 
-If you’re using [Apache](https://httpd.apache.org/), you need to create a `.htaccess` file in the `public` folder that looks like this:
+If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to create a `.htaccess` file in the `public` folder that looks like this:
 
 ```
     Options -MultiViews
@@ -1535,7 +1760,9 @@ If you’re using [Apache](https://httpd.apache.org/), you need to create a `.ht
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`.
+It will get copied to the `build` folder when you run `npm run build`. 
+
+If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
@@ -1660,18 +1887,23 @@ Now, whenever you run `npm run build`, you will see a cheat sheet with instructi
 To publish it at [https://myusername.github.io/my-app](https://myusername.github.io/my-app), run:
 
 ```sh
-npm install --save-dev gh-pages
+npm install --save gh-pages
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add gh-pages
 ```
 
 Add the following scripts in your `package.json`:
 
-```js
-  // ...
+```diff
   "scripts": {
-    // ...
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  }
++   "predeploy": "npm run build",
++   "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
 ```
 
 The `predeploy` script will run automatically before `deploy` is run.
@@ -1698,7 +1930,7 @@ You can configure a custom domain with GitHub Pages by adding a `CNAME` file to 
 
 GitHub Pages doesn’t support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 
-* You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
+* You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://reacttraining.com/react-router/web/api/Router) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
 
 ### Heroku
@@ -1774,27 +2006,23 @@ When you build the project, Create React App will place the `public` folder cont
 
 ### Now
 
-[now](https://zeit.co/now) offers a zero-configuration single-command deployment.
+[now](https://zeit.co/now) offers a zero-configuration single-command deployment. You can use `now` to deploy your app for free.
 
 1. Install the `now` command-line tool either via the recommended [desktop tool](https://zeit.co/download) or via node with `npm install -g now`.
 
-2. Install `serve` by running `npm install --save serve`.
+2. Build your app by running `npm run build`.
 
-3. Add this line to `scripts` in `package.json`:
+3. Move into the build directory by running `cd build`.
 
-    ```
-    "now-start": "serve -s build/",
-    ```
-
-4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
+4. Run `now --name your-project-name` from within the build directory. You will see a **now.sh** URL in your output like this:
 
     ```
-    > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
+    > Ready! https://your-project-name-tpspyhtdtk.now.sh (copied to clipboard)
     ```
 
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
-Details are available in [this article.](https://zeit.co/blog/now-static)
+Details are available in [this article.](https://zeit.co/blog/unlimited-static)
 
 ### S3 and CloudFront
 
@@ -1824,6 +2052,7 @@ PORT | :white_check_mark: | :x: | By default, the development web server will at
 HTTPS | :white_check_mark: | :x: | When set to `true`, Create React App will run the development server in `https` mode.
 PUBLIC_URL | :x: | :white_check_mark: | Create React App assumes your application is hosted at the serving web server's root or a subpath as specified in [`package.json` (`homepage`)](#building-for-relative-paths). Normally, Create React App ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included). This may be particularly useful when using a CDN to host your application.
 CI | :large_orange_diamond: | :white_check_mark: | When set to `true`, Create React App treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.
+REACT_EDITOR | :white_check_mark: | :x: | When an app crashes in development, you will see an error overlay with clickable stack trace. When you click on it, Create React App will try to determine the editor you are using based on currently running processes, and open the relevant source file. You can [send a pull request to detect your editor of choice](https://github.com/facebookincubator/create-react-app/issues/2636). Setting this environment variable overrides the automatic detection. If you do it, make sure your systems [PATH](https://en.wikipedia.org/wiki/PATH_(variable)) environment variable points to your editor’s bin folder.
 
 ## Troubleshooting
 
@@ -1865,9 +2094,13 @@ If this still doesn’t help, try running `launchctl unload -F ~/Library/LaunchA
 
 There are also reports that *uninstalling* Watchman fixes the issue. So if nothing else helps, remove it from your system and try again.
 
-### `npm run build` silently fails
+### `npm run build` exits too early
 
-It is reported that `npm run build` can fail on machines with no swap space, which is common in cloud environments. If [the symptoms are matching](https://github.com/facebookincubator/create-react-app/issues/1133#issuecomment-264612171), consider adding some swap space to the machine you’re building on, or build the project locally.
+It is reported that `npm run build` can fail on machines with limited memory and no swap space, which is common in cloud environments. Even with small projects this command can increase RAM usage in your system by hundreds of megabytes, so if you have less than 1 GB of available memory your build is likely to fail with the following message:
+
+>  The build failed because the process exited too early. This probably means the system ran out of memory or someone called `kill -9` on the process.
+
+If you are completely sure that you didn't terminate the process, consider [adding some swap space](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04) to the machine you’re building on, or build the project locally.
 
 ### `npm run build` fails on Heroku
 
