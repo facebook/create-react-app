@@ -15,7 +15,7 @@
   "devDependencies": {
     "@types/jest": "^19.2.3",
     "@types/node": "^7.0.21",
-    "@types/react": "^15.0.24",
+    "@types/react": "^15.0.34",
     "@types/react-dom": "^15.5.0",
     "eslint": "3.19.0",
     "husky": "^0.13.2",
