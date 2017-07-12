@@ -220,17 +220,17 @@ compiler.plugin('done', function(stats) {
 });
 ```
 
-#### `formatBuildError(error: Object): String`
+#### `printBuildError(error: Object): String`
 
 Prettify some known build errors.
 Pass an Error object to log a prettified error message in the console
 
 ```
-  const formatBuildError = require('react-dev-utils/formatBuildError')
+  const printBuildError = require('react-dev-utils/printBuildError')
   try {
     build()
-  } catch(e){
-    formatBuildError(e) // logs prettified message
+  } catch(e) {
+    printBuildError(e) // logs prettified message
   }
 ```
 

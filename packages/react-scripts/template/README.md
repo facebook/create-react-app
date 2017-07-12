@@ -87,6 +87,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` exits too early](#npm-run-build-exits-too-early)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
+  - [`npm run build` fails to minify](#npm-run-build-fails-to-minify)
   - [Moment.js locales are missing](#momentjs-locales-are-missing)
 - [Something Missing?](#something-missing)
 
@@ -1997,6 +1998,16 @@ moment.locale('fr');
 ```
 
 This will only work for locales that have been explicitly imported before.
+
+### `npm run build` fails to minify
+
+Some dependencies may be shipping their source which our minify can't process.
+Because running Babel on `node_modules` is slow, we cannot compile it to es5 
+before minifying it. Possible solutions are:
+1. Raise an issue with the library author to ship compiled es5.
+2. If it's small and compatible with out babel preset, you can place the
+source in ./src.
+3. Fork the project repo and publish an es5 version of it.
 
 ## Something Missing?
 

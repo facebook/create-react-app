@@ -18,7 +18,7 @@
     "crossSpawn.js",
     "eslintFormatter.js",
     "FileSizeReporter.js",
-    "formatBuildError.js",
+    "printBuildError.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
     "inquirer.js",

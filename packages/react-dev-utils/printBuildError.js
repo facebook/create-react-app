@@ -12,7 +12,7 @@
 const get = require('lodash/get');
 const chalk = require('chalk');
 
-module.exports = function formatBuildError(err) {
+module.exports = function printBuildError(err) {
   const message = get(err, 'message');
   const stack = get(err, 'stack');
 
@@ -43,10 +43,8 @@ module.exports = function formatBuildError(err) {
       console.log('Failed to minify the code.', err);
     }
     console.log(
-      'Please check your dependencies for any untranspiled es6 code and raise an issue with \n' +
-        'the author. \n' +
-        '\nIf you need to use the module right now, you can try placing the source in ./src \n' +
-        'and we will transpile it for you.'
+      'Read more here: \n',
+      'https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-run-build-fails-to-minify'
     );
   } else {
     console.log((message || err) + '\n');
