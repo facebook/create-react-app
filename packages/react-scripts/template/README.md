@@ -1784,12 +1784,12 @@ To override this, specify the `homepage` in your `package.json`, for example:
 
 This will let Create React App correctly infer the root path to use in the generated HTML file.
 
->Note: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`. See more information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).
->For example:
-  ```js
-  <BrowserRouter basename="/calendar"/>
-  <Link to="/today"/> // renders <a href="/calendar/today">
-  ```
+**Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`. See more information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).
+For example:
+```js
+<BrowserRouter basename="/calendar"/>
+<Link to="/today"/> // renders <a href="/calendar/today">
+```
 
 #### Serving the Same Build from Different Paths
 
