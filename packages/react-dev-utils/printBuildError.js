@@ -42,9 +42,9 @@ module.exports = function printBuildError(err) {
     } catch (ignored) {
       console.log('Failed to minify the code.', err);
     }
+    console.log('Read more here:');
     console.log(
-      'Read more here: \n',
-      'https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-run-build-fails-to-minify'
+      'https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-run-build-fails-to-minify\n'
     );
   } else {
     console.log((message || err) + '\n');
