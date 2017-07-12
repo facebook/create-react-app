@@ -13,6 +13,16 @@ const fs = require('fs');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
 
+const pkgJson = require(paths.appPackageJson);
+const bpkReactScriptsConfig = pkgJson['backpack-react-scripts'] || {};
+
+const includePrefixes = bpkReactScriptsConfig.babelIncludePrefixes || [];
+includePrefixes.unshift('bpk-');
+
+const transformIgnorePattern = `[/\\\\]node_modules[/\\\\](?!${includePrefixes.join(
+  '|'
+)}).+\\.(js|jsx)$`;
+
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
@@ -36,12 +46,14 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^.+\\.(js|jsx)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
+      '^(?!.*\\.(js|jsx|css|scss|json)$)': resolve(
+        'config/jest/fileTransform.js'
+      ),
     },
-    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
+    transformIgnorePatterns: [transformIgnorePattern],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
+      '^.+\\.s?css$': 'identity-obj-proxy',
     },
     moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'node'],
   };

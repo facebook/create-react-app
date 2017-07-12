@@ -27,6 +27,11 @@ let handleCompile;
 // We only use this block for testing of Create React App itself:
 const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
 if (isSmokeTest) {
+  // process.env.UV_THREADPOOL_SIZE default value is 4. Setting it to 20 seems to stop the build hanging.
+  // We only do this if the --smoke-test flag is passed because we haven't seen this in the wild yet.
+  // See https://github.com/sass/node-sass/issues/857 & https://github.com/jtangelder/sass-loader/issues/147.
+  process.env.UV_THREADPOOL_SIZE = 50;
+
   handleCompile = (err, stats) => {
     if (err || stats.hasErrors() || stats.hasWarnings()) {
       process.exit(1);

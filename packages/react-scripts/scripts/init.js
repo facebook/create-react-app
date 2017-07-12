@@ -42,6 +42,11 @@ module.exports = function(
     start: 'react-scripts start',
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
+    'lint:scss': "stylelint 'src/**/*.scss' --syntax scss",
+    'lint:scss:fix': "stylefmt --recursive 'src/**/*.scss'",
+    'lint:js': 'eslint . --ignore-path .gitignore --ext .js,.jsx',
+    'lint:js:fix': 'npm run lint:js -- --fix',
+    lint: 'npm run lint:js && npm run lint:scss',
     eject: 'react-scripts eject',
   };
 
@@ -96,10 +101,10 @@ module.exports = function(
 
   if (useYarn) {
     command = 'yarnpkg';
-    args = ['add'];
+    args = ['add', '--dev'];
   } else {
     command = 'npm';
-    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    args = ['install', '--save-dev', verbose && '--verbose'].filter(e => e);
   }
   args.push('react', 'react-dom');
 
@@ -132,6 +137,47 @@ module.exports = function(
     }
   }
 
+  // BPK: Install additional backpack components
+  const bpkArgs = args.slice();
+  bpkArgs.push(
+    'bpk-component-button',
+    'bpk-component-code',
+    'bpk-component-grid',
+    'bpk-component-text',
+    'bpk-mixins',
+    'bpk-stylesheets'
+  );
+  const bpkProc = spawn.sync(command, bpkArgs, { stdio: 'inherit' });
+  if (bpkProc.status !== 0) {
+    console.error('`' + command + ' ' + bpkArgs.join(' ') + '` failed');
+    return;
+  }
+
+  // BPK: Re-read package.json as dependencies have been added
+  const appPackagePath = path.join(appPath, 'package.json');
+  delete require.cache[require.resolve(appPackagePath)];
+  const newAppPackage = require(appPackagePath);
+
+  // BPK: If React is installed in `dependencies`, move it to `devDependencies`
+  if (isReactInstalled(newAppPackage)) {
+    const devDependencies = Object.assign({}, newAppPackage.devDependencies);
+    const dependencies = Object.assign({}, newAppPackage.dependencies);
+
+    devDependencies.react = dependencies.react;
+    devDependencies['react-dom'] = dependencies['react-dom'];
+
+    delete dependencies.react;
+    delete dependencies['react-dom'];
+
+    newAppPackage.devDependencies = devDependencies;
+    newAppPackage.dependencies = dependencies;
+
+    fs.writeFileSync(
+      path.join(appPath, 'package.json'),
+      JSON.stringify(newAppPackage, null, 2)
+    );
+  }
+
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for
   // backward compatibility with old global-cli's.
@@ -159,6 +205,9 @@ module.exports = function(
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
+  console.log();
+  console.log(chalk.cyan(`  ${displayedCommand} lint`));
+  console.log('    Lints all JavaScript & SCSS.');
   console.log();
   console.log(
     chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}eject`)

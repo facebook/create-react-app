@@ -17,11 +17,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
+// const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const sassFunctions = require('bpk-mixins/sass-functions');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const pkgJson = require(paths.appPackageJson);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -53,8 +56,36 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
-    { publicPath: Array(cssFilename.split('/').length).join('../') }
+  { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
+
+const bpkReactScriptsConfig = pkgJson['backpack-react-scripts'] || {};
+
+const customModuleRegexes = bpkReactScriptsConfig.babelIncludePrefixes
+  ? bpkReactScriptsConfig.babelIncludePrefixes.map(
+    prefix => new RegExp(`node_modules[\\\/]${prefix}`)
+  )
+  : [];
+
+const optInCssModules = bpkReactScriptsConfig.cssModules === false;
+
+const postcssOptions = {
+  // Necessary for external CSS imports to work
+  // https://github.com/facebookincubator/create-react-app/issues/2677
+  ident: 'postcss',
+  plugins: () => [
+    require('postcss-flexbugs-fixes'),
+    autoprefixer({
+      browsers: [
+        '>1%',
+        'last 4 versions',
+        'Firefox ESR',
+        'not ie < 9', // React doesn't support IE8 anyway
+      ],
+      flexbox: 'no-2009',
+    }),
+  ],
+};
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -83,6 +114,7 @@ module.exports = {
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
   },
+  externals: bpkReactScriptsConfig.externals,
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
@@ -131,29 +163,29 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      {
-        test: /\.(js|jsx)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-              // @remove-on-eject-begin
-              // TODO: consider separate config for production,
-              // e.g. to enable no-console and no-debugger only in production.
-              baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
-              },
-              ignore: false,
-              useEslintrc: false,
-              // @remove-on-eject-end
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include: paths.appSrc,
-      },
+      // {
+      //   test: /\.(js|jsx)$/,
+      //   enforce: 'pre',
+      //   use: [
+      //     {
+      //       options: {
+      //         formatter: eslintFormatter,
+      //         eslintPath: require.resolve('eslint'),
+      //         // @remove-on-eject-begin
+      //         // TODO: consider separate config for production,
+      //         // e.g. to enable no-console and no-debugger only in production.
+      //         baseConfig: {
+      //           extends: [require.resolve('eslint-config-react-app')],
+      //         },
+      //         ignore: false,
+      //         useEslintrc: false,
+      //         // @remove-on-eject-end
+      //       },
+      //       loader: require.resolve('eslint-loader'),
+      //     },
+      //   ],
+      //   include: paths.appSrc,
+      // },
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
@@ -172,7 +204,11 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,
-            include: paths.appSrc,
+            include: [
+              paths.appSrc,
+              paths.backpackModulesRegex,
+              ...customModuleRegexes,
+            ],
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
@@ -195,6 +231,87 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
+            test: /\.scss$/,
+            exclude: optInCssModules
+              ? [/\.module\.scss$/, paths.backpackModulesRegex]
+              : [],
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: require.resolve('style-loader'),
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        minimize: true,
+                        sourceMap: shouldUseSourceMap,
+                        modules: !optInCssModules,
+                        localIdentName: '[local]-[hash:base64:5]',
+                      },
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: postcssOptions,
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        functions: sassFunctions,
+                      },
+                    },
+                  ],
+                },
+                extractTextPluginOptions
+              )
+            ),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          {
+            test: {
+              and: [
+                () => optInCssModules,
+                {
+                  or: [
+                    /\.module\.scss$/,
+                    { and: [paths.backpackModulesRegex, /\.scss$/] },
+                  ],
+                },
+              ],
+            },
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: require.resolve('style-loader'),
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        minimize: true,
+                        sourceMap: shouldUseSourceMap,
+                        modules: true,
+                        localIdentName: '[local]-[hash:base64:5]',
+                      },
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: postcssOptions,
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        functions: sassFunctions,
+                      },
+                    },
+                  ],
+                },
+                extractTextPluginOptions
+              )
+            ),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
@@ -211,23 +328,7 @@ module.exports = {
                     },
                     {
                       loader: require.resolve('postcss-loader'),
-                      options: {
-                        // Necessary for external CSS imports to work
-                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                        ident: 'postcss',
-                        plugins: () => [
-                          require('postcss-flexbugs-fixes'),
-                          autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                            ],
-                            flexbox: 'no-2009',
-                          }),
-                        ],
-                      },
+                      options: postcssOptions,
                     },
                   ],
                 },
@@ -350,6 +451,20 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new OptimizeCssAssetsPlugin({
+      cssProcessorOptions: {
+        postcssZindex: {
+          disable: true,
+        },
+        autoprefixer: { disable: true },
+        postcssDiscardComments: {
+          disable: true,
+        },
+        map: {
+          inline: false,
+        },
+      },
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

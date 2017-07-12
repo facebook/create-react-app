@@ -148,7 +148,6 @@ npm run build
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
-exists build/static/media/*.svg
 exists build/favicon.ico
 
 # Run tests with CI flag
@@ -261,18 +260,18 @@ function verify_module_scope {
   echo "{}" >> sample.json
 
   # Save App.js, we're going to modify it
-  cp src/App.js src/App.js.bak
+  cp src/App.jsx src/App.jsx.bak
 
   # Add an out of scope import
-  echo "import sampleJson from '../sample'" | cat - src/App.js > src/App.js.temp && mv src/App.js.temp src/App.js
+  echo "import sampleJson from '../sample'" | cat - src/App.jsx > src/App.jsx.temp && mv src/App.jsx.temp src/App.jsx
 
   # Make sure the build fails
   npm run build; test $? -eq 1 || exit 1
   # TODO: check for error message
 
   # Restore App.js
-  rm src/App.js
-  mv src/App.js.bak src/App.js
+  rm src/App.jsx
+  mv src/App.jsx.bak src/App.jsx
 }
 
 # Enter the app directory
@@ -284,7 +283,6 @@ npm run build
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
-exists build/static/media/*.svg
 exists build/favicon.ico
 
 # Run tests with CI flag
@@ -320,7 +318,6 @@ npm run build
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
-exists build/static/media/*.svg
 exists build/favicon.ico
 
 # Run tests, overring the watch option to disable it.

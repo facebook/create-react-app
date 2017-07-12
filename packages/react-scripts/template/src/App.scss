@@ -1,0 +1,30 @@
+@import '~bpk-mixins';
+
+.App {
+  text-align: center;
+
+  &__header {
+    padding: $bpk-spacing-xl 0;
+    background-color: $bpk-color-blue-500;
+    background-image: $bpk-primary-gradient;
+    color: $bpk-color-white;
+
+    @include bpk-box-shadow-sm;
+
+    @include bpk-breakpoint-mobile {
+      padding: $bpk-spacing-base 0;
+    }
+  }
+
+  &__main {
+    padding: $bpk-spacing-base 0;
+  }
+
+  &__heading {
+    margin-bottom: $bpk-spacing-sm;
+  }
+
+  &__text {
+    margin-bottom: $bpk-spacing-sm;
+  }
+}
