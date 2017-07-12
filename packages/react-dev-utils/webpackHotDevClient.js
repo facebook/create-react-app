@@ -22,6 +22,7 @@ var url = require('url');
 var launchEditorEndpoint = require('./launchEditorEndpoint');
 var formatWebpackMessages = require('./formatWebpackMessages');
 var ErrorOverlay = require('react-error-overlay');
+var logger = require('./logger');
 
 // We need to keep track of if there has been a runtime error.
 // Essentially, we cannot guarantee application state was not corrupted by the
@@ -57,14 +58,12 @@ var connection = new SockJS(
 );
 
 // Unlike WebpackDevServer client, we won't try to reconnect
-// to avoid spamming the console. Disconnect usually happens
+// to avoid spamming the logger. Disconnect usually happens
 // when developer stops the server.
 connection.onclose = function() {
-  if (typeof console !== 'undefined' && typeof console.info === 'function') {
-    console.info(
-      'The development server has disconnected.\nRefresh the page if necessary.'
-    );
-  }
+  logger.info(
+    'The development server has disconnected.\nRefresh the page if necessary.'
+  );
 };
 
 // Remember some state related to hot module replacement.
@@ -74,10 +73,8 @@ var hasCompileErrors = false;
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
-  if (typeof console !== 'undefined' && typeof console.clear === 'function') {
-    if (hasCompileErrors) {
-      console.clear();
-    }
+  if (hasCompileErrors) {
+    logger.clear();
   }
 }
 
@@ -108,23 +105,21 @@ function handleWarnings(warnings) {
   hasCompileErrors = false;
 
   function printWarnings() {
-    // Print warnings to the console.
+    // Print warnings to the logger.
     var formatted = formatWebpackMessages({
       warnings: warnings,
       errors: [],
     });
 
-    if (typeof console !== 'undefined' && typeof console.warn === 'function') {
-      for (var i = 0; i < formatted.warnings.length; i++) {
-        if (i === 5) {
-          console.warn(
-            'There were more warnings in other files.\n' +
-              'You can find a complete log in the terminal.'
-          );
-          break;
-        }
-        console.warn(stripAnsi(formatted.warnings[i]));
+    for (var i = 0; i < formatted.warnings.length; i++) {
+      if (i === 5) {
+        logger.warn(
+          'There were more warnings in other files.\n' +
+            'You can find a complete log in the terminal.'
+        );
+        break;
       }
+      logger.warn(stripAnsi(formatted.warnings[i]));
     }
   }
 
@@ -160,11 +155,9 @@ function handleErrors(errors) {
   // Only show the first error.
   ErrorOverlay.reportBuildError(formatted.errors[0]);
 
-  // Also log them to the console.
-  if (typeof console !== 'undefined' && typeof console.error === 'function') {
-    for (var i = 0; i < formatted.errors.length; i++) {
-      console.error(stripAnsi(formatted.errors[i]));
-    }
+  // Also log them to the logger.
+  for (var i = 0; i < formatted.errors.length; i++) {
+    logger.error(stripAnsi(formatted.errors[i]));
   }
 
   // Do not attempt to reload now.
