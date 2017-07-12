@@ -23,6 +23,10 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Changelog
 
+### 2.4.0
+* Upgrade typescript to 2.4 and ts-loadder to 2.2.1 - thanks @frederickfogerty
+* Fix readme typo - thanks @wrongway4you
+
 ### 2.3.2
 * Fix `typescript` version to 2.3.x until 2.4 @types are fixed
 
