@@ -3,14 +3,13 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const h = React.createElement;
 
-const useLogger = true;
-const domId = 'toast';
+const id = 'create-react-app-logger';
 
-let dom = document.getElementById(domId);
+let dom = document.getElementById(id);
 
 if (!dom) {
   dom = document.createElement('div');
-  dom.id = domId;
+  dom.id = id;
   document.body.appendChild(dom);
 }
 
@@ -82,9 +81,11 @@ class Logger extends React.Component {
       });
     }, this.props.timeout);
   }
+
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
+
   render() {
     return h(
       'div',
@@ -128,11 +129,7 @@ function getColor(type) {
 }
 
 function render(type, message) {
-  if (useLogger) {
-    ReactDOM.render(h(Logger, { type }, message), dom);
-  } else {
-    console.log(message);
-  }
+  ReactDOM.render(h(Logger, { type }, message), dom);
 }
 
 const logger = {
