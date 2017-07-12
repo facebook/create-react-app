@@ -46,6 +46,10 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
+// Regex to match backpack node modules
+const backpackModulesRegex = /node_modules[\\/]bpk-/;
+const saddlebagModulesRegex = /node_modules[\\/]saddlebag-/;
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -60,6 +64,9 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  backpackModulesRegex: backpackModulesRegex,
+  saddlebagModulesRegex: saddlebagModulesRegex,
+  appSsrJs: resolveApp('src/ssr.js'),
 };
 
 // @remove-on-eject-begin
@@ -83,6 +90,9 @@ module.exports = {
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
+  backpackModulesRegex: backpackModulesRegex,
+  saddlebagModulesRegex: saddlebagModulesRegex,
+  appSsrJs: resolveApp('src/ssr.js'),
 };
 
 const ownPackageJson = require('../package.json');
@@ -113,6 +123,9 @@ if (
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
+    backpackModulesRegex: backpackModulesRegex,
+    saddlebagModulesRegex: saddlebagModulesRegex,
+    appSsrJs: resolveOwn('template/src/ssr.js'),
   };
 }
 // @remove-on-eject-end

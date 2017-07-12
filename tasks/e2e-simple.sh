@@ -129,7 +129,7 @@ yarn build
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
-exists build/static/media/*.svg
+#exists build/static/media/*.svg
 exists build/favicon.ico
 
 # Run tests with CI flag
@@ -235,7 +235,7 @@ yarn build
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
-exists build/static/media/*.svg
+#exists build/static/media/*.svg
 exists build/favicon.ico
 
 # Run tests with CI flag
@@ -265,7 +265,7 @@ yarn build
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
-exists build/static/media/*.svg
+#exists build/static/media/*.svg
 exists build/favicon.ico
 
 # Run tests, overring the watch option to disable it.

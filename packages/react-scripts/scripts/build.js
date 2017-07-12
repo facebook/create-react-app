@@ -27,6 +27,7 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
+const ssrConfig = require('../config/webpack.config.ssr');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -112,12 +113,38 @@ measureFileSizesBeforeBuild(paths.appBuild)
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
-  let compiler = webpack(config);
+  let finalConfig = config;
+
+  // If an SSR entry file is found, lets make use of webpacks multi-compiler
+  // functionality to bundle it in parallel
+  var compileSsr = fs.existsSync(paths.appSsrJs);
+  if (compileSsr) {
+    finalConfig = [ssrConfig, config];
+  }
+
+  let compiler = webpack(finalConfig);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) {
         return reject(err);
       }
+
+      // We don't want to make too many changes as it makes syncing back
+      // with upstream a pain. The rest of the code in this function relies on
+      // `config` and `stats` being an object as opposed to an array (from
+      // webpack's multi-compiler feature.)
+      if (compileSsr) {
+        stats = stats.stats[1];
+      }
+
+      // The SSR config still omits a css file - it's not yet possible to omit
+      // file output in ExtractTextPlugin. This is not needed so lets clean
+      // it up to avoid confusion.
+      var ssrCssPath = path.join(paths.appBuild, 'ssr.css');
+      if (fs.existsSync(ssrCssPath)) {
+        fs.unlinkSync(ssrCssPath);
+      }
+
       const messages = formatWebpackMessages(stats.toJson({}, true));
       if (messages.errors.length) {
         // Only keep the first error. Others are often indicative

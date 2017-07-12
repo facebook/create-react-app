@@ -15,10 +15,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
+// const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const sassFunctions = require('bpk-mixins/sass-functions');
+const camelCase = require('lodash/camelCase');
 const getClientEnvironment = require('./env');
+const getLocalIdent = require('./getLocalIdent');
 const paths = require('./paths');
+const pkgJson = require(paths.appPackageJson);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -30,6 +34,34 @@ const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
+const bpkReactScriptsConfig = pkgJson['backpack-react-scripts'] || {};
+
+const customModuleRegexes = bpkReactScriptsConfig.babelIncludePrefixes
+  ? bpkReactScriptsConfig.babelIncludePrefixes.map(
+      prefix => new RegExp(`node_modules[\\/]${prefix}`)
+    )
+  : [];
+
+const optInCssModules = bpkReactScriptsConfig.cssModules === false;
+
+const postcssOptions = {
+  // Necessary for external CSS imports to work
+  // https://github.com/facebookincubator/create-react-app/issues/2677
+  ident: 'postcss',
+  plugins: () => [
+    require('postcss-flexbugs-fixes'),
+    autoprefixer({
+      browsers: [
+        '>1%',
+        'last 4 versions',
+        'Firefox ESR',
+        'not ie < 9', // React doesn't support IE8 anyway
+      ],
+      flexbox: 'no-2009',
+    }),
+  ],
+};
+
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
@@ -40,27 +72,30 @@ module.exports = {
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
-  entry: [
-    // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
-    // Include an alternative client for WebpackDevServer. A client's job is to
-    // connect to WebpackDevServer by a socket and get notified about changes.
-    // When you save a file, the client will either apply hot updates (in case
-    // of CSS changes), or refresh the page (in case of JS changes). When you
-    // make a syntax error, this client will display a syntax error overlay.
-    // Note: instead of the default WebpackDevServer client, we use a custom one
-    // to bring better experience for Create React App users. You can replace
-    // the line below with these two lines if you prefer the stock client:
-    // require.resolve('webpack-dev-server/client') + '?/',
-    // require.resolve('webpack/hot/dev-server'),
-    require.resolve('react-dev-utils/webpackHotDevClient'),
-    // Finally, this is your app's code:
-    paths.appIndexJs,
-    // We include the app code last so that if there is a runtime error during
-    // initialization, it doesn't blow up the WebpackDevServer client, and
-    // changing JS code would still trigger a refresh.
-  ],
+  entry: bpkReactScriptsConfig.disablePolyfills
+    ? [require.resolve('react-dev-utils/webpackHotDevClient'), paths.appIndexJs]
+    : [
+        // We ship a few polyfills by default:
+        require.resolve('./polyfills'),
+        // Include an alternative client for WebpackDevServer. A client's job is to
+        // connect to WebpackDevServer by a socket and get notified about changes.
+        // When you save a file, the client will either apply hot updates (in case
+        // of CSS changes), or refresh the page (in case of JS changes). When you
+        // make a syntax error, this client will display a syntax error overlay.
+        // Note: instead of the default WebpackDevServer client, we use a custom one
+        // to bring better experience for Create React App users. You can replace
+        // the line below with these two lines if you prefer the stock client:
+        // require.resolve('webpack-dev-server/client') + '?/',
+        // require.resolve('webpack/hot/dev-server'),
+        require.resolve('react-dev-utils/webpackHotDevClient'),
+        // Finally, this is your app's code:
+        paths.appIndexJs,
+        // We include the app code last so that if there is a runtime error during
+        // initialization, it doesn't blow up the WebpackDevServer client, and
+        // changing JS code would still trigger a refresh.
+      ],
   output: {
+    jsonpFunction: camelCase(pkgJson.name + 'JsonpCallback'),
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: true,
     // This does not produce a real file. It's just the virtual path that is
@@ -123,26 +158,36 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
+      // {
+      //  test: /\.(js|jsx|mjs)$/,
+      //   enforce: 'pre',
+      //   use: [
+      //     {
+      //       options: {
+      //         formatter: eslintFormatter,
+      //         eslintPath: require.resolve('eslint'),
+      //         // @remove-on-eject-begin
+      //         baseConfig: {
+      //           extends: [require.resolve('eslint-config-react-app')],
+      //         },
+      //         ignore: false,
+      //         useEslintrc: false,
+      //         // @remove-on-eject-end
+      //       },
+      //       loader: require.resolve('eslint-loader'),
+      //     },
+      //   ],
+      //   include: paths.appSrc,
+      // },
       {
-        test: /\.(js|jsx|mjs)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-              // @remove-on-eject-begin
-              baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
-              },
-              ignore: false,
-              useEslintrc: false,
-              // @remove-on-eject-end
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include: paths.appSrc,
+        test: new RegExp(
+          `(^|/)(${(bpkReactScriptsConfig.amdExcludes || [])
+            .concat('lodash')
+            .join('|')})(/|.|$)`
+        ),
+        parser: {
+          amd: false,
+        },
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -163,7 +208,12 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
-            include: paths.appSrc,
+            include: [
+              paths.appSrc,
+              paths.backpackModulesRegex,
+              paths.saddlebagModulesRegex,
+              ...customModuleRegexes,
+            ],
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
@@ -182,6 +232,69 @@ module.exports = {
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           {
+            test: /\.scss$/,
+            exclude: optInCssModules
+              ? [/\.module\.scss$/, paths.backpackModulesRegex]
+              : [],
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  modules: !optInCssModules,
+                  localIdentName: '[local]-[hash:base64:5]',
+                  getLocalIdent: getLocalIdent,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: postcssOptions,
+              },
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  functions: sassFunctions,
+                },
+              },
+            ],
+          },
+          {
+            test: {
+              and: [
+                () => optInCssModules,
+                {
+                  or: [
+                    /\.module\.scss$/,
+                    { and: [paths.backpackModulesRegex, /\.scss$/] },
+                  ],
+                },
+              ],
+            },
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  modules: true,
+                  localIdentName: '[local]-[hash:base64:5]',
+                  getLocalIdent: getLocalIdent,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: postcssOptions,
+              },
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  functions: sassFunctions,
+                },
+              },
+            ],
+          },
+          {
             test: /\.css$/,
             use: [
               require.resolve('style-loader'),
@@ -193,23 +306,7 @@ module.exports = {
               },
               {
                 loader: require.resolve('postcss-loader'),
-                options: {
-                  // Necessary for external CSS imports to work
-                  // https://github.com/facebookincubator/create-react-app/issues/2677
-                  ident: 'postcss',
-                  plugins: () => [
-                    require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
-                        'not ie < 9', // React doesn't support IE8 anyway
-                      ],
-                      flexbox: 'no-2009',
-                    }),
-                  ],
-                },
+                options: postcssOptions,
               },
             ],
           },

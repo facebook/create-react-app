@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "react-error-overlay",
   "version": "4.0.1",
   "description": "An overlay for displaying stack frames.",

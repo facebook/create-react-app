@@ -26,3 +26,10 @@ matrix:
       env: TEST_SUITE=old-node
     - node_js: 6
       env: TEST_SUITE=kitchensink
+notifications:
+  slack:
+    rooms:
+      secure: bhPLCxVEdmUTTaIwkmZMBBHtJVfSmdCS0feVgRdWLcAOhiSfAkwBhf42kZfovc1fwGxIeRukDERehzC8SqmRAX0U2o9aNuY+NyXWasWzFQlR2Dz2M5HPI0k1Qp8dMdPXQTr4GfQ+hsgpSzySnObjvdwchHNpDZDBsdEIUm6ppNvdYJA9E3BO8o7CNZyDiWNhJt47jx5u3Xh+g0iXix45wuMlLuZjnjXsSkFx39NPlLGsSCh4nTalJbpyB9Txh9zjBO4KCL0PoggFC8WGCoM9G73gn/oXie20nIX+NOMaAkGyN7aG0VxrVb5mAB4puhC+u2oPJRKc85REL2MRRcMLv8AC+/6nlXMjIF5WS2MhWKrejQlccO9lqqapsdDMENYx9+Oaxs4QDdQA1Hxd4J9eWBSwAO7xrhN2sTaUiOguEp+yX3EYWUtF1WtIU3NtxB6TTvOvbGHzJYcBJvU0zIywR4tik6HQuv6ZiC0+H50yfT9mm8KmVn0zdJ4O20QO7Fa+/WBpVMGHJLxLEP7Hj1I7cTOYE/B/5Dj8ABTUUoKV/q4hY24FcfQ3rLqFmbQxWdder95oiMh1TYtdP2c44m2E1BkmwUzjtJZCoxJOEKgjAaGdEA2+OxSuAIUmUhcJ6X0cSyll8OgyoOXiNQoHhrNMv/y9FxUvGdKDgX2uH96t8pE=
+    on_pull_requests: false
+    on_success: always
+    on_failure: change

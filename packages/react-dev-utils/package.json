@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "react-dev-utils",
   "version": "5.0.2",
   "description": "Webpack utilities used by Create React App",
