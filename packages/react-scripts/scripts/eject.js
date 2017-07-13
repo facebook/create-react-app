@@ -155,7 +155,7 @@ inquirer
     });
     console.log();
 
-    if (pluginPaths.size() > 0) {
+    if (pluginPaths.size > 0) {
       console.log(cyan('Adding plugins'));
     }
     for (const pluginPath of pluginPaths) {
