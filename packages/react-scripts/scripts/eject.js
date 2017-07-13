@@ -166,6 +166,9 @@ inquirer
       const { eject } = require(pluginPath);
       eject({ paths });
     }
+    if (pluginPaths.size > 0) {
+      console.log();
+    }
 
     const {
       name: ownPackageName,
