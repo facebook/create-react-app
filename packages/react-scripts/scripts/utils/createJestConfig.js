@@ -12,8 +12,11 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
+const { hasPlugin } = require('react-dev-utils/plugins');
 
 module.exports = (resolve, rootDir, isEjecting) => {
+  const hasTypeScript = hasPlugin('typescript');
+
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup)
@@ -23,27 +26,54 @@ module.exports = (resolve, rootDir, isEjecting) => {
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
-    collectCoverageFrom: ['src/**/*.{js,jsx}'],
+    collectCoverageFrom: [
+      'src/**/*.{js,jsx}',
+      ...(hasTypeScript ? ['src/**/*.{ts,tsx}'] : []),
+    ],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.js?(x)',
       '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
+      ...(hasTypeScript
+        ? [
+            '<rootDir>/src/**/__tests__/**/*.ts?(x)',
+            '<rootDir>/src/**/?(*.)(spec|test).ts?(x)',
+          ]
+        : []),
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
-    transform: {
-      '^.+\\.(js|jsx)$': isEjecting
-        ? '<rootDir>/node_modules/babel-jest'
-        : resolve('config/jest/babelTransform.js'),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
-    },
-    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
+    transform: Object.assign(
+      {
+        '^.+\\.(js|jsx)$': isEjecting
+          ? '<rootDir>/node_modules/babel-jest'
+          : resolve('config/jest/babelTransform.js'),
+        '^.+\\.css$': resolve('config/jest/cssTransform.js'),
+      },
+      hasTypeScript
+        ? { '^.+\\.(ts|tsx)$': resolve('config/jest/typescriptTransform.js') }
+        : {},
+      {
+        '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
+      }
+    ),
+    transformIgnorePatterns: [
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$',
+      ...(hasTypeScript ? ['[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$'] : []),
+    ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
     },
-    moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'node'],
+    moduleFileExtensions: [
+      'web.js',
+      'js',
+      ...(hasTypeScript ? ['tsx', 'ts'] : []),
+      'json',
+      'web.jsx',
+      'jsx',
+      'node',
+    ],
   };
   if (rootDir) {
     config.rootDir = rootDir;

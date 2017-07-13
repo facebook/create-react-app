@@ -24,7 +24,7 @@ const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
 const spawnSync = require('react-dev-utils/crossSpawn').sync;
-const { ejectFile } = require('react-dev-utils/plugins');
+const { ejectFile, hasPlugin } = require('react-dev-utils/plugins');
 
 const green = chalk.green;
 const cyan = chalk.cyan;
@@ -152,7 +152,12 @@ inquirer
       let content = fs.readFileSync(file, 'utf8');
 
       // Skip flagged files
-      if (content.match(/\/\/ @remove-file-on-eject/)) {
+      const pluginMatch = content.match(/\/\/ @remove-file-on-eject (\w+-?)+/);
+      if (pluginMatch) {
+        if (!hasPlugin(pluginMatch.pop())) {
+          return;
+        }
+      } else if (content.match(/\/\/ @remove-file-on-eject/)) {
         return;
       }
       // Remove plugins

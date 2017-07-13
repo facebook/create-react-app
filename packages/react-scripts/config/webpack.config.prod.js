@@ -361,4 +361,4 @@ const base = {
   },
 };
 
-module.exports = applyPlugins(base, [], { paths });
+module.exports = applyPlugins(base, ['typescript'], { path, paths });

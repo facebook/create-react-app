@@ -20,7 +20,7 @@ const getPackageJson = require('read-pkg-up').sync;
 const { dirname, isAbsolute } = require('path');
 const semver = require('semver');
 
-function applyPlugins(config, plugins, { paths }) {
+function applyPlugins(config, plugins, { path, paths }) {
   const pluginPaths = plugins
     .map(p => {
       try {
@@ -32,9 +32,18 @@ function applyPlugins(config, plugins, { paths }) {
     .filter(e => e != null);
   for (const pluginPath of pluginPaths) {
     const { apply } = require(pluginPath);
-    config = apply(config, { paths });
+    config = apply(config, { path, paths });
   }
   return config;
+}
+
+function hasPlugin(plugin) {
+  try {
+    require.resolve(`react-scripts-plugin-${plugin}`);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 function _getArrayValues(arr) {
@@ -256,6 +265,7 @@ function ejectFile({ filename, code, existingDependencies }) {
 
 module.exports = {
   applyPlugins,
+  hasPlugin,
   pushExtensions,
   pushExclusiveLoader,
   ejectFile,
