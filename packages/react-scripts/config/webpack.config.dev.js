@@ -292,13 +292,30 @@ const config = {
   },
 };
 
-const configPath = path.resolve(paths.appPath, 'config', 'webpack.config.patch.js');
+/*
+  Zendesk modification:
+  Allow the consumer to provide a `config/webpack.config.override.js` file to
+  customize the webpack config.
+
+  `config/webpack.config.override.js` must export a method which receives the
+  webpack config, the env ('dev' or 'prod') and paths. The function returns a
+  new or altered config:
+
+  ```
+    module.exports = (config, environment, paths) => {
+      // do some change to the config...
+      ...
+
+      return config;
+    }
+  ```
+*/
+const fs = require('fs');
+const configPath = path.resolve(paths.appPath, 'config', 'webpack.config.override.js');
 let customizeConfig = null;
 
-try {
-  customizeConfig = require(configPath);
-} catch (ex) {
-  console.error("No custom config file found:", configPath.slice(paths.appPath.length + 1));
+if (fs.existsSync(configPath)) {
+  customizeConfig = require(configPath)(config, 'dev', paths);
 }
 
-module.exports = customizeConfig ?  customizeConfig(config, 'dev', paths) : config;
+module.exports = customizeConfig ?  customizeConfig : config;
