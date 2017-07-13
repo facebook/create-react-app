@@ -17,7 +17,7 @@ const t = require('babel-types');
 const { readFileSync } = require('fs');
 const prettier = require('prettier');
 const getPackageJson = require('read-pkg-up').sync;
-const { dirname } = require('path');
+const { dirname, isAbsolute } = require('path');
 const semver = require('semver');
 
 function applyPlugins(config, plugins, { paths }) {
@@ -187,7 +187,10 @@ function ejectFile({ filename, code, existingDependencies }) {
       const version = pluginPackage.dependencies[pkg];
       if (dependencies.has(pkg)) {
         const prev = dependencies.get(pkg);
-        if (semver.satisfies(version.replace(/[\^~]/g, ''), prev)) {
+        if (
+          isAbsolute(version) ||
+          semver.satisfies(version.replace(/[\^~]/g, ''), prev)
+        ) {
           continue;
         } else if (!semver.satisfies(prev.replace(/[\^~]/g, ''), version)) {
           throw new Error(
