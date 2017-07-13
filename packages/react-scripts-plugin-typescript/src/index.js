@@ -22,4 +22,15 @@ function apply(config, { paths }) {
   return config;
 }
 
-module.exports = { apply };
+const { readFileSync, writeFileSync } = require('fs');
+const { join } = require('path');
+
+function eject({ paths }) {
+  const configFileName = require.resolve('tsconfig-react-app');
+  const tsconfigContent = readFileSync(configFileName, 'utf8');
+
+  const { appSrc } = paths;
+  writeFileSync(join(appSrc, 'tsconfig.json'), tsconfigContent);
+}
+
+module.exports = { apply, eject };

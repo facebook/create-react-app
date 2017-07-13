@@ -116,6 +116,7 @@ inquirer
     });
 
     let addtlDeps = new Map();
+    let pluginPaths = new Set();
     files.forEach(file => {
       let content = fs.readFileSync(file, 'utf8');
 
@@ -128,12 +129,13 @@ inquirer
         file.endsWith('webpack.config.dev.js') ||
         file.endsWith('webpack.config.prod.js')
       ) {
-        const { code, dependencies } = ejectFile({
+        const { code, dependencies, paths: newPaths } = ejectFile({
           code: content,
           existingDependencies: addtlDeps,
         });
         content = code;
         addtlDeps = new Map([...addtlDeps, ...dependencies]);
+        pluginPaths = new Set([...pluginPaths, ...newPaths]);
       }
       content =
         content
@@ -152,6 +154,18 @@ inquirer
       fs.writeFileSync(file.replace(ownPath, appPath), content);
     });
     console.log();
+
+    if (pluginPaths.size() > 0) {
+      console.log(cyan('Adding plugins'));
+    }
+    for (const pluginPath of pluginPaths) {
+      const pluginName = /.*react-scripts-plugin-([\w-]+)/
+        .exec(pluginPath)
+        .pop();
+      console.log(`  Applying ${cyan(pluginName)}`);
+      const { eject } = require(pluginPath);
+      eject({ paths });
+    }
 
     const {
       name: ownPackageName,

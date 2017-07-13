@@ -174,6 +174,7 @@ function ejectFile({ filename, code, existingDependencies }) {
   });
   let deferredTransforms = [];
   const dependencies = new Map([...existingDependencies]);
+  const paths = new Set();
   plugins.forEach(p => {
     let path;
     try {
@@ -181,6 +182,7 @@ function ejectFile({ filename, code, existingDependencies }) {
     } catch (e) {
       return;
     }
+    paths.add(path);
 
     const { pkg: pluginPackage } = getPackageJson({ cwd: dirname(path) });
     for (const pkg of Object.keys(pluginPackage.dependencies)) {
@@ -250,7 +252,7 @@ function ejectFile({ filename, code, existingDependencies }) {
     trailingComma: 'es5',
   });
 
-  return { code: outCode, dependencies };
+  return { code: outCode, dependencies, paths };
 }
 
 module.exports = {
