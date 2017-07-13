@@ -16,6 +16,9 @@ const generator = require('babel-generator').default;
 const t = require('babel-types');
 const { readFileSync } = require('fs');
 const prettier = require('prettier');
+const getPackageJson = require('read-pkg-up');
+const { dirname } = require('path');
+const semver = require('semver');
 
 function applyPlugins(config, plugins, { paths }) {
   const pluginPaths = plugins
@@ -136,7 +139,7 @@ function pushExclusiveLoader({ config, ast }, testStr, loader) {
   }
 }
 
-function ejectFile({ filename, code }) {
+function ejectFile({ filename, code, existingDependencies }) {
   if (filename != null) {
     code = readFileSync(filename, 'utf8');
   }
@@ -170,6 +173,7 @@ function ejectFile({ filename, code }) {
     },
   });
   let deferredTransforms = [];
+  const dependencies = new Map([...existingDependencies]);
   plugins.forEach(p => {
     let path;
     try {
@@ -177,6 +181,23 @@ function ejectFile({ filename, code }) {
     } catch (e) {
       return;
     }
+
+    const { pkg: pluginPackage } = getPackageJson({ path: dirname(path) });
+    for (const pkg of Object.keys(pluginPackage.dependencies)) {
+      const version = pluginPackage.dependencies[pkg];
+      if (dependencies.has(pkg)) {
+        const prev = dependencies.get(pkg);
+        if (semver.satisfies(version, prev)) {
+          continue;
+        } else if (!semver.satisfies(prev, version)) {
+          throw new Error(
+            `Dependency ${pkg}@${version} cannot be satisfied by colliding range ${pkg}@${prev}.`
+          );
+        }
+      }
+      dependencies.set(pkg, pluginPackage.dependencies[pkg]);
+    }
+
     const pluginCode = readFileSync(path, 'utf8');
     const pluginAst = babylon.parse(pluginCode);
     traverse(pluginAst, {
@@ -225,7 +246,8 @@ function ejectFile({ filename, code }) {
     singleQuote: true,
     trailingComma: 'es5',
   });
-  return outCode;
+
+  return { code: outCode, dependencies };
 }
 
 module.exports = {

@@ -115,6 +115,7 @@ inquirer
       fs.mkdirSync(path.join(appPath, folder));
     });
 
+    let addtlDeps = new Map();
     files.forEach(file => {
       let content = fs.readFileSync(file, 'utf8');
 
@@ -127,7 +128,12 @@ inquirer
         file.endsWith('webpack.config.dev.js') ||
         file.endsWith('webpack.config.prod.js')
       ) {
-        content = ejectFile({ code: content });
+        const { code, dependencies } = ejectFile({
+          code: content,
+          existingDependencies: addtlDeps,
+        });
+        content = code;
+        addtlDeps = new Map([...addtlDeps, ...dependencies]);
       }
       content =
         content
@@ -147,11 +153,24 @@ inquirer
     });
     console.log();
 
-    const ownPackage = require(path.join(ownPath, 'package.json'));
+    const {
+      name: ownPackageName,
+      dependencies: _ownDependencies,
+      optionalDependencies: ownOptionalDependencies,
+      bin: ownBin,
+    } = require(path.join(ownPath, 'package.json'));
     const appPackage = require(path.join(appPath, 'package.json'));
 
+    const ownDependencies = Object.assign(
+      {},
+      _ownDependencies,
+      Array.from(addtlDeps).reduce(
+        (prev, [pkg, version]) => Object.assign(prev, { [pkg]: version }),
+        {}
+      )
+    );
+
     console.log(cyan('Updating the dependencies'));
-    const ownPackageName = ownPackage.name;
     if (appPackage.devDependencies) {
       // We used to put react-scripts in devDependencies
       if (appPackage.devDependencies[ownPackageName]) {
@@ -164,13 +183,13 @@ inquirer
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
       delete appPackage.dependencies[ownPackageName];
     }
-    Object.keys(ownPackage.dependencies).forEach(key => {
+    Object.keys(ownDependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
-      if (ownPackage.optionalDependencies[key]) {
+      if (ownOptionalDependencies[key]) {
         return;
       }
       console.log(`  Adding ${cyan(key)} to dependencies`);
-      appPackage.dependencies[key] = ownPackage.dependencies[key];
+      appPackage.dependencies[key] = ownDependencies[key];
     });
     // Sort the deps
     const unsortedDependencies = appPackage.dependencies;
@@ -183,7 +202,7 @@ inquirer
     console.log(cyan('Updating the scripts'));
     delete appPackage.scripts['eject'];
     Object.keys(appPackage.scripts).forEach(key => {
-      Object.keys(ownPackage.bin).forEach(binKey => {
+      Object.keys(ownBin).forEach(binKey => {
         const regex = new RegExp(binKey + ' (\\w+)', 'g');
         if (!regex.test(appPackage.scripts[key])) {
           return;
@@ -228,7 +247,7 @@ inquirer
     if (ownPath.indexOf(appPath) === 0) {
       try {
         // remove react-scripts and react-scripts binaries from app node_modules
-        Object.keys(ownPackage.bin).forEach(binKey => {
+        Object.keys(ownBin).forEach(binKey => {
           fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
         });
         fs.removeSync(ownPath);
