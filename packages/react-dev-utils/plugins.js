@@ -187,9 +187,9 @@ function ejectFile({ filename, code, existingDependencies }) {
       const version = pluginPackage.dependencies[pkg];
       if (dependencies.has(pkg)) {
         const prev = dependencies.get(pkg);
-        if (semver.satisfies(semver.clean(version), prev)) {
+        if (semver.satisfies(version.replace(/[\^~]/g, ''), prev)) {
           continue;
-        } else if (!semver.satisfies(semver.clean(prev), version)) {
+        } else if (!semver.satisfies(prev.replace(/[\^~]/g, ''), version)) {
           throw new Error(
             `Dependency ${pkg}@${version} cannot be satisfied by colliding range ${pkg}@${prev}.`
           );
