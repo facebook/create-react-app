@@ -20,8 +20,12 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const createHashFromPaths = require('react-dev-utils/createHashFromPaths');
+const AutoDllWebpackPlugin = require('autodll-webpack-plugin');
+const WebpackUglifyParallel = require('webpack-uglify-parallel');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const os = require('os');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -171,14 +175,19 @@ module.exports = {
           {
             test: /\.(js|jsx)$/,
             include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
-              // @remove-on-eject-begin
-              babelrc: false,
-              presets: [require.resolve('babel-preset-react-app')],
-              // @remove-on-eject-end
-              compact: true,
-            },
+            use: [
+              require.resolve('cache-loader'),
+              {
+                loader: require.resolve('babel-loader'),
+                options: {
+                  // @remove-on-eject-begin
+                  babelrc: false,
+                  presets: [require.resolve('babel-preset-react-app')],
+                  // @remove-on-eject-end
+                  compact: true,
+                },
+              },
+            ],
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
@@ -199,6 +208,8 @@ module.exports = {
                 {
                   fallback: require.resolve('style-loader'),
                   use: [
+                    require.resolve('cache-loader'),
+
                     {
                       loader: require.resolve('css-loader'),
                       options: {
@@ -279,13 +290,23 @@ module.exports = {
         minifyURLs: true,
       },
     }),
+    new AutoDllWebpackPlugin({
+      env: process.env.NODE_ENV,
+      additionalHash: createHashFromPaths({
+        paths: [paths.appNodeModules],
+        exclude: [path.join(paths.appNodeModules, '.cache')],
+      }),
+      inject: true,
+      filename: '[name].[hash].js',
+    }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
     // Minify the code.
-    new webpack.optimize.UglifyJsPlugin({
+    new WebpackUglifyParallel({
+      workers: os.cpus().length,
       compress: {
         warnings: false,
         // Disabled because of an issue with Uglify breaking seemingly valid code:

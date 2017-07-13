@@ -1,5 +1,6 @@
 .idea/
 .vscode/
+.cache-loader/
 node_modules/
 build
 .DS_Store
