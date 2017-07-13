@@ -8,7 +8,7 @@
   },
   "author": "",
   "license": "BSD-3-Clause",
-  "dependencies": {
+  "peerDependencies": {
     "@types/node": "^8.0.9"
   }
 }

@@ -17,6 +17,7 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@types/node": "^8.0.11",
     "awesome-typescript-loader": "^3.2.1",
     "tsconfig-react-app": "^1.0.0",
     "typescript": "^2.4.1"
