@@ -16,7 +16,7 @@ const generator = require('babel-generator').default;
 const t = require('babel-types');
 const { readFileSync } = require('fs');
 const prettier = require('prettier');
-const getPackageJson = require('read-pkg-up');
+const getPackageJson = require('read-pkg-up').sync;
 const { dirname } = require('path');
 const semver = require('semver');
 
@@ -187,9 +187,9 @@ function ejectFile({ filename, code, existingDependencies }) {
       const version = pluginPackage.dependencies[pkg];
       if (dependencies.has(pkg)) {
         const prev = dependencies.get(pkg);
-        if (semver.satisfies(version, prev)) {
+        if (semver.satisfies(semver.clean(version), prev)) {
           continue;
-        } else if (!semver.satisfies(prev, version)) {
+        } else if (!semver.satisfies(semver.clean(prev), version)) {
           throw new Error(
             `Dependency ${pkg}@${version} cannot be satisfied by colliding range ${pkg}@${prev}.`
           );
