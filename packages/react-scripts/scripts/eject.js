@@ -40,6 +40,37 @@ function getGitStatus() {
   }
 }
 
+function ejectContent(content, { additionalDeps, pluginPaths }) {
+  const { code, dependencies, paths: newPaths } = ejectFile({
+    code: content,
+    existingDependencies: additionalDeps,
+  });
+  for (const [key, value] of dependencies) {
+    additionalDeps.set(key, value);
+  }
+  for (const newPath of newPaths) {
+    pluginPaths.add(newPath);
+  }
+  return code;
+}
+
+function addPlugins(pluginPaths) {
+  if (pluginPaths.size < 1) {
+    return;
+  }
+
+  console.log(cyan('Adding plugins'));
+
+  for (const pluginPath of pluginPaths) {
+    const pluginName = /.*react-scripts-plugin-([\w-]+)/.exec(pluginPath).pop();
+    console.log(`  Applying ${cyan(pluginName)}`);
+    const { eject } = require(pluginPath);
+    eject({ paths });
+  }
+
+  console.log();
+}
+
 inquirer
   .prompt({
     type: 'confirm',
@@ -115,8 +146,8 @@ inquirer
       fs.mkdirSync(path.join(appPath, folder));
     });
 
-    let addtlDeps = new Map();
-    let pluginPaths = new Set();
+    const additionalDeps = new Map(),
+      pluginPaths = new Set();
     files.forEach(file => {
       let content = fs.readFileSync(file, 'utf8');
 
@@ -124,19 +155,11 @@ inquirer
       if (content.match(/\/\/ @remove-file-on-eject/)) {
         return;
       }
-      // Inline plugins
-      if (
-        file.endsWith('webpack.config.dev.js') ||
-        file.endsWith('webpack.config.prod.js')
-      ) {
-        const { code, dependencies, paths: newPaths } = ejectFile({
-          code: content,
-          existingDependencies: addtlDeps,
-        });
-        content = code;
-        addtlDeps = new Map([...addtlDeps, ...dependencies]);
-        pluginPaths = new Set([...pluginPaths, ...newPaths]);
+      // Remove plugins
+      if (content.match(/\/\/ @remove-plugins-on-eject/)) {
+        content = ejectContent(content, { additionalDeps, pluginPaths });
       }
+
       content =
         content
           // Remove dead code from .js files on eject
@@ -155,39 +178,13 @@ inquirer
     });
     console.log();
 
-    if (pluginPaths.size > 0) {
-      console.log(cyan('Adding plugins'));
-    }
-    for (const pluginPath of pluginPaths) {
-      const pluginName = /.*react-scripts-plugin-([\w-]+)/
-        .exec(pluginPath)
-        .pop();
-      console.log(`  Applying ${cyan(pluginName)}`);
-      const { eject } = require(pluginPath);
-      eject({ paths });
-    }
-    if (pluginPaths.size > 0) {
-      console.log();
-    }
+    addPlugins(pluginPaths);
 
-    const {
-      name: ownPackageName,
-      dependencies: _ownDependencies,
-      optionalDependencies: ownOptionalDependencies,
-      bin: ownBin,
-    } = require(path.join(ownPath, 'package.json'));
+    const ownPackage = require(path.join(ownPath, 'package.json'));
     const appPackage = require(path.join(appPath, 'package.json'));
 
-    const ownDependencies = Object.assign(
-      {},
-      _ownDependencies,
-      Array.from(addtlDeps).reduce(
-        (prev, [pkg, version]) => Object.assign(prev, { [pkg]: version }),
-        {}
-      )
-    );
-
     console.log(cyan('Updating the dependencies'));
+    const ownPackageName = ownPackage.name;
     if (appPackage.devDependencies) {
       // We used to put react-scripts in devDependencies
       if (appPackage.devDependencies[ownPackageName]) {
@@ -200,9 +197,18 @@ inquirer
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
       delete appPackage.dependencies[ownPackageName];
     }
+    // Combine `react-scripts` dependencies with additional dependencies
+    const ownDependencies = Object.assign(
+      {},
+      ownPackage.dependencies,
+      Array.from(additionalDeps).reduce(
+        (prev, [pkg, version]) => Object.assign(prev, { [pkg]: version }),
+        {}
+      )
+    );
     Object.keys(ownDependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
-      if (ownOptionalDependencies[key]) {
+      if (ownPackage.optionalDependencies[key]) {
         return;
       }
       console.log(`  Adding ${cyan(key)} to dependencies`);
@@ -219,7 +225,7 @@ inquirer
     console.log(cyan('Updating the scripts'));
     delete appPackage.scripts['eject'];
     Object.keys(appPackage.scripts).forEach(key => {
-      Object.keys(ownBin).forEach(binKey => {
+      Object.keys(ownPackage.bin).forEach(binKey => {
         const regex = new RegExp(binKey + ' (\\w+)', 'g');
         if (!regex.test(appPackage.scripts[key])) {
           return;
@@ -264,7 +270,7 @@ inquirer
     if (ownPath.indexOf(appPath) === 0) {
       try {
         // remove react-scripts and react-scripts binaries from app node_modules
-        Object.keys(ownBin).forEach(binKey => {
+        Object.keys(ownPackage.bin).forEach(binKey => {
           fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
         });
         fs.removeSync(ownPath);

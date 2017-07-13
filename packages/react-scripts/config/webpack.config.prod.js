@@ -1,4 +1,5 @@
 // @remove-on-eject-begin
+// @remove-plugins-on-eject
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
