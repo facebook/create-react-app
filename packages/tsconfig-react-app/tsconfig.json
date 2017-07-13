@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": true,
+    "allowUnusedLabels": true,
+    "alwaysStrict": true,
+    "checkJs": false,
+    "diagnostics": false,
+    "downlevelIteration": true,
+    "emitBOM": false,
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "lib": ["es5", "es2015.promise", "dom"],
+    "types": ["node"],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "target": "es5"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "tsconfig-react-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tsconfig.json",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-3-Clause",
+  "peerDependencies": {
+    "@types/node": "^8.0.9"
+  }
+}
