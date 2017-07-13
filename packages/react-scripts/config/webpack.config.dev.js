@@ -35,7 +35,7 @@ const env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
-module.exports = {
+let config = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
@@ -168,22 +168,21 @@ module.exports = {
           /\.gif$/,
           /\.jpe?g$/,
           /\.png$/,
-          /\.svg$/,
         ],
         loader: require.resolve('file-loader'),
         options: {
-          name: 'agent/assets/react/media/[name].[hash:8].[ext]',
+          name: 'static/media/[name].[hash:8].[ext]',
         },
       },
       // "url" loader works like "file" loader except that it embeds assets
       // smaller than specified limit in bytes as data URLs to avoid requests.
       // A missing `test` is equivalent to a match.
       {
-        test: [/\.bmp$/, /\.svg$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
         loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
-          name: 'agent/assets/react/media/[name].[hash:8].[ext]',
+          name: 'static/media/[name].[hash:8].[ext]',
         },
       },
       // Process JS with Babel.
@@ -215,8 +214,6 @@ module.exports = {
             loader: require.resolve('css-loader'),
             options: {
               importLoaders: 1,
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]',
             },
           },
           {
@@ -294,3 +291,30 @@ module.exports = {
     hints: false,
   },
 };
+
+/*
+  Zendesk modification:
+  Allow the consumer to provide a `config/webpack.config.override.js` file to
+  customize the webpack config.
+
+  `config/webpack.config.override.js` must export a method which receives the
+  webpack config, the env ('dev' or 'prod') and paths. The function returns a
+  new or altered config:
+
+  ```
+    module.exports = (config, environment, paths) => {
+      // do some change to the config...
+      ...
+
+      return config;
+    }
+  ```
+*/
+const fs = require('fs');
+const configPath = path.resolve(paths.appPath, 'config', 'webpack.config.override.js');
+
+if (fs.existsSync(configPath)) {
+  config = require(configPath)(config, 'dev', paths);
+}
+
+module.exports = config;

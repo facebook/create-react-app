@@ -57,7 +57,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = {
+let config = {
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
@@ -169,21 +169,20 @@ module.exports = {
           /\.gif$/,
           /\.jpe?g$/,
           /\.png$/,
-          /\.svg$/,
         ],
         loader: require.resolve('file-loader'),
         options: {
-          name: 'agent/assets/react/media/[name].[hash:8].[ext]',
+          name: 'static/media/[name].[hash:8].[ext]',
         },
       },
       // "url" loader works just like "file" loader but it also embeds
       // assets smaller than specified size as data URLs to avoid requests.
       {
-        test: [/\.bmp$/, /\.svg$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
         loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
-          name: 'agent/assets/react/media/[name].[hash:8].[ext]',
+          name: 'static/media/[name].[hash:8].[ext]',
         },
       },
       // Process JS with Babel.
@@ -224,8 +223,6 @@ module.exports = {
                     importLoaders: 1,
                     minimize: true,
                     sourceMap: true,
-                    modules: true,
-                    localIdentName: '[name]__[local]___[hash:base64:5]',
                   },
                 },
                 {
@@ -362,3 +359,30 @@ module.exports = {
     tls: 'empty',
   },
 };
+
+/*
+  Zendesk modification:
+  Allow the consumer to provide a `config/webpack.config.override.js` file to
+  customize the webpack config.
+
+  `config/webpack.config.override.js` must export a method which receives the
+  webpack config, the env ('dev' or 'prod') and paths. The function returns a
+  new or altered config:
+
+  ```
+    module.exports = (config, environment, paths) => {
+      // apply some change to the config...
+      ...
+
+      return config;
+    }
+  ```
+*/
+const fs = require('fs');
+const configPath = path.resolve(paths.appPath, 'config', 'webpack.config.override.js');
+
+if (fs.existsSync(configPath)) {
+  config = require(configPath)(config, 'prod', paths);
+}
+
+module.exports = config;
