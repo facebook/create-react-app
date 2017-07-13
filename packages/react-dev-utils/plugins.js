@@ -182,7 +182,7 @@ function ejectFile({ filename, code, existingDependencies }) {
       return;
     }
 
-    const { pkg: pluginPackage } = getPackageJson({ path: dirname(path) });
+    const { pkg: pluginPackage } = getPackageJson({ cwd: dirname(path) });
     for (const pkg of Object.keys(pluginPackage.dependencies)) {
       const version = pluginPackage.dependencies[pkg];
       if (dependencies.has(pkg)) {
