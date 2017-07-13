@@ -35,7 +35,7 @@ const env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
-const config = {
+let config = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
@@ -312,10 +312,9 @@ const config = {
 */
 const fs = require('fs');
 const configPath = path.resolve(paths.appPath, 'config', 'webpack.config.override.js');
-let customizeConfig = null;
 
 if (fs.existsSync(configPath)) {
-  customizeConfig = require(configPath)(config, 'dev', paths);
+  config = require(configPath)(config, 'dev', paths);
 }
 
-module.exports = customizeConfig ?  customizeConfig : config;
+module.exports = config;

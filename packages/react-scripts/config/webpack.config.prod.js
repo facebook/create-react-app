@@ -57,7 +57,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-const config = {
+let config = {
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
@@ -380,10 +380,9 @@ const config = {
 */
 const fs = require('fs');
 const configPath = path.resolve(paths.appPath, 'config', 'webpack.config.override.js');
-let customizeConfig = null;
 
 if (fs.existsSync(configPath)) {
-  customizeConfig = require(configPath)(config, 'prod', paths);
+  config = require(configPath)(config, 'prod', paths);
 }
 
-module.exports = customizeConfig ?  customizeConfig : config;
+module.exports = config;
