@@ -19,8 +19,11 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const createHashFromPaths = require('react-dev-utils/createHashFromPaths');
+const createCacheLoader = require('./createCacheLoader');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const AutoDllWebpackPlugin = require('autodll-webpack-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -31,6 +34,13 @@ const publicPath = '/';
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+
+const hash = createHashFromPaths({
+  paths: [paths.appNodeModules],
+  exclude: [path.join(paths.appNodeModules, '.cache')],
+});
+
+const cacheLoader = createCacheLoader(hash, paths);
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -170,17 +180,22 @@ module.exports = {
           {
             test: /\.(js|jsx)$/,
             include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
-              // @remove-on-eject-begin
-              babelrc: false,
-              presets: [require.resolve('babel-preset-react-app')],
-              // @remove-on-eject-end
-              // This is a feature of `babel-loader` for webpack (not Babel itself).
-              // It enables caching results in ./node_modules/.cache/babel-loader/
-              // directory for faster rebuilds.
-              cacheDirectory: true,
-            },
+            use: [
+              cacheLoader,
+              {
+                loader: require.resolve('babel-loader'),
+                options: {
+                  // @remove-on-eject-begin
+                  babelrc: false,
+                  presets: [require.resolve('babel-preset-react-app')],
+                  // @remove-on-eject-end
+                  // This is a feature of `babel-loader` for webpack (not Babel itself).
+                  // It enables caching results in ./node_modules/.cache/babel-loader/
+                  // directory for faster rebuilds.
+                  cacheDirectory: true,
+                },
+              },
+            ],
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -190,6 +205,7 @@ module.exports = {
           {
             test: /\.css$/,
             use: [
+              cacheLoader,
               require.resolve('style-loader'),
               {
                 loader: require.resolve('css-loader'),
@@ -251,6 +267,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+    }),
+    new AutoDllWebpackPlugin({
+      env: process.env.NODE_ENV,
+      additionalHash: hash,
+      inject: true,
+      filename: '[name].[hash].js',
+      entry: {
+        vendor: ['react', 'react-dom'],
+      },
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
