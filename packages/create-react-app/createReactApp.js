@@ -582,29 +582,27 @@ function isSafeToCreateProjectIn(root, name) {
     '.hgcheck',
   ];
   console.log();
-  let conflicts = fs.readdirSync(root).map((file, index) => {
-    if (!validFiles.indexOf(file) >= 0) {
-      return file;
-    }
-  });
 
-  if (conflicts.length > 0) {
-    console.log(
-      `The directory ${chalk.green(
-        name
-      )} already exists and contains files that could cause conflicts:`
-    );
-    console.log();
-    console.log(JSON.stringify(conflicts, null, '   '));
-    console.log();
-
-    console.log(
-      'Either try using a new directory name, or remove the files listed above.'
-    );
-    return false;
+  const conflicts = fs
+    .readdirSync(root)
+    .filter(file => !validFiles.includes(file));
+  if (conflicts.length < 1) {
+    return true;
   }
 
-  return true;
+  console.log(
+    `The directory ${chalk.green(name)} contains files that could conflict.`
+  );
+  console.log();
+  for (const file of conflicts) {
+    console.log(`  ${file}`);
+  }
+  console.log();
+  console.log(
+    'Either try using a new directory name, or remove the files listed above.'
+  );
+
+  return false;
 }
 
 function checkIfOnline(useYarn) {
