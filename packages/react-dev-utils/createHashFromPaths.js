@@ -1,6 +1,6 @@
 'use strict';
-
-const crypto = require('crypto');
+const { execSync } = require('child_process');
+// const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
 
@@ -55,15 +55,18 @@ const getSourceMethod = key => {
 };
 
 const createHashFromPaths = ({ paths, exclude, method = 'mtime' }) => {
-  const hash = crypto.createHash('md5');
-  hash.update(paths.join(''));
-  if (Array.isArray(paths)) {
-    const sourceMethod = getSourceMethod(method);
-    const sources = getSources(paths, sourceMethod, exclude);
-    hash.update(sources);
+  try {
+    return String(execSync(`tar cf - ${paths.join(' ')} | md5`));
+  } catch (ignored) {
+    const hash = crypto.createHash('md5');
+    hash.update(paths.join(''));
+    if (Array.isArray(paths)) {
+      const sourceMethod = getSourceMethod(method);
+      const sources = getSources(paths, sourceMethod, exclude);
+      hash.update(sources);
+    }
+    return hash.digest('hex');
   }
-
-  return hash.digest('hex');
 };
 
 module.exports = createHashFromPaths;
