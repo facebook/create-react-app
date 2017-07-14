@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
+  "name": "@neverbland/react-scripts",
   "version": "1.0.10",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "neverbland/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/neverbland/create-react-app/issues"
   },
   "files": [
     "bin",
