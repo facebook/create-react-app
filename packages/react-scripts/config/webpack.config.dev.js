@@ -20,6 +20,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const createHashFromPaths = require('react-dev-utils/createHashFromPaths');
+const createCacheLoader = require('./createCacheLoader');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const AutoDllWebpackPlugin = require('autodll-webpack-plugin');
@@ -33,6 +34,13 @@ const publicPath = '/';
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+
+const hash = createHashFromPaths({
+  paths: [paths.appNodeModules],
+  exclude: [path.join(paths.appNodeModules, '.cache')],
+});
+
+const cacheLoader = createCacheLoader(hash, paths);
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -173,7 +181,7 @@ module.exports = {
             test: /\.(js|jsx)$/,
             include: paths.appSrc,
             use: [
-              require.resolve('cache-loader'),
+              cacheLoader,
               {
                 loader: require.resolve('babel-loader'),
                 options: {
@@ -197,7 +205,7 @@ module.exports = {
           {
             test: /\.css$/,
             use: [
-              require.resolve('cache-loader'),
+              cacheLoader,
               require.resolve('style-loader'),
               {
                 loader: require.resolve('css-loader'),
@@ -262,10 +270,7 @@ module.exports = {
     }),
     new AutoDllWebpackPlugin({
       env: process.env.NODE_ENV,
-      additionalHash: createHashFromPaths({
-        paths: [paths.appNodeModules],
-        exclude: [path.join(paths.appNodeModules, '.cache')],
-      }),
+      additionalHash: hash,
       inject: true,
       filename: '[name].[hash].js',
       entry: {

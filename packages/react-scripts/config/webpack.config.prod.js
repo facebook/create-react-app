@@ -23,6 +23,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const createHashFromPaths = require('react-dev-utils/createHashFromPaths');
 const AutoDllWebpackPlugin = require('autodll-webpack-plugin');
 const WebpackUglifyParallel = require('webpack-uglify-parallel');
+const createCacheLoader = require('./createCacheLoader');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const os = require('os');
@@ -57,6 +58,13 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
     { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
+
+const hash = createHashFromPaths({
+  paths: [paths.appNodeModules],
+  exclude: [path.join(paths.appNodeModules, '.cache')],
+});
+
+const cacheLoader = createCacheLoader(hash, paths);
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -176,7 +184,7 @@ module.exports = {
             test: /\.(js|jsx)$/,
             include: paths.appSrc,
             use: [
-              require.resolve('cache-loader'),
+              cacheLoader,
               {
                 loader: require.resolve('babel-loader'),
                 options: {
@@ -208,8 +216,7 @@ module.exports = {
                 {
                   fallback: require.resolve('style-loader'),
                   use: [
-                    require.resolve('cache-loader'),
-
+                    cacheLoader,
                     {
                       loader: require.resolve('css-loader'),
                       options: {
@@ -292,10 +299,7 @@ module.exports = {
     }),
     new AutoDllWebpackPlugin({
       env: process.env.NODE_ENV,
-      additionalHash: createHashFromPaths({
-        paths: [paths.appNodeModules],
-        exclude: [path.join(paths.appNodeModules, '.cache')],
-      }),
+      additionalHash: hash,
       inject: true,
       filename: '[name].[hash].js',
     }),
