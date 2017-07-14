@@ -243,7 +243,7 @@ Some of the more popular and actively maintained ones are:
 Notable alternatives also include:
 
 * [enclave](https://github.com/eanplatter/enclave)
-* [motion](https://github.com/motion/motion)
+* [motion](https://github.com/steelbrain/pundle/tree/master/packages/motion)
 * [quik](https://github.com/satya164/quik)
 * [sagui](https://github.com/saguijs/sagui)
 * [roc](https://github.com/rocjs/roc)
