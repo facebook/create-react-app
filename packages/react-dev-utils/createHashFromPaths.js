@@ -1,6 +1,6 @@
 'use strict';
 const { execSync } = require('child_process');
-// const crypto = require('crypto');
+const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
 
@@ -54,9 +54,14 @@ const getSourceMethod = key => {
   process.exit(1);
 };
 
+const toRelative = filePath => path.relative(process.cwd(), filePath);
+
 const createHashFromPaths = ({ paths, exclude, method = 'mtime' }) => {
   try {
-    return String(execSync(`tar cf - ${paths.join(' ')} | md5`));
+    const fileList = paths.map(toRelative).join(' ');
+    const excludedPaths = exclude.map(toRelative).join(' ');
+    const command = `tar --exclude ${excludedPaths} -cf - ${fileList} | md5`;
+    return String(execSync(command));
   } catch (ignored) {
     const hash = crypto.createHash('md5');
     hash.update(paths.join(''));
