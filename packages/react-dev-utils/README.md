@@ -220,10 +220,10 @@ compiler.plugin('done', function(stats) {
 });
 ```
 
-#### `printBuildError(error: Object): String`
+#### `printBuildError(error: Object): void`
 
 Prettify some known build errors.
-Pass an Error object to log a prettified error message in the console
+Pass an Error object to log a prettified error message in the console.
 
 ```
   const printBuildError = require('react-dev-utils/printBuildError')

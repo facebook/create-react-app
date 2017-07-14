@@ -2001,13 +2001,13 @@ This will only work for locales that have been explicitly imported before.
 
 ### `npm run build` fails to minify
 
-Some dependencies may be shipping their source which our minify can't process.
-Because running Babel on `node_modules` is slow, we cannot compile it to es5 
-before minifying it. Possible solutions are:
-1. Raise an issue with the library author to ship compiled es5.
-2. If it's small and compatible with out babel preset, you can place the
-source in ./src.
-3. Fork the project repo and publish an es5 version of it.
+You may occasionally find a package you depend on needs compiled or ships code for a non-browser environment.<br>
+This is considered poor practice in the ecosystem and does not have an escape hatch in Create React App.<br>
+<br>
+To resolve this:
+1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled (retaining ES6 Modules).
+2. Fork the package and publish a corrected version yourself.
+3. If the dependency is small enough, copy it to your `src/` folder and treat it as application code.
 
 ## Something Missing?
 
