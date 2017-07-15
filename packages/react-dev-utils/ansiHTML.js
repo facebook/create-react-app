@@ -10,6 +10,8 @@
 'use strict';
 
 var Anser = require('anser');
+var Entities = require('html-entities').AllHtmlEntities;
+var entities = new Entities();
 
 // Color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
 // var base00 = 'ffffff'; // Default Background
@@ -61,7 +63,7 @@ var anserMap = {
 };
 
 function ansiHTML(txt) {
-  var arr = new Anser().ansiToJson(txt, {
+  var arr = new Anser().ansiToJson(entities.encode(txt), {
     use_classes: true,
   });
 
@@ -78,10 +80,7 @@ function ansiHTML(txt) {
         result += '<span data-ansi-line="true">';
         open = true;
       }
-      var part = contentParts[_index]
-        .replace('\r', '')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+      var part = contentParts[_index].replace('\r', '');
       var color = colors[anserMap[fg]];
       if (color != null) {
         result += '<span style="color: #' + color + ';">' + part + '</span>';
