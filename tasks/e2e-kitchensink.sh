@@ -163,8 +163,8 @@ npm install test-integrity@^2.0.1
 # Enter the app directory
 cd "$temp_app_path/test-kitchensink"
 
-# Link to our preset
-npm link "$root_path"/packages/babel-preset-react-app
+# Install our preset
+npm install file:"$root_path"/packages/babel-preset-react-app
 
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
