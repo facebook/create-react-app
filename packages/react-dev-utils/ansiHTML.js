@@ -78,7 +78,10 @@ function ansiHTML(txt) {
         result += '<span data-ansi-line="true">';
         open = true;
       }
-      var part = contentParts[_index].replace('\r', '');
+      var part = contentParts[_index]
+        .replace('\r', '')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
       var color = colors[anserMap[fg]];
       if (color != null) {
         result += '<span style="color: #' + color + ';">' + part + '</span>';
