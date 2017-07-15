@@ -60,7 +60,7 @@
     "webpack-manifest-plugin": "1.1.0",
     "whatwg-fetch": "2.0.3",
     "lodash.defaults": "^4.2.0",
-    "autodll-webpack-plugin": "^0.0.6"
+    "autodll-webpack-plugin": "^0.2.1"
   },
   "devDependencies": {
     "react": "^15.5.4",
