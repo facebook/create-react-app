@@ -295,8 +295,6 @@ Returns an object with local and remote URLs for the development server. Pass th
 
 This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.
 
-It currently supports only Webpack 1.x.
-
 ```js
 // Webpack development config
 module.exports = {
