@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "prop-types": "15.5.6",
+    "bootstrap": "4.0.0-alpha.6",
+    "classnames": "^2.2.5",
+    "normalize.css": "^7.0.0",
+    "react-router": "^3.0.5",
+    "node-sass": "^4.5.3"
+  }
+}
