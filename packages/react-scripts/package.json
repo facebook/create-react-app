@@ -52,6 +52,8 @@
     "react-error-overlay": "^1.0.9",
     "sass-loader": "6.0.6",
     "style-loader": "0.18.2",
+    "svg-sprite-loader": "3.0.5",
+    "svgo-loader": "1.2.1",
     "sw-precache-webpack-plugin": "0.11.3",
     "url-loader": "0.5.9",
     "webpack": "2.6.1",

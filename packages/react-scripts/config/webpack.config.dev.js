@@ -160,6 +160,7 @@ module.exports = {
           // A missing `test` is equivalent to a match.
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            exclude: [paths.appSprite],
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
@@ -222,6 +223,21 @@ module.exports = {
               }
             ],
           },
+          {
+            test: /\.svg$/,
+            include: [paths.appSprite],
+            use: [
+              {
+                loader: require.resolve('svg-sprite-loader'),
+                options: {
+                  symbolId: '[name]_[hash]'
+                }
+              },
+              {
+                loader: require.resolve('svgo-loader')
+              }
+            ]
+          },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.
@@ -238,14 +254,6 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
-          {
-            test: /\.svg$/,
-            include: [paths.appSprite],
-            loader: 'svg-sprite?' + JSON.stringify({
-              name: '[name]_[hash]',
-              prefixize: true
-            }) + '!svgo'
-          }
         ],
       },
       // ** STOP ** Are you adding a new loader?
