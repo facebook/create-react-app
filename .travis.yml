@@ -13,6 +13,7 @@ script:
  - 'if [ $TEST_SUITE = "simple" ]; then tasks/e2e-simple.sh; fi'
  - 'if [ $TEST_SUITE = "installs" ]; then tasks/e2e-installs.sh; fi'
  - 'if [ $TEST_SUITE = "kitchensink" ]; then tasks/e2e-kitchensink.sh; fi'
+ - 'if [ $TEST_SUITE = "features" ]; then tasks/e2e-features.sh; fi'
 env:
   global:
     - USE_YARN=no
@@ -20,6 +21,7 @@ env:
     - TEST_SUITE=simple
     - TEST_SUITE=installs
     - TEST_SUITE=kitchensink
+    - TEST_SUITE=features
 matrix:
   include:
     - node_js: 0.10
