@@ -1599,12 +1599,17 @@ instructions for using other methods. *Be sure to always use an
 incognito window to avoid complications with your browser cache.*
 
 1. If possible, configure your production environment to serve the generated
-`service-worker.js` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
+`service-worker.js` and `index.html` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
 If that's not possible—[GitHub Pages](#github-pages), for instance, does not
 allow you to change the default 10 minute HTTP cache lifetime—then be aware
 that if you visit your production site, and then revisit again before
 `service-worker.js` has expired from your HTTP cache, you'll continue to get
-the previously cached assets from the service worker. If you have an immediate
+the previously cached assets from the service worker. Even worse, if the
+caches for `service-worker.js` and `index.html` get out of sync, a user might
+end up having a new `service-worker.js` populate its cache with an old
+`index.html`, and this erronous state will persist until yet another
+`service-worker.js` is installed so that the SW cache is repopulated.
+If you have an immediate
 need to view your updated production deployment, performing a shift-refresh
 will temporarily disable the service worker and retrieve all assets from the
 network.
