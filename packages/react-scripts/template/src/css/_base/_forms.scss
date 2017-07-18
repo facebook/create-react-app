@@ -1,0 +1,8 @@
+%disabled-state {
+  cursor: not-allowed;
+}
+
+// Allow only vertical resizing of textareas.
+textarea {
+  resize: vertical;
+}
