@@ -13,10 +13,12 @@
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
+const defaults = require('lodash.defaults');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+const AutoDllPlugin = require('autodll-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
@@ -31,6 +33,8 @@ const publicPath = '/';
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+// Read the dll configuration from package.json
+const dllConfig = require(paths.appPackageJson).dll || { entry: {} };
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -251,6 +255,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+    }),
+    new AutoDllPlugin({
+      context: paths.appPath,
+      path: './dll',
+      filename: '[name].js',
+      inject: true,
+      entry: defaults(dllConfig.entry, {
+        polyfills: [require.resolve('./polyfills')],
+      }),
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),

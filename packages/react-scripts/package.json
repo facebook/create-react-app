@@ -42,6 +42,8 @@
     "extract-text-webpack-plugin": "2.1.2",
     "file-loader": "0.11.2",
     "fs-extra": "3.0.1",
+    "html-webpack-plugin": "2.28.0",
+    "jest": "20.0.3",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "object-assign": "4.1.1",
@@ -56,7 +58,9 @@
     "webpack": "2.6.1",
     "webpack-dev-server": "2.5.1",
     "webpack-manifest-plugin": "1.1.0",
-    "whatwg-fetch": "2.0.3"
+    "whatwg-fetch": "2.0.3",
+    "lodash.defaults": "^4.2.0",
+    "autodll-webpack-plugin": "^0.2.1"
   },
   "devDependencies": {
     "react": "^15.5.4",
