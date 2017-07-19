@@ -68,6 +68,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
+  - [Opting Out of Caching](#opting-out-of-caching)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
@@ -1562,6 +1563,8 @@ The service worker will use a [cache-first strategy](https://developers.google.c
 for handling all requests for local assets, including the initial HTML, ensuring
 that your web app is reliably fast, even on a slow or unreliable network.
 
+### Opting Out of Caching
+
 If you would prefer not to enable service workers prior to your initial
 production deployment, then remove the call to `serviceWorkerRegistration.register()`
 from [`src/index.js`](src/index.js).
@@ -1571,7 +1574,8 @@ have decided that you would like to disable them for all your existing users,
 you can swap out the call to `serviceWorkerRegistration.register()` in
 [`src/index.js`](src/index.js) with a call to `serviceWorkerRegistration.unregister()`.
 After the user visits a page that has `serviceWorkerRegistration.unregister()`,
-the service worker will be uninstalled.
+the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
+it make take up to 24 hours for the cache to be invalidated.
 
 ### Offline-First Considerations
 
