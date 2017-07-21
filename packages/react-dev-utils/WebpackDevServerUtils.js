@@ -287,7 +287,11 @@ function prepareProxy(proxy, appPublicFolder) {
   // Otherwise, if proxy is specified, we will let it handle any request except for files in the public folder.
   function mayProxy(pathname) {
     const maybePublicPath = path.resolve(appPublicFolder, pathname.slice(1));
-    return !fs.existsSync(maybePublicPath);
+    try {
+      return !fs.statSync(maybePublicPath).isFile();
+    } catch (ex) {
+      return true;
+    }
   }
 
   // Support proxy as a string for those who are using the simple proxy option
