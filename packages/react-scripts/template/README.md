@@ -93,6 +93,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [`npm run build` exits too early](#npm-run-build-exits-too-early)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
   - [Moment.js locales are missing](#momentjs-locales-are-missing)
+  - [External libraries have uncompiled JSX](#external-libraries-have-uncompiled-jsx)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -2135,6 +2136,16 @@ moment.locale('fr');
 ```
 
 This will only work for locales that have been explicitly imported before.
+
+### External libraries have uncompiled JSX
+
+If `npm start` or `npm build` yields an error along the lines of
+
+```
+Module parse failed: ...js Unexpected token (19:15)
+You may need an appropriate loader to handle this file type.
+```
+and the code snipped looks like JSX, not JS, the library needs to be compiled before it can be used.
 
 ## Something Missing?
 
