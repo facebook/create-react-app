@@ -56,10 +56,16 @@ inquirer
     if (gitStatus) {
       console.error(
         chalk.red(
-          `This git repository has untracked files or uncommitted changes:\n\n` +
-            gitStatus.split('\n').map(line => '  ' + line) +
-            '\n\n' +
-            'Remove untracked files, stash or commit any changes, and try again.'
+          `Your git working tree is dirty. This will make it hard for you to resolve any unintended consequences eject may have on your changes.\n` +
+            `Please use`,
+          chalk.cyan(`git status`),
+          `to verify the changed files, then either`,
+          chalk.cyan('remove'),
+          `,`,
+          chalk.cyan(`stash`),
+          `or`,
+          chalk.cyan(`commit`),
+          `them before trying again.\n`
         )
       );
       process.exit(1);
