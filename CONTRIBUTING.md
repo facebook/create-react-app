@@ -98,7 +98,7 @@ More detailed information are in the dedicated [README](/packages/react-scripts/
 
 ## Tips for contributors using Windows
 
-The scripts in tasks folder and other scripts in `package.json` will not work in Windows out of the box. However, using [Bash on  windows](https://msdn.microsoft.com/en-us/commandline/wsl/about) makes it easier to use those scripts without any workarounds.
+The scripts in tasks folder and other scripts in `package.json` will not work in Windows out of the box. However, using [Bash on  windows](https://msdn.microsoft.com/en-us/commandline/wsl/about) makes it easier to use those scripts without any workarounds. The steps to do so are detailed below: 
 
 ### Install Bash on Ubuntu on Windows
 
@@ -109,9 +109,7 @@ Even if you have node and npm installed on your windows, it would not be accessi
 
 ### Line endings
 
-By default git would use `CRLF` line endings which would cause the scripts to fail. You can change it for this repo only by setting `autocrlf` to false.
-`git config core.autocrlf false`
-You can also enable it for all your repos by using the `--global` flag
+By default git would use `CRLF` line endings which would cause the scripts to fail. You can change it for this repo only by setting `autocrlf` to false by running `git config core.autocrlf false`. You can also enable it for all your repos by using the `--global` flag if you wish to do so.
 
 ## Cutting a Release
 
