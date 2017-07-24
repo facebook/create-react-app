@@ -1,0 +1,44 @@
+image: Visual Studio 2017
+
+environment:
+  matrix:
+    - nodejs_version: 7
+      test_suite: "simple"
+    - nodejs_version: 7
+      test_suite: "installs"
+    - nodejs_version: 7
+      test_suite: "kitchensink"
+    - nodejs_version: 6
+      test_suite: "simple"
+    - nodejs_version: 6
+      test_suite: "installs"
+    - nodejs_version: 6
+      test_suite: "kitchensink"
+
+cache:
+  - node_modules -> appveyor.cleanup-cache.txt
+  - packages\react-scripts\node_modules -> appveyor.cleanup-cache.txt
+
+clone_depth: 50
+
+matrix:
+  fast_finish: true
+
+platform:
+  - x64
+
+install:
+  # TODO: Remove after https://github.com/appveyor/ci/issues/1426 is fixed
+  - set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
+  - ps: Install-Product node $env:nodejs_version $env:platform
+
+build: off
+
+skip_commits:
+  files:
+    - '**/*.md'
+
+test_script:
+  - node --version
+  - npm --version
+  - sh tasks/e2e-%test_suite%.sh

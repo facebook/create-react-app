@@ -1,28 +1,47 @@
-import React from 'react';
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
-class BuiltEmitter extends React.Component {
-  constructor(props) {
-    super(props)
+import React, { Component, createElement } from 'react';
+import PropTypes from 'prop-types';
 
-    this.callWhenDone = done => done();
-  }
+class BuiltEmitter extends Component {
+  static propTypes = {
+    feature: PropTypes.func.isRequired,
+  };
 
   componentDidMount() {
-    this.callWhenDone(() => document.dispatchEvent(new Event('ReactFeatureDidMount')));
+    const { feature } = this.props;
+
+    // Class components must call this.props.onReady when they're ready for the test.
+    // We will assume functional components are ready immediately after mounting.
+    if (!Component.isPrototypeOf(feature)) {
+      this.handleReady();
+    }
+  }
+
+  handleReady() {
+    document.dispatchEvent(new Event('ReactFeatureDidMount'));
   }
 
   render() {
-    const feature = React.cloneElement(React.Children.only(this.props.children), {
-      setCallWhenDone: done => {
-        this.callWhenDone = done;
-      }
-    });
-
-    return <div>{feature}</div>;
+    const { props: { feature }, handleReady } = this;
+    return (
+      <div>
+        {createElement(feature, {
+          onReady: handleReady,
+        })}
+      </div>
+    );
   }
 }
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -32,82 +51,138 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    switch (location.hash.slice(1)) {
+    const feature = window.location.hash.slice(1);
+    switch (feature) {
       case 'array-destructuring':
-        require.ensure([], () => this.setFeature(require('./features/syntax/ArrayDestructuring').default));
+        import('./features/syntax/ArrayDestructuring').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'array-spread':
-        require.ensure([], () => this.setFeature(require('./features/syntax/ArraySpread').default));
+        import('./features/syntax/ArraySpread').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'async-await':
-        require.ensure([], () => this.setFeature(require('./features/syntax/AsyncAwait').default));
+        import('./features/syntax/AsyncAwait').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'class-properties':
-        require.ensure([], () => this.setFeature(require('./features/syntax/ClassProperties').default));
+        import('./features/syntax/ClassProperties').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'computed-properties':
-        require.ensure([], () => this.setFeature(require('./features/syntax/ComputedProperties').default));
+        import('./features/syntax/ComputedProperties').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'css-inclusion':
-        require.ensure([], () => this.setFeature(require('./features/webpack/CssInclusion').default));
+        import('./features/webpack/CssInclusion').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'custom-interpolation':
-        require.ensure([], () => this.setFeature(require('./features/syntax/CustomInterpolation').default));
+        import('./features/syntax/CustomInterpolation').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'default-parameters':
-        require.ensure([], () => this.setFeature(require('./features/syntax/DefaultParameters').default));
+        import('./features/syntax/DefaultParameters').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'destructuring-and-await':
-        require.ensure([], () => this.setFeature(require('./features/syntax/DestructuringAndAwait').default));
+        import('./features/syntax/DestructuringAndAwait').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'file-env-variables':
-        require.ensure([], () => this.setFeature(require('./features/env/FileEnvVariables').default));
+        import('./features/env/FileEnvVariables').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'generators':
-        require.ensure([], () => this.setFeature(require('./features/syntax/Generators').default));
+        import('./features/syntax/Generators').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'image-inclusion':
-        require.ensure([], () => this.setFeature(require('./features/webpack/ImageInclusion').default));
+        import('./features/webpack/ImageInclusion').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'json-inclusion':
-        require.ensure([], () => this.setFeature(require('./features/webpack/JsonInclusion').default));
+        import('./features/webpack/JsonInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'linked-modules':
+        import('./features/webpack/LinkedModules').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'node-path':
-        require.ensure([], () => this.setFeature(require('./features/env/NodePath').default));
+        import('./features/env/NodePath').then(f => this.setFeature(f.default));
         break;
       case 'no-ext-inclusion':
-        require.ensure([], () => this.setFeature(require('./features/webpack/NoExtInclusion').default));
+        import('./features/webpack/NoExtInclusion').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'object-destructuring':
-        require.ensure([], () => this.setFeature(require('./features/syntax/ObjectDestructuring').default));
+        import('./features/syntax/ObjectDestructuring').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'object-spread':
-        require.ensure([], () => this.setFeature(require('./features/syntax/ObjectSpread').default));
+        import('./features/syntax/ObjectSpread').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'promises':
-        require.ensure([], () => this.setFeature(require('./features/syntax/Promises').default));
+        import('./features/syntax/Promises').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'public-url':
+        import('./features/env/PublicUrl').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'rest-and-default':
-        require.ensure([], () => this.setFeature(require('./features/syntax/RestAndDefault').default));
+        import('./features/syntax/RestAndDefault').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'rest-parameters':
-        require.ensure([], () => this.setFeature(require('./features/syntax/RestParameters').default));
+        import('./features/syntax/RestParameters').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'shell-env-variables':
-        require.ensure([], () => this.setFeature(require('./features/env/ShellEnvVariables').default));
+        import('./features/env/ShellEnvVariables').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'svg-inclusion':
-        require.ensure([], () => this.setFeature(require('./features/webpack/SvgInclusion').default));
+        import('./features/webpack/SvgInclusion').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'template-interpolation':
-        require.ensure([], () => this.setFeature(require('./features/syntax/TemplateInterpolation').default));
+        import('./features/syntax/TemplateInterpolation').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'unknown-ext-inclusion':
-        require.ensure([], () => this.setFeature(require('./features/webpack/UnknownExtInclusion').default));
+        import('./features/webpack/UnknownExtInclusion').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       default:
-        this.setFeature(null);
-        break;
+        throw new Error(`Missing feature "${feature}"`);
     }
   }
 
@@ -116,8 +191,11 @@ class App extends React.Component {
   }
 
   render() {
-    const Feature = this.state.feature;
-    return Feature ? <BuiltEmitter><Feature /></BuiltEmitter> : null;
+    const { feature } = this.state;
+    if (feature !== null) {
+      return <BuiltEmitter feature={feature} />;
+    }
+    return null;
   }
 }
 
