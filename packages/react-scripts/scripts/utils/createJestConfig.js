@@ -46,11 +46,8 @@ module.exports = (resolve, rootDir) => {
       '^react-native$': 'react-native-web',
     },
     globals: {
-      __TS_CONFIG__: {
-        module: 'commonjs',
-      },
       'ts-jest': {
-        tsConfigFile: paths.appTsConfig,
+        tsConfigFile: paths.appTsTestConfig,
       },
     },
   };
