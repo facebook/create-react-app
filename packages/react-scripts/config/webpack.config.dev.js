@@ -54,10 +54,10 @@ module.exports = {
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
-    // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
     // Errors should be considered fatal in development
     require.resolve('react-error-overlay'),
+    // Hot loader
+    // require.resolve('react-hot-loader/patch'),
     // Finally, this is your app's code:
     paths.appIndexJs,
     // We include the app code last so that if there is a runtime error during
@@ -160,6 +160,7 @@ module.exports = {
           // A missing `test` is equivalent to a match.
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            exclude: [paths.appSprite],
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
@@ -188,7 +189,7 @@ module.exports = {
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           {
-            test: /\.css$/,
+            test: /\.scss$/,
             use: [
               require.resolve('style-loader'),
               {
@@ -217,7 +218,25 @@ module.exports = {
                   ],
                 },
               },
+              {
+                loader: require.resolve('sass-loader')
+              }
             ],
+          },
+          {
+            test: /\.svg$/,
+            include: [paths.appSprite],
+            use: [
+              {
+                loader: require.resolve('svg-sprite-loader'),
+                options: {
+                  symbolId: '[name]_[hash]'
+                }
+              },
+              {
+                loader: require.resolve('svgo-loader')
+              }
+            ]
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
@@ -229,7 +248,7 @@ module.exports = {
             // it's runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.js$/, /\.html$/, /\.json$/],
+            exclude: [/\.js$/, /\.html$/, /\.json$/, paths.appSprite],
             loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',

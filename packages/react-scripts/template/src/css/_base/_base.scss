@@ -1,0 +1,33 @@
+html {
+  box-sizing: border-box;
+  font-family: $base-font;
+  font-size: 100%;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: $background-colour;
+  color: $colour;
+  position: relative;
+}
+
+*::selection {
+  background: $selection-colour;
+  text-shadow: none;
+}
+
+%no-list-style,
+.no-list-style {
+  list-style: none;
+}
+
+ul {
+  &.no-list-style {
+    @extend %no-list-style;
+  }
+}

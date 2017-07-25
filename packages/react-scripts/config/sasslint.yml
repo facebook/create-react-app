@@ -1,0 +1,98 @@
+options:
+  formatter: stylish
+files:
+  include: '**/*.s+(a|c)ss'
+  ignore:
+    - 'src/css/vendor/*.scss'
+    - 'src/css/scratchpad.scss'
+rules:
+  # Extends
+  extends-before-mixins: 1
+  extends-before-declarations: 1
+  placeholder-in-extend: 1
+
+  # Mixins
+  mixins-before-declarations: 0
+
+  # Line Spacing
+  one-declaration-per-line: 1
+  empty-line-between-blocks: 1
+  single-line-per-selector: 1
+
+  # Disallows
+  no-attribute-selectors: 0
+  no-color-hex: 0
+  no-color-keywords: 1
+  no-color-literals: 1
+  no-combinators: 0
+  no-css-comments: 1
+  no-debug: 1
+  no-disallowed-properties: 0
+  no-duplicate-properties: 2
+  no-empty-rulesets: 1
+  no-extends: 0
+  no-ids: 1
+  no-important: 1
+  no-invalid-hex: 1
+  no-mergeable-selectors: 2
+  no-misspelled-properties: 1
+  no-qualifying-elements: 1
+  no-trailing-whitespace: 1
+  no-trailing-zero: 0
+  no-transition-all: 2
+  no-universal-selectors: 0
+  no-url-protocols: 1
+  no-vendor-prefixes: 1
+  no-warn: 1
+  property-units: 0
+
+  # Nesting
+  force-attribute-nesting: 0
+  force-element-nesting: 0
+  force-pseudo-nesting: 0
+
+  # Name Formats
+  class-name-format:
+    - 2
+    -
+      convention: 'hyphenatedbem'
+      convention-explanation: "butt"
+  function-name-format: 1
+  id-name-format: 0
+  mixin-name-format: 1
+  placeholder-name-format: 1
+  variable-name-format: 1
+
+  # Style Guide
+  attribute-quotes: 1
+  bem-depth: 2
+  border-zero: 1
+  brace-style: 1
+  clean-import-paths: 1
+  empty-args: 0
+  hex-length: 0
+  hex-notation: 0
+  indentation: 2
+  leading-zero: 0
+  nesting-depth: 2
+  property-sort-order: 0
+  pseudo-element: 0
+  quotes: 0
+  shorthand-values: 1
+  url-quotes: 1
+  variable-for-property: 1
+  zero-unit: 1
+
+  # Inner Spacing
+  space-after-comma: 1
+  space-before-colon: 1
+  space-after-colon: 1
+  space-before-brace: 2
+  space-before-bang: 1
+  space-after-bang: 1
+  space-between-parens: 1
+  space-around-operator: 1
+
+  # Final Items
+  trailing-semicolon: 1
+  final-newline: 1

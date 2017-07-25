@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "1.0.10",
+  "name": "@neverbland/react-scripts",
+  "version": "1.0.15",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "neverbland/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/neverbland/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -33,6 +33,7 @@
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
     "eslint": "4.1.1",
+    "eslint-config-airbnb": "^15.1.0",
     "eslint-config-react-app": "^1.0.5",
     "eslint-loader": "1.9.0",
     "eslint-plugin-flowtype": "2.34.0",
@@ -44,13 +45,17 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
+    "node-sass": "^4.5.3",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
     "promise": "7.1.1",
     "react-dev-utils": "^3.0.2",
     "react-error-overlay": "^1.0.9",
+    "sass-loader": "6.0.6",
     "style-loader": "0.18.2",
+    "svg-sprite-loader": "3.0.5",
+    "svgo-loader": "1.2.1",
     "sw-precache-webpack-plugin": "0.11.3",
     "url-loader": "0.5.9",
     "webpack": "2.6.1",
