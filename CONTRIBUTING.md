@@ -60,7 +60,7 @@ This package is a babel preset intended to be used with `react-scripts`.<br>
 It targets platforms that React is designed to support (IE 9+) and enables experimental features used heavily at Facebook.<br>
 This package is enabled by default for all `create-react-app` scaffolded applications.
 #### [create-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/create-react-app)
-The global CLI command code can be found in this directory, and shouldn't often be changed. It should run on Node 0.10+.
+The global CLI command code can be found in this directory, and shouldn't often be changed. It should run on Node 4 or higher.
 #### [eslint-config-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/eslint-config-react-app)
 This package contains a conservative set of rules focused on making errors apparent and enforces no style rules.<br>
 This package is enabled by default for all `create-react-app` scaffolded applications.
