@@ -589,6 +589,20 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
      "eject": "react-scripts eject"
    }
 ```
+Or if you have used `yarn enject`:
+
+```diff
+   "scripts": {
+     "build-css": "node-sass-chokidar src/ -o src/",
+     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+-    "start": "node scripts/start.js",
+-    "build": "node scripts/build.js",
++    "start-js": "node scripts/start.js",
++    "start": "npm-run-all -p watch-css start-js",
++    "build": "npm run build-css && node scripts/build.js",
+     "test": "node scripts/test.js --env=jsdom"
+   }
+```
 
 Now running `npm start` and `npm run build` also builds Sass files.
 
