@@ -43,6 +43,9 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    "lint:js": "eslint src/js/**/*.js",
+    "lint:scss": "sass-lint 'src/css/**/*.scss' -v -q",
+    "svg:pretty": "find src/images -name '*.svg' -type f -exec svgo --pretty --indent=2 '{}' \\;"
   };
 
   fs.writeFileSync(
