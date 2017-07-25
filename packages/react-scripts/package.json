@@ -1,6 +1,6 @@
 {
   "name": "@neverbland/react-scripts",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Configuration and scripts for Create React App.",
   "repository": "neverbland/create-react-app",
   "license": "BSD-3-Clause",
@@ -45,6 +45,7 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
+    "node-sass": "^4.5.3",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
