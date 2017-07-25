@@ -1,6 +1,6 @@
 {
   "name": "@neverbland/react-scripts",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Configuration and scripts for Create React App.",
   "repository": "neverbland/create-react-app",
   "license": "BSD-3-Clause",
