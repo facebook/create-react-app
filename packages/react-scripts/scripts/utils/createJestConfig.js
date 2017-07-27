@@ -36,11 +36,13 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^.+\\.(js|jsx)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
+      "^.+\\.yml$": resolve('config/jest/ymlTransform.js'),
+      '^(?!.*\\.(js|jsx|css|yml|json)$)': resolve('config/jest/fileTransform.js'),
     },
     transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
     moduleNameMapper: {
+      '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
+      '^.+\\.(css|scss)$': 'identity-obj-proxy',
       '^react-native$': 'react-native-web',
     },
     moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'node'],
@@ -52,6 +54,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const supportedKeys = [
     'json',
     'outputFile',
+    'modulePaths',
+    'automock',
     'coverageDirectory',
     'collectCoverageFrom',
     'coverageReporters',
