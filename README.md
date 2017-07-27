@@ -23,6 +23,12 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Changelog
 
+### 2.5.0
+* Support dynamic imports - thanks @nicolaserny, @DorianGrey
+* Fix up tsconfig - thanks @js-n
+* Fix readme typo - thanks @adambowles
+* Move to ts-jest - thanks @DorianGrey
+
 ### 2.4.0
 * Upgrade typescript to 2.4 and ts-loader to 2.2.1 - thanks @frederickfogerty
 * Fix readme typo - thanks @wrongway4you
