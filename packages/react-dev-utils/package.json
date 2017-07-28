@@ -38,6 +38,7 @@
     "babel-code-frame": "6.22.0",
     "chalk": "1.1.3",
     "cross-spawn": "4.0.2",
+    "default-browser": "^2.0.1",
     "detect-port-alt": "1.1.3",
     "escape-string-regexp": "1.0.5",
     "filesize": "3.3.0",
