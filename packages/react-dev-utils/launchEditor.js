@@ -30,6 +30,14 @@ class PowerShell extends EventEmitter {
       }
     );
 
+    this._proc.on('error', () => {
+      // Needs to be registered... already catched by if-statement below
+    });
+
+    if (!this._proc.pid) {
+      throw new Error('Failed to start PowerShell');
+    }
+
     let output = [];
     this._proc.stdout.on('data', data => {
       if (data.indexOf(EOI) !== -1) {
@@ -39,17 +47,9 @@ class PowerShell extends EventEmitter {
         output.push(data);
       }
     });
-
-    this._proc.on('error', () => {
-      this._proc = null;
-    });
   }
 
   invoke(cmd) {
-    if (!this._proc) {
-      return Promise.resolve('');
-    }
-
     return new Promise(resolve => {
       this.on('resolve', data => {
         resolve(data);
@@ -154,63 +154,76 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
 }
 
 let powerShellAgent = null;
-function launchPowerShellAgent() {
+function tryLaunchPowerShellAgent() {
   if (!powerShellAgent) {
-    powerShellAgent = new PowerShell();
+    try {
+      powerShellAgent = new PowerShell();
+    } catch (err) {
+      // Failed to start, ignore silent...
+      powerShellAgent = null;
+    }
   }
 }
 
 function guessEditor() {
-  return new Promise(resolve => {
-    // Explicit config always wins
-    if (process.env.REACT_EDITOR) {
-      return resolve(shellQuote.parse(process.env.REACT_EDITOR));
-    }
-
+  return Promise.resolve().then(() => {
     // Using `ps x` on OSX or `Get-Process` on Windows we can find out which editor is currently running.
     // Potentially we could use similar technique for Linux
-    try {
-      if (process.platform === 'darwin') {
+    if (process.platform === 'darwin') {
+      try {
         const output = child_process.execSync('ps x').toString();
         const processNames = Object.keys(COMMON_EDITORS_OSX);
         for (let i = 0; i < processNames.length; i++) {
           const processName = processNames[i];
           if (output.indexOf(processName) !== -1) {
-            return resolve([COMMON_EDITORS_OSX[processName]]);
+            return COMMON_EDITORS_OSX[processName];
           }
         }
-      } else if (process.platform === 'win32' && powerShellAgent) {
-        return powerShellAgent
-          .invoke('Get-Process | Select-Object Path')
-          .then(output => {
-            const runningProcesses = output.split('\r\n');
-            for (let i = 0; i < runningProcesses.length; i++) {
-              // `Get-Process` sometimes returns empty lines
-              if (!runningProcesses[i]) {
-                continue;
-              }
-
-              const fullProcessPath = runningProcesses[i].trim();
-              const shortProcessName = path.basename(fullProcessPath);
-
-              if (COMMON_EDITORS_WIN.indexOf(shortProcessName) !== -1) {
-                return resolve([fullProcessPath]);
-              }
-            }
-          });
+      } catch (error) {
+        // Ignore...
       }
-    } catch (error) {
-      // Ignore...
-    }
+    } else if (process.platform === 'win32' && powerShellAgent) {
+      return powerShellAgent
+        .invoke('Get-Process | Select-Object Path')
+        .then(output => {
+          const runningProcesses = output.split('\r\n');
+          for (let i = 0; i < runningProcesses.length; i++) {
+            // `Get-Process` sometimes returns empty lines
+            if (!runningProcesses[i]) {
+              continue;
+            }
 
-    // Last resort, use old skool env vars
-    if (process.env.VISUAL) {
-      return resolve([process.env.VISUAL]);
-    } else if (process.env.EDITOR) {
-      return resolve([process.env.EDITOR]);
-    }
+            const fullProcessPath = runningProcesses[i].trim();
+            const shortProcessName = path.basename(fullProcessPath);
 
-    return resolve([null]);
+            if (COMMON_EDITORS_WIN.indexOf(shortProcessName) !== -1) {
+              return fullProcessPath;
+            }
+          }
+        });
+    }
+  });
+}
+
+function tryGetEditor() {
+  // Explicit config always wins
+  if (process.env.REACT_EDITOR) {
+    return Promise.resolve(shellQuote.parse(process.env.REACT_EDITOR));
+  }
+
+  return guessEditor().then(editor => {
+    if (editor) {
+      return [editor];
+    } else {
+      // Last resort, use old skool env vars
+      if (process.env.VISUAL) {
+        return [process.env.VISUAL];
+      } else if (process.env.EDITOR) {
+        return [process.env.EDITOR];
+      }
+
+      return [null];
+    }
   });
 }
 
@@ -252,7 +265,7 @@ function launchEditor(fileName, lineNumber) {
     return;
   }
 
-  guessEditor().then(([editor, ...args]) => {
+  tryGetEditor().then(([editor, ...args]) => {
     if (!editor) {
       printInstructions(fileName, null);
       return;
@@ -315,5 +328,5 @@ function launchEditor(fileName, lineNumber) {
 
 module.exports = {
   launchEditor,
-  launchPowerShellAgent,
+  tryLaunchPowerShellAgent,
 };
