@@ -11,6 +11,11 @@
 const { launchEditor } = require('react-dev-utils/launchEditor');
 
 module.exports = function createLaunchEditorMiddleware() {
+  if (process.platform === 'win32') {
+    const { launchPowerShellAgent } = require('react-dev-utils/launchEditor');
+    launchPowerShellAgent();
+  }
+
   return function launchEditorMiddleware(req, res, next) {
     // Keep this in sync with react-error-overlay
     if (req.url.startsWith('/__open-stack-frame-in-editor')) {
