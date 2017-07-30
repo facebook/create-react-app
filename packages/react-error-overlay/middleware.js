@@ -11,7 +11,7 @@
 const { launchEditor } = require('react-dev-utils/launchEditor');
 
 module.exports = function createLaunchEditorMiddleware() {
-  if (process.platform === 'win32') {
+  if (process.platform === 'win32' && !process.env.REACT_EDITOR) {
     const { launchPowerShellAgent } = require('react-dev-utils/launchEditor');
     launchPowerShellAgent();
   }
