@@ -36,9 +36,17 @@ Just create a project, and you’re good to go.
 
 Install it once globally:
 
-```sh
-npm install -g create-react-app
-```
+- ##### NPM
+
+  ```sh
+  npm install -g create-react-app
+  ```
+
+- ##### Yarn
+
+  ```sh
+  yarn global add create-react-app
+  ```
 
 **You’ll need to have Node >= 6 on your machine**. You can use [nvm](https://github.com/creationix/nvm#installation) to easily switch Node versions between different projects.
 
