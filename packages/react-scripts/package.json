@@ -47,7 +47,7 @@
     "source-map-loader": "^0.2.1",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.5.9",
-    "webpack": "3.4.0",
+    "webpack": "3.4.1",
     "webpack-dev-server": "2.6.1",
     "webpack-manifest-plugin": "1.2.1",
     "whatwg-fetch": "2.0.3"
