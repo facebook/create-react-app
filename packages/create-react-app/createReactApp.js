@@ -47,6 +47,7 @@ const semver = require('semver');
 const dns = require('dns');
 const tmp = require('tmp');
 const unpack = require('tar-pack').unpack;
+const url = require('url');
 const hyperquest = require('hyperquest');
 
 const packageJson = require('./package.json');
@@ -613,7 +614,13 @@ function checkIfOnline(useYarn) {
   }
 
   return new Promise(resolve => {
-    dns.lookup('registry.yarnpkg.com', err => {
+    let host = 'registry.yarnpkg.com';
+    // If a proxy is defined, we likely can't resolve external hostnames.
+    // Try to resolve the proxy name as an indication of a connection.
+    if (process.env.https_proxy) {
+      host = url.parse(process.env.https_proxy).hostname;
+    }
+    dns.lookup(host, err => {
       resolve(err === null);
     });
   });
