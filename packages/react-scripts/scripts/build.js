@@ -64,8 +64,10 @@ measureFileSizesBeforeBuild(paths.appBuild)
   })
   .then(
     ({ stats, previousFileSizes, warnings }) => {
+      const compileTime = parseFloat((Math.abs(stats.endTime - stats.startTime) / 1000).toFixed(2));
+
       if (warnings.length) {
-        console.log(chalk.yellow('Compiled with warnings.\n'));
+        console.log(chalk.yellow('Compiled in ' + compileTime + 's with warnings.\n'));
         console.log(warnings.join('\n\n'));
         console.log(
           '\nSearch for the ' +
@@ -78,7 +80,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
             ' to the line before.\n'
         );
       } else {
-        console.log(chalk.green('Compiled successfully.\n'));
+        console.log(chalk.green('Compiled successfully in ' + compileTime + 's!'));
       }
 
       console.log('File sizes after gzip:\n');
