@@ -42,6 +42,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Integrating with an API Backend](#integrating-with-an-api-backend)
   - [Node](#node)
   - [Ruby on Rails](#ruby-on-rails)
+  - [AWS Lambda and API Gateway](#aws-lambda-and-api-gateway)
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
   - ["Invalid Host Header" Errors After Configuring Proxy](#invalid-host-header-errors-after-configuring-proxy)
   - [Configuring the Proxy Manually](#configuring-the-proxy-manually)
@@ -935,8 +936,7 @@ Create React App will add decorator support when the specification advances to a
 
 ## Integrating with an API Backend
 
-These tutorials will help you to integrate your app with an API backend running on another port,
-using `fetch()` to access it.
+These tutorials will help you to integrate your app with an API backend, using `fetch()` to access it.
 
 ### Node
 Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
@@ -946,6 +946,11 @@ You can find the companion GitHub repository [here](https://github.com/fullstack
 
 Check out [this tutorial](https://www.fullstackreact.com/articles/how-to-get-create-react-app-to-work-with-your-rails-api/).
 You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo-rails).
+
+### AWS Lambda and API Gateway
+
+Check out [this tutorial](http://serverless-stack.com).
+You can find the companion GitHub repository [here](https://github.com/AnomalyInnovations/serverless-stack-demo-client).
 
 ## Proxying API Requests in Development
 
