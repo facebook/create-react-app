@@ -22,9 +22,7 @@ var SockJS = require('sockjs-client');
 var stripAnsi = require('strip-ansi');
 var url = require('url');
 var formatWebpackMessages = require('./formatWebpackMessages');
-var Entities = require('html-entities').AllHtmlEntities;
 var ansiHTML = require('./ansiHTML');
-var entities = new Entities();
 
 function createOverlayIframe(onIframeLoad) {
   var iframe = document.createElement('iframe');
@@ -81,14 +79,16 @@ function addOverlayDivTo(iframe) {
 }
 
 function overlayHeaderStyle() {
-  return 'font-size: 2em;' +
+  return (
+    'font-size: 2em;' +
     'font-family: sans-serif;' +
     'color: rgb(206, 17, 38);' +
     'white-space: pre-wrap;' +
     'margin: 0 2rem 0.75rem 0px;' +
     'flex: 0 0 auto;' +
     'max-height: 35%;' +
-    'overflow: auto;';
+    'overflow: auto;'
+  );
 }
 
 var overlayIframe = null;
@@ -127,7 +127,8 @@ function ensureOverlayDivExists(onOverlayDivReady) {
 function showErrorOverlay(message) {
   ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
     // TODO: unify this with our runtime overlay
-    overlayDiv.innerHTML = '<div style="' +
+    overlayDiv.innerHTML =
+      '<div style="' +
       overlayHeaderStyle() +
       '">Failed to compile</div>' +
       '<pre style="' +
@@ -135,7 +136,7 @@ function showErrorOverlay(message) {
       'margin-bottom: 0.5em; overflow-x: auto; white-space: pre-wrap; ' +
       'border-radius: 0.25rem; background-color: rgba(206, 17, 38, 0.05)">' +
       '<code style="font-family: Consolas, Menlo, monospace;">' +
-      ansiHTML(entities.encode(message)) +
+      ansiHTML(message) +
       '</code></pre>' +
       '<div style="' +
       'font-family: sans-serif; color: rgb(135, 142, 145); margin-top: 0.5rem; ' +

@@ -15,7 +15,8 @@ import path from 'path';
 
 function count(search: string, string: string): number {
   // Count starts at -1 becuse a do-while loop always runs at least once
-  let count = -1, index = -1;
+  let count = -1,
+    index = -1;
   do {
     // First call or the while case evaluated true, meaning we have to make
     // count 0 or we found a character

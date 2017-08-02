@@ -11,6 +11,8 @@
 
 const chalk = require('chalk');
 const url = require('url');
+const globalModules = require('global-modules');
+const fs = require('fs');
 
 function printHostingInstructions(
   appPackage,
@@ -23,10 +25,14 @@ function printHostingInstructions(
   if (publicUrl && publicUrl.indexOf('.github.io/') !== -1) {
     // "homepage": "http://user.github.io/project"
     console.log(
-      `The project was built assuming it is hosted at ${chalk.green(publicPathname)}.`
+      `The project was built assuming it is hosted at ${chalk.green(
+        publicPathname
+      )}.`
     );
     console.log(
-      `You can control this with the ${chalk.green('homepage')} field in your ${chalk.cyan('package.json')}.`
+      `You can control this with the ${chalk.green(
+        'homepage'
+      )} field in your ${chalk.cyan('package.json')}.`
     );
     console.log();
     console.log(`The ${chalk.cyan('build')} folder is ready to be deployed.`);
@@ -48,10 +54,14 @@ function printHostingInstructions(
       console.log(`    ${chalk.yellow('"scripts"')}: {`);
       console.log(`      ${chalk.dim('// ...')}`);
       console.log(
-        `      ${chalk.yellow('"predeploy"')}: ${chalk.yellow('"npm run build",')}`
+        `      ${chalk.yellow('"predeploy"')}: ${chalk.yellow(
+          '"npm run build",'
+        )}`
       );
       console.log(
-        `      ${chalk.yellow('"deploy"')}: ${chalk.yellow('"gh-pages -d build"')}`
+        `      ${chalk.yellow('"deploy"')}: ${chalk.yellow(
+          '"gh-pages -d build"'
+        )}`
       );
       console.log('    }');
       console.log();
@@ -63,10 +73,14 @@ function printHostingInstructions(
   } else if (publicPath !== '/') {
     // "homepage": "http://mywebsite.com/project"
     console.log(
-      `The project was built assuming it is hosted at ${chalk.green(publicPath)}.`
+      `The project was built assuming it is hosted at ${chalk.green(
+        publicPath
+      )}.`
     );
     console.log(
-      `You can control this with the ${chalk.green('homepage')} field in your ${chalk.cyan('package.json')}.`
+      `You can control this with the ${chalk.green(
+        'homepage'
+      )} field in your ${chalk.cyan('package.json')}.`
     );
     console.log();
     console.log(`The ${chalk.cyan('build')} folder is ready to be deployed.`);
@@ -75,10 +89,14 @@ function printHostingInstructions(
     if (publicUrl) {
       // "homepage": "http://mywebsite.com"
       console.log(
-        `The project was built assuming it is hosted at ${chalk.green(publicUrl)}.`
+        `The project was built assuming it is hosted at ${chalk.green(
+          publicUrl
+        )}.`
       );
       console.log(
-        `You can control this with the ${chalk.green('homepage')} field in your ${chalk.cyan('package.json')}.`
+        `You can control this with the ${chalk.green(
+          'homepage'
+        )} field in your ${chalk.cyan('package.json')}.`
       );
       console.log();
     } else {
@@ -87,12 +105,16 @@ function printHostingInstructions(
         'The project was built assuming it is hosted at the server root.'
       );
       console.log(
-        `To override this, specify the ${chalk.green('homepage')} in your ${chalk.cyan('package.json')}.`
+        `To override this, specify the ${chalk.green(
+          'homepage'
+        )} in your ${chalk.cyan('package.json')}.`
       );
       console.log('For example, add this to build it for GitHub Pages:');
       console.log();
       console.log(
-        `  ${chalk.green('"homepage"')} ${chalk.cyan(':')} ${chalk.green('"http://myname.github.io/myapp"')}${chalk.cyan(',')}`
+        `  ${chalk.green('"homepage"')} ${chalk.cyan(':')} ${chalk.green(
+          '"http://myname.github.io/myapp"'
+        )}${chalk.cyan(',')}`
       );
       console.log();
     }
@@ -101,10 +123,12 @@ function printHostingInstructions(
     );
     console.log('You may serve it with a static server:');
     console.log();
-    if (useYarn) {
-      console.log(`  ${chalk.cyan('yarn')} global add serve`);
-    } else {
-      console.log(`  ${chalk.cyan('npm')} install -g serve`);
+    if (!fs.existsSync(`${globalModules}/serve`)) {
+      if (useYarn) {
+        console.log(`  ${chalk.cyan('yarn')} global add serve`);
+      } else {
+        console.log(`  ${chalk.cyan('npm')} install -g serve`);
+      }
     }
     console.log(`  ${chalk.cyan('serve')} -s ${buildFolder}`);
     console.log();
