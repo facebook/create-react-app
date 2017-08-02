@@ -13,9 +13,9 @@ const chalk = require('chalk');
 const path = require('path');
 
 class ModuleScopePlugin {
-  constructor(appSrc, allowedPaths = []) {
+  constructor(appSrc, allowedFiles = []) {
     this.appSrc = appSrc;
-    this.allowedPaths = new Set(allowedPaths);
+    this.allowedFiles = new Set(allowedFiles);
   }
 
   apply(resolver) {
@@ -45,7 +45,7 @@ class ModuleScopePlugin {
         path.dirname(request.context.issuer),
         request.__innerRequest_request
       );
-      if (this.allowedPaths.has(requestFullPath)) {
+      if (this.allowedFiles.has(requestFullPath)) {
         return callback();
       }
       // Find path from src to the requested file
