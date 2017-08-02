@@ -33,6 +33,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
   - [Using a Custom Theme](#using-a-custom-theme)
+- [Adding Ant Design](#adding-ant-design)
 - [Adding Flow](#adding-flow)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
@@ -766,6 +767,10 @@ We suggest the following approach:
 * Install your own theme npm package as a dependency of your app.
 
 Here is an example of adding a [customized Bootstrap](https://medium.com/@tacomanator/customizing-create-react-app-aa9ffb88165) that follows these steps.
+
+## Adding Ant Design
+
+If you wish to styling your React applications by Ant Design, you can follow this [Use antd in create-react-app](https://ant.design/docs/react/use-with-create-react-app).
 
 ## Adding Flow
 
