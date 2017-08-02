@@ -92,6 +92,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` exits too early](#npm-run-build-exits-too-early)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
+  - [`npm run build` fails to minify](#npm-run-build-fails-to-minify)
   - [Moment.js locales are missing](#momentjs-locales-are-missing)
 - [Something Missing?](#something-missing)
 
@@ -2136,6 +2137,16 @@ moment.locale('fr');
 ```
 
 This will only work for locales that have been explicitly imported before.
+
+### `npm run build` fails to minify
+
+You may occasionally find a package you depend on needs compiled or ships code for a non-browser environment.<br>
+This is considered poor practice in the ecosystem and does not have an escape hatch in Create React App.<br>
+<br>
+To resolve this:
+1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled (retaining ES6 Modules).
+2. Fork the package and publish a corrected version yourself.
+3. If the dependency is small enough, copy it to your `src/` folder and treat it as application code.
 
 ## Something Missing?
 
