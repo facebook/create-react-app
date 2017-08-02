@@ -41,7 +41,11 @@ export default class extends Component {
   render() {
     return (
       <div id="feature-async-await">
-        {this.state.users.map(user => <div key={user.id}>{user.name}</div>)}
+        {this.state.users.map(user =>
+          <div key={user.id}>
+            {user.name}
+          </div>
+        )}
       </div>
     );
   }

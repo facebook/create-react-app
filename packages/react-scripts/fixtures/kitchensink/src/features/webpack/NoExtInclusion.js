@@ -14,6 +14,7 @@ const text = aFileWithoutExt.includes('base64')
   ? atob(aFileWithoutExt.split('base64,')[1]).trim()
   : aFileWithoutExt;
 
-export default () => (
-  <a id="feature-no-ext-inclusion" href={text}>aFileWithoutExt</a>
-);
+export default () =>
+  <a id="feature-no-ext-inclusion" href={text}>
+    aFileWithoutExt
+  </a>;

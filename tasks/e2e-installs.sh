@@ -55,15 +55,6 @@ function checkDependencies {
    echo "There are extraneous dependencies in package.json"
    exit 1
   fi
-
-
-  if ! awk '/"devDependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
-  grep -v -q -E '^\s*"react(-dom|-scripts)?"'; then
-   echo "Dev Dependencies are correct"
-  else
-   echo "There are extraneous devDependencies in package.json"
-   exit 1
-  fi
 }
 
 function create_react_app {
@@ -89,7 +80,7 @@ then
   # AppVeyor uses an old version of yarn.
   # Once updated to 0.24.3 or above, the workaround can be removed
   # and replaced with `yarnpkg cache clean`
-  # Issues: 
+  # Issues:
   #    https://github.com/yarnpkg/yarn/issues/2591
   #    https://github.com/appveyor/ci/issues/1576
   #    https://github.com/facebookincubator/create-react-app/pull/2400
@@ -104,12 +95,16 @@ fi
 
 if hash npm 2>/dev/null
 then
-  npm cache clean
+  # npm 5 is too buggy right now
+  if [ $(npm -v | head -c 1) -eq 5 ]; then
+    npm i -g npm@^4.x
+  fi;
+  npm cache clean || npm cache verify
 fi
 
-# Prevent lerna bootstrap, we only want top-level dependencies
+# Prevent bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
-grep -v "lerna bootstrap" package.json > temp && mv temp package.json
+grep -v "postinstall" package.json > temp && mv temp package.json
 npm install
 mv package.json.bak package.json
 
@@ -121,7 +116,7 @@ then
 fi
 
 # We removed the postinstall, so do it manually
-./node_modules/.bin/lerna bootstrap --concurrency=1
+node bootstrap.js
 
 cd packages/react-error-overlay/
 npm run build:prod
