@@ -16,6 +16,7 @@ const chalk = require('chalk');
 const detect = require('detect-port-alt');
 const isRoot = require('is-root');
 const inquirer = require('inquirer');
+const qrcode = require('qrcode-terminal');
 const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
@@ -82,9 +83,11 @@ function prepareUrls(protocol, host, port) {
   }
   const localUrlForTerminal = prettyPrintUrl(prettyHost);
   const localUrlForBrowser = formatUrl(prettyHost);
+  const lanUrlForBrowser = formatUrl(lanUrlForConfig);
   return {
     lanUrlForConfig,
     lanUrlForTerminal,
+    lanUrlForBrowser,
     localUrlForTerminal,
     localUrlForBrowser,
   };
@@ -102,6 +105,7 @@ function printInstructions(appName, urls, useYarn) {
     console.log(
       `  ${chalk.bold('On Your Network:')}  ${urls.lanUrlForTerminal}`
     );
+    qrcode.generate(urls.lanUrlForBrowser);
   } else {
     console.log(`  ${urls.localUrlForTerminal}`);
   }
