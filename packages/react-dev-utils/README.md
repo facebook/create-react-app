@@ -220,6 +220,20 @@ compiler.plugin('done', function(stats) {
 });
 ```
 
+#### `printBuildError(error: Object): void`
+
+Prettify some known build errors.
+Pass an Error object to log a prettified error message in the console.
+
+```
+  const printBuildError = require('react-dev-utils/printBuildError')
+  try {
+    build()
+  } catch(e) {
+    printBuildError(e) // logs prettified message
+  }
+```
+
 #### `getProcessForPort(port: number): string`
 
 Finds the currently running process on `port`.
