@@ -19,9 +19,12 @@ switch (script) {
   case 'eject':
   case 'start':
   case 'test': {
+    const nodeOptions = getNodeOptionsIfPresent(script);
     const result = spawn.sync(
       'node',
-      [require.resolve('../scripts/' + script)].concat(args),
+      nodeOptions
+        .concat([require.resolve('../scripts/' + script)])
+        .concat(args),
       { stdio: 'inherit' }
     );
     if (result.signal) {
@@ -50,4 +53,31 @@ switch (script) {
       'See: https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases'
     );
     break;
+}
+
+function getNodeOptionsIfPresent(script) {
+  const nameOne = 'NODE_COMMAND_LINE';
+  const nameTwo = `${nameOne}_${script.toUpperCase()}`;
+  const { readFileSync } = require('fs');
+  const { parse } = require('dotenv');
+  const path = '.env';
+  const encoding = 'utf8';
+  const getArgList = val => {
+    return val.split('--').filter(v => v !== '').map(v => `--${v}`);
+  };
+  let nodeOptions = [];
+  try {
+    const parsedObj = parse(readFileSync(path, { encoding: encoding }));
+    nodeOptions = Object.entries(parsedObj).reduce((lst, [key, val]) => {
+      if (key === nameTwo) {
+        lst = getArgList(val);
+      } else if (key === nameOne && lst.length === 0) {
+        lst = getArgList(val);
+      }
+      return lst;
+    }, []);
+  } catch (e) {
+    // File does not exit or could not be read
+  }
+  return nodeOptions;
 }
