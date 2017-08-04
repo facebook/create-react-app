@@ -2148,6 +2148,28 @@ To resolve this:
 2. Fork the package and publish a corrected version yourself.
 3. If the dependency is small enough, copy it to your `src/` folder and treat it as application code.
 
+#### Making packages compatible with Create React App (pre-compiling)
+
+To ensure that your package supports a browser environment, it should be compiled at first before publishing to npm. You can use tools like Babel to achive that.
+
+- Install Babel ([read more](https://babeljs.io/docs/plugins/#presets) about presets)
+`yarn add --dev babel-cli babel-preset-es2015 babel-preset-react babel-preset-stage-0`
+
+- Move your package source code to a directory, say `src`.
+
+- Add a build command to your package scripts in `package.json`. Here we are building in the `lib` directory with multiple presets that we are intrested in supporting.
+```
+"scripts": {
+  "build": "babel src --out-dir lib --presets=es2015,react,stage-0"
+}
+```
+
+- Ensure that your main package entery is pointing to the new compiled directory `"main": "./lib/foo.js",`.
+
+- Run `yarn build` to genrate the compiled code, you can take a look at it in the `lib` directory.
+
+- Publish your package! it could be also helpful to add some push ignore rules. You can add `lib/` to `.gitignore` (if you are using GitHub) and `src/` to your `.npmignore`.
+
 ## Something Missing?
 
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
