@@ -614,14 +614,16 @@ function checkIfOnline(useYarn) {
   }
 
   return new Promise(resolve => {
-    let host = 'registry.yarnpkg.com';
-    // If a proxy is defined, we likely can't resolve external hostnames.
-    // Try to resolve the proxy name as an indication of a connection.
-    if (process.env.https_proxy) {
-      host = url.parse(process.env.https_proxy).hostname;
-    }
-    dns.lookup(host, err => {
-      resolve(err === null);
+    dns.lookup('registry.yarnpkg.com', err => {
+      if (err != null && process.env.https_proxy) {
+        // If a proxy is defined, we likely can't resolve external hostnames.
+        // Try to resolve the proxy name as an indication of a connection.
+        dns.lookup(url.parse(process.env.https_proxy).hostname, proxyErr => {
+          resolve(proxyErr == null);
+        });
+      } else {
+        resolve(err == null);
+      }
     });
   });
 }
