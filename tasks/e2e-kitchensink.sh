@@ -22,7 +22,7 @@ temp_module_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_module_path'`
 
 function cleanup {
   echo 'Cleaning up.'
-  ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -s 9
+  ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
   rm -rf "$temp_cli_path" "$temp_app_path" "$temp_module_path" || $CI
@@ -66,9 +66,37 @@ set -x
 cd ..
 root_path=$PWD
 
-# Prevent lerna bootstrap, we only want top-level dependencies
+# Clear cache to avoid issues with incorrect packages being used
+if hash yarnpkg 2>/dev/null
+then
+  # AppVeyor uses an old version of yarn.
+  # Once updated to 0.24.3 or above, the workaround can be removed
+  # and replaced with `yarnpkg cache clean`
+  # Issues:
+  #    https://github.com/yarnpkg/yarn/issues/2591
+  #    https://github.com/appveyor/ci/issues/1576
+  #    https://github.com/facebookincubator/create-react-app/pull/2400
+  # When removing workaround, you may run into
+  #    https://github.com/facebookincubator/create-react-app/issues/2030
+  case "$(uname -s)" in
+    *CYGWIN*|MSYS*|MINGW*) yarn=yarn.cmd;;
+    *) yarn=yarnpkg;;
+  esac
+  $yarn cache clean
+fi
+
+if hash npm 2>/dev/null
+then
+  # npm 5 is too buggy right now
+  if [ $(npm -v | head -c 1) -eq 5 ]; then
+    npm i -g npm@^4.x
+  fi;
+  npm cache clean || npm cache verify
+fi
+
+# Prevent bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
-grep -v "lerna bootstrap" package.json > temp && mv temp package.json
+grep -v "postinstall" package.json > temp && mv temp package.json
 npm install
 mv package.json.bak package.json
 
@@ -80,7 +108,7 @@ then
 fi
 
 # We removed the postinstall, so do it manually
-./node_modules/.bin/lerna bootstrap --concurrency=1
+node bootstrap.js
 
 cd packages/react-error-overlay/
 npm run build:prod
@@ -156,7 +184,7 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  npm test -- --no-cache --testPathPattern="/src/"
+  npm test -- --no-cache --testPathPattern=src
 
 # Test "development" environment
 tmp_server_log=`mktemp`
@@ -220,7 +248,7 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  npm test -- --no-cache --testPathPattern='/src/'
+  npm test -- --no-cache --testPathPattern=src
 
 # Test "development" environment
 tmp_server_log=`mktemp`

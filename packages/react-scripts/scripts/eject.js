@@ -85,19 +85,16 @@ inquirer
     const folders = ['config', 'config/jest', 'scripts'];
 
     // Make shallow array of files paths
-    const files = folders.reduce(
-      (files, folder) => {
-        return files.concat(
-          fs
-            .readdirSync(path.join(ownPath, folder))
-            // set full path
-            .map(file => path.join(ownPath, folder, file))
-            // omit dirs from file list
-            .filter(file => fs.lstatSync(file).isFile())
-        );
-      },
-      []
-    );
+    const files = folders.reduce((files, folder) => {
+      return files.concat(
+        fs
+          .readdirSync(path.join(ownPath, folder))
+          // set full path
+          .map(file => path.join(ownPath, folder, file))
+          // omit dirs from file list
+          .filter(file => fs.lstatSync(file).isFile())
+      );
+    }, []);
 
     // Ensure that the app folder is clean and we won't override any files
     folders.forEach(verifyAbsent);
@@ -124,18 +121,19 @@ inquirer
       if (content.match(/\/\/ @remove-file-on-eject/)) {
         return;
       }
-      content = content
-        // Remove dead code from .js files on eject
-        .replace(
-          /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/mg,
-          ''
-        )
-        // Remove dead code from .applescript files on eject
-        .replace(
-          /-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/mg,
-          ''
-        )
-        .trim() + '\n';
+      content =
+        content
+          // Remove dead code from .js files on eject
+          .replace(
+            /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/gm,
+            ''
+          )
+          // Remove dead code from .applescript files on eject
+          .replace(
+            /-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/gm,
+            ''
+          )
+          .trim() + '\n';
       console.log(`  Adding ${cyan(file.replace(ownPath, ''))} to the project`);
       fs.writeFileSync(file.replace(ownPath, appPath), content);
     });
@@ -146,35 +144,50 @@ inquirer
 
     console.log(cyan('Updating the dependencies'));
     const ownPackageName = ownPackage.name;
-    if (appPackage.devDependencies[ownPackageName]) {
-      console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
-      delete appPackage.devDependencies[ownPackageName];
+    if (appPackage.devDependencies) {
+      // We used to put react-scripts in devDependencies
+      if (appPackage.devDependencies[ownPackageName]) {
+        console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
+        delete appPackage.devDependencies[ownPackageName];
+      }
     }
+    appPackage.dependencies = appPackage.dependencies || {};
     if (appPackage.dependencies[ownPackageName]) {
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
       delete appPackage.dependencies[ownPackageName];
     }
-
     Object.keys(ownPackage.dependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
       if (ownPackage.optionalDependencies[key]) {
         return;
       }
-      console.log(`  Adding ${cyan(key)} to devDependencies`);
-      appPackage.devDependencies[key] = ownPackage.dependencies[key];
+      console.log(`  Adding ${cyan(key)} to dependencies`);
+      appPackage.dependencies[key] = ownPackage.dependencies[key];
+    });
+    // Sort the deps
+    const unsortedDependencies = appPackage.dependencies;
+    appPackage.dependencies = {};
+    Object.keys(unsortedDependencies).sort().forEach(key => {
+      appPackage.dependencies[key] = unsortedDependencies[key];
     });
     console.log();
+
     console.log(cyan('Updating the scripts'));
     delete appPackage.scripts['eject'];
     Object.keys(appPackage.scripts).forEach(key => {
       Object.keys(ownPackage.bin).forEach(binKey => {
         const regex = new RegExp(binKey + ' (\\w+)', 'g');
+        if (!regex.test(appPackage.scripts[key])) {
+          return;
+        }
         appPackage.scripts[key] = appPackage.scripts[key].replace(
           regex,
           'node scripts/$1.js'
         );
         console.log(
-          `  Replacing ${cyan(`"${binKey} ${key}"`)} with ${cyan(`"node scripts/${key}.js"`)}`
+          `  Replacing ${cyan(`"${binKey} ${key}"`)} with ${cyan(
+            `"node scripts/${key}.js"`
+          )}`
         );
       });
     });
@@ -217,11 +230,26 @@ inquirer
     }
 
     if (fs.existsSync(paths.yarnLockFile)) {
-      console.log(cyan('Running yarn...'));
-      spawnSync('yarnpkg', [], { stdio: 'inherit' });
+      // TODO: this is disabled for three reasons.
+      //
+      // 1. It produces garbage warnings on Windows on some systems:
+      //    https://github.com/facebookincubator/create-react-app/issues/2030
+      //
+      // 2. For the above reason, it breaks Windows CI:
+      //    https://github.com/facebookincubator/create-react-app/issues/2624
+      //
+      // 3. It is wrong anyway: re-running yarn will respect the lockfile
+      //    rather than package.json we just updated. Instead we should have
+      //    updated the lockfile. So we might as well not do it while it's broken.
+      //    https://github.com/facebookincubator/create-react-app/issues/2627
+      //
+      // console.log(cyan('Running yarn...'));
+      // spawnSync('yarnpkg', [], { stdio: 'inherit' });
     } else {
       console.log(cyan('Running npm install...'));
-      spawnSync('npm', ['install'], { stdio: 'inherit' });
+      spawnSync('npm', ['install', '--loglevel', 'error'], {
+        stdio: 'inherit',
+      });
     }
     console.log(green('Ejected successfully!'));
     console.log();
