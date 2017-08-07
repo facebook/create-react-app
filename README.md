@@ -23,6 +23,10 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Changelog
 
+### 2.6.0
+* Merge react-scripts@1.0.10 - @wmonk
+* Update component template - @pelotom
+
 ### 2.5.0
 * Support dynamic imports - thanks @nicolaserny, @DorianGrey
 * Fix up tsconfig - thanks @js-n
