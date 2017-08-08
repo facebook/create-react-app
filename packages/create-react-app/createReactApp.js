@@ -149,11 +149,7 @@ function createApp(name, verbose, version, template) {
 
   checkAppName(appName);
   fs.ensureDirSync(name);
-  if (!isSafeToCreateProjectIn(root)) {
-    console.log(
-      `The directory ${chalk.green(name)} contains files that could conflict.`
-    );
-    console.log('Try using a new directory name.');
+  if (!isSafeToCreateProjectIn(root, name)) {
     process.exit(1);
   }
 
@@ -441,7 +437,7 @@ function getPackageName(installPackage) {
     // git+https://github.com/mycompany/react-scripts.git
     // git+ssh://github.com/mycompany/react-scripts.git#v1.2.3
     return Promise.resolve(installPackage.match(/([^\/]+)\.git(#.*)?$/)[1]);
-  } else if (installPackage.indexOf('@') > 0) {
+  } else if (installPackage.match(/.+@/)) {
     // Do not match @scope/ when stripping off @version or @tag
     return Promise.resolve(
       installPackage.charAt(0) + installPackage.substr(1).split('@')[0]
@@ -569,17 +565,7 @@ function setCaretRangeForRuntimeDeps(packageName) {
 // installation, lets remove them now.
 // We also special case IJ-based products .idea because it integrates with CRA:
 // https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-243446094
-function isSafeToCreateProjectIn(root) {
-  const currentFiles = fs.readdirSync(path.join(root));
-  currentFiles.forEach(file => {
-    remnantFiles.forEach(fileToMatch => {
-      // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
-      if (fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) {
-        fs.removeSync(path.join(root, file));
-      }
-    });
-  });
-
+function isSafeToCreateProjectIn(root, name) {
   const validFiles = [
     '.DS_Store',
     'Thumbs.db',
@@ -593,7 +579,39 @@ function isSafeToCreateProjectIn(root) {
     '.hgignore',
     '.hgcheck',
   ];
-  return fs.readdirSync(root).every(file => validFiles.indexOf(file) >= 0);
+  console.log();
+
+  const conflicts = fs
+    .readdirSync(root)
+    .filter(file => !validFiles.includes(file));
+  
+  if (conflicts.length > 0) {
+    console.log(
+      `The directory ${chalk.green(name)} contains files that could conflict:`
+    );
+    console.log();
+    for (const file of conflicts) {
+      console.log(`  ${file}`);
+    }
+    console.log();
+    console.log(
+      'Either try using a new directory name, or remove the files listed above.'
+    );
+
+    return false;
+  }
+
+   // remove any remnant files from a previous installation
+  const currentFiles = fs.readdirSync(path.join(root));
+  currentFiles.forEach(file => {
+    remnantFiles.forEach(fileToMatch => {
+      // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
+      if (fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) {
+        fs.removeSync(path.join(root, file));
+      }
+    });
+  });
+  return true
 }
 
 function checkIfOnline(useYarn) {
