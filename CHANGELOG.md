@@ -1,3 +1,114 @@
+## 1.0.11 (2017-08-09)
+
+#### :bug: Bug Fix
+* `create-react-app`
+  * [#2884](https://github.com/facebookincubator/create-react-app/pull/2884) Improve offline heuristic for proxied environments. ([@bsyk](https://github.com/bsyk))
+
+    When a Yarn proxy is set, we will check its connectivity if we cannot reach Yarn's registry. This is often the case when DNS lookups must be made through the proxy.
+
+  * [#2853](https://github.com/facebookincubator/create-react-app/pull/2853) Allow use of scoped packages with a pinned version. ([@wileybenet](https://github.com/wileybenet))
+* `react-dev-utils`
+  * [#2796](https://github.com/facebookincubator/create-react-app/pull/2796) Properly escape HTML tags in error overlay. ([@ccloli](https://github.com/ccloli))
+
+    Elements printed in their entirety would sometimes render as HTML. This should no longer happen and should properly render as text.
+
+* `react-dev-utils`, `react-scripts`
+  * [#2834](https://github.com/facebookincubator/create-react-app/pull/2834) Make `formatWebpackMessages` return all messages ([@onigoetz](https://github.com/onigoetz))
+* `react-scripts`
+  * [#2806](https://github.com/facebookincubator/create-react-app/pull/2806) Fix SockJS version compatibility. ([@christianbundy](https://github.com/christianbundy))
+  * [#2738](https://github.com/facebookincubator/create-react-app/pull/2738) Fix Jest `node` file resolution. ([@mostafah](https://github.com/mostafah))
+
+#### :nail_care: Enhancement
+* `react-scripts`
+  * [#2818](https://github.com/facebookincubator/create-react-app/pull/2818) Allow sourcemaps to be disabled. ([@viankakrisna](https://github.com/viankakrisna))
+
+    As applications grow more complex, it is possible webpack may run out of memory while generating source maps. They may now be disabled by setting `GENERATE_SOURCEMAP=false`.
+
+  * [#2913](https://github.com/facebookincubator/create-react-app/pull/2913) Allow flags to be passed to node when running `react-scripts`. ([@koistya](https://github.com/koistya))
+  * [#2574](https://github.com/facebookincubator/create-react-app/pull/2574) Upgrade to `webpack@3`. ([@themre](https://github.com/themre))
+  * [#2747](https://github.com/facebookincubator/create-react-app/pull/2747) Simplify webpack configuration using `Rule.oneOf`. ([@Furizaa](https://github.com/Furizaa))
+* `react-dev-utils`, `react-scripts`
+  * [#2468](https://github.com/facebookincubator/create-react-app/pull/2468) Allow importing `package.json`. ([@iamdoron](https://github.com/iamdoron))
+  * [#2650](https://github.com/facebookincubator/create-react-app/pull/2650) Make UglifyJS error friendlier. ([@viankakrisna](https://github.com/viankakrisna))
+* `create-react-app`
+  * [#2785](https://github.com/facebookincubator/create-react-app/pull/2785) Change error wording and list conflicting files when initializing app. ([@OwenFlood](https://github.com/OwenFlood))
+* `react-dev-utils`
+  * [#2761](https://github.com/facebookincubator/create-react-app/pull/2761) Don't prompt to install serve if already installed. ([@OwenFlood](https://github.com/OwenFlood))
+  * [#2754](https://github.com/facebookincubator/create-react-app/pull/2754) Auto-detect JetBrains IDEs. ([@danrr](https://github.com/danrr))
+  * [#2740](https://github.com/facebookincubator/create-react-app/pull/2740) Support PyCharm in `launchEditor`. ([@danrr](https://github.com/danrr))
+  * [#2723](https://github.com/facebookincubator/create-react-app/pull/2723) Reorder vim arguments in `launchEditor` so `--remote` works. ([@trygveaa](https://github.com/trygveaa))
+* `eslint-config-react-app`, `react-scripts`
+  * [#2735](https://github.com/facebookincubator/create-react-app/pull/2735) Upgrade to `eslint@4`. ([@trungdq88](https://github.com/trungdq88))
+* `eslint-config-react-app`
+  * [#2701](https://github.com/facebookincubator/create-react-app/pull/2701) Set `allowTaggedTemplates` to true (eslint). ([@denkristoffer](https://github.com/denkristoffer))
+
+#### :memo: Documentation
+* Other
+  * [#2728](https://github.com/facebookincubator/create-react-app/pull/2728) Add Electrode to alternatives. ([@animesh10](https://github.com/animesh10))
+  * [#2788](https://github.com/facebookincubator/create-react-app/pull/2788) Update link for motion. ([@viankakrisna](https://github.com/viankakrisna))
+  * [#2697](https://github.com/facebookincubator/create-react-app/pull/2697) Fix env list ordering. ([@alexeyraspopov](https://github.com/alexeyraspopov))
+* `react-dev-utils`
+  * [#2798](https://github.com/facebookincubator/create-react-app/pull/2798) Update note about `webpackHotDevClient` support. ([@ForbesLindesay](https://github.com/ForbesLindesay))
+* `react-scripts`
+  * [#2822](https://github.com/facebookincubator/create-react-app/pull/2822) Add explicit "Opting Out of Caching" header. ([@gaearon](https://github.com/gaearon))
+  * [#2725](https://github.com/facebookincubator/create-react-app/pull/2725) Fixed typo. ([@zeel](https://github.com/zeel))
+  * [#2668](https://github.com/facebookincubator/create-react-app/pull/2668) Document `basename` feature in `react-router`. ([@viankakrisna](https://github.com/viankakrisna))
+  * [#2719](https://github.com/facebookincubator/create-react-app/pull/2719) Remove Windows note for `source-map-explorer`. ([@hodanny](https://github.com/hodanny))
+* `babel-preset-react-app`
+  * [#2732](https://github.com/facebookincubator/create-react-app/pull/2732) Update link to issue blocking JSX hoisting. ([@ForbesLindesay](https://github.com/ForbesLindesay))
+
+#### :house: Internal
+* `create-react-app`, `eslint-config-react-app`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
+  * [#2923](https://github.com/facebookincubator/create-react-app/pull/2923) Update deps. ([@Timer](https://github.com/Timer))
+* `eslint-config-react-app`
+  * [#2718](https://github.com/facebookincubator/create-react-app/pull/2718) Re-enable flowtype warning. ([@oskarkook](https://github.com/oskarkook))
+* Other
+  * [#2700](https://github.com/facebookincubator/create-react-app/pull/2700) Unstage `yarn.lock` pre-commit. ([@jdcrensh](https://github.com/jdcrensh))
+* `react-scripts`
+  * [#2873](https://github.com/facebookincubator/create-react-app/pull/2873) Use template strings. ([@monkindey](https://github.com/monkindey))
+
+#### Committers: 26
+- 864907600cc ([ccloli](https://github.com/ccloli))
+- Ade Viankakrisna Fadlil ([viankakrisna](https://github.com/viankakrisna))
+- Alexey Raspopov ([alexeyraspopov](https://github.com/alexeyraspopov))
+- Andreas Hoffmann ([Furizaa](https://github.com/Furizaa))
+- Animesh Dutta ([animesh10](https://github.com/animesh10))
+- Ben Sykes ([bsyk](https://github.com/bsyk))
+- Christian Bundy ([christianbundy](https://github.com/christianbundy))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Dan Ristea ([danrr](https://github.com/danrr))
+- Danny Ho ([hodanny](https://github.com/hodanny))
+- Forbes Lindesay ([ForbesLindesay](https://github.com/ForbesLindesay))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Jon Crenshaw ([jdcrensh](https://github.com/jdcrensh))
+- Kiho · Cham ([monkindey](https://github.com/monkindey))
+- Konstantin Tarkus ([koistya](https://github.com/koistya))
+- Kristoffer ([denkristoffer](https://github.com/denkristoffer))
+- Mostafa Hajizadeh ([mostafah](https://github.com/mostafah))
+- Oskar Köök ([oskarkook](https://github.com/oskarkook))
+- Owen Flood ([OwenFlood](https://github.com/OwenFlood))
+- Stéphane Goetz ([onigoetz](https://github.com/onigoetz))
+- Trygve Aaberge ([trygveaa](https://github.com/trygveaa))
+- Wiley Bennett ([wileybenet](https://github.com/wileybenet))
+- [iamdoron](https://github.com/iamdoron)
+- [themre](https://github.com/themre)
+- zeel ([zeel](https://github.com/zeel))
+- Đinh Quang Trung ([trungdq88](https://github.com/trungdq88))
+
+### Migrating from 1.0.10 to 1.0.11
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.11
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.11
+```
+
 ## 1.0.10 (June 29, 2017)
 
 #### :bug: Bug Fix
@@ -110,7 +221,7 @@ yarn add --exact react-scripts@1.0.9
   * [#2600](https://github.com/facebookincubator/create-react-app/pull/2600) Add empty mock for `dgram` Node module. ([@micopiira](https://github.com/micopiira))
   * [#2458](https://github.com/facebookincubator/create-react-app/pull/2458) Add names to module factories in development. ([@Zaccc123](https://github.com/Zaccc123))
   * [#2551](https://github.com/facebookincubator/create-react-app/pull/2551) In new projects, unregister service worker and force reload if `service-worker.js` is not found. ([@ro-savage](https://github.com/ro-savage))
-  
+
 * `babel-preset-react-app`, `react-dev-utils`, `react-scripts`
 
   * [#2658](https://github.com/facebookincubator/create-react-app/pull/2658) Bump dependencies. ([@gaearon](https://github.com/gaearon))
@@ -119,7 +230,7 @@ yarn add --exact react-scripts@1.0.9
 
   * [#2657](https://github.com/facebookincubator/create-react-app/pull/2657) Put `react-scripts` in `dependencies`, not `devDependencies`. ([@gaearon](https://github.com/gaearon))
   * [#2635](https://github.com/facebookincubator/create-react-app/pull/2635) Silence unhelpful npm warnings. ([@gaearon](https://github.com/gaearon))
-  
+
 * `react-dev-utils`
 
   * [#2637](https://github.com/facebookincubator/create-react-app/pull/2637) Auto-detect Brackets editor from error overlay. ([@petetnt](https://github.com/petetnt))
@@ -176,7 +287,7 @@ yarn add --exact react-scripts@1.0.9
   * [#2397](https://github.com/facebookincubator/create-react-app/pull/2397) Fix command in e2e-kitchensink.sh cleanup. ([@ro-savage](https://github.com/ro-savage))
   * [#2388](https://github.com/facebookincubator/create-react-app/pull/2388) Fix wrong path expansion in end-to-end test. ([@gaearon](https://github.com/gaearon))
   * [#2387](https://github.com/facebookincubator/create-react-app/pull/2387) Catch "No tests found" during CI. ([@EnoahNetzach](https://github.com/EnoahNetzach))
-  
+
 * `react-scripts`
 
   * [#2408](https://github.com/facebookincubator/create-react-app/pull/2408) E2E testing enhancements. ([@EnoahNetzach](https://github.com/EnoahNetzach))
@@ -573,7 +684,7 @@ yarn add --dev --exact react-scripts@1.0.1
 
 We’ve been working on this release for the past few months, and there are many big impovements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
 
-So instead of just enumerating them here, we decided to write a blog post about all the new features.  
+So instead of just enumerating them here, we decided to write a blog post about all the new features.<br>
 Check it out: **[What’s New in Create React App](https://facebook.github.io/react/blog/2017/05/18/whats-new-in-create-react-app.html)**.
 
 Have you read it? Now let's see how to update your app to the latest version.
