@@ -1576,7 +1576,7 @@ you can swap out the call to `serviceWorkerRegistration.register()` in
 [`src/index.js`](src/index.js) with a call to `serviceWorkerRegistration.unregister()`.
 After the user visits a page that has `serviceWorkerRegistration.unregister()`,
 the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
-it make take up to 24 hours for the cache to be invalidated.
+it may take up to 24 hours for the cache to be invalidated.
 
 ### Offline-First Considerations
 
