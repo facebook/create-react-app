@@ -21,7 +21,7 @@
     "react-scripts-ts": "./bin/react-scripts-ts.js"
   },
   "dependencies": {
-    "autoprefixer": "7.1.1",
+    "autoprefixer": "7.1.2",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
     "css-loader": "0.28.4",
@@ -32,7 +32,7 @@
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "object-assign": "4.1.1",
-    "postcss-flexbugs-fixes": "3.0.0",
+    "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.6",
     "promise": "8.0.1",
     "react-dev-utils": "^3.0.2",
@@ -47,8 +47,8 @@
     "source-map-loader": "^0.2.1",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.5.9",
-    "webpack": "3.4.1",
-    "webpack-dev-server": "2.6.1",
+    "webpack": "3.5.1",
+    "webpack-dev-server": "2.7.1",
     "webpack-manifest-plugin": "1.2.1",
     "whatwg-fetch": "2.0.3"
   },
