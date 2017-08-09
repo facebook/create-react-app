@@ -23,7 +23,7 @@ module.exports = function printBuildError(err) {
     message.indexOf('from UglifyJs') !== -1
   ) {
     try {
-      const matched = /Unexpected token:(.+)\[(.+)\:(.+)\,(.+)\]\[.+\]/.exec(
+      const matched = /Unexpected token:(.+)\[(.+):(.+),(.+)\]\[.+\]/.exec(
         stack
       );
       if (!matched) {
