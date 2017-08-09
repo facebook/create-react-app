@@ -441,7 +441,7 @@ function getPackageName(installPackage) {
     // Pull package name out of git urls e.g:
     // git+https://github.com/mycompany/react-scripts.git
     // git+ssh://github.com/mycompany/react-scripts.git#v1.2.3
-    return Promise.resolve(installPackage.match(/([^\/]+)\.git(#.*)?$/)[1]);
+    return Promise.resolve(installPackage.match(/([^/]+)\.git(#.*)?$/)[1]);
   } else if (installPackage.match(/.+@/)) {
     // Do not match @scope/ when stripping off @version or @tag
     return Promise.resolve(
