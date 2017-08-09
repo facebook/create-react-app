@@ -31,7 +31,7 @@
     "middleware.js"
   ],
   "dependencies": {
-    "anser": "1.2.5",
+    "anser": "1.4.1",
     "babel-code-frame": "6.22.0",
     "babel-runtime": "6.23.0",
     "react-dev-utils": "^3.0.2",
@@ -42,16 +42,16 @@
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
     "babel-preset-react-app": "^3.0.1",
-    "cross-env": "5.0.0",
-    "eslint": "3.19.0",
+    "cross-env": "5.0.5",
+    "eslint": "4.4.1",
     "eslint-config-react-app": "^1.0.5",
-    "eslint-plugin-flowtype": "2.33.0",
-    "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-jsx-a11y": "5.0.3",
-    "eslint-plugin-react": "7.0.1",
-    "flow-bin": "0.49.1",
-    "jest": "20.0.1",
-    "jest-fetch-mock": "1.1.1"
+    "eslint-plugin-flowtype": "2.35.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "7.1.0",
+    "flow-bin": "0.52.0",
+    "jest": "20.0.4",
+    "jest-fetch-mock": "1.2.1"
   },
   "jest": {
     "setupFiles": [
