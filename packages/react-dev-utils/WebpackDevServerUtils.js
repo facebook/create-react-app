@@ -164,6 +164,11 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
 
     // If errors exist, only show errors.
     if (messages.errors.length) {
+      // Only keep the first error. Others are often indicative
+      // of the same problem, but confuse the reader with noise.
+      if (messages.errors.length > 1) {
+        messages.errors.length = 1;
+      }
       console.log(chalk.red('Failed to compile.\n'));
       console.log(messages.errors.join('\n\n'));
       return;
