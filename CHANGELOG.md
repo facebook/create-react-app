@@ -684,7 +684,7 @@ yarn add --dev --exact react-scripts@1.0.1
 
 We’ve been working on this release for the past few months, and there are many big impovements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
 
-So instead of just enumerating them here, we decided to write a blog post about all the new features.
+So instead of just enumerating them here, we decided to write a blog post about all the new features.<br>
 Check it out: **[What’s New in Create React App](https://facebook.github.io/react/blog/2017/05/18/whats-new-in-create-react-app.html)**.
 
 Have you read it? Now let's see how to update your app to the latest version.
