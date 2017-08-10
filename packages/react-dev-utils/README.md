@@ -57,7 +57,7 @@ module.exports = {
 ```
 
 
-#### `new ModuleScopePlugin(appSrc: string)`
+#### `new ModuleScopePlugin(appSrc: string, allowedFiles?: string[])`
 
 This Webpack plugin ensures that relative imports from app's source directory don't reach outside of it.
 
@@ -71,7 +71,7 @@ module.exports = {
   resolve: {
     // ...
     plugins: [
-      new ModuleScopePlugin(paths.appSrc),
+      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
       // ...
     ],
     // ...
@@ -220,6 +220,20 @@ compiler.plugin('done', function(stats) {
 });
 ```
 
+#### `printBuildError(error: Object): void`
+
+Prettify some known build errors.
+Pass an Error object to log a prettified error message in the console.
+
+```
+  const printBuildError = require('react-dev-utils/printBuildError')
+  try {
+    build()
+  } catch(e) {
+    printBuildError(e) // logs prettified message
+  }
+```
+
 #### `getProcessForPort(port: number): string`
 
 Finds the currently running process on `port`.
@@ -295,7 +309,7 @@ Returns an object with local and remote URLs for the development server. Pass th
 
 This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.
 
-It currently supports only Webpack 1.x.
+It currently supports only Webpack 3.x.
 
 ```js
 // Webpack development config

@@ -239,6 +239,7 @@ Some of the more popular and actively maintained ones are:
 * [NYTimes/kyt](https://github.com/NYTimes/kyt)
 * [zeit/next.js](https://github.com/zeit/next.js)
 * [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)
+* [electrode-io/electrode](https://github.com/electrode-io/electrode)
 
 Notable alternatives also include:
 
