@@ -88,14 +88,6 @@ class App extends Component {
             </li>
           </ul>
 
-          <b> Others </b>
-          <ul className="configs style-configs">
-            <li>
-              <code>PORT=3015</code>
-              <span>- change default port (supported in CRA by default)</span>
-            </li>
-          </ul>
-
           <br />
           <br />
           <a

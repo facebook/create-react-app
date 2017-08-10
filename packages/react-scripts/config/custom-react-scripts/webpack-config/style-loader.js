@@ -1,22 +1,13 @@
-const postCssOptions = require('../postcss-options');
+const postCssOptions = require('../options/postcss-options');
+const extractTextPluginOptions = require('../options/extract-text-plugin-options');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-const paths = require('../../paths');
-const publicPath = paths.servedPath;
-const shouldUseRelativeAssetPaths = publicPath === './';
-const cssFilename = 'static/css/[name].[contenthash:8].css';
-
-const extractTextPluginOptions = shouldUseRelativeAssetPaths
-  ? // Making sure that the publicPath goes back to to build folder.
-    { publicPath: Array(cssFilename.split('/').length).join('../') }
-  : {};
+const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
 module.exports = (loader, test, exclude, modules) => isDev => {
   let loaders = isDev
     ? [
         {
           loader: require.resolve('style-loader'),
-          options: { sourceMap: true },
         },
       ]
     : [];
@@ -25,7 +16,7 @@ module.exports = (loader, test, exclude, modules) => isDev => {
     {
       loader: require.resolve('css-loader'),
       options: Object.assign(
-        {},
+        { minimize: !isDev, sourceMap: shouldUseSourceMap },
         { importLoaders: 1 },
         modules === true
           ? {
@@ -37,7 +28,11 @@ module.exports = (loader, test, exclude, modules) => isDev => {
     },
     {
       loader: require.resolve('postcss-loader'),
-      options: Object.assign({}, { sourceMap: isDev }, postCssOptions),
+      options: Object.assign(
+        {},
+        { sourceMap: shouldUseSourceMap },
+        postCssOptions
+      ),
     },
   ]);
 
@@ -45,7 +40,7 @@ module.exports = (loader, test, exclude, modules) => isDev => {
     loaders.push({
       loader,
       options: {
-        sourceMap: isDev,
+        sourceMap: shouldUseSourceMap,
       },
     });
   }
