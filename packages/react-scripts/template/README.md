@@ -68,6 +68,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
+  - [Opting Out of Caching](#opting-out-of-caching)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
@@ -91,6 +92,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` exits too early](#npm-run-build-exits-too-early)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
+  - [`npm run build` fails to minify](#npm-run-build-fails-to-minify)
   - [Moment.js locales are missing](#momentjs-locales-are-missing)
 - [Something Missing?](#something-missing)
 
@@ -1379,8 +1381,8 @@ cache:
   directories:
     - node_modules
 script:
-  - npm test
   - npm run build
+  - npm test
 ```
 1. Trigger your first build with a git push.
 1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
@@ -1562,6 +1564,8 @@ The service worker will use a [cache-first strategy](https://developers.google.c
 for handling all requests for local assets, including the initial HTML, ensuring
 that your web app is reliably fast, even on a slow or unreliable network.
 
+### Opting Out of Caching
+
 If you would prefer not to enable service workers prior to your initial
 production deployment, then remove the call to `serviceWorkerRegistration.register()`
 from [`src/index.js`](src/index.js).
@@ -1571,7 +1575,8 @@ have decided that you would like to disable them for all your existing users,
 you can swap out the call to `serviceWorkerRegistration.register()` in
 [`src/index.js`](src/index.js) with a call to `serviceWorkerRegistration.unregister()`.
 After the user visits a page that has `serviceWorkerRegistration.unregister()`,
-the service worker will be uninstalled.
+the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
+it make take up to 24 hours for the cache to be invalidated.
 
 ### Offline-First Considerations
 
@@ -1670,16 +1675,6 @@ Then in `package.json`, add the following line to `scripts`:
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
 ```
-
->**Note:**
->
->This doesn't quite work on Windows because it doesn't automatically expand `*` in the filepath. For now, the workaround is to look at the full hashed filename in `build/static/js` (e.g. `main.89b7e95a.js`) and copy it into `package.json` when you're running the analyzer. For example:
->
->```diff
->+    "analyze": "source-map-explorer build/static/js/main.89b7e95a.js",
->```
->
->Unfortunately it will be different after every build. You can express support for fixing this on Windows [in this issue](https://github.com/danvk/source-map-explorer/issues/52).
 
 Then to analyze the bundle run the production build then run the analyze
 script.
@@ -1785,6 +1780,15 @@ To override this, specify the `homepage` in your `package.json`, for example:
 ```
 
 This will let Create React App correctly infer the root path to use in the generated HTML file.
+
+**Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
+More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
+<br>
+For example:
+```js
+<BrowserRouter basename="/calendar"/>
+<Link to="/today"/> // renders <a href="/calendar/today">
+```
 
 #### Serving the Same Build from Different Paths
 
@@ -2053,6 +2057,8 @@ HTTPS | :white_check_mark: | :x: | When set to `true`, Create React App will run
 PUBLIC_URL | :x: | :white_check_mark: | Create React App assumes your application is hosted at the serving web server's root or a subpath as specified in [`package.json` (`homepage`)](#building-for-relative-paths). Normally, Create React App ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included). This may be particularly useful when using a CDN to host your application.
 CI | :large_orange_diamond: | :white_check_mark: | When set to `true`, Create React App treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.
 REACT_EDITOR | :white_check_mark: | :x: | When an app crashes in development, you will see an error overlay with clickable stack trace. When you click on it, Create React App will try to determine the editor you are using based on currently running processes, and open the relevant source file. You can [send a pull request to detect your editor of choice](https://github.com/facebookincubator/create-react-app/issues/2636). Setting this environment variable overrides the automatic detection. If you do it, make sure your systems [PATH](https://en.wikipedia.org/wiki/PATH_(variable)) environment variable points to your editor’s bin folder.
+CHOKIDAR_USEPOLLING | :white_check_mark: | :x: | When set to `true`, the watcher runs in polling mode, as necessary inside a VM. Use this option if `npm start` isn't detecting changes.
+GENERATE_SOURCEMAP | :x: | :white_check_mark: | When set to `false`, source maps are not generated for a production build. This solves OOM issues on some smaller machines.
 
 ## Troubleshooting
 
@@ -2132,6 +2138,16 @@ moment.locale('fr');
 ```
 
 This will only work for locales that have been explicitly imported before.
+
+### `npm run build` fails to minify
+
+You may occasionally find a package you depend on needs compiled or ships code for a non-browser environment.<br>
+This is considered poor practice in the ecosystem and does not have an escape hatch in Create React App.<br>
+<br>
+To resolve this:
+1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled (retaining ES6 Modules).
+2. Fork the package and publish a corrected version yourself.
+3. If the dependency is small enough, copy it to your `src/` folder and treat it as application code.
 
 ## Something Missing?
 
