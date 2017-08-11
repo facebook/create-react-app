@@ -59,7 +59,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = {
+let config = {
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
@@ -360,3 +360,30 @@ module.exports = {
     tls: 'empty',
   },
 };
+
+/*
+  Zendesk modification:
+  Allow the consumer to provide a `config/webpack.config.override.js` file to
+  customize the webpack config.
+
+  `config/webpack.config.override.js` must export a method which receives the
+  webpack config, the env ('dev' or 'prod') and paths. The function returns a
+  new or altered config:
+
+  ```
+    module.exports = (config, environment, paths) => {
+      // apply some change to the config...
+      ...
+
+      return config;
+    }
+  ```
+*/
+const fs = require('fs');
+const configPath = path.resolve(paths.appPath, 'config', 'webpack.config.override.js');
+
+if (fs.existsSync(configPath)) {
+  config = require(configPath)(config, 'prod', paths);
+}
+
+module.exports = config;

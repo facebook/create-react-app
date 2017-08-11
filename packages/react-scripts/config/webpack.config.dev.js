@@ -35,7 +35,7 @@ const env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
-module.exports = {
+let config = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
@@ -290,3 +290,30 @@ module.exports = {
     hints: false,
   },
 };
+
+/*
+  Zendesk modification:
+  Allow the consumer to provide a `config/webpack.config.override.js` file to
+  customize the webpack config.
+
+  `config/webpack.config.override.js` must export a method which receives the
+  webpack config, the env ('dev' or 'prod') and paths. The function returns a
+  new or altered config:
+
+  ```
+    module.exports = (config, environment, paths) => {
+      // do some change to the config...
+      ...
+
+      return config;
+    }
+  ```
+*/
+const fs = require('fs');
+const configPath = path.resolve(paths.appPath, 'config', 'webpack.config.override.js');
+
+if (fs.existsSync(configPath)) {
+  config = require(configPath)(config, 'dev', paths);
+}
+
+module.exports = config;
