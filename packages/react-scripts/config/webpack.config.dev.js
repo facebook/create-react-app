@@ -19,6 +19,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const oem = require('./oem');
@@ -233,6 +234,18 @@ module.exports = {
               },
             ],
           },
+          // "po" loader convert po file to json, used by i18n module.
+          {
+            test: /\.po$/,
+            use: [
+              require.resolve('json-loader'),
+              require.resolve('po-loader'),
+            ],
+          },
+          {
+            test: /error.html$/,
+            loader: require.resolve('html-loader'),
+          },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.
@@ -261,11 +274,23 @@ module.exports = {
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(env.raw),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(paths.appPublic, 'javascripts/browser-ua.js'),
+        to: path.join(paths.appBuild, 'static/js/browser-ua.js'),
+      }
+    ]),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
       title: `${oem.reactAppOem} Dashboard`,
+      favicon: path.join(paths.appSrc, 'customize', oem.reactAppOem, 'favicon.ico'),
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      filename: 'error.html',
+      template: paths.errorHtml,
       favicon: path.join(paths.appSrc, 'customize', oem.reactAppOem, 'favicon.ico'),
     }),
     // Add module names to factory functions so they appear in browser profiler.

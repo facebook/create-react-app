@@ -45,13 +45,16 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
+    "json-loader": "^0.5.7",
     "object-assign": "4.1.1",
+    "po-loader": "^0.4.1",
+    "po2json": "^0.4.5",
     "postcss-color-function": "^4.0.0",
     "postcss-custom-properties": "^6.0.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-import": "^10.0.0",
-    "postcss-nested": "^2.0.2",
     "postcss-loader": "2.0.6",
+    "postcss-nested": "^2.0.2",
     "promise": "8.0.1",
     "react-dev-utils": "^3.1.0",
     "react-error-overlay": "^1.0.10",
@@ -61,7 +64,8 @@
     "webpack": "3.5.1",
     "webpack-dev-server": "2.7.1",
     "webpack-manifest-plugin": "1.2.1",
-    "whatwg-fetch": "2.0.3"
+    "whatwg-fetch": "2.0.3",
+    "copy-webpack-plugin": "^4.0.1"
   },
   "devDependencies": {
     "react": "^15.5.4",
