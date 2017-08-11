@@ -64,6 +64,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^4.0.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },

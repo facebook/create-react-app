@@ -19,6 +19,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const oem = require('./oem');
@@ -249,6 +250,10 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
+          {
+            test: /error.html$/,
+            loader: require.resolve('html-loader'),
+          },
         ],
       },
       // ** STOP ** Are you adding a new loader?
@@ -261,11 +266,23 @@ module.exports = {
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(env.raw),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(paths.appPublic, 'javascripts/browser-ua.js'),
+        to: path.join(paths.appBuild, 'static/js/browser-ua.js'),
+      }
+    ]),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
       title: `${oem.reactAppOem} Dashboard`,
+      favicon: path.join(paths.appSrc, 'customize', oem.reactAppOem, 'favicon.ico'),
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      filename: 'error.html',
+      template: paths.errorHtml,
       favicon: path.join(paths.appSrc, 'customize', oem.reactAppOem, 'favicon.ico'),
     }),
     // Add module names to factory functions so they appear in browser profiler.
