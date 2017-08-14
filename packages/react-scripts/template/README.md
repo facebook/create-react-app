@@ -81,7 +81,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Firebase](#firebase)
   - [GitHub Pages](#github-pages)
   - [Heroku](#heroku)
-  - [Modulus](#modulus)
   - [Netlify](#netlify)
   - [Now](#now)
   - [S3 and CloudFront](#s3-and-cloudfront)
@@ -1974,10 +1973,6 @@ remote: npm ERR! argv "/tmp/build_a2875fc163b209225122d68916f1d4df/.heroku/node/
 ```
 
 In this case, ensure that the file is there with the proper lettercase and that’s not ignored on your local `.gitignore` or `~/.gitignore_global`.
-
-### Modulus
-
-See the [Modulus blog post](http://blog.modulus.io/deploying-react-apps-on-modulus) on how to deploy your react app to Modulus.
 
 ### Netlify
 
