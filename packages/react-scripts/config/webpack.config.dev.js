@@ -142,7 +142,7 @@ module.exports = {
                 extends: [require.resolve('eslint-config-react-app')],
               },
               ignore: false,
-              useEslintrc: false,
+              useEslintrc: true,
               // @remove-on-eject-end
             },
             loader: require.resolve('eslint-loader'),
@@ -173,7 +173,7 @@ module.exports = {
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
-              babelrc: false,
+              babelrc: true,
               presets: [require.resolve('babel-preset-react-app')],
               // @remove-on-eject-end
               // This is a feature of `babel-loader` for webpack (not Babel itself).
@@ -195,6 +195,7 @@ module.exports = {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  modules: true,
                 },
               },
               {
