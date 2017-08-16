@@ -10,7 +10,7 @@ type Props = {
   logo: string,
 }
 
-const Header = ({logo}: Props) =>
+const Header = ({ logo }: Props) =>
   (<div>
     <div className={styles.header}>
       <img src={logo} className={styles.appLogo} alt="logo" />
