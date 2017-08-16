@@ -60,7 +60,7 @@ const bpkReactScriptsConfig = pkgJson['backpack-react-scripts'] || {};
 
 const customModuleRegexes = bpkReactScriptsConfig.babelIncludePrefixes
   ? bpkReactScriptsConfig.babelIncludePrefixes.map(
-      prefix => new RegExp(`node_modules[\\\/]${prefix}`)
+      prefix => new RegExp(`node_modules[\\/]${prefix}`)
     )
   : [];
 

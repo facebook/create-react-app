@@ -49,7 +49,7 @@ function getServedPath(appPackageJson) {
 }
 
 // Regex to match backpack node modules
-var backpackModulesRegex = /node_modules[\\\/]bpk-/;
+var backpackModulesRegex = /node_modules[\\/]bpk-/;
 
 // config after eject: we're in ./config/
 module.exports = {
