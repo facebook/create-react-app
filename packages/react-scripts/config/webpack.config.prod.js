@@ -182,7 +182,10 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,
-            include: paths.appSrc,
+            include: [
+              paths.appSrc,
+              path.join(paths.appNodeModules, 'redux-demon'),
+            ],
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
