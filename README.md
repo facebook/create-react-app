@@ -1,3 +1,6 @@
+# Please see [react-scripts readme](oackages/react-scripts/README.md) for details on how to use backpack-react-scripts
+
+
 # Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
 
 Create React apps with no build configuration.
