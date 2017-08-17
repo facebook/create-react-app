@@ -247,7 +247,7 @@ module.exports = {
                         minimize: true,
                         sourceMap: shouldUseSourceMap,
                         modules: !optInCssModules,
-                        localIdentName: '[local]-[hash:base64:5]',
+                        localIdentName: '[local]-[contentHash:base64:5]',
                       },
                     },
                     {

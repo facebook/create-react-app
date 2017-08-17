@@ -233,7 +233,7 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                   modules: !optInCssModules,
-                  localIdentName: '[local]-[hash:base64:5]',
+                  localIdentName: '[local]-[contentHash:base64:5]',
                 },
               },
               {

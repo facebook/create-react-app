@@ -17,8 +17,8 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const ManifestPlugin = require('webpack-manifest-plugin');
 // const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-// const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+// const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const sassFunctions = require('bpk-mixins/sass-functions');
 const paths = require('./paths');
@@ -31,6 +31,8 @@ const publicPath = paths.servedPath;
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
 const shouldUseRelativeAssetPaths = publicPath === './';
+// Source maps are resource heavy and can cause out of memory issue for large source files.
+const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
@@ -67,7 +69,9 @@ const customModuleRegexes = bpkReactScriptsConfig.babelIncludePrefixes
 const optInCssModules = bpkReactScriptsConfig.cssModules === false;
 
 const postcssOptions = {
-  ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+  // Necessary for external CSS imports to work
+  // https://github.com/facebookincubator/create-react-app/issues/2677
+  ident: 'postcss',
   plugins: () => [
     require('postcss-flexbugs-fixes'),
     autoprefixer({
@@ -90,7 +94,7 @@ module.exports = {
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
-  // devtool: 'source-map',
+  // devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
   // entry: [require.resolve('./polyfills'), paths.appIndexJs],
   entry: paths.appSsrJs,
@@ -107,7 +111,7 @@ module.exports = {
     // We inferred the "public path" (such as / or /my-project) from homepage.
     // publicPath: publicPath,
     libraryTarget: 'commonjs2',
-    // Point sourcemap entries to original disk location
+    // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path.relative(paths.appSrc, info.absoluteResourcePath),
   },
@@ -125,7 +129,9 @@ module.exports = {
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
     // https://github.com/facebookincubator/create-react-app/issues/290
-    extensions: ['.js', '.json', '.jsx'],
+    // `web` extension prefixes have been added for better support
+    // for React Native Web.
+    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
       // @remove-on-eject-begin
       // Resolve Babel runtime relative to react-scripts.
@@ -165,6 +171,7 @@ module.exports = {
       //     {
       //       options: {
       //         formatter: eslintFormatter,
+      //         eslintPath: require.resolve('eslint'),
       //         // @remove-on-eject-begin
       //         // TODO: consider separate config for production,
       //         // e.g. to enable no-console and no-debugger only in production.
@@ -180,178 +187,176 @@ module.exports = {
       //   ],
       //   include: paths.appSrc,
       // },
-      // ** ADDING/UPDATING LOADERS **
-      // The "file" loader handles all assets unless explicitly excluded.
-      // The `exclude` list *must* be updated with every change to loader extensions.
-      // When adding a new loader, you must add its `test`
-      // as a new entry in the `exclude` list in the "file" loader.
-
-      // "file" loader makes sure those assets end up in the `build` folder.
-      // When you `import` an asset, you get its filename.
       {
-        exclude: [
-          /\.html$/,
-          /\.(js|jsx)$/,
-          /\.(scss|css)$/,
-          /\.json$/,
-          /\.bmp$/,
-          /\.gif$/,
-          /\.jpe?g$/,
-          /\.png$/,
+        // "oneOf" will traverse all following loaders until one will
+        // match the requirements. When no loader matches it will fall
+        // back to the "file" loader at the end of the loader list.
+        oneOf: [
+          // "url" loader works just like "file" loader but it also embeds
+          // assets smaller than specified size as data URLs to avoid requests.
+          {
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            loader: require.resolve('url-loader'),
+            options: {
+              limit: 10000,
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
+          // Process JS with Babel.
+          {
+            test: /\.(js|jsx)$/,
+            include: [
+              paths.appSrc,
+              paths.backpackModulesRegex,
+              ...customModuleRegexes,
+            ],
+            loader: require.resolve('babel-loader'),
+            options: {
+              // @remove-on-eject-begin
+              babelrc: false,
+              presets: [require.resolve('babel-preset-react-app')],
+              // @remove-on-eject-end
+              compact: true,
+            },
+          },
+          // The notation here is somewhat confusing.
+          // "postcss" loader applies autoprefixer to our CSS.
+          // "css" loader resolves paths in CSS and adds assets as dependencies.
+          // "style" loader normally turns CSS into JS modules injecting <style>,
+          // but unlike in development configuration, we do something different.
+          // `ExtractTextPlugin` first applies the "postcss" and "css" loaders
+          // (second argument), then grabs the result CSS and puts it into a
+          // separate file in our build process. This way we actually ship
+          // a single CSS file in production instead of JS code injecting <style>
+          // tags. If you use code splitting, however, any async bundles will still
+          // use the "style" loader inside the async code so CSS from them won't be
+          // in the main CSS file.
+          {
+            test: /\.scss$/,
+            exclude: optInCssModules
+              ? [/\.module\.scss$/, paths.backpackModulesRegex]
+              : [],
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: require.resolve('style-loader'),
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        minimize: true,
+                        sourceMap: shouldUseSourceMap,
+                        modules: !optInCssModules,
+                        localIdentName: '[local]-[hash:base64:5]',
+                      },
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: postcssOptions,
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        functions: sassFunctions,
+                      },
+                    },
+                  ],
+                },
+                extractTextPluginOptions
+              )
+            ),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          {
+            test: {
+              and: [
+                () => optInCssModules,
+                {
+                  or: [
+                    /\.module\.scss$/,
+                    { and: [paths.backpackModulesRegex, /\.scss$/] },
+                  ],
+                },
+              ],
+            },
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: require.resolve('style-loader'),
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        minimize: true,
+                        sourceMap: shouldUseSourceMap,
+                        modules: true,
+                        localIdentName: '[local]-[hash:base64:5]',
+                      },
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: postcssOptions,
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        functions: sassFunctions,
+                      },
+                    },
+                  ],
+                },
+                extractTextPluginOptions
+              )
+            ),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          {
+            test: /\.css$/,
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: require.resolve('style-loader'),
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        minimize: true,
+                        sourceMap: shouldUseSourceMap,
+                      },
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: postcssOptions,
+                    },
+                  ],
+                },
+                extractTextPluginOptions
+              )
+            ),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          // "file" loader makes sure assets end up in the `build` folder.
+          // When you `import` an asset, you get its filename.
+          // This loader don't uses a "test" so it will catch all modules
+          // that fall through the other loaders.
+          {
+            loader: require.resolve('file-loader'),
+            // Exclude `js` files to keep "css" loader working as it injects
+            // it's runtime that would otherwise processed through "file" loader.
+            // Also exclude `html` and `json` extensions so they get processed
+            // by webpacks internal loaders.
+            exclude: [/\.js$/, /\.html$/, /\.json$/],
+            options: {
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
+          // ** STOP ** Are you adding a new loader?
+          // Make sure to add the new loader(s) before the "file" loader.
         ],
-        loader: require.resolve('file-loader'),
-        options: {
-          name: 'static/media/[name].[hash:8].[ext]',
-        },
       },
-      // "url" loader works just like "file" loader but it also embeds
-      // assets smaller than specified size as data URLs to avoid requests.
-      {
-        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: require.resolve('url-loader'),
-        options: {
-          limit: 10000,
-          name: 'static/media/[name].[hash:8].[ext]',
-        },
-      },
-      // Process JS with Babel.
-      {
-        test: /\.(js|jsx)$/,
-        include: [
-          paths.appSrc,
-          paths.backpackModulesRegex,
-          ...customModuleRegexes,
-        ],
-        loader: require.resolve('babel-loader'),
-        options: {
-          // @remove-on-eject-begin
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
-          // @remove-on-eject-end
-          compact: true,
-        },
-      },
-      // The notation here is somewhat confusing.
-      // "postcss" loader applies autoprefixer to our CSS.
-      // "css" loader resolves paths in CSS and adds assets as dependencies.
-      // "style" loader normally turns CSS into JS modules injecting <style>,
-      // but unlike in development configuration, we do something different.
-      // `ExtractTextPlugin` first applies the "postcss" and "css" loaders
-      // (second argument), then grabs the result CSS and puts it into a
-      // separate file in our build process. This way we actually ship
-      // a single CSS file in production instead of JS code injecting <style>
-      // tags. If you use code splitting, however, any async bundles will still
-      // use the "style" loader inside the async code so CSS from them won't be
-      // in the main CSS file.
-      {
-        test: /\.scss$/,
-        exclude: optInCssModules
-          ? [/\.module\.scss$/, paths.backpackModulesRegex]
-          : [],
-        loader: ExtractTextPlugin.extract(
-          Object.assign(
-            {
-              fallback: require.resolve('style-loader'),
-              use: [
-                {
-                  loader: require.resolve('css-loader'),
-                  options: {
-                    importLoaders: 1,
-                    minimize: true,
-                    sourceMap: true,
-                    modules: !optInCssModules,
-                    localIdentName: '[local]-[hash:base64:5]',
-                  },
-                },
-                {
-                  loader: require.resolve('postcss-loader'),
-                  options: postcssOptions,
-                },
-                {
-                  loader: require.resolve('sass-loader'),
-                  options: {
-                    functions: sassFunctions,
-                  },
-                },
-              ],
-            },
-            extractTextPluginOptions
-          )
-        ),
-        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-      },
-      {
-        test: {
-          and: [
-            () => optInCssModules,
-            {
-              or: [
-                /\.module\.scss$/,
-                { and: [paths.backpackModulesRegex, /\.scss$/] },
-              ],
-            },
-          ],
-        },
-        loader: ExtractTextPlugin.extract(
-          Object.assign(
-            {
-              fallback: require.resolve('style-loader'),
-              use: [
-                {
-                  loader: require.resolve('css-loader'),
-                  options: {
-                    importLoaders: 1,
-                    minimize: true,
-                    sourceMap: true,
-                    modules: true,
-                    localIdentName: '[local]-[hash:base64:5]',
-                  },
-                },
-                {
-                  loader: require.resolve('postcss-loader'),
-                  options: postcssOptions,
-                },
-                {
-                  loader: require.resolve('sass-loader'),
-                  options: {
-                    functions: sassFunctions,
-                  },
-                },
-              ],
-            },
-            extractTextPluginOptions
-          )
-        ),
-        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-      },
-      {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract(
-          Object.assign(
-            {
-              fallback: require.resolve('style-loader'),
-              use: [
-                {
-                  loader: require.resolve('css-loader'),
-                  options: {
-                    importLoaders: 1,
-                    minimize: true,
-                    sourceMap: true,
-                  },
-                },
-                {
-                  loader: require.resolve('postcss-loader'),
-                  options: postcssOptions,
-                },
-              ],
-            },
-            extractTextPluginOptions
-          )
-        ),
-        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-      },
-      // ** STOP ** Are you adding a new loader?
-      // Remember to add the new extension(s) to the "file" loader exclusion list.
     ],
   },
   plugins: [
@@ -387,15 +392,19 @@ module.exports = {
     // new webpack.optimize.UglifyJsPlugin({
     //   compress: {
     //     warnings: false,
-    //     // This feature has been reported as buggy a few times, such as:
-    //     // https://github.com/mishoo/UglifyJS2/issues/1964
-    //     // We'll wait with enabling it by default until it is more solid.
-    //     reduce_vars: false,
+    //     // Disabled because of an issue with Uglify breaking seemingly valid code:
+    //     // https://github.com/facebookincubator/create-react-app/issues/2376
+    //     // Pending further investigation:
+    //     // https://github.com/mishoo/UglifyJS2/issues/2011
+    //     comparisons: false,
     //   },
     //   output: {
     //     comments: false,
+    //     // Turned on because emoji and regex is not minified properly using default
+    //     // https://github.com/facebookincubator/create-react-app/issues/2488
+    //     ascii_only: true,
     //   },
-    //   sourceMap: true,
+    //   sourceMap: shouldUseSourceMap,
     // }),
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
@@ -410,7 +419,7 @@ module.exports = {
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
     // new SWPrecacheWebpackPlugin({
-    //   // By default, a cache-busting query parameter is appended to requests
+    // By default, a cache-busting query parameter is appended to requests
     //   // used to populate the caches, to ensure the responses are fresh.
     //   // If a URL is already hashed by Webpack, then there is no concern
     //   // about it being stale, and the cache-busting can be skipped.
@@ -419,6 +428,11 @@ module.exports = {
     //   logger(message) {
     //     if (message.indexOf('Total precache size is') === 0) {
     //       // This message occurs for every build and is a bit too noisy.
+    //       return;
+    //     }
+    //     if (message.indexOf('Skipping static resource') === 0) {
+    //       // This message obscures real errors so we ignore it.
+    //       // https://github.com/facebookincubator/create-react-app/issues/2612
     //       return;
     //     }
     //     console.log(message);
@@ -431,9 +445,6 @@ module.exports = {
     //   navigateFallbackWhitelist: [/^(?!\/__).*/],
     //   // Don't precache sourcemaps (they're large) and build asset manifest:
     //   staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-    //   // Work around Windows path issue in SWPrecacheWebpackPlugin:
-    //   // https://github.com/facebookincubator/create-react-app/issues/2235
-    //   stripPrefix: paths.appBuild.replace(/\\/g, '/') + '/',
     // }),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
@@ -459,6 +470,7 @@ module.exports = {
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   // node: {
+  //   dgram: 'empty',
   //   fs: 'empty',
   //   net: 'empty',
   //   tls: 'empty',
