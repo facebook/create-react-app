@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "create-react-app",
   "version": "1.4.0",
   "keywords": [

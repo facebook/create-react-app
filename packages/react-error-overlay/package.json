@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "react-error-overlay",
   "version": "1.0.10",
   "description": "An overlay for displaying stack frames.",
@@ -6,7 +7,7 @@
   "scripts": {
     "prepublishOnly": "npm run build:prod && npm test",
     "start": "cross-env NODE_ENV=development npm run build -- --watch",
-    "test": "flow && jest",
+    "test": "jest",
     "build": "babel src/ -d lib/",
     "build:prod": "cross-env NODE_ENV=production babel src/ -d lib/"
   },
