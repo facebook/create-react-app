@@ -13,6 +13,7 @@
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
+const oem = require('./oem');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -51,9 +52,10 @@ function getServedPath(appPackageJson) {
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp(path.join('dist', oem.reactAppOem)),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
+  errorHtml: resolveApp('public/error.html'),
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
@@ -71,9 +73,10 @@ const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp(path.join('dist', oem.reactAppOem)),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
+  errorHtml: resolveApp('public/error.html'),
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
@@ -101,9 +104,10 @@ if (
   module.exports = {
     dotenv: resolveOwn('template/.env'),
     appPath: resolveApp('.'),
-    appBuild: resolveOwn('../../build'),
+    appBuild: resolveApp(path.join('../../dist', oem.reactAppOem)),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
+    errorHtml: resolveOwn('template/public/error.html'),
     appIndexJs: resolveOwn('template/src/index.js'),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),

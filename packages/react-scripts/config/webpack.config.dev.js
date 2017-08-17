@@ -19,8 +19,10 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const oem = require('./oem');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -56,6 +58,8 @@ module.exports = {
     require.resolve('react-dev-utils/webpackHotDevClient'),
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
+    // Shipping babel-polyfill also
+    require.resolve('./babel-polyfill'),
     // Errors should be considered fatal in development
     require.resolve('react-error-overlay'),
     // Finally, this is your app's code:
@@ -110,6 +114,10 @@ module.exports = {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
+      // Useful to import modules from the src folder.
+      '~': paths.appSrc,
+      // This path will be changed in the 'npm run deploy' process.
+      '~customize': path.join(paths.appSrc, `customize/${oem.customizeEntry}`),
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -169,7 +177,10 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,
-            include: paths.appSrc,
+            include: [
+              paths.appSrc,
+              path.join(paths.appNodeModules, 'redux-demon'),
+            ],
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
@@ -204,7 +215,11 @@ module.exports = {
                   // https://github.com/facebookincubator/create-react-app/issues/2677
                   ident: 'postcss',
                   plugins: () => [
+                    require('postcss-import'),
                     require('postcss-flexbugs-fixes'),
+                    require('postcss-custom-properties'),
+                    require('postcss-nested'),
+                    require('postcss-color-function'),
                     autoprefixer({
                       browsers: [
                         '>1%',
@@ -218,6 +233,18 @@ module.exports = {
                 },
               },
             ],
+          },
+          // "po" loader convert po file to json, used by i18n module.
+          {
+            test: /\.po$/,
+            use: [
+              require.resolve('json-loader'),
+              require.resolve('po-loader'),
+            ],
+          },
+          {
+            test: /error.html$/,
+            loader: require.resolve('html-loader'),
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
@@ -247,10 +274,24 @@ module.exports = {
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(env.raw),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(paths.appPublic, 'javascripts/browser-ua.js'),
+        to: path.join(paths.appBuild, 'static/js/browser-ua.js'),
+      }
+    ]),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      title: `${oem.reactAppOem} Dashboard`,
+      favicon: path.join(paths.appSrc, 'customize', oem.reactAppOem, 'favicon.ico'),
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      filename: 'error.html',
+      template: paths.errorHtml,
+      favicon: path.join(paths.appSrc, 'customize', oem.reactAppOem, 'favicon.ico'),
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
