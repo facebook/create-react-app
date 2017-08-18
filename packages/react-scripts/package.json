@@ -1,6 +1,6 @@
 {
-  "name": "postlight-react-scripts",
-  "version": "0.0.1",
+  "name": "@postlight/postlight-react-scripts",
+  "version": "0.0.2",
   "description": "Configuration and scripts for Create React App - Postlight style",
   "repository": "postlight/create-react-app",
   "license": "BSD-3-Clause",

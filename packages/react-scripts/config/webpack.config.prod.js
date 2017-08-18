@@ -218,7 +218,7 @@ module.exports = {
                         ident: 'postcss',
                         plugins: () => [
                           require('postcss-flexbugs-fixes'),
-                          autoprefixer({
+                          require("postcss-cssnext")({
                             browsers: [
                               '>1%',
                               'last 4 versions',
@@ -226,14 +226,6 @@ module.exports = {
                               'not ie < 9', // React doesn't support IE8 anyway
                             ],
                             flexbox: 'no-2009',
-                          }),
-                          require("postcss-cssnext")({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9',
-                            ],
                           }),
                         ],
                       },
@@ -270,7 +262,7 @@ module.exports = {
                         ident: 'postcss',
                         plugins: () => [
                           require('postcss-flexbugs-fixes'),
-                          autoprefixer({
+                          require("postcss-cssnext")({
                             browsers: [
                               '>1%',
                               'last 4 versions',
@@ -278,14 +270,6 @@ module.exports = {
                               'not ie < 9', // React doesn't support IE8 anyway
                             ],
                             flexbox: 'no-2009',
-                          }),
-                          require("postcss-cssnext")({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9',
-                            ],
                           }),
                         ],
                       },
