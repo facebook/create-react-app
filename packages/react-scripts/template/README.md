@@ -348,6 +348,8 @@ Learn more about ES6 modules:
 
 ## Importing a Component using path relative to src (Absolute path)
 
+**NOTE**: Make sure to remove `.env` from your .gitignore in the project root
+
 Create a file called `.env` in the root of the project, then add the following:
 
 ```
@@ -372,7 +374,6 @@ This allows uniform import path accross different component, and eliminate the f
 ```js
 import Utils from '../../../Utils';
 ```
-
 
 
 ## Adding a Stylesheet
