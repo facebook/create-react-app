@@ -25,7 +25,8 @@ class InterpolateHtmlPlugin {
 
   apply(compiler) {
     compiler.plugin('compilation', compilation => {
-      compilation.plugin('html-webpack-plugin-before-html-processing',
+      compilation.plugin(
+        'html-webpack-plugin-before-html-processing',
         (data, callback) => {
           // Run HTML through a series of user-specified string replacements.
           Object.keys(this.replacements).forEach(key => {

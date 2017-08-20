@@ -1,0 +1,86 @@
+[
+  {
+    "functionName": "App.componentDidMount",
+    "fileName": "http://localhost:3000/static/js/bundle.js",
+    "lineNumber": 26122,
+    "columnNumber": 21,
+    "_originalFunctionName": "App.componentDidMount",
+    "_originalFileName": "webpack:///packages/react-scripts/template/src/App.js",
+    "_originalLineNumber": 7,
+    "_originalColumnNumber": 0,
+    "_scriptCode": [
+      {
+        "lineNumber": 26119,
+        "content": "  _createClass(App, [{",
+        "highlight": false
+      },
+      {
+        "lineNumber": 26120,
+        "content": "    key: 'componentDidMount',",
+        "highlight": false
+      },
+      {
+        "lineNumber": 26121,
+        "content": "    value: function componentDidMount() {",
+        "highlight": false
+      },
+      {
+        "lineNumber": 26122,
+        "content": "      document.body.missing();",
+        "highlight": true
+      },
+      {
+        "lineNumber": 26123,
+        "content": "    }",
+        "highlight": false
+      },
+      {
+        "lineNumber": 26124,
+        "content": "  }, {",
+        "highlight": false
+      },
+      {
+        "lineNumber": 26125,
+        "content": "    key: 'render',",
+        "highlight": false
+      }
+    ],
+    "_originalScriptCode": [
+      {
+        "lineNumber": 4,
+        "content": "",
+        "highlight": false
+      },
+      {
+        "lineNumber": 5,
+        "content": "class App extends Component {",
+        "highlight": false
+      },
+      {
+        "lineNumber": 6,
+        "content": "  componentDidMount() {",
+        "highlight": false
+      },
+      {
+        "lineNumber": 7,
+        "content": "    document.body.missing()",
+        "highlight": true
+      },
+      {
+        "lineNumber": 8,
+        "content": "  }",
+        "highlight": false
+      },
+      {
+        "lineNumber": 9,
+        "content": "",
+        "highlight": false
+      },
+      {
+        "lineNumber": 10,
+        "content": "  render() {",
+        "highlight": false
+      }
+    ]
+  }
+]

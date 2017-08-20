@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 var fs = require('fs');
 var path = require('path');
 var chalk = require('chalk');
