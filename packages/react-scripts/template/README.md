@@ -278,7 +278,7 @@ You would need to have [WebStorm](https://www.jetbrains.com/webstorm/) and [JetB
 
 In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and select `JavaScript Debug`. Paste `http://localhost:3000` into the URL field and save the configuration.
 
-Start your app by running `npm start`, then press ^D on macOS or F9 on Windows and Linux or click the green debug icon to start debugging in WebStorm.
+Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
 
 The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine. 
 
