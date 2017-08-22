@@ -45,8 +45,6 @@ module.exports = function(
     eject: 'react-scripts-ts eject',
   };
 
-  console.log(appPackage);
-
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
@@ -104,6 +102,23 @@ module.exports = function(
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
 
+  // Install dev dependencies
+  const types = [
+    '@types/node',
+    '@types/react',
+    '@types/react-dom',
+    '@types/jest',
+  ];
+
+  console.log(`Installing ${types.join(', ')} as dev dependencies ${command}...`);
+  console.log();
+
+  const devProc = spawn.sync(command, args.concat('-D').concat(types), { stdio: 'inherit' });
+  if (devProc.status !== 0) {
+    console.error(`\`${command} ${args.concat(types).join(' ')}\` failed`);
+    return;
+  }
+
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
     appPath,
@@ -117,22 +132,6 @@ module.exports = function(
       })
     );
     fs.unlinkSync(templateDependenciesPath);
-  }
-
-  const types = [
-    '@types/node',
-    '@types/react',
-    '@types/react-dom',
-    '@types/jest',
-  ];
-
-  console.log(`Installing ${types.join(', ')} ${command}...`);
-  console.log();
-
-  const proc = spawn.sync(command, args.concat(types), { stdio: 'inherit' });
-  if (proc.status !== 0) {
-    console.error(`\`${command} ${args.concat(types).join(' ')}\` failed`);
-    return;
   }
 
   // Install react and react-dom for backward compatibility with old CRA cli
