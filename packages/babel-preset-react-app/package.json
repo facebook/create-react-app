@@ -25,6 +25,6 @@
     "babel-preset-react": "6.24.1"
   },
   "peerDependencies": {
-    "babel-runtime": "^6.26.0"
+    "babel-runtime": "^6.23.0"
   }
 }
