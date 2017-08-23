@@ -5,4 +5,5 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+// Consider enabling service workers for caching and offline pages by uncommenting the following line
+//registerServiceWorker();
