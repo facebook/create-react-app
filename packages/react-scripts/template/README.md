@@ -46,7 +46,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - ["Invalid Host Header" Errors After Configuring Proxy](#invalid-host-header-errors-after-configuring-proxy)
   - [Configuring the Proxy Manually](#configuring-the-proxy-manually)
   - [Configuring a WebSocket Proxy](#configuring-a-websocket-proxy)
-  - [Configuring the Proxy behind a network proxy](#configuring-the-proxy-behind-a-network-proxy)
+  - [Configuring the Proxy Behind a Network Proxy](#configuring-the-proxy-behind-a-network-proxy)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
@@ -1046,7 +1046,6 @@ You may also specify any configuration value [`http-proxy-middleware`](https://g
   // ...
 }
 ```
-
 All requests matching this path will be proxies, no exceptions. This includes requests for `text/html`, which the standard `proxy` option does not proxy.`
 eg:`
 
