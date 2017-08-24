@@ -1114,7 +1114,7 @@ Either way, you can proxy WebSocket requests manually in `package.json`:
 }
 ```
 
-### Configuring the Proxy behind a network proxy
+### Configuring the Proxy Behind a Network Proxy
 
 If you are behind a network proxy (common in corporate environments), and require requests to the url specified in the `target` property of the `proxy` object to be forwarded through your network proxy, you may specify an `agent` property in your `package.json` under the `proxy` object.
 The `agent` property must be a string value representing either the environment variable containing your network proxy configuration (case sensitive), or the proxy configuration itself, in the format:
