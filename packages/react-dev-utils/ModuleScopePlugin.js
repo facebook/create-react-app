@@ -13,8 +13,9 @@ const chalk = require('chalk');
 const path = require('path');
 
 class ModuleScopePlugin {
-  constructor(appSrc) {
+  constructor(appSrc, allowedFiles = []) {
     this.appSrc = appSrc;
+    this.allowedFiles = new Set(allowedFiles);
   }
 
   apply(resolver) {
@@ -40,15 +41,16 @@ class ModuleScopePlugin {
       if (relative.startsWith('../') || relative.startsWith('..\\')) {
         return callback();
       }
-      // Find path from src to the requested file
-      const requestRelative = path.relative(
-        appSrc,
-        path.resolve(
-          path.dirname(request.context.issuer),
-          request.__innerRequest_request
-        )
+      const requestFullPath = path.resolve(
+        path.dirname(request.context.issuer),
+        request.__innerRequest_request
       );
+      if (this.allowedFiles.has(requestFullPath)) {
+        return callback();
+      }
+      // Find path from src to the requested file
       // Error if in a parent directory of src/
+      const requestRelative = path.relative(appSrc, requestFullPath);
       if (
         requestRelative.startsWith('../') ||
         requestRelative.startsWith('..\\')

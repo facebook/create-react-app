@@ -13,10 +13,7 @@ import Overlay from '../components/Overlay';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import CodeBlock from '../components/CodeBlock';
-import { AllHtmlEntities as Entities } from 'html-entities';
 import ansiHTML from 'react-dev-utils/ansiHTML';
-
-const entities = new Entities();
 
 class CompileErrorContainer extends PureComponent {
   render() {
@@ -24,7 +21,7 @@ class CompileErrorContainer extends PureComponent {
     return (
       <Overlay>
         <Header headerText="Failed to compile" />
-        <CodeBlock main={true} codeHTML={ansiHTML(entities.encode(error))} />
+        <CodeBlock main={true} codeHTML={ansiHTML(error)} />
         <Footer line1="This error occurred during the build time and cannot be dismissed." />
       </Overlay>
     );
