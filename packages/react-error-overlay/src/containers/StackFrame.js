@@ -91,13 +91,16 @@ class StackFrame extends Component {
     } = frame;
 
     // TODO: find a better place for this.
-    // Chrome has a bug with inferring function.name:
-    // https://github.com/facebookincubator/create-react-app/issues/2097
-    // Let's ignore a meaningless name we get for top-level modules.
+    if (functionName && functionName.indexOf('Object.') === 0) {
+      functionName = functionName.slice('Object.'.length);
+    }
     if (
-      functionName === 'Object.friendlySyntaxErrorLabel' ||
-      functionName === 'Object.exports.__esModule' ||
-      functionName === 'Object.<anonymous>' ||
+      // Chrome has a bug with inferring function.name:
+      // https://github.com/facebookincubator/create-react-app/issues/2097
+      // Let's ignore a meaningless name we get for top-level modules.
+      functionName === 'friendlySyntaxErrorLabel' ||
+      functionName === 'exports.__esModule' ||
+      functionName === '<anonymous>' ||
       !functionName
     ) {
       functionName = '(anonymous function)';
