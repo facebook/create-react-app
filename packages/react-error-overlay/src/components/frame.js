@@ -101,13 +101,13 @@ function frameDiv(
   const frame = document.createElement('div');
   const frameFunctionName = document.createElement('div');
 
-  let cleanedFunctionName;
-  if (!functionName || functionName === 'Object.<anonymous>') {
-    cleanedFunctionName = '(anonymous function)';
-  } else {
-    cleanedFunctionName = functionName;
+  if (functionName && functionName.indexOf('Object.') === 0) {
+    functionName = functionName.slice('Object.'.length);
   }
-
+  if (functionName === '<anonymous>') {
+    functionName = null;
+  }
+  const cleanedFunctionName = functionName || '(anonymous function)';
   const cleanedUrl = url.replace('webpack://', '.');
 
   if (internalUrl) {
