@@ -55,8 +55,12 @@ function NavigationBar(props: NavigationBarPropsType) {
   return (
     <div style={navigationBarStyle}>
       <span style={buttonContainerStyle}>
-        <button onClick={previous} style={leftButtonStyle}>←</button>
-        <button onClick={next} style={rightButtonStyle}>→</button>
+        <button onClick={previous} style={leftButtonStyle}>
+          ←
+        </button>
+        <button onClick={next} style={rightButtonStyle}>
+          →
+        </button>
       </span>
       {`${currentError} of ${totalErrors} errors on the page`}
     </div>
