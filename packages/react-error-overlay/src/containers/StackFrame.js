@@ -55,10 +55,7 @@ class StackFrame extends Component {
   };
 
   canOpenInEditor() {
-    const {
-      _originalFileName: sourceFileName,
-      _originalLineNumber: sourceLineNumber,
-    } = this.props.frame;
+    const { _originalFileName: sourceFileName } = this.props.frame;
     // Unknown file
     if (!sourceFileName) {
       return false;
