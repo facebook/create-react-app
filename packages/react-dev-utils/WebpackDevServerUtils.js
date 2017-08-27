@@ -16,6 +16,7 @@ const chalk = require('chalk');
 const detect = require('detect-port-alt');
 const isRoot = require('is-root');
 const inquirer = require('inquirer');
+const HttpsProxyAgent = require('https-proxy-agent');
 const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
@@ -364,6 +365,21 @@ function prepareProxy(proxy, appPublicFolder) {
     } else {
       target = proxy[context].target;
     }
+    let proxyAgent;
+    if (proxy[context].hasOwnProperty('agent') || process.env.PROXY_AGENT) {
+      const agentVal = proxy[context].agent || process.env.PROXY_AGENT;
+      if (typeof agentVal !== 'string') {
+        console.log(
+          chalk.red('"agent" value in package.json must be a string')
+        );
+        process.exit(1);
+      }
+      if (agentVal.toLowerCase() !== 'none') {
+        proxyAgent = process.env[agentVal]
+          ? new HttpsProxyAgent(process.env[agentVal])
+          : new HttpsProxyAgent(agentVal);
+      }
+    }
     return Object.assign({}, proxy[context], {
       context: function(pathname) {
         return mayProxy(pathname) && pathname.match(context);
@@ -377,6 +393,7 @@ function prepareProxy(proxy, appPublicFolder) {
         }
       },
       target,
+      agent: proxyAgent ? proxyAgent : undefined,
       onError: onProxyError(target),
     });
   });

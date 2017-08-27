@@ -46,6 +46,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - ["Invalid Host Header" Errors After Configuring Proxy](#invalid-host-header-errors-after-configuring-proxy)
   - [Configuring the Proxy Manually](#configuring-the-proxy-manually)
   - [Configuring a WebSocket Proxy](#configuring-a-websocket-proxy)
+  - [Configuring the Proxy Behind a Network Proxy](#configuring-the-proxy-behind-a-network-proxy)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
@@ -1113,6 +1114,65 @@ Either way, you can proxy WebSocket requests manually in `package.json`:
   // ...
 }
 ```
+
+### Configuring the Proxy Behind a Network Proxy
+
+If you are behind a network proxy (common in corporate environments), and require requests to the url specified in the `target` property of the `proxy` object to be forwarded through your network proxy, you may specify an `agent` property in your `package.json` under the `proxy` object.
+The `agent` property must be a string value representing either the environment variable containing your network proxy configuration (case sensitive), or the proxy configuration itself, in the format:
+
+`<protocol>://[<username>:<password>@]<proxy_address>:<port>`
+
+eg: `http://myproxy.com:8080`
+
+or: `http://my_name:my_password@myproxy.com:8080`
+
+You may also set the network proxy for all specified proxies via an environment variable named `PROXY_AGENT` either in your system environment variables or your `.env` or `.env.development` files.
+
+If the `PROXY_AGENT` environment variable exists, it will be used for all proxies which do not explicitly set an `agent` property manually. If you need to exclude a proxy from using the `PROXY_AGENT` value, simply set the `agent` property to "none".
+
+A more complete example of using the proxy agent is:
+
+```js
+{
+  // ...
+  "proxy": {
+    // Matches any request starting with /api
+    "/api": {
+      "target": "<url_1>",
+      "ws": true
+      // Specify a network proxy agent for this context via environment variable
+      "agent": "http_proxy"
+      // ...
+    },
+    // Matches any request starting with /foo
+    "/foo": {
+      "target": "<url_2>",
+      "ssl": true,
+      "pathRewrite": {
+        "^/foo": "/foo/beta"
+      }
+      // Specify a network proxy agent for this context directly
+      "agent": "http://username:password@myproxy.local:8080"
+      // ...
+    },
+    // Matches /bar/abc.html but not /bar/sub/def.html
+    // Does not need to be forwarded through the network proxy as it is local to the machine
+    "/bar/*.html": {
+      "target": "http://localhost:5000/bar_api",
+      // ...
+    },
+    // Matches /baz/abc.html and /baz/sub/def.html
+    // Does not need to be forwarded through the network proxy as it is in the local domain, explicitly setting to none to override "PROXY_AGENT" environment variable
+    "/baz/**/*.html": {
+      "target": "http://apiserver.local",
+      "agent": "none"
+      // ...
+    }
+  }
+  // ...
+}
+```
+
 
 ## Using HTTPS in Development
 
