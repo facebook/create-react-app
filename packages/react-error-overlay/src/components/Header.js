@@ -24,9 +24,9 @@ const headerStyle = {
   overflow: 'auto',
 };
 
-type HeaderPropType = {
+type HeaderPropType = {|
   headerText: string,
-};
+|};
 
 function Header(props: HeaderPropType) {
   return (

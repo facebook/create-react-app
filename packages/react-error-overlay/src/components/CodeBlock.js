@@ -35,10 +35,10 @@ const codeStyle = {
   fontFamily: 'Consolas, Menlo, monospace',
 };
 
-type CodeBlockPropsType = {
+type CodeBlockPropsType = {|
   main: boolean,
   codeHTML: string,
-};
+|};
 
 function CodeBlock(props: CodeBlockPropsType) {
   const preStyle = props.main ? primaryPreStyle : secondaryPreStyle;

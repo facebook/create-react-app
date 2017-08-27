@@ -43,12 +43,12 @@ const rightButtonStyle = {
 
 type Callback = () => void;
 
-type NavigationBarPropsType = {
+type NavigationBarPropsType = {|
   currentError: number,
   totalErrors: number,
   previous: Callback,
   next: Callback,
-};
+|};
 
 function NavigationBar(props: NavigationBarPropsType) {
   const { currentError, totalErrors, previous, next } = props;

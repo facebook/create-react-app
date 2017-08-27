@@ -23,7 +23,7 @@ const closeButtonStyle = {
 };
 
 type CloseCallback = () => void;
-function CloseButton({ close }: { close: CloseCallback }) {
+function CloseButton({ close }: {| close: CloseCallback |}) {
   return (
     <span
       title="Click or press Escape to dismiss."

@@ -19,13 +19,13 @@ import generateAnsiHtml from 'react-dev-utils/ansiHTML';
 
 import codeFrame from 'babel-code-frame';
 
-type StackFrameCodeBlockPropsType = {
+type StackFrameCodeBlockPropsType = {|
   lines: ScriptLine[],
   lineNum: number,
   columnNum: number,
   contextSize: number,
   main: boolean,
-};
+|};
 
 function StackFrameCodeBlock(props: StackFrameCodeBlockPropsType) {
   const { lines, lineNum, columnNum, contextSize, main } = props;

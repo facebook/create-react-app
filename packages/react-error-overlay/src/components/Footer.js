@@ -18,10 +18,10 @@ const footerStyle = {
   flex: '0 0 auto',
 };
 
-type FooterPropsType = {
+type FooterPropsType = {|
   line1: string,
   line2?: string,
-};
+|};
 
 function Footer(props: FooterPropsType) {
   return (

@@ -18,12 +18,12 @@ const wrapperStyle = {
   flexDirection: 'column',
 };
 
-type ErrorRecord = {
+type ErrorRecord = {|
   error: Error,
   unhandledRejection: boolean,
   contextSize: number,
   stackFrames: StackFrame[],
-};
+|};
 
 function RuntimeError({ errorRecord }: { errorRecord: ErrorRecord }) {
   const { error, unhandledRejection, contextSize, stackFrames } = errorRecord;
