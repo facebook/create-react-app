@@ -24,6 +24,10 @@ const anchorStyle = {
   cursor: 'pointer',
 };
 
+const codeAnchorStyle = {
+  cursor: 'pointer',
+};
+
 const toggleStyle = {
   marginBottom: '1.5em',
   color: darkGray,
@@ -150,7 +154,9 @@ class StackFrame extends Component {
         </div>
         {codeBlockProps &&
           <span>
-            <CodeBlock {...codeBlockProps} />
+            <a onClick={this.openInEditor} style={codeAnchorStyle}>
+              <CodeBlock {...codeBlockProps} />
+            </a>
             <button style={toggleStyle} onClick={this.toggleCompiled}>
               {'View ' + (compiled ? 'source' : 'compiled')}
             </button>
