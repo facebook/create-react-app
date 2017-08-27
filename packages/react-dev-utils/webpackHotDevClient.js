@@ -22,10 +22,21 @@ var SockJS = require('sockjs-client');
 var stripAnsi = require('strip-ansi');
 var url = require('url');
 var formatWebpackMessages = require('./formatWebpackMessages');
-var showCompileErrorOverlay = require('react-error-overlay')
-  .showCompileErrorOverlay;
+var ErrorOverlay = require('react-error-overlay');
 
-var destroyOverlay = null;
+ErrorOverlay.startReportingRuntimeErrors(() => {
+  // TODO: why do we need this?
+  if (module.hot && typeof module.hot.decline === 'function') {
+    module.hot.decline();
+  }
+});
+
+if (module.hot && typeof module.hot.dispose === 'function') {
+  module.hot.dispose(() => {
+    // TODO: why do we need this?
+    ErrorOverlay.stopReportingRuntimeErrors();
+  });
+}
 
 // Connect to WebpackDevServer via a socket.
 var connection = new SockJS(
@@ -74,11 +85,9 @@ function handleSuccess() {
   // Attempt to apply hot updates or reload.
   if (isHotUpdate) {
     tryApplyUpdates(function onHotUpdateSuccess() {
-      // Only destroy it when we're sure it's a hot update.
+      // Only dismiss it when we're sure it's a hot update.
       // Otherwise it would flicker right before the reload.
-      if (destroyOverlay) {
-        destroyOverlay();
-      }
+      ErrorOverlay.dismissBuildError();
     });
   }
 }
@@ -118,11 +127,9 @@ function handleWarnings(warnings) {
       // Only print warnings if we aren't refreshing the page.
       // Otherwise they'll disappear right away anyway.
       printWarnings();
-      // Only destroy it when we're sure it's a hot update.
+      // Only dismiss it when we're sure it's a hot update.
       // Otherwise it would flicker right before the reload.
-      if (destroyOverlay) {
-        destroyOverlay();
-      }
+      ErrorOverlay.dismissBuildError();
     });
   } else {
     // Print initial warnings immediately.
@@ -144,7 +151,7 @@ function handleErrors(errors) {
   });
 
   // Only show the first error.
-  destroyOverlay = showCompileErrorOverlay(formatted.errors[0]);
+  ErrorOverlay.reportBuildError(formatted.errors[0]);
 
   // Also log them to the console.
   if (typeof console !== 'undefined' && typeof console.error === 'function') {
