@@ -83,7 +83,7 @@
 2. `node -v`: 
 3. `npm -v`:
 4. `yarn --version` (if you use Yarn):
-3. `npm ls react-scripts-ts` (if you haven’t ejected): 
+5. `npm ls react-scripts-ts` (if you haven’t ejected): 
 
 Then, specify:
 
