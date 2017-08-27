@@ -25,7 +25,12 @@ type ErrorRecord = {|
   stackFrames: StackFrame[],
 |};
 
-function RuntimeError({ errorRecord }: { errorRecord: ErrorRecord }) {
+type Props = {|
+  errorRecord: ErrorRecord,
+  launchEditorEndpoint: ?string,
+|};
+
+function RuntimeError({ errorRecord, launchEditorEndpoint }: Props) {
   const { error, unhandledRejection, contextSize, stackFrames } = errorRecord;
   const errorName = unhandledRejection
     ? 'Unhandled Rejection (' + error.name + ')'
@@ -54,6 +59,7 @@ function RuntimeError({ errorRecord }: { errorRecord: ErrorRecord }) {
         stackFrames={stackFrames}
         errorName={errorName}
         contextSize={contextSize}
+        launchEditorEndpoint={launchEditorEndpoint}
       />
     </div>
   );

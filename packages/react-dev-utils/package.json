@@ -24,6 +24,7 @@
     "inquirer.js",
     "InterpolateHtmlPlugin.js",
     "launchEditor.js",
+    "launchEditorEndpoint.js",
     "ModuleScopePlugin.js",
     "noopServiceWorkerMiddleware.js",
     "openBrowser.js",

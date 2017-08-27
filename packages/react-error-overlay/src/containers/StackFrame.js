@@ -55,6 +55,9 @@ class StackFrame extends Component {
   };
 
   canOpenInEditor() {
+    if (!this.props.launchEditorEndpoint) {
+      return;
+    }
     const { _originalFileName: sourceFileName } = this.props.frame;
     // Unknown file
     if (!sourceFileName) {
@@ -80,7 +83,7 @@ class StackFrame extends Component {
     } = this.props.frame;
     // Keep this in sync with react-error-overlay/middleware.js
     fetch(
-      '/__open-stack-frame-in-editor?fileName=' +
+      `${this.props.launchEditorEndpoint}?fileName=` +
         window.encodeURIComponent(sourceFileName) +
         '&lineNumber=' +
         window.encodeURIComponent(sourceLineNumber || 1)

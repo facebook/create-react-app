@@ -18,12 +18,18 @@ import { applyStyles } from './utils/dom/css';
 
 import type { ErrorRecord } from './listenToRuntimeErrors';
 
+type RuntimeReportingOptions = {|
+  onError: () => void,
+  launchEditorEndpoint: string,
+|};
+
 let iframe: null | HTMLIFrameElement = null;
 let isLoadingIframe: boolean = false;
 
 let renderedElement: null | React.Element<any> = null;
 let currentBuildError: null | string = null;
 let currentRuntimeErrorRecords: Array<ErrorRecord> = [];
+let currentRuntimeErrorOptions: null | RuntimeReportingOptions = null;
 let stopListeningToRuntimeErrors: null | (() => void) = null;
 
 export function reportBuildError(error: string) {
@@ -36,14 +42,15 @@ export function dismissBuildError() {
   update();
 }
 
-export function startReportingRuntimeErrors(onError?: () => void) {
+export function startReportingRuntimeErrors(options: RuntimeReportingOptions) {
   if (stopListeningToRuntimeErrors !== null) {
-    return;
+    throw new Error('Already listening');
   }
+  currentRuntimeErrorOptions = options;
   listenToRuntimeErrors(errorRecord => {
     try {
-      if (typeof onError === 'function') {
-        onError();
+      if (typeof options.onError === 'function') {
+        options.onError.call(null);
       }
     } finally {
       handleRuntimeError(errorRecord);
@@ -62,12 +69,14 @@ function dismissRuntimeErrors() {
 }
 
 export function stopReportingRuntimeErrors() {
-  if (stopListeningToRuntimeErrors !== null) {
-    try {
-      stopListeningToRuntimeErrors();
-    } finally {
-      stopListeningToRuntimeErrors = null;
-    }
+  if (stopListeningToRuntimeErrors === null) {
+    throw new Error('Not currently listening');
+  }
+  currentRuntimeErrorOptions = null;
+  try {
+    stopListeningToRuntimeErrors();
+  } finally {
+    stopListeningToRuntimeErrors = null;
   }
 }
 
@@ -114,10 +123,14 @@ function render() {
     return <CompileErrorContainer error={currentBuildError} />;
   }
   if (currentRuntimeErrorRecords.length > 0) {
+    if (!currentRuntimeErrorOptions) {
+      throw new Error('Expected options to be injected.');
+    }
     return (
       <RuntimeErrorContainer
         errorRecords={currentRuntimeErrorRecords}
         close={dismissRuntimeErrors}
+        launchEditorEndpoint={currentRuntimeErrorOptions.launchEditorEndpoint}
       />
     );
   }

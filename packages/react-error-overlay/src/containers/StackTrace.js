@@ -23,7 +23,12 @@ const traceStyle = {
 
 class StackTrace extends Component {
   renderFrames() {
-    const { stackFrames, errorName, contextSize } = this.props;
+    const {
+      stackFrames,
+      errorName,
+      contextSize,
+      launchEditorEndpoint,
+    } = this.props;
     const renderedFrames = [];
     let hasReachedAppCode = false,
       currentBundle = [],
@@ -47,6 +52,7 @@ class StackTrace extends Component {
           contextSize={contextSize}
           critical={index === 0}
           showCode={!shouldCollapse}
+          launchEditorEndpoint={launchEditorEndpoint}
         />
       );
       const lastElement = index === stackFrames.length - 1;

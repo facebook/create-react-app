@@ -6,7 +6,18 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-
 'use strict';
 
-module.exports = require('react-error-overlay/middleware');
+const launchEditor = require('./launchEditor');
+const launchEditorEndpoint = require('./launchEditorEndpoint');
+
+module.exports = function createLaunchEditorMiddleware() {
+  return function launchEditorMiddleware(req, res, next) {
+    if (req.url.startsWith(launchEditorEndpoint)) {
+      launchEditor(req.query.fileName, req.query.lineNumber);
+      res.end();
+    } else {
+      next();
+    }
+  };
+};

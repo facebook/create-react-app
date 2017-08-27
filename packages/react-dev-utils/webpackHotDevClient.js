@@ -21,18 +21,22 @@
 var SockJS = require('sockjs-client');
 var stripAnsi = require('strip-ansi');
 var url = require('url');
+var launchEditorEndpoint = require('./launchEditorEndpoint');
 var formatWebpackMessages = require('./formatWebpackMessages');
 var ErrorOverlay = require('react-error-overlay');
 
-ErrorOverlay.startReportingRuntimeErrors(() => {
-  // TODO: why do we need this?
-  if (module.hot && typeof module.hot.decline === 'function') {
-    module.hot.decline();
-  }
+ErrorOverlay.startReportingRuntimeErrors({
+  launchEditorEndpoint: launchEditorEndpoint,
+  onError: function() {
+    // TODO: why do we need this?
+    if (module.hot && typeof module.hot.decline === 'function') {
+      module.hot.decline();
+    }
+  },
 });
 
 if (module.hot && typeof module.hot.dispose === 'function') {
-  module.hot.dispose(() => {
+  module.hot.dispose(function() {
     // TODO: why do we need this?
     ErrorOverlay.stopReportingRuntimeErrors();
   });

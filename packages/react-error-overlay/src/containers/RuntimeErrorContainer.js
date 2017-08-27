@@ -61,7 +61,10 @@ class RuntimeErrorContainer extends PureComponent {
             previous={this.previous}
             next={this.next}
           />}
-        <RuntimeError errorRecord={errorRecords[this.state.currentIndex]} />
+        <RuntimeError
+          errorRecord={errorRecords[this.state.currentIndex]}
+          launchEditorEndpoint={this.props.launchEditorEndpoint}
+        />
         <Footer
           line1="This screen is visible only in development. It will not appear if the app crashes in production."
           line2="Open your browser’s developer console to further inspect this error."
