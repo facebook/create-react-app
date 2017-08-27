@@ -1,4 +1,5 @@
 // @remove-on-eject-begin
+// @remove-plugins-on-eject
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -21,6 +22,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const { applyPlugins } = require('react-dev-utils/plugins');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -35,7 +37,7 @@ const env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
-module.exports = {
+const base = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
@@ -290,3 +292,5 @@ module.exports = {
     hints: false,
   },
 };
+
+module.exports = applyPlugins(base, [], { paths });

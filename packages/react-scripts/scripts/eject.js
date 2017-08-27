@@ -24,6 +24,7 @@ const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
 const spawnSync = require('react-dev-utils/crossSpawn').sync;
+const { ejectFile } = require('react-dev-utils/plugins');
 
 const green = chalk.green;
 const cyan = chalk.cyan;
@@ -37,6 +38,37 @@ function getGitStatus() {
   } catch (e) {
     return '';
   }
+}
+
+function ejectContent(content, { additionalDeps, pluginPaths }) {
+  const { code, dependencies, paths: newPaths } = ejectFile({
+    code: content,
+    existingDependencies: additionalDeps,
+  });
+  for (const [key, value] of dependencies) {
+    additionalDeps.set(key, value);
+  }
+  for (const newPath of newPaths) {
+    pluginPaths.add(newPath);
+  }
+  return code;
+}
+
+function addPlugins(pluginPaths) {
+  if (pluginPaths.size < 1) {
+    return;
+  }
+
+  console.log(cyan('Adding plugins'));
+
+  for (const pluginPath of pluginPaths) {
+    const pluginName = /.*react-scripts-plugin-([\w-]+)/.exec(pluginPath).pop();
+    console.log(`  Applying ${cyan(pluginName)}`);
+    const { eject } = require(pluginPath);
+    eject({ paths });
+  }
+
+  console.log();
 }
 
 inquirer
@@ -114,6 +146,8 @@ inquirer
       fs.mkdirSync(path.join(appPath, folder));
     });
 
+    const additionalDeps = new Map(),
+      pluginPaths = new Set();
     files.forEach(file => {
       let content = fs.readFileSync(file, 'utf8');
 
@@ -121,6 +155,11 @@ inquirer
       if (content.match(/\/\/ @remove-file-on-eject/)) {
         return;
       }
+      // Remove plugins
+      if (content.match(/\/\/ @remove-plugins-on-eject/)) {
+        content = ejectContent(content, { additionalDeps, pluginPaths });
+      }
+
       content =
         content
           // Remove dead code from .js files on eject
@@ -139,6 +178,8 @@ inquirer
     });
     console.log();
 
+    addPlugins(pluginPaths);
+
     const ownPackage = require(path.join(ownPath, 'package.json'));
     const appPackage = require(path.join(appPath, 'package.json'));
 
@@ -156,13 +197,22 @@ inquirer
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
       delete appPackage.dependencies[ownPackageName];
     }
-    Object.keys(ownPackage.dependencies).forEach(key => {
+    // Combine `react-scripts` dependencies with additional dependencies
+    const ownDependencies = Object.assign(
+      {},
+      ownPackage.dependencies,
+      Array.from(additionalDeps).reduce(
+        (prev, [pkg, version]) => Object.assign(prev, { [pkg]: version }),
+        {}
+      )
+    );
+    Object.keys(ownDependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
       if (ownPackage.optionalDependencies[key]) {
         return;
       }
       console.log(`  Adding ${cyan(key)} to dependencies`);
-      appPackage.dependencies[key] = ownPackage.dependencies[key];
+      appPackage.dependencies[key] = ownDependencies[key];
     });
     // Sort the deps
     const unsortedDependencies = appPackage.dependencies;

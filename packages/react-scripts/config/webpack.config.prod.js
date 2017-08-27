@@ -1,4 +1,5 @@
 // @remove-on-eject-begin
+// @remove-plugins-on-eject
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -22,6 +23,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const { applyPlugins } = require('react-dev-utils/plugins');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -59,7 +61,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = {
+const base = {
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
@@ -360,3 +362,5 @@ module.exports = {
     tls: 'empty',
   },
 };
+
+module.exports = applyPlugins(base, [], { paths });
