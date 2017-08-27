@@ -14,8 +14,7 @@ import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
 import type { ScriptLine } from '../utils/stack-frame';
 import { primaryErrorStyle, secondaryErrorStyle } from '../styles';
-
-import generateAnsiHtml from 'react-dev-utils/ansiHTML';
+import generateAnsiHTML from '../utils/generateAnsiHTML';
 
 import codeFrame from 'babel-code-frame';
 
@@ -62,7 +61,7 @@ function StackFrameCodeBlock(props: StackFrameCodeBlockPropsType) {
       linesBelow: contextSize,
     }
   );
-  const htmlHighlight = generateAnsiHtml(ansiHighlight);
+  const htmlHighlight = generateAnsiHTML(ansiHighlight);
   const code = document.createElement('code');
   code.innerHTML = htmlHighlight;
   absolutifyCaret(code);

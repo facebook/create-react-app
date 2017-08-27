@@ -13,7 +13,7 @@ import Overlay from '../components/Overlay';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import CodeBlock from '../components/CodeBlock';
-import ansiHTML from 'react-dev-utils/ansiHTML';
+import generateAnsiHTML from '../utils/generateAnsiHTML';
 
 class CompileErrorContainer extends PureComponent {
   render() {
@@ -21,7 +21,7 @@ class CompileErrorContainer extends PureComponent {
     return (
       <Overlay>
         <Header headerText="Failed to compile" />
-        <CodeBlock main={true} codeHTML={ansiHTML(error)} />
+        <CodeBlock main={true} codeHTML={generateAnsiHTML(error)} />
         <Footer line1="This error occurred during the build time and cannot be dismissed." />
       </Overlay>
     );
