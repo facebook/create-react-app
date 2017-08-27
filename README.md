@@ -23,7 +23,7 @@ When you run `npm run build` the terminal will output the error, including the h
 
 ## Migration
 
-In general, most upgrades wont require any migration steps to work, but if you experience problems after an upgrade, please file an issue, and we'll add it to the list of migration steps below.
+In general, most upgrades won't require any migration steps to work, but if you experience problems after an upgrade, please file an issue, and we'll add it to the list of migration steps below.
 
 ### From `<2.5.0` to `>=2.5.0`
 
