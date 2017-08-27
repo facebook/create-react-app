@@ -79,35 +79,19 @@ class StackFrame extends Component {
 
   render() {
     const { frame, contextSize, critical, showCode } = this.props;
-    let { functionName, _originalFileName: sourceFileName } = frame;
     const {
       fileName,
       lineNumber,
       columnNumber,
       _scriptCode: scriptLines,
+      _originalFileName: sourceFileName,
       _originalLineNumber: sourceLineNumber,
       _originalColumnNumber: sourceColumnNumber,
       _originalScriptCode: sourceLines,
     } = frame;
-
-    // TODO: find a better place for this.
-    if (functionName && functionName.indexOf('Object.') === 0) {
-      functionName = functionName.slice('Object.'.length);
-    }
-    if (
-      // Chrome has a bug with inferring function.name:
-      // https://github.com/facebookincubator/create-react-app/issues/2097
-      // Let's ignore a meaningless name we get for top-level modules.
-      functionName === 'friendlySyntaxErrorLabel' ||
-      functionName === 'exports.__esModule' ||
-      functionName === '<anonymous>' ||
-      !functionName
-    ) {
-      functionName = '(anonymous function)';
-    }
+    const functionName = frame.getFunctionName();
 
     const compiled = this.state.compiled;
-
     const url = getPrettyURL(
       sourceFileName,
       sourceLineNumber,
@@ -119,7 +103,6 @@ class StackFrame extends Component {
     );
 
     let codeBlockProps = null;
-
     if (showCode) {
       if (
         compiled &&
