@@ -54,25 +54,40 @@ class StackFrame extends Component {
     }));
   };
 
-  openInEditor = () => {
+  canOpenInEditor() {
     const {
       _originalFileName: sourceFileName,
       _originalLineNumber: sourceLineNumber,
     } = this.props.frame;
-    if (sourceFileName) {
-      // e.g. "/path-to-my-app/webpack/bootstrap eaddeb46b67d75e4dfc1"
-      const isInternalWebpackBootstrapCode =
-        sourceFileName.trim().indexOf(' ') !== -1;
-      if (!isInternalWebpackBootstrapCode) {
-        // Keep this in sync with react-error-overlay/middleware.js
-        fetch(
-          '/__open-stack-frame-in-editor?fileName=' +
-            window.encodeURIComponent(sourceFileName) +
-            '&lineNumber=' +
-            window.encodeURIComponent(sourceLineNumber || 1)
-        ).then(() => {}, () => {});
-      }
+    // Unknown file
+    if (!sourceFileName) {
+      return false;
     }
+    // e.g. "/path-to-my-app/webpack/bootstrap eaddeb46b67d75e4dfc1"
+    const isInternalWebpackBootstrapCode =
+      sourceFileName.trim().indexOf(' ') !== -1;
+    if (isInternalWebpackBootstrapCode) {
+      return false;
+    }
+    // Code is in a real file
+    return true;
+  }
+
+  openInEditor = () => {
+    if (!this.canOpenInEditor()) {
+      return;
+    }
+    const {
+      _originalFileName: sourceFileName,
+      _originalLineNumber: sourceLineNumber,
+    } = this.props.frame;
+    // Keep this in sync with react-error-overlay/middleware.js
+    fetch(
+      '/__open-stack-frame-in-editor?fileName=' +
+        window.encodeURIComponent(sourceFileName) +
+        '&lineNumber=' +
+        window.encodeURIComponent(sourceLineNumber || 1)
+    ).then(() => {}, () => {});
   };
 
   onKeyDown = (e: SyntheticKeyboardEvent) => {
@@ -137,6 +152,7 @@ class StackFrame extends Component {
       }
     }
 
+    const canOpenInEditor = this.canOpenInEditor();
     return (
       <div>
         <div>
@@ -144,17 +160,20 @@ class StackFrame extends Component {
         </div>
         <div style={linkStyle}>
           <a
-            style={anchorStyle}
-            onClick={this.openInEditor}
-            onKeyDown={this.onKeyDown}
-            tabIndex="0"
+            style={canOpenInEditor ? anchorStyle : null}
+            onClick={canOpenInEditor ? this.openInEditor : null}
+            onKeyDown={canOpenInEditor ? this.onKeyDown : null}
+            tabIndex={canOpenInEditor ? '0' : null}
           >
             {url}
           </a>
         </div>
         {codeBlockProps &&
           <span>
-            <a onClick={this.openInEditor} style={codeAnchorStyle}>
+            <a
+              onClick={canOpenInEditor ? this.openInEditor : null}
+              style={canOpenInEditor ? codeAnchorStyle : null}
+            >
               <CodeBlock {...codeBlockProps} />
             </a>
             <button style={toggleStyle} onClick={this.toggleCompiled}>
