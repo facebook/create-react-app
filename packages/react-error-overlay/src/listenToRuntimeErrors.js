@@ -8,8 +8,6 @@
  */
 
 /* @flow */
-import React from 'react';
-import ReactDOM from 'react-dom';
 import {
   register as registerError,
   unregister as unregisterError,
@@ -28,9 +26,7 @@ import {
   unregisterReactStack,
 } from './effects/proxyConsole';
 import { massage as massageWarning } from './utils/warnings';
-import { mountOverlayIframe } from './utils/dom/mountOverlayIframe';
 import getStackFrames from './utils/getStackFrames';
-import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
 
 import type { StackFrame } from './utils/stack-frame';
 
