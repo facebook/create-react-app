@@ -59,6 +59,13 @@ export function startReportingRuntimeErrors(options: RuntimeReportingOptions) {
 }
 
 function handleRuntimeError(errorRecord) {
+  if (
+    currentRuntimeErrorRecords.some(({ error }) => error === errorRecord.error)
+  ) {
+    // Deduplicate identical errors.
+    // This fixes https://github.com/facebookincubator/create-react-app/issues/3011.
+    return;
+  }
   currentRuntimeErrorRecords = currentRuntimeErrorRecords.concat([errorRecord]);
   update();
 }
