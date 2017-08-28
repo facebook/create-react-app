@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-//@flow
+/* @flow */
 
 /** A container holding a script line. */
 class ScriptLine {
@@ -54,6 +54,20 @@ class StackFrame {
     sourceColumnNumber: number | null = null,
     sourceScriptCode: ScriptLine[] | null = null
   ) {
+    if (functionName && functionName.indexOf('Object.') === 0) {
+      functionName = functionName.slice('Object.'.length);
+    }
+    if (
+      // Chrome has a bug with inferring function.name:
+      // https://github.com/facebookincubator/create-react-app/issues/2097
+      // Let's ignore a meaningless name we get for top-level modules.
+      functionName === 'friendlySyntaxErrorLabel' ||
+      functionName === 'exports.__esModule' ||
+      functionName === '<anonymous>' ||
+      !functionName
+    ) {
+      functionName = null;
+    }
     this.functionName = functionName;
 
     this.fileName = fileName;
@@ -72,8 +86,8 @@ class StackFrame {
   /**
    * Returns the name of this function.
    */
-  getFunctionName(): string | null {
-    return this.functionName;
+  getFunctionName(): string {
+    return this.functionName || '(anonymous function)';
   }
 
   /**
@@ -98,11 +112,9 @@ class StackFrame {
    * Returns a pretty version of this stack frame.
    */
   toString(): string {
-    const f = this.getFunctionName();
-    if (f == null) {
-      return this.getSource();
-    }
-    return `${f} (${this.getSource()})`;
+    const functionName = this.getFunctionName();
+    const source = this.getSource();
+    return `${functionName}${source ? ` (${source})` : ``}`;
   }
 }
 
