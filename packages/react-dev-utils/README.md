@@ -170,9 +170,9 @@ module: {
 
 Captures JS and CSS asset sizes inside the passed `buildFolder`. Save the result value to compare it after the build.
 
-##### `printFileSizesAfterBuild(webpackStats: WebpackStats, previousFileSizes: OpaqueFileSizes)`
+##### `printFileSizesAfterBuild(webpackStats: WebpackStats, previousFileSizes: OpaqueFileSizes, buildFolder: string, maxBundleGzipSize?: number, maxChunkGzipSize?: number)`
 
-Prints the JS and CSS asset sizes after the build, and includes a size comparison with `previousFileSizes` that were captured earlier using `measureFileSizesBeforeBuild()`.
+Prints the JS and CSS asset sizes after the build, and includes a size comparison with `previousFileSizes` that were captured earlier using `measureFileSizesBeforeBuild()`. `maxBundleGzipSize` and `maxChunkGzipSizemay` may optionally be specified to display a warning when the main bundle or a chunk exceeds the specified size (in bytes).
 
 ```js
 var {
@@ -182,7 +182,7 @@ var {
 
 measureFileSizesBeforeBuild(buildFolder).then(previousFileSizes => {
   return cleanAndRebuild().then(webpackStats => {
-    printFileSizesAfterBuild(webpackStats, previousFileSizes);
+    printFileSizesAfterBuild(webpackStats, previousFileSizes, buildFolder);
   });
 });
 ```

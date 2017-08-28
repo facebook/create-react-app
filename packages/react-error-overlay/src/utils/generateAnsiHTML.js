@@ -7,10 +7,11 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-'use strict';
+/* @flow */
 
-var Anser = require('anser');
-var Entities = require('html-entities').AllHtmlEntities;
+import Anser from 'anser';
+import { AllHtmlEntities as Entities } from 'html-entities';
+
 var entities = new Entities();
 
 // Color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
@@ -62,7 +63,7 @@ var anserMap = {
   'ansi-white': 'darkgrey',
 };
 
-function ansiHTML(txt) {
+function generateAnsiHTML(txt: string): string {
   var arr = new Anser().ansiToJson(entities.encode(txt), {
     use_classes: true,
   });
@@ -104,4 +105,4 @@ function ansiHTML(txt) {
   return result;
 }
 
-module.exports = ansiHTML;
+export default generateAnsiHTML;
