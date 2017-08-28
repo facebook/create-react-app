@@ -13,9 +13,9 @@ test('proper empty shape', () => {
   const empty = new StackFrame();
   expect(empty).toMatchSnapshot();
 
-  expect(empty.getFunctionName()).toBe(null);
+  expect(empty.getFunctionName()).toBe('(anonymous function)');
   expect(empty.getSource()).toBe('');
-  expect(empty.toString()).toBe('');
+  expect(empty.toString()).toBe('(anonymous function)');
 });
 
 test('proper full shape', () => {
