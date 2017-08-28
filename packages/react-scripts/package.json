@@ -27,7 +27,7 @@
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.1",
     "babel-preset-react-app": "^3.0.2",
-    "babel-runtime": "6.23.0",
+    "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
     "css-loader": "0.28.4",
