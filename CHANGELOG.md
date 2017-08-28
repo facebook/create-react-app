@@ -1,4 +1,68 @@
-## 1.0.11 (2017-08-09)
+## 1.0.12 (August 28, 2017)
+
+#### :bug: Bug Fix
+
+* `react-error-overlay`
+  * [#3012](https://github.com/facebookincubator/create-react-app/pull/3012) Fix module function name in error overlay. ([@gaearon](https://github.com/gaearon))
+
+* `react-dev-utils`
+  * [#2938](https://github.com/facebookincubator/create-react-app/pull/2938) Remove superfluous lodash usage. ([@Timer](https://github.com/Timer))
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#2917](https://github.com/facebookincubator/create-react-app/pull/2917) Optimize the size of default favicon. ([@sylvainbaronnet](https://github.com/sylvainbaronnet))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#2986](https://github.com/facebookincubator/create-react-app/pull/2986) Docs: debugging in WebStorm. ([@prigara](https://github.com/prigara))
+  * [#2948](https://github.com/facebookincubator/create-react-app/pull/2948) Remove Modulus from user guide. ([@Zertz](https://github.com/Zertz))
+  * [#2927](https://github.com/facebookincubator/create-react-app/pull/2927) Update README.md. ([@tbassetto](https://github.com/tbassetto))
+
+* `react-dev-utils`
+
+  * [#2942](https://github.com/facebookincubator/create-react-app/pull/2942) Fix docs for `printFileSizesAfterBuild`. ([@Kerumen](https://github.com/Kerumen))
+
+#### :house: Internal
+
+* `react-error-overlay`, `react-scripts`
+
+  * [#2991](https://github.com/facebookincubator/create-react-app/pull/2991) Update `babel-runtime` dependency ([@christophehurpeau](https://github.com/christophehurpeau))
+
+* `react-dev-utils`, `react-error-overlay`, `react-scripts`
+
+  * [#2515](https://github.com/facebookincubator/create-react-app/pull/2515) Convert `react-error-overlay` to React ([@tharakawj](https://github.com/tharakawj))
+
+#### Committers: 9
+
+- Christophe Hurpeau ([christophehurpeau](https://github.com/christophehurpeau))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Ekaterina Prigara ([prigara](https://github.com/prigara))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Pier-Luc Gendreau ([Zertz](https://github.com/Zertz))
+- Sylvain Baronnet ([sylvainbaronnet](https://github.com/sylvainbaronnet))
+- Tharaka Wijebandara ([tharakawj](https://github.com/tharakawj))
+- Thomas Bassetto ([tbassetto](https://github.com/tbassetto))
+- Yann Pringault ([Kerumen](https://github.com/Kerumen))
+
+### Migrating from 1.0.11 to 1.0.12
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.12
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.12
+```
+
+## 1.0.11 (August 9, 2017)
 
 #### :bug: Bug Fix
 * `create-react-app`
