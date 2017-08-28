@@ -8,33 +8,29 @@
  */
 
 /* @flow */
-import type { ScriptLine } from '../utils/stack-frame';
+import React from 'react';
+import CodeBlock from '../components/CodeBlock';
 import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
-import {
-  codeStyle,
-  primaryErrorStyle,
-  primaryPreStyle,
-  secondaryErrorStyle,
-  secondaryPreStyle,
-} from '../styles';
-
-import generateAnsiHtml from 'react-dev-utils/ansiHTML';
+import type { ScriptLine } from '../utils/stack-frame';
+import { primaryErrorStyle, secondaryErrorStyle } from '../styles';
+import generateAnsiHTML from '../utils/generateAnsiHTML';
 
 import codeFrame from 'babel-code-frame';
 
-function createCode(
-  document: Document,
-  sourceLines: ScriptLine[],
+type StackFrameCodeBlockPropsType = {|
+  lines: ScriptLine[],
   lineNum: number,
-  columnNum: number | null,
+  columnNum: number,
   contextSize: number,
   main: boolean,
-  onSourceClick: ?Function
-) {
+|};
+
+function StackFrameCodeBlock(props: StackFrameCodeBlockPropsType) {
+  const { lines, lineNum, columnNum, contextSize, main } = props;
   const sourceCode = [];
   let whiteSpace = Infinity;
-  sourceLines.forEach(function(e) {
+  lines.forEach(function(e) {
     const { content: text } = e;
     const m = text.match(/^\s*/);
     if (text === '') {
@@ -46,7 +42,7 @@ function createCode(
       whiteSpace = 0;
     }
   });
-  sourceLines.forEach(function(e) {
+  lines.forEach(function(e) {
     let { content: text } = e;
     const { lineNumber: line } = e;
 
@@ -65,11 +61,10 @@ function createCode(
       linesBelow: contextSize,
     }
   );
-  const htmlHighlight = generateAnsiHtml(ansiHighlight);
+  const htmlHighlight = generateAnsiHTML(ansiHighlight);
   const code = document.createElement('code');
   code.innerHTML = htmlHighlight;
   absolutifyCaret(code);
-  applyStyles(code, codeStyle);
 
   const ccn = code.childNodes;
   // eslint-disable-next-line
@@ -91,19 +86,8 @@ function createCode(
       break oLoop;
     }
   }
-  const pre = document.createElement('pre');
-  applyStyles(pre, main ? primaryPreStyle : secondaryPreStyle);
-  pre.appendChild(code);
 
-  if (typeof onSourceClick === 'function') {
-    let handler = onSourceClick;
-    pre.style.cursor = 'pointer';
-    pre.addEventListener('click', function() {
-      handler();
-    });
-  }
-
-  return pre;
+  return <CodeBlock main={main} codeHTML={code.innerHTML} />;
 }
 
-export { createCode };
+export default StackFrameCodeBlock;
