@@ -99,7 +99,7 @@ then
   if [ $(npm -v | head -c 1) -eq 5 ]; then
     npm i -g npm@^5.4.0
   fi;
-  npm cache clean || npm cache verify
+  npm cache clean --force || npm cache verify
 fi
 
 # Prevent bootstrap, we only want top-level dependencies
