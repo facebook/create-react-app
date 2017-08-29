@@ -1,6 +1,6 @@
 {
   "name": "@vtex/react-scripts",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Configuration and scripts for Create React App.",
   "repository": "vtex/create-react-app",
   "license": "BSD-3-Clause",
