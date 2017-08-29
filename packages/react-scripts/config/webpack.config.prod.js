@@ -344,9 +344,9 @@ module.exports = {
       // Don't precache sourcemaps (they're large) and build asset manifest:
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
       // Precache files in public/, and allow them to be accessed directly
-      staticFileGlobs: ['./public/**/*'],
+      staticFileGlobs: [paths.appPublic + '/**/*'],
       mergeStaticsConfig: true,
-      stripPrefix: './public',
+      stripPrefix: paths.appPublic,
     }),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
