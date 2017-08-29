@@ -41,7 +41,7 @@ export type ErrorRecord = {|
 
 export function listenToRuntimeErrors(
   crash: ErrorRecord => void,
-  filename: string
+  filename: string = '/static/js/bundle.js'
 ) {
   function crashWithFrames(error: Error, unhandledRejection = false) {
     getStackFrames(error, unhandledRejection, CONTEXT_SIZE)
