@@ -38,7 +38,7 @@ function printHostingInstructions(
     //   or no homepage
     printBaseMessage(buildFolder, publicUrl);
 
-    printStaticServerInstructions(useYarn);
+    printStaticServerInstructions(buildFolder, useYarn);
   }
   console.log();
 }
@@ -108,7 +108,7 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
   console.log(`  ${chalk.cyan(useYarn ? 'yarn' : 'npm')} run deploy`);
 }
 
-function printStaticServerInstructions(useYarn) {
+function printStaticServerInstructions(buildFolder, useYarn) {
   console.log('You may serve it with a static server:');
   console.log();
 
