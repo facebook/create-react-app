@@ -112,7 +112,12 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', paths.appNodeModules].concat(
+    modules: [
+      paths.appPath,
+      // paths.appNodeModules,
+      path.resolve(paths.asiagoPath),
+      'node_modules',
+    ].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
@@ -130,10 +135,11 @@ module.exports = {
       // unfortunate to rely on, as react-scripts could be symlinked,
       // and thus babel-runtime might not be resolvable from the source.
       '~': paths.appNodeModules,
-      'src': paths.appSrc,
       'babel-runtime': path.dirname(
         require.resolve('babel-runtime/package.json')
       ),
+      'mapbox-gl$': path.resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js'),
+      'webworkify': 'webworkify-webpack-dropin',
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -145,12 +151,11 @@ module.exports = {
       // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
-      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+      new ModuleScopePlugin(paths.appPath, [paths.appPackageJson]),
     ],
   },
   module: {
     noParse: [
-      /\/dist\/mapbox-gl\.js/,
       /moment\.js/
     ],
     strictExportPresence: true,
@@ -180,7 +185,7 @@ module.exports = {
             loader: require.resolve('eslint-loader'),
           },
         ],
-        include: paths.appSrc,
+        include: paths.appPath,
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -201,18 +206,17 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,
-            include: paths.appSrc,
+            exclude: /(node_modules)/,
+            include: [
+              paths.appPath,
+              path.resolve(paths.asiagoPath),
+            ],
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
               babelrc: false,
               presets: [require.resolve('babel-preset-react-app')],
               plugins: [
-                // [require.resolve('babel-plugin-react-intl'), {
-                //   messagesDir: './build/messages/',
-                //   // enforceDescriptions: true,
-                //   extractSourceLocation: true,
-                // }],
                 'transform-function-bind',
                 ['transform-decorators-legacy']
               ],
@@ -222,6 +226,17 @@ module.exports = {
               // directory for faster rebuilds.
               cacheDirectory: true,
             },
+          },
+          {
+            test: /\.ya?ml$/,
+            use: [
+              {
+                loader: 'json-loader'
+              },
+              {
+                loader: 'yaml-loader'
+              }
+            ]
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -259,7 +274,7 @@ module.exports = {
                   modules: true,
                   camelCase: true,
                   autoprefixer: false,
-                  localIdentName: '[name]__[local]___[hash:base64:5]',
+                  localIdentName: '[name]__[local]',
                 },
               },
               {
@@ -285,10 +300,10 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
-          // ** STOP ** Are you adding a new loader?
-          // Remember to add the new extension(s) to the "file" loader exclusion list.
-        ]
-      }
+        ],
+      },
+      // ** STOP ** Are you adding a new loader?
+      // Make sure to add the new loader(s) before the "file" loader.
     ],
   },
   plugins: [

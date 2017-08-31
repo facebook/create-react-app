@@ -60,6 +60,18 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // Define what the compiled file is called (normally 'brickwork' but docs project overwrites it)
 const mainEntry = process.env['MAIN_ENTRY'] || 'brickwork';
 
+const babelPlugins = [
+  'transform-function-bind',
+  ['transform-decorators-legacy']
+]
+if (require(paths.appPackageJson).name === '@brickwork-software/asiago') {
+  babelPlugins.unshift([require.resolve('babel-plugin-react-intl'), {
+    messagesDir: 'dist/messages/',
+    // enforceDescriptions: true,
+    // extractSourceLocation: true,
+  }])
+}
+
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
@@ -79,15 +91,15 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].[chunkhash:8].js',
-    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+    filename: 'static/js/[name].js',
+    chunkFilename: 'static/js/[name].chunk.js',
     jsonpFunction: 'brickworkJsonpFunction',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path
-        .relative(paths.appSrc, info.absoluteResourcePath)
+        .relative(paths.appPath, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
   },
   resolve: {
@@ -95,7 +107,12 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', paths.appNodeModules].concat(
+    modules: [
+      paths.appPath,
+      // paths.appNodeModules,
+      path.resolve(paths.asiagoPath),
+      'node_modules',
+    ].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
@@ -112,10 +129,10 @@ module.exports = {
       // It usually still works on npm 3 without this but it would be
       // unfortunate to rely on, as react-scripts could be symlinked,
       // and thus babel-runtime might not be resolvable from the source.
-      'src': paths.appSrc,
       'babel-runtime': path.dirname(
         require.resolve('babel-runtime/package.json')
       ),
+      'mapbox-gl$': path.resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js'),
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -127,12 +144,11 @@ module.exports = {
       // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
-      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+      new ModuleScopePlugin(paths.appPath, [paths.appPackageJson]),
     ],
   },
   module: {
     noParse: [
-      /\/dist\/mapbox-gl\.js/,
       /moment\.js/
     ],
     strictExportPresence: true,
@@ -164,7 +180,7 @@ module.exports = {
             loader: require.resolve('eslint-loader'),
           },
         ],
-        include: paths.appSrc,
+        include: paths.appPath,
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -184,7 +200,11 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,
-            include: paths.appSrc,
+            exclude: /(node_modules)/,
+            include: [
+              paths.appPath,
+              path.resolve(paths.asiagoPath),
+            ],
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
@@ -192,15 +212,7 @@ module.exports = {
               presets: [require.resolve('babel-preset-react-app')],
               // @remove-on-eject-end
               compact: true,
-              plugins: [
-                // [require.resolve('babel-plugin-react-intl'), {
-                //   messagesDir: './build/messages/',
-                //   // enforceDescriptions: true,
-                //   extractSourceLocation: true,
-                // }],
-                'transform-function-bind',
-                ['transform-decorators-legacy']
-              ],
+              plugins: babelPlugins,
             },
           },
           // The notation here is somewhat confusing.
@@ -284,7 +296,7 @@ module.exports = {
                   camelCase: true,
                   autoprefixer: false,
                   sourceMap: true,
-                  localIdentName: '[name]__[local]___[hash:base64:5]',
+                  localIdentName: '[name]__[local]',
                 },
               },
               {
