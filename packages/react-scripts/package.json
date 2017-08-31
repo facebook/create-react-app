@@ -1,7 +1,8 @@
 {
-  "name": "react-scripts",
-  "version": "1.0.12",
-  "description": "Configuration and scripts for Create React App.",
+  "name": "mattkunze-react-scripts",
+  "version": "1.1.0",
+  "description":
+    "Configuration and scripts for Create React App customization test",
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
@@ -10,13 +11,7 @@
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
-  "files": [
-    "bin",
-    "config",
-    "scripts",
-    "template",
-    "utils"
-  ],
+  "files": ["bin", "config", "scripts", "template", "utils"],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
@@ -30,6 +25,8 @@
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
+    "coffeescript": "next",
+    "coffee-loader": "^0.8.0",
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
     "eslint": "4.4.1",
