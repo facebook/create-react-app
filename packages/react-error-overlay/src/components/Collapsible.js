@@ -9,6 +9,7 @@
 
 /* @flow */
 import React, { Component } from 'react';
+import assign from 'object-assign';
 import { black } from '../styles';
 
 const _collapsibleStyle = {
@@ -25,15 +26,13 @@ const _collapsibleStyle = {
   lineHeight: '1.5',
 };
 
-const collapsibleCollapsedStyle = {
-  ..._collapsibleStyle,
+const collapsibleCollapsedStyle = assign({}, _collapsibleStyle, {
   marginBottom: '1.5em',
-};
+});
 
-const collapsibleExpandedStyle = {
-  ..._collapsibleStyle,
+const collapsibleExpandedStyle = assign({}, _collapsibleStyle, {
   marginBottom: '0.6em',
-};
+});
 
 class Collapsible extends Component {
   state = {
