@@ -20,11 +20,6 @@ module.exports = babelJest.createTransformer({
       }
     }],
     "css-modules-transform",
-    // [require.resolve('babel-plugin-react-intl'), {
-    //   messagesDir: './build/messages/',
-    //   // enforceDescriptions: true,
-    //   extractSourceLocation: true,
-    // }],
     'transform-function-bind',
     ['transform-decorators-legacy']
   ],
