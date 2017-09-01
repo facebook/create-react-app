@@ -174,7 +174,9 @@ class StackFrame extends Component {
               onClick={canOpenInEditor ? this.openInEditor : null}
               style={canOpenInEditor ? codeAnchorStyle : null}
             >
-              <CodeBlock {...codeBlockProps} />
+              {// Use JS instead of JSX spread attributes to avoid Object.assign
+              // in transpiled code which haven't pollyfilled at this point
+              React.createElement(CodeBlock, codeBlockProps)}
             </a>
             <button style={toggleStyle} onClick={this.toggleCompiled}>
               {'View ' + (compiled ? 'source' : 'compiled')}

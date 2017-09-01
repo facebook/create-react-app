@@ -9,6 +9,7 @@
 
 /* @flow */
 import React from 'react';
+import assign from 'object-assign';
 import { red, redTransparent } from '../styles';
 
 const navigationBarStyle = {
@@ -28,18 +29,16 @@ const _navButtonStyle = {
   cursor: 'pointer',
 };
 
-const leftButtonStyle = {
-  ..._navButtonStyle,
+const leftButtonStyle = assign({}, _navButtonStyle, {
   borderTopRightRadius: '0px',
   borderBottomRightRadius: '0px',
   marginRight: '1px',
-};
+});
 
-const rightButtonStyle = {
-  ..._navButtonStyle,
+const rightButtonStyle = assign({}, _navButtonStyle, {
   borderTopLeftRadius: '0px',
   borderBottomLeftRadius: '0px',
-};
+});
 
 type Callback = () => void;
 

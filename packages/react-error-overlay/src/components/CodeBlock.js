@@ -9,6 +9,7 @@
 
 /* @flow */
 import React from 'react';
+import assign from 'object-assign';
 import { redTransparent, yellowTransparent } from '../styles';
 
 const _preStyle = {
@@ -21,15 +22,13 @@ const _preStyle = {
   borderRadius: '0.25rem',
 };
 
-const primaryPreStyle = {
-  ..._preStyle,
+const primaryPreStyle = assign({}, _preStyle, {
   backgroundColor: redTransparent,
-};
+});
 
-const secondaryPreStyle = {
-  ..._preStyle,
+const secondaryPreStyle = assign({}, _preStyle, {
   backgroundColor: yellowTransparent,
-};
+});
 
 const codeStyle = {
   fontFamily: 'Consolas, Menlo, monospace',
