@@ -31,7 +31,7 @@ const overlayStyle = {
   color: black,
 };
 
-class Overlay extends Component {
+class ErrorOverlay extends Component {
   iframeWindow: window = null;
 
   getIframeWindow = (element: HTMLDivElement) => {
@@ -71,4 +71,4 @@ class Overlay extends Component {
   }
 }
 
-export default Overlay;
+export default ErrorOverlay;
