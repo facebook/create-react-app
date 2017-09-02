@@ -1,3 +1,52 @@
+## 1.0.13 (September 2, 2017)
+
+#### :bug: Bug Fix
+
+* `react-error-overlay`
+
+  * [#3051](https://github.com/facebookincubator/create-react-app/pull/3051) Fix case-sensitivity issue with upgrading the package version. ([@tharakawj](https://github.com/tharakawj))
+
+* `react-dev-utils`
+
+  * [#3049](https://github.com/facebookincubator/create-react-app/pull/3049) Print filesize difference for chunks. ([@esturcke](https://github.com/esturcke))
+
+* `react-scripts`
+
+  * [#3046](https://github.com/facebookincubator/create-react-app/pull/3046) Fix crash in development mode on IE11. ([@tharakawj](https://github.com/tharakawj))
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#3033](https://github.com/facebookincubator/create-react-app/pull/3033) Add an empty mock for `child_process` to let some libraries compile. ([@McFlurriez](https://github.com/McFlurriez))
+
+#### :house: Internal
+
+* `react-dev-utils`, `react-error-overlay`
+
+  * [#3028](https://github.com/facebookincubator/create-react-app/pull/3028) Make error overlay filename configurable. ([@jaredpalmer](https://github.com/jaredpalmer))
+
+#### Committers: 4
+
+- Anthony ([McFlurriez](https://github.com/McFlurriez))
+- Erik J. Sturcke ([esturcke](https://github.com/esturcke))
+- Jared Palmer ([jaredpalmer](https://github.com/jaredpalmer))
+- Tharaka Wijebandara ([tharakawj](https://github.com/tharakawj))
+
+### Migrating from 1.0.12 to 1.0.13
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.13
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.13
+```
+
 ## 1.0.12 (August 28, 2017)
 
 #### :bug: Bug Fix
@@ -61,6 +110,8 @@ or
 ```
 yarn add --exact react-scripts@1.0.12
 ```
+
+**Note:** there’s a [known issue](https://github.com/facebookincubator/create-react-app/issues/3041) that might cause the project to not compile after upgrading. In this case, migrate straight to `1.0.13` which doesn’t have this issue.
 
 ## 1.0.11 (August 9, 2017)
 
