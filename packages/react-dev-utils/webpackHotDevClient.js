@@ -33,6 +33,7 @@ ErrorOverlay.startReportingRuntimeErrors({
       module.hot.decline();
     }
   },
+  filename: 'static/js/bundle.js',
 });
 
 if (module.hot && typeof module.hot.dispose === 'function') {
