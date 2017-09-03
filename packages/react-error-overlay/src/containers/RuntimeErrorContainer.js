@@ -54,13 +54,14 @@ class RuntimeErrorContainer extends PureComponent {
     return (
       <ErrorOverlay shortcutHandler={this.shortcutHandler}>
         <CloseButton close={close} />
-        {totalErrors > 1 &&
+        {totalErrors > 1 && (
           <NavigationBar
             currentError={this.state.currentIndex + 1}
             totalErrors={totalErrors}
             previous={this.previous}
             next={this.next}
-          />}
+          />
+        )}
         <RuntimeError
           errorRecord={errorRecords[this.state.currentIndex]}
           launchEditorEndpoint={this.props.launchEditorEndpoint}

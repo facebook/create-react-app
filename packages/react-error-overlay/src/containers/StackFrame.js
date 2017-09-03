@@ -155,9 +155,7 @@ class StackFrame extends Component {
     const canOpenInEditor = this.canOpenInEditor();
     return (
       <div>
-        <div>
-          {functionName}
-        </div>
+        <div>{functionName}</div>
         <div style={linkStyle}>
           <a
             style={canOpenInEditor ? anchorStyle : null}
@@ -168,7 +166,7 @@ class StackFrame extends Component {
             {url}
           </a>
         </div>
-        {codeBlockProps &&
+        {codeBlockProps && (
           <span>
             <a
               onClick={canOpenInEditor ? this.openInEditor : null}
@@ -179,7 +177,8 @@ class StackFrame extends Component {
             <button style={toggleStyle} onClick={this.toggleCompiled}>
               {'View ' + (compiled ? 'source' : 'compiled')}
             </button>
-          </span>}
+          </span>
+        )}
       </div>
     );
   }
