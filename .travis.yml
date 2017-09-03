@@ -1,4 +1,9 @@
 ---
+# Use Ubuntu Precise instead of new default Trusty which cause build fail
+# with pre installed yarn v0.17.8
+# https://github.com/facebookincubator/create-react-app/issues/3054
+# TODO: remove after Trusty environment is updated with a lastet version of yarn
+dist: precise
 language: node_js
 node_js:
   - 6
