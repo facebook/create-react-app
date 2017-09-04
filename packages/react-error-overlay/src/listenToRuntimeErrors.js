@@ -39,10 +39,7 @@ export type ErrorRecord = {|
   stackFrames: StackFrame[],
 |};
 
-export function listenToRuntimeErrors(
-  crash: ErrorRecord => void,
-  filename: string = '/static/js/bundle.js'
-) {
+export function listenToRuntimeErrors(crash: ErrorRecord => void) {
   function crashWithFrames(error: Error, unhandledRejection = false) {
     getStackFrames(error, unhandledRejection, CONTEXT_SIZE)
       .then(stackFrames => {
@@ -71,7 +68,7 @@ export function listenToRuntimeErrors(
       {
         message: data.message,
         stack: data.stack,
-        __unmap_source: filename,
+        __unmap_source: '/static/js/bundle.js',
       },
       false
     );

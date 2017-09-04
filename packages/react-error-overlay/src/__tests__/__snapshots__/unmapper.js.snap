@@ -46,37 +46,44 @@ Array [
     ],
     "_scriptCode": Array [
       ScriptLine {
-        "content": "        },",
+        "content": "        },
+",
         "highlight": false,
         "lineNumber": 41463,
       },
       ScriptLine {
-        "content": "        [1, 2].map(function (v) {",
+        "content": "        [1, 2].map(function (v) {
+",
         "highlight": false,
         "lineNumber": 41464,
       },
       ScriptLine {
-        "content": "          return _react2.default.createElement(",
+        "content": "          return _react2.default.createElement(
+",
         "highlight": false,
         "lineNumber": 41465,
       },
       ScriptLine {
-        "content": "            'div',",
+        "content": "            'div',
+",
         "highlight": true,
         "lineNumber": 41466,
       },
       ScriptLine {
-        "content": "            {",
+        "content": "            {
+",
         "highlight": false,
         "lineNumber": 41467,
       },
       ScriptLine {
-        "content": "              __source: {",
+        "content": "              __source: {
+",
         "highlight": false,
         "lineNumber": 41468,
       },
       ScriptLine {
-        "content": "                fileName: _jsxFileName,",
+        "content": "                fileName: _jsxFileName,
+",
         "highlight": false,
         "lineNumber": 41469,
       },

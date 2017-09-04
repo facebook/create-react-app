@@ -14,8 +14,19 @@ import CloseButton from '../components/CloseButton';
 import NavigationBar from '../components/NavigationBar';
 import RuntimeError from './RuntimeError';
 import Footer from '../components/Footer';
+import type { ErrorRecord } from './RuntimeError';
 
-class RuntimeErrorContainer extends PureComponent {
+type Props = {|
+  errorRecords: ErrorRecord[],
+  close: () => void,
+  launchEditorEndpoint: ?string
+|};
+
+type State = {|
+  currentIndex: number
+|};
+
+class RuntimeErrorContainer extends PureComponent<Props, State> {
   state = {
     currentIndex: 0,
   };

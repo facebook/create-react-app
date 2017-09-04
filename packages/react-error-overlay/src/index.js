@@ -9,6 +9,7 @@
 
 /* @flow */
 import React from 'react';
+import type { Element } from 'react';
 import ReactDOM from 'react-dom';
 import CompileErrorContainer from './containers/CompileErrorContainer';
 import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
@@ -21,13 +22,12 @@ import type { ErrorRecord } from './listenToRuntimeErrors';
 type RuntimeReportingOptions = {|
   onError: () => void,
   launchEditorEndpoint: string,
-  filename?: string,
 |};
 
 let iframe: null | HTMLIFrameElement = null;
 let isLoadingIframe: boolean = false;
 
-let renderedElement: null | React.Element<any> = null;
+let renderedElement: null | Element<any> = null;
 let currentBuildError: null | string = null;
 let currentRuntimeErrorRecords: Array<ErrorRecord> = [];
 let currentRuntimeErrorOptions: null | RuntimeReportingOptions = null;
@@ -56,7 +56,7 @@ export function startReportingRuntimeErrors(options: RuntimeReportingOptions) {
     } finally {
       handleRuntimeError(errorRecord);
     }
-  }, options.filename);
+  });
 }
 
 function handleRuntimeError(errorRecord) {
