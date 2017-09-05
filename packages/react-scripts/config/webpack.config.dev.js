@@ -136,7 +136,7 @@ module.exports = {
       'babel-runtime': path.dirname(
         require.resolve('babel-runtime/package.json')
       ),
-      'mapbox-gl$': path.resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js'),
+      // 'mapbox-gl$': path.resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js'),
       'webworkify': 'webworkify-webpack-dropin',
       // @remove-on-eject-end
       // Support React Native Web

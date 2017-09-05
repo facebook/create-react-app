@@ -108,10 +108,11 @@ module.exports = {
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
     modules: [
-      paths.appPath,
-      // paths.appNodeModules,
-      path.resolve(paths.asiagoPath),
       'node_modules',
+      paths.appNodeModules,
+      paths.asiagoNodeModules,
+      paths.appPath,
+      paths.asiagoPath,
     ].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
@@ -132,7 +133,7 @@ module.exports = {
       'babel-runtime': path.dirname(
         require.resolve('babel-runtime/package.json')
       ),
-      'mapbox-gl$': path.resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js'),
+      // 'mapbox-gl$': path.resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js'),
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -203,7 +204,7 @@ module.exports = {
             exclude: /node_modules(?!\/@brickwork-software\/asiago)/,
             include: [
               paths.appPath,
-              path.resolve(paths.asiagoPath),
+              paths.asiagoPath,
             ],
             loader: require.resolve('babel-loader'),
             options: {
