@@ -113,10 +113,11 @@ module.exports = {
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
     modules: [
-      paths.appPath,
-      path.resolve(paths.asiagoPath),
-      paths.asiagoNodeModules,
       'node_modules',
+      paths.appNodeModules,
+      paths.asiagoNodeModules,
+      paths.appPath,
+      paths.asiagoPath,
     ].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
