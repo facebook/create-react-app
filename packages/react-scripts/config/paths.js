@@ -26,6 +26,7 @@ const asiagoLocation = fs.existsSync(resolveApp('node_modules/@brickwork-softwar
   ? resolveApp('node_modules/@brickwork-software/asiago')
   : resolveApp('..');
 const asiagoDirectory = fs.realpathSync(asiagoLocation)
+const asiagoNodeModules = path.resolve(asiagoDirectory, 'node_modules')
 
 const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 
@@ -64,13 +65,13 @@ module.exports = {
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
   asiagoPath: asiagoDirectory,
+  asiagoNodeModules: asiagoNodeModules,
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appPath: appDirectory,
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
-  ownNodeModules: resolveOwn('../node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
 };

@@ -114,8 +114,8 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/253
     modules: [
       paths.appPath,
-      // paths.appNodeModules,
       path.resolve(paths.asiagoPath),
+      paths.asiagoNodeModules,
       'node_modules',
     ].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
