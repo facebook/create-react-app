@@ -1,8 +1,8 @@
 {
-  "name": "react-scripts",
-  "version": "1.0.13",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "name": "@brickwork-software/react-scripts",
+  "version": "1.2.4",
+  "description": "Configuration and scripts for Brickwork react apps",
+  "repository": "brickworksoftware/create-react-app",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=6"

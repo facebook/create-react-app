@@ -207,7 +207,7 @@ module.exports = {
             exclude: /node_modules(?!\/@brickwork-software\/asiago)/,
             include: [
               paths.appPath,
-              path.resolve(paths.asiagoPath),
+              paths.asiagoPath,
             ],
             loader: require.resolve('babel-loader'),
             options: {
