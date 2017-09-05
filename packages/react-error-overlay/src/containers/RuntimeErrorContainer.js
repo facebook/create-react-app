@@ -9,7 +9,7 @@
 
 /* @flow */
 import React, { PureComponent } from 'react';
-import Overlay from '../components/Overlay';
+import ErrorOverlay from '../components/ErrorOverlay';
 import CloseButton from '../components/CloseButton';
 import NavigationBar from '../components/NavigationBar';
 import RuntimeError from './RuntimeError';
@@ -52,7 +52,7 @@ class RuntimeErrorContainer extends PureComponent {
     const { errorRecords, close } = this.props;
     const totalErrors = errorRecords.length;
     return (
-      <Overlay shortcutHandler={this.shortcutHandler}>
+      <ErrorOverlay shortcutHandler={this.shortcutHandler}>
         <CloseButton close={close} />
         {totalErrors > 1 &&
           <NavigationBar
@@ -69,7 +69,7 @@ class RuntimeErrorContainer extends PureComponent {
           line1="This screen is visible only in development. It will not appear if the app crashes in production."
           line2="Open your browser’s developer console to further inspect this error."
         />
-      </Overlay>
+      </ErrorOverlay>
     );
   }
 }

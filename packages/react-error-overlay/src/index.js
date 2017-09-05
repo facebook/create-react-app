@@ -21,6 +21,7 @@ import type { ErrorRecord } from './listenToRuntimeErrors';
 type RuntimeReportingOptions = {|
   onError: () => void,
   launchEditorEndpoint: string,
+  filename?: string,
 |};
 
 let iframe: null | HTMLIFrameElement = null;
@@ -55,7 +56,7 @@ export function startReportingRuntimeErrors(options: RuntimeReportingOptions) {
     } finally {
       handleRuntimeError(errorRecord);
     }
-  });
+  }, options.filename);
 }
 
 function handleRuntimeError(errorRecord) {
