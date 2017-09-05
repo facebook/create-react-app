@@ -216,6 +216,17 @@ module.exports = {
               plugins: babelPlugins,
             },
           },
+          {
+            test: /\.ya?ml$/,
+            use: [
+              {
+                loader: 'json-loader'
+              },
+              {
+                loader: 'yaml-loader'
+              }
+            ]
+          },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -334,12 +345,12 @@ module.exports = {
           // This loader don't uses a "test" so it will catch all modules
           // that fall through the other loaders.
           {
-            loader: require.resolve('file-loader'),
             // Exclude `js` files to keep "css" loader working as it injects
             // it's runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
             exclude: [/\.js$/, /\.html$/, /\.json$/],
+            loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },
