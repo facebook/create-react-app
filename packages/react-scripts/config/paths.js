@@ -66,6 +66,7 @@ module.exports = {
   appIndexJs: resolveApp('src/index.js'),
   asiagoPath: asiagoDirectory,
   asiagoNodeModules: asiagoNodeModules,
+  ownNodeModules: resolveOwn('../node_modules'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appPath: appDirectory,
