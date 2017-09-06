@@ -12,7 +12,6 @@ import React, { Component } from 'react';
 import CodeBlock from './StackFrameCodeBlock';
 import { getPrettyURL } from '../utils/getPrettyURL';
 import { darkGray } from '../styles';
-import type { StackFrame as StackFrameType } from '../utils/stack-frame';
 
 const linkStyle = {
   fontSize: '0.9em',
@@ -44,19 +43,7 @@ const toggleStyle = {
   lineHeight: '1.5',
 };
 
-type Props = {|
-  frame: StackFrameType,
-  launchEditorEndpoint: ?string,
-  contextSize: number,
-  critical: boolean,
-  showCode: boolean
-|};
-
-type State = {|
-  compiled: boolean
-|};
-
-class StackFrame extends Component<Props, State> {
+class StackFrame extends Component {
   state = {
     compiled: false,
   };
@@ -87,7 +74,7 @@ class StackFrame extends Component<Props, State> {
   }
 
   openInEditor = () => {
-    if (!this.props.launchEditorEndpoint) {
+    if (!this.canOpenInEditor()) {
       return;
     }
     const {
@@ -103,7 +90,7 @@ class StackFrame extends Component<Props, State> {
     ).then(() => {}, () => {});
   };
 
-  onKeyDown = (e: SyntheticKeyboardEvent<>) => {
+  onKeyDown = (e: SyntheticKeyboardEvent) => {
     if (e.key === 'Enter') {
       this.openInEditor();
     }

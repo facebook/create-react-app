@@ -15,11 +15,7 @@ import Header from '../components/Header';
 import CodeBlock from '../components/CodeBlock';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
 
-type Props = {|
-  error: string
-|};
-
-class CompileErrorContainer extends PureComponent<Props, void> {
+class CompileErrorContainer extends PureComponent {
   render() {
     const { error } = this.props;
     return (

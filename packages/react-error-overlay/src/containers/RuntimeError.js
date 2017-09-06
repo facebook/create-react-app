@@ -65,5 +65,4 @@ function RuntimeError({ errorRecord, launchEditorEndpoint }: Props) {
   );
 }
 
-export type { ErrorRecord };
 export default RuntimeError;
