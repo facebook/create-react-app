@@ -43,7 +43,7 @@ const COMMON_EDITORS_OSX = {
   '/Applications/CLion.app/Contents/MacOS/clion':
     '/Applications/CLion.app/Contents/MacOS/clion',
   '/Applications/IntelliJ IDEA.app/Contents/MacOS/idea':
-      '/Applications/IntelliJ IDEA.app/Contents/MacOS/idea',
+    '/Applications/IntelliJ IDEA.app/Contents/MacOS/idea',
   '/Applications/PhpStorm.app/Contents/MacOS/phpstorm':
     '/Applications/PhpStorm.app/Contents/MacOS/phpstorm',
   '/Applications/PyCharm.app/Contents/MacOS/pycharm':
@@ -53,7 +53,19 @@ const COMMON_EDITORS_OSX = {
   '/Applications/RubyMine.app/Contents/MacOS/rubymine':
     '/Applications/RubyMine.app/Contents/MacOS/rubymine',
   '/Applications/WebStorm.app/Contents/MacOS/webstorm':
-      '/Applications/WebStorm.app/Contents/MacOS/webstorm',
+    '/Applications/WebStorm.app/Contents/MacOS/webstorm',
+};
+
+const COMMON_EDITORS_LINUX = {
+  atom: 'atom',
+  Brackets: 'brackets',
+  code: 'code',
+  'idea.sh': 'idea',
+  'phpstorm.sh': 'phpstorm',
+  'pycharm.sh': 'pycharm',
+  'rubymine.sh': 'rubymine',
+  sublime_text: 'sublime_text',
+  'webstorm.sh': 'webstorm',
 };
 
 const COMMON_EDITORS_WIN = [
@@ -145,7 +157,6 @@ function guessEditor() {
   }
 
   // Using `ps x` on OSX or `Get-Process` on Windows we can find out which editor is currently running.
-  // Potentially we could use similar technique for Linux
   try {
     if (process.platform === 'darwin') {
       const output = child_process.execSync('ps x').toString();
@@ -174,6 +185,17 @@ function guessEditor() {
 
         if (COMMON_EDITORS_WIN.indexOf(shortProcessName) !== -1) {
           return [fullProcessPath];
+        }
+      }
+    } else if (process.platform === 'linux') {
+      const output = child_process
+        .execSync('ps --no-heading -e -o comm --sort=comm')
+        .toString();
+      const processNames = Object.keys(COMMON_EDITORS_LINUX);
+      for (let i = 0; i < processNames.length; i++) {
+        const processName = processNames[i];
+        if (output.indexOf(processName) !== -1) {
+          return [COMMON_EDITORS_LINUX[processName]];
         }
       }
     }
