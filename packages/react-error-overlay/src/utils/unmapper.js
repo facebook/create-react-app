@@ -56,7 +56,7 @@ async function unmap(
     }
     let { fileName } = frame;
     if (fileName) {
-      fileName = path.normalize(fileName);
+      fileName = path.normalize(fileName.replace(/[\\]+/g, '/'));
     }
     if (fileName == null) {
       return frame;
