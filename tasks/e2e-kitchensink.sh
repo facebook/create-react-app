@@ -87,9 +87,9 @@ fi
 
 if hash npm 2>/dev/null
 then
-  # npm 5 is too buggy right now
+  # npm 5.0-5.2 is too buggy
   if [ $(npm -v | head -c 1) -eq 5 ]; then
-    npm i -g npm@^4.x
+    npm i -g npm@^5.3.0
   fi;
   npm cache clean || npm cache verify
 fi
@@ -163,8 +163,8 @@ npm install test-integrity@^2.0.1
 # Enter the app directory
 cd "$temp_app_path/test-kitchensink"
 
-# Link to our preset
-npm link "$root_path"/packages/babel-preset-react-app
+# Install our preset
+npm install file:"$root_path"/packages/babel-preset-react-app
 
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
