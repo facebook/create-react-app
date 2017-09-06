@@ -9,6 +9,7 @@
 
 /* @flow */
 import React, { Component } from 'react';
+import type { Element } from 'react';
 import { black } from '../styles';
 
 const _collapsibleStyle = {
@@ -35,7 +36,15 @@ const collapsibleExpandedStyle = {
   marginBottom: '0.6em',
 };
 
-class Collapsible extends Component {
+type Props = {|
+  children: Element<any>[],
+|};
+
+type State = {|
+  collapsed: boolean,
+|};
+
+class Collapsible extends Component<Props, State> {
   state = {
     collapsed: true,
   };
