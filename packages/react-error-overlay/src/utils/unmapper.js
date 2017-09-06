@@ -27,6 +27,25 @@ function count(search: string, string: string): number {
   return count;
 }
 
+function normalizePath(_path: string): string {
+  // `path.normalize` cleans a file path, (e.g. /foo//baz/..//bar/ becomes
+  // /foo/bar/).
+  // The web version of this module only provides POSIX support, so Windows
+  // paths like C:\foo\\baz\..\\bar\ cannot be normalized.
+  // A simple solution to this is to replace all `\` with `/`, then normalize
+  // afterwards.
+  //
+  // Note:
+  // `path.normalize` supports POSIX forward slashes on Windows, but not the
+  // other way around. Converting all backslashes to forward slashes before
+  // normalizing makes this cross platform if it were isomorphic (used server
+  // side).
+  return path.normalize(
+    // Match contiguous backslashes
+    _path.replace(/[\\]+/g, '/')
+  );
+}
+
 /**
  * Turns a set of mapped <code>StackFrame</code>s back into their generated code position and enhances them with code.
  * @param {string} fileUri The URI of the <code>bundle.js</code> file.
@@ -56,7 +75,7 @@ async function unmap(
     }
     let { fileName } = frame;
     if (fileName) {
-      fileName = path.normalize(fileName.replace(/[\\]+/g, '/'));
+      fileName = normalizePath(fileName);
     }
     if (fileName == null) {
       return frame;
@@ -64,7 +83,7 @@ async function unmap(
     const fN: string = fileName;
     const source = map
       .getSources()
-      .map(s => s.replace(/[\\]+/g, '/'))
+      .map(normalizePath)
       .filter(p => {
         p = path.normalize(p);
         const i = p.lastIndexOf(fN);
