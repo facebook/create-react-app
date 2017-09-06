@@ -56,6 +56,7 @@
     "postcss-loader": "2.0.6",
     "promise": "8.0.1",
     "react-dev-utils": "^4.0.1",
+    "react-intl-translations-manager": "^5.0.0",
     "sass-loader": "^6.0.6",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.4",

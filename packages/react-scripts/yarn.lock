@@ -5485,6 +5485,15 @@ react-error-overlay@^2.0.0:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
+react-intl-translations-manager@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-intl-translations-manager/-/react-intl-translations-manager-5.0.0.tgz#3c78d3e3e44c5804d7a15c60e89c3aefd9d06615"
+  dependencies:
+    chalk "^1.1.3"
+    glob "^7.0.3"
+    json-stable-stringify "^1.0.1"
+    mkdirp "^0.5.1"
+
 "react@^15 || ^16", react@^15.5.4:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
