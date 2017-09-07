@@ -1,13 +1,2 @@
-# Autodetect text files
-* text=auto
-
-# ...Unless the name matches the following
-# overriding patterns
-
-# Definitively text files 
-*.txt text
-*.js text
-
-# Ensure those won't be messed up with
-*.jpg binary
-*.data binary
+# Check out files with LF
+*.js -crlf
