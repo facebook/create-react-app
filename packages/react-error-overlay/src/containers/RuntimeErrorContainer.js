@@ -14,6 +14,7 @@ import CloseButton from '../components/CloseButton';
 import NavigationBar from '../components/NavigationBar';
 import RuntimeError from './RuntimeError';
 import Footer from '../components/Footer';
+
 import type { ErrorRecord } from './RuntimeError';
 
 type Props = {|

@@ -12,6 +12,7 @@ import React, { Component } from 'react';
 import CodeBlock from './StackFrameCodeBlock';
 import { getPrettyURL } from '../utils/getPrettyURL';
 import { darkGray } from '../styles';
+
 import type { StackFrame as StackFrameType } from '../utils/stack-frame';
 
 const linkStyle = {

@@ -13,6 +13,7 @@ import StackFrame from './StackFrame';
 import Collapsible from '../components/Collapsible';
 import { isInternalFile } from '../utils/isInternalFile';
 import { isBultinErrorName } from '../utils/isBultinErrorName';
+
 import type { StackFrame as StackFrameType } from '../utils/stack-frame';
 
 const traceStyle = {

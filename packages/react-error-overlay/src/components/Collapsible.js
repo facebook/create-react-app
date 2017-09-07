@@ -9,8 +9,9 @@
 
 /* @flow */
 import React, { Component } from 'react';
-import type { Element } from 'react';
 import { black } from '../styles';
+
+import type { Element as ReactElement } from 'react';
 
 const _collapsibleStyle = {
   color: black,
@@ -37,7 +38,7 @@ const collapsibleExpandedStyle = {
 };
 
 type Props = {|
-  children: Element<any>[],
+  children: ReactElement<any>[],
 |};
 
 type State = {|

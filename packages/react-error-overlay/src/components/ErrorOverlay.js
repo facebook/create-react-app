@@ -9,8 +9,9 @@
 
 /* @flow */
 import React, { Component } from 'react';
-import type { Node } from 'react';
 import { black } from '../styles';
+
+import type { Node as ReactNode } from 'react';
 
 const overlayStyle = {
   position: 'relative',
@@ -33,7 +34,7 @@ const overlayStyle = {
 };
 
 type Props = {|
-  children: Node,
+  children: ReactNode,
   shortcutHandler?: (eventKey: string) => void,
 |};
 
