@@ -21,143 +21,26 @@
 var SockJS = require('sockjs-client');
 var stripAnsi = require('strip-ansi');
 var url = require('url');
+var launchEditorEndpoint = require('./launchEditorEndpoint');
 var formatWebpackMessages = require('./formatWebpackMessages');
-var Entities = require('html-entities').AllHtmlEntities;
-var ansiHTML = require('./ansiHTML');
-var entities = new Entities();
+var ErrorOverlay = require('react-error-overlay');
 
-function createOverlayIframe(onIframeLoad) {
-  var iframe = document.createElement('iframe');
-  iframe.id = 'react-dev-utils-webpack-hot-dev-client-overlay';
-  iframe.src = 'about:blank';
-  iframe.style.position = 'fixed';
-  iframe.style.left = 0;
-  iframe.style.top = 0;
-  iframe.style.right = 0;
-  iframe.style.bottom = 0;
-  iframe.style.width = '100vw';
-  iframe.style.height = '100vh';
-  iframe.style.border = 'none';
-  iframe.style.zIndex = 2147483647;
-  iframe.onload = onIframeLoad;
-  return iframe;
-}
+ErrorOverlay.startReportingRuntimeErrors({
+  launchEditorEndpoint: launchEditorEndpoint,
+  onError: function() {
+    // TODO: why do we need this?
+    if (module.hot && typeof module.hot.decline === 'function') {
+      module.hot.decline();
+    }
+  },
+  filename: '/static/js/bundle.js',
+});
 
-function addOverlayDivTo(iframe) {
-  // TODO: unify these styles with react-error-overlay
-  iframe.contentDocument.body.style.margin = 0;
-  iframe.contentDocument.body.style.maxWidth = '100vw';
-
-  var outerDiv = iframe.contentDocument.createElement('div');
-  outerDiv.id = 'react-dev-utils-webpack-hot-dev-client-overlay-div';
-  outerDiv.style.width = '100%';
-  outerDiv.style.height = '100%';
-  outerDiv.style.boxSizing = 'border-box';
-  outerDiv.style.textAlign = 'center';
-  outerDiv.style.backgroundColor = 'rgb(255, 255, 255)';
-
-  var div = iframe.contentDocument.createElement('div');
-  div.style.position = 'relative';
-  div.style.display = 'inline-flex';
-  div.style.flexDirection = 'column';
-  div.style.height = '100%';
-  div.style.width = '1024px';
-  div.style.maxWidth = '100%';
-  div.style.overflowX = 'hidden';
-  div.style.overflowY = 'auto';
-  div.style.padding = '0.5rem';
-  div.style.boxSizing = 'border-box';
-  div.style.textAlign = 'left';
-  div.style.fontFamily = 'Consolas, Menlo, monospace';
-  div.style.fontSize = '11px';
-  div.style.whiteSpace = 'pre-wrap';
-  div.style.wordBreak = 'break-word';
-  div.style.lineHeight = '1.5';
-  div.style.color = 'rgb(41, 50, 56)';
-
-  outerDiv.appendChild(div);
-  iframe.contentDocument.body.appendChild(outerDiv);
-  return div;
-}
-
-function overlayHeaderStyle() {
-  return (
-    'font-size: 2em;' +
-    'font-family: sans-serif;' +
-    'color: rgb(206, 17, 38);' +
-    'white-space: pre-wrap;' +
-    'margin: 0 2rem 0.75rem 0px;' +
-    'flex: 0 0 auto;' +
-    'max-height: 35%;' +
-    'overflow: auto;'
-  );
-}
-
-var overlayIframe = null;
-var overlayDiv = null;
-var lastOnOverlayDivReady = null;
-
-function ensureOverlayDivExists(onOverlayDivReady) {
-  if (overlayDiv) {
-    // Everything is ready, call the callback right away.
-    onOverlayDivReady(overlayDiv);
-    return;
-  }
-
-  // Creating an iframe may be asynchronous so we'll schedule the callback.
-  // In case of multiple calls, last callback wins.
-  lastOnOverlayDivReady = onOverlayDivReady;
-
-  if (overlayIframe) {
-    // We're already creating it.
-    return;
-  }
-
-  // Create iframe and, when it is ready, a div inside it.
-  overlayIframe = createOverlayIframe(function onIframeLoad() {
-    overlayDiv = addOverlayDivTo(overlayIframe);
-    // Now we can talk!
-    lastOnOverlayDivReady(overlayDiv);
+if (module.hot && typeof module.hot.dispose === 'function') {
+  module.hot.dispose(function() {
+    // TODO: why do we need this?
+    ErrorOverlay.stopReportingRuntimeErrors();
   });
-
-  // Zalgo alert: onIframeLoad() will be called either synchronously
-  // or asynchronously depending on the browser.
-  // We delay adding it so `overlayIframe` is set when `onIframeLoad` fires.
-  document.body.appendChild(overlayIframe);
-}
-
-function showErrorOverlay(message) {
-  ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
-    // TODO: unify this with our runtime overlay
-    overlayDiv.innerHTML =
-      '<div style="' +
-      overlayHeaderStyle() +
-      '">Failed to compile</div>' +
-      '<pre style="' +
-      'display: block; padding: 0.5em; margin-top: 0; ' +
-      'margin-bottom: 0.5em; overflow-x: auto; white-space: pre-wrap; ' +
-      'border-radius: 0.25rem; background-color: rgba(206, 17, 38, 0.05)">' +
-      '<code style="font-family: Consolas, Menlo, monospace;">' +
-      ansiHTML(entities.encode(message)) +
-      '</code></pre>' +
-      '<div style="' +
-      'font-family: sans-serif; color: rgb(135, 142, 145); margin-top: 0.5rem; ' +
-      'flex: 0 0 auto">' +
-      'This error occurred during the build time and cannot be dismissed.</div>';
-  });
-}
-
-function destroyErrorOverlay() {
-  if (!overlayDiv) {
-    // It is not there in the first place.
-    return;
-  }
-
-  // Clean up and reset internal state.
-  document.body.removeChild(overlayIframe);
-  overlayDiv = null;
-  overlayIframe = null;
-  lastOnOverlayDivReady = null;
 }
 
 // Connect to WebpackDevServer via a socket.
@@ -207,9 +90,9 @@ function handleSuccess() {
   // Attempt to apply hot updates or reload.
   if (isHotUpdate) {
     tryApplyUpdates(function onHotUpdateSuccess() {
-      // Only destroy it when we're sure it's a hot update.
+      // Only dismiss it when we're sure it's a hot update.
       // Otherwise it would flicker right before the reload.
-      destroyErrorOverlay();
+      ErrorOverlay.dismissBuildError();
     });
   }
 }
@@ -249,9 +132,9 @@ function handleWarnings(warnings) {
       // Only print warnings if we aren't refreshing the page.
       // Otherwise they'll disappear right away anyway.
       printWarnings();
-      // Only destroy it when we're sure it's a hot update.
+      // Only dismiss it when we're sure it's a hot update.
       // Otherwise it would flicker right before the reload.
-      destroyErrorOverlay();
+      ErrorOverlay.dismissBuildError();
     });
   } else {
     // Print initial warnings immediately.
@@ -273,7 +156,7 @@ function handleErrors(errors) {
   });
 
   // Only show the first error.
-  showErrorOverlay(formatted.errors[0]);
+  ErrorOverlay.reportBuildError(formatted.errors[0]);
 
   // Also log them to the console.
   if (typeof console !== 'undefined' && typeof console.error === 'function') {

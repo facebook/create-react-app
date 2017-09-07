@@ -57,7 +57,7 @@ module.exports = {
 ```
 
 
-#### `new ModuleScopePlugin(appSrc: string)`
+#### `new ModuleScopePlugin(appSrc: string, allowedFiles?: string[])`
 
 This Webpack plugin ensures that relative imports from app's source directory don't reach outside of it.
 
@@ -71,7 +71,7 @@ module.exports = {
   resolve: {
     // ...
     plugins: [
-      new ModuleScopePlugin(paths.appSrc),
+      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
       // ...
     ],
     // ...
@@ -170,9 +170,9 @@ module: {
 
 Captures JS and CSS asset sizes inside the passed `buildFolder`. Save the result value to compare it after the build.
 
-##### `printFileSizesAfterBuild(webpackStats: WebpackStats, previousFileSizes: OpaqueFileSizes)`
+##### `printFileSizesAfterBuild(webpackStats: WebpackStats, previousFileSizes: OpaqueFileSizes, buildFolder: string, maxBundleGzipSize?: number, maxChunkGzipSize?: number)`
 
-Prints the JS and CSS asset sizes after the build, and includes a size comparison with `previousFileSizes` that were captured earlier using `measureFileSizesBeforeBuild()`.
+Prints the JS and CSS asset sizes after the build, and includes a size comparison with `previousFileSizes` that were captured earlier using `measureFileSizesBeforeBuild()`. `maxBundleGzipSize` and `maxChunkGzipSizemay` may optionally be specified to display a warning when the main bundle or a chunk exceeds the specified size (in bytes).
 
 ```js
 var {
@@ -182,7 +182,7 @@ var {
 
 measureFileSizesBeforeBuild(buildFolder).then(previousFileSizes => {
   return cleanAndRebuild().then(webpackStats => {
-    printFileSizesAfterBuild(webpackStats, previousFileSizes);
+    printFileSizesAfterBuild(webpackStats, previousFileSizes, buildFolder);
   });
 });
 ```
@@ -218,6 +218,20 @@ compiler.plugin('done', function(stats) {
     messages.warnings.forEach(w => console.log(w));
   }
 });
+```
+
+#### `printBuildError(error: Object): void`
+
+Prettify some known build errors.
+Pass an Error object to log a prettified error message in the console.
+
+```
+  const printBuildError = require('react-dev-utils/printBuildError')
+  try {
+    build()
+  } catch(e) {
+    printBuildError(e) // logs prettified message
+  }
 ```
 
 #### `getProcessForPort(port: number): string`
@@ -295,7 +309,7 @@ Returns an object with local and remote URLs for the development server. Pass th
 
 This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.
 
-It currently supports only Webpack 1.x.
+It currently supports only Webpack 3.x.
 
 ```js
 // Webpack development config
