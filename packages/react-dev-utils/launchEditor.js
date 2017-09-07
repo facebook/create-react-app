@@ -38,10 +38,15 @@ class PowerShell extends EventEmitter {
       throw new Error('Failed to start PowerShell');
     }
 
+    // Initialize counters for mapping events
+    this._callbackCounter = 0;
+    this._resolveCounter = 0;
+
     let output = [];
     this._proc.stdout.on('data', data => {
       if (data.indexOf(EOI) !== -1) {
-        this.emit('resolve', output.join(''));
+        const eventName = 'resolve' + ++this._callbackCounter;
+        this.emit(eventName, output.join(''));
         output = [];
       } else {
         output.push(data);
@@ -51,10 +56,8 @@ class PowerShell extends EventEmitter {
 
   invoke(cmd) {
     return new Promise(resolve => {
-      this.on('resolve', data => {
-        resolve(data);
-        this.removeAllListeners('resolve');
-      });
+      const eventName = 'resolve' + ++this._resolveCounter;
+      this.once(eventName, resolve);
 
       this._proc.stdin.write(cmd);
       this._proc.stdin.write(os.EOL);
