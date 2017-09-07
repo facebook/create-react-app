@@ -194,10 +194,10 @@ function guessEditor() {
       }
     } else if (process.platform === 'linux') {
       // --no-heading No header line
-      // -e Select all processes
+      // x List all processes owned by you
       // -o comm Need only names column
       const output = child_process
-        .execSync('ps --no-heading -e -o comm --sort=comm')
+        .execSync('ps x --no-heading -o comm --sort=comm')
         .toString();
       const processNames = Object.keys(COMMON_EDITORS_LINUX);
       for (let i = 0; i < processNames.length; i++) {
