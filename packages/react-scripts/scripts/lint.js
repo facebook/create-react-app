@@ -11,9 +11,11 @@ const argsLint = [].concat('-c', path.resolve(paths.ownPath, './scripts/utils/.e
   .concat(path.resolve(paths.appPath, 'src'))
 
 // console.log(argsLint)
+// console.log(path.resolve(paths.ownPath, './node_modules/eslint/bin/eslint.js'))
+// console.log(require.resolve('eslint/bin/eslint.js'))
 
 const result = spawn.sync(
-  path.resolve(paths.ownPath, './node_modules/eslint/bin/eslint.js'),
+  require.resolve('eslint/bin/eslint.js'),
   argsLint,
   { stdio: 'inherit' }
 )
