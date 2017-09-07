@@ -60,11 +60,13 @@ const COMMON_EDITORS_LINUX = {
   atom: 'atom',
   Brackets: 'brackets',
   code: 'code',
+  emacs: 'emacs',
   'idea.sh': 'idea',
   'phpstorm.sh': 'phpstorm',
   'pycharm.sh': 'pycharm',
   'rubymine.sh': 'rubymine',
   sublime_text: 'sublime_text',
+  vim: 'vim',
   'webstorm.sh': 'webstorm',
 };
 
@@ -156,7 +158,10 @@ function guessEditor() {
     return shellQuote.parse(process.env.REACT_EDITOR);
   }
 
-  // Using `ps x` on OSX or `Get-Process` on Windows we can find out which editor is currently running.
+  // We can find out which editor is currently running by:
+  // `ps x` on OSX
+  // `Get-Process` on Windows
+  // `ps -e` on Linux
   try {
     if (process.platform === 'darwin') {
       const output = child_process.execSync('ps x').toString();
@@ -188,6 +193,9 @@ function guessEditor() {
         }
       }
     } else if (process.platform === 'linux') {
+      // --no-heading No header line
+      // -e Select all processes
+      // -o comm Need only names column
       const output = child_process
         .execSync('ps --no-heading -e -o comm --sort=comm')
         .toString();
