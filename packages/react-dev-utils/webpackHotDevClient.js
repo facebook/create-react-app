@@ -28,9 +28,18 @@ var ErrorOverlay = require('react-error-overlay');
 ErrorOverlay.startReportingRuntimeErrors({
   launchEditorEndpoint: launchEditorEndpoint,
   onError: function() {
-    // TODO: why do we need this?
-    if (module.hot && typeof module.hot.decline === 'function') {
-      module.hot.decline();
+    // Ensure HotModuleReplacementPlugin is active
+    if (module.hot && typeof module.hot.addStatusHandler === 'function') {
+      // When a run time error occurs, it does not make sense to continue HMR;
+      // as application state may be corrupted.
+      // So, next time we check for updates, simply reload the page (to
+      // abort the process).
+      // See https://github.com/facebookincubator/create-react-app/issues/3096
+      module.hot.addStatusHandler(function(status) {
+        if (status === 'check') {
+          window.location.reload();
+        }
+      });
     }
   },
   filename: '/static/js/bundle.js',
