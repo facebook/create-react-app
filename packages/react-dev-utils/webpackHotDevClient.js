@@ -43,6 +43,7 @@ if (module.hot && typeof module.hot.dispose === 'function') {
   });
 }
 
+/* globals __resourceQuery */
 var urlParts;
 if(typeof __resourceQuery === "string" && __resourceQuery) {
   // If this bundle is inlined, use the resource query to get the correct url.
