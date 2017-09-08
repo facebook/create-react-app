@@ -43,12 +43,21 @@ if (module.hot && typeof module.hot.dispose === 'function') {
   });
 }
 
+var urlParts;
+if(typeof __resourceQuery === "string" && __resourceQuery) {
+  // If this bundle is inlined, use the resource query to get the correct url.
+  urlParts = url.parse(__resourceQuery.substr(1));
+} else {
+  // Else, get the url from current window
+  urlParts = url.parse(window.location.origin);
+}
+
 // Connect to WebpackDevServer via a socket.
 var connection = new SockJS(
   url.format({
-    protocol: window.location.protocol,
-    hostname: window.location.hostname,
-    port: window.location.port,
+    protocol: urlParts.protocol,
+    hostname: urlParts.hostname,
+    port: urlParts.port,
     // Hardcoded in WebpackDevServer
     pathname: '/sockjs-node',
   })
