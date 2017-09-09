@@ -2,7 +2,7 @@
 import Anser from 'anser';
 
 export type ErrorLocation = {|
-  filePath: string,
+  fileName: string,
   lineNumber: number,
 |};
 
@@ -23,15 +23,15 @@ const lineNumberRegexes = [
 // https://github.com/webpack/webpack/blob/v3.5.5/lib/Stats.js#L183-L217
 function parseCompileError(message: string): ?ErrorLocation {
   const lines: Array<string> = message.split('\n');
-  let filePath: string = '';
+  let fileName: string = '';
   let lineNumber: number = 0;
 
   for (let i = 0; i < lines.length; i++) {
     const line: string = Anser.ansiToText(lines[i]).trim();
     if (!line) continue;
 
-    if (!filePath && line.match(filePathRegex)) {
-      filePath = line;
+    if (!fileName && line.match(filePathRegex)) {
+      fileName = line;
     }
 
     let k = 0;
@@ -44,10 +44,10 @@ function parseCompileError(message: string): ?ErrorLocation {
       k++;
     }
 
-    if (filePath && lineNumber) break;
+    if (fileName && lineNumber) break;
   }
 
-  return filePath && lineNumber ? { filePath, lineNumber } : null;
+  return fileName && lineNumber ? { fileName, lineNumber } : null;
 }
 
 export default parseCompileError;

@@ -23,6 +23,18 @@ var launchEditorEndpoint = require('./launchEditorEndpoint');
 var formatWebpackMessages = require('./formatWebpackMessages');
 var ErrorOverlay = require('react-error-overlay');
 
+ErrorOverlay.listenToOpenInEditor(function OpenInEditor({
+  fileName,
+  lineNumber,
+}) {
+  fetch(
+    `${launchEditorEndpoint}?fileName=` +
+      window.encodeURIComponent(fileName) +
+      '&lineNumber=' +
+      window.encodeURIComponent(lineNumber || 1)
+  ).then(() => {}, () => {});
+});
+
 // We need to keep track of if there has been a runtime error.
 // Essentially, we cannot guarantee application state was not corrupted by the
 // runtime error. To prevent confusing behavior, we forcibly reload the entire
@@ -31,7 +43,6 @@ var ErrorOverlay = require('react-error-overlay');
 // See https://github.com/facebookincubator/create-react-app/issues/3096
 var hadRuntimeError = false;
 ErrorOverlay.startReportingRuntimeErrors({
-  launchEditorEndpoint: launchEditorEndpoint,
   onError: function() {
     hadRuntimeError = true;
   },

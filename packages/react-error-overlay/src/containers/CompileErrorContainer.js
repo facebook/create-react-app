@@ -21,27 +21,18 @@ const codeAnchorStyle = {
 
 type Props = {|
   error: string,
+  openInEditor: (errorLoc: ErrorLocation) => void,
 |};
 
 class CompileErrorContainer extends PureComponent<Props, void> {
-  openInEditor(errorLoc: ErrorLocation): void {
-    const { filePath, lineNumber } = errorLoc;
-    fetch(
-      `/__open-stack-frame-in-editor?fileName=` +
-        window.encodeURIComponent(filePath) +
-        '&lineNumber=' +
-        window.encodeURIComponent(lineNumber || 1)
-    ).then(() => {}, () => {});
-  }
-
   render() {
-    const { error } = this.props;
+    const { error, openInEditor } = this.props;
     const errLoc = parseCompileError(error);
     return (
       <ErrorOverlay>
         <Header headerText="Failed to compile" />
         <a
-          onClick={errLoc ? () => this.openInEditor(errLoc) : null}
+          onClick={errLoc ? () => openInEditor(errLoc) : null}
           style={errLoc ? codeAnchorStyle : null}
         >
           <CodeBlock main={true} codeHTML={generateAnsiHTML(error)} />

@@ -16,21 +16,34 @@ import { applyStyles } from './utils/dom/css';
 import iframeScript from 'iframeScript';
 
 import type { ErrorRecord } from './listenToRuntimeErrors';
+import type { ErrorLocation } from './utils/parseCompileError';
 
 type RuntimeReportingOptions = {|
   onError: () => void,
-  launchEditorEndpoint: string,
   filename?: string,
 |};
+
+type OpenInEditorListener = (errorLoc: ErrorLocation) => void;
 
 let iframe: null | HTMLIFrameElement = null;
 let isLoadingIframe: boolean = false;
 var isIframeReady: boolean = false;
 
+let openInEditorListener: null | OpenInEditorListener = null;
 let currentBuildError: null | string = null;
 let currentRuntimeErrorRecords: Array<ErrorRecord> = [];
 let currentRuntimeErrorOptions: null | RuntimeReportingOptions = null;
 let stopListeningToRuntimeErrors: null | (() => void) = null;
+
+export function listenToOpenInEditor(listener: OpenInEditorListener) {
+  openInEditorListener = listener;
+}
+
+function openInEditor(errorLoc: ErrorLocation) {
+  if (typeof openInEditorListener === 'function') {
+    openInEditorListener(errorLoc);
+  }
+}
 
 export function reportBuildError(error: string) {
   currentBuildError = error;
@@ -45,6 +58,13 @@ export function dismissBuildError() {
 export function startReportingRuntimeErrors(options: RuntimeReportingOptions) {
   if (stopListeningToRuntimeErrors !== null) {
     throw new Error('Already listening');
+  }
+  if (options.launchEditorEndpoint) {
+    console.warn(
+      'Warning: `startReportingRuntimeErrors` doesn’t accept ' +
+        '`launchEditorEndpoint` argument anymore. Use `listenToOpenInEditor` ' +
+        'instead with your own implementation to open errors in editor '
+    );
   }
   currentRuntimeErrorOptions = options;
   listenToRuntimeErrors(errorRecord => {
