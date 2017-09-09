@@ -25,22 +25,17 @@ var launchEditorEndpoint = require('./launchEditorEndpoint');
 var formatWebpackMessages = require('./formatWebpackMessages');
 var ErrorOverlay = require('react-error-overlay');
 
+// We need to keep track of if there has been a runtime error.
+// Essentially, we cannot guarantee application state was not corrupted by the
+// runtime error. To prevent confusing behavior, we forcibly reload the entire
+// application. This is handled below when we are notified of a compile (code
+// change).
+// See https://github.com/facebookincubator/create-react-app/issues/3096
+var hadRuntimeError = false;
 ErrorOverlay.startReportingRuntimeErrors({
   launchEditorEndpoint: launchEditorEndpoint,
   onError: function() {
-    // Ensure HotModuleReplacementPlugin is active
-    if (module.hot && typeof module.hot.addStatusHandler === 'function') {
-      // When a run time error occurs, it does not make sense to continue HMR;
-      // as application state may be corrupted.
-      // So, next time we check for updates, simply reload the page (to
-      // abort the process).
-      // See https://github.com/facebookincubator/create-react-app/issues/3096
-      module.hot.addStatusHandler(function(status) {
-        if (status === 'check') {
-          window.location.reload();
-        }
-      });
-    }
+    hadRuntimeError = true;
   },
   filename: '/static/js/bundle.js',
 });
@@ -236,7 +231,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   function handleApplyUpdates(err, updatedModules) {
-    if (err || !updatedModules) {
+    if (err || !updatedModules || hadRuntimeError) {
       window.location.reload();
       return;
     }
