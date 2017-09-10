@@ -219,7 +219,7 @@ E2E_FILE=./build/index.html \
 # ******************************************************************************
 
 # Unlink our preset
-npm unlink "$root_path"/packages/babel-preset-react-app
+rm -rf node_modules/packages/babel-preset-react-app
 
 # Eject...
 echo yes | npm run eject
