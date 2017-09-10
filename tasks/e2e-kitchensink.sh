@@ -164,10 +164,10 @@ npm install test-integrity@^2.0.1
 cd "$temp_app_path/test-kitchensink"
 
 # Link to our preset
-npm link "$root_path"/packages/babel-preset-react-app
+cp -r "$root_path"/packages/babel-preset-react-app node_modules
 
 # Link to test module
-npm link "$temp_module_path/node_modules/test-integrity"
+cp -r "$temp_module_path/node_modules/test-integrity" node_modules
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -225,13 +225,13 @@ npm unlink "$root_path"/packages/babel-preset-react-app
 echo yes | npm run eject
 
 # ...but still link to the local packages
-npm link "$root_path"/packages/babel-preset-react-app
-npm link "$root_path"/packages/eslint-config-react-app
-npm link "$root_path"/packages/react-dev-utils
-npm link "$root_path"/packages/react-scripts
+cp -r "$root_path"/packages/babel-preset-react-app node_modules
+cp -r "$root_path"/packages/eslint-config-react-app node_modules
+cp -r "$root_path"/packages/react-dev-utils node_modules
+cp -r "$root_path"/packages/react-scripts node_modules
 
 # Link to test module
-npm link "$temp_module_path/node_modules/test-integrity"
+cp -r "$temp_module_path/node_modules/test-integrity" node_modules
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
