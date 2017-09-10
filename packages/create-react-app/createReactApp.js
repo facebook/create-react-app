@@ -455,7 +455,9 @@ function checkNpmVersion() {
   let hasMinNpm = false;
   let npmVersion = null;
   try {
-    npmVersion = execSync('npm --version').toString().trim();
+    npmVersion = execSync('npm --version')
+      .toString()
+      .trim();
     hasMinNpm = semver.gte(npmVersion, '3.0.0');
   } catch (err) {
     // ignore

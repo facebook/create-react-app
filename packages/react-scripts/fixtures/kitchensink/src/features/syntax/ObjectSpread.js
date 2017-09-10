@@ -41,11 +41,11 @@ export default class extends Component {
   render() {
     return (
       <div id="feature-object-spread">
-        {this.state.users.map(user =>
+        {this.state.users.map(user => (
           <div key={user.id}>
             {user.name}: {user.age}
           </div>
-        )}
+        ))}
       </div>
     );
   }
