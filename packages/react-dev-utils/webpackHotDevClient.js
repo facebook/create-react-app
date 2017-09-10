@@ -23,17 +23,14 @@ var launchEditorEndpoint = require('./launchEditorEndpoint');
 var formatWebpackMessages = require('./formatWebpackMessages');
 var ErrorOverlay = require('react-error-overlay');
 
-ErrorOverlay.listenToOpenInEditor(function OpenInEditor({
-  fileName,
-  lineNumber,
-}) {
+ErrorOverlay.listenToOpenInEditor(function OpenInEditor(errorLocation) {
   // Keep this sync with errorOverlayMiddleware.js
   fetch(
     `${launchEditorEndpoint}?fileName=` +
-      window.encodeURIComponent(fileName) +
+      window.encodeURIComponent(errorLocation.fileName) +
       '&lineNumber=' +
-      window.encodeURIComponent(lineNumber || 1)
-  ).then(() => {}, () => {});
+      window.encodeURIComponent(errorLocation.lineNumber || 1)
+  );
 });
 
 // We need to keep track of if there has been a runtime error.
