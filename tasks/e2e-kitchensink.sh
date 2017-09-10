@@ -167,7 +167,7 @@ cd "$temp_app_path/test-kitchensink"
 cp -r "$root_path"/packages/babel-preset-react-app node_modules
 
 # Link to test module
-cp -r "$temp_module_path/node_modules/test-integrity" node_modules
+npm link "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -231,7 +231,7 @@ cp -r "$root_path"/packages/react-dev-utils node_modules
 cp -r "$root_path"/packages/react-scripts node_modules
 
 # Link to test module
-cp -r "$temp_module_path/node_modules/test-integrity" node_modules
+npm link "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
