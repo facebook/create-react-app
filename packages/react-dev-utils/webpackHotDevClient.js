@@ -27,6 +27,7 @@ ErrorOverlay.listenToOpenInEditor(function OpenInEditor({
   fileName,
   lineNumber,
 }) {
+  // Keep this sync with errorOverlayMiddleware.js
   fetch(
     `${launchEditorEndpoint}?fileName=` +
       window.encodeURIComponent(fileName) +
