@@ -29,11 +29,7 @@ type HeaderPropType = {|
 |};
 
 function Header(props: HeaderPropType) {
-  return (
-    <div style={headerStyle}>
-      {props.headerText}
-    </div>
-  );
+  return <div style={headerStyle}>{props.headerText}</div>;
 }
 
 export default Header;
