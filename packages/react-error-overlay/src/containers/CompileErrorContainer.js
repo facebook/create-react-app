@@ -27,7 +27,7 @@ type Props = {|
 class CompileErrorContainer extends PureComponent<Props, void> {
   render() {
     const { error, openInEditor } = this.props;
-    const errLoc = parseCompileError(error);
+    const errLoc: ?ErrorLocation = parseCompileError(error);
     return (
       <ErrorOverlay>
         <Header headerText="Failed to compile" />

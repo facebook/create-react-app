@@ -6,7 +6,7 @@ export type ErrorLocation = {|
   lineNumber: number,
 |};
 
-const filePathRegex = /^\.(\/[^\/\n ]+)+\.[^\/\n ]+$/;
+const filePathRegex = /^\.(\/[^/\n ]+)+\.[^/\n ]+$/;
 
 const lineNumberRegexes = [
   // Babel syntax errors
@@ -28,7 +28,9 @@ function parseCompileError(message: string): ?ErrorLocation {
 
   for (let i = 0; i < lines.length; i++) {
     const line: string = Anser.ansiToText(lines[i]).trim();
-    if (!line) continue;
+    if (!line) {
+      continue;
+    }
 
     if (!fileName && line.match(filePathRegex)) {
       fileName = line;
@@ -38,13 +40,15 @@ function parseCompileError(message: string): ?ErrorLocation {
     while (k < lineNumberRegexes.length) {
       const match: ?Array<string> = line.match(lineNumberRegexes[k]);
       if (match) {
-        lineNumber = parseInt(match[1]);
+        lineNumber = parseInt(match[1], 10);
         break;
       }
       k++;
     }
 
-    if (fileName && lineNumber) break;
+    if (fileName && lineNumber) {
+      break;
+    }
   }
 
   return fileName && lineNumber ? { fileName, lineNumber } : null;
