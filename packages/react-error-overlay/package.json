@@ -5,10 +5,10 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "npm run build:prod && npm test",
-    "start": "cross-env NODE_ENV=development npm run build -- --watch",
+    "start": "rm -rf lib/ && cross-env NODE_ENV=development npm run build -- --watch",
     "test": "flow && jest",
-    "build": "babel src/ -d lib/",
-    "build:prod": "cross-env NODE_ENV=production babel src/ -d lib/"
+    "build": "rm -rf lib/ && babel src/ -d lib/",
+    "build:prod": "rm -rf lib/ && cross-env NODE_ENV=production babel src/ -d lib/"
   },
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
