@@ -130,6 +130,10 @@ function printHostingInstructions(
     }
     console.log(`  ${chalk.cyan('serve')} -s ${buildFolder}`);
     console.log();
+    console.log('Find out more about deployment here:');
+    console.log();
+    console.log(`  ${chalk.yellow('http://bit.ly/2vY88Kr')}`);
+    console.log();
   }
 }
 
