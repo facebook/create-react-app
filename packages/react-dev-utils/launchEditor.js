@@ -159,9 +159,8 @@ function guessEditor() {
   }
 
   // We can find out which editor is currently running by:
-  // `ps x` on OSX
+  // `ps x` on macOS and Linux
   // `Get-Process` on Windows
-  // `ps -e` on Linux
   try {
     if (process.platform === 'darwin') {
       const output = child_process.execSync('ps x').toString();
