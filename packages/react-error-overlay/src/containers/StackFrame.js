@@ -68,36 +68,38 @@ class StackFrame extends Component<Props, State> {
     }));
   };
 
-  canOpenInEditor() {
+  getEndpointUrl() {
     if (!this.props.launchEditorEndpoint) {
-      return;
+      return null;
     }
     const { _originalFileName: sourceFileName } = this.props.frame;
     // Unknown file
     if (!sourceFileName) {
-      return false;
+      return null;
     }
     // e.g. "/path-to-my-app/webpack/bootstrap eaddeb46b67d75e4dfc1"
     const isInternalWebpackBootstrapCode =
       sourceFileName.trim().indexOf(' ') !== -1;
     if (isInternalWebpackBootstrapCode) {
-      return false;
+      return null;
     }
     // Code is in a real file
-    return true;
+    return this.props.launchEditorEndpoint;
   }
 
   openInEditor = () => {
-    if (!this.props.launchEditorEndpoint) {
+    const endpointUrl = this.getEndpointUrl();
+    if (endpointUrl == null) {
       return;
     }
+
     const {
       _originalFileName: sourceFileName,
       _originalLineNumber: sourceLineNumber,
     } = this.props.frame;
     // Keep this in sync with react-error-overlay/middleware.js
     fetch(
-      `${this.props.launchEditorEndpoint}?fileName=` +
+      `${endpointUrl}?fileName=` +
         window.encodeURIComponent(sourceFileName) +
         '&lineNumber=' +
         window.encodeURIComponent(sourceLineNumber || 1)
@@ -166,7 +168,7 @@ class StackFrame extends Component<Props, State> {
       }
     }
 
-    const canOpenInEditor = this.canOpenInEditor();
+    const canOpenInEditor = this.getEndpointUrl() != null;
     return (
       <div>
         <div>{functionName}</div>
