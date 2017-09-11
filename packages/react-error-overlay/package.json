@@ -5,10 +5,10 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "npm run build:prod && npm test",
-    "start": "cross-env NODE_ENV=development npm run build -- --watch",
+    "start": "rimraf lib/ && cross-env NODE_ENV=development npm run build -- --watch",
     "test": "flow && jest",
-    "build": "babel src/ -d lib/",
-    "build:prod": "cross-env NODE_ENV=production babel src/ -d lib/"
+    "build": "rimraf lib/ && babel src/ -d lib/",
+    "build:prod": "rimraf lib/ && cross-env NODE_ENV=production babel src/ -d lib/"
   },
   "repository": "facebookincubator/create-react-app",
   "license": "BSD-3-Clause",
@@ -53,7 +53,8 @@
     "eslint-plugin-react": "7.1.0",
     "flow-bin": "0.52.0",
     "jest": "20.0.4",
-    "jest-fetch-mock": "1.2.1"
+    "jest-fetch-mock": "1.2.1",
+    "rimraf": "^2.6.1"
   },
   "jest": {
     "setupFiles": [
