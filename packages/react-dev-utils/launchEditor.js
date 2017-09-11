@@ -56,6 +56,20 @@ const COMMON_EDITORS_OSX = {
     '/Applications/WebStorm.app/Contents/MacOS/webstorm',
 };
 
+const COMMON_EDITORS_LINUX = {
+  atom: 'atom',
+  Brackets: 'brackets',
+  code: 'code',
+  emacs: 'emacs',
+  'idea.sh': 'idea',
+  'phpstorm.sh': 'phpstorm',
+  'pycharm.sh': 'pycharm',
+  'rubymine.sh': 'rubymine',
+  sublime_text: 'sublime_text',
+  vim: 'vim',
+  'webstorm.sh': 'webstorm',
+};
+
 const COMMON_EDITORS_WIN = [
   'Brackets.exe',
   'Code.exe',
@@ -144,8 +158,9 @@ function guessEditor() {
     return shellQuote.parse(process.env.REACT_EDITOR);
   }
 
-  // Using `ps x` on OSX or `Get-Process` on Windows we can find out which editor is currently running.
-  // Potentially we could use similar technique for Linux
+  // We can find out which editor is currently running by:
+  // `ps x` on macOS and Linux
+  // `Get-Process` on Windows
   try {
     if (process.platform === 'darwin') {
       const output = child_process.execSync('ps x').toString();
@@ -174,6 +189,20 @@ function guessEditor() {
 
         if (COMMON_EDITORS_WIN.indexOf(shortProcessName) !== -1) {
           return [fullProcessPath];
+        }
+      }
+    } else if (process.platform === 'linux') {
+      // --no-heading No header line
+      // x List all processes owned by you
+      // -o comm Need only names column
+      const output = child_process
+        .execSync('ps x --no-heading -o comm --sort=comm')
+        .toString();
+      const processNames = Object.keys(COMMON_EDITORS_LINUX);
+      for (let i = 0; i < processNames.length; i++) {
+        const processName = processNames[i];
+        if (output.indexOf(processName) !== -1) {
+          return [COMMON_EDITORS_LINUX[processName]];
         }
       }
     }
