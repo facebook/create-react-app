@@ -11,6 +11,8 @@
 import React, { Component } from 'react';
 import { black } from '../styles';
 
+import type { Node as ReactNode } from 'react';
+
 const overlayStyle = {
   position: 'relative',
   display: 'inline-flex',
@@ -31,10 +33,19 @@ const overlayStyle = {
   color: black,
 };
 
-class ErrorOverlay extends Component {
+type Props = {|
+  children: ReactNode,
+  shortcutHandler?: (eventKey: string) => void,
+|};
+
+type State = {|
+  collapsed: boolean,
+|};
+
+class ErrorOverlay extends Component<Props, State> {
   iframeWindow: window = null;
 
-  getIframeWindow = (element: HTMLDivElement) => {
+  getIframeWindow = (element: ?HTMLDivElement) => {
     if (element) {
       const document = element.ownerDocument;
       this.iframeWindow = document.defaultView;

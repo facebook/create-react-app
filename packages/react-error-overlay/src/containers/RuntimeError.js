@@ -11,6 +11,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import StackTrace from './StackTrace';
+
 import type { StackFrame } from '../utils/stack-frame';
 
 const wrapperStyle = {
@@ -18,7 +19,7 @@ const wrapperStyle = {
   flexDirection: 'column',
 };
 
-type ErrorRecord = {|
+export type ErrorRecord = {|
   error: Error,
   unhandledRejection: boolean,
   contextSize: number,

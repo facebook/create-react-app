@@ -77,7 +77,10 @@ class SourceMap {
   }
 }
 
-function extractSourceMapUrl(fileUri: string, fileContents: string) {
+function extractSourceMapUrl(
+  fileUri: string,
+  fileContents: string
+): Promise<string> {
   const regex = /\/\/[#@] ?sourceMappingURL=([^\s'"]+)\s*$/gm;
   let match = null;
   for (;;) {
