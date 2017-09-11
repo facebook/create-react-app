@@ -8,10 +8,14 @@
  */
 'use strict';
 
-const launchEditor = require('./launchEditor');
+const { launchEditor, tryLaunchPowerShellAgent } = require('./launchEditor');
 const launchEditorEndpoint = require('./launchEditorEndpoint');
 
 module.exports = function createLaunchEditorMiddleware() {
+  if (process.platform === 'win32' && !process.env.REACT_EDITOR) {
+    tryLaunchPowerShellAgent();
+  }
+
   return function launchEditorMiddleware(req, res, next) {
     if (req.url.startsWith(launchEditorEndpoint)) {
       launchEditor(req.query.fileName, req.query.lineNumber);

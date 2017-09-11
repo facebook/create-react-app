@@ -11,9 +11,61 @@
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
+const EventEmitter = require('events').EventEmitter;
 const os = require('os');
 const chalk = require('chalk');
 const shellQuote = require('shell-quote');
+
+// Inspired by https://github.com/rannn505/node-powershell
+const EOI = 'EOI';
+class PowerShell extends EventEmitter {
+  constructor() {
+    super();
+
+    this._proc = child_process.spawn(
+      'powershell.exe',
+      ['-NoLogo', '-NoProfile', '-NoExit', '-Command', '-'],
+      {
+        stdio: 'pipe',
+      }
+    );
+
+    this._proc.on('error', () => {
+      // Needs to be registered... already catched by if-statement below
+    });
+
+    if (!this._proc.pid) {
+      throw new Error('Failed to start PowerShell');
+    }
+
+    // Initialize counters for mapping events
+    this._callbackCounter = 0;
+    this._resolveCounter = 0;
+
+    let output = [];
+    this._proc.stdout.on('data', data => {
+      if (data.indexOf(EOI) !== -1) {
+        const eventName = 'resolve' + ++this._callbackCounter;
+        this.emit(eventName, output.join(''));
+        output = [];
+      } else {
+        output.push(data);
+      }
+    });
+  }
+
+  invoke(cmd) {
+    return new Promise(resolve => {
+      const eventName = 'resolve' + ++this._resolveCounter;
+      this.once(eventName, resolve);
+
+      this._proc.stdin.write(cmd);
+      this._proc.stdin.write(os.EOL);
+      this._proc.stdin.write(`echo ${EOI}`);
+      this._proc.stdin.write(os.EOL);
+    });
+  }
+}
 
 function isTerminalEditor(editor) {
   switch (editor) {
@@ -138,57 +190,78 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
   return [fileName];
 }
 
+let powerShellAgent = null;
+function tryLaunchPowerShellAgent() {
+  if (!powerShellAgent) {
+    try {
+      powerShellAgent = new PowerShell();
+    } catch (err) {
+      // Failed to start, ignore silent...
+      powerShellAgent = null;
+    }
+  }
+}
+
 function guessEditor() {
+  return Promise.resolve().then(() => {
+    // Using `ps x` on OSX or `Get-Process` on Windows we can find out which editor is currently running.
+    // Potentially we could use similar technique for Linux
+    if (process.platform === 'darwin') {
+      try {
+        const output = child_process.execSync('ps x').toString();
+        const processNames = Object.keys(COMMON_EDITORS_OSX);
+        for (let i = 0; i < processNames.length; i++) {
+          const processName = processNames[i];
+          if (output.indexOf(processName) !== -1) {
+            return COMMON_EDITORS_OSX[processName];
+          }
+        }
+      } catch (error) {
+        // Ignore...
+      }
+    } else if (process.platform === 'win32' && powerShellAgent) {
+      return powerShellAgent
+        .invoke('Get-Process | Select-Object Path')
+        .then(output => {
+          const runningProcesses = output.split('\r\n');
+          for (let i = 0; i < runningProcesses.length; i++) {
+            // `Get-Process` sometimes returns empty lines
+            if (!runningProcesses[i]) {
+              continue;
+            }
+
+            const fullProcessPath = runningProcesses[i].trim();
+            const shortProcessName = path.basename(fullProcessPath);
+
+            if (COMMON_EDITORS_WIN.indexOf(shortProcessName) !== -1) {
+              return fullProcessPath;
+            }
+          }
+        });
+    }
+  });
+}
+
+function tryGetEditor() {
   // Explicit config always wins
   if (process.env.REACT_EDITOR) {
-    return shellQuote.parse(process.env.REACT_EDITOR);
+    return Promise.resolve(shellQuote.parse(process.env.REACT_EDITOR));
   }
 
-  // Using `ps x` on OSX or `Get-Process` on Windows we can find out which editor is currently running.
-  // Potentially we could use similar technique for Linux
-  try {
-    if (process.platform === 'darwin') {
-      const output = child_process.execSync('ps x').toString();
-      const processNames = Object.keys(COMMON_EDITORS_OSX);
-      for (let i = 0; i < processNames.length; i++) {
-        const processName = processNames[i];
-        if (output.indexOf(processName) !== -1) {
-          return [COMMON_EDITORS_OSX[processName]];
-        }
+  return guessEditor().then(editor => {
+    if (editor) {
+      return [editor];
+    } else {
+      // Last resort, use old skool env vars
+      if (process.env.VISUAL) {
+        return [process.env.VISUAL];
+      } else if (process.env.EDITOR) {
+        return [process.env.EDITOR];
       }
-    } else if (process.platform === 'win32') {
-      const output = child_process
-        .execSync('powershell -Command "Get-Process | Select-Object Path"', {
-          stdio: ['pipe', 'pipe', 'ignore'],
-        })
-        .toString();
-      const runningProcesses = output.split('\r\n');
-      for (let i = 0; i < runningProcesses.length; i++) {
-        // `Get-Process` sometimes returns empty lines
-        if (!runningProcesses[i]) {
-          continue;
-        }
 
-        const fullProcessPath = runningProcesses[i].trim();
-        const shortProcessName = path.basename(fullProcessPath);
-
-        if (COMMON_EDITORS_WIN.indexOf(shortProcessName) !== -1) {
-          return [fullProcessPath];
-        }
-      }
+      return [null];
     }
-  } catch (error) {
-    // Ignore...
-  }
-
-  // Last resort, use old skool env vars
-  if (process.env.VISUAL) {
-    return [process.env.VISUAL];
-  } else if (process.env.EDITOR) {
-    return [process.env.EDITOR];
-  }
-
-  return [null];
+  });
 }
 
 function printInstructions(fileName, errorMessage) {
@@ -229,64 +302,68 @@ function launchEditor(fileName, lineNumber) {
     return;
   }
 
-  let [editor, ...args] = guessEditor();
-  if (!editor) {
-    printInstructions(fileName, null);
-    return;
-  }
-
-  if (
-    process.platform === 'linux' &&
-    fileName.startsWith('/mnt/') &&
-    /Microsoft/i.test(os.release())
-  ) {
-    // Assume WSL / "Bash on Ubuntu on Windows" is being used, and
-    // that the file exists on the Windows file system.
-    // `os.release()` is "4.4.0-43-Microsoft" in the current release
-    // build of WSL, see: https://github.com/Microsoft/BashOnWindows/issues/423#issuecomment-221627364
-    // When a Windows editor is specified, interop functionality can
-    // handle the path translation, but only if a relative path is used.
-    fileName = path.relative('', fileName);
-  }
-
-  let workspace = null;
-  if (lineNumber) {
-    args = args.concat(
-      getArgumentsForLineNumber(editor, fileName, lineNumber, workspace)
-    );
-  } else {
-    args.push(fileName);
-  }
-
-  if (_childProcess && isTerminalEditor(editor)) {
-    // There's an existing editor process already and it's attached
-    // to the terminal, so go kill it. Otherwise two separate editor
-    // instances attach to the stdin/stdout which gets confusing.
-    _childProcess.kill('SIGKILL');
-  }
-
-  if (process.platform === 'win32') {
-    // On Windows, launch the editor in a shell because spawn can only
-    // launch .exe files.
-    _childProcess = child_process.spawn(
-      'cmd.exe',
-      ['/C', editor].concat(args),
-      { stdio: 'inherit' }
-    );
-  } else {
-    _childProcess = child_process.spawn(editor, args, { stdio: 'inherit' });
-  }
-  _childProcess.on('exit', function(errorCode) {
-    _childProcess = null;
-
-    if (errorCode) {
-      printInstructions(fileName, '(code ' + errorCode + ')');
+  tryGetEditor().then(([editor, ...args]) => {
+    if (!editor) {
+      printInstructions(fileName, null);
+      return;
     }
-  });
 
-  _childProcess.on('error', function(error) {
-    printInstructions(fileName, error.message);
+    if (
+      process.platform === 'linux' &&
+      fileName.startsWith('/mnt/') &&
+      /Microsoft/i.test(os.release())
+    ) {
+      // Assume WSL / "Bash on Ubuntu on Windows" is being used, and
+      // that the file exists on the Windows file system.
+      // `os.release()` is "4.4.0-43-Microsoft" in the current release
+      // build of WSL, see: https://github.com/Microsoft/BashOnWindows/issues/423#issuecomment-221627364
+      // When a Windows editor is specified, interop functionality can
+      // handle the path translation, but only if a relative path is used.
+      fileName = path.relative('', fileName);
+    }
+
+    let workspace = null;
+    if (lineNumber) {
+      args = args.concat(
+        getArgumentsForLineNumber(editor, fileName, lineNumber, workspace)
+      );
+    } else {
+      args.push(fileName);
+    }
+
+    if (_childProcess && isTerminalEditor(editor)) {
+      // There's an existing editor process already and it's attached
+      // to the terminal, so go kill it. Otherwise two separate editor
+      // instances attach to the stdin/stdout which gets confusing.
+      _childProcess.kill('SIGKILL');
+    }
+
+    if (process.platform === 'win32') {
+      // On Windows, launch the editor in a shell because spawn can only
+      // launch .exe files.
+      _childProcess = child_process.spawn(
+        'cmd.exe',
+        ['/C', editor].concat(args),
+        { stdio: 'inherit' }
+      );
+    } else {
+      _childProcess = child_process.spawn(editor, args, { stdio: 'inherit' });
+    }
+    _childProcess.on('exit', function(errorCode) {
+      _childProcess = null;
+
+      if (errorCode) {
+        printInstructions(fileName, '(code ' + errorCode + ')');
+      }
+    });
+
+    _childProcess.on('error', function(error) {
+      printInstructions(fileName, error.message);
+    });
   });
 }
 
-module.exports = launchEditor;
+module.exports = {
+  launchEditor,
+  tryLaunchPowerShellAgent,
+};
