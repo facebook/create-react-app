@@ -86,11 +86,11 @@ fi
 
 if hash npm 2>/dev/null
 then
-  # npm 5.0-5.4.0 is too buggy
+  # npm 5 is too buggy right now
   if [ $(npm -v | head -c 1) -eq 5 ]; then
-    npm i -g npm@^5.4.1
+    npm i -g npm@^4.x
   fi;
-  npm cache clean --force || npm cache verify
+  npm cache clean || npm cache verify
 fi
 
 # Prevent bootstrap, we only want top-level dependencies
