@@ -14,6 +14,8 @@ import Collapsible from '../components/Collapsible';
 import { isInternalFile } from '../utils/isInternalFile';
 import { isBultinErrorName } from '../utils/isBultinErrorName';
 
+import type { StackFrame as StackFrameType } from '../utils/stack-frame';
+
 const traceStyle = {
   fontSize: '1em',
   flex: '0 1 auto',
@@ -21,7 +23,14 @@ const traceStyle = {
   overflow: 'auto',
 };
 
-class StackTrace extends Component {
+type Props = {|
+  stackFrames: StackFrameType[],
+  errorName: string,
+  contextSize: number,
+  launchEditorEndpoint: ?string,
+|};
+
+class StackTrace extends Component<Props> {
   renderFrames() {
     const {
       stackFrames,

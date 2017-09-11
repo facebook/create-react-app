@@ -11,6 +11,8 @@
 import React, { Component } from 'react';
 import { black } from '../styles';
 
+import type { Element as ReactElement } from 'react';
+
 const _collapsibleStyle = {
   color: black,
   cursor: 'pointer',
@@ -35,7 +37,15 @@ const collapsibleExpandedStyle = {
   marginBottom: '0.6em',
 };
 
-class Collapsible extends Component {
+type Props = {|
+  children: ReactElement<any>[],
+|};
+
+type State = {|
+  collapsed: boolean,
+|};
+
+class Collapsible extends Component<Props, State> {
   state = {
     collapsed: true,
   };

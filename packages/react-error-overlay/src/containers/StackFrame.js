@@ -13,6 +13,8 @@ import CodeBlock from './StackFrameCodeBlock';
 import { getPrettyURL } from '../utils/getPrettyURL';
 import { darkGray } from '../styles';
 
+import type { StackFrame as StackFrameType } from '../utils/stack-frame';
+
 const linkStyle = {
   fontSize: '0.9em',
   marginBottom: '0.9em',
@@ -43,7 +45,19 @@ const toggleStyle = {
   lineHeight: '1.5',
 };
 
-class StackFrame extends Component {
+type Props = {|
+  frame: StackFrameType,
+  launchEditorEndpoint: ?string,
+  contextSize: number,
+  critical: boolean,
+  showCode: boolean,
+|};
+
+type State = {|
+  compiled: boolean,
+|};
+
+class StackFrame extends Component<Props, State> {
   state = {
     compiled: false,
   };
@@ -54,43 +68,45 @@ class StackFrame extends Component {
     }));
   };
 
-  canOpenInEditor() {
+  getEndpointUrl(): string | null {
     if (!this.props.launchEditorEndpoint) {
-      return;
+      return null;
     }
     const { _originalFileName: sourceFileName } = this.props.frame;
     // Unknown file
     if (!sourceFileName) {
-      return false;
+      return null;
     }
     // e.g. "/path-to-my-app/webpack/bootstrap eaddeb46b67d75e4dfc1"
     const isInternalWebpackBootstrapCode =
       sourceFileName.trim().indexOf(' ') !== -1;
     if (isInternalWebpackBootstrapCode) {
-      return false;
+      return null;
     }
     // Code is in a real file
-    return true;
+    return this.props.launchEditorEndpoint || null;
   }
 
   openInEditor = () => {
-    if (!this.canOpenInEditor()) {
+    const endpointUrl = this.getEndpointUrl();
+    if (endpointUrl === null) {
       return;
     }
+
     const {
       _originalFileName: sourceFileName,
       _originalLineNumber: sourceLineNumber,
     } = this.props.frame;
     // Keep this in sync with react-error-overlay/middleware.js
     fetch(
-      `${this.props.launchEditorEndpoint}?fileName=` +
+      `${endpointUrl}?fileName=` +
         window.encodeURIComponent(sourceFileName) +
         '&lineNumber=' +
         window.encodeURIComponent(sourceLineNumber || 1)
     ).then(() => {}, () => {});
   };
 
-  onKeyDown = (e: SyntheticKeyboardEvent) => {
+  onKeyDown = (e: SyntheticKeyboardEvent<>) => {
     if (e.key === 'Enter') {
       this.openInEditor();
     }
@@ -152,7 +168,7 @@ class StackFrame extends Component {
       }
     }
 
-    const canOpenInEditor = this.canOpenInEditor();
+    const canOpenInEditor = this.getEndpointUrl() !== null;
     return (
       <div>
         <div>{functionName}</div>

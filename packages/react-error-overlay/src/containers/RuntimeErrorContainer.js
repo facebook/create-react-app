@@ -15,7 +15,19 @@ import NavigationBar from '../components/NavigationBar';
 import RuntimeError from './RuntimeError';
 import Footer from '../components/Footer';
 
-class RuntimeErrorContainer extends PureComponent {
+import type { ErrorRecord } from './RuntimeError';
+
+type Props = {|
+  errorRecords: ErrorRecord[],
+  close: () => void,
+  launchEditorEndpoint: ?string,
+|};
+
+type State = {|
+  currentIndex: number,
+|};
+
+class RuntimeErrorContainer extends PureComponent<Props, State> {
   state = {
     currentIndex: 0,
   };

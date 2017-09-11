@@ -21,12 +21,16 @@ import codeFrame from 'babel-code-frame';
 type StackFrameCodeBlockPropsType = {|
   lines: ScriptLine[],
   lineNum: number,
-  columnNum: number,
+  columnNum: ?number,
   contextSize: number,
   main: boolean,
 |};
 
-function StackFrameCodeBlock(props: StackFrameCodeBlockPropsType) {
+// Exact type workaround for spread operator.
+// See: https://github.com/facebook/flow/issues/2405
+type Exact<T> = $Shape<T>;
+
+function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
   const { lines, lineNum, columnNum, contextSize, main } = props;
   const sourceCode = [];
   let whiteSpace = Infinity;
