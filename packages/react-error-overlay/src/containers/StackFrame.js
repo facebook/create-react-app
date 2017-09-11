@@ -68,7 +68,7 @@ class StackFrame extends Component<Props, State> {
     }));
   };
 
-  getEndpointUrl() {
+  getEndpointUrl(): string | null {
     if (!this.props.launchEditorEndpoint) {
       return null;
     }
@@ -84,12 +84,12 @@ class StackFrame extends Component<Props, State> {
       return null;
     }
     // Code is in a real file
-    return this.props.launchEditorEndpoint;
+    return this.props.launchEditorEndpoint || null;
   }
 
   openInEditor = () => {
     const endpointUrl = this.getEndpointUrl();
-    if (endpointUrl == null) {
+    if (endpointUrl === null) {
       return;
     }
 
@@ -168,7 +168,7 @@ class StackFrame extends Component<Props, State> {
       }
     }
 
-    const canOpenInEditor = this.getEndpointUrl() != null;
+    const canOpenInEditor = this.getEndpointUrl() !== null;
     return (
       <div>
         <div>{functionName}</div>
