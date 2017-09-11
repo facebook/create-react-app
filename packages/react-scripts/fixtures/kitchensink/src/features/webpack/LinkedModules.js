@@ -16,9 +16,5 @@ export default () => {
   if (!test() || v !== '2.0.0') {
     throw new Error('Functionality test did not pass.');
   }
-  return (
-    <p id="feature-linked-modules">
-      {v}
-    </p>
-  );
+  return <p id="feature-linked-modules">{v}</p>;
 };

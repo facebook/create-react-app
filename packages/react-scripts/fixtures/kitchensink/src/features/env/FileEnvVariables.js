@@ -9,7 +9,7 @@
 
 import React from 'react';
 
-export default () =>
+export default () => (
   <span>
     <span id="feature-file-env-original-1">
       {process.env.REACT_APP_ORIGINAL_1}
@@ -21,7 +21,6 @@ export default () =>
       {process.env.REACT_APP_DEVELOPMENT}
       {process.env.REACT_APP_PRODUCTION}
     </span>
-    <span id="feature-file-env-x">
-      {process.env.REACT_APP_X}
-    </span>
-  </span>;
+    <span id="feature-file-env-x">{process.env.REACT_APP_X}</span>
+  </span>
+);

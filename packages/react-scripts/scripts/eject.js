@@ -167,9 +167,11 @@ inquirer
     // Sort the deps
     const unsortedDependencies = appPackage.dependencies;
     appPackage.dependencies = {};
-    Object.keys(unsortedDependencies).sort().forEach(key => {
-      appPackage.dependencies[key] = unsortedDependencies[key];
-    });
+    Object.keys(unsortedDependencies)
+      .sort()
+      .forEach(key => {
+        appPackage.dependencies[key] = unsortedDependencies[key];
+      });
     console.log();
 
     console.log(cyan('Updating the scripts'));
