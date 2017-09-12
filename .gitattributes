@@ -6,12 +6,7 @@
 *.less text eol=lf
 *.js   text eol=lf
 *.json text eol=lf
-*.php  text eol=lf
-*.rst  text eol=lf
 *.md   text eol=lf
 *.yml  text eol=lf
 *.ts   text eol=lf
-*.xlf  text eol=lf
-*.sql  text eol=lf
-*.t3s  text eol=lf
 *.txt  text eol=lf
