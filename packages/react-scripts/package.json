@@ -1,6 +1,6 @@
 {
   "name": "@vtex/react-scripts",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Configuration and scripts for Create React App.",
   "repository": "vtex/create-react-app",
   "license": "BSD-3-Clause",
@@ -37,7 +37,7 @@
     "eslint": "4.10.0",
     "eslint-config-vtex": "^7.0.0",
     "eslint-config-vtex-react": "^3.0.2",
-    "eslint-config-vtex-react-app": "^2.0.0",
+    "eslint-config-vtex-react-app": "^3.0.0",
     "eslint-loader": "1.9.0",
     "eslint-plugin-flowtype": "2.39.1",
     "eslint-plugin-import": "2.8.0",
