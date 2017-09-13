@@ -46,8 +46,19 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
 
+const externals = appPackage.externalReact
+  ? {
+      react: 'React',
+      'react-dom': 'ReactDOM',
+    }
+  : {};
+
+const component = appPackage.component;
+
 // Note: defined here because it will be used more than once.
-const cssFilename = 'static/css/[name].[contenthash:8].css';
+const cssFilename = component
+  ? 'static/css/[name].css'
+  : 'static/css/[name].[contenthash:8].css';
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -57,15 +68,6 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
     { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
-
-const externals = appPackage.externalReact
-  ? {
-      react: 'React',
-      'react-dom': 'ReactDOM',
-    }
-  : {};
-
-const component = appPackage.component;
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
