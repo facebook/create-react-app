@@ -35,7 +35,7 @@
     "dotenv": "4.0.0",
     "dotenv-expand": "4.0.1",
     "eslint": "4.10.0",
-    "eslint-config-vtex": "^6.0.1",
+    "eslint-config-vtex": "^7.0.0",
     "eslint-config-vtex-react": "^3.0.2",
     "eslint-config-vtex-react-app": "^2.0.0",
     "eslint-loader": "1.9.0",
