@@ -1,12 +1,2 @@
 # Enforce checkout with linux lf consistent over all plattforms
-.*     text eol=lf
-*.html text eol=lf
-*.css  text eol=lf
-*.tmpl text eol=lf
-*.less text eol=lf
 *.js   text eol=lf
-*.json text eol=lf
-*.md   text eol=lf
-*.yml  text eol=lf
-*.ts   text eol=lf
-*.txt  text eol=lf
