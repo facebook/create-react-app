@@ -96,6 +96,15 @@ module.exports = (context, opts = {}) => {
       ]),
     };
   } else {
+    if (env === 'production') {
+      // Optimization: hoist JSX that never changes out of render()
+      // Disabled because of issues: https://github.com/facebookincubator/create-react-app/issues/553
+      // TODO: Enable again when these issues are resolved.
+      // plugins.push.apply(plugins, [
+      //   require.resolve('babel-plugin-transform-react-constant-elements')
+      // ]);
+    }
+
     return {
       presets: [
         // Latest stable ECMAScript features
@@ -131,14 +140,5 @@ module.exports = (context, opts = {}) => {
         require.resolve('babel-plugin-syntax-dynamic-import'),
       ]),
     };
-
-    if (env === 'production') {
-      // Optimization: hoist JSX that never changes out of render()
-      // Disabled because of issues: https://github.com/facebookincubator/create-react-app/issues/553
-      // TODO: Enable again when these issues are resolved.
-      // plugins.push.apply(plugins, [
-      //   require.resolve('babel-plugin-transform-react-constant-elements')
-      // ]);
-    }
   }
 };
