@@ -1,7 +1,3 @@
-# Handle line endings automatically for files detected as text
-# and leave all files detected as binary untouched.
-* text=auto
-
 # Enforce checkout with linux lf consistent over all plattforms
 .*     text eol=lf
 *.html text eol=lf
