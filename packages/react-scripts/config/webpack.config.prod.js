@@ -31,6 +31,9 @@ const publicPath = paths.servedPath;
 const shouldUseRelativeAssetPaths = publicPath === './';
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
+// New feature of uglifyjs, would improve build speed if enabled.
+const shouldUseUglifyJsParallelization =
+  process.env.UGLIFYJS_PARALLEL === 'true';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
@@ -288,6 +291,7 @@ module.exports = {
     new webpack.DefinePlugin(env.stringified),
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
+      parallel: shouldUseUglifyJsParallelization,
       compress: {
         warnings: false,
         // Disabled because of an issue with Uglify breaking seemingly valid code:
