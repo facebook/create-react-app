@@ -28,7 +28,7 @@ const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
-const config = require('../config/webpack.config.prod');
+const getWebpackConfig = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -50,6 +50,9 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
+const es5config = getWebpackConfig('production');
+const es6config = getWebpackConfig('module');
+
 // First, read the current file sizes in build directory.
 // This lets us display how much they changed later.
 measureFileSizesBeforeBuild(paths.appBuild)
@@ -60,10 +63,13 @@ measureFileSizesBeforeBuild(paths.appBuild)
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
-    return build(previousFileSizes);
+    return Promise.all([
+      build(previousFileSizes, es5config),
+      build(previousFileSizes, es6config),
+    ]);
   })
   .then(
-    ({ stats, previousFileSizes, warnings }) => {
+    ([{ stats, previousFileSizes, warnings }, es6Result]) => {
       if (warnings.length) {
         console.log(chalk.yellow('Compiled with warnings.\n'));
         console.log(warnings.join('\n\n'));
@@ -93,7 +99,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
 
       const appPackage = require(paths.appPackageJson);
       const publicUrl = paths.publicUrl;
-      const publicPath = config.output.publicPath;
+      const publicPath = es5config.output.publicPath;
       const buildFolder = path.relative(process.cwd(), paths.appBuild);
       printHostingInstructions(
         appPackage,
@@ -111,7 +117,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
   );
 
 // Create the production build and print the deployment instructions.
-function build(previousFileSizes) {
+function build(previousFileSizes, config) {
   console.log('Creating an optimized production build...');
 
   let compiler = webpack(config);
