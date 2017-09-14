@@ -1,0 +1,2 @@
+# Enforce checkout with linux lf consistent over all plattforms
+*.js   text eol=lf
