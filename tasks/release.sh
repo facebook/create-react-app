@@ -16,6 +16,9 @@
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
+# Just in case this script is called by the bot
+./own.sh
+
 # Exit the script on any command with non 0 return code
 # We assume that all the commands in the pipeline set their return code
 # properly and that we do not need to validate that the output is correct

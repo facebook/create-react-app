@@ -63,5 +63,9 @@
   },
   "optionalDependencies": {
     "fsevents": "1.1.2"
+  },
+  "scripts": {
+    "postinstall": "../../tasks/own.sh",
+    "postpublish": "../../tasks/own.sh"
   }
 }
