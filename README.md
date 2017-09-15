@@ -43,6 +43,13 @@ To fix this, create a new file *in the root of the project* called `tsconfig.tes
 
 ## Changelog
 
+### 2.7.0
+* Merge react-scripts@1.0.13 - @JohnNilsson
+* Fix git tempalte - @hktonylee
+* Provide migration docs - @JReinhold
+* Updated dependencies - @swengorschewski
+* Fix tslint config - @comerc
+
 ### 2.6.0
 * Merge react-scripts@1.0.10 - @wmonk
 * Update component template - @pelotom
