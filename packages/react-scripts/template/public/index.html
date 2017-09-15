@@ -10,6 +10,7 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link href="<%= htmlWebpackPlugin.files.chunks.main.css %>" rel="stylesheet">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -19,6 +20,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <script type="module" src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
     <title>React App</title>
   </head>
   <body>
@@ -36,5 +38,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script nomodule type="text/javascript" src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
   </body>
 </html>

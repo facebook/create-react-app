@@ -316,14 +316,14 @@ module.exports = target => {
       new InterpolateHtmlPlugin(env.raw),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin({
-        inject: true,
         template: paths.appHtml,
+        inject: false,
         minify: {
           removeComments: true,
           collapseWhitespace: true,
           removeRedundantAttributes: true,
           useShortDoctype: true,
-          removeEmptyAttributes: true,
+          removeEmptyAttributes: false,
           removeStyleLinkTypeAttributes: true,
           keepClosingSlash: true,
           minifyJS: true,
