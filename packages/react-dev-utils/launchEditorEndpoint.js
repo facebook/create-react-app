@@ -6,13 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+'use strict';
 
-/* @flow */
-function consumeEvent(e: Event) {
-  e.preventDefault();
-  if (typeof e.target.blur === 'function') {
-    e.target.blur();
-  }
-}
-
-export { consumeEvent };
+// TODO: we might want to make this injectable to support DEV-time non-root URLs.
+module.exports = '/__open-stack-frame-in-editor';

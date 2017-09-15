@@ -14,14 +14,14 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
-    "@types/jest": "^19.2.3",
+    "@types/jest": "^20.0.4",
     "@types/node": "^7.0.21",
-    "@types/react": "^15.0.34",
+    "@types/react": "^15.6.1",
     "@types/react-dom": "^15.5.0",
-    "eslint": "3.19.0",
+    "eslint": "^4.4.1",
     "husky": "^0.13.2",
-    "lerna": "2.0.0-rc.5",
-    "lerna-changelog": "^0.2.3",
+    "lerna": "^2.0.0",
+    "lerna-changelog": "^0.6.0",
     "lint-staged": "^3.3.1",
     "prettier": "^1.5.2"
   },
@@ -29,6 +29,9 @@
     "*.js": [
       "prettier --trailing-comma es5 --single-quote --write",
       "git add"
+    ],
+    "yarn.lock": [
+      "git rm --cached"
     ]
   }
 }
