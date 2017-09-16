@@ -165,6 +165,9 @@ cd "$temp_app_path/test-kitchensink"
 
 # Link to our preset
 npm link "$root_path"/packages/babel-preset-react-app
+# Link to error overlay package because now it's a dependency
+# of react-dev-utils and not react-scripts
+npm link "$root_path"/packages/react-error-overlay
 
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
@@ -220,6 +223,8 @@ E2E_FILE=./build/index.html \
 
 # Unlink our preset
 npm unlink "$root_path"/packages/babel-preset-react-app
+# Unlink error overlay
+npm unlink "$root_path"/packages/react-error-overlay
 
 # Eject...
 echo yes | npm run eject
@@ -227,6 +232,7 @@ echo yes | npm run eject
 # ...but still link to the local packages
 npm link "$root_path"/packages/babel-preset-react-app
 npm link "$root_path"/packages/eslint-config-react-app
+npm link "$root_path"/packages/react-error-overlay
 npm link "$root_path"/packages/react-dev-utils
 npm link "$root_path"/packages/react-scripts
 
