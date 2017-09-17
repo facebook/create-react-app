@@ -5,10 +5,10 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "npm run build:prod && npm test",
-    "start": "rimraf lib/ && cross-env NODE_ENV=development npm run build -- --watch",
-    "test": "flow && jest",
-    "build": "rimraf lib/ && babel src/ -d lib/",
-    "build:prod": "rimraf lib/ && cross-env NODE_ENV=production babel src/ -d lib/"
+    "start": "rimraf lib/ && cross-env NODE_ENV=development webpack --config webpack.config.js -w & NODE_ENV=development babel src/ -d lib/ -w",
+    "test": "flow && cross-env NODE_ENV=test jest",
+    "build": "rimraf lib/ && cross-env NODE_ENV=development babel src/ -d lib/ && cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "build:prod": "rimraf lib/ && cross-env NODE_ENV=production babel src/ -d lib/ && cross-env NODE_ENV=production webpack --config webpack.config.js"
   },
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -33,12 +33,14 @@
   "dependencies": {
     "anser": "1.4.1",
     "babel-code-frame": "6.22.0",
+    "babel-loader": "^7.1.2",
     "babel-runtime": "6.26.0",
     "html-entities": "1.2.1",
     "react": "^15 || ^16",
     "react-dom": "^15 || ^16",
     "settle-promise": "1.0.0",
-    "source-map": "0.5.6"
+    "source-map": "0.5.6",
+    "webpack": "^3.6.0"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",
@@ -54,6 +56,7 @@
     "flow-bin": "^0.54.0",
     "jest": "20.0.4",
     "jest-fetch-mock": "1.2.1",
+    "raw-loader": "^0.5.1",
     "rimraf": "^2.6.1"
   },
   "jest": {
