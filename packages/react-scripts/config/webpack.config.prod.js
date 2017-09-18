@@ -64,7 +64,13 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs, paths.appVendors],
+  entry: {
+    app: paths.appIndexJs,
+    // Load the app and all its dependencies
+    vendors: require(paths.appVendors),
+    // List of all the node modules that should be excluded from the app
+    polyfills: require.resolve('./polyfills'),
+  },
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -356,7 +362,15 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */ 'vendors'),
+    // For some reason, Webpack adds these ids of all the modules that exist to our vendor chunk
+    // Instead of using numerical ids it uses a unique path to map our request to a module.
+    // Thanks to this change the vendor hash will now always stay the same
+    new webpack.NamedModulesPlugin(),
+    // Avoid having the vendors in the rest of the app
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendors',
+      minChunks: Infinity,
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
