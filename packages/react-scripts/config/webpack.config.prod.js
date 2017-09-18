@@ -379,12 +379,9 @@ module.exports = {
       if (chunk.name) {
         return chunk.name;
       }
-      return (chunk.mapModules
-        ? chunk.mapModules(m => m.request)
-        : chunk.modules.map(m => m.request)
-      )
-        .map(filename => filename.replace(/.*\//g, ''))
-        .map(filename => filename.replace(path.extname(filename), ''))
+      return chunk
+        .mapModules(m => m.request)
+        .map(filename => path.basename(filename, path.extname(filename)))
         .join('_');
     }),
 
