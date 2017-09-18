@@ -371,6 +371,11 @@ module.exports = {
       name: 'vendors',
       minChunks: Infinity,
     }),
+    // The runtime is the part of Webpack that resolves modules
+    // at runtime and handles async loading and more
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'runtime',
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
