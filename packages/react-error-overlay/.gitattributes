@@ -1,2 +1,2 @@
-*         text=auto
 *.js		  text eol=lf
+*.snap    text eol=lf
