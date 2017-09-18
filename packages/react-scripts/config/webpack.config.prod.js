@@ -65,7 +65,7 @@ module.exports = {
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
   entry: {
-    app: paths.appIndexJs,
+    main: paths.appIndexJs,
     // Load the app and all its dependencies
     vendors: require(paths.appVendors),
     // List of all the node modules that should be excluded from the app
