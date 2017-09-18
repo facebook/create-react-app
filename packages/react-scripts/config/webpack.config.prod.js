@@ -18,6 +18,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const fs = require('fs');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -65,11 +66,14 @@ module.exports = {
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
   entry: {
-    main: paths.appIndexJs,
     // Load the app and all its dependencies
-    vendors: require(paths.appVendors),
-    // List of all the node modules that should be excluded from the app
+    main: paths.appIndexJs,
+    // Add the polyfills
     polyfills: require.resolve('./polyfills'),
+    // List of all the node modules that should be excluded from the app
+    vendors: fs.existsSync(paths.appVendors)
+      ? require(paths.appVendors)
+      : ['react', 'react-dom'],
   },
   output: {
     // The build folder.
@@ -362,10 +366,26 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    // For some reason, Webpack adds these ids of all the modules that exist to our vendor chunk
+
+    // For some reason, Webpack adds some ids of all the modules that exist to our vendor chunk
     // Instead of using numerical ids it uses a unique path to map our request to a module.
     // Thanks to this change the vendor hash will now always stay the same
     new webpack.NamedModulesPlugin(),
+
+    // Ensure that every chunks have an actual name and not an id
+    // If the chunk has a name, this name is used
+    // otherwise the name of the file is used
+    new webpack.NamedChunksPlugin(chunk => {
+      if (chunk.name) {
+        return chunk.name;
+      }
+      return chunk.modules
+        .map(m => m.request)
+        .map(filename => filename.replace(/.*\//g, ''))
+        .map(filename => filename.replace(path.extname(filename), ''))
+        .join('_');
+    }),
+
     // Avoid having the vendors in the rest of the app
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendors',
