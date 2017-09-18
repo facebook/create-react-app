@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-//@flow
+/* @flow */
 import { SourceMapConsumer } from 'source-map';
 
 /**
@@ -77,7 +77,10 @@ class SourceMap {
   }
 }
 
-function extractSourceMapUrl(fileUri: string, fileContents: string) {
+function extractSourceMapUrl(
+  fileUri: string,
+  fileContents: string
+): Promise<string> {
   const regex = /\/\/[#@] ?sourceMappingURL=([^\s'"]+)\s*$/gm;
   let match = null;
   for (;;) {

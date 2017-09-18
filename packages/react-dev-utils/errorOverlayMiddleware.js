@@ -8,12 +8,12 @@
  */
 'use strict';
 
-const launchEditor = require('react-dev-utils/launchEditor');
+const launchEditor = require('./launchEditor');
+const launchEditorEndpoint = require('./launchEditorEndpoint');
 
 module.exports = function createLaunchEditorMiddleware() {
   return function launchEditorMiddleware(req, res, next) {
-    // Keep this in sync with react-error-overlay
-    if (req.url.startsWith('/__open-stack-frame-in-editor')) {
+    if (req.url.startsWith(launchEditorEndpoint)) {
       launchEditor(req.query.fileName, req.query.lineNumber);
       res.end();
     } else {

@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-// @flow
+/* @flow */
 import StackFrame from './stack-frame';
 import { getSourceMap } from './getSourceMap';
 import { getLinesAround } from './getLinesAround';
@@ -56,7 +56,11 @@ async function unmap(
     }
     let { fileName } = frame;
     if (fileName) {
-      fileName = path.normalize(fileName);
+      // The web version of this module only provides POSIX support, so Windows
+      // paths like C:\foo\\baz\..\\bar\ cannot be normalized.
+      // A simple solution to this is to replace all `\` with `/`, then
+      // normalize afterwards.
+      fileName = path.normalize(fileName.replace(/[\\]+/g, '/'));
     }
     if (fileName == null) {
       return frame;
@@ -64,6 +68,7 @@ async function unmap(
     const fN: string = fileName;
     const source = map
       .getSources()
+      // Prepare path for normalization; see comment above for reasoning.
       .map(s => s.replace(/[\\]+/g, '/'))
       .filter(p => {
         p = path.normalize(p);

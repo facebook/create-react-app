@@ -45,6 +45,8 @@ const base = {
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
   entry: [
+    // We ship a few polyfills by default:
+    require.resolve('./polyfills'),
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
     // When you save a file, the client will either apply hot updates (in case
@@ -56,10 +58,6 @@ const base = {
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
-    // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
-    // Errors should be considered fatal in development
-    require.resolve('react-error-overlay'),
     // Finally, this is your app's code:
     paths.appIndexJs,
     // We include the app code last so that if there is a runtime error during
@@ -119,7 +117,7 @@ const base = {
       // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
-      new ModuleScopePlugin(paths.appSrc),
+      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
     ],
   },
   module: {
@@ -284,6 +282,7 @@ const base = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty',
+    child_process: 'empty',
   },
   // Turn off performance hints during development because we don't do any
   // splitting or minification in interest of speed. These warnings become
