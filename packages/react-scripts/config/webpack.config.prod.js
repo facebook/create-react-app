@@ -66,17 +66,20 @@ module.exports = {
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
-  // In production, we only want to load the polyfills and the app code.
-  entry: {
-    // Load the app and all its dependencies
-    main: paths.appIndexJs,
-    // Add the polyfills
-    polyfills: require.resolve('./polyfills'),
-    // List of all the node modules that should be excluded from the app
-    vendors: fs.existsSync(paths.appVendors)
-      ? require(paths.appVendors)
-      : ['react', 'react-dom'],
-  },
+  // In production, we only want to load the polyfills, the app code and the vendors.
+  entry: Object.assign(
+    {
+      // Load the app and all its dependencies
+      main: paths.appIndexJs,
+      // Add the polyfills
+      polyfills: require.resolve('./polyfills'),
+    },
+    // Only add the vendors if the file "src/vendors.js" exists
+    fs.existsSync(paths.appVendors)
+      ? // List of all the node modules that should be excluded from the app
+        { vendors: require(paths.appVendors) }
+      : {}
+  ),
   output: {
     // The build folder.
     path: paths.appBuild,
