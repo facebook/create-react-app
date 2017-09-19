@@ -18,6 +18,8 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const NameAllModulesPlugin = require('name-all-modules-plugin');
+
 const fs = require('fs');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
@@ -395,6 +397,10 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'runtime',
     }),
+
+    // https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
+    // Name the modules that were not named by the previous plugins
+    new NameAllModulesPlugin(),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
