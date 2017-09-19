@@ -23,6 +23,7 @@ const NameAllModulesPlugin = require('name-all-modules-plugin');
 const fs = require('fs');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const sortChunks = require('./sortChunks');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -286,6 +287,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      // Need to ensure that the runtime is loaded first because
+      // it loads the rest, then the vendors
+      // And then the polyfills before the main
+      // The others chunks will be loaded after
+      chunksSortMode: sortChunks(['runtime', 'vendors', 'polyfills', 'main']),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
