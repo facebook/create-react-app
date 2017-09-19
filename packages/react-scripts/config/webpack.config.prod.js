@@ -343,8 +343,8 @@ module.exports = {
       navigateFallbackWhitelist: [/^(?!\/__).*/],
       // Don't precache sourcemaps (they're large) and build asset manifest:
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-      // Precache files in public/, and allow them to be accessed directly
-      staticFileGlobs: [paths.appPublic + '/**/*'],
+      // Precache likely navigation targets in public/
+      staticFileGlobs: [paths.appPublic + '/**/*.html'],
       mergeStaticsConfig: true,
       stripPrefix: paths.appPublic,
     }),
