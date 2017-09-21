@@ -3,8 +3,8 @@
 // as dependencies which rarely change can be cached while you iterate on your
 // application.
 
-// If you want to add another vendor, just add in this array the name of the
-// npm package.
+// If you want to add another npm package to the vendor bundle, just add its
+// name in this array
 
 module.exports = ['react', 'react-dom'];
 
