@@ -38,9 +38,6 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
-// Allow to desactivate webpack plugin
-const activateWebpackPluginOnCondition = (condition, plugin) =>
-  condition ? [plugin] : [];
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -395,13 +392,13 @@ module.exports = {
 
     // Avoid having the vendors in the rest of the app
     // Only execute if the vendors file exists
-    ...activateWebpackPluginOnCondition(
-      fs.existsSync(paths.appVendors),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendors',
-        minChunks: Infinity,
-      })
-    ),
+
+    fs.existsSync(paths.appVendors)
+      ? new webpack.optimize.CommonsChunkPlugin({
+          name: 'vendors',
+          minChunks: Infinity,
+        })
+      : null,
     // The runtime is the part of Webpack that resolves modules
     // at runtime and handles async loading and more
     new webpack.optimize.CommonsChunkPlugin({
@@ -411,7 +408,9 @@ module.exports = {
     // https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
     // Name the modules that were not named by the previous plugins
     new NameAllModulesPlugin(),
-  ],
+  ]
+    // Remove null elements
+    .filter(Boolean),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
