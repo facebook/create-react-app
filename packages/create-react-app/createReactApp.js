@@ -285,9 +285,8 @@ function run(
       checkNodeVersion(packageName);
       setCaretRangeForRuntimeDeps(packageName);
 
-      const scriptsPath = path.resolve(
-        process.cwd(),
-        'node_modules',
+      const scriptsPath = path.join(
+        '..',
         packageName,
         'scripts',
         'init.js'
@@ -469,9 +468,8 @@ function checkNpmVersion() {
 }
 
 function checkNodeVersion(packageName) {
-  const packageJsonPath = path.resolve(
-    process.cwd(),
-    'node_modules',
+  const packageJsonPath = path.join(
+    '..',
     packageName,
     'package.json'
   );
