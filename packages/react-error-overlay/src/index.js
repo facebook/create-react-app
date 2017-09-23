@@ -10,10 +10,9 @@ import { listenToRuntimeErrors } from './listenToRuntimeErrors';
 import { iframeStyle } from './styles';
 import { applyStyles } from './utils/dom/css';
 
-/* eslint-disable import/no-webpack-loader-syntax */
-//$FlowFixMe
-import iframeScript from 'raw-loader!iframeScript';
-/* eslint-enable import/no-webpack-loader-syntax */
+// Importing iframe-bundle generated in the pre build step as
+// a text using webpack raw-loader. See webpack.config.js file.
+import iframeScript from 'iframeScript';
 
 import type { ErrorRecord } from './listenToRuntimeErrors';
 

@@ -13,6 +13,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /iframe-bundle\.js$/,
+        use: 'raw-loader',
+      },
+      {
         test: /\.js$/,
         include: path.resolve(__dirname, './src'),
         use: [
