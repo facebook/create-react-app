@@ -385,12 +385,13 @@ module.exports = {
         return chunk.name;
       }
       const chunkNames = chunk.mapModules(m => m);
-      // Sort the chunks by their depth
-      // The first one is the imported chunk
-      // The others are those imported its dependencies
+      // Sort the chunks by their depths
+      // The chunk with the lower depth is the imported one
+      // The others are its dependencies
       chunkNames.sort((chunkA, chunkB) => chunkA.depth - chunkB.depth);
       // Get the absolute path of the file
       const fileName = chunkNames[0].resource;
+      // Return the name of the file without the extension
       return path.basename(fileName, path.extname(fileName));
     }),
 
