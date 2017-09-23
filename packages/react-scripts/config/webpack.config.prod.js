@@ -384,10 +384,14 @@ module.exports = {
       if (chunk.name) {
         return chunk.name;
       }
-      return chunk
-        .mapModules(m => m.request)
-        .map(filename => path.basename(filename, path.extname(filename)))
-        .join('_');
+      const chunkNames = chunk.mapModules(m => m);
+      // Sort the chunks by their depth
+      // The first one is the imported chunk
+      // The others are those imported its dependencies
+      chunkNames.sort((chunkA, chunkB) => chunkA.depth - chunkB.depth);
+      // Get the absolute path of the file
+      const fileName = chunkNames[0].resource;
+      return path.basename(fileName, path.extname(fileName));
     }),
 
     // Avoid having the vendors in the rest of the app
