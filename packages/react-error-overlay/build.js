@@ -3,6 +3,10 @@ const chalk = require('chalk');
 const webpackConfig = require('./webpack.config.js');
 const iframeWebpackConfig = require('./webpack.config.iframe.js');
 const rimraf = require('rimraf');
+const chokidar = require('chokidar');
+
+const args = process.argv.slice(2);
+const watchMode = args[0] === '--watch' || args[0] === '-w';
 
 function build(config, name, callback) {
   console.log(chalk.cyan('Compiling ' + name));
@@ -38,7 +42,32 @@ function runBuildSteps() {
   build(iframeWebpackConfig, 'iframeScript.js', () => {
     build(webpackConfig, 'index.js', () => {
       console.log(chalk.bold.green('Compiled successfully!'));
+      console.log();
+      console.log();
     });
+  });
+}
+
+function setupWatch() {
+  const watcher = chokidar.watch('./src', {
+    ignoreInitial: true,
+  });
+
+  watcher.on('change', runBuildSteps);
+  watcher.on('add', runBuildSteps);
+
+  watcher.on('ready', () => {
+    runBuildSteps();
+  });
+
+  process.on('SIGINT', function() {
+    watcher.close();
+    process.exit(0);
+  });
+
+  watcher.on('error', error => {
+    console.error('Watcher failure', error);
+    process.exit(1);
   });
 }
 
@@ -46,5 +75,5 @@ function runBuildSteps() {
 rimraf('lib/', () => {
   console.log('Cleaned up the lib folder.');
   console.log();
-  runBuildSteps();
+  watchMode ? setupWatch() : runBuildSteps();
 });

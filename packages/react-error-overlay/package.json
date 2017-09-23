@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "npm run build:prod && npm test",
-    "start": "cross-env NODE_ENV=development node build.js",
+    "start": "cross-env NODE_ENV=development node build.js --watch",
     "test": "flow && cross-env NODE_ENV=test jest",
     "build": "cross-env NODE_ENV=development node build.js",
     "build:prod": "cross-env NODE_ENV=production node build.js"
@@ -46,6 +46,7 @@
     "babel-eslint": "7.2.3",
     "babel-preset-react-app": "^3.0.3",
     "chalk": "^2.1.0",
+    "chokidar": "^1.7.0",
     "cross-env": "5.0.5",
     "eslint": "4.4.1",
     "eslint-config-react-app": "^2.0.1",
