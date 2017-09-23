@@ -3,12 +3,10 @@ var webpack = require('webpack');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
-  entry: './src/index.js',
+  entry: './src/iframeScript.js',
   output: {
     path: path.join(__dirname, './lib'),
-    filename: 'index.js',
-    library: 'ReactErrorOverlay',
-    libraryTarget: 'umd',
+    filename: 'iframe-bundle.js',
   },
   module: {
     rules: [
@@ -25,10 +23,5 @@ module.exports = {
         ],
       },
     ],
-  },
-  resolve: {
-    alias: {
-      iframeScript$: path.resolve(__dirname, './lib/iframe-bundle.js'),
-    },
   },
 };

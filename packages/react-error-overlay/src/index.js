@@ -12,7 +12,7 @@ import { applyStyles } from './utils/dom/css';
 
 /* eslint-disable import/no-webpack-loader-syntax */
 //$FlowFixMe
-import iframeScript from 'raw-loader!./bundle.js';
+import iframeScript from 'raw-loader!iframeScript';
 /* eslint-enable import/no-webpack-loader-syntax */
 
 import type { ErrorRecord } from './listenToRuntimeErrors';
