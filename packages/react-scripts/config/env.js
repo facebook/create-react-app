@@ -24,8 +24,12 @@ if (!NODE_ENV) {
   );
 }
 
+const DOTENV = process.env.DOTENV;
+
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 var dotenvFiles = [
+  DOTENV && `${paths.dotenv}.${DOTENV}.local`,
+  DOTENV && `${paths.dotenv}.${DOTENV}`,
   `${paths.dotenv}.${NODE_ENV}.local`,
   `${paths.dotenv}.${NODE_ENV}`,
   // Don't include `.env.local` for `test` environment
