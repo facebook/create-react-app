@@ -36,6 +36,8 @@
     "babel-loader": "^7.1.2",
     "babel-runtime": "6.26.0",
     "html-entities": "1.2.1",
+    "object-assign": "^4.1.1",
+    "promise": "^8.0.1",
     "react": "^15 || ^16",
     "react-dom": "^15 || ^16",
     "settle-promise": "1.0.0",
