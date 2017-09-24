@@ -6,8 +6,6 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-'use strict';
-
 const webpack = require('webpack');
 const chalk = require('chalk');
 const webpackConfig = require('./webpack.config.js');
@@ -18,6 +16,11 @@ const chokidar = require('chokidar');
 const args = process.argv.slice(2);
 const watchMode = args[0] === '--watch' || args[0] === '-w';
 
+const isCI =
+  process.env.CI &&
+  (typeof process.env.CI !== 'string' ||
+    process.env.CI.toLowerCase() !== 'false');
+
 function build(config, name, callback) {
   console.log(chalk.cyan('Compiling ' + name));
   webpack(config).run((error, stats) => {
@@ -25,18 +28,26 @@ function build(config, name, callback) {
       console.log(chalk.red('Failed to compile.'));
       console.log(error.message || error);
       console.log();
-      return;
     }
 
     if (stats.compilation.errors.length) {
       console.log(chalk.red('Failed to compile.'));
       console.log(stats.toString({ all: false, errors: true }));
-      return;
     }
 
     if (stats.compilation.warnings.length) {
       console.log(chalk.yellow('Compiled with warnings.'));
       console.log(stats.toString({ all: false, warnings: true }));
+    }
+
+    // Fail the build if running in a CI server
+    if (
+      error ||
+      stats.compilation.errors.length ||
+      stats.compilation.warnings.length
+    ) {
+      isCI && process.exit(1);
+      return;
     }
 
     console.log(
@@ -51,9 +62,7 @@ function build(config, name, callback) {
 function runBuildSteps() {
   build(iframeWebpackConfig, 'iframeScript.js', () => {
     build(webpackConfig, 'index.js', () => {
-      console.log(chalk.bold.green('Compiled successfully!'));
-      console.log();
-      console.log();
+      console.log(chalk.bold.green('Compiled successfully!\n\n'));
     });
   });
 }
@@ -83,7 +92,6 @@ function setupWatch() {
 
 // Clean up lib folder
 rimraf('lib/', () => {
-  console.log('Cleaned up the lib folder.');
-  console.log();
+  console.log('Cleaned up the lib folder.\n');
   watchMode ? setupWatch() : runBuildSteps();
 });

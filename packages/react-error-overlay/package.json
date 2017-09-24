@@ -33,7 +33,6 @@
   "dependencies": {
     "anser": "1.4.1",
     "babel-code-frame": "6.22.0",
-    "babel-loader": "^7.1.2",
     "babel-runtime": "6.26.0",
     "html-entities": "1.2.1",
     "object-assign": "^4.1.1",
@@ -47,6 +46,7 @@
   "devDependencies": {
     "babel-eslint": "7.2.3",
     "babel-preset-react-app": "^3.0.3",
+    "babel-loader": "^7.1.2",
     "chalk": "^2.1.0",
     "chokidar": "^1.7.0",
     "cross-env": "5.0.5",
