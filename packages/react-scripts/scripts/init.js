@@ -45,12 +45,6 @@ module.exports = function(
     eject: 'react-scripts eject',
   };
 
-  // Add the supported browsers list
-  appPackage.browserslist = {
-    production: ['> 1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9'],
-    development: ['last 1 version'],
-  };
-
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
