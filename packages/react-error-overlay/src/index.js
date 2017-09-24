@@ -12,6 +12,7 @@ import { applyStyles } from './utils/dom/css';
 
 // Importing iframe-bundle generated in the pre build step as
 // a text using webpack raw-loader. See webpack.config.js file.
+// $FlowFixMe
 import iframeScript from 'iframeScript';
 
 import type { ErrorRecord } from './listenToRuntimeErrors';
