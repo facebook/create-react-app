@@ -23,6 +23,18 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
+// Get supported browsers list
+let supportedBrowsers = require(paths.appPackageJson).browserslist;
+if (!supportedBrowsers || Object.keys(supportedBrowsers).length === 0) {
+  // Assign default browsers when browserslist is not specified
+  supportedBrowsers = [
+      '>1%',
+      'last 4 versions',
+      'Firefox ESR',
+      'not ie < 9', // React doesn't support IE8 anyway
+  ];
+}
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
@@ -218,12 +230,7 @@ module.exports = {
                         plugins: () => [
                           require('postcss-flexbugs-fixes'),
                           autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                            ],
+                            browsers: supportedBrowsers,
                             flexbox: 'no-2009',
                           }),
                         ],
