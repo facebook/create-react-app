@@ -35,13 +35,12 @@
     "babel-code-frame": "6.22.0",
     "babel-runtime": "6.26.0",
     "html-entities": "1.2.1",
-    "object-assign": "^4.1.1",
-    "promise": "^8.0.1",
+    "object-assign": "4.1.1",
+    "promise": "8.0.1",
     "react": "^15 || ^16",
     "react-dom": "^15 || ^16",
     "settle-promise": "1.0.0",
-    "source-map": "0.5.6",
-    "webpack": "^3.6.0"
+    "source-map": "0.5.6"
   },
   "devDependencies": {
     "babel-eslint": "7.2.3",
@@ -60,7 +59,8 @@
     "jest": "20.0.4",
     "jest-fetch-mock": "1.2.1",
     "raw-loader": "^0.5.1",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "webpack": "^3.6.0"
   },
   "jest": {
     "setupFiles": [
