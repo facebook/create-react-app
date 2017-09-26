@@ -11,7 +11,7 @@
     "build:prod": "rimraf lib/ && cross-env NODE_ENV=production babel src/ -d lib/"
   },
   "repository": "facebookincubator/create-react-app",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
