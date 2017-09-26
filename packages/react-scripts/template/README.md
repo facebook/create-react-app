@@ -1881,6 +1881,8 @@ Now, after you create a production build with `npm run build`, you can deploy it
 
 For more information see [Add Firebase to your JavaScript Project](https://firebase.google.com/docs/web/setup).
 
+For more information on getting Firebase to work with React Router and client-side routing, see [this answer by the Firebase team](https://groups.google.com/d/msg/firebase-talk/ZoxVFZfi46Y/gil9SxCGAgAJ).
+
 ### GitHub Pages
 
 >Note: this feature is available with `react-scripts@0.2.0` and higher.
