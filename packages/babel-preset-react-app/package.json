@@ -3,7 +3,7 @@
   "version": "3.0.2",
   "description": "Babel preset used by Create React App",
   "repository": "facebookincubator/create-react-app",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },

@@ -3,7 +3,7 @@
   "version": "1.0.13",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "engines": {
     "node": ">=6"
   },
