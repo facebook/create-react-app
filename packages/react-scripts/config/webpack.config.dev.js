@@ -19,6 +19,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const CSSVisor = require('css-visor');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -180,13 +181,13 @@ module.exports = {
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
-          // "style" loader turns CSS into JS modules that inject <style> tags.
+          // "css-visor" loader extracts css from css-loader and appends HMR code to JS module
           // In production, we use a plugin to extract that CSS to a file, but
-          // in development "style" loader enables hot editing of CSS.
+          // in development "css-visor" loader + plugin enables hot editing of CSS.
           {
             test: /\.css$/,
             use: [
-              require.resolve('style-loader'),
+              require.resolve('css-visor/loader'),
               {
                 loader: require.resolve('css-loader'),
                 options: {
@@ -238,6 +239,8 @@ module.exports = {
     ],
   },
   plugins: [
+    // CSS extracted by css-visor/loader is passed on to this plugin, which ensures they get served by webpack-dev-server
+    new CSSVisor(),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
