@@ -22,3 +22,12 @@ require('whatwg-fetch');
 // Object.assign() is commonly used with React.
 // It will use the native implementation if it's present and isn't buggy.
 Object.assign = require('object-assign');
+
+// React depends on collection types Map and Set starting in version 16.
+// We will include these dependencies explicitly until specified versions of
+// browsers may be targeted.
+require('core-js/es6/map');
+require('core-js/es6/set');
+
+// React also depends on requestAnimationFrame in version 16 and newer.
+require('raf/polyfill');
