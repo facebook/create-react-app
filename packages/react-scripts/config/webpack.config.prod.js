@@ -246,6 +246,7 @@ module.exports = {
                 loader: 'style-loader',
                 options: {
                   sourceMap: true,
+                  insertAt: 'top',
                   // combine all <link rel="stylesheet" href="blob:..."> tags into one
                   singleton: true,
                 }
@@ -295,6 +296,7 @@ module.exports = {
                 loader: 'style-loader',
                 options: {
                   sourceMap: true,
+                  insertAt: 'top',
                   // combine all <link rel="stylesheet" href="blob:..."> tags into one
                   singleton: true,
                 }

@@ -244,7 +244,12 @@ module.exports = {
           {
             test: /\.global\.s?css$/,
             use: [
-              require.resolve('style-loader'),
+              {
+                loader: require.resolve('style-loader'),
+                options: {
+                  insertAt: 'top'
+                }
+              },
               {
                 loader: require.resolve('css-loader'),
                 options: {
@@ -264,7 +269,12 @@ module.exports = {
             test: /\.s?css$/,
             exclude: /\.global\.s?css$/,
             use: [
-              require.resolve('style-loader'),
+              {
+                loader: require.resolve('style-loader'),
+                options: {
+                  insertAt: 'top'
+                }
+              },
               {
                 loader: require.resolve('css-loader'),
                 options: {
