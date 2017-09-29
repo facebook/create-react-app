@@ -57,6 +57,26 @@ measureFileSizesBeforeBuild(paths.appBuild)
     fs.emptyDirSync(paths.appBuild);
     // Merge with the public folder
     copyPublicFolder();
+
+    // Check if every vendors are defined in the package.json
+    const dependencies = Object.keys(
+      require(paths.appPackageJson).dependencies
+    );
+    const vendors = fs.existsSync(paths.appVendors)
+      ? require(paths.appVendors)
+      : [];
+    const missingVendors = vendors.filter(
+      vendor => dependencies.indexOf(vendor) === -1
+    );
+    if (missingVendors.length > 0) {
+      throw new Error(
+        'Error: Unknown vendors: ' +
+          chalk.yellow(missingVendors) +
+          " should be listed in the project's dependencies.\n" +
+          `(Vendors defined in '${path.resolve(paths.appVendors)}')`
+      );
+    }
+
     // Start the webpack build
     return build(previousFileSizes);
   })
