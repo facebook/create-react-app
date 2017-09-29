@@ -59,6 +59,10 @@ measureFileSizesBeforeBuild(paths.appBuild)
     copyPublicFolder();
 
     // Check if every vendors are defined in the package.json
+    // @remove-on-eject-begin
+    // The devDepencencies shouldn't be available for vendors
+    // But otherwise the tests fail.
+    // @remove-on-eject-end
     const packageJson = require(paths.appPackageJson);
     const dependencies = Object.keys(packageJson.dependencies || {})
       .concat(Object.keys(packageJson.devDependencies || {}))
