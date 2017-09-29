@@ -70,10 +70,12 @@ module.exports = function(proxy, allowedHost) {
     // WebpackDevServer is noisy by default so we emit custom message instead
     // by listening to the compiler events with `compiler.plugin` calls above.
     quiet: true,
-    // Reportedly, this avoids CPU overload on some systems.
+    // Reportedly, ignoring node_modules avoids CPU overload on some systems.
     // https://github.com/facebookincubator/create-react-app/issues/293
+    // src/node_modules is not ignored to support absolute imports
+    // https://github.com/facebookincubator/create-react-app/issues/1065
     watchOptions: {
-      ignored: /node_modules/,
+      ignored: /^([^\/\\]|[\/\\](?!src))*[\/\\]node_modules[\/\\]/,
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === 'https',
