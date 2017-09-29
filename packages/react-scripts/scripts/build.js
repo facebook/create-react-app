@@ -59,9 +59,10 @@ measureFileSizesBeforeBuild(paths.appBuild)
     copyPublicFolder();
 
     // Check if every vendors are defined in the package.json
-    const dependencies = Object.keys(
-      require(paths.appPackageJson).dependencies
-    );
+    const packageJson = require(paths.appPackageJson);
+    const dependencies = Object.keys(packageJson.dependencies || {})
+      .concat(Object.keys(packageJson.devDependencies || {}))
+      .concat(Object.keys(packageJson.peerDependencies || {}));
     const vendors = fs.existsSync(paths.appVendors)
       ? require(paths.appVendors)
       : [];
