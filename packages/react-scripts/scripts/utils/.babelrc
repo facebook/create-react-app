@@ -1,0 +1,24 @@
+{
+  "plugins": [
+    "transform-es2015-modules-commonjs",
+    "dynamic-import-node",
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    ["css-modules-transform", {
+      "generateScopedName": "[name]__[local]",
+      "extensions": [".scss", ".css"]
+    }],
+    ["module-resolver", {
+      "root": ["."],
+      "alias": {
+        "example": "./example",
+        "src": "./src"
+      }
+    }]
+  ],
+  "presets": [
+    "react-app",
+    "es2015"
+  ]
+
+}

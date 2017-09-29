@@ -46,6 +46,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^react-native$': 'react-native-web',
     },
     moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'node'],
+    snapshotSerializers: ['<rootDir>/node_modules/enzyme-to-json/serializer'],
   };
   if (rootDir) {
     config.rootDir = rootDir;

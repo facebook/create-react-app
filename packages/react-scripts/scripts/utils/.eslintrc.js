@@ -1,6 +1,3 @@
-const path = require('path')
-const paths = require('../../config/paths')
-
 module.exports = {
   'extends': [
     // 'airbnb',
@@ -10,7 +7,7 @@ module.exports = {
   'settings': {
     'import/resolver': {
       'node': {
-        'paths': [paths.appPath]
+        'paths': ['.']
       }
     }
   },

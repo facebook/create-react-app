@@ -16,6 +16,7 @@ const args = process.argv.slice(2);
 const scriptIndex = args.findIndex(
   x => x === 'build' ||
        x === 'eject' ||
+       x === 'copy' ||
        x === 'start' ||
        x === 'test' ||
        x === 'translations' ||
@@ -28,6 +29,7 @@ switch (script) {
   case 'build':
   case 'eject':
   case 'start':
+  case 'copy':
   case 'translations':
   case 'lint':
   case 'test': {
