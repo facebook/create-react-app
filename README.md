@@ -255,4 +255,4 @@ Notable alternatives also include:
 * [gluestick](https://github.com/TrueCar/gluestick)
 
 You can also use module bundlers like [webpack](http://webpack.js.org) and [Browserify](http://browserify.org/) directly.<br>
-React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
+React documentation includes [a walkthrough](https://reactjs.org/docs/installation.html#development-and-production-versions) on this topic.
