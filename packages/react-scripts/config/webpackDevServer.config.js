@@ -79,7 +79,7 @@ module.exports = function(proxy, allowedHost) {
       ignored: new RegExp(
         `^(?!${path
           .normalize(paths.appSrc + '/')
-          .replace('\\', '\\\\')}).+[\\\\/]node_modules[\\\\/]`,
+          .replace(/[\\]+/g, '\\\\')}).+[\\\\/]node_modules[\\\\/]`,
         'g'
       ),
     },
