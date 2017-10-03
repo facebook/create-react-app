@@ -151,12 +151,9 @@ module.exports = {
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
-              // @remove-on-eject-begin
-              baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
-              },
               ignore: false,
-              useEslintrc: false,
+              useEslintrc: true,
+              // @remove-on-eject-end
               // @remove-on-eject-end
             },
             loader: require.resolve('eslint-loader'),
@@ -203,8 +200,8 @@ module.exports = {
           // in development "style" loader enables hot editing of CSS.
           // By default we support CSS Modules with the extension .module.css
           {
-            test: /\.css$/,
-            exclude: /\.module\.css$/,
+            test: /\.s?css$/,
+            exclude: /\.module\.s?css$/,
             use: [
               require.resolve('style-loader'),
               {
@@ -212,6 +209,9 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                 },
+              },
+              {
+                loader: require.resolve('sass-loader'),
               },
               {
                 loader: require.resolve('postcss-loader'),
@@ -222,7 +222,7 @@ module.exports = {
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
           {
-            test: /\.module\.css$/,
+            test: /\.module\.s?css$/,
             use: [
               require.resolve('style-loader'),
               {
@@ -232,6 +232,9 @@ module.exports = {
                   modules: true,
                   localIdentName: '[name]__[local]___[hash:base64:5]',
                 },
+              },
+              {
+                loader: require.resolve('sass-loader'),
               },
               {
                 loader: require.resolve('postcss-loader'),

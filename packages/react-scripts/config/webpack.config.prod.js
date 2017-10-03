@@ -212,8 +212,8 @@ module.exports = {
           // in the main CSS file.
           // By default we support CSS Modules with the extension .module.css
           {
-            test: /\.css$/,
-            exclude: /\.module\.css$/,
+            test: /\.s?css$/,
+            exclude: /\.module\.s?css$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -226,6 +226,9 @@ module.exports = {
                         minimize: true,
                         sourceMap: shouldUseSourceMap,
                       },
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
                     },
                     {
                       loader: require.resolve('postcss-loader'),
@@ -256,6 +259,9 @@ module.exports = {
                         modules: true,
                         localIdentName: '[name]__[local]___[hash:base64:5]',
                       },
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
                     },
                     {
                       loader: require.resolve('postcss-loader'),
