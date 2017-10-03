@@ -28,14 +28,7 @@ module.exports = {
       {
         test: /\.js$/,
         include: path.resolve(__dirname, './src'),
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true,
-            },
-          },
-        ],
+        use: 'babel-loader',
       },
     ],
   },
