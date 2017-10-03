@@ -77,7 +77,9 @@ module.exports = function(proxy, allowedHost) {
     // https://github.com/facebookincubator/create-react-app/issues/1065
     watchOptions: {
       ignored: new RegExp(
-        `^(?!${path.normalize(paths.appSrc + '/')}).+[\\/]node_modules[\\/]`,
+        `^(?!${path
+          .normalize(paths.appSrc + '/')
+          .replace(/[\\]+/g, '\\\\')}).+[\\\\/]node_modules[\\\\/]`,
         'g'
       ),
     },
