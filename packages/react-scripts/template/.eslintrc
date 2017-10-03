@@ -1,0 +1,63 @@
+---
+root: true
+plugins:
+  - react
+  - jsx-a11y
+  - import
+  - prettier
+
+parser: babel-eslint
+
+parserOptions:
+  ecmaVersion: 6
+  ecmaFeatures:
+    jsx: true
+    modules: true
+    experimentalObjectRestSpread: true
+
+extends:
+  - airbnb
+  - eslint:recommended
+  - plugin:import/errors
+  - plugin:react/recommended
+  - plugin:jsx-a11y/recommended
+  - prettier
+  - prettier/react
+env:
+    browser: true
+    node: true
+
+rules:
+  react/jsx-uses-vars: 1
+  react/display-name: 0
+  no-console: 1
+  jsx-a11y/click-events-have-key-events: 0
+  jsx-a11y/label-has-for: 1
+  react/prop-types: 1
+  jsx-a11y/href-no-hash: 0
+  react/jsx-filename-extension: 0
+  react/prefer-stateless-function: 1
+  react/require-default-props: 1
+  react/sort-comp: [1, {
+    order: [
+      'lifecycle',
+      '/^get.+$/',
+      '/^on.+$/',
+      '/^render.+$/',
+      'render',
+      'everything-else',
+      '/^_.+$/'
+    ]
+  }]
+
+
+globals:
+  react: true
+  module: true
+  process: true
+  console: true
+  it: true
+  expect: true
+  jest: true
+  __dirname: true
+

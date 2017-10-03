@@ -41,6 +41,18 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    precommit: 'lint-staged',
+    checkBranch: './scripts/check_branch.sh',
+  };
+
+  // Setup lint-staged
+  appPackage['lint-staged'] = {
+    "*.js": [
+      "prettier --single-quote --trailing-comma es5 --no-semi --write",
+      "eslint --quiet",
+      "checkBranch",
+      "git add"
+    ]
   };
 
   fs.writeFileSync(
@@ -91,14 +103,18 @@ module.exports = function(
 
   let command;
   let args;
+  let devArgs;
 
   if (useYarn) {
     command = 'yarnpkg';
     args = ['add'];
+    devArgs = ['add', '--dev']
   } else {
     command = 'npm';
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    devArgs = ['install', '--save-dev', verbose && '--verbose'].filter(e => e);
   }
+
   args.push('react', 'react-dom');
 
   // Install additional template dependencies, if present
@@ -108,11 +124,18 @@ module.exports = function(
   );
   if (fs.existsSync(templateDependenciesPath)) {
     const templateDependencies = require(templateDependenciesPath).dependencies;
+    const devDependencies = require(templateDependenciesPath).devDependencies;
     args = args.concat(
       Object.keys(templateDependencies).map(key => {
         return `${key}@${templateDependencies[key]}`;
       })
     );
+    devArgs = devArgs.concat(
+      Object.keys(devDependencies).map(key => {
+        return `${key}@${devDependencies[key]}`;
+      })
+    );
+
     fs.unlinkSync(templateDependenciesPath);
   }
 
@@ -128,6 +151,13 @@ module.exports = function(
       console.error(`\`${command} ${args.join(' ')}\` failed`);
       return;
     }
+  }
+
+  // install dev dependencies from template
+  const devProc = spawn.sync(command, devArgs, { stdio: 'inherit' });
+  if (devProc.status !== 0) {
+    console.error(`\`${command} ${devArgs.join(' ')}\` failed`);
+    return;
   }
 
   // Display the most elegant way to cd.
@@ -181,7 +211,7 @@ module.exports = function(
     );
   }
   console.log();
-  console.log('Happy hacking!');
+  console.log('Yippie Kay Yay!');
 };
 
 function isReactInstalled(appPackage) {
