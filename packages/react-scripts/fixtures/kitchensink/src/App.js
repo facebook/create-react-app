@@ -81,6 +81,11 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
+      case 'css-modules-inclusion':
+        import(
+          './features/webpack/CssModulesInclusion'
+        ).then(f => this.setFeature(f.default));
+        break;
       case 'custom-interpolation':
         import('./features/syntax/CustomInterpolation').then(f =>
           this.setFeature(f.default)
