@@ -5,18 +5,18 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-'use strict';
+'use strict'
 
-const fs = require('fs');
-const chalk = require('chalk');
-const paths = require('../../config/paths');
+const fs = require('fs')
+const chalk = require('chalk')
+const paths = require('../../config/paths')
 
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup)
     ? '<rootDir>/src/setupTests.js'
-    : undefined;
+    : undefined
 
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
@@ -54,23 +54,24 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
   };
   if (rootDir) {
-    config.rootDir = rootDir;
+    config.rootDir = rootDir
   }
-  const overrides = Object.assign({}, require(paths.appPackageJson).jest);
+  const overrides = Object.assign({}, require(paths.appPackageJson).jest)
   const supportedKeys = [
     'collectCoverageFrom',
     'coverageReporters',
     'coverageThreshold',
     'snapshotSerializers',
-  ];
+    'testPathIgnorePatterns',
+  ]
   if (overrides) {
     supportedKeys.forEach(key => {
       if (overrides.hasOwnProperty(key)) {
-        config[key] = overrides[key];
-        delete overrides[key];
+        config[key] = overrides[key]
+        delete overrides[key]
       }
-    });
-    const unsupportedKeys = Object.keys(overrides);
+    })
+    const unsupportedKeys = Object.keys(overrides)
     if (unsupportedKeys.length) {
       console.error(
         chalk.red(
@@ -88,11 +89,11 @@ module.exports = (resolve, rootDir, isEjecting) => {
             chalk.bold('npm run eject') +
             ' but remember that this is a one-way operation. ' +
             'You may also file an issue with Create React App to discuss ' +
-            'supporting more options out of the box.\n'
-        )
-      );
-      process.exit(1);
+            'supporting more options out of the box.\n',
+        ),
+      )
+      process.exit(1)
     }
   }
-  return config;
-};
+  return config
+}
