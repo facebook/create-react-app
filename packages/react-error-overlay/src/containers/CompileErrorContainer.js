@@ -21,19 +21,20 @@ const codeAnchorStyle = {
 
 type Props = {|
   error: string,
-  openInEditor: (errorLoc: ErrorLocation) => void,
+  editorHandler: (errorLoc: ErrorLocation) => void,
 |};
 
 class CompileErrorContainer extends PureComponent<Props, void> {
   render() {
-    const { error, openInEditor } = this.props;
+    const { error, editorHandler } = this.props;
     const errLoc: ?ErrorLocation = parseCompileError(error);
+    const canOpenInEditor = errLoc !== null && editorHandler !== null;
     return (
       <ErrorOverlay>
         <Header headerText="Failed to compile" />
         <a
-          onClick={errLoc ? () => openInEditor(errLoc) : null}
-          style={errLoc ? codeAnchorStyle : null}
+          onClick={canOpenInEditor ? () => editorHandler(errLoc) : null}
+          style={canOpenInEditor ? codeAnchorStyle : null}
         >
           <CodeBlock main={true} codeHTML={generateAnsiHTML(error)} />
         </a>

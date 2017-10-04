@@ -19,13 +19,13 @@ function render({
   currentBuildError,
   currentRuntimeErrorRecords,
   dismissRuntimeErrors,
-  openInEditor,
+  editorHandler,
 }) {
   if (currentBuildError) {
     return (
       <CompileErrorContainer
         error={currentBuildError}
-        openInEditor={openInEditor}
+        editorHandler={editorHandler}
       />
     );
   }
@@ -34,7 +34,7 @@ function render({
       <RuntimeErrorContainer
         errorRecords={currentRuntimeErrorRecords}
         close={dismissRuntimeErrors}
-        openInEditor={openInEditor}
+        editorHandler={editorHandler}
       />
     );
   }

@@ -19,7 +19,7 @@ import type { ErrorLocation } from '../utils/parseCompileError';
 type Props = {|
   errorRecords: ErrorRecord[],
   close: () => void,
-  openInEditor: (errorLoc: ErrorLocation) => void,
+  editorHandler: (errorLoc: ErrorLocation) => void,
 |};
 
 type State = {|
@@ -75,7 +75,7 @@ class RuntimeErrorContainer extends PureComponent<Props, State> {
         )}
         <RuntimeError
           errorRecord={errorRecords[this.state.currentIndex]}
-          openInEditor={this.props.openInEditor}
+          editorHandler={this.props.editorHandler}
         />
         <Footer
           line1="This screen is visible only in development. It will not appear if the app crashes in production."

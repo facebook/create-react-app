@@ -27,10 +27,10 @@ export type ErrorRecord = {|
 
 type Props = {|
   errorRecord: ErrorRecord,
-  openInEditor: (errorLoc: ErrorLocation) => void,
+  editorHandler: (errorLoc: ErrorLocation) => void,
 |};
 
-function RuntimeError({ errorRecord, openInEditor }: Props) {
+function RuntimeError({ errorRecord, editorHandler }: Props) {
   const { error, unhandledRejection, contextSize, stackFrames } = errorRecord;
   const errorName = unhandledRejection
     ? 'Unhandled Rejection (' + error.name + ')'
@@ -59,7 +59,7 @@ function RuntimeError({ errorRecord, openInEditor }: Props) {
         stackFrames={stackFrames}
         errorName={errorName}
         contextSize={contextSize}
-        openInEditor={openInEditor}
+        editorHandler={editorHandler}
       />
     </div>
   );

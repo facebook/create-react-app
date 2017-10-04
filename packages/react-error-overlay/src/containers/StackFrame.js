@@ -49,7 +49,7 @@ type Props = {|
   contextSize: number,
   critical: boolean,
   showCode: boolean,
-  openInEditor: (errorLoc: ErrorLocation) => void,
+  editorHandler: (errorLoc: ErrorLocation) => void,
 |};
 
 type State = {|
@@ -85,17 +85,17 @@ class StackFrame extends Component<Props, State> {
     return { fileName, lineNumber: lineNumber || 1 };
   }
 
-  openInEditor = () => {
+  editorHandler = () => {
     const errorLoc = this.getErrorLocation();
     if (!errorLoc) {
       return;
     }
-    this.props.openInEditor(errorLoc);
+    this.props.editorHandler(errorLoc);
   };
 
   onKeyDown = (e: SyntheticKeyboardEvent<>) => {
     if (e.key === 'Enter') {
-      this.openInEditor();
+      this.editorHandler();
     }
   };
 
@@ -155,14 +155,15 @@ class StackFrame extends Component<Props, State> {
       }
     }
 
-    const canOpenInEditor = this.getErrorLocation() !== null;
+    const canOpenInEditor =
+      this.getErrorLocation() !== null && this.props.editorHandler !== null;
     return (
       <div>
         <div>{functionName}</div>
         <div style={linkStyle}>
           <a
             style={canOpenInEditor ? anchorStyle : null}
-            onClick={canOpenInEditor ? this.openInEditor : null}
+            onClick={canOpenInEditor ? this.editorHandler : null}
             onKeyDown={canOpenInEditor ? this.onKeyDown : null}
             tabIndex={canOpenInEditor ? '0' : null}
           >
@@ -172,7 +173,7 @@ class StackFrame extends Component<Props, State> {
         {codeBlockProps && (
           <span>
             <a
-              onClick={canOpenInEditor ? this.openInEditor : null}
+              onClick={canOpenInEditor ? this.editorHandler : null}
               style={canOpenInEditor ? codeAnchorStyle : null}
             >
               <CodeBlock {...codeBlockProps} />

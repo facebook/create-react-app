@@ -23,7 +23,7 @@ var launchEditorEndpoint = require('./launchEditorEndpoint');
 var formatWebpackMessages = require('./formatWebpackMessages');
 var ErrorOverlay = require('react-error-overlay');
 
-ErrorOverlay.listenToOpenInEditor(function OpenInEditor(errorLocation) {
+ErrorOverlay.setEditorHandler(function editorHandler(errorLocation) {
   // Keep this sync with errorOverlayMiddleware.js
   fetch(
     `${launchEditorEndpoint}?fileName=` +

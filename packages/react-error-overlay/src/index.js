@@ -23,25 +23,22 @@ type RuntimeReportingOptions = {|
   filename?: string,
 |};
 
-type OpenInEditorListener = (errorLoc: ErrorLocation) => void;
+type EditorHandler = (errorLoc: ErrorLocation) => void;
 
 let iframe: null | HTMLIFrameElement = null;
 let isLoadingIframe: boolean = false;
 var isIframeReady: boolean = false;
 
-let openInEditorListener: null | OpenInEditorListener = null;
+let editorHandler: null | OpenInEditorListener = null;
 let currentBuildError: null | string = null;
 let currentRuntimeErrorRecords: Array<ErrorRecord> = [];
 let currentRuntimeErrorOptions: null | RuntimeReportingOptions = null;
 let stopListeningToRuntimeErrors: null | (() => void) = null;
 
-export function listenToOpenInEditor(listener: OpenInEditorListener) {
-  openInEditorListener = listener;
-}
-
-function openInEditor(errorLoc: ErrorLocation) {
-  if (typeof openInEditorListener === 'function') {
-    openInEditorListener(errorLoc);
+export function setEditorHandler(handler: EditorHandler | null) {
+  editorHandler = handler;
+  if (iframe) {
+    update();
   }
 }
 
@@ -153,7 +150,7 @@ function updateIframeContent() {
     currentBuildError,
     currentRuntimeErrorRecords,
     dismissRuntimeErrors,
-    openInEditor,
+    editorHandler,
   });
 
   if (!isRendered) {
