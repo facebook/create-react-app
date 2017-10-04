@@ -153,7 +153,7 @@ function updateIframeContent() {
     currentBuildError,
     currentRuntimeErrorRecords,
     dismissRuntimeErrors,
-    launchEditorEndpoint: currentRuntimeErrorOptions.launchEditorEndpoint,
+    openInEditor,
   });
 
   if (!isRendered) {
