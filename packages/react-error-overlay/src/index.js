@@ -29,7 +29,7 @@ let iframe: null | HTMLIFrameElement = null;
 let isLoadingIframe: boolean = false;
 var isIframeReady: boolean = false;
 
-let editorHandler: null | OpenInEditorListener = null;
+let editorHandler: null | EditorHandler = null;
 let currentBuildError: null | string = null;
 let currentRuntimeErrorRecords: Array<ErrorRecord> = [];
 let currentRuntimeErrorOptions: null | RuntimeReportingOptions = null;
