@@ -336,17 +336,8 @@ module.exports = {
         console.log(message);
       },
       minify: true,
-      // For unknown URLs, fallback to the index page
-      navigateFallback: publicUrl + '/index.html',
-      // Ignores URLs starting from /__ (useful for Firebase):
-      // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
-      navigateFallbackWhitelist: [/^(?!\/__).*/],
-      // Don't precache sourcemaps (they're large) and build asset manifest:
+      // Don't precache sourcemaps (they're large), or build asset manifest:
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-      // Precache likely navigation targets in public/
-      staticFileGlobs: [paths.appPublic + '/**/*.html'],
-      mergeStaticsConfig: true,
-      stripPrefix: paths.appPublic,
     }),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
