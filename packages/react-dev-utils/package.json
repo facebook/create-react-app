@@ -15,7 +15,6 @@
     "clearConsole.js",
     "crashOverlay.js",
     "crossSpawn.js",
-    "eslintFormatter.js",
     "errorOverlayMiddleware.js",
     "FileSizeReporter.js",
     "printBuildError.js",
