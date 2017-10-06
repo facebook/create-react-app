@@ -170,7 +170,12 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,
-            include: paths.appSrc,
+            include: [
+              paths.appSrc,
+              path.resolve(paths.appNodeModules, 'preact-chartjs-2/es'),
+              path.resolve(paths.appNodeModules, 'skatejs/esnext'),
+              path.resolve(paths.appNodeModules, '@skatejs/renderer-preact/esnext')
+             ],
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
