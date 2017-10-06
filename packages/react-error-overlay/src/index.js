@@ -16,21 +16,31 @@ import { applyStyles } from './utils/dom/css';
 import iframeScript from 'iframeScript';
 
 import type { ErrorRecord } from './listenToRuntimeErrors';
+import type { ErrorLocation } from './utils/parseCompileError';
 
 type RuntimeReportingOptions = {|
   onError: () => void,
-  launchEditorEndpoint: string,
   filename?: string,
 |};
+
+type EditorHandler = (errorLoc: ErrorLocation) => void;
 
 let iframe: null | HTMLIFrameElement = null;
 let isLoadingIframe: boolean = false;
 var isIframeReady: boolean = false;
 
+let editorHandler: null | EditorHandler = null;
 let currentBuildError: null | string = null;
 let currentRuntimeErrorRecords: Array<ErrorRecord> = [];
 let currentRuntimeErrorOptions: null | RuntimeReportingOptions = null;
 let stopListeningToRuntimeErrors: null | (() => void) = null;
+
+export function setEditorHandler(handler: EditorHandler | null) {
+  editorHandler = handler;
+  if (iframe) {
+    update();
+  }
+}
 
 export function reportBuildError(error: string) {
   currentBuildError = error;
@@ -45,6 +55,13 @@ export function dismissBuildError() {
 export function startReportingRuntimeErrors(options: RuntimeReportingOptions) {
   if (stopListeningToRuntimeErrors !== null) {
     throw new Error('Already listening');
+  }
+  if (options.launchEditorEndpoint) {
+    console.warn(
+      'Warning: `startReportingRuntimeErrors` doesn’t accept ' +
+        '`launchEditorEndpoint` argument anymore. Use `listenToOpenInEditor` ' +
+        'instead with your own implementation to open errors in editor '
+    );
   }
   currentRuntimeErrorOptions = options;
   listenToRuntimeErrors(errorRecord => {
@@ -133,7 +150,7 @@ function updateIframeContent() {
     currentBuildError,
     currentRuntimeErrorRecords,
     dismissRuntimeErrors,
-    launchEditorEndpoint: currentRuntimeErrorOptions.launchEditorEndpoint,
+    editorHandler,
   });
 
   if (!isRendered) {

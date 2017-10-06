@@ -19,17 +19,22 @@ function render({
   currentBuildError,
   currentRuntimeErrorRecords,
   dismissRuntimeErrors,
-  launchEditorEndpoint,
+  editorHandler,
 }) {
   if (currentBuildError) {
-    return <CompileErrorContainer error={currentBuildError} />;
+    return (
+      <CompileErrorContainer
+        error={currentBuildError}
+        editorHandler={editorHandler}
+      />
+    );
   }
   if (currentRuntimeErrorRecords.length > 0) {
     return (
       <RuntimeErrorContainer
         errorRecords={currentRuntimeErrorRecords}
         close={dismissRuntimeErrors}
-        launchEditorEndpoint={launchEditorEndpoint}
+        editorHandler={editorHandler}
       />
     );
   }
