@@ -6,22 +6,31 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-'use strict';
+'use strict'
 
-const babelJest = require('babel-jest');
+const babelJest = require('babel-jest')
 
 module.exports = babelJest.createTransformer({
-  presets: [require.resolve('babel-preset-react-app')],
-  plugins: [
-    ["module-resolver", {
-      // "root": ["./"],
-      "alias": {
-        "src": "./src",
-      }
+  'plugins': [
+    'transform-es2015-modules-commonjs',
+    'dynamic-import-node',
+    'transform-decorators-legacy',
+    'transform-class-properties',
+    ['css-modules-transform', {
+      'generateScopedName': '[name]__[local]',
+      'extensions': ['.scss', '.css']
     }],
-    "css-modules-transform",
-    'transform-function-bind',
-    ['transform-decorators-legacy']
+    ['module-resolver', {
+      'root': ['.'],
+      'alias': {
+        'example': './example',
+        'src': './src'
+      }
+    }]
+  ],
+  'presets': [
+    'react-app',
+    'es2015'
   ],
   babelrc: false,
-});
+})

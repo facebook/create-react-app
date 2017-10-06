@@ -37,7 +37,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
       "^.+\\.yml$": resolve('config/jest/ymlTransform.js'),
-      '^(?!.*\\.(js|jsx|css|yml|json)$)': resolve('config/jest/fileTransform.js'),
+      '^(?!.*\\.(js|jsx|css|scss|yml|json)$)': resolve('config/jest/fileTransform.js'),
     },
     transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
     moduleNameMapper: {
