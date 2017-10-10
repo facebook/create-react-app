@@ -3,21 +3,26 @@
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": true,
+    "lib": ["es6", "dom"]
   },
   "exclude": [
     "node_modules",
+    "!node_modules/@types",
     "build",
     "scripts",
     "acceptance-tests",
     "webpack",
     "jest"
+  ],
+  "include": [
+    "./src/types/**/*.d.ts",
+    "../node_modules/@types"
   ]
 }

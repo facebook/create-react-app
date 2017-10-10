@@ -21,6 +21,10 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@types/jest": "21.1.2",
+    "@types/node": "8.0.33",
+    "@types/react": "16.0.10",
+    "@types/react-dom": "16.0.1",
     "autoprefixer": "7.1.2",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
