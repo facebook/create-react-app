@@ -12,14 +12,14 @@ const babelJest = require('babel-jest')
 
 module.exports = babelJest.createTransformer({
   'plugins': [
+    // ['css-modules-transform', {
+    //   'generateScopedName': '[name]__[local]',
+    //   'extensions': ['.scss', '.css']
+    // }],
     'transform-es2015-modules-commonjs',
     'dynamic-import-node',
     'transform-decorators-legacy',
     'transform-class-properties',
-    ['css-modules-transform', {
-      'generateScopedName': '[name]__[local]',
-      'extensions': ['.scss', '.css']
-    }],
     ['module-resolver', {
       'root': ['.'],
       'alias': {
