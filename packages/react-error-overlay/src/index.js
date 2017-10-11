@@ -168,14 +168,23 @@ window.__REACT_ERROR_OVERLAY_GLOBAL_HOOK__.iframeReady = function iframeReady() 
   updateIframeContent();
 };
 
-var testFunc = function testFn() {};
-if ((testFunc.name || testFunc.toString()).indexOf('testFn') !== -1) {
+const warningText =
+  'When deploying an application, `react-error-overlay` should be excluded ' +
+  'as it is a heavy dependency meant for development.\n\n' +
+  'Consider adding an error boundary to your tree to customize error ' +
+  'handling behavior. See https://fb.me/react-error-boundaries for more ' +
+  'information.';
+
+if (process.env.NODE_ENV !== 'production') {
+  var testFunc = function testFn() {};
+  if ((testFunc.name || testFunc.toString()).indexOf('testFn') === -1) {
+    console.warn(
+      'It looks like you are using `react-error-overlay` in production. ' +
+        warningText
+    );
+  }
+} else {
   console.warn(
-    'It looks like you are using `react-error-overlay` in production. When ' +
-      'deploying an application, `react-error-overlay` should be excluded ' +
-      'as it is a heavy dependency meant for development.\n\n' +
-      'Consider adding an error boundary to your tree to customize error ' +
-      'handling behavior. See https://fb.me/react-error-boundaries for more ' +
-      'information.'
+    'You are using `react-error-overlay` in production. ' + warningText
   );
 }
