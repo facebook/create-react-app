@@ -10,7 +10,6 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
   entry: './src/iframeScript.js',
   output: {
     path: path.join(__dirname, './lib'),
@@ -28,6 +27,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: '"production"' },
+      __REACT_DEVTOOLS_GLOBAL_HOOK__:
+        '__REACT_ERROR_OVERLAY_GLOBAL_HOOK_NOOP__',
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -38,7 +39,6 @@ module.exports = {
         comments: false,
         ascii_only: false,
       },
-      sourceMap: true,
     }),
   ],
 };
