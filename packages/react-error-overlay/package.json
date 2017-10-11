@@ -27,8 +27,7 @@
   ],
   "author": "Joe Haddad <timer150@gmail.com>",
   "files": [
-    "lib/",
-    "middleware.js"
+    "lib/index.js"
   ],
   "devDependencies": {
     "anser": "1.4.1",

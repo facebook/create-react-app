@@ -7,9 +7,9 @@
 'use strict';
 
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
   entry: './src/iframeScript.js',
   output: {
     path: path.join(__dirname, './lib'),
@@ -24,4 +24,26 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      // We set process.env.NODE_ENV to 'production' so that React is built
+      // in production mode.
+      'process.env': { NODE_ENV: '"production"' },
+      // This prevents our bundled React from accidentally hijacking devtools.
+      __REACT_DEVTOOLS_GLOBAL_HOOK__:
+        '__REACT_ERROR_OVERLAY_GLOBAL_HOOK_NOOP__',
+    }),
+    // This code is embedded as a string, so it would never be optimized
+    // elsewhere.
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        comparisons: false,
+      },
+      output: {
+        comments: false,
+        ascii_only: false,
+      },
+    }),
+  ],
 };
