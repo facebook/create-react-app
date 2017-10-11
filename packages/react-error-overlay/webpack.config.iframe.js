@@ -38,7 +38,7 @@ module.exports = {
         comments: false,
         ascii_only: false,
       },
-      sourceMap: false,
+      sourceMap: true,
     }),
   ],
 };
