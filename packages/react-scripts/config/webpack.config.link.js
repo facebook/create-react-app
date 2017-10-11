@@ -338,7 +338,6 @@ module.exports = {
     // in `package.json`, in which case it will be the pathname of that URL.
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
-    new HtmlWebpackCrossoriginPlugin(),
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
@@ -362,14 +361,20 @@ module.exports = {
               module: 'react',
               entry: 'https://unpkg.com/react@15.6.1/dist/react.min.js',
               global: 'React',
+              attributes: {
+                crossorigin: 'anonymous',
+              },
             },
             {
               module: 'react-dom',
               entry: 'https://unpkg.com/react-dom@15.6.1/dist/react-dom.min.js',
               global: 'ReactDOM',
+              attributes: {
+                crossorigin: 'anonymous',
+              },
             },
           ]
-        : null,
+        : [],
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
