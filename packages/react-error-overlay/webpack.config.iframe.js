@@ -26,7 +26,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      // We set process.env.NODE_ENV to 'production' so that React is build
+      // We set process.env.NODE_ENV to 'production' so that React is built
       // in production mode.
       'process.env': { NODE_ENV: '"production"' },
       // This prevents our bundled React from accidentally hijacking devtools.
