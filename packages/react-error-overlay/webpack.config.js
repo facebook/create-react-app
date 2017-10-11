@@ -7,7 +7,6 @@
 'use strict';
 
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -36,20 +35,4 @@ module.exports = {
       iframeScript$: path.resolve(__dirname, './lib/iframe-bundle.js'),
     },
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: '"production"' },
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        comparisons: false,
-      },
-      output: {
-        comments: false,
-        ascii_only: false,
-      },
-      sourceMap: false,
-    }),
-  ],
 };
