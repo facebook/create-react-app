@@ -18,6 +18,6 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
     "eslint-config-vtex": "7.0.0",
-    "eslint-config-vtex-react": "3.0.2"
+    "eslint-config-vtex-react": "3.0.3"
   }
 }
