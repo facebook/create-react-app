@@ -20,7 +20,6 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
-const HtmlWebpackCrossoriginPlugin = require('html-webpack-crossorigin-plugin');
 const appPackage = require(paths.appPackageJson);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -301,7 +300,6 @@ module.exports = {
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(env.raw),
-    new HtmlWebpackCrossoriginPlugin(),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
@@ -312,16 +310,22 @@ module.exports = {
         ? [
             {
               module: 'react',
-              entry: 'https://unpkg.com/react@15.6.1/dist/react.js',
+              entry: 'https://unpkg.com/react@15.6.1/dist/react.min.js',
               global: 'React',
+              attributes: {
+                crossorigin: 'anonymous',
+              },
             },
             {
               module: 'react-dom',
-              entry: 'https://unpkg.com/react-dom@15.6.1/dist/react-dom.js',
+              entry: 'https://unpkg.com/react-dom@15.6.1/dist/react-dom.min.js',
               global: 'ReactDOM',
+              attributes: {
+                crossorigin: 'anonymous',
+              },
             },
           ]
-        : null,
+        : [],
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),

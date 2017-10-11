@@ -24,7 +24,6 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
-const HtmlWebpackCrossoriginPlugin = require('html-webpack-crossorigin-plugin');
 const appPackage = require(paths.appPackageJson);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
