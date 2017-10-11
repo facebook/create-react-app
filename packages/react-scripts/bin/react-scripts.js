@@ -22,6 +22,7 @@ switch (script) {
   case 'eject':
   case 'start':
   case 'deploy':
+  case 'link':
   case 'test': {
     const result = spawn.sync(
       'node',
