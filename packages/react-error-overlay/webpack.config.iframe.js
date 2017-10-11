@@ -26,10 +26,15 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
+      // We set process.env.NODE_ENV to 'production' so that React is build
+      // in production mode.
       'process.env': { NODE_ENV: '"production"' },
+      // This prevents our bundled React from accidentally hijacking devtools.
       __REACT_DEVTOOLS_GLOBAL_HOOK__:
         '__REACT_ERROR_OVERLAY_GLOBAL_HOOK_NOOP__',
     }),
+    // This code is embedded as a string, so it would never be optimized
+    // elsewhere.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
