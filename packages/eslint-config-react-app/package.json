@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-vtex-react-app",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "ESLint configuration used by VTEX Create React App",
   "repository": "vtex/create-react-app",
   "license": "MIT",
