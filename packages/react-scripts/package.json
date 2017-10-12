@@ -1,5 +1,5 @@
 {
-  "name": "react-scripts",
+  "name": "@phoenixmatrix/opinionated-scripts",
   "version": "1.0.14",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
@@ -21,6 +21,10 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@types/jest": "21.1.2",
+    "@types/node": "8.0.33",
+    "@types/react": "16.0.10",
+    "@types/react-dom": "16.0.1",
     "autoprefixer": "7.1.2",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
@@ -51,6 +55,9 @@
     "react-dev-utils": "^4.1.0",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
+    "ts-jest": "21.1.1",
+    "ts-loader": "2.3.7",
+    "typescript": "2.5.3",
     "url-loader": "0.6.2",
     "webpack": "3.5.1",
     "webpack-dev-server": "2.8.2",

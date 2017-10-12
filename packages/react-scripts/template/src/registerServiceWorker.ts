@@ -21,7 +21,7 @@ const isLocalhost = Boolean(
 export default function register() {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
-    const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
+    const publicUrl = new URL(process.env.PUBLIC_URL || "", window.location.toString());
     if (publicUrl.origin !== window.location.origin) {
       // Our service worker won't work if PUBLIC_URL is on a different origin
       // from what our page is served on. This might happen if a CDN is used to
@@ -43,12 +43,12 @@ export default function register() {
   }
 }
 
-function registerValidSW(swUrl) {
+function registerValidSW(swUrl: string) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
       registration.onupdatefound = () => {
-        const installingWorker = registration.installing;
+        const installingWorker = registration.installing as ServiceWorker;
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
@@ -72,14 +72,28 @@ function registerValidSW(swUrl) {
     });
 }
 
-function checkValidServiceWorker(swUrl) {
+function isJavaScriptFile(response: Response) {
+  const headers = response.headers;
+  if (!headers) {
+    return false;
+  }
+
+  const contentType = headers.get('content-type');
+
+  if (!contentType) {
+    return false;
+  }
+
+  return contentType.indexOf('javascript') !== -1;
+}
+
+function checkValidServiceWorker(swUrl: string) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl)
-    .then(response => {
+    .then((response: Response) => {
       // Ensure service worker exists, and that we really are getting a JS file.
       if (
-        response.status === 404 ||
-        response.headers.get('content-type').indexOf('javascript') === -1
+        response.status === 404 || !isJavaScriptFile(response)
       ) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then(registration => {
