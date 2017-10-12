@@ -68,6 +68,21 @@ if (env === 'development' || env === 'test') {
   ]);
 }
 
+var thisEnv = process.env.BABEL_PRESET_REACT_APP_ENV;
+if (thisEnv !== undefined) {
+  if (thisEnv === 'coverage') {
+    plugins.push.call(plugins, require.resolve('babel-plugin-istanbul'));
+  } else {
+    throw new Error(
+      'Using `babel-preset-react-app` requires that if you specify ' +
+        '`BABEL_PRESET_REACT_APP_ENV` it must be "coverage". No ' +
+        'other values are allowed. Received: ' +
+        JSON.stringify(thisEnv) +
+        '.'
+    );
+  }
+}
+
 if (env === 'test') {
   module.exports = {
     presets: [
