@@ -12,6 +12,7 @@ import { getPrettyURL } from '../utils/getPrettyURL';
 import { darkGray } from '../styles';
 
 import type { StackFrame as StackFrameType } from '../utils/stack-frame';
+import type { ErrorLocation } from '../utils/parseCompileError';
 
 const linkStyle = {
   fontSize: '0.9em',
@@ -45,10 +46,10 @@ const toggleStyle = {
 
 type Props = {|
   frame: StackFrameType,
-  launchEditorEndpoint: ?string,
   contextSize: number,
   critical: boolean,
   showCode: boolean,
+  editorHandler: (errorLoc: ErrorLocation) => void,
 |};
 
 type State = {|
@@ -66,47 +67,35 @@ class StackFrame extends Component<Props, State> {
     }));
   };
 
-  getEndpointUrl(): string | null {
-    if (!this.props.launchEditorEndpoint) {
-      return null;
-    }
-    const { _originalFileName: sourceFileName } = this.props.frame;
+  getErrorLocation(): ErrorLocation | null {
+    const {
+      _originalFileName: fileName,
+      _originalLineNumber: lineNumber,
+    } = this.props.frame;
     // Unknown file
-    if (!sourceFileName) {
+    if (!fileName) {
       return null;
     }
     // e.g. "/path-to-my-app/webpack/bootstrap eaddeb46b67d75e4dfc1"
-    const isInternalWebpackBootstrapCode =
-      sourceFileName.trim().indexOf(' ') !== -1;
+    const isInternalWebpackBootstrapCode = fileName.trim().indexOf(' ') !== -1;
     if (isInternalWebpackBootstrapCode) {
       return null;
     }
     // Code is in a real file
-    return this.props.launchEditorEndpoint || null;
+    return { fileName, lineNumber: lineNumber || 1 };
   }
 
-  openInEditor = () => {
-    const endpointUrl = this.getEndpointUrl();
-    if (endpointUrl === null) {
+  editorHandler = () => {
+    const errorLoc = this.getErrorLocation();
+    if (!errorLoc) {
       return;
     }
-
-    const {
-      _originalFileName: sourceFileName,
-      _originalLineNumber: sourceLineNumber,
-    } = this.props.frame;
-    // Keep this in sync with react-error-overlay/middleware.js
-    fetch(
-      `${endpointUrl}?fileName=` +
-        window.encodeURIComponent(sourceFileName) +
-        '&lineNumber=' +
-        window.encodeURIComponent(sourceLineNumber || 1)
-    ).then(() => {}, () => {});
+    this.props.editorHandler(errorLoc);
   };
 
   onKeyDown = (e: SyntheticKeyboardEvent<>) => {
     if (e.key === 'Enter') {
-      this.openInEditor();
+      this.editorHandler();
     }
   };
 
@@ -166,14 +155,15 @@ class StackFrame extends Component<Props, State> {
       }
     }
 
-    const canOpenInEditor = this.getEndpointUrl() !== null;
+    const canOpenInEditor =
+      this.getErrorLocation() !== null && this.props.editorHandler !== null;
     return (
       <div>
         <div>{functionName}</div>
         <div style={linkStyle}>
           <a
             style={canOpenInEditor ? anchorStyle : null}
-            onClick={canOpenInEditor ? this.openInEditor : null}
+            onClick={canOpenInEditor ? this.editorHandler : null}
             onKeyDown={canOpenInEditor ? this.onKeyDown : null}
             tabIndex={canOpenInEditor ? '0' : null}
           >
@@ -183,7 +173,7 @@ class StackFrame extends Component<Props, State> {
         {codeBlockProps && (
           <span>
             <a
-              onClick={canOpenInEditor ? this.openInEditor : null}
+              onClick={canOpenInEditor ? this.editorHandler : null}
               style={canOpenInEditor ? codeAnchorStyle : null}
             >
               <CodeBlock {...codeBlockProps} />
