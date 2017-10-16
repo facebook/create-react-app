@@ -49,6 +49,6 @@ module.exports = idObj;
   },
   getCacheKey() {
     // The output is always the same.
-    return 'cssTradform';
+    return 'cssTransform';
   },
 };
