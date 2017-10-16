@@ -8,6 +8,10 @@
 'use strict';
 
 function clearConsole() {
+  if (process.env.REACT_APP_NO_CLEAR_CONSOLE) {
+    return;
+  }
+
   process.stdout.write(
     process.platform === 'win32' ? '\x1Bc' : '\x1B[2J\x1B[3J\x1B[H'
   );

@@ -134,6 +134,8 @@ clearConsole();
 console.log('Just cleared the screen!');
 ```
 
+This behavior can be disabled by setting the environment variable `REACT_APP_NO_CLEAR_CONSOLE`.
+
 #### `eslintFormatter(results: Object): string`
 
 This is our custom ESLint formatter that integrates well with Create React App console output.<br>
