@@ -10,10 +10,8 @@
 
 module.exports = function createServeAppMiddleware(servedPathPathname) {
   return function serveAppMiddleware(req, res, next) {
-    console.log(req.url, servedPathPathname);
     if (servedPathPathname.length > 1 && servedPathPathname !== './') {
       if (req.url.indexOf(servedPathPathname) === -1) {
-        console.log('redirect');
         res.redirect(servedPathPathname);
       } else {
         next();
