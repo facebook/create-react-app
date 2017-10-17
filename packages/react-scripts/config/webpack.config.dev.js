@@ -21,22 +21,18 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
-console.log(paths.servedPath);
-
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we serve from the root by default. Webpack will serve from
 // the relative path of the homepage field if specified.
 const publicPath = url.parse(paths.servedPath).pathname || '';
-console.log(publicPath);
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 const publicUrl = publicPath.slice(0, -1);
-console.log(publicUrl);
-process.exit();
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
-
+console.log(env);
+process.exit();
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
