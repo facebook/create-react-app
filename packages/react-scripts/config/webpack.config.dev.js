@@ -30,9 +30,7 @@ const publicPath = url.parse(paths.servedPath).pathname || '';
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
-const env = getClientEnvironment(publicUrl);
-console.log(env);
-process.exit();
+const env = getClientEnvironment(publicUrl === '.' ? '' : publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
