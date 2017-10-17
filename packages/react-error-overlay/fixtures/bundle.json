@@ -240,11 +240,11 @@
     ]
   },
   {
-    "functionName": "Object.batchedUpdates",
+    "functionName": "batchedUpdates",
     "fileName": "http://localhost:3000/static/js/bundle.js",
     "lineNumber": 33900,
     "columnNumber": 26,
-    "_originalFunctionName": "Object.batchedUpdates",
+    "_originalFunctionName": "batchedUpdates",
     "_originalFileName": "webpack:///packages/react-scripts/~/react-dom/lib/ReactDefaultBatchingStrategy.js",
     "_originalLineNumber": 62,
     "_originalColumnNumber": 0,
@@ -264,11 +264,11 @@
     ]
   },
   {
-    "functionName": "Object.batchedUpdates",
+    "functionName": "batchedUpdates",
     "fileName": "http://localhost:3000/static/js/bundle.js",
     "lineNumber": 2181,
     "columnNumber": 27,
-    "_originalFunctionName": "Object.batchedUpdates",
+    "_originalFunctionName": "batchedUpdates",
     "_originalFileName": "webpack:///packages/react-scripts/~/react-dom/lib/ReactUpdates.js",
     "_originalLineNumber": 97,
     "_originalColumnNumber": 0,
@@ -288,11 +288,11 @@
     ]
   },
   {
-    "functionName": "Object._renderNewRootComponent",
+    "functionName": "_renderNewRootComponent",
     "fileName": "http://localhost:3000/static/js/bundle.js",
     "lineNumber": 14398,
     "columnNumber": 18,
-    "_originalFunctionName": "Object._renderNewRootComponent",
+    "_originalFunctionName": "_renderNewRootComponent",
     "_originalFileName": "webpack:///packages/react-scripts/~/react-dom/lib/ReactMount.js",
     "_originalLineNumber": 320,
     "_originalColumnNumber": 0,
@@ -312,11 +312,11 @@
     ]
   },
   {
-    "functionName": "Object._renderSubtreeIntoContainer",
+    "functionName": "_renderSubtreeIntoContainer",
     "fileName": "http://localhost:3000/static/js/bundle.js",
     "lineNumber": 14479,
     "columnNumber": 32,
-    "_originalFunctionName": "Object._renderSubtreeIntoContainer",
+    "_originalFunctionName": "_renderSubtreeIntoContainer",
     "_originalFileName": "webpack:///packages/react-scripts/~/react-dom/lib/ReactMount.js",
     "_originalLineNumber": 401,
     "_originalColumnNumber": 0,
@@ -336,11 +336,11 @@
     ]
   },
   {
-    "functionName": "Object.render",
+    "functionName": "render",
     "fileName": "http://localhost:3000/static/js/bundle.js",
     "lineNumber": 14500,
     "columnNumber": 23,
-    "_originalFunctionName": "Object.render",
+    "_originalFunctionName": "render",
     "_originalFileName": "webpack:///packages/react-scripts/~/react-dom/lib/ReactMount.js",
     "_originalLineNumber": 422,
     "_originalColumnNumber": 0,
@@ -360,11 +360,11 @@
     ]
   },
   {
-    "functionName": "Object.friendlySyntaxErrorLabel",
+    "functionName": null,
     "fileName": "http://localhost:3000/static/js/bundle.js",
     "lineNumber": 17287,
     "columnNumber": 20,
-    "_originalFunctionName": "Object.friendlySyntaxErrorLabel",
+    "_originalFunctionName": null,
     "_originalFileName": "webpack:///packages/react-scripts/template/src/index.js",
     "_originalLineNumber": 6,
     "_originalColumnNumber": 0,
@@ -432,11 +432,11 @@
     ]
   },
   {
-    "functionName": "Object.<anonymous>",
+    "functionName": null,
     "fileName": "http://localhost:3000/static/js/bundle.js",
     "lineNumber": 41219,
     "columnNumber": 18,
-    "_originalFunctionName": "Object.<anonymous>",
+    "_originalFunctionName": null,
     "_originalFileName": null,
     "_originalLineNumber": null,
     "_originalColumnNumber": null,

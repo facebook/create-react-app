@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,6 +45,7 @@ const semver = require('semver');
 const dns = require('dns');
 const tmp = require('tmp');
 const unpack = require('tar-pack').unpack;
+const url = require('url');
 const hyperquest = require('hyperquest');
 
 const packageJson = require('./package.json');
@@ -440,8 +439,8 @@ function getPackageName(installPackage) {
     // Pull package name out of git urls e.g:
     // git+https://github.com/mycompany/react-scripts.git
     // git+ssh://github.com/mycompany/react-scripts.git#v1.2.3
-    return Promise.resolve(installPackage.match(/([^\/]+)\.git(#.*)?$/)[1]);
-  } else if (installPackage.indexOf('@') > 0) {
+    return Promise.resolve(installPackage.match(/([^/]+)\.git(#.*)?$/)[1]);
+  } else if (installPackage.match(/.+@/)) {
     // Do not match @scope/ when stripping off @version or @tag
     return Promise.resolve(
       installPackage.charAt(0) + installPackage.substr(1).split('@')[0]
@@ -454,7 +453,9 @@ function checkNpmVersion() {
   let hasMinNpm = false;
   let npmVersion = null;
   try {
-    npmVersion = execSync('npm --version').toString().trim();
+    npmVersion = execSync('npm --version')
+      .toString()
+      .trim();
     hasMinNpm = semver.gte(npmVersion, '3.0.0');
   } catch (err) {
     // ignore
@@ -614,7 +615,15 @@ function checkIfOnline(useYarn) {
 
   return new Promise(resolve => {
     dns.lookup('registry.yarnpkg.com', err => {
-      resolve(err === null);
+      if (err != null && process.env.https_proxy) {
+        // If a proxy is defined, we likely can't resolve external hostnames.
+        // Try to resolve the proxy name as an indication of a connection.
+        dns.lookup(url.parse(process.env.https_proxy).hostname, proxyErr => {
+          resolve(proxyErr == null);
+        });
+      } else {
+        resolve(err == null);
+      }
     });
   });
 }
