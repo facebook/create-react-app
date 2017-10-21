@@ -271,7 +271,7 @@ function run(
       console.log(
         `Installing ${chalk.cyan('react')}, ${chalk.cyan(
           'react-dom'
-        )}, and ${chalk.cyan(packageName)}...`
+        )} and ${chalk.cyan(packageName)}...`
       );
       console.log();
 
