@@ -4,6 +4,10 @@
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebook/create-react-app",
   "license": "MIT",
+  "publishConfig": {
+    "registry":
+      "https://artifactory.ops.babylontech.co.uk/artifactory/api/npm/babylon-virtual-npm/"
+  },
   "engines": {
     "node": ">=6"
   },
