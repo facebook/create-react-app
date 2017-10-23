@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 /* @flow */
@@ -16,11 +14,12 @@ import RuntimeError from './RuntimeError';
 import Footer from '../components/Footer';
 
 import type { ErrorRecord } from './RuntimeError';
+import type { ErrorLocation } from '../utils/parseCompileError';
 
 type Props = {|
   errorRecords: ErrorRecord[],
   close: () => void,
-  launchEditorEndpoint: ?string,
+  editorHandler: (errorLoc: ErrorLocation) => void,
 |};
 
 type State = {|
@@ -76,7 +75,7 @@ class RuntimeErrorContainer extends PureComponent<Props, State> {
         )}
         <RuntimeError
           errorRecord={errorRecords[this.state.currentIndex]}
-          launchEditorEndpoint={this.props.launchEditorEndpoint}
+          editorHandler={this.props.editorHandler}
         />
         <Footer
           line1="This screen is visible only in development. It will not appear if the app crashes in production."

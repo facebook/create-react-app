@@ -1,3 +1,88 @@
+## 1.0.14 (September 26, 2017)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`
+
+  * [#3098](https://github.com/facebookincubator/create-react-app/pull/3098) Always reload the page on next compile after a runtime error. ([@Timer](https://github.com/Timer))
+
+* `react-error-overlay`
+
+  * [#3079](https://github.com/facebookincubator/create-react-app/pull/3079) Fix code context on Windows. ([@Timer](https://github.com/Timer))
+
+#### :nail_care: Enhancement
+
+* `react-dev-utils`
+
+  * [#3077](https://github.com/facebookincubator/create-react-app/pull/3077) Auto-detect running editor on Linux for error overlay. ([@gulderov](https://github.com/gulderov))
+
+  * [#3131](https://github.com/facebookincubator/create-react-app/pull/3131) Display process pid in already running message. ([@Pajn](https://github.com/Pajn))
+
+#### :memo: Documentation
+
+* Other
+
+  * [#3163](https://github.com/facebookincubator/create-react-app/pull/3163) Add link to active CSS modules discussion. ([@NeekSandhu](https://github.com/NeekSandhu))
+
+* `react-scripts`
+
+  * [#2908](https://github.com/facebookincubator/create-react-app/pull/2908) Note that class fields have progressed to stage 3. ([@rickbeerendonk](https://github.com/rickbeerendonk))
+
+  * [#3160](https://github.com/facebookincubator/create-react-app/pull/3160) Update unclear wording in webpack configuration (file loader section). ([@kristiehoward](https://github.com/kristiehoward))
+
+* `eslint-config-react-app`
+
+  * [#3072](https://github.com/facebookincubator/create-react-app/pull/3072) Update eslint versions for install instructions. ([@jdcrensh](https://github.com/jdcrensh))
+
+#### :house: Internal
+
+* `react-scripts`
+
+  * [#3157](https://github.com/facebookincubator/create-react-app/pull/3157) Update `webpack-dev-server` to `2.8.2`. ([@nikolas](https://github.com/nikolas))
+
+  * [#2989](https://github.com/facebookincubator/create-react-app/pull/2989) Update install template to match accessibility guidelines. ([@davidleger95](https://github.com/davidleger95))
+
+* `react-error-overlay`
+
+  * [#3065](https://github.com/facebookincubator/create-react-app/pull/3065) Updated `react-error-overlay` to latest Flow (`0.54.0`). ([@duvet86](https://github.com/duvet86))
+
+  * [#3102](https://github.com/facebookincubator/create-react-app/pull/3102) Clean target directory before compiling overlay. ([@Timer](https://github.com/Timer))
+
+* `create-react-app`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
+
+  * [#3058](https://github.com/facebookincubator/create-react-app/pull/3058) Re-run prettier for all files and pin the version. ([@viankakrisna](https://github.com/viankakrisna))
+
+  * [#3107](https://github.com/facebookincubator/create-react-app/pull/3107) Run CI on `npm@^4`. ([@viankakrisna](https://github.com/viankakrisna))
+
+#### Committers: 12
+
+- Ade Viankakrisna Fadlil ([viankakrisna](https://github.com/viankakrisna))
+- David Leger ([davidleger95](https://github.com/davidleger95))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Jon Crenshaw ([jdcrensh](https://github.com/jdcrensh))
+- Kristie Howard ([kristiehoward](https://github.com/kristiehoward))
+- Luca ([duvet86](https://github.com/duvet86))
+- Neek Sandhu ([NeekSandhu](https://github.com/NeekSandhu))
+- Nik Nyby ([nikolas](https://github.com/nikolas))
+- Rasmus Eneman ([Pajn](https://github.com/Pajn))
+- Rick Beerendonk ([rickbeerendonk](https://github.com/rickbeerendonk))
+- Sophie Alpert ([sophiebits](https://github.com/sophiebits))
+- [gulderov](https://github.com/gulderov)
+
+### Migrating from 1.0.13 to 1.0.14
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.14
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.14
+```
+
 ## 1.0.13 (September 2, 2017)
 
 #### :bug: Bug Fix
