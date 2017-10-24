@@ -111,9 +111,7 @@ module.exports = {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',
     'default-case': ['warn', { commentPattern: '^no default$' }],
-    'dot-location': ['warn', 'property'],
     eqeqeq: ['warn', 'allow-null'],
-    'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
     'no-cond-assign': ['warn', 'always'],
@@ -140,18 +138,6 @@ module.exports = {
     'no-labels': ['warn', { allowLoop: true, allowSwitch: false }],
     'no-lone-blocks': 'warn',
     'no-loop-func': 'warn',
-    'no-mixed-operators': [
-      'warn',
-      {
-        groups: [
-          ['&', '|', '^', '~', '<<', '>>', '>>>'],
-          ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
-          ['&&', '||'],
-          ['in', 'instanceof'],
-        ],
-        allowSamePrecedence: false,
-      },
-    ],
     'no-multi-str': 'warn',
     'no-native-reassign': 'warn',
     'no-negated-in-lhs': 'warn',
@@ -215,12 +201,9 @@ module.exports = {
       },
     ],
     'no-with': 'warn',
-    'no-whitespace-before-property': 'warn',
     radix: 'warn',
     'require-yield': 'warn',
-    'rest-spread-spacing': ['warn', 'never'],
     strict: ['warn', 'never'],
-    'unicode-bom': ['warn', 'never'],
     'use-isnan': 'warn',
     'valid-typeof': 'warn',
     'no-restricted-properties': [
