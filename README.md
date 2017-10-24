@@ -14,13 +14,6 @@ cd my-app/
 npm start
 ```
 
-## Features
-
-### Code highlighting on error
-When you run `npm run build` the terminal will output the error, including the highlighted sourcecode (like babel)!
-
-![CodeHighlight](https://cloud.githubusercontent.com/assets/175278/22310149/1ee66ccc-e346-11e6-83ff-e3a053701fb4.gif)
-
 ## Migration
 
 In general, most upgrades won't require any migration steps to work, but if you experience problems after an upgrade, please file an issue, and we'll add it to the list of migration steps below.
@@ -42,6 +35,9 @@ Test suite failed to run
 To fix this, create a new file *in the root of the project* called `tsconfig.test.json`, and paste [the content of this file into it](https://raw.githubusercontent.com/wmonk/create-react-app-typescript/master/packages/react-scripts/template/tsconfig.test.json). Everything should work now. For more info, please see [this issue](https://github.com/wmonk/create-react-app-typescript/issues/141).
 
 ## Changelog
+
+### 2.8.0
+* Update typescript to 2.5.3 - @nicolaserny
 
 ### 2.7.0
 * Merge react-scripts@1.0.13 - @JohnNilsson
