@@ -606,6 +606,22 @@ function isSafeToCreateProjectIn(root, name) {
   return false;
 }
 
+function getProxy() {
+  if (process.env.https_proxy) {
+    return process.env.https_proxy;
+  } else {
+    try {
+      // Trying to read https-proxy from .npmrc
+      let httpsProxy = execSync('yarn config get https-proxy')
+        .toString()
+        .trim();
+      return httpsProxy !== 'undefined' ? httpsProxy : undefined;
+    } catch (e) {
+      return;
+    }
+  }
+}
+
 function checkIfOnline(useYarn) {
   if (!useYarn) {
     // Don't ping the Yarn registry.
@@ -615,10 +631,11 @@ function checkIfOnline(useYarn) {
 
   return new Promise(resolve => {
     dns.lookup('registry.yarnpkg.com', err => {
-      if (err != null && process.env.https_proxy) {
+      let proxy;
+      if (err != null && (proxy = getProxy())) {
         // If a proxy is defined, we likely can't resolve external hostnames.
         // Try to resolve the proxy name as an indication of a connection.
-        dns.lookup(url.parse(process.env.https_proxy).hostname, proxyErr => {
+        dns.lookup(url.parse(proxy).hostname, proxyErr => {
           resolve(proxyErr == null);
         });
       } else {
