@@ -160,8 +160,8 @@ module.exports = {
     'no-template-curly-in-string': 'warn',
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
-    'no-undef': 'error',
-    'no-restricted-globals': ['error'].concat(restrictedGlobals),
+    'no-undef': 'warn',
+    'no-restricted-globals': ['warn'].concat(restrictedGlobals),
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
@@ -207,7 +207,7 @@ module.exports = {
     'use-isnan': 'warn',
     'valid-typeof': 'warn',
     'no-restricted-properties': [
-      'error',
+      'warn',
       // TODO: reenable once import() is no longer slow.
       // https://github.com/facebookincubator/create-react-app/issues/2176
       // {
@@ -224,15 +224,15 @@ module.exports = {
     ],
 
     // https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
-    'import/first': 'error',
-    'import/no-amd': 'error',
-    'import/no-webpack-loader-syntax': 'error',
+    'import/first': 'warn',
+    'import/no-amd': 'warn',
+    'import/no-webpack-loader-syntax': 'warn',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/jsx-no-comment-textnodes': 'warn',
     'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
     'react/jsx-no-target-blank': 'warn',
-    'react/jsx-no-undef': 'error',
+    'react/jsx-no-undef': 'warn',
     'react/jsx-pascal-case': [
       'warn',
       {
@@ -246,8 +246,8 @@ module.exports = {
     'react/no-deprecated': 'warn',
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
-    'react/react-in-jsx-scope': 'error',
-    'react/require-render-return': 'error',
+    'react/react-in-jsx-scope': 'warn',
+    'react/require-render-return': 'warn',
     'react/style-prop-object': 'warn',
 
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
