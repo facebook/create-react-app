@@ -15,7 +15,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm run eject](#npm-run-eject)
 - [Supported Language Features and Polyfills](#supported-language-features-and-polyfills)
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
-- [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
 - [Debugging in the Editor](#debugging-in-the-editor)
 - [Formatting Code Automatically](#formatting-code-automatically)
 - [Changing the Page `<title>`](#changing-the-page-title)
@@ -30,7 +29,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Changing the HTML](#changing-the-html)
   - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system)
   - [When to Use the `public` Folder](#when-to-use-the-public-folder)
-- [Using Global Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
   - [Using a Custom Theme](#using-a-custom-theme)
 - [Adding Flow](#adding-flow)
@@ -60,10 +58,16 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Initializing Test Environment](#initializing-test-environment)
   - [Focusing and Excluding Tests](#focusing-and-excluding-tests)
   - [Coverage Reporting](#coverage-reporting)
-  - [Continuous Integration](#continuous-integration)
   - [Disabling jsdom](#disabling-jsdom)
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
+- [Running the Linter](#running-the-linter)
+  - [Failing a Build When the Linter Encounters an Issue](#failing-a-build-when-the-linter-encounters-an-issue)
+  - [Customizing the Linter](#customizing-the-linter)
+  - [Failing ESLint on Warnings](#failing-eslint-on-warnings)
+  - [Integrating With Your Editor](#integrating-with-your-editor)
+  - [Using Global Variables](#using-global-variables)
+- [Continuous Integration](#continuous-integration)
 - [Developing Components in Isolation](#developing-components-in-isolation)
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
@@ -163,7 +167,7 @@ Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+You will also see any lint warnings in the console.
 
 ### `npm test`
 
@@ -218,29 +222,6 @@ If you use any other ES6+ features that need **runtime support** (such as `Array
 
 To configure the syntax highlighting in your favorite text editor, head to the [relevant Babel documentation page](https://babeljs.io/docs/editors) and follow the instructions. Some of the most popular editors are covered.
 
-## Displaying Lint Output in the Editor
-
->Note: this feature is available with `react-scripts@0.2.0` and higher.<br>
->It also only works with npm 3 or higher.
-
-Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
-
-They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
-
-You would need to install an ESLint plugin for your editor first. Then, add a file called `.eslintrc` to the project root:
-
-```js
-{
-  "extends": "react-app"
-}
-```
-
-Now your editor should report the linting warnings.
-
-Note that even if you edit your `.eslintrc` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
-
-If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
-
 ## Debugging in the Editor
 
 **This feature is currently only supported by [Visual Studio Code](https://code.visualstudio.com) and [WebStorm](https://www.jetbrains.com/webstorm/).**
@@ -283,7 +264,7 @@ In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and s
 
 Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
 
-The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine. 
+The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine.
 
 ## Formatting Code Automatically
 
@@ -723,20 +704,6 @@ The `public` folder is useful as a workaround for a number of less common cases:
 * Some library may be incompatible with Webpack and you have no other option but to include it as a `<script>` tag.
 
 Note that if you add a `<script>` that declares global variables, you also need to read the next section on using them.
-
-## Using Global Variables
-
-When you include a script in the HTML file that defines global variables and try to use one of these variables in the code, the linter will complain because it cannot see the definition of the variable.
-
-You can avoid this by reading the global variable explicitly from the `window` object, for example:
-
-```js
-const $ = window.$;
-```
-
-This makes it obvious you are using a global variable intentionally rather than because of a typo.
-
-Alternatively, you can force the linter to ignore any line by adding `// eslint-disable-line` after it.
 
 ## Adding Bootstrap
 
@@ -1408,67 +1375,6 @@ Example package.json:
   }
 }
 ```
-
-### Continuous Integration
-
-By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`.
-
-When creating a build of your application with `npm run build` linter warnings are not checked by default. Like `npm test`, you can force the build to perform a linter warning check by setting the environment variable `CI`. If any warnings are encountered then the build fails.
-
-Popular CI servers already set the environment variable `CI` by default but you can do this yourself too:
-
-### On CI servers
-#### Travis CI
-
-1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis.  You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
-1. Add a `.travis.yml` file to your git repository.
-```
-language: node_js
-node_js:
-  - 6
-cache:
-  directories:
-    - node_modules
-script:
-  - npm run build
-  - npm test
-```
-1. Trigger your first build with a git push.
-1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
-
-#### CircleCI
-
-Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React App project.
-
-### On your own environment
-##### Windows (cmd.exe)
-
-```cmd
-set CI=true&&npm test
-```
-
-```cmd
-set CI=true&&npm run build
-```
-
-(Note: the lack of whitespace is intentional.)
-
-##### Linux, macOS (Bash)
-
-```bash
-CI=true npm test
-```
-
-```bash
-CI=true npm run build
-```
-
-The test command will force Jest to run tests once instead of launching the watcher.
-
->  If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
-
-The build command will check for linter warnings and fail if any are found.
-
 ### Disabling jsdom
 
 By default, the `package.json` of the generated project looks like this:
@@ -1513,6 +1419,166 @@ Snapshot testing is a feature of Jest that automatically generates text snapshot
 If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
+
+## Running the Linter
+
+Create React App includes a set of ESLint rules handpicked to help spot potential issues with your code and to enforce best practices. Create React App does not include any ESLint rules that enforce style or formatting. We recommend using a tool like [Prettier](https://github.com/prettier/prettier) for that instead. See the [Formatting Code Automatically](#formatting-code-automatically) section for instructions on how to use [Prettier](https://github.com/prettier/prettier) with Create React App.
+
+Create React App runs the linter automatically with the `npm start` and `npm build` commands. It's important to note that these two commands will only lint the files that are transpiled as part of the build, and any other code (e.g. tests) won't be linted.
+
+### Failing a Build When the Linter Encounters an Issue
+
+By default the linter will never cause `npm start` or `npm build` to fail. If you want to fail a build when the linter encounters an issue you must set the `CI` environment variable to `true` when running the command. Here's an example:
+
+On Linux, macOS (Bash):
+
+```bash
+CI=true npm run build
+```
+
+And on Windows:
+
+```cmd
+set CI=true&&npm run build
+```
+
+### Customizing the Linter
+
+If you want to augment the ESLint rules bundled with Create React App, or if you want to run the linter on files that aren't transpiled as part of the build (e.g tests) you would need to create an `.eslintrc` file that extends `react-app` and place it in your project's root directory:
+
+```js
+// .eslintrc
+{
+  "extends": "react-app"
+}
+```
+
+You can then add any custom rules, plugins, or configs to this file. To run this customized rule set you must have ESLint installed globally or locally:
+
+```bash
+npm install --save-dev eslint
+```
+
+Then in your `package.json` file you could add a custom script to run your custom linter:
+
+```json
+{
+  "scripts": {
+    "lint": "eslint src/"
+  }
+}
+```
+
+Then you can run the linter as follows:
+
+```bash
+npm run lint
+```
+
+> :warning: The ESLint rules that run with `npm start` and `npm build` **cannot** be customized or disabled. So if you make customizations as described above they won't run with `npm start` or `npm build`.
+
+### Failing ESLint on Warnings
+
+All the ESLint rules included with Create React App are configured as ESLint warnings and not errors. This means that a customized linter like the one described above will never fail (exit with code 1) due to one of Create React App's ESLint rules. If you want ESLint to fail when it encounters warnings you can run ESLint with the `--max-warnings` flag set to 0:
+
+```json
+{
+  "scripts": {
+    "lint": "eslint src/ --max-warnings 0"
+  }
+}
+```
+
+### Integrating With Your Editor
+
+Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
+
+They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
+
+You would need to install an ESLint plugin for your editor first. Then, add a file called `.eslintrc` to the project root:
+
+```js
+{
+  "extends": "react-app"
+}
+```
+
+Now your editor should report the linting warnings.
+
+Note that even if you edit your `.eslintrc` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
+
+If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
+
+### Using Global Variables
+
+When you include a script in the HTML file that defines global variables and try to use one of these variables in the code, the linter will complain because it cannot see the definition of the variable.
+
+You can avoid this by reading the global variable explicitly from the `window` object, for example:
+
+```js
+const $ = window.$;
+```
+
+This makes it obvious you are using a global variable intentionally rather than because of a typo.
+
+Alternatively, you can force the linter to ignore any line by adding `// eslint-disable-line` after it.
+
+## Continuous Integration
+
+By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`.
+
+Popular CI servers already set the environment variable `CI` by default but you can do this yourself too:
+
+### On CI servers
+#### Travis CI
+
+1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis.  You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
+1. Add a `.travis.yml` file to your git repository.
+```
+language: node_js
+node_js:
+  - 6
+cache:
+  directories:
+    - node_modules
+script:
+  - npm test
+```
+1. Trigger your first build with a git push.
+1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
+
+#### CircleCI
+
+Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React App project.
+
+### On your own environment
+##### Windows (cmd.exe)
+
+```cmd
+set CI=true&&npm test
+```
+
+```cmd
+set CI=true&&npm run build
+```
+
+(Note: the lack of whitespace is intentional.)
+
+##### Linux, macOS (Bash)
+
+```bash
+CI=true npm test
+```
+
+```bash
+CI=true npm run build
+```
+
+The test command will force Jest to run tests once instead of launching the watcher.
+
+>  If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
+
+The build command will check for linter warnings and fail if any are found.
 
 ## Developing Components in Isolation
 
@@ -1804,7 +1870,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`. 
+It will get copied to the `build` folder when you run `npm run build`.
 
 If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
