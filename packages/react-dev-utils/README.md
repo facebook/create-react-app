@@ -105,6 +105,19 @@ module.exports = {
 }
 ```
 
+#### `addProcessExitHandlers(): void`
+
+Exits the process when stdin is closed by an external program.<br>
+This is useful when the dev server is started by some other tool (i.e.: Phoenix)
+which then uses the standard Unix convention of closing the standard input to
+signal the end of the program.
+
+```js
+var addProcessExitHandlers = require('react-dev-utils/addProcessExitHandlers');
+
+addProcessExitHandlers();
+```
+
 #### `checkRequiredFiles(files: Array<string>): boolean`
 
 Makes sure that all passed files exist.<br>

@@ -38,6 +38,7 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
 const createDevServerConfig = require('../config/webpackDevServer.config');
+const addProcessExitHandlers = require('react-dev-utils/addProcessExitHandlers');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
@@ -47,15 +48,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
-// Issue: https://github.com/facebookincubator/create-react-app/issues/1753
-// The below lines are added to make sure that this process is
-// exited when stdin is ended. The consequence of not doing this means
-// that all watch processes will stay running despite the process that spawned
-// them being closed.
-process.stdin.on('end', function() {
-  process.exit(0);
-});
-process.stdin.resume();
+addProcessExitHandlers();
 
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;

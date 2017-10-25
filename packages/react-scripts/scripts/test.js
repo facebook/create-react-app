@@ -23,6 +23,7 @@ process.on('unhandledRejection', err => {
 // Ensure environment variables are read.
 require('../config/env');
 
+const addProcessExitHandlers = require('react-dev-utils/addProcessExitHandlers');
 const jest = require('jest');
 const argv = process.argv.slice(2);
 
@@ -31,16 +32,7 @@ const argv = process.argv.slice(2);
 if (!process.env.CI && argv.indexOf('--coverage') < 0) {
   argv.push('--watch');
 
-  // Issue: https://github.com/facebookincubator/create-react-app/issues/1753
-  // The below lines are added to make sure that this process is
-  // exited when stdin is ended. The consequence of not doing this means
-  // that all watch processes will stay running despite the process that spawned
-  // them being closed.
-
-  process.stdin.on('end', function() {
-    process.exit(0);
-  });
-  process.stdin.resume();
+  addProcessExitHandlers();
 }
 
 // @remove-on-eject-begin

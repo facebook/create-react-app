@@ -11,6 +11,7 @@
     "node": ">=6"
   },
   "files": [
+    "addProcessExitHandlers.js",
     "checkRequiredFiles.js",
     "clearConsole.js",
     "crashOverlay.js",
