@@ -37,10 +37,10 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test --env=jsdom',
-    eject: 'react-scripts eject',
+    start: 'NODE_PATH=src react-scripts start',
+    build: 'NODE_PATH=src react-scripts build',
+    test: 'NODE_PATH=src react-scripts test --env=jsdom',
+    eject: 'NODE_PATH=src react-scripts eject',
   };
 
   fs.writeFileSync(
