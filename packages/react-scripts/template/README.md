@@ -2186,13 +2186,19 @@ This will only work for locales that have been explicitly imported before.
 
 ### `npm run build` fails to minify
 
-You may occasionally find a package you depend on needs compiled or ships code for a non-browser environment.<br>
-This is considered poor practice in the ecosystem and does not have an escape hatch in Create React App.<br>
+Some third-party packages don't compile their code to ES5 before publishing to npm. This often causes problems in the ecosystem because neither browsers (except for most modern versions) nor some tools currently support all ES6 features. We recommend to publish code on npm as ES5 at least for a few more years.
+
 <br>
 To resolve this:
-1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled (retaining ES6 Modules).
-2. Fork the package and publish a corrected version yourself.
+
+1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled.
+  * Note: Create React App can consume both CommonJS and ES modules. For Node.js compatibility, it is recommended that the main entry point is CommonJS. However, they can optionally provide an ES module entry point with the `module` field in `package.json`. Note that **even if a library provides an ES Modules version, it should still precompile other ES6 features to ES5 if it intends to support older browsers**.
+
+2. Fork the package and publish a corrected version yourself. 
+
 3. If the dependency is small enough, copy it to your `src/` folder and treat it as application code.
+
+In the future, we might start automatically compiling incompatible third-party modules, but it is not currently supported. This approach would also slow down the production builds.
 
 ## Something Missing?
 
