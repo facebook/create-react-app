@@ -1,6 +1,6 @@
 # Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
 
-Create React apps with no build configuration.
+Create React apps with no build configuration, with Postlight's custom additions to support flow, cssnext, css-modules, as well as Airbnb style ESLint.
 
 * [Getting Started](#getting-started) – How to create a new app.
 * [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
@@ -13,7 +13,7 @@ If something doesn’t work, please [file an issue](https://github.com/facebooki
 ```sh
 npm install -g create-react-app
 
-create-react-app my-app
+create-react-app my-app --scripts-version @postlight/postlight-react-scripts
 cd my-app/
 npm start
 ```

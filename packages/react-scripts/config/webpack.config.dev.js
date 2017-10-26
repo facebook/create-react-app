@@ -138,7 +138,7 @@ module.exports = {
                 extends: [require.resolve('eslint-config-react-app')],
               },
               ignore: false,
-              useEslintrc: false,
+              useEslintrc: true,
               // @remove-on-eject-end
             },
             loader: require.resolve('eslint-loader'),
@@ -169,7 +169,7 @@ module.exports = {
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
-              babelrc: false,
+              babelrc: true,
               presets: [require.resolve('babel-preset-react-app')],
               // @remove-on-eject-end
               // This is a feature of `babel-loader` for webpack (not Babel itself).
@@ -191,6 +191,7 @@ module.exports = {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  modules: true,
                 },
               },
               {
@@ -201,7 +202,41 @@ module.exports = {
                   ident: 'postcss',
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
-                    autoprefixer({
+                    require("postcss-cssnext")({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              },
+            ],
+            exclude: /.*(node_modules|global).*\.css$/,
+          },
+          {
+            test: /.*(node_modules|global).*\.css$/,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  modules: false,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    require("postcss-cssnext")({
                       browsers: [
                         '>1%',
                         'last 4 versions',
