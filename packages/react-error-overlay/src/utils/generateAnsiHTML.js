@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
+/* @flow */
 
-var Anser = require('anser');
-var Entities = require('html-entities').AllHtmlEntities;
+import Anser from 'anser';
+import { AllHtmlEntities as Entities } from 'html-entities';
+
 var entities = new Entities();
 
 // Color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
@@ -62,7 +61,7 @@ var anserMap = {
   'ansi-white': 'darkgrey',
 };
 
-function ansiHTML(txt) {
+function generateAnsiHTML(txt: string): string {
   var arr = new Anser().ansiToJson(entities.encode(txt), {
     use_classes: true,
   });
@@ -104,4 +103,4 @@ function ansiHTML(txt) {
   return result;
 }
 
-module.exports = ansiHTML;
+export default generateAnsiHTML;

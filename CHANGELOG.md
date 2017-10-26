@@ -1,4 +1,204 @@
-## 1.0.11 (2017-08-09)
+## 1.0.14 (September 26, 2017)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`
+
+  * [#3098](https://github.com/facebookincubator/create-react-app/pull/3098) Always reload the page on next compile after a runtime error. ([@Timer](https://github.com/Timer))
+
+* `react-error-overlay`
+
+  * [#3079](https://github.com/facebookincubator/create-react-app/pull/3079) Fix code context on Windows. ([@Timer](https://github.com/Timer))
+
+#### :nail_care: Enhancement
+
+* `react-dev-utils`
+
+  * [#3077](https://github.com/facebookincubator/create-react-app/pull/3077) Auto-detect running editor on Linux for error overlay. ([@gulderov](https://github.com/gulderov))
+
+  * [#3131](https://github.com/facebookincubator/create-react-app/pull/3131) Display process pid in already running message. ([@Pajn](https://github.com/Pajn))
+
+#### :memo: Documentation
+
+* Other
+
+  * [#3163](https://github.com/facebookincubator/create-react-app/pull/3163) Add link to active CSS modules discussion. ([@NeekSandhu](https://github.com/NeekSandhu))
+
+* `react-scripts`
+
+  * [#2908](https://github.com/facebookincubator/create-react-app/pull/2908) Note that class fields have progressed to stage 3. ([@rickbeerendonk](https://github.com/rickbeerendonk))
+
+  * [#3160](https://github.com/facebookincubator/create-react-app/pull/3160) Update unclear wording in webpack configuration (file loader section). ([@kristiehoward](https://github.com/kristiehoward))
+
+* `eslint-config-react-app`
+
+  * [#3072](https://github.com/facebookincubator/create-react-app/pull/3072) Update eslint versions for install instructions. ([@jdcrensh](https://github.com/jdcrensh))
+
+#### :house: Internal
+
+* `react-scripts`
+
+  * [#3157](https://github.com/facebookincubator/create-react-app/pull/3157) Update `webpack-dev-server` to `2.8.2`. ([@nikolas](https://github.com/nikolas))
+
+  * [#2989](https://github.com/facebookincubator/create-react-app/pull/2989) Update install template to match accessibility guidelines. ([@davidleger95](https://github.com/davidleger95))
+
+* `react-error-overlay`
+
+  * [#3065](https://github.com/facebookincubator/create-react-app/pull/3065) Updated `react-error-overlay` to latest Flow (`0.54.0`). ([@duvet86](https://github.com/duvet86))
+
+  * [#3102](https://github.com/facebookincubator/create-react-app/pull/3102) Clean target directory before compiling overlay. ([@Timer](https://github.com/Timer))
+
+* `create-react-app`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
+
+  * [#3058](https://github.com/facebookincubator/create-react-app/pull/3058) Re-run prettier for all files and pin the version. ([@viankakrisna](https://github.com/viankakrisna))
+
+  * [#3107](https://github.com/facebookincubator/create-react-app/pull/3107) Run CI on `npm@^4`. ([@viankakrisna](https://github.com/viankakrisna))
+
+#### Committers: 12
+
+- Ade Viankakrisna Fadlil ([viankakrisna](https://github.com/viankakrisna))
+- David Leger ([davidleger95](https://github.com/davidleger95))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Jon Crenshaw ([jdcrensh](https://github.com/jdcrensh))
+- Kristie Howard ([kristiehoward](https://github.com/kristiehoward))
+- Luca ([duvet86](https://github.com/duvet86))
+- Neek Sandhu ([NeekSandhu](https://github.com/NeekSandhu))
+- Nik Nyby ([nikolas](https://github.com/nikolas))
+- Rasmus Eneman ([Pajn](https://github.com/Pajn))
+- Rick Beerendonk ([rickbeerendonk](https://github.com/rickbeerendonk))
+- Sophie Alpert ([sophiebits](https://github.com/sophiebits))
+- [gulderov](https://github.com/gulderov)
+
+### Migrating from 1.0.13 to 1.0.14
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.14
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.14
+```
+
+## 1.0.13 (September 2, 2017)
+
+#### :bug: Bug Fix
+
+* `react-error-overlay`
+
+  * [#3051](https://github.com/facebookincubator/create-react-app/pull/3051) Fix case-sensitivity issue with upgrading the package version. ([@tharakawj](https://github.com/tharakawj))
+
+* `react-dev-utils`
+
+  * [#3049](https://github.com/facebookincubator/create-react-app/pull/3049) Print filesize difference for chunks. ([@esturcke](https://github.com/esturcke))
+
+* `react-scripts`
+
+  * [#3046](https://github.com/facebookincubator/create-react-app/pull/3046) Fix crash in development mode on IE11. ([@tharakawj](https://github.com/tharakawj))
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#3033](https://github.com/facebookincubator/create-react-app/pull/3033) Add an empty mock for `child_process` to let some libraries compile. ([@McFlurriez](https://github.com/McFlurriez))
+
+#### :house: Internal
+
+* `react-dev-utils`, `react-error-overlay`
+
+  * [#3028](https://github.com/facebookincubator/create-react-app/pull/3028) Make error overlay filename configurable. ([@jaredpalmer](https://github.com/jaredpalmer))
+
+#### Committers: 4
+
+- Anthony ([McFlurriez](https://github.com/McFlurriez))
+- Erik J. Sturcke ([esturcke](https://github.com/esturcke))
+- Jared Palmer ([jaredpalmer](https://github.com/jaredpalmer))
+- Tharaka Wijebandara ([tharakawj](https://github.com/tharakawj))
+
+### Migrating from 1.0.12 to 1.0.13
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.13
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.13
+```
+
+## 1.0.12 (August 28, 2017)
+
+#### :bug: Bug Fix
+
+* `react-error-overlay`
+  * [#3012](https://github.com/facebookincubator/create-react-app/pull/3012) Fix module function name in error overlay. ([@gaearon](https://github.com/gaearon))
+
+* `react-dev-utils`
+  * [#2938](https://github.com/facebookincubator/create-react-app/pull/2938) Remove superfluous lodash usage. ([@Timer](https://github.com/Timer))
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#2917](https://github.com/facebookincubator/create-react-app/pull/2917) Optimize the size of default favicon. ([@sylvainbaronnet](https://github.com/sylvainbaronnet))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#2986](https://github.com/facebookincubator/create-react-app/pull/2986) Docs: debugging in WebStorm. ([@prigara](https://github.com/prigara))
+  * [#2948](https://github.com/facebookincubator/create-react-app/pull/2948) Remove Modulus from user guide. ([@Zertz](https://github.com/Zertz))
+  * [#2927](https://github.com/facebookincubator/create-react-app/pull/2927) Update README.md. ([@tbassetto](https://github.com/tbassetto))
+
+* `react-dev-utils`
+
+  * [#2942](https://github.com/facebookincubator/create-react-app/pull/2942) Fix docs for `printFileSizesAfterBuild`. ([@Kerumen](https://github.com/Kerumen))
+
+#### :house: Internal
+
+* `react-error-overlay`, `react-scripts`
+
+  * [#2991](https://github.com/facebookincubator/create-react-app/pull/2991) Update `babel-runtime` dependency ([@christophehurpeau](https://github.com/christophehurpeau))
+
+* `react-dev-utils`, `react-error-overlay`, `react-scripts`
+
+  * [#2515](https://github.com/facebookincubator/create-react-app/pull/2515) Convert `react-error-overlay` to React ([@tharakawj](https://github.com/tharakawj))
+
+#### Committers: 9
+
+- Christophe Hurpeau ([christophehurpeau](https://github.com/christophehurpeau))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Ekaterina Prigara ([prigara](https://github.com/prigara))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Pier-Luc Gendreau ([Zertz](https://github.com/Zertz))
+- Sylvain Baronnet ([sylvainbaronnet](https://github.com/sylvainbaronnet))
+- Tharaka Wijebandara ([tharakawj](https://github.com/tharakawj))
+- Thomas Bassetto ([tbassetto](https://github.com/tbassetto))
+- Yann Pringault ([Kerumen](https://github.com/Kerumen))
+
+### Migrating from 1.0.11 to 1.0.12
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.12
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.12
+```
+
+**Note:** there’s a [known issue](https://github.com/facebookincubator/create-react-app/issues/3041) that might cause the project to not compile after upgrading. In this case, migrate straight to `1.0.13` which doesn’t have this issue.
+
+## 1.0.11 (August 9, 2017)
 
 #### :bug: Bug Fix
 * `create-react-app`

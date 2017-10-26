@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -13,8 +11,9 @@
 const spawn = require('react-dev-utils/crossSpawn');
 const args = process.argv.slice(2);
 
-const scriptIndex = args.findIndex(x =>
-   x === 'build' || x === 'eject' || x === 'start' || x === 'test');
+const scriptIndex = args.findIndex(
+  x => x === 'build' || x === 'eject' || x === 'start' || x === 'test'
+);
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
 
