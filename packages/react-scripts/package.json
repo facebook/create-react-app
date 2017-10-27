@@ -29,7 +29,7 @@
     "babel-preset-react-app": "^3.0.3",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "chalk": "1.1.3",
+    "chalk": "^2.0.1",
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
     "eslint": "4.4.1",
