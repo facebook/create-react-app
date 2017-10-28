@@ -30,8 +30,7 @@ module.exports = {
       // in production mode.
       'process.env': { NODE_ENV: '"production"' },
       // This prevents our bundled React from accidentally hijacking devtools.
-      __REACT_DEVTOOLS_GLOBAL_HOOK__:
-        '__REACT_ERROR_OVERLAY_GLOBAL_HOOK_NOOP__',
+      __REACT_DEVTOOLS_GLOBAL_HOOK__: '({})',
     }),
     // This code is embedded as a string, so it would never be optimized
     // elsewhere.
