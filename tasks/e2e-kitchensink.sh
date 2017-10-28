@@ -44,6 +44,22 @@ function create_react_app {
   node "$temp_cli_path"/node_modules/create-react-app/index.js "$@"
 }
 
+function install_package {
+  rsync -a ${1%/} node_modules/ --exclude node_modules
+
+  $restore_location = $(pwd)
+
+  cd node_modules/$(basename $1)/
+  if [ "$USE_YARN" = "yes" ]
+  then
+    yarn install --production
+  else
+    npm install --only=production
+  fi
+
+  cd $restore_location
+}
+
 # Check for the existence of one or more files.
 function exists {
   for f in $*; do
@@ -162,13 +178,13 @@ npm install test-integrity@^2.0.1
 cd "$temp_app_path/test-kitchensink"
 
 # Link to our preset
-npm link "$root_path"/packages/babel-preset-react-app
+install_package "$root_path"/packages/babel-preset-react-app
 # Link to error overlay package because now it's a dependency
 # of react-dev-utils and not react-scripts
-npm link "$root_path"/packages/react-error-overlay
+install_package "$root_path"/packages/react-error-overlay
 
 # Link to test module
-npm link "$temp_module_path/node_modules/test-integrity"
+install_package "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -219,23 +235,18 @@ E2E_FILE=./build/index.html \
 # Finally, let's check that everything still works after ejecting.
 # ******************************************************************************
 
-# Unlink our preset
-npm unlink "$root_path"/packages/babel-preset-react-app
-# Unlink error overlay
-npm unlink "$root_path"/packages/react-error-overlay
-
 # Eject...
 echo yes | npm run eject
 
 # ...but still link to the local packages
-npm link "$root_path"/packages/babel-preset-react-app
-npm link "$root_path"/packages/eslint-config-react-app
-npm link "$root_path"/packages/react-error-overlay
-npm link "$root_path"/packages/react-dev-utils
-npm link "$root_path"/packages/react-scripts
+install_package "$root_path"/packages/babel-preset-react-app
+install_package "$root_path"/packages/eslint-config-react-app
+install_package "$root_path"/packages/react-error-overlay
+install_package "$root_path"/packages/react-dev-utils
+install_package "$root_path"/packages/react-scripts
 
 # Link to test module
-npm link "$temp_module_path/node_modules/test-integrity"
+install_package "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
