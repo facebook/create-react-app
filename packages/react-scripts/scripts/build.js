@@ -21,6 +21,7 @@ process.on('unhandledRejection', err => {
 
 // Ensure environment variables are read.
 require('../config/env');
+require('./utils/setBabelPresetReactAppEnv')();
 
 const path = require('path');
 const chalk = require('chalk');
