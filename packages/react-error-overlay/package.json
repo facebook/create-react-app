@@ -30,8 +30,8 @@
     "lib/index.js"
   ],
   "devDependencies": {
-    "anser": "1.4.1",
-    "babel-code-frame": "6.22.0",
+    "anser": "1.4.4",
+    "babel-code-frame": "6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "7.2.3",
     "babel-loader": "^7.1.2",
