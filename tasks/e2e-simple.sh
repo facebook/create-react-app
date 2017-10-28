@@ -53,6 +53,8 @@ function install_package {
   else
     npm install --only=production
   fi
+  # Remove our packages
+  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-dev-utils,react-error-overlay,react-scripts}
   cd ../..
 }
 
