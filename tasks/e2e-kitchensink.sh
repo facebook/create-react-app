@@ -45,8 +45,14 @@ function create_react_app {
 }
 
 function install_package {
+  # Clean target
+  rm -rf node_modules/$(basename $1)/
+  rm -rf node_modules/**/$(basename $1)/
+
+  # Copy package into node_modules/
   rsync -a ${1%/} node_modules/ --exclude node_modules
 
+  # Install `dependencies`
   cd node_modules/$(basename $1)/
   if [ "$USE_YARN" = "yes" ]
   then
