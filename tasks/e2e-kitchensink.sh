@@ -47,8 +47,6 @@ function create_react_app {
 function install_package {
   rsync -a ${1%/} node_modules/ --exclude node_modules
 
-  $restore_location = $(pwd)
-
   cd node_modules/$(basename $1)/
   if [ "$USE_YARN" = "yes" ]
   then
@@ -56,8 +54,7 @@ function install_package {
   else
     npm install --only=production
   fi
-
-  cd $restore_location
+  cd ../..
 }
 
 # Check for the existence of one or more files.
