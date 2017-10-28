@@ -50,8 +50,7 @@ function install_package {
   rm -rf node_modules/**/$(basename $1)/
 
   # Copy package into node_modules/
-  copyfrom=${1%/}
-  rsync -a ${copyfrom/\/c\//c:\/} node_modules/ --exclude node_modules
+  rsync -a ${1%/} node_modules/ --exclude node_modules
 
   # Install `dependencies`
   cd node_modules/$(basename $1)/
