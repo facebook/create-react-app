@@ -1262,16 +1262,28 @@ When you encounter bugs caused by changing components, you will gain a deeper in
 If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). To install it, run:
 
 ```sh
-npm install --save enzyme react-test-renderer
+npm install --save enzyme enzyme-adapter-react-16 react-test-renderer
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add enzyme react-test-renderer
+yarn add enzyme enzyme-adapter-react-16 react-test-renderer
 ```
 
-You can write a smoke test with it too:
+As of Enzyme 3, you will need to install Enzyme along with an Adapter corresponding to the version of React you are using. (The examples above use the adapter for React 16.)
+
+The adapter will also need to be configured in your [global setup file](#initializing-test-environment):
+
+#### `src/setupTests.js`
+```js
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
+```
+
+Now you can write a smoke test with it:
 
 ```js
 import React from 'react';
