@@ -1628,14 +1628,18 @@ that your web app is reliably fast, even on a slow or unreliable network.
 ### Opting Out of Caching
 
 If you would prefer not to enable service workers prior to your initial
-production deployment, then remove the call to `serviceWorkerRegistration.register()`
+production deployment, then remove the call to `registerServiceWorker()`
 from [`src/index.js`](src/index.js).
 
 If you had previously enabled service workers in your production deployment and
 have decided that you would like to disable them for all your existing users,
-you can swap out the call to `serviceWorkerRegistration.register()` in
-[`src/index.js`](src/index.js) with a call to `serviceWorkerRegistration.unregister()`.
-After the user visits a page that has `serviceWorkerRegistration.unregister()`,
+you can swap out the call to `registerServiceWorker()` in
+[`src/index.js`](src/index.js) first by modifying the service worker import:
+```javascript
+import { unregister } from './registerServiceWorker';
+```
+and then call `unregister()` instead.
+After the user visits a page that has `unregister()`,
 the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
 it may take up to 24 hours for the cache to be invalidated.
 
