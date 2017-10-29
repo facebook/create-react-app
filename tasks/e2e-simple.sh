@@ -331,6 +331,11 @@ verify_module_scope
 # Eject...
 echo yes | npm run eject
 
+if hash yarnpkg 2>/dev/null
+then
+  yarn install --check-files
+fi
+
 # ...but still link to the local packages
 install_package "$root_path"/packages/babel-preset-react-app
 install_package "$root_path"/packages/eslint-config-react-app
