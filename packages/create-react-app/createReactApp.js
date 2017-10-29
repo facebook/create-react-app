@@ -612,10 +612,10 @@ function getProxy() {
   } else {
     try {
       // Trying to read https-proxy from .npmrc
-      let httpsProxy = execSync('yarn config get https-proxy')
+      let httpsProxy = execSync('npm config get https-proxy')
         .toString()
         .trim();
-      return httpsProxy !== 'undefined' ? httpsProxy : undefined;
+      return httpsProxy !== 'null' ? httpsProxy : undefined;
     } catch (e) {
       return;
     }
