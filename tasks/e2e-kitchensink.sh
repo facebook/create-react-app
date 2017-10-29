@@ -53,7 +53,7 @@ function install_package {
 
   # Copy package into node_modules/ ignoring installed deps
   # rsync -a ${1%/} node_modules/ --exclude node_modules
-  cp -r ${1%/} node_modules/
+  cp -R ${1%/} node_modules/
   rm -rf node_modules/$pkg/node_modules/
 
   # Install `dependencies`
