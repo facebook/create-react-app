@@ -44,22 +44,26 @@ function create_react_app {
 }
 
 function install_package {
-  # Clean target
-  rm -rf node_modules/$(basename $1)/
-  rm -rf node_modules/**/$(basename $1)/
+  pkg = $(basename $1)
 
-  # Copy package into node_modules/
-  rsync -a ${1%/} node_modules/ --exclude node_modules
+  # Clean target (for safety)
+  rm -rf node_modules/$pkg/
+  rm -rf node_modules/**/$pkg/
+
+  # Copy package into node_modules/ ignoring installed deps
+  # rsync -a ${1%/} node_modules/ --exclude node_modules
+  cp -r ${1%/} node_modules/
+  rm -rf node_modules/$pkg/node_modules/
 
   # Install `dependencies`
-  cd node_modules/$(basename $1)/
+  cd node_modules/$pkg/
   if [ "$USE_YARN" = "yes" ]
   then
     yarn install --production
   else
     npm install --only=production
   fi
-  # Remove our packages
+  # Remove our packages to ensure side-by-side versions are used (which we link)
   rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-dev-utils,react-error-overlay,react-scripts}
   cd ../..
 }
