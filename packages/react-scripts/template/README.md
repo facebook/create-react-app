@@ -1428,7 +1428,7 @@ Create React App runs the linter automatically with the `npm start` and `npm bui
 
 ### Failing a Build When the Linter Encounters an Issue
 
-By default the linter will never cause `npm start` or `npm build` to fail. If you want to fail a build when the linter encounters an issue you must set the `CI` environment variable to `true` when running the command. Here's an example:
+By default the linter will never cause `npm start` or `npm build` to fail on warnings. If you want to fail a build when the linter encounters a warning you must set the `CI` environment variable to `true` when running the command. Here's an example:
 
 On Linux, macOS (Bash):
 
@@ -1479,7 +1479,7 @@ npm run lint
 
 ### Failing ESLint on Warnings
 
-All the ESLint rules included with Create React App are configured as ESLint warnings and not errors. This means that a customized linter like the one described above will never fail (exit with code 1) due to one of Create React App's ESLint rules. If you want ESLint to fail when it encounters warnings you can run ESLint with the `--max-warnings` flag set to 0:
+Most of the ESLint rules included with Create React App are configured as ESLint warnings and not errors. This means that a customized linter like the one described above often won't fail (exit with code 1) due to one of Create React App's ESLint rules. If you want ESLint to fail when it encounters warnings you can run ESLint with the `--max-warnings` flag set to 0:
 
 ```json
 {
