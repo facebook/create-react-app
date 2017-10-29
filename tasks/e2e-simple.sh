@@ -331,9 +331,12 @@ verify_module_scope
 # Eject...
 echo yes | npm run eject
 
+# Ensure Yarn is ran after eject; at the time of this commit, we don't run Yarn
+# after ejecting. Soon, we may only skip Yarn on Windows. Let's try to remove
+# this in the near future.
 if hash yarnpkg 2>/dev/null
 then
-  yarn install --check-files
+  yarnpkg install --check-files
 fi
 
 # ...but still link to the local packages
