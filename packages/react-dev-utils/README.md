@@ -134,7 +134,7 @@ clearConsole();
 console.log('Just cleared the screen!');
 ```
 
-This behavior can be disabled by setting the environment variable `REACT_APP_NO_CLEAR_CONSOLE`.
+This behavior can be disabled by setting the environment variable `DEBUG=1`.
 
 #### `eslintFormatter(results: Object): string`
 

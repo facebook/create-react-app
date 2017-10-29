@@ -8,7 +8,7 @@
 'use strict';
 
 function clearConsole() {
-  if (process.env.REACT_APP_NO_CLEAR_CONSOLE) {
+  if (process.env.DEBUG) {
     return;
   }
 
