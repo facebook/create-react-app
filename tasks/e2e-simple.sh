@@ -44,7 +44,7 @@ function create_react_app {
 }
 
 function install_package {
-  pkg = $(basename $1)
+  local pkg=$(basename $1)
 
   # Clean target (for safety)
   rm -rf node_modules/$pkg/
