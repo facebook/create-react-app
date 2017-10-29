@@ -23,7 +23,7 @@ function cleanup {
   ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
-  rm -rf "$temp_cli_path" "$temp_app_path" "$temp_module_path" || $CI
+  # rm -rf "$temp_cli_path" "$temp_app_path" "$temp_module_path" || $CI
 }
 
 # Error messages are redirected to stderr
@@ -252,7 +252,6 @@ install_package "$root_path"/packages/babel-preset-react-app
 install_package "$root_path"/packages/eslint-config-react-app
 install_package "$root_path"/packages/react-error-overlay
 install_package "$root_path"/packages/react-dev-utils
-install_package "$root_path"/packages/react-scripts
 
 # Link to test module
 install_package "$temp_module_path/node_modules/test-integrity"
