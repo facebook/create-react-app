@@ -2,11 +2,11 @@ image: Visual Studio 2017
 
 environment:
   matrix:
-    - nodejs_version: 7
+    - nodejs_version: 8
       test_suite: "simple"
-    - nodejs_version: 7
+    - nodejs_version: 8
       test_suite: "installs"
-    - nodejs_version: 7
+    - nodejs_version: 8
       test_suite: "kitchensink"
     - nodejs_version: 6
       test_suite: "simple"
