@@ -1,4 +1,4 @@
-## 1.0.15 (October 30)
+## 1.0.15 (October 30, 2017)
 
 #### :bug: Bug Fix
 
