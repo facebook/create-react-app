@@ -84,6 +84,19 @@ trap 'set +x; handle_exit' SIGQUIT SIGTERM SIGINT SIGKILL SIGHUP
 # Echo every command being executed
 set -x
 
+# Make sure we don't introduce accidental references to PATENTS.
+EXPECTED='packages/react-error-overlay/fixtures/bundle.mjs
+packages/react-error-overlay/fixtures/bundle.mjs.map
+packages/react-error-overlay/fixtures/bundle_u.mjs
+packages/react-error-overlay/fixtures/bundle_u.mjs.map
+tasks/e2e-simple.sh'
+ACTUAL=$(git grep -l PATENTS)
+if [ "$EXPECTED" != "$ACTUAL" ]; then
+  echo "PATENTS crept into some new files?"
+  diff -u <(echo "$EXPECTED") <(echo "$ACTUAL") || true
+  exit 1
+fi
+
 # Go to root
 cd ..
 root_path=$PWD
