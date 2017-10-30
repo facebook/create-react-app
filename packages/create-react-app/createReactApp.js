@@ -624,7 +624,7 @@ function checkThatNpmCanReadCwd() {
   try {
     // Note: intentionally using spawn over exec since
     // the problem doesn't reproduce otherwise.
-    // `npm config list` is the only reliably way I could find
+    // `npm config list` is the only reliable way I could find
     // to reproduce the wrong path. Just printing process.cwd()
     // in a Node process was not enough.
     childOutput = spawn.sync('npm', ['config', 'list']).output.join('');
@@ -658,7 +658,7 @@ function checkThatNpmCanReadCwd() {
         `However, a newly started npm process runs in: ${chalk.bold(
           npmCWD
         )}\n\n` +
-        `This is probably caused by a miconfigured system terminal shell.`
+        `This is probably caused by a misconfigured system terminal shell.`
     )
   );
   if (process.platform === 'win32') {
