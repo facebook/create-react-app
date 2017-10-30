@@ -1,4 +1,4 @@
-## 1.0.15 (October 30, 2017)
+## 1.0.15 (October 30)
 
 #### :bug: Bug Fix
 
@@ -24,6 +24,10 @@
 * `react-dev-utils`, `react-error-overlay`
 
   * [#3100](https://github.com/facebookincubator/create-react-app/pull/3100) Add click-to-open support for build errors. ([@tharakawj](https://github.com/tharakawj))
+
+* `create-react-app`
+
+  * [#3355](https://github.com/facebookincubator/create-react-app/pull/3355) Add preflight CWD check for npm to detect bad Windows setups. ([@gaearon](https://github.com/gaearon))
 
 #### :memo: Documentation
 
@@ -95,6 +99,20 @@
 - Tharaka Wijebandara ([tharakawj](https://github.com/tharakawj))
 - Toshiharu Nishina ([nishina555](https://github.com/nishina555))
 - [captDaylight](https://github.com/captDaylight)
+
+### Migrating from 1.0.14 to 1.0.15
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.15
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.15
+```
 
 ## 1.0.14 (September 26, 2017)
 
