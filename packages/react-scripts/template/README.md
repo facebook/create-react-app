@@ -992,6 +992,17 @@ Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854
 Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 ```
 
+The development server can also be configured to proxy requests to multiple API servers using the _object_ syntax, for example:
+
+```js
+  "proxy": {
+    "/auth": { "target": "http://localhost:3333" },
+    "/api": { "target": "http://localhost:4444" }
+  }
+```
+
+This way, when you `fetch('/api/todos')` in development, the development server will match against the _context_ key (i.e. `/api`) and proxy the request to `http://localhost:4444`. Similarly, when you `fetch('/auth/login', {...})`, the development server will match against the other _context_ key and proxy the request to `http://localhost:3333`.
+
 Keep in mind that `proxy` only has effect in development (with `npm start`), and it is up to you to ensure that URLs like `/api/todos` point to the right thing in production. You don’t have to use the `/api` prefix. Any unrecognized request without a `text/html` accept header will be redirected to the specified `proxy`.
 
 The `proxy` option supports HTTP, HTTPS and WebSocket connections.<br>
