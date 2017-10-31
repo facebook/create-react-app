@@ -184,7 +184,11 @@ module.exports = {
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           {
-            test: /\/src\/app\/(components|screens)\/\*\*\/\*.scss$/,
+            test: /\.scss$/,
+            include: [
+              path.resolve(__dirname, '../src/app/components'),
+              path.resolve(__dirname, '../src/app/screens'),
+            ],
             use: [
               require.resolve('style-loader'),
               {
@@ -225,7 +229,8 @@ module.exports = {
             ],
           },
           {
-            test: /\/src\/app\/scss\/\*\*\/\*.scss$/,
+            test: /\.scss$/,
+            include: [path.resolve(__dirname, '../src/app/scss')],
             use: [
               require.resolve('style-loader'),
               {
