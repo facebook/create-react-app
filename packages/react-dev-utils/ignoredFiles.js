@@ -8,11 +8,12 @@
 'use strict';
 
 const path = require('path');
-const escapeStringRegexp = require('escape-string-regexp');
 
-module.exports = function watchOptionsRegex(paths) {
+module.exports = function ignoredFiles(appSrc) {
   return new RegExp(
-    `^(?!${escapeStringRegexp(path.join(paths.appSrc, '/'))}).+node_modules`,
+    `^(?!${path
+      .normalize(appSrc + '/')
+      .replace(/[\\]+/g, '/')}).+/node_modules/`,
     'g'
   );
 };
