@@ -287,6 +287,14 @@ function prepareProxy(proxy, appPublicFolder) {
     process.exit(1);
   }
 
+  const defaultProxyOption = {
+    logLevel: 'silent',
+    secure: false,
+    changeOrigin: true,
+    ws: true,
+    xfwd: true,
+  };
+
   // Otherwise, if proxy is specified, we will let it handle any request except for files in the public folder.
   function mayProxy(pathname) {
     const maybePublicPath = path.resolve(appPublicFolder, pathname.slice(1));
@@ -311,9 +319,8 @@ function prepareProxy(proxy, appPublicFolder) {
       target = proxy;
     }
     return [
-      {
+      Object.assign({}, defaultProxyOption, {
         target,
-        logLevel: 'silent',
         // For single page apps, we generally want to fallback to /index.html.
         // However we also want to respect `proxy` for API calls.
         // So if `proxy` is specified as a string, we need to decide which fallback to use.
@@ -337,11 +344,7 @@ function prepareProxy(proxy, appPublicFolder) {
           }
         },
         onError: onProxyError(target),
-        secure: false,
-        changeOrigin: true,
-        ws: true,
-        xfwd: true,
-      },
+      }),
     ];
   }
 
@@ -362,7 +365,8 @@ function prepareProxy(proxy, appPublicFolder) {
     } else {
       target = proxy[context].target;
     }
-    return Object.assign({}, proxy[context], {
+    return Object.assign({}, defaultProxyOption, proxy[context], {
+      target,
       context: function(pathname) {
         return mayProxy(pathname) && pathname.match(context);
       },
@@ -374,7 +378,6 @@ function prepareProxy(proxy, appPublicFolder) {
           proxyReq.setHeader('origin', target);
         }
       },
-      target,
       onError: onProxyError(target),
     });
   });
