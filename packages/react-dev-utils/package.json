@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Webpack utilities used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",

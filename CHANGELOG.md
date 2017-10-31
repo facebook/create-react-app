@@ -1,3 +1,34 @@
+## 1.0.16 (October 31, 2017) 🎃
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#3374](https://github.com/facebookincubator/create-react-app/pull/3374) Set correct image type and sizes in `manifest.json`. ([@piotr-cz](https://github.com/piotr-cz))
+
+* `react-dev-utils`
+
+  * [#3368](https://github.com/facebookincubator/create-react-app/pull/3368) Fix a crash in development mode in older browsers. ([@felthy](https://github.com/felthy))
+
+#### Committers: 2
+
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Piotr ([piotr-cz](https://github.com/piotr-cz))
+
+### Migrating from 1.0.15 to 1.0.16
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.16
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.16
+```
+
 ## 1.0.15 (October 30, 2017)
 
 #### :bug: Bug Fix
