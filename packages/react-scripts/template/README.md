@@ -599,7 +599,8 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
 -    "build": "react-scripts build",
 +    "start-js": "react-scripts start",
 +    "start": "npm-run-all -p watch-css start-js",
-+    "build": "npm run build-css && react-scripts build",
++    "build-js": "react-scripts build",
++    "build": "npm-run-all build-css build-js",
      "test": "react-scripts test --env=jsdom",
      "eject": "react-scripts eject"
    }
@@ -1156,7 +1157,7 @@ If you use a Node server, you can even share the route matching logic between th
 
 ## Pre-Rendering into Static HTML Files
 
-If you’re hosting your `build` with a static hosting provider you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot) to generate HTML pages for each route, or relative link, in your application. These pages will then seamlessly become active, or “hydrated”, when the JavaScript bundle has loaded.
+If you’re hosting your `build` with a static hosting provider you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot) or [react-snap](https://github.com/stereobooster/react-snap) to generate HTML pages for each route, or relative link, in your application. These pages will then seamlessly become active, or “hydrated”, when the JavaScript bundle has loaded.
 
 There are also opportunities to use this outside of static hosting, to take the pressure off the server when generating and caching routes.
 
@@ -1262,16 +1263,28 @@ When you encounter bugs caused by changing components, you will gain a deeper in
 If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). To install it, run:
 
 ```sh
-npm install --save enzyme react-test-renderer
+npm install --save enzyme enzyme-adapter-react-16 react-test-renderer
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add enzyme react-test-renderer
+yarn add enzyme enzyme-adapter-react-16 react-test-renderer
 ```
 
-You can write a smoke test with it too:
+As of Enzyme 3, you will need to install Enzyme along with an Adapter corresponding to the version of React you are using. (The examples above use the adapter for React 16.)
+
+The adapter will also need to be configured in your [global setup file](#initializing-test-environment):
+
+#### `src/setupTests.js`
+```js
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
+```
+
+Now you can write a smoke test with it:
 
 ```js
 import React from 'react';
@@ -1616,14 +1629,18 @@ that your web app is reliably fast, even on a slow or unreliable network.
 ### Opting Out of Caching
 
 If you would prefer not to enable service workers prior to your initial
-production deployment, then remove the call to `serviceWorkerRegistration.register()`
+production deployment, then remove the call to `registerServiceWorker()`
 from [`src/index.js`](src/index.js).
 
 If you had previously enabled service workers in your production deployment and
 have decided that you would like to disable them for all your existing users,
-you can swap out the call to `serviceWorkerRegistration.register()` in
-[`src/index.js`](src/index.js) with a call to `serviceWorkerRegistration.unregister()`.
-After the user visits a page that has `serviceWorkerRegistration.unregister()`,
+you can swap out the call to `registerServiceWorker()` in
+[`src/index.js`](src/index.js) first by modifying the service worker import:
+```javascript
+import { unregister } from './registerServiceWorker';
+```
+and then call `unregister()` instead.
+After the user visits a page that has `unregister()`,
 the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
 it may take up to 24 hours for the cache to be invalidated.
 
@@ -1818,6 +1835,12 @@ service worker navigation routing can be configured or disabled by
 [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
 options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
+
+When users install your app to the homescreen of their device the default configuration will make a shortcut to `/index.html`. This may not work for client-side routers which expect the app to be served from `/`. Edit the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to match the required URL scheme, for example:
+
+```js
+  "start_url": ".",
+```
 
 ### Building for Relative Paths
 
@@ -2186,13 +2209,19 @@ This will only work for locales that have been explicitly imported before.
 
 ### `npm run build` fails to minify
 
-You may occasionally find a package you depend on needs compiled or ships code for a non-browser environment.<br>
-This is considered poor practice in the ecosystem and does not have an escape hatch in Create React App.<br>
+Some third-party packages don't compile their code to ES5 before publishing to npm. This often causes problems in the ecosystem because neither browsers (except for most modern versions) nor some tools currently support all ES6 features. We recommend to publish code on npm as ES5 at least for a few more years.
+
 <br>
 To resolve this:
-1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled (retaining ES6 Modules).
-2. Fork the package and publish a corrected version yourself.
+
+1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled.
+  * Note: Create React App can consume both CommonJS and ES modules. For Node.js compatibility, it is recommended that the main entry point is CommonJS. However, they can optionally provide an ES module entry point with the `module` field in `package.json`. Note that **even if a library provides an ES Modules version, it should still precompile other ES6 features to ES5 if it intends to support older browsers**.
+
+2. Fork the package and publish a corrected version yourself. 
+
 3. If the dependency is small enough, copy it to your `src/` folder and treat it as application code.
+
+In the future, we might start automatically compiling incompatible third-party modules, but it is not currently supported. This approach would also slow down the production builds.
 
 ## Something Missing?
 
