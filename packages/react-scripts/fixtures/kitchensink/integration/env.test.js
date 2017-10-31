@@ -50,7 +50,7 @@ describe('Integration', () => {
 
       const prefix =
         process.env.NODE_ENV === 'development'
-          ? '/spa'
+          ? ''
           : 'http://www.example.org/spa';
       expect(doc.getElementById('feature-public-url').textContent).to.equal(
         `${prefix}.`
