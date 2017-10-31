@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -49,7 +49,7 @@
     "postcss-loader": "2.0.8",
     "promise": "8.0.1",
     "raf": "3.4.0",
-    "react-dev-utils": "^4.2.0",
+    "react-dev-utils": "^4.2.1",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
