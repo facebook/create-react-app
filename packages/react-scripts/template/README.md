@@ -516,7 +516,7 @@ If you are concerned about using Webpack-specific semantics, you can put all you
 
 ## Adding a CSS Modules stylesheet
 
-This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically prefixing class names with a unique name and hash.
+This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format **[dir]\_\_[filename]___[classname]**.
 
 An advantage of this is the ability to repeat the same classname within many CSS files without worrying about a clash.
 
@@ -540,7 +540,8 @@ An advantage of this is the ability to repeat the same classname within many CSS
 
 ```js
 import React, { Component } from 'react';
-import styles from './Button.module.css'; // Import stylesheet as styles
+import './another-stylesheet.css'; // Import regular stylesheet
+import styles from './Button.module.css'; // Import css modules stylesheet as styles
 
 class Button extends Component {
   render() {
@@ -553,10 +554,10 @@ class Button extends Component {
 No clashes from other `.button` classnames
 
 ```html
-<div class="Button-module__button___1o1Ru"></div>
+<div class="src__Button-module___button"></div>
 ```
 
-**This is an optional feature.** Regular stylesheets and imported stylesheets are fully supported. CSS Modules are only added when explictly named as a css module stylesheet using the extension `.module.css`.
+**This is an optional feature.** Regular html stylesheets and js imported stylesheets are fully supported. CSS Modules are only added when explictly named as a css module stylesheet using the extension `.module.css`.
 
 ## Post-Processing CSS
 

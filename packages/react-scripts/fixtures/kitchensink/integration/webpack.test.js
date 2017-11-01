@@ -27,7 +27,7 @@ describe('Integration', () => {
       expect(
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
       ).to.match(
-        /.+style-module__cssModulesInclusion+\{background:.+;color:.+}/
+        /.+__style-module___cssModulesInclusion+\{background:.+;color:.+}/
       );
     });
 

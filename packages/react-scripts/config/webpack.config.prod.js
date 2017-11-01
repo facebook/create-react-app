@@ -289,7 +289,7 @@ module.exports = {
                         minimize: true,
                         sourceMap: shouldUseSourceMap,
                         modules: true,
-                        localIdentName: '[path][name]__[local]',
+                        localIdentName: '[path]__[name]___[local]',
                       },
                     },
                     {
