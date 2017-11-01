@@ -185,10 +185,7 @@ module.exports = {
           // in development "style" loader enables hot editing of CSS.
           {
             test: /\.scss$/,
-            include: [
-              path.resolve(__dirname, '../src/app/components'),
-              path.resolve(__dirname, '../src/app/screens'),
-            ],
+            include: paths.scssModulesPath,
             use: [
               require.resolve('style-loader'),
               {
@@ -230,7 +227,7 @@ module.exports = {
           },
           {
             test: /\.scss$/,
-            include: [path.resolve(__dirname, '../src/app/scss')],
+            include: paths.scssPath,
             use: [
               require.resolve('style-loader'),
               {
