@@ -6,6 +6,8 @@
  */
 'use strict';
 
+let presetConfig;
+
 const plugins = [
   // class { handleClick = () => { } }
   require.resolve('babel-plugin-transform-class-properties'),
@@ -69,7 +71,7 @@ if (env === 'development' || env === 'test') {
 }
 
 if (env === 'test') {
-  module.exports = {
+  presetConfig = {
     presets: [
       // ES features necessary for user's Node version
       [
@@ -89,7 +91,7 @@ if (env === 'test') {
     ]),
   };
 } else {
-  module.exports = {
+  presetConfig = {
     presets: [
       // Latest stable ECMAScript features
       [
@@ -134,3 +136,29 @@ if (env === 'test') {
     // ]);
   }
 }
+
+module.exports = function(context, opts = {}) {
+  const moduleTypes = ['commonjs', 'amd', 'umd', 'systemjs'];
+  let modules = 'commonjs';
+
+  if (opts !== undefined) {
+    if (opts.modules !== undefined) modules = opts.modules;
+  }
+
+  if (modules === true) {
+    modules = 'commonjs';
+  }
+
+  if (modules !== false && moduleTypes.indexOf(modules) === -1) {
+    throw new Error(
+      "Preset es2015 'modules' option must be 'false' to indicate no modules\n" +
+        "or a module type which be be one of: 'commonjs' (default), 'amd', 'umd', 'systemjs'"
+    );
+  }
+
+  if (env !== 'test') {
+    presetConfig.presets[0][1].modules = modules;
+  }
+
+  return presetConfig;
+};
