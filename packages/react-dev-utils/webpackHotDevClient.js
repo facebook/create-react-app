@@ -26,7 +26,8 @@ var ErrorOverlay = require('react-error-overlay');
 ErrorOverlay.setEditorHandler(function editorHandler(errorLocation) {
   // Keep this sync with errorOverlayMiddleware.js
   fetch(
-    `${launchEditorEndpoint}?fileName=` +
+    launchEditorEndpoint +
+      '?fileName=' +
       window.encodeURIComponent(errorLocation.fileName) +
       '&lineNumber=' +
       window.encodeURIComponent(errorLocation.lineNumber || 1)
