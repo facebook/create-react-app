@@ -26,7 +26,10 @@ const appPackage = require(paths.appPackageJson);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-const publicPath = `https://io.vtex.com.br/${appPackage.name}/${appPackage.version}/`;
+const hasHomepage = paths.servedPath !== '/';
+const publicPath = hasHomepage
+  ? paths.servedPath
+  : `https://io.vtex.com.br/${appPackage.name}/${appPackage.version}/`;
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
 const shouldUseRelativeAssetPaths = publicPath === './';
@@ -77,7 +80,9 @@ module.exports = {
   output: Object.assign(
     {
       // The build folder.
-      path: path.join(paths.appBuild, appPackage.version),
+      path: hasHomepage
+        ? paths.appBuild
+        : path.join(paths.appBuild, appPackage.version),
       // Generated JS file names (with nested folders).
       // There will be one main bundle, and one file per asynchronous chunk.
       // We don't currently advertise code splitting but Webpack supports it.
