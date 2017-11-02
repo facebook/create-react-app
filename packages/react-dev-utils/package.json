@@ -21,6 +21,7 @@
     "printBuildError.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
+    "ignoredFiles.js",
     "inquirer.js",
     "InterpolateHtmlPlugin.js",
     "launchEditor.js",
