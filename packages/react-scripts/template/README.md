@@ -911,7 +911,7 @@ REACT_APP_SECRET_CODE=abcdef
 
 `.env` files **should be** checked into source control (with the exclusion of `.env*.local`).
 
-#### What other `.env` files are can be used?
+#### What other `.env` files can be used?
 
 >Note: this feature is **available with `react-scripts@1.0.0` and higher**.
 
