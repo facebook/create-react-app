@@ -38,6 +38,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
   - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
   - [Adding Development Environment Variables In `.env`](#adding-development-environment-variables-in-env)
+  - [Expanding Environment Variables In `.env`](#expanding-environment-variables-in-env)
 - [Can I Use Decorators?](#can-i-use-decorators)
 - [Integrating with an API Backend](#integrating-with-an-api-backend)
   - [Node](#node)
