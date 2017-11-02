@@ -38,7 +38,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
   - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
   - [Adding Development Environment Variables In `.env`](#adding-development-environment-variables-in-env)
-  - [Expanding Environment Variables In `.env`](#expanding-environment-variables-in-env)
 - [Can I Use Decorators?](#can-i-use-decorators)
 - [Integrating with an API Backend](#integrating-with-an-api-backend)
   - [Node](#node)
@@ -933,13 +932,13 @@ Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) f
 >Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
 these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
 
-### Expanding Environment Variables In `.env`
+#### Expanding Environment Variables In `.env`
 
 >Note: this feature is available with `react-scripts@1.0.17` and higher.
 
-Expand variables already on your machine for use in your .env file (using [dotenv-expand](https://github.com/motdotla/dotenv-expand)).  See [#2223](https://github.com/facebookincubator/create-react-app/issues/2233).
+Expand variables already on your machine for use in your .env file (using [dotenv-expand](https://github.com/motdotla/dotenv-expand)).  See [#2223](https://github.com/facebookincubator/create-react-app/issues/2223).
 
-For example, to get read the environment variable `npm_package_version`:
+For example, to get the environment variable `npm_package_version`:
 ```
 REACT_APP_VERSION=$npm_package_version
 # also works:
