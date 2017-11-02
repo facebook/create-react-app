@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
   "name": "wolox-react-scripts",
-  "version": "1.0.15",
-=======
-  "name": "react-scripts",
-  "version": "1.0.16",
->>>>>>> dc95d18c9ccbf69ccc2e85b11de638f6462d7181
+  "version": "1.0.24-0",
   "description": "Configuration and scripts for Create React App.",
   "repository": "Wolox/wolox-react-scripts",
   "license": "MIT",
