@@ -204,7 +204,7 @@ In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, 
 
 Learn more about [different proposal stages](https://babeljs.io/docs/plugins/#presets-stage-x-experimental-presets-).
 
-While we recommend to use experimental proposals with some caution, Facebook heavily uses these features in the product code, so we intend to provide [codemods](https://medium.com/@cpojer/effective-javascript-codemods-5a6686bb46fb) if any of these proposals change in the future.
+While we recommend using experimental proposals with some caution, Facebook heavily uses these features in the product code, so we intend to provide [codemods](https://medium.com/@cpojer/effective-javascript-codemods-5a6686bb46fb) if any of these proposals change in the future.
 
 Note that **the project only includes a few ES6 [polyfills](https://en.wikipedia.org/wiki/Polyfill)**:
 
@@ -1616,7 +1616,7 @@ By default, the production build is a fully functional, offline-first
 Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
 
  * All static site assets are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
- * Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the Subway.
+ * Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.
  * On mobile devices, your app can be added directly to the user's home screen, app icon and all. You can also re-engage users using web **push notifications**. This eliminates the need for the app store.
 
 The [`sw-precache-webpack-plugin`](https://github.com/goldhand/sw-precache-webpack-plugin)
