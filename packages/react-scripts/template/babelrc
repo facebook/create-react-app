@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "components": "./src/app/components",
+        "screens": "./src/app/screens",
+        "store": "./src/store"
+      }
+    }]
+  ]
+}
