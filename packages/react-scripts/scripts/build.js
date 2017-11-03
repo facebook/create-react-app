@@ -49,8 +49,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
-const hasHomepage = paths.servedPath !== '/';
-const buildPath = hasHomepage
+const buildPath = appPackage.homepage
   ? paths.appBuild
   : path.join(paths.appBuild, appPackage.version);
 // First, read the current file sizes in build directory.

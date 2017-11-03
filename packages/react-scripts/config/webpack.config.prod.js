@@ -26,8 +26,7 @@ const appPackage = require(paths.appPackageJson);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-const hasHomepage = paths.servedPath !== '/';
-const publicPath = hasHomepage
+const publicPath = appPackage.homepage
   ? paths.servedPath
   : `https://io.vtex.com.br/${appPackage.name}/${appPackage.version}/`;
 // Some apps do not use client-side routing with pushState.
@@ -80,7 +79,7 @@ module.exports = {
   output: Object.assign(
     {
       // The build folder.
-      path: hasHomepage
+      path: appPackage.homepage
         ? paths.appBuild
         : path.join(paths.appBuild, appPackage.version),
       // Generated JS file names (with nested folders).
