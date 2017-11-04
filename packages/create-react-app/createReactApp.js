@@ -64,6 +64,7 @@ const program = new commander.Command(packageJson.name)
     '--scripts-version <alternative-package>',
     'use a non-standard version of react-scripts'
   )
+  .option('--use-npm')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -133,10 +134,11 @@ createApp(
   projectName,
   program.verbose,
   program.scriptsVersion,
+  program.useNpm,
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(name, verbose, version, template) {
+function createApp(name, verbose, version, useNpm, template) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -159,7 +161,7 @@ function createApp(name, verbose, version, template) {
     JSON.stringify(packageJson, null, 2)
   );
 
-  const useYarn = shouldUseYarn();
+  const useYarn = useNpm ? false : shouldUseYarn();
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
