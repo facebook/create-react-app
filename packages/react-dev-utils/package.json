@@ -21,6 +21,7 @@
     "printBuildError.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
+    "ignoredFiles.js",
     "inquirer.js",
     "InterpolateHtmlPlugin.js",
     "launchEditor.js",
@@ -53,5 +54,11 @@
     "sockjs-client": "1.1.4",
     "strip-ansi": "3.0.1",
     "text-table": "0.2.0"
+  },
+  "devDependencies": {
+    "jest": "20.0.4"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
