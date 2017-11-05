@@ -186,7 +186,7 @@ inquirer
         return;
       }
       console.log(`  Adding ${cyan(key)} to dependencies`);
-      appendList.push(key);
+      appendList.push(`${key}@${ownPackage.dependencies[key]}`);
     });
     adjustPackages(appendList, true);
     console.log();
