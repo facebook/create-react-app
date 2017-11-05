@@ -187,19 +187,19 @@ inquirer
     console.log();
 
     const ownPackage = require(path.join(ownPath, 'package.json'));
-    let appPackage = require(path.join(appPath, 'package.json'));
+    const ejectingAppPackage = require(path.join(appPath, 'package.json'));
 
     console.log(cyan('Updating the dependencies'));
     const ownPackageName = ownPackage.name;
-    if (appPackage.devDependencies) {
+    if (ejectingAppPackage.devDependencies) {
       // We used to put react-scripts in devDependencies
-      if (appPackage.devDependencies[ownPackageName]) {
+      if (ejectingAppPackage.devDependencies[ownPackageName]) {
         console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
         adjustPackages(appPath, ownPackageName, REMOVE_PACKAGE, DEV_PACKAGE);
       }
     }
-    appPackage.dependencies = appPackage.dependencies || {};
-    if (appPackage.dependencies[ownPackageName]) {
+    ejectingAppPackage.dependencies = ejectingAppPackage.dependencies || {};
+    if (ejectingAppPackage.dependencies[ownPackageName]) {
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
       adjustPackages(appPath, ownPackageName, REMOVE_PACKAGE, PROD_PACKAGE);
     }
@@ -215,16 +215,16 @@ inquirer
     adjustPackages(appPath, appendList, ADD_PACKAGE, PROD_PACKAGE);
     console.log();
 
-    appPackage = require(path.join(appPath, 'package.json'));
+    const ejectedAppPackage = require(path.join(appPath, 'package.json'));
     console.log(cyan('Updating the scripts'));
-    delete appPackage.scripts['eject'];
-    Object.keys(appPackage.scripts).forEach(key => {
+    delete ejectedAppPackage.scripts['eject'];
+    Object.keys(ejectedAppPackage.scripts).forEach(key => {
       Object.keys(ownPackage.bin).forEach(binKey => {
         const regex = new RegExp(binKey + ' (\\w+)', 'g');
-        if (!regex.test(appPackage.scripts[key])) {
+        if (!regex.test(ejectedAppPackage.scripts[key])) {
           return;
         }
-        appPackage.scripts[key] = appPackage.scripts[key].replace(
+        ejectedAppPackage.scripts[key] = ejectedAppPackage.scripts[key].replace(
           regex,
           'node scripts/$1.js'
         );
@@ -240,23 +240,23 @@ inquirer
     console.log(cyan('Configuring package.json'));
     // Add Jest config
     console.log(`  Adding ${cyan('Jest')} configuration`);
-    appPackage.jest = jestConfig;
+    ejectedAppPackage.jest = jestConfig;
 
     // Add Babel config
     console.log(`  Adding ${cyan('Babel')} preset`);
-    appPackage.babel = {
+    ejectedAppPackage.babel = {
       presets: ['react-app'],
     };
 
     // Add ESlint config
     console.log(`  Adding ${cyan('ESLint')} configuration`);
-    appPackage.eslintConfig = {
+    ejectedAppPackage.eslintConfig = {
       extends: 'react-app',
     };
 
     fs.writeFileSync(
       path.join(appPath, 'package.json'),
-      JSON.stringify(appPackage, null, 2) + '\n'
+      JSON.stringify(ejectedAppPackage, null, 2) + '\n'
     );
     console.log();
 
