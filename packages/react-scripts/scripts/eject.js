@@ -37,6 +37,22 @@ function getGitStatus() {
   }
 }
 
+function adjustPackages(packages, append, dev = false) {
+  if (fs.existsSync(paths.yarnLockFile)) {
+    spawnSync('yarnpkg', [append ? 'add' : 'remove', ...packages], {
+      stdio: 'inherit',
+    });
+  } else {
+    spawnSync(
+      'npm',
+      [append ? 'install' : 'uninstall', dev ? '-D' : '-S', ...packages],
+      {
+        stdio: 'inherit',
+      }
+    );
+  }
+}
+
 inquirer
   .prompt({
     type: 'confirm',
@@ -144,7 +160,7 @@ inquirer
     console.log();
 
     const ownPackage = require(path.join(ownPath, 'package.json'));
-    const appPackage = require(path.join(appPath, 'package.json'));
+    let appPackage = require(path.join(appPath, 'package.json'));
 
     console.log(cyan('Updating the dependencies'));
     const ownPackageName = ownPackage.name;
@@ -152,13 +168,13 @@ inquirer
       // We used to put react-scripts in devDependencies
       if (appPackage.devDependencies[ownPackageName]) {
         console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
-        delete appPackage.devDependencies[ownPackageName];
+        adjustPackages(ownPackageName, false, true);
       }
     }
     appPackage.dependencies = appPackage.dependencies || {};
     if (appPackage.dependencies[ownPackageName]) {
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
-      delete appPackage.dependencies[ownPackageName];
+      adjustPackages(ownPackageName, false);
     }
     Object.keys(ownPackage.dependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
@@ -166,18 +182,11 @@ inquirer
         return;
       }
       console.log(`  Adding ${cyan(key)} to dependencies`);
-      appPackage.dependencies[key] = ownPackage.dependencies[key];
+      adjustPackages(key, true);
     });
-    // Sort the deps
-    const unsortedDependencies = appPackage.dependencies;
-    appPackage.dependencies = {};
-    Object.keys(unsortedDependencies)
-      .sort()
-      .forEach(key => {
-        appPackage.dependencies[key] = unsortedDependencies[key];
-      });
     console.log();
 
+    appPackage = require(path.join(appPath, 'package.json'));
     console.log(cyan('Updating the scripts'));
     delete appPackage.scripts['eject'];
     Object.keys(appPackage.scripts).forEach(key => {
@@ -235,24 +244,6 @@ inquirer
       }
     }
 
-    if (fs.existsSync(paths.yarnLockFile)) {
-      // TODO: this is disabled on Windows for two reasons.
-      //
-      // 1. It produces garbage warnings on Windows on some systems:
-      //    https://github.com/facebookincubator/create-react-app/issues/2030
-      //
-      // 2. For the above reason, it breaks Windows CI:
-      //    https://github.com/facebookincubator/create-react-app/issues/2624
-      if (process.platform !== 'win32') {
-        console.log(cyan('Running yarn...'));
-        spawnSync('yarnpkg', [], { stdio: 'inherit' });
-      }
-    } else {
-      console.log(cyan('Running npm install...'));
-      spawnSync('npm', ['install', '--loglevel', 'error'], {
-        stdio: 'inherit',
-      });
-    }
     console.log(green('Ejected successfully!'));
     console.log();
 
