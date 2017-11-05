@@ -37,13 +37,18 @@ function getGitStatus() {
   }
 }
 
-function adjustPackages(packages, append, dev = false) {
+const ADD_PACKAGE = true,
+  REMOVE_PACKAGE = false;
+const PROD_PACKAGE = true,
+  DEV_PACKAGE = false;
+function adjustPackages(cwd, packages, append, dev) {
   if (!Array.isArray(packages)) {
     packages = [packages];
   }
   if (fs.existsSync(paths.yarnLockFile)) {
     spawnSync('yarnpkg', [append ? 'add' : 'remove', ...packages], {
       stdio: 'inherit',
+      cwd,
     });
   } else {
     spawnSync(
@@ -51,6 +56,7 @@ function adjustPackages(packages, append, dev = false) {
       [append ? 'install' : 'uninstall', dev ? '-D' : '-S', ...packages],
       {
         stdio: 'inherit',
+        cwd,
       }
     );
   }
@@ -171,13 +177,13 @@ inquirer
       // We used to put react-scripts in devDependencies
       if (appPackage.devDependencies[ownPackageName]) {
         console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
-        adjustPackages(ownPackageName, false, true);
+        adjustPackages(appPath, ownPackageName, REMOVE_PACKAGE, DEV_PACKAGE);
       }
     }
     appPackage.dependencies = appPackage.dependencies || {};
     if (appPackage.dependencies[ownPackageName]) {
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
-      adjustPackages(ownPackageName, false);
+      adjustPackages(appPath, ownPackageName, REMOVE_PACKAGE, PROD_PACKAGE);
     }
     let appendList = [];
     Object.keys(ownPackage.dependencies).forEach(key => {
@@ -188,7 +194,7 @@ inquirer
       console.log(`  Adding ${cyan(key)} to dependencies`);
       appendList.push(`${key}@${ownPackage.dependencies[key]}`);
     });
-    adjustPackages(appendList, true);
+    adjustPackages(appPath, appendList, ADD_PACKAGE, PROD_PACKAGE);
     console.log();
 
     appPackage = require(path.join(appPath, 'package.json'));
