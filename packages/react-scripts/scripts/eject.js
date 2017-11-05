@@ -45,10 +45,10 @@ function adjustPackages(cwd, packages, append, dev) {
   if (!Array.isArray(packages)) {
     packages = [packages];
   }
-  let status;
+  let status, output;
   if (fs.existsSync(paths.yarnLockFile)) {
-    ({ status } = spawnSync(
-      'yarnpkg',
+    ({ status, output } = spawnSync(
+      process.platform === 'win32' ? 'yarnpkg.cmd' : 'yarnpkg',
       [append ? 'add' : 'remove', ...packages],
       {
         stdio: 'pipe',
@@ -56,7 +56,7 @@ function adjustPackages(cwd, packages, append, dev) {
       }
     ));
   } else {
-    ({ status } = spawnSync(
+    ({ status, output } = spawnSync(
       'npm',
       [
         append ? 'install' : 'uninstall',
@@ -74,7 +74,8 @@ function adjustPackages(cwd, packages, append, dev) {
 
   if (status !== 0) {
     console.error(chalk.red('Failed to update the dependencies.'));
-
+    console.error();
+    console.error(output.join(process.platform === 'win32' ? '\r\n' : '\n'));
     process.exit(status);
   }
 }
