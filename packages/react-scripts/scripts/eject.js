@@ -38,6 +38,9 @@ function getGitStatus() {
 }
 
 function adjustPackages(packages, append, dev = false) {
+  if (!Array.isArray(packages)) {
+    packages = [packages];
+  }
   if (fs.existsSync(paths.yarnLockFile)) {
     spawnSync('yarnpkg', [append ? 'add' : 'remove', ...packages], {
       stdio: 'inherit',
@@ -176,14 +179,16 @@ inquirer
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
       adjustPackages(ownPackageName, false);
     }
+    let appendList = [];
     Object.keys(ownPackage.dependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
       if (ownPackage.optionalDependencies[key]) {
         return;
       }
       console.log(`  Adding ${cyan(key)} to dependencies`);
-      adjustPackages(key, true);
+      appendList.push(key);
     });
+    adjustPackages(appendList, true);
     console.log();
 
     appPackage = require(path.join(appPath, 'package.json'));
