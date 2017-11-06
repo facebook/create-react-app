@@ -5,7 +5,7 @@
       "alias": {
         "components": "./src/app/components",
         "screens": "./src/app/screens",
-        "store": "./src/store"
+        "redux": "./src/redux"
       }
     }]
   ]

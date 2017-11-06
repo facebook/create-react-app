@@ -210,7 +210,6 @@ module.exports = {
                         importLoaders: 1,
                         modules: true,
                         camelCase: true,
-                        localIdentName: '[name]__[local]___[hash:base64:5]',
                         minimize: true,
                         sourceMap: shouldUseSourceMap,
                       },
@@ -268,7 +267,6 @@ module.exports = {
                       options: {
                         importLoaders: 1,
                         minimize: true,
-                        localIdentName: '[name]__[local]___[hash:base64:5]',
                         sourceMap: shouldUseSourceMap,
                       },
                     },
