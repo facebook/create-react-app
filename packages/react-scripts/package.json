@@ -1,6 +1,6 @@
 {
   "name": "wolox-react-scripts",
-  "version": "1.0.24-0",
+  "version": "1.0.25-0",
   "description": "Configuration and scripts for Create React App.",
   "repository": "Wolox/wolox-react-scripts",
   "license": "MIT",
@@ -26,6 +26,7 @@
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.2",
+    "babel-plugin-module-resolver": "^2.7.1",
     "babel-preset-react-app": "^3.1.0",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
@@ -35,6 +36,7 @@
     "eslint": "4.10.0",
     "eslint-config-react-app": "^2.0.1",
     "eslint-loader": "1.9.0",
+    "eslint-import-resolver-babel-module": "^4.0.0",
     "eslint-plugin-flowtype": "2.39.1",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
