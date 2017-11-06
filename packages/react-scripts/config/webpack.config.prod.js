@@ -344,9 +344,8 @@ module.exports = {
       minify: true,
       // Don't precache sourcemaps (they're large) and build asset manifest:
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-      // `navigateFallback` and `navigateFallbackWhitelist` are disabled by default;
-      // see https://github.com/facebookincubator/create-react-app/issues/3248 and
-      // https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#serving-apps-with-client-side-routing
+      // `navigateFallback` and `navigateFallbackWhitelist` are disabled by default; see
+      // https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#service-worker-considerations
       // navigateFallback: publicUrl + '/index.html',
       // navigateFallbackWhitelist: [/^(?!\/__).*/],
     }),
