@@ -28,7 +28,7 @@ const cyan = chalk.cyan;
 
 function getGitStatus() {
   try {
-    let stdout = execSync(`git status --porcelain`, {
+    let stdout = execSync(`git status --porcelain | awk '{print $2}'`, {
       stdio: ['pipe', 'pipe', 'ignore'],
     }).toString();
     return stdout.trim();
@@ -54,11 +54,14 @@ inquirer
     if (gitStatus) {
       console.error(
         chalk.red(
-          `This git repository has untracked files or uncommitted changes:\n\n` +
-            gitStatus.split('\n').map(line => '  ' + line) +
-            '\n\n' +
+          'This git repository has untracked files or uncommitted changes:'
+        ) +
+          '\n\n' +
+          gitStatus +
+          '\n\n' +
+          chalk.red(
             'Remove untracked files, stash or commit any changes, and try again.'
-        )
+          )
       );
       process.exit(1);
     }
