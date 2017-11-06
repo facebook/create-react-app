@@ -1,3 +1,38 @@
+## 1.0.17 (November 3, 2017)
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#3401](https://github.com/facebookincubator/create-react-app/pull/3401) Stop using a deprecated option. ([@gaearon](https://github.com/gaearon))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#3399](https://github.com/facebookincubator/create-react-app/pull/3399) Add link to VS Code troubleshooting guide. ([@auchenberg](https://github.com/auchenberg))
+  * [#3400](https://github.com/facebookincubator/create-react-app/pull/3400) Update VS Code debug configuration. ([@auchenberg](https://github.com/auchenberg))
+
+#### Committers: 3
+
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Kenneth Auchenberg ([auchenberg](https://github.com/auchenberg))
+- Loren Sands-Ramshaw ([lorensr](https://github.com/lorensr))
+
+### Migrating from 1.0.16 to 1.0.17
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.17
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.17
+```
+
 ## 1.0.16 (October 31, 2017) 🎃
 
 #### :bug: Bug Fix

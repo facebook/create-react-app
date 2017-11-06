@@ -159,6 +159,9 @@ cd packages/react-error-overlay/
 npm test
 npm run build:prod
 cd ../..
+cd packages/react-dev-utils/
+npm test
+cd ../..
 
 # ******************************************************************************
 # First, test the create-react-app development environment.

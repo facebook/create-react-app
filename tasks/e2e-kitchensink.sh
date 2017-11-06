@@ -218,14 +218,7 @@ PORT=3001 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   nohup npm start &>$tmp_server_log &
-while true
-do
-  if grep -q 'You can now view' $tmp_server_log; then
-    break
-  else
-    sleep 1
-  fi
-done
+grep -q 'You can now view' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
@@ -287,14 +280,7 @@ PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   nohup npm start &>$tmp_server_log &
-while true
-do
-  if grep -q 'You can now view' $tmp_server_log; then
-    break
-  else
-    sleep 1
-  fi
-done
+grep -q 'You can now view' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
