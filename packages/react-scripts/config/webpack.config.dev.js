@@ -217,7 +217,7 @@ module.exports = {
               {
                 loader: require.resolve('sass-loader'),
                 options: {
-                  includePaths: [path.resolve(__dirname, '../src/app/scss')],
+                  includePaths: [path.resolve(__dirname, '../src/scss')],
                 },
               },
             ],
@@ -258,7 +258,7 @@ module.exports = {
               {
                 loader: require.resolve('sass-loader'),
                 options: {
-                  includePaths: [path.resolve(__dirname, '../src/app/scss')],
+                  includePaths: [path.resolve(__dirname, '../src/scss')],
                 },
               },
             ],
