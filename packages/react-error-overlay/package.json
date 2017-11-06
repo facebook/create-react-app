@@ -45,7 +45,7 @@
     "eslint-plugin-flowtype": "2.35.0",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.1.0",
+    "eslint-plugin-react": "7.4.0",
     "flow-bin": "^0.54.0",
     "html-entities": "1.2.1",
     "jest": "20.0.4",
