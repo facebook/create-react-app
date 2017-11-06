@@ -87,7 +87,7 @@ function handleRuntimeError(errorRecord) {
   update();
 }
 
-function dismissRuntimeErrors() {
+export function dismissRuntimeErrors() {
   currentRuntimeErrorRecords = [];
   update();
 }
