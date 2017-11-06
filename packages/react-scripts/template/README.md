@@ -1848,12 +1848,12 @@ manifest at [`public/manifest.json`](public/manifest.json) and change
 ### Service Worker Considerations
 
 [Navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
-for URLs like `/todos/42` will not be intercepted by the generated
-[service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers),
-that's created by the production build. Navigations for those URLs will always
+for URLs like `/todos/42` will not be intercepted by the
+[service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers)
+created by the production build. Navigations for those URLs will always
 require a network connection, as opposed to navigations for `/` and
 `/index.html`, both of which will be served from the cache by the service worker
-and continue to work while offline.
+and work without requiring a network connection.
 
 If you are using the `pushState` history API and would like to enable service
 worker support for navigations to URLs like `/todos/42`, you need to
