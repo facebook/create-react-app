@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "1.0.17",
+  "name": "wolox-react-scripts",
+  "version": "1.1.2-0",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "Wolox/wolox-react-scripts",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/Wolox/wolox-react-scripts/issues"
   },
   "files": [
     "bin",
@@ -26,6 +26,7 @@
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.2",
+    "babel-plugin-module-resolver": "^2.7.1",
     "babel-preset-react-app": "^3.1.0",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
@@ -34,6 +35,7 @@
     "dotenv": "4.0.0",
     "eslint": "4.10.0",
     "eslint-config-react-app": "^2.0.1",
+    "eslint-import-resolver-babel-module": "^4.0.0-beta.3",
     "eslint-loader": "1.9.0",
     "eslint-plugin-flowtype": "2.39.1",
     "eslint-plugin-import": "2.8.0",
@@ -44,12 +46,14 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
+    "node-sass": "^4.5.3",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
     "promise": "8.0.1",
     "raf": "3.4.0",
     "react-dev-utils": "^4.2.1",
+    "sass-loader": "^6.0.6",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
