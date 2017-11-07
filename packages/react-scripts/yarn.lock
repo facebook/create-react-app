@@ -2312,33 +2312,21 @@ entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
-enzyme-adapter-react-15@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-15/-/enzyme-adapter-react-15-1.0.0.tgz#2f97f024324c585a6523034d4ba99bd6ca29ce56"
-  dependencies:
-    enzyme-adapter-utils "^1.0.0"
-    lodash "^4.17.4"
-    object.assign "^4.0.4"
-    object.values "^1.0.4"
-    prop-types "^15.5.10"
-
-enzyme-adapter-utils@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.0.0.tgz#e94eee63da9a798d498adb1162a2102ed04fc638"
-  dependencies:
-    lodash "^4.17.4"
-    object.assign "^4.0.4"
-    prop-types "^15.5.10"
-
 enzyme-matchers@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/enzyme-matchers/-/enzyme-matchers-4.0.0.tgz#3158166a5004f289895d203f58372bb7867a88e5"
   dependencies:
     deep-equal-ident "^1.1.1"
 
-enzyme-to-json@^3.0.0, enzyme-to-json@^3.0.1:
+enzyme-to-json@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.0.1.tgz#16468e2ff3e4db817d84f9df38760abbc322273d"
+  dependencies:
+    lodash "^4.17.4"
+
+enzyme-to-json@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.2.1.tgz#bdee118fb94eb058311a76a6f94670c0c504b71d"
   dependencies:
     lodash "^4.17.4"
 
