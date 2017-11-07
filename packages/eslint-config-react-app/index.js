@@ -9,7 +9,11 @@
 
 // Inspired by https://github.com/airbnb/javascript but less opinionated.
 
-// We use eslint-loader so even warnings are very visible.
+// We use eslint-loader so even warnings are very visible. This is
+// why we configure most of our eslint rules as warnings, reserving
+// the error level for run-time errors, features that aren't
+// supported, and issues that cause non-obvious/indeterministic behavior
+// to the majority of our users.
 
 // In the future, we might create a separate list of rules for production.
 // It would probably be more strict.
