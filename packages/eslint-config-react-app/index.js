@@ -95,6 +95,13 @@ module.exports = {
     es6: true,
     jest: true,
     node: true,
+    mocha: true,
+  },
+
+  globals: {
+    expect: true,
+    Cy: true,
+    Cypress: true,
   },
 
   parserOptions: {
