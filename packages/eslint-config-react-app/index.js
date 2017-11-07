@@ -100,7 +100,7 @@ module.exports = {
 
   globals: {
     expect: true,
-    Cy: true,
+    cy: true,
     Cypress: true,
   },
 
