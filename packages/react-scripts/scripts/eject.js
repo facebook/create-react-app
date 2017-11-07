@@ -28,7 +28,7 @@ const cyan = chalk.cyan;
 
 function getGitStatus() {
   try {
-    let stdout = execSync(`git status --porcelain | awk '{print $2}'`, {
+    let stdout = execSync(`git status --porcelain`, {
       stdio: ['pipe', 'pipe', 'ignore'],
     }).toString();
     return stdout.trim();
@@ -57,7 +57,10 @@ inquirer
           'This git repository has untracked files or uncommitted changes:'
         ) +
           '\n\n' +
-          gitStatus +
+          gitStatus
+            .split('\n')
+            .map(line => line.match(/ .*/g)[0].trim())
+            .join('\n') +
           '\n\n' +
           chalk.red(
             'Remove untracked files, stash or commit any changes, and try again.'
