@@ -91,6 +91,12 @@ choosePort(HOST, DEFAULT_PORT)
         process.exit();
       });
     });
+
+    process.stdin.on('end', function() {
+      devServer.close();
+      process.exit();
+    });
+    process.stdin.resume();
   })
   .catch(err => {
     if (err && err.message) {
