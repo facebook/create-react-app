@@ -167,7 +167,7 @@ Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
-You will also see any lint warnings in the console.
+You will also see lint warnings and errors in the console.
 
 ### `npm test`
 
@@ -1422,9 +1422,9 @@ If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest
 
 ## Running the Linter
 
-Create React App includes a set of ESLint rules handpicked to help spot potential issues with your code and to enforce best practices. Create React App does not include any ESLint rules that enforce style or formatting. We recommend using a tool like [Prettier](https://github.com/prettier/prettier) for that instead. See the [Formatting Code Automatically](#formatting-code-automatically) section for instructions on how to use [Prettier](https://github.com/prettier/prettier) with Create React App.
+Create React App includes a set of ESLint rules handpicked to help spot potential issues with your code and to encourage best practices. Create React App does not include any ESLint rules that enforce style or formatting. We recommend using a tool like [Prettier](https://github.com/prettier/prettier) for that instead. See the [Formatting Code Automatically](#formatting-code-automatically) section for instructions on how to use [Prettier](https://github.com/prettier/prettier) with Create React App.
 
-Create React App runs the linter automatically with the `npm start` and `npm build` commands. It's important to note that these two commands will only lint the files that are transpiled as part of the build, and any other code (e.g. tests) won't be linted.
+Create React App runs the linter automatically with the `npm start` and `npm build` commands. It's important to note that these two commands will only lint the files that are compiled as part of the build, and any other code (e.g. tests) won't be linted.
 
 ### Failing a Build When the Linter Encounters an Issue
 
@@ -1444,7 +1444,7 @@ set CI=true&&npm run build
 
 ### Customizing the Linter
 
-If you want to augment the ESLint rules bundled with Create React App, or if you want to run the linter on files that aren't transpiled as part of the build (e.g tests) you would need to create an `.eslintrc` file that extends `react-app` and place it in your project's root directory:
+If you want to augment the ESLint rules bundled with Create React App, or if you want to run the linter on files that aren't compiled as part of the build (e.g tests) you would need to create an `.eslintrc` file that extends `react-app` and place it in your project's root directory:
 
 ```js
 // .eslintrc
@@ -1525,7 +1525,7 @@ Alternatively, you can force the linter to ignore any line by adding `// eslint-
 
 ## Continuous Integration
 
-By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`.
+By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI` to `true`.
 
 Popular CI servers already set the environment variable `CI` by default but you can do this yourself too:
 
