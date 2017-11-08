@@ -105,6 +105,7 @@ if (typeof projectName === 'undefined') {
     envinfo.print({
       packages: ['react', 'react-dom', 'react-scripts'],
       noNativeIDE: true,
+      duplicates: true,
     });
     process.exit(0);
   }
