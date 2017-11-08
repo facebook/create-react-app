@@ -1,4 +1,4 @@
-# Create React App [![Build Status](https://travis-ci.org/stinkstudios/create-react-app.svg?branch=master)](https://travis-ci.org/stinkstudios/create-react-app)
+# Create React App [![Build Status](https://travis-ci.org/stinkstudios/create-react-app.svg?branch=master)](https://travis-ci.org/stinkstudios/create-react-app) [![Build status](https://ci.appveyor.com/api/projects/status/8712ea9jermcnwjl/branch/master?svg=true)](https://ci.appveyor.com/project/Stinkstudios/create-react-app/branch/master)
 
 Create React apps with no build configuration.
 
