@@ -146,6 +146,20 @@ grep '"version": "0.4.0"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
+# Test --use-npm flag
+# ******************************************************************************
+
+cd "$temp_app_path"
+create_react_app --use-npm --scripts-version=0.4.0 test-use-npm-flag
+cd test-use-npm-flag
+
+# Check corresponding scripts version is installed.
+exists node_modules/react-scripts
+[ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
+grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+checkDependencies
+
+# ******************************************************************************
 # Test --scripts-version with a tarball url
 # ******************************************************************************
 
