@@ -11,7 +11,15 @@ const fs = require('fs');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
 
-module.exports = (resolve, rootDir, isEjecting) => {
+const srcRootTestMatch = srcRoot => [
+  srcRoot + '/**/__tests__/**/*.{js,jsx,mjs}',
+  srcRoot + '/**/?(*.)(spec|test).{js,jsx,mjs}',
+];
+
+const srcRootTestMatches = srcRoots =>
+  srcRoots.reduce((m, srcRoot) => m.concat(srcRootTestMatch(srcRoot)), []);
+
+module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup)
@@ -27,7 +35,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}',
       '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}',
-    ],
+    ].concat(srcRootTestMatches(srcRoots)),
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
@@ -39,10 +47,16 @@ module.exports = (resolve, rootDir, isEjecting) => {
         'config/jest/fileTransform.js'
       ),
     },
+    // pattern matching doesn't work for workspaces (symlinks from node_modules)
+    // because jest doesn't match against realpaths
+    // ...so decision to tranpile is inside babelTransform which can use realpaths
+    // for matching
+    // jest 22.0.x does match patterns against realpath so this can probably
+    // change with jest 22.0.x+
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$',
+      //'[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
       '^.+\\.module\\.css$',
-    ],
+    ]
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.css$': 'identity-obj-proxy',
@@ -59,6 +73,10 @@ module.exports = (resolve, rootDir, isEjecting) => {
   };
   if (rootDir) {
     config.rootDir = rootDir;
+  }
+  if (srcRoots) {
+    // where to search for tests
+    config.roots = [rootDir].concat(srcRoots);
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [

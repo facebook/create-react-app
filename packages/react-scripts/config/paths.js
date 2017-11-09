@@ -11,6 +11,7 @@
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
+const findPkg = require('find-pkg');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -86,17 +87,12 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
 };
 
-const ownPackageJson = require('../package.json');
-const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
-const reactScriptsLinked =
-  fs.existsSync(reactScriptsPath) &&
-  fs.lstatSync(reactScriptsPath).isSymbolicLink();
-
 // config before publish: we're in ./packages/react-scripts/config/
+// if appDirectory (cwd) is the create-react-app repo root, use template files.
 if (
-  !reactScriptsLinked &&
-  __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
+  fs.existsSync(path.join(appDirectory, 'packages', 'react-scripts', 'config'))
 ) {
+  const appPackageJson = require(resolveOwn('package.json'));
   module.exports = {
     dotenv: resolveOwn('template/.env'),
     appPath: resolveApp('.'),
@@ -117,3 +113,45 @@ if (
   };
 }
 // @remove-on-eject-end
+
+const isInPath = (fpath, searchPaths) => {
+  for (let i = 0; i < searchPaths.length; i++) {
+    if (fpath.startsWith(searchPaths[i] + path.sep)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const hasNodeModules = /[/\\\\]node_modules[/\\\\]/;
+
+// treat as source if realpath is in a srcPath, but not in a node_modules dir
+const isSrcFile = srcFile => {
+  const realSrc = fs.realpathSync(srcFile);
+  return (
+    !realSrc.match(hasNodeModules) && isInPath(realSrc, module.exports.srcPaths)
+  );
+};
+
+module.exports.srcPaths = [module.exports.appSrc];
+
+// if app is in a monorepo (lerna or yarn workspace), allow any module inside
+// the monorepo to be linted, transpiled, and tested as if it came from app's
+// src.
+const monoPkgPath = findPkg.sync(resolveApp('..'));
+if (monoPkgPath) {
+  const monoRoot = path.dirname(monoPkgPath);
+  const monoPkgJson = require(monoPkgPath);
+  if (monoPkgJson.workspaces) {
+    module.exports.yarnWorkspaceRoot = monoRoot;
+    module.exports.srcPaths.push(monoRoot);
+  } else if (
+    fs.existsSync(path.resolve(path.dirname(monoPkgPath), 'lerna.json'))
+  ) {
+    module.exports.lernaRoot = monoRoot;
+    module.exports.srcPaths.push(monoRoot);
+  }
+}
+
+module.exports.shouldLint = modPath => isSrcFile(modPath);
+module.exports.shouldTranspile = modPath => isSrcFile(modPath);
