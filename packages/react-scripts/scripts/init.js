@@ -45,6 +45,7 @@ module.exports = function(
 
   // Setup prettier rules
   appPackage.prettier = {
+    trailingComma: 'es5',
     singleQuote: true,
   };
 
