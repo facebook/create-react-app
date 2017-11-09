@@ -49,6 +49,7 @@ const url = require('url');
 const hyperquest = require('hyperquest');
 const envinfo = require('envinfo');
 const os = require('os');
+const resolveFrom = require('resolve-from');
 
 const packageJson = require('./package.json');
 
@@ -318,15 +319,12 @@ function run(
       );
     })
     .then(packageName => {
-      checkNodeVersion(packageName);
+      checkNodeVersion(root, packageName);
       setCaretRangeForRuntimeDeps(packageName);
 
-      const scriptsPath = path.resolve(
-        process.cwd(),
-        'node_modules',
-        packageName,
-        'scripts',
-        'init.js'
+      const scriptsPath = resolveFrom(
+        root,
+        path.join(packageName, 'scripts', 'init.js')
       );
       const init = require(scriptsPath);
       init(root, appName, verbose, originalDirectory, template);
@@ -506,12 +504,10 @@ function checkNpmVersion() {
   };
 }
 
-function checkNodeVersion(packageName) {
-  const packageJsonPath = path.resolve(
-    process.cwd(),
-    'node_modules',
-    packageName,
-    'package.json'
+function checkNodeVersion(root, packageName) {
+  const packageJsonPath = resolveFrom(
+    root,
+    path.join(packageName, 'package.json')
   );
   const packageJson = require(packageJsonPath);
   if (!packageJson.engines || !packageJson.engines.node) {
