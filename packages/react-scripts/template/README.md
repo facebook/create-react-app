@@ -190,6 +190,14 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### `npm run format`
+
+Formats all `*.js` files in `/src` folder with [`prettier`](https://github.com/prettier/prettier). Also see [formatting code automatically](#formatting-code-automatically).
+
+```js
+  prettier --trailing-comma es5 --single-quote --write "src/**/*.js"
+```
+
 ## Supported Language Features and Polyfills
 
 This project supports a superset of the latest JavaScript standard.<br>
@@ -238,8 +246,6 @@ You would need to install an ESLint plugin for your editor first. Then, add a fi
 Now your editor should report the linting warnings.
 
 Note that even if you edit your `.eslintrc` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
-
-If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
 
 ## Debugging in the Editor
 
@@ -325,7 +331,7 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
   },
 + "lint-staged": {
 +   "src/**/*.{js,jsx,json,css}": [
-+     "prettier --single-quote --write",
++     "prettier --trailing-comma es5 --single-quote --write",
 +     "git add"
 +   ]
 + },
@@ -335,6 +341,15 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
 Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
 
 Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://github.com/prettier/prettier#editor-integration) on the Prettier GitHub page.
+
+The editor plugins should be able to pick up the configuration already defined in `package.json`
+
+```json
+  "prettier": {
+    "trailingComma": "es5",
+    "singleQuote": true
+  }
+```
 
 ## Changing the Page `<title>`
 
