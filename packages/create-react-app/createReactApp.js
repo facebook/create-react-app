@@ -159,7 +159,7 @@ function createApp(name, verbose, version, template) {
     JSON.stringify(packageJson, null, 2)
   );
 
-  const useYarn = shouldUseYarn();
+  const useYarn = shouldUseYarn() && !haveParentApplication();
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -195,6 +195,11 @@ function createApp(name, verbose, version, template) {
   run(root, appName, version, verbose, originalDirectory, template, useYarn);
 }
 
+function haveParentApplication() {
+  const packageJsonPath = path.resolve('./package.json');
+  const yarnLockPath = path.resolve('./yarn.lock');
+  return fs.existsSync(packageJsonPath) && fs.existsSync(yarnLockPath);
+}
 function shouldUseYarn() {
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
