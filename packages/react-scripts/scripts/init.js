@@ -41,6 +41,8 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    format:
+      'prettier --trailing-comma es5 --single-quote --write "src/**/*.js"',
   };
 
   // Setup prettier rules
