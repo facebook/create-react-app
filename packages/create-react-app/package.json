@@ -26,6 +26,7 @@
     "cross-spawn": "^4.0.0",
     "fs-extra": "^1.0.0",
     "hyperquest": "^2.1.2",
+    "resolve-from": "^4.0.0",
     "semver": "^5.0.3",
     "tar-pack": "^3.4.0",
     "tmp": "0.0.31",
