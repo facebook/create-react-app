@@ -43,6 +43,11 @@ module.exports = function(
     eject: 'react-scripts eject',
   };
 
+  // Setup prettier rules
+  appPackage.prettier = {
+    singleQuote: true,
+  };
+
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
