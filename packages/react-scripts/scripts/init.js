@@ -21,6 +21,7 @@ const execSync = require('child_process').execSync;
 const spawn = require('react-dev-utils/crossSpawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
+const resolveFrom = require('resolve-from');
 
 function isInGitRepository() {
   try {
@@ -83,7 +84,10 @@ module.exports = function(
 ) {
   const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
     .name;
-  const ownPath = path.join(appPath, 'node_modules', ownPackageName);
+  const ownPath = path.join(
+    resolveFrom(appPath, path.join(ownPackageName, 'package.json')),
+    '..'
+  );
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
