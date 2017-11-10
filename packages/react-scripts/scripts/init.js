@@ -26,8 +26,8 @@ module.exports = function(
   originalDirectory,
   template
 ) {
-  const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
-    .name;
+  const ownPackage = require(path.join(__dirname, '..', 'package.json'));
+  const ownPackageName = ownPackage.name;
   const ownPath = path.join(appPath, 'node_modules', ownPackageName);
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
@@ -50,6 +50,10 @@ module.exports = function(
     trailingComma: 'es5',
     singleQuote: true,
   };
+
+  // Add Babel config
+  // Taken from react-script package.json
+  appPackage.babel = ownPackage.babel;
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
