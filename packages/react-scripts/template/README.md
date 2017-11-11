@@ -2010,6 +2010,50 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://reacttraining.com/react-router/web/api/Router) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
 
+#### Optional: User Page / Organization Page guide
+
+#### Step 1: Add `homepage` to `package.json`
+
+Open your `package.json` and add a `homepage` field:
+
+```js
+  "homepage": "https://myusername.github.io/",
+```
+
+#### Step 2: Install `gh-pages` and add `deploy` to `scripts` in `package.json`
+
+To publish it at [https://myusername.github.io/](https://myusername.github.io/), run:
+
+```sh
+npm install --save gh-pages
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add gh-pages
+```
+
+Add the following scripts in your `package.json`:
+
+```diff
+  "scripts": {
++   "predeploy": "npm run build",
++   "deploy": "gh-pages -d build -b master",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+```
+
+>Note: You should be checked out at the branch you want it to build from as User Page / Organization Page configuration will deploy only from the master branch [Explained Here](https://help.github.com/articles/user-organization-and-project-pages/).
+
+#### Step 3: Deploy the site by running `npm run deploy`
+
+Then run:
+
+```sh
+npm run deploy
+```
+
 ### [Heroku](https://www.heroku.com/)
 
 Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
