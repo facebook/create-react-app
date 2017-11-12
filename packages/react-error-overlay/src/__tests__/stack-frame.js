@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 import { StackFrame } from '../utils/stack-frame';
@@ -13,9 +11,9 @@ test('proper empty shape', () => {
   const empty = new StackFrame();
   expect(empty).toMatchSnapshot();
 
-  expect(empty.getFunctionName()).toBe(null);
+  expect(empty.getFunctionName()).toBe('(anonymous function)');
   expect(empty.getSource()).toBe('');
-  expect(empty.toString()).toBe('');
+  expect(empty.toString()).toBe('(anonymous function)');
 });
 
 test('proper full shape', () => {

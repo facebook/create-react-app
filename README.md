@@ -6,7 +6,7 @@ Create React apps with no build configuration.
 * [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
 
 Create React App works on macOS, Windows, and Linux.<br>
-If something doesn’t work please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new).
+If something doesn’t work, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new).
 
 ## Quick Overview
 
@@ -84,7 +84,7 @@ Once the installation is done, you can run some commands inside the project fold
 Runs the app in development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
+The page will automatically reload if you make changes to the code.<br>
 You will see the build errors and lint warnings in the console.
 
 <img src='https://camo.githubusercontent.com/41678b3254cf583d3186c365528553c7ada53c6e/687474703a2f2f692e696d6775722e636f6d2f466e4c566677362e706e67' width='600' alt='Build errors'>
@@ -191,7 +191,7 @@ Some features are currently **not supported**:
 
 * Server rendering.
 * Some experimental syntax extensions (e.g. decorators).
-* CSS Modules.
+* CSS Modules (see [#2285](https://github.com/facebookincubator/create-react-app/pull/2285)).
 * Importing LESS or Sass directly ([but you still can use them](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)).
 * Hot reloading of components.
 
@@ -239,6 +239,7 @@ Some of the more popular and actively maintained ones are:
 * [NYTimes/kyt](https://github.com/NYTimes/kyt)
 * [zeit/next.js](https://github.com/zeit/next.js)
 * [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)
+* [electrode-io/electrode](https://github.com/electrode-io/electrode)
 
 Notable alternatives also include:
 
@@ -254,4 +255,4 @@ Notable alternatives also include:
 * [gluestick](https://github.com/TrueCar/gluestick)
 
 You can also use module bundlers like [webpack](http://webpack.js.org) and [Browserify](http://browserify.org/) directly.<br>
-React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
+React documentation includes [a walkthrough](https://reactjs.org/docs/installation.html#development-and-production-versions) on this topic.

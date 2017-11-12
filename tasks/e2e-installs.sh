@@ -1,10 +1,8 @@
 #!/bin/bash
 # Copyright (c) 2015-present, Facebook, Inc.
-# All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 # ******************************************************************************
 # This is an end-to-end test intended to run on CI.
@@ -144,6 +142,20 @@ cd test-app-version-number
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
+grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+checkDependencies
+
+# ******************************************************************************
+# Test --use-npm flag
+# ******************************************************************************
+
+cd "$temp_app_path"
+create_react_app --use-npm --scripts-version=0.4.0 test-use-npm-flag
+cd test-use-npm-flag
+
+# Check corresponding scripts version is installed.
+exists node_modules/react-scripts
+[ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
 checkDependencies
 
