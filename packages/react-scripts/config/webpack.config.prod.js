@@ -220,7 +220,7 @@ module.exports = {
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
           {
-            test: /\.module\.css$/,
+            test: /\.module\.s?css$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
