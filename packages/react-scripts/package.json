@@ -4,19 +4,17 @@
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
+  "publishConfig": {
+    "registry":
+      "https://artifactory.ops.babylontech.co.uk/artifactory/api/npm/babylon-virtual-npm/"
+  },
   "engines": {
     "node": ">=6"
   },
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
-  "files": [
-    "bin",
-    "config",
-    "scripts",
-    "template",
-    "utils"
-  ],
+  "files": ["bin", "config", "scripts", "template", "utils"],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
