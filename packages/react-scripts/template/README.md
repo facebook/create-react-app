@@ -1482,9 +1482,11 @@ If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest
 
 ## Debugging Tests
 
-There are various ways to setup a debugger for your Jest tests. We cover debugging in Chrome and Visual Studio Code.
+There are various ways to setup a debugger for your Jest tests. We cover debugging in Chrome and [Visual Studio Code](https://code.visualstudio.com/).
 
-### Chrome
+>Note: debugging tests requires Node 8 or higher.
+
+### Debugging Tests in Chrome
 
 Add the following to the `scripts` section in your project's `package.json`
 ```json
@@ -1510,7 +1512,7 @@ After opening that link, the Chrome Developer Tools will be displayed. Select `i
 
 ### Debugging Tests in Visual Studio Code
 
-Debugging Jest tests for `create-react-app` is supported out of the box for [Visual Studio Code](https://code.visualstudio.com).
+Debugging Jest tests is supported out of the box for [Visual Studio Code](https://code.visualstudio.com).
 
 Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) configuration file:
 ```
