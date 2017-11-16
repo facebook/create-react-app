@@ -43,7 +43,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
-      '^.+\\.module\\.css$': 'identity-obj-proxy',
+      '^.+\\.module\\.s?css$': 'identity-obj-proxy',
     },
     moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'node'],
   };
