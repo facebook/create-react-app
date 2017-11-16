@@ -1,6 +1,6 @@
 {
   "name": "@ethersage/react-scripts",
-  "version": "1.0.17",
+  "version": "1.0.17-ethersage.2",
   "description": "Configuration and scripts for Create React App.",
   "repository": "ethersage/create-react-app",
   "license": "MIT",
