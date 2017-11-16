@@ -1,8 +1,8 @@
 {
-  "name": "react-scripts",
+  "name": "@ethersage/react-scripts",
   "version": "1.0.17",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "ethersage/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
@@ -50,6 +50,7 @@
     "promise": "8.0.1",
     "raf": "3.4.0",
     "react-dev-utils": "^4.2.1",
+    "react-hot-loader": "^3.0.0",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
