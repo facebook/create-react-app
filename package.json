@@ -1,6 +1,6 @@
 {
   "name": "create-react-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "build": "node packages/react-scripts/scripts/build.js",
@@ -8,13 +8,11 @@
     "create-react-app": "tasks/cra.sh",
     "e2e": "tasks/e2e-simple.sh",
     "e2e:docker": "tasks/local-test.sh",
-    "postinstall":
-      "node bootstrap.js && cd packages/react-error-overlay/ && npm run build:prod",
+    "postinstall": "node bootstrap.js && cd packages/react-error-overlay/ && npm run build:prod",
     "publish": "tasks/release.sh",
     "start": "node packages/react-scripts/scripts/start.js",
     "test": "node packages/react-scripts/scripts/test.js --env=jsdom",
-    "format":
-      "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
+    "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
     "precommit": "lint-staged"
   },
   "devDependencies": {
@@ -26,7 +24,12 @@
     "prettier": "1.6.1"
   },
   "lint-staged": {
-    "*.js": ["prettier --trailing-comma es5 --single-quote --write", "git add"],
-    "yarn.lock": ["git rm --cached"]
+    "*.js": [
+      "prettier --trailing-comma es5 --single-quote --write",
+      "git add"
+    ],
+    "yarn.lock": [
+      "git rm --cached"
+    ]
   }
 }
