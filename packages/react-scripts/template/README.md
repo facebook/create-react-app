@@ -1917,6 +1917,16 @@ To override this, specify the `homepage` in your `package.json`, for example:
 
 This will let Create React App correctly infer the root path to use in the generated HTML file.
 
+If using a dynamic server like in the previous example, make sure to update your root page as well so you don't serve index.html when you try calling the css and js bundle files.
+
+
+```diff
+
+-app.use(express.static(path.join(__dirname, 'build')));
++app.use('/relativepath/', express.static(path.join(__dirname, 'build')));
+
+```
+
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
 More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
 <br>
