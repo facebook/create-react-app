@@ -55,6 +55,9 @@ module.exports = function(
   // Taken from react-script package.json
   appPackage.babel = ownPackage.babel;
 
+  // Add Browserslist config
+  appPackage.browserslist = ownPackage.browserslist;
+
   // Add Postcss config
   appPackage.postcss = ownPackage.postcss;
 
