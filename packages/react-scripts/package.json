@@ -73,9 +73,6 @@
       "react-app"
     ]
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "eslintIgnore": [
     "node_modules",
     "build",
