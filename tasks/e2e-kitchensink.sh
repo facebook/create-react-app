@@ -65,7 +65,7 @@ function install_package {
     npm install --only=production
   fi
   # Remove our packages to ensure side-by-side versions are used (which we link)
-  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-dev-utils,react-error-overlay,react-scripts}
+  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-error-overlay,react-scripts}
   cd ../..
 }
 
@@ -252,7 +252,6 @@ fi
 install_package "$root_path"/packages/babel-preset-react-app
 install_package "$root_path"/packages/eslint-config-react-app
 install_package "$root_path"/packages/react-error-overlay
-install_package "$root_path"/packages/react-dev-utils
 
 # Link to test module
 install_package "$temp_module_path/node_modules/test-integrity"
