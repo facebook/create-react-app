@@ -55,6 +55,12 @@ module.exports = function(
   // Taken from react-script package.json
   appPackage.babel = ownPackage.babel;
 
+  // Add ESlint config
+  appPackage.eslintConfig = ownPackage.eslintConfig;
+
+  // Add EslintIgnore
+  appPackage.eslintIgnore = ownPackage.eslintIgnore;
+
   // Add Browserslist config
   appPackage.browserslist = ownPackage.browserslist;
 
