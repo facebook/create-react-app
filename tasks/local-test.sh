@@ -19,7 +19,7 @@ function print_help {
 
 cd $(dirname $0)
 
-node_version=6
+node_version=8
 current_git_branch=`git rev-parse --abbrev-ref HEAD`
 git_branch=${current_git_branch}
 use_yarn=no
