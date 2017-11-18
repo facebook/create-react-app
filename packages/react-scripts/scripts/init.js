@@ -56,7 +56,9 @@ module.exports = function(
   appPackage.babel = ownPackage.babel;
 
   // Add ESlint config
-  appPackage.eslintConfig = ownPackage.eslintConfig;
+  appPackage.eslintConfig = {
+    extends: 'react-app',
+  };
 
   // Add EslintIgnore
   appPackage.eslintIgnore = ownPackage.eslintIgnore;
