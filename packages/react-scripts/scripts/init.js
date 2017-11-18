@@ -55,6 +55,9 @@ module.exports = function(
   // Taken from react-script package.json
   appPackage.babel = ownPackage.babel;
 
+  // Add Postcss config
+  appPackage.postcss = ownPackage.postcss;
+
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
