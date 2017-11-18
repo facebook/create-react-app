@@ -73,6 +73,14 @@
       "react-app"
     ]
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "build",
+    "public"
+  ],
   "browserslist": [
     ">1%",
     "last 4 versions",
