@@ -71,17 +71,17 @@
       "react-app"
     ]
   },
+  "browserslist" : [
+    ">1%",
+    "last 4 versions",
+    "Firefox ESR",
+    "not ie < 9"
+  ],
   "postcss": {
     "ident": "postcss",
     "plugins": {
       "postcss-flexbugs-fixes": {},
       "autoprefixer": {
-        "browsers": [
-          ">1%",
-          "last 4 versions",
-          "Firefox ESR",
-          "not ie < 9"
-        ],
         "flexbox": "no-2009"
       }
     }
