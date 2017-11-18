@@ -21,7 +21,6 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -45,6 +44,8 @@
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "object-assign": "4.1.1",
+    "postcss": "6.0.14",
+    "postcss-cssnext": "3.0.2",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
     "prettier": "1.8.2",
@@ -71,7 +72,7 @@
       "react-app"
     ]
   },
-  "browserslist" : [
+  "browserslist": [
     ">1%",
     "last 4 versions",
     "Firefox ESR",
@@ -81,8 +82,12 @@
     "ident": "postcss",
     "plugins": {
       "postcss-flexbugs-fixes": {},
-      "autoprefixer": {
-        "flexbox": "no-2009"
+      "postcss-cssnext": {
+        "features": {
+          "autoprefixer": {
+            "flexbox": "no-2009"
+          }
+        }
       }
     }
   }
