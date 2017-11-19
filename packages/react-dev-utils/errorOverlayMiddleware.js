@@ -12,7 +12,11 @@ const launchEditorEndpoint = require('./launchEditorEndpoint');
 module.exports = function createLaunchEditorMiddleware() {
   return function launchEditorMiddleware(req, res, next) {
     if (req.url.startsWith(launchEditorEndpoint)) {
-      launchEditor(req.query.fileName, req.query.lineNumber);
+      launchEditor(
+        req.query.fileName,
+        req.query.lineNumber,
+        req.query.colNumber
+      );
       res.end();
     } else {
       next();

@@ -95,7 +95,13 @@ function addWorkspaceToArgumentsIfExists(args, workspace) {
   return args;
 }
 
-function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
+function getArgumentsForLineNumber(
+  editor,
+  fileName,
+  lineNumber,
+  colNumber,
+  workspace
+) {
   const editorBasename = path.basename(editor).replace(/\.(exe|cmd|bat)$/i, '');
   switch (editorBasename) {
     case 'atom':
@@ -104,17 +110,19 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
     case 'subl':
     case 'sublime':
     case 'sublime_text':
+      return [fileName + ':' + lineNumber + ':' + colNumber];
     case 'wstorm':
     case 'charm':
       return [fileName + ':' + lineNumber];
     case 'notepad++':
-      return ['-n' + lineNumber, fileName];
+      return ['-n' + lineNumber, '-c' + colNumber, fileName];
     case 'vim':
     case 'mvim':
     case 'joe':
+      return ['+' + lineNumber, fileName];
     case 'emacs':
     case 'emacsclient':
-      return ['+' + lineNumber, fileName];
+      return ['+' + lineNumber + ':' + colNumber, fileName];
     case 'rmate':
     case 'mate':
     case 'mine':
@@ -122,7 +130,7 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
     case 'code':
     case 'Code':
       return addWorkspaceToArgumentsIfExists(
-        ['-g', fileName + ':' + lineNumber],
+        ['-g', fileName + ':' + lineNumber + ':' + colNumber],
         workspace
       );
     case 'appcode':
@@ -245,7 +253,7 @@ function printInstructions(fileName, errorMessage) {
 }
 
 let _childProcess = null;
-function launchEditor(fileName, lineNumber) {
+function launchEditor(fileName, lineNumber, colNumber) {
   if (!fs.existsSync(fileName)) {
     return;
   }
@@ -255,6 +263,10 @@ function launchEditor(fileName, lineNumber) {
   if (lineNumber && isNaN(lineNumber)) {
     return;
   }
+
+  // colNumber is optional, but should be a number
+  // default is 1
+  colNumber = parseInt(colNumber, 10) || 1;
 
   let [editor, ...args] = guessEditor();
   if (!editor) {
@@ -279,7 +291,13 @@ function launchEditor(fileName, lineNumber) {
   let workspace = null;
   if (lineNumber) {
     args = args.concat(
-      getArgumentsForLineNumber(editor, fileName, lineNumber, workspace)
+      getArgumentsForLineNumber(
+        editor,
+        fileName,
+        lineNumber,
+        colNumber,
+        workspace
+      )
     );
   } else {
     args.push(fileName);
