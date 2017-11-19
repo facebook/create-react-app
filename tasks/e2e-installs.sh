@@ -116,10 +116,6 @@ fi
 # We removed the postinstall, so do it manually
 node bootstrap.js
 
-cd packages/react-error-overlay/
-npm run build:prod
-cd ../..
-
 # ******************************************************************************
 # First, pack and install create-react-app.
 # ******************************************************************************

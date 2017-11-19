@@ -65,7 +65,7 @@ function install_package {
     npm install --only=production
   fi
   # Remove our packages to ensure side-by-side versions are used (which we link)
-  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-error-overlay,react-scripts}
+  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-scripts}
   cd ../..
 }
 
@@ -133,10 +133,6 @@ fi
 # We removed the postinstall, so do it manually
 node bootstrap.js
 
-cd packages/react-error-overlay/
-npm run build:prod
-cd ../..
-
 # ******************************************************************************
 # First, pack react-scripts and create-react-app so we can use them.
 # ******************************************************************************
@@ -188,9 +184,6 @@ cd "$temp_app_path/test-kitchensink"
 
 # Link to our preset
 install_package "$root_path"/packages/babel-preset-react-app
-# Link to error overlay package because now it's a dependency
-# of react-dev-utils and not react-scripts
-install_package "$root_path"/packages/react-error-overlay
 
 # Link to test module
 install_package "$temp_module_path/node_modules/test-integrity"
@@ -251,7 +244,6 @@ fi
 # ...but still link to the local packages
 install_package "$root_path"/packages/babel-preset-react-app
 install_package "$root_path"/packages/eslint-config-react-app
-install_package "$root_path"/packages/react-error-overlay
 
 # Link to test module
 install_package "$temp_module_path/node_modules/test-integrity"

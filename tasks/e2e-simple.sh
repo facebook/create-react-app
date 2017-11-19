@@ -64,7 +64,7 @@ function install_package {
     npm install --only=production
   fi
   # Remove our packages to ensure side-by-side versions are used (which we link)
-  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-error-overlay,react-scripts}
+  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-scripts}
   cd ../..
 }
 
@@ -153,11 +153,6 @@ node bootstrap.js
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
-cd packages/react-error-overlay/
-./node_modules/.bin/eslint --max-warnings 0 src/
-npm test
-npm run build:prod
-cd ../..
 
 # ******************************************************************************
 # First, test the create-react-app development environment.
