@@ -65,7 +65,7 @@ function install_package {
     npm install --only=production
   fi
   # Remove our packages to ensure side-by-side versions are used (which we link)
-  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-scripts}
+  rm -rf node_modules/{eslint-config-react-app,react-scripts}
   cd ../..
 }
 
@@ -182,9 +182,6 @@ npm install test-integrity@^2.0.1
 # Enter the app directory
 cd "$temp_app_path/test-kitchensink"
 
-# Link to our preset
-install_package "$root_path"/packages/babel-preset-react-app
-
 # Link to test module
 install_package "$temp_module_path/node_modules/test-integrity"
 
@@ -242,7 +239,6 @@ then
 fi
 
 # ...but still link to the local packages
-install_package "$root_path"/packages/babel-preset-react-app
 install_package "$root_path"/packages/eslint-config-react-app
 
 # Link to test module

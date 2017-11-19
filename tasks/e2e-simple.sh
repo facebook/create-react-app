@@ -64,7 +64,7 @@ function install_package {
     npm install --only=production
   fi
   # Remove our packages to ensure side-by-side versions are used (which we link)
-  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-scripts}
+  rm -rf node_modules/{eslint-config-react-app,react-scripts}
   cd ../..
 }
 
@@ -149,7 +149,6 @@ fi
 node bootstrap.js
 
 # Lint own code
-./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
@@ -334,7 +333,6 @@ then
 fi
 
 # ...but still link to the local packages
-install_package "$root_path"/packages/babel-preset-react-app
 install_package "$root_path"/packages/eslint-config-react-app
 
 # Test the build
