@@ -48,7 +48,7 @@ function adjustPackages(cwd, packages, append, dev) {
   let status, output;
   if (fs.existsSync(paths.yarnLockFile)) {
     ({ status, output } = spawnSync(
-      'yarnpkg',
+      process.platform === 'win32' ? 'yarn.cmd' : 'yarnpkg',
       [append ? 'add' : 'remove', ...packages],
       {
         stdio: 'pipe',

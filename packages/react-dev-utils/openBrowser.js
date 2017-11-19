@@ -9,7 +9,7 @@
 
 var chalk = require('chalk');
 var execSync = require('child_process').execSync;
-var spawn = require('./crossSpawn');
+var spawn = require('cross-spawn');
 var opn = require('opn');
 
 // https://github.com/sindresorhus/opn#app
