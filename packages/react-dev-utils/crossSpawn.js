@@ -7,9 +7,9 @@
 
 'use strict';
 
-const { spawn } = require('child_process');
+const { spawn, spawnSync } = require('child_process');
 
-function crossSpawn(file, args, options) {
+function normalizeSpawnArguments(file, args, options) {
   if (typeof file !== 'string' || file.length === 0) {
     throw new TypeError('"file" argument must be a non-empty string');
   }
@@ -36,7 +36,18 @@ function crossSpawn(file, args, options) {
   if (options.shell === undefined && process.platform === 'win32') {
     options.shell = true;
   }
+
+  return { file, args, options };
+}
+
+function crossSpawn(file, args, options) {
+  ({ file, args, options } = normalizeSpawnArguments(file, args, options));
   return spawn(file, args, options);
 }
+
+crossSpawn.sync = function crossSpawnSync(file, args, options) {
+  ({ file, args, options } = normalizeSpawnArguments(file, args, options));
+  return spawnSync(file, args, options);
+};
 
 module.exports = crossSpawn;
