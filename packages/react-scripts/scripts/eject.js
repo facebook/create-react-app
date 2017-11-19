@@ -16,12 +16,11 @@ process.on('unhandledRejection', err => {
 
 const fs = require('fs-extra');
 const path = require('path');
-const execSync = require('child_process').execSync;
+const { spawnSync, execSync } = require('child_process').execSync;
 const chalk = require('chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
-const spawnSync = require('react-dev-utils/crossSpawn').sync;
 
 const green = chalk.green;
 const cyan = chalk.cyan;
@@ -48,7 +47,7 @@ function adjustPackages(cwd, packages, append, dev) {
   let status, output;
   if (fs.existsSync(paths.yarnLockFile)) {
     ({ status, output } = spawnSync(
-      process.platform === 'win32' ? 'yarn.cmd' : 'yarnpkg',
+      process.platform === 'win32' ? 'yarnpkg.cmd' : 'yarnpkg',
       [append ? 'add' : 'remove', ...packages],
       {
         stdio: 'pipe',
@@ -57,7 +56,7 @@ function adjustPackages(cwd, packages, append, dev) {
     ));
   } else {
     ({ status, output } = spawnSync(
-      'npm',
+      process.platform === 'win32' ? 'npm.cmd' : 'npm',
       [
         append ? 'install' : 'uninstall',
         dev ? '-D' : '-S',
