@@ -57,7 +57,7 @@ module.exports = function(
 
   // Add ESlint config
   appPackage.eslintConfig = {
-    extends: '@stinkstudios/eslint-config-react-app',
+    extends: 'eslint-config-react-app',
   };
 
   // Add EslintIgnore
