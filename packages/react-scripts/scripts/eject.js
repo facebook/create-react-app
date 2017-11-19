@@ -16,7 +16,7 @@ process.on('unhandledRejection', err => {
 
 const fs = require('fs-extra');
 const path = require('path');
-const { spawnSync, execSync } = require('child_process').execSync;
+const { spawnSync, execSync } = require('child_process');
 const chalk = require('chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
