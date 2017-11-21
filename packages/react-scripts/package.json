@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
+  "name": "light-react-scripts",
   "version": "1.0.17",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "description": "Configuration and scripts for Light.",
+  "repository": "lighting-beetle/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/lightingbeetle/light-react-scripts"
   },
   "files": [
     "bin",
@@ -18,7 +18,7 @@
     "utils"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "light-react-scripts": "./bin/light-react-scripts.js"
   },
   "dependencies": {
     "autoprefixer": "7.1.6",
