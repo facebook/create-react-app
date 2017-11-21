@@ -1,7 +1,7 @@
 {
-  "name": "light-react-scripts",
-  "version": "1.0.17",
-  "description": "Configuration and scripts for Light.",
+  "name": "@lighting-beetle/light-react-scripts",
+  "version": "2.0.0",
+  "description": "Configuration and scripts for Light",
   "repository": "lighting-beetle/create-react-app",
   "license": "MIT",
   "engines": {
