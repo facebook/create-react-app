@@ -1,0 +1,12 @@
+{
+  "extends": ["@stinkstudios/eslint-config-react-app"],
+  "rules": {
+    "class-methods-use-this": 0,
+    "import/extensions": 0,
+    "no-prototype-builtins": 0,
+    "no-restricted-syntax": 0,
+    "react/no-did-mount-set-state": 0,
+    "react/no-multi-comp": 0,
+    "compat/compat": 0
+  }
+}

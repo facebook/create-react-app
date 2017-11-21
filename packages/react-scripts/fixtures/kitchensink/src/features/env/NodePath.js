@@ -7,7 +7,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import load from 'absoluteLoad';
+import load from '../../absoluteLoad';
 
 export default class extends Component {
   static propTypes = {

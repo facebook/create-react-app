@@ -12,7 +12,7 @@ function* load(limit) {
   let i = 1;
   while (i <= limit) {
     yield { id: i, name: i };
-    i++;
+    i += 1;
   }
 }
 
@@ -28,7 +28,7 @@ export default class extends Component {
 
   componentDidMount() {
     const users = [];
-    for (let user of load(4)) {
+    for (const user of load(4)) {
       users.push(user);
     }
     this.setState({ users });

@@ -6,8 +6,9 @@
  */
 
 import React from 'react';
-import './assets/style.css';
 import { test, version } from 'test-integrity';
+
+import './assets/style.css';
 
 export default () => {
   const v = version();

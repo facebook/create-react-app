@@ -57,7 +57,10 @@ module.exports = function(
 
   // Add ESlint config
   appPackage.eslintConfig = {
-    extends: 'eslint-config-react-app',
+    extends: '@stinkstudios/eslint-config-react-app',
+    settings: {
+      polyfills: ['fetch', 'promises', 'serviceworkers'],
+    },
   };
 
   // Add EslintIgnore

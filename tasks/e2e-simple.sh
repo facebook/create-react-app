@@ -44,7 +44,9 @@ function create_react_app {
 }
 
 function install_package {
-  local pkg=$(basename $1)
+  # TODO better way to handle @ namespaces npm packages
+  # temp fix
+  local pkg="@stinkstudios/$(basename $1)"
 
   # Clean target (for safety)
   rm -rf node_modules/$pkg/
@@ -52,7 +54,7 @@ function install_package {
 
   # Copy package into node_modules/ ignoring installed deps
   # rsync -a ${1%/} node_modules/ --exclude node_modules
-  cp -R ${1%/} node_modules/
+  cp -R ${1%/} node_modules/@stinkstudios/
   rm -rf node_modules/$pkg/node_modules/
 
   # Install `dependencies`
@@ -64,8 +66,8 @@ function install_package {
     npm install --only=production
   fi
   # Remove our packages to ensure side-by-side versions are used (which we link)
-  rm -rf node_modules/{eslint-config-react-app,react-scripts}
-  cd ../..
+  rm -rf node_modules/{@stinkstudios/eslint-config-react-app,@stinkstudios/react-scripts}
+  cd ../../..
 }
 
 # Check for the existence of one or more files.

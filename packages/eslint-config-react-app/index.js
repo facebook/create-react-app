@@ -87,9 +87,15 @@ module.exports = {
 
   parser: 'babel-eslint',
 
-  extends: ['airbnb', 'plugin:jsx-a11y/recommended'],
+  extends: [
+    'airbnb',
+    'plugin:jsx-a11y/recommended',
+    'prettier',
+    'prettier/flowtype',
+    'prettier/react',
+  ],
 
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'compat'],
 
   env: {
     browser: true,
@@ -111,9 +117,21 @@ module.exports = {
 
   rules: {
     // https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
+    'class-methods-use-this': 0,
+    'no-console': 0,
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
+    'no-use-before-define': [
+      'warn',
+      {
+        functions: false,
+        classes: false,
+        variables: false,
+      },
+    ],
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
+    'react/jsx-filename-extension': 0,
+    'react/prefer-stateless-function': 0,
 
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
 
@@ -121,5 +139,8 @@ module.exports = {
     'flowtype/define-flow-type': 'warn',
     'flowtype/require-valid-file-annotation': 'warn',
     'flowtype/use-flow-type': 'warn',
+
+    // https://github.com/amilajack/eslint-plugin-compat
+    'compat/compat': 'warn',
   },
 };
