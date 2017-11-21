@@ -52,14 +52,19 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appIndexJs: resolveApp('src/app/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  styleguideIndexJs: resolveApp('src/styleguide/index.js'),
+  staticJs: resolveApp('src/app/scripts/index.js'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  styles: resolveApp('src/app/styles'),
+  icons: resolveApp('src/app/assets/icons'),
+  iconsSG: resolveApp('src/styleguide/assets/icons'),
 };
 
 // @remove-on-eject-begin
@@ -68,18 +73,22 @@ const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
   dotenv: resolveApp('.env'),
-  appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appIndexJs: resolveApp('src/app/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  styleguideIndexJs: resolveApp('src/styleguide/index.js'),
+  staticJs: resolveApp('src/app/scripts/index.js'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  styles: resolveApp('src/app/styles'),
+  icons: resolveApp('src/app/assets/icons'),
+  iconsSG: resolveApp('src/styleguide/assets/icons'),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3

@@ -8,7 +8,6 @@
 // @remove-on-eject-end
 'use strict';
 
-const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -20,6 +19,37 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+
+const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
+const FilterWarningsPLugin = require('webpack-filter-warnings-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
+const { JSDOM } = require('jsdom');
+
+const extractSass = new ExtractTextPlugin({
+  filename: 'static/styles/styles.[contenthash].css',
+});
+
+const svgoLoader = {
+  loader: require.resolve('svgo-loader'),
+  options: {
+    plugins: [
+      { cleanupIDs: true },
+      { cleanupAttrs: true },
+      { removeComments: true },
+      { removeMetadata: true },
+      { removeUselessDefs: true },
+      { removeEditorsNSData: true },
+      { convertStyleToAttrs: true },
+      { convertPathData: true },
+      { convertTransform: true },
+      { collapseGroups: true },
+      { mergePaths: true },
+      { convertShapeToPath: true },
+      { removeStyleElement: true },
+    ],
+  },
+};
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -64,14 +94,25 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: Object.assign(
+    {},
+    {
+      // Finally, this is your app's code:
+      app: paths.appIndexJs,
+      styleguide: paths.styleguideIndexJs,
+      // We include the app code last so that if there is a runtime error during
+      // initialization, it doesn't blow up the WebpackDevServer client, and
+      // changing JS code would still trigger a refresh.
+    },
+    process.env.REACT_APP_TYPE === 'static' ? { static: paths.staticJs } : {}
+  ),
   output: {
     // The build folder.
     path: paths.appBuild,
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].[chunkhash:8].js',
+    filename: 'static/js/[name].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
@@ -80,6 +121,8 @@ module.exports = {
       path
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
+
+    libraryTarget: 'umd', // StaticSiteGeneratorPlugin needs this setting
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -136,15 +179,13 @@ module.exports = {
           {
             options: {
               formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
+              eslintPath: require.resolve(
+                path.join(paths.appNodeModules, 'eslint')
+              ),
               // @remove-on-eject-begin
-              // TODO: consider separate config for production,
-              // e.g. to enable no-console and no-debugger only in production.
-              baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
-              },
               ignore: false,
-              useEslintrc: false,
+              useEslintrc: true,
+              fix: true,
               // @remove-on-eject-end
             },
             loader: require.resolve('eslint-loader'),
@@ -170,7 +211,10 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
-            include: paths.appSrc,
+            include: [
+              paths.appSrc,
+              path.join(paths.appNodeModules, 'stringify-object'),
+            ],
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
@@ -179,65 +223,6 @@ module.exports = {
               // @remove-on-eject-end
               compact: true,
             },
-          },
-          // The notation here is somewhat confusing.
-          // "postcss" loader applies autoprefixer to our CSS.
-          // "css" loader resolves paths in CSS and adds assets as dependencies.
-          // "style" loader normally turns CSS into JS modules injecting <style>,
-          // but unlike in development configuration, we do something different.
-          // `ExtractTextPlugin` first applies the "postcss" and "css" loaders
-          // (second argument), then grabs the result CSS and puts it into a
-          // separate file in our build process. This way we actually ship
-          // a single CSS file in production instead of JS code injecting <style>
-          // tags. If you use code splitting, however, any async bundles will still
-          // use the "style" loader inside the async code so CSS from them won't be
-          // in the main CSS file.
-          {
-            test: /\.css$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: {
-                    loader: require.resolve('style-loader'),
-                    options: {
-                      hmr: false,
-                    },
-                  },
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: {
-                        // Necessary for external CSS imports to work
-                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                        ident: 'postcss',
-                        plugins: () => [
-                          require('postcss-flexbugs-fixes'),
-                          autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                            ],
-                            flexbox: 'no-2009',
-                          }),
-                        ],
-                      },
-                    },
-                  ],
-                },
-                extractTextPluginOptions
-              )
-            ),
-            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
@@ -249,18 +234,82 @@ module.exports = {
             // it's runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.js$/, /\.html$/, /\.json$/],
+            exclude: [/\.js$/, /\.html$/, /\.json$/, /\.scss$/, /\.svg$/],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
-          // ** STOP ** Are you adding a new loader?
-          // Make sure to add the new loader(s) before the "file" loader.
+        ],
+      },
+      // ** STOP ** Are you adding a new loader?
+      // Make sure to add the new loader(s) before the "file" loader.
+      {
+        test: /\.scss$/,
+        use: extractSass.extract({
+          use: [
+            {
+              loader: require.resolve('css-loader'),
+              options: { importLoaders: 1 },
+            },
+            {
+              loader: require.resolve('postcss-loader'),
+              options: {
+                plugins: [
+                  require('postcss-flexbugs-fixes')(),
+                  require('autoprefixer')(),
+                  require('postcss-inline-svg')(),
+                  require('postcss-reporter')({
+                    clearReportedMessages: true,
+                    throwError: true,
+                  }),
+                ],
+              },
+            },
+            {
+              loader: require.resolve('sass-loader'),
+              options: {
+                includePaths: [paths.styles],
+              },
+            },
+          ],
+          fallback: require.resolve('style-loader'),
+        }),
+      },
+      {
+        test: /\.svg$/,
+        include: paths.icons,
+        use: [
+          {
+            loader: require.resolve('svg-sprite-loader'),
+            options: {
+              extract: true,
+              spriteFilename: 'sprite-app.svg',
+            },
+          },
+          svgoLoader,
+        ],
+      },
+      {
+        test: /\.svg$/,
+        include: paths.iconsSG,
+        use: [
+          {
+            loader: require.resolve('svg-sprite-loader'),
+            options: {
+              extract: true,
+              spriteFilename: 'sprite-sg.svg',
+            },
+          },
+          svgoLoader,
         ],
       },
     ],
   },
   plugins: [
+    new StaticSiteGeneratorPlugin({
+      entry: 'app',
+      globals: new JSDOM().window,
+    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -271,6 +320,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      filename: 'styleguide.html',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -356,6 +406,12 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    extractSass,
+    new StyleLintPlugin(),
+    new SpriteLoaderPlugin({ plainSprite: true }),
+    new FilterWarningsPLugin({
+      exclude: /svg-sprite-loader exception. 2 rules applies to/,
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
