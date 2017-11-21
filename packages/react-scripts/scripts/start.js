@@ -120,6 +120,17 @@ checkBrowsers(paths.appPath, isInteractive)
       proxyConfig,
       urls.lanUrlForConfig
     );
+
+    // custom rewrite to serve /styleguide(/)* as styleguide.html
+    serverConfig.historyApiFallback = {
+      rewrites: [
+        {
+          from: /^\/styleguide\/?.*$/,
+          to: () => '/styleguide.html',
+        },
+      ],
+    };
+
     const devServer = new WebpackDevServer(compiler, serverConfig);
     // Launch WebpackDevServer.
     devServer.listen(port, HOST, err => {
