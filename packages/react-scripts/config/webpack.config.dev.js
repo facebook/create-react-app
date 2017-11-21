@@ -27,6 +27,31 @@ const FilterWarningsPLugin = require('webpack-filter-warnings-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { JSDOM } = require('jsdom');
 
+const extractSass = new ExtractTextPlugin({
+  filename: 'static/styles/styles.[contenthash].css',
+});
+
+const svgoLoader = {
+  loader: require.resolve('svgo-loader'),
+  options: {
+    plugins: [
+      { cleanupIDs: true },
+      { cleanupAttrs: true },
+      { removeComments: true },
+      { removeMetadata: true },
+      { removeUselessDefs: true },
+      { removeEditorsNSData: true },
+      { convertStyleToAttrs: true },
+      { convertPathData: true },
+      { convertTransform: true },
+      { collapseGroups: true },
+      { mergePaths: true },
+      { convertShapeToPath: true },
+      { removeStyleElement: true },
+    ],
+  },
+};
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 const publicPath = '/';
@@ -100,18 +125,15 @@ module.exports = {
       // the line below with these two lines if you prefer the stock client:
       // require.resolve('webpack-dev-server/client') + '?/',
       // require.resolve('webpack/hot/dev-server'),
-      hotDevClient: require.resolve(
-        '@lighting-beetle/lighter-react-dev-utils/webpackHotDevClient'
-      ),
+      hotDevClient: require.resolve('react-dev-utils/webpackHotDevClient'),
       // Finally, this is your app's code:
       app: paths.appIndexJs,
+      styleguide: paths.styleguideIndexJs,
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     },
-    fs.existsSync(paths.styleguideIndexJs) ? { styleguide: paths.styleguideIndexJs } : {},
-    fs.existsSync(paths.staticJs) ? { static: paths.staticJs } : {},
-    fs.existsSync(paths.polyfills) ? { polyfills: paths.polyfills } : {}
+    process.env.REACT_APP_TYPE === 'static' ? { static: paths.staticJs } : {}
   ),
   output: {
     // Add /* filename */ comments to generated require()s in the output.
@@ -210,9 +232,6 @@ module.exports = {
             include: [
               paths.appSrc,
               path.join(paths.appNodeModules, 'stringify-object'),
-              // if lighterStyleguide do not exist
-              // return empty array which webpack accepts
-              ...([lighterStyleguidePath || []]),
             ],
             loader: require.resolve('babel-loader'),
             options: {
@@ -236,14 +255,7 @@ module.exports = {
             // its runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [
-              /\.(js|jsx|mjs)$/,
-              /\.html$/,
-              /\.json$/,
-              /\.css/,
-              /\.scss$/,
-              paths.icons,
-            ],
+            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.scss$/, /\.svg$/],
             loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
@@ -254,7 +266,7 @@ module.exports = {
       // ** STOP ** Are you adding a new loader?
       // Make sure to add the new loader(s) before the "file" loader.
       {
-        test: [/\.scss$/, /\.css$/],
+        test: /\.scss$/,
         use: extractSass.extract({
           use: [
             {
@@ -293,7 +305,21 @@ module.exports = {
             loader: require.resolve('svg-sprite-loader'),
             options: {
               extract: true,
-              spriteFilename: 'sprite.svg',
+              spriteFilename: 'sprite-app.svg',
+            },
+          },
+          svgoLoader,
+        ],
+      },
+      {
+        test: /\.svg$/,
+        include: paths.iconsSG,
+        use: [
+          {
+            loader: require.resolve('svg-sprite-loader'),
+            options: {
+              extract: true,
+              spriteFilename: 'sprite-sg.svg',
             },
           },
           svgoLoader,
@@ -304,9 +330,7 @@ module.exports = {
   plugins: [
     new StaticSiteGeneratorPlugin({
       entry: 'app',
-      globals: Object.assign({}, new JSDOM().window, {
-        __lighterIsServer__: true,
-      }),
+      globals: new JSDOM().window,
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
@@ -317,11 +341,10 @@ module.exports = {
     ...(fs.existsSync(paths.styleguideIndexJs) ? [
       new HtmlWebpackPlugin({
       inject: true,
-      template: paths.styleguideHtml,
+      template: paths.appHtml,
       filename: 'styleguide.html',
-      chunks: ['hotDevClient', 'polyfills', 'styleguide'],
-      chunksSortMode: 'manual',
-    })] : []),
+      chunks: ['styleguide', 'hotDevClient'],
+    }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
@@ -347,9 +370,7 @@ module.exports = {
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     extractSass,
-    new StyleLintPlugin({
-      files: [path.join(paths.appSrc, '**/*.scss')]
-    }),
+    new StyleLintPlugin(),
     new SpriteLoaderPlugin({ plainSprite: true }),
     new FilterWarningsPLugin({
       exclude: /svg-sprite-loader exception. 2 rules applies to/,
