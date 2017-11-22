@@ -4,7 +4,10 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+// Node.js 6 ECMAScript
 'use strict';
+
+const path = require('path');
 
 const plugins = [
   // class { handleClick = () => { } }
@@ -35,6 +38,24 @@ const plugins = [
     },
   ],
 ];
+
+const filename = path.resolve('package.json');
+try {
+  const object = require(filename);
+  const craBabelPlugins = Object(
+    Object(Object(object)['create-react-app']).babel
+  ).plugins;
+  if (Array.isArray(craBabelPlugins))
+    plugins.push.apply(plugins, craBabelPlugins);
+} catch (e) {
+  console.error(
+    'babel-preset-react-app: error:',
+    String(e),
+    'reading filename:',
+    filename
+  );
+  throw e;
+}
 
 // This is similar to how `env` works in Babel:
 // https://babeljs.io/docs/usage/babelrc/#env-option
