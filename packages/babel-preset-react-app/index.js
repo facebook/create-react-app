@@ -45,8 +45,9 @@ try {
   const craBabelPlugins = Object(
     Object(Object(object)['create-react-app']).babel
   ).plugins;
-  if (Array.isArray(craBabelPlugins))
+  if (Array.isArray(craBabelPlugins)) {
     plugins.push.apply(plugins, craBabelPlugins);
+  }
 } catch (e) {
   console.error(
     'babel-preset-react-app: error:',
