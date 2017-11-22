@@ -38,7 +38,6 @@ const configFactory = require('../config/webpack.config');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('@lighting-beetle/light-react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('@lighting-beetle/light-react-dev-utils/formatWebpackMessages');
-const printHostingInstructions = require('@lighting-beetle/light-react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('@lighting-beetle/light-react-dev-utils/FileSizeReporter');
 const printBuildError = require('@lighting-beetle/light-react-dev-utils/printBuildError');
 
