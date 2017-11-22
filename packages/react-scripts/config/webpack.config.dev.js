@@ -12,10 +12,10 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const InterpolateHtmlPlugin = require('@lighting-beetle/light-react-dev-utils/InterpolateHtmlPlugin');
+const WatchMissingNodeModulesPlugin = require('@lighting-beetle/light-react-dev-utils/WatchMissingNodeModulesPlugin');
+const eslintFormatter = require('@lighting-beetle/light-react-dev-utils/eslintFormatter');
+const ModuleScopePlugin = require('@lighting-beetle/light-react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
@@ -84,7 +84,9 @@ module.exports = {
       // the line below with these two lines if you prefer the stock client:
       // require.resolve('webpack-dev-server/client') + '?/',
       // require.resolve('webpack/hot/dev-server'),
-      hotDevClient: require.resolve('react-dev-utils/webpackHotDevClient'),
+      hotDevClient: require.resolve(
+        '@lighting-beetle/light-react-dev-utils/webpackHotDevClient'
+      ),
       // Finally, this is your app's code:
       app: paths.appIndexJs,
       styleguide: paths.styleguideIndexJs,

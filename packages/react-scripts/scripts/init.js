@@ -17,7 +17,7 @@ process.on('unhandledRejection', err => {
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
-const spawn = require('react-dev-utils/crossSpawn');
+const spawn = require('@lighting-beetle/light-react-dev-utils/crossSpawn');
 
 module.exports = function(
   appPath,
