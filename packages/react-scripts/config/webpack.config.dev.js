@@ -27,31 +27,6 @@ const FilterWarningsPLugin = require('webpack-filter-warnings-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { JSDOM } = require('jsdom');
 
-const extractSass = new ExtractTextPlugin({
-  filename: 'static/styles/styles.[contenthash].css',
-});
-
-const svgoLoader = {
-  loader: require.resolve('svgo-loader'),
-  options: {
-    plugins: [
-      { cleanupIDs: true },
-      { cleanupAttrs: true },
-      { removeComments: true },
-      { removeMetadata: true },
-      { removeUselessDefs: true },
-      { removeEditorsNSData: true },
-      { convertStyleToAttrs: true },
-      { convertPathData: true },
-      { convertTransform: true },
-      { collapseGroups: true },
-      { mergePaths: true },
-      { convertShapeToPath: true },
-      { removeStyleElement: true },
-    ],
-  },
-};
-
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 const publicPath = '/';
@@ -94,13 +69,6 @@ const svgoLoader = {
     ],
   },
 };
-
-function getLighterStyleguidePath() {
-  const ligterStyleguidePath = path.join(paths.appNodeModules, '@lighting-beetle', 'lighter-styleguide')
-  return fs.existsSync(ligterStyleguidePath) && fs.realpathSync(ligterStyleguidePath);
-}
-
-const lighterStyleguidePath = getLighterStyleguidePath();
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -268,7 +236,7 @@ module.exports = {
       // ** STOP ** Are you adding a new loader?
       // Make sure to add the new loader(s) before the "file" loader.
       {
-        test: /\.scss$/,
+        test: [/\.scss$/, /\.css$/],
         use: extractSass.extract({
           use: [
             {
