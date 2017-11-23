@@ -2146,11 +2146,17 @@ Now offers a zero-configuration single-command deployment. You can use `now` to 
 
 1. Install the `now` command-line tool either via the recommended [desktop tool](https://zeit.co/download) or via node with `npm install -g now`.
 
-2. Build your app by running `npm run build`.
+2. Add the following scripts in your `package.json`:
 
-3. Move into the build directory by running `cd build`.
+    ```diff
+      "scripts": {
+    +   "now-build": "GENERATE_SOURCEMAP=false react-scripts build",
+    +   "now-start": "serve --single build/",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+    ```
 
-4. Run `now --name your-project-name` from within the build directory. You will see a **now.sh** URL in your output like this:
+3. Run `now --name your-project-name`. You will see a **now.sh** URL in your output like this:
 
     ```
     > Ready! https://your-project-name-tpspyhtdtk.now.sh (copied to clipboard)
@@ -2158,7 +2164,7 @@ Now offers a zero-configuration single-command deployment. You can use `now` to 
 
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
-Details are available in [this article.](https://zeit.co/blog/unlimited-static)
+Details are available in [the `now` documentation.](https://zeit.co/now)
 
 ### [S3](https://aws.amazon.com/s3) and [CloudFront](https://aws.amazon.com/cloudfront/)
 
