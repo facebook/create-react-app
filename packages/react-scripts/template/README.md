@@ -895,6 +895,12 @@ set REACT_APP_SECRET_CODE=abcdef&&npm start
 
 (Note: the lack of whitespace is intentional.)
 
+#### Windows (Powershell)
+
+```Powershell
+($env:REACT_APP_SECRET_CODE = "abcdef") -and (npm start)
+```
+
 #### Linux, macOS (Bash)
 
 ```bash
@@ -1129,6 +1135,12 @@ To do this, set the `HTTPS` environment variable to `true`, then start the dev s
 
 ```cmd
 set HTTPS=true&&npm start
+```
+
+#### Windows (Powershell)
+
+```Powershell
+($env:HTTPS = $true) -and (npm start)
 ```
 
 (Note: the lack of whitespace is intentional.)
@@ -1467,6 +1479,16 @@ set CI=true&&npm run build
 ```
 
 (Note: the lack of whitespace is intentional.)
+
+##### Windows (Powershell)
+
+```Powershell
+($env:CI = $true) -and (npm test)
+```
+
+```Powershell
+($env:CI = $true) -and (npm run build)
+```
 
 ##### Linux, macOS (Bash)
 
