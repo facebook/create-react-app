@@ -72,6 +72,15 @@ module.exports = (resolve, rootDir, isEjecting) => {
     });
     const unsupportedKeys = Object.keys(overrides);
     if (unsupportedKeys.length) {
+      const isOverridingSetupFile =
+        unsupportedKeys.indexOf('setupTestFrameworkScriptFile') >= -1;
+
+      const setupFileError = isOverridingSetupFile
+        ? '\nTo add a setupTestFrameworkScriptFile, create the file in ' +
+          chalk.bold('src/setupTests.js') +
+          ' and create-react-app will automatically load it for you.\n'
+        : '';
+
       console.error(
         chalk.red(
           'Out of the box, Create React App only supports overriding ' +
@@ -88,7 +97,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
             chalk.bold('npm run eject') +
             ' but remember that this is a one-way operation. ' +
             'You may also file an issue with Create React App to discuss ' +
-            'supporting more options out of the box.\n'
+            'supporting more options out of the box.\n' +
+            setupFileError
         )
       );
       process.exit(1);
