@@ -1,7 +1,7 @@
 {
-  "name": "react-scripts",
+  "name": "rmw-react-scripts",
   "version": "1.0.17",
-  "description": "Configuration and scripts for Create React App.",
+  "description": "rmw-react-scripts",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
   "engines": {
