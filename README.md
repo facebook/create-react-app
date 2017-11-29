@@ -6,7 +6,7 @@ Create React apps with no build configuration.
 * [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
 
 Create React App works on macOS, Windows, and Linux.<br>
-If something doesn’t work please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new).
+If something doesn’t work, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new).
 
 ## Quick Overview
 
@@ -40,9 +40,7 @@ Install it once globally:
 npm install -g create-react-app
 ```
 
-**You’ll need to have Node >= 4 on your machine**.
-
-**We strongly recommend to use Node >= 6 and npm >= 3 for faster installation speed and better disk usage.** You can use [nvm](https://github.com/creationix/nvm#usage) to easily switch Node versions between different projects.
+**You’ll need to have Node >= 6 on your machine**. You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
 **This tool doesn’t assume a Node backend**. The Node installation is only required for Create React App itself.
 
@@ -59,21 +57,23 @@ It will create a directory called `my-app` inside the current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transitive dependencies:
 
 ```
-my-app/
-  README.md
-  node_modules/
-  package.json
-  .gitignore
-  public/
-    favicon.ico
-    index.html
-  src/
-    App.css
-    App.js
-    App.test.js
-    index.css
-    index.js
-    logo.svg
+my-app
+├── README.md
+├── node_modules
+├── package.json
+├── .gitignore
+├── public
+│   └── favicon.ico
+│   └── index.html
+│   └── manifest.json
+└── src
+    └── App.css
+    └── App.js
+    └── App.test.js
+    └── index.css
+    └── index.js
+    └── logo.svg
+    └── registerServiceWorker.js
 ```
 
 No configuration or complicated folder structures, just the files you need to build your app.<br>
@@ -84,7 +84,7 @@ Once the installation is done, you can run some commands inside the project fold
 Runs the app in development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
+The page will automatically reload if you make changes to the code.<br>
 You will see the build errors and lint warnings in the console.
 
 <img src='https://camo.githubusercontent.com/41678b3254cf583d3186c365528553c7ada53c6e/687474703a2f2f692e696d6775722e636f6d2f466e4c566677362e706e67' width='600' alt='Build errors'>
@@ -92,7 +92,7 @@ You will see the build errors and lint warnings in the console.
 ### `npm test` or `yarn test`
 
 Runs the test watcher in an interactive mode.<br>
-By default, runs tests related to files changes since the last commit.
+By default, runs tests related to files changed since the last commit.
 
 [Read more about testing.](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
 
@@ -102,7 +102,9 @@ Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+By default, it also [includes a service worker](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app) so that your app loads from local cache on future visits.
+
+Your app is ready to be deployed.
 
 ## User Guide
 
@@ -114,10 +116,12 @@ The [User Guide](https://github.com/facebookincubator/create-react-app/blob/mast
 - [Supported Language Features and Polyfills](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#supported-language-features-and-polyfills)
 - [Syntax Highlighting in the Editor](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#displaying-lint-output-in-the-editor)
+- [Formatting Code Automatically](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#formatting-code-automatically)
 - [Debugging in the Editor](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#debugging-in-the-editor)
 - [Changing the Page `<title>`](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#changing-the-page-title)
 - [Installing a Dependency](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#installing-a-dependency)
 - [Importing a Component](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#importing-a-component)
+- [Code Splitting](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting)
 - [Adding a Stylesheet](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet)
 - [Post-Processing CSS](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#post-processing-css)
 - [Adding a CSS Preprocessor (Sass, Less etc.)](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)
@@ -136,6 +140,7 @@ The [User Guide](https://github.com/facebookincubator/create-react-app/blob/mast
 - [Running Tests](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
 - [Developing Components in Isolation](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#developing-components-in-isolation)
 - [Making a Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)
+- [Analyzing the Bundle Size](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#analyzing-the-bundle-size)
 - [Deployment](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment)
 - [Advanced Configuration](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration)
 - [Troubleshooting](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#troubleshooting)
@@ -164,6 +169,7 @@ Please refer to the [User Guide](https://github.com/facebookincubator/create-rea
 * Import CSS and image files directly from JavaScript.
 * Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
 * A `build` script to bundle JS, CSS, and images for production, with sourcemaps.
+* An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app) criteria.
 
 **The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 
@@ -185,7 +191,7 @@ Some features are currently **not supported**:
 
 * Server rendering.
 * Some experimental syntax extensions (e.g. decorators).
-* CSS Modules.
+* CSS Modules (see [#2285](https://github.com/facebookincubator/create-react-app/pull/2285)).
 * Importing LESS or Sass directly ([but you still can use them](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)).
 * Hot reloading of components.
 
@@ -196,7 +202,7 @@ Some of them might get added in the future if they are stable, are useful to maj
 The tools used by Create React App are subject to change.
 Currently it is a thin layer on top of many amazing community projects, such as:
 
-* [webpack](https://webpack.github.io/) with [webpack-dev-server](https://github.com/webpack/webpack-dev-server), [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) and [style-loader](https://github.com/webpack/style-loader)
+* [webpack](https://webpack.js.org/) with [webpack-dev-server](https://github.com/webpack/webpack-dev-server), [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) and [style-loader](https://github.com/webpack/style-loader)
 * [Babel](http://babeljs.io/) with ES6 and extensions used by Facebook (JSX, [object spread](https://github.com/sebmarkbage/ecmascript-rest-spread/commits/master), [class properties](https://github.com/jeffmo/es-class-public-fields))
 * [Autoprefixer](https://github.com/postcss/autoprefixer)
 * [ESLint](http://eslint.org/)
@@ -229,21 +235,24 @@ Some of the more popular and actively maintained ones are:
 
 * [insin/nwb](https://github.com/insin/nwb)
 * [mozilla-neutrino/neutrino-dev](https://github.com/mozilla-neutrino/neutrino-dev)
+* [jaredpalmer/razzle](https://github.com/jaredpalmer/razzle)
 * [NYTimes/kyt](https://github.com/NYTimes/kyt)
 * [zeit/next.js](https://github.com/zeit/next.js)
 * [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)
+* [electrode-io/electrode](https://github.com/electrode-io/electrode)
 
 Notable alternatives also include:
 
 * [enclave](https://github.com/eanplatter/enclave)
-* [motion](https://github.com/motion/motion)
+* [motion](https://github.com/steelbrain/pundle/tree/master/packages/motion)
 * [quik](https://github.com/satya164/quik)
 * [sagui](https://github.com/saguijs/sagui)
 * [roc](https://github.com/rocjs/roc)
 * [aik](https://github.com/d4rkr00t/aik)
 * [react-app](https://github.com/kriasoft/react-app)
 * [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
-* [tarec](https://github.com/geowarin/tarec)
+* [sku](https://github.com/seek-oss/sku)
+* [gluestick](https://github.com/TrueCar/gluestick)
 
-You can also use module bundlers like [webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) directly.<br>
-React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.
+You can also use module bundlers like [webpack](http://webpack.js.org) and [Browserify](http://browserify.org/) directly.<br>
+React documentation includes [a walkthrough](https://reactjs.org/docs/installation.html#development-and-production-versions) on this topic.

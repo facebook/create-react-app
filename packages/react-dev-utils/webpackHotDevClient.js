@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -21,107 +19,40 @@
 var SockJS = require('sockjs-client');
 var stripAnsi = require('strip-ansi');
 var url = require('url');
+var launchEditorEndpoint = require('./launchEditorEndpoint');
 var formatWebpackMessages = require('./formatWebpackMessages');
-var Entities = require('html-entities').AllHtmlEntities;
-var ansiHTML = require('./ansiHTML');
-var entities = new Entities();
+var ErrorOverlay = require('react-error-overlay');
 
-var red = '#E36049';
+ErrorOverlay.setEditorHandler(function editorHandler(errorLocation) {
+  // Keep this sync with errorOverlayMiddleware.js
+  fetch(
+    launchEditorEndpoint +
+      '?fileName=' +
+      window.encodeURIComponent(errorLocation.fileName) +
+      '&lineNumber=' +
+      window.encodeURIComponent(errorLocation.lineNumber || 1)
+  );
+});
 
-function createOverlayIframe(onIframeLoad) {
-  var iframe = document.createElement('iframe');
-  iframe.id = 'react-dev-utils-webpack-hot-dev-client-overlay';
-  iframe.src = 'about:blank';
-  iframe.style.position = 'fixed';
-  iframe.style.left = 0;
-  iframe.style.top = 0;
-  iframe.style.right = 0;
-  iframe.style.bottom = 0;
-  iframe.style.width = '100vw';
-  iframe.style.height = '100vh';
-  iframe.style.border = 'none';
-  iframe.style.zIndex = 9999999999;
-  iframe.onload = onIframeLoad;
-  return iframe;
-}
+// We need to keep track of if there has been a runtime error.
+// Essentially, we cannot guarantee application state was not corrupted by the
+// runtime error. To prevent confusing behavior, we forcibly reload the entire
+// application. This is handled below when we are notified of a compile (code
+// change).
+// See https://github.com/facebookincubator/create-react-app/issues/3096
+var hadRuntimeError = false;
+ErrorOverlay.startReportingRuntimeErrors({
+  onError: function() {
+    hadRuntimeError = true;
+  },
+  filename: '/static/js/bundle.js',
+});
 
-function addOverlayDivTo(iframe) {
-  var div = iframe.contentDocument.createElement('div');
-  div.id = 'react-dev-utils-webpack-hot-dev-client-overlay-div';
-  div.style.position = 'fixed';
-  div.style.boxSizing = 'border-box';
-  div.style.left = 0;
-  div.style.top = 0;
-  div.style.right = 0;
-  div.style.bottom = 0;
-  div.style.width = '100vw';
-  div.style.height = '100vh';
-  div.style.backgroundColor = '#fafafa';
-  div.style.color = '#333';
-  div.style.fontFamily = 'Menlo, Consolas, monospace';
-  div.style.fontSize = 'large';
-  div.style.padding = '2rem';
-  div.style.lineHeight = '1.2';
-  div.style.whiteSpace = 'pre-wrap';
-  div.style.overflow = 'auto';
-  iframe.contentDocument.body.appendChild(div);
-  return div;
-}
-
-var overlayIframe = null;
-var overlayDiv = null;
-var lastOnOverlayDivReady = null;
-
-function ensureOverlayDivExists(onOverlayDivReady) {
-  if (overlayDiv) {
-    // Everything is ready, call the callback right away.
-    onOverlayDivReady(overlayDiv);
-    return;
-  }
-
-  // Creating an iframe may be asynchronous so we'll schedule the callback.
-  // In case of multiple calls, last callback wins.
-  lastOnOverlayDivReady = onOverlayDivReady;
-
-  if (overlayIframe) {
-    // We're already creating it.
-    return;
-  }
-
-  // Create iframe and, when it is ready, a div inside it.
-  overlayIframe = createOverlayIframe(function onIframeLoad() {
-    overlayDiv = addOverlayDivTo(overlayIframe);
-    // Now we can talk!
-    lastOnOverlayDivReady(overlayDiv);
+if (module.hot && typeof module.hot.dispose === 'function') {
+  module.hot.dispose(function() {
+    // TODO: why do we need this?
+    ErrorOverlay.stopReportingRuntimeErrors();
   });
-
-  // Zalgo alert: onIframeLoad() will be called either synchronously
-  // or asynchronously depending on the browser.
-  // We delay adding it so `overlayIframe` is set when `onIframeLoad` fires.
-  document.body.appendChild(overlayIframe);
-}
-
-function showErrorOverlay(message) {
-  ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
-    // Make it look similar to our terminal.
-    overlayDiv.innerHTML = '<span style="color: ' +
-      red +
-      '">Failed to compile.</span><br><br>' +
-      ansiHTML(entities.encode(message));
-  });
-}
-
-function destroyErrorOverlay() {
-  if (!overlayDiv) {
-    // It is not there in the first place.
-    return;
-  }
-
-  // Clean up and reset internal state.
-  document.body.removeChild(overlayIframe);
-  overlayDiv = null;
-  overlayIframe = null;
-  lastOnOverlayDivReady = null;
 }
 
 // Connect to WebpackDevServer via a socket.
@@ -139,9 +70,11 @@ var connection = new SockJS(
 // to avoid spamming the console. Disconnect usually happens
 // when developer stops the server.
 connection.onclose = function() {
-  console.info(
-    'The development server has disconnected.\nRefresh the page if necessary.'
-  );
+  if (typeof console !== 'undefined' && typeof console.info === 'function') {
+    console.info(
+      'The development server has disconnected.\nRefresh the page if necessary.'
+    );
+  }
 };
 
 // Remember some state related to hot module replacement.
@@ -151,15 +84,16 @@ var hasCompileErrors = false;
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
-  if (hasCompileErrors && typeof console.clear === 'function') {
-    console.clear();
+  if (typeof console !== 'undefined' && typeof console.clear === 'function') {
+    if (hasCompileErrors) {
+      console.clear();
+    }
   }
 }
 
 // Successful compilation.
 function handleSuccess() {
   clearOutdatedErrors();
-  destroyErrorOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
@@ -167,14 +101,17 @@ function handleSuccess() {
 
   // Attempt to apply hot updates or reload.
   if (isHotUpdate) {
-    tryApplyUpdates();
+    tryApplyUpdates(function onHotUpdateSuccess() {
+      // Only dismiss it when we're sure it's a hot update.
+      // Otherwise it would flicker right before the reload.
+      ErrorOverlay.dismissBuildError();
+    });
   }
 }
 
 // Compilation with warnings (e.g. ESLint).
 function handleWarnings(warnings) {
   clearOutdatedErrors();
-  destroyErrorOverlay();
 
   var isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
@@ -182,8 +119,22 @@ function handleWarnings(warnings) {
 
   function printWarnings() {
     // Print warnings to the console.
-    for (var i = 0; i < warnings.length; i++) {
-      console.warn(stripAnsi(warnings[i]));
+    var formatted = formatWebpackMessages({
+      warnings: warnings,
+      errors: [],
+    });
+
+    if (typeof console !== 'undefined' && typeof console.warn === 'function') {
+      for (var i = 0; i < formatted.warnings.length; i++) {
+        if (i === 5) {
+          console.warn(
+            'There were more warnings in other files.\n' +
+              'You can find a complete log in the terminal.'
+          );
+          break;
+        }
+        console.warn(stripAnsi(formatted.warnings[i]));
+      }
     }
   }
 
@@ -193,6 +144,9 @@ function handleWarnings(warnings) {
       // Only print warnings if we aren't refreshing the page.
       // Otherwise they'll disappear right away anyway.
       printWarnings();
+      // Only dismiss it when we're sure it's a hot update.
+      // Otherwise it would flicker right before the reload.
+      ErrorOverlay.dismissBuildError();
     });
   } else {
     // Print initial warnings immediately.
@@ -214,11 +168,13 @@ function handleErrors(errors) {
   });
 
   // Only show the first error.
-  showErrorOverlay(formatted.errors[0]);
+  ErrorOverlay.reportBuildError(formatted.errors[0]);
 
   // Also log them to the console.
-  for (var i = 0; i < formatted.errors.length; i++) {
-    console.error(stripAnsi(formatted.errors[i]));
+  if (typeof console !== 'undefined' && typeof console.error === 'function') {
+    for (var i = 0; i < formatted.errors.length; i++) {
+      console.error(stripAnsi(formatted.errors[i]));
+    }
   }
 
   // Do not attempt to reload now.
@@ -283,7 +239,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   function handleApplyUpdates(err, updatedModules) {
-    if (err || !updatedModules) {
+    if (err || !updatedModules || hadRuntimeError) {
       window.location.reload();
       return;
     }
