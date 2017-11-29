@@ -535,13 +535,13 @@ Following this rule often makes CSS preprocessors less useful, as features like 
 First, let’s install the command-line interface for Sass:
 
 ```sh
-npm install --save node-sass-chokidar
+npm install --save-dev node-sass-chokidar
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add node-sass-chokidar
+yarn add --dev node-sass-chokidar
 ```
 
 Then in `package.json`, add the following lines to `scripts`:
@@ -580,13 +580,13 @@ At this point you might want to remove all CSS files from the source control, an
 As a final step, you may find it convenient to run `watch-css` automatically with `npm start`, and run `build-css` as a part of `npm run build`. You can use the `&&` operator to execute two scripts sequentially. However, there is no cross-platform way to run two scripts in parallel, so we will install a package for this:
 
 ```sh
-npm install --save npm-run-all
+npm install --save-dev npm-run-all
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add npm-run-all
+yarn add --dev npm-run-all
 ```
 
 Then we can change `start` and `build` scripts to include the CSS preprocessor commands:
