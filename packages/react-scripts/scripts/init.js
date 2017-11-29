@@ -19,7 +19,7 @@ const path = require('path');
 const chalk = require('chalk');
 const spawn = require('react-dev-utils/crossSpawn');
 
-module.exports = function(
+module.exports = function (
   appPath,
   appName,
   verbose,
@@ -106,6 +106,9 @@ module.exports = function(
     appPath,
     '.template.dependencies.json'
   );
+
+  console.log(`Install additional template dependencies, if present in ${templateDependenciesPath} ...`);
+
   if (fs.existsSync(templateDependenciesPath)) {
     const templateDependencies = require(templateDependenciesPath).dependencies;
     args = args.concat(
