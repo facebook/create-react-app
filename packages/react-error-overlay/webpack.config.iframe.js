@@ -34,15 +34,15 @@ module.exports = {
     }),
     // This code is embedded as a string, so it would never be optimized
     // elsewhere.
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        comparisons: false,
-      },
-      output: {
-        comments: false,
-        ascii_only: false,
-      },
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false,
+    //     comparisons: false,
+    //   },
+    //   output: {
+    //     comments: false,
+    //     ascii_only: false,
+    //   },
+    // }),
   ],
 };
