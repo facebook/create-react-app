@@ -1,5 +1,8 @@
 {
     "dependencies": {
+        "chart.js": "2.x",
+        "echarts": "3.x",
+        "echarts-for-react": "2.x",
         "firebase": "4.x",
         "firebaseui": "2.x",
         "fireform": "0.x",
@@ -28,6 +31,7 @@
         "react-redux": "5.x",
         "react-router": "4.x",
         "react-router-dom": "4.x",
+        "react-scripts": "1.x",
         "redux": "3.x",
         "redux-form": "7.x",
         "redux-form-material-ui": "4.x",
@@ -35,7 +39,6 @@
         "redux-persist": "5.x",
         "redux-responsive": "4.x",
         "redux-thunk": "2.x",
-        "rmw-shell": "1.x",
-        "react-scripts": "1.x"
+        "rmw-shell": "1.x"
     }
 }
