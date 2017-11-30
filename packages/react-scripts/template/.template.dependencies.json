@@ -19,6 +19,7 @@
         "material-ui-superselectfield": "1.x",
         "prop-types": "15.x",
         "react": "15.x || 16.x",
+        "react-chartjs-2": "2.x",
         "react-container-dimensions": "1.x",
         "react-custom-scrollbars": "4.x",
         "react-dom": "15.x || 16.x",

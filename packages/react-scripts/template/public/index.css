@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #222;
+  height: 100%
+}
+
+.shell {
+  position: absolute;
+  bottom:0;
+  top:0;
+  left:0;
+  width: 100%;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+html, body, #root{
+  height: 100%
+}
+
+.loader {
+  animation: spin infinite 20s linear;
+  height: 80px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
