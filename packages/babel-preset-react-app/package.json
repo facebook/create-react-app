@@ -23,6 +23,7 @@
   "devDependencies": {
     "@babel/core": "7.0.0-beta.32",
     "@babel/helper-plugin-test-runner": "7.0.0-beta.32",
-    "@babel/helper-transform-fixture-test-runner": "7.0.0-beta.32"
+    "@babel/helper-transform-fixture-test-runner": "7.0.0-beta.32",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.32"
   }
 }

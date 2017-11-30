@@ -30,13 +30,13 @@
     "lib/index.js"
   ],
   "devDependencies": {
+    "@babel/code-frame": "^7.0.0-beta.32",
+    "@babel/core": "^7.0.0-beta.32",
+    "@babel/runtime": "^7.0.0-beta.32",
     "anser": "1.4.4",
-    "babel-code-frame": "6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "7.2.3",
-    "babel-loader": "^7.1.2",
+    "babel-eslint": "^8.0.2",
+    "babel-loader": "^8.0.0-beta.0",
     "babel-preset-react-app": "^3.1.0",
-    "babel-runtime": "6.26.0",
     "chalk": "^2.1.0",
     "chokidar": "^1.7.0",
     "cross-env": "5.0.5",
