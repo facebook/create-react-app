@@ -96,9 +96,9 @@ module.exports = {
       // Resolve Babel runtime relative to react-scripts.
       // It usually still works on npm 3 without this but it would be
       // unfortunate to rely on, as react-scripts could be symlinked,
-      // and thus babel-runtime might not be resolvable from the source.
-      'babel-runtime': path.dirname(
-        require.resolve('babel-runtime/package.json')
+      // and thus @babel/runtime might not be resolvable from the source.
+      '@babel/runtime': path.dirname(
+        require.resolve('@babel/runtime/package.json')
       ),
       // @remove-on-eject-end
       // Support React Native Web
@@ -173,7 +173,7 @@ module.exports = {
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
-              cacheDirectory: true,
+              // cacheDirectory: true,
             },
           },
           // "postcss" loader applies autoprefixer to our CSS.
