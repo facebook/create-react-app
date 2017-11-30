@@ -118,6 +118,8 @@ module.exports = function(
         return `${key}@${templateDependencies[key]}`;
       })
     );
+
+    console.log('Args:', args);
     fs.unlinkSync(templateDependenciesPath);
   }
 
