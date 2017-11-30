@@ -112,6 +112,7 @@ module.exports = function(
 
   if (fs.existsSync(templateDependenciesPath)) {
     const templateDependencies = require(templateDependenciesPath).dependencies;
+    console.log('Template dependencies:', templateDependencies);
     args = args.concat(
       Object.keys(templateDependencies).map(key => {
         return `${key}@${templateDependencies[key]}`;
