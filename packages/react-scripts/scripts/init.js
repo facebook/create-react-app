@@ -19,6 +19,14 @@ const path = require('path');
 const chalk = require('chalk');
 const spawn = require('react-dev-utils/crossSpawn');
 
+const run = (command, args) => {
+  const proc = spawn.sync(command, args, { stdio: 'inherit' });
+  if (proc.status !== 0) {
+    console.error(`\`${command} ${args.join(' ')}\` failed`);
+    return;
+  }
+};
+
 module.exports = function(
   appPath,
   appName,
@@ -33,10 +41,7 @@ module.exports = function(
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
   // Copy over some of the devDependencies
-  appPackage.dependencies = appPackage.dependencies || {
-    'react-scripts': '^1.0.17',
-    'rmw-shell': '^1.3.11',
-  };
+  appPackage.dependencies = appPackage.dependencies || {};
 
   // Setup the script rules
   appPackage.scripts = {
@@ -93,33 +98,35 @@ module.exports = function(
   );
 
   let command;
-  let args;
+  let baseArgs;
 
   if (useYarn) {
     command = 'yarnpkg';
-    args = ['add'];
+    baseArgs = ['add'];
   } else {
     command = 'npm';
-    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    baseArgs = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
-  args.push('react', 'react-dom', 'react-scripts');
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
     appPath,
     '.template.dependencies.json'
   );
-
   if (fs.existsSync(templateDependenciesPath)) {
     const templateDependencies = require(templateDependenciesPath).dependencies;
-    console.log('Template dependencies:', templateDependencies);
-    args = args.concat(
+    const args = baseArgs.concat(
       Object.keys(templateDependencies).map(key => {
         return `${key}@${templateDependencies[key]}`;
       })
     );
 
-    console.log('Args:', args);
+    if (args.length > baseArgs.length) {
+      console.log(`Installing template dependencies using ${command}...`);
+      console.log();
+
+      run(command, args);
+    }
     fs.unlinkSync(templateDependenciesPath);
   }
 
@@ -130,11 +137,8 @@ module.exports = function(
     console.log(`Installing react and react-dom using ${command}...`);
     console.log();
 
-    const proc = spawn.sync(command, args, { stdio: 'inherit' });
-    if (proc.status !== 0) {
-      console.error(`\`${command} ${args.join(' ')}\` failed`);
-      return;
-    }
+    const args = baseArgs.concat(['react', 'react-dom']);
+    run(command, args);
   }
 
   // Display the most elegant way to cd.
@@ -150,13 +154,6 @@ module.exports = function(
   // Change displayed command to yarn instead of yarnpkg
   const displayedCommand = useYarn ? 'yarn' : 'npm';
 
-  console.log();
-  console.log('Template path:', templatePath);
-  console.log('Template dependencies path:', templateDependenciesPath);
-  console.log();
-  console.log();
-  console.log(`Success! Created ${appName} at ${appPath}`);
-  console.log('Inside that directory, you can run several commands:');
   console.log();
   console.log(`Success! Created ${appName} at ${appPath}`);
   console.log('Inside that directory, you can run several commands:');
