@@ -12,15 +12,10 @@
   ],
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.32",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.32",
-    "@babel/plugin-syntax-jsx": "7.0.0-beta.32",
-    "@babel/plugin-syntax-object-rest-spread": "^7.0.0-beta.32",
     "@babel/plugin-transform-classes": "^7.0.0-beta.32",
     "@babel/plugin-transform-react-constant-elements": "^7.0.0-beta.32",
     "@babel/plugin-transform-react-display-name": "7.0.0-beta.32",
     "@babel/plugin-transform-react-jsx": "7.0.0-beta.32",
-    "@babel/plugin-transform-react-jsx-self": "7.0.0-beta.32",
-    "@babel/plugin-transform-react-jsx-source": "7.0.0-beta.32",
     "@babel/plugin-transform-regenerator": "^7.0.0-beta.32",
     "@babel/plugin-transform-runtime": "^7.0.0-beta.32",
     "@babel/preset-env": "^7.0.0-beta.32",
@@ -29,10 +24,5 @@
   },
   "peerDependencies": {
     "@babel/core": "7.0.0-beta.32"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.0.0-beta.32",
-    "@babel/helper-plugin-test-runner": "7.0.0-beta.32",
-    "@babel/helper-transform-fixture-test-runner": "7.0.0-beta.32"
   }
 }
