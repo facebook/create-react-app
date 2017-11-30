@@ -33,7 +33,10 @@ module.exports = function(
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
   // Copy over some of the devDependencies
-  appPackage.dependencies = appPackage.dependencies || {};
+  appPackage.dependencies = appPackage.dependencies || {
+    'react-scripts': '^1.0.17',
+    'rmw-shell': '^1.3.11',
+  };
 
   // Setup the script rules
   appPackage.scripts = {
