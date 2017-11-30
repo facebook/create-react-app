@@ -145,6 +145,10 @@ module.exports = function(
   const displayedCommand = useYarn ? 'yarn' : 'npm';
 
   console.log();
+  console.log('Template path:', templatePath);
+  console.log('Template dependencies path:', templateDependenciesPath);
+  console.log();
+  console.log();
   console.log(`Success! Created ${appName} at ${appPath}`);
   console.log('Inside that directory, you can run several commands:');
   console.log();
