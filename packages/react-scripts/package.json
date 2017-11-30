@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "autoprefixer": "7.1.6",
-    "@babel/core": "^7.0.0-beta.31",
-    "@babel/runtime": "^7.0.0-beta.31",
+    "@babel/core": "7.0.0-beta.31",
+    "@babel/runtime": "7.0.0-beta.31",
     "babel-eslint": "^8.0.2",
     "babel-jest": "20.0.3",
     "babel-loader": "^8.0.0-beta.0",

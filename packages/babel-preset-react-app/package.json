@@ -11,18 +11,16 @@
     "index.js"
   ],
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.32",
-    "@babel/plugin-transform-classes": "^7.0.0-beta.32",
-    "@babel/plugin-transform-react-constant-elements": "^7.0.0-beta.32",
+    "@babel/plugin-proposal-class-properties": "7.0.0-beta.32",
+    "@babel/plugin-transform-classes": "7.0.0-beta.32",
+    "@babel/plugin-transform-react-constant-elements": "7.0.0-beta.32",
     "@babel/plugin-transform-react-display-name": "7.0.0-beta.32",
     "@babel/plugin-transform-react-jsx": "7.0.0-beta.32",
-    "@babel/plugin-transform-regenerator": "^7.0.0-beta.32",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.32",
-    "@babel/preset-env": "^7.0.0-beta.32",
-    "@babel/preset-flow": "^7.0.0-beta.32",
-    "@babel/preset-react": "^7.0.0-beta.32"
-  },
-  "peerDependencies": {
+    "@babel/plugin-transform-regenerator": "7.0.0-beta.32",
+    "@babel/plugin-transform-runtime": "7.0.0-beta.32",
+    "@babel/preset-env": "7.0.0-beta.32",
+    "@babel/preset-flow": "7.0.0-beta.32",
+    "@babel/preset-react": "7.0.0-beta.32",
     "@babel/core": "7.0.0-beta.32"
   }
 }
