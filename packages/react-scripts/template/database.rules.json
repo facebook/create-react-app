@@ -1,0 +1,110 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    "admins":{
+      ".read": "auth != null",
+      "$uid":{
+        ".write": "auth != null || root.child('admins/'+auth.uid).exists()"
+      }
+    },
+    "predefined_chat_messages": {
+      ".read": "auth != null",
+      "$uid":{
+        ".write": "auth != null"
+      }
+    },
+    "users": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && ($uid === auth.uid || root.child('admins/'+auth.uid).exists())"
+      }
+    },
+    "user_chats": {
+      "$uid": {
+        ".read": "auth != null && $uid===auth.uid",
+        ".write": "auth != null && $uid===auth.uid"
+      }
+    },
+    "user_chat_messages": {
+      "$uid": {
+        ".read": "auth != null && $uid===auth.uid",
+        ".write": "auth != null && $uid===auth.uid"
+      }
+    },
+    "users_count": {
+      ".read": true,
+      "$uid": {
+        ".write": "auth != null && root.child('admins/'+auth.uid).exists()"
+      }
+    },
+    "provider_count": {
+      ".read": true,
+      ".write": false
+    },
+    "roles":{
+      ".read": "auth != null && root.child('admins/'+auth.uid).exists()",
+      "$uid":{
+        ".write": "auth != null && root.child('admins/'+auth.uid).exists()"
+      }
+    },
+    "role_grants":{
+      ".read": "auth != null && root.child('admins/'+auth.uid).exists()",
+      "$uid":{
+        ".write": "auth != null && root.child('admins/'+auth.uid).exists()"
+      }
+    },
+    "user_grants":{
+      ".read": "auth != null",
+      "$uid":{
+        ".write": "auth != null && root.child('admins/'+auth.uid).exists()"
+      }
+    },
+    "user_roles":{
+      ".read": "auth != null && root.child('admins/'+auth.uid).exists()",
+      "$uid":{
+        ".write": "auth != null && root.child('admins/'+auth.uid).exists()"
+      }
+    },
+    "public_tasks":{
+      ".indexOn": ["userId"],
+      "$tid":{
+        ".indexOn": ["userId"],
+        ".write": "data.child('userId').val() === auth.uid || newData.child('userId').val() === auth.uid"
+      }
+    },
+    "public_tasks_count":{
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "companies":{
+      ".read": "(auth != null && root.child('admins/'+auth.uid).exists()) || root.child('user_grants/'+auth.uid+'/read_companies').exists()",
+      "$uid":{
+        ".write": "(auth != null && root.child('admins/'+auth.uid).exists()) || (data.exists() && newData.exists() && root.child('user_grants/'+auth.uid+'/edit_company').exists()) || (!data.exists() && newData.exists() && root.child('user_grants/'+auth.uid+'/create_company').exists()) || (data.exists() && !newData.exists() && root.child('user_grants/'+auth.uid+'/delete_company').exists())"
+      }
+    },
+    "public_chats":{
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "private_chats":{
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "private_chat_members":{
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "messages":{
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "user_registrations_per_day":{
+      ".read": true,
+      ".write": false
+    },
+    "user_registrations_per_month":{
+      ".read": true,
+      ".write": false
+    }
+  }
+}
