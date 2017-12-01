@@ -19,7 +19,24 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, './src'),
+        include: [
+          path.resolve(__dirname, './src'),
+          path.dirname(
+            require.resolve('chalk', {
+              paths: path.dirname(require.resolve('@babel/code-frame')),
+            })
+          ),
+          path.dirname(
+            require.resolve(
+              'ansi-styles',
+              path.dirname(
+                require.resolve('chalk', {
+                  paths: path.dirname(require.resolve('@babel/code-frame')),
+                })
+              )
+            )
+          ),
+        ],
         use: 'babel-loader',
       },
     ],
@@ -34,15 +51,15 @@ module.exports = {
     }),
     // This code is embedded as a string, so it would never be optimized
     // elsewhere.
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     warnings: false,
-    //     comparisons: false,
-    //   },
-    //   output: {
-    //     comments: false,
-    //     ascii_only: false,
-    //   },
-    // }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        comparisons: false,
+      },
+      output: {
+        comments: false,
+        ascii_only: false,
+      },
+    }),
   ],
 };
