@@ -49,10 +49,10 @@ module.exports = function(api, opts) {
           targets: {
             // React parses on ie 9, so we should too
             ie: 9,
-            // We currently minify with uglify
-            // Remove after https://github.com/mishoo/UglifyJS2/issues/448
-            forceAllTransforms: true,
           },
+          // We currently minify with uglify
+          // Remove after https://github.com/mishoo/UglifyJS2/issues/448
+          forceAllTransforms: true,
           // Disable polyfill transforms
           useBuiltIns: false,
           // Do not transform modules to CJS
