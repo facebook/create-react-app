@@ -61,7 +61,11 @@ module.exports = function(api, opts) {
       ],
       [
         require('@babel/preset-react').default,
-        { development: isEnvDevelopment || isEnvTest },
+        {
+          // Adds component stack to warning messages
+          // Adds __self attribute to JSX which React will use for some warnings
+          development: isEnvDevelopment || isEnvTest,
+        },
       ],
       [require('@babel/preset-flow').default],
     ].filter(Boolean),
@@ -93,6 +97,8 @@ module.exports = function(api, opts) {
           regenerator: true,
         },
       ],
+      // Adds syntax support for import()
+      require('@babel/plugin-syntax-dynamic-import'),
       isEnvTest &&
         // Transform dynamic import to require
         require('babel-plugin-transform-dynamic-import').default,
