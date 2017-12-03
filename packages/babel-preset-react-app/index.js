@@ -93,6 +93,9 @@ module.exports = function(api, opts) {
           regenerator: true,
         },
       ],
+      isEnvTest &&
+        // Transform dynamic import to require
+        require('babel-plugin-transform-dynamic-import').default,
     ].filter(Boolean),
   };
 };
