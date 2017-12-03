@@ -102,6 +102,7 @@ module.exports = function(api, opts) {
       isEnvTest &&
         // Transform dynamic import to require
         require('babel-plugin-transform-dynamic-import').default,
+      isEnvTest && require('@babel/plugin-transform-modules-commonjs'),
     ].filter(Boolean),
   };
 };
