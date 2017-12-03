@@ -8,8 +8,11 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 
-const file = fs.readFileSync('./package.json');
+const packageFile = path.join(process.cwd(), 'package.json');
+
+const file = fs.readFileSync(packageFile);
 const data = JSON.parse(file);
 
 if (data.babel == null) {
@@ -20,7 +23,7 @@ if (data.babel == null) {
   data.babel.plugins.push('@babel/plugin-transform-modules-commonjs');
 }
 
-fs.writeFile('./package.json', JSON.stringify(data, null, 2), 'utf8', err => {
+fs.writeFile(packageFile, JSON.stringify(data, null, 2), 'utf8', err => {
   if (err) {
     throw err;
   }
