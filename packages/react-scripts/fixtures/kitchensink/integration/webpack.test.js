@@ -18,7 +18,7 @@ describe('Integration', () => {
       ).to.match(/html\{/);
       expect(
         doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
-      ).to.match(/#feature-css-inclusion\{background:.+;color:.+}/);
+      ).to.match(/.feature-css-inclusion\{color:.+;background:.+}/);
     });
 
     it('image inclusion', async () => {

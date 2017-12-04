@@ -13,6 +13,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
@@ -172,14 +173,25 @@ module.exports = {
           {
             test: /\.css$/,
             use: [
-              require.resolve('style-loader'),
+              {
+                loader: require.resolve('style-loader'),
+                options: {
+                  sourceMap: true,
+                },
+              },
               {
                 loader: require.resolve('css-loader'),
                 options: {
+                  sourceMap: true,
                   importLoaders: 1,
                 },
               },
-              require.resolve('postcss-loader'),
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  sourceMap: true,
+                },
+              },
             ],
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
@@ -205,6 +217,11 @@ module.exports = {
     ],
   },
   plugins: [
+    // Lint CSS with StyleLint
+    new StyleLintPlugin({
+      context: paths.appSrc,
+      files: ['**/*.css'],
+    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">

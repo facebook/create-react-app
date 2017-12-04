@@ -21,6 +21,8 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@stinkstudios/eslint-config-react-app": "^0.3.0",
+    "@stinkstudios/stylelint-config-react-app": "^0.1.0",
     "babel-core": "6.26.0",
     "babel-eslint": "8.0.2",
     "babel-jest": "20.0.3",
@@ -33,7 +35,6 @@
     "css-loader": "0.28.7",
     "dotenv": "4.0.0",
     "eslint": "4.11.0",
-    "@stinkstudios/eslint-config-react-app": "^0.3.0",
     "eslint-loader": "1.9.0",
     "eslint-plugin-compat": "2.1.0",
     "eslint-plugin-flowtype": "2.39.1",
@@ -55,6 +56,9 @@
     "raf": "3.4.0",
     "react-dev-utils": "^4.2.1",
     "style-loader": "0.19.0",
+    "stylelint": "8.2.0",
+    "stylelint-formatter-pretty": "1.0.3",
+    "stylelint-webpack-plugin":"0.9.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
@@ -79,6 +83,17 @@
     "build",
     "public"
   ],
+  "stylelint": {
+    "extends": "@stinkstudios/stylelint-config-react-app",
+    "rules": {
+      "plugin/no-unsupported-browser-features": [
+        true,
+        {
+          "ignore": ["css-animation", "transforms2d"]
+        }
+      ]
+    }
+  },
   "browserslist": [
     ">1%",
     "last 4 versions",

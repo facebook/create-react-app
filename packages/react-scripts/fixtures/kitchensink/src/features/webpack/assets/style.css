@@ -4,7 +4,7 @@
  */
 @import '~normalize.css/normalize.css';
 
-#feature-css-inclusion {
-  background: palevioletred;
+.feature-css-inclusion {
   color: papayawhip;
+  background: palevioletred;
 }

@@ -1,0 +1,50 @@
+{
+  "name": "@stinkstudios/stylelint-config-react-app",
+  "version": "0.1.0",
+  "keywords": [
+    "stylelint",
+    "stylelint-config"
+  ],
+  "description": "@stinkstudios Create React App shareable config for stylelint",
+  "repository": "stinkstudios/create-react-app",
+  "license": "MIT",
+  "author": "Stink Studios",
+  "bugs": {
+    "url": "https://github.com/stinkstudios/create-react-app/issues"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "no-unsupported-browser-features.js",
+    "order.js",
+    "properties-order.js"
+  ],
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-stylelint": "^8.0.0",
+    "jest": "^21.2.1",
+    "stylelint": "^8.2.0"
+  },
+  "peerDependencies": {
+    "stylelint": "^8.2.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "eslintConfig": {
+    "extends": [
+      "stylelint"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true
+  },
+  "dependencies": {
+    "stylelint-declaration-block-no-ignored-properties": "^1.0.1",
+    "stylelint-no-unsupported-browser-features": "^1.0.1",
+    "stylelint-order": "^0.7.0",
+    "stylelint-scss": "^2.1.0"
+  }
+}

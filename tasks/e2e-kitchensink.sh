@@ -67,7 +67,7 @@ function install_package {
     npm install --only=production
   fi
   # Remove our packages to ensure side-by-side versions are used (which we link)
-  rm -rf node_modules/{@stinkstudios/eslint-config-react-app,@stinkstudios/react-scripts}
+  rm -rf node_modules/{@stinkstudios/eslint-config-react-app,@stinkstudios/react-scripts,@stinkstudios/stylelint-config-react-app}
   cd ../../..
 }
 
@@ -242,6 +242,7 @@ fi
 
 # ...but still link to the local packages
 install_package "$root_path"/packages/eslint-config-react-app
+install_package "$root_path"/packages/stylelint-config-react-app
 
 # Link to test module
 install_package "$temp_module_path/node_modules/test-integrity"

@@ -66,7 +66,7 @@ function install_package {
     npm install --only=production
   fi
   # Remove our packages to ensure side-by-side versions are used (which we link)
-  rm -rf node_modules/{@stinkstudios/eslint-config-react-app,@stinkstudios/react-scripts}
+  rm -rf node_modules/{@stinkstudios/eslint-config-react-app,@stinkstudios/stylelint-config-react-app,@stinkstudios/react-scripts}
   cd ../../..
 }
 
@@ -154,6 +154,11 @@ node bootstrap.js
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
+
+cd packages/stylelint-config-react-app
+./node_modules/.bin/eslint --max-warnings 0
+npm test
+cd ../..
 
 # ******************************************************************************
 # First, test the create-react-app development environment.
@@ -336,6 +341,7 @@ fi
 
 # ...but still link to the local packages
 install_package "$root_path"/packages/eslint-config-react-app
+install_package "$root_path"/packages/stylelint-config-react-app
 
 # Test the build
 npm run build

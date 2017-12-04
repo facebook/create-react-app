@@ -41,6 +41,7 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    lint: 'react-scripts lint',
     format:
       'prettier --trailing-comma es5 --single-quote --write "src/**/*.js"',
   };
@@ -65,6 +66,9 @@ module.exports = function(
 
   // Add EslintIgnore
   appPackage.eslintIgnore = ownPackage.eslintIgnore;
+
+  // Add Stylelint
+  appPackage.stylelint = ownPackage.stylelint;
 
   // Add Browserslist config
   appPackage.browserslist = ownPackage.browserslist;
