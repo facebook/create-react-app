@@ -1,6 +1,6 @@
 {
   "name": "@stinkstudios/react-scripts",
-  "version": "1.0.17",
+  "version": "1.0.18-beta.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": "stinkstudios/create-react-app",
   "license": "MIT",
