@@ -57,7 +57,7 @@ describe('Integration', () => {
       const doc = await initDOM('svg-inclusion');
 
       expect(doc.getElementById('feature-svg-inclusion').src).to.match(
-        /\/static\/media\/logo\..+\.svg$/
+        /(\/static\/media\/logo\..+\.svg$)|(^data:image\/svg\+xml;base64.+==$)/
       );
     });
 
