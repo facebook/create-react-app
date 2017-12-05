@@ -1,12 +1,13 @@
-const packageJson = require('../package.json');
-const definedAliases = packageJson.alias || [];
+const paths = require('./paths');
+const appPackageJson = require(paths.appPackageJson);
+const definedAliases = appPackageJson.alias || [];
 
 if (!Array.isArray(definedAliases)) {
-  throw new Error('Your aliases declaraction must be an array');
+  throw new Error('Your alias declaration must be an array');
 }
 
 const alias = definedAliases.reduce((accum, current) => {
-  if (current.expost && current.source) {
+  if (current.expose && current.source) {
     accum[current.expose] = current.source;
   }
   return accum;
