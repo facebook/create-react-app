@@ -5,8 +5,10 @@ if (!Array.isArray(definedAliases)) {
   throw new Error('Your aliases declaraction must be an array');
 }
 
-const alias = definedAliases.alias.reduce((accum, current) => {
-  accum[current.expose] = current.source;
+const alias = definedAliases.reduce((accum, current) => {
+  if (current.expost && current.source) {
+    accum[current.expose] = current.source;
+  }
   return accum;
 }, {});
 
