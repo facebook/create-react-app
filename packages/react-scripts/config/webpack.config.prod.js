@@ -35,10 +35,15 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
-// The list of packages in node_modules that babel will include in it's transpile.
+// Application package.json
+const pkg = require(paths.appPackageJson);
 // An array property in the apps package.json called "transpileDependencies"
-const transpileDependencies =
-  require(paths.appPackageJson).transpileDependencies || [];
+const transpileModules = pkg.transpileDependencies || [];
+// The list of packages in node_modules that babel will include in it's transpile.
+const babelInclude = [
+  paths.appSrc,
+  ...transpileModules.map(m => path.resolve(paths.appNodeModules, m)),
+];
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -174,12 +179,7 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
-            include: [
-              paths.appSrc,
-              ...transpileDependencies.map(module =>
-                path.resolve(paths.appNodeModules, module)
-              ),
-            ],
+            include: babelInclude,
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
