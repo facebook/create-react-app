@@ -1,24 +1,24 @@
-:local .root {
+:local .component {
   text-align: center;
 }
 
-:local .logo {
-  animation: logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-:local .header {
+:local .component > header {
   background-color: #222;
   height: 150px;
   padding: 20px;
   color: white;
 }
 
-:local .title {
+:local .component > header > img {
+  animation: logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+:local .component h1 {
   font-size: 1.5em;
 }
 
-:local .intro {
+:local .component p {
   font-size: large;
 }
 
