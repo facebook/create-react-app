@@ -39,7 +39,7 @@ idObj = new Proxy({}, {
     if (key === '__esModule') {
       return false;
     }
-    return '${path.basename(filename).split('.')[0]}__' + key;
+    return 'bw__${path.basename(filename).split('.')[0]}__' + key;
   }
 });
 

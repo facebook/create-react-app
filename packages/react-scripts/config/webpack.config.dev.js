@@ -282,7 +282,7 @@ module.exports = {
                   modules: true,
                   camelCase: true,
                   autoprefixer: false,
-                  localIdentName: '[name]__[local]',
+                  localIdentName: 'bw__[name]__[local]',
                 },
               },
               {

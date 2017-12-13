@@ -310,7 +310,7 @@ module.exports = {
                   camelCase: true,
                   autoprefixer: false,
                   sourceMap: true,
-                  localIdentName: '[name]__[local]',
+                  localIdentName: 'bw__[name]__[local]',
                 },
               },
               {
