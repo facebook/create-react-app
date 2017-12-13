@@ -12,6 +12,7 @@ const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
@@ -29,6 +30,11 @@ const publicPath = '/';
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+
+const cssFilename = 'static/css/[name].[contenthash:8].css';
+const extractTextPluginOptions = {
+  publicPath: Array(cssFilename.split('/').length).join('../'),
+};
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -182,86 +188,110 @@ module.exports = {
           // in development "style" loader enables hot editing of CSS.
           {
             test: /\.scss$/,
-            include: paths.scssModulesPath,
-            use: [
-              require.resolve('style-loader'),
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  importLoaders: 1,
-                  modules: true,
-                  camelCase: true,
-                  localIdentName: '[name]__[local]___[hash:base64:5]',
-                },
-              },
-              {
-                loader: require.resolve('postcss-loader'),
-                options: {
-                  // Necessary for external CSS imports to work
-                  // https://github.com/facebookincubator/create-react-app/issues/2677
-                  ident: 'postcss',
-                  plugins: () => [
-                    require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
-                        'not ie < 9', // React doesn't support IE8 anyway
-                      ],
-                      flexbox: 'no-2009',
-                    }),
+            include: paths.scssPath,
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: {
+                    loader: require.resolve('style-loader'),
+                    options: {
+                      hmr: false,
+                    },
+                  },
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        minimize: false,
+                      },
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: {
+                        // Necessary for external CSS imports to work
+                        // https://github.com/facebookincubator/create-react-app/issues/2677
+                        ident: 'postcss',
+                        plugins: () => [
+                          require('postcss-flexbugs-fixes'),
+                          autoprefixer({
+                            browsers: [
+                              '>1%',
+                              'last 4 versions',
+                              'Firefox ESR',
+                              'not ie < 9', // React doesn't support IE8 anyway
+                            ],
+                            flexbox: 'no-2009',
+                          }),
+                        ],
+                      },
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        includePaths: [paths.scssPath],
+                      },
+                    },
                   ],
                 },
-              },
-              {
-                loader: require.resolve('sass-loader'),
-                options: {
-                  includePaths: [paths.scssPath],
-                },
-              },
-            ],
+                extractTextPluginOptions
+              )
+            ),
           },
           {
             test: /\.scss$/,
-            include: paths.scssPath,
-            use: [
-              require.resolve('style-loader'),
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  importLoaders: 1,
-                  camelCase: true,
-                  localIdentName: '[name]__[local]___[hash:base64:5]',
-                },
-              },
-              {
-                loader: require.resolve('postcss-loader'),
-                options: {
-                  // Necessary for external CSS imports to work
-                  // https://github.com/facebookincubator/create-react-app/issues/2677
-                  ident: 'postcss',
-                  plugins: () => [
-                    require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
-                        'not ie < 9', // React doesn't support IE8 anyway
-                      ],
-                      flexbox: 'no-2009',
-                    }),
+            include: paths.scssModulesPath,
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: {
+                    loader: require.resolve('style-loader'),
+                    options: {
+                      hmr: false,
+                    },
+                  },
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        modules: true,
+                        camelCase: true,
+                        minimize: false,
+                      },
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: {
+                        // Necessary for external CSS imports to work
+                        // https://github.com/facebookincubator/create-react-app/issues/2677
+                        ident: 'postcss',
+                        plugins: () => [
+                          require('postcss-flexbugs-fixes'),
+                          autoprefixer({
+                            browsers: [
+                              '>1%',
+                              'last 4 versions',
+                              'Firefox ESR',
+                              'not ie < 9', // React doesn't support IE8 anyway
+                            ],
+                            flexbox: 'no-2009',
+                          }),
+                        ],
+                      },
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        includePaths: [paths.scssPath],
+                      },
+                    },
                   ],
                 },
-              },
-              {
-                loader: require.resolve('sass-loader'),
-                options: {
-                  includePaths: [paths.scssPath],
-                },
-              },
-            ],
+                extractTextPluginOptions
+              )
+            ),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
@@ -318,6 +348,8 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
+    new ExtractTextPlugin(),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
