@@ -37,10 +37,10 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test --env=jsdom',
-    eject: 'react-scripts eject',
+    start: 'react-app-rewired start --scripts-version moz-console-react-scripts',
+    build: 'react-app-rewired build --scripts-version moz-console-react-scripts',
+    test: 'react-app-rewired test --env=jsdom --scripts-version moz-console-react-scripts',
+    eject: 'react-app-rewired eject --scripts-version moz-console-react-scripts',
   };
 
   fs.writeFileSync(
@@ -91,15 +91,23 @@ module.exports = function(
 
   let command;
   let args;
+  let photonArgs;
 
   if (useYarn) {
     command = 'yarnpkg';
-    args = ['add'];
+    photonArgs = args = ['add'];
   } else {
     command = 'npm';
-    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    photonArgs = args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
-  args.push('react', 'react-dom');
+
+  photonArgs.push(
+    'antd',
+    'react-app-rewired',
+    'babel-plugin-import',
+    'photon-ant',
+    'react-app-rewire-less'
+  );
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -128,6 +136,16 @@ module.exports = function(
       console.error(`\`${command} ${args.join(' ')}\` failed`);
       return;
     }
+  }
+
+  // Install ant/photon-ant dependencies
+  console.log(`Installing ant and photon-ant dependencies using ${command}...`);
+  console.log();
+
+  const proc = spawn.sync(command, photonArgs, { stdio: 'inherit' });
+  if (proc.status !== 0) {
+    console.error(`\`${command} ${photonArgs.join(' ')}\` failed`);
+    return;
   }
 
   // Display the most elegant way to cd.

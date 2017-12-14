@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "1.0.17",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
-  "license": "MIT",
+  "name": "moz-console-react-scripts",
+  "version": "0.0.7",
+  "description": "Configuration and scripts for Create React App, tailored for moz-console apps",
+  "repository": "mozilla/moz-console",
+  "license": "MPL",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/mozilla/moz-console/issues"
   },
   "files": [
     "bin",
