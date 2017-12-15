@@ -106,7 +106,7 @@ module.exports = function(proxy, allowedHost) {
       app.use(noopServiceWorkerMiddleware(servedPathPathname));
       app.use(serveAppMiddleware(servedPathPathname));
       app.use(
-        `${config.output.publicPath.slice(0, -1)}/assets`,
+        `${config.output.publicPath.slice(0, -1)}/static`,
         express.static(paths.appPublic)
       );
     },
