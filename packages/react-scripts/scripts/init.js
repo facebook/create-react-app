@@ -180,6 +180,11 @@ module.exports = function(
       )
     );
   }
+
+  // Create a Tailwind config file
+  spawn.sync('./node_modules/.bin/tailwind', 'init', { stdio: 'inherit' });
+  console.log('Created a Tailwind config file');
+
   console.log();
   console.log('Happy hacking!');
 };
