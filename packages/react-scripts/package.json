@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "1.0.17",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "name": "react-scripts-tailwindcss",
+  "version": "0.0.1",
+  "description": "Configuration and scripts for Create React App, extended with Tailwind CSS.",
+  "repository": "DemianD/create-react-app-tailwindcss",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/DemianD/create-react-app-tailwindcss/issues"
   },
   "files": [
     "bin",
