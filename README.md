@@ -1,4 +1,14 @@
-# Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
+# Create React App, extended with TailwindCSS and PurgeCSS [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
+
+## Customization
+- Added TailwindCSS to the webpack configuration
+- Added PurgeCSS to the production build
+
+Please feel free to use this package.
+If something doesn’t work regard to TailwindCSS or PurgeCSS configuration, please [file an issue in this repository](https://github.com/DemianD/create-react-app-tailwindcss/issues/new).
+
+
+## General
 
 Create React apps with no build configuration.
 

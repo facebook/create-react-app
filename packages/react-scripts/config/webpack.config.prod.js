@@ -21,6 +21,11 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
+/* CUSTOM */
+const glob = require('glob')
+const tailwindcss = require('tailwindcss');
+const PurgecssPlugin = require("purgecss-webpack-plugin");
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
@@ -53,6 +58,15 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
     { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
+
+// Custom PurgeCSS extractor for Tailwind that allows special characters in
+// class names.
+// https://github.com/FullHuman/purgecss#extractor
+class TailwindExtractor {
+  static extract(content) {
+    return content.match(/[A-z0-9-:\/]+/g);
+  }
+}
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -220,6 +234,7 @@ module.exports = {
                         ident: 'postcss',
                         plugins: () => [
                           require('postcss-flexbugs-fixes'),
+                          tailwindcss('./tailwind.js'),
                           autoprefixer({
                             browsers: [
                               '>1%',
@@ -356,6 +371,20 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
+    new PurgecssPlugin({
+      // Specify the locations of any files you want to scan for class names.
+      paths: glob.sync(`${paths.appSrc}/**/*.js`),
+      extractors: [
+        {
+          extractor: TailwindExtractor,
+
+          // Specify the file extensions to include when scanning for
+          // class names.
+          extensions: ["js", "jsx"],
+        }
+      ]
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
