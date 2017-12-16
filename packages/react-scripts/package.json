@@ -1,6 +1,6 @@
 {
   "name": "react-scripts-tailwindcss",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Configuration and scripts for Create React App, extended with Tailwind CSS.",
   "repository": "DemianD/create-react-app-tailwindcss",
   "license": "MIT",
