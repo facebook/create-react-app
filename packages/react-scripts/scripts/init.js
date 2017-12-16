@@ -56,6 +56,20 @@ module.exports = function(
     );
   }
 
+  // Create a Tailwind config file
+  const procTailwind = spawn.sync(
+    `${appPath}/node_modules/.bin/tailwind`,
+    ["init", path.join(appPath, "tailwind.js")],
+    { stdio: "inherit" }
+  );
+
+  if (procTailwind.status !== 0) {
+    console.error(`Failed creating Tailwind config file`);
+    return;
+  }
+
+  console.log("Created a Tailwind config file");
+
   // Copy the files for the user
   const templatePath = template
     ? path.resolve(originalDirectory, template)
@@ -180,6 +194,7 @@ module.exports = function(
       )
     );
   }
+
   console.log();
   console.log('Happy hacking!');
 };
