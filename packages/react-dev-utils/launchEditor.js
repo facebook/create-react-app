@@ -260,13 +260,16 @@ function launchEditor(fileName, lineNumber, colNumber) {
 
   // Sanitize lineNumber to prevent malicious use on win32
   // via: https://github.com/nodejs/node/blob/c3bb4b1aa5e907d489619fb43d233c3336bfc03d/lib/child_process.js#L333
-  if (lineNumber && isNaN(lineNumber)) {
+  // and it should be a positive integer
+  if (!(Number.isInteger(lineNumber) && lineNumber > 0)) {
     return;
   }
 
-  // colNumber is optional, but should be a number
+  // colNumber is optional, but should be a positive integer too
   // default is 1
-  colNumber = parseInt(colNumber, 10) || 1;
+  if (!(Number.isInteger(colNumber) && colNumber > 0)) {
+    colNumber = 1;
+  }
 
   let [editor, ...args] = guessEditor();
   if (!editor) {
