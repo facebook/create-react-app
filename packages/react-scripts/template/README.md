@@ -1572,12 +1572,9 @@ Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debu
       "name": "Debug CRA Tests",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
-      "runtimeArgs": [
-        "--inspect-brk",
-        "test"
-      ],
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",      
       "args": [
+        "test",
         "--runInBand",
         "--no-cache",
         "--env=jsdom"
