@@ -370,7 +370,7 @@ function getInstallPackage(version, originalDirectory) {
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
-  } else if (version.match(/^file:/)) {
+  } else if (version && version.match(/^file:/)) {
     packageToInstall = `file:${path.resolve(
       originalDirectory,
       version.match(/^file:(.*)?$/)[1]
