@@ -113,12 +113,14 @@ choosePort(HOST, DEFAULT_PORT)
           config: {
             record: false,
             baseUrl: 'http://' + HOST + ':' + port,
+            screenshotOnHeadlessFailure: false,
+            videoRecording: false,
           },
         })
         .then(results => {
-          console.log(results);
           devServer.close();
-          process.exit();
+          const exitCode = results.failures !== 0 ? 1 : 0;
+          process.exit(exitCode);
         });
     });
   })
