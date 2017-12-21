@@ -73,6 +73,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
+- [File Compression](#file-compression)
 - [Deployment](#deployment)
   - [Static Server](#static-server)
   - [Other Solutions](#other-solutions)
@@ -1809,6 +1810,19 @@ script.
 ```
 npm run build
 npm run analyze
+```
+
+## File Compression
+
+Build script shows files size after gzip compression but the real output in the build folder is only minified. A simple way to achieve the compression is to add a postbuild script in the package.json
+```diff
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
++   "postbuild": "gzip -r build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
 ```
 
 ## Deployment
