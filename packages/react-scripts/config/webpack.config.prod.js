@@ -263,7 +263,6 @@ module.exports = {
                       modules: true,
                       camelCase: true,
                       minimize: false,
-                      localIdentName: '[name]__[local]___[hash:base64:5]',
                       sourceMap: true,
                     },
                   },
