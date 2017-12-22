@@ -13,7 +13,6 @@ const babelJest = require('babel-jest')
 module.exports = babelJest.createTransformer({
   'plugins': [
     'transform-es2015-modules-commonjs',
-    'dynamic-import-node',
     'transform-decorators-legacy',
     'transform-class-properties',
     ['module-resolver', {
