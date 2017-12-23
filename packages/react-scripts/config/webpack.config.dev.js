@@ -219,8 +219,10 @@ module.exports = {
   plugins: [
     // Lint CSS with StyleLint
     new StyleLintPlugin({
+      cache: true,
       context: paths.appSrc,
       files: ['**/*.css'],
+      lintDirtyModulesOnly: true,
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:

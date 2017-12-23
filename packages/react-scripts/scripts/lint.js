@@ -6,9 +6,10 @@ const paths = require('../config/paths');
 
 stylelint
   .lint({
+    cache: process.env.NODE_ENV !== 'production' && !process.env.CI,
     files: `${paths.appSrc}/**/*.css`,
-    formatter: stylelintFormatter,
     fix: true,
+    formatter: stylelintFormatter,
   })
   .then(function(data) {
     console.log(data.output);

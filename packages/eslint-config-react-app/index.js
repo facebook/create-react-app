@@ -118,6 +118,7 @@ module.exports = {
   rules: {
     // https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
     'class-methods-use-this': 0,
+    'global-require': 0,
     'no-console': 0,
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
     'no-use-before-define': [
@@ -142,5 +143,8 @@ module.exports = {
 
     // https://github.com/amilajack/eslint-plugin-compat
     'compat/compat': 'warn',
+
+    // https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
+    'import/prefer-default-export': 0,
   },
 };

@@ -47,14 +47,11 @@ if (process.env.E2E_FILE) {
 
   resourceLoader = (resource, callback) => resource.defaultFetch(callback);
 } else {
-  it.only(
-    'can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)',
-    () => {
-      expect(
-        new Error("This isn't the error you are looking for.")
-      ).to.be.undefined();
-    }
-  );
+  it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {
+    expect(
+      new Error("This isn't the error you are looking for.")
+    ).to.be.undefined();
+  });
 }
 
 export default feature =>

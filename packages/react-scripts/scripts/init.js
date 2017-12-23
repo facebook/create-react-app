@@ -43,7 +43,7 @@ module.exports = function(
     eject: 'react-scripts eject',
     lint: 'react-scripts lint',
     format:
-      'prettier --trailing-comma es5 --single-quote --write "src/**/*.js"',
+      'prettier --trailing-comma es5 --single-quote --write "src/**/*.{js,css}"',
   };
 
   // Setup prettier rules
