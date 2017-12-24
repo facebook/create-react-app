@@ -7,6 +7,10 @@
 Please feel free to use this package.
 If something doesn’t work regard to TailwindCSS or PurgeCSS configuration, please [file an issue in this repository](https://github.com/DemianD/create-react-app-tailwindcss/issues/new).
 
+### Installation
+```bash
+create-react-app app --scripts-version=react-scripts-tailwindcss
+```
 
 ## General
 
