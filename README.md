@@ -39,6 +39,10 @@ Install it once globally:
 ```sh
 npm install -g create-react-app
 ```
+or with yarn
+```sh
+yarn global add create-react-app --prefix /usr/local
+```
 
 **You’ll need to have Node >= 6 on your machine**. You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
