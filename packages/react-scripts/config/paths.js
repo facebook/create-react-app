@@ -60,6 +60,8 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  scssModulesPath: resolveApp('src/app'),
+  scssPath: resolveApp('src/scss'),
 };
 
 // @remove-on-eject-begin
@@ -83,6 +85,8 @@ module.exports = {
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
+  scssModulesPath: resolveApp('src/app'),
+  scssPath: resolveApp('src/scss'),
 };
 
 const ownPackageJson = require('../package.json');
