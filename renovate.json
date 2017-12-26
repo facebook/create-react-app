@@ -1,0 +1,9 @@
+{
+  "extends": ["config:base"],
+  "baseBranch": "master",
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "renovateFork": true,
+  "ignorePaths": [".github", "packages/create-react-app", "tasks"]
+}
