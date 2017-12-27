@@ -18,6 +18,8 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const SentryPlugin = require('webpack-sentry-plugin');
+
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -41,6 +43,23 @@ const env = getClientEnvironment(publicUrl);
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
+
+// We only want to upload
+const ciBuildBranch = (function() {
+  if (!process.env.CI || !env.stringified['process.env'].BRANCH) {
+    return false;
+  }
+  switch (env.stringified['process.env'].BRANCH) {
+    case 'develop':
+    case 'staging':
+    case 'master': {
+      return true;
+    }
+    default: {
+      return false;
+    }
+  }
+})();
 
 // Note: defined here because it will be used more than once.
 const cssFilename = 'static/css/[name].[contenthash:8].css';
@@ -329,6 +348,18 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
+    // Upload sourcemaps to sentry.io if API key & build branch & sourcemaps enabled
+    process.env.SENTRY_API_KEY && ciBuildBranch && shouldUseSourceMap
+      ? new SentryPlugin({
+          organisation: process.env.SENTRY_ORGANISATION,
+          project: process.env.SENTRY_PROJECT,
+          apiKey: process.env.SENTRY_API_KEY,
+          deleteAfterCompile: true,
+          release: env.stringified['process.env'].BUILD_NUM,
+          exclude: /\.(html|css)$/,
+        })
+      : () => {},
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

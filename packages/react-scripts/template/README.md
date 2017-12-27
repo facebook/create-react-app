@@ -65,6 +65,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
 - [Debugging Tests](#debugging-tests)
+- [JS Error reporting](#js-error-reporting)
 - [Developing Components in Isolation](#developing-components-in-isolation)
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
@@ -1606,6 +1607,44 @@ Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debu
 }
 ```
 
+## JS Error reporting
+
+Using [Sentry] for real-time error reporting.
+
+Only active on a `production` build and if you define environment variables.
+
+```sh
+SENTRY_DSN=
+SENTRY_API_KEY=
+SENTRY_ORGANISATION=
+SENTRY_PROJECT=
+```
+
+### `SENTRY_DSN` 
+
+public one as it is used client side
+
+### `SENTRY_API_KEY`
+
+Go to [Generate API key](https://sentry.io/api/)
+
+### `SENTRY_ORGANISATION` 
+
+most likely `stinkstudios`
+
+### `SENTRY_PROJECT` 
+
+short name in the settings on sentry for your project
+
+Using
+
+- [`raven-js`]
+- [`webpack-sentry-plugin`](https://github.com/40thieves/webpack-sentry-plugin)
+
+Sourcemaps are generated via webpack and upload to sentry. They should be deleted once uploaded
+
+**Make sure you dont deploy the sourcemaps on production**
+
 ## Developing Components in Isolation
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states.
@@ -2305,3 +2344,7 @@ In the future, we might start automatically compiling incompatible third-party m
 ## Something Missing?
 
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
+
+
+[Sentry]: https://sentry.io/stinkstudios/
+[`raven-js`]: https://github.com/getsentry/raven-js
