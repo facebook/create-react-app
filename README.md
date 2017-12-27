@@ -7,6 +7,17 @@ This is fork is maintained for the purpose of publishing `@ethersage/react-scrip
 - Changes should not be made to any package other that `react-scripts`.
 - New versions of `@facebookincubator/create-react-app` upstream will be merged into `ethersage` regularly. The first ethersage release off of a given upstream semver version will have the same version. Thereafter, changes to an upstream version will use a pre-release version of the upstream, such as `@ethersage/react-scripts@1.0.17-ethersage.1`.
 
+### Install warnings
+
+`yarn` on projects created with `@ethersage/react-scripts` produces a number of "normal" peer dependency warnings that are caused by upstream dependencies. The following are known as of the last update here, but will change as upstream dependencies change:
+
+```
+warning "@ethersage/react-scripts > react-hot-loader > redbox-react@1.4.2" has incorrect peer dependency "react@^0.14.0 || ^15.0.0".
+warning "@ethersage/react-scripts > react-hot-loader > redbox-react@1.4.2" has incorrect peer dependency "react-dom@^0.14.0 || ^15.0.0".
+```
+
+## Continiuing Upstream README
+
 Create React apps with no build configuration.
 
 * [Getting Started](#getting-started) – How to create a new app.
