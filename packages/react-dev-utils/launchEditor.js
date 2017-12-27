@@ -36,6 +36,8 @@ const COMMON_EDITORS_OSX = {
   '/Applications/Sublime Text 2.app/Contents/MacOS/Sublime Text 2':
     '/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl',
   '/Applications/Visual Studio Code.app/Contents/MacOS/Electron': 'code',
+  '/Applications/Visual Studio Code - Insiders.app/Contents/MacOS/Electron':
+    'code-insiders',
   '/Applications/AppCode.app/Contents/MacOS/appcode':
     '/Applications/AppCode.app/Contents/MacOS/appcode',
   '/Applications/CLion.app/Contents/MacOS/clion':
@@ -58,6 +60,7 @@ const COMMON_EDITORS_LINUX = {
   atom: 'atom',
   Brackets: 'brackets',
   code: 'code',
+  'code-insiders': 'code-insiders',
   emacs: 'emacs',
   'idea.sh': 'idea',
   'phpstorm.sh': 'phpstorm',
@@ -71,6 +74,7 @@ const COMMON_EDITORS_LINUX = {
 const COMMON_EDITORS_WIN = [
   'Brackets.exe',
   'Code.exe',
+  'Code - Insiders.exe',
   'atom.exe',
   'sublime_text.exe',
   'notepad++.exe',
@@ -121,6 +125,8 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
       return ['--line', lineNumber, fileName];
     case 'code':
     case 'Code':
+    case 'code-insiders':
+    case 'Code - Insiders':
       return addWorkspaceToArgumentsIfExists(
         ['-g', fileName + ':' + lineNumber],
         workspace
