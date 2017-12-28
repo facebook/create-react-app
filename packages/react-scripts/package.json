@@ -57,7 +57,7 @@
     "raven-js": "3.21.0",
     "react-dev-utils": "^4.2.1",
     "style-loader": "0.19.1",
-    "stylelint": "8.2.0",
+    "stylelint": "8.4.0",
     "stylelint-formatter-pretty": "1.0.3",
     "stylelint-webpack-plugin": "0.9.0",
     "sw-precache-webpack-plugin": "0.11.4",
