@@ -19,7 +19,11 @@
   ],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
-  },
+	},
+	"pkg": {
+		"scripts": "*.js",
+		"assets": "./**/*"
+	},
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
