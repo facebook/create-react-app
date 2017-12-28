@@ -50,7 +50,7 @@
     "postcss": "6.0.14",
     "postcss-cssnext": "3.0.2",
     "postcss-flexbugs-fixes": "3.2.0",
-    "postcss-loader": "2.0.8",
+    "postcss-loader": "2.0.9",
     "prettier": "1.9.2",
     "promise": "8.0.1",
     "raf": "3.4.0",
