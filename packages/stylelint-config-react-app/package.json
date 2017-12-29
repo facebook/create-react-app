@@ -44,7 +44,7 @@
   "dependencies": {
     "stylelint-declaration-block-no-ignored-properties": "^1.0.1",
     "stylelint-no-unsupported-browser-features": "^1.0.1",
-    "stylelint-order": "^0.7.0",
+    "stylelint-order": "^0.8.0",
     "stylelint-scss": "^2.1.0"
   }
 }
