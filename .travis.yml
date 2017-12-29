@@ -3,7 +3,7 @@
 # with pre installed yarn v0.17.8
 # https://github.com/facebookincubator/create-react-app/issues/3054
 # TODO: remove after Trusty environment is updated with a lastet version of yarn
-dist: precise
+dist: trusty
 language: node_js
 node_js:
   - 8.9.0
