@@ -22,7 +22,7 @@
   "devDependencies": {
     "eslint": "^4.11.0",
     "eslint-config-stylelint": "^8.0.0",
-    "jest": "^21.2.1",
+    "jest": "^22.0.0",
     "stylelint": "^8.2.0"
   },
   "peerDependencies": {
