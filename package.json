@@ -19,7 +19,7 @@
     "husky": "^0.14.0",
     "lerna": "^2.0.0",
     "lerna-changelog": "^0.7.0",
-    "lint-staged": "^3.3.1",
+    "lint-staged": "^6.0.0",
     "prettier": "1.9.2"
   },
   "lint-staged": {
