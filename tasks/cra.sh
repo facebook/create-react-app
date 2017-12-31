@@ -15,7 +15,7 @@ cd "$(dirname "$0")"
 function cleanup {
   echo 'Cleaning up.'
   # Uncomment when snapshot testing is enabled by default:
-  # rm ./template/src/__snapshots__/App.test.js.snap
+  # rm ./template/src/__snapshots__/app.test.js.snap
 }
 
 # Error messages are redirected to stderr

@@ -7,13 +7,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Generators from './generators';
+import AsyncAwait from './async-await';
 
-describe('generators', () => {
+describe('async/await', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<Generators onReady={resolve} />, div);
+      ReactDOM.render(<AsyncAwait onReady={resolve} />, div);
     });
   });
 });

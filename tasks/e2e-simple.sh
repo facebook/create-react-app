@@ -21,7 +21,7 @@ function cleanup {
   echo 'Cleaning up.'
   cd "$root_path"
   # Uncomment when snapshot testing is enabled by default:
-  # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
+  # rm ./packages/react-scripts/template/src/__snapshots__/app.test.js.snap
   rm -rf "$temp_cli_path" $temp_app_path
 }
 
@@ -177,7 +177,7 @@ exists build/favicon.ico
 # Run tests with CI flag
 CI=true npm test
 # Uncomment when snapshot testing is enabled by default:
-# exists template/src/__snapshots__/App.test.js.snap
+# exists template/src/__snapshots__/app.test.js.snap
 
 # Test local start command
 npm start -- --smoke-test
@@ -283,19 +283,19 @@ function verify_module_scope {
   # Create stub json file
   echo "{}" >> sample.json
 
-  # Save App.js, we're going to modify it
-  cp src/App.js src/App.js.bak
+  # Save app.js, we're going to modify it
+  cp src/app.js src/app.js.bak
 
   # Add an out of scope import
-  echo "import sampleJson from '../sample'" | cat - src/App.js > src/App.js.temp && mv src/App.js.temp src/App.js
+  echo "import sampleJson from '../sample'" | cat - src/app.js > src/app.js.temp && mv src/app.js.temp src/app.js
 
   # Make sure the build fails
   npm run build; test $? -eq 1 || exit 1
   # TODO: check for error message
 
-  # Restore App.js
-  rm src/App.js
-  mv src/App.js.bak src/App.js
+  # Restore app.js
+  rm src/app.js
+  mv src/app.js.bak src/app.js
 }
 
 # Enter the app directory
@@ -313,7 +313,7 @@ exists build/favicon.ico
 # Run tests with CI flag
 CI=true npm test
 # Uncomment when snapshot testing is enabled by default:
-# exists src/__snapshots__/App.test.js.snap
+# exists src/__snapshots__/app.test.js.snap
 
 # Test the server
 npm start -- --smoke-test
@@ -358,7 +358,7 @@ exists build/favicon.ico
 # `scripts/test.js` survive ejection (right now it doesn't).
 npm test -- --watch=no
 # Uncomment when snapshot testing is enabled by default:
-# exists src/__snapshots__/App.test.js.snap
+# exists src/__snapshots__/app.test.js.snap
 
 # Test the server
 npm start -- --smoke-test

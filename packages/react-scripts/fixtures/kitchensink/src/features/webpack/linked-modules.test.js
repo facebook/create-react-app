@@ -7,13 +7,17 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Generators from './generators';
+import { test, version } from 'test-integrity';
+import LinkedModules from './linked-modules';
 
-describe('generators', () => {
+describe('linked modules', () => {
+  it('has integrity', () => {
+    expect(test());
+    expect(version() === '2.0.0');
+  });
+
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    return new Promise(resolve => {
-      ReactDOM.render(<Generators onReady={resolve} />, div);
-    });
+    ReactDOM.render(<LinkedModules />, div);
   });
 });

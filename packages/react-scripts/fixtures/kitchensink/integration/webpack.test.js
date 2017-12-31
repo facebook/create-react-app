@@ -33,7 +33,7 @@ describe('Integration', () => {
       const doc = await initDOM('no-ext-inclusion');
 
       expect(doc.getElementById('feature-no-ext-inclusion').href).to.match(
-        /\/static\/media\/aFileWithoutExt\.[a-f0-9]{8}\.bin$/
+        /\/static\/media\/a-file-without-ext\.[a-f0-9]{8}\.bin$/
       );
     });
 
@@ -65,7 +65,7 @@ describe('Integration', () => {
       const doc = await initDOM('unknown-ext-inclusion');
 
       expect(doc.getElementById('feature-unknown-ext-inclusion').href).to.match(
-        /\/static\/media\/aFileWithExt\.[a-f0-9]{8}\.unknown$/
+        /\/static\/media\/a-file-with-ext\.[a-f0-9]{8}\.unknown$/
       );
     });
   });

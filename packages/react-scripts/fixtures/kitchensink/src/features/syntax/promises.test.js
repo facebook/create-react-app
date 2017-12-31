@@ -7,13 +7,14 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Generators from './generators';
 
-describe('generators', () => {
+describe('promises', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    return new Promise(resolve => {
-      ReactDOM.render(<Generators onReady={resolve} />, div);
+    return import('./Promises').then(({ default: Promises }) => {
+      return new Promise(resolve => {
+        ReactDOM.render(<Promises onReady={resolve} />, div);
+      });
     });
   });
 });

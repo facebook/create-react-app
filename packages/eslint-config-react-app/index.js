@@ -95,7 +95,7 @@ module.exports = {
     'prettier/react',
   ],
 
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'compat'],
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'compat', 'unicorn'],
 
   env: {
     browser: true,
@@ -146,5 +146,8 @@ module.exports = {
 
     // https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
     'import/prefer-default-export': 0,
+
+    // https://github.com/sindresorhus/eslint-plugin-unicorn#rules
+    'unicorn/filename-case': ['error', { case: 'kebabCase' }],
   },
 };

@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+This project was bootstrapped with [Create React app](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
@@ -69,15 +69,15 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Developing Components in Isolation](#developing-components-in-isolation)
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
-- [Making a Progressive Web App](#making-a-progressive-web-app)
+- [Making a Progressive Web app](#making-a-progressive-web-app)
   - [Opting Out of Caching](#opting-out-of-caching)
   - [Offline-First Considerations](#offline-first-considerations)
-  - [Progressive Web App Metadata](#progressive-web-app-metadata)
+  - [Progressive Web app Metadata](#progressive-web-app-metadata)
 - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
 - [Deployment](#deployment)
   - [Static Server](#static-server)
   - [Other Solutions](#other-solutions)
-  - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
+  - [Serving apps with Client-Side Routing](#serving-apps-with-client-side-routing)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [Azure](#azure)
   - [Firebase](#firebase)
@@ -99,7 +99,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Updating to New Releases
 
-Create React App is divided into two packages:
+Create React app is divided into two packages:
 
 * `create-react-app` is a global command-line utility that you use to create new projects.
 * `react-scripts` is a development dependency in the generated projects (including this one).
@@ -131,9 +131,9 @@ my-app/
     index.html
     favicon.ico
   src/
-    App.css
-    App.js
-    App.test.js
+    app.css
+    app.js
+    app.test.js
     index.css
     index.js
     logo.svg
@@ -247,13 +247,13 @@ You would need to install an ESLint plugin for your editor first. Then, add a fi
 
 Now your editor should report the linting warnings.
 
-Note that even if you edit your `.eslintrc` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
+Note that even if you edit your `.eslintrc` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React app intentionally provides a minimal set of rules that find common mistakes.
 
 ## Debugging in the Editor
 
 **This feature is currently only supported by [Visual Studio Code](https://code.visualstudio.com) and [WebStorm](https://www.jetbrains.com/webstorm/).**
 
-Visual Studio Code and WebStorm support debugging out of the box with Create React App. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.
+Visual Studio Code and WebStorm support debugging out of the box with Create React app. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.
 
 ### Visual Studio Code
 
@@ -355,7 +355,7 @@ The editor plugins should be able to pick up the configuration already defined i
 
 ## Changing the Page `<title>`
 
-You can find the source HTML file in the `public` folder of the generated project. You may edit the `<title>` tag in it to change the title from “React App” to anything else.
+You can find the source HTML file in the `public` folder of the generated project. You may edit the `<title>` tag in it to change the title from “React app” to anything else.
 
 Note that normally you wouldn’t edit files in the `public` folder very often. For example, [adding a stylesheet](#adding-a-stylesheet) is done without touching the HTML.
 
@@ -365,7 +365,7 @@ If you use a custom server for your app in production and want to modify the tit
 
 ## Installing a Dependency
 
-The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
+The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React app as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
 
 ```sh
 npm install --save react-router
@@ -443,12 +443,12 @@ const moduleA = 'Hello';
 
 export { moduleA };
 ```
-### `App.js`
+### `app.js`
 
 ```js
 import React, { Component } from 'react';
 
-class App extends Component {
+class app extends Component {
   handleClick = () => {
     import('./moduleA')
       .then(({ moduleA }) => {
@@ -468,7 +468,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default app;
 ```
 
 This will make `moduleA.js` and all its unique dependencies as a separate chunk that only loads after the user clicks the 'Load' button.
@@ -518,7 +518,7 @@ This project setup minifies your CSS and adds vendor prefixes to it automaticall
 For example, this:
 
 ```css
-.App {
+.app {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -528,7 +528,7 @@ For example, this:
 becomes this:
 
 ```css
-.App {
+.app {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -575,9 +575,9 @@ Then in `package.json`, add the following lines to `scripts`:
 
 >Note: To use a different preprocessor, replace `build-css` and `watch-css` commands according to your preprocessor’s documentation.
 
-Now you can rename `src/App.css` to `src/App.scss` and run `npm run watch-css`. The watcher will find every Sass file in `src` subdirectories, and create a corresponding CSS file next to it, in our case overwriting `src/App.css`. Since `src/App.js` still imports `src/App.css`, the styles become a part of your application. You can now edit `src/App.scss`, and `src/App.css` will be regenerated.
+Now you can rename `src/app.css` to `src/app.scss` and run `npm run watch-css`. The watcher will find every Sass file in `src` subdirectories, and create a corresponding CSS file next to it, in our case overwriting `src/app.css`. Since `src/app.js` still imports `src/app.css`, the styles become a part of your application. You can now edit `src/app.scss`, and `src/app.css` will be regenerated.
 
-To share variables between Sass files, you can use Sass imports. For example, `src/App.scss` and other component style files could include `@import "./shared.scss";` with variable definitions.
+To share variables between Sass files, you can use Sass imports. For example, `src/app.scss` and other component style files could include `@import "./shared.scss";` with variable definitions.
 
 To enable importing files without using relative paths, you can add the  `--include-path` option to the command in `package.json`.
 
@@ -712,7 +712,7 @@ Inside `index.html`, you can use it like this:
 
 Only files inside the `public` folder will be accessible by `%PUBLIC_URL%` prefix. If you need to use a file from `src` or `node_modules`, you’ll have to copy it there to explicitly specify your intention to make this file a part of the build.
 
-When you run `npm run build`, Create React App will substitute `%PUBLIC_URL%` with a correct absolute path so your project works even if you use client-side routing or host it at a non-root URL.
+When you run `npm run build`, Create React app will substitute `%PUBLIC_URL%` with a correct absolute path so your project works even if you use client-side routing or host it at a non-root URL.
 
 In JavaScript code, you can use `process.env.PUBLIC_URL` for similar purposes:
 
@@ -759,7 +759,7 @@ Alternatively, you can force the linter to ignore any line by adding `// eslint-
 
 ## Adding Bootstrap
 
-You don’t have to use [React Bootstrap](https://react-bootstrap.github.io) together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
+You don’t have to use [React Bootstrap](https://react-bootstrap.github.io) together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React app by following these steps:
 
 Install React Bootstrap and Bootstrap from npm. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well:
 
@@ -782,13 +782,13 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 // components takes precedence over default styles.
 ```
 
-Import required React Bootstrap components within ```src/App.js``` file or your custom component files:
+Import required React Bootstrap components within ```src/app.js``` file or your custom component files:
 
 ```js
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 ```
 
-Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
+Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`app.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/app.js) redone using React Bootstrap.
 
 ### Using a Custom Theme
 
@@ -805,18 +805,18 @@ Here is an example of adding a [customized Bootstrap](https://medium.com/@tacoma
 
 Flow is a static type checker that helps you write code with fewer bugs. Check out this [introduction to using static types in JavaScript](https://medium.com/@preethikasireddy/why-use-static-types-in-javascript-part-1-8382da1e0adb) if you are new to this concept.
 
-Recent versions of [Flow](http://flowtype.org/) work with Create React App projects out of the box.
+Recent versions of [Flow](http://flowtype.org/) work with Create React app projects out of the box.
 
-To add Flow to a Create React App project, follow these steps:
+To add Flow to a Create React app project, follow these steps:
 
 1. Run `npm install --save flow-bin` (or `yarn add flow-bin`).
 2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
 3. Run `npm run flow init` (or `yarn flow init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
-4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
+4. Add `// @flow` to any files you want to type check (for example, to `src/app.js`).
 
 Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
 You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/flow/) for a better integrated experience.
-In the future we plan to integrate it into Create React App even more closely.
+In the future we plan to integrate it into Create React app even more closely.
 
 To learn more about Flow, check out [its documentation](https://flowtype.org/).
 
@@ -828,7 +828,7 @@ Your project can consume variables declared in your environment as if they were 
 default you will have `NODE_ENV` defined for you, and any other environment variables starting with
 `REACT_APP_`.
 
-**The environment variables are embedded during the build time**. Since Create React App produces a static HTML/CSS/JS bundle, it can’t possibly read them at runtime. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, just like [described here](#injecting-data-from-the-server-into-the-page). Alternatively you can rebuild the app on the server anytime you change them.
+**The environment variables are embedded during the build time**. Since Create React app produces a static HTML/CSS/JS bundle, it can’t possibly read them at runtime. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, just like [described here](#injecting-data-from-the-server-into-the-page). Alternatively you can rebuild the app on the server anytime you change them.
 
 >Note: You must create custom environment variables beginning with `REACT_APP_`. Any other variables except `NODE_ENV` will be ignored to avoid accidentally [exposing a private key on the machine that could have the same name](https://github.com/facebookincubator/create-react-app/issues/865#issuecomment-252199527). Changing any environment variables will require you to restart the development server if it is running.
 
@@ -953,7 +953,7 @@ these defined as well. Consult their documentation how to do this. For example, 
 ## Can I Use Decorators?
 
 Many popular libraries use [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841) in their documentation.<br>
-Create React App doesn’t support decorator syntax at the moment because:
+Create React app doesn’t support decorator syntax at the moment because:
 
 * It is an experimental proposal and is subject to change.
 * The current specification version is not officially supported by Babel.
@@ -965,7 +965,7 @@ Please refer to these two threads for reference:
 * [#214](https://github.com/facebookincubator/create-react-app/issues/214)
 * [#411](https://github.com/facebookincubator/create-react-app/issues/411)
 
-Create React App will add decorator support when the specification advances to a stable stage.
+Create React app will add decorator support when the specification advances to a stable stage.
 
 ## Integrating with an API Backend
 
@@ -1159,7 +1159,7 @@ Note that the server will use a self-signed certificate, so your web browser wil
 
 ## Generating Dynamic `<meta>` Tags on the Server
 
-Since Create React App doesn’t support server rendering, you might be wondering how to make `<meta>` tags dynamic and reflect the current URL. To solve this, we recommend to add placeholders into the HTML, like this:
+Since Create React app doesn’t support server rendering, you might be wondering how to make `<meta>` tags dynamic and reflect the current URL. To solve this, we recommend to add placeholders into the HTML, like this:
 
 ```html
 <!doctype html>
@@ -1203,13 +1203,13 @@ Then, on the server, you can replace `__SERVER_DATA__` with a JSON of real data 
 >Note: this feature is available with `react-scripts@0.3.0` and higher.<br>
 >[Read the migration guide to learn how to enable it in older projects!](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030)
 
-Create React App uses [Jest](https://facebook.github.io/jest/) as its test runner. To prepare for this integration, we did a [major revamp](https://facebook.github.io/jest/blog/2016/09/01/jest-15.html) of Jest so if you heard bad things about it years ago, give it another try.
+Create React app uses [Jest](https://facebook.github.io/jest/) as its test runner. To prepare for this integration, we did a [major revamp](https://facebook.github.io/jest/blog/2016/09/01/jest-15.html) of Jest so if you heard bad things about it years ago, give it another try.
 
 Jest is a Node-based runner. This means that the tests always run in a Node environment and not in a real browser. This lets us enable fast iteration speed and prevent flakiness.
 
 While Jest provides browser globals such as `window` thanks to [jsdom](https://github.com/tmpvar/jsdom), they are only approximations of the real browser behavior. Jest is intended to be used for unit tests of your logic and your components rather than the DOM quirks.
 
-We recommend that you use a separate tool for browser end-to-end tests if you need them. They are beyond the scope of Create React App.
+We recommend that you use a separate tool for browser end-to-end tests if you need them. They are beyond the scope of Create React app.
 
 ### Filename Conventions
 
@@ -1221,7 +1221,7 @@ Jest will look for test files with any of the following popular naming conventio
 
 The `.test.js` / `.spec.js` files (or the `__tests__` folders) can be located at any depth under the `src` top level folder.
 
-We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Colocation also helps find tests more quickly in larger projects.
+We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `app.test.js` and `app.js` are in the same folder, the test just needs to `import app from './app'` instead of a long relative path. Colocation also helps find tests more quickly in larger projects.
 
 ### Command Line Interface
 
@@ -1266,15 +1266,15 @@ Different projects choose different testing tradeoffs based on how often compone
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import app from './app';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  ReactDOM.render(<app />, div);
 });
 ```
 
-This test mounts a component and makes sure that it didn’t throw during rendering. Tests like this provide a lot value with very little effort so they are great as a starting point, and this is the test you will find in `src/App.test.js`.
+This test mounts a component and makes sure that it didn’t throw during rendering. Tests like this provide a lot value with very little effort so they are great as a starting point, and this is the test you will find in `src/app.test.js`.
 
 When you encounter bugs caused by changing components, you will gain a deeper insight into which parts of them are worth testing in your application. This might be a good time to introduce more specific tests asserting specific expected output or behavior.
 
@@ -1307,14 +1307,14 @@ Now you can write a smoke test with it:
 ```js
 import React from 'react';
 import { shallow } from 'enzyme';
-import App from './App';
+import app from './app';
 
 it('renders without crashing', () => {
-  shallow(<App />);
+  shallow(<app />);
 });
 ```
 
-Unlike the previous smoke test using `ReactDOM.render()`, this test only renders `<App>` and doesn’t go deeper. For example, even if `<App>` itself renders a `<Button>` that throws, this test will pass. Shallow rendering is great for isolated unit tests, but you may still want to create some full rendering tests to ensure the components integrate correctly. Enzyme supports [full rendering with `mount()`](http://airbnb.io/enzyme/docs/api/mount.html), and you can also use it for testing state changes and component lifecycle.
+Unlike the previous smoke test using `ReactDOM.render()`, this test only renders `<app>` and doesn’t go deeper. For example, even if `<app>` itself renders a `<Button>` that throws, this test will pass. Shallow rendering is great for isolated unit tests, but you may still want to create some full rendering tests to ensure the components integrate correctly. Enzyme supports [full rendering with `mount()`](http://airbnb.io/enzyme/docs/api/mount.html), and you can also use it for testing state changes and component lifecycle.
 
 You can read the [Enzyme documentation](http://airbnb.io/enzyme/) for more testing techniques. Enzyme documentation uses Chai and Sinon for assertions but you don’t have to use them because Jest provides built-in `expect()` and `jest.fn()` for spies.
 
@@ -1323,10 +1323,10 @@ Here is an example from Enzyme documentation that asserts specific output, rewri
 ```js
 import React from 'react';
 import { shallow } from 'enzyme';
-import App from './App';
+import app from './app';
 
 it('renders welcome message', () => {
-  const wrapper = shallow(<App />);
+  const wrapper = shallow(<app />);
   const welcome = <h2>Welcome to React</h2>;
   // expect(wrapper.contains(welcome)).to.equal(true);
   expect(wrapper.contains(welcome)).toEqual(true);
@@ -1469,7 +1469,7 @@ script:
 
 #### CircleCI
 
-Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React App project.
+Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React app project.
 
 ### On your own environment
 ##### Windows (cmd.exe)
@@ -1541,7 +1541,7 @@ Snapshot testing is a feature of Jest that automatically generates text snapshot
 
 ### Editor Integration
 
-If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.
+If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React app out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
@@ -1656,7 +1656,7 @@ For an example, a simple button component could have following states:
 
 Usually, it’s hard to see these states without running a sample app or some examples.
 
-Create React App doesn’t include any tools for this by default, but you can easily add [Storybook for React](https://storybook.js.org) ([source](https://github.com/storybooks/storybook)) or [React Styleguidist](https://react-styleguidist.js.org/) ([source](https://github.com/styleguidist/react-styleguidist)) to your project. **These are third-party tools that let you develop components and see all their states in isolation from your app**.
+Create React app doesn’t include any tools for this by default, but you can easily add [Storybook for React](https://storybook.js.org) ([source](https://github.com/storybooks/storybook)) or [React Styleguidist](https://react-styleguidist.js.org/) ([source](https://github.com/styleguidist/react-styleguidist)) to your project. **These are third-party tools that let you develop components and see all their states in isolation from your app**.
 
 ![Storybook for React Demo](http://i.imgur.com/7CIAWpB.gif)
 
@@ -1725,12 +1725,12 @@ Learn more about React Styleguidist:
 * [GitHub Repo](https://github.com/styleguidist/react-styleguidist)
 * [Documentation](https://react-styleguidist.js.org/docs/getting-started.html)
 
-## Making a Progressive Web App
+## Making a Progressive Web app
 
 By default, the production build is a fully functional, offline-first
-[Progressive Web App](https://developers.google.com/web/progressive-web-apps/).
+[Progressive Web app](https://developers.google.com/web/progressive-web-apps/).
 
-Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
+Progressive Web apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
 
  * All static site assets are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
  * Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.
@@ -1755,7 +1755,7 @@ have decided that you would like to disable them for all your existing users,
 you can swap out the call to `registerServiceWorker()` in
 [`src/index.js`](src/index.js) first by modifying the service worker import:
 ```javascript
-import { unregister } from './registerServiceWorker';
+import { unregister } from './register-service-worker';
 ```
 and then call `unregister()` instead.
 After the user visits a page that has `unregister()`,
@@ -1771,7 +1771,7 @@ If your production web server does not support HTTPS, then the service worker
 registration will fail, but the rest of your web app will remain functional.
 
 1. Service workers are [not currently supported](https://jakearchibald.github.io/isserviceworkerready/)
-in all web browsers. Service worker registration [won't be attempted](src/registerServiceWorker.js)
+in all web browsers. Service worker registration [won't be attempted](src/register-service-worker.js)
 on browsers that lack support.
 
 1. The service worker is only enabled in the [production environment](#deployment),
@@ -1805,7 +1805,7 @@ app works offline!" message) and also let them know when the service worker has
 fetched the latest updates that will be available the next time they load the
 page (showing a "New content is available; please refresh." message). Showing
 this messages is currently left as an exercise to the developer, but as a
-starting point, you can make use of the logic included in [`src/registerServiceWorker.js`](src/registerServiceWorker.js), which
+starting point, you can make use of the logic included in [`src/register-service-worker.js`](src/register-service-worker.js), which
 demonstrates which service worker lifecycle events to listen for to detect each
 scenario, and which as a default, just logs appropriate messages to the
 JavaScript console.
@@ -1819,7 +1819,7 @@ and then configure the
 option in the `SWPrecacheWebpackPlugin` section of
 [`webpack.config.prod.js`](../config/webpack.config.prod.js).
 
-### Progressive Web App Metadata
+### Progressive Web app Metadata
 
 The default configuration includes a web app manifest located at
 [`public/manifest.json`](public/manifest.json), that you can customize with
@@ -1828,7 +1828,7 @@ details specific to your web application.
 When a user adds a web app to their homescreen using Chrome or Firefox on
 Android, the metadata in [`manifest.json`](public/manifest.json) determines what
 icons, names, and branding colors to use when the web app is displayed.
-[The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
+[The Web app Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations
 will affect your users' experience.
 
@@ -1838,7 +1838,7 @@ will affect your users' experience.
 JavaScript bundles using the source maps. This helps you understand where code
 bloat is coming from.
 
-To add Source map explorer to a Create React App project, follow these steps:
+To add Source map explorer to a Create React app project, follow these steps:
 
 ```sh
 npm install --save source-map-explorer
@@ -1891,7 +1891,7 @@ serve -h
 
 ### Other Solutions
 
-You don’t necessarily need a static server in order to run a Create React App project in production. It works just as fine integrated into an existing dynamic one.
+You don’t necessarily need a static server in order to run a Create React app project in production. It works just as fine integrated into an existing dynamic one.
 
 Here’s a programmatic example using [Node](https://nodejs.org/) and [Express](http://expressjs.com/):
 
@@ -1909,13 +1909,13 @@ app.get('/', function (req, res) {
 app.listen(9000);
 ```
 
-The choice of your server software isn’t important either. Since Create React App is completely platform-agnostic, there’s no need to explicitly use Node.
+The choice of your server software isn’t important either. Since Create React app is completely platform-agnostic, there’s no need to explicitly use Node.
 
-The `build` folder with static assets is the only output produced by Create React App.
+The `build` folder with static assets is the only output produced by Create React app.
 
 However this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
 
-### Serving Apps with Client-Side Routing
+### Serving apps with Client-Side Routing
 
 If you use routers that use the HTML5 [`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) under the hood (for example, [React Router](https://github.com/ReactTraining/react-router) with `browserHistory`), many static file servers will fail. For example, if you used React Router with a route for `/todos/42`, the development server will respond to `localhost:3000/todos/42` properly, but an Express serving a production build as above will not.
 
@@ -1962,14 +1962,14 @@ When users install your app to the homescreen of their device the default config
 
 ### Building for Relative Paths
 
-By default, Create React App produces a build assuming your app is hosted at the server root.<br>
+By default, Create React app produces a build assuming your app is hosted at the server root.<br>
 To override this, specify the `homepage` in your `package.json`, for example:
 
 ```js
   "homepage": "http://mywebsite.com/relativepath",
 ```
 
-This will let Create React App correctly infer the root path to use in the generated HTML file.
+This will let Create React app correctly infer the root path to use in the generated HTML file.
 
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
 More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
@@ -2072,7 +2072,7 @@ Open your `package.json` and add a `homepage` field:
   "homepage": "https://myusername.github.io/my-app",
 ```
 
-Create React App uses the `homepage` field to determine the root URL in the built HTML file.
+Create React app uses the `homepage` field to determine the root URL in the built HTML file.
 
 #### Step 2: Install `gh-pages` and add `deploy` to `scripts` in `package.json`
 
@@ -2129,7 +2129,7 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 
 ### [Heroku](https://www.heroku.com/)
 
-Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
+Use the [Heroku Buildpack for Create React app](https://github.com/mars/create-react-app-buildpack).<br>
 You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
 
 #### Resolving Heroku Deployment Errors
@@ -2192,7 +2192,7 @@ To support `pushState`, make sure to create a `public/_redirects` file with the 
 /*  /index.html  200
 ```
 
-When you build the project, Create React App will place the `public` folder contents into the build output.
+When you build the project, Create React app will place the `public` folder contents into the build output.
 
 ### [Now](https://zeit.co/now)
 
@@ -2236,13 +2236,13 @@ You can adjust various development and production settings by setting environmen
 
 Variable | Development | Production | Usage
 :--- | :---: | :---: | :---
-BROWSER | :white_check_mark: | :x: | By default, Create React App will open the default system browser, favoring Chrome on macOS. Specify a [browser](https://github.com/sindresorhus/opn#app) to override this behavior, or set it to `none` to disable it completely. If you need to customize the way the browser is launched, you can specify a node script instead. Any arguments passed to `npm start` will also be passed to this script, and the url where your app is served will be the last argument. Your script's file name must have the `.js` extension.
+BROWSER | :white_check_mark: | :x: | By default, Create React app will open the default system browser, favoring Chrome on macOS. Specify a [browser](https://github.com/sindresorhus/opn#app) to override this behavior, or set it to `none` to disable it completely. If you need to customize the way the browser is launched, you can specify a node script instead. Any arguments passed to `npm start` will also be passed to this script, and the url where your app is served will be the last argument. Your script's file name must have the `.js` extension.
 HOST | :white_check_mark: | :x: | By default, the development web server binds to `localhost`. You may use this variable to specify a different host.
 PORT | :white_check_mark: | :x: | By default, the development web server will attempt to listen on port 3000 or prompt you to attempt the next available port. You may use this variable to specify a different port.
-HTTPS | :white_check_mark: | :x: | When set to `true`, Create React App will run the development server in `https` mode.
-PUBLIC_URL | :x: | :white_check_mark: | Create React App assumes your application is hosted at the serving web server's root or a subpath as specified in [`package.json` (`homepage`)](#building-for-relative-paths). Normally, Create React App ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included). This may be particularly useful when using a CDN to host your application.
-CI | :large_orange_diamond: | :white_check_mark: | When set to `true`, Create React App treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.
-REACT_EDITOR | :white_check_mark: | :x: | When an app crashes in development, you will see an error overlay with clickable stack trace. When you click on it, Create React App will try to determine the editor you are using based on currently running processes, and open the relevant source file. You can [send a pull request to detect your editor of choice](https://github.com/facebookincubator/create-react-app/issues/2636). Setting this environment variable overrides the automatic detection. If you do it, make sure your systems [PATH](https://en.wikipedia.org/wiki/PATH_(variable)) environment variable points to your editor’s bin folder.
+HTTPS | :white_check_mark: | :x: | When set to `true`, Create React app will run the development server in `https` mode.
+PUBLIC_URL | :x: | :white_check_mark: | Create React app assumes your application is hosted at the serving web server's root or a subpath as specified in [`package.json` (`homepage`)](#building-for-relative-paths). Normally, Create React app ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included). This may be particularly useful when using a CDN to host your application.
+CI | :large_orange_diamond: | :white_check_mark: | When set to `true`, Create React app treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.
+REACT_EDITOR | :white_check_mark: | :x: | When an app crashes in development, you will see an error overlay with clickable stack trace. When you click on it, Create React app will try to determine the editor you are using based on currently running processes, and open the relevant source file. You can [send a pull request to detect your editor of choice](https://github.com/facebookincubator/create-react-app/issues/2636). Setting this environment variable overrides the automatic detection. If you do it, make sure your systems [PATH](https://en.wikipedia.org/wiki/PATH_(variable)) environment variable points to your editor’s bin folder.
 CHOKIDAR_USEPOLLING | :white_check_mark: | :x: | When set to `true`, the watcher runs in polling mode, as necessary inside a VM. Use this option if `npm start` isn't detecting changes.
 GENERATE_SOURCEMAP | :x: | :white_check_mark: | When set to `false`, source maps are not generated for a production build. This solves OOM issues on some smaller machines.
 
@@ -2333,7 +2333,7 @@ Some third-party packages don't compile their code to ES5 before publishing to n
 To resolve this:
 
 1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled.
-  * Note: Create React App can consume both CommonJS and ES modules. For Node.js compatibility, it is recommended that the main entry point is CommonJS. However, they can optionally provide an ES module entry point with the `module` field in `package.json`. Note that **even if a library provides an ES Modules version, it should still precompile other ES6 features to ES5 if it intends to support older browsers**.
+  * Note: Create React app can consume both CommonJS and ES modules. For Node.js compatibility, it is recommended that the main entry point is CommonJS. However, they can optionally provide an ES module entry point with the `module` field in `package.json`. Note that **even if a library provides an ES Modules version, it should still precompile other ES6 features to ES5 if it intends to support older browsers**.
 
 2. Fork the package and publish a corrected version yourself. 
 

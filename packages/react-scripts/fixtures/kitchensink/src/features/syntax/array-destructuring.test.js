@@ -7,13 +7,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Generators from './generators';
+import ArrayDestructuring from './array-destructuring';
 
-describe('generators', () => {
+describe('array destructuring', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<Generators onReady={resolve} />, div);
+      ReactDOM.render(<ArrayDestructuring onReady={resolve} />, div);
     });
   });
 });

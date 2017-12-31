@@ -41,7 +41,7 @@ Test are written in `integration/{env|syntax|webpack}.test.js`, depending on the
 
 For every test case added there is just a little chore to do:
 
- - a `case` statement must be added in `src/App.js`, which simply perform a dynamic `import()` of the feature
+ - a `case` statement must be added in `src/app.js`, which simply perform a dynamic `import()` of the feature
 
  - add a test case in the appropriate integration test file, which calls and awaits `initDOM` with the previous `SwitchCase` string
  

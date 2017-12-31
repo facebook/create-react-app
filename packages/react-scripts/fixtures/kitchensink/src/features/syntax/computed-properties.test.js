@@ -7,13 +7,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Generators from './generators';
+import ComputedProperties from './computed-properties';
 
-describe('generators', () => {
+describe('computed properties', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<Generators onReady={resolve} />, div);
+      ReactDOM.render(<ComputedProperties onReady={resolve} />, div);
     });
   });
 });

@@ -14,6 +14,8 @@
     "cacheDir": ".changelog"
   },
   "packages": [
-    "packages/*"
+    "packages/eslint-config-react-app",
+    "packages/react-scripts",
+    "packages/stylelint-config-react-app"
   ]
 }

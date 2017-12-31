@@ -67,13 +67,14 @@ my-app
 │   └── index.html
 │   └── manifest.json
 └── src
-    └── App.css
-    └── App.js
-    └── App.test.js
+    └── app.css
+    └── app.js
+    └── app.test.js
     └── index.css
     └── index.js
     └── logo.svg
-    └── registerServiceWorker.js
+    └── register-service-worker.js
+    └── sentry.js
 ```
 
 No configuration or complicated folder structures, just the files you need to build your app.<br>

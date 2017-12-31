@@ -7,13 +7,11 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Generators from './generators';
+import CssInclusion from './css-inclusion';
 
-describe('generators', () => {
+describe('css inclusion', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    return new Promise(resolve => {
-      ReactDOM.render(<Generators onReady={resolve} />, div);
-    });
+    ReactDOM.render(<CssInclusion />, div);
   });
 });

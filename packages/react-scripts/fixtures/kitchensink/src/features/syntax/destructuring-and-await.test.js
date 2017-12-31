@@ -7,13 +7,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Generators from './generators';
+import DestructuringAndAwait from './destructuring-and-await';
 
-describe('generators', () => {
+describe('destructuring and await', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<Generators onReady={resolve} />, div);
+      ReactDOM.render(<DestructuringAndAwait onReady={resolve} />, div);
     });
   });
 });

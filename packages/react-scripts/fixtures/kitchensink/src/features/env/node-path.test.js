@@ -7,13 +7,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Generators from './generators';
+import NodePath from './node-path';
 
-describe('generators', () => {
+describe('NODE_PATH', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<Generators onReady={resolve} />, div);
+      ReactDOM.render(<NodePath onReady={resolve} />, div);
     });
   });
 });

@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import sentry from './sentry';
-import registerServiceWorker from './registerServiceWorker';
-import App from './App';
+import registerServiceWorker from './register-service-worker';
+import App from './app';
 
 sentry();
 

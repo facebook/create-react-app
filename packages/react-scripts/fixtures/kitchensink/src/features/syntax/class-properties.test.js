@@ -7,13 +7,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Generators from './generators';
+import ClassProperties from './class-properties';
 
-describe('generators', () => {
+describe('class properties', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {
-      ReactDOM.render(<Generators onReady={resolve} />, div);
+      ReactDOM.render(<ClassProperties onReady={resolve} />, div);
     });
   });
 });

@@ -19,7 +19,7 @@ If you want to use this ESLint configuration in a project not built with @stinks
 First, install this package, ESLint and the necessary plugins.
 
   ```sh
-  npm install --save-dev @stinkstudios/eslint-config-react-app babel-eslint@^8.0.2 eslint@^4.11.0 eslint-plugin-flowtype@^2.39.1 eslint-plugin-import@^2.8.0 eslint-plugin-jsx-a11y@^6.0.2 eslint-plugin-react@^7.5.1 eslint-plugin-compat@^2.1.0
+  npm install --save-dev @stinkstudios/eslint-config-react-app babel-eslint@^8.0.2 eslint@^4.11.0 eslint-plugin-flowtype@^2.39.1 eslint-plugin-import@^2.8.0 eslint-plugin-jsx-a11y@^6.0.2 eslint-plugin-react@^7.5.1 eslint-plugin-compat@^2.1.0 eslint-plugin-unicorn@^3.0.1
   ```
 
 Then create a file named `.eslintrc` with following contents in the root folder of your project:
@@ -39,6 +39,7 @@ Then create a file named `.eslintrc` with following contents in the root folder 
 - [`eslint-plugin-import`](https://github.com/benmosher/eslint-plugin-import/)
 - [`eslint-plugin-jsx-a11y`](https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/v6.0.2)
 - [`eslint-plugin-react`](https://github.com/yannickcr/eslint-plugin-react/tree/v7.5.1)
+- [`eslint-plugin-unicorn`](https://github.com/sindresorhus/eslint-plugin-unicorn)
 
 ## ESLint Configs
 
