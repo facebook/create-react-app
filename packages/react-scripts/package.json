@@ -1,6 +1,6 @@
 {
   "name": "@stinkstudios/react-scripts",
-  "version": "1.0.18-beta.1",
+  "version": "1.0.18-beta.2",
   "description": "Configuration and scripts for Create React App.",
   "repository": "stinkstudios/create-react-app",
   "license": "MIT",
@@ -21,8 +21,8 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@stinkstudios/eslint-config-react-app": "^0.3.2",
-    "@stinkstudios/stylelint-config-react-app": "^0.1.1",
+    "@stinkstudios/eslint-config-react-app": "^0.3.4",
+    "@stinkstudios/stylelint-config-react-app": "^0.1.2",
     "babel-core": "6.26.0",
     "babel-eslint": "8.1.2",
     "babel-jest": "22.0.4",

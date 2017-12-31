@@ -1,6 +1,6 @@
 {
   "name": "@stinkstudios/eslint-config-react-app",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "ESLint configuration used by Create React App",
   "repository": "stinkstudios/create-react-app",
   "license": "MIT",
