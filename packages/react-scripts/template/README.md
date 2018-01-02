@@ -890,10 +890,10 @@ life of the shell session.
 #### Windows (cmd.exe)
 
 ```cmd
-set REACT_APP_SECRET_CODE=abcdef&&npm start
+set "REACT_APP_SECRET_CODE=abcdef" && npm start
 ```
 
-(Note: the lack of whitespace is intentional.)
+(Note: Quotes around the variable assignment are required to avoid a trailing whitespace.)
 
 #### Linux, macOS (Bash)
 
