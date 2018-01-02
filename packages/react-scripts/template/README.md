@@ -2131,7 +2131,7 @@ In this case, ensure that the file is there with the proper lettercase and thatâ
 **To do a manual deploy to Netlifyâ€™s CDN:**
 
 ```sh
-npm install netlify-cli
+npm install netlify-cli -g
 netlify deploy
 ```
 
