@@ -54,6 +54,9 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
     { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
+const definedLimit = require(paths.appPackageJson).inlineLimit;
+const inlineLimit = definedLimit === parseInt(definedLimit, 10) ? parseInt(definedLimit, 10) : 10000;
+
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
@@ -163,7 +166,7 @@ module.exports = {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             loader: require.resolve('url-loader'),
             options: {
-              limit: 10000,
+              limit: inlineLimit,
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
