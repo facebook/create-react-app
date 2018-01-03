@@ -46,6 +46,9 @@ exports = module.exports = functions.database
       if (snapValues.location) {
         lastMessage = 'Position';
       }
+      if (snapValues.audio) {
+        lastMessage = 'Audio';
+      }
     }
 
     const udateReceiverChatMessage = receiverChatMessageRef.update(snapValues);
