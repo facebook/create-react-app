@@ -13,7 +13,8 @@ module.exports = function ignoredFiles(appSrc) {
   return new RegExp(
     `^(?!${path
       .normalize(appSrc + '/')
-      .replace(/[\\]+/g, '/')}).+/node_modules/`,
+      .replace(/[\\]+/g, '/')
+      .replace(/\+/g,'\\+')}).+/node_modules/`,
     'g'
   );
 };
