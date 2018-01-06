@@ -32,7 +32,7 @@
     "caniuse-lite": "^1.0.30000766",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
-    "css-loader": "0.28.7",
+    "css-loader": "0.28.8",
     "dotenv": "4.0.0",
     "eslint": "4.14.0",
     "eslint-friendly-formatter": "3.0.0",
