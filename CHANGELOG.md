@@ -1,13 +1,19 @@
-## Unreleased (2018-01-01)
+## Unreleased (2018-01-07)
+
+#### :bug: Bug Fix
+* [#56](https://github.com/Stinkstudios/create-react-app/pull/56) set node to 8.9. ([@andykenward](https://github.com/andykenward))
 
 #### :nail_care: Enhancement
-
 * `react-scripts`
-  * #25 ESLint to linting CLI. ([@andykenward](https://github.com/andykenward))
+  * [#54](https://github.com/Stinkstudios/create-react-app/pull/54) Feature/eslint cli. ([@andykenward](https://github.com/andykenward))
 
-#### Committers: 1
+#### :house: Dependency Update
+* `stylelint-config-react-app`
+  * [#58](https://github.com/Stinkstudios/create-react-app/pull/58) Update dependency stylelint-no-unsupported-browser-features to ^2.0.0. ([@renovate[bot]](https://github.com/apps/renovate))
 
-* Andy Kenward ([andykenward](https://github.com/andykenward))
+#### Committers: 2
+- Andy Kenward ([andykenward](https://github.com/andykenward))
+- [renovate[bot]](https://github.com/apps/renovate)
 
 ## Releases Before 1.0.17
 

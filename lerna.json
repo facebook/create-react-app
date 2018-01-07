@@ -9,7 +9,8 @@
       "tag: bug fix": ":bug: Bug Fix",
       "tag: enhancement": ":nail_care: Enhancement",
       "tag: documentation": ":memo: Documentation",
-      "tag: internal": ":house: Internal"
+      "tag: internal": ":house: Internal",
+      "tag: dependency update": ":house: Dependency Update"
     },
     "cacheDir": ".changelog"
   },
