@@ -49,7 +49,7 @@
     "html-webpack-plugin": "2.30.1",
     "jest": "22.0.4",
     "object-assign": "4.1.1",
-    "postcss": "6.0.14",
+    "postcss": "6.0.16",
     "postcss-cssnext": "3.0.2",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.10",
