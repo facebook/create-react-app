@@ -11,10 +11,8 @@ If something doesn’t work, please [file an issue](https://github.com/facebooki
 ## Quick Overview
 
 ```sh
-npm install -g create-react-app
-
-create-react-app my-app
-cd my-app/
+npx create-react-app my-app
+cd my-app
 npm start
 ```
 
@@ -32,13 +30,7 @@ Just create a project, and you’re good to go.
 
 ## Getting Started
 
-### Installation
-
-Install it once globally:
-
-```sh
-npm install -g create-react-app
-```
+### Prerequisites
 
 **You’ll need to have Node >= 6 on your machine**. You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
@@ -46,12 +38,13 @@ npm install -g create-react-app
 
 ### Creating an App
 
-To create a new app, run:
+To create a new app, run a single command:
 
 ```sh
-create-react-app my-app
-cd my-app
+npx create-react-app my-app
 ```
+
+([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))
 
 It will create a directory called `my-app` inside the current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transitive dependencies:
@@ -77,7 +70,13 @@ my-app
 ```
 
 No configuration or complicated folder structures, just the files you need to build your app.<br>
-Once the installation is done, you can run some commands inside the project folder:
+Once the installation is done, you can open your project folder:
+
+```sh
+cd my-app
+```
+
+Inside the newly created project, you can run some built-in commands:
 
 ### `npm start` or `yarn start`
 
