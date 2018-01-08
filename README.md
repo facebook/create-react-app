@@ -174,11 +174,11 @@ The tradeoff is that **these tools are preconfigured to work in a specific way**
 
 ## Popular Alternatives
 
-This project is a great fit for:
+Create React App is a great fit for:
 
-* Learning React in a comfortable and feature-rich development environment.
-* Starting new single-page React applications.
-* Creating examples with React for your library.
+* **Learning React** in a comfortable and feature-rich development environment.
+* **Starting new single-page React applications.**
+* **Creating examples** with React for your libraries and components.
 
 Here’s a few common cases where you might want to try something else:
 
