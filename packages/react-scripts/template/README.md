@@ -67,6 +67,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
 - [Debugging Tests](#debugging-tests)
+  - [Debugging Tests in Chrome](#debugging-tests-in-chrome)
+  - [Debugging Tests in Visual Studio Code](#debugging-tests-in-visual-studio-code)
 - [Developing Components in Isolation](#developing-components-in-isolation)
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
