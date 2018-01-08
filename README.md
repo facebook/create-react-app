@@ -183,7 +183,7 @@ Create React App is a great fit for:
 
 Here’s a few common cases where you might want to try something else:
 
-* If you want to **try React** without installing hundreds of `node_modules`, consider [using a single HTML file or an online sandbox instead](https://reactjs.org/docs/try-react.html).
+* If you want to **try React** without hundreds of transitive build tool dependencies, consider [using a single HTML file or an online sandbox instead](https://reactjs.org/docs/try-react.html).
 
 * If you need to **integrate React code with a server-side template framework** like Rails or Django, or if you’re **not building a single-page app**, consider using [nwb](https://github.com/insin/nwb) or [Neutrino](https://neutrino.js.org/) which are more flexible.
 
