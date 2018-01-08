@@ -1323,6 +1323,8 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 ```
 
+(Note that **if you already ejected** before creating `src/setupTests.js`, this won’t work unless you set [this Jest option](https://facebook.github.io/jest/docs/en/configuration.html#setuptestframeworkscriptfile-string) to point to `src/setupTests.js`.)
+
 Now you can write a smoke test with it:
 
 ```js
@@ -1411,6 +1413,8 @@ const localStorageMock = {
 };
 global.localStorage = localStorageMock
 ```
+
+Note that **if you already ejected** before creating `src/setupTests.js`, this won’t work unless you set [this Jest option](https://facebook.github.io/jest/docs/en/configuration.html#setuptestframeworkscriptfile-string) to point to `src/setupTests.js`.
 
 ### Focusing and Excluding Tests
 
