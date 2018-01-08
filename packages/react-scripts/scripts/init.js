@@ -89,6 +89,14 @@ module.exports = function(
     );
   }
 
+  const editorconfigExists = fs.existsSync(path.join(appPath, '.editorconfig'));
+  if (editorconfigExists) {
+    fs.renameSync(
+      path.join(appPath, '.editorconfig'),
+      path.join(appPath, '.old.editorconfig')
+    );
+  }
+
   // Copy the files for the user
   const templatePath = template
     ? path.resolve(originalDirectory, template)
