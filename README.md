@@ -184,7 +184,7 @@ Here’s a few common cases where you might want to try something else:
 
 * If you want to **try React** without installing hundreds of `node_modules`, consider [using a single HTML file or an online sandbox instead](https://reactjs.org/docs/try-react.html).
 
-* Maybe you are **not building a single-page application** and need to integrate your React code with an existing template-based server framework such as Rails or Django. In this case, consider using projects like [nwb](https://github.com/insin/nwb) or [Neutrino](https://neutrino.js.org/) which are more flexible.
+* If you need to **integrate your React code with a template-based server framework** like Rails or Django or **aren’t building a single-page app**, consider using [nwb](https://github.com/insin/nwb) or [Neutrino](https://neutrino.js.org/) which are more flexible.
 
 * If you need to **publish a React component**, [nwb](https://github.com/insin/nwb) can [also do this](https://github.com/insin/nwb#react-components-and-libraries).
 
