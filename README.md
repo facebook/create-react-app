@@ -30,7 +30,7 @@ Just create a project, and you’re good to go.
 
 ## Creating an App
 
-**For the build tools, you’ll need to have Node >= 6 on your machine**. You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects. Note that Create React App **works with any backend** because it produces static HTML/JS/CSS bundles.
+**You’ll need to have Node >= 6 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
 To create a new app, run a single command:
 
