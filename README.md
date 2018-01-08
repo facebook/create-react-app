@@ -213,6 +213,8 @@ Currently it is a thin layer on top of many amazing community projects, such as:
 
 All of them are transitive dependencies of the provided npm package.
 
+Check out [this guide](https://github.com/nitishdayal/cra_closer_look) for an overview of how these tools fit together.
+
 ## Contributing
 
 We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
