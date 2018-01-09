@@ -13,6 +13,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
+- [Supported Browsers](#supported-browsers)
 - [Supported Language Features and Polyfills](#supported-language-features-and-polyfills)
 - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
 - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
@@ -34,11 +35,13 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Bootstrap](#adding-bootstrap)
   - [Using a Custom Theme](#using-a-custom-theme)
 - [Adding Flow](#adding-flow)
+- [Adding a Router](#adding-a-router)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
   - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
   - [Adding Development Environment Variables In `.env`](#adding-development-environment-variables-in-env)
 - [Can I Use Decorators?](#can-i-use-decorators)
+- [Fetching Data with AJAX Requests](#fetching-data-with-ajax-requests)
 - [Integrating with an API Backend](#integrating-with-an-api-backend)
   - [Node](#node)
   - [Ruby on Rails](#ruby-on-rails)
@@ -65,9 +68,12 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Snapshot Testing](#snapshot-testing)
   - [Editor Integration](#editor-integration)
 - [Debugging Tests](#debugging-tests)
+  - [Debugging Tests in Chrome](#debugging-tests-in-chrome)
+  - [Debugging Tests in Visual Studio Code](#debugging-tests-in-visual-studio-code)
 - [Developing Components in Isolation](#developing-components-in-isolation)
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
+- [Publishing Components to npm](#publishing-components-to-npm)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
   - [Opting Out of Caching](#opting-out-of-caching)
   - [Offline-First Considerations](#offline-first-considerations)
@@ -94,6 +100,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
   - [`npm run build` fails to minify](#npm-run-build-fails-to-minify)
   - [Moment.js locales are missing](#momentjs-locales-are-missing)
+- [Alternatives to Ejecting](#alternatives-to-ejecting)
 - [Something Missing?](#something-missing)
 
 ## Updating to New Releases
@@ -191,6 +198,12 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Supported Browsers
+
+By default, the generated project uses the latest version of React.
+
+You can refer [to the React documentation](https://reactjs.org/docs/react-dom.html#browser-support) for more information about supported browsers.
+
 ## Supported Language Features and Polyfills
 
 This project supports a superset of the latest JavaScript standard.<br>
@@ -214,6 +227,8 @@ Note that **the project only includes a few ES6 [polyfills](https://en.wikipedia
 * [`fetch()`](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) via [`whatwg-fetch`](https://github.com/github/fetch).
 
 If you use any other ES6+ features that need **runtime support** (such as `Array.from()` or `Symbol`), make sure you are including the appropriate polyfills manually, or that the browsers you are targeting already support them.
+
+Also note that using some newer syntax features like `for...of` or `[...nonArrayValue]` causes Babel to emit code that depends on ES6 runtime features and might not work without a polyfill. When in doubt, use [Babel REPL](https://babeljs.io/repl/) to see what any specific syntax compiles down to.
 
 ## Syntax Highlighting in the Editor
 
@@ -462,6 +477,8 @@ You can also use it with `async` / `await` syntax if you prefer it.
 ### With React Router
 
 If you are using React Router check out [this tutorial](http://serverless-stack.com/chapters/code-splitting-in-create-react-app.html) on how to use code splitting with it. You can find the companion GitHub repository [here](https://github.com/AnomalyInnovations/serverless-stack-demo-client/tree/code-splitting-in-create-react-app).
+
+Also check out the [Code Splitting](https://reactjs.org/docs/code-splitting.html) section in React documentation.
 
 ## Adding a Stylesheet
 
@@ -804,6 +821,26 @@ In the future we plan to integrate it into Create React App even more closely.
 
 To learn more about Flow, check out [its documentation](https://flowtype.org/).
 
+## Adding a Router
+
+Create React App doesn't prescribe a specific routing solution, but [React Router](https://reacttraining.com/react-router/) is the most popular one.
+
+To add it, run:
+
+```sh
+npm install --save react-router-dom
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add react-router-dom
+```
+
+To try it, delete all the code in `src/App.js` and replace it with any of the examples on its website. The [Basic Example](https://reacttraining.com/react-router/web/example/basic) is a good place to get started.
+
+Note that [you may need to configure your production server to support client-side routing](#serving-apps-with-client-side-routing) before deploying your app.
+
 ## Adding Custom Environment Variables
 
 >Note: this feature is available with `react-scripts@0.2.3` and higher.
@@ -890,10 +927,10 @@ life of the shell session.
 #### Windows (cmd.exe)
 
 ```cmd
-set REACT_APP_SECRET_CODE=abcdef&&npm start
+set "REACT_APP_SECRET_CODE=abcdef" && npm start
 ```
 
-(Note: the lack of whitespace is intentional.)
+(Note: Quotes around the variable assignment are required to avoid a trailing whitespace.)
 
 #### Linux, macOS (Bash)
 
@@ -910,6 +947,7 @@ To define permanent environment variables, create a file called `.env` in the ro
 ```
 REACT_APP_SECRET_CODE=abcdef
 ```
+>Note: You must create custom environment variables beginning with `REACT_APP_`. Any other variables except `NODE_ENV` will be ignored to avoid [accidentally exposing a private key on the machine that could have the same name](https://github.com/facebookincubator/create-react-app/issues/865#issuecomment-252199527). Changing any environment variables will require you to restart the development server if it is running.
 
 `.env` files **should be** checked into source control (with the exclusion of `.env*.local`).
 
@@ -950,6 +988,16 @@ Please refer to these two threads for reference:
 * [#411](https://github.com/facebookincubator/create-react-app/issues/411)
 
 Create React App will add decorator support when the specification advances to a stable stage.
+
+## Fetching Data with AJAX Requests
+
+React doesn't prescribe a specific approach to data fetching, but people commonly use either a library like [axios](https://github.com/axios/axios) or the [`fetch()` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) provided by the browser. Conveniently, Create React App includes a polyfill for `fetch()` so you can use it without worrying about the browser support.
+
+The global `fetch` function allows to easily makes AJAX requests. It takes in a URL as an input and returns a `Promise` that resolves to a `Response` object. You can find more information about `fetch` [here](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+
+This project also includes a [Promise polyfill](https://github.com/then/promise) which provides a full implementation of Promises/A+. A Promise represents the eventual result of an asynchronous operation, you can find more information about Promises [here](https://www.promisejs.org/) and [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). Both axios and `fetch()` use Promises under the hood. You can also use the [`async / await`](https://davidwalsh.name/async-await) syntax to reduce the callback nesting.
+
+You can learn more about making AJAX requests from React components in [the FAQ entry on the React website](https://reactjs.org/docs/faq-ajax.html).
 
 ## Integrating with an API Backend
 
@@ -1258,7 +1306,7 @@ it('renders without crashing', () => {
 });
 ```
 
-This test mounts a component and makes sure that it didn’t throw during rendering. Tests like this provide a lot value with very little effort so they are great as a starting point, and this is the test you will find in `src/App.test.js`.
+This test mounts a component and makes sure that it didn’t throw during rendering. Tests like this provide a lot of value with very little effort so they are great as a starting point, and this is the test you will find in `src/App.test.js`.
 
 When you encounter bugs caused by changing components, you will gain a deeper insight into which parts of them are worth testing in your application. This might be a good time to introduce more specific tests asserting specific expected output or behavior.
 
@@ -1681,6 +1729,10 @@ Learn more about React Styleguidist:
 
 * [GitHub Repo](https://github.com/styleguidist/react-styleguidist)
 * [Documentation](https://react-styleguidist.js.org/docs/getting-started.html)
+
+## Publishing Components to npm
+
+Create React App doesn't provide any built-in functionality to publish a component to npm. If you're ready to extract a component from your project so other people can use it, we recommend moving it to a separate directory outside of your project and then using a tool like [nwb](https://github.com/insin/nwb#react-components-and-libraries) to prepare it for publishing.
 
 ## Making a Progressive Web App
 
@@ -2145,7 +2197,7 @@ In this case, ensure that the file is there with the proper lettercase and that�
 **To do a manual deploy to Netlify’s CDN:**
 
 ```sh
-npm install netlify-cli
+npm install netlify-cli -g
 netlify deploy
 ```
 
@@ -2217,9 +2269,10 @@ PORT | :white_check_mark: | :x: | By default, the development web server will at
 HTTPS | :white_check_mark: | :x: | When set to `true`, Create React App will run the development server in `https` mode.
 PUBLIC_URL | :x: | :white_check_mark: | Create React App assumes your application is hosted at the serving web server's root or a subpath as specified in [`package.json` (`homepage`)](#building-for-relative-paths). Normally, Create React App ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included). This may be particularly useful when using a CDN to host your application.
 CI | :large_orange_diamond: | :white_check_mark: | When set to `true`, Create React App treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.
-REACT_EDITOR | :white_check_mark: | :x: | When an app crashes in development, you will see an error overlay with clickable stack trace. When you click on it, Create React App will try to determine the editor you are using based on currently running processes, and open the relevant source file. You can [send a pull request to detect your editor of choice](https://github.com/facebookincubator/create-react-app/issues/2636). Setting this environment variable overrides the automatic detection. If you do it, make sure your systems [PATH](https://en.wikipedia.org/wiki/PATH_(variable)) environment variable points to your editor’s bin folder.
+REACT_EDITOR | :white_check_mark: | :x: | When an app crashes in development, you will see an error overlay with clickable stack trace. When you click on it, Create React App will try to determine the editor you are using based on currently running processes, and open the relevant source file. You can [send a pull request to detect your editor of choice](https://github.com/facebookincubator/create-react-app/issues/2636). Setting this environment variable overrides the automatic detection. If you do it, make sure your systems [PATH](https://en.wikipedia.org/wiki/PATH_(variable)) environment variable points to your editor’s bin folder. You can also set it to `none` to disable it completely.
 CHOKIDAR_USEPOLLING | :white_check_mark: | :x: | When set to `true`, the watcher runs in polling mode, as necessary inside a VM. Use this option if `npm start` isn't detecting changes.
 GENERATE_SOURCEMAP | :x: | :white_check_mark: | When set to `false`, source maps are not generated for a production build. This solves OOM issues on some smaller machines.
+NODE_PATH | :white_check_mark: |  :white_check_mark: | Same as [`NODE_PATH` in Node.js](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders), but only relative folders are allowed. Can be handy for emulating a monorepo setup by setting `NODE_PATH=src`.
 
 ## Troubleshooting
 
@@ -2232,7 +2285,7 @@ If this doesn’t happen, try one of the following workarounds:
 * If the watcher doesn’t see a file called `index.js` and you’re referencing it by the folder name, you [need to restart the watcher](https://github.com/facebookincubator/create-react-app/issues/1164) due to a Webpack bug.
 * Some editors like Vim and IntelliJ have a “safe write” feature that currently breaks the watcher. You will need to disable it. Follow the instructions in [“Adjusting Your Text Editor”](https://webpack.js.org/guides/development/#adjusting-your-text-editor).
 * If your project path contains parentheses, try moving the project to a path without them. This is caused by a [Webpack watcher bug](https://github.com/webpack/watchpack/issues/42).
-* On Linux and macOS, you might need to [tweak system settings](https://webpack.github.io/docs/troubleshooting.html#not-enough-watchers) to allow more watchers.
+* On Linux and macOS, you might need to [tweak system settings](https://github.com/webpack/docs/wiki/troubleshooting#not-enough-watchers) to allow more watchers.
 * If the project runs inside a virtual machine such as (a Vagrant provisioned) VirtualBox, create an `.env` file in your project directory if it doesn’t exist, and add `CHOKIDAR_USEPOLLING=true` to it. This ensures that the next time you run `npm start`, the watcher uses the polling mode, as necessary inside a VM.
 
 If none of these solutions help please leave a comment [in this thread](https://github.com/facebookincubator/create-react-app/issues/659).
@@ -2315,6 +2368,10 @@ To resolve this:
 3. If the dependency is small enough, copy it to your `src/` folder and treat it as application code.
 
 In the future, we might start automatically compiling incompatible third-party modules, but it is not currently supported. This approach would also slow down the production builds.
+
+## Alternatives to Ejecting
+
+[Ejecting](#npm-run-eject) lets you customize anything, but from that point on you have to maintain the configuration and scripts yourself. This can be daunting if you have many similar projects. In such cases instead of ejecting we recommend to *fork* `react-scripts` and any other packages you need. [This article](https://auth0.com/blog/how-to-configure-create-react-app/) dives into how to do it in depth. You can find more discussion in [this issue](https://github.com/facebookincubator/create-react-app/issues/682).
 
 ## Something Missing?
 
