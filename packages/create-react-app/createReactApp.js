@@ -47,6 +47,7 @@ const tmp = require('tmp');
 const unpack = require('tar-pack').unpack;
 const url = require('url');
 const hyperquest = require('hyperquest');
+const envinfo = require('envinfo');
 
 const packageJson = require('./package.json');
 
@@ -60,6 +61,7 @@ const program = new commander.Command(packageJson.name)
     projectName = name;
   })
   .option('--verbose', 'print additional logs')
+  .option('--info', 'print environment debug info')
   .option(
     '--scripts-version <alternative-package>',
     'use a non-standard version of react-scripts'
@@ -100,6 +102,14 @@ const program = new commander.Command(packageJson.name)
   .parse(process.argv);
 
 if (typeof projectName === 'undefined') {
+  if (program.info) {
+    envinfo.print({
+      packages: ['react', 'react-dom', 'react-scripts'],
+      noNativeIDE: true,
+      duplicates: true,
+    });
+    process.exit(0);
+  }
   console.error('Please specify the project directory:');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
