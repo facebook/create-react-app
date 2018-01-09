@@ -135,6 +135,8 @@ The [User Guide](https://github.com/facebookincubator/create-react-app/blob/mast
 - [Using HTTPS in Development](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#pre-rendering-into-static-html-files)
+- [Injecting Data from the Server into the Page](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#injecting-data-from-the-server-into-the-page)
+- [Server-side Rendering](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#server-side-rendering)
 - [Running Tests](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests)
 - [Debugging Tests](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#debugging-tests)
 - [Developing Components in Isolation](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#developing-components-in-isolation)
