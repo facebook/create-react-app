@@ -86,6 +86,11 @@ const program = new commander.Command(packageJson.name)
       )}`
     );
     console.log(
+      `      - a .tar.gz archive: ${chalk.green(
+        'https://mysite.com/my-react-scripts-0.8.2.tar.gz'
+      )}`
+    );
+    console.log(
       `    It is not needed unless you specifically want to use a fork.`
     );
     console.log();
@@ -432,7 +437,7 @@ function extractStream(stream, dest) {
 
 // Extract package name from tarball url or path.
 function getPackageName(installPackage) {
-  if (installPackage.indexOf('.tgz') > -1) {
+  if (installPackage.match(/^.+\.(tgz|tar\.gz)$/)) {
     return getTemporaryDirectory()
       .then(obj => {
         let stream;
@@ -455,7 +460,7 @@ function getPackageName(installPackage) {
           `Could not extract the package name from the archive: ${err.message}`
         );
         const assumedProjectName = installPackage.match(
-          /^.+\/(.+?)(?:-\d+.+)?\.tgz$/
+          /^.+\/(.+?)(?:-\d+.+)?\.(tgz|tar\.gz)$/
         )[1];
         console.log(
           `Based on the filename, assuming it is "${chalk.cyan(
