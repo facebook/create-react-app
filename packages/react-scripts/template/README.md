@@ -53,6 +53,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
 - [Injecting Data from the Server into the Page](#injecting-data-from-the-server-into-the-page)
+- [Server Side Rendering of apps with React Router](#server-side-rendering-of-apps-with-react-router)
 - [Running Tests](#running-tests)
   - [Filename Conventions](#filename-conventions)
   - [Command Line Interface](#command-line-interface)
@@ -1229,6 +1230,12 @@ Similarly to the previous section, you can leave some placeholders in the HTML t
 ```
 
 Then, on the server, you can replace `__SERVER_DATA__` with a JSON of real data right before sending the response. The client code can then read `window.SERVER_DATA` to use it. **Make sure to [sanitize the JSON before sending it to the client](https://medium.com/node-security/the-most-common-xss-vulnerability-in-react-js-applications-2bdffbcc1fa0) as it makes your app vulnerable to XSS attacks.**
+
+## Server Side Rendering of apps with React Router
+
+If your application is based on React Router (required) and Redux (optionally) you may benefit from using simple CLI script [create-react-server](https://github.com/kirill-konshin/create-react-server#cli-mode). It creates a NodeJS server that takes your store and router, fetches all required data (incl. Redux Store initial state) and then renders your application so that client will get everything in one piece. The package also supports other customized/optimized usages.
+
+Step by step installation and usage instruction is available [in the readme](https://github.com/kirill-konshin/create-react-server#installation).
 
 ## Running Tests
 
