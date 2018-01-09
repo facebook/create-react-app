@@ -268,7 +268,7 @@ function run(
   template,
   useYarn
 ) {
-  const packageToInstall = getInstallPackage(version);
+  const packageToInstall = getInstallPackage(version, originalDirectory);
   const allDependencies = ['react', 'react-dom', packageToInstall];
 
   console.log('Installing packages. This might take a couple of minutes.');
@@ -365,11 +365,16 @@ function run(
     });
 }
 
-function getInstallPackage(version) {
+function getInstallPackage(version, originalDirectory) {
   let packageToInstall = 'react-scripts';
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
+  } else if (version && version.match(/^file:/)) {
+    packageToInstall = `file:${path.resolve(
+      originalDirectory,
+      version.match(/^file:(.*)?$/)[1]
+    )}`;
   } else if (version) {
     // for tar.gz or alternative paths
     packageToInstall = version;
@@ -459,6 +464,10 @@ function getPackageName(installPackage) {
     return Promise.resolve(
       installPackage.charAt(0) + installPackage.substr(1).split('@')[0]
     );
+  } else if (installPackage.match(/^file:/)) {
+    const installPackagePath = installPackage.match(/^file:(.*)?$/)[1];
+    const installPackageJson = require(path.join(installPackagePath, 'package.json'));
+    return Promise.resolve(installPackageJson.name);
   }
   return Promise.resolve(installPackage);
 }
