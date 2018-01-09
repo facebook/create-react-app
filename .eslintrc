@@ -12,6 +12,9 @@
   "rules": {
     "no-console": "off",
     "strict": ["error", "global"],
-    "curly": "warn"
+    "curly": "warn",
+    "getter-return": "error",
+    "function-paren-newline": ["error", "multiline"],
+    "implicit-arrow-linebreak": ["error", "beside"]
   }
 }

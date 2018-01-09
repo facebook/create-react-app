@@ -14,7 +14,7 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
-    "eslint": "^4.4.1",
+    "eslint": "^4.15.0",
     "husky": "^0.13.2",
     "lerna": "^2.0.0",
     "lerna-changelog": "^0.6.0",
