@@ -1370,7 +1370,7 @@ it('renders welcome message', () => {
 All Jest matchers are [extensively documented here](http://facebook.github.io/jest/docs/en/expect.html).<br>
 Nevertheless you can use a third-party assertion library like [Chai](http://chaijs.com/) if you want to, as described below.
 
-Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzyme-matchers) helpful to simplify your tests with readable matchers. The above `contains` code can be written simpler with jest-enzyme.
+Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzyme-matchers) helpful to simplify your tests with readable matchers. The above `contains` code can be written more simply with jest-enzyme.
 
 ```js
 expect(wrapper).toContainReact(welcome)
