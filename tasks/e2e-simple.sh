@@ -85,11 +85,7 @@ trap 'set +x; handle_exit' SIGQUIT SIGTERM SIGINT SIGKILL SIGHUP
 set -x
 
 # Make sure we don't introduce accidental references to PATENTS.
-EXPECTED='packages/react-error-overlay/fixtures/bundle.mjs
-packages/react-error-overlay/fixtures/bundle.mjs.map
-packages/react-error-overlay/fixtures/bundle_u.mjs
-packages/react-error-overlay/fixtures/bundle_u.mjs.map
-tasks/e2e-simple.sh'
+EXPECTED='tasks/e2e-simple.sh'
 ACTUAL=$(git grep -l PATENTS)
 if [ "$EXPECTED" != "$ACTUAL" ]; then
   echo "PATENTS crept into some new files?"
