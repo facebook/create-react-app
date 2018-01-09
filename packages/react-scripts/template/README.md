@@ -195,6 +195,11 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
+Ejecting removes some automatic functionality like:
+
+Automatic registration of src/setupTests.js
+... (what else?)
+
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Supported Browsers
@@ -1400,7 +1405,9 @@ and then use them in your tests like you normally do.
 
 >Note: this feature is available with `react-scripts@0.4.0` and higher.
 
-If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
+>Note: After [ejecting](#npm-run-eject) you need to manually add [setupTestFrameworkScriptFile](https://facebook.github.io/jest/docs/configuration.html#setuptestframeworkscriptfile-string) in package.json. 
+
+If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests. 
 
 For example:
 
