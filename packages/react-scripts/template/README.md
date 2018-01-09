@@ -978,6 +978,25 @@ Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) f
 >Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
 these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
 
+#### Expanding Environment Variables In `.env`
+
+>Note: this feature is available with `react-scripts@1.0.18` and higher.
+
+Expand variables already on your machine for use in your .env file (using [dotenv-expand](https://github.com/motdotla/dotenv-expand)).  See [#2223](https://github.com/facebookincubator/create-react-app/issues/2223).
+
+For example, to get the environment variable `npm_package_version`:
+```
+REACT_APP_VERSION=$npm_package_version
+# also works:
+# REACT_APP_VERSION=${npm_package_version}
+```
+Or expand variables local to the current `.env` file:
+```
+DOMAIN=www.example.com
+REACT_APP_FOO=$DOMAIN/foo
+REACT_APP_BAR=$DOMAIN/bar
+```
+
 ## Can I Use Decorators?
 
 Many popular libraries use [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841) in their documentation.<br>
