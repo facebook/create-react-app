@@ -1425,15 +1425,11 @@ const localStorageMock = {
 global.localStorage = localStorageMock
 ```
 
->Note: Please keep in mind that, if you decide to `npm run eject` before creating `src/setupTests.js`, the resulting package.json file won't contain any reference to it, so you should manually create the property `setupTestFrameworkScriptFile` in the configuration for Jest, something like the following: 
->```
+>Note: Keep in mind that if you decide to `npm run eject` before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupTestFrameworkScriptFile` in the configuration for Jest, something like the following: 
+>```js
 >"jest": {
->   ...
->   "setupFiles": [
->     "<rootDir>/config/polyfills.js"
->   ],
->   "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
->   ...
+>   // ...
+>   "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js"
 >  }
 >  ```
 
