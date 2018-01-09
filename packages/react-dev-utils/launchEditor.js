@@ -64,6 +64,7 @@ const COMMON_EDITORS_LINUX = {
   atom: 'atom',
   Brackets: 'brackets',
   code: 'code',
+  'code-insiders': 'code-insiders',
   emacs: 'emacs',
   'idea.sh': 'idea',
   'phpstorm.sh': 'phpstorm',
@@ -77,6 +78,7 @@ const COMMON_EDITORS_LINUX = {
 const COMMON_EDITORS_WIN = [
   'Brackets.exe',
   'Code.exe',
+  'Code - Insiders.exe',
   'atom.exe',
   'sublime_text.exe',
   'notepad++.exe',
@@ -127,6 +129,8 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
       return ['--line', lineNumber, fileName];
     case 'code':
     case 'Code':
+    case 'code-insiders':
+    case 'Code - Insiders':
       return addWorkspaceToArgumentsIfExists(
         ['-g', fileName + ':' + lineNumber],
         workspace
