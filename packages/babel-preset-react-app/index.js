@@ -42,6 +42,10 @@ const plugins = [
 // https://github.com/babel/babel/issues/4539
 // https://github.com/facebookincubator/create-react-app/issues/720
 // It’s also nice that we can enforce `NODE_ENV` being specified.
+// [PROPOSED_FEATURE] Read `.env` file if present and assign environment variables 
+// in `.env` file to process.env
+const dotenv = require('dotenv');
+dotenv.config();
 var env = process.env.BABEL_ENV || process.env.NODE_ENV;
 if (env !== 'development' && env !== 'test' && env !== 'production') {
   throw new Error(
