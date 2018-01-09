@@ -258,7 +258,7 @@ function launchEditor(fileName, lineNumber) {
 
   let [editor, ...args] = guessEditor();
 
-  if (editor.toLowerCase() === 'none') {
+  if (editor && editor.toLowerCase() === 'none') {
     return;
   }
 
