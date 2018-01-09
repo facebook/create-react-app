@@ -492,7 +492,6 @@ function checkNodeVersion(packageName) {
     packageName,
     'package.json'
   );
-  console.log(packageJsonPath);
   const packageJson = require(packageJsonPath);
   if (!packageJson.engines || !packageJson.engines.node) {
     return;
