@@ -13,7 +13,6 @@
     "no-console": "off",
     "strict": ["error", "global"],
     "curly": "warn",
-    "getter-return": "error",
-    "implicit-arrow-linebreak": ["error", "beside"]
+    "getter-return": "error"
   }
 }
