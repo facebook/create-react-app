@@ -42,6 +42,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
+      '^.+\\.css$': resolve('config/jest/styleMock.js'),
     },
     moduleFileExtensions: [
       'web.js',
