@@ -1,10 +1,8 @@
 #!/bin/bash
 # Copyright (c) 2015-present, Facebook, Inc.
-# All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 # ******************************************************************************
 # This is an end-to-end test intended to run on CI.
@@ -46,6 +44,17 @@ function exists {
   done
 }
 
+# Check for accidental dependencies in package.json
+function checkDependencies {
+  if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
+  grep -v -q -E '^\s*"react(-dom|-scripts)?"'; then
+   echo "Dependencies are correct"
+  else
+   echo "There are extraneous dependencies in package.json"
+   exit 1
+  fi
+}
+
 function create_react_app {
   node "$temp_cli_path"/node_modules/create-react-app/index.js $*
 }
@@ -63,7 +72,39 @@ set -x
 cd ..
 root_path=$PWD
 
+# Clear cache to avoid issues with incorrect packages being used
+if hash yarnpkg 2>/dev/null
+then
+  # AppVeyor uses an old version of yarn.
+  # Once updated to 0.24.3 or above, the workaround can be removed
+  # and replaced with `yarnpkg cache clean`
+  # Issues:
+  #    https://github.com/yarnpkg/yarn/issues/2591
+  #    https://github.com/appveyor/ci/issues/1576
+  #    https://github.com/facebookincubator/create-react-app/pull/2400
+  # When removing workaround, you may run into
+  #    https://github.com/facebookincubator/create-react-app/issues/2030
+  case "$(uname -s)" in
+    *CYGWIN*|MSYS*|MINGW*) yarn=yarn.cmd;;
+    *) yarn=yarnpkg;;
+  esac
+  $yarn cache clean
+fi
+
+if hash npm 2>/dev/null
+then
+  # npm 5 is too buggy right now
+  if [ $(npm -v | head -c 1) -eq 5 ]; then
+    npm i -g npm@^4.x
+  fi;
+  npm cache clean || npm cache verify
+fi
+
+# Prevent bootstrap, we only want top-level dependencies
+cp package.json package.json.bak
+grep -v "postinstall" package.json > temp && mv temp package.json
 npm install
+mv package.json.bak package.json
 
 if [ "$USE_YARN" = "yes" ]
 then
@@ -71,6 +112,13 @@ then
   npm install -g yarn
   yarn cache clean
 fi
+
+# We removed the postinstall, so do it manually
+node bootstrap.js
+
+cd packages/react-error-overlay/
+npm run build:prod
+cd ../..
 
 # ******************************************************************************
 # First, pack and install create-react-app.
@@ -95,6 +143,21 @@ cd test-app-version-number
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+checkDependencies
+
+# ******************************************************************************
+# Test --use-npm flag
+# ******************************************************************************
+
+cd "$temp_app_path"
+create_react_app --use-npm --scripts-version=0.4.0 test-use-npm-flag
+cd test-use-npm-flag
+
+# Check corresponding scripts version is installed.
+exists node_modules/react-scripts
+[ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
+grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+checkDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
@@ -107,6 +170,7 @@ cd test-app-tarball-url
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
 grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+checkDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a custom fork of react-scripts
@@ -161,7 +225,7 @@ exists node_modules/@enoah_netzach/react-scripts
 # Test nested folder path as the project name
 # ******************************************************************************
 
-#Testing a path that exists
+# Testing a path that exists
 cd "$temp_app_path"
 mkdir test-app-nested-paths-t1
 cd test-app-nested-paths-t1
@@ -170,13 +234,13 @@ create_react_app test-app-nested-paths-t1/aa/bb/cc/dd
 cd test-app-nested-paths-t1/aa/bb/cc/dd
 npm start -- --smoke-test
 
-#Testing a path that does not exist
+# Testing a path that does not exist
 cd "$temp_app_path"
 create_react_app test-app-nested-paths-t2/aa/bb/cc/dd
 cd test-app-nested-paths-t2/aa/bb/cc/dd
 npm start -- --smoke-test
 
-#Testing a path that is half exists
+# Testing a path that is half exists
 cd "$temp_app_path"
 mkdir -p test-app-nested-paths-t3/aa
 create_react_app test-app-nested-paths-t3/aa/bb/cc/dd

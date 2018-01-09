@@ -34,7 +34,7 @@ var publicUrl = '/my-custom-url';
 module.exports = {
   output: {
     // ...
-    publicPath: publicUrl + '/' 
+    publicPath: publicUrl + '/'
   },
   // ...
   plugins: [
@@ -52,6 +52,30 @@ module.exports = {
     }),
     // ...
   ],
+  // ...
+}
+```
+
+
+#### `new ModuleScopePlugin(appSrc: string, allowedFiles?: string[])`
+
+This Webpack plugin ensures that relative imports from app's source directory don't reach outside of it.
+
+```js
+var path = require('path');
+var ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+
+
+module.exports = {
+  // ...
+  resolve: {
+    // ...
+    plugins: [
+      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+      // ...
+    ],
+    // ...
+  },
   // ...
 }
 ```
@@ -110,15 +134,45 @@ clearConsole();
 console.log('Just cleared the screen!');
 ```
 
+#### `eslintFormatter(results: Object): string`
+
+This is our custom ESLint formatter that integrates well with Create React App console output.<br>
+You can use the default one instead if you prefer so.
+
+```js
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
+
+// In your webpack config:
+// ...
+module: {
+   rules: [
+     {
+        test: /\.(js|jsx)$/,
+        include: paths.appSrc,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'eslint-loader',
+            options: {
+              // Pass the formatter:
+              formatter: eslintFormatter,
+            },
+          },
+        ],
+      }
+   ]
+}
+```
+
 #### `FileSizeReporter`
 
 ##### `measureFileSizesBeforeBuild(buildFolder: string): Promise<OpaqueFileSizes>`
 
 Captures JS and CSS asset sizes inside the passed `buildFolder`. Save the result value to compare it after the build.
 
-##### `printFileSizesAfterBuild(webpackStats: WebpackStats, previousFileSizes: OpaqueFileSizes)`
+##### `printFileSizesAfterBuild(webpackStats: WebpackStats, previousFileSizes: OpaqueFileSizes, buildFolder: string, maxBundleGzipSize?: number, maxChunkGzipSize?: number)`
 
-Prints the JS and CSS asset sizes after the build, and includes a size comparison with `previousFileSizes` that were captured earlier using `measureFileSizesBeforeBuild()`.
+Prints the JS and CSS asset sizes after the build, and includes a size comparison with `previousFileSizes` that were captured earlier using `measureFileSizesBeforeBuild()`. `maxBundleGzipSize` and `maxChunkGzipSizemay` may optionally be specified to display a warning when the main bundle or a chunk exceeds the specified size (in bytes).
 
 ```js
 var {
@@ -128,7 +182,7 @@ var {
 
 measureFileSizesBeforeBuild(buildFolder).then(previousFileSizes => {
   return cleanAndRebuild().then(webpackStats => {
-    printFileSizesAfterBuild(webpackStats, previousFileSizes);
+    printFileSizesAfterBuild(webpackStats, previousFileSizes, buildFolder);
   });
 });
 ```
@@ -166,6 +220,20 @@ compiler.plugin('done', function(stats) {
 });
 ```
 
+#### `printBuildError(error: Object): void`
+
+Prettify some known build errors.
+Pass an Error object to log a prettified error message in the console.
+
+```
+  const printBuildError = require('react-dev-utils/printBuildError')
+  try {
+    build()
+  } catch(e) {
+    printBuildError(e) // logs prettified message
+  }
+```
+
 #### `getProcessForPort(port: number): string`
 
 Finds the currently running process on `port`.
@@ -181,6 +249,14 @@ var getProcessForPort = require('react-dev-utils/getProcessForPort');
 
 getProcessForPort(3000);
 ```
+
+#### `launchEditor(fileName: string, lineNumber: number): void`
+
+On macOS, tries to find a known running editor process and opens the file in it. It can also be explicitly configured by `REACT_EDITOR`, `VISUAL`, or `EDITOR` environment variables. For example, you can put `REACT_EDITOR=atom` in your `.env.local` file, and Create React App will respect that.
+
+#### `noopServiceWorkerMiddleware(): ExpressMiddleware`
+
+Returns Express middleware that serves a `/service-worker.js` that resets any previously set service worker configuration. Useful for development.
 
 #### `openBrowser(url: string): boolean`
 
@@ -198,34 +274,42 @@ if (openBrowser('http://localhost:3000')) {
 }
 ```
 
-#### `prompt(message: string, isYesDefault: boolean): Promise<boolean>`
+#### `printHostingInstructions(appPackage: Object, publicUrl: string, publicPath: string, buildFolder: string, useYarn: boolean): void`
 
-This function displays a console prompt to the user.
+Prints hosting instructions after the project is built.
 
-By convention, "no" should be the conservative choice.<br>
-If you mistype the answer, we'll always take it as a "no".<br>
-You can control the behavior on `<Enter>` with `isYesDefault`.
+Pass your parsed `package.json` object as `appPackage`, your the URL where you plan to host the app as `publicUrl`, `output.publicPath` from your Webpack configuration as `publicPath`, the `buildFolder` name, and whether to `useYarn` in instructions.
 
 ```js
-var prompt = require('react-dev-utils/prompt');
-
-prompt(
-  'Are you sure you want to eat all the candy?',
-  /* isYesDefault */ false
-).then(shouldEat => {
-  if (shouldEat) {
-    console.log('You have successfully consumed all the candy.');
-  } else {
-    console.log('Phew, candy is still available!');
-  }
-});
+const appPackage = require(paths.appPackageJson);
+const publicUrl = paths.publicUrl;
+const publicPath = config.output.publicPath;
+printHostingInstructions(appPackage, publicUrl, publicPath, 'build', true);
 ```
 
-#### `webpackHotDevClient.js`
+#### `WebpackDevServerUtils`
+
+##### `choosePort(host: string, defaultPort: number): Promise<number | null>`
+
+Returns a Promise resolving to either `defaultPort` or next available port if the user confirms it is okay to do. If the port is taken and the user has refused to use another port, or if the terminal is not interactive and can’t present user with the choice, resolves to `null`.
+
+##### `createCompiler(webpack: Function, config: Object, appName: string, urls: Object, useYarn: boolean): WebpackCompiler`
+
+Creates a Webpack compiler instance for WebpackDevServer with built-in helpful messages. Takes the `require('webpack')` entry point as the first argument. To provide the `urls` argument, use `prepareUrls()` described below.
+
+##### `prepareProxy(proxySetting: string, appPublicFolder: string): Object`
+
+Creates a WebpackDevServer `proxy` configuration object from the `proxy` setting in `package.json`.
+
+##### `prepareUrls(protocol: string, host: string, port: number): Object`
+
+Returns an object with local and remote URLs for the development server. Pass this object to `createCompiler()` described above.
+
+#### `webpackHotDevClient`
 
 This is an alternative client for [WebpackDevServer](https://github.com/webpack/webpack-dev-server) that shows a syntax error overlay.
 
-It currently supports only Webpack 1.x.
+It currently supports only Webpack 3.x.
 
 ```js
 // Webpack development config

@@ -1,13 +1,12 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 function load(baseUser) {
   return [
@@ -41,7 +40,9 @@ export default class extends Component {
     return (
       <div id="feature-object-spread">
         {this.state.users.map(user => (
-          <div key={user.id}>{user.name}: {user.age}</div>
+          <div key={user.id}>
+            {user.name}: {user.age}
+          </div>
         ))}
       </div>
     );
