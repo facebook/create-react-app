@@ -44,7 +44,7 @@
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
-    "jest": "21.1.0",
+    "jest": "22.0.5",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
