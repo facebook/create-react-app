@@ -427,6 +427,35 @@ Learn more about ES6 modules:
 * [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
 * [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
 
+## Importing a Component using path relative to src (Absolute path)
+
+**NOTE**: Make sure to remove `.env` from your .gitignore in the project root
+
+Create a file called `.env` in the root of the project, then add the following:
+
+```
+NODE_PATH=src
+```
+
+This will allows any component to be imported using its path relative to `src`, for example:
+
+```js
+import Button from './components/Button';
+```
+
+is now:
+
+
+```js
+import Button from 'components/Button';
+```
+
+This allows uniform import path accross different component, and eliminate the following "hypothetical" situation:
+
+```js
+import Utils from '../../../Utils';
+```
+
 ## Code Splitting
 
 Instead of downloading the entire app before users can use it, code splitting allows you to split your code into small chunks which you can then load on demand.
