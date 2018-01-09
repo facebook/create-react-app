@@ -47,6 +47,16 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
+// Issue: https://github.com/facebookincubator/create-react-app/issues/1753
+// The below lines are added to make sure that this process is
+// exited when stdin is ended. The consequence of not doing this means
+// that all watch processes will stay running despite the process that spawned
+// them being closed.
+process.stdin.on('end', function() {
+  process.exit(0);
+});
+process.stdin.resume();
+
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';

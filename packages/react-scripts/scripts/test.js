@@ -27,8 +27,20 @@ const jest = require('jest');
 const argv = process.argv.slice(2);
 
 // Watch unless on CI or in coverage mode
+// Exit process when stdin ends only when watch mode enabled
 if (!process.env.CI && argv.indexOf('--coverage') < 0) {
   argv.push('--watch');
+
+  // Issue: https://github.com/facebookincubator/create-react-app/issues/1753
+  // The below lines are added to make sure that this process is
+  // exited when stdin is ended. The consequence of not doing this means
+  // that all watch processes will stay running despite the process that spawned
+  // them being closed.
+
+  process.stdin.on('end', function() {
+    process.exit(0);
+  });
+  process.stdin.resume();
 }
 
 // @remove-on-eject-begin
