@@ -1,18 +1,17 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var child_process = require('child_process');
-var chalk = require('chalk');
-var shellQuote = require('shell-quote');
+const fs = require('fs');
+const path = require('path');
+const child_process = require('child_process');
+const os = require('os');
+const chalk = require('chalk');
+const shellQuote = require('shell-quote');
 
 function isTerminalEditor(editor) {
   switch (editor) {
@@ -27,13 +26,69 @@ function isTerminalEditor(editor) {
 // Map from full process name to binary that starts the process
 // We can't just re-use full process name, because it will spawn a new instance
 // of the app every time
-var COMMON_EDITORS = {
+const COMMON_EDITORS_OSX = {
   '/Applications/Atom.app/Contents/MacOS/Atom': 'atom',
-  '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta': '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta',
-  '/Applications/Sublime Text.app/Contents/MacOS/Sublime Text': '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl',
-  '/Applications/Sublime Text 2.app/Contents/MacOS/Sublime Text 2': '/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl',
+  '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta':
+    '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta',
+  '/Applications/Brackets.app/Contents/MacOS/Brackets': 'brackets',
+  '/Applications/Sublime Text.app/Contents/MacOS/Sublime Text':
+    '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl',
+  '/Applications/Sublime Text 2.app/Contents/MacOS/Sublime Text 2':
+    '/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl',
   '/Applications/Visual Studio Code.app/Contents/MacOS/Electron': 'code',
+  '/Applications/AppCode.app/Contents/MacOS/appcode':
+    '/Applications/AppCode.app/Contents/MacOS/appcode',
+  '/Applications/CLion.app/Contents/MacOS/clion':
+    '/Applications/CLion.app/Contents/MacOS/clion',
+  '/Applications/IntelliJ IDEA.app/Contents/MacOS/idea':
+    '/Applications/IntelliJ IDEA.app/Contents/MacOS/idea',
+  '/Applications/PhpStorm.app/Contents/MacOS/phpstorm':
+    '/Applications/PhpStorm.app/Contents/MacOS/phpstorm',
+  '/Applications/PyCharm.app/Contents/MacOS/pycharm':
+    '/Applications/PyCharm.app/Contents/MacOS/pycharm',
+  '/Applications/PyCharm CE.app/Contents/MacOS/pycharm':
+    '/Applications/PyCharm CE.app/Contents/MacOS/pycharm',
+  '/Applications/RubyMine.app/Contents/MacOS/rubymine':
+    '/Applications/RubyMine.app/Contents/MacOS/rubymine',
+  '/Applications/WebStorm.app/Contents/MacOS/webstorm':
+    '/Applications/WebStorm.app/Contents/MacOS/webstorm',
+  '/Applications/MacVim.app/Contents/MacOS/MacVim':
+    'mvim',
 };
+
+const COMMON_EDITORS_LINUX = {
+  atom: 'atom',
+  Brackets: 'brackets',
+  code: 'code',
+  emacs: 'emacs',
+  'idea.sh': 'idea',
+  'phpstorm.sh': 'phpstorm',
+  'pycharm.sh': 'pycharm',
+  'rubymine.sh': 'rubymine',
+  sublime_text: 'sublime_text',
+  vim: 'vim',
+  'webstorm.sh': 'webstorm',
+};
+
+const COMMON_EDITORS_WIN = [
+  'Brackets.exe',
+  'Code.exe',
+  'atom.exe',
+  'sublime_text.exe',
+  'notepad++.exe',
+  'clion.exe',
+  'clion64.exe',
+  'idea.exe',
+  'idea64.exe',
+  'phpstorm.exe',
+  'phpstorm64.exe',
+  'pycharm.exe',
+  'pycharm64.exe',
+  'rubymine.exe',
+  'rubymine64.exe',
+  'webstorm.exe',
+  'webstorm64.exe',
+];
 
 function addWorkspaceToArgumentsIfExists(args, workspace) {
   if (workspace) {
@@ -43,20 +98,21 @@ function addWorkspaceToArgumentsIfExists(args, workspace) {
 }
 
 function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
-  switch (path.basename(editor)) {
-    case 'vim':
-    case 'mvim':
-      return [fileName, '+' + lineNumber];
+  const editorBasename = path.basename(editor).replace(/\.(exe|cmd|bat)$/i, '');
+  switch (editorBasename) {
     case 'atom':
     case 'Atom':
     case 'Atom Beta':
     case 'subl':
     case 'sublime':
+    case 'sublime_text':
     case 'wstorm':
-    case 'appcode':
     case 'charm':
-    case 'idea':
       return [fileName + ':' + lineNumber];
+    case 'notepad++':
+      return ['-n' + lineNumber, fileName];
+    case 'vim':
+    case 'mvim':
     case 'joe':
     case 'emacs':
     case 'emacsclient':
@@ -66,8 +122,26 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
     case 'mine':
       return ['--line', lineNumber, fileName];
     case 'code':
+    case 'Code':
       return addWorkspaceToArgumentsIfExists(
         ['-g', fileName + ':' + lineNumber],
+        workspace
+      );
+    case 'appcode':
+    case 'clion':
+    case 'clion64':
+    case 'idea':
+    case 'idea64':
+    case 'phpstorm':
+    case 'phpstorm64':
+    case 'pycharm':
+    case 'pycharm64':
+    case 'rubymine':
+    case 'rubymine64':
+    case 'webstorm':
+    case 'webstorm64':
+      return addWorkspaceToArgumentsIfExists(
+        ['--line', lineNumber, fileName],
         workspace
       );
   }
@@ -84,21 +158,56 @@ function guessEditor() {
     return shellQuote.parse(process.env.REACT_EDITOR);
   }
 
-  // Using `ps x` on OSX we can find out which editor is currently running.
-  // Potentially we could use similar technique for Windows and Linux
-  if (process.platform === 'darwin') {
-    try {
-      var output = child_process.execSync('ps x').toString();
-      var processNames = Object.keys(COMMON_EDITORS);
-      for (var i = 0; i < processNames.length; i++) {
-        var processName = processNames[i];
+  // We can find out which editor is currently running by:
+  // `ps x` on macOS and Linux
+  // `Get-Process` on Windows
+  try {
+    if (process.platform === 'darwin') {
+      const output = child_process.execSync('ps x').toString();
+      const processNames = Object.keys(COMMON_EDITORS_OSX);
+      for (let i = 0; i < processNames.length; i++) {
+        const processName = processNames[i];
         if (output.indexOf(processName) !== -1) {
-          return [COMMON_EDITORS[processName]];
+          return [COMMON_EDITORS_OSX[processName]];
         }
       }
-    } catch (error) {
-      // Ignore...
+    } else if (process.platform === 'win32') {
+      const output = child_process
+        .execSync('powershell -Command "Get-Process | Select-Object Path"', {
+          stdio: ['pipe', 'pipe', 'ignore'],
+        })
+        .toString();
+      const runningProcesses = output.split('\r\n');
+      for (let i = 0; i < runningProcesses.length; i++) {
+        // `Get-Process` sometimes returns empty lines
+        if (!runningProcesses[i]) {
+          continue;
+        }
+
+        const fullProcessPath = runningProcesses[i].trim();
+        const shortProcessName = path.basename(fullProcessPath);
+
+        if (COMMON_EDITORS_WIN.indexOf(shortProcessName) !== -1) {
+          return [fullProcessPath];
+        }
+      }
+    } else if (process.platform === 'linux') {
+      // --no-heading No header line
+      // x List all processes owned by you
+      // -o comm Need only names column
+      const output = child_process
+        .execSync('ps x --no-heading -o comm --sort=comm')
+        .toString();
+      const processNames = Object.keys(COMMON_EDITORS_LINUX);
+      for (let i = 0; i < processNames.length; i++) {
+        const processName = processNames[i];
+        if (output.indexOf(processName) !== -1) {
+          return [COMMON_EDITORS_LINUX[processName]];
+        }
+      }
     }
+  } catch (error) {
+    // Ignore...
   }
 
   // Last resort, use old skool env vars
@@ -131,12 +240,13 @@ function printInstructions(fileName, errorMessage) {
       ' to the ' +
       chalk.green('.env.local') +
       ' file in your project folder ' +
-      'and restart the development server.'
+      'and restart the development server. Learn more: ' +
+      chalk.green('https://goo.gl/MMTaZt')
   );
   console.log();
 }
 
-var _childProcess = null;
+let _childProcess = null;
 function launchEditor(fileName, lineNumber) {
   if (!fs.existsSync(fileName)) {
     return;
@@ -149,12 +259,31 @@ function launchEditor(fileName, lineNumber) {
   }
 
   let [editor, ...args] = guessEditor();
+
   if (!editor) {
     printInstructions(fileName, null);
     return;
   }
 
-  var workspace = null;
+  if (editor.toLowerCase() === 'none') {
+    return;
+  }
+
+  if (
+    process.platform === 'linux' &&
+    fileName.startsWith('/mnt/') &&
+    /Microsoft/i.test(os.release())
+  ) {
+    // Assume WSL / "Bash on Ubuntu on Windows" is being used, and
+    // that the file exists on the Windows file system.
+    // `os.release()` is "4.4.0-43-Microsoft" in the current release
+    // build of WSL, see: https://github.com/Microsoft/BashOnWindows/issues/423#issuecomment-221627364
+    // When a Windows editor is specified, interop functionality can
+    // handle the path translation, but only if a relative path is used.
+    fileName = path.relative('', fileName);
+  }
+
+  let workspace = null;
   if (lineNumber) {
     args = args.concat(
       getArgumentsForLineNumber(editor, fileName, lineNumber, workspace)

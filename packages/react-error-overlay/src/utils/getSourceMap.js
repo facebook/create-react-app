@@ -1,4 +1,11 @@
-//@flow
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* @flow */
 import { SourceMapConsumer } from 'source-map';
 
 /**
@@ -68,7 +75,10 @@ class SourceMap {
   }
 }
 
-function extractSourceMapUrl(fileUri: string, fileContents: string) {
+function extractSourceMapUrl(
+  fileUri: string,
+  fileContents: string
+): Promise<string> {
   const regex = /\/\/[#@] ?sourceMappingURL=([^\s'"]+)\s*$/gm;
   let match = null;
   for (;;) {

@@ -1,8 +1,18 @@
-// @flow
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* @flow */
 import type { ReactFrame } from '../effects/proxyConsole';
 
 function stripInlineStacktrace(message: string): string {
-  return message.split('\n').filter(line => !line.match(/^\s*in/)).join('\n'); // "  in Foo"
+  return message
+    .split('\n')
+    .filter(line => !line.match(/^\s*in/))
+    .join('\n'); // "  in Foo"
 }
 
 function massage(

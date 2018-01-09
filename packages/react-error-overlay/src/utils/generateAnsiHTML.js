@@ -1,32 +1,33 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
+/* @flow */
 
-var Anser = require('anser');
+import Anser from 'anser';
+import { AllHtmlEntities as Entities } from 'html-entities';
+
+var entities = new Entities();
 
 // Color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
 // var base00 = 'ffffff'; // Default Background
 var base01 = 'f5f5f5'; // Lighter Background (Used for status bars)
 // var base02 = 'c8c8fa'; // Selection Background
-var base03 = '969896'; // Comments, Invisibles, Line Highlighting
+var base03 = '6e6e6e'; // Comments, Invisibles, Line Highlighting
 // var base04 = 'e8e8e8'; // Dark Foreground (Used for status bars)
 var base05 = '333333'; // Default Foreground, Caret, Delimiters, Operators
 // var base06 = 'ffffff'; // Light Foreground (Not often used)
 // var base07 = 'ffffff'; // Light Background (Not often used)
-var base08 = 'ed6a43'; // Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+var base08 = '881280'; // Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
 // var base09 = '0086b3'; // Integers, Boolean, Constants, XML Attributes, Markup Link Url
 // var base0A = '795da3'; // Classes, Markup Bold, Search Text Background
-var base0B = '183691'; // Strings, Inherited Class, Markup Code, Diff Inserted
-var base0C = '183691'; // Support, Regular Expressions, Escape Characters, Markup Quotes
+var base0B = '1155cc'; // Strings, Inherited Class, Markup Code, Diff Inserted
+var base0C = '994500'; // Support, Regular Expressions, Escape Characters, Markup Quotes
 // var base0D = '795da3'; // Functions, Methods, Attribute IDs, Headings
-var base0E = 'a71d5d'; // Keywords, Storage, Selector, Markup Italic, Diff Changed
+var base0E = 'c80000'; // Keywords, Storage, Selector, Markup Italic, Diff Changed
 // var base0F = '333333'; // Deprecated, Opening/Closing Embedded Language Tags e.g. <?php ?>
 
 // Map ANSI colors from what babel-code-frame uses to base16-github
@@ -60,8 +61,8 @@ var anserMap = {
   'ansi-white': 'darkgrey',
 };
 
-function ansiHTML(txt) {
-  var arr = new Anser().ansiToJson(txt, {
+function generateAnsiHTML(txt: string): string {
+  var arr = new Anser().ansiToJson(entities.encode(txt), {
     use_classes: true,
   });
 
@@ -69,7 +70,8 @@ function ansiHTML(txt) {
   var open = false;
   for (var index = 0; index < arr.length; ++index) {
     var c = arr[index];
-    var content = c.content, fg = c.fg;
+    var content = c.content,
+      fg = c.fg;
 
     var contentParts = content.split('\n');
     for (var _index = 0; _index < contentParts.length; ++_index) {
@@ -101,4 +103,4 @@ function ansiHTML(txt) {
   return result;
 }
 
-module.exports = ansiHTML;
+export default generateAnsiHTML;

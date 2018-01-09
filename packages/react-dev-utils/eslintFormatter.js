@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 'use strict';
 
 const chalk = require('chalk');
@@ -12,6 +19,8 @@ function isError(message) {
 
 function formatter(results) {
   let output = '\n';
+  let hasErrors = false;
+  let reportContainsErrorRuleIDs = false;
 
   results.forEach(result => {
     let messages = result.messages;
@@ -19,12 +28,14 @@ function formatter(results) {
       return;
     }
 
-    let hasErrors = false;
     messages = messages.map(message => {
       let messageType;
       if (isError(message)) {
         messageType = 'error';
         hasErrors = true;
+        if (message.ruleId) {
+          reportContainsErrorRuleIDs = true;
+        }
       } else {
         messageType = 'warn';
       }
@@ -45,9 +56,9 @@ function formatter(results) {
       messages = messages.filter(m => m[2] === 'error');
     }
 
-    // add color to messageTypes
+    // add color to rule keywords
     messages.forEach(m => {
-      m[3] = m[2] === 'error' ? chalk.red(m[3]) : chalk.yellow(m[3]);
+      m[4] = m[2] === 'error' ? chalk.red(m[4]) : chalk.yellow(m[4]);
       m.splice(2, 1);
     });
 
@@ -60,6 +71,20 @@ function formatter(results) {
 
     output += `${outputTable}\n\n`;
   });
+
+  if (reportContainsErrorRuleIDs) {
+    // Unlike with warnings, we have to do it here.
+    // We have similar code in react-scripts for warnings,
+    // but warnings can appear in multiple files so we only
+    // print it once at the end. For errors, however, we print
+    // it here because we always show at most one error, and
+    // we can only be sure it's an ESLint error before exiting
+    // this function.
+    output +=
+      'Search for the ' +
+      chalk.underline(chalk.red('keywords')) +
+      ' to learn more about each error.';
+  }
 
   return output;
 }
