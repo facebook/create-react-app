@@ -7,6 +7,9 @@
 'use strict';
 
 const plugins = [
+  // Experimental macros support. Will be documented after it's had some time
+  // in the wild.
+  require.resolve('babel-plugin-macros'),
   // class { handleClick = () => { } }
   require.resolve('babel-plugin-transform-class-properties'),
   // The following two plugins use Object.assign directly, instead of Babel's
