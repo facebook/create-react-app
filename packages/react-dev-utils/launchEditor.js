@@ -103,7 +103,13 @@ function addWorkspaceToArgumentsIfExists(args, workspace) {
   return args;
 }
 
-function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
+function getArgumentsForLineNumber(
+  editor,
+  fileName,
+  lineNumber,
+  colNumber,
+  workspace
+) {
   const editorBasename = path.basename(editor).replace(/\.(exe|cmd|bat)$/i, '');
   switch (editorBasename) {
     case 'atom':
@@ -112,17 +118,19 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
     case 'subl':
     case 'sublime':
     case 'sublime_text':
+      return [fileName + ':' + lineNumber + ':' + colNumber];
     case 'wstorm':
     case 'charm':
       return [fileName + ':' + lineNumber];
     case 'notepad++':
-      return ['-n' + lineNumber, fileName];
+      return ['-n' + lineNumber, '-c' + colNumber, fileName];
     case 'vim':
     case 'mvim':
     case 'joe':
+      return ['+' + lineNumber, fileName];
     case 'emacs':
     case 'emacsclient':
-      return ['+' + lineNumber, fileName];
+      return ['+' + lineNumber + ':' + colNumber, fileName];
     case 'rmate':
     case 'mate':
     case 'mine':
@@ -132,7 +140,7 @@ function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
     case 'code-insiders':
     case 'Code - Insiders':
       return addWorkspaceToArgumentsIfExists(
-        ['-g', fileName + ':' + lineNumber],
+        ['-g', fileName + ':' + lineNumber + ':' + colNumber],
         workspace
       );
     case 'appcode':
@@ -255,15 +263,22 @@ function printInstructions(fileName, errorMessage) {
 }
 
 let _childProcess = null;
-function launchEditor(fileName, lineNumber) {
+function launchEditor(fileName, lineNumber, colNumber) {
   if (!fs.existsSync(fileName)) {
     return;
   }
 
   // Sanitize lineNumber to prevent malicious use on win32
   // via: https://github.com/nodejs/node/blob/c3bb4b1aa5e907d489619fb43d233c3336bfc03d/lib/child_process.js#L333
-  if (lineNumber && isNaN(lineNumber)) {
+  // and it should be a positive integer
+  if (!(Number.isInteger(lineNumber) && lineNumber > 0)) {
     return;
+  }
+
+  // colNumber is optional, but should be a positive integer too
+  // default is 1
+  if (!(Number.isInteger(colNumber) && colNumber > 0)) {
+    colNumber = 1;
   }
 
   let [editor, ...args] = guessEditor();
@@ -294,7 +309,13 @@ function launchEditor(fileName, lineNumber) {
   let workspace = null;
   if (lineNumber) {
     args = args.concat(
-      getArgumentsForLineNumber(editor, fileName, lineNumber, workspace)
+      getArgumentsForLineNumber(
+        editor,
+        fileName,
+        lineNumber,
+        colNumber,
+        workspace
+      )
     );
   } else {
     args.push(fileName);
