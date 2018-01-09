@@ -1286,6 +1286,8 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 ```
 
+>Note: Please keep in mind that, if you decide to `npm run eject` before creating `src/setupTests.js`, the resulting package.json file won't contain any reference to it, [read here](#initializing-test-environment) for a complete description.
+
 Now you can write a smoke test with it:
 
 ```js
