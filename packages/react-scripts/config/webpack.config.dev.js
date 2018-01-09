@@ -148,8 +148,8 @@ module.exports = {
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
         oneOf: [
-          // This is included by default, but when we add .json to eslint-loader
-          // test regex the compiler fails to recognize json files.
+          // Necessary because we add .json test in eslint-loader
+          // https://webpack.js.org/guides/migrating/#json-loader-is-not-required-anymore
           {
             test: /\.json$/,
             loader: require.resolve('json-loader'),
