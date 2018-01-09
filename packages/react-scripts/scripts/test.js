@@ -31,6 +31,10 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
   argv.push('--watch');
 }
 
+if (!process.env.CI && argv.indexOf('--debug') >= 0) {
+  argv.push('--runInBand');
+}
+
 // @remove-on-eject-begin
 // This is not necessary after eject because we embed config into package.json.
 const createJestConfig = require('./utils/createJestConfig');
