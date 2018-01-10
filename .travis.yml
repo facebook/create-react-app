@@ -15,8 +15,6 @@ script:
  - 'if [ $TEST_SUITE = "installs" ]; then tasks/e2e-installs.sh; fi'
  - 'if [ $TEST_SUITE = "kitchensink" ]; then tasks/e2e-kitchensink.sh; fi'
 env:
-  global:
-    - USE_YARN=no
   matrix:
     - TEST_SUITE=simple
     - TEST_SUITE=installs
@@ -25,7 +23,3 @@ matrix:
   include:
     - node_js: 0.10
       env: TEST_SUITE=simple
-# There's a weird Yarn/Lerna bug related to prerelease versions.
-# TODO: reenable after we ship 1.0.
-#    - node_js: 6
-#      env: USE_YARN=yes TEST_SUITE=simple

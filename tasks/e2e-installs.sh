@@ -103,13 +103,6 @@ grep -v "postinstall" package.json > temp && mv temp package.json
 npm install
 mv package.json.bak package.json
 
-if [ "$USE_YARN" = "yes" ]
-then
-  # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn
-  yarn cache clean
-fi
-
 # We removed the postinstall, so do it manually
 node bootstrap.js
 

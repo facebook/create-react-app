@@ -57,12 +57,7 @@ function install_package {
 
   # Install `dependencies`
   cd node_modules/$pkg/
-  if [ "$USE_YARN" = "yes" ]
-  then
-    yarn install --production
-  else
-    npm install --only=production
-  fi
+  npm install --only=production
   # Remove our packages to ensure side-by-side versions are used (which we link)
   rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-dev-utils,react-error-overlay,react-scripts}
   cd ../..
@@ -145,13 +140,6 @@ then
   cd $temp_app_path
   err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
   [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
-fi
-
-if [ "$USE_YARN" = "yes" ]
-then
-  # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn
-  yarn cache clean
 fi
 
 # We removed the postinstall, so do it manually here
