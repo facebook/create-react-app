@@ -109,7 +109,6 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
     console.log();
   }
   console.log(`  ${chalk.cyan(useYarn ? 'yarn' : 'npm')} run deploy`);
-  console.log()
 }
 
 function printStaticServerInstructions(buildFolder, useYarn) {
