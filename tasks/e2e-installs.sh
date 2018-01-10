@@ -93,10 +93,7 @@ fi
 
 if hash npm 2>/dev/null
 then
-  # npm 5 is too buggy right now
-  if [ $(npm -v | head -c 1) -eq 5 ]; then
-    npm i -g npm@^4.x
-  fi;
+  npm i -g npm@latest
   npm cache clean || npm cache verify
 fi
 
@@ -137,12 +134,12 @@ npm install "$cli_path"
 # ******************************************************************************
 
 cd "$temp_app_path"
-create_react_app --scripts-version=0.4.0 test-app-version-number
+create_react_app --scripts-version=1.0.17 test-app-version-number
 cd test-app-version-number
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
-grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
@@ -150,13 +147,13 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-create_react_app --use-npm --scripts-version=0.4.0 test-use-npm-flag
+create_react_app --use-npm --scripts-version=1.0.17 test-use-npm-flag
 cd test-use-npm-flag
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
 [ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
-grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
@@ -164,12 +161,12 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-create_react_app --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-0.4.0.tgz test-app-tarball-url
+create_react_app --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-1.0.17.tgz test-app-tarball-url
 cd test-app-tarball-url
 
 # Check corresponding scripts version is installed.
 exists node_modules/react-scripts
-grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
