@@ -31,8 +31,10 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
   argv.push('--watch');
 }
 
-if (!process.env.CI && argv.indexOf('--debug') >= 0) {
-  argv.push('--runInBand');
+// Run tests in sequence if debugging
+const debugIndex = argv.indexOf('--debug');
+if (!process.env.CI && debugIndex >= 0) {
+  argv[debugIndex] = '--runInBand';
 }
 
 // @remove-on-eject-begin
