@@ -47,10 +47,9 @@ module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
         'config/jest/fileTransform.js'
       ),
     },
-    // pattern matching doesn't work for workspaces (symlinks from node_modules)
-    // because jest doesn't match against realpaths
-    // ...so decision to tranpile is inside babelTransform which can use realpaths
-    // for matching
+    // jest doesn't match against realpaths, so pattern matching doesn't work
+    // for monorepos with symlinks from node_modules to module source
+    // moved pattern matching into babelTransform for now
     // jest 22.0.x does match patterns against realpath so this can probably
     // change with jest 22.0.x+
     transformIgnorePatterns: [

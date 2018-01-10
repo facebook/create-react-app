@@ -92,7 +92,6 @@ module.exports = {
 if (
   fs.existsSync(path.join(appDirectory, 'packages', 'react-scripts', 'config'))
 ) {
-  const appPackageJson = require(resolveOwn('package.json'));
   module.exports = {
     dotenv: resolveOwn('template/.env'),
     appPath: resolveApp('.'),
@@ -114,25 +113,6 @@ if (
 }
 // @remove-on-eject-end
 
-const isInPath = (fpath, searchPaths) => {
-  for (let i = 0; i < searchPaths.length; i++) {
-    if (fpath.startsWith(searchPaths[i] + path.sep)) {
-      return true;
-    }
-  }
-  return false;
-};
-
-const hasNodeModules = /[/\\\\]node_modules[/\\\\]/;
-
-// treat as source if realpath is in a srcPath, but not in a node_modules dir
-const isSrcFile = srcFile => {
-  const realSrc = fs.realpathSync(srcFile);
-  return (
-    !realSrc.match(hasNodeModules) && isInPath(realSrc, module.exports.srcPaths)
-  );
-};
-
 module.exports.srcPaths = [module.exports.appSrc];
 
 // if app is in a monorepo (lerna or yarn workspace), allow any module inside
@@ -153,5 +133,29 @@ if (monoPkgPath) {
   }
 }
 
-module.exports.shouldLint = modPath => isSrcFile(modPath);
+//
+// BELOW IS TO SUPPORT JEST TRANSPILING SOURCE FOR MONOREPOS
+// * JEST DOESN'T MATCH ON REALPATHS, BUT DOES WITH JEST >= 22.0.?, SO
+//   THIS CAN BE REMOVED WITH JEST > 22.0.?
+//
+
+const isInPath = (fpath, searchPaths) => {
+  for (let i = 0; i < searchPaths.length; i++) {
+    if (fpath.startsWith(searchPaths[i] + path.sep)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const hasNodeModules = /[/\\\\]node_modules[/\\\\]/;
+
+// realpath is in a srcPaths, but not in a node_modules dir
+const isSrcFile = srcFile => {
+  const realSrc = fs.realpathSync(srcFile);
+  return (
+    !realSrc.match(hasNodeModules) && isInPath(realSrc, module.exports.srcPaths)
+  );
+};
+
 module.exports.shouldTranspile = modPath => isSrcFile(modPath);
