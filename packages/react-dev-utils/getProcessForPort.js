@@ -46,7 +46,7 @@ function getProcessCommand(processId, processDirectory) {
     execOptions
   );
 
-  command = command.replace(/\n$/, '')
+  command = command.replace(/\n$/, '');
 
   if (isProcessAReactApp(command)) {
     const packageName = getPackageNameInDirectory(processDirectory);
@@ -58,7 +58,7 @@ function getProcessCommand(processId, processDirectory) {
 
 function getDirectoryOfProcessById(processId) {
   return execSync(
-    'lsof -p ' + processId + ' | awk \'$4=="cwd" {print $9}\'',
+    'lsof -p ' + processId + ' | awk \'$4=="cwd" {for (i=9; i<=NF; i++) printf "%s ", $i}\'',
     execOptions
   ).trim();
 }
@@ -68,8 +68,12 @@ function getProcessForPort(port) {
     var processId = getProcessIdOnPort(port);
     var directory = getDirectoryOfProcessById(processId);
     var command = getProcessCommand(processId, directory);
-    return chalk.cyan(command) + chalk.grey(' (pid ' + processId + ')\n') + 
-      chalk.blue('  in ') + chalk.cyan(directory);
+    return (
+      chalk.cyan(command) +
+      chalk.grey(' (pid ' + processId + ')\n') +
+      chalk.blue('  in ') +
+      chalk.cyan(directory)
+    );
   } catch (e) {
     return null;
   }

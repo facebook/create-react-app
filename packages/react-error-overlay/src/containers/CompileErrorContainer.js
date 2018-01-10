@@ -12,18 +12,34 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import CodeBlock from '../components/CodeBlock';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
+import parseCompileError from '../utils/parseCompileError';
+import type { ErrorLocation } from '../utils/parseCompileError';
+
+const codeAnchorStyle = {
+  cursor: 'pointer',
+};
 
 type Props = {|
   error: string,
+  editorHandler: (errorLoc: ErrorLocation) => void,
 |};
 
 class CompileErrorContainer extends PureComponent<Props, void> {
   render() {
-    const { error } = this.props;
+    const { error, editorHandler } = this.props;
+    const errLoc: ?ErrorLocation = parseCompileError(error);
+    const canOpenInEditor = errLoc !== null && editorHandler !== null;
     return (
       <ErrorOverlay>
         <Header headerText="Failed to compile" />
-        <CodeBlock main={true} codeHTML={generateAnsiHTML(error)} />
+        <a
+          onClick={
+            canOpenInEditor && errLoc ? () => editorHandler(errLoc) : null
+          }
+          style={canOpenInEditor ? codeAnchorStyle : null}
+        >
+          <CodeBlock main={true} codeHTML={generateAnsiHTML(error)} />
+        </a>
         <Footer line1="This error occurred during the build time and cannot be dismissed." />
       </ErrorOverlay>
     );
