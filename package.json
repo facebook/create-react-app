@@ -20,7 +20,7 @@
     "lerna": "^2.0.0",
     "lerna-changelog": "^0.7.0",
     "lint-staged": "^6.0.0",
-    "prettier": "1.9.2"
+    "prettier": "1.10.1"
   },
   "lint-staged": {
     "*.js": [
