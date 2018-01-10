@@ -22,6 +22,13 @@ switch (script) {
   case 'eject':
   case 'start':
   case 'test': {
+    if (
+      script === "test" &&
+      args.indexOf("--debug") > 0 &&
+      nodeArgs.indexOf("--inspect-brk") < 0
+    ) {
+      nodeArgs.push("--inspect-brk");
+    }
     const result = spawn.sync(
       'node',
       nodeArgs
