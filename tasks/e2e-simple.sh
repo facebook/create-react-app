@@ -1,10 +1,8 @@
 #!/bin/bash
 # Copyright (c) 2015-present, Facebook, Inc.
-# All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 # ******************************************************************************
 # This is an end-to-end test intended to run on CI.
@@ -45,6 +43,31 @@ function create_react_app {
   node "$temp_cli_path"/node_modules/create-react-app/index.js "$@"
 }
 
+function install_package {
+  local pkg=$(basename $1)
+
+  # Clean target (for safety)
+  rm -rf node_modules/$pkg/
+  rm -rf node_modules/**/$pkg/
+
+  # Copy package into node_modules/ ignoring installed deps
+  # rsync -a ${1%/} node_modules/ --exclude node_modules
+  cp -R ${1%/} node_modules/
+  rm -rf node_modules/$pkg/node_modules/
+
+  # Install `dependencies`
+  cd node_modules/$pkg/
+  if [ "$USE_YARN" = "yes" ]
+  then
+    yarn install --production
+  else
+    npm install --only=production
+  fi
+  # Remove our packages to ensure side-by-side versions are used (which we link)
+  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-dev-utils,react-error-overlay,react-scripts}
+  cd ../..
+}
+
 # Check for the existence of one or more files.
 function exists {
   for f in $*; do
@@ -65,13 +88,26 @@ set -x
 cd ..
 root_path=$PWD
 
+# Make sure we don't introduce accidental references to PATENTS.
+EXPECTED='packages/react-error-overlay/fixtures/bundle.mjs
+packages/react-error-overlay/fixtures/bundle.mjs.map
+packages/react-error-overlay/fixtures/bundle_u.mjs
+packages/react-error-overlay/fixtures/bundle_u.mjs.map
+tasks/e2e-simple.sh'
+ACTUAL=$(git grep -l PATENTS)
+if [ "$EXPECTED" != "$ACTUAL" ]; then
+  echo "PATENTS crept into some new files?"
+  diff -u <(echo "$EXPECTED") <(echo "$ACTUAL") || true
+  exit 1
+fi
+
 # Clear cache to avoid issues with incorrect packages being used
 if hash yarnpkg 2>/dev/null
 then
   # AppVeyor uses an old version of yarn.
   # Once updated to 0.24.3 or above, the workaround can be removed
   # and replaced with `yarnpkg cache clean`
-  # Issues: 
+  # Issues:
   #    https://github.com/yarnpkg/yarn/issues/2591
   #    https://github.com/appveyor/ci/issues/1576
   #    https://github.com/facebookincubator/create-react-app/pull/2400
@@ -86,12 +122,16 @@ fi
 
 if hash npm 2>/dev/null
 then
-  npm cache clean
+  # npm 5 is too buggy right now
+  if [ $(npm -v | head -c 1) -eq 5 ]; then
+    npm i -g npm@^4.x
+  fi;
+  npm cache clean || npm cache verify
 fi
 
-# Prevent lerna bootstrap, we only want top-level dependencies
+# Prevent bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
-grep -v "lerna bootstrap" package.json > temp && mv temp package.json
+grep -v "postinstall" package.json > temp && mv temp package.json
 npm install
 mv package.json.bak package.json
 
@@ -111,15 +151,15 @@ then
   [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 fi
 
-# We removed the postinstall, so do it manually here
-./node_modules/.bin/lerna bootstrap --concurrency=1
-
 if [ "$USE_YARN" = "yes" ]
 then
   # Install Yarn so that the test can use it to install packages.
   npm install -g yarn
   yarn cache clean
 fi
+
+# We removed the postinstall, so do it manually here
+node bootstrap.js
 
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
@@ -131,6 +171,9 @@ cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
 npm test
 npm run build:prod
+cd ../..
+cd packages/react-dev-utils/
+npm test
 cd ../..
 
 # ******************************************************************************
@@ -304,11 +347,18 @@ verify_module_scope
 # Eject...
 echo yes | npm run eject
 
+# Ensure Yarn is ran after eject; at the time of this commit, we don't run Yarn
+# after ejecting. Soon, we may only skip Yarn on Windows. Let's try to remove
+# this in the near future.
+if hash yarnpkg 2>/dev/null
+then
+  yarnpkg install --check-files
+fi
+
 # ...but still link to the local packages
-npm link "$root_path"/packages/babel-preset-react-app
-npm link "$root_path"/packages/eslint-config-react-app
-npm link "$root_path"/packages/react-dev-utils
-npm link "$root_path"/packages/react-scripts
+install_package "$root_path"/packages/babel-preset-react-app
+install_package "$root_path"/packages/eslint-config-react-app
+install_package "$root_path"/packages/react-dev-utils
 
 # Test the build
 npm run build
