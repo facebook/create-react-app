@@ -91,7 +91,7 @@ cd ../..
 
 # Pack CLI
 cd "$root_path"/packages/create-react-app
-cli_path=$PWD/`yarn pack`
+cli_path=$PWD/`npm pack`
 
 # Install the CLI in a temporary location
 cd "$temp_cli_path"

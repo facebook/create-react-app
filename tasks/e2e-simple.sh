@@ -164,7 +164,7 @@ yarn start --smoke-test
 
 # Pack CLI
 cd "$root_path"/packages/create-react-app
-cli_path=$PWD/`yarn pack`
+cli_path=$PWD/`npm pack`
 
 # Go to react-scripts
 cd "$root_path"/packages/react-scripts
@@ -177,7 +177,7 @@ cp package.json package.json.orig
 node "$root_path"/tasks/replace-own-deps.js
 
 # Finally, pack react-scripts
-scripts_path="$root_path"/packages/react-scripts/`yarn pack`
+scripts_path="$root_path"/packages/react-scripts/`npm pack`
 
 # Restore package.json
 rm package.json
