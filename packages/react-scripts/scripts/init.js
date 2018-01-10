@@ -43,6 +43,13 @@ module.exports = function(
     eject: 'react-scripts eject',
   };
 
+  appPackage.browserslist = [
+    '>1%',
+    'last 4 versions',
+    'Firefox ESR',
+    'not ie < 9',
+  ];
+
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)

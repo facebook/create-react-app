@@ -116,7 +116,7 @@ module.exports = {
     'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
-    'no-cond-assign': ['warn', 'always'],
+    'no-cond-assign': ['warn', 'except-parens'],
     'no-const-assign': 'warn',
     'no-control-regex': 'warn',
     'no-delete-var': 'warn',
@@ -225,13 +225,12 @@ module.exports = {
     'valid-typeof': 'warn',
     'no-restricted-properties': [
       'error',
-      // TODO: reenable once import() is no longer slow.
-      // https://github.com/facebookincubator/create-react-app/issues/2176
-      // {
-      //   object: 'require',
-      //   property: 'ensure',
-      //   message: 'Please use import() instead. More info: https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting',
-      // },
+      {
+        object: 'require',
+        property: 'ensure',
+        message:
+          'Please use import() instead. More info: https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting',
+      },
       {
         object: 'System',
         property: 'import',
