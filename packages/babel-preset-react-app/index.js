@@ -98,7 +98,7 @@ module.exports = function(api, opts) {
         },
       ],
       // function* () { yield 42; yield 43; }
-      [
+      !envTest && [
         require('@babel/plugin-transform-regenerator').default,
         {
           // Async functions are converted to generators by babel-preset-env
