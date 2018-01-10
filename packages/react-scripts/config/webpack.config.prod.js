@@ -360,7 +360,7 @@ module.exports = {
 
     // Warn about duplicate dependencies.
     // See https://github.com/facebookincubator/create-react-app/issues/1844
-    new DuplicatePackageCheckerPlugin(),
+    new DuplicatePackageCheckerPlugin({ strict: false }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
