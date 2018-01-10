@@ -84,6 +84,10 @@ trap 'set +x; handle_exit' SIGQUIT SIGTERM SIGINT SIGKILL SIGHUP
 # Echo every command being executed
 set -x
 
+# Go to root
+cd ..
+root_path=$PWD
+
 # Make sure we don't introduce accidental references to PATENTS.
 EXPECTED='tasks/e2e-simple.sh'
 ACTUAL=$(git grep -l PATENTS)
@@ -92,10 +96,6 @@ if [ "$EXPECTED" != "$ACTUAL" ]; then
   diff -u <(echo "$EXPECTED") <(echo "$ACTUAL") || true
   exit 1
 fi
-
-# Go to root
-cd ..
-root_path=$PWD
 
 # Clear cache to avoid issues with incorrect packages being used
 if hash yarnpkg 2>/dev/null
