@@ -186,11 +186,9 @@ inquirer
         if (!regex.test(appPackage.scripts[key])) {
           return;
         }
-        const nodeCommand =
-          key === 'test:debug' ? 'node --inspect-brk' : 'node';
         appPackage.scripts[key] = appPackage.scripts[key].replace(
           regex,
-          `${nodeCommand} scripts/$1.js`
+          'node scripts/$1.js'
         );
         console.log(
           `  Replacing ${cyan(`"${binKey} ${key}"`)} with ${cyan(
