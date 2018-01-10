@@ -26,11 +26,9 @@ function printHostingInstructions(
     printBaseMessage(buildFolder, publicPathname);
 
     printDeployInstructions(publicUrl, hasDeployScript, useYarn);
-
   } else if (publicPath !== '/') {
     // "homepage": "http://mywebsite.com/project"
     printBaseMessage(buildFolder, publicPath);
-
   } else {
     // "homepage": "http://mywebsite.com"
     //   or no homepage
@@ -39,40 +37,36 @@ function printHostingInstructions(
     printStaticServerInstructions(buildFolder, useYarn);
   }
   console.log();
+  console.log('Find out more about deployment here:');
+  console.log();
+  console.log(`  ${chalk.yellow('http://bit.ly/2vY88Kr')}`);
+  console.log();
 }
 
 function printBaseMessage(buildFolder, hostingLocation) {
-    console.log(
-      `The project was built assuming it is hosted at ${chalk.green(
-        hostingLocation || 'the server root'
-      )}.`
-    );
-    console.log(
-      `You can control this with the ${chalk.green(
-        'homepage'
-      )} field in your ${chalk.cyan('package.json')}.`
-    );
+  console.log(
+    `The project was built assuming it is hosted at ${chalk.green(
+      hostingLocation || 'the server root'
+    )}.`
+  );
+  console.log(
+    `You can control this with the ${chalk.green(
+      'homepage'
+    )} field in your ${chalk.cyan('package.json')}.`
+  );
 
-    if (!hostingLocation) {
-      console.log('For example, add this to build it for GitHub Pages:');
-      console.log();
-
-      console.log(
-        `  ${chalk.green('"homepage"')} ${chalk.cyan(':')} ${chalk.green(
-          '"http://myname.github.io/myapp"'
-        )}${chalk.cyan(',')}`
-      );
-    }
+  if (!hostingLocation) {
+    console.log('For example, add this to build it for GitHub Pages:');
     console.log();
 
     console.log(
-      `The ${chalk.cyan(buildFolder)} folder is ready to be deployed.`
+      `  ${chalk.green('"homepage"')} ${chalk.cyan(':')} ${chalk.green(
+        '"http://myname.github.io/myapp"'
+      )}${chalk.cyan(',')}`
     );
-    console.log()
-    console.log('Find out more about deployment here:');
-    console.log();
-    console.log(`  ${chalk.yellow('http://bit.ly/2vY88Kr')}`);
-    console.log();
+  }
+  console.log();
+  console.log(`The ${chalk.cyan(buildFolder)} folder is ready to be deployed.`);
 }
 
 function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
@@ -88,20 +82,24 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
     }
     console.log();
 
-    console.log(`Add the following script in your ${chalk.cyan(
-      'package.json'
-    )}.`);
+    console.log(
+      `Add the following script in your ${chalk.cyan('package.json')}.`
+    );
     console.log();
 
     console.log(`    ${chalk.dim('// ...')}`);
     console.log(`    ${chalk.yellow('"scripts"')}: {`);
     console.log(`      ${chalk.dim('// ...')}`);
-    console.log(`      ${chalk.yellow('"predeploy"')}: ${chalk.yellow(
-      '"npm run build",'
-    )}`);
-    console.log(`      ${chalk.yellow('"deploy"')}: ${chalk.yellow(
-      '"gh-pages -d build"'
-    )}`);
+    console.log(
+      `      ${chalk.yellow('"predeploy"')}: ${chalk.yellow(
+        '"npm run build",'
+      )}`
+    );
+    console.log(
+      `      ${chalk.yellow('"deploy"')}: ${chalk.yellow(
+        '"gh-pages -d build"'
+      )}`
+    );
     console.log('    }');
     console.log();
 
