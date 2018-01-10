@@ -129,6 +129,15 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_ENV=test \
   yarn test --no-cache --testPathPattern=src
 
+echo "before weird stuff"
+
+PORT=3001 \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  npm start
+
+echo "after weird stuff"
+
 # Test "development" environment
 tmp_server_log=`mktemp`
 PORT=3001 \
