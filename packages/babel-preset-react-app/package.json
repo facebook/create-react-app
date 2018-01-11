@@ -23,6 +23,7 @@
     "@babel/preset-env": "7.0.0-beta.36",
     "@babel/preset-flow": "7.0.0-beta.36",
     "@babel/preset-react": "7.0.0-beta.36",
+    "babel-plugin-macros": "2.0.0",
     "babel-plugin-transform-dynamic-import": "2.0.0"
   }
 }

@@ -70,6 +70,9 @@ module.exports = function(api, opts) {
       [require('@babel/preset-flow').default],
     ].filter(Boolean),
     plugins: [
+      // Experimental macros support. Will be documented after it's had some time
+      // in the wild.
+      require('babel-plugin-macros'),
       // class { handleClick = () => { } }
       require('@babel/plugin-proposal-class-properties').default,
       // The following two plugins use Object.assign directly, instead of Babel's

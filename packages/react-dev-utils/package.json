@@ -56,7 +56,7 @@
     "text-table": "0.2.0"
   },
   "devDependencies": {
-    "jest": "21.2.1"
+    "jest": "22.0.6"
   },
   "scripts": {
     "test": "jest"
