@@ -12,9 +12,8 @@
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
-# CLI and app temporary locations
+# App temporary location
 # http://unix.stackexchange.com/a/84980
-temp_cli_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_cli_path'`
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 
 function cleanup {
@@ -22,7 +21,7 @@ function cleanup {
   cd "$root_path"
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
-  rm -rf "$temp_cli_path" $temp_app_path
+  rm -rf "$temp_app_path"
 }
 
 # Error messages are redirected to stderr
@@ -37,30 +36,6 @@ function handle_exit {
   cleanup
   echo 'Exiting without error.' 1>&2;
   exit
-}
-
-function create_react_app {
-  node "$temp_cli_path"/node_modules/create-react-app/index.js "$@"
-}
-
-function install_package {
-  local pkg=$(basename $1)
-
-  # Clean target (for safety)
-  rm -rf node_modules/$pkg/
-  rm -rf node_modules/**/$pkg/
-
-  # Copy package into node_modules/ ignoring installed deps
-  # rsync -a ${1%/} node_modules/ --exclude node_modules
-  cp -R ${1%/} node_modules/
-  rm -rf node_modules/$pkg/node_modules/
-
-  # Install `dependencies`
-  cd node_modules/$pkg/
-  yarn --production
-  # Remove our packages to ensure side-by-side versions are used (which we link)
-  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-dev-utils,react-error-overlay,react-scripts}
-  cd ../..
 }
 
 # Check for the existence of one or more files.
@@ -96,11 +71,30 @@ if [ "$EXPECTED" != "$ACTUAL" ]; then
   exit 1
 fi
 
+if hash npm 2>/dev/null
+then
+  npm i -g npm@latest
+  npm cache clean || npm cache verify
+fi
+
 # Prevent bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
 grep -v "postinstall" package.json > temp && mv temp package.json
 yarn
 mv package.json.bak package.json
+
+# Start local registry
+tmp_registry_log=`mktemp`
+nohup npx verdaccio@2.7.2 &>$tmp_registry_log &
+# Wait for `verdaccio` to boot
+grep -q 'http address' <(tail -f $tmp_registry_log)
+
+# Set registry to local registry
+npm set registry http://localhost:4873
+yarn config set registry http://localhost:4873
+
+# Login so we can publish packages
+npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r http://localhost:4873 --quotes
 
 # We removed the postinstall, so do it manually here
 node bootstrap.js
@@ -142,48 +136,18 @@ CI=true yarn test
 # Test local start command
 yarn start --smoke-test
 
-# ******************************************************************************
-# Next, pack react-scripts and create-react-app so we can verify they work.
-# ******************************************************************************
-
-# Pack CLI
-cd "$root_path"/packages/create-react-app
-cli_path=$PWD/`npm pack`
-
-# Go to react-scripts
-cd "$root_path"/packages/react-scripts
-
-# Save package.json because we're going to touch it
-cp package.json package.json.orig
-
-# Replace own dependencies (those in the `packages` dir) with the local paths
-# of those packages.
-node "$root_path"/tasks/replace-own-deps.js
-
-# Finally, pack react-scripts
-scripts_path="$root_path"/packages/react-scripts/`npm pack`
-
-# Restore package.json
-rm package.json
-mv package.json.orig package.json
+git clean -f
+./tasks/release.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
-# Now that we have packed them, create a clean app folder and install them.
+# Install react-scripts prerelease via create-react-app prerelease.
 # ******************************************************************************
-
-# Install the CLI in a temporary location
-cd "$temp_cli_path"
-
-# Initialize package.json before installing the CLI because npm will not install
-# the CLI properly in the temporary location if it is missing.
-yarn init --yes
-
-# Now we can install the CLI from the local package.
-yarn add "$cli_path"
 
 # Install the app in a temporary location
 cd $temp_app_path
-create_react_app --scripts-version="$scripts_path" test-app
+npx create-react-app test-app
+
+# TODO: verify we installed prerelease
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -290,11 +254,6 @@ verify_module_scope
 
 # Eject...
 echo yes | npm run eject
-
-# ...but still link to the local packages
-install_package "$root_path"/packages/babel-preset-react-app
-install_package "$root_path"/packages/eslint-config-react-app
-install_package "$root_path"/packages/react-dev-utils
 
 # Test the build
 yarn build
