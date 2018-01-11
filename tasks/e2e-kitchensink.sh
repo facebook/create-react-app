@@ -58,7 +58,7 @@ function install_package {
 
   # Install `dependencies`
   cd node_modules/$pkg/
-  npm install --only=production
+  yarn --production
   # Remove our packages to ensure side-by-side versions are used (which we link)
   rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-dev-utils,react-error-overlay,react-scripts}
   cd ../..
@@ -84,42 +84,17 @@ set -x
 cd ..
 root_path=$PWD
 
-# Clear cache to avoid issues with incorrect packages being used
-if hash yarnpkg 2>/dev/null
-then
-  # AppVeyor uses an old version of yarn.
-  # Once updated to 0.24.3 or above, the workaround can be removed
-  # and replaced with `yarnpkg cache clean`
-  # Issues:
-  #    https://github.com/yarnpkg/yarn/issues/2591
-  #    https://github.com/appveyor/ci/issues/1576
-  #    https://github.com/facebookincubator/create-react-app/pull/2400
-  # When removing workaround, you may run into
-  #    https://github.com/facebookincubator/create-react-app/issues/2030
-  case "$(uname -s)" in
-    *CYGWIN*|MSYS*|MINGW*) yarn=yarn.cmd;;
-    *) yarn=yarnpkg;;
-  esac
-  $yarn cache clean
-fi
-
-if hash npm 2>/dev/null
-then
-  npm i -g npm@latest
-  npm cache clean || npm cache verify
-fi
-
 # Prevent bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
 grep -v "postinstall" package.json > temp && mv temp package.json
-npm install
+yarn
 mv package.json.bak package.json
 
 # We removed the postinstall, so do it manually
 node bootstrap.js
 
 cd packages/react-error-overlay/
-npm run build:prod
+yarn build:prod
 cd ../..
 
 # ******************************************************************************
@@ -153,7 +128,7 @@ mv package.json.orig package.json
 
 # Install the CLI in a temporary location
 cd "$temp_cli_path"
-npm install "$cli_path"
+yarn add "$cli_path"
 
 # Install the app in a temporary location
 cd $temp_app_path
@@ -161,7 +136,7 @@ create_react_app --scripts-version="$scripts_path" --internal-testing-template="
 
 # Install the test module
 cd "$temp_module_path"
-npm install test-integrity@^2.0.1
+yarn add test-integrity@^2.0.1
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -184,7 +159,7 @@ install_package "$temp_module_path/node_modules/test-integrity"
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  npm run build
+  yarn build
 
 # Check for expected output
 exists build/*.html
@@ -195,14 +170,14 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  npm test -- --no-cache --testPathPattern=src
+  yarn test --no-cache --testPathPattern=src
 
 # Test "development" environment
 tmp_server_log=`mktemp`
 PORT=3001 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
-  nohup npm start &>$tmp_server_log &
+  nohup yarn start &>$tmp_server_log &
 grep -q 'You can now view' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -225,14 +200,6 @@ E2E_FILE=./build/index.html \
 # Eject...
 echo yes | npm run eject
 
-# Ensure Yarn is ran after eject; at the time of this commit, we don't run Yarn
-# after ejecting. Soon, we may only skip Yarn on Windows. Let's try to remove
-# this in the near future.
-if hash yarnpkg 2>/dev/null
-then
-  yarn install --check-files
-fi
-
 # ...but still link to the local packages
 install_package "$root_path"/packages/babel-preset-react-app
 install_package "$root_path"/packages/eslint-config-react-app
@@ -246,7 +213,7 @@ install_package "$temp_module_path/node_modules/test-integrity"
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  npm run build
+  yarn build
 
 # Check for expected output
 exists build/*.html
@@ -257,14 +224,14 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  npm test -- --no-cache --testPathPattern=src
+  yarn test --no-cache --testPathPattern=src
 
 # Test "development" environment
 tmp_server_log=`mktemp`
 PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
-  nohup npm start &>$tmp_server_log &
+  nohup yarn start &>$tmp_server_log &
 grep -q 'You can now view' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \

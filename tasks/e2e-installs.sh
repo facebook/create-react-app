@@ -72,42 +72,17 @@ set -x
 cd ..
 root_path=$PWD
 
-# Clear cache to avoid issues with incorrect packages being used
-if hash yarnpkg 2>/dev/null
-then
-  # AppVeyor uses an old version of yarn.
-  # Once updated to 0.24.3 or above, the workaround can be removed
-  # and replaced with `yarnpkg cache clean`
-  # Issues:
-  #    https://github.com/yarnpkg/yarn/issues/2591
-  #    https://github.com/appveyor/ci/issues/1576
-  #    https://github.com/facebookincubator/create-react-app/pull/2400
-  # When removing workaround, you may run into
-  #    https://github.com/facebookincubator/create-react-app/issues/2030
-  case "$(uname -s)" in
-    *CYGWIN*|MSYS*|MINGW*) yarn=yarn.cmd;;
-    *) yarn=yarnpkg;;
-  esac
-  $yarn cache clean
-fi
-
-if hash npm 2>/dev/null
-then
-  npm i -g npm@latest
-  npm cache clean || npm cache verify
-fi
-
 # Prevent bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
 grep -v "postinstall" package.json > temp && mv temp package.json
-npm install
+yarn
 mv package.json.bak package.json
 
 # We removed the postinstall, so do it manually
 node bootstrap.js
 
 cd packages/react-error-overlay/
-npm run build:prod
+yarn run build:prod
 cd ../..
 
 # ******************************************************************************
@@ -120,7 +95,7 @@ cli_path=$PWD/`npm pack`
 
 # Install the CLI in a temporary location
 cd "$temp_cli_path"
-npm install "$cli_path"
+yarn add "$cli_path"
 
 # ******************************************************************************
 # Test --scripts-version with a version number
@@ -222,20 +197,20 @@ cd test-app-nested-paths-t1
 mkdir -p test-app-nested-paths-t1/aa/bb/cc/dd
 create_react_app test-app-nested-paths-t1/aa/bb/cc/dd
 cd test-app-nested-paths-t1/aa/bb/cc/dd
-npm start -- --smoke-test
+yarn start --smoke-test
 
 # Testing a path that does not exist
 cd "$temp_app_path"
 create_react_app test-app-nested-paths-t2/aa/bb/cc/dd
 cd test-app-nested-paths-t2/aa/bb/cc/dd
-npm start -- --smoke-test
+yarn start --smoke-test
 
 # Testing a path that is half exists
 cd "$temp_app_path"
 mkdir -p test-app-nested-paths-t3/aa
 create_react_app test-app-nested-paths-t3/aa/bb/cc/dd
 cd test-app-nested-paths-t3/aa/bb/cc/dd
-npm start -- --smoke-test
+yarn start --smoke-test
 
 # Cleanup
 cleanup
