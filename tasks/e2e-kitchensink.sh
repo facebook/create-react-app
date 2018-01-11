@@ -155,7 +155,7 @@ E2E_FILE=./build/index.html \
 # ******************************************************************************
 
 # Eject...
-echo yes | yarn eject
+echo yes | npm run eject
 
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
