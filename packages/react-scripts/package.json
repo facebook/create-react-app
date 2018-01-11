@@ -37,7 +37,7 @@
     "postcss-loader": "2.0.8",
     "promise": "8.0.1",
     "raf": "3.4.0",
-    "react-dev-utils": "^4.2.1",
+    "react-dev-utils": "4.2.1",
     "style-loader": "0.19.0",
     "ts-jest": "^20.0.7",
     "ts-loader": "^2.3.7",
@@ -61,4 +61,3 @@
     "fsevents": "1.1.2"
   }
 }
-
