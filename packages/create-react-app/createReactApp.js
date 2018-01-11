@@ -619,6 +619,12 @@ function isSafeToCreateProjectIn(root, name) {
     '.hg',
     '.hgignore',
     '.hgcheck',
+    '.npmignore',
+    'mkdocs.yml',
+    'docs',
+    '.travis.yml',
+    '.gitlab-ci.yml',
+    '.gitattributes',
   ];
   console.log();
 
