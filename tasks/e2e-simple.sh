@@ -305,7 +305,7 @@ verify_module_scope
 # ******************************************************************************
 
 # Eject...
-echo yes | yarn eject
+echo yes | npm run eject
 
 # ...but still link to the local packages
 install_package "$root_path"/packages/babel-preset-react-app
