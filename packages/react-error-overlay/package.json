@@ -6,7 +6,7 @@
   "scripts": {
     "prepublishOnly": "npm run build:prod && npm test",
     "start": "cross-env NODE_ENV=development node build.js --watch",
-    "test": "flow && cross-env NODE_ENV=test jest",
+    "test": "cross-env NODE_ENV=test jest",
     "build": "cross-env NODE_ENV=development node build.js",
     "build:prod": "cross-env NODE_ENV=production node build.js"
   },
