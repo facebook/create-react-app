@@ -177,10 +177,6 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_ENV=test \
   yarn test --no-cache --testPathPattern=src
 
-# Add modules transform since we're running code with import/export
-# in a test environment which doesn't support modules.
-node "$root_path"/tasks/add-modules-transform.js
-
 # Test "development" environment
 tmp_server_log=`mktemp`
 PORT=3002 \
