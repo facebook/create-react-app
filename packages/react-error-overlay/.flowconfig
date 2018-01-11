@@ -1,0 +1,10 @@
+[include]
+<PROJECT_ROOT>/src/**/*.js
+
+[ignore]
+.*/node_modules/.*
+
+[libs]
+flow/
+
+[options]
