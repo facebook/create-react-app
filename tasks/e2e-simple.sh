@@ -307,11 +307,6 @@ verify_module_scope
 # Eject...
 echo yes | yarn eject
 
-# Ensure Yarn is ran after eject; at the time of this commit, we don't run Yarn
-# after ejecting. Soon, we may only skip Yarn on Windows. Let's try to remove
-# this in the near future.
-yarn install --check-files
-
 # ...but still link to the local packages
 install_package "$root_path"/packages/babel-preset-react-app
 install_package "$root_path"/packages/eslint-config-react-app
