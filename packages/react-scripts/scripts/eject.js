@@ -182,14 +182,14 @@ inquirer
     delete appPackage.scripts['eject'];
     Object.keys(ownPackage.bin).forEach(binKey => {
       const regex = new RegExp(binKey + ' (\\w+)', 'g');
+      const testDebugRegex = new RegExp(binKey + ' test --debug', 'g');
       Object.keys(appPackage.scripts).forEach(key => {
         if (!regex.test(appPackage.scripts[key])) {
           return;
         }
-        appPackage.scripts[key] = appPackage.scripts[key].replace(
-          regex,
-          'node scripts/$1.js'
-        );
+        appPackage.scripts[key] = appPackage.scripts[key]
+          .replace(testDebugRegex, 'node --inspect-brk scripts/test.js --debug')
+          .replace(regex, 'node scripts/$1.js');
         console.log(
           `  Replacing ${cyan(`"${binKey}"`)} commands in script ${cyan(
             `"${key}"`
