@@ -70,16 +70,21 @@ if [ "$EXPECTED" != "$ACTUAL" ]; then
   exit 1
 fi
 
+if hash npm 2>/dev/null
+then
+  npm i -g npm@latest
+  npm cache clean || npm cache verify
+fi
+
 # Prevent bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
 grep -v "postinstall" package.json > temp && mv temp package.json
 yarn
 mv package.json.bak package.json
 
-yarn global add verdaccio
 # Start local registry
 tmp_registry_log=`mktemp`
-nohup verdaccio &>$tmp_registry_log &
+nohup npx verdaccio@2.7.2 &>$tmp_registry_log &
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
@@ -88,8 +93,7 @@ npm set registry http://localhost:4873
 yarn config set registry http://localhost:4873
 
 # Login so we can publish packages
-yarn global add npm-cli-login@0.0.10
-npm-cli-login -u user -p password -e user@example.com -r http://localhost:4873 --quotes
+npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r http://localhost:4873 --quotes
 
 # We removed the postinstall, so do it manually here
 node bootstrap.js
@@ -138,12 +142,9 @@ git clean -f
 # Install react-scripts prerelease via create-react-app prerelease.
 # ******************************************************************************
 
-# Install latest CLI
-yarn global add create-react-app
-
 # Install the app in a temporary location
 cd $temp_app_path
-create-react-app test-app
+npx create-react-app test-app
 
 # TODO: verify we installed prerelease
 
