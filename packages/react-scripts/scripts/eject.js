@@ -191,8 +191,8 @@ inquirer
           'node scripts/$1.js'
         );
         console.log(
-          `  Replacing ${cyan(`"${binKey} ${key}"`)} with ${cyan(
-            `"node scripts/${key}.js"`
+          `  Replacing ${cyan(`"${binKey}"`)} commands in script ${cyan(
+            `"${key}"`
           )}`
         );
       });
