@@ -21,6 +21,7 @@ function cleanup {
   cd "$root_path"
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
+  rm -rf "$temp_app_path"
 }
 
 # Error messages are redirected to stderr
