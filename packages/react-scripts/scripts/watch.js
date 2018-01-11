@@ -21,7 +21,7 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 
-const config = require('../config/webpack.config.watch');
+const config = require('../config/webpack.config.dev');
 const paths = require('../config/paths');
 
 const clearConsole = require('react-dev-utils/clearConsole');
@@ -38,7 +38,6 @@ const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const cli = useYarn ? 'yarn' : 'npm';
 const isInteractive = process.stdout.isTTY;
-const echo = console.log; //alias console.log for easier printing
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -83,12 +82,19 @@ function run() {
     .catch(console.log);
 }
 
+const watchConfig = Object.assign({}, config, {
+  watch: true,
+  output: Object.assign({}, config.output, {
+    path: paths.appBuild,
+  }),
+});
+
 function watch(previousFileSizes) {
   clearConsoleIfInteractive();
-  const watcher = webpack(config, () => {});
+  const watcher = webpack(watchConfig, () => {});
   const compiler = watcher.compiler;
 
-  echo('Compiling ' + process.env.NODE_ENV + ' build...');
+  console.log('Compiling ' + process.env.NODE_ENV + ' build...');
   compiler.plugin('done', createCompilerDoneHandler(previousFileSizes));
   compiler.plugin('invalid', handleCompilerInvalid);
 }
@@ -96,7 +102,7 @@ function watch(previousFileSizes) {
 function handleCompilerInvalid() {
   clearConsoleIfInteractive();
 
-  echo('Compiling...');
+  console.log('Compiling...');
 }
 
 function createCompilerDoneHandler(previousFileSizes) {
@@ -107,86 +113,92 @@ function createCompilerDoneHandler(previousFileSizes) {
 }
 
 function cleanUpAndPrintMessages(stats, previousFileSizes) {
-  cleanBuildFolder(paths.appBuild, stats).then(removedFiles => {
-    if (removedFiles.length) {
-      console.log(
-        'Deleting up old assets in the build folder:\n',
-        removedFiles.join('\n')
-      );
-    }
-    copyPublicFolder(); // Update public folder
+  cleanBuildFolder(paths.appBuild, stats)
+    .then(removedFiles => {
+      if (removedFiles.length) {
+        console.log(
+          'Deleting up old assets in the build folder:\n',
+          removedFiles.join('\n')
+        );
+      }
+      copyPublicFolder(); // Update public folder
 
-    const messages = formatWebpackMessages(stats.toJson({}, true));
-    const isSuccessful = !messages.errors.length && !messages.warnings.length;
+      const messages = formatWebpackMessages(stats.toJson({}, true));
+      const isSuccessful = !messages.errors.length && !messages.warnings.length;
 
-    if (isSuccessful) {
-      printWatchSuccessMessage(messages, stats, previousFileSizes);
-      return printWaitingChanges();
-    }
+      if (isSuccessful) {
+        printWatchSuccessMessage(messages, stats, previousFileSizes);
+        return printWaitingChanges();
+      }
 
-    // If errors exist, only print errors.
-    if (messages.errors.length) {
-      printErrors(messages);
-      return printWaitingChanges();
-    }
+      // If errors exist, only print errors.
+      if (messages.errors.length) {
+        printErrors(messages);
+        return printWaitingChanges();
+      }
 
-    // Print warnings if no errors were found.
-    if (messages.warnings.length) {
-      printWarnings(messages);
-      return printWaitingChanges();
-    }
-  });
+      // Print warnings if no errors were found.
+      if (messages.warnings.length) {
+        printWarnings(messages);
+        return printWaitingChanges();
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
 }
 
 function printErrors(messages) {
-  echo(chalk.red('Failed to compile.'));
-  echo();
+  console.log(chalk.red('Failed to compile.'));
+  console.log();
   messages.errors.forEach(message => {
-    echo(message);
-    echo();
+    console.log(message);
+    console.log();
   });
 }
 
 function printWatchSuccessMessage(messages, stats, previousFileSizes) {
-  echo(
+  console.log(
     [
       chalk.green(
         'Successfully compiled a ' + process.env.NODE_ENV + ' build.'
       ),
       '',
       'You can access the compiled files in',
-      paths.appBuild,
+      '',
+      '  ' + chalk.yellow(paths.appBuild),
       '',
       'File sizes after gzip:',
       '',
     ].join('\n')
   );
-  printFileSizesAfterBuild(stats, previousFileSizes);
-  echo(
-    'To start a development server, use ' + chalk.cyan(cli + ' start') + '.'
+  printFileSizesAfterBuild(stats, previousFileSizes, paths.appBuild);
+  console.log();
+  console.log(
+    'To start a development server, run `' + chalk.cyan(cli + ' start') + '`.'
   );
-  echo(
-    'To create an optimized production build, use ' +
+  console.log(
+    'To create an optimized production build, run `' +
       chalk.cyan(cli + ' build') +
-      '.'
+      '`.'
   );
 }
 
 function printWarnings(messages) {
-  echo(chalk.yellow('Compiled with warnings.'));
-  echo();
+  console.log(chalk.yellow('Compiled with warnings.'));
+  console.log();
   messages.warnings.forEach(message => {
-    echo(message);
-    echo();
+    console.log(message);
+    console.log();
   });
   // Teach some ESLint tricks.
-  echo('You may use special comments to disable some warnings.');
-  echo(
+  console.log('You may use special comments to disable some warnings.');
+  console.log(
     'Use ' +
       chalk.yellow('// eslint-disable-next-line') +
       ' to ignore the next line.'
   );
-  echo(
+  console.log(
     'Use ' +
       chalk.yellow('/* eslint-disable */') +
       ' to ignore all warnings in a file.'
@@ -200,8 +212,8 @@ function clearConsoleIfInteractive() {
 }
 
 function printWaitingChanges() {
-  echo();
-  echo(
+  console.log();
+  console.log(
     'Waiting for changes in',
     paths.appSrc.replace(process.cwd(), '.') + '/'
   );
