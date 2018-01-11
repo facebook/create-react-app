@@ -73,14 +73,8 @@ then
   npm cache clean || npm cache verify
 fi
 
-# Prevent bootstrap, we only want top-level dependencies
-cp package.json package.json.bak
-grep -v "postinstall" package.json > temp && mv temp package.json
+# Install packages
 yarn
-mv package.json.bak package.json
-
-# We removed the postinstall, so do it manually
-node bootstrap.js
 
 cd packages/react-error-overlay/
 yarn run build:prod
