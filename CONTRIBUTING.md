@@ -82,7 +82,7 @@ Once it is done, you can modify any file locally and run `yarn start`, `yarn tes
 If you want to try out the end-to-end flow with the global CLI, you can do this too:
 
 ```
-yarn run create-react-app my-app
+yarn create-react-app my-app
 cd my-app
 ```
 
@@ -117,11 +117,11 @@ By default git would use `CRLF` line endings which would cause the scripts to fa
 4. Note that files in `packages/create-react-app` should be modified with extreme caution. Since it’s a global CLI, any version of `create-react-app` (global CLI) including very old ones should work with the latest version of `react-scripts`.
 5. Create a change log entry for the release:
   * You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
-  * Run `yarn run changelog`. The command will find all the labeled pull requests merged since the last release and group them by the label and affected packages, and create a change log entry with all the changes and links to PRs and their authors. Copy and paste it to `CHANGELOG.md`.
+  * Run `yarn changelog`. The command will find all the labeled pull requests merged since the last release and group them by the label and affected packages, and create a change log entry with all the changes and links to PRs and their authors. Copy and paste it to `CHANGELOG.md`.
   * Add a four-space indented paragraph after each non-trivial list item, explaining what changed and why. For each breaking change also write who it affects and instructions for migrating existing code.
   * Maybe add some newlines here and there. Preview the result on GitHub to get a feel for it. Changelog generator output is a bit too terse for my taste, so try to make it visually pleasing and well grouped.
 6. Make sure to include “Migrating from ...” instructions for the previous release. Often you can copy and paste them.
-7. **Do not run `yarn publish`. Instead, run `yarn run publish`.**
+7. Run `yarn run publish`. (Don’t forget the `run` there.)
 8. Wait for a long time, and it will get published. Don’t worry that it’s stuck. In the end the publish script will prompt for versions before publishing the packages.
 9. After publishing, create a GitHub Release with the same text as the changelog entry. See previous Releases for inspiration.
 
