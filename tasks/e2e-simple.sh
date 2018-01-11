@@ -102,6 +102,7 @@ npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r http://local
 cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
 yarn test
+yarn run flow
 cd ../..
 cd packages/react-dev-utils/
 yarn test
