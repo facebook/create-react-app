@@ -19,6 +19,7 @@ function printHostingInstructions(
   buildFolder,
   useYarn
 ) {
+  throw new Error('test');
   if (publicUrl && publicUrl.includes('.github.io/')) {
     // "homepage": "http://user.github.io/project"
     const publicPathname = url.parse(publicPath).pathname;
