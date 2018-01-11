@@ -77,11 +77,8 @@ then
   npm cache clean || npm cache verify
 fi
 
-# Prevent bootstrap, we only want top-level dependencies
-cp package.json package.json.bak
-grep -v "postinstall" package.json > temp && mv temp package.json
+# Bootstrap monorepo
 yarn
-mv package.json.bak package.json
 
 # Start local registry
 tmp_registry_log=`mktemp`
@@ -96,9 +93,6 @@ yarn config set registry http://localhost:4873
 # Login so we can publish packages
 npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r http://localhost:4873 --quotes
 
-# We removed the postinstall, so do it manually here
-node bootstrap.js
-
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
@@ -108,7 +102,6 @@ node bootstrap.js
 cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
 yarn test
-yarn build:prod
 cd ../..
 cd packages/react-dev-utils/
 yarn test
