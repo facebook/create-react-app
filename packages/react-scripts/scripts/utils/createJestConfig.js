@@ -8,16 +8,9 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
-
-const srcRootTestMatch = srcRoot => [
-  srcRoot + '/**/__tests__/**/*.{js,jsx,mjs}',
-  srcRoot + '/**/?(*.)(spec|test).{js,jsx,mjs}',
-];
-
-const srcRootTestMatches = srcRoots =>
-  srcRoots.reduce((m, srcRoot) => m.concat(srcRootTestMatch(srcRoot)), []);
 
 module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
@@ -26,16 +19,24 @@ module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
     ? '<rootDir>/src/setupTests.js'
     : undefined;
 
+  const srcRootsRel = srcRoots.map(
+    srcRoot => '<rootDir>/' + path.relative(rootDir || '', srcRoot)
+  );
+
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
-    testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}',
-      '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}',
-    ].concat(srcRootTestMatches(srcRoots)),
+    testMatch: srcRootsRel.reduce(
+      (m, srcRoot) =>
+        m.concat([
+          srcRoot + '/**/__tests__/**/*.{js,jsx,mjs}',
+          srcRoot + '/**/?(*.)(spec|test).{js,jsx,mjs}',
+        ]),
+      []
+    ),
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
@@ -73,9 +74,9 @@ module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
   if (rootDir) {
     config.rootDir = rootDir;
   }
-  if (srcRoots) {
+  if (srcRoots && srcRoots.length) {
     // where to search for tests
-    config.roots = [rootDir].concat(srcRoots);
+    config.roots = srcRootsRel;
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
@@ -136,6 +137,15 @@ module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
 
       process.exit(1);
     }
+  }
+  // temp fix until JEST 22.0.0+ with realpath matching arrives
+  // after ejecting, we can't filter using our custom babelTransform
+  // ... with below, monorepo source won't transpile, so monorepos won't work
+  // after ejecting
+  if (isEjecting) {
+    config.transformIgnorePatterns = [
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$',
+    ];
   }
   return config;
 };
