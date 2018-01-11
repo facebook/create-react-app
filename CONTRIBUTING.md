@@ -96,6 +96,21 @@ and then run `npm start` or `npm run build`.
 
 More detailed information are in the dedicated [README](/packages/react-scripts/fixtures/kitchensink/README.md).
 
+## Tips for contributors using Windows
+
+The scripts in tasks folder and other scripts in `package.json` will not work in Windows out of the box. However, using [Bash on  windows](https://msdn.microsoft.com/en-us/commandline/wsl/about) makes it easier to use those scripts without any workarounds. The steps to do so are detailed below: 
+
+### Install Bash on Ubuntu on Windows
+
+A good step by step guide can be found [here](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/)
+
+### Install Node.js and npm
+Even if you have node and npm installed on your windows, it would not be accessible from the bash shell. You would have to install it again. Installing via [`nvm`](https://github.com/creationix/nvm#install-script) is recommended.
+
+### Line endings
+
+By default git would use `CRLF` line endings which would cause the scripts to fail. You can change it for this repo only by setting `autocrlf` to false by running `git config core.autocrlf false`. You can also enable it for all your repos by using the `--global` flag if you wish to do so.
+
 ## Cutting a Release
 
 1. Tag all merged pull requests that go into the release with the relevant milestone. Each merged PR should also be labeled with one of the [labels](https://github.com/facebookincubator/create-react-app/labels) named `tag: ...` to indicate what kind of change it is.
@@ -108,9 +123,9 @@ More detailed information are in the dedicated [README](/packages/react-scripts/
   * Add a four-space indented paragraph after each non-trivial list item, explaining what changed and why. For each breaking change also write who it affects and instructions for migrating existing code.
   * Maybe add some newlines here and there. Preview the result on GitHub to get a feel for it. Changelog generator output is a bit too terse for my taste, so try to make it visually pleasing and well grouped.
 6. Make sure to include “Migrating from ...” instructions for the previous release. Often you can copy and paste them.
-7. After merging the changelog update, create a GitHub Release with the same text. See previous Releases for inspiration.
-8. **Do not run `npm publish`. Instead, run `npm run publish`.**
-9. Wait for a long time, and it will get published. Don’t worry that it’s stuck. In the end the publish script will prompt for versions before publishing the packages.
+7. **Do not run `npm publish`. Instead, run `npm run publish`.**
+8. Wait for a long time, and it will get published. Don’t worry that it’s stuck. In the end the publish script will prompt for versions before publishing the packages.
+9. After publishing, create a GitHub Release with the same text as the changelog entry. See previous Releases for inspiration.
 
 Make sure to test the released version! If you want to be extra careful, you can publish a prerelease by running `npm run publish -- --tag next` instead of `npm run publish`.
 

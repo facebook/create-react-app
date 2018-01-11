@@ -1,3 +1,69 @@
+## 1.0.17 (November 3, 2017)
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#3401](https://github.com/facebookincubator/create-react-app/pull/3401) Stop using a deprecated option. ([@gaearon](https://github.com/gaearon))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#3399](https://github.com/facebookincubator/create-react-app/pull/3399) Add link to VS Code troubleshooting guide. ([@auchenberg](https://github.com/auchenberg))
+  * [#3400](https://github.com/facebookincubator/create-react-app/pull/3400) Update VS Code debug configuration. ([@auchenberg](https://github.com/auchenberg))
+
+#### Committers: 3
+
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Kenneth Auchenberg ([auchenberg](https://github.com/auchenberg))
+- Loren Sands-Ramshaw ([lorensr](https://github.com/lorensr))
+
+### Migrating from 1.0.16 to 1.0.17
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.17
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.17
+```
+
+## 1.0.16 (October 31, 2017) 🎃
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#3374](https://github.com/facebookincubator/create-react-app/pull/3374) Set correct image type and sizes in `manifest.json`. ([@piotr-cz](https://github.com/piotr-cz))
+
+* `react-dev-utils`
+
+  * [#3368](https://github.com/facebookincubator/create-react-app/pull/3368) Fix a crash in development mode in older browsers. ([@felthy](https://github.com/felthy))
+
+#### Committers: 2
+
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Piotr ([piotr-cz](https://github.com/piotr-cz))
+
+### Migrating from 1.0.15 to 1.0.16
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.0.16
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.0.16
+```
+
 ## 1.0.15 (October 30, 2017)
 
 #### :bug: Bug Fix
