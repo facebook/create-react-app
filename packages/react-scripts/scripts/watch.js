@@ -28,10 +28,11 @@ const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const cleanBuildFolder = require('react-dev-utils/cleanBuildFolder');
-const prompt = require('react-dev-utils/prompt');
+const inquirer = require('inquirer');
 
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
-const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
+const measureFileSizesBeforeBuild =
+  FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
@@ -44,21 +45,32 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
-const question = `Note that running in watch mode is slower and only recommended if you need to
+const message = `Note that running in watch mode is slower and only recommended if you need to
 serve the assets with your own back-end in development. It's not recommended if 
 your use case is creating a single page application. Use npm start if that's the case. 
-Also, don't deploy the code before running npm run build.
+Also, don't deploy the code before running npm run build.`;
 
-Continue running in watching mode?`;
+const question = `
+
+Continue running in watching mode?
+
+`;
 
 clearConsoleIfInteractive();
-prompt(question, true).then(accept => {
-  if (accept) {
-    run();
-  } else {
-    process.exit();
-  }
-});
+inquirer
+  .prompt({
+    type: 'confirm',
+    name: 'shouldChangePort',
+    message: chalk.yellow(message) + question,
+    default: true,
+  })
+  .then(accept => {
+    if (accept) {
+      run();
+    } else {
+      process.exit();
+    }
+  });
 
 function run() {
   // First, read the current file sizes in build directory.
