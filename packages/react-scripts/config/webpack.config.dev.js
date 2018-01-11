@@ -76,6 +76,10 @@ module.exports = {
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
+    // This will tell webpack to not resolve symlinks to actual folders
+    // Symlinks into `src` folder will work with this option
+    // default value is set to `true`
+    symlinks: false,
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
