@@ -10,7 +10,7 @@
     "e2e": "tasks/e2e-simple.sh",
     "e2e:docker": "tasks/local-test.sh",
     "postinstall": "cd packages/react-error-overlay/ && yarn build:prod",
-    "publish": "lerna publish --independent",
+    "publish": "(git status --porcelain | grep -q ^ && echo '\nGit status is dirty.\n' && exit 1 || exit 0) && lerna publish --independent",
     "start": "cd packages/react-scripts && node scripts/start.js",
     "screencast": "svg-term --cast hItN7sl5yfCPTHxvFg5glhhfp --out screencast.svg --window",
     "test": "cd packages/react-scripts && node scripts/test.js --env=jsdom",
