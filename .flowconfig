@@ -1,0 +1,6 @@
+[include]
+react-error-overlay/src/**/*.js
+
+[libs]
+
+[options]
