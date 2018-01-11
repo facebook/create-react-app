@@ -19,7 +19,24 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, './src'),
+        include: [
+          path.resolve(__dirname, './src'),
+          path.dirname(
+            require.resolve('chalk', {
+              paths: path.dirname(require.resolve('@babel/code-frame')),
+            })
+          ),
+          path.dirname(
+            require.resolve(
+              'ansi-styles',
+              path.dirname(
+                require.resolve('chalk', {
+                  paths: path.dirname(require.resolve('@babel/code-frame')),
+                })
+              )
+            )
+          ),
+        ],
         use: 'babel-loader',
       },
     ],
