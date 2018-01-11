@@ -15,11 +15,16 @@ cd "$(dirname "$0")"
 # CLI and app temporary locations
 # http://unix.stackexchange.com/a/84980
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
+custom_registry_url=http://localhost:4873
+original_npm_registry_url=`npm get registry`
+original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
   cd "$root_path"
   rm -rf "$temp_app_path"
+  npm set registry "$original_npm_registry_url"
+  yarn config set registry "$original_yarn_registry_url"
 }
 
 # Error messages are redirected to stderr
@@ -87,11 +92,11 @@ nohup npx verdaccio@2.7.2 &>$tmp_registry_log &
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
 # Set registry to local registry
-npm set registry http://localhost:4873
-yarn config set registry http://localhost:4873
+npm set registry "$custom_registry_url"
+yarn config set registry "$custom_registry_url"
 
 # Login so we can publish packages
-npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r http://localhost:4873 --quotes
+npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
 
 # Publish the monorepo
 git clean -f
