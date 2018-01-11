@@ -180,9 +180,9 @@ inquirer
 
     console.log(cyan('Updating the scripts'));
     delete appPackage.scripts['eject'];
-    Object.keys(appPackage.scripts).forEach(key => {
-      Object.keys(ownPackage.bin).forEach(binKey => {
-        const regex = new RegExp(binKey + ' (\\w+)', 'g');
+    Object.keys(ownPackage.bin).forEach(binKey => {
+      const regex = new RegExp(binKey + ' (\\w+)', 'g');
+      Object.keys(appPackage.scripts).forEach(key => {
         if (!regex.test(appPackage.scripts[key])) {
           return;
         }
