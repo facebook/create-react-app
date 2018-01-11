@@ -293,6 +293,7 @@ module.exports = {
     // Minify the code.
     new UglifyJsPlugin({
       uglifyOptions: {
+        ecma: 5,
         compress: {
           warnings: false,
           // Disabled because of an issue with Uglify breaking seemingly valid code:
