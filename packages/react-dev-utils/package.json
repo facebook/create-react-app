@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "address": "1.0.3",
-    "babel-code-frame": "6.26.0",
+    "@babel/code-frame": "7.0.0-beta.36",
     "chalk": "1.1.3",
     "cross-spawn": "5.1.0",
     "detect-port-alt": "1.1.5",

@@ -21,13 +21,14 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@babel/core": "7.0.0-beta.36",
+    "@babel/runtime": "7.0.0-beta.36",
     "autoprefixer": "7.1.6",
-    "babel-core": "6.26.0",
-    "babel-eslint": "7.2.3",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "8.0.2",
     "babel-jest": "22.0.6",
-    "babel-loader": "7.1.2",
+    "babel-loader": "8.0.0-beta.0",
     "babel-preset-react-app": "^3.1.1",
-    "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
     "css-loader": "0.28.7",
