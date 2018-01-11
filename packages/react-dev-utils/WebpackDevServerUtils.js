@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 'use strict';
 
@@ -37,20 +35,18 @@ if (isSmokeTest) {
 }
 
 function prepareUrls(protocol, host, port) {
-  const formatUrl = hostname =>
-    url.format({
-      protocol,
-      hostname,
-      port,
-      pathname: '/',
-    });
-  const prettyPrintUrl = hostname =>
-    url.format({
-      protocol,
-      hostname,
-      port: chalk.bold(port),
-      pathname: '/',
-    });
+  const formatUrl = hostname => url.format({
+    protocol,
+    hostname,
+    port,
+    pathname: '/',
+  });
+  const prettyPrintUrl = hostname => url.format({
+    protocol,
+    hostname,
+    port: chalk.bold(port),
+    pathname: '/',
+  });
 
   const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
   let prettyHost, lanUrlForConfig, lanUrlForTerminal;
@@ -324,11 +320,9 @@ function prepareProxy(proxy, appPublicFolder) {
         // However API calls like `fetch()` won’t generally accept text/html.
         // If this heuristic doesn’t work well for you, use a custom `proxy` object.
         context: function(pathname, req) {
-          return (
-            mayProxy(pathname) &&
+          return mayProxy(pathname) &&
             req.headers.accept &&
-            req.headers.accept.indexOf('text/html') === -1
-          );
+            req.headers.accept.indexOf('text/html') === -1;
         },
         onProxyReq: proxyReq => {
           // Browers may send Origin headers even with same-origin
@@ -384,40 +378,39 @@ function prepareProxy(proxy, appPublicFolder) {
 
 function choosePort(host, defaultPort) {
   return detect(defaultPort, host).then(
-    port =>
-      new Promise(resolve => {
-        if (port === defaultPort) {
-          return resolve(port);
-        }
-        const message =
-          process.platform !== 'win32' && defaultPort < 1024 && !isRoot()
-            ? `Admin permissions are required to run a server on a port below 1024.`
-            : `Something is already running on port ${defaultPort}.`;
-        if (isInteractive) {
-          clearConsole();
-          const existingProcess = getProcessForPort(defaultPort);
-          const question = {
-            type: 'confirm',
-            name: 'shouldChangePort',
-            message:
-              chalk.yellow(
-                message +
-                  `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
-              ) + '\n\nWould you like to run the app on another port instead?',
-            default: true,
-          };
-          inquirer.prompt(question).then(answer => {
-            if (answer.shouldChangePort) {
-              resolve(port);
-            } else {
-              resolve(null);
-            }
-          });
-        } else {
-          console.log(chalk.red(message));
-          resolve(null);
-        }
-      }),
+    port => new Promise(resolve => {
+      if (port === defaultPort) {
+        return resolve(port);
+      }
+      const message = process.platform !== 'win32' &&
+        defaultPort < 1024 &&
+        !isRoot()
+        ? `Admin permissions are required to run a server on a port below 1024.`
+        : `Something is already running on port ${defaultPort}.`;
+      if (isInteractive) {
+        clearConsole();
+        const existingProcess = getProcessForPort(defaultPort);
+        const question = {
+          type: 'confirm',
+          name: 'shouldChangePort',
+          message: chalk.yellow(
+            message +
+              `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
+          ) + '\n\nWould you like to run the app on another port instead?',
+          default: true,
+        };
+        inquirer.prompt(question).then(answer => {
+          if (answer.shouldChangePort) {
+            resolve(port);
+          } else {
+            resolve(null);
+          }
+        });
+      } else {
+        console.log(chalk.red(message));
+        resolve(null);
+      }
+    }),
     err => {
       throw new Error(
         chalk.red(`Could not find an open port at ${chalk.bold(host)}.`) +

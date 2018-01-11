@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 /* @flow */
 import React, { Component } from 'react';
 import { black } from '../styles';
+
+import type { Node as ReactNode } from 'react';
 
 const overlayStyle = {
   position: 'relative',
@@ -31,10 +31,19 @@ const overlayStyle = {
   color: black,
 };
 
-class ErrorOverlay extends Component {
+type Props = {|
+  children: ReactNode,
+  shortcutHandler?: (eventKey: string) => void,
+|};
+
+type State = {|
+  collapsed: boolean,
+|};
+
+class ErrorOverlay extends Component<Props, State> {
   iframeWindow: window = null;
 
-  getIframeWindow = (element: HTMLDivElement) => {
+  getIframeWindow = (element: ?HTMLDivElement) => {
     if (element) {
       const document = element.ownerDocument;
       this.iframeWindow = document.defaultView;

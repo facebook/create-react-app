@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -25,14 +23,10 @@ function printHostingInstructions(
   if (publicUrl && publicUrl.indexOf('.github.io/') !== -1) {
     // "homepage": "http://user.github.io/project"
     console.log(
-      `The project was built assuming it is hosted at ${chalk.green(
-        publicPathname
-      )}.`
+      `The project was built assuming it is hosted at ${chalk.green(publicPathname)}.`
     );
     console.log(
-      `You can control this with the ${chalk.green(
-        'homepage'
-      )} field in your ${chalk.cyan('package.json')}.`
+      `You can control this with the ${chalk.green('homepage')} field in your ${chalk.cyan('package.json')}.`
     );
     console.log();
     console.log(`The ${chalk.cyan('build')} folder is ready to be deployed.`);
@@ -54,14 +48,10 @@ function printHostingInstructions(
       console.log(`    ${chalk.yellow('"scripts"')}: {`);
       console.log(`      ${chalk.dim('// ...')}`);
       console.log(
-        `      ${chalk.yellow('"predeploy"')}: ${chalk.yellow(
-          '"npm run build",'
-        )}`
+        `      ${chalk.yellow('"predeploy"')}: ${chalk.yellow('"npm run build",')}`
       );
       console.log(
-        `      ${chalk.yellow('"deploy"')}: ${chalk.yellow(
-          '"gh-pages -d build"'
-        )}`
+        `      ${chalk.yellow('"deploy"')}: ${chalk.yellow('"gh-pages -d build"')}`
       );
       console.log('    }');
       console.log();
@@ -73,14 +63,10 @@ function printHostingInstructions(
   } else if (publicPath !== '/') {
     // "homepage": "http://mywebsite.com/project"
     console.log(
-      `The project was built assuming it is hosted at ${chalk.green(
-        publicPath
-      )}.`
+      `The project was built assuming it is hosted at ${chalk.green(publicPath)}.`
     );
     console.log(
-      `You can control this with the ${chalk.green(
-        'homepage'
-      )} field in your ${chalk.cyan('package.json')}.`
+      `You can control this with the ${chalk.green('homepage')} field in your ${chalk.cyan('package.json')}.`
     );
     console.log();
     console.log(`The ${chalk.cyan('build')} folder is ready to be deployed.`);
@@ -89,14 +75,10 @@ function printHostingInstructions(
     if (publicUrl) {
       // "homepage": "http://mywebsite.com"
       console.log(
-        `The project was built assuming it is hosted at ${chalk.green(
-          publicUrl
-        )}.`
+        `The project was built assuming it is hosted at ${chalk.green(publicUrl)}.`
       );
       console.log(
-        `You can control this with the ${chalk.green(
-          'homepage'
-        )} field in your ${chalk.cyan('package.json')}.`
+        `You can control this with the ${chalk.green('homepage')} field in your ${chalk.cyan('package.json')}.`
       );
       console.log();
     } else {
@@ -105,16 +87,12 @@ function printHostingInstructions(
         'The project was built assuming it is hosted at the server root.'
       );
       console.log(
-        `To override this, specify the ${chalk.green(
-          'homepage'
-        )} in your ${chalk.cyan('package.json')}.`
+        `To override this, specify the ${chalk.green('homepage')} in your ${chalk.cyan('package.json')}.`
       );
       console.log('For example, add this to build it for GitHub Pages:');
       console.log();
       console.log(
-        `  ${chalk.green('"homepage"')} ${chalk.cyan(':')} ${chalk.green(
-          '"http://myname.github.io/myapp"'
-        )}${chalk.cyan(',')}`
+        `  ${chalk.green('"homepage"')} ${chalk.cyan(':')} ${chalk.green('"http://myname.github.io/myapp"')}${chalk.cyan(',')}`
       );
       console.log();
     }

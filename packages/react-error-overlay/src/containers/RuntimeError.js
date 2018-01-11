@@ -1,24 +1,24 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 /* @flow */
 import React from 'react';
 import Header from '../components/Header';
 import StackTrace from './StackTrace';
+
 import type { StackFrame } from '../utils/stack-frame';
+import type { ErrorLocation } from '../utils/parseCompileError';
 
 const wrapperStyle = {
   display: 'flex',
   flexDirection: 'column',
 };
 
-type ErrorRecord = {|
+export type ErrorRecord = {|
   error: Error,
   unhandledRejection: boolean,
   contextSize: number,
@@ -27,10 +27,10 @@ type ErrorRecord = {|
 
 type Props = {|
   errorRecord: ErrorRecord,
-  launchEditorEndpoint: ?string,
+  editorHandler: (errorLoc: ErrorLocation) => void,
 |};
 
-function RuntimeError({ errorRecord, launchEditorEndpoint }: Props) {
+function RuntimeError({ errorRecord, editorHandler }: Props) {
   const { error, unhandledRejection, contextSize, stackFrames } = errorRecord;
   const errorName = unhandledRejection
     ? 'Unhandled Rejection (' + error.name + ')'
@@ -38,8 +38,9 @@ function RuntimeError({ errorRecord, launchEditorEndpoint }: Props) {
 
   // Make header prettier
   const message = error.message;
-  let headerText =
-    message.match(/^\w*:/) || !errorName ? message : errorName + ': ' + message;
+  let headerText = message.match(/^\w*:/) || !errorName
+    ? message
+    : errorName + ': ' + message;
 
   headerText = headerText
     // TODO: maybe remove this prefix from fbjs?
@@ -59,7 +60,7 @@ function RuntimeError({ errorRecord, launchEditorEndpoint }: Props) {
         stackFrames={stackFrames}
         errorName={errorName}
         contextSize={contextSize}
-        launchEditorEndpoint={launchEditorEndpoint}
+        editorHandler={editorHandler}
       />
     </div>
   );

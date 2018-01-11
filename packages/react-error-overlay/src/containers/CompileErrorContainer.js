@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 /* @flow */
@@ -14,15 +12,37 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import CodeBlock from '../components/CodeBlock';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
+import parseCompileError from '../utils/parseCompileError';
+import type { ErrorLocation } from '../utils/parseCompileError';
 
-class CompileErrorContainer extends PureComponent {
+const codeAnchorStyle = {
+  cursor: 'pointer',
+};
+
+type Props = {|
+  error: string,
+  editorHandler: (errorLoc: ErrorLocation) => void,
+|};
+
+class CompileErrorContainer extends PureComponent<Props, void> {
   render() {
-    const { error } = this.props;
+    const { error, editorHandler } = this.props;
+    const errLoc: ?ErrorLocation = parseCompileError(error);
+    const canOpenInEditor = errLoc !== null && editorHandler !== null;
     return (
       <ErrorOverlay>
         <Header headerText="Failed to compile" />
-        <CodeBlock main={true} codeHTML={generateAnsiHTML(error)} />
-        <Footer line1="This error occurred during the build time and cannot be dismissed." />
+        <a
+          onClick={
+            canOpenInEditor && errLoc ? () => editorHandler(errLoc) : null
+          }
+          style={canOpenInEditor ? codeAnchorStyle : null}
+        >
+          <CodeBlock main={true} codeHTML={generateAnsiHTML(error)} />
+        </a>
+        <Footer
+          line1="This error occurred during the build time and cannot be dismissed."
+        />
       </ErrorOverlay>
     );
   }

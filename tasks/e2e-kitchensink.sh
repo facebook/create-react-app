@@ -1,10 +1,8 @@
 #!/bin/bash
 # Copyright (c) 2015-present, Facebook, Inc.
-# All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 # ******************************************************************************
 # This is an end-to-end kitchensink test intended to run on CI.
@@ -44,6 +42,31 @@ function handle_exit {
 
 function create_react_app {
   node "$temp_cli_path"/node_modules/create-react-app/index.js "$@"
+}
+
+function install_package {
+  local pkg=$(basename $1)
+
+  # Clean target (for safety)
+  rm -rf node_modules/$pkg/
+  rm -rf node_modules/**/$pkg/
+
+  # Copy package into node_modules/ ignoring installed deps
+  # rsync -a ${1%/} node_modules/ --exclude node_modules
+  cp -R ${1%/} node_modules/
+  rm -rf node_modules/$pkg/node_modules/
+
+  # Install `dependencies`
+  cd node_modules/$pkg/
+  if [ "$USE_YARN" = "yes" ]
+  then
+    yarn install --production
+  else
+    npm install --only=production
+  fi
+  # Remove our packages to ensure side-by-side versions are used (which we link)
+  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-dev-utils,react-error-overlay,react-scripts}
+  cd ../..
 }
 
 # Check for the existence of one or more files.
@@ -164,10 +187,13 @@ npm install test-integrity@^2.0.1
 cd "$temp_app_path/test-kitchensink"
 
 # Link to our preset
-npm link "$root_path"/packages/babel-preset-react-app
+install_package "$root_path"/packages/babel-preset-react-app
+# Link to error overlay package because now it's a dependency
+# of react-dev-utils and not react-scripts
+install_package "$root_path"/packages/react-error-overlay
 
 # Link to test module
-npm link "$temp_module_path/node_modules/test-integrity"
+install_package "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -218,20 +244,25 @@ E2E_FILE=./build/index.html \
 # Finally, let's check that everything still works after ejecting.
 # ******************************************************************************
 
-# Unlink our preset
-npm unlink "$root_path"/packages/babel-preset-react-app
-
 # Eject...
 echo yes | npm run eject
 
+# Ensure Yarn is ran after eject; at the time of this commit, we don't run Yarn
+# after ejecting. Soon, we may only skip Yarn on Windows. Let's try to remove
+# this in the near future.
+if hash yarnpkg 2>/dev/null
+then
+  yarn install --check-files
+fi
+
 # ...but still link to the local packages
-npm link "$root_path"/packages/babel-preset-react-app
-npm link "$root_path"/packages/eslint-config-react-app
-npm link "$root_path"/packages/react-dev-utils
-npm link "$root_path"/packages/react-scripts
+install_package "$root_path"/packages/babel-preset-react-app
+install_package "$root_path"/packages/eslint-config-react-app
+install_package "$root_path"/packages/react-error-overlay
+install_package "$root_path"/packages/react-dev-utils
 
 # Link to test module
-npm link "$temp_module_path/node_modules/test-integrity"
+install_package "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \

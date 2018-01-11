@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -52,24 +50,13 @@ class ModuleScopePlugin {
       // Error if in a parent directory of src/
       const requestRelative = path.relative(appSrc, requestFullPath);
       if (
-        requestRelative.startsWith('../') ||
-        requestRelative.startsWith('..\\')
+        requestRelative.startsWith('../') || requestRelative.startsWith('..\\')
       ) {
         callback(
           new Error(
-            `You attempted to import ${chalk.cyan(
-              request.__innerRequest_request
-            )} which falls outside of the project ${chalk.cyan(
-              'src/'
-            )} directory. ` +
-              `Relative imports outside of ${chalk.cyan(
-                'src/'
-              )} are not supported. ` +
-              `You can either move it inside ${chalk.cyan(
-                'src/'
-              )}, or add a symlink to it from project's ${chalk.cyan(
-                'node_modules/'
-              )}.`
+            `You attempted to import ${chalk.cyan(request.__innerRequest_request)} which falls outside of the project ${chalk.cyan('src/')} directory. ` +
+              `Relative imports outside of ${chalk.cyan('src/')} are not supported. ` +
+              `You can either move it inside ${chalk.cyan('src/')}, or add a symlink to it from project's ${chalk.cyan('node_modules/')}.`
           ),
           request
         );

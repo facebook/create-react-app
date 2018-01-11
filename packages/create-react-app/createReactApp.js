@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -75,14 +73,10 @@ const program = new commander.Command(packageJson.name)
     );
     console.log(`      - a specific npm version: ${chalk.green('0.8.2')}`);
     console.log(
-      `      - a custom fork published on npm: ${chalk.green(
-        'my-react-scripts'
-      )}`
+      `      - a custom fork published on npm: ${chalk.green('my-react-scripts')}`
     );
     console.log(
-      `      - a .tgz archive: ${chalk.green(
-        'https://mysite.com/my-react-scripts-0.8.2.tgz'
-      )}`
+      `      - a .tgz archive: ${chalk.green('https://mysite.com/my-react-scripts-0.8.2.tgz')}`
     );
     console.log(
       `    It is not needed unless you specifically want to use a fork.`
@@ -92,9 +86,7 @@ const program = new commander.Command(packageJson.name)
       `    If you have any problems, do not hesitate to file an issue:`
     );
     console.log(
-      `      ${chalk.cyan(
-        'https://github.com/facebookincubator/create-react-app/issues/new'
-      )}`
+      `      ${chalk.cyan('https://github.com/facebookincubator/create-react-app/issues/new')}`
     );
     console.log();
   })
@@ -160,8 +152,13 @@ function createApp(name, verbose, version, template) {
     path.join(root, 'package.json'),
     JSON.stringify(packageJson, null, 2)
   );
+
+  const useYarn = shouldUseYarn();
   const originalDirectory = process.cwd();
   process.chdir(root);
+  if (!useYarn && !checkThatNpmCanReadCwd()) {
+    process.exit(1);
+  }
 
   if (!semver.satisfies(process.version, '>=6.0.0')) {
     console.log(
@@ -174,7 +171,6 @@ function createApp(name, verbose, version, template) {
     version = 'react-scripts@0.9.x';
   }
 
-  const useYarn = shouldUseYarn();
   if (!useYarn) {
     const npmInfo = checkNpmVersion();
     if (!npmInfo.hasMinNpm) {
@@ -202,7 +198,7 @@ function shouldUseYarn() {
   }
 }
 
-function install(useYarn, dependencies, verbose, isOnline) {
+function install(root, useYarn, dependencies, verbose, isOnline) {
   return new Promise((resolve, reject) => {
     let command;
     let args;
@@ -213,6 +209,14 @@ function install(useYarn, dependencies, verbose, isOnline) {
         args.push('--offline');
       }
       [].push.apply(args, dependencies);
+
+      // Explicitly set cwd() to work around issues like
+      // https://github.com/facebookincubator/create-react-app/issues/3326.
+      // Unfortunately we can only do this for Yarn because npm support for
+      // equivalent --prefix flag doesn't help with this issue.
+      // This is why for npm, we run checkThatNpmCanReadCwd() early instead.
+      args.push('--cwd');
+      args.push(root);
 
       if (!isOnline) {
         console.log(chalk.yellow('You appear to be offline.'));
@@ -261,23 +265,19 @@ function run(
 
   console.log('Installing packages. This might take a couple of minutes.');
   getPackageName(packageToInstall)
-    .then(packageName =>
-      checkIfOnline(useYarn).then(isOnline => ({
-        isOnline: isOnline,
-        packageName: packageName,
-      }))
-    )
+    .then(packageName => checkIfOnline(useYarn).then(isOnline => ({
+      isOnline: isOnline,
+      packageName: packageName,
+    })))
     .then(info => {
       const isOnline = info.isOnline;
       const packageName = info.packageName;
       console.log(
-        `Installing ${chalk.cyan('react')}, ${chalk.cyan(
-          'react-dom'
-        )}, and ${chalk.cyan(packageName)}...`
+        `Installing ${chalk.cyan('react')}, ${chalk.cyan('react-dom')}, and ${chalk.cyan(packageName)}...`
       );
       console.log();
 
-      return install(useYarn, allDependencies, verbose, isOnline).then(
+      return install(root, useYarn, allDependencies, verbose, isOnline).then(
         () => packageName
       );
     })
@@ -341,9 +341,7 @@ function run(
       if (!remainingFiles.length) {
         // Delete target folder if empty
         console.log(
-          `Deleting ${chalk.cyan(`${appName} /`)} from ${chalk.cyan(
-            path.resolve(root, '..')
-          )}`
+          `Deleting ${chalk.cyan(`${appName} /`)} from ${chalk.cyan(path.resolve(root, '..'))}`
         );
         process.chdir(path.resolve(root, '..'));
         fs.removeSync(path.join(root));
@@ -431,9 +429,7 @@ function getPackageName(installPackage) {
           /^.+\/(.+?)(?:-\d+.+)?\.tgz$/
         )[1];
         console.log(
-          `Based on the filename, assuming it is "${chalk.cyan(
-            assumedProjectName
-          )}"`
+          `Based on the filename, assuming it is "${chalk.cyan(assumedProjectName)}"`
         );
         return Promise.resolve(assumedProjectName);
       });
@@ -496,9 +492,7 @@ function checkAppName(appName) {
   const validationResult = validateProjectName(appName);
   if (!validationResult.validForNewPackages) {
     console.error(
-      `Could not create a project called ${chalk.red(
-        `"${appName}"`
-      )} because of npm naming restrictions:`
+      `Could not create a project called ${chalk.red(`"${appName}"`)} because of npm naming restrictions:`
     );
     printValidationResults(validationResult.errors);
     printValidationResults(validationResult.warnings);
@@ -510,9 +504,7 @@ function checkAppName(appName) {
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
-        `We cannot create a project called ${chalk.green(
-          appName
-        )} because a dependency with the same name exists.\n` +
+        `We cannot create a project called ${chalk.green(appName)} because a dependency with the same name exists.\n` +
           `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
         chalk.cyan(dependencies.map(depName => `  ${depName}`).join('\n')) +
@@ -534,9 +526,7 @@ function makeCaretRange(dependencies, name) {
 
   if (!semver.validRange(patchedVersion)) {
     console.error(
-      `Unable to patch ${name} dependency version because version ${chalk.red(
-        version
-      )} will become invalid ${chalk.red(patchedVersion)}`
+      `Unable to patch ${name} dependency version because version ${chalk.red(version)} will become invalid ${chalk.red(patchedVersion)}`
     );
     patchedVersion = version;
   }
@@ -603,6 +593,61 @@ function isSafeToCreateProjectIn(root, name) {
     'Either try using a new directory name, or remove the files listed above.'
   );
 
+  return false;
+}
+
+function checkThatNpmCanReadCwd() {
+  const cwd = process.cwd();
+  let childOutput = null;
+  try {
+    // Note: intentionally using spawn over exec since
+    // the problem doesn't reproduce otherwise.
+    // `npm config list` is the only reliable way I could find
+    // to reproduce the wrong path. Just printing process.cwd()
+    // in a Node process was not enough.
+    childOutput = spawn.sync('npm', ['config', 'list']).output.join('');
+  } catch (err) {
+    // Something went wrong spawning node.
+    // Not great, but it means we can't do this check.
+    // We might fail later on, but let's continue.
+    return true;
+  }
+  if (typeof childOutput !== 'string') {
+    return true;
+  }
+  const lines = childOutput.split('\n');
+  // `npm config list` output includes the following line:
+  // "; cwd = C:\path\to\current\dir" (unquoted)
+  // I couldn't find an easier way to get it.
+  const prefix = '; cwd = ';
+  const line = lines.find(line => line.indexOf(prefix) === 0);
+  if (typeof line !== 'string') {
+    // Fail gracefully. They could remove it.
+    return true;
+  }
+  const npmCWD = line.substring(prefix.length);
+  if (npmCWD === cwd) {
+    return true;
+  }
+  console.error(
+    chalk.red(
+      `Could not start an npm process in the right directory.\n\n` +
+        `The current directory is: ${chalk.bold(cwd)}\n` +
+        `However, a newly started npm process runs in: ${chalk.bold(npmCWD)}\n\n` +
+        `This is probably caused by a misconfigured system terminal shell.`
+    )
+  );
+  if (process.platform === 'win32') {
+    console.error(
+      chalk.red(`On Windows, this can usually be fixed by running:\n\n`) +
+        `  ${chalk.cyan('reg')} delete "HKCU\\Software\\Microsoft\\Command Processor" /v AutoRun /f\n` +
+        `  ${chalk.cyan('reg')} delete "HKLM\\Software\\Microsoft\\Command Processor" /v AutoRun /f\n\n` +
+        chalk.red(`Try to run the above two lines in the terminal.\n`) +
+        chalk.red(
+          `To learn more about this problem, read: https://blogs.msdn.microsoft.com/oldnewthing/20071121-00/?p=24433/`
+        )
+    );
+  }
   return false;
 }
 

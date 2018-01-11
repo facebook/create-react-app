@@ -1,12 +1,12 @@
 {
   "name": "create-react-app",
-  "version": "1.4.0",
+  "version": "1.4.3",
   "keywords": [
     "react"
   ],
   "description": "Create React apps with no build configuration.",
   "repository": "facebookincubator/create-react-app",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "engines": {
     "node": ">=4"
   },
