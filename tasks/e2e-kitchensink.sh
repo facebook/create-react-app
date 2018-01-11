@@ -65,12 +65,8 @@ then
   npm cache clean || npm cache verify
 fi
 
-# Install packages
+# Bootstrap monorepo
 yarn
-
-cd packages/react-error-overlay/
-yarn build:prod
-cd ../..
 
 # ******************************************************************************
 # First, publish the monorepo.
