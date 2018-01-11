@@ -59,6 +59,12 @@ set -x
 cd ..
 root_path=$PWD
 
+if hash npm 2>/dev/null
+then
+  npm i -g npm@latest
+  npm cache clean || npm cache verify
+fi
+
 # Prevent bootstrap, we only want top-level dependencies
 cp package.json package.json.bak
 grep -v "postinstall" package.json > temp && mv temp package.json
