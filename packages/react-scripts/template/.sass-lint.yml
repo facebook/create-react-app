@@ -1,0 +1,66 @@
+files:
+  include:
+    - 'src/**/*.scss'
+  ignore:
+    - 'src/scss/overrides/**/*.scss'
+rules:
+  border-zero: 2
+  brace-style: 2
+  empty-line-between-blocks:
+    - 2
+    - include: true
+      allow-single-line-rulesets: true
+  extends-before-declarations: 2
+  final-newline: 2
+  force-element-nesting: false
+  force-pseudo-nesting: false
+  function-name-format:
+    - 2
+    - allow-leading-underscore: false
+      convention: camelcase
+  hex-length: 2
+  hex-notation:
+    - 2
+    - style: uppercase
+  indentation: 2
+  leading-zero:
+    - 2
+    - include: true
+  mixin-name-format:
+    - 2
+    - allow-leading-underscore: false
+  mixins-before-declarations: 2
+  nesting-depth:
+    - 2
+    - max-depth: 5
+  no-color-keywords: 2
+  no-color-literals: 2
+  no-css-comments: 2
+  no-debug: 2
+  no-duplicate-properties: 2
+  no-empty-rulesets: 2
+  no-ids: 1
+  no-important: 1
+  no-invalid-hex: 2
+  no-mergeable-selectors: 2
+  no-misspelled-properties: 2
+  no-trailing-zero: 2
+  no-vendor-prefixes: 2
+  no-warn: 2
+  one-declaration-per-line: 2
+  quotes: 2
+  shorthand-values: 2
+  single-line-per-selector: 2
+  space-after-bang: 2
+  space-after-colon: 2
+  space-after-comma: 2
+  space-before-bang: 2
+  space-before-brace: 2
+  space-before-colon: 2
+  space-between-parens: 2
+  trailing-semicolon: 2
+  url-quotes: 2
+  variable-name-format:
+    - 2
+    - allow-leading-underscore: false
+  zero-unit: 2
