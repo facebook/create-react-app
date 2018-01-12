@@ -87,11 +87,17 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
 };
 
+// use template files
+//  if appDirectory is the create-react-app repo root
+//  if appDirectory is the react-scripts pkg dir
+const rsPkgPath = path.join(__dirname, '..');
+const useTemplate =
+  fs.existsSync(
+    path.join(appDirectory, 'packages', 'react-scripts', 'config')
+  ) || appDirectory === fs.realpathSync(rsPkgPath);
+
 // config before publish: we're in ./packages/react-scripts/config/
-// if appDirectory (cwd) is the create-react-app repo root, use template files.
-if (
-  fs.existsSync(path.join(appDirectory, 'packages', 'react-scripts', 'config'))
-) {
+if (useTemplate) {
   module.exports = {
     dotenv: resolveOwn('template/.env'),
     appPath: resolveApp('.'),
@@ -115,21 +121,24 @@ if (
 
 module.exports.srcPaths = [module.exports.appSrc];
 
-// if app is in a monorepo (lerna or yarn workspace), allow any module inside
-// the monorepo to be linted, transpiled, and tested as if it came from app's
-// src.
-const monoPkgPath = findPkg.sync(resolveApp('..'));
-if (monoPkgPath) {
-  const monoRoot = path.dirname(monoPkgPath);
-  const monoPkgJson = require(monoPkgPath);
-  if (monoPkgJson.workspaces) {
-    module.exports.yarnWorkspaceRoot = monoRoot;
-    module.exports.srcPaths.push(monoRoot);
-  } else if (
-    fs.existsSync(path.resolve(path.dirname(monoPkgPath), 'lerna.json'))
-  ) {
-    module.exports.lernaRoot = monoRoot;
-    module.exports.srcPaths.push(monoRoot);
+// don't detect create-react-app repo as app src monorepo
+if (!useTemplate) {
+  // if app is in a monorepo (lerna or yarn workspace), allow any module inside
+  // the monorepo to be linted, transpiled, and tested as if it came from app's
+  // src.
+  const monoPkgPath = findPkg.sync(resolveApp('..'));
+  if (monoPkgPath) {
+    const monoRoot = path.dirname(monoPkgPath);
+    const monoPkgJson = require(monoPkgPath);
+    if (monoPkgJson.workspaces) {
+      module.exports.yarnWorkspaceRoot = monoRoot;
+      module.exports.srcPaths.push(monoRoot);
+    } else if (
+      fs.existsSync(path.resolve(path.dirname(monoPkgPath), 'lerna.json'))
+    ) {
+      module.exports.lernaRoot = monoRoot;
+      module.exports.srcPaths.push(monoRoot);
+    }
   }
 }
 
