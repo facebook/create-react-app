@@ -46,7 +46,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = 'static/css/[name].[contenthash:8].css';
+const cssFilename = '[contenthash:8]/static/css/[name].css';
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -91,8 +91,8 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].js',
-    chunkFilename: 'static/js/[name].chunk.js',
+    filename: '[chunkhash:8]/static/js/[name].js',
+    chunkFilename: '[chunkhash:8]/static/js/[name].chunk.js',
     jsonpFunction: 'brickworkJsonpFunction',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
