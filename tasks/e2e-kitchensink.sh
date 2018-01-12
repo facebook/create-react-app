@@ -91,8 +91,8 @@ yarn config set registry "$custom_registry_url"
 npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
 
 # Publish the monorepo
-git clean -f
-./tasks/release.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+git clean -df
+./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
 # Now that we have published them, create a clean app folder and install them.

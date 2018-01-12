@@ -107,6 +107,12 @@ npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_reg
 cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
 yarn test
+
+if [ $APPVEYOR != 'True' ]; then
+  # Flow started hanging on AppVeyor after we moved to Yarn Workspaces :-(
+  yarn flow
+fi
+
 cd ../..
 cd packages/react-dev-utils/
 yarn test
@@ -134,8 +140,8 @@ CI=true yarn test
 # Test local start command
 yarn start --smoke-test
 
-git clean -f
-./tasks/release.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+git clean -df
+./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
 # Install react-scripts prerelease via create-react-app prerelease.
