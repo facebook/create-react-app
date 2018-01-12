@@ -141,7 +141,7 @@ CI=true yarn test
 yarn start --smoke-test
 
 git clean -df
-yarn run publish --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
 # Install react-scripts prerelease via create-react-app prerelease.

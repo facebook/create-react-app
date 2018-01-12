@@ -100,7 +100,7 @@ npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_reg
 
 # Publish the monorepo
 git clean -df
-yarn run publish --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
 # Test --scripts-version with a version number
