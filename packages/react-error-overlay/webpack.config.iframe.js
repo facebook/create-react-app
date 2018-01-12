@@ -21,22 +21,7 @@ module.exports = {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, './src'),
-          path.dirname(
-            require.resolve('chalk', {
-              paths: [path.dirname(require.resolve('@babel/code-frame'))],
-            })
-          ),
-          path.dirname(
-            require.resolve('ansi-styles', {
-              paths: [
-                path.dirname(
-                  require.resolve('chalk', {
-                    paths: [path.dirname(require.resolve('@babel/code-frame'))],
-                  })
-                ),
-              ],
-            })
-          ),
+          /\/node_modules\/(ansi-styles|chalk)\//,
         ],
         use: {
           loader: 'babel-loader',
