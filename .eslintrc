@@ -12,7 +12,6 @@
   "rules": {
     "no-console": "off",
     "strict": ["error", "global"],
-    "curly": "warn",
-    "getter-return": "error"
+    "curly": "warn"
   }
 }
