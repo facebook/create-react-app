@@ -19,9 +19,30 @@ module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
     ? '<rootDir>/src/setupTests.js'
     : undefined;
 
-  const srcRootsRel = srcRoots.map(
-    srcRoot => '<rootDir>/' + path.relative(rootDir || '', srcRoot)
-  );
+  const toRelRootDir = f => '<rootDir>/' + path.relative(rootDir || '', f);
+  const toRealpath = f => fs.realpathSync(f);
+  const isSymlink = f => fs.lstatSync(f).isSymbolicLink();
+  const srcRootsReal = srcRoots.map(toRealpath);
+  const isInSrcRoot = realPath => {
+    for (let i = 0; i < srcRootsReal.length; i++) {
+      if (realPath.startsWith(srcRootsReal[i] + path.sep)) {
+        return true;
+      }
+    }
+    return false;
+  };
+  const appNodeModules = path.join(rootDir || '.', 'node_modules');
+  const appLinkedSrcPaths = fs.existsSync(appNodeModules)
+    ? fs
+        .readdirSync(appNodeModules)
+        .map(f => path.join(appNodeModules, f))
+        .filter(isSymlink)
+        .map(toRealpath)
+        .filter(isInSrcRoot)
+    : [];
+  const testIncDirsRel = [(rootDir || '.') + '/src']
+    .concat(appLinkedSrcPaths)
+    .map(toRelRootDir);
 
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
@@ -29,7 +50,7 @@ module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
     collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
-    testMatch: srcRootsRel.reduce(
+    testMatch: testIncDirsRel.reduce(
       (m, srcRoot) =>
         m.concat([
           srcRoot + '/**/__tests__/**/*.{js,jsx,mjs}',
@@ -74,9 +95,9 @@ module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
   if (rootDir) {
     config.rootDir = rootDir;
   }
-  if (srcRoots && srcRoots.length) {
+  if (testIncDirsRel) {
     // where to search for tests
-    config.roots = srcRootsRel;
+    config.roots = testIncDirsRel;
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
