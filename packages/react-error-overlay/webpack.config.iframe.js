@@ -21,7 +21,7 @@ module.exports = {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, './src'),
-          /\/node_modules\/(ansi-styles|chalk)\//,
+          /[\/\\]node_modules[\/\\](ansi-styles|chalk)[\/\\]/,
         ],
         use: {
           loader: 'babel-loader',
