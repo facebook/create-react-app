@@ -140,7 +140,7 @@ CI=true yarn test
 # Test local start command
 yarn start --smoke-test
 
-git clean -f
+git clean -df
 yarn run publish --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
