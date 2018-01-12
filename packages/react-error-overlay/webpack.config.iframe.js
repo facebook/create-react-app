@@ -23,21 +23,27 @@ module.exports = {
           path.resolve(__dirname, './src'),
           path.dirname(
             require.resolve('chalk', {
-              paths: path.dirname(require.resolve('@babel/code-frame')),
+              paths: [path.dirname(require.resolve('@babel/code-frame'))],
             })
           ),
           path.dirname(
-            require.resolve(
-              'ansi-styles',
-              path.dirname(
-                require.resolve('chalk', {
-                  paths: path.dirname(require.resolve('@babel/code-frame')),
-                })
-              )
-            )
+            require.resolve('ansi-styles', {
+              paths: [
+                path.dirname(
+                  require.resolve('chalk', {
+                    paths: [path.dirname(require.resolve('@babel/code-frame'))],
+                  })
+                ),
+              ],
+            })
           ),
         ],
-        use: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['react-app'],
+          },
+        },
       },
     ],
   },
