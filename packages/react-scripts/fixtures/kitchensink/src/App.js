@@ -53,85 +53,85 @@ class App extends Component {
     const feature = window.location.hash.slice(1);
     switch (feature) {
       case 'array-destructuring':
-        setFeatureFromString('./features/syntax/ArrayDestructuring')
+        this.setFeatureFromString('./features/syntax/ArrayDestructuring')
         break;
       case 'array-spread':
-        setFeatureFromString('./features/syntax/ArraySpread')
+        this.setFeatureFromString('./features/syntax/ArraySpread')
         break;
       case 'async-await':
-        setFeatureFromString('./features/syntax/AsyncAwait')
+        this.setFeatureFromString('./features/syntax/AsyncAwait')
         break;
       case 'class-properties':
-        setFeatureFromString('./features/syntax/ClassProperties')
+        this.setFeatureFromString('./features/syntax/ClassProperties')
         break;
       case 'computed-properties':
-        setFeatureFromString('./features/syntax/ComputedProperties')
+        this.setFeatureFromString('./features/syntax/ComputedProperties')
         break;
       case 'css-inclusion':
-        setFeatureFromString('./features/webpack/CssInclusion')
+        this.setFeatureFromString('./features/webpack/CssInclusion')
         break;
       case 'custom-interpolation':
-        setFeatureFromString('./features/syntax/CustomInterpolation')
+        this.setFeatureFromString('./features/syntax/CustomInterpolation')
         break;
       case 'default-parameters':
-        setFeatureFromString('./features/syntax/DefaultParameters')
+        this.setFeatureFromString('./features/syntax/DefaultParameters')
         break;
       case 'destructuring-and-await':
-        setFeatureFromString('./features/syntax/DestructuringAndAwait')
+        this.setFeatureFromString('./features/syntax/DestructuringAndAwait')
         break;
       case 'file-env-variables':
-        setFeatureFromString('./features/env/FileEnvVariables')
+        this.setFeatureFromString('./features/env/FileEnvVariables')
         break;
       case 'generators':
-        setFeatureFromString('./features/syntax/Generators')
+        this.setFeatureFromString('./features/syntax/Generators')
         break;
       case 'image-inclusion':
-        setFeatureFromString('./features/webpack/ImageInclusion')
+        this.setFeatureFromString('./features/webpack/ImageInclusion')
         break;
       case 'json-inclusion':
-        setFeatureFromString('./features/webpack/JsonInclusion')
+        this.setFeatureFromString('./features/webpack/JsonInclusion')
         break;
       case 'linked-modules':
-        setFeatureFromString('./features/webpack/LinkedModules')
+        this.setFeatureFromString('./features/webpack/LinkedModules')
         break;
       case 'node-path':
         import('./features/env/NodePath').then(f => this.setFeature(f.default));
         break;
       case 'no-ext-inclusion':
-        setFeatureFromString('./features/webpack/NoExtInclusion')
+        this.setFeatureFromString('./features/webpack/NoExtInclusion')
         break;
       case 'object-destructuring':
-        setFeatureFromString('./features/syntax/ObjectDestructuring')
+        this.setFeatureFromString('./features/syntax/ObjectDestructuring')
         break;
       case 'object-spread':
-        setFeatureFromString('./features/syntax/ObjectSpread')
+        this.setFeatureFromString('./features/syntax/ObjectSpread')
         break;
       case 'promises':
-        setFeatureFromString('./features/syntax/Promises')
+        this.setFeatureFromString('./features/syntax/Promises')
         break;
       case 'public-url':
-        setFeatureFromString('./features/env/PublicUrl')
+        this.setFeatureFromString('./features/env/PublicUrl')
         break;
       case 'rest-and-default':
-        setFeatureFromString('./features/syntax/RestAndDefault')
+        this.setFeatureFromString('./features/syntax/RestAndDefault')
         break;
       case 'rest-parameters':
-        setFeatureFromString('./features/syntax/RestParameters')
+        this.setFeatureFromString('./features/syntax/RestParameters')
         break;
       case 'shell-env-variables':
-        setFeatureFromString('./features/env/ShellEnvVariables')
+        this.setFeatureFromString('./features/env/ShellEnvVariables')
         break;
       case 'svg-inclusion':
-        setFeatureFromString('./features/webpack/SvgInclusion')
+        this.setFeatureFromString('./features/webpack/SvgInclusion')
         break;
       case 'template-interpolation':
-        setFeatureFromString('./features/syntax/TemplateInterpolation')
+        this.setFeatureFromString('./features/syntax/TemplateInterpolation')
         break;
       case 'unknown-ext-inclusion':
-        setFeatureFromString('./features/webpack/UnknownExtInclusion')
+        this.setFeatureFromString('./features/webpack/UnknownExtInclusion')
         break;
       case 'expand-env-variables':
-        setFeatureFromString('./features/env/ExpandEnvVariables')
+        this.setFeatureFromString('./features/env/ExpandEnvVariables')
         break;
       default:
         throw new Error(`Missing feature "${feature}"`);
