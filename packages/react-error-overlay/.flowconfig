@@ -8,7 +8,7 @@
 .*/fixtures/.*
 
 [libs]
-<PROJECT_ROOT>/flow/env.js
+flow/
 
 [options]
 module.file_ext=.js
