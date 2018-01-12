@@ -1,10 +1,8 @@
 #!/bin/bash
 # Copyright (c) 2015-present, Facebook, Inc.
-# All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 # ******************************************************************************
 # This releases an update to the `react-scripts` package.
@@ -28,18 +26,11 @@ set -x
 cd ..
 root_path=$PWD
 
-# You can only release with npm >= 3
-if [ $(npm -v | head -c 1) -lt 3 ]; then
-  echo "Releasing requires npm >= 3. Aborting.";
-  exit 1;
-fi;
-
 if [ -n "$(git status --porcelain)" ]; then
   echo "Your git status is not clean. Aborting.";
   exit 1;
 fi
 
-cd "$root_path"
 # Compile
 cd packages/react-error-overlay/
 npm run build:prod
