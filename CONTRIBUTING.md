@@ -75,7 +75,7 @@ All functionality must be retained (and configuration given to the user) if they
 
 1. Clone the repo with `git clone https://github.com/facebookincubator/create-react-app`
 
-2. Run `yarn --no-lockfile` in the root `create-react-app` folder.
+2. Run `yarn` in the root `create-react-app` folder.
 
 Once it is done, you can modify any file locally and run `yarn start`, `yarn test` or `yarn build` just like in a generated project.
 
