@@ -64,6 +64,8 @@ module.exports = {
   servedPath: getServedPath(resolveApp('package.json')),
 };
 
+let checkForMonorepo = true;
+
 // @remove-on-eject-begin
 const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 
@@ -87,14 +89,15 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
 };
 
-// use template files
-//  if appDirectory is the create-react-app repo root
-//  if appDirectory is the react-scripts pkg dir
-const rsPkgPath = path.join(__dirname, '..');
-const useTemplate =
-  fs.existsSync(
-    path.join(appDirectory, 'packages', 'react-scripts', 'config')
-  ) || appDirectory === fs.realpathSync(rsPkgPath);
+const appDirIsCraRoot = fs.existsSync(
+  path.join(appDirectory, 'packages', 'react-scripts', 'config')
+);
+// below appDirIsCraScripts logic is only valid before ejecting
+const appDirIsCraScripts =
+  appDirectory === fs.realpathSync(path.join(__dirname, '..'));
+const useTemplate = appDirIsCraRoot || appDirIsCraScripts;
+
+checkForMonorepo = !useTemplate;
 
 // config before publish: we're in ./packages/react-scripts/config/
 if (useTemplate) {
@@ -121,8 +124,7 @@ if (useTemplate) {
 
 module.exports.srcPaths = [module.exports.appSrc];
 
-// don't detect create-react-app repo as app src monorepo
-if (!useTemplate) {
+if (checkForMonorepo) {
   // if app is in a monorepo (lerna or yarn workspace), allow any module inside
   // the monorepo to be linted, transpiled, and tested as if it came from app's
   // src.
