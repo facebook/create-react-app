@@ -1,6 +1,6 @@
 {
   "name": "react-scripts-ts",
-  "version": "2.8.0",
+  "version": "2.10.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": "wmonk/create-react-app",
   "license": "BSD-3-Clause",
@@ -60,4 +60,3 @@
     "fsevents": "1.1.2"
   }
 }
-
