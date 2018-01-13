@@ -69,15 +69,10 @@ module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
         'config/jest/fileTransform.js'
       ),
     },
-    // jest doesn't match against realpaths, so pattern matching doesn't work
-    // for monorepos with symlinks from node_modules to module source
-    // moved pattern matching into babelTransform for now
-    // jest 22.0.x does match patterns against realpath so this can probably
-    // change with jest 22.0.x+
     transformIgnorePatterns: [
-      //'[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$',
       '^.+\\.module\\.css$',
-    ]
+    ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.css$': 'identity-obj-proxy',
@@ -158,15 +153,6 @@ module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
 
       process.exit(1);
     }
-  }
-  // temp fix until JEST 22.0.0+ with realpath matching arrives
-  // after ejecting, we can't filter using our custom babelTransform
-  // ... with below, monorepo source won't transpile, so monorepos won't work
-  // after ejecting
-  if (isEjecting) {
-    config.transformIgnorePatterns = [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$',
-    ];
   }
   return config;
 };
