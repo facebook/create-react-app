@@ -54,6 +54,7 @@
     "react-dev-utils": "^5.0.0",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
+    "thread-loader": "1.1.2",
     "uglifyjs-webpack-plugin": "1.1.6",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
