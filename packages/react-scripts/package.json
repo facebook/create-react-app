@@ -40,6 +40,7 @@
     "style-loader": "0.18.2",
     "ts-jest": "^20.0.7",
     "ts-loader": "^2.3.7",
+    "tsconfig-paths-webpack-plugin": "^2.0.0",
     "tslint": "^5.7.0",
     "tslint-loader": "^3.5.3",
     "tslint-react": "^3.2.0",
