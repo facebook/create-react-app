@@ -1,12 +1,12 @@
 {
   "name": "react-error-overlay",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "An overlay for displaying stack frames.",
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "npm run build:prod && npm test",
     "start": "cross-env NODE_ENV=development node build.js --watch",
-    "test": "flow && cross-env NODE_ENV=test jest",
+    "test": "cross-env NODE_ENV=test jest",
     "build": "cross-env NODE_ENV=development node build.js",
     "build:prod": "cross-env NODE_ENV=production node build.js"
   },
@@ -30,12 +30,12 @@
     "lib/index.js"
   ],
   "devDependencies": {
-    "anser": "1.4.1",
-    "babel-code-frame": "6.22.0",
+    "anser": "1.4.4",
+    "babel-code-frame": "6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "7.2.3",
     "babel-loader": "^7.1.2",
-    "babel-preset-react-app": "^3.0.3",
+    "babel-preset-react-app": "^3.1.0",
     "babel-runtime": "6.26.0",
     "chalk": "^2.1.0",
     "chokidar": "^1.7.0",
@@ -46,7 +46,7 @@
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.1.0",
-    "flow-bin": "^0.54.0",
+    "flow-bin": "^0.63.1",
     "html-entities": "1.2.1",
     "jest": "20.0.4",
     "jest-fetch-mock": "1.2.1",
