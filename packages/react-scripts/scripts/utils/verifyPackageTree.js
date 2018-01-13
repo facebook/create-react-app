@@ -72,7 +72,7 @@ function verifyPackageTree() {
       if (depPackageJson.version !== expectedVersion) {
         console.error(
           chalk.red(
-            `There might be a problem with the project dependency tree.\n` +
+            `\nThere might be a problem with the project dependency tree.\n` +
               `It is likely ${chalk.bold(
                 'not'
               )} a bug in Create React App, but something you need to fix locally.\n\n`
@@ -83,14 +83,15 @@ function verifyPackageTree() {
             chalk.green(
               `  "${chalk.bold(dep)}": "${chalk.bold(expectedVersion)}"\n\n`
             ) +
+            `Don't try to install it manually: your package manager does it automatically.\n` +
             `However, a different version of ${chalk.bold(
               dep
             )} was detected higher up in the tree:\n\n` +
             `  ${chalk.bold(chalk.red(maybeDep))} (version: ${chalk.bold(
               chalk.red(depPackageJson.version)
             )}) \n\n` +
-            `This is known to cause hard-to-debug issues.\n` +
-            `Try following these steps:\n\n` +
+            `Manually installing incompatible versions is known to cause hard-to-debug issues.\n` +
+            `To fix the dependency tree, try following the steps below in the exact order:\n\n` +
             `  ${chalk.cyan('1.')} Delete ${chalk.bold(
               'package-lock.json'
             )} (${chalk.underline('not')} ${chalk.bold(
@@ -113,7 +114,8 @@ function verifyPackageTree() {
             )} or ${chalk.bold(
               'yarn'
             )}, depending on the package manager you use.\n\n` +
-            `If this has not helped, there are a few other things to try:\n\n` +
+            `In most cases, this should be enough to fix the problem.\n` +
+            `If this has not helped, there are a few other things you can try:\n\n` +
             `  ${chalk.cyan('5.')} If you used ${chalk.bold(
               'npm'
             )}, install ${chalk.bold(
@@ -123,7 +125,7 @@ function verifyPackageTree() {
             `  ${chalk.cyan('6.')} Check if ${chalk.bold(
               maybeDep
             )} is outside your project directory.\n` +
-            `     For example, you might have installed something accidentally in your home folder.\n\n` +
+            `     For example, you might have accidentally installed something in your home folder.\n\n` +
             `  ${chalk.cyan('7.')} Try running ${chalk.bold(
               `npm ls ${dep}`
             )} in your project folder.\n` +
@@ -135,7 +137,7 @@ function verifyPackageTree() {
             `If nothing else helps, add ${chalk.bold(
               'SKIP_PREFLIGHT_CHECK=true'
             )} to an ${chalk.bold('.env')} file in your project.\n` +
-            `This permanently disables this preflight check in case you want to proceed anyway.\n\n` +
+            `That would permanently disable this preflight check in case you want to proceed anyway.\n\n` +
             chalk.cyan(
               `P.S. We know this message is long but please read the steps above :-) We hope you find them helpful!\n`
             )
