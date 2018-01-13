@@ -59,6 +59,7 @@ function verifyPackageTree() {
   });
   // Verify we don't have other versions up the tree
   let currentDir = __dirname;
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const previousDir = currentDir;
     currentDir = path.resolve(currentDir, '..');
