@@ -52,7 +52,7 @@ module.exports = function(api, opts) {
           // This is probably a fine default to help trim down bundles when
           // end-users inevitably import '@babel/polyfill'.
           useBuiltIns: 'entry',
-          // Do not transform modules to CJS.
+          // Do not transform modules to CJS
           modules: false,
         },
       ],
