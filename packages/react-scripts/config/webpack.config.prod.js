@@ -167,7 +167,8 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
-          // Process JS with Babel.
+          // Process application JS with Babel.
+          // The preset includes JSX, Flow, and some ESnext features.
           {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
@@ -178,6 +179,18 @@ module.exports = {
               presets: [require.resolve('babel-preset-react-app')],
               // @remove-on-eject-end
               compact: true,
+            },
+          },
+          // Process any JS outside of the app with Babel.
+          // Unlike the application JS, we only compile the standard ES features.
+          {
+            test: /\.js$/,
+            loader: require.resolve('babel-loader'),
+            options: {
+              babelrc: false,
+              compact: false,
+              presets: [require.resolve('babel-preset-react-app/dependencies')],
+              cacheDirectory: true,
             },
           },
           // The notation here is somewhat confusing.

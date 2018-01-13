@@ -8,7 +8,8 @@
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "dependencies.js"
   ],
   "dependencies": {
     "@babel/core": "7.0.0-beta.36",
