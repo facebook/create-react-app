@@ -151,14 +151,12 @@ E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
-  BABEL_ENV=test \
   node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=production \
-  BABEL_ENV=test \
   PUBLIC_URL=http://www.example.org/spa/ \
   node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
 
@@ -204,14 +202,12 @@ E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
-  BABEL_ENV=test \
   node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_ENV=production \
-  BABEL_ENV=test \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
   node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
