@@ -6,6 +6,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+'use strict';
+
 const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
