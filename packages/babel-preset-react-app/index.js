@@ -46,15 +46,12 @@ module.exports = function(api, opts) {
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
-          targets: {
-            // React parses on ie 9, so we should too
-            ie: 9,
-          },
-          // We currently minify with uglify
-          // Remove after https://github.com/mishoo/UglifyJS2/issues/448
-          forceAllTransforms: true,
-          // Disable polyfill transforms
-          useBuiltIns: false,
+          // `entry` transforms `@babel/polyfill` into individual requires for
+          // the targeted browsers. This is safer than `usage` which performs
+          // static code analysis to determine what's required.
+          // This is probably a fine default to help trim down bundles when
+          // end-users inevitably import '@babel/polyfill'.
+          useBuiltIns: 'entry',
           // Do not transform modules to CJS
           modules: false,
         },
@@ -108,7 +105,7 @@ module.exports = function(api, opts) {
       !isEnvTest && [
         require('@babel/plugin-transform-regenerator').default,
         {
-          // Async functions are converted to generators by babel-preset-env
+          // Async functions are converted to generators by @babel/preset-env
           async: false,
         },
       ],
