@@ -43,12 +43,12 @@ module.exports = function(
     eject: 'react-scripts eject',
   };
 
-  appPackage.browserslist = [
-    '>1%',
-    'last 4 versions',
-    'Firefox ESR',
-    'not ie < 9',
-  ];
+  appPackage.browserslist = {
+    development: ['chrome', 'firefox', 'edge'].map(
+      browser => `last 2 ${browser} versions`
+    ),
+    production: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 11'],
+  };
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
