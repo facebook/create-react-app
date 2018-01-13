@@ -39,6 +39,14 @@ To fix this, create a new file *in the root of the project* called `tsconfig.tes
 
 ## Changelog
 
+### 2.10.0
+* README updates - StefanSchoof
+* README updates - DorianGrey
+* Add support for fork-ts-checker-webpack-plugin - johnnyreilly
+
+### 2.9.0 - UNPUBLISHED
+This included changes that were not published by the facebook upstream, so was unpublished.
+
 ### 2.8.0
 * Update typescript to 2.5.3 - @nicolaserny
 
