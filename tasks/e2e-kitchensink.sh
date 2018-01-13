@@ -22,6 +22,7 @@ original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
+  unset BROWSERSLIST
   ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
@@ -113,6 +114,9 @@ yarn add test-integrity@^2.0.1
 
 # Enter the app directory
 cd "$temp_app_path/test-kitchensink"
+
+# In kitchensink, we want to test all transforms
+export BROWSERSLIST='ie 9'
 
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
