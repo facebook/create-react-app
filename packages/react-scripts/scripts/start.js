@@ -54,14 +54,11 @@ const HOST = process.env.HOST || '0.0.0.0';
 if (process.env.HOST) {
   console.log(
     chalk.yellow(
-      "Attempting to bind to $HOST because it was specified. If this was unintentional, check that you haven't mistakenly set it in your shell."
+      `Attempting to bind to HOST environment variable: ${process.env
+        .HOST}. If this was unintentional, check that you haven't mistakenly set it in your shell.`
     )
   );
-  console.log(
-    chalk.cyan(
-      'https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration\n'
-    )
-  );
+  console.log(chalk.yellow('Learn more here: http://bit.ly/2mwWSwH\n'));
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to
