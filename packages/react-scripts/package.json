@@ -61,7 +61,7 @@
     "style-loader": "0.19.1",
     "stylelint": "8.4.0",
     "stylelint-formatter-pretty": "1.0.3",
-    "stylelint-webpack-plugin": "0.9.0",
+    "stylelint-webpack-plugin": "0.10.1",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
     "webpack": "3.10.0",
