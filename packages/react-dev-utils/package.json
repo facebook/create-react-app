@@ -40,7 +40,7 @@
     "babel-code-frame": "6.26.0",
     "chalk": "1.1.3",
     "cross-spawn": "5.1.0",
-    "detect-port-alt": "1.1.3",
+    "detect-port-alt": "1.1.5",
     "escape-string-regexp": "1.0.5",
     "filesize": "3.5.11",
     "global-modules": "1.0.0",
