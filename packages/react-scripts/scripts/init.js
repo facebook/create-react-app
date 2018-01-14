@@ -18,6 +18,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const spawn = require('react-dev-utils/crossSpawn');
+const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 
 module.exports = function(
   appPath,
@@ -43,12 +44,7 @@ module.exports = function(
     eject: 'react-scripts eject',
   };
 
-  appPackage.browserslist = {
-    development: ['chrome', 'firefox', 'edge'].map(
-      browser => `last 2 ${browser} versions`
-    ),
-    production: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 11'],
-  };
+  appPackage.browserslist = defaultBrowsers;
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
