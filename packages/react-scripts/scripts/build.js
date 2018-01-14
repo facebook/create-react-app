@@ -64,63 +64,63 @@ checkBrowsers(paths.appPath)
     // First, read the current file sizes in build directory.
     // This lets us display how much they changed later.
     measureFileSizesBeforeBuild(paths.appBuild)
-      .then(previousFileSizes => {
-        // Remove all content but keep the directory so that
-        // if you're in it, you don't end up in Trash
-        fs.emptyDirSync(paths.appBuild);
-        // Merge with the public folder
-        copyPublicFolder();
-        // Start the webpack build
-        return build(previousFileSizes);
-      })
-      .then(
-        ({ stats, previousFileSizes, warnings }) => {
-          if (warnings.length) {
-            console.log(chalk.yellow('Compiled with warnings.\n'));
-            console.log(warnings.join('\n\n'));
-            console.log(
-              '\nSearch for the ' +
-                chalk.underline(chalk.yellow('keywords')) +
-                ' to learn more about each warning.'
-            );
-            console.log(
-              'To ignore, add ' +
-                chalk.cyan('// eslint-disable-next-line') +
-                ' to the line before.\n'
-            );
-          } else {
-            console.log(chalk.green('Compiled successfully.\n'));
-          }
+  )
+  .then(previousFileSizes => {
+    // Remove all content but keep the directory so that
+    // if you're in it, you don't end up in Trash
+    fs.emptyDirSync(paths.appBuild);
+    // Merge with the public folder
+    copyPublicFolder();
+    // Start the webpack build
+    return build(previousFileSizes);
+  })
+  .then(
+    ({ stats, previousFileSizes, warnings }) => {
+      if (warnings.length) {
+        console.log(chalk.yellow('Compiled with warnings.\n'));
+        console.log(warnings.join('\n\n'));
+        console.log(
+          '\nSearch for the ' +
+            chalk.underline(chalk.yellow('keywords')) +
+            ' to learn more about each warning.'
+        );
+        console.log(
+          'To ignore, add ' +
+            chalk.cyan('// eslint-disable-next-line') +
+            ' to the line before.\n'
+        );
+      } else {
+        console.log(chalk.green('Compiled successfully.\n'));
+      }
 
-          console.log('File sizes after gzip:\n');
-          printFileSizesAfterBuild(
-            stats,
-            previousFileSizes,
-            paths.appBuild,
-            WARN_AFTER_BUNDLE_GZIP_SIZE,
-            WARN_AFTER_CHUNK_GZIP_SIZE
-          );
-          console.log();
+      console.log('File sizes after gzip:\n');
+      printFileSizesAfterBuild(
+        stats,
+        previousFileSizes,
+        paths.appBuild,
+        WARN_AFTER_BUNDLE_GZIP_SIZE,
+        WARN_AFTER_CHUNK_GZIP_SIZE
+      );
+      console.log();
 
-          const appPackage = require(paths.appPackageJson);
-          const publicUrl = paths.publicUrl;
-          const publicPath = config.output.publicPath;
-          const buildFolder = path.relative(process.cwd(), paths.appBuild);
-          printHostingInstructions(
-            appPackage,
-            publicUrl,
-            publicPath,
-            buildFolder,
-            useYarn
-          );
-          printBrowsers(paths.appPath);
-        },
-        err => {
-          console.log(chalk.red('Failed to compile.\n'));
-          printBuildError(err);
-          process.exit(1);
-        }
-      )
+      const appPackage = require(paths.appPackageJson);
+      const publicUrl = paths.publicUrl;
+      const publicPath = config.output.publicPath;
+      const buildFolder = path.relative(process.cwd(), paths.appBuild);
+      printHostingInstructions(
+        appPackage,
+        publicUrl,
+        publicPath,
+        buildFolder,
+        useYarn
+      );
+      printBrowsers(paths.appPath);
+    },
+    err => {
+      console.log(chalk.red('Failed to compile.\n'));
+      printBuildError(err);
+      process.exit(1);
+    }
   )
   .catch(err => {
     if (err && err.message) {
