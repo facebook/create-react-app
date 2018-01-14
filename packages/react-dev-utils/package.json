@@ -11,6 +11,7 @@
     "node": ">=6"
   },
   "files": [
+    "browsersHelper.js",
     "checkRequiredFiles.js",
     "clearConsole.js",
     "crashOverlay.js",
@@ -36,8 +37,9 @@
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "address": "1.0.3",
     "@babel/code-frame": "7.0.0-beta.37",
+    "address": "1.0.3",
+    "browserslist": "2.11.1",
     "chalk": "2.3.0",
     "cross-spawn": "5.1.0",
     "detect-port-alt": "1.1.5",

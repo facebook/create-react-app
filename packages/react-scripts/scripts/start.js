@@ -48,6 +48,13 @@ const createDevServerConfig = require('../config/webpackDevServer.config');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
+// @remove-on-eject-begin
+// Require browsers to be specified before you eject
+const { checkBrowsers } = require('react-dev-utils/browsersHelper');
+if (!checkBrowsers(paths.appPath)) {
+  process.exit(1);
+}
+// @remove-on-eject-end
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
