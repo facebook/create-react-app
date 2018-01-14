@@ -1,33 +1,39 @@
 # confusing-browser-globals
 
-> A list of confusing globals that should be restricted to be used as globals
+A curated list of browser globals that commonly cause confusion and are not recommended to use without an explicit `window.` qualifier.
 
-## Install
+## Motivation
 
-```
-$ npm install --save confusing-browser-globals
-```
+Some global variables in browser are likely to be used by people without the intent of using them as globals, such as `status`, `name`, `event`, etc.
 
-Some global variables in browser are likely to be used by people without the intent of using them as globals, such as `status`, `name` etc. 
-And because eslint thinks of them as valid global variables, it does not warn in case of bugs.
+For example:
 
-For eg:
 ```js
-function logStats(stats) {
-  console.log(status);
+handleClick() { // missing `event` argument
+  this.setState({
+  	text: event.target.value // uses the `event` global: oops!
+  });
 }
 ```
 
-Here we try to log variable `stats`, but by mistake we are logging `status` and as `status` is a valid global, no eslint warning is shown.
+This package exports a list of globals that are often used by mistake. You can feed this list to a static analysis tool like ESLint to prevent their usage without an explicit `window.` qualifier.
 
-To avoid this, we blacklist such confusing globals which are exported from this package. It contains the list of variables that we think should not be used without `window.` qualifier. But as this is just a javascript array you can add, remove variables or even make your own list of variables.
+
+## Installation
+
+```
+npm install --save confusing-browser-globals
+```
+
 
 ## Usage
 
-Add this in your eslint config in rules property:
+If you use Create React App, you don't need to configure anything, as this rule is already included in the default `eslint-config-react-app` preset.
+
+If you maintain your own ESLint configuration, you can do this:
 
 ```js
-var restrictedGlobals = require('eslint-restricted-globals');
+var restrictedGlobals = require('confusing-browser-globals');
 
 module.exports = {
   rules: {
@@ -39,4 +45,4 @@ module.exports = {
 
 ## License
 
-MIT 
+MIT
