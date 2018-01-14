@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+/* eslint-env jest */
+
 'use strict';
 
 let globals = require('./index');
