@@ -60,7 +60,7 @@ function checkBrowsers(dir, retry = true) {
 
           const pkg = JSON.parse(fs.readFileSync(filePath));
           pkg['browserslist'] = defaultBrowsers;
-          fs.writeFileSync(filePath, JSON.stringify(pkg, null, 2) + '\n');
+          fs.writeFileSync(filePath, JSON.stringify(pkg, null, 2) + os.EOL);
         })
         .catch(() => checkBrowsers(dir, false));
     } else {
