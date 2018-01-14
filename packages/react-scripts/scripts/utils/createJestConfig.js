@@ -28,8 +28,8 @@ module.exports = (resolve, rootDir, srcRoots, isEjecting) => {
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
-      '/**/__tests__/**/*.{js,jsx,mjs}',
-      '/**/?(*.)(spec|test).{js,jsx,mjs}',
+      '**/__tests__/**/*.{js,jsx,mjs}',
+      '**/?(*.)(spec|test).{js,jsx,mjs}',
     ],
     // where to search for files/tests
     roots: srcRoots.map(toRelRootDir),
