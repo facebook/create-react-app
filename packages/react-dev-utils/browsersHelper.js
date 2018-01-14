@@ -27,11 +27,17 @@ function checkBrowsers(dir) {
 }
 
 function printBrowsers(dir) {
-  const browsers = checkBrowsers(dir);
+  let browsers = checkBrowsers(dir);
+  if (browsers == null) {
+    console.log('Built the bundle with default browser support.');
+    return;
+  }
+  browsers = browsers[process.env.NODE_ENV] || browsers;
+  if (Array.isArray(browsers)) {
+    browsers = browsers.join(', ');
+  }
   console.log(
-    `Built the bundle with browser support for ${browsers == null
-      ? 'defaults'
-      : browsers[process.env.NODE_ENV] || browsers}.`
+    `Built the bundle with browser support for ${chalk.cyan(browsers)}.`
   );
 }
 
