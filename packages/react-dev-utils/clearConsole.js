@@ -8,7 +8,7 @@
 'use strict';
 
 function clearConsole() {
-  if (process.env.DEBUG) {
+  if (process.env.REACT_APP_VERBOSE) {
     return;
   }
 

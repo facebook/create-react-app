@@ -134,7 +134,7 @@ clearConsole();
 console.log('Just cleared the screen!');
 ```
 
-This behavior can be disabled by setting the environment variable `DEBUG=1`.
+This behavior can be disabled by setting the environment variable `REACT_APP_VERBOSE=1`.
 
 #### `eslintFormatter(results: Object): string`
 
