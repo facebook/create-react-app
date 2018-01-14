@@ -18,17 +18,28 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        include: [
-          path.resolve(__dirname, './src'),
-          /[\/\\]node_modules[\/\\](ansi-styles|chalk)[\/\\]/,
-        ],
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['react-app'],
+        oneOf: [
+          // Source
+          {
+            test: /\.js$/,
+            include: [path.resolve(__dirname, './src')],
+            use: {
+              loader: 'babel-loader',
+            },
           },
-        },
+          // Dependencies
+          {
+            test: /\.js$/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                babelrc: false,
+                compact: false,
+                presets: ['babel-preset-react-app/dependencies'],
+              },
+            },
+          },
+        ],
       },
     ],
   },
