@@ -50,6 +50,7 @@
     "inquirer": "5.0.0",
     "is-root": "1.0.0",
     "opn": "5.2.0",
+    "pkg-up": "2.0.0",
     "react-error-overlay": "^4.0.0",
     "recursive-readdir": "2.2.1",
     "shell-quote": "1.6.1",

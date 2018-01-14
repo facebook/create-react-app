@@ -70,7 +70,16 @@
     "fsevents": "1.1.2"
   },
   "browserslist": {
-    "development": "last 2 chrome versions",
-    "production": [">1%", "last 4 versions", "Firefox ESR", "not ie < 11"]
+    "development": [
+      "last 2 chrome versions",
+      "last 2 firefox versions",
+      "last 2 edge versions"
+    ],
+    "production": [
+      ">1%",
+      "last 4 versions",
+      "Firefox ESR",
+      "not ie < 11"
+    ]
   }
 }
