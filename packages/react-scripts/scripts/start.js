@@ -53,12 +53,17 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 if (process.env.HOST) {
   console.log(
-    chalk.yellow(
-      `Attempting to bind to HOST environment variable: ${process.env
-        .HOST}. If this was unintentional, check that you haven't mistakenly set it in your shell.`
+    chalk.cyan(
+      `Attempting to bind to HOST environment variable: ${chalk.yellow(
+        chalk.bold(process.env.HOST)
+      )}`
     )
   );
-  console.log(chalk.yellow('Learn more here: http://bit.ly/2mwWSwH\n'));
+  console.log(
+    `If this was unintentional, check that you haven't mistakenly set it in your shell.`
+  );
+  console.log(`Learn more here: ${chalk.yellow('http://bit.ly/2mwWSwH')}`);
+  console.log();
 }
 
 // We attempt to use the default port but if it is busy, we offer the user to
