@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -25,13 +23,27 @@ var launchEditorEndpoint = require('./launchEditorEndpoint');
 var formatWebpackMessages = require('./formatWebpackMessages');
 var ErrorOverlay = require('react-error-overlay');
 
+ErrorOverlay.setEditorHandler(function editorHandler(errorLocation) {
+  // Keep this sync with errorOverlayMiddleware.js
+  fetch(
+    launchEditorEndpoint +
+      '?fileName=' +
+      window.encodeURIComponent(errorLocation.fileName) +
+      '&lineNumber=' +
+      window.encodeURIComponent(errorLocation.lineNumber || 1)
+  );
+});
+
+// We need to keep track of if there has been a runtime error.
+// Essentially, we cannot guarantee application state was not corrupted by the
+// runtime error. To prevent confusing behavior, we forcibly reload the entire
+// application. This is handled below when we are notified of a compile (code
+// change).
+// See https://github.com/facebookincubator/create-react-app/issues/3096
+var hadRuntimeError = false;
 ErrorOverlay.startReportingRuntimeErrors({
-  launchEditorEndpoint: launchEditorEndpoint,
   onError: function() {
-    // TODO: why do we need this?
-    if (module.hot && typeof module.hot.decline === 'function') {
-      module.hot.decline();
-    }
+    hadRuntimeError = true;
   },
   filename: '/static/js/bundle.js',
 });
@@ -227,7 +239,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   function handleApplyUpdates(err, updatedModules) {
-    if (err || !updatedModules) {
+    if (err || !updatedModules || hadRuntimeError) {
       window.location.reload();
       return;
     }

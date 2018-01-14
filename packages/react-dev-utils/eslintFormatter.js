@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -82,8 +80,7 @@ function formatter(results) {
     // it here because we always show at most one error, and
     // we can only be sure it's an ESLint error before exiting
     // this function.
-    output +=
-      'Search for the ' +
+    output += 'Search for the ' +
       chalk.underline(chalk.red('keywords')) +
       ' to learn more about each error.';
   }

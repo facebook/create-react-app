@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -122,12 +120,15 @@ function measureFileSizesBeforeBuild(buildFolder) {
       if (!err && fileNames) {
         sizes = fileNames
           .filter(fileName => /\.(js|css)$/.test(fileName))
-          .reduce((memo, fileName) => {
-            var contents = fs.readFileSync(fileName);
-            var key = removeFileNameHash(buildFolder, fileName);
-            memo[key] = gzipSize(contents);
-            return memo;
-          }, {});
+          .reduce(
+            (memo, fileName) => {
+              var contents = fs.readFileSync(fileName);
+              var key = removeFileNameHash(buildFolder, fileName);
+              memo[key] = gzipSize(contents);
+              return memo;
+            },
+            {}
+          );
       }
       resolve({
         root: buildFolder,

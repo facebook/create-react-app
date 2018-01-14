@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 /* @flow */
@@ -12,6 +10,9 @@ import React, { Component } from 'react';
 import CodeBlock from './StackFrameCodeBlock';
 import { getPrettyURL } from '../utils/getPrettyURL';
 import { darkGray } from '../styles';
+
+import type { StackFrame as StackFrameType } from '../utils/stack-frame';
+import type { ErrorLocation } from '../utils/parseCompileError';
 
 const linkStyle = {
   fontSize: '0.9em',
@@ -43,7 +44,19 @@ const toggleStyle = {
   lineHeight: '1.5',
 };
 
-class StackFrame extends Component {
+type Props = {|
+  frame: StackFrameType,
+  contextSize: number,
+  critical: boolean,
+  showCode: boolean,
+  editorHandler: (errorLoc: ErrorLocation) => void,
+|};
+
+type State = {|
+  compiled: boolean,
+|};
+
+class StackFrame extends Component<Props, State> {
   state = {
     compiled: false,
   };
@@ -54,45 +67,35 @@ class StackFrame extends Component {
     }));
   };
 
-  canOpenInEditor() {
-    if (!this.props.launchEditorEndpoint) {
-      return;
-    }
-    const { _originalFileName: sourceFileName } = this.props.frame;
+  getErrorLocation(): ErrorLocation | null {
+    const {
+      _originalFileName: fileName,
+      _originalLineNumber: lineNumber,
+    } = this.props.frame;
     // Unknown file
-    if (!sourceFileName) {
-      return false;
+    if (!fileName) {
+      return null;
     }
     // e.g. "/path-to-my-app/webpack/bootstrap eaddeb46b67d75e4dfc1"
-    const isInternalWebpackBootstrapCode =
-      sourceFileName.trim().indexOf(' ') !== -1;
+    const isInternalWebpackBootstrapCode = fileName.trim().indexOf(' ') !== -1;
     if (isInternalWebpackBootstrapCode) {
-      return false;
+      return null;
     }
     // Code is in a real file
-    return true;
+    return { fileName, lineNumber: lineNumber || 1 };
   }
 
-  openInEditor = () => {
-    if (!this.canOpenInEditor()) {
+  editorHandler = () => {
+    const errorLoc = this.getErrorLocation();
+    if (!errorLoc) {
       return;
     }
-    const {
-      _originalFileName: sourceFileName,
-      _originalLineNumber: sourceLineNumber,
-    } = this.props.frame;
-    // Keep this in sync with react-error-overlay/middleware.js
-    fetch(
-      `${this.props.launchEditorEndpoint}?fileName=` +
-        window.encodeURIComponent(sourceFileName) +
-        '&lineNumber=' +
-        window.encodeURIComponent(sourceLineNumber || 1)
-    ).then(() => {}, () => {});
+    this.props.editorHandler(errorLoc);
   };
 
-  onKeyDown = (e: SyntheticKeyboardEvent) => {
+  onKeyDown = (e: SyntheticKeyboardEvent<>) => {
     if (e.key === 'Enter') {
-      this.openInEditor();
+      this.editorHandler();
     }
   };
 
@@ -152,16 +155,15 @@ class StackFrame extends Component {
       }
     }
 
-    const canOpenInEditor = this.canOpenInEditor();
+    const canOpenInEditor = this.getErrorLocation() !== null &&
+      this.props.editorHandler !== null;
     return (
       <div>
-        <div>
-          {functionName}
-        </div>
+        <div>{functionName}</div>
         <div style={linkStyle}>
           <a
             style={canOpenInEditor ? anchorStyle : null}
-            onClick={canOpenInEditor ? this.openInEditor : null}
+            onClick={canOpenInEditor ? this.editorHandler : null}
             onKeyDown={canOpenInEditor ? this.onKeyDown : null}
             tabIndex={canOpenInEditor ? '0' : null}
           >
@@ -171,7 +173,7 @@ class StackFrame extends Component {
         {codeBlockProps &&
           <span>
             <a
-              onClick={canOpenInEditor ? this.openInEditor : null}
+              onClick={canOpenInEditor ? this.editorHandler : null}
               style={canOpenInEditor ? codeAnchorStyle : null}
             >
               <CodeBlock {...codeBlockProps} />

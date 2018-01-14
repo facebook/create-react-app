@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 /* @flow */
@@ -15,8 +13,7 @@ import path from 'path';
 
 function count(search: string, string: string): number {
   // Count starts at -1 becuse a do-while loop always runs at least once
-  let count = -1,
-    index = -1;
+  let count = -1, index = -1;
   do {
     // First call or the while case evaluated true, meaning we have to make
     // count 0 or we found a character
@@ -56,7 +53,11 @@ async function unmap(
     }
     let { fileName } = frame;
     if (fileName) {
-      fileName = path.normalize(fileName);
+      // The web version of this module only provides POSIX support, so Windows
+      // paths like C:\foo\\baz\..\\bar\ cannot be normalized.
+      // A simple solution to this is to replace all `\` with `/`, then
+      // normalize afterwards.
+      fileName = path.normalize(fileName.replace(/[\\]+/g, '/'));
     }
     if (fileName == null) {
       return frame;
@@ -64,6 +65,7 @@ async function unmap(
     const fN: string = fileName;
     const source = map
       .getSources()
+      // Prepare path for normalization; see comment above for reasoning.
       .map(s => s.replace(/[\\]+/g, '/'))
       .filter(p => {
         p = path.normalize(p);
