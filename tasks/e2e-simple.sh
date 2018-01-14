@@ -100,21 +100,26 @@ npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_reg
 
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/confusing-browser-globals/
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
+
 cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
 yarn test
-
 if [ $APPVEYOR != 'True' ]; then
   # Flow started hanging on AppVeyor after we moved to Yarn Workspaces :-(
   yarn flow
 fi
-
 cd ../..
+
 cd packages/react-dev-utils/
+yarn test
+cd ../..
+
+cd packages/confusing-browser-globals/
 yarn test
 cd ../..
 
