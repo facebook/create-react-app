@@ -61,6 +61,22 @@ function checkBrowsers(dir, retry = true) {
             const pkg = JSON.parse(fs.readFileSync(filePath));
             pkg['browserslist'] = defaultBrowsers;
             fs.writeFileSync(filePath, JSON.stringify(pkg, null, 2) + os.EOL);
+
+            browserslist.clearCaches();
+            console.log();
+            console.log(chalk.green('Set target browsers:'));
+            console.log();
+            console.log(
+              `\t${chalk.bold('Production')}: ${chalk.cyan(
+                defaultBrowsers.production.join(', ')
+              )}`
+            );
+            console.log(
+              `\t${chalk.bold('Development')}: ${chalk.cyan(
+                defaultBrowsers.development.join(', ')
+              )}`
+            );
+            console.log();
           })
           // Swallow any error
           .catch(() => {})
