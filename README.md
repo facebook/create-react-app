@@ -39,6 +39,9 @@ To fix this, create a new file *in the root of the project* called `tsconfig.tes
 
 ## Changelog
 
+### 2.11.0
+* Upgrade to [`react-scripts@1.0.17`](https://github.com/facebookincubator/create-react-app/releases/tag/v1.0.17)
+
 ### 2.10.0
 * README updates - StefanSchoof
 * README updates - DorianGrey
