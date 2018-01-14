@@ -52,17 +52,20 @@ function checkBrowsers(dir, retry = true) {
   };
   return inquirer.prompt(question).then(answer => {
     if (answer.shouldSetBrowsers) {
-      return pkgUp(dir)
-        .then(filePath => {
-          if (filePath == null) {
-            return Promise.reject();
-          }
-
-          const pkg = JSON.parse(fs.readFileSync(filePath));
-          pkg['browserslist'] = defaultBrowsers;
-          fs.writeFileSync(filePath, JSON.stringify(pkg, null, 2) + os.EOL);
-        })
-        .catch(() => checkBrowsers(dir, false));
+      return (
+        pkgUp(dir)
+          .then(filePath => {
+            if (filePath == null) {
+              return Promise.reject();
+            }
+            const pkg = JSON.parse(fs.readFileSync(filePath));
+            pkg['browserslist'] = defaultBrowsers;
+            fs.writeFileSync(filePath, JSON.stringify(pkg, null, 2) + os.EOL);
+          })
+          // Swallow any error
+          .catch(() => {})
+          .then(() => checkBrowsers(dir, false))
+      );
     } else {
       return checkBrowsers(dir, false);
     }
