@@ -19,6 +19,12 @@ const isLocalhost = Boolean(
 );
 
 export default function register() {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(
+      'This project is configured to add a service worker caching in the production build. Read more on %o',
+      'http://bit.ly/2vJdu84'
+    );
+  }
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
