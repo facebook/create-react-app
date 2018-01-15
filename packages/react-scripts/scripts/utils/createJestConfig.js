@@ -61,7 +61,10 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'collectCoverageFrom',
     'coverageReporters',
     'coverageThreshold',
+    'resetMocks',
+    'resetModules',
     'snapshotSerializers',
+    'watchPathIgnorePatterns',
   ];
   if (overrides) {
     supportedKeys.forEach(key => {
