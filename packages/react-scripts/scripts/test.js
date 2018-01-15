@@ -33,7 +33,7 @@ if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
 const jest = require('jest');
 const argv = process.argv.slice(2);
 
-// Watch unless on CI in coverage mode, or explicitly running all tests
+// Watch unless on CI, in coverage mode, or explicitly running all tests
 if (
   !process.env.CI &&
   argv.indexOf('--coverage') === -1 &&
