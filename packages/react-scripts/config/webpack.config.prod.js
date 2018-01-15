@@ -9,8 +9,11 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const NameAllModulesPlugin = require('name-all-modules-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
@@ -37,6 +40,8 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+// Check if vendors file exists
+const checkIfVendorFileExists = fs.existsSync(paths.appVendorsJs);
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -83,7 +88,14 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  // If there is a vendors file combine with polyfills.
+  // Incase the vendors need polyfills too.
+  entry: checkIfVendorFileExists
+    ? {
+        vendors: [require.resolve('./polyfills'), paths.appVendorsJs],
+        main: paths.appIndexJs,
+      }
+    : [require.resolve('./polyfills'), paths.appIndexJs],
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -253,6 +265,45 @@ module.exports = {
       context: paths.appSrc,
       files: ['**/*.css'],
     }),
+    // For some reason, Webpack adds some ids of all the modules that exist to our vendor chunk
+    // Instead of using numerical ids it uses a unique path to map our request to a module.
+    // Thanks to this change the vendor hash will now always stay the same
+    new webpack.NamedModulesPlugin(),
+    // Ensure that every chunks have an actual name and not an id
+    // If the chunk has a name, this name is used
+    // otherwise the name of the file is used
+    new webpack.NamedChunksPlugin(chunk => {
+      if (chunk.name) {
+        return chunk.name;
+      }
+      const chunkNames = chunk.mapModules(m => m);
+      // Sort the chunks by their depths
+      // The chunk with the lower depth is the imported one
+      // The others are its dependencies
+      chunkNames.sort((chunkA, chunkB) => chunkA.depth - chunkB.depth);
+      // Get the absolute path of the file
+      const fileName = chunkNames[0].resource;
+      // Return the name of the file without the extension
+      return path.basename(fileName, path.extname(fileName));
+    }),
+    // Avoid having the vendors in the rest of the app
+    // Only execute if the vendors file exists
+    checkIfVendorFileExists
+      ? new webpack.optimize.CommonsChunkPlugin({
+          name: 'vendors',
+          minChunks: Infinity,
+        })
+      : null,
+    // The runtime is the part of Webpack that resolves modules
+    // at runtime and handles async loading and more
+    checkIfVendorFileExists
+      ? new webpack.optimize.CommonsChunkPlugin({
+          name: 'runtime',
+        })
+      : null,
+    // https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
+    // Name the modules that were not named by the previous plugins
+    new NameAllModulesPlugin(),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -275,6 +326,11 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true,
       },
+    }),
+    // This ensures that the browser will load the scripts in parallel,
+    // but execute them in the order they appear in the document.
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'defer',
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
@@ -348,7 +404,6 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-
     // Upload sourcemaps to sentry.io if API key & build branch & sourcemaps enabled
     process.env.SENTRY_API_KEY && ciBuildBranch && shouldUseSourceMap
       ? new SentryPlugin({
@@ -360,7 +415,7 @@ module.exports = {
           exclude: /\.(html|css)$/,
         })
       : () => {},
-  ],
+  ].filter(Boolean),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {

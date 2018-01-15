@@ -9,11 +9,13 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const AutoDllPlugin = require('autodll-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
@@ -29,6 +31,8 @@ const publicPath = '/';
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+// Check if vendors file exists
+const checkIfVendorFileExists = fs.existsSync(paths.appVendorsJs);
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -66,7 +70,7 @@ module.exports = {
     // This does not produce a real file. It's just the virtual path that is
     // served by WebpackDevServer in development. This is the JS bundle
     // containing code from all our entry points, and the Webpack runtime.
-    filename: 'static/js/bundle.js',
+    filename: 'static/js/[name].js',
     // There are also additional JS chunk files if you use code splitting.
     chunkFilename: 'static/js/[name].chunk.js',
     // This is the URL that app is served from. We use "/" in development.
@@ -233,6 +237,20 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+    }),
+    new AutoDllPlugin({
+      context: paths.appPath,
+      path: './dll',
+      filename: '[name].js',
+      inject: true,
+      entry: checkIfVendorFileExists
+        ? {
+            vendors: [require.resolve('./polyfills'), paths.appVendorsJs],
+          }
+        : {
+            polyfills: [require.resolve('./polyfills')],
+          },
+      plugins: [new webpack.NamedModulesPlugin()],
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
