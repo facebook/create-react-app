@@ -16,12 +16,11 @@ process.on('unhandledRejection', err => {
 
 const fs = require('fs-extra');
 const path = require('path');
-const execSync = require('child_process').execSync;
+const { spawnSync, execSync } = require('child_process');
 const chalk = require('chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
-const spawnSync = require('react-dev-utils/crossSpawn').sync;
 
 const green = chalk.green;
 const cyan = chalk.cyan;
@@ -34,6 +33,49 @@ function getGitStatus() {
     return stdout.trim();
   } catch (e) {
     return '';
+  }
+}
+
+const ADD_PACKAGE = true,
+  REMOVE_PACKAGE = false;
+const PROD_PACKAGE = true,
+  DEV_PACKAGE = false;
+function adjustPackages(cwd, packages, append, dev) {
+  if (!Array.isArray(packages)) {
+    packages = [packages];
+  }
+  let status, output;
+  if (fs.existsSync(paths.yarnLockFile)) {
+    ({ status, output } = spawnSync(
+      'yarnpkg',
+      [append ? 'add' : 'remove', ...packages],
+      {
+        stdio: 'pipe',
+        cwd,
+      }
+    ));
+  } else {
+    ({ status, output } = spawnSync(
+      process.platform === 'win32' ? 'npm.cmd' : 'npm',
+      [
+        append ? 'install' : 'uninstall',
+        dev ? '-D' : '-S',
+        '--loglevel',
+        'error',
+        ...packages,
+      ],
+      {
+        stdio: 'pipe',
+        cwd,
+      }
+    ));
+  }
+
+  if (status !== 0) {
+    console.error(chalk.red('Failed to update the dependencies.'));
+    console.error();
+    console.error(output.join(process.platform === 'win32' ? '\r\n' : '\n'));
+    process.exit(status);
   }
 }
 
@@ -144,49 +186,44 @@ inquirer
     console.log();
 
     const ownPackage = require(path.join(ownPath, 'package.json'));
-    const appPackage = require(path.join(appPath, 'package.json'));
+    const ejectingAppPackage = require(path.join(appPath, 'package.json'));
 
     console.log(cyan('Updating the dependencies'));
     const ownPackageName = ownPackage.name;
-    if (appPackage.devDependencies) {
+    if (ejectingAppPackage.devDependencies) {
       // We used to put react-scripts in devDependencies
-      if (appPackage.devDependencies[ownPackageName]) {
+      if (ejectingAppPackage.devDependencies[ownPackageName]) {
         console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
-        delete appPackage.devDependencies[ownPackageName];
+        adjustPackages(appPath, ownPackageName, REMOVE_PACKAGE, DEV_PACKAGE);
       }
     }
-    appPackage.dependencies = appPackage.dependencies || {};
-    if (appPackage.dependencies[ownPackageName]) {
+    ejectingAppPackage.dependencies = ejectingAppPackage.dependencies || {};
+    if (ejectingAppPackage.dependencies[ownPackageName]) {
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
-      delete appPackage.dependencies[ownPackageName];
+      adjustPackages(appPath, ownPackageName, REMOVE_PACKAGE, PROD_PACKAGE);
     }
+    let appendList = [];
     Object.keys(ownPackage.dependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
       if (ownPackage.optionalDependencies[key]) {
         return;
       }
       console.log(`  Adding ${cyan(key)} to dependencies`);
-      appPackage.dependencies[key] = ownPackage.dependencies[key];
+      appendList.push(`${key}@${ownPackage.dependencies[key]}`);
     });
-    // Sort the deps
-    const unsortedDependencies = appPackage.dependencies;
-    appPackage.dependencies = {};
-    Object.keys(unsortedDependencies)
-      .sort()
-      .forEach(key => {
-        appPackage.dependencies[key] = unsortedDependencies[key];
-      });
+    adjustPackages(appPath, appendList, ADD_PACKAGE, PROD_PACKAGE);
     console.log();
 
+    const ejectedAppPackage = require(path.join(appPath, 'package.json'));
     console.log(cyan('Updating the scripts'));
-    delete appPackage.scripts['eject'];
-    Object.keys(appPackage.scripts).forEach(key => {
+    delete ejectedAppPackage.scripts['eject'];
+    Object.keys(ejectedAppPackage.scripts).forEach(key => {
       Object.keys(ownPackage.bin).forEach(binKey => {
         const regex = new RegExp(binKey + ' (\\w+)', 'g');
-        if (!regex.test(appPackage.scripts[key])) {
+        if (!regex.test(ejectedAppPackage.scripts[key])) {
           return;
         }
-        appPackage.scripts[key] = appPackage.scripts[key].replace(
+        ejectedAppPackage.scripts[key] = ejectedAppPackage.scripts[key].replace(
           regex,
           'node scripts/$1.js'
         );
@@ -202,23 +239,23 @@ inquirer
     console.log(cyan('Configuring package.json'));
     // Add Jest config
     console.log(`  Adding ${cyan('Jest')} configuration`);
-    appPackage.jest = jestConfig;
+    ejectedAppPackage.jest = jestConfig;
 
     // Add Babel config
     console.log(`  Adding ${cyan('Babel')} preset`);
-    appPackage.babel = {
+    ejectedAppPackage.babel = {
       presets: ['react-app'],
     };
 
     // Add ESlint config
     console.log(`  Adding ${cyan('ESLint')} configuration`);
-    appPackage.eslintConfig = {
+    ejectedAppPackage.eslintConfig = {
       extends: 'react-app',
     };
 
     fs.writeFileSync(
       path.join(appPath, 'package.json'),
-      JSON.stringify(appPackage, null, 2) + '\n'
+      JSON.stringify(ejectedAppPackage, null, 2) + '\n'
     );
     console.log();
 
@@ -235,28 +272,6 @@ inquirer
       }
     }
 
-    if (fs.existsSync(paths.yarnLockFile)) {
-      // TODO: this is disabled for three reasons.
-      //
-      // 1. It produces garbage warnings on Windows on some systems:
-      //    https://github.com/facebookincubator/create-react-app/issues/2030
-      //
-      // 2. For the above reason, it breaks Windows CI:
-      //    https://github.com/facebookincubator/create-react-app/issues/2624
-      //
-      // 3. It is wrong anyway: re-running yarn will respect the lockfile
-      //    rather than package.json we just updated. Instead we should have
-      //    updated the lockfile. So we might as well not do it while it's broken.
-      //    https://github.com/facebookincubator/create-react-app/issues/2627
-      //
-      // console.log(cyan('Running yarn...'));
-      // spawnSync('yarnpkg', [], { stdio: 'inherit' });
-    } else {
-      console.log(cyan('Running npm install...'));
-      spawnSync('npm', ['install', '--loglevel', 'error'], {
-        stdio: 'inherit',
-      });
-    }
     console.log(green('Ejected successfully!'));
     console.log();
 
