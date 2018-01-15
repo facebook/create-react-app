@@ -1,10 +1,16 @@
-## Unreleased (2018-01-07)
+## Unreleased (2018-01-15)
+
+#### :rocket: New Feature
+* `react-scripts`
+  * [#65](https://github.com/Stinkstudios/create-react-app/pull/65) Closes (#64) - editorconfig config file. ([@andykenward](https://github.com/andykenward))
 
 #### :bug: Bug Fix
 * [#56](https://github.com/Stinkstudios/create-react-app/pull/56) set node to 8.9. ([@andykenward](https://github.com/andykenward))
 
 #### :nail_care: Enhancement
 * `react-scripts`
+  * [#83](https://github.com/Stinkstudios/create-react-app/pull/83) :sparkles: Webpack Dll caching & vendor bundle output (#81) (#75). ([@andykenward](https://github.com/andykenward))
+  * [#73](https://github.com/Stinkstudios/create-react-app/pull/73) :wrench: Feature/stylelint ignores. ([@andykenward](https://github.com/andykenward))
   * [#54](https://github.com/Stinkstudios/create-react-app/pull/54) Feature/eslint cli. ([@andykenward](https://github.com/andykenward))
 
 #### :house: Dependency Update
