@@ -1077,7 +1077,9 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
 * [Configure the proxy yourself](#configuring-the-proxy-manually)
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
-* Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+* Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port directly into your application code for each request (i.e. completely bypassing the the CRA proxy feature.)
+
+Note: Currently the only way to use the creat-react-app proxy feature is by setting the proxy key within `package.json`. In other words, CRA itself does not look for this information in any environment variables.
 
 ### "Invalid Host Header" Errors After Configuring Proxy
 
