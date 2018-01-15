@@ -104,6 +104,9 @@ inquirer
     folders.forEach(verifyAbsent);
     files.forEach(verifyAbsent);
 
+    // Ensure that the app folder doesn't have a .babelrc file
+    verifyAbsent('.babelrc');
+
     // Prepare Jest config early in case it throws
     const jestConfig = createJestConfig(
       filePath => path.posix.join('<rootDir>', filePath),
