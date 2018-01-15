@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+'use strict';
+
 var chalk = require('chalk');
 var execSync = require('child_process').execSync;
 var path = require('path');
@@ -7,8 +16,8 @@ var execOptions = {
   stdio: [
     'pipe', // stdin (default)
     'pipe', // stdout (default)
-    'ignore' //stderr
-  ]
+    'ignore', //stderr
+  ],
 };
 
 function isProcessAReactApp(processCommand) {
@@ -16,7 +25,9 @@ function isProcessAReactApp(processCommand) {
 }
 
 function getProcessIdOnPort(port) {
-  return execSync('lsof -i:' + port + ' -P -t -sTCP:LISTEN', execOptions).trim();
+  return execSync('lsof -i:' + port + ' -P -t -sTCP:LISTEN', execOptions)
+    .split('\n')[0]
+    .trim();
 }
 
 function getPackageNameInDirectory(directory) {
@@ -24,26 +35,32 @@ function getPackageNameInDirectory(directory) {
 
   try {
     return require(packagePath).name;
-  } catch(e) {
+  } catch (e) {
     return null;
   }
-
 }
 
 function getProcessCommand(processId, processDirectory) {
-  var command = execSync('ps -o command -p ' + processId + ' | sed -n 2p', execOptions);
+  var command = execSync(
+    'ps -o command -p ' + processId + ' | sed -n 2p',
+    execOptions
+  );
+
+  command = command.replace(/\n$/, '');
 
   if (isProcessAReactApp(command)) {
     const packageName = getPackageNameInDirectory(processDirectory);
-    return (packageName) ? packageName + '\n' : command;
+    return packageName ? packageName : command;
   } else {
     return command;
   }
-
 }
 
 function getDirectoryOfProcessById(processId) {
-  return execSync('lsof -p '+ processId + ' | grep cwd | awk \'{print $9}\'', execOptions).trim();
+  return execSync(
+    'lsof -p ' + processId + ' | awk \'$4=="cwd" {for (i=9; i<=NF; i++) printf "%s ", $i}\'',
+    execOptions
+  ).trim();
 }
 
 function getProcessForPort(port) {
@@ -51,11 +68,15 @@ function getProcessForPort(port) {
     var processId = getProcessIdOnPort(port);
     var directory = getDirectoryOfProcessById(processId);
     var command = getProcessCommand(processId, directory);
-    return chalk.cyan(command) + chalk.blue('  in ') + chalk.cyan(directory);
-  } catch(e) {
+    return (
+      chalk.cyan(command) +
+      chalk.grey(' (pid ' + processId + ')\n') +
+      chalk.blue('  in ') +
+      chalk.cyan(directory)
+    );
+  } catch (e) {
     return null;
   }
 }
 
 module.exports = getProcessForPort;
-

@@ -1,34 +1,67 @@
 {
   "name": "react-dev-utils",
-  "version": "0.5.1",
+  "version": "5.0.0",
   "description": "Webpack utilities used by Create React App",
   "repository": "facebookincubator/create-react-app",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "files": [
-    "clearConsole.js",
+    "browsersHelper.js",
     "checkRequiredFiles.js",
+    "clearConsole.js",
+    "crashOverlay.js",
+    "crossSpawn.js",
+    "eslintFormatter.js",
+    "errorOverlayMiddleware.js",
+    "FileSizeReporter.js",
+    "printBuildError.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
+    "ignoredFiles.js",
+    "inquirer.js",
     "InterpolateHtmlPlugin.js",
-    "openChrome.applescript",
+    "launchEditor.js",
+    "launchEditorEndpoint.js",
+    "ModuleScopePlugin.js",
+    "noopServiceWorkerMiddleware.js",
     "openBrowser.js",
-    "prompt.js",
+    "openChrome.applescript",
+    "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
+    "WebpackDevServerUtils.js",
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "ansi-html": "0.0.5",
-    "chalk": "1.1.3",
+    "@babel/code-frame": "7.0.0-beta.37",
+    "address": "1.0.3",
+    "browserslist": "2.11.1",
+    "chalk": "2.3.0",
+    "cross-spawn": "5.1.0",
+    "detect-port-alt": "1.1.5",
     "escape-string-regexp": "1.0.5",
-    "html-entities": "1.2.0",
-    "opn": "4.0.2",
-    "sockjs-client": "1.1.2",
-    "strip-ansi": "3.0.1"
+    "filesize": "3.5.11",
+    "global-modules": "1.0.0",
+    "gzip-size": "4.1.0",
+    "inquirer": "5.0.0",
+    "is-root": "1.0.0",
+    "opn": "5.2.0",
+    "pkg-up": "2.0.0",
+    "react-error-overlay": "^4.0.0",
+    "recursive-readdir": "2.2.1",
+    "shell-quote": "1.6.1",
+    "sockjs-client": "1.1.4",
+    "strip-ansi": "4.0.0",
+    "text-table": "0.2.0"
+  },
+  "devDependencies": {
+    "jest": "22.0.6"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
