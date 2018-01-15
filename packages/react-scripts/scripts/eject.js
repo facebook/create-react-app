@@ -251,7 +251,7 @@ inquirer
       //    https://github.com/facebookincubator/create-react-app/issues/2627
       //
       // console.log(cyan('Running yarn...'));
-      // spawnSync('yarnpkg', [], { stdio: 'inherit' });
+      spawnSync('yarnpkg', ['--cwd', process.cwd()], { stdio: 'inherit' });
     } else {
       console.log(cyan('Running npm install...'));
       spawnSync('npm', ['install', '--loglevel', 'error'], {
