@@ -12,7 +12,7 @@
     "postinstall": "cd packages/react-error-overlay/ && yarn build:prod",
     "publish": "tasks/publish.sh",
     "start": "cd packages/react-scripts && node bin/react-scripts.js start",
-    "screencast": "svg-term --cast hItN7sl5yfCPTHxvFg5glhhfp --out screencast.svg --window",
+    "screencast": "svg-term --cast Re4bWGN7Va7LckbjAd2yOHH4K --out screencast.svg --window",
     "test": "cd packages/react-scripts && node bin/react-scripts.js test --env=jsdom",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
     "precommit": "lint-staged"
