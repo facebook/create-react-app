@@ -18,6 +18,8 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const spawn = require('react-dev-utils/crossSpawn');
+const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
+const os = require('os');
 
 module.exports = function(
   appPath,
@@ -43,9 +45,11 @@ module.exports = function(
     eject: 'react-scripts eject',
   };
 
+  appPackage.browserslist = defaultBrowsers;
+
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
-    JSON.stringify(appPackage, null, 2)
+    JSON.stringify(appPackage, null, 2) + os.EOL
   );
 
   const readmeExists = fs.existsSync(path.join(appPath, 'README.md'));

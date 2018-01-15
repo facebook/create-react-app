@@ -32,14 +32,14 @@ class CompileErrorContainer extends PureComponent<Props, void> {
     return (
       <ErrorOverlay>
         <Header headerText="Failed to compile" />
-        <a
+        <div
           onClick={
             canOpenInEditor && errLoc ? () => editorHandler(errLoc) : null
           }
           style={canOpenInEditor ? codeAnchorStyle : null}
         >
           <CodeBlock main={true} codeHTML={generateAnsiHTML(error)} />
-        </a>
+        </div>
         <Footer line1="This error occurred during the build time and cannot be dismissed." />
       </ErrorOverlay>
     );

@@ -14,7 +14,7 @@ import type { ScriptLine } from '../utils/stack-frame';
 import { primaryErrorStyle, secondaryErrorStyle } from '../styles';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
 
-import codeFrame from 'babel-code-frame';
+import { codeFrameColumns } from '@babel/code-frame';
 
 type StackFrameCodeBlockPropsType = {|
   lines: ScriptLine[],
@@ -53,10 +53,17 @@ function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
     }
     sourceCode[line - 1] = text;
   });
-  const ansiHighlight = codeFrame(
+  const ansiHighlight = codeFrameColumns(
     sourceCode.join('\n'),
-    lineNum,
-    columnNum == null ? 0 : columnNum - (isFinite(whiteSpace) ? whiteSpace : 0),
+    {
+      start: {
+        line: lineNum,
+        column:
+          columnNum == null
+            ? 0
+            : columnNum - (isFinite(whiteSpace) ? whiteSpace : 0),
+      },
+    },
     {
       forceColor: true,
       linesAbove: contextSize,
