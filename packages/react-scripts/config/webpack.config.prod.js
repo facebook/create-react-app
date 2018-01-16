@@ -130,7 +130,7 @@ module.exports = {
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       {
-        test: /\.(js|jsx|mjs)$/,
+        test: /\.(js|jsx|mjs|json)$/,
         enforce: 'pre',
         use: [
           {
@@ -157,6 +157,12 @@ module.exports = {
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
         oneOf: [
+          // Necessary because we add .json test in eslint-loader
+          // https://webpack.js.org/guides/migrating/#json-loader-is-not-required-anymore
+          {
+            test: /\.json$/,
+            loader: require.resolve('json-loader'),
+          },
           // "url" loader works just like "file" loader but it also embeds
           // assets smaller than specified size as data URLs to avoid requests.
           {
