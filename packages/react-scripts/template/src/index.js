@@ -6,10 +6,7 @@ import * as serviceWorker from './registerServiceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
-// By default we make sure that no service worker is registered. If you would
-// like to enable service worker uncomment the call to serviceWorker.register()
-// and comment out the call to serviceWorker.unregister().
-// See http://bit.ly/2vJdu84 for more information.
-
-// serviceWorker.register();
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/2vJdu84
 serviceWorker.unregister();
