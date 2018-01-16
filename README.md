@@ -22,7 +22,7 @@ Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
 
 <p align='center'>
-<img src='https://cdn.rawgit.com/facebookincubator/create-react-app/6ab67e6b96457720d843aa3c557ff951a41bafc2/screencast.svg' width='600' alt=''>
+<img src='https://cdn.rawgit.com/facebookincubator/create-react-app/27b42ac/screencast.svg' width='600' alt='npm start'>
 </p>
 
 ### Get Started Immediately
