@@ -121,7 +121,7 @@ By default git would use `CRLF` line endings which would cause the scripts to fa
   * Add a four-space indented paragraph after each non-trivial list item, explaining what changed and why. For each breaking change also write who it affects and instructions for migrating existing code.
   * Maybe add some newlines here and there. Preview the result on GitHub to get a feel for it. Changelog generator output is a bit too terse for my taste, so try to make it visually pleasing and well grouped.
 6. Make sure to include “Migrating from ...” instructions for the previous release. Often you can copy and paste them.
-7. Run `yarn run publish`. (Don’t forget the `run` there.)
+7. Run `npm run publish`. (It has to be `npm run publish` exactly, not just `npm publish` or `yarn publish`.)
 8. Wait for a long time, and it will get published. Don’t worry that it’s stuck. In the end the publish script will prompt for versions before publishing the packages.
 9. After publishing, create a GitHub Release with the same text as the changelog entry. See previous Releases for inspiration.
 
