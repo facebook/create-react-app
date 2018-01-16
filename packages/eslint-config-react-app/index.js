@@ -184,6 +184,7 @@ module.exports = {
       'error',
       {
         allowShortCircuit: true,
+        allowTaggedTemplates: true,
         allowTernary: true,
       },
     ],
