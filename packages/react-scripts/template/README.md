@@ -980,17 +980,20 @@ these defined as well. Consult their documentation how to do this. For example, 
 
 #### Expanding Environment Variables In `.env`
 
->Note: this feature is available with `react-scripts@1.0.18` and higher.
+>Note: this feature is available with `react-scripts@1.1.0` and higher.
 
-Expand variables already on your machine for use in your .env file (using [dotenv-expand](https://github.com/motdotla/dotenv-expand)).  See [#2223](https://github.com/facebookincubator/create-react-app/issues/2223).
+Expand variables already on your machine for use in your `.env` file (using [dotenv-expand](https://github.com/motdotla/dotenv-expand)).
 
 For example, to get the environment variable `npm_package_version`:
+
 ```
 REACT_APP_VERSION=$npm_package_version
 # also works:
 # REACT_APP_VERSION=${npm_package_version}
 ```
+
 Or expand variables local to the current `.env` file:
+
 ```
 DOMAIN=www.example.com
 REACT_APP_FOO=$DOMAIN/foo
