@@ -261,6 +261,12 @@ verify_module_scope
 # Finally, let's check that everything still works after ejecting.
 # ******************************************************************************
 
+# Commiting changes
+git config user.email "you@example.com"
+git config user.name "Your Name"
+git add .
+git commit -m "Before npm run eject"
+
 # Eject...
 echo yes | npm run eject
 
