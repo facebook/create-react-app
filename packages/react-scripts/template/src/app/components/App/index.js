@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import logo from '../../../logo.svg';
+
 import style from './styles.scss';
 
 class App extends Component {
@@ -12,8 +13,7 @@ class App extends Component {
           <h1 className={style.appTitle}>Welcome to React</h1>
         </header>
         <p className={style.appIntro}>
-          To get started, edit <code>src/app/components/App/index.js</code> and
-          save to reload.
+          To get started, edit <code>src/app/components/App/index.js</code> and save to reload.
         </p>
       </div>
     );
