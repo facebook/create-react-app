@@ -248,9 +248,11 @@ inquirer
         // https://github.com/facebookincubator/create-react-app/pull/3806#issuecomment-357781035
         // Yarn is diligent about cleaning up after itself, but this causes the react-scripts.cmd file
         // to be deleted while it is running. This trips Windows up after the eject completes.
-        // We'll read the batch file and later "write it back" to match npm behavior.
+        // We'll reduce the the batch file to a single line to avoid CMD tripping over the file going missing.
         try {
-          windowsCmdFileContent = fs.readFileSync(windowsCmdFilePath);
+          windowsCmdFileContent = fs.readFileSync(windowsCmdFilePath).toString('ansi');
+          windowsCmdFileContent = windowsCmdFileContent.replace(/(\()\r\n\s*|\s*\r\n\s*(\))/g, '$1$2').replace(/\s*\r\n\s*/g, ' & ') + ' & EXIT';
+          fs.writeFileSync(windowsCmdFilePath, windowsCmdFileContent);
         } catch (err) {
           // If this fails we're not worse off than if we didn't try to fix it.
         }
@@ -258,14 +260,6 @@ inquirer
 
       console.log(cyan('Running yarn...'));
       spawnSync('yarnpkg', ['--cwd', process.cwd()], { stdio: 'inherit' });
-
-      if (windowsCmdFileContent && !fs.existsSync(windowsCmdFilePath)) {
-        try {
-          fs.writeFileSync(windowsCmdFilePath, windowsCmdFileContent);
-        } catch (err) {
-          // If this fails we're not worse off than if we didn't try to fix it.
-        }
-      }
     } else {
       console.log(cyan('Running npm install...'));
       spawnSync('npm', ['install', '--loglevel', 'error'], {
