@@ -304,6 +304,31 @@ module.exports = {
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
+          // Allows you to use two kinds of imports for SVG:
+          // import logoUrl from './logo.svg'; gives you the URL.
+          // import { ReactComponent as Logo } from './logo.svg'; gives you a component.
+          {
+            test: /\.svg$/,
+            use: [
+              {
+                loader: require.resolve('babel-loader'),
+                options: {
+                  // @remove-on-eject-begin
+                  babelrc: false,
+                  presets: [require.resolve('babel-preset-react-app')],
+                  // @remove-on-eject-end
+                  cacheDirectory: true,
+                },
+              },
+              require.resolve('svgr/webpack'),
+              {
+                loader: require.resolve('file-loader'),
+                options: {
+                  name: 'static/media/[name].[hash:8].[ext]',
+                },
+              },
+            ],
+          },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
