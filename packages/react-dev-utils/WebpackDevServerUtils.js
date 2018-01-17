@@ -263,34 +263,45 @@ function onProxyError(proxy) {
   };
 }
 
-function prepareProxy(proxy, appPublicFolder) {
-  // `proxy` lets you specify alternate servers for specific requests.
-  // It can either be a string or an object conforming to the Webpack dev server proxy configuration
-  // https://webpack.github.io/docs/webpack-dev-server.html
-  if (!proxy) {
-    return undefined;
-  }
-  if (typeof proxy !== 'object' && typeof proxy !== 'string') {
+function prepareProxy(proxy, paths) {
+  // `proxy` lets you specify an alternate server for non-asset requests.
+  if (typeof proxy !== 'string' && proxy !== undefined) {
     console.log(
-      chalk.red(
-        'When specified, "proxy" in package.json must be a string or an object.'
-      )
+      chalk.red('When specified, "proxy" in package.json must be a string.')
     );
     console.log(
       chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".')
     );
+    if (typeof proxy === 'object') {
+      console.log(
+        chalk.red('Proxy object is no longer supported. Use proxy.js instead.')
+      );
+    }
     console.log(
-      chalk.red(
-        'Either remove "proxy" from package.json, or make it an object.'
-      )
+      chalk.red('Either remove "proxy" from package.json, or make it a string.')
     );
     process.exit(1);
   }
 
   // Otherwise, if proxy is specified, we will let it handle any request except for files in the public folder.
   function mayProxy(pathname) {
-    const maybePublicPath = path.resolve(appPublicFolder, pathname.slice(1));
+    const maybePublicPath = path.resolve(paths.appPublic, pathname.slice(1));
     return !fs.existsSync(maybePublicPath);
+  }
+
+  function proxyFileExists() {
+    return fs.existsSync(path.resolve(paths.appPath, 'proxy.js'));
+  }
+
+  if (proxyFileExists()) {
+    if (typeof proxy === 'string') {
+      console.log(
+        chalk.red('proxy.js found, ignoring "proxy" in package.json')
+      );
+    }
+
+    const getProxyConfig = require(path.resolve(paths.appPath, 'proxy.js'));
+    return getProxyConfig(paths, resolveLoopback, mayProxy, onProxyError);
   }
 
   // Support proxy as a string for those who are using the simple proxy option
@@ -348,40 +359,6 @@ function prepareProxy(proxy, appPublicFolder) {
       },
     ];
   }
-
-  // Otherwise, proxy is an object so create an array of proxies to pass to webpackDevServer
-  return Object.keys(proxy).map(function(context) {
-    if (!proxy[context].hasOwnProperty('target')) {
-      console.log(
-        chalk.red(
-          'When `proxy` in package.json is as an object, each `context` object must have a ' +
-            '`target` property specified as a url string'
-        )
-      );
-      process.exit(1);
-    }
-    let target;
-    if (process.platform === 'win32') {
-      target = resolveLoopback(proxy[context].target);
-    } else {
-      target = proxy[context].target;
-    }
-    return Object.assign({}, proxy[context], {
-      context: function(pathname) {
-        return mayProxy(pathname) && pathname.match(context);
-      },
-      onProxyReq: proxyReq => {
-        // Browers may send Origin headers even with same-origin
-        // requests. To prevent CORS issues, we have to change
-        // the Origin to match the target URL.
-        if (proxyReq.getHeader('origin')) {
-          proxyReq.setHeader('origin', target);
-        }
-      },
-      target,
-      onError: onProxyError(target),
-    });
-  });
 }
 
 function choosePort(host, defaultPort) {
