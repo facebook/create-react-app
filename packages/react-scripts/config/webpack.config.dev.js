@@ -31,7 +31,8 @@ const publicUrl = '';
 const env = getClientEnvironment(publicUrl);
 
 // Options for PostCSS as we reference these options twice
-// Adds vendor prefixing to support IE9 and above
+// Adds vendor prefixing based on your specified browser support in
+// package.json
 const postCSSLoaderOptions = {
   // Necessary for external CSS imports to work
   // https://github.com/facebookincubator/create-react-app/issues/2677
