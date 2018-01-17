@@ -5,11 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 const webpack = require('webpack');
-const chalk = require('chalk');
+const Chalk = require('chalk');
 const webpackConfig = require('./webpack.config.js');
 const iframeWebpackConfig = require('./webpack.config.iframe.js');
 const rimraf = require('rimraf');
 const chokidar = require('chokidar');
+const chalk = new Chalk.constructor({ enabled: true, level: 1 });
 
 const args = process.argv.slice(2);
 const watchMode = args[0] === '--watch' || args[0] === '-w';

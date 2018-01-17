@@ -669,6 +669,7 @@ function getProxy() {
     }
   }
 }
+
 function checkThatNpmCanReadCwd() {
   const cwd = process.cwd();
   let childOutput = null;
