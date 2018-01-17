@@ -73,35 +73,43 @@ module.exports = (resolve, rootDir, isEjecting) => {
     const unsupportedKeys = Object.keys(overrides);
     if (unsupportedKeys.length) {
       const isOverridingSetupFile =
-        unsupportedKeys.indexOf('setupTestFrameworkScriptFile') >= -1;
+        unsupportedKeys.indexOf('setupTestFrameworkScriptFile') > -1;
 
-      const setupFileError = isOverridingSetupFile
-        ? 'We detected `setupTestFrameworkScriptFile` in your package.json.\n' +
-          'To add a setupTestFrameworkScriptFile, create the file in ' +
-          chalk.bold('src/setupTests.js') +
-          ' and create-react-app will automatically load it for you.\n'
-        : '';
-
-      console.error(
-        chalk.red(
-          setupFileError +
+      if (isOverridingSetupFile) {
+        console.error(
+          chalk.red(
+            'We detected ' +
+              chalk.bold('setupTestFrameworkScriptFile') +
+              ' in your package.json.\n\n' +
+              'To add a setupTestFrameworkScriptFile, create the file ' +
+              chalk.bold('src/setupTests.js') +
+              ' and create-react-app will automatically load it for you.\n'
+          )
+        );
+      } else {
+        console.error(
+          chalk.red(
             '\nOut of the box, Create React App only supports overriding ' +
-            'these Jest options:\n\n' +
-            supportedKeys.map(key => chalk.bold('  \u2022 ' + key)).join('\n') +
-            '.\n\n' +
-            'These options in your package.json Jest configuration ' +
-            'are not currently supported by Create React App:\n\n' +
-            unsupportedKeys
-              .map(key => chalk.bold('  \u2022 ' + key))
-              .join('\n') +
-            '\n\nIf you wish to override other Jest options, you need to ' +
-            'eject from the default setup. You can do so by running ' +
-            chalk.bold('npm run eject') +
-            ' but remember that this is a one-way operation. ' +
-            'You may also file an issue with Create React App to discuss ' +
-            'supporting more options out of the box.\n'
-        )
-      );
+              'these Jest options:\n\n' +
+              supportedKeys
+                .map(key => chalk.bold('  \u2022 ' + key))
+                .join('\n') +
+              '.\n\n' +
+              'These options in your package.json Jest configuration ' +
+              'are not currently supported by Create React App:\n\n' +
+              unsupportedKeys
+                .map(key => chalk.bold('  \u2022 ' + key))
+                .join('\n') +
+              '\n\nIf you wish to override other Jest options, you need to ' +
+              'eject from the default setup. You can do so by running ' +
+              chalk.bold('npm run eject') +
+              ' but remember that this is a one-way operation. ' +
+              'You may also file an issue with Create React App to discuss ' +
+              'supporting more options out of the box.\n'
+          )
+        );
+      }
+
       process.exit(1);
     }
   }
