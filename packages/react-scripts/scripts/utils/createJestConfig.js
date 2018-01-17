@@ -81,9 +81,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
             'We detected ' +
               chalk.bold('setupTestFrameworkScriptFile') +
               ' in your package.json.\n\n' +
-              'To add a setupTestFrameworkScriptFile, create the file ' +
+              'Remove it from Jest configuration, and put the initialization code in ' +
               chalk.bold('src/setupTests.js') +
-              ' and create-react-app will automatically load it for you.\n'
+              '.\nThis file will be loaded automatically.\n'
           )
         );
       } else {
