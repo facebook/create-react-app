@@ -250,8 +250,13 @@ inquirer
         // to be deleted while it is running. This trips Windows up after the eject completes.
         // We'll reduce the the batch file to a single line to avoid CMD tripping over the file going missing.
         try {
-          windowsCmdFileContent = fs.readFileSync(windowsCmdFilePath).toString('ansi');
-          windowsCmdFileContent = windowsCmdFileContent.replace(/(\()\r\n\s*|\s*\r\n\s*(\))/g, '$1$2').replace(/\s*\r\n\s*/g, ' & ') + ' & EXIT';
+          windowsCmdFileContent = fs
+            .readFileSync(windowsCmdFilePath)
+            .toString('ansi');
+          windowsCmdFileContent =
+            windowsCmdFileContent
+              .replace(/(\()\r\n\s*|\s*\r\n\s*(\))/g, '$1$2')
+              .replace(/\s*\r\n\s*/g, ' & ') + ' & EXIT';
           fs.writeFileSync(windowsCmdFilePath, windowsCmdFileContent);
         } catch (err) {
           // If this fails we're not worse off than if we didn't try to fix it.
