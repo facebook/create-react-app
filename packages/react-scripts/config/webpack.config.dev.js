@@ -235,6 +235,9 @@ module.exports = {
               },
             ],
           },
+          // Allows you to use two kinds of imports for SVG:
+          // import logoUrl from './logo.svg'; gives you the URL.
+          // import { ReactComponent as Logo } from './logo.svg'; gives you a component.
           {
             test: /\.svg$/,
             use: [
