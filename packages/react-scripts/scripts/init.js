@@ -1,18 +1,25 @@
 // @remove-file-on-eject
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 'use strict';
 
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
+process.on('unhandledRejection', err => {
+  throw err;
+});
+
 const fs = require('fs-extra');
 const path = require('path');
-const spawn = require('cross-spawn');
 const chalk = require('chalk');
+const spawn = require('react-dev-utils/crossSpawn');
+const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
+const os = require('os');
 
 module.exports = function(
   appPath,
@@ -21,18 +28,14 @@ module.exports = function(
   originalDirectory,
   template
 ) {
-  const ownPackageName = require(path.join(
-    __dirname,
-    '..',
-    'package.json'
-  )).name;
+  const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
+    .name;
   const ownPath = path.join(appPath, 'node_modules', ownPackageName);
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
-  appPackage.devDependencies = appPackage.devDependencies || {};
 
   // Setup the script rules
   appPackage.scripts = {
@@ -42,9 +45,11 @@ module.exports = function(
     eject: 'react-scripts eject',
   };
 
+  appPackage.browserslist = defaultBrowsers;
+
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
-    JSON.stringify(appPackage, null, 2)
+    JSON.stringify(appPackage, null, 2) + os.EOL
   );
 
   const readmeExists = fs.existsSync(path.join(appPath, 'README.md'));
@@ -149,13 +154,17 @@ module.exports = function(
   console.log(chalk.cyan(`  ${displayedCommand} start`));
   console.log('    Starts the development server.');
   console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} run build`));
+  console.log(
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)
+  );
   console.log('    Bundles the app into static files for production.');
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
   console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} run eject`));
+  console.log(
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}eject`)
+  );
   console.log(
     '    Removes this tool and copies build dependencies, configuration files'
   );
@@ -182,6 +191,8 @@ module.exports = function(
 function isReactInstalled(appPackage) {
   const dependencies = appPackage.dependencies || {};
 
-  return typeof dependencies.react !== 'undefined' &&
-    typeof dependencies['react-dom'] !== 'undefined';
+  return (
+    typeof dependencies.react !== 'undefined' &&
+    typeof dependencies['react-dom'] !== 'undefined'
+  );
 }

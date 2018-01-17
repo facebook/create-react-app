@@ -1,13 +1,12 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 async function load() {
   return [
@@ -17,6 +16,16 @@ async function load() {
     { id: 4, name: '4' },
   ];
 }
+
+/* eslint-disable */
+// Regression test for https://github.com/facebookincubator/create-react-app/issues/3055
+const x = async (
+  /* prettier-ignore */
+  y: void
+) => {
+  const z = await y;
+};
+/* eslint-enable */
 
 export default class extends Component {
   static propTypes = {

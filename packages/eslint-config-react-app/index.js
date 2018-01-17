@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -19,6 +17,13 @@ const resolveNodePath = require('./utils/resolveNodePath');
 
 // In the future, we might create a separate list of rules for production.
 // It would probably be more strict.
+
+// The ESLint browser environment defines all browser globals as valid,
+// even though most people don't know some of them exist (e.g. `name` or `status`).
+// This is dangerous as it hides accidentally undefined variables.
+// We blacklist the globals that we deem potentially confusing.
+// To use them, explicitly reference them, e.g. `window.name` or `window.status`.
+var restrictedGlobals = require('confusing-browser-globals');
 
 module.exports = {
   root: true,
@@ -65,7 +70,7 @@ module.exports = {
     'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
-    'no-cond-assign': ['warn', 'always'],
+    'no-cond-assign': ['warn', 'except-parens'],
     'no-const-assign': 'warn',
     'no-control-regex': 'warn',
     'no-delete-var': 'warn',
@@ -86,7 +91,7 @@ module.exports = {
     'no-invalid-regexp': 'warn',
     'no-iterator': 'warn',
     'no-label-var': 'warn',
-    'no-labels': ['warn', { allowLoop: false, allowSwitch: false }],
+    'no-labels': ['warn', { allowLoop: true, allowSwitch: false }],
     'no-lone-blocks': 'warn',
     'no-loop-func': 'warn',
     'no-mixed-operators': [
@@ -113,7 +118,7 @@ module.exports = {
     'no-octal-escape': 'warn',
     'no-redeclare': 'warn',
     'no-regex-spaces': 'warn',
-    'no-restricted-syntax': ['warn', 'LabeledStatement', 'WithStatement'],
+    'no-restricted-syntax': ['warn', 'WithStatement'],
     'no-script-url': 'warn',
     'no-self-assign': 'warn',
     'no-self-compare': 'warn',
@@ -124,27 +129,33 @@ module.exports = {
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
     'no-undef': 'error',
-    'no-restricted-globals': ['error', 'event'],
+    'no-restricted-globals': ['error'].concat(restrictedGlobals),
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
-      'warn',
+      'error',
       {
         allowShortCircuit: true,
         allowTernary: true,
+        allowTaggedTemplates: true,
       },
     ],
     'no-unused-labels': 'warn',
     'no-unused-vars': [
       'warn',
       {
-        vars: 'local',
-        varsIgnorePattern: '^_',
         args: 'none',
         ignoreRestSiblings: true,
       },
     ],
-    'no-use-before-define': ['warn', 'nofunc'],
+    'no-use-before-define': [
+      'warn',
+      {
+        functions: false,
+        classes: false,
+        variables: false,
+      },
+    ],
     'no-useless-computed-key': 'warn',
     'no-useless-concat': 'warn',
     'no-useless-constructor': 'warn',
@@ -159,7 +170,6 @@ module.exports = {
     ],
     'no-with': 'warn',
     'no-whitespace-before-property': 'warn',
-    'operator-assignment': ['warn', 'always'],
     radix: 'warn',
     'require-yield': 'warn',
     'rest-spread-spacing': ['warn', 'never'],
@@ -172,48 +182,28 @@ module.exports = {
       {
         object: 'require',
         property: 'ensure',
-        message: 'Please use import() instead. More info: https://webpack.js.org/guides/code-splitting-import/#dynamic-import',
+        message:
+          'Please use import() instead. More info: https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting',
       },
       {
         object: 'System',
         property: 'import',
-        message: 'Please use import() instead. More info: https://webpack.js.org/guides/code-splitting-import/#dynamic-import',
+        message:
+          'Please use import() instead. More info: https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting',
       },
     ],
+    'getter-return': 'warn',
 
-    // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/
-
-    // TODO: import rules are temporarily disabled because they don't play well
-    // with how eslint-loader only checks the file you change. So if module A
-    // imports module B, and B is missing a default export, the linter will
-    // record this as an issue in module A. Now if you fix module B, the linter
-    // will not be aware that it needs to re-lint A as well, so the error
-    // will stay until the next restart, which is really confusing.
-
-    // This is probably fixable with a patch to eslint-loader.
-    // When file A is saved, we want to invalidate all files that import it
-    // *and* that currently have lint errors. This should fix the problem.
-    // (As an exception, import/no-webpack-loader-syntax can be enabled already
-    // because it doesn't depend on whether the file exists, so this issue
-    // doesn't apply to it.)
-
-    // 'import/default': 'warn',
-    // 'import/export': 'warn',
-    // 'import/named': 'warn',
-    // 'import/namespace': 'warn',
-    // 'import/no-amd': 'warn',
-    // 'import/no-duplicates': 'warn',
-    // 'import/no-named-as-default': 'warn',
-    // 'import/no-named-as-default-member': 'warn',
-    // 'import/no-unresolved': ['warn', { commonjs: true }],
-    // We don't support configuring Webpack using import source strings, so this
-    // is always an error.
+    // https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
+    'import/first': 'error',
+    'import/no-amd': 'error',
     'import/no-webpack-loader-syntax': 'error',
     'import/no-extraneous-dependencies': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
-    'react/jsx-equals-spacing': ['warn', 'never'],
+    'react/jsx-no-comment-textnodes': 'warn',
     'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
+    'react/jsx-no-target-blank': 'warn',
     'react/jsx-no-undef': 'error',
     'react/jsx-pascal-case': [
       'warn',
@@ -229,14 +219,33 @@ module.exports = {
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
     'react/react-in-jsx-scope': 'error',
-    'react/require-render-return': 'warn',
+    'react/require-render-return': 'error',
     'react/style-prop-object': 'warn',
 
     // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
+    'jsx-a11y/accessible-emoji': 'warn',
+    'jsx-a11y/alt-text': 'warn',
+    'jsx-a11y/anchor-has-content': 'warn',
+    'jsx-a11y/anchor-is-valid': [
+      'warn',
+      {
+        aspects: ['noHref', 'invalidHref'],
+      },
+    ],
+    'jsx-a11y/aria-activedescendant-has-tabindex': 'warn',
+    'jsx-a11y/aria-props': 'warn',
+    'jsx-a11y/aria-proptypes': 'warn',
     'jsx-a11y/aria-role': 'warn',
-    'jsx-a11y/img-has-alt': 'warn',
+    'jsx-a11y/aria-unsupported-elements': 'warn',
+    'jsx-a11y/heading-has-content': 'warn',
+    'jsx-a11y/iframe-has-title': 'warn',
     'jsx-a11y/img-redundant-alt': 'warn',
     'jsx-a11y/no-access-key': 'warn',
+    'jsx-a11y/no-distracting-elements': 'warn',
+    'jsx-a11y/no-redundant-roles': 'warn',
+    'jsx-a11y/role-has-required-aria-props': 'warn',
+    'jsx-a11y/role-supports-aria-props': 'warn',
+    'jsx-a11y/scope': 'warn',
 
     // https://github.com/gajus/eslint-plugin-flowtype
     'flowtype/define-flow-type': 'warn',
