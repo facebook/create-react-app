@@ -187,6 +187,7 @@ module.exports = {
     'import/no-webpack-loader-syntax': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
+    'react/forbid-foreign-prop-types': 'warn',
     'react/jsx-no-comment-textnodes': 'warn',
     'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
     'react/jsx-no-target-blank': 'warn',
