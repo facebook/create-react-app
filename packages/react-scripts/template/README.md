@@ -24,6 +24,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Importing a Component](#importing-a-component)
 - [Code Splitting](#code-splitting)
 - [Adding a Stylesheet](#adding-a-stylesheet)
+- [Adding a CSS Modules stylesheet](#adding-a-css-modules-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
 - [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
 - [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
@@ -512,6 +513,51 @@ class Button extends Component {
 In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
 
 If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
+
+## Adding a CSS Modules stylesheet
+
+This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format **[dir]\_\_[filename]___[classname]**.
+
+An advantage of this is the ability to repeat the same classname within many CSS files without worrying about a clash.
+
+### `Button.module.css`
+
+```css
+.button {
+  padding: 20px;
+}
+```
+
+### `another-stylesheet.css`
+
+```css
+.button {
+  color: green;
+}
+```
+
+### `Button.js`
+
+```js
+import React, { Component } from 'react';
+import './another-stylesheet.css'; // Import regular stylesheet
+import styles from './Button.module.css'; // Import css modules stylesheet as styles
+
+class Button extends Component {
+  render() {
+    // You can use them as regular CSS styles
+    return <div className={styles.button} />;
+  }
+}
+```
+### `exported HTML`
+No clashes from other `.button` classnames
+
+```html
+<div class="src__Button-module___button"></div>
+```
+
+**This is an optional feature.** Regular html stylesheets and js imported stylesheets are fully supported. CSS Modules are only added when explictly named as a css module stylesheet using the extension `.module.css`.
 
 ## Post-Processing CSS
 

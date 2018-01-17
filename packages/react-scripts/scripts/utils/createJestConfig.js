@@ -39,9 +39,13 @@ module.exports = (resolve, rootDir, isEjecting) => {
         'config/jest/fileTransform.js'
       ),
     },
-    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
+    transformIgnorePatterns: [
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$',
+      '^.+\\.module\\.css$',
+    ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
+      '^.+\\.module\\.css$': 'identity-obj-proxy',
     },
     moduleFileExtensions: [
       'web.js',

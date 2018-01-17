@@ -21,6 +21,16 @@ describe('Integration', () => {
       ).to.match(/#feature-css-inclusion\{background:.+;color:.+}/);
     });
 
+    it('css modules inclusion', async () => {
+      const doc = await initDOM('css-modules-inclusion');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(
+        /.+__style-module___cssModulesInclusion+\{background:.+;color:.+}/
+      );
+    });
+
     it('image inclusion', async () => {
       const doc = await initDOM('image-inclusion');
 
