@@ -15,6 +15,10 @@ const path = require('path');
 
 module.exports = {
   process(src, filename) {
+    if (filename.match(/\.svg$/)) {
+      return `module.exports = {ReactComponent: () => ('')};`;
+    }
+
     return `module.exports = ${JSON.stringify(path.basename(filename))};`;
   },
 };
