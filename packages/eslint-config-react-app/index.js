@@ -120,7 +120,7 @@ module.exports = {
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
-      'warn',
+      'error',
       {
         allowShortCircuit: true,
         allowTernary: true,
