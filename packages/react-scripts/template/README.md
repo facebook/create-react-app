@@ -1564,8 +1564,8 @@ Example package.json:
       }
     },
     "coverageReporters": ["text"],
-	"snapshotSerializers": ["my-serializer-module"],
-	"cacheDirectory": ".tmp/cache/jest"
+    "snapshotSerializers": ["my-serializer-module"],
+    "cacheDirectory": ".tmp/cache/jest"
   }
 }
 ```
@@ -1646,7 +1646,7 @@ To speed up tests, Jest uses a cache. Unfortunately it saves the cache in hard-t
 
 ```json
   "jest": {
-	  "cacheDirectory": ".tmp/cache/jest"
+    "cacheDirectory": ".tmp/cache/jest"
   }
 ```
 
