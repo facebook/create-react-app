@@ -450,7 +450,7 @@ import React, { Component } from 'react';
 
 class App extends Component {
   handleClick = () => {
-    import('./moduleA')
+   import(/* webpackChunkName: "moduleA" */ './moduleA')
       .then(({ moduleA }) => {
         // Use moduleA
       })
@@ -474,6 +474,8 @@ export default App;
 This will make `moduleA.js` and all its unique dependencies as a separate chunk that only loads after the user clicks the 'Load' button.
 
 You can also use it with `async` / `await` syntax if you prefer it.
+
+Note the use of `webpackChunkName` in the comment. This will cause our separate chunk to be named `moduleA.<hash>.chunk.js` instead of just `<index>.<hash>.chunk.js`. Naming chunks is optional, but it can be useful in some situations (for example when [analyzing bundle size](#analyzing-the-bundle-size)).
 
 ### With React Router
 
@@ -1964,12 +1966,16 @@ Then in `package.json`, add the following line to `scripts`:
      "test": "react-scripts test --env=jsdom",
 ```
 
-Then to analyze the bundle run the production build then run the analyze
-script.
+To analyze the bundle first run the production build.
 
 ```
 npm run build
-npm run analyze
+```
+
+Then run the analyze script. Because source map explorer can only analyze one bundle at a time, you need to provide the path to the bundle that you want to analayze.
+
+```
+npm run analyze build/statis/js/<path-to-file>
 ```
 
 ## Deployment
