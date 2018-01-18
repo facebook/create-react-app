@@ -82,44 +82,50 @@ grep -q 'http address' <(tail -f $tmp_registry_log)
 npm set registry "$custom_registry_url"
 yarn config set registry "$custom_registry_url"
 
+# Login so we can publish packages
+npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
+
 git clean -df
-./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest --registry $custom_registry_url
+./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
 # Set up the apps monorepo
 # ******************************************************************************
 # Start with base workspace
 cp -r "$root_path/packages/react-scripts/fixtures/yarn-ws/ws" "$temp_app_path"
+pushd "$temp_app_path/ws"
+# Bootstrap the apps monorepo
+yarn
 
-# Install cra-app1
+# ******************************************************************************
+# Install CRA-App1
+# ******************************************************************************
 # npx create-react-app --internal-testing-template="$root_path"/packages/react-scripts/fixtures/yarn-ws/cra-app1 cra-app1
 # -- above needs https://github.com/facebookincubator/create-react-app/pull/3435 to user create-react-app
 # -- alternative install until 3435
-pushd "$temp_app_path/ws/packages"
-cp -r "$root_path/packages/react-scripts/fixtures/yarn-ws/cra-app1" .
-cd cra-app1
-yarn add react-scripts
+cp -r "$root_path/packages/react-scripts/fixtures/yarn-ws/cra-app1" packages
+pushd packages/cra-app1
+yarn add react-scripts --dev
 popd
 
-# Bootstrap the apps monorepo
-pushd "$temp_app_path/ws"
+# reset yarn workspace to get node_modules created properly in cra-app1
+rm -rf ./node_modules
 yarn
-cd "packages/cra-app1"
+
 # ******************************************************************************
 # Test CRA-App1
 # ******************************************************************************
+pushd packages/cra-app1
 yarn start --smoke-test
 CI=true yarn test --watch=no
 yarn build
-popd
 
 # ******************************************************************************
 # Test eject
 # ******************************************************************************
-pushd "$temp_app_path/ws/packages/cra-app1"
 # TODO: make eject work
 echo yes | yarn run eject
-yarn build
+# yarn build
 # start: error transpiling config/polyfills.
 # yarn start --smoke-test
 # CI=true yarn test --watch=no
