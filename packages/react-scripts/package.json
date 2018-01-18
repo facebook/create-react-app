@@ -1,6 +1,6 @@
 {
   "name": "babylon-react-scripts",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -57,6 +57,7 @@
     "sass-loader": "^6.0.6",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.4",
+    "uglifyjs-webpack-plugin": "^1.1.6",
     "url-loader": "0.5.9",
     "webpack": "3.5.1",
     "webpack-dev-server": "2.8.2",
