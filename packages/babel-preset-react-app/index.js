@@ -1,3 +1,10 @@
+// ****************************************************************************
+// IMPORTANT
+// This file is no longer used as `packages/react-scripts/config/webpack.config.*.js`
+// has been updated not to use `babel-preset-react-app`, but to instead use a
+// `.babelrc` config that contains the equivalent configuration.
+// ****************************************************************************
+
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  *

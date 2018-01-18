@@ -237,9 +237,9 @@ module.exports = {
                 'babel-preset-react-app/webpack-overrides'
               ),
               // @remove-on-eject-begin
-              babelrc: false,
+              babelrc: true,
               configFile: false,
-              presets: [require.resolve('babel-preset-react-app')],
+              presets: [],
               // Make sure we have a unique cache identifier, erring on the
               // side of caution.
               // We remove this when the user ejects because the default
