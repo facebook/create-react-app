@@ -199,6 +199,7 @@ module.exports = {
                   presets: [require.resolve('babel-preset-react-app')],
                   // @remove-on-eject-end
                   compact: true,
+                  highlightCode: true,
                 },
               },
             ],
@@ -220,6 +221,7 @@ module.exports = {
                     require.resolve('babel-preset-react-app/dependencies'),
                   ],
                   cacheDirectory: true,
+                  highlightCode: true,
                 },
               },
             ],
