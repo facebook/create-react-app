@@ -1640,6 +1640,18 @@ The test command will force Jest to run tests once instead of launching the watc
 
 The build command will check for linter warnings and fail if any are found.
 
+### Speeding up CI tests with jest cache
+
+To speed up tests, Jest uses a cache. Unfortunately it saves the cache in hard-to-predict directory by default, making it difficult to save this cache in between builds on the CI environment. To counter this and make your tests run up to 2 times faster, you can specify which directory Jest should save it's cache to, by setting it in the `package.json`:
+
+```json
+  "jest": {
+	  "cacheDirectory": ".tmp/cache/jest"
+  }
+```
+
+And then configuring your CI to cache that directory. See guides for [Travis CI](https://docs.travis-ci.com/user/caching/#Arbitrary-directories) and [CircleCI](https://circleci.com/docs/2.0/caching/) on how to configure cache directories.
+
 ### Disabling jsdom
 
 By default, the `package.json` of the generated project looks like this:
