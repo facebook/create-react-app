@@ -126,11 +126,10 @@ yarn build
 # ******************************************************************************
 # Test eject
 # ******************************************************************************
-# TODO: make eject work
-echo yes | yarn run eject
+echo yes | npm run eject
 yarn build
-#CI=true yarn test --watch=no
 yarn start --smoke-test
+CI=true yarn test --watch=no
 popd
 
 # Cleanup
