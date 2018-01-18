@@ -124,22 +124,37 @@ if (useTemplate) {
 
 module.exports.srcPaths = [module.exports.appSrc];
 
+// recursively package dirs (ones with package.json)
+// -- omit things in node_modules, nested packages, and current app package
+const findPkgs = root =>
+  fs
+    .readdirSync(root)
+    .filter(f => ['node_modules', '.git'].indexOf(f) === -1)
+    .map(f => path.join(root, f))
+    .filter(f => fs.realpathSync(f) !== appDirectory)
+    .filter(f => fs.statSync(f).isDirectory())
+    .reduce(
+      (pkgs, dir) =>
+        fs.existsSync(path.join(dir, 'package.json'))
+          ? pkgs.concat([dir])
+          : pkgs.concat(findPkgs(dir)),
+      []
+    );
+
 if (checkForMonorepo) {
   // if app is in a monorepo (lerna or yarn workspace), allow any module inside
   // the monorepo to be linted, transpiled, and tested as if it came from app's
   // src.
   const monoPkgPath = findPkg.sync(resolveApp('..'));
   if (monoPkgPath) {
-    const monoRoot = path.dirname(monoPkgPath);
-    const monoPkgJson = require(monoPkgPath);
-    if (monoPkgJson.workspaces) {
-      module.exports.yarnWorkspaceRoot = monoRoot;
-      module.exports.srcPaths.push(monoRoot);
-    } else if (
+    if (
+      require(monoPkgPath).workspaces ||
       fs.existsSync(path.resolve(path.dirname(monoPkgPath), 'lerna.json'))
     ) {
-      module.exports.lernaRoot = monoRoot;
-      module.exports.srcPaths.push(monoRoot);
+      Array.prototype.push.apply(
+        module.exports.srcPaths,
+        findPkgs(path.dirname(monoPkgPath))
+      );
     }
   }
 }

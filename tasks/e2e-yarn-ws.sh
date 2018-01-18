@@ -82,6 +82,9 @@ grep -q 'http address' <(tail -f $tmp_registry_log)
 npm set registry "$custom_registry_url"
 yarn config set registry "$custom_registry_url"
 
+yarn config get registry
+npm get registry
+
 # Login so we can publish packages
 npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
 
@@ -125,11 +128,9 @@ yarn build
 # ******************************************************************************
 # TODO: make eject work
 echo yes | yarn run eject
-# yarn build
-# start: error transpiling config/polyfills.
-# yarn start --smoke-test
-# CI=true yarn test --watch=no
-# yarn build
+yarn build
+#CI=true yarn test --watch=no
+yarn start --smoke-test
 popd
 
 # Cleanup
