@@ -168,8 +168,8 @@ module.exports = {
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
-              babelrc: false,
-              presets: [require.resolve('babel-preset-react-app')],
+              babelrc: true,
+              presets: [],
               // @remove-on-eject-end
               compact: true,
             },
