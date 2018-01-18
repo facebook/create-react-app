@@ -243,6 +243,9 @@ exists build/static/css/*.css
 exists build/static/media/*.svg
 exists build/favicon.ico
 
+# Test linter
+./node_modules/.bin/react-scripts lint
+
 # Run tests with CI flag
 CI=true yarn test
 # Uncomment when snapshot testing is enabled by default:
@@ -272,6 +275,9 @@ exists build/static/js/*.js
 exists build/static/css/*.css
 exists build/static/media/*.svg
 exists build/favicon.ico
+
+# Test linter
+node scripts/lint.js
 
 # Run tests, overring the watch option to disable it.
 # `CI=true yarn test` won't work here because `yarn test` becomes just `jest`.
