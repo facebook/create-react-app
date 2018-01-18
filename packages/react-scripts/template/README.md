@@ -450,7 +450,7 @@ import React, { Component } from 'react';
 
 class App extends Component {
   handleClick = () => {
-   import(/* webpackChunkName: "moduleA" */ './moduleA')
+    import(/* webpackChunkName: "moduleA" */ './moduleA')
       .then(({ moduleA }) => {
         // Use moduleA
       })
