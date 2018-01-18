@@ -118,7 +118,9 @@ popd
 # ******************************************************************************
 pushd "$temp_app_path/ws/packages/cra-app1"
 # TODO: make eject work
-# yarn run eject
+echo yes | yarn run eject
+yarn build
+# start: error transpiling config/polyfills.
 # yarn start --smoke-test
 # CI=true yarn test --watch=no
 # yarn build
