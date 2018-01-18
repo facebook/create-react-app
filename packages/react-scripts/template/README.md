@@ -1960,7 +1960,7 @@ Then in `package.json`, add the following line to `scripts`:
 
 ```diff
    "scripts": {
-+    "analyze": "source-map-explorer build/static/js/main.*",
++    "analyze": "source-map-explorer",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
