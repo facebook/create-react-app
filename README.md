@@ -22,7 +22,7 @@ Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
 
 <p align='center'>
-<img src='https://cdn.rawgit.com/facebookincubator/create-react-app/6ab67e6b96457720d843aa3c557ff951a41bafc2/screencast.svg' width='600' alt=''>
+<img src='https://cdn.rawgit.com/facebookincubator/create-react-app/27b42ac/screencast.svg' width='600' alt='npm start'>
 </p>
 
 ### Get Started Immediately
@@ -84,7 +84,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will automatically reload if you make changes to the code.<br>
 You will see the build errors and lint warnings in the console.
 
-<img src='https://camo.githubusercontent.com/41678b3254cf583d3186c365528553c7ada53c6e/687474703a2f2f692e696d6775722e636f6d2f466e4c566677362e706e67' width='600' alt='Build errors'>
+<p align='center'>
+<img src='https://cdn.rawgit.com/marionebl/create-react-app/9f62826/screencast-error.svg' width='600' alt='Build errors'>
+</p>
 
 ### `npm test` or `yarn test`
 

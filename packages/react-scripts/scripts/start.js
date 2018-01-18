@@ -21,6 +21,13 @@ process.on('unhandledRejection', err => {
 
 // Ensure environment variables are read.
 require('../config/env');
+// @remove-on-eject-begin
+// Do the preflight check (only happens before eject).
+const verifyPackageTree = require('./utils/verifyPackageTree');
+if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
+  verifyPackageTree();
+}
+// @remove-on-eject-end
 
 const fs = require('fs');
 const chalk = require('chalk');
@@ -66,9 +73,15 @@ if (process.env.HOST) {
   console.log();
 }
 
-// We attempt to use the default port but if it is busy, we offer the user to
-// run on a different port. `choosePort()` Promise resolves to the next free port.
-choosePort(HOST, DEFAULT_PORT)
+// We require that you explictly set browsers and do not fall back to
+// browserslist defaults.
+const { checkBrowsers } = require('react-dev-utils/browsersHelper');
+checkBrowsers(paths.appPath)
+  .then(() => {
+    // We attempt to use the default port but if it is busy, we offer the user to
+    // run on a different port. `choosePort()` Promise resolves to the next free port.
+    return choosePort(HOST, DEFAULT_PORT);
+  })
   .then(port => {
     if (port == null) {
       // We have not found a port.

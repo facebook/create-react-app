@@ -83,6 +83,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Static Server](#static-server)
   - [Other Solutions](#other-solutions)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
+    - [Service Worker Considerations](#service-worker-considerations)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [Azure](#azure)
   - [Firebase](#firebase)
@@ -300,7 +301,7 @@ In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and s
 
 Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
 
-The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine. 
+The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine.
 
 ## Formatting Code Automatically
 
@@ -511,6 +512,53 @@ class Button extends Component {
 In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
 
 If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
+
+<!---
+## Adding a CSS Modules stylesheet
+
+This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format **[dir]\_\_[filename]___[classname]**.
+
+An advantage of this is the ability to repeat the same classname within many CSS files without worrying about a clash.
+
+### `Button.module.css`
+
+```css
+.button {
+  padding: 20px;
+}
+```
+
+### `another-stylesheet.css`
+
+```css
+.button {
+  color: green;
+}
+```
+
+### `Button.js`
+
+```js
+import React, { Component } from 'react';
+import './another-stylesheet.css'; // Import regular stylesheet
+import styles from './Button.module.css'; // Import css modules stylesheet as styles
+
+class Button extends Component {
+  render() {
+    // You can use them as regular CSS styles
+    return <div className={styles.button} />;
+  }
+}
+```
+### `exported HTML`
+No clashes from other `.button` classnames
+
+```html
+<div class="src__Button-module___button"></div>
+```
+
+**This is an optional feature.** Regular html stylesheets and js imported stylesheets are fully supported. CSS Modules are only added when explictly named as a css module stylesheet using the extension `.module.css`.
+--->
 
 ## Post-Processing CSS
 
@@ -1675,7 +1723,7 @@ Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debu
       "name": "Debug CRA Tests",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",      
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
       "args": [
         "test",
         "--runInBand",
@@ -1791,8 +1839,14 @@ is integrated into production configuration,
 and it will take care of generating a service worker file that will automatically
 precache all of your local assets and keep them up to date as you deploy updates.
 The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
-for handling all requests for local assets, including the initial HTML, ensuring
-that your web app is reliably fast, even on a slow or unreliable network.
+for handling all requests for local assets, including
+[navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
+for `/` and `/index.html`, ensuring that your web app is consistently fast, even
+on a slow or unreliable network.
+
+>Note: If you are using the `pushState` history API and want to enable
+cache-first navigations for URLs other than `/` and `/index.html`, please
+[follow these steps](#service-worker-considerations).
 
 ### Opting Out of Caching
 
@@ -1989,26 +2043,33 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`. 
+It will get copied to the `build` folder when you run `npm run build`.
 
 If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
-On a production build, and in a browser that supports [service workers](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers),
-the service worker will automatically handle all navigation requests, like for
-`/todos/42`, by serving the cached copy of your `index.html`. This
-service worker navigation routing can be configured or disabled by
-[`eject`ing](#npm-run-eject) and then modifying the
-[`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
+When users install your app to the homescreen of their device the default configuration will make a shortcut to `/`. This may not work if you don't use a client-side router and expect the app to be served from `/index.html`. In this case, the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to `./index.html`.
+
+### Service Worker Considerations
+
+[Navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
+for URLs like `/todos/42` will not be intercepted by the
+[service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers)
+created by the production build. Navigations for those URLs will always
+require a network connection, as opposed to navigations for `/` and
+`/index.html`, both of which will be served from the cache by the service worker
+and work without requiring a network connection.
+
+If you are using the `pushState` history API and would like to enable service
+worker support for navigations to URLs like `/todos/42`, you need to
+[`npm eject`](#npm-run-eject) and enable the [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
 options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
 
-When users install your app to the homescreen of their device the default configuration will make a shortcut to `/index.html`. This may not work for client-side routers which expect the app to be served from `/`. Edit the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to match the required URL scheme, for example:
-
-```js
-  "start_url": ".",
-```
+>Note: This is a [change in default behavior](https://github.com/facebookincubator/create-react-app/issues/3248),
+as earlier versions of `create-react-app` shipping with `navigateFallback`
+enabled by default.
 
 ### Building for Relative Paths
 
@@ -2142,6 +2203,11 @@ or for a GitHub user page:
   "homepage": "https://myusername.github.io",
 ```
 
+or for a custom domain page:
+```json
+  "homepage": "https://mywebsite.com",
+```
+
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
 
 #### Step 2: Install `gh-pages` and add `deploy` to `scripts` in `package.json`
@@ -2201,6 +2267,12 @@ Finally, make sure **GitHub Pages** option in your GitHub project settings is se
 #### Step 5: Optionally, configure the domain
 
 You can configure a custom domain with GitHub Pages by adding a `CNAME` file to the `public/` folder.
+
+Your CNAME file should look like this:
+
+```
+mywebsite.com
+```
 
 #### Notes on client-side routing
 
@@ -2418,7 +2490,7 @@ To resolve this:
 1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled.
   * Note: Create React App can consume both CommonJS and ES modules. For Node.js compatibility, it is recommended that the main entry point is CommonJS. However, they can optionally provide an ES module entry point with the `module` field in `package.json`. Note that **even if a library provides an ES Modules version, it should still precompile other ES6 features to ES5 if it intends to support older browsers**.
 
-2. Fork the package and publish a corrected version yourself. 
+2. Fork the package and publish a corrected version yourself.
 
 3. If the dependency is small enough, copy it to your `src/` folder and treat it as application code.
 
