@@ -29,6 +29,7 @@ const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+const detectMissingVendors = require('react-dev-utils/detectMissingVendors');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
@@ -63,24 +64,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
     // The devDepencencies shouldn't be available for vendors
     // But otherwise the tests fail.
     // @remove-on-eject-end
-    const packageJson = require(paths.appPackageJson);
-    const dependencies = Object.keys(packageJson.dependencies || {})
-      .concat(Object.keys(packageJson.devDependencies || {}))
-      .concat(Object.keys(packageJson.peerDependencies || {}));
-    const vendors = fs.existsSync(paths.appVendors)
-      ? require(paths.appVendors)
-      : [];
-    const missingVendors = vendors.filter(
-      vendor => dependencies.indexOf(vendor) === -1
-    );
-    if (missingVendors.length > 0) {
-      throw new Error(
-        'Error: Unknown vendors: ' +
-          chalk.yellow(missingVendors) +
-          " should be listed in the project's dependencies.\n" +
-          `(Vendors defined in '${path.resolve(paths.appVendors)}')`
-      );
-    }
+    detectMissingVendors(paths.appPackageJson, paths.appVendors);
 
     // Start the webpack build
     return build(previousFileSizes);
