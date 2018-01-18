@@ -1,0 +1,82 @@
+{
+  "plugins": [
+    "transform-class-properties",
+    ["transform-object-rest-spread", {
+      "useBuiltIns": true
+    }],
+    ["transform-react-jsx", {
+      "useBuiltIns": true
+    }],
+    ["transform-runtime", {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true
+    }]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "transform-react-jsx-source",
+        "transform-react-jsx-self",
+        "dynamic-import-node"
+      ],
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ],
+        "react"
+      ]
+    },
+    "development": {
+      "plugins": [
+        "transform-react-jsx-source",
+        "transform-react-jsx-self",
+        ["transform-regenerator", {
+          "async": false
+        }],
+        "syntax-dynamic-import"
+      ],
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "ie": "9",
+              "uglify": true
+            },
+            "useBuiltIns": false,
+            "modules": false
+          }
+        ],
+        "react"
+      ]
+    },
+    "production": {
+      "plugins": [
+        ["transform-regenerator", {
+          "async": false
+        }],
+        "syntax-dynamic-import"
+      ],
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "ie": "9",
+              "uglify": true
+            },
+            "useBuiltIns": false,
+            "modules": false
+          }
+        ],
+        "react"
+      ]
+    }
+  }
+}
