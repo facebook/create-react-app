@@ -1539,6 +1539,10 @@ Supported overrides:
  - [`coverageReporters`](https://facebook.github.io/jest/docs/en/configuration.html#coveragereporters-array-string)
  - [`coverageThreshold`](https://facebook.github.io/jest/docs/en/configuration.html#coveragethreshold-object)
  - [`snapshotSerializers`](https://facebook.github.io/jest/docs/en/configuration.html#snapshotserializers-array-string)
+ - [`resetMocks`](https://facebook.github.io/jest/docs/en/configuration.html#resetmocks-boolean)
+ - [`resetModules`](https://facebook.github.io/jest/docs/en/configuration.html#resetmodules-boolean)
+ - [`watchPathIgnorePatterns`](https://facebook.github.io/jest/docs/en/configuration.html#watchpathignorepatterns-array-string)
+ - [`cacheDirectory`](https://facebook.github.io/jest/docs/en/configuration.html#watchpathignorepatterns-array-string)
 
 Example package.json:
 
@@ -1560,7 +1564,8 @@ Example package.json:
       }
     },
     "coverageReporters": ["text"],
-    "snapshotSerializers": ["my-serializer-module"]
+	"snapshotSerializers": ["my-serializer-module"],
+	"cacheDirectory": ".tmp/cache/jest"
   }
 }
 ```
