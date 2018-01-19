@@ -89,7 +89,7 @@ git clean -df
 ./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 function verifyTest {
-  out=`CI=true yarn test --watch=no 2>&1` || return 1
+  out=$(CI=true yarn test --watch=no 2>&1) || return 1
   echo "$out" > testoutput.txt
   grep "^PASS src[\\/]App.test.js" testoutput.txt -q  || return 1
   grep "^PASS \.\.[\\/]comp1[\\/]index.test.js" testoutput.txt -q  || return 1

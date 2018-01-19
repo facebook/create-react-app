@@ -89,17 +89,14 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
 };
 
-const appDirIsCraRoot = fs.existsSync(
-  path.join(appDirectory, 'packages', 'react-scripts', 'config')
-);
-// below appDirIsCraScripts logic is only valid before ejecting
-const appDirIsCraScripts =
-  appDirectory === fs.realpathSync(path.join(__dirname, '..'));
-const useTemplate = appDirIsCraRoot || appDirIsCraScripts;
+// config before publish: appDir is cra monorepo root or packages/react-scripts
+const useTemplate =
+  fs.existsSync(
+    path.join(appDirectory, 'packages', 'react-scripts', 'config')
+  ) || appDirectory === fs.realpathSync(path.join(__dirname, '..'));
 
 checkForMonorepo = !useTemplate;
 
-// config before publish: we're in ./packages/react-scripts/config/
 if (useTemplate) {
   module.exports = {
     dotenv: resolveOwn('template/.env'),
@@ -124,7 +121,7 @@ if (useTemplate) {
 
 module.exports.srcPaths = [module.exports.appSrc];
 
-// recursively package dirs (ones with package.json)
+// recursively find package dirs
 // -- omit things in node_modules, nested packages, and current app package
 const findPkgs = root =>
   fs

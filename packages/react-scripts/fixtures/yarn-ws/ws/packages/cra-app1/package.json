@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "comp1": "^1.0.0",
+    "comp2": "^1.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
