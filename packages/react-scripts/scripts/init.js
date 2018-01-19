@@ -49,7 +49,7 @@ function gitInit() {
     }
 
     execSync('git init', { stdio: 'ignore' });
-    execSync('git add .', { stdio: 'ignore' });
+    execSync('git add -A', { stdio: 'ignore' });
     execSync('git commit -m "Initial commit from Create React App"', {
       stdio: 'ignore',
     });
