@@ -115,5 +115,3 @@ export function unregister() {
     });
   }
 }
-
-export default register;
