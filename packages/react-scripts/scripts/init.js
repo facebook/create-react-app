@@ -24,7 +24,7 @@ const os = require('os');
 
 function insideGitRepository() {
   try {
-    execSync('git rev-parse --is-inside-work-tree', {stdio: 'ignore'});
+    execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' });
     return true;
   } catch (e) {
     return false;
@@ -33,7 +33,7 @@ function insideGitRepository() {
 
 function insideMercurialRepository() {
   try {
-    execSync('hg --cwd . root', {stdio: 'ignore'});
+    execSync('hg --cwd . root', { stdio: 'ignore' });
     return true;
   } catch (e) {
     return false;
@@ -42,15 +42,17 @@ function insideMercurialRepository() {
 
 function gitInit() {
   try {
-    execSync('git --version', {stdio: 'ignore'});
+    execSync('git --version', { stdio: 'ignore' });
 
     if (insideGitRepository() || insideMercurialRepository()) {
       return false;
     }
 
-    execSync('git init', {stdio: 'ignore'});
-    execSync('git add .', {stdio: 'ignore'});
-    execSync('git commit -m "Initial commit from Create React App"', {stdio: 'ignore'});
+    execSync('git init', { stdio: 'ignore' });
+    execSync('git add .', { stdio: 'ignore' });
+    execSync('git commit -m "Initial commit from Create React App"', {
+      stdio: 'ignore',
+    });
 
     return true;
   } catch (e) {
@@ -141,7 +143,7 @@ module.exports = function(
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
   args.push('react', 'react-dom');
-  
+
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
     appPath,
@@ -172,7 +174,7 @@ module.exports = function(
   }
 
   if (gitInit()) {
-    console.log('Initializing git repository');
+    console.log('Initialized git repository');
   }
 
   // Display the most elegant way to cd.
