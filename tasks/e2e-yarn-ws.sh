@@ -82,14 +82,24 @@ grep -q 'http address' <(tail -f $tmp_registry_log)
 npm set registry "$custom_registry_url"
 yarn config set registry "$custom_registry_url"
 
-yarn config get registry
-npm get registry
-
 # Login so we can publish packages
 npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
 
 git clean -df
 ./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+
+function verifyTest {
+  out=`CI=true yarn test --watch=no 2>&1` || return 1
+  echo "$out" > testoutput.txt
+  grep "^PASS src[\\/]App.test.js" testoutput.txt -q  || return 1
+  grep "^PASS \.\.[\\/]comp1[\\/]index.test.js" testoutput.txt -q  || return 1
+  grep "^PASS \.\.[\\/]comp2[\\/]index.test.js" testoutput.txt -q  || return 1
+}
+
+function verifyBuild {
+  yarn build || return 1
+  grep -F -R --exclude=*.map "YarnWS-CraApp" build/ -q || return 1
+}
 
 # ******************************************************************************
 # Set up the apps monorepo
@@ -101,36 +111,28 @@ pushd "$temp_app_path/ws"
 yarn
 
 # ******************************************************************************
-# Install CRA-App1
-# ******************************************************************************
-# npx create-react-app --internal-testing-template="$root_path"/packages/react-scripts/fixtures/yarn-ws/cra-app1 cra-app1
-# -- above needs https://github.com/facebookincubator/create-react-app/pull/3435 to user create-react-app
-# -- alternative install until 3435
-cp -r "$root_path/packages/react-scripts/fixtures/yarn-ws/cra-app1" packages
-pushd packages/cra-app1
-yarn add react-scripts --dev
-popd
-
-# reset yarn workspace to get node_modules created properly in cra-app1
-rm -rf ./node_modules
-yarn
-
-# ******************************************************************************
 # Test CRA-App1
 # ******************************************************************************
 pushd packages/cra-app1
 yarn start --smoke-test
-CI=true yarn test --watch=no
-yarn build
+verifyBuild
+verifyTest
 
 # ******************************************************************************
 # Test eject
 # ******************************************************************************
 echo yes | npm run eject
-yarn build
 yarn start --smoke-test
-CI=true yarn test --watch=no
+verifyBuild
+verifyTest
 popd
 
+# ******************************************************************************
+# Test create-react-app inside workspace
+# ******************************************************************************
+# npx create-react-app --internal-testing-template="$root_path"/packages/react-scripts/fixtures/yarn-ws/ws/cra-app1 cra-app2
+# -- above needs https://github.com/facebookincubator/create-react-app/pull/3435 to user create-react-app
+
+popd
 # Cleanup
 cleanup
