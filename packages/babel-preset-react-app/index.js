@@ -6,6 +6,18 @@
  */
 'use strict';
 
+const validateBoolOption = (name, value, defaultValue) => {
+  if (typeof value === 'undefined') {
+    value = defaultValue;
+  }
+
+  if (typeof value !== 'boolean') {
+    throw new Error(`Preset react-app: '${name}' option must be a boolean.`);
+  }
+
+  return value;
+};
+
 module.exports = function(api, opts) {
   if (!opts) {
     opts = {};
@@ -21,6 +33,8 @@ module.exports = function(api, opts) {
   var isEnvDevelopment = env === 'development';
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
+  var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
@@ -64,7 +78,7 @@ module.exports = function(api, opts) {
           development: isEnvDevelopment || isEnvTest,
         },
       ],
-      [require('@babel/preset-flow').default],
+      isFlowEnabled && [require('@babel/preset-flow').default],
     ].filter(Boolean),
     plugins: [
       // Experimental macros support. Will be documented after it's had some time
