@@ -89,11 +89,11 @@ git clean -df
 ./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 function verifyTest {
-  out=$(CI=true yarn test --watch=no 2>&1) || return 1
-  echo "$out" > testoutput.txt
-  grep "^PASS src[\\/]App.test.js" testoutput.txt -q  || return 1
-  grep "^PASS \.\.[\\/]comp1[\\/]index.test.js" testoutput.txt -q  || return 1
-  grep "^PASS \.\.[\\/]comp2[\\/]index.test.js" testoutput.txt -q  || return 1
+  CI=true yarn test --watch=no --json --outputFile testoutput.json || return 1
+  grep -F "\"numFailedTestSuites\":0" testoutput.json -q || return 1
+  grep -F "\"numFailedTests\":0" testoutput.json -q || return 1
+  grep -F "\"numPassedTestSuites\":3" testoutput.json -q || return 1
+  grep -F "\"numPassedTests\":3" testoutput.json -q || return 1
 }
 
 function verifyBuild {
