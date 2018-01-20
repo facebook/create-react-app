@@ -175,8 +175,8 @@ echo '## Hello' > ./test-app-should-remain/README.md
 npx create-react-app --scripts-version=`date +%s` test-app-should-remain || true
 # confirm the file exist
 test -e test-app-should-remain/README.md
-# confirm only README.md is the only file in the directory
-if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "1" ]; then
+# confirm only README.md and error log are the only files in the directory
+if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "2" ]; then
   false
 fi
 
