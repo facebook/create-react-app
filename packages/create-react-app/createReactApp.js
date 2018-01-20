@@ -52,10 +52,8 @@ const os = require('os');
 
 const packageJson = require('./package.json');
 
-/*
-These files should be allowed to remain on a failed install,
-but then silently removed during the next create.
-*/
+// These files should be allowed to remain on a failed install,
+// but then silently removed during the next create.
 const remnantFiles = ['npm-debug.log', 'yarn-error.log', 'yarn-debug.log'];
 
 let projectName;
