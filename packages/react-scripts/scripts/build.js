@@ -36,6 +36,7 @@ const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+const detectMissingVendors = require('react-dev-utils/detectMissingVendors');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
@@ -71,6 +72,14 @@ checkBrowsers(paths.appPath)
     fs.emptyDirSync(paths.appBuild);
     // Merge with the public folder
     copyPublicFolder();
+
+    // Check if every vendors are defined in the package.json
+    // @remove-on-eject-begin
+    // The devDepencencies shouldn't be available for vendors
+    // But otherwise the tests fail.
+    // @remove-on-eject-end
+    detectMissingVendors(paths.appPackageJson, paths.appVendors);
+
     // Start the webpack build
     return build(previousFileSizes);
   })
