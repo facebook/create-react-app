@@ -54,7 +54,11 @@ const packageJson = require('./package.json');
 
 // These files should be allowed to remain on a failed install,
 // but then silently removed during the next create.
-const remnantFiles = ['npm-debug.log', 'yarn-error.log', 'yarn-debug.log'];
+const errorLogFilePatterns = [
+  'npm-debug.log',
+  'yarn-error.log',
+  'yarn-debug.log',
+];
 
 let projectName;
 
@@ -363,7 +367,7 @@ function run(
       if (!remainingFiles.length) {
         // Delete target folder if empty
         console.log(
-          `Deleting ${chalk.cyan(`${appName} /`)} from ${chalk.cyan(
+          `Deleting ${chalk.cyan(`${appName}/`)} from ${chalk.cyan(
             path.resolve(root, '..')
           )}`
         );
@@ -630,8 +634,12 @@ function isSafeToCreateProjectIn(root, name) {
 
   const conflicts = fs
     .readdirSync(root)
-    .filter(file => !validFiles.includes(file));
-  
+    .filter(file => !validFiles.includes(file))
+    // Don't treat log files from previous installation as conflicts
+    .filter(
+      file => !errorLogFilePatterns.some(pattern => file.indexOf(pattern) === 0)
+    );
+
   if (conflicts.length > 0) {
     console.log(
       `The directory ${chalk.green(name)} contains files that could conflict:`
@@ -648,17 +656,17 @@ function isSafeToCreateProjectIn(root, name) {
     return false;
   }
 
-   // remove any remnant files from a previous installation
+  // Remove any remnant files from a previous installation
   const currentFiles = fs.readdirSync(path.join(root));
   currentFiles.forEach(file => {
-    remnantFiles.forEach(fileToMatch => {
+    errorLogFilePatterns.forEach(errorLogFilePattern => {
       // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
-      if (fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) {
+      if (file.indexOf(errorLogFilePattern) === 0) {
         fs.removeSync(path.join(root, file));
       }
     });
   });
-  return true
+  return true;
 }
 
 function getProxy() {
