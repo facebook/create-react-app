@@ -1,11 +1,9 @@
 // @remove-file-on-eject
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 'use strict';
 
@@ -24,6 +22,7 @@ const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
 const spawnSync = require('react-dev-utils/crossSpawn').sync;
+const os = require('os');
 
 const green = chalk.green;
 const cyan = chalk.cyan;
@@ -56,11 +55,17 @@ inquirer
     if (gitStatus) {
       console.error(
         chalk.red(
-          `This git repository has untracked files or uncommitted changes:\n\n` +
-            gitStatus.split('\n').map(line => '  ' + line) +
-            '\n\n' +
+          'This git repository has untracked files or uncommitted changes:'
+        ) +
+          '\n\n' +
+          gitStatus
+            .split('\n')
+            .map(line => line.match(/ .*/g)[0].trim())
+            .join('\n') +
+          '\n\n' +
+          chalk.red(
             'Remove untracked files, stash or commit any changes, and try again.'
-        )
+          )
       );
       process.exit(1);
     }
@@ -167,9 +172,11 @@ inquirer
     // Sort the deps
     const unsortedDependencies = appPackage.dependencies;
     appPackage.dependencies = {};
-    Object.keys(unsortedDependencies).sort().forEach(key => {
-      appPackage.dependencies[key] = unsortedDependencies[key];
-    });
+    Object.keys(unsortedDependencies)
+      .sort()
+      .forEach(key => {
+        appPackage.dependencies[key] = unsortedDependencies[key];
+      });
     console.log();
 
     console.log(cyan('Updating the scripts'));
@@ -212,7 +219,7 @@ inquirer
 
     fs.writeFileSync(
       path.join(appPath, 'package.json'),
-      JSON.stringify(appPackage, null, 2) + '\n'
+      JSON.stringify(appPackage, null, 2) + os.EOL
     );
     console.log();
 
@@ -230,21 +237,35 @@ inquirer
     }
 
     if (fs.existsSync(paths.yarnLockFile)) {
-      // TODO: this is disabled for three reasons.
-      //
-      // 1. It produces garbage warnings on Windows on some systems:
-      //    https://github.com/facebookincubator/create-react-app/issues/2030
-      //
-      // 2. For the above reason, it breaks Windows CI:
-      //    https://github.com/facebookincubator/create-react-app/issues/2624
-      //
-      // 3. It is wrong anyway: re-running yarn will respect the lockfile
-      //    rather than package.json we just updated. Instead we should have
-      //    updated the lockfile. So we might as well not do it while it's broken.
-      //    https://github.com/facebookincubator/create-react-app/issues/2627
-      //
-      // console.log(cyan('Running yarn...'));
-      // spawnSync('yarnpkg', [], { stdio: 'inherit' });
+      const windowsCmdFilePath = path.join(
+        appPath,
+        'node_modules',
+        '.bin',
+        'react-scripts.cmd'
+      );
+      let windowsCmdFileContent;
+      if (process.platform === 'win32') {
+        // https://github.com/facebookincubator/create-react-app/pull/3806#issuecomment-357781035
+        // Yarn is diligent about cleaning up after itself, but this causes the react-scripts.cmd file
+        // to be deleted while it is running. This trips Windows up after the eject completes.
+        // We'll read the batch file and later "write it back" to match npm behavior.
+        try {
+          windowsCmdFileContent = fs.readFileSync(windowsCmdFilePath);
+        } catch (err) {
+          // If this fails we're not worse off than if we didn't try to fix it.
+        }
+      }
+
+      console.log(cyan('Running yarn...'));
+      spawnSync('yarnpkg', ['--cwd', process.cwd()], { stdio: 'inherit' });
+
+      if (windowsCmdFileContent && !fs.existsSync(windowsCmdFilePath)) {
+        try {
+          fs.writeFileSync(windowsCmdFilePath, windowsCmdFileContent);
+        } catch (err) {
+          // If this fails we're not worse off than if we didn't try to fix it.
+        }
+      }
     } else {
       console.log(cyan('Running npm install...'));
       spawnSync('npm', ['install', '--loglevel', 'error'], {
