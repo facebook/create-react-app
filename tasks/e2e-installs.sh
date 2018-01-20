@@ -160,8 +160,9 @@ exists node_modules/react-scripts-fork
 cd "$temp_app_path"
 # we will install a non-existing package to simulate a failed installataion.
 npx create-react-app --scripts-version=`date +%s` test-app-should-not-exist || true
-# confirm that the project folder was deleted
-test ! -d test-app-should-not-exist
+# confirm that the project files were deleted
+test ! -e test-app-should-not-exist/package.json
+test ! -d test-app-should-not-exist/node_modules
 
 # ******************************************************************************
 # Test project folder is not deleted when creating app over existing folder
