@@ -205,18 +205,6 @@ inquirer
     console.log(`  Adding ${cyan('Jest')} configuration`);
     appPackage.jest = jestConfig;
 
-    // Add Babel config
-    console.log(`  Adding ${cyan('Babel')} preset`);
-    appPackage.babel = {
-      presets: ['react-app'],
-    };
-
-    // Add ESlint config
-    console.log(`  Adding ${cyan('ESLint')} configuration`);
-    appPackage.eslintConfig = {
-      extends: 'react-app',
-    };
-
     fs.writeFileSync(
       path.join(appPath, 'package.json'),
       JSON.stringify(appPackage, null, 2) + os.EOL
