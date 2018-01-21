@@ -79,17 +79,11 @@
   To help identify if a problem is specific to a platform, browser, or module version, information about your environment is required.
   This enables the maintainers quickly reproduce the issue and give feedback.
 
-  Run the command specific to your operating system in your react app's folder
+  Run the following command in your react app's folder in terminal.
+  Note: The result is copied to your clipboard directly.
   
-  Windows: `create-react-app --info | clip`
-  macOS: `create-react-app --info | pbcopy`
-  Linux: `create-react-app --info`
+  npx -p create-react-app -p clipboard-cli -c 'create-react-app --info | clipboard'  
   
-  If you get an error, you can use `npx` or `yarn` by running one of the commands below in terminal.
-  
-  npx create-react-app --info
-  yarn create react-app --info
-
   Paste the output of the command in the section below.
 -->
 (paste the output of the command here)
