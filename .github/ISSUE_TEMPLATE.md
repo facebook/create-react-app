@@ -82,7 +82,7 @@
   Run the following command in your react app's folder in terminal.
   Note: The result is copied to your clipboard directly.
   
-  npx -p create-react-app -p clipboard-cli -c 'create-react-app --info | clipboard'  
+  npx -p create-react-app -p clipboard-cli -c "create-react-app --info | clipboard"
   
   Paste the output of the command in the section below.
 -->
