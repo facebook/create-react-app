@@ -88,7 +88,7 @@ function startBrowserProcess(browser, url) {
   // Another special case: on OS X, check if BROWSER has been set to "open".
   // In this case, instead of passing `open` to `opn` (which won't work),
   // just ignore it (thus ensuring the intended behavior, i.e. opening the system browser):
-  // https://github.com/facebookincubator/create-react-app/pull/1690#issuecomment-283518768
+  // https://github.com/facebook/create-react-app/pull/1690#issuecomment-283518768
   if (process.platform === 'darwin' && browser === 'open') {
     browser = undefined;
   }

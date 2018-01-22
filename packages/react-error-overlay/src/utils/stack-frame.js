@@ -57,7 +57,7 @@ class StackFrame {
     }
     if (
       // Chrome has a bug with inferring function.name:
-      // https://github.com/facebookincubator/create-react-app/issues/2097
+      // https://github.com/facebook/create-react-app/issues/2097
       // Let's ignore a meaningless name we get for top-level modules.
       functionName === 'friendlySyntaxErrorLabel' ||
       functionName === 'exports.__esModule' ||
