@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 'use strict';
 
@@ -13,7 +11,8 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const chalk = require('chalk');
-const detect = require('@timer/detect-port');
+const detect = require('detect-port-alt');
+const isRoot = require('is-root');
 const inquirer = require('inquirer');
 const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
@@ -107,7 +106,7 @@ function printInstructions(appName, urls, useYarn) {
   console.log('Note that the development build is not optimized.');
   console.log(
     `To create a production build, use ` +
-      `${chalk.cyan(`${useYarn ? 'yarn' : 'npm'} run build`)}.`
+      `${chalk.cyan(`${useYarn ? 'yarn' : 'npm run'} build`)}.`
   );
   console.log();
 }
@@ -161,6 +160,11 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
 
     // If errors exist, only show errors.
     if (messages.errors.length) {
+      // Only keep the first error. Others are often indicative
+      // of the same problem, but confuse the reader with noise.
+      if (messages.errors.length > 1) {
+        messages.errors.length = 1;
+      }
       console.log(chalk.red('Failed to compile.\n'));
       console.log(messages.errors.join('\n\n'));
       return;
@@ -193,8 +197,23 @@ function resolveLoopback(proxy) {
   if (o.hostname !== 'localhost') {
     return proxy;
   }
-  try {
+  // Unfortunately, many languages (unlike node) do not yet support IPv6.
+  // This means even though localhost resolves to ::1, the application
+  // must fall back to IPv4 (on 127.0.0.1).
+  // We can re-enable this in a few years.
+  /*try {
     o.hostname = address.ipv6() ? '::1' : '127.0.0.1';
+  } catch (_ignored) {
+    o.hostname = '127.0.0.1';
+  }*/
+
+  try {
+    // Check if we're on a network; if we are, chances are we can resolve
+    // localhost. Otherwise, we can just be safe and assume localhost is
+    // IPv4 for maximum compatibility.
+    if (!address.ip()) {
+      o.hostname = '127.0.0.1';
+    }
   } catch (_ignored) {
     o.hostname = '127.0.0.1';
   }
@@ -296,14 +315,18 @@ function prepareProxy(proxy, appPublicFolder) {
         // For single page apps, we generally want to fallback to /index.html.
         // However we also want to respect `proxy` for API calls.
         // So if `proxy` is specified as a string, we need to decide which fallback to use.
-        // We use a heuristic: if request `accept`s text/html, we pick /index.html.
+        // We use a heuristic: We want to proxy all the requests that are not meant
+        // for static assets and as all the requests for static assets will be using
+        // `GET` method, we can proxy all non-`GET` requests.
+        // For `GET` requests, if request `accept`s text/html, we pick /index.html.
         // Modern browsers include text/html into `accept` header when navigating.
         // However API calls like `fetch()` won’t generally accept text/html.
         // If this heuristic doesn’t work well for you, use a custom `proxy` object.
         context: function(pathname, req) {
-          return mayProxy(pathname) &&
-            req.headers.accept &&
-            req.headers.accept.indexOf('text/html') === -1;
+          return req.method !== 'GET' ||
+            (mayProxy(pathname) &&
+              req.headers.accept &&
+              req.headers.accept.indexOf('text/html') === -1);
         },
         onProxyReq: proxyReq => {
           // Browers may send Origin headers even with same-origin
@@ -363,6 +386,11 @@ function choosePort(host, defaultPort) {
       if (port === defaultPort) {
         return resolve(port);
       }
+      const message = process.platform !== 'win32' &&
+        defaultPort < 1024 &&
+        !isRoot()
+        ? `Admin permissions are required to run a server on a port below 1024.`
+        : `Something is already running on port ${defaultPort}.`;
       if (isInteractive) {
         clearConsole();
         const existingProcess = getProcessForPort(defaultPort);
@@ -370,7 +398,7 @@ function choosePort(host, defaultPort) {
           type: 'confirm',
           name: 'shouldChangePort',
           message: chalk.yellow(
-            `Something is already running on port ${defaultPort}.` +
+            message +
               `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
           ) + '\n\nWould you like to run the app on another port instead?',
           default: true,
@@ -383,9 +411,7 @@ function choosePort(host, defaultPort) {
           }
         });
       } else {
-        console.log(
-          chalk.red(`Something is already running on port ${defaultPort}.`)
-        );
+        console.log(chalk.red(message));
         resolve(null);
       }
     }),

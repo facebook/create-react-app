@@ -1,10 +1,8 @@
 #!/bin/bash
 # Copyright (c) 2015-present, Facebook, Inc.
-# All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 # ******************************************************************************
 # This is an end-to-end kitchensink test intended to run on CI.
@@ -16,16 +14,21 @@ cd "$(dirname "$0")"
 
 # CLI, app, and test module temporary locations
 # http://unix.stackexchange.com/a/84980
-temp_cli_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_cli_path'`
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 temp_module_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_module_path'`
+custom_registry_url=http://localhost:4873
+original_npm_registry_url=`npm get registry`
+original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
-  ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -s 9
+  unset BROWSERSLIST
+  ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
-  rm -rf "$temp_cli_path" "$temp_app_path" "$temp_module_path" || $CI
+  rm -rf "$temp_app_path" "$temp_module_path" || $CI
+  npm set registry "$original_npm_registry_url"
+  yarn config set registry "$original_yarn_registry_url"
 }
 
 # Error messages are redirected to stderr
@@ -40,10 +43,6 @@ function handle_exit {
   cleanup
   echo 'Exiting without error.' 1>&2;
   exit
-}
-
-function create_react_app {
-  node "$temp_cli_path"/node_modules/create-react-app/index.js "$@"
 }
 
 # Check for the existence of one or more files.
@@ -66,66 +65,47 @@ set -x
 cd ..
 root_path=$PWD
 
-# Prevent lerna bootstrap, we only want top-level dependencies
-cp package.json package.json.bak
-grep -v "lerna bootstrap" package.json > temp && mv temp package.json
-npm install
-mv package.json.bak package.json
-
-if [ "$USE_YARN" = "yes" ]
+if hash npm 2>/dev/null
 then
-  # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn
-  yarn cache clean
+  npm i -g npm@latest
+  npm cache clean || npm cache verify
 fi
 
-# We removed the postinstall, so do it manually
-./node_modules/.bin/lerna bootstrap --concurrency=1
-
-cd packages/react-error-overlay/
-npm run build:prod
-cd ../..
+# Bootstrap monorepo
+yarn
 
 # ******************************************************************************
-# First, pack react-scripts and create-react-app so we can use them.
+# First, publish the monorepo.
 # ******************************************************************************
 
-# Pack CLI
-cd "$root_path"/packages/create-react-app
-cli_path=$PWD/`npm pack`
+# Start local registry
+tmp_registry_log=`mktemp`
+nohup npx verdaccio@2.7.2 &>$tmp_registry_log &
+# Wait for `verdaccio` to boot
+grep -q 'http address' <(tail -f $tmp_registry_log)
 
-# Go to react-scripts
-cd "$root_path"/packages/react-scripts
+# Set registry to local registry
+npm set registry "$custom_registry_url"
+yarn config set registry "$custom_registry_url"
 
-# Save package.json because we're going to touch it
-cp package.json package.json.orig
+# Login so we can publish packages
+npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
 
-# Replace own dependencies (those in the `packages` dir) with the local paths
-# of those packages.
-node "$root_path"/tasks/replace-own-deps.js
-
-# Finally, pack react-scripts
-scripts_path="$root_path"/packages/react-scripts/`npm pack`
-
-# Restore package.json
-rm package.json
-mv package.json.orig package.json
+# Publish the monorepo
+git clean -df
+./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
-# Now that we have packed them, create a clean app folder and install them.
+# Now that we have published them, create a clean app folder and install them.
 # ******************************************************************************
-
-# Install the CLI in a temporary location
-cd "$temp_cli_path"
-npm install "$cli_path"
 
 # Install the app in a temporary location
 cd $temp_app_path
-create_react_app --scripts-version="$scripts_path" --internal-testing-template="$root_path"/packages/react-scripts/fixtures/kitchensink test-kitchensink
+npx create-react-app --internal-testing-template="$root_path"/packages/react-scripts/fixtures/kitchensink test-kitchensink
 
 # Install the test module
 cd "$temp_module_path"
-npm install test-integrity@^2.0.1
+yarn add test-integrity@^2.0.1
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -135,8 +115,8 @@ npm install test-integrity@^2.0.1
 # Enter the app directory
 cd "$temp_app_path/test-kitchensink"
 
-# Link to our preset
-npm link "$root_path"/packages/babel-preset-react-app
+# In kitchensink, we want to test all transforms
+export BROWSERSLIST='ie 9'
 
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
@@ -145,7 +125,7 @@ npm link "$temp_module_path/node_modules/test-integrity"
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  npm run build
+  yarn build
 
 # Check for expected output
 exists build/*.html
@@ -156,51 +136,46 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  npm test -- --no-cache --testPathPattern="/src/"
+  yarn test --no-cache --testPathPattern=src
 
-# Test "development" environment
+# Prepare "development" environment
 tmp_server_log=`mktemp`
 PORT=3001 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
-  nohup npm start &>$tmp_server_log &
-while true
-do
-  if grep -q 'You can now view' $tmp_server_log; then
-    break
-  else
-    sleep 1
-  fi
-done
+  nohup yarn start &>$tmp_server_log &
+grep -q 'You can now view' <(tail -f $tmp_server_log)
+
+# Before running Mocha, specify that it should use our preset
+# TODO: this is very hacky and we should find some other solution
+echo '{"presets":["react-app"]}' > .babelrc
+
+# Test "development" environment
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
-
+  BABEL_ENV=test \
+  node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=production \
+  BABEL_ENV=test \
   PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+  node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
+
+# Remove the config we just created for Mocha
+# TODO: this is very hacky and we should find some other solution
+rm .babelrc
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
 # ******************************************************************************
 
-# Unlink our preset
-npm unlink "$root_path"/packages/babel-preset-react-app
-
 # Eject...
 echo yes | npm run eject
-
-# ...but still link to the local packages
-npm link "$root_path"/packages/babel-preset-react-app
-npm link "$root_path"/packages/eslint-config-react-app
-npm link "$root_path"/packages/react-dev-utils
-npm link "$root_path"/packages/react-scripts
 
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
@@ -209,7 +184,7 @@ npm link "$temp_module_path/node_modules/test-integrity"
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  npm run build
+  yarn build
 
 # Check for expected output
 exists build/*.html
@@ -220,35 +195,30 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  npm test -- --no-cache --testPathPattern='/src/'
+  yarn test --no-cache --testPathPattern=src
 
 # Test "development" environment
 tmp_server_log=`mktemp`
 PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
-  nohup npm start &>$tmp_server_log &
-while true
-do
-  if grep -q 'You can now view' $tmp_server_log; then
-    break
-  else
-    sleep 1
-  fi
-done
+  nohup yarn start &>$tmp_server_log &
+grep -q 'You can now view' <(tail -f $tmp_server_log)
 E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+  BABEL_ENV=test \
+  node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
   NODE_ENV=production \
+  BABEL_ENV=test \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+  node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
 
 # Cleanup
 cleanup

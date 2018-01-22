@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 import React, { Component, createElement } from 'react';
@@ -30,10 +28,7 @@ class BuiltEmitter extends Component {
   }
 
   render() {
-    const {
-      props: { feature },
-      handleReady,
-    } = this;
+    const { props: { feature }, handleReady } = this;
     return (
       <div>
         {createElement(feature, {
@@ -81,6 +76,11 @@ class App extends Component {
       case 'css-inclusion':
         import('./features/webpack/CssInclusion').then(f =>
           this.setFeature(f.default));
+        break;
+      case 'css-modules-inclusion':
+        import(
+          './features/webpack/CssModulesInclusion'
+        ).then(f => this.setFeature(f.default));
         break;
       case 'custom-interpolation':
         import(
@@ -165,6 +165,10 @@ class App extends Component {
         import(
           './features/webpack/UnknownExtInclusion'
         ).then(f => this.setFeature(f.default));
+        break;
+      case 'expand-env-variables':
+        import('./features/env/ExpandEnvVariables').then(f =>
+          this.setFeature(f.default));
         break;
       default:
         throw new Error(`Missing feature "${feature}"`);
