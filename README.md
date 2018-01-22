@@ -169,7 +169,7 @@ Your environment will have everything you need to build a modern single-page Rea
 
 * React, JSX, ES6, and Flow syntax support.
 * Language extras beyond ES6 like the object spread operator.
-* Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
+* Autoprefixed CSS, so you don’t need `-webkit-` or other prefixes.
 * A fast interactive unit test runner with built-in support for coverage reporting.
 * A live development server that warns about common mistakes.
 * A build script to bundle JS, CSS, and images for production, with hashes and sourcemaps.
