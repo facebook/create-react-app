@@ -43,7 +43,7 @@ function printFileSizesAfterBuild(
             name: path.basename(asset.name),
             size: size,
             sizeLabel:
-              filesize(size) + (difference ? ' (' + difference + ')' : '')
+              filesize(size) + (difference ? ' (' + difference + ')' : ''),
           };
         })
     )

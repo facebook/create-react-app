@@ -2,8 +2,8 @@
 dist: trusty
 language: node_js
 node_js:
-  - 6
   - 8
+  - 9
 cache:
   directories:
   - node_modules
@@ -24,3 +24,5 @@ matrix:
   include:
     - node_js: 0.10
       env: TEST_SUITE=old-node
+    - node_js: 6
+      env: TEST_SUITE=kitchensink
