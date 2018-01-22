@@ -11,7 +11,7 @@
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
     "index.js",

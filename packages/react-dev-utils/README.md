@@ -1,18 +1,18 @@
 # react-dev-utils
 
-This package includes some utilities used by [Create React App](https://github.com/facebookincubator/create-react-app).<br>
+This package includes some utilities used by [Create React App](https://github.com/facebook/create-react-app).<br>
 Please refer to its documentation:
 
-* [Getting Started](https://github.com/facebookincubator/create-react-app/blob/master/README.md#getting-started) – How to create a new app.
-* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+* [Getting Started](https://github.com/facebook/create-react-app/blob/master/README.md#getting-started) – How to create a new app.
+* [User Guide](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
 
 ## Usage in Create React App Projects
 
-These utilities come by default with [Create React App](https://github.com/facebookincubator/create-react-app), which includes it by default. **You don’t need to install it separately in Create React App projects.**
+These utilities come by default with [Create React App](https://github.com/facebook/create-react-app), which includes it by default. **You don’t need to install it separately in Create React App projects.**
 
 ## Usage Outside of Create React App
 
-If you don’t use Create React App, or if you [ejected](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-run-eject), you may keep using these utilities. Their development will be aligned with Create React App, so major versions of these utilities may come out relatively often. Feel free to fork or copy and paste them into your projects if you’d like to have more control over them, or feel free to use the old versions. Not all of them are React-specific, but we might make some of them more React-specific in the future.
+If you don’t use Create React App, or if you [ejected](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-run-eject), you may keep using these utilities. Their development will be aligned with Create React App, so major versions of these utilities may come out relatively often. Feel free to fork or copy and paste them into your projects if you’d like to have more control over them, or feel free to use the old versions. Not all of them are React-specific, but we might make some of them more React-specific in the future.
 
 ### Entry Points
 
@@ -84,7 +84,7 @@ module.exports = {
 
 This Webpack plugin ensures `npm install <library>` forces a project rebuild.<br>
 We’re not sure why this isn't Webpack's default behavior.<br>
-See [#186](https://github.com/facebookincubator/create-react-app/issues/186) for details.
+See [#186](https://github.com/facebook/create-react-app/issues/186) for details.
 
 ```js
 var path = require('path');
@@ -98,7 +98,7 @@ module.exports = {
     // If you require a missing module and then `npm install` it, you still have
     // to restart the development server for Webpack to discover it. This plugin
     // makes the discovery automatic so you don't have to restart.
-    // See https://github.com/facebookincubator/create-react-app/issues/186
+    // See https://github.com/facebook/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(path.resolve('node_modules'))
   ],
   // ...

@@ -13,7 +13,7 @@
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/facebook/create-react-app/issues"
   },
   "keywords": [
     "overlay",
