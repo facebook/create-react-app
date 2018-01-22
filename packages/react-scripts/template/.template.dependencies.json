@@ -1,12 +1,12 @@
 {
     "dependencies": {
         "chart.js": "2.x",
-        "echarts": "3.x",
+        "echarts": "4.x",
         "echarts-for-react": "2.x",
         "firebase": "4.x",
         "firebaseui": "2.x",
         "fireform": "0.x",
-        "firekit": "0.x",
+        "firekit": "1.x",
         "firekit-provider": "0.x",
         "intl": "1.x",
         "intl-locales-supported": "1.x",
