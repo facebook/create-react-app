@@ -12,6 +12,7 @@ const path = require('path');
 const fs = require('fs');
 const url = require('url');
 const findPkg = require('find-pkg');
+const globby = require('globby');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -89,11 +90,9 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
 };
 
-// config before publish: appDir is cra monorepo root or packages/react-scripts
+// detect if template should be used, ie. when cwd is react-scripts itself
 const useTemplate =
-  fs.existsSync(
-    path.join(appDirectory, 'packages', 'react-scripts', 'config')
-  ) || appDirectory === fs.realpathSync(path.join(__dirname, '..'));
+  appDirectory === fs.realpathSync(path.join(__dirname, '..'));
 
 checkForMonorepo = !useTemplate;
 
@@ -121,37 +120,42 @@ if (useTemplate) {
 
 module.exports.srcPaths = [module.exports.appSrc];
 
-// recursively find package dirs
-// -- omit things in node_modules, nested packages, and current app package
-const findPkgs = root =>
-  fs
-    .readdirSync(root)
-    .filter(f => ['node_modules', '.git'].indexOf(f) === -1)
-    .map(f => path.join(root, f))
-    .filter(f => fs.realpathSync(f) !== appDirectory)
-    .filter(f => fs.statSync(f).isDirectory())
+const findPkgs = (rootPath, globPatterns) => {
+  const globOpts = {
+    cwd: rootPath,
+    strict: true,
+    absolute: true,
+  };
+  return globPatterns
     .reduce(
-      (pkgs, dir) =>
-        fs.existsSync(path.join(dir, 'package.json'))
-          ? pkgs.concat([dir])
-          : pkgs.concat(findPkgs(dir)),
+      (pkgs, pattern) =>
+        pkgs.concat(globby.sync(path.join(pattern, 'package.json'), globOpts)),
       []
-    );
+    )
+    .map(f => path.dirname(f));
+};
 
-if (checkForMonorepo) {
-  // if app is in a monorepo (lerna or yarn workspace), allow any module inside
-  // the monorepo to be linted, transpiled, and tested as if it came from app's
-  // src.
-  const monoPkgPath = findPkg.sync(resolveApp('..'));
+const getMonorepoPkgPaths = () => {
+  const monoPkgPath = findPkg.sync(path.resolve(appDirectory, '..'));
   if (monoPkgPath) {
-    if (
-      require(monoPkgPath).workspaces ||
-      fs.existsSync(path.resolve(path.dirname(monoPkgPath), 'lerna.json'))
-    ) {
-      Array.prototype.push.apply(
-        module.exports.srcPaths,
-        findPkgs(path.dirname(monoPkgPath))
-      );
+    // Yarn workspace
+    let pkgPatterns = require(monoPkgPath).workspaces;
+    if (!pkgPatterns) {
+      // lerna
+      const lernaJson = path.resolve(path.dirname(monoPkgPath), 'lerna.json');
+      pkgPatterns = fs.existsSync(lernaJson) && require(lernaJson).packages;
+    }
+    const pkgPaths = findPkgs(path.dirname(monoPkgPath), pkgPatterns);
+    // check if app is part of monorepo
+    if (pkgPaths.indexOf(appDirectory) !== -1) {
+      return pkgPaths.filter(f => fs.realpathSync(f) !== appDirectory);
     }
   }
+  return [];
+};
+
+if (checkForMonorepo) {
+  // if app is in a monorepo (lerna or yarn workspace), treat other packages in
+  // the monorepo as if they are app source
+  Array.prototype.push.apply(module.exports.srcPaths, getMonorepoPkgPaths());
 }

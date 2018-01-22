@@ -90,10 +90,9 @@ git clean -df
 
 function verifyTest {
   CI=true yarn test --watch=no --json --outputFile testoutput.json || return 1
-  grep -F "\"numFailedTestSuites\":0" testoutput.json -q || return 1
-  grep -F "\"numFailedTests\":0" testoutput.json -q || return 1
-  grep -F "\"numPassedTestSuites\":3" testoutput.json -q || return 1
-  grep -F "\"numPassedTests\":3" testoutput.json -q || return 1
+  grep -F -R "src/App.test.js" testoutput.json -q || return 1
+  grep -F -R "comp1/index.test.js" testoutput.json -q || return 1
+  grep -F -R "comp2/index.test.js" testoutput.json -q || return 1
 }
 
 function verifyBuild {
