@@ -39,6 +39,12 @@ To fix this, create a new file *in the root of the project* called `tsconfig.tes
 
 ## Changelog
 
+### 2.13.0
+* Remove tslint-loader from prod builds - @DorianGrey
+* Include typescript as devDependency in boilerplate - @ianschmitz
+* Document custom module formats - @joshtynjala
+* Fix tscofnig.json - @diabelb
+
 ### 2.12.0
 * Update typescript to 2.6.2
 
