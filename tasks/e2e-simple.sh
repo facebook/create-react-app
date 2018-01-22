@@ -226,6 +226,8 @@ function verify_module_scope {
   yarn build; test $? -eq 1 || exit 1
   # TODO: check for error message
 
+  rm sample.json
+
   # Restore App.js
   rm src/App.js
   mv src/App.js.bak src/App.js
