@@ -45,7 +45,6 @@
     "ts-loader": "^2.3.7",
     "tsconfig-paths-webpack-plugin": "^2.0.0",
     "tslint": "^5.7.0",
-    "tslint-loader": "^3.5.3",
     "tslint-react": "^3.2.0",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
