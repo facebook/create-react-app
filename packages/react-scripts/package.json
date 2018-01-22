@@ -47,7 +47,6 @@
     "tslint": "^5.7.0",
     "tslint-loader": "^3.5.3",
     "tslint-react": "^3.2.0",
-    "typescript": "^2.6.2",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
     "webpack-dev-server": "2.9.4",
@@ -57,6 +56,9 @@
   "devDependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
+  },
+  "peerDependencies": {
+    "typescript": "2.x"
   },
   "optionalDependencies": {
     "fsevents": "1.1.2"

@@ -109,6 +109,7 @@ module.exports = function(
     '@types/react',
     '@types/react-dom',
     '@types/jest',
+    'typescript',
   ];
 
   console.log(
