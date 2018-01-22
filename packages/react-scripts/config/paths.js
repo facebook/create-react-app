@@ -132,7 +132,7 @@ const findPkgs = (rootPath, globPatterns) => {
         pkgs.concat(globby.sync(path.join(pattern, 'package.json'), globOpts)),
       []
     )
-    .map(f => path.dirname(f));
+    .map(f => path.dirname(path.normalize(f)));
 };
 
 const getMonorepoPkgPaths = () => {

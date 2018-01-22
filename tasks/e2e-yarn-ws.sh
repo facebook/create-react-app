@@ -90,9 +90,11 @@ git clean -df
 
 function verifyTest {
   CI=true yarn test --watch=no --json --outputFile testoutput.json || return 1
-  grep -F -R "src/App.test.js" testoutput.json -q || return 1
-  grep -F -R "comp1/index.test.js" testoutput.json -q || return 1
-  grep -F -R "comp2/index.test.js" testoutput.json -q || return 1
+  cat testoutput.json
+  # on windows, output contains double backslashes for path separator
+  grep -E -q "src([\\]{1,2}|/)App.test.js" testoutput.json || return 1
+  grep -E -q "comp1([\\]{1,2}|/)index.test.js" testoutput.json || return 1
+  grep -E -q "comp2([\\]{1,2}|/)index.test.js" testoutput.json || return 1
 }
 
 function verifyBuild {
@@ -113,16 +115,16 @@ yarn
 # Test CRA-App1
 # ******************************************************************************
 pushd packages/cra-app1
-yarn start --smoke-test
 verifyBuild
+yarn start --smoke-test
 verifyTest
 
 # ******************************************************************************
 # Test eject
 # ******************************************************************************
 echo yes | npm run eject
-yarn start --smoke-test
 verifyBuild
+yarn start --smoke-test
 verifyTest
 popd
 
