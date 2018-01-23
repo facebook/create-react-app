@@ -5,6 +5,8 @@
   ],
   "scripts": {
     "build": "cd packages/react-scripts && node bin/react-scripts.js build",
+    "build:with-stats":
+      "cd packages/react-scripts && node scripts/build.js --stats",
     "changelog": "lerna-changelog",
     "create-react-app": "node tasks/cra.js",
     "e2e": "tasks/e2e-simple.sh",
