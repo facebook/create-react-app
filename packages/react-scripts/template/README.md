@@ -2419,7 +2419,7 @@ If none of these solutions help please leave a comment [in this thread](https://
 
 ### `npm test` hangs on macOS Sierra
 
-If you run `npm test` and the console gets stuck after printing `react-scripts test --env=jsdom` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebookincubator/create-react-app#713](https://github.com/facebook/create-react-app/issues/713).
+If you run `npm test` and the console gets stuck after printing `react-scripts test --env=jsdom` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebook/create-react-app#713](https://github.com/facebook/create-react-app/issues/713).
 
 We recommend deleting `node_modules` in your project and running `npm install` (or `yarn` if you use it) first. If it doesn't help, you can try one of the numerous workarounds mentioned in these issues:
 

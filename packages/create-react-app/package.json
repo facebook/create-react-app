@@ -5,7 +5,7 @@
     "react"
   ],
   "description": "Create React apps with no build configuration.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "facebook/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=4"
