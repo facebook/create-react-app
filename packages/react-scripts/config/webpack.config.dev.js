@@ -204,7 +204,7 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,
-            exclude: /node_modules(?!\/@brickwork-software\/asiago|dot-prop)/,
+            exclude: /node_modules\/(?!@brickwork-software\/asiago|dot-prop)/,
             include: [
               paths.appPath,
               paths.asiagoPath,
