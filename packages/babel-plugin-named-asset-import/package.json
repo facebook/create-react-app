@@ -11,7 +11,7 @@
   "files": [
     "index.js"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "@babel/core": "7.0.0-beta.38"
   }
 }
