@@ -331,6 +331,13 @@ module.exports = {
               },
             ],
           },
+          // The graphql loader saves GraphQL ASTs processing time on client-side
+          // and enables queries to be separated from script over .graphql and .gql files.
+          {
+            test: /\.(graphql|gql)$/,
+            exclude: /node_modules/,
+            loader: 'graphql-tag/loader',
+          },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
