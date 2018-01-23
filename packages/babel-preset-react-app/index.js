@@ -115,6 +115,14 @@ module.exports = function(api, opts) {
           regenerator: true,
         },
       ],
+      [
+        require('babel-plugin-named-asset-import'),
+        {
+          loaderMap: {
+            svg: filename => `-!svg-react-loader!${filename}`,
+          },
+        },
+      ],
       isEnvProduction && [
         // Remove PropTypes from production build
         require('babel-plugin-transform-react-remove-prop-types').default,
