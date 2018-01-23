@@ -27,6 +27,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Post-Processing CSS](#post-processing-css)
 - [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
 - [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
+- [Adding GraphQL files](#adding-graphql-files)
 - [Using the `public` Folder](#using-the-public-folder)
   - [Changing the HTML](#changing-the-html)
   - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system)
@@ -686,6 +687,30 @@ Now running `npm start` and `npm run build` also builds Sass files.
 - `node-sass` has been reported as having issues with detecting new files in a directory [#1891](https://github.com/sass/node-sass/issues/1891)
 
  `node-sass-chokidar` is used here as it addresses these issues.
+
+## Adding GraphQL files
+
+If you are using GraphQL, you can **import a your GraphQL queries directly in a JavaScript module**.
+
+By preprocessing the GraphQL queries by importing them instead of using (for example) a [template tag](https://github.com/apollographql/graphql-tag), you save GraphQL ASTs processing time on client-side and enable queries to be separated from script over `.graphql` or `.gql` files.
+
+Here is an example:
+
+```js
+// query.graphql
+{
+  githubStats(repository: "facebook/react") {
+    stars
+  }
+}
+
+import query from './query.graphql';
+
+console.log(query);
+// {
+//   "kind": "Document",
+// ...
+```
 
 ## Adding Images, Fonts, and Files
 
