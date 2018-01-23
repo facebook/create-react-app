@@ -1,0 +1,8 @@
+{
+	"devDependencies": {
+		"lerna": "^2.6.0"
+	},
+  "scripts": {
+    "postinstall": "lerna bootstrap --hoist \"@(react|react-dom)\""
+  }
+}

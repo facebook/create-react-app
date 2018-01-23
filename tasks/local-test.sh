@@ -49,7 +49,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
-test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-installs.sh && ./tasks/e2e-yarn-ws.sh"
+test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-installs.sh && ./tasks/e2e-monorepos.sh"
 case ${test_suite} in
   "all")
     ;;
@@ -62,8 +62,8 @@ case ${test_suite} in
   "installs")
     test_command="./tasks/e2e-installs.sh"
     ;;
-  "yarnws")
-    test_command="./tasks/e2e-yarn-ws.sh"
+  "monorepos")
+    test_command="./tasks/e2e-monorepos.sh"
     ;;
   *)
     ;;

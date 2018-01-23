@@ -103,37 +103,68 @@ function verifyBuild {
 }
 
 # ******************************************************************************
-# Set up the apps monorepo
+# Test yarn workspace monorepo
 # ******************************************************************************
-# Start with base workspace
-cp -r "$root_path/packages/react-scripts/fixtures/yarn-ws/ws" "$temp_app_path"
-pushd "$temp_app_path/ws"
-# Bootstrap the apps monorepo
+# Set up yarn workspace monorepo
+pushd "$temp_app_path"
+cp -r "$root_path/packages/react-scripts/fixtures/monorepos/yarn-ws" .
+cd "yarn-ws"
+cp -r "$root_path/packages/react-scripts/fixtures/monorepos/packages" .
 yarn
 
-# ******************************************************************************
-# Test CRA-App1
-# ******************************************************************************
-pushd packages/cra-app1
+# Test cra-app1
+cd packages/cra-app1
 verifyBuild
 yarn start --smoke-test
 verifyTest
 
-# ******************************************************************************
 # Test eject
-# ******************************************************************************
 echo yes | npm run eject
 verifyBuild
 yarn start --smoke-test
 verifyTest
-popd
 
 # ******************************************************************************
 # Test create-react-app inside workspace
 # ******************************************************************************
 # npx create-react-app --internal-testing-template="$root_path"/packages/react-scripts/fixtures/yarn-ws/ws/cra-app1 cra-app2
 # -- above needs https://github.com/facebookincubator/create-react-app/pull/3435 to user create-react-app
-
 popd
+
+# ******************************************************************************
+# Test lerna monorepo
+# ******************************************************************************
+# Set up lerna monorepo
+pushd "$temp_app_path"
+cp -r "$root_path/packages/react-scripts/fixtures/monorepos/lerna-ws" .
+cd "lerna-ws"
+cp -r "$root_path/packages/react-scripts/fixtures/monorepos/packages" .
+npm install
+
+# Test cra-app1
+cd packages/cra-app1
+verifyBuild
+yarn start --smoke-test
+verifyTest
+
+# Test eject
+echo yes | npm run eject
+pushd ../..
+# re-init monorepo with lerna. the npm install that runs as part of eject fails
+# because it doesn't know about the monorepo and can't find comp1
+npm install
+popd
+verifyBuild
+yarn start --smoke-test
+verifyTest
+
+# ******************************************************************************
+# Test create-react-app inside workspace
+# ******************************************************************************
+# npx create-react-app --internal-testing-template="$root_path"/packages/react-scripts/fixtures/yarn-ws/ws/cra-app1 cra-app2
+# -- above needs https://github.com/facebookincubator/create-react-app/pull/3435 to user create-react-app
+popd
+
+
 # Cleanup
 cleanup
