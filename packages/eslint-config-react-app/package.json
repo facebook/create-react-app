@@ -2,7 +2,7 @@
   "name": "eslint-config-react-app",
   "version": "2.1.0",
   "description": "ESLint configuration used by Create React App",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "facebook/create-react-app",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"
