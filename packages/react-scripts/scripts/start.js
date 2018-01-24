@@ -106,7 +106,7 @@ checkBrowsers(paths.appPath)
       if (err) {
         return console.log(err);
       }
-      if (isInteractive) {
+      if (isInteractive && !process.env.NO_CLEAR_CONSOLE) {
         clearConsole();
       }
       console.log(chalk.cyan('Starting the development server...\n'));
