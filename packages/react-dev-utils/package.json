@@ -40,29 +40,29 @@
   "dependencies": {
     "@babel/code-frame": "7.0.0-beta.46",
     "address": "1.0.3",
-    "browserslist": "2.11.3",
-    "chalk": "2.3.0",
-    "cross-spawn": "5.1.0",
+    "browserslist": "3.2.6",
+    "chalk": "2.4.1",
+    "cross-spawn": "6.0.5",
     "detect-port-alt": "1.1.6",
     "escape-string-regexp": "1.0.5",
-    "filesize": "3.5.11",
+    "filesize": "3.6.1",
     "find-pkg": "1.0.0",
     "global-modules": "1.0.0",
-    "globby": "7.1.1",
+    "globby": "8.0.1",
     "gzip-size": "4.1.0",
-    "inquirer": "5.0.0",
+    "inquirer": "5.1.0",
     "is-root": "1.0.0",
-    "opn": "5.2.0",
+    "opn": "5.3.0",
     "pkg-up": "2.0.0",
     "react-error-overlay": "^4.0.0",
-    "recursive-readdir": "2.2.1",
+    "recursive-readdir": "2.2.2",
     "shell-quote": "1.6.1",
     "sockjs-client": "1.1.4",
     "strip-ansi": "4.0.0",
     "text-table": "0.2.0"
   },
   "devDependencies": {
-    "jest": "22.4.1"
+    "jest": "22.4.3"
   },
   "scripts": {
     "test": "jest"
