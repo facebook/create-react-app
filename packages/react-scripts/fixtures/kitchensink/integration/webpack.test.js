@@ -37,12 +37,12 @@ describe('Integration', () => {
 
       // .graphql
       expect(children[0].textContent.replace(/\s/g, '')).to.match(
-        '{"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"test"},"value":{"kind":"StringValue","value":"test","block":false}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":41}}'
+        /^{"kind":"Document","definitions":\[{"kind":"OperationDefinition","operation":"query","variableDefinitions":\[],"directives":\[\],"selectionSet":{"kind":"SelectionSet","selections":\[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":\[{"kind":"Argument","name":{"kind":"Name","value":"test"},"value":{"kind":"StringValue","value":"test","block":false}}\],"directives":\[\],"selectionSet":{"kind":"SelectionSet","selections":\[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":\[\],"directives":\[\]}\]}}\]}}\],"loc":{"start":0,"end":41}}$/
       );
 
       // .gql
       expect(children[1].textContent.replace(/\s/g, '')).to.match(
-        '{"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"test"},"value":{"kind":"StringValue","value":"test","block":false}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":41}}'
+        /^{"kind":"Document","definitions":\[{"kind":"OperationDefinition","operation":"query","variableDefinitions":\[],"directives":\[\],"selectionSet":{"kind":"SelectionSet","selections":\[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":\[{"kind":"Argument","name":{"kind":"Name","value":"test"},"value":{"kind":"StringValue","value":"test","block":false}}\],"directives":\[\],"selectionSet":{"kind":"SelectionSet","selections":\[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":\[\],"directives":\[\]}\]}}\]}}\],"loc":{"start":0,"end":41}}$/
       );
     });
 
