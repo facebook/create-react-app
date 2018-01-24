@@ -12,6 +12,7 @@ const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -375,6 +376,11 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true,
       },
+    }),
+    new DynamicCdnWebpackPlugin({
+      only: ['react', 'react-dom'],
+      disable: false, // switch to true to disable
+      verbose: false, // switch to true to log which modules are being served from CDN
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
