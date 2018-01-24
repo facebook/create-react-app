@@ -704,6 +704,8 @@ Here is an example:
   }
 }
 
+// foo.js
+
 import query from './query.graphql';
 
 console.log(query);
