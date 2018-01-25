@@ -138,15 +138,10 @@ const findPkgs = (rootPath, globPatterns) => {
 const getMonorepoPkgPaths = () => {
   const monoPkgPath = findPkg.sync(path.resolve(appDirectory, '..'));
   if (monoPkgPath) {
-    // Yarn workspace
-    let pkgPatterns = require(monoPkgPath).workspaces;
-    if (!pkgPatterns) {
-      // lerna
-      const lernaJson = path.resolve(path.dirname(monoPkgPath), 'lerna.json');
-      pkgPatterns = fs.existsSync(lernaJson) && require(lernaJson).packages;
-    }
+    // get monorepo config from yarn workspace
+    const pkgPatterns = require(monoPkgPath).workspaces;
     const pkgPaths = findPkgs(path.dirname(monoPkgPath), pkgPatterns);
-    // check if app is part of monorepo
+    // only include monorepo pkgs if app itself is included in monorepo
     if (pkgPaths.indexOf(appDirectory) !== -1) {
       return pkgPaths.filter(f => fs.realpathSync(f) !== appDirectory);
     }

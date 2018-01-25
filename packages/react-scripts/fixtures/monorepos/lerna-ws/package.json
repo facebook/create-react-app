@@ -1,9 +1,0 @@
-{
- "devDependencies": {
-  "cross-spawn": "6.0.3",
-  "lerna": "2.6.0"
- },
- "scripts": {
-  "postinstall": "node bootstrap.js --hoist \"@(react|react-dom)\""
- }
-}
