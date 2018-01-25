@@ -198,6 +198,8 @@ Here’s a few common cases where you might want to try something else:
 
 * If you want to do **server rendering** with React and Node.js, check out [Next.js](https://github.com/zeit/next.js/) or [Razzle](https://github.com/jaredpalmer/razzle). Create React App is agnostic of the backend, and just produces static HTML/JS/CSS bundles.
 
+* If you want to build **WordPress Gutenberg** blocks PHP/JavaScript plugins with React, ES6, Babel, ESLint, webpack then check out [create-guten-block](https://github.com/ahmadawais/create-guten-block) by [@AhmadAwais](https://github.com/ahmadawais)
+
 * If your website is **mostly static** (for example, a portfolio or a blog), consider using [Gatsby](https://www.gatsbyjs.org/) instead. Unlike Create React App, it pre-renders the website into HTML at the build time.
 
 * If you want to use **TypeScript**, consider using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript).
