@@ -74,7 +74,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
 - [Publishing Components to npm](#publishing-components-to-npm)
-- [Making a Progressive Web App](#making-Making a Progressive Web Appa-progressive-web-app)
+- [Making a Progressive Web App](#making-a-progressive-web-app)
   - [Why Opt-in?](#why-opt-in)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
