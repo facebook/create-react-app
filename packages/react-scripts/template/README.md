@@ -74,8 +74,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
 - [Publishing Components to npm](#publishing-components-to-npm)
-- [Making a Progressive Web App](#making-a-progressive-web-app)
-  - [Opting Out of Caching](#opting-out-of-caching)
+- [Making a Progressive Web App](#making-Making a Progressive Web Appa-progressive-web-app)
+  - [Why Opt-in?](#why-opt-in)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
@@ -1825,10 +1825,35 @@ Create React App doesn't provide any built-in functionality to publish a compone
 
 ## Making a Progressive Web App
 
-By default, the production build is a fully functional, offline-first
-[Progressive Web App](https://developers.google.com/web/progressive-web-apps/).
+The production build has all the tools necessary to generate a first-class
+[Progressive Web App](https://developers.google.com/web/progressive-web-apps/),
+but **the offline/cache-first behavior is opt-in only**. By default,
+the build process will generate a service worker file, but it will not be
+registered, so it will not take control of your production web app.
 
-Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
+In order to opt-in to the offline-first behavior, developers should look for the
+following in their [`src/index.js`](src/index.js) file:
+
+```js
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+```
+
+As the comment states, switching `serviceWorker.unregister()` to
+`serviceWorker.register()` will opt you in to using the service worker.
+
+>Note: In the current version of `create-react-app`, opting-in is required for
+all developers who want offline-first behavior, even if you've previously
+deployed a version of your web app which used a service worker. If you redeploy
+your web app, but do not change `serviceWorker.unregister()` to
+`serviceWorker.register()`, then users will have their previous service worker
+registration removed the next time they visit your web app.
+
+### Why Opt-in?
+
+Offline-first Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
 
  * All static site assets are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
  * Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.
@@ -1848,25 +1873,10 @@ on a slow or unreliable network.
 cache-first navigations for URLs other than `/` and `/index.html`, please
 [follow these steps](#service-worker-considerations).
 
-### Opting Out of Caching
-
-If you would prefer not to enable service workers prior to your initial
-production deployment, then remove the call to `registerServiceWorker()`
-from [`src/index.js`](src/index.js).
-
-If you had previously enabled service workers in your production deployment and
-have decided that you would like to disable them for all your existing users,
-you can swap out the call to `registerServiceWorker()` in
-[`src/index.js`](src/index.js) first by modifying the service worker import:
-```javascript
-import { unregister } from './registerServiceWorker';
-```
-and then call `unregister()` instead.
-After the user visits a page that has `unregister()`,
-the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
-it may take up to 24 hours for the cache to be invalidated.
-
 ### Offline-First Considerations
+
+If you do decide to opt-in to service worker registration, please take the
+following into account:
 
 1. Service workers [require HTTPS](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers#you_need_https),
 although to facilitate local testing, that policy
@@ -1935,6 +1945,11 @@ icons, names, and branding colors to use when the web app is displayed.
 [The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations
 will affect your users' experience.
+
+Progressive web apps that have been added to the homescreen will load faster and
+work offline when there's an active service worker. That being said, the
+metadata from the web app manifest will still be used regardless of whether or
+not you opt-in to service worker registration.
 
 ## Analyzing the Bundle Size
 
