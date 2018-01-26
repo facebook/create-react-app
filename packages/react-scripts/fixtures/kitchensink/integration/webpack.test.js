@@ -17,8 +17,10 @@ describe('Integration', () => {
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
       ).to.match(/html\{/);
       expect(
-        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
       ).to.match(/#feature-css-inclusion\{background:.+;color:.+}/);
+      // we expect to only have one style tag when allChunks: true
+      expect(doc.getElementsByTagName('style').length).to.equal(1);
     });
 
     it('css modules inclusion', async () => {

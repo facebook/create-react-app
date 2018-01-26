@@ -412,6 +412,10 @@ module.exports = {
     }),
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
+      // Turning this on because we want all css to be included in the main
+      // css bundle when doing code splitting to avoid FOUC:
+      // https://github.com/facebook/create-react-app/issues/2415
+      allChunks: true,
       filename: cssFilename,
     }),
     // Generate a manifest file which contains a mapping of all asset filenames
