@@ -103,26 +103,9 @@ const start = () => {
         urls.lanUrlForConfig
       );
       const devServer = new WebpackDevServer(compiler, serverConfig);
-      // Launch WebpackDevServer.
-      devServer.listen(port, HOST, err => {
-        if (err) {
-          return console.log(err);
-        }
-        if (isInteractive) {
-          clearConsole();
-        }
-        console.log(chalk.cyan('Starting the development server...\n'));
-        openBrowser(urls.localUrlForBrowser);
-      });
+      const launchBrowser = () => openBrowser(urls.localUrlForBrowser);
 
-      ['SIGINT', 'SIGTERM'].forEach(function(sig) {
-        process.on(sig, function() {
-          devServer.close();
-          process.exit();
-        });
-      });
-
-      return devServer;
+      return { devServer, host, port, launchBrowser };
     })
     .catch(err => {
       if (err && err.message) {
@@ -133,8 +116,31 @@ const start = () => {
 }
 
 if (!module.parent) {
-    start();
+  start()
+    .then(
+      ({ devServer, host, port, launchBrowser }) => {
+        // Launch WebpackDevServer.
+        devServer.listen(port, host, err => {
+          if (err) {
+            return console.log(err);
+          }
+          if (isInteractive) {
+            clearConsole();
+          }
+          console.log(chalk.cyan('Starting the development server...\n'));
+          launchBrowser();
+        });
+
+        ['SIGINT', 'SIGTERM'].forEach(function(sig) {
+          process.on(sig, function() {
+            devServer.close();
+            process.exit();
+          });
+        });
+      }
+    );
 }
+
 export {
     start
 };
