@@ -39,6 +39,7 @@ module.exports = function(
   appPackage.scripts = {
     start: 'react-scripts start',
     build: 'react-scripts build',
+    'build:with-stats': 'react-scripts build --stats',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
   };
@@ -161,6 +162,13 @@ module.exports = function(
     chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)
   );
   console.log('    Bundles the app into static files for production.');
+  console.log();
+  console.log(
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build:with-stats`)
+  );
+  console.log(
+    '    Builds, with additional info about your bundle for optimization.'
+  );
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
