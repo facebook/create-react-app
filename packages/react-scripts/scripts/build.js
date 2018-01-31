@@ -33,6 +33,7 @@ const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
+const bfj = require('bfj');
 const config = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
@@ -54,6 +55,10 @@ const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
+
+// Process CLI arguments
+const argv = process.argv.slice(2);
+const writeStatsJson = argv.indexOf('--stats') !== -1;
 
 // We require that you explictly set browsers and do not fall back to
 // browserslist defaults.
@@ -161,11 +166,20 @@ function build(previousFileSizes) {
         );
         return reject(new Error(messages.warnings.join('\n\n')));
       }
-      return resolve({
+
+      const resolveArgs = {
         stats,
         previousFileSizes,
         warnings: messages.warnings,
-      });
+      };
+      if (writeStatsJson) {
+        return bfj
+          .write(paths.appBuild + '/bundle-stats.json', stats.toJson())
+          .then(() => resolve(resolveArgs))
+          .catch(error => reject(new Error(error)));
+      }
+
+      return resolve(resolveArgs);
     });
   });
 }
