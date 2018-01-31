@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 // Include the default polyfills to enable modern javascript features
 // in legacy browsers. Learn more: http://bit.ly/2Bt1Yjk
 import './polyfills';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
