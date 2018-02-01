@@ -43,7 +43,7 @@ Please also provide a **test plan**, i.e. specify how you verified that your add
 
 ## Folder Structure of Create React App
 `create-react-app` is a monorepo, meaning it is divided into independent sub-packages.<br>
-These packages can be found in the [`packages/`](https://github.com/facebookincubator/create-react-app/tree/master/packages) directory.
+These packages can be found in the [`packages/`](https://github.com/facebook/create-react-app/tree/master/packages) directory.
 
 ### Overview of directory structure
 ```
@@ -55,25 +55,25 @@ packages/
   react-scripts/
 ```
 ### Package Descriptions
-#### [babel-preset-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/babel-preset-react-app)
+#### [babel-preset-react-app](https://github.com/facebook/create-react-app/tree/master/packages/babel-preset-react-app)
 This package is a babel preset intended to be used with `react-scripts`.<br>
 It targets platforms that React is designed to support (IE 9+) and enables experimental features used heavily at Facebook.<br>
 This package is enabled by default for all `create-react-app` scaffolded applications.
-#### [create-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/create-react-app)
+#### [create-react-app](https://github.com/facebook/create-react-app/tree/master/packages/create-react-app)
 The global CLI command code can be found in this directory, and shouldn't often be changed. It should run on Node 0.10+.
-#### [eslint-config-react-app](https://github.com/facebookincubator/create-react-app/tree/master/packages/eslint-config-react-app)
+#### [eslint-config-react-app](https://github.com/facebook/create-react-app/tree/master/packages/eslint-config-react-app)
 This package contains a conservative set of rules focused on making errors apparent and enforces no style rules.<br>
 This package is enabled by default for all `create-react-app` scaffolded applications.
-#### [react-dev-utils](https://github.com/facebookincubator/create-react-app/tree/master/packages/react-dev-utils)
+#### [react-dev-utils](https://github.com/facebook/create-react-app/tree/master/packages/react-dev-utils)
 This package contains utilities used for `react-scripts` and sister packages.<br>
 Its main purpose is to conceal code which the user shouldn't be burdened with upon ejecting.
-#### [react-scripts](https://github.com/facebookincubator/create-react-app/tree/master/packages/react-scripts)
+#### [react-scripts](https://github.com/facebook/create-react-app/tree/master/packages/react-scripts)
 This package is the heart of the project, which contains the scripts for setting up the development server, building production builds, configuring all software used, etc.<br>
 All functionality must be retained (and configuration given to the user) if they choose to eject.
 
 ## Setting Up a Local Copy
 
-1. Clone the repo with `git clone https://github.com/facebookincubator/create-react-app`
+1. Clone the repo with `git clone https://github.com/facebook/create-react-app`
 
 2. Run `yarn` in the root `create-react-app` folder.
 
@@ -111,7 +111,7 @@ By default git would use `CRLF` line endings which would cause the scripts to fa
 
 ## Cutting a Release
 
-1. Tag all merged pull requests that go into the release with the relevant milestone. Each merged PR should also be labeled with one of the [labels](https://github.com/facebookincubator/create-react-app/labels) named `tag: ...` to indicate what kind of change it is.
+1. Tag all merged pull requests that go into the release with the relevant milestone. Each merged PR should also be labeled with one of the [labels](https://github.com/facebook/create-react-app/labels) named `tag: ...` to indicate what kind of change it is.
 2. Close the milestone.
 3. In most releases, only `react-scripts` needs to be released. If you don’t have any changes to the `packages/create-react-app` folder, you don’t need to bump its version or publish it (the publish script will publish only changed packages).
 4. Note that files in `packages/create-react-app` should be modified with extreme caution. Since it’s a global CLI, any version of `create-react-app` (global CLI) including very old ones should work with the latest version of `react-scripts`.
