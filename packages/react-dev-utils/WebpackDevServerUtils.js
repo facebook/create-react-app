@@ -367,13 +367,60 @@ function prepareProxy(proxy, appPublicFolder) {
     return !(isPublicFileRequest || isWdsEndpointRequest);
   }
 
-  if (!/^http(s)?:\/\//.test(proxy)) {
-    console.log(
-      chalk.red(
-        'When "proxy" is specified in package.json it must start with either http:// or https://'
-      )
-    );
-    process.exit(1);
+  // Support proxy as a string for those who are using the simple proxy option
+  if (typeof proxy === 'string') {
+    if (!/^http(s)?:\/\//.test(proxy)) {
+      console.log(
+        chalk.red(
+          'When "proxy" is specified in package.json it must start with either http:// or https://'
+        )
+      );
+      process.exit(1);
+    }
+
+    let target;
+    if (process.platform === 'win32') {
+      target = resolveLoopback(proxy);
+    } else {
+      target = proxy;
+    }
+    return [
+      {
+        target,
+        logLevel: 'silent',
+        // For single page apps, we generally want to fallback to /index.html.
+        // However we also want to respect `proxy` for API calls.
+        // So if `proxy` is specified as a string, we need to decide which fallback to use.
+        // We use a heuristic: We want to proxy all the requests that are not meant
+        // for static assets and as all the requests for static assets will be using
+        // `GET` method, we can proxy all non-`GET` requests.
+        // For `GET` requests, if request `accept`s text/html, we pick /index.html.
+        // Modern browsers include text/html into `accept` header when navigating.
+        // However API calls like `fetch()` won’t generally accept text/html.
+        // If this heuristic doesn’t work well for you, use a custom `proxy` object.
+        context: function(pathname, req) {
+          return (
+            req.method !== 'GET' ||
+            (mayProxy(pathname) &&
+              req.headers.accept &&
+              req.headers.accept.indexOf('text/html') === -1)
+          );
+        },
+        onProxyReq: proxyReq => {
+          // Browers may send Origin headers even with same-origin
+          // requests. To prevent CORS issues, we have to change
+          // the Origin to match the target URL.
+          if (proxyReq.getHeader('origin')) {
+            proxyReq.setHeader('origin', target);
+          }
+        },
+        onError: onProxyError(target),
+        secure: false,
+        changeOrigin: true,
+        ws: true,
+        xfwd: true,
+      },
+    ];
   }
 
   let target;

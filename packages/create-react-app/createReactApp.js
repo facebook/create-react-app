@@ -49,7 +49,8 @@ const spawn = require('cross-spawn');
 const tmp = require('tmp');
 const unpack = require('tar-pack').unpack;
 const url = require('url');
-const validateProjectName = require('validate-npm-package-name');
+const hyperquest = require('hyperquest');
+const envinfo = require('envinfo');
 
 const packageJson = require('./package.json');
 
@@ -144,6 +145,14 @@ if (program.info) {
 }
 
 if (typeof projectName === 'undefined') {
+  if (program.info) {
+    envinfo.print({
+      packages: ['react', 'react-dom', 'react-scripts'],
+      noNativeIDE: true,
+      duplicates: true,
+    });
+    process.exit(0);
+  }
   console.error('Please specify the project directory:');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
@@ -382,17 +391,41 @@ function run(
   usePnp,
   useTypescript
 ) {
-  getInstallPackage(version, originalDirectory).then(packageToInstall => {
-    const allDependencies = ['react', 'react-dom', packageToInstall];
-    if (useTypescript) {
-      allDependencies.push(
-        // TODO: get user's node version instead of installing latest
-        '@types/node',
-        '@types/react',
-        '@types/react-dom',
-        // TODO: get version of Jest being used instead of installing latest
-        '@types/jest',
-        'typescript'
+  const packageToInstall = getInstallPackage(version, originalDirectory);
+  const allDependencies = ['react', 'react-dom', packageToInstall];
+
+  console.log('Installing packages. This might take a couple of minutes.');
+  getPackageName(packageToInstall)
+    .then(packageName =>
+      checkIfOnline(useYarn).then(isOnline => ({
+        isOnline: isOnline,
+        packageName: packageName,
+      }))
+    )
+    .then(info => {
+      const isOnline = info.isOnline;
+      const packageName = info.packageName;
+      console.log(
+        `Installing ${chalk.cyan('react')}, ${chalk.cyan(
+          'react-dom'
+        )}, and ${chalk.cyan(packageName)}...`
+      );
+      console.log();
+
+      return install(root, useYarn, allDependencies, verbose, isOnline).then(
+        () => packageName
+      );
+    })
+    .then(packageName => {
+      checkNodeVersion(packageName);
+      setCaretRangeForRuntimeDeps(packageName);
+
+      const scriptsPath = path.resolve(
+        process.cwd(),
+        'node_modules',
+        packageName,
+        'scripts',
+        'init.js'
       );
     }
 
@@ -503,6 +536,11 @@ function getInstallPackage(version, originalDirectory) {
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
+  } else if (version && version.match(/^file:/)) {
+    packageToInstall = `file:${path.resolve(
+      originalDirectory,
+      version.match(/^file:(.*)?$/)[1]
+    )}`;
   } else if (version) {
     if (version[0] === '@' && version.indexOf('/') === -1) {
       packageToInstall += version;

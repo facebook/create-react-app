@@ -26,10 +26,6 @@ set -x
 cd ..
 root_path=$PWD
 
-if [ -z $CI ]; then
-  yarn compile:lockfile
-fi
-
 if [ -n "$(git status --porcelain)" ]; then
   echo "Your git status is not clean. Aborting.";
   exit 1;
@@ -48,4 +44,4 @@ if [ -z $CI ]; then
 fi
 
 # Go!
-NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish --npm-client=npm "$@"
+./node_modules/.bin/lerna publish --independent "$@"

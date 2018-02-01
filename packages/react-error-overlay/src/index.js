@@ -74,10 +74,15 @@ export function startReportingRuntimeErrors(options: RuntimeReportingOptions) {
     );
   }
   currentRuntimeErrorOptions = options;
-  stopListeningToRuntimeErrors = listenToRuntimeErrors(
-    handleRuntimeError(options),
-    options.filename
-  );
+  stopListeningToRuntimeErrors = listenToRuntimeErrors(errorRecord => {
+    try {
+      if (typeof options.onError === 'function') {
+        options.onError.call(null);
+      }
+    } finally {
+      handleRuntimeError(errorRecord);
+    }
+  }, options.filename);
 }
 
 const handleRuntimeError = (options: RuntimeReportingOptions) => (
