@@ -241,7 +241,7 @@ module.exports = {
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
             exclude: [
-              /\.js$/,
+              /\.(js|jsx|mjs)$/,
               /\.html$/,
               /\.json$/,
               /\.css/,
