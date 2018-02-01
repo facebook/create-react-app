@@ -6,6 +6,6 @@
  */
 
 import React from 'react';
-import { default as Logo } from './assets/logo.svg';
+import { ReactComponent as Logo } from './assets/logo.svg';
 
 export default () => <Logo />;
