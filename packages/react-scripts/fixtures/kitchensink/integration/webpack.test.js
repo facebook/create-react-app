@@ -74,8 +74,8 @@ describe('Integration', () => {
     it('svg component', async () => {
       const doc = await initDOM('svg-component');
 
-      expect(doc.getElementById('feature-svg-component').textContent).to.match(
-        /\/static\/media\/logo\..+\.svg$/
+      expect(doc.getElementById('feature-svg-component').textContent).to.equal(
+        ''
       );
     });
 
@@ -84,7 +84,7 @@ describe('Integration', () => {
 
       expect(
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(/\/static\/media\/logo\..+\.svg$/);
+      ).to.match(/\/static\/media\/logo\..+\.svg/);
     });
 
     it('unknown ext inclusion', async () => {
