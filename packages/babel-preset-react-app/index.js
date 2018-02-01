@@ -115,7 +115,7 @@ module.exports = function(api, opts) {
           regenerator: true,
         },
       ],
-      [
+      !isEnvTest && [
         require('babel-plugin-named-asset-import'),
         {
           loaderMap: {
