@@ -9,6 +9,7 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -102,7 +103,8 @@ module.exports = {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     },
-    process.env.REACT_APP_TYPE === 'static' ? { static: paths.staticJs } : {}
+    fs.existsSync(paths.staticJs) ? { static: paths.staticJs } : {},
+    fs.existsSync(paths.polyfills) ? { polyfills: paths.polyfills } : {}
   ),
   output: {
     // Add /* filename */ comments to generated require()s in the output.
