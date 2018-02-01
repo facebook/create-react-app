@@ -16,15 +16,15 @@ function namedAssetImportPlugin({ types: t }) {
         }
 
         if (loaderMap[ext]) {
-          const addLoader = loaderMap[ext];
-
           path.replaceWithMultiple(
             path.node.specifiers.map(specifier => {
-              const localName = specifier.local.name;
-
               if (t.isImportDefaultSpecifier(specifier)) {
                 const newDefaultImport = t.importDeclaration(
-                  [t.importDefaultSpecifier(t.identifier(localName))],
+                  [
+                    t.importDefaultSpecifier(
+                      t.identifier(specifier.local.name)
+                    ),
+                  ],
                   t.stringLiteral(sourcePath)
                 );
 
@@ -35,12 +35,18 @@ function namedAssetImportPlugin({ types: t }) {
               const newImport = t.importDeclaration(
                 [
                   t.importSpecifier(
-                    t.identifier(localName),
+                    t.identifier(specifier.local.name),
                     t.identifier(specifier.imported.name)
                   ),
                 ],
                 t.stringLiteral(
-                  addLoader(sourcePath, specifier.imported.name, localName)
+                  loaderMap[ext][specifier.imported.name]
+                    ? loaderMap[ext][specifier.imported.name](
+                        sourcePath,
+                        specifier.imported.name,
+                        specifier.local.name
+                      )
+                    : sourcePath
                 )
               );
 

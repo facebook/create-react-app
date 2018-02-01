@@ -119,7 +119,9 @@ module.exports = function(api, opts) {
         require('babel-plugin-named-asset-import'),
         {
           loaderMap: {
-            svg: filename => `-!svg-react-loader!${filename}`,
+            svg: {
+              ReactComponent: filename => `svgr/webpack!${filename}`,
+            },
           },
         },
       ],
