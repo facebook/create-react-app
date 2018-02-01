@@ -1,16 +1,45 @@
-## 2.4.1 (July 30, 2018)
-
-#### :bug: Bug Fix
-* [lighter-react-scripts] bump cssnano package to fix issues with border declaration
-
-#### :tada: version updates
-
-* `lighter-react-scripts@2.4.1`
-
-## 2.4.0 (July 16, 2018)
+## 1.1.0 (January 15, 2018)
 
 #### :rocket: New Feature
-* [lighter-react-scripts] do not inline images
+
+* `react-scripts`
+
+  * [#3387](https://github.com/facebookincubator/create-react-app/pull/3387) Add support for variable expansion in `.env` files. ([@moos](https://github.com/moos))
+
+* `react-error-overlay`
+
+  * [#3474](https://github.com/facebookincubator/create-react-app/pull/3474) Allow the error overlay to be unregistered. ([@Timer](https://github.com/Timer))
+  
+* `create-react-app`
+
+  * [#3408](https://github.com/facebookincubator/create-react-app/pull/3408) Add `--info` flag to help gather bug reports. ([@tabrindle](https://github.com/tabrindle))
+  * [#3409](https://github.com/facebookincubator/create-react-app/pull/3409) Add `--use-npm` flag to bypass Yarn even on systems that have it. ([@tabrindle](https://github.com/tabrindle))
+  * [#3725](https://github.com/facebookincubator/create-react-app/pull/3725) Extend `--scripts-version` to include `.tar.gz` format. ([@SaschaDens](https://github.com/SaschaDens))
+  * [#3629](https://github.com/facebookincubator/create-react-app/pull/3629) Allowing `"file:<path>"` `--scripts-version` values. ([@GreenGremlin](https://github.com/GreenGremlin))
+
+
+#### :bug: Bug Fix
+
+* `babel-preset-react-app`, `react-scripts`
+
+  * [#3788](https://github.com/facebookincubator/create-react-app/pull/3788) Fix object destructuring inside an array on Node 6. ([@gaearon](https://github.com/gaearon))
+
+* `react-dev-utils`
+
+  * [#3784](https://github.com/facebookincubator/create-react-app/pull/3784) Detach browser process from the shell on Linux. ([@gaearon](https://github.com/gaearon))
+  * [#3726](https://github.com/facebookincubator/create-react-app/pull/3726) Use proxy for all request methods other than `GET`. ([@doshisid](https://github.com/doshisid))
+  * [#3440](https://github.com/facebookincubator/create-react-app/pull/3440) Print full directory name from `lsof`. ([@rmccue](https://github.com/rmccue))
+  * [#2071](https://github.com/facebookincubator/create-react-app/pull/2071) Fix broken console clearing on Windows. ([@danielverejan](https://github.com/danielverejan))
+  * [#3686](https://github.com/facebookincubator/create-react-app/pull/3686) Fix starting a project in directory with `++` in the name. ([@Norris1z](https://github.com/Norris1z))
+
+* `create-react-app`
+
+  * [#3320](https://github.com/facebookincubator/create-react-app/pull/3320) Fix offline installation to respect proxy from `.npmrc`. ([@mdogadailo](https://github.com/mdogadailo))
+  
+* `react-scripts`
+
+  * [#3537](https://github.com/facebookincubator/create-react-app/pull/3537) Add `mjs` and `jsx` filename extensions to `file-loader` exclude pattern. ([@iansu](https://github.com/iansu))
+  * [#3511](https://github.com/facebookincubator/create-react-app/pull/3511) Unmount the component in the default generated test. ([@gaearon](https://github.com/gaearon))
 
 #### :nail_care: Enhancement
 * [lighter-react-scripts] update dependencies
