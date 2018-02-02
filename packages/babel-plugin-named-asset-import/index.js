@@ -41,10 +41,9 @@ function namedAssetImportPlugin({ types: t }) {
                 ],
                 t.stringLiteral(
                   loaderMap[ext][specifier.imported.name]
-                    ? loaderMap[ext][specifier.imported.name](
-                        sourcePath,
-                        specifier.imported.name,
-                        specifier.local.name
+                    ? loaderMap[ext][specifier.imported.name].replace(
+                        /\[path\]/,
+                        sourcePath
                       )
                     : sourcePath
                 )

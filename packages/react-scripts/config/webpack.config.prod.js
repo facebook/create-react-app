@@ -200,6 +200,18 @@ module.exports = {
                   babelrc: false,
                   // @remove-on-eject-end
                   presets: [require.resolve('babel-preset-react-app')],
+                  plugins: [
+                    [
+                      require.resolve('babel-plugin-named-asset-import'),
+                      {
+                        loaderMap: {
+                          svg: {
+                            ReactComponent: 'svgr/webpack![path]',
+                          },
+                        },
+                      },
+                    ],
+                  ],
                   compact: true,
                   highlightCode: true,
                 },

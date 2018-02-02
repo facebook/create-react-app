@@ -192,6 +192,18 @@ module.exports = {
                   babelrc: false,
                   // @remove-on-eject-end
                   presets: [require.resolve('babel-preset-react-app')],
+                  plugins: [
+                    [
+                      require.resolve('babel-plugin-named-asset-import'),
+                      {
+                        loaderMap: {
+                          svg: {
+                            ReactComponent: 'svgr/webpack![path]',
+                          },
+                        },
+                      },
+                    ],
+                  ],
                   // This is a feature of `babel-loader` for webpack (not Babel itself).
                   // It enables caching results in ./node_modules/.cache/babel-loader/
                   // directory for faster rebuilds.
