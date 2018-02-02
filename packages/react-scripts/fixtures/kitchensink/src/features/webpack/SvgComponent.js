@@ -8,4 +8,4 @@
 import React from 'react';
 import { ReactComponent as Logo } from './assets/logo.svg';
 
-export default () => <Logo />;
+export default () => <Logo id="feature-svg-component" />;
