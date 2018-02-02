@@ -71,6 +71,22 @@ describe('Integration', () => {
       );
     });
 
+    it('svg component', async () => {
+      const doc = await initDOM('svg-component');
+
+      expect(doc.getElementById('feature-svg-component').textContent).to.equal(
+        ''
+      );
+    });
+
+    it('svg in css', async () => {
+      const doc = await initDOM('svg-in-css');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(/\/static\/media\/logo\..+\.svg/);
+    });
+
     it('unknown ext inclusion', async () => {
       const doc = await initDOM('unknown-ext-inclusion');
 

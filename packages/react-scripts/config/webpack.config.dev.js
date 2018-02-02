@@ -192,6 +192,18 @@ module.exports = {
                   babelrc: false,
                   // @remove-on-eject-end
                   presets: [require.resolve('babel-preset-react-app')],
+                  plugins: [
+                    [
+                      require.resolve('babel-plugin-named-asset-import'),
+                      {
+                        loaderMap: {
+                          svg: {
+                            ReactComponent: 'svgr/webpack![path]',
+                          },
+                        },
+                      },
+                    ],
+                  ],
                   // This is a feature of `babel-loader` for webpack (not Babel itself).
                   // It enables caching results in ./node_modules/.cache/babel-loader/
                   // directory for faster rebuilds.
@@ -263,31 +275,6 @@ module.exports = {
               {
                 loader: require.resolve('postcss-loader'),
                 options: postCSSLoaderOptions,
-              },
-            ],
-          },
-          // Allows you to use two kinds of imports for SVG:
-          // import logoUrl from './logo.svg'; gives you the URL.
-          // import { ReactComponent as Logo } from './logo.svg'; gives you a component.
-          {
-            test: /\.svg$/,
-            use: [
-              {
-                loader: require.resolve('babel-loader'),
-                options: {
-                  // @remove-on-eject-begin
-                  babelrc: false,
-                  // @remove-on-eject-end
-                  presets: [require.resolve('babel-preset-react-app')],
-                  cacheDirectory: true,
-                },
-              },
-              require.resolve('svgr/webpack'),
-              {
-                loader: require.resolve('file-loader'),
-                options: {
-                  name: 'static/media/[name].[hash:8].[ext]',
-                },
               },
             ],
           },
