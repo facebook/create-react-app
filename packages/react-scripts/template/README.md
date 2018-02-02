@@ -688,32 +688,6 @@ Now running `npm start` and `npm run build` also builds Sass files.
 
  `node-sass-chokidar` is used here as it addresses these issues.
 
-## Adding GraphQL files
-
-If you are using GraphQL, you can **import a your GraphQL queries directly in a JavaScript module**.
-
-By preprocessing the GraphQL queries by importing them instead of using (for example) a [template tag](https://github.com/apollographql/graphql-tag), you save GraphQL ASTs processing time on client-side and enable queries to be separated from script over `.graphql` or `.gql` files.
-
-Here is an example:
-
-```js
-// query.graphql
-{
-  githubStats(repository: "facebook/react") {
-    stars
-  }
-}
-
-// foo.js
-
-import query from './query.graphql';
-
-console.log(query);
-// {
-//   "kind": "Document",
-// ...
-```
-
 ## Adding Images, Fonts, and Files
 
 With Webpack, using static assets like images and fonts works similarly to CSS.
@@ -754,6 +728,32 @@ Please be advised that this is also a custom feature of Webpack.
 
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).<br>
 An alternative way of handling static assets is described in the next section.
+
+## Adding GraphQL files
+
+If you are using GraphQL, you can **`import` GraphQL files in a JavaScript module**.
+
+By importing GraphQL queries instead of using a [template tag](https://github.com/apollographql/graphql-tag), they are preprocessed at build time. This eliminates the need to process them on the client at run time. It also allows you to separate your GraphQL queries from your code. You can put a GraphQL query in a file with a `.graphql` or `.gql` extension.
+
+Here is an example:
+
+```js
+// query.graphql
+{
+  githubStats(repository: "facebook/react") {
+    stars
+  }
+}
+
+// foo.js
+
+import query from './query.graphql';
+
+console.log(query);
+// {
+//   "kind": "Document",
+// ...
+```
 
 ## Using the `public` Folder
 
