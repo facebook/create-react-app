@@ -1825,7 +1825,10 @@ Create React App doesn't provide any built-in functionality to publish a compone
 
 ## Making a Progressive Web App
 
-By default, the production build is a fully functional, offline-first
+By default, the production build comes with a service worker that is
+disabled by default. If you want a fully functional, offline-first web
+app, you'll need to `register` the `serviceWorker`.
+
 [Progressive Web App](https://developers.google.com/web/progressive-web-apps/).
 
 Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
@@ -1848,23 +1851,24 @@ on a slow or unreliable network.
 cache-first navigations for URLs other than `/` and `/index.html`, please
 [follow these steps](#service-worker-considerations).
 
+### Opting In For Caching
+
+If you would prefer to enable service workers, you can change the
+`serviceWorker.unregister()` to `serviceWorker.register()` in
+[`src/index.js`](src/index.js).
+
 ### Opting Out of Caching
 
-If you would prefer not to enable service workers prior to your initial
-production deployment, then remove the call to `registerServiceWorker()`
-from [`src/index.js`](src/index.js).
+By default, the service workers are not enabled. If you had previously
+enabled service workers in your production deployment and have decided
+that you would like to disable them again for all your existing users,
+you can swap out the call to `serviceWorker.register()` in
+[`src/index.js`](src/index.js) to `serviceWorker.unregister()`.
 
-If you had previously enabled service workers in your production deployment and
-have decided that you would like to disable them for all your existing users,
-you can swap out the call to `registerServiceWorker()` in
-[`src/index.js`](src/index.js) first by modifying the service worker import:
-```javascript
-import { unregister } from './registerServiceWorker';
-```
-and then call `unregister()` instead.
-After the user visits a page that has `unregister()`,
-the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
-it may take up to 24 hours for the cache to be invalidated.
+After the user visits a page that has `unregister()`, the service
+worker will be uninstalled. Note that depending on how
+`/service-worker.js` is served, it may take up to 24 hours for the
+cache to be invalidated.
 
 ### Offline-First Considerations
 
