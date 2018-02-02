@@ -323,7 +323,6 @@ module.exports = {
           // The GraphQL loader preprocesses GraphQL queries in .graphql and .gql files.
           {
             test: /\.(graphql|gql)$/,
-            exclude: /node_modules/,
             loader: 'graphql-tag/loader',
           },
           // "file" loader makes sure assets end up in the `build` folder.
