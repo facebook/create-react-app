@@ -33,7 +33,7 @@ module.exports = (resolve, rootDir, srcRoots) => {
     ],
     // where to search for files/tests
     roots: srcRoots.map(toRelRootDir),
-    testEnvironment: 'node',
+    testEnvironment: 'jsdom',
     testURL: 'http://localhost',
     transform: {
       '^.+\\.(js|jsx|mjs)$': resolve('config/jest/babelTransform.js'),
