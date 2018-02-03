@@ -344,14 +344,19 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
   },
 + "lint-staged": {
 +   "src/**/*.{js,jsx,json,css}": [
-+     "prettier --single-quote --write",
++     "prettier --write",
 +     "git add"
 +   ]
++ },
++ "prettier": {
++   "singleQuote": true
 + },
   "scripts": {
 ```
 
-Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
+The "prettier" key is optional and allows you to [customize the default configuration](https://prettier.io/docs/en/configuration.html).
+
+Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
 
 Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://prettier.io/docs/en/editors.html) on the Prettier GitHub page.
 
