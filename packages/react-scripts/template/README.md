@@ -2019,6 +2019,12 @@ To override this, specify the `homepage` in your `package.json`, for example:
   "homepage": "http://mywebsite.com/relativepath",
 ```
 
+Or, specify environment variable named `PUBLIC_URL`, for example:
+
+```sh
+  export PUBLIC_URL=http://mywebsite.com/relativepath
+```
+
 This will let Create React App correctly infer the root path to use in the generated HTML file.
 
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
