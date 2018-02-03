@@ -320,9 +320,9 @@ module.exports = {
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
-          // The GraphQL loader preprocesses GraphQL queries in .graphql and .gql files.
+          // The GraphQL loader preprocesses GraphQL queries in .graphql files.
           {
-            test: /\.(graphql|gql)$/,
+            test: /\.(graphql)$/,
             loader: 'graphql-tag/loader',
           },
           // "file" loader makes sure assets end up in the `build` folder.

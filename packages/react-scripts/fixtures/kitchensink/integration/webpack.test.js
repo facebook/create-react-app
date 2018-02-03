@@ -39,11 +39,6 @@ describe('Integration', () => {
       expect(children[0].textContent.replace(/\s/g, '')).to.equal(
         '{"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"test"},"value":{"kind":"StringValue","value":"test","block":false}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":40,"source":{"body":"{\\ntest(test:\\"test\\"){\\ntest\\n}\\n}\\n","name":"GraphQLrequest","locationOffset":{"line":1,"column":1}}}}'
       );
-
-      // .gql
-      expect(children[1].textContent.replace(/\s/g, '')).to.equal(
-        '{"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"test"},"value":{"kind":"StringValue","value":"test","block":false}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":40,"source":{"body":"{\\ntest(test:\\"test\\"){\\ntest\\n}\\n}\\n","name":"GraphQLrequest","locationOffset":{"line":1,"column":1}}}}'
-      );
     });
 
     it('image inclusion', async () => {

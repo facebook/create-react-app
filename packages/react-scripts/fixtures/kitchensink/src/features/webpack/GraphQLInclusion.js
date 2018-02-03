@@ -7,11 +7,9 @@
 
 import React from 'react';
 import A from './assets/graphql.graphql';
-import B from './assets/graphql.gql';
 
 export default () => (
   <p id="graphql-inclusion">
     <span>{JSON.stringify(A)}</span>
-    <span>{JSON.stringify(B)}</span>
   </p>
 );

@@ -736,7 +736,7 @@ An alternative way of handling static assets is described in the next section.
 
 If you are using GraphQL, you can **`import` GraphQL files in a JavaScript module**.
 
-By importing GraphQL queries instead of using a [template tag](https://github.com/apollographql/graphql-tag), they are preprocessed at build time. This eliminates the need to process them on the client at run time. It also allows you to separate your GraphQL queries from your code. You can put a GraphQL query in a file with a `.graphql` or `.gql` extension.
+By importing GraphQL queries instead of using a [template tag](https://github.com/apollographql/graphql-tag), they are preprocessed at build time. This eliminates the need to process them on the client at run time. It also allows you to separate your GraphQL queries from your code. You can put a GraphQL query in a file with a `.graphql` extension.
 
 Here is an example:
 
