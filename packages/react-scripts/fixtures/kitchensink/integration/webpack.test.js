@@ -26,9 +26,7 @@ describe('Integration', () => {
 
       expect(
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(
-        /.+__style-module___cssModulesInclusion+\{background:.+;color:.+}/
-      );
+      ).to.match(/\.style-module-cssModulesInclusion{background:.+;color:.+}/);
     });
 
     it('graphql files inclusion', async () => {
