@@ -111,6 +111,11 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
+      case 'graphql-inclusion':
+        import('./features/webpack/GraphQLInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
       case 'image-inclusion':
         import('./features/webpack/ImageInclusion').then(f =>
           this.setFeature(f.default)

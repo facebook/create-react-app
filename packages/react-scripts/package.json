@@ -47,6 +47,8 @@
     "find-pkg": "1.0.0",
     "fs-extra": "5.0.0",
     "globby": "7.1.1",
+    "graphql": "0.12.3",
+    "graphql-tag": "2.6.1",
     "html-webpack-plugin": "2.30.1",
     "identity-obj-proxy": "3.0.0",
     "jest": "22.1.2",
