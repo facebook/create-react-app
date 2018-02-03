@@ -110,25 +110,48 @@ pushd "$temp_app_path"
 cp -r "$root_path/packages/react-scripts/fixtures/monorepos/yarn-ws" .
 cd "yarn-ws"
 cp -r "$root_path/packages/react-scripts/fixtures/monorepos/packages" .
-yarn
 
 # Test cra-app1
-cd packages/cra-app1
+pushd packages/cra-app1
+cp -r "$root_path/packages/react-scripts/fixtures/monorepos/cra-app/"* .
+yarn
+verifyBuild
+yarn start --smoke-test
+verifyTest
+popd
+
+# ******************************************************************************
+# Test clean create-react-app inside workspace
+# ******************************************************************************
+pushd packages
+npx create-react-app newapp
+cd newapp
+yarn
+yarn build
+yarn start --smoke-test
+CI=true yarn test --watch=no
+popd
+
+# ******************************************************************************
+# Test create-react-app w/ shared comps inside workspace
+# ******************************************************************************
+pushd packages
+npx create-react-app --internal-testing-template="$root_path"/packages/react-scripts/fixtures/monorepos/cra-app cra-app2
+cd cra-app2
+yarn
 verifyBuild
 yarn start --smoke-test
 verifyTest
 
 # Test eject
+# TODO: veriy tests can be run from other apps after eject
+# -- will currently fail due to picking up ejected scripts/test.js
 echo yes | npm run eject
 verifyBuild
 yarn start --smoke-test
 verifyTest
+popd
 
-# ******************************************************************************
-# Test create-react-app inside workspace
-# ******************************************************************************
-# npx create-react-app --internal-testing-template="$root_path"/packages/react-scripts/fixtures/yarn-ws/ws/cra-app1 cra-app2
-# -- above needs https://github.com/facebookincubator/create-react-app/pull/3435 to user create-react-app
 popd
 
 # Cleanup

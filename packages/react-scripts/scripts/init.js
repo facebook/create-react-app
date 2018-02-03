@@ -75,6 +75,15 @@ function tryGitInit(appPath) {
   }
 }
 
+function isYarnAvailable() {
+  try {
+    execSync('yarnpkg --version', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 module.exports = function(
   appPath,
   appName,
@@ -89,7 +98,8 @@ module.exports = function(
     '..'
   );
   const appPackage = require(path.join(appPath, 'package.json'));
-  const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
+  const useYarn =
+    fs.existsSync(path.join(appPath, 'yarn.lock')) || isYarnAvailable();
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
