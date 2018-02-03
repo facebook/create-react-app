@@ -8,6 +8,10 @@
 // @remove-on-eject-end
 'use strict';
 
-const graphqlTransform = require('jest-transform-graphql');
+const loader = require('graphql-tag/loader');
 
-module.exports = graphqlTransform;
+module.exports = {
+  process(src) {
+    return loader.call({ cacheable() {} }, src);
+  },
+};
