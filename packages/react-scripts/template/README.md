@@ -1812,6 +1812,8 @@ After the user visits a page that has `unregister()`,
 the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
 it may take up to 24 hours for the cache to be invalidated.
 
+* To remove a file permanently from the cache, just add __ prefix to the file name.
+
 ### Offline-First Considerations
 
 1. Service workers [require HTTPS](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers#you_need_https),
