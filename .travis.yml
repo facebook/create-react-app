@@ -1,13 +1,9 @@
 ---
-# Use Ubuntu Precise instead of new default Trusty which cause build fail
-# with pre installed yarn v0.17.8
-# https://github.com/facebookincubator/create-react-app/issues/3054
-# TODO: remove after Trusty environment is updated with a lastet version of yarn
-dist: precise
+dist: trusty
 language: node_js
 node_js:
-  - 6
   - 8
+  - 9
 cache:
   directories:
   - node_modules
@@ -18,9 +14,8 @@ script:
  - 'if [ $TEST_SUITE = "simple" ]; then tasks/e2e-simple.sh; fi'
  - 'if [ $TEST_SUITE = "installs" ]; then tasks/e2e-installs.sh; fi'
  - 'if [ $TEST_SUITE = "kitchensink" ]; then tasks/e2e-kitchensink.sh; fi'
+ - 'if [ $TEST_SUITE = "old-node" ]; then tasks/e2e-old-node.sh; fi'
 env:
-  global:
-    - USE_YARN=no
   matrix:
     - TEST_SUITE=simple
     - TEST_SUITE=installs
@@ -28,8 +23,6 @@ env:
 matrix:
   include:
     - node_js: 0.10
-      env: TEST_SUITE=simple
-# There's a weird Yarn/Lerna bug related to prerelease versions.
-# TODO: reenable after we ship 1.0.
-#    - node_js: 6
-#      env: USE_YARN=yes TEST_SUITE=simple
+      env: TEST_SUITE=old-node
+    - node_js: 6
+      env: TEST_SUITE=kitchensink

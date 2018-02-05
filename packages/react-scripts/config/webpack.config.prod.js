@@ -9,6 +9,7 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -110,7 +111,8 @@ module.exports = {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     },
-    process.env.REACT_APP_TYPE === 'static' ? { static: paths.staticJs } : {}
+    fs.existsSync(paths.staticJs) ? { static: paths.staticJs } : {},
+    fs.existsSync(paths.polyfills) ? { polyfills: paths.polyfills } : {}
   ),
   output: {
     // The build folder.
@@ -118,7 +120,7 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].js',
+    filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
@@ -241,7 +243,7 @@ module.exports = {
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
             exclude: [
-              /\.js$/,
+              /\.(js|jsx|mjs)$/,
               /\.html$/,
               /\.json$/,
               /\.css/,
