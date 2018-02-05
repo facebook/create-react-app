@@ -10,12 +10,22 @@
 
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
-const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
+
+const watchOptions = {};
+
+// While Create React App does not use polling for watching files by default,
+// polling can occur if CHOKIDAR_USEPOLLING environment variable is
+// set to a truthy value. Excessive polling can cause CPU overloads
+// on some systems (see https://github.com/facebookincubator/create-react-app/issues/293),
+// which is why we ignore node_modules if polling is enforced.
+if (process.env.CHOKIDAR_USEPOLLING) {
+  watchOptions.ignored = /node_modules/;
+}
 
 module.exports = function(proxy, allowedHost) {
   return {
@@ -71,13 +81,7 @@ module.exports = function(proxy, allowedHost) {
     // WebpackDevServer is noisy by default so we emit custom message instead
     // by listening to the compiler events with `compiler.plugin` calls above.
     quiet: true,
-    // Reportedly, this avoids CPU overload on some systems.
-    // https://github.com/facebook/create-react-app/issues/293
-    // src/node_modules is not ignored to support absolute imports
-    // https://github.com/facebook/create-react-app/issues/1065
-    watchOptions: {
-      ignored: ignoredFiles(paths.appSrc),
-    },
+    watchOptions,
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === 'https',
     host: host,

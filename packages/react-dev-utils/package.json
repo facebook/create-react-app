@@ -20,7 +20,6 @@
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
     "getProcessForPort.js",
-    "ignoredFiles.js",
     "inquirer.js",
     "InterpolateHtmlPlugin.js",
     "launchEditor.js",
@@ -62,8 +61,5 @@
   },
   "devDependencies": {
     "jest": "22.1.2"
-  },
-  "scripts": {
-    "test": "jest"
   }
 }
