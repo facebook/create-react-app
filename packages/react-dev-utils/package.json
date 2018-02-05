@@ -1,11 +1,11 @@
 {
-  "name": "@lighting-beetle/light-react-dev-utils",
+  "name": "@lighting-beetle/lighter-react-dev-utils",
   "version": "1.0.0",
-  "description": "Webpack utilities used by Light",
-  "repository": "lighting-beetle/create-react-app",
+  "description": "Webpack utilities used by Lighter",
+  "repository": "lighting-beetle/lighter",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lightingbeetle/light-react-scripts"
+    "url": "https://github.com/lightingbeetle/lighter"
   },
   "engines": {
     "node": ">=6"

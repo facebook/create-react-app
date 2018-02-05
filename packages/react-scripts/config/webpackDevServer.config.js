@@ -8,9 +8,9 @@
 // @remove-on-eject-end
 'use strict';
 
-const errorOverlayMiddleware = require('@lighting-beetle/light-react-dev-utils/errorOverlayMiddleware');
-const noopServiceWorkerMiddleware = require('@lighting-beetle/light-react-dev-utils/noopServiceWorkerMiddleware');
-const ignoredFiles = require('@lighting-beetle/light-react-dev-utils/ignoredFiles');
+const errorOverlayMiddleware = require('@lighting-beetle/lighter-react-dev-utils/errorOverlayMiddleware');
+const noopServiceWorkerMiddleware = require('@lighting-beetle/lighter-react-dev-utils/noopServiceWorkerMiddleware');
+const ignoredFiles = require('@lighting-beetle/lighter-react-dev-utils/ignoredFiles');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
 
