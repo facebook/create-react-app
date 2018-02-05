@@ -23,8 +23,19 @@ const watchOptions = {};
 // set to a truthy value. Excessive polling can cause CPU overloads
 // on some systems (see https://github.com/facebookincubator/create-react-app/issues/293),
 // which is why we ignore node_modules if polling is enforced.
-if (process.env.CHOKIDAR_USEPOLLING) {
-  watchOptions.ignored = /node_modules/;
+const usePolling = process.env.CHOKIDAR_USEPOLLING;
+
+if (usePolling) {
+  const usePollingLower = usePolling.toLowerCase();
+
+  // Chokidar rules https://github.com/paulmillr/chokidar/blob/master/index.js#L99
+  if (
+    usePollingLower === 'true' ||
+    usePollingLower === '1' ||
+    !!usePollingLower
+  ) {
+    watchOptions.ignored = /node_modules/;
+  }
 }
 
 module.exports = function(proxy, allowedHost) {
