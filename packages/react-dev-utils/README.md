@@ -1,6 +1,6 @@
 # react-dev-utils
 
-This package includes some utilities used by [Create React App](https://github.com/facebookincubator/create-react-app).<br>
+This package includes some utilities used by [Lighter](https://github.com/lightingbeetle/lighter).<br>
 Please refer to its documentation:
 
 * [Getting Started](https://github.com/facebookincubator/create-react-app/blob/master/README.md#getting-started) – How to create a new app.

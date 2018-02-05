@@ -1,14 +1,14 @@
 {
-  "name": "@lighting-beetle/light-react-scripts",
+  "name": "@lighting-beetle/lighter-react-scripts",
   "version": "2.0.2",
-  "description": "Configuration and scripts for Light",
-  "repository": "lighting-beetle/create-react-app",
+  "description": "Configuration and scripts for Lighter",
+  "repository": "lighting-beetle/lighter",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/lightingbeetle/light-react-scripts"
+    "url": "https://github.com/lightingbeetle/lighter"
   },
   "files": [
     "bin",
@@ -18,10 +18,10 @@
     "utils"
   ],
   "bin": {
-    "light-react-scripts": "./bin/light-react-scripts.js"
+    "lighter-react-scripts": "./bin/lighter-react-scripts.js"
   },
   "dependencies": {
-    "@lighting-beetle/light-react-dev-utils": "~1.0.0",
+    "@lighting-beetle/lighter-react-dev-utils": "~1.0.0",
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
