@@ -36,10 +36,10 @@ const fs = require('fs-extra');
 const webpack = require('webpack');
 const configFactory = require('../config/webpack.config');
 const paths = require('../config/paths');
-const checkRequiredFiles = require('@lighting-beetle/light-react-dev-utils/checkRequiredFiles');
-const formatWebpackMessages = require('@lighting-beetle/light-react-dev-utils/formatWebpackMessages');
-const FileSizeReporter = require('@lighting-beetle/light-react-dev-utils/FileSizeReporter');
-const printBuildError = require('@lighting-beetle/light-react-dev-utils/printBuildError');
+const checkRequiredFiles = require('@lighting-beetle/lighter-react-dev-utils/checkRequiredFiles');
+const formatWebpackMessages = require('@lighting-beetle/lighter-react-dev-utils/formatWebpackMessages');
+const FileSizeReporter = require('@lighting-beetle/lighter-react-dev-utils/FileSizeReporter');
+const printBuildError = require('@lighting-beetle/lighter-react-dev-utils/printBuildError');
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
