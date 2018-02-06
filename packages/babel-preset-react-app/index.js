@@ -38,6 +38,8 @@ const plugins = [
       regenerator: true,
     },
   ],
+  require.resolve('babel-plugin-styled-components'),
+  require.resolve('babel-plugin-transform-async-to-generator'),
 ];
 
 // This is similar to how `env` works in Babel:
