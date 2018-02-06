@@ -1,0 +1,16 @@
+[ignore]
+/flow-typed
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=src
+module.ignore_non_literal_requires=true
+emoji=true
+
+[strict]
