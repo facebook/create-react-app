@@ -41,6 +41,26 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    precommit: 'lint-staged',
+    postcommit: 'git reset',
+  };
+
+  // Add prettier
+  appPackage.prettier = {
+    printWidth: 80,
+    tabWidth: 2,
+    useTabs: false,
+    semi: true,
+    singleQuote: true,
+    trailingComma: 'none',
+    bracketSpacing: true,
+    jsxBracketSameLine: true,
+    requirePragma: false,
+  };
+
+  // Add precommit hooks
+  appPackage['lint-staged'] = {
+    '*.js': ['./node_modules/.bin/prettier --write', 'git add'],
   };
 
   fs.writeFileSync(
@@ -128,6 +148,26 @@ module.exports = function(
       console.error(`\`${command} ${args.join(' ')}\` failed`);
       return;
     }
+  }
+
+  // Init a git repo and commit an initial commit
+  const gitProc = spawn.sync('git', ['init'], { stdio: 'inherit' });
+  if (gitProc.status !== 0) {
+    console.error(`Failed to initialize git`);
+    return;
+  }
+
+  // install husky (this is done here so it installs git hooks after the git repo was initialized
+  const installArgs =
+    command === 'yarnpkg'
+      ? ['add', 'husky', '--dev']
+      : ['install', '--save-dev', 'husky'];
+  const installGitHooksProc = spawn.sync(command, installArgs, {
+    stdio: 'inherit',
+  });
+  if (installGitHooksProc.status !== 0) {
+    console.error(`Failed to install git hooks`);
+    return;
   }
 
   // Display the most elegant way to cd.

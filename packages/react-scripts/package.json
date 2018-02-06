@@ -73,16 +73,32 @@
     "webpack": "3.8.1",
     "webpack-dev-server": "2.9.4",
     "webpack-manifest-plugin": "1.3.2",
-    "whatwg-fetch": "2.0.3"
+    "whatwg-fetch": "2.0.3",
+    "lint-staged": "6.1.0",
+    "prettier": "1.10.2"
   },
   "devDependencies": {
-    "husky": "^0.14.3",
-    "lint-staged": "^6.1.0",
-    "prettier": "^1.10.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
   },
   "optionalDependencies": {
     "fsevents": "1.1.2"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": true,
+    "requirePragma": false
+  },
+  "lint-staged": {
+    "*.js": [
+      "./node_modules/.bin/prettier --write",
+      "git add"
+    ]
   }
 }
