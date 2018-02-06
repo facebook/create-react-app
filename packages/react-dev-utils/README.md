@@ -287,6 +287,32 @@ const publicPath = config.output.publicPath;
 printHostingInstructions(appPackage, publicUrl, publicPath, 'build', true);
 ```
 
+#### `checkShouldIgnoreNodeModules(): boolean`
+
+Checks if `node_modules` should be ignored from file watching.<br>
+Excessive polling can cause CPU overloads on some systems (see https://github.com/facebookincubator/create-react-app/issues/293), so we use two heuristics to determine if `chokidar` file watching is going to use polling:
+
+- The state of the `process.env.CHOKIDAR_USEPOLLING` environment variable
+- The existence of `fsevents` module on OSX.
+
+If the environment variable is truthy, or `fsevent` either doesn't exist or it fails to load, polling is enforced and we
+we ignore node_modules.
+
+```js
+const WebpackDevServer = require('webpack-dev-server');
+const shouldIgnoreNodeModules = require('react-dev-utils/checkShouldIgnoreNodeModules');
+const watchOptions = {};
+
+if (shouldIgnoreNodeModules) {
+  watchOptions.ignored = /node_modules;
+}
+
+const compiler = /**/
+const server = new WebpackDevServer(compiler, {
+  watchOptions,
+});
+```
+
 #### `WebpackDevServerUtils`
 
 ##### `choosePort(host: string, defaultPort: number): Promise<number | null>`

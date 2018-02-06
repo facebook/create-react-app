@@ -10,6 +10,7 @@
 
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
+const shouldIgnoreNodeModules = require('react-dev-utils/shouldIgnoreNodeModules');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
 
@@ -18,24 +19,8 @@ const host = process.env.HOST || '0.0.0.0';
 
 const watchOptions = {};
 
-// While Create React App does not use polling for watching files by default,
-// polling can occur if CHOKIDAR_USEPOLLING environment variable is
-// set to a truthy value. Excessive polling can cause CPU overloads
-// on some systems (see https://github.com/facebookincubator/create-react-app/issues/293),
-// which is why we ignore node_modules if polling is enforced.
-const usePolling = process.env.CHOKIDAR_USEPOLLING;
-
-if (usePolling) {
-  const usePollingLower = usePolling.toLowerCase();
-
-  // Chokidar rules https://github.com/paulmillr/chokidar/blob/master/index.js#L99
-  if (
-    usePollingLower === 'true' ||
-    usePollingLower === '1' ||
-    !!usePollingLower
-  ) {
-    watchOptions.ignored = /node_modules/;
-  }
+if (shouldIgnoreNodeModules) {
+  watchOptions.ignored = /node_modules/;
 }
 
 module.exports = function(proxy, allowedHost) {
