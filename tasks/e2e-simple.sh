@@ -115,10 +115,6 @@ if [ $APPVEYOR != 'True' ]; then
 fi
 cd ../..
 
-cd packages/react-dev-utils/
-yarn test
-cd ../..
-
 cd packages/confusing-browser-globals/
 yarn test
 cd ../..
