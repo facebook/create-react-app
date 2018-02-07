@@ -193,7 +193,7 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,
+            test: /\.(css|scss)$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -230,6 +230,13 @@ module.exports = {
                             flexbox: 'no-2009',
                           }),
                         ],
+                        sourceMap: true,
+                      },
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        sourceMap: true,
                       },
                     },
                   ],
@@ -319,7 +326,7 @@ module.exports = {
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
-      publicPath: publicPath
+      publicPath: publicPath,
     }),
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.

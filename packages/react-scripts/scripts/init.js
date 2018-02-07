@@ -43,6 +43,7 @@ module.exports = function(
     eject: 'react-scripts eject',
     precommit: 'lint-staged',
     postcommit: 'git reset',
+    flow: 'flow',
   };
 
   // Add prettier
@@ -157,11 +158,11 @@ module.exports = function(
     return;
   }
 
-  // install husky (this is done here so it installs git hooks after the git repo was initialized
+  // install husky and flow-bin (this is done here so it installs git hooks after the git repo was initialized
   const installArgs =
     command === 'yarnpkg'
-      ? ['add', 'husky', '--dev']
-      : ['install', '--save-dev', 'husky'];
+      ? ['add', 'husky', 'flow-bin', '--dev']
+      : ['install', '--save-dev', 'husky', 'flow-bin'];
   const installGitHooksProc = spawn.sync(command, installArgs, {
     stdio: 'inherit',
   });

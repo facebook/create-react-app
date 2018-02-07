@@ -208,6 +208,7 @@ module.exports = {
                       flexbox: 'no-2009',
                     }),
                   ],
+                  sourceMap: true,
                 },
               },
               {
