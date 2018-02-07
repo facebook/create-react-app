@@ -13,10 +13,10 @@ const initialState: NetworkState = {};
 
 const networkReducer = handleActions(
   {
-    [AT.START_NETWORK]: (state: NetworkState, { payload: { label } }: Action): NetworkState =>
+    [AT.START_NETWORK]: (state: NetworkState, { payload: { label } = {} }: Action): NetworkState =>
       set(label, state[label] ? state[label] + 1 : 1, state),
 
-    [AT.END_NETWORK]: (state: NetworkState, { payload: { label } }: Action): NetworkState =>
+    [AT.END_NETWORK]: (state: NetworkState, { payload: { label } = {} }: Action): NetworkState =>
       set(label, state[label] ? state[label] - 1 : 0, state),
   },
   initialState

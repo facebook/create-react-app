@@ -6,7 +6,7 @@ import type { NetworkState } from 'reducers/network.reducer';
 
 const networkSelector = (state: State): NetworkState => state.network;
 
-export const isLoadingSelector = (state: NetworkState, label: string): boolean =>
+export const isLoadingSelector = (state: State, label: string): boolean =>
   createSelector(
     networkSelector,
     (network: NetworkState) => typeof network[label] !== 'undefined' && network[label] !== 0
