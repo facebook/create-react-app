@@ -4,7 +4,7 @@ import { handleActions } from 'redux-actions';
 
 import { Action } from 'types/redux.types';
 
-import * as LOCALIZATION from 'actions/localization.actions';
+import * as AT from 'actions/localization.actions';
 
 export type LocalizationState = {|
   locale: string,
@@ -16,7 +16,7 @@ const initialState: LocalizationState = {
 
 const localizationReducer = handleActions(
   {
-    [LOCALIZATION.SET]: (
+    [AT.SET_LOCALE]: (
       state: LocalizationState,
       { payload: { locale } }: Action
     ): LocalizationState => set('locale', locale, state),

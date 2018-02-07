@@ -1,50 +1,32 @@
 // @flow
-import { stringify } from 'query-string';
-import superagent from 'superagent';
 import { get } from 'lodash/fp';
 
-import * as NETWORK from 'actions/network.actions';
+import apiUtils from 'utils/api.utils';
 import { startNetwork, endNetwork } from 'actions/network.actions';
 
 import { Middleware } from 'types/redux.types';
 // import type { Middleware } from 'redux'; doesn't work?
 
-console.log(superagent);
-
-type Params = {
-  headers: Object,
-  data?: string,
-} & RequestOptions;
-
 const apiMiddleware: Middleware = ({ dispatch, getState }) => next => action => {
-  if (action.type !== NETWORK.API) {
+  if (!get('meta.api', action)) {
     return next(action);
   }
-  
-  let { url } = action.payload;
-  const { label, data, method = 'GET' } = action.payload;
-  const request = superagent(method, url).set('Accept', 'application/json');
-  
-  if (data) {
-    if (method === 'GET') {
-      request.query(data);
-    } else {
-      request.send(data)
-        .set('Content-type', 'application/json');
-    }
-  }
 
-  if (getState().user.token) {
-    request.set('auth', getState().user.token);
-  }
+  let { url, onSuccess, onError } = action.payload;
+  const { label, data, method = 'GET' } = action.payload;
+  const headers = {};
+  // TODO: if using token authentication
+  // if (getState().user.token) {
+  //   headers['auth'] = getState().user.token;
+  // }
 
   dispatch(startNetwork(label));
 
-  return request
+  apiUtils.request({ method, url, data, headers })
     .then(({ body }) => {
       dispatch(endNetwork(label));
 
-      return body;
+      if (onSuccess) onSuccess(body, dispatch);
     })
     .catch(error => {
       console.error('API error', error, action);
@@ -55,8 +37,10 @@ const apiMiddleware: Middleware = ({ dispatch, getState }) => next => action => 
         // TODO: handle 401
       }
 
-      return error;
+      if (onError) onError(error, dispatch);
     });
+
+  return next(action);
 };
 
 export default apiMiddleware;

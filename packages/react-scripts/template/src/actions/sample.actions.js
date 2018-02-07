@@ -1,24 +1,26 @@
-import { API } from './network.actions';
+// TODO: remove this file
 import { fetchPostsUrl } from '../constants/api.constants';
-import type { Posts } from 'types/api.types';
+import type { Posts } from 'types/sample.types';
+import type { ActionCreator, ApiAction } from 'types/redux.types';
 
-export const SET = '[posts] Set';
+export const FETCH_POSTS = '[posts] Fetch Posts';
+export const SET_POSTS = '[posts] Set Posts';
 
-export const fetchPosts: ThunkActionCreator = () => (dispatch: Dispatch) => {
-  return dispatch({
-    type: API,
-    payload: {
-      label: 'posts',
-      method: 'get',
-      url: fetchPostsUrl()
-    }
-  }).then((posts: Posts) => {
-    dispatch(setPosts(posts));
-  });
-};
+export const fetchPosts: ActionCreator = (): ApiAction => ({
+  type: FETCH_POSTS,
+  payload: {
+    label: 'posts',
+    method: 'GET',
+    url: fetchPostsUrl(),
+    onSuccess: (posts, dispatch) => dispatch(setPosts(posts))
+  },
+  meta: {
+    api: true
+  }
+});
 
 const setPosts: ActionCreator = (posts: Posts) => ({
-  type: SET,
+  type: SET_POSTS,
   payload: {
     posts
   }

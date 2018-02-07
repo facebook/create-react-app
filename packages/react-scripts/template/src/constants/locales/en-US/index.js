@@ -1,5 +1,6 @@
 // @flow
 import type { Locale } from 'types/common.types';
+import translations from './translations.json';
 
 const enUS: Locale = {
   dateTimeFormat: {
@@ -13,9 +14,7 @@ const enUS: Locale = {
       dow: 1,
     },
   },
-  translations: {
-    'homepage.title': 'Hello World',
-  },
+  translations,
 };
 
 export default enUS;
