@@ -8,3 +8,5 @@
 - Locale switcher
 - redux-freeze
 - remove // @flow
+- try to use redux types
+- fix redux types - state & state....

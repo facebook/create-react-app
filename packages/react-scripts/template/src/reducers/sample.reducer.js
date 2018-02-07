@@ -1,6 +1,6 @@
 // @flow
 // TODO: remove this file
-import { set, keyBy } from 'lodash/fp';
+import { get, set, keyBy } from 'lodash/fp';
 import { handleActions } from 'redux-actions';
 
 import type { Action } from 'types/redux.types';
@@ -8,20 +8,20 @@ import type { PostsMap } from 'types/sample.types';
 
 import * as AT from 'actions/sample.actions';
 
-export type PostsState = {|
+export type SampleState = {|
   posts: PostsMap,
 |};
 
-const initialState: PostsState = {
+const initialState: SampleState = {
   posts: {},
 };
 
 const sampleReducer = handleActions(
   {
     [AT.SET_POSTS]: (
-      state: PostsState,
-      { payload: { posts } }: Action
-    ): PostsState => set('posts', keyBy('id', posts), state),
+      state: SampleState,
+      action: Action
+    ): SampleState => set('posts', keyBy('id', get('payload.posts', action)), state),
   },
   initialState
 );

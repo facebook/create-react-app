@@ -1,3 +1,4 @@
+// @flow
 import enUS from 'constants/locales/en-US';
 
 export default {

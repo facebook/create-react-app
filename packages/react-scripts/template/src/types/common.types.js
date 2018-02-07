@@ -3,7 +3,7 @@ export type Translations = {
   [key: string]: string,
 };
 
-export type DateTimeFormat = {
+export type DateTimeFormat = {|
   parentLocale: string,
   longDateFormat: {
     LT: string,
@@ -13,9 +13,9 @@ export type DateTimeFormat = {
   week: {
     dow: number,
   },
-};
+|};
 
-export type Locale = {
+export type Locale = {|
   dateTimeFormat: DateTimeFormat,
   translations: Translations,
-};
+|};

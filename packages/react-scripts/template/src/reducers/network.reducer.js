@@ -3,7 +3,7 @@ import { set } from 'lodash/fp';
 import { handleActions } from 'redux-actions';
 
 import * as AT from 'actions/network.actions';
-import { Action } from 'types/redux.types'; // TODO: from redux?
+import type { Action } from 'types/redux.types'; // TODO: from redux?
 
 export type NetworkState = {
   [key: string]: number

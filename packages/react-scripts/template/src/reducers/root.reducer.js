@@ -1,3 +1,4 @@
+// @flow
 import { combineReducers } from 'redux';
 
 import network from 'reducers/network.reducer';

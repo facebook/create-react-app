@@ -4,21 +4,21 @@ import { get } from 'lodash/fp';
 import apiUtils from 'utils/api.utils';
 import { startNetwork, endNetwork } from 'actions/network.actions';
 
-import { Middleware } from 'types/redux.types';
+import type { Middleware } from 'types/redux.types';
 // import type { Middleware } from 'redux'; doesn't work?
 
 const apiMiddleware: Middleware = ({ dispatch, getState }) => next => action => {
   if (!get('meta.api', action)) {
     return next(action);
   }
-
-  let { url, onSuccess, onError } = action.payload;
-  const { label, data, method = 'GET' } = action.payload;
+  const { payload } = action;
+  const { url, onSuccess, onError } = payload || {};
+  const { label, data, method = 'GET' } = payload || {};
   const headers = {};
   // TODO: if using token authentication
   // if (getState().user.token) {
   //   headers['auth'] = getState().user.token;
-  // }
+  // } 
 
   dispatch(startNetwork(label));
 

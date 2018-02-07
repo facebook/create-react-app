@@ -50,8 +50,11 @@ class Home extends React.Component<ConnectedProps & OwnProps> {
 
     return (
       <StyledContainer>
+        <h1>Welcome to the 500Tech boilerplate</h1>
+        <h3>To get started, search your project for // TODO<br />
+          This is a sample component that uses a sample action + reducer, it fetches posts from a remote server and displays them</h3>
         <img src="https://www.materialui.co/materialIcons/navigation/refresh_grey_192x192.png" alt="refresh" onClick={this.refresh} />
-        <h2>Posts</h2>
+        <h2>Posts from remote server</h2>
         {
           isLoading
             ? <div>loading...</div>
@@ -64,7 +67,7 @@ class Home extends React.Component<ConnectedProps & OwnProps> {
 
 const StyledContainer = styled.div`
   padding: 50px;
-  img { cursor: pointer; width: 35px }
+  img { cursor: pointer; width: 35px; float: left }
 `;
 
 const StyledPost = styled.div`
