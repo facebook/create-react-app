@@ -120,7 +120,7 @@ if (useTemplate) {
 
 module.exports.srcPaths = [module.exports.appSrc];
 
-const findPkgs = (rootPath, globPatterns = []) => {
+const findPkgs = (rootPath, globPatterns) => {
   const globOpts = {
     cwd: rootPath,
     strict: true,
