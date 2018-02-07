@@ -1,5 +1,5 @@
 {
-  "name": "react-scripts",
+  "name": "@500tech/react-scripts",
   "version": "1.1.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
@@ -28,7 +28,7 @@
     "babel-loader": "7.1.2",
     "babel-plugin-styled-components": "^1.5.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-preset-react-app": "^3.1.1",
+    "@500tech/babel-preset-react-app": "^3.1.1",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "chalk": "1.1.3",
