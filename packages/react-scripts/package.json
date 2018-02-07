@@ -1,6 +1,6 @@
 {
   "name": "@500tech/react-scripts",
-  "version": "1.1.0",
+  "version": "1.1.0-1",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -22,6 +22,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@500tech/babel-preset-react-app": "^3.1.1",
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
@@ -29,7 +30,6 @@
     "babel-loader": "7.1.2",
     "babel-plugin-styled-components": "^1.5.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "@500tech/babel-preset-react-app": "^3.1.1",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "chalk": "1.1.3",
