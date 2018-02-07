@@ -151,26 +151,6 @@ module.exports = function(
     }
   }
 
-  // Init a git repo and commit an initial commit
-  const gitProc = spawn.sync('git', ['init'], { stdio: 'inherit' });
-  if (gitProc.status !== 0) {
-    console.error(`Failed to initialize git`);
-    return;
-  }
-
-  // install husky and flow-bin (this is done here so it installs git hooks after the git repo was initialized
-  const installArgs =
-    command === 'yarnpkg'
-      ? ['add', 'husky', 'flow-bin', '--dev']
-      : ['install', '--save-dev', 'husky', 'flow-bin'];
-  const installGitHooksProc = spawn.sync(command, installArgs, {
-    stdio: 'inherit',
-  });
-  if (installGitHooksProc.status !== 0) {
-    console.error(`Failed to install git hooks`);
-    return;
-  }
-
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for
   // backward compatibility with old global-cli's.
