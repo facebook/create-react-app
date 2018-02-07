@@ -52,6 +52,14 @@ module.exports = (resolve, rootDir, isEjecting) => {
       'jsx',
       'node',
     ],
+    moduleDirectories: [
+      'node_modules',
+      'src'
+    ],
+    'modulePaths': [
+      '/app',
+      '<rootDir>'
+    ]
   };
   if (rootDir) {
     config.rootDir = rootDir;
