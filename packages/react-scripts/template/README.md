@@ -7,3 +7,4 @@
 - Debug menu
 - Locale switcher
 - redux-freeze
+- remove // @flow
