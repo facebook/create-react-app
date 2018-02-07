@@ -4,6 +4,7 @@
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
+  "private": false,
   "engines": {
     "node": ">=6"
   },
