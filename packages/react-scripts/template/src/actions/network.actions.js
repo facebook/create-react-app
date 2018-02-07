@@ -1,18 +1,19 @@
 // @flow
 import type { ActionCreator } from 'types/redux.types';
 
-export const START_NETWORK: string = '[network] Start';
-export const END_NETWORK: string = '[network] End';
+export const API: string = '[network] API';
+export const START: string = '[network] Start';
+export const END: string = '[network] End';
 
 export const startNetwork: ActionCreator = (label: string) => ({
-  type: START_NETWORK,
+  type: START,
   payload: {
     label,
   },
 });
 
 export const endNetwork: ActionCreator = (label: string) => ({
-  type: END_NETWORK,
+  type: END,
   payload: {
     label,
   },

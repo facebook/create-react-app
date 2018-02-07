@@ -58,6 +58,7 @@
     "raf": "3.4.0",
     "react-dev-utils": "^5.0.0",
     "react-intl": "2.4.0",
+    "react-redux": "5.0.6",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",

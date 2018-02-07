@@ -3,12 +3,13 @@ import { stringify } from 'query-string';
 import superagent from 'superagent';
 import { get } from 'lodash/fp';
 
-import * as AT from 'constants/action-types.constants';
+import * as NETWORK from 'actions/network.actions';
 import { startNetwork, endNetwork } from 'actions/network.actions';
-import { SERVER_URL } from 'constants/api.constants';
 
 import { Middleware } from 'types/redux.types';
 // import type { Middleware } from 'redux'; doesn't work?
+
+console.log(superagent);
 
 type Params = {
   headers: Object,
@@ -16,43 +17,34 @@ type Params = {
 } & RequestOptions;
 
 const apiMiddleware: Middleware = ({ dispatch, getState }) => next => action => {
-  if (action.type !== AT.API) {
+  if (action.type !== NETWORK.API) {
     return next(action);
   }
-
+  
   let { url } = action.payload;
-  const { label, data, method = 'get' } = action.payload;
-
-  const params: Params = {
-    method,
-    headers: {},
-    withCredentials: true,
-  };
-
+  const { label, data, method = 'GET' } = action.payload;
+  const request = superagent(method, url).set('Accept', 'application/json');
+  
   if (data) {
-    if (method === 'get') {
-      url = url + '?' + stringify(data);
+    if (method === 'GET') {
+      request.query(data);
     } else {
-      params.data = JSON.stringify(data);
-      params.headers['Content-type'] = 'application/json';
+      request.send(data)
+        .set('Content-type', 'application/json');
     }
   }
 
   if (getState().user.token) {
-    params.headers['auth'] = getState().user.token;
+    request.set('auth', getState().user.token);
   }
 
   dispatch(startNetwork(label));
 
-  return superagent
-    .request({
-      ...params,
-      url: SERVER_URL + url,
-    })
-    .then(({ data }) => {
+  return request
+    .then(({ body }) => {
       dispatch(endNetwork(label));
 
-      return data;
+      return body;
     })
     .catch(error => {
       console.error('API error', error, action);

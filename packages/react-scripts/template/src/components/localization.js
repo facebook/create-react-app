@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import moment from 'moment';
 
-import { store } from 'store';
+import store from 'store';
 
 import locales from 'constants/locales';
 
