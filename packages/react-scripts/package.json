@@ -34,7 +34,7 @@
     "chalk": "2.3.0",
     "css-loader": "0.28.9",
     "dotenv": "4.0.0",
-    "dotenv-expand": "4.0.1",
+    "dotenv-expand": "4.2.0",
     "eslint": "4.15.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "1.9.0",
