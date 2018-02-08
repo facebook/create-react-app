@@ -1,15 +1,6 @@
-// @remove-on-eject-begin
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-// @remove-on-eject-end
 'use strict';
 
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -21,11 +12,9 @@ const ModuleScopePlugin = require('@lighting-beetle/lighter-react-dev-utils/Modu
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
-const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
-const FilterWarningsPLugin = require('webpack-filter-warnings-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const { JSDOM } = require('jsdom');
+const FilterWarningsPLugin = require('webpack-filter-warnings-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -49,7 +38,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = 'static/css/[name].[contenthash:8].css';
+const cssFilename = 'lib/[name].css';
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -101,27 +90,18 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: Object.assign(
-    {},
-    {
-      // Finally, this is your app's code:
-      app: paths.appIndexJs,
-      styleguide: paths.styleguideIndexJs,
-      // We include the app code last so that if there is a runtime error during
-      // initialization, it doesn't blow up the WebpackDevServer client, and
-      // changing JS code would still trigger a refresh.
-    },
-    fs.existsSync(paths.staticJs) ? { static: paths.staticJs } : {},
-    fs.existsSync(paths.polyfills) ? { polyfills: paths.polyfills } : {}
-  ),
+  entry: {
+    // Finally, this is your app's code:
+    components: paths.componentsJs,
+  },
   output: {
     // The build folder.
     path: paths.appBuild,
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].[chunkhash:8].js',
-    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+    filename: 'lib/[name].js',
+    chunkFilename: 'lib/[name].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
@@ -213,7 +193,7 @@ module.exports = {
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: 'lib/[name].[hash:8].[ext]',
             },
           },
           // Process JS with Babel.
@@ -251,7 +231,7 @@ module.exports = {
               /\.svg$/,
             ],
             options: {
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: 'lib/[name].[hash:8].[ext]',
             },
           },
         ],
@@ -299,21 +279,7 @@ module.exports = {
             loader: require.resolve('svg-sprite-loader'),
             options: {
               extract: true,
-              spriteFilename: 'sprite-app.svg',
-            },
-          },
-          svgoLoader,
-        ],
-      },
-      {
-        test: /\.svg$/,
-        include: paths.iconsSG,
-        use: [
-          {
-            loader: require.resolve('svg-sprite-loader'),
-            options: {
-              extract: true,
-              spriteFilename: 'sprite-sg.svg',
+              spriteFilename: 'lib/sprite.svg',
             },
           },
           svgoLoader,
@@ -322,10 +288,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new StaticSiteGeneratorPlugin({
-      entry: 'app',
-      globals: new JSDOM().window,
-    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
