@@ -1844,13 +1844,6 @@ serviceWorker.unregister();
 As the comment states, switching `serviceWorker.unregister()` to
 `serviceWorker.register()` will opt you in to using the service worker.
 
->Note: In the current version of `create-react-app`, opting-in is required for
-all developers who want offline-first behavior, even if you've previously
-deployed a version of your web app which used a service worker. If you redeploy
-your web app, but do not change `serviceWorker.unregister()` to
-`serviceWorker.register()`, then users will have their previous service worker
-registration removed the next time they visit your web app.
-
 ### Why Opt-in?
 
 Offline-first Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
@@ -1866,12 +1859,8 @@ precache all of your local assets and keep them up to date as you deploy updates
 The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
 for handling all requests for local assets, including
 [navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
-for `/` and `/index.html`, ensuring that your web app is consistently fast, even
-on a slow or unreliable network.
-
->Note: If you are using the `pushState` history API and want to enable
-cache-first navigations for URLs other than `/` and `/index.html`, please
-[follow these steps](#service-worker-considerations).
+for your HTML, ensuring that your web app is consistently fast, even on a slow
+or unreliable network.
 
 ### Offline-First Considerations
 
@@ -2064,27 +2053,20 @@ If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
-When users install your app to the homescreen of their device the default configuration will make a shortcut to `/`. This may not work if you don't use a client-side router and expect the app to be served from `/index.html`. In this case, the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to `./index.html`.
-
-### Service Worker Considerations
-
-[Navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
-for URLs like `/todos/42` will not be intercepted by the
-[service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers)
-created by the production build. Navigations for those URLs will always
-require a network connection, as opposed to navigations for `/` and
-`/index.html`, both of which will be served from the cache by the service worker
-and work without requiring a network connection.
-
-If you are using the `pushState` history API and would like to enable service
-worker support for navigations to URLs like `/todos/42`, you need to
-[`npm eject`](#npm-run-eject) and enable the [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
+On a production build, and when you've [opted-in](#why-opt-in),
+a [service worker](https://developers.google.com/web/fundamentals/primers/service-workers/) will automatically handle all navigation requests, like for
+`/todos/42`, by serving the cached copy of your `index.html`. This
+service worker navigation routing can be configured or disabled by
+[`eject`ing](#npm-run-eject) and then modifying the
+[`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
 options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
 
->Note: This is a [change in default behavior](https://github.com/facebookincubator/create-react-app/issues/3248),
-as earlier versions of `create-react-app` shipping with `navigateFallback`
-enabled by default.
+When users install your app to the homescreen of their device the default configuration will make a shortcut to `/index.html`. This may not work for client-side routers which expect the app to be served from `/`. Edit the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to match the required URL scheme, for example:
+
+```js
+  "start_url": ".",
+```
 
 ### Building for Relative Paths
 
