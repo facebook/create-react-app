@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest"
   },
-  "repository": "facebookincubator/create-react-app",
+  "repository": "facebook/create-react-app",
   "keywords": [
     "eslint",
     "globals"

@@ -146,10 +146,6 @@ PORT=3001 \
   nohup yarn start &>$tmp_server_log &
 grep -q 'You can now view' <(tail -f $tmp_server_log)
 
-# Before running Mocha, specify that it should use our preset
-# TODO: this is very hacky and we should find some other solution
-echo '{"presets":["react-app"]}' > .babelrc
-
 # Test "development" environment
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -165,10 +161,6 @@ E2E_FILE=./build/index.html \
   BABEL_ENV=test \
   PUBLIC_URL=http://www.example.org/spa/ \
   node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
-
-# Remove the config we just created for Mocha
-# TODO: this is very hacky and we should find some other solution
-rm .babelrc
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.

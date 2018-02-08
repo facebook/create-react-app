@@ -2,10 +2,10 @@
   "name": "react-dev-utils",
   "version": "5.0.0",
   "description": "Webpack utilities used by Create React App",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "facebook/create-react-app",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/facebook/create-react-app/issues"
   },
   "engines": {
     "node": ">=6"

@@ -60,7 +60,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // package.json
 const postCSSLoaderOptions = {
   // Necessary for external CSS imports to work
-  // https://github.com/facebookincubator/create-react-app/issues/2677
+  // https://github.com/facebook/create-react-app/issues/2677
   ident: 'postcss',
   plugins: () => [
     require('postcss-flexbugs-fixes'),
@@ -101,7 +101,7 @@ module.exports = {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
-    // https://github.com/facebookincubator/create-react-app/issues/253
+    // https://github.com/facebook/create-react-app/issues/253
     modules: ['node_modules'].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
@@ -109,7 +109,7 @@ module.exports = {
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
-    // https://github.com/facebookincubator/create-react-app/issues/290
+    // https://github.com/facebook/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
@@ -152,12 +152,12 @@ module.exports = {
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
-              // @remove-on-eject-begin
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
               baseConfig: {
                 extends: [require.resolve('eslint-config-react-app')],
               },
+              // @remove-on-eject-begin
               ignore: false,
               useEslintrc: false,
               // @remove-on-eject-end
@@ -165,7 +165,8 @@ module.exports = {
             loader: require.resolve('eslint-loader'),
           },
         ],
-        include: paths.appSrc,
+        include: paths.srcPaths,
+        exclude: [/[/\\\\]node_modules[/\\\\]/],
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -186,7 +187,8 @@ module.exports = {
           // The preset includes JSX, Flow, and some ESnext features.
           {
             test: /\.(js|jsx|mjs)$/,
-            include: paths.appSrc,
+            include: paths.srcPaths,
+            exclude: [/[/\\\\]node_modules[/\\\\]/],
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
@@ -196,8 +198,20 @@ module.exports = {
                 options: {
                   // @remove-on-eject-begin
                   babelrc: false,
-                  presets: [require.resolve('babel-preset-react-app')],
                   // @remove-on-eject-end
+                  presets: [require.resolve('babel-preset-react-app')],
+                  plugins: [
+                    [
+                      require.resolve('babel-plugin-named-asset-import'),
+                      {
+                        loaderMap: {
+                          svg: {
+                            ReactComponent: 'svgr/webpack![path]',
+                          },
+                        },
+                      },
+                    ],
+                  ],
                   compact: true,
                   highlightCode: true,
                 },
@@ -306,30 +320,10 @@ module.exports = {
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
-          // Allows you to use two kinds of imports for SVG:
-          // import logoUrl from './logo.svg'; gives you the URL.
-          // import { ReactComponent as Logo } from './logo.svg'; gives you a component.
+          // The GraphQL loader preprocesses GraphQL queries in .graphql files.
           {
-            test: /\.svg$/,
-            use: [
-              {
-                loader: require.resolve('babel-loader'),
-                options: {
-                  // @remove-on-eject-begin
-                  babelrc: false,
-                  presets: [require.resolve('babel-preset-react-app')],
-                  // @remove-on-eject-end
-                  cacheDirectory: true,
-                },
-              },
-              require.resolve('svgr/webpack'),
-              {
-                loader: require.resolve('file-loader'),
-                options: {
-                  name: 'static/media/[name].[hash:8].[ext]',
-                },
-              },
-            ],
+            test: /\.(graphql)$/,
+            loader: 'graphql-tag/loader',
           },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
@@ -388,7 +382,7 @@ module.exports = {
         compress: {
           warnings: false,
           // Disabled because of an issue with Uglify breaking seemingly valid code:
-          // https://github.com/facebookincubator/create-react-app/issues/2376
+          // https://github.com/facebook/create-react-app/issues/2376
           // Pending further investigation:
           // https://github.com/mishoo/UglifyJS2/issues/2011
           comparisons: false,
@@ -399,7 +393,7 @@ module.exports = {
         output: {
           comments: false,
           // Turned on because emoji and regex is not minified properly using default
-          // https://github.com/facebookincubator/create-react-app/issues/2488
+          // https://github.com/facebook/create-react-app/issues/2488
           ascii_only: true,
         },
       },
@@ -436,7 +430,7 @@ module.exports = {
         }
         if (message.indexOf('Skipping static resource') === 0) {
           // This message obscures real errors so we ignore it.
-          // https://github.com/facebookincubator/create-react-app/issues/2612
+          // https://github.com/facebook/create-react-app/issues/2612
           return;
         }
         console.log(message);

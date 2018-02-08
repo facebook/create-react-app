@@ -57,6 +57,8 @@ const COMMON_EDITORS_OSX = {
   '/Applications/WebStorm.app/Contents/MacOS/webstorm':
     '/Applications/WebStorm.app/Contents/MacOS/webstorm',
   '/Applications/MacVim.app/Contents/MacOS/MacVim': 'mvim',
+  '/Applications/GoLand.app/Contents/MacOS/goland':
+    '/Applications/GoLand.app/Contents/MacOS/goland',
 };
 
 const COMMON_EDITORS_LINUX = {
@@ -72,6 +74,7 @@ const COMMON_EDITORS_LINUX = {
   sublime_text: 'sublime_text',
   vim: 'vim',
   'webstorm.sh': 'webstorm',
+  'goland.sh': 'goland',
 };
 
 const COMMON_EDITORS_WIN = [
@@ -93,6 +96,8 @@ const COMMON_EDITORS_WIN = [
   'rubymine64.exe',
   'webstorm.exe',
   'webstorm64.exe',
+  'goland.exe',
+  'goland64.exe',
 ];
 
 function addWorkspaceToArgumentsIfExists(args, workspace) {
@@ -155,6 +160,8 @@ function getArgumentsForLineNumber(
     case 'rubymine64':
     case 'webstorm':
     case 'webstorm64':
+    case 'goland':
+    case 'goland64':
       return addWorkspaceToArgumentsIfExists(
         ['--line', lineNumber, fileName],
         workspace
