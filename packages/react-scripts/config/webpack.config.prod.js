@@ -277,6 +277,7 @@ module.exports = {
                     clearReportedMessages: true,
                     throwError: true,
                   }),
+                  require('cssnano'),
                 ],
               },
             },
