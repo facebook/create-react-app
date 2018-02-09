@@ -249,6 +249,7 @@ module.exports = {
               {
                 loader: require.resolve('css-loader'),
                 options: {
+                  sourceMap: true,
                   importLoaders: 1,
                 },
               },
@@ -267,6 +268,7 @@ module.exports = {
               {
                 loader: require.resolve('css-loader'),
                 options: {
+                  sourceMap: true,
                   importLoaders: 1,
                   modules: true,
                   localIdentName: '[path]__[name]___[local]',
