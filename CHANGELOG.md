@@ -1,3 +1,13 @@
+## 1.1.1 (February 9, 2018)
+
+#### :bug: Bug Fix
+  * sort webpack entries correctly in html (sortChunkMode)
+  * remove unnecessary plugins from components webpack config
+
+#### :tada: version updates
+
+* `lighter-react-scripts@1.1.1`
+
 ## 1.1.0 (February 8, 2018)
 
 #### :rocket: New Feature
