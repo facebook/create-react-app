@@ -1,3 +1,43 @@
+## 1.1.1 (February 2, 2018)
+
+#### :bug: Bug Fix
+* `react-scripts`
+  * [#4000](https://github.com/facebook/create-react-app/pull/4000) Fix escaping `$` in environment variables. ([@iansu](https://github.com/iansu))
+
+#### :nail_care: Enhancement
+* `react-scripts`
+  * [#4006](https://github.com/facebook/create-react-app/pull/4006) Add Node 9 compatibility for `fsevents`. ([@gaearon](https://github.com/gaearon))
+
+#### :memo: Documentation
+* `react-scripts`
+  * [#3971](https://github.com/facebook/create-react-app/pull/3971) Update instructions for continuous delivery with Netlify. ([@hubgit](https://github.com/hubgit))
+  * [#3894](https://github.com/facebook/create-react-app/pull/3894) Include `{json,css}` files in prettier command. ([@reyronald](https://github.com/reyronald))
+
+#### :house: Internal
+* `create-react-app`
+  * [#3853](https://github.com/facebook/create-react-app/pull/3853) pin envinfo version to 3.4.2. ([@bondz](https://github.com/bondz))
+
+#### Committers: 6
+- Alf Eaton ([hubgit](https://github.com/hubgit))
+- Bond ([bondz](https://github.com/bondz))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Ian Sutherland ([iansu](https://github.com/iansu))
+- Ronald Rey ([reyronald](https://github.com/reyronald))
+
+### Migrating from 1.1.0 to 1.1.1
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.1.1
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.1.1
+```
+
 ## 1.1.0 (January 15, 2018)
 
 #### :rocket: New Feature
