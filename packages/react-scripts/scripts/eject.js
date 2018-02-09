@@ -38,6 +38,15 @@ function getGitStatus() {
   }
 }
 
+function isYarnAvailable() {
+  try {
+    execSync('yarnpkg --version', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 inquirer
   .prompt({
     type: 'confirm',
@@ -224,7 +233,7 @@ inquirer
       }
     }
 
-    if (fs.existsSync(paths.yarnLockFile)) {
+    if (fs.existsSync(paths.yarnLockFile) || isYarnAvailable()) {
       const windowsCmdFilePath = path.join(
         appPath,
         'node_modules',

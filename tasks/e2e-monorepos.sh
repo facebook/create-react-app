@@ -120,7 +120,6 @@ verifyTest
 
 # Test eject
 echo yes | npm run eject
-yarn
 verifyBuild
 yarn start --smoke-test
 verifyTest
