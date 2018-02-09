@@ -336,6 +336,8 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
       filename: 'styleguide.html',
+      chunks: ['hotDevClient', 'polyfills', 'styleguide'],
+      chunksSortMode: 'manual',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
