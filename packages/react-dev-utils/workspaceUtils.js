@@ -48,4 +48,6 @@ const getMonorepo = appDir => {
   };
 };
 
-module.exports = getMonorepo;
+module.exports = {
+  getMonorepo,
+};

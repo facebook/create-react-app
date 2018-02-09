@@ -28,14 +28,14 @@
     "launchEditor.js",
     "launchEditorEndpoint.js",
     "ModuleScopePlugin.js",
-    "monorepo.js",
     "noopServiceWorkerMiddleware.js",
     "openBrowser.js",
     "openChrome.applescript",
     "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
-    "webpackHotDevClient.js"
+    "webpackHotDevClient.js",
+    "workspaceUtils.js"
   ],
   "dependencies": {
     "@babel/code-frame": "7.0.0-beta.38",

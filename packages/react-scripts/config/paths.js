@@ -11,7 +11,7 @@
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
-const monorepo = require('react-dev-utils/monorepo');
+const getMonorepo = require('react-dev-utils/workspaceUtils').getMonorepo;
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
@@ -123,7 +123,7 @@ module.exports.useYarn = fs.existsSync(
 if (checkForMonorepo) {
   // if app is in a monorepo (lerna or yarn workspace), treat other packages in
   // the monorepo as if they are app source
-  const mono = monorepo(appDirectory);
+  const mono = getMonorepo(appDirectory);
   if (mono.isAppIncluded) {
     Array.prototype.push.apply(module.exports.srcPaths, mono.pkgs);
   }

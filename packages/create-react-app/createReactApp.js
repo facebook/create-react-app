@@ -49,7 +49,7 @@ const url = require('url');
 const hyperquest = require('hyperquest');
 const envinfo = require('envinfo');
 const os = require('os');
-const monorepo = require('react-dev-utils/monorepo');
+const getMonorepo = require('react-dev-utils/workspaceUtils').getMonorepo;
 const packageJson = require('./package.json');
 
 // These files should be allowed to remain on a failed install,
@@ -231,7 +231,7 @@ function isYarnAvailable() {
 }
 
 function shouldUseYarn(appDir) {
-  const mono = monorepo(appDir);
+  const mono = getMonorepo(appDir);
   return (mono.isYarnWs && mono.isAppIncluded) || isYarnAvailable();
 }
 
