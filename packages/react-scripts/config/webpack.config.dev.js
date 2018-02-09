@@ -331,7 +331,8 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
       filename: 'styleguide.html',
-      chunks: ['styleguide', 'hotDevClient'],
+      chunks: ['hotDevClient', 'polyfills', 'styleguide'],
+      chunksSortMode: 'manual',
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),

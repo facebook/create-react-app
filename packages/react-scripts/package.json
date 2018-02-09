@@ -39,7 +39,7 @@
     "extract-text-webpack-plugin": "~3.0.2",
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
-    "html-webpack-plugin": "2.29.0",
+    "html-webpack-plugin": "2.30.1",
     "jest": "20.0.4",
     "jsdom": "~11.4.0",
     "node-sass": "~4.7.1",
