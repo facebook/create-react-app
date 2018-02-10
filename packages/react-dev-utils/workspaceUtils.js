@@ -29,7 +29,7 @@ const findPkgs = (rootPath, globPatterns) => {
     .map(f => path.dirname(path.normalize(f)));
 };
 
-const getMonorepo = appDir => {
+const findMonorepo = appDir => {
   const monoPkgPath = findPkg.sync(path.resolve(appDir, '..'));
   const monoPkg = monoPkgPath && require(monoPkgPath);
   const patterns = monoPkg && monoPkg.workspaces;
@@ -49,5 +49,5 @@ const getMonorepo = appDir => {
 };
 
 module.exports = {
-  getMonorepo,
+  findMonorepo,
 };
