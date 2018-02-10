@@ -38,7 +38,8 @@ module.exports = (resolve, rootDir, srcRoots) => {
     transform: {
       '^.+\\.(js|jsx|mjs)$': resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|mjs|css|json)$)': resolve(
+      '^.+\\.(graphql)$': resolve('config/jest/graphqlTransform.js'),
+      '^(?!.*\\.(js|jsx|mjs|css|json|graphql)$)': resolve(
         'config/jest/fileTransform.js'
       ),
     },
