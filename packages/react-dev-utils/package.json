@@ -34,7 +34,8 @@
     "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
-    "webpackHotDevClient.js"
+    "webpackHotDevClient.js",
+    "workspaceUtils.js"
   ],
   "dependencies": {
     "@babel/code-frame": "7.0.0-beta.38",
@@ -45,7 +46,9 @@
     "detect-port-alt": "1.1.5",
     "escape-string-regexp": "1.0.5",
     "filesize": "3.5.11",
+    "find-pkg": "1.0.0",
     "global-modules": "1.0.0",
+    "globby": "7.1.1",
     "gzip-size": "4.1.0",
     "inquirer": "5.0.0",
     "is-root": "1.0.0",
