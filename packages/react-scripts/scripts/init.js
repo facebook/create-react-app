@@ -22,6 +22,7 @@ const spawn = require('react-dev-utils/crossSpawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
 const resolveFrom = require('resolve-from');
+const paths = require('../config/paths');
 
 function isInGitRepository() {
   try {
@@ -75,15 +76,6 @@ function tryGitInit(appPath) {
   }
 }
 
-function isYarnAvailable() {
-  try {
-    execSync('yarnpkg --version', { stdio: 'ignore' });
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
 module.exports = function(
   appPath,
   appName,
@@ -98,8 +90,7 @@ module.exports = function(
     '..'
   );
   const appPackage = require(path.join(appPath, 'package.json'));
-  const useYarn =
-    fs.existsSync(path.join(appPath, 'yarn.lock')) || isYarnAvailable();
+  const useYarn = paths.useYarn;
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
