@@ -26,9 +26,10 @@ const fallbackExts = [
 const withExt = (ext, file) => file.dir + path.sep + file.name + ext;
 
 function checkRequiredFiles(files) {
-  let didFallbackExts = false;
+  let didFallbackExts;
   try {
     for (const filePath of files) {
+      didFallbackExts = false;
       const file = path.parse(filePath);
 
       if (file.ext === '') {
