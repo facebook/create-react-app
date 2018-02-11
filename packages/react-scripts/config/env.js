@@ -33,6 +33,7 @@ var dotenvFiles = [
   paths.dotenv,
 ].filter(Boolean);
 
+console.log('dotenvFiles', dotenvFiles);
 // Load environment variables from .env* files. Suppress warnings using silent
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.  Variable expansion is supported in .env files.
@@ -85,6 +86,7 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
+        RAILS_ENV: process.env.RAILS_ENV || 'development',
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
@@ -94,6 +96,8 @@ function getClientEnvironment(publicUrl) {
       return env;
     }, {}),
   };
+
+  console.log('stringified value', stringified);
 
   return { raw, stringified };
 }
