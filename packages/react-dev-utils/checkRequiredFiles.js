@@ -15,9 +15,9 @@ const chalk = require('chalk');
 // If other types of files need to be passed later without extensions the
 // checkRequiredFiles function will need to be modified.
 const fallbackExts = [
+  '.js',
   '.web.js',
   '.mjs',
-  '.js',
   '.web.jsx',
   '.jsx',
   '.ts',
@@ -38,9 +38,9 @@ function checkRequiredFiles(files) {
         } else {
           throw file;
         }
+      } else if (!fs.existsSync(filePath)) {
+        throw file;
       }
-
-      if (!fs.existsSync(filePath)) throw file;
     }
     return true;
   } catch (file) {
