@@ -1,3 +1,12 @@
+## 1.1.2 (February 12, 2018)
+
+#### :bug: Bug Fix
+  * remove hashes from static assets when building components
+
+#### :tada: version updates
+
+* `lighter-react-scripts@1.1.2`
+
 ## 1.1.1 (February 9, 2018)
 
 #### :bug: Bug Fix
