@@ -30,6 +30,7 @@
     "openChrome.applescript",
     "printBuildError.js",
     "printHostingInstructions.js",
+    "shouldIgnoreNodeModules.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
     "webpackHotDevClient.js",
