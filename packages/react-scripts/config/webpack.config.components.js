@@ -226,7 +226,8 @@ module.exports = {
               /\.json$/,
               /\.css/,
               /\.scss$/,
-              /\.svg$/,
+              paths.icons,
+              paths.iconsSG,
             ],
             options: {
               name: 'lib/[name].[ext]',

@@ -232,7 +232,8 @@ module.exports = {
               /\.json$/,
               /\.css/,
               /\.scss$/,
-              /\.svg$/,
+              paths.icons,
+              paths.iconsSG,
             ],
             loader: require.resolve('file-loader'),
             options: {
