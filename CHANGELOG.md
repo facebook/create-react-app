@@ -1,3 +1,12 @@
+## 1.1.3 (February 12, 2018)
+
+#### :bug: Bug Fix
+  * rename `sprite-app.svg` to `sprite.svg`
+
+#### :tada: version updates
+
+* `lighter-react-scripts@1.1.3`
+
 ## 1.1.2 (February 12, 2018)
 
 #### :bug: Bug Fix
