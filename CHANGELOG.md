@@ -1,3 +1,12 @@
+## 1.1.4 (February 12, 2018)
+
+#### :bug: Bug Fix
+  * fix SVG loading via file-loader
+
+#### :tada: version updates
+
+* `lighter-react-scripts@1.1.4`
+
 ## 1.1.3 (February 12, 2018)
 
 #### :bug: Bug Fix
