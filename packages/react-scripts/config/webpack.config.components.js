@@ -191,7 +191,7 @@ module.exports = {
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
-              name: 'lib/[name].[hash:8].[ext]',
+              name: 'lib/[name].[ext]',
             },
           },
           // Process JS with Babel.
@@ -229,7 +229,7 @@ module.exports = {
               /\.svg$/,
             ],
             options: {
-              name: 'lib/[name].[hash:8].[ext]',
+              name: 'lib/[name].[ext]',
             },
           },
         ],
