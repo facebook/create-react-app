@@ -294,7 +294,7 @@ module.exports = {
             loader: require.resolve('svg-sprite-loader'),
             options: {
               extract: true,
-              spriteFilename: 'sprite-app.svg',
+              spriteFilename: 'sprite.svg',
             },
           },
           svgoLoader,
