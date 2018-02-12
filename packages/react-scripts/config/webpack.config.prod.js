@@ -248,7 +248,8 @@ module.exports = {
               /\.json$/,
               /\.css/,
               /\.scss$/,
-              /\.svg$/,
+              paths.icons,
+              paths.iconsSG,
             ],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
