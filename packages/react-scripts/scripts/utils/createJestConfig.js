@@ -11,7 +11,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
 
-module.exports = (resolve, rootDir) => {
+module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup)
@@ -25,12 +25,15 @@ module.exports = (resolve, rootDir) => {
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.ts?(x)',
-      '<rootDir>/src/**/?(*.)(spec|test).ts?(x)',
+      '<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)',
+      '<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)',
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
+      '^.+\\.(js|jsx|mjs)$': isEjecting
+        ? '<rootDir>/node_modules/babel-jest'
+        : resolve('config/jest/babelTransform.js'),
       '^.+\\.tsx?$': resolve('config/jest/typescriptTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|mjs|css|json)$)': resolve(
@@ -38,7 +41,7 @@ module.exports = (resolve, rootDir) => {
       ),
     },
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$'
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$',
     ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',

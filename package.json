@@ -10,7 +10,7 @@
     "publish": "tasks/release.sh",
     "start": "node packages/react-scripts/scripts/start.js",
     "test": "node packages/react-scripts/scripts/test.js --env=jsdom",
-    "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
+    "format": "prettier --trailing-comma es5 --single-quote --write \"packages/*/*.js\" \"packages/*/!(node_modules)/**/*.js\"",
     "precommit": "lint-staged"
   },
   "devDependencies": {
