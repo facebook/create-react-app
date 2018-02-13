@@ -126,7 +126,6 @@ popd
 pushd packages
 npx create-react-app newapp
 cd newapp
-yarn
 yarn build
 yarn start --smoke-test
 CI=true yarn test --watch=no
@@ -138,7 +137,6 @@ popd
 pushd packages
 npx create-react-app --internal-testing-template="$root_path"/packages/react-scripts/fixtures/monorepos/cra-app cra-app2
 cd cra-app2
-yarn
 verifyBuild
 yarn start --smoke-test
 verifyTest
