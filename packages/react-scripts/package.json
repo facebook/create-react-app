@@ -1,14 +1,17 @@
 {
-  "name": "react-scripts",
-  "version": "1.1.1",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "name": "@cognite/react-scripts",
+  "version": "2.0.0-0",
+  "description": "Cognite fork of configuration and scripts for Create React App.",
+  "repository": "https://github.com/cognitedata/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -18,7 +21,7 @@
     "utils"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "@cognite/react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
     "autoprefixer": "7.1.6",
@@ -34,7 +37,7 @@
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
     "eslint": "4.10.0",
-    "eslint-config-react-app": "^2.1.0",
+    "@cognite/eslint-config": ">=1",
     "eslint-loader": "1.9.0",
     "eslint-plugin-flowtype": "2.39.1",
     "eslint-plugin-import": "2.8.0",
