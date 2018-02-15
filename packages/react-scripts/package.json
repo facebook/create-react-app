@@ -1,8 +1,7 @@
 {
   "name": "@cognite/react-scripts",
-  "version": "2.0.1",
-  "description":
-    "Cognite fork of configuration and scripts for Create React App.",
+  "version": "2.0.2",
+  "description": "Cognite fork of configuration and scripts for Create React App.",
   "repository": "https://github.com/cognitedata/create-react-app",
   "license": "MIT",
   "engines": {
@@ -14,7 +13,13 @@
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"
   },
-  "files": ["bin", "config", "scripts", "template", "utils"],
+  "files": [
+    "bin",
+    "config",
+    "scripts",
+    "template",
+    "utils"
+  ],
   "bin": {
     "cognite-react-scripts": "./bin/react-scripts.js"
   },
@@ -32,7 +37,7 @@
     "css-loader": "0.28.7",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
-    "eslint": "4.10.0",
+    "eslint": "^4.17.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-loader": "1.9.0",
