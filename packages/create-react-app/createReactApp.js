@@ -76,6 +76,7 @@ const program = new commander.Command(packageJson.name)
     'use a non-standard version of react-scripts'
   )
   .option('--use-npm')
+  .option('--no-bin-links')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -159,10 +160,11 @@ createApp(
   program.verbose,
   program.scriptsVersion,
   program.useNpm,
+  program.binLinks,
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(name, verbose, version, useNpm, template) {
+function createApp(name, verbose, version, useNpm, binLinks, template) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -184,8 +186,9 @@ function createApp(name, verbose, version, useNpm, template) {
     path.join(root, 'package.json'),
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
-
-  const useYarn = useNpm ? false : shouldUseYarn(root);
+  console.log(`what are we using?: ${useNpm}`);
+  const useYarn = false;
+  //const useYarn = useNpm ? false : shouldUseYarn(root);
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -218,7 +221,16 @@ function createApp(name, verbose, version, useNpm, template) {
       version = 'react-scripts@0.9.x';
     }
   }
-  run(root, appName, version, verbose, originalDirectory, template, useYarn);
+  run(
+    root,
+    appName,
+    version,
+    verbose,
+    binLinks,
+    originalDirectory,
+    template,
+    useYarn
+  );
 }
 
 function isYarnAvailable() {
@@ -235,7 +247,7 @@ function shouldUseYarn(appDir) {
   return (mono.isYarnWs && mono.isAppIncluded) || isYarnAvailable();
 }
 
-function install(root, useYarn, dependencies, verbose, isOnline) {
+function install(root, useYarn, dependencies, verbose, binLinks, isOnline) {
   return new Promise((resolve, reject) => {
     let command;
     let args;
@@ -275,6 +287,11 @@ function install(root, useYarn, dependencies, verbose, isOnline) {
       args.push('--verbose');
     }
 
+    if (binLinks === false) {
+      console.log(`ya got links?: ${binLinks}`);
+      args.push('--no-bin-links');
+    }
+
     const child = spawn(command, args, { stdio: 'inherit' });
     child.on('close', code => {
       if (code !== 0) {
@@ -293,6 +310,7 @@ function run(
   appName,
   version,
   verbose,
+  binLinks,
   originalDirectory,
   template,
   useYarn
@@ -318,9 +336,14 @@ function run(
       );
       console.log();
 
-      return install(root, useYarn, allDependencies, verbose, isOnline).then(
-        () => packageName
-      );
+      return install(
+        root,
+        useYarn,
+        allDependencies,
+        verbose,
+        binLinks,
+        isOnline
+      ).then(() => packageName);
     })
     .then(packageName => {
       checkNodeVersion(packageName);
