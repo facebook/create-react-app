@@ -186,9 +186,8 @@ function createApp(name, verbose, version, useNpm, binLinks, template) {
     path.join(root, 'package.json'),
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
-  console.log(`what are we using?: ${useNpm}`);
-  const useYarn = false;
-  //const useYarn = useNpm ? false : shouldUseYarn(root);
+
+  const useYarn = useNpm ? false : shouldUseYarn(root);
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -288,7 +287,6 @@ function install(root, useYarn, dependencies, verbose, binLinks, isOnline) {
     }
 
     if (binLinks === false) {
-      console.log(`ya got links?: ${binLinks}`);
       args.push('--no-bin-links');
     }
 
