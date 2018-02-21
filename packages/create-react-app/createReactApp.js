@@ -91,7 +91,7 @@ const program = new commander.Command(packageJson.name)
     );
     console.log(
       `      - a local path relative to the current working directory: ${chalk.green(
-        'file:./my-create-react-app-fork/packages/react-scripts'
+        'file:../my-react-scripts'
       )}`
     );
     console.log(
