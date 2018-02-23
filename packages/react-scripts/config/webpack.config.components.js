@@ -4,7 +4,6 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const InterpolateHtmlPlugin = require('@lighting-beetle/lighter-react-dev-utils/InterpolateHtmlPlugin');
 const eslintFormatter = require('@lighting-beetle/lighter-react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('@lighting-beetle/lighter-react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
@@ -108,7 +107,7 @@ module.exports = {
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
 
-    libraryTarget: 'umd', // StaticSiteGeneratorPlugin needs this setting
+    libraryTarget: 'umd',
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
