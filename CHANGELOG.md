@@ -1,3 +1,12 @@
+## 1.2.0 (February 23, 2018)
+
+#### :rocket: New Feature
+  * add `__lighterIsServer__` global passed via static-site-generator-webpack-plugin
+
+#### :tada: version updates
+
+* `lighter-react-scripts@1.2.0`
+
 ## 1.1.4 (February 12, 2018)
 
 #### :bug: Bug Fix
