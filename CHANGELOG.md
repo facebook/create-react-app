@@ -1,3 +1,16 @@
+## 1.3.0 (February 26, 2018)
+
+#### :nail_care: Enhancement
+  * rename `public/index.html` => `public/styleguide.html`
+
+#### :house: Internal
+  * update dependencies, normalize verzions, remove unnecessary dependecies
+  * remove unused imports
+
+#### :tada: version updates
+
+* `lighter-react-scripts@1.3.0`
+
 ## 1.2.0 (February 23, 2018)
 
 #### :rocket: New Feature
