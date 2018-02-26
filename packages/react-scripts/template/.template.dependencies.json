@@ -29,7 +29,6 @@
         "react-intl": "2.x",
         "react-list": "0.x",
         "react-loadable": "5.x",
-        "react-materialui-notifications": "0.x",
         "react-mic": "9.x",
         "react-player": "0.x",
         "react-redux": "5.x",
@@ -43,6 +42,7 @@
         "redux-persist": "5.x",
         "redux-responsive": "4.x",
         "redux-thunk": "2.x",
-        "rmw-shell": "1.x"
+        "rmw-shell": "1.x",
+        "react-toastify": "3.x"
     }
 }
