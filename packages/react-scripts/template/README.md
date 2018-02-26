@@ -1307,14 +1307,14 @@ Jest will always run all tests on a [continuous integration](#continuous-integra
 
 ### Writing Tests
 
-To create tests, add `it()` (or `test()`) blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping.
+To create tests, add `test()` or `it()` blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping.
 
 Jest provides a built-in `expect()` global function for making assertions. A basic test could look like this:
 
 ```js
 import sum from './sum';
 
-it('sums numbers', () => {
+test('sum', () => {
   expect(sum(1, 2)).toEqual(3);
   expect(sum(2, 2)).toEqual(4);
 });
@@ -1334,7 +1334,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-it('renders without crashing', () => {
+test('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(<App />, div);
 });
@@ -1377,7 +1377,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import App from './App';
 
-it('renders without crashing', () => {
+test('renders without crashing', () => {
   shallow(<App />);
 });
 ```
@@ -1393,7 +1393,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import App from './App';
 
-it('renders welcome message', () => {
+test('renders welcome message', () => {
   const wrapper = shallow(<App />);
   const welcome = <h2>Welcome to React</h2>;
   // expect(wrapper.contains(welcome)).to.equal(true);
@@ -1470,8 +1470,8 @@ global.localStorage = localStorageMock
 
 ### Focusing and Excluding Tests
 
-You can replace `it()` with `xit()` to temporarily exclude a test from being executed.<br>
-Similarly, `fit()` lets you focus on a specific test without running any other tests.
+You can replace `test()` with `test.skip()` to temporarily exclude a test from being executed.<br>
+Similarly, `test.only()` lets you focus on a specific test without running any other tests.
 
 ### Coverage Reporting
 
