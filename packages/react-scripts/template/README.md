@@ -291,6 +291,8 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
 
 Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
 
+**Windows Subsystem for Linux**: Running VSCode from Windows and using WSL `bash` shell to run the app can result in breakpoints not working due to sourcemap issues. To solve this you have to add `"/mnt/c/*": "C:\\*"` to sourceMapPathOverrides.
+
 Having problems with VS Code Debugging? Please see their [troubleshooting guide](https://github.com/Microsoft/vscode-chrome-debug/blob/master/README.md#troubleshooting).
 
 ### WebStorm
