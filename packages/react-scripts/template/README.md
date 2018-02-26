@@ -1307,7 +1307,7 @@ Jest will always run all tests on a [continuous integration](#continuous-integra
 
 ### Writing Tests
 
-To create tests, add `it()` (or `test()`) blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping but this is neither required nor recommended.
+To create tests, add `it()` (or `test()`) blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping.
 
 Jest provides a built-in `expect()` global function for making assertions. A basic test could look like this:
 
