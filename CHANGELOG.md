@@ -1,3 +1,11 @@
+## 1.4.0 (February 26, 2018)
+
+#### :nail_care: Enhancement
+  * use `uglifyjs-webpack-plugin` instead webpack build-in plugin
+
+#### :tada: version updates
+
+* `lighter-react-scripts@1.4.0`
 ## 1.3.0 (February 26, 2018)
 
 #### :nail_care: Enhancement
