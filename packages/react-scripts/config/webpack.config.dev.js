@@ -53,7 +53,7 @@ const postCSSLoaderOptions = {
       flexbox: 'no-2009',
     }),
   ],
-}
+};
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -68,7 +68,7 @@ module.exports = {
   entry: {
     [mainEntry]: [
       // We ship a few polyfills by default:
-      require.resolve('./polyfills'),// Include an alternative client for WebpackDevServer. A client's job is to
+      require.resolve('./polyfills'), // Include an alternative client for WebpackDevServer. A client's job is to
       // connect to WebpackDevServer by a socket and get notified about changes.
       // When you save a file, the client will either apply hot updates (in case
       // of CSS changes), or refresh the page (in case of JS changes). When you
@@ -84,7 +84,7 @@ module.exports = {
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
-    ]
+    ],
   },
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
@@ -137,7 +137,7 @@ module.exports = {
         require.resolve('babel-runtime/package.json')
       ),
       // 'mapbox-gl$': path.resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js'),
-      'webworkify': 'webworkify-webpack-dropin',
+      webworkify: 'webworkify-webpack-dropin',
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -153,9 +153,6 @@ module.exports = {
     ],
   },
   module: {
-    noParse: [
-      /moment\.js/
-    ],
     strictExportPresence: true,
     rules: [
       // TODO: Disable require.ensure as it's not a standard language feature.
@@ -205,10 +202,7 @@ module.exports = {
           {
             test: /\.(js|jsx)$/,
             exclude: /node_modules\/(?!@brickwork-software\/asiago|dot-prop)/,
-            include: [
-              paths.appPath,
-              paths.asiagoPath,
-            ],
+            include: [paths.appPath, paths.asiagoPath],
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
@@ -216,7 +210,7 @@ module.exports = {
               presets: [require.resolve('babel-preset-react-app')],
               plugins: [
                 'transform-function-bind',
-                ['transform-decorators-legacy']
+                ['transform-decorators-legacy'],
               ],
               // @remove-on-eject-end
               // This is a feature of `babel-loader` for webpack (not Babel itself).
@@ -229,12 +223,12 @@ module.exports = {
             test: /\.ya?ml$/,
             use: [
               {
-                loader: 'json-loader'
+                loader: 'json-loader',
               },
               {
-                loader: 'yaml-loader'
-              }
-            ]
+                loader: 'yaml-loader',
+              },
+            ],
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -247,8 +241,8 @@ module.exports = {
               {
                 loader: require.resolve('style-loader'),
                 options: {
-                  insertAt: 'top'
-                }
+                  insertAt: 'top',
+                },
               },
               {
                 loader: require.resolve('css-loader'),
@@ -272,8 +266,8 @@ module.exports = {
               {
                 loader: require.resolve('style-loader'),
                 options: {
-                  insertAt: 'top'
-                }
+                  insertAt: 'top',
+                },
               },
               {
                 loader: require.resolve('css-loader'),

@@ -22,7 +22,8 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -62,14 +63,17 @@ const mainEntry = process.env['MAIN_ENTRY'] || 'brickwork';
 
 const babelPlugins = [
   'transform-function-bind',
-  ['transform-decorators-legacy']
-]
+  ['transform-decorators-legacy'],
+];
 if (require(paths.appPackageJson).name === '@brickwork-software/asiago') {
-  babelPlugins.unshift([require.resolve('babel-plugin-react-intl'), {
-    messagesDir: 'dist/messages/',
-    // enforceDescriptions: true,
-    // extractSourceLocation: true,
-  }])
+  babelPlugins.unshift([
+    require.resolve('babel-plugin-react-intl'),
+    {
+      messagesDir: 'dist/messages/',
+      // enforceDescriptions: true,
+      // extractSourceLocation: true,
+    },
+  ]);
 }
 
 // This is the production configuration.
@@ -83,7 +87,7 @@ module.exports = {
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
   entry: {
-    [mainEntry]: [require.resolve('./polyfills'), paths.appIndexJs]
+    [mainEntry]: [require.resolve('./polyfills'), paths.appIndexJs],
   },
   output: {
     // The build folder.
@@ -149,9 +153,6 @@ module.exports = {
     ],
   },
   module: {
-    noParse: [
-      /moment\.js/
-    ],
     strictExportPresence: true,
     rules: [
       // TODO: Disable require.ensure as it's not a standard language feature.
@@ -202,10 +203,7 @@ module.exports = {
           {
             test: /\.(js|jsx)$/,
             exclude: /node_modules\/(?!@brickwork-software\/asiago|dot-prop)/,
-            include: [
-              paths.appPath,
-              paths.asiagoPath,
-            ],
+            include: [paths.appPath, paths.asiagoPath],
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
@@ -220,12 +218,12 @@ module.exports = {
             test: /\.ya?ml$/,
             use: [
               {
-                loader: 'json-loader'
+                loader: 'json-loader',
               },
               {
-                loader: 'yaml-loader'
-              }
-            ]
+                loader: 'yaml-loader',
+              },
+            ],
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
@@ -249,7 +247,7 @@ module.exports = {
                   insertAt: 'top',
                   // combine all <link rel="stylesheet" href="blob:..."> tags into one
                   singleton: true,
-                }
+                },
               },
               {
                 loader: require.resolve('css-loader'),
@@ -283,8 +281,8 @@ module.exports = {
               {
                 loader: require.resolve('sass-loader'),
                 options: {
-                  sourceMap: true
-                }
+                  sourceMap: true,
+                },
               },
             ],
           },
@@ -299,7 +297,7 @@ module.exports = {
                   insertAt: 'top',
                   // combine all <link rel="stylesheet" href="blob:..."> tags into one
                   singleton: true,
-                }
+                },
               },
               {
                 loader: require.resolve('css-loader'),
@@ -337,8 +335,8 @@ module.exports = {
               {
                 loader: require.resolve('sass-loader'),
                 options: {
-                  sourceMap: true
-                }
+                  sourceMap: true,
+                },
               },
             ],
           },
