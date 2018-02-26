@@ -332,7 +332,7 @@ module.exports = {
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
-      template: paths.appHtml,
+      template: paths.styleguideHtml,
       filename: 'styleguide.html',
       chunks: ['hotDevClient', 'polyfills', 'styleguide'],
       chunksSortMode: 'manual',
