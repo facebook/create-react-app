@@ -1261,7 +1261,7 @@ Different projects choose different testing tradeoffs based on how often compone
 
 ```ts
 import * as React from 'react';
-import * asReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import App from './App';
 
 it('renders without crashing', () => {
