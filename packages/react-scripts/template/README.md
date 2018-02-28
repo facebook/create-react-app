@@ -2451,7 +2451,7 @@ Now offers a zero-configuration single-command deployment. You can use `now` to 
 
 3. Move into the build directory by running `cd build`.
 
-4. The free version of Now only supports files <1 MB. Temporarily move (or remove) the generated source maps from `build/static/js`. If you have any other large files (images, for instance), make sure they meet the file size requirement.
+4. The free version of Now only supports file sizes of <1 MB. Temporarily move (or remove) the generated source maps from `build/static/js`. If you have any other large files (images, for instance), make sure they meet the file size requirement.
 
 5. Run `now --name your-project-name` from within the build directory. You will be prompted to authenticate if you haven't done so yet. Otherwise, you will see a **now.sh** URL in your output like this:
 
