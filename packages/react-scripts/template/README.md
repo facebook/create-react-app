@@ -638,7 +638,9 @@ declare module "*.gif";
 declare module "*.jpg";
 declare module "*.jpeg";
 declare module "*.png";
+declare module "*.svg";
 ```
+(you'll have to restart the compiler in order the changes to take place)
 
 In this case, we've added several image file extensions as valid module formats.
 
@@ -646,7 +648,7 @@ Now that the compiler is configured, here is an example of importing an image fi
 
 ```js
 import React from 'react';
-import logo from './logo.png'; // Tell Webpack this JS file uses this image
+import logo from './logo.svg'; // Tell Webpack this JS file uses this image
 
 console.log(logo); // /logo.84287d09.png
 
