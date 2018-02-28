@@ -2451,13 +2451,34 @@ Now offers a zero-configuration single-command deployment. You can use `now` to 
 
 3. Move into the build directory by running `cd build`.
 
-4. Run `now --name your-project-name` from within the build directory. You will see a **now.sh** URL in your output like this:
+4. The free version of Now only supports files <1 MB. Remove (or temporarily move) the generated source maps from `build/static/js`. If you have any other large files (images, for instance), make sure they meet the file size requirement.
+
+5. Run `now --name your-project-name` from within the build directory. You will be prompted to authenticate if you haven't done so yet. Otherwise, you will see a **now.sh** URL in your output like this:
 
     ```
     > Ready! https://your-project-name-tpspyhtdtk.now.sh (copied to clipboard)
     ```
 
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
+
+    If you have any files >1 MB, you may get an output like so:
+
+    ```
+    $ now --name async-await-tutorial
+    > Deploying ~/Projects/async-await-tutorial/build under jmares93@gmail.com
+    > Your deployment's code and logs will be publicly accessible because you are subscribed to the OSS plan.
+    > NOTE: You can use `now --public` or upgrade your plan (https://zeit.co/account/plan) to skip this prompt
+
+    > Error! Upload failed
+    > Error! An unexpected error occurred!
+      Error: File size limit exceeded (1 MB)
+        at responseError (/snapshot/now-cli/dist/now.js:199:15)
+        at <anonymous>
+        at process._tickCallback (internal/process/next_tick.js:188:7) Error: File size limit exceeded (1 MB)
+        at responseError (/snapshot/now-cli/dist/now.js:199:15)
+        at <anonymous>
+        at process._tickCallback (internal/process/next_tick.js:188:7)
+    ```
 
 Details are available in [this article.](https://zeit.co/blog/unlimited-static)
 
