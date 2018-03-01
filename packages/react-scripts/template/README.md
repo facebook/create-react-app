@@ -2465,7 +2465,7 @@ Now offers a zero-configuration single-command deployment. You can use `now` to 
 
     ```
     $ now --name async-await-tutorial
-    > Deploying ~/Projects/async-await-tutorial/build under jmares93@gmail.com
+    > Deploying ~/Projects/async-await-tutorial/build under *******@gmail.com
     > Your deployment's code and logs will be publicly accessible because you are subscribed to the OSS plan.
     > NOTE: You can use `now --public` or upgrade your plan (https://zeit.co/account/plan) to skip this prompt
 
