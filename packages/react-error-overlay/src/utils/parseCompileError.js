@@ -7,7 +7,7 @@ export type ErrorLocation = {|
   colNumber?: number,
 |};
 
-const filePathRegex = /^\.(\/[^/\n ]+)+\.[^/\n ]+$/;
+const filePathRegex = /^\.?(\/[^/\n ]+)+\.[^/\n ]+$/;
 
 const lineNumberRegexes = [
   // Babel syntax errors
