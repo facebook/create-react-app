@@ -8,7 +8,19 @@
 // @remove-on-eject-end
 'use strict';
 
-const autoprefixer = require('autoprefixer');
+const autoprefixer = require('autoprefixer')({
+  browsers: [
+    '>1%',
+    'last 4 versions',
+    'Firefox ESR',
+    'not ie < 9', // React doesn't support IE8 anyway
+  ],
+  flexbox: 'no-2009',
+});
+
+const postCSSInlineSVG = require('postcss-inline-svg');
+const importSassOnce = require('node-sass-import-once');
+
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -182,7 +194,51 @@ module.exports = {
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           {
-            test: /\.css$/,
+            test: /\.(sass|scss)$/,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  modules: true,
+                  sourceMap: true,
+                  localIdentName: '[name]__[local]___[hash:base64:5]',
+                },
+              },
+              {
+                loader: require.resolve('resolve-url-loader'),
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  plugins: () => [
+                    autoprefixer,
+                    postCSSInlineSVG({
+                      path: './node_modules',
+                    }),
+                    require('postcss-flexbugs-fixes'),
+                  ],
+                  sourceMap: true,
+                },
+              },
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  sourceMap: true,
+                  includePaths: ['./node_modules'],
+                  // Don't break compilation if the themes.scss doesn't exist
+                  // Will fall back to the default _themes.scss included in the psl-themes package
+                  importer: [importSassOnce],
+                },
+              },
+            ],
+          },
+          {
+            test: /\.(css)$/,
             use: [
               require.resolve('style-loader'),
               {
@@ -199,16 +255,9 @@ module.exports = {
                   ident: 'postcss',
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
-                        'not ie < 9', // React doesn't support IE8 anyway
-                      ],
-                      flexbox: 'no-2009',
-                    }),
+                    autoprefixer,
                   ],
+                  sourceMap: true,
                 },
               },
             ],

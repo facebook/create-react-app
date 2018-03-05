@@ -8,7 +8,15 @@
 // @remove-on-eject-end
 'use strict';
 
-const autoprefixer = require('autoprefixer');
+const autoprefixer = require('autoprefixer')({
+  browsers: [
+    '>1%',
+    'last 4 versions',
+    'Firefox ESR',
+    'not ie < 9', // React doesn't support IE8 anyway
+  ],
+  flexbox: 'no-2009',
+});
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -20,6 +28,10 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const postCSSInlineSVG = require('postcss-inline-svg');
+const importSassOnce = require('node-sass-import-once');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const cssnano = require('cssnano');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -43,7 +55,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = 'static/css/[name].[contenthash:8].css';
+const cssFilename = 'css/[name].[contenthash:8].css';
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -71,8 +83,8 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].[chunkhash:8].js',
-    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+    filename: 'js/[name].[chunkhash:8].js',
+    chunkFilename: 'js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
@@ -164,7 +176,7 @@ module.exports = {
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: 'images/[name].[hash:8].[ext]',
             },
           },
           // Process JS with Babel.
@@ -179,6 +191,53 @@ module.exports = {
               // @remove-on-eject-end
               compact: true,
             },
+          },
+          {
+            test: /\.(sass|scss)$/,
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: require.resolve('style-loader'),
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        modules: true,
+                        importLoaders: 1,
+                        minimize: true,
+                        sourceMap: shouldUseSourceMap,
+                      },
+                    },
+                    {
+                      loader: require.resolve('resolve-url-loader'),
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: {
+                        plugins: () => [
+                          autoprefixer,
+                          postCSSInlineSVG({
+                            path: './node_modules',
+                          }),
+                        ],
+                        sourceMap: true,
+                      },
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        sourceMap: true,
+                        includePaths: ['./node_modules'],
+                        // Don't break compilation if the themes.scss doesn't exist
+                        // Will fall back to the default _themes.scss included in the psl-themes package
+                        importer: [importSassOnce],
+                      },
+                    },
+                  ],
+                },
+                extractTextPluginOptions
+              )
+            ),
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
@@ -220,15 +279,7 @@ module.exports = {
                         ident: 'postcss',
                         plugins: () => [
                           require('postcss-flexbugs-fixes'),
-                          autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                            ],
-                            flexbox: 'no-2009',
-                          }),
+                          autoprefixer,
                         ],
                       },
                     },
@@ -238,6 +289,23 @@ module.exports = {
               )
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          {
+            test: /\.woff2$/,
+            loader: require.resolve('url-loader'),
+            options: {
+              name: 'static/fonts/[name].[hash:8].[ext]',
+              limit: 20000,
+              mimetype: 'application/font-woff2',
+            },
+          },
+          {
+            loader: require.resolve('file-loader'),
+            test: /\.(woff|otf|ttf|eot|svg)$/,
+            options: {
+              name: 'static/fonts/[name].[hash:8].[ext]',
+            },
+            include: `${paths.appNodeModules}/psl-themes/fonts`,
           },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
@@ -251,7 +319,7 @@ module.exports = {
             // by webpacks internal loaders.
             exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
             options: {
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: 'static/[name].[hash:8].[ext]',
             },
           },
           // ** STOP ** Are you adding a new loader?
@@ -313,6 +381,14 @@ module.exports = {
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,
+    }),
+    // Remove any duplicate CSS (generated when using extract-text-webpack-plugin)
+    new OptimizeCssAssetsPlugin({
+      cssProcessor: cssnano,
+      cssProcessorOptions: {
+        discardComments: { removeAll: true },
+        map: { inline: false },
+      },
     }),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without

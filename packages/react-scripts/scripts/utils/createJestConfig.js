@@ -21,6 +21,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
+    modulePaths: ['src', 'node_modules'],
     collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
@@ -42,6 +43,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
+      '^!svg-react-loader.*$': resolve('config/jest/svgNameMapper.js'),
     },
     moduleFileExtensions: [
       'web.js',
