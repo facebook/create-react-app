@@ -2214,7 +2214,7 @@ Applications are generally split between different environments such as staging,
 
       - `REACT_APP_NODE_ENV=staging npm run build`
 
-When the environment variable is set you can do conditionals within your code:
+When the environment variable is set you can then do conditionals within your code:
 
 ```js
 if (process.env.REACT_APP_NODE_ENV === 'staging') {
@@ -2256,8 +2256,6 @@ and within your `package.json`:
 Then run `npm run build:staging`
 
 You may use `.env.production` as the fallback option in this case as `'production'` is the default `NODE_ENV`
-
-
 
 ### [Azure](https://azure.microsoft.com/)
 
