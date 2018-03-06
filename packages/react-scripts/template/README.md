@@ -2196,6 +2196,63 @@ If you are not using the HTML5 `pushState` history API or not using client-side 
 
 This will make sure that all the asset paths are relative to `index.html`. You will then be able to move your app from `http://mywebsite.com` to `http://mywebsite.com/relativepath` or even `http://mywebsite.com/relative/path` without having to rebuild it.
 
+#### Building for Multiple Environments
+
+Applications are generally split between different environments such as staging, production, and development. To allow the app to run in these different environments one must set environment variables to conditionally run different processes depending on the environment.
+
+`create-react-app` handles environment variables in a specific way. [Read More Here](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)
+
+Primarily, You cannot override `NODE_ENV`, it is always set to `'production'`
+
+So you cannot run `NODE_ENV=staging npm run build`
+
+And, it is mandated that you prefix any custom environment variables with `REACT_APP_`
+
+So you can run `REACT_APP_NODE_ENV=staging npm run build`
+
+And then you can do conditionals depending on what this environment variable is set to:
+
+```js
+if (process.env.REACT_APP_NODE_ENV === 'staging') {
+    analytics.setEnvironment('staging');
+}
+```
+
+A better way is to do this is within your `package.json` :
+
+```js
+{
+  // ...
+  "scripts": {
+    "build:staging": "REACT_APP_NODE_ENV=staging npm run build",
+    // ...
+  }
+  // ...
+}
+```
+
+Though, the most simplified way is to use .env files as so:
+
+Within `.env.staging` write this: `REACT_APP_NODE_ENV=staging`
+
+and within your `package.json`:
+
+```js
+{
+  // ...
+  "scripts": {
+    "build:staging": "env-cmd .env.staging npm run build",
+    // ...
+  }
+  // ...
+}
+```
+This will allow you to run `npm run build:staging`
+
+`.env.production` will be the fallback option in this case as `'production'` is the default `env`
+
+
+
 ### [Azure](https://azure.microsoft.com/)
 
 See [this](https://medium.com/@to_pe/deploying-create-react-app-on-microsoft-azure-c0f6686a4321) blog post on how to deploy your React app to Microsoft Azure.
