@@ -2198,19 +2198,23 @@ This will make sure that all the asset paths are relative to `index.html`. You w
 
 #### Building for Multiple Environments
 
-Applications are generally split between different environments such as staging, production, and development. To allow the app to run in these different environments one must set environment variables to conditionally run different processes depending on the environment.
+Applications are generally split between different environments such as staging, production, and development. To allow the app to run in these different environments one must set environment variables to be able to conditionally run different processes depending on the specified environment.
 
-`create-react-app` handles environment variables in a specific way. [Read More Here](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)
+`create-react-app` handles environment variables in a specific way. [Adding Custom Environment Variables](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)
 
-Primarily, You cannot override `NODE_ENV`, it is always set to `'production'`
+1. You cannot override `NODE_ENV`, it is always set to `'production'`
 
-So you cannot run `NODE_ENV=staging npm run build`
+2. It is mandated that you prefix any custom environment variables with `REACT_APP_`
 
-And, it is mandated that you prefix any custom environment variables with `REACT_APP_`
+    - This means you cannot run:
 
-So you can run `REACT_APP_NODE_ENV=staging npm run build`
+      - `NODE_ENV=staging npm run build`
 
-And then you can do conditionals depending on what this environment variable is set to:
+    - But you can run:
+
+      - `REACT_APP_NODE_ENV=staging npm run build`
+
+When the environment variable is set you can do conditionals within your code:
 
 ```js
 if (process.env.REACT_APP_NODE_ENV === 'staging') {
@@ -2218,7 +2222,7 @@ if (process.env.REACT_APP_NODE_ENV === 'staging') {
 }
 ```
 
-A better way is to do this is within your `package.json` :
+Though, you should write this command within your `package.json` :
 
 ```js
 {
@@ -2231,9 +2235,11 @@ A better way is to do this is within your `package.json` :
 }
 ```
 
-Though, the most simplified way is to use .env files as so:
+But, the ideal way is to use `.env` files as you can specify many environment variables simultaneously. This can be done as so:
 
-Within `.env.staging` write this: `REACT_APP_NODE_ENV=staging`
+Within `.env.staging` write this:
+
+`REACT_APP_NODE_ENV=staging`
 
 and within your `package.json`:
 
@@ -2247,9 +2253,9 @@ and within your `package.json`:
   // ...
 }
 ```
-This will allow you to run `npm run build:staging`
+Then run `npm run build:staging`
 
-`.env.production` will be the fallback option in this case as `'production'` is the default `env`
+You may use `.env.production` as the fallback option in this case as `'production'` is the default `NODE_ENV`
 
 
 
