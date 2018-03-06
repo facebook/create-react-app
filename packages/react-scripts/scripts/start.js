@@ -23,6 +23,7 @@ process.on('unhandledRejection', err => {
 require('../config/env');
 
 const fs = require('fs');
+const url = require('url');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -51,6 +52,8 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 
+const servedPathPathname = url.parse(paths.servedPath).pathname || '';
+
 if (process.env.HOST) {
   console.log(
     chalk.cyan(
@@ -76,7 +79,7 @@ choosePort(HOST, DEFAULT_PORT)
     }
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
-    const urls = prepareUrls(protocol, HOST, port);
+    const urls = prepareUrls(protocol, HOST, port, servedPathPathname);
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler(webpack, config, appName, urls, useYarn);
     // Load proxy config
