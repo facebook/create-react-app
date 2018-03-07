@@ -270,7 +270,7 @@ module.exports = {
                       loader: require.resolve('css-loader'),
                       options: {
                         importLoaders: 1,
-                        minimize: true,
+                        minimize: { minifyFontValues: { removeQuotes: false } },
                         sourceMap: shouldUseSourceMap,
                       },
                     },
@@ -303,7 +303,7 @@ module.exports = {
                       loader: require.resolve('css-loader'),
                       options: {
                         importLoaders: 1,
-                        minimize: true,
+                        minimize: { minifyFontValues: { removeQuotes: false } },
                         sourceMap: shouldUseSourceMap,
                         modules: true,
                         localIdentName: '[path]__[name]___[local]',
