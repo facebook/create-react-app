@@ -2200,50 +2200,29 @@ This will make sure that all the asset paths are relative to `index.html`. You w
 
 Applications are generally split between different environments such as staging, production, and development. To allow the app to run in these different environments one must set environment variables to be able to conditionally run different processes depending on the specified environment.
 
-`create-react-app` handles environment variables in a specific way. [Adding Custom Environment Variables](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)
+`create-react-app` handles environment variables in a specific way. [This link](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables) explains how it does but the main facts to know in relation to this are:
 
 1. You cannot override `NODE_ENV`, it is always set to `'production'`
 
 2. It is mandated that you prefix any custom environment variables with `REACT_APP_`
 
-    - This means you cannot run:
+    - So you cannot depend upon using `NODE_ENV` to set the environment of your application.
 
-      - `NODE_ENV=staging npm run build`
+The ideal way to do this is to use `.env` files as you can specify many environment variables simultaneously. This can be done as so:
 
-    - But you can run:
+1. Within `.env.staging` you can set your environment variables:
 
-      - `REACT_APP_NODE_ENV=staging npm run build`
+    - `REACT_APP_API_URL=http://api-staging.example.com`
 
-When the environment variable is set you can then do conditionals within your code:
+2. You can use the [env-cmd](https://www.npmjs.com/package/env-cmd) npm package in conjunction with the `.env` file.
 
-```js
-if (process.env.REACT_APP_NODE_ENV === 'staging') {
-    analytics.setEnvironment('staging');
-}
-```
+    - To install `env-cmd` you can do so either locally or globally:
 
-Though, you should write this command within your `package.json` :
+        - `npm install env-cmd` or `npm install -g env-cmd`
 
-```js
-{
-  // ...
-  "scripts": {
-    "build:staging": "REACT_APP_NODE_ENV=staging npm run build",
-    // ...
-  }
-  // ...
-}
-```
+3. Lastly, within your `package.json`:
 
-But, the ideal way is to use `.env` files as you can specify many environment variables simultaneously. This can be done as so:
-
-Within `.env.staging` write this:
-
-`REACT_APP_NODE_ENV=staging`
-
-and within your `package.json`:
-
-```js
+```javascript
 {
   // ...
   "scripts": {
@@ -2253,9 +2232,9 @@ and within your `package.json`:
   // ...
 }
 ```
-Then run `npm run build:staging`
+Then you can run `npm run build:staging` or whatever other environment you would like to set up.
 
-You may use `.env.production` as the fallback option in this case as `'production'` is the default `NODE_ENV`
+You may use `.env.production` as the fallback option in this case as `'production'` is the default `NODE_ENV`.
 
 ### [Azure](https://azure.microsoft.com/)
 
