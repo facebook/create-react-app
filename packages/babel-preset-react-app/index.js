@@ -84,6 +84,9 @@ module.exports = function(api, opts) {
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
+      // Allows correctly aliasing `react-native` to `react-native-web`
+      // Prevents bundling unused react-native(-web) modules in production
+      require('babel-plugin-react-native-web'),
       // Necessary to include regardless of the environment because
       // in practice some other transforms (such as object-rest-spread)
       // don't work without it: https://github.com/babel/babel/issues/7215

@@ -48,7 +48,6 @@ module.exports = (resolve, rootDir, srcRoots) => {
       '^.+\\.module\\.css$',
     ],
     moduleNameMapper: {
-      '^react-native$': 'react-native-web',
       '^.+\\.module\\.css$': 'identity-obj-proxy',
     },
     moduleFileExtensions: [
