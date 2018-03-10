@@ -1,5 +1,3 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
+@import "../node_modules/tailwindcss/dist/preflight.css";
+@import "./**/*.css";
+@import "../node_modules/tailwindcss/dist/utilities.css";
