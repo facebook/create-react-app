@@ -16,25 +16,6 @@ class ModuleScopePlugin {
     this.allowedFiles = new Set(allowedFiles);
   }
 
-  issuerInAppSrc(appSrc, requestFullPath) {
-    const requestRelative = path.relative(appSrc, requestFullPath);
-    if (
-      requestRelative.startsWith('../') ||
-      requestRelative.startsWith('..\\')
-    ) {
-      return false;
-    }
-    return true;
-  }
-
-  issuerIsOurFiles(appSrc, relative) {
-    // If it's not in src/ or a subdirectory, not our request!
-    if (relative.startsWith('../') || relative.startsWith('..\\')) {
-      return false;
-    }
-    return true;
-  }
-
   apply(resolver) {
     const { appSrcs } = this;
     resolver.plugin('file', (request, callback) => {
@@ -53,11 +34,14 @@ class ModuleScopePlugin {
       }
       // Resolve the issuer from our appSrc and make sure it's one of our files
       // Maybe an indexOf === 0 would be better?
-      for (let i = 0; i < appSrcs.length; i++) {
-        const relative = path.relative(appSrcs[i], request.context.issuer);
-        if (relative.startsWith('../') || relative.startsWith('..\\')) {
-          return callback();
-        }
+      if (
+        appSrcs.every(appSrc => {
+          const relative = path.relative(appSrc, request.context.issuer);
+          // If it's not in one of our app src or a subdirectory, not our request!
+          return relative.startsWith('../') || relative.startsWith('..\\');
+        })
+      ) {
+        return callback();
       }
       const requestFullPath = path.resolve(
         path.dirname(request.context.issuer),
@@ -66,33 +50,38 @@ class ModuleScopePlugin {
       if (this.allowedFiles.has(requestFullPath)) {
         return callback();
       }
-
       // Find path from src to the requested file
-      // Error if in a parent directory of src/
-      appSrcs.forEach(appSrc => {
-        if (this.issuerInAppSrc(appSrc, requestFullPath)) {
-          callback();
-        } else {
-          callback(
-            new Error(
-              `You attempted to import ${chalk.cyan(
-                request.__innerRequest_request
-              )} which falls outside of the project ${chalk.cyan(
-                'src/'
-              )} directory. ` +
-                `Relative imports outside of ${chalk.cyan(
-                  'src/'
-                )} are not supported. ` +
-                `You can either move it inside ${chalk.cyan(
-                  'src/'
-                )}, or add a symlink to it from project's ${chalk.cyan(
-                  'node_modules/'
-                )}.`
-            ),
-            request
+      // Error if in a parent directory of all given appSrcs
+      if (
+        appSrcs.every(appSrc => {
+          const requestRelative = path.relative(appSrc, requestFullPath);
+          return (
+            requestRelative.startsWith('../') ||
+            requestRelative.startsWith('..\\')
           );
-        }
-      });
+        })
+      ) {
+        callback(
+          new Error(
+            `You attempted to import ${chalk.cyan(
+              request.__innerRequest_request
+            )} which falls outside of the project ${chalk.cyan(
+              'src/'
+            )} directory. ` +
+              `Relative imports outside of ${chalk.cyan(
+                'src/'
+              )} are not supported. ` +
+              `You can either move it inside ${chalk.cyan(
+                'src/'
+              )}, or add a symlink to it from project's ${chalk.cyan(
+                'node_modules/'
+              )}.`
+          ),
+          request
+        );
+      } else {
+        callback();
+      }
     });
   }
 }
