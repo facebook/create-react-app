@@ -1,21 +1,21 @@
 {
-  "name": "eslint-config-react-app",
-  "version": "2.1.0",
-  "description": "ESLint configuration used by Create React App",
-  "repository": "facebookincubator/create-react-app",
+  "name": "sw-eslint-config-react-app",
+  "version": "2.1.1",
+  "description": "SWRVE ESLint configuration used by Create React App",
+  "repository": "swrve/create-react-app",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/swrve/create-react-app/issues"
   },
-  "files": [
-    "index.js"
-  ],
+  "files": ["index.js"],
   "peerDependencies": {
     "babel-eslint": "^7.2.3",
     "eslint": "^4.1.1",
+    "prettier": "^1.11.1",
     "eslint-plugin-flowtype": "^2.34.1",
     "eslint-plugin-import": "^2.6.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0"
+    "eslint-plugin-react": "^7.1.0",
+    "eslint-config-prettier": "^2.9.0"
   }
 }
