@@ -1,6 +1,6 @@
 {
   "name": "sw-react-scripts",
-  "version": "1.1.5",
+  "version": "1.1.8",
   "description": "SWRVE Configuration and scripts for Create React App.",
   "repository": "swrve/create-react-app",
   "license": "MIT",
@@ -24,6 +24,7 @@
     "lint-staged": "7.0.0",
     "pretty-quick": "1.4.1",
     "husky": "0.14.3",
+    "tailwindcss": "^0.4.3",
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
@@ -68,13 +69,7 @@
   },
   "devDependencies": {
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "tailwindcss": "^0.4.3",
-    "react-redux": "^5.0.7",
-    "react-router": "^4.2.0",
-    "react-router-redux": "^4.0.8",
-    "redux": "^3.7.2",
-    "reselect": "^3.0.1"
+    "react-dom": "^16.0.0"
   },
   "optionalDependencies": {
     "fsevents": "^1.1.3"
