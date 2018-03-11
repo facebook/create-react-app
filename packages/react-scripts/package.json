@@ -44,6 +44,7 @@
     "html-webpack-plugin": "2.30.1",
     "jest": "20.0.4",
     "jsdom": "11.4.0",
+    "node-sass": "4.7.2",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.3.0",
     "postcss-inline-svg": "3.0.0",
