@@ -1,3 +1,12 @@
+## 1.4.1 (March 11, 2018)
+
+#### :bug: Bug Fix
+  * fix missing node-sass in package.json
+
+#### :tada: version updates
+
+* `lighter-react-scripts@1.4.1`
+
 ## 1.4.0 (February 26, 2018)
 
 #### :nail_care: Enhancement
