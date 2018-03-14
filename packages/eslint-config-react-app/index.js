@@ -116,7 +116,7 @@ module.exports = {
     'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
-    'no-cond-assign': ['warn', 'always'],
+    'no-cond-assign': ['warn', 'except-parens'],
     'no-const-assign': 'warn',
     'no-control-regex': 'warn',
     'no-delete-var': 'warn',

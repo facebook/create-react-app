@@ -47,6 +47,7 @@ const tmp = require('tmp');
 const unpack = require('tar-pack').unpack;
 const url = require('url');
 const hyperquest = require('hyperquest');
+const envinfo = require('envinfo');
 
 const packageJson = require('./package.json');
 
@@ -60,10 +61,12 @@ const program = new commander.Command(packageJson.name)
     projectName = name;
   })
   .option('--verbose', 'print additional logs')
+  .option('--info', 'print environment debug info')
   .option(
     '--scripts-version <alternative-package>',
     'use a non-standard version of react-scripts'
   )
+  .option('--use-npm')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -77,6 +80,11 @@ const program = new commander.Command(packageJson.name)
     );
     console.log(
       `      - a .tgz archive: ${chalk.green('https://mysite.com/my-react-scripts-0.8.2.tgz')}`
+    );
+    console.log(
+      `      - a .tar.gz archive: ${chalk.green(
+        'https://mysite.com/my-react-scripts-0.8.2.tar.gz'
+      )}`
     );
     console.log(
       `    It is not needed unless you specifically want to use a fork.`
@@ -93,6 +101,14 @@ const program = new commander.Command(packageJson.name)
   .parse(process.argv);
 
 if (typeof projectName === 'undefined') {
+  if (program.info) {
+    envinfo.print({
+      packages: ['react', 'react-dom', 'react-scripts'],
+      noNativeIDE: true,
+      duplicates: true,
+    });
+    process.exit(0);
+  }
   console.error('Please specify the project directory:');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
@@ -127,10 +143,11 @@ createApp(
   projectName,
   program.verbose,
   program.scriptsVersion,
+  program.useNpm,
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(name, verbose, version, template) {
+function createApp(name, verbose, version, useNpm, template) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -153,7 +170,7 @@ function createApp(name, verbose, version, template) {
     JSON.stringify(packageJson, null, 2)
   );
 
-  const useYarn = shouldUseYarn();
+  const useYarn = useNpm ? false : shouldUseYarn();
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -260,7 +277,7 @@ function run(
   template,
   useYarn
 ) {
-  const packageToInstall = getInstallPackage(version);
+  const packageToInstall = getInstallPackage(version, originalDirectory);
   const allDependencies = ['react', 'react-dom', packageToInstall];
 
   console.log('Installing packages. This might take a couple of minutes.');
@@ -351,11 +368,16 @@ function run(
     });
 }
 
-function getInstallPackage(version) {
+function getInstallPackage(version, originalDirectory) {
   let packageToInstall = 'react-scripts';
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
+  } else if (version && version.match(/^file:/)) {
+    packageToInstall = `file:${path.resolve(
+      originalDirectory,
+      version.match(/^file:(.*)?$/)[1]
+    )}`;
   } else if (version) {
     // for tar.gz or alternative paths
     packageToInstall = version;
@@ -403,7 +425,7 @@ function extractStream(stream, dest) {
 
 // Extract package name from tarball url or path.
 function getPackageName(installPackage) {
-  if (installPackage.indexOf('.tgz') > -1) {
+  if (installPackage.match(/^.+\.(tgz|tar\.gz)$/)) {
     return getTemporaryDirectory()
       .then(obj => {
         let stream;
@@ -426,7 +448,7 @@ function getPackageName(installPackage) {
           `Could not extract the package name from the archive: ${err.message}`
         );
         const assumedProjectName = installPackage.match(
-          /^.+\/(.+?)(?:-\d+.+)?\.tgz$/
+          /^.+\/(.+?)(?:-\d+.+)?\.(tgz|tar\.gz)$/
         )[1];
         console.log(
           `Based on the filename, assuming it is "${chalk.cyan(assumedProjectName)}"`
@@ -443,6 +465,10 @@ function getPackageName(installPackage) {
     return Promise.resolve(
       installPackage.charAt(0) + installPackage.substr(1).split('@')[0]
     );
+  } else if (installPackage.match(/^file:/)) {
+    const installPackagePath = installPackage.match(/^file:(.*)?$/)[1];
+    const installPackageJson = require(path.join(installPackagePath, 'package.json'));
+    return Promise.resolve(installPackageJson.name);
   }
   return Promise.resolve(installPackage);
 }
@@ -571,6 +597,12 @@ function isSafeToCreateProjectIn(root, name) {
     '.hg',
     '.hgignore',
     '.hgcheck',
+    '.npmignore',
+    'mkdocs.yml',
+    'docs',
+    '.travis.yml',
+    '.gitlab-ci.yml',
+    '.gitattributes',
   ];
   console.log();
 
@@ -596,6 +628,21 @@ function isSafeToCreateProjectIn(root, name) {
   return false;
 }
 
+function getProxy() {
+  if (process.env.https_proxy) {
+    return process.env.https_proxy;
+  } else {
+    try {
+      // Trying to read https-proxy from .npmrc
+      let httpsProxy = execSync('npm config get https-proxy')
+        .toString()
+        .trim();
+      return httpsProxy !== 'null' ? httpsProxy : undefined;
+    } catch (e) {
+      return;
+    }
+  }
+}
 function checkThatNpmCanReadCwd() {
   const cwd = process.cwd();
   let childOutput = null;
@@ -660,10 +707,11 @@ function checkIfOnline(useYarn) {
 
   return new Promise(resolve => {
     dns.lookup('registry.yarnpkg.com', err => {
-      if (err != null && process.env.https_proxy) {
+      let proxy;
+      if (err != null && (proxy = getProxy())) {
         // If a proxy is defined, we likely can't resolve external hostnames.
         // Try to resolve the proxy name as an indication of a connection.
-        dns.lookup(url.parse(process.env.https_proxy).hostname, proxyErr => {
+        dns.lookup(url.parse(proxy).hostname, proxyErr => {
           resolve(proxyErr == null);
         });
       } else {
