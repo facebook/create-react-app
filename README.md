@@ -53,6 +53,14 @@ To fix this, create a new file *in the root of the project* called `tsconfig.tes
 
 ## Changelog
 
+### 2.14.0
+* README fixes - @kaminskypavel
+* README fixes - @adambowles
+* Remove unused JS files - @DorianGrey
+* README fixes - @stephtr
+* Added the abillity to import js and jsx files with ts-loader - @GeeWee
+* Uglifyjs update for es6 support - @thetric
+
 ### 2.13.0
 * Remove tslint-loader from prod builds - @DorianGrey
 * Include typescript as devDependency in boilerplate - @ianschmitz
