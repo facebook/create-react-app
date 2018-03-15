@@ -20,7 +20,6 @@
     "@babel/plugin-transform-destructuring": "7.0.0-beta.42",
     "@babel/plugin-transform-react-constant-elements": "7.0.0-beta.42",
     "@babel/plugin-transform-react-display-name": "7.0.0-beta.42",
-    "@babel/plugin-transform-react-jsx": "7.0.0-beta.42",
     "@babel/plugin-transform-regenerator": "7.0.0-beta.42",
     "@babel/plugin-transform-runtime": "7.0.0-beta.42",
     "@babel/preset-env": "7.0.0-beta.42",
