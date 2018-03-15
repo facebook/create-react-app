@@ -59,7 +59,7 @@ module.exports = {
 
 #### `new ModuleScopePlugin(appSrc: string | string[], allowedFiles?: string[])`
 
-This Webpack plugin ensures that relative imports from app's source directory don't reach outside of it.
+This Webpack plugin ensures that relative imports from app's source directories don't reach outside of it.
 
 ```js
 var path = require('path');
