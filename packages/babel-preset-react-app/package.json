@@ -14,6 +14,7 @@
   "dependencies": {
     "@babel/core": "7.0.0-beta.38",
     "@babel/plugin-proposal-class-properties": "7.0.0-beta.38",
+    "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.38",
     "@babel/plugin-syntax-dynamic-import": "7.0.0-beta.38",
     "@babel/plugin-transform-classes": "7.0.0-beta.38",
     "@babel/plugin-transform-destructuring": "7.0.0-beta.38",
