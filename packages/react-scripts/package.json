@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebook/create-react-app",
+	"homepage": "https://app.knowledgehound.com/supplier",
   "license": "MIT",
   "engines": {
     "node": ">=6"
@@ -21,8 +22,8 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@babel/core": "7.0.0-beta.38",
-    "@babel/runtime": "7.0.0-beta.38",
+    "@babel/core": "7.0.0-beta.41",
+    "@babel/runtime": "7.0.0-beta.41",
     "autoprefixer": "7.2.5",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "8.2.1",

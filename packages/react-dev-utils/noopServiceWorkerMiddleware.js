@@ -7,9 +7,11 @@
 
 'use strict';
 
-module.exports = function createNoopServiceWorkerMiddleware() {
+module.exports = function createNoopServiceWorkerMiddleware(
+  servedPathPathname
+) {
   return function noopServiceWorkerMiddleware(req, res, next) {
-    if (req.url === '/service-worker.js') {
+    if (req.url === `${servedPathPathname}/service-worker.js`) {
       res.setHeader('Content-Type', 'text/javascript');
       res.send(
         `// This service worker file is effectively a 'no-op' that will reset any

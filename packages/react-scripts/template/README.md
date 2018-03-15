@@ -2175,6 +2175,13 @@ To override this, specify the `homepage` in your `package.json`, for example:
 
 This will let Create React App correctly infer the root path to use in the generated HTML file.
 
+If `homepage` is specified, Create React App will open your browser at the path specified. From the example above, `npm start` would result in:
+
+```js
+http://localhost:3000/relativepath
+```
+This also means that in development the paths to the static files will be served out of the `relativepath` directory.
+
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
 More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
 <br>
