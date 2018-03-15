@@ -16,7 +16,7 @@
     "clearConsole.js",
     "crossSpawn.js",
     "errorOverlayMiddleware.js",
-		"serveAppMiddleware.js",
+    "serveAppMiddleware.js",
     "eslintFormatter.js",
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
