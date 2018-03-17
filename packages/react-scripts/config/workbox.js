@@ -26,7 +26,7 @@ const defaultInjectConfig = {
 
 // Default method is generate
 let method = 'generate';
-let workboxConfig;
+let workboxConfig = defaultGenerateConfig;
 
 const craConfigPath = paths.craConfig;
 if (fs.existsSync(craConfigPath)) {
