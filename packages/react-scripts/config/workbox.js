@@ -29,11 +29,8 @@ let method = 'generate';
 let workboxConfig;
 
 const craConfigPath = paths.craConfig;
-console.log('craConfigPath', craConfigPath);
 if (fs.existsSync(craConfigPath)) {
-  console.log('file exists');
   const craConfig = require(craConfigPath);
-  console.log('file is', craConfig);
   if ('workbox' in craConfig) {
     // 'method' should be either 'generate' or 'inject'
     method = craConfig.workbox.method || method;
