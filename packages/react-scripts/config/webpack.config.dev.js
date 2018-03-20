@@ -258,6 +258,15 @@ module.exports = {
               },
             ],
           },
+          {
+            test: /\.scss$/,
+            exclude: /\.module\.css$/,
+            loaders: [
+              require.resolve('style-loader'),
+              require.resolve('css-loader'),
+              require.resolve('sass-loader'),
+            ],
+          },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
           {
