@@ -16,7 +16,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-const workboxPlugin = require('./workbox');
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
@@ -423,7 +423,11 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
-    workboxPlugin,
+    new WorkboxWebpackPlugin.GenerateSW({
+      exclude: [/\.map$/, /^(?:asset-)manifest.*\.js(?:on)?$/],
+      navigateFallback: '/index.html',
+      navigateFallbackWhitelist: [/^(?!\/__).*/], // fix for Firebase
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
