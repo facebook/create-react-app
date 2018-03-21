@@ -258,15 +258,6 @@ module.exports = {
               },
             ],
           },
-          {
-            test: /\.scss$/,
-            exclude: /\.module\.css$/,
-            loaders: [
-              require.resolve('style-loader'),
-              require.resolve('css-loader'),
-              require.resolve('sass-loader'),
-            ],
-          },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
           {
@@ -285,6 +276,29 @@ module.exports = {
                 loader: require.resolve('postcss-loader'),
                 options: postCSSLoaderOptions,
               },
+            ],
+          },
+          {
+            test: /\.scss$/,
+            exclude: /\.module\.css$/,
+            use: [
+              require.resolve('style-loader'),
+              require.resolve('css-loader'),
+              require.resolve('sass-loader'),
+            ],
+          },
+          {
+            test: /\.module\.scss$/,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  modules: true,
+                  localIdentName: '[path]__[name]___[local]',
+                },
+              },
+              require.resolve('sass-loader'),
             ],
           },
           // The GraphQL loader preprocesses GraphQL queries in .graphql files.
