@@ -278,17 +278,24 @@ module.exports = {
               },
             ],
           },
+          // Opt-in support for SASS (using .scss or .sass extensions).
+          // Chains the sass-loader with the css-loader and the style-loader
+          // to immediately apply all styles to the DOM.
+          // By default we support SASS Modules with the
+          // extensions .module.scss or .module.sass
           {
-            test: /\.scss$/,
-            exclude: /\.module\.scss$/,
+            test: /\.(scss|sass)$/,
+            exclude: /\.module\.(scss|sass)$/,
             use: [
               require.resolve('style-loader'),
               require.resolve('css-loader'),
               require.resolve('sass-loader'),
             ],
           },
+          // Adds support for CSS Modules, but using SASS
+          // using the extension .module.scss or .module.sass
           {
-            test: /\.module\.scss$/,
+            test: /\.module\.(scss|sass)$/,
             use: [
               require.resolve('style-loader'),
               {
