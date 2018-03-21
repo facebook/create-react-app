@@ -280,7 +280,7 @@ module.exports = {
           },
           {
             test: /\.scss$/,
-            exclude: /\.module\.css$/,
+            exclude: /\.module\.scss$/,
             use: [
               require.resolve('style-loader'),
               require.resolve('css-loader'),
