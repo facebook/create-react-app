@@ -41,6 +41,27 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    precommit: 'lint-staged',
+    postcommit: 'git reset',
+    flow: 'flow',
+  };
+
+  // Add prettier
+  appPackage.prettier = {
+    printWidth: 80,
+    tabWidth: 2,
+    useTabs: false,
+    semi: true,
+    singleQuote: true,
+    trailingComma: 'none',
+    bracketSpacing: true,
+    jsxBracketSameLine: true,
+    requirePragma: false,
+  };
+
+  // Add precommit hooks
+  appPackage['lint-staged'] = {
+    '*.js': ['./node_modules/.bin/prettier --write', 'git add'],
   };
 
   fs.writeFileSync(

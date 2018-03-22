@@ -80,7 +80,7 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', paths.appNodeModules].concat(
+    modules: ['node_modules', paths.appNodeModules, paths.appSrc].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
@@ -97,13 +97,12 @@ module.exports = {
       // It usually still works on npm 3 without this but it would be
       // unfortunate to rely on, as react-scripts could be symlinked,
       // and thus babel-runtime might not be resolvable from the source.
-      'babel-runtime': path.dirname(
-        require.resolve('babel-runtime/package.json')
-      ),
+      'babel-runtime': path.dirname(require.resolve('babel-runtime/package.json')),
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
+      tests: 'tests',
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -168,7 +167,7 @@ module.exports = {
             options: {
               // @remove-on-eject-begin
               babelrc: false,
-              presets: [require.resolve('babel-preset-react-app')],
+              presets: [require.resolve('@500tech/babel-preset-react-app')],
               // @remove-on-eject-end
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -182,7 +181,7 @@ module.exports = {
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           {
-            test: /\.css$/,
+            test: /\.(css|scss)$/,
             use: [
               require.resolve('style-loader'),
               {
@@ -209,6 +208,13 @@ module.exports = {
                       flexbox: 'no-2009',
                     }),
                   ],
+                  sourceMap: true,
+                },
+              },
+              {
+                loader: 'sass-loader',
+                query: {
+                  sourceMap: true,
                 },
               },
             ],
