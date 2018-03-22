@@ -1806,7 +1806,6 @@ After that, follow the instructions on the screen.
 
 Learn more about React Storybook:
 
-* Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
 * [GitHub Repo](https://github.com/storybooks/storybook)
 * [Documentation](https://storybook.js.org/basics/introduction/)
 * [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
@@ -1875,14 +1874,24 @@ monorepo/
     "private": true
   app1/
     package.json:
-      "dependencies": ["@myorg/comp1": ">=0.0.0", "react": "^16.2.0"],
-      "devDependencies": ["react-scripts": "2.0.0"]
+      "dependencies": {
+        "@myorg/comp1": ">=0.0.0",
+        "react": "^16.2.0"
+      },
+      "devDependencies": {
+        "react-scripts": "2.0.0"
+      }
     src/
       app.js: import comp1 from '@myorg/comp1';
   app2/
     package.json:
-      "dependencies": ["@myorg/comp1": ">=0.0.0", "react": "^16.2.0"],
-      "devDependencies": ["react-scripts": "2.0.0"]
+      "dependencies": {
+        "@myorg/comp1": ">=0.0.0",
+        "react": "^16.2.0"
+      },
+      "devDependencies": {
+        "react-scripts": "2.0.0"
+      }
     src/
       app.js: import comp1 from '@myorg/comp1';
   comp1/
@@ -1894,8 +1903,12 @@ monorepo/
     package.json:
       "name": "@myorg/comp2",
       "version": "0.1.0",
-      "dependencies": ["@myorg/comp1": ">=0.0.0"],
-      "devDependencies": ["react": "^16.2.0"]
+      "dependencies": {
+        "@myorg/comp1": ">=0.0.0"
+      },
+      "devDependencies": {
+        "react": "^16.2.0"
+      }
     index.js: import comp1 from '@myorg/comp1'
 ```
 * Monorepo tools work on a package level, the same level as an npm package.
