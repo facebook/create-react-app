@@ -48,6 +48,7 @@
     "ts-loader": "^2.3.7",
     "tsconfig-paths-webpack-plugin": "^2.0.0",
     "tslint": "^5.7.0",
+    "tslint-config-prettier": "^1.10.0",
     "tslint-react": "^3.2.0",
     "uglifyjs-webpack-plugin": "^1.1.8",
     "url-loader": "0.6.2",
