@@ -45,35 +45,28 @@ const postCSSLoaderOptions = {
   ],
 };
 
+// style files regexes
+const CSSRegex = /\.css$/;
+const CSSModuleRegex = /\.module\.css$/;
+const SASSRegex = /\.(scss|sass)$/;
+const SASSModuleRegex = /\.module\.(scss|sass)$/;
+
+// Pattern that defines CSS modules naming
 const CSSModulePattern = '[path]__[name]___[local]';
 
-const getStyleLoader = (
-  testRegex,
-  excludeRegex,
-  secondLoader,
-  secondLoaderOptions,
-  firstLoader,
-  firstLoaderOptions
-) => {
-  return Object.assign(
+// Common function to create any style loader
+const getStyleLoader = (CSSLoaderOptions, firstLoader, firstLoaderOptions) => {
+  return [
+    require.resolve('style-loader'),
     {
-      test: testRegex,
+      loader: require.resolve('css-loader'),
+      options: CSSLoaderOptions,
     },
-    excludeRegex ? { exclude: excludeRegex } : {},
     {
-      use: [
-        require.resolve('style-loader'),
-        {
-          loader: require.resolve(secondLoader),
-          options: secondLoaderOptions,
-        },
-        {
-          loader: require.resolve(firstLoader),
-          options: firstLoaderOptions,
-        },
-      ],
-    }
-  );
+      loader: require.resolve(firstLoader),
+      options: firstLoaderOptions,
+    },
+  ];
 };
 
 // This is the development configuration.
@@ -272,63 +265,54 @@ module.exports = {
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           // By default we support CSS Modules with the extension .module.css
-          getStyleLoader(
-            // uses ".css" and excludes ".module.css"
-            /\.css$/,
-            /\.module\.css$/,
-            // second loader and its options
-            'css-loader',
-            { importLoaders: 1 },
-            // first loader and its options
-            'postcss-loader',
-            postCSSLoaderOptions
-          ),
+          {
+            test: CSSRegex,
+            exclude: CSSModuleRegex,
+            use: getStyleLoader(
+              {
+                importLoaders: 1,
+              },
+              'postcss-loader',
+              postCSSLoaderOptions
+            ),
+          },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
-          getStyleLoader(
-            // uses ".module.css" and no exclude argument
-            /\.module\.css$/,
-            null,
-            // second loader and its options
-            'css-loader',
-            {
-              importLoaders: 1,
-              modules: true,
-              localIdentName: CSSModulePattern,
-            },
-            // first loader and its options
-            'postcss-loader',
-            postCSSLoaderOptions
-          ),
+          {
+            test: CSSModuleRegex,
+            use: getStyleLoader(
+              {
+                importLoaders: 1,
+                modules: true,
+                localIdentName: CSSModulePattern,
+              },
+              'postcss-loader',
+              postCSSLoaderOptions
+            ),
+          },
           // Opt-in support for SASS (using .scss or .sass extensions).
           // Chains the sass-loader with the css-loader and the style-loader
           // to immediately apply all styles to the DOM.
           // By default we support SASS Modules with the
           // extensions .module.scss or .module.sass
-          getStyleLoader(
-            // uses ".scss/sass" and exclude ".module.scss/sass"
-            /\.(scss|sass)$/,
-            /\.module\.(scss|sass)$/,
-            // second loader and its options
-            'css-loader',
-            {},
-            // first loader and its options
-            'sass-loader',
-            {}
-          ),
+          {
+            test: SASSRegex,
+            exclude: SASSModuleRegex,
+            use: getStyleLoader({}, 'sass-loader', {}),
+          },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
-          getStyleLoader(
-            // uses ".module.scss/sass" and no exclude argument
-            /\.module\.(scss|sass)$/,
-            null,
-            // second loader and its options
-            'css-loader',
-            { modules: true, localIdentName: CSSModulePattern },
-            // first loader and its options
-            'sass-loader',
-            {}
-          ),
+          {
+            test: SASSModuleRegex,
+            use: getStyleLoader(
+              {
+                modules: true,
+                localIdentName: CSSModulePattern,
+              },
+              'sass-loader',
+              {}
+            ),
+          },
           // The GraphQL loader preprocesses GraphQL queries in .graphql files.
           {
             test: /\.(graphql)$/,
