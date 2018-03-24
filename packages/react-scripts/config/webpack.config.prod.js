@@ -70,6 +70,42 @@ const postCSSLoaderOptions = {
   ],
 };
 
+// style files regexes
+const CSSRegex = /\.css$/;
+const CSSModuleRegex = /\.module\.css$/;
+const SASSRegex = /\.(scss|sass)$/;
+const SASSModuleRegex = /\.module\.(scss|sass)$/;
+
+// Pattern that defines CSS modules naming
+const CSSModulePattern = '[path]__[name]___[local]';
+
+// Common function to create any style loader
+const getStyleLoader = (CSSLoaderOptions, firstLoader, firstLoaderOptions) => {
+  return ExtractTextPlugin.extract(
+    Object.assign(
+      {
+        fallback: {
+          loader: require.resolve('style-loader'),
+          options: {
+            hmr: false,
+          },
+        },
+        use: [
+          {
+            loader: require.resolve('css-loader'),
+            options: CSSLoaderOptions,
+          },
+          {
+            loader: require.resolve(firstLoader),
+            options: firstLoaderOptions,
+          },
+        ],
+      },
+      extractTextPluginOptions
+    )
+  );
+};
+
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
@@ -254,69 +290,33 @@ module.exports = {
           // in the main CSS file.
           // By default we support CSS Modules with the extension .module.css
           {
-            test: /\.css$/,
-            exclude: /\.module\.css$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: {
-                    loader: require.resolve('style-loader'),
-                    options: {
-                      hmr: false,
-                    },
-                  },
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: postCSSLoaderOptions,
-                    },
-                  ],
-                },
-                extractTextPluginOptions
-              )
+            test: CSSRegex,
+            exclude: CSSModuleRegex,
+            loader: getStyleLoader(
+              {
+                importLoaders: 1,
+                minimize: true,
+                sourceMap: shouldUseSourceMap,
+              },
+              'postcss-loader',
+              postCSSLoaderOptions
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
           {
-            test: /\.module\.css$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: {
-                    loader: require.resolve('style-loader'),
-                    options: {
-                      hmr: false,
-                    },
-                  },
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                        modules: true,
-                        localIdentName: '[path]__[name]___[local]',
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: postCSSLoaderOptions,
-                    },
-                  ],
-                },
-                extractTextPluginOptions
-              )
+            test: CSSRegex,
+            loader: getStyleLoader(
+              {
+                importLoaders: 1,
+                minimize: true,
+                sourceMap: shouldUseSourceMap,
+                modules: true,
+                localIdentName: CSSModulePattern,
+              },
+              'postcss-loader',
+              postCSSLoaderOptions
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
@@ -326,71 +326,35 @@ module.exports = {
           // By default we support SASS Modules with the
           // extensions .module.scss or .module.sass
           {
-            test: /\.(scss|sass)$/,
-            exclude: /\.module\.(scss|sass)$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: {
-                    loader: require.resolve('style-loader'),
-                    options: {
-                      hmr: false,
-                    },
-                  },
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                    {
-                      loader: require.resolve('sass-loader'),
-                      options: {
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                  ],
-                },
-                extractTextPluginOptions
-              )
+            test: SASSRegex,
+            exclude: SASSModuleRegex,
+            loader: getStyleLoader(
+              {
+                minimize: true,
+                sourceMap: shouldUseSourceMap,
+              },
+              'sass-loader',
+              {
+                sourceMap: shouldUseSourceMap,
+              }
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
           {
-            test: /\.module\.(scss|sass)$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: {
-                    loader: require.resolve('style-loader'),
-                    options: {
-                      hmr: false,
-                    },
-                  },
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                        modules: true,
-                        localIdentName: '[path]__[name]___[local]',
-                      },
-                    },
-                    {
-                      loader: require.resolve('sass-loader'),
-                      options: {
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                  ],
-                },
-                extractTextPluginOptions
-              )
+            test: SASSModuleRegex,
+            loader: getStyleLoader(
+              {
+                minimize: true,
+                sourceMap: shouldUseSourceMap,
+                modules: true,
+                localIdentName: CSSModulePattern,
+              },
+              'sass-loader',
+              {
+                sourceMap: shouldUseSourceMap,
+              }
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
