@@ -45,6 +45,37 @@ const postCSSLoaderOptions = {
   ],
 };
 
+const CSSModulePattern = '[path]__[name]___[local]';
+
+const getStyleLoader = (
+  testRegex,
+  excludeRegex,
+  secondLoader,
+  secondLoaderOptions,
+  firstLoader,
+  firstLoaderOptions
+) => {
+  return Object.assign(
+    {
+      test: testRegex,
+    },
+    excludeRegex ? { exclude: excludeRegex } : {},
+    {
+      use: [
+        require.resolve('style-loader'),
+        {
+          loader: require.resolve(secondLoader),
+          options: secondLoaderOptions,
+        },
+        {
+          loader: require.resolve(firstLoader),
+          options: firstLoaderOptions,
+        },
+      ],
+    }
+  );
+};
+
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
@@ -241,73 +272,63 @@ module.exports = {
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           // By default we support CSS Modules with the extension .module.css
-          {
-            test: /\.css$/,
-            exclude: /\.module\.css$/,
-            use: [
-              require.resolve('style-loader'),
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  importLoaders: 1,
-                },
-              },
-              {
-                loader: require.resolve('postcss-loader'),
-                options: postCSSLoaderOptions,
-              },
-            ],
-          },
+          getStyleLoader(
+            // uses ".css" and excludes ".module.css"
+            /\.css$/,
+            /\.module\.css$/,
+            // second loader and its options
+            'css-loader',
+            { importLoaders: 1 },
+            // first loader and its options
+            'postcss-loader',
+            postCSSLoaderOptions
+          ),
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
-          {
-            test: /\.module\.css$/,
-            use: [
-              require.resolve('style-loader'),
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  importLoaders: 1,
-                  modules: true,
-                  localIdentName: '[path]__[name]___[local]',
-                },
-              },
-              {
-                loader: require.resolve('postcss-loader'),
-                options: postCSSLoaderOptions,
-              },
-            ],
-          },
+          getStyleLoader(
+            // uses ".module.css" and no exclude argument
+            /\.module\.css$/,
+            null,
+            // second loader and its options
+            'css-loader',
+            {
+              importLoaders: 1,
+              modules: true,
+              localIdentName: CSSModulePattern,
+            },
+            // first loader and its options
+            'postcss-loader',
+            postCSSLoaderOptions
+          ),
           // Opt-in support for SASS (using .scss or .sass extensions).
           // Chains the sass-loader with the css-loader and the style-loader
           // to immediately apply all styles to the DOM.
           // By default we support SASS Modules with the
           // extensions .module.scss or .module.sass
-          {
-            test: /\.(scss|sass)$/,
-            exclude: /\.module\.(scss|sass)$/,
-            use: [
-              require.resolve('style-loader'),
-              require.resolve('css-loader'),
-              require.resolve('sass-loader'),
-            ],
-          },
+          getStyleLoader(
+            // uses ".scss/sass" and exclude ".module.scss/sass"
+            /\.(scss|sass)$/,
+            /\.module\.(scss|sass)$/,
+            // second loader and its options
+            'css-loader',
+            {},
+            // first loader and its options
+            'sass-loader',
+            {}
+          ),
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
-          {
-            test: /\.module\.(scss|sass)$/,
-            use: [
-              require.resolve('style-loader'),
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  modules: true,
-                  localIdentName: '[path]__[name]___[local]',
-                },
-              },
-              require.resolve('sass-loader'),
-            ],
-          },
+          getStyleLoader(
+            // uses ".module.scss/sass" and no exclude argument
+            /\.module\.(scss|sass)$/,
+            null,
+            // second loader and its options
+            'css-loader',
+            { modules: true, localIdentName: CSSModulePattern },
+            // first loader and its options
+            'sass-loader',
+            {}
+          ),
           // The GraphQL loader preprocesses GraphQL queries in .graphql files.
           {
             test: /\.(graphql)$/,
