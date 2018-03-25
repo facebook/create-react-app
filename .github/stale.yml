@@ -12,14 +12,14 @@ daysUntilLock: 7
 
 # Issues or Pull Requests with these labels will never be considered stale. Set to `[]` to disable
 exemptLabels:
-  - pinned
+  - "issue: proposal"
   - "issue: announcement"
 
 # Set to true to ignore issues in a project (defaults to false)
-exemptProjects: false
+exemptProjects: true
 
 # Set to true to ignore issues in a milestone (defaults to false)
-exemptMilestones: false
+exemptMilestones: true
 
 # Label to use when marking as stale
 staleLabel: stale
