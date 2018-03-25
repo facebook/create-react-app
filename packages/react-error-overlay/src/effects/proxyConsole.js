@@ -28,7 +28,7 @@ const registerReactStack = () => {
     // $FlowFixMe
     console.reactStack = frames => reactFrameStack.push(frames);
     // $FlowFixMe
-    console.reactStackEnd = () => reactFrameStack.pop();
+    console.reactStackEnd = frames => reactFrameStack.pop();
   }
 };
 

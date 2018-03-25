@@ -13,7 +13,7 @@ import { unmap } from './unmapper';
 
 function getStackFrames(
   error: Error,
-  unhandledRejection: boolean = false, // eslint-disable-line
+  unhandledRejection: boolean = false,
   contextSize: number = 3
 ): Promise<StackFrame[] | null> {
   const parsedFrames = parse(error);
