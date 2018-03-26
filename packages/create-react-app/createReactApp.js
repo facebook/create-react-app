@@ -48,8 +48,17 @@ const unpack = require('tar-pack').unpack;
 const url = require('url');
 const hyperquest = require('hyperquest');
 const envinfo = require('envinfo');
-
+const os = require('os');
+const findMonorepo = require('react-dev-utils/workspaceUtils').findMonorepo;
 const packageJson = require('./package.json');
+
+// These files should be allowed to remain on a failed install,
+// but then silently removed during the next create.
+const errorLogFilePatterns = [
+  'npm-debug.log',
+  'yarn-error.log',
+  'yarn-debug.log',
+];
 
 let projectName;
 
@@ -81,6 +90,11 @@ const program = new commander.Command(packageJson.name)
       )}`
     );
     console.log(
+      `      - a local path relative to the current working directory: ${chalk.green(
+        'file:../my-react-scripts'
+      )}`
+    );
+    console.log(
       `      - a .tgz archive: ${chalk.green(
         'https://mysite.com/my-react-scripts-0.8.2.tgz'
       )}`
@@ -99,7 +113,7 @@ const program = new commander.Command(packageJson.name)
     );
     console.log(
       `      ${chalk.cyan(
-        'https://github.com/facebookincubator/create-react-app/issues/new'
+        'https://github.com/facebook/create-react-app/issues/new'
       )}`
     );
     console.log();
@@ -173,10 +187,10 @@ function createApp(name, verbose, version, useNpm, template) {
   };
   fs.writeFileSync(
     path.join(root, 'package.json'),
-    JSON.stringify(packageJson, null, 2)
+    JSON.stringify(packageJson, null, 2) + os.EOL
   );
 
-  const useYarn = useNpm ? false : shouldUseYarn();
+  const useYarn = useNpm ? false : shouldUseYarn(root);
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -212,13 +226,18 @@ function createApp(name, verbose, version, useNpm, template) {
   run(root, appName, version, verbose, originalDirectory, template, useYarn);
 }
 
-function shouldUseYarn() {
+function isYarnAvailable() {
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
     return true;
   } catch (e) {
     return false;
   }
+}
+
+function shouldUseYarn(appDir) {
+  const mono = findMonorepo(appDir);
+  return (mono.isYarnWs && mono.isAppIncluded) || isYarnAvailable();
 }
 
 function install(root, useYarn, dependencies, verbose, isOnline) {
@@ -234,7 +253,7 @@ function install(root, useYarn, dependencies, verbose, isOnline) {
       [].push.apply(args, dependencies);
 
       // Explicitly set cwd() to work around issues like
-      // https://github.com/facebookincubator/create-react-app/issues/3326.
+      // https://github.com/facebook/create-react-app/issues/3326.
       // Unfortunately we can only do this for Yarn because npm support for
       // equivalent --prefix flag doesn't help with this issue.
       // This is why for npm, we run checkThatNpmCanReadCwd() early instead.
@@ -343,22 +362,12 @@ function run(
       console.log();
 
       // On 'exit' we will delete these files from target directory.
-      const knownGeneratedFiles = [
-        'package.json',
-        'npm-debug.log',
-        'yarn-error.log',
-        'yarn-debug.log',
-        'node_modules',
-      ];
+      const knownGeneratedFiles = ['package.json', 'node_modules'];
       const currentFiles = fs.readdirSync(path.join(root));
       currentFiles.forEach(file => {
         knownGeneratedFiles.forEach(fileToMatch => {
-          // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
-          // and the rest of knownGeneratedFiles.
-          if (
-            (fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) ||
-            file === fileToMatch
-          ) {
+          // This remove all of knownGeneratedFiles.
+          if (file === fileToMatch) {
             console.log(`Deleting generated file... ${chalk.cyan(file)}`);
             fs.removeSync(path.join(root, file));
           }
@@ -368,7 +377,7 @@ function run(
       if (!remainingFiles.length) {
         // Delete target folder if empty
         console.log(
-          `Deleting ${chalk.cyan(`${appName} /`)} from ${chalk.cyan(
+          `Deleting ${chalk.cyan(`${appName}/`)} from ${chalk.cyan(
             path.resolve(root, '..')
           )}`
         );
@@ -481,7 +490,10 @@ function getPackageName(installPackage) {
     );
   } else if (installPackage.match(/^file:/)) {
     const installPackagePath = installPackage.match(/^file:(.*)?$/)[1];
-    const installPackageJson = require(path.join(installPackagePath, 'package.json'));
+    const installPackageJson = require(path.join(
+      installPackagePath,
+      'package.json'
+    ));
     return Promise.resolve(installPackageJson.name);
   }
   return Promise.resolve(installPackage);
@@ -600,12 +612,14 @@ function setCaretRangeForRuntimeDeps(packageName) {
   makeCaretRange(packageJson.dependencies, 'react');
   makeCaretRange(packageJson.dependencies, 'react-dom');
 
-  fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
+  fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2) + os.EOL);
 }
 
 // If project only contains files generated by GH, it’s safe.
+// Also, if project contains remnant error logs from a previous
+// installation, lets remove them now.
 // We also special case IJ-based products .idea because it integrates with CRA:
-// https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-243446094
+// https://github.com/facebook/create-react-app/pull/368#issuecomment-243446094
 function isSafeToCreateProjectIn(root, name) {
   const validFiles = [
     '.DS_Store',
@@ -630,24 +644,39 @@ function isSafeToCreateProjectIn(root, name) {
 
   const conflicts = fs
     .readdirSync(root)
-    .filter(file => !validFiles.includes(file));
-  if (conflicts.length < 1) {
-    return true;
+    .filter(file => !validFiles.includes(file))
+    // Don't treat log files from previous installation as conflicts
+    .filter(
+      file => !errorLogFilePatterns.some(pattern => file.indexOf(pattern) === 0)
+    );
+
+  if (conflicts.length > 0) {
+    console.log(
+      `The directory ${chalk.green(name)} contains files that could conflict:`
+    );
+    console.log();
+    for (const file of conflicts) {
+      console.log(`  ${file}`);
+    }
+    console.log();
+    console.log(
+      'Either try using a new directory name, or remove the files listed above.'
+    );
+
+    return false;
   }
 
-  console.log(
-    `The directory ${chalk.green(name)} contains files that could conflict:`
-  );
-  console.log();
-  for (const file of conflicts) {
-    console.log(`  ${file}`);
-  }
-  console.log();
-  console.log(
-    'Either try using a new directory name, or remove the files listed above.'
-  );
-
-  return false;
+  // Remove any remnant files from a previous installation
+  const currentFiles = fs.readdirSync(path.join(root));
+  currentFiles.forEach(file => {
+    errorLogFilePatterns.forEach(errorLogFilePattern => {
+      // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
+      if (file.indexOf(errorLogFilePattern) === 0) {
+        fs.removeSync(path.join(root, file));
+      }
+    });
+  });
+  return true;
 }
 
 function getProxy() {

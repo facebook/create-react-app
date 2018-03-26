@@ -8,13 +8,16 @@ environment:
       test_suite: "installs"
     - nodejs_version: 8
       test_suite: "kitchensink"
+    - nodejs_version: 8
+      test_suite: "monorepos"
     - nodejs_version: 6
       test_suite: "simple"
     - nodejs_version: 6
       test_suite: "installs"
     - nodejs_version: 6
       test_suite: "kitchensink"
-
+    - nodejs_version: 6
+      test_suite: "monorepos"
 cache:
   - node_modules -> appveyor.cleanup-cache.txt
   - packages\react-scripts\node_modules -> appveyor.cleanup-cache.txt
