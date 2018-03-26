@@ -6,6 +6,7 @@
     "chai": "3.5.0",
     "jsdom": "9.8.3",
     "mocha": "3.2.0",
+    "node-sass": "4.8.3",
     "normalize.css": "7.0.0",
     "prop-types": "15.5.6",
     "test-integrity": "1.0.0"
