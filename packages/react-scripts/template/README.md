@@ -621,7 +621,7 @@ Then in `package.json`, add the following lines to `scripts`:
 ```diff
    "scripts": {
 +    "build-css": "node-sass-chokidar src/ -o src/",
-+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch",
++    "watch-css": "node-sass-chokidar src/ -o src/ --watch",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
