@@ -48,7 +48,7 @@ describe('Integration', () => {
       expect(
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
       ).to.match(
-        /.+__style-module___scssModulesInclusion+\{background:.+;color:.+}/
+        /.+__scss-styles-module___scssModulesInclusion+\{background:.+;color:.+}/
       );
     });
 
@@ -69,7 +69,7 @@ describe('Integration', () => {
       expect(
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
       ).to.match(
-        /.+__style-module___sassModulesInclusion+\{background:.+;color:.+}/
+        /.+__sass-styles-module___sassModulesInclusion+\{background:.+;color:.+}/
       );
     });
 
