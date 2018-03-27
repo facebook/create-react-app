@@ -36,9 +36,6 @@ describe('Integration', () => {
 
       expect(
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(/html\{/);
-      expect(
-        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
       ).to.match(/#feature-scss-inclusion\{background:.+;color:.+}/);
     });
 
@@ -57,9 +54,6 @@ describe('Integration', () => {
 
       expect(
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(/html\{/);
-      expect(
-        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
       ).to.match(/#feature-sass-inclusion\{background:.+;color:.+}/);
     });
 
