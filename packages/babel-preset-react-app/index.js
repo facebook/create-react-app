@@ -93,6 +93,9 @@ module.exports = function(api, opts) {
       require('@babel/plugin-transform-destructuring').default,
       // class { handleClick = () => { } }
       require('@babel/plugin-proposal-class-properties').default,
+      // Support async generator functions and for-await
+      // async function* agf() { await 1; yield 2; }
+      require('@babel/plugin-proposal-async-generator-functions').default,
       // The following two plugins use Object.assign directly, instead of Babel's
       // extends helper. Note that this assumes `Object.assign` is available.
       // { ...todo, completed: true }
