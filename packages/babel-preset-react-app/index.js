@@ -76,6 +76,9 @@ module.exports = function(api, opts) {
           // Adds component stack to warning messages
           // Adds __self attribute to JSX which React will use for some warnings
           development: isEnvDevelopment || isEnvTest,
+          // Will use the native built-in instead of trying to polyfill
+          // behavior for any plugins that require one.
+          useBuiltIns: true,
         },
       ],
       isFlowEnabled && [require('@babel/preset-flow').default],
@@ -95,13 +98,6 @@ module.exports = function(api, opts) {
       // { ...todo, completed: true }
       [
         require('@babel/plugin-proposal-object-rest-spread').default,
-        {
-          useBuiltIns: true,
-        },
-      ],
-      // Transforms JSX
-      [
-        require('@babel/plugin-transform-react-jsx').default,
         {
           useBuiltIns: true,
         },

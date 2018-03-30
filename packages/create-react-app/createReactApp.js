@@ -49,7 +49,7 @@ const url = require('url');
 const hyperquest = require('hyperquest');
 const envinfo = require('envinfo');
 const os = require('os');
-
+const findMonorepo = require('react-dev-utils/workspaceUtils').findMonorepo;
 const packageJson = require('./package.json');
 
 // These files should be allowed to remain on a failed install,
@@ -87,6 +87,11 @@ const program = new commander.Command(packageJson.name)
     console.log(
       `      - a custom fork published on npm: ${chalk.green(
         'my-react-scripts'
+      )}`
+    );
+    console.log(
+      `      - a local path relative to the current working directory: ${chalk.green(
+        'file:../my-react-scripts'
       )}`
     );
     console.log(
@@ -185,7 +190,7 @@ function createApp(name, verbose, version, useNpm, template) {
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
 
-  const useYarn = useNpm ? false : shouldUseYarn();
+  const useYarn = useNpm ? false : shouldUseYarn(root);
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -221,13 +226,18 @@ function createApp(name, verbose, version, useNpm, template) {
   run(root, appName, version, verbose, originalDirectory, template, useYarn);
 }
 
-function shouldUseYarn() {
+function isYarnAvailable() {
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
     return true;
   } catch (e) {
     return false;
   }
+}
+
+function shouldUseYarn(appDir) {
+  const mono = findMonorepo(appDir);
+  return (mono.isYarnWs && mono.isAppIncluded) || isYarnAvailable();
 }
 
 function install(root, useYarn, dependencies, verbose, isOnline) {
