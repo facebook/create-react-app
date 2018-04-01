@@ -32,7 +32,7 @@ const Header = ({
   const classes = cx(CLASS_ROOT, className);
 
   const getLogo = matches => (
-    <Link to="/">{matches ? project : projectSmall}</Link>
+    <StyledLink to="/">{matches ? project : projectSmall}</StyledLink>
   );
 
   return (
@@ -55,6 +55,15 @@ const Header = ({
     </StyledBar>
   );
 };
+
+const StyledLink = styled(Link)`
+  color: ${props => props.theme.colors.black};
+  text-decoration: none;
+
+  &:visited {
+    ${props => props.theme.colors.black};
+  }
+`;
 
 const StyledBar = styled(Bar)`
   font-family: ${props => props.theme.fontFamily};
