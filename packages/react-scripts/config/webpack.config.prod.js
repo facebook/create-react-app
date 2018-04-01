@@ -107,11 +107,11 @@ module.exports = {
     {
       // Finally, this is your app's code:
       app: paths.appIndexJs,
-      styleguide: paths.styleguideIndexJs,
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     },
+    fs.existsSync(paths.styleguideIndexJs) ? { styleguide: paths.styleguideIndexJs } : {},
     fs.existsSync(paths.staticJs) ? { static: paths.staticJs } : {},
     fs.existsSync(paths.polyfills) ? { polyfills: paths.polyfills } : {}
   ),
@@ -223,6 +223,7 @@ module.exports = {
             include: [
               paths.appSrc,
               path.join(paths.appNodeModules, 'stringify-object'),
+              fs.realpathSync(path.join(paths.appNodeModules, '@lighting-beetle', 'lighter-styleguide')),
             ],
             loader: require.resolve('babel-loader'),
             options: {
@@ -250,7 +251,6 @@ module.exports = {
               /\.css/,
               /\.scss$/,
               paths.icons,
-              paths.iconsSG,
             ],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
@@ -307,20 +307,6 @@ module.exports = {
           svgoLoader,
         ],
       },
-      {
-        test: /\.svg$/,
-        include: paths.iconsSG,
-        use: [
-          {
-            loader: require.resolve('svg-sprite-loader'),
-            options: {
-              extract: true,
-              spriteFilename: 'sprite-sg.svg',
-            },
-          },
-          svgoLoader,
-        ],
-      },
     ],
   },
   plugins: [
@@ -337,25 +323,26 @@ module.exports = {
     // in `package.json`, in which case it will be the pathname of that URL.
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: paths.styleguideHtml,
-      filename: 'styleguide.html',
-      chunks: ['hotDevClient', 'polyfills', 'styleguide'],
-      chunksSortMode: 'manual',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true,
-      },
-    }),
+    ...(fs.existsSync(paths.styleguideIndexJs) ? [
+      new HtmlWebpackPlugin({
+        inject: true,
+        template: paths.styleguideHtml,
+        filename: 'styleguide.html',
+        chunks: ['hotDevClient', 'polyfills', 'styleguide'],
+        chunksSortMode: 'manual',
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true,
+          removeEmptyAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          keepClosingSlash: true,
+          minifyJS: true,
+          minifyCSS: true,
+          minifyURLs: true,
+        },
+    })] : []),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.

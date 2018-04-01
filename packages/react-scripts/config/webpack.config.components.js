@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -200,6 +201,7 @@ module.exports = {
             include: [
               paths.appSrc,
               path.join(paths.appNodeModules, 'stringify-object'),
+              fs.realpathSync(path.join(paths.appNodeModules, '@lighting-beetle', 'lighter-styleguide')),
             ],
             loader: require.resolve('babel-loader'),
             options: {
@@ -227,7 +229,6 @@ module.exports = {
               /\.css/,
               /\.scss$/,
               paths.icons,
-              paths.iconsSG,
             ],
             options: {
               name: 'lib/[name].[ext]',
