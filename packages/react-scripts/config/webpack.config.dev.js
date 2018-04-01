@@ -98,11 +98,11 @@ module.exports = {
       ),
       // Finally, this is your app's code:
       app: paths.appIndexJs,
-      styleguide: paths.styleguideIndexJs,
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     },
+    fs.existsSync(paths.styleguideIndexJs) ? { styleguide: paths.styleguideIndexJs } : {},
     fs.existsSync(paths.staticJs) ? { static: paths.staticJs } : {},
     fs.existsSync(paths.polyfills) ? { polyfills: paths.polyfills } : {}
   ),
@@ -203,6 +203,7 @@ module.exports = {
             include: [
               paths.appSrc,
               path.join(paths.appNodeModules, 'stringify-object'),
+              fs.realpathSync(path.join(paths.appNodeModules, '@lighting-beetle', 'lighter-styleguide')),
             ],
             loader: require.resolve('babel-loader'),
             options: {
@@ -233,7 +234,6 @@ module.exports = {
               /\.css/,
               /\.scss$/,
               paths.icons,
-              paths.iconsSG,
             ],
             loader: require.resolve('file-loader'),
             options: {
@@ -290,20 +290,6 @@ module.exports = {
           svgoLoader,
         ],
       },
-      {
-        test: /\.svg$/,
-        include: paths.iconsSG,
-        use: [
-          {
-            loader: require.resolve('svg-sprite-loader'),
-            options: {
-              extract: true,
-              spriteFilename: 'sprite-sg.svg',
-            },
-          },
-          svgoLoader,
-        ],
-      },
     ],
   },
   plugins: [
@@ -326,7 +312,7 @@ module.exports = {
       filename: 'styleguide.html',
       chunks: ['hotDevClient', 'polyfills', 'styleguide'],
       chunksSortMode: 'manual',
-    }),
+    })] : []),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
