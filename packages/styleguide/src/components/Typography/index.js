@@ -7,7 +7,6 @@ const baseCSS = css`
   color: ${props => props.theme.colors.black};
   margin-top: 0;
   margin-bottom: ${props => props.theme.spaces.medium};
-  max-width: ${props => props.theme.contentWidth};
 `;
 
 export const H1 = styled.h1`
@@ -49,7 +48,6 @@ export const P = styled.p`
   line-height: ${props => props.theme.lineHeights.base};
   margin-top: 0;
   margin-bottom: ${props => props.theme.spaces.medium};
-  max-width: ${props => props.theme.contentWidth};
 `;
 
 export const Link = styled.a`

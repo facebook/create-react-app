@@ -21,7 +21,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNavActive: false
+      isActive: false
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleNavLinkClick = this.handleNavLinkClick.bind(this);
@@ -29,12 +29,12 @@ class App extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   handleClick() {
-    this.setState({ isNavActive: !this.state.isNavActive });
+    this.setState({ isActive: !this.state.isActive });
   }
 
   handleNavLinkClick() {
-    if (this.state.isNavActive) {
-      this.setState({ isNavActive: false });
+    if (this.state.isActive) {
+      this.setState({ isActive: false });
     }
   }
 
@@ -49,11 +49,11 @@ class App extends React.Component {
       styleguideBasePath = '/styleguide/'
     } = config;
 
-    const activeClass = this.state.isNavActive ? 'is-active' : '';
+    const activeClass = this.state.isActive ? 'is-active' : '';
 
     // merge styleguide theme and project theme
     const localTheme = Object.keys(theme).reduce((acc, prop) => {
-      if (typeof theme[prop] === 'object') {
+      if (typeof acc[prop] === 'object') {
         acc[prop] = {
           ...theme[prop],
           ...projectTheme[prop]
@@ -79,17 +79,22 @@ class App extends React.Component {
             >
               <NavigationButton
                 onClick={() => this.handleClick()}
-                isActive={this.state.isNavActive}
+                isActive={this.state.isActive}
               />
             </PageHeader>
-            <PageBody className={activeClass}>
-              <PageContent>
+            <PageBody>
+              <PageContent className={activeClass}>
                 <Sitemap routes={routes} />
               </PageContent>
-              <PageSidebar>
+              <PageSidebar className={activeClass}>
                 <Navigation
                   routes={routes}
                   onNavLinkClick={() => this.handleNavLinkClick()}
+                />
+                <NavigationButton
+                  onClick={() => this.handleClick()}
+                  isActive={this.state.isActive}
+                  isMobileButton
                 />
               </PageSidebar>
             </PageBody>
@@ -103,93 +108,98 @@ class App extends React.Component {
 /* eslint-disable */
 injectGlobal`
   body, html {
+    height: initial;
   }
-
-  html,
-  body {
-    padding: 0;
-    margin: 0;
-    text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  * { box-sizing: border-box; }
-  *::after { box-sizing: border-box; }
-  *::before { box-sizing: border-box; }
 `;
 /* eslint-enable */
 
-const PageLayout = styled.div``;
+const PageLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 6rem);
+  margin-top: ${props => rem(props.theme.sizes.headerHeight)};
+`;
 
 const PageHeader = styled(Header)`
-  position: sticky;
-  top: 0;
-  width: 100%;
   height: ${props => rem(props.theme.sizes.headerHeight)};
   display: flex;
-  flex: 0 0 auto;
   justify-content: space-between;
   align-items: center;
   padding: 0 ${props => rem(props.theme.spaces.large)};
   background-color: ${props => props.theme.colors.main};
   color: ${props => props.theme.colors.black};
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: ${props => props.theme.zIndex.header};
 `;
 
 const PageBody = styled.div`
-  position: relative;
   display: flex;
-  flex: 1 1 auto;
-  min-height: 0;
-  align-items: flex-start;
+  flex-direction: column;
+  overflow: hidden;
 
-  @media (max-width: calc(${props => props.theme.breakpoints.l} - 1px)) {
-    &.is-active {
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
+  @media (min-width: ${props => props.theme.breakpoints.m}) {
+    flex-direction: row;
+    flex: 1 0 auto;
   }
 `;
 
 const PageSidebar = styled(Sidebar)`
-  position: fixed;
-  top: 6rem;
-  height: calc(100vh - 6rem);
-  flex: 0 0 ${props => rem(props.theme.sizes.sidebarWidth)};
+  display: flex;
   order: -1;
-  overflow: auto;
-  transform: translateX(-${props => rem(props.theme.sizes.sidebarWidth)});
-  transition: transform 0.3s ease-in-out 0s;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 0;
+  transition: width 0.3s ease-in-out 0s;
   z-index: ${props => props.theme.zIndex.sidebar};
 
-  @media (min-width: ${props => props.theme.breakpoints.l}) {
-    position: sticky;
-    transform: translateX(0);
+  &.is-active {
+    width: 100vw;
+    overflow: auto;
+
+    @media (min-width: ${props => props.theme.breakpoints.s}) {
+      width: ${props => rem(props.theme.sizes.sidebarWidth)};
+    }
   }
 
-  .is-active & {
-    transform: translateX(0);
+  @media (min-width: ${props => props.theme.breakpoints.s}) {
+    top: ${props => rem(props.theme.sizes.headerHeight)};
+    left: initial;
+    height: calc(100vh - 6rem);
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.l}) {
+    width: ${props => rem(props.theme.sizes.sidebarWidth)};
+    overflow: auto;
   }
 `;
 
 const PageContent = styled.main`
+  max-width: 100%;
+  padding: ${props => rem(props.theme.spaces.default)}
+    ${props => rem(props.theme.spaces.medium)}
+    ${props => rem(props.theme.spaces.medium)};
   position: relative;
-  flex: 1 1 auto;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: ${props => rem(props.theme.spaces.default)} 0;
-  transition: transform 0.3s ease-in-out 0s, opacity 0.3s ease-in-out 0s;
+  left: 0;
+  transition: left 0.3s ease-in-out 0s;
 
-  .is-active & {
-    transform: translateX(${props => rem(props.theme.sizes.sidebarWidth)});
-    opacity: 0.5;
+  &.is-active {
+    left: ${props => rem(props.theme.sizes.sidebarWidth)};
   }
 
   @media (min-width: ${props => props.theme.breakpoints.l}) {
+    width: calc(100vw - ${props => rem(props.theme.sizes.sidebarWidth)});
+    margin-left: ${props => rem(props.theme.sizes.sidebarWidth)};
     padding-left: 0;
-    .is-active & {
-      transform: translateX(0);
-      opacity: 1;
+
+    &.is-active {
+      left: 0;
     }
   }
 `;

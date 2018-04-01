@@ -4,7 +4,7 @@ import { rem } from './utils';
 
 export const sizes = {
   headerHeight: '96px',
-  sidebarWidth: '248px',
+  sidebarWidth: '266px',
   menuWidth: '200px'
 };
 
@@ -17,13 +17,11 @@ export const breakpoints = {
 };
 
 export const spaces = {
-  mini: '3px',
   tiny: '6px',
   small: '12px',
   default: '18px',
   medium: '24px',
-  large: '48px',
-  xlarge: '60px'
+  large: '48px'
 };
 
 export const contentSpacing = spaces.large;
@@ -69,13 +67,6 @@ const functionalColors = {
   redDamask: '#cb6b4d'
 };
 
-export const previewBackgrounds = {
-  white: '#FFFFFF',
-  greyLight: '#F7F7F7',
-  grey: '#919191',
-  greyDark: '#565656'
-};
-
 /* *** TODO temp names (while full design won't exist) *** */
 export const colors = {
   accent: '#f85013',
@@ -97,5 +88,3 @@ export const shadows = {
 export const borderRadius = {
   default: '0'
 };
-
-export const contentWidth = '55rem';

@@ -1,2 +1,1 @@
-export { default as md } from './md';
-export { default as ComponentDocs } from './ComponentDocs';
+export { default as md } from './md'; // eslint-disable-line import/prefer-default-export

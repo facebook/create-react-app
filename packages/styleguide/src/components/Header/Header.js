@@ -32,24 +32,20 @@ const Header = ({
   const classes = cx(CLASS_ROOT, className);
 
   const getLogo = matches => (
-    <StyledLink to="/">{matches ? project : projectSmall}</StyledLink>
+    <Link to="/">{matches ? project : projectSmall}</Link>
   );
 
   return (
     <StyledBar className={classes} space="" {...other}>
       <BarItem>{children}</BarItem>
-      <BarItem isFilling>
+      <BarItem fill>
         <Bar space="">
           <MediaQuery minDeviceWidth={theme.breakpoints.m}>
             {matches =>
               typeof project === 'string' ? (
-                <StyledProjectText isFilling>
-                  {getLogo(matches)}
-                </StyledProjectText>
+                <StyledProjectText fill>{getLogo(matches)}</StyledProjectText>
               ) : (
-                <StyledProjectLogo isFilling>
-                  {getLogo(matches)}
-                </StyledProjectLogo>
+                <StyledProjectLogo fill>{getLogo(matches)}</StyledProjectLogo>
               )
             }
           </MediaQuery>
@@ -59,15 +55,6 @@ const Header = ({
     </StyledBar>
   );
 };
-
-const StyledLink = styled(Link)`
-  color: ${props => props.theme.colors.black};
-  text-decoration: none;
-
-  &:visited {
-    ${props => props.theme.colors.black};
-  }
-`;
 
 const StyledBar = styled(Bar)`
   font-family: ${props => props.theme.fontFamily};

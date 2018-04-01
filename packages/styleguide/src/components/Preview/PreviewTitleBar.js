@@ -17,7 +17,7 @@ const PreviewTitleBar = ({ className, title, actions = [], ...other }) => {
 
   return (
     <StyledBar className={classes} {...other}>
-      <BarItem isFilling>
+      <BarItem fill>
         <H5>{title}</H5>
       </BarItem>
 

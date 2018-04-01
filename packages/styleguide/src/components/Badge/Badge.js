@@ -1,10 +1,12 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { oneOf } from 'prop-types';
 import styled from 'styled-components';
 import { rem } from './../../style/utils';
 
+import { colors } from './../../style/theme';
+
 const propTypes = {
-  color: string
+  color: oneOf(Object.keys(colors))
 };
 
 const Badge = ({ children, color = 'black', ...other }) => (

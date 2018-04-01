@@ -141,9 +141,11 @@ class Navigation extends React.Component {
 
     // div has to wrapp Nav because of nice layout
     return (
-      <StyledNav className={classes} {...other}>
-        {getNavList(routes)}
-      </StyledNav>
+      <div>
+        <StyledNav className={classes} {...other}>
+          {getNavList(routes)}
+        </StyledNav>
+      </div>
     );
   }
 }

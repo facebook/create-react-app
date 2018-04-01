@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { string, node, object, bool, oneOf } from 'prop-types';
 import cx from 'classnames';
-import Select from 'react-select';
 import styled from 'styled-components';
 
 import PreviewTitleBar from './PreviewTitleBar';
@@ -11,7 +10,7 @@ import Frame from './Frame';
 import Card from './../Card';
 import Icon from './../Icon';
 
-import { colors, previewBackgrounds, fontFamily } from './../../style/theme';
+import { colors } from './../../style/theme';
 import { ButtonBaseCSS } from '../../style/common';
 
 const CLASS_ROOT = '';
@@ -40,42 +39,17 @@ export default class Preview extends Component {
     super(props);
 
     this.handleToggleCode = this.handleToggleCode.bind(this);
-    this.handlePreviewBackground = this.handlePreviewBackground.bind(this);
   }
 
   state = {
-    isCodeShown: false,
-    previewBackground: '',
-    previewBackgrounds: []
+    isCodeShown: false
   };
-
-  componentDidMount() {
-    const previewBackgroundsArray = [];
-
-    Object.keys(previewBackgrounds).map((key, index) => {
-      return previewBackgroundsArray.push({
-        value: previewBackgrounds[key],
-        label: key
-      });
-    });
-
-    this.setState({
-      previewBackgroundsList: previewBackgroundsArray,
-      previewBackground: previewBackgroundsArray[0]
-    });
-  }
 
   handleToggleCode() {
     this.setState({
       isCodeShown: !this.state.isCodeShown
     });
   }
-
-  handlePreviewBackground = previewBackground => {
-    this.setState({ previewBackground });
-  };
-
-  return;
 
   render() {
     const {
@@ -93,23 +67,9 @@ export default class Preview extends Component {
       ...other
     } = this.props;
 
-    const { previewBackground, previewBackgroundsList } = this.state;
-
     const classes = cx(CLASS_ROOT, className);
 
     const actions = [];
-
-    actions.push(
-      <StyledSelect
-        name="background-select"
-        clearable={false}
-        searchable={false}
-        closeOnSelect={false}
-        value={previewBackground.value}
-        onChange={this.handlePreviewBackground}
-        options={previewBackgroundsList}
-      />
-    );
 
     if (hasCodePreview) {
       actions.push(
@@ -120,9 +80,7 @@ export default class Preview extends Component {
       );
     }
 
-    const toReneder = (typeof children === 'function'
-      ? children(this.state.previewBackground)
-      : children) || (
+    const toReneder = children || (
       // eslint-disable-next-line react/no-danger
       <div dangerouslySetInnerHTML={{ __html: html }} />
     );
@@ -139,12 +97,7 @@ export default class Preview extends Component {
 
     return [
       <PreviewTitleBar title={title} actions={actions} key="previewTitle" />,
-      <Card
-        className={classes}
-        bgColor={previewBackground.value}
-        {...other}
-        key="previewCard"
-      >
+      <Card className={classes} {...other} key="previewCard">
         <StyledPreviewLive bgTheme={bgTheme}>{content}</StyledPreviewLive>
         {this.state.isCodeShown &&
           hasCodePreview &&
@@ -169,63 +122,4 @@ const StyledButton = styled.button`
   ${ButtonBaseCSS};
   padding-right: 0;
   text-transform: uppercase;
-`;
-
-const StyledSelect = styled(Select)`
-  &.Select {
-    box-sizing: border-box;
-    background-color: #ffffff;
-    position: relative;
-    margin: 2px;
-    font-family: ${fontFamily};
-
-    &:hover {
-      border: 2px solid #ee6338;
-      border-width: 2px;
-      margin: 0;
-    }
-  }
-
-  .Select-multi-value-wrapper {
-    display: flex;
-    align-items: center;
-    height: 36px;
-    width: 180px;
-    border: 2px solid #000000;
-    padding: 0 10px;
-  }
-
-  .Select-value {
-    font-size: 16px;
-    color: #737373;
-  }
-
-  .Select-menu {
-    position: absolute;
-    top: 36px;
-
-    .Select-option {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      height: 36px;
-      width: 180px;
-      background-color: #ffffff;
-      border: solid #000000;
-      border-width: 0 2px;
-      padding: 0 10px;
-
-      &:last-child {
-        border-width: 0 2px 2px 2px;
-      }
-
-      &:hover {
-        border: 2px solid #ee6338;
-        border-width: 2px;
-      }
-      &.is-selected {
-        background-color: #fbeee8;
-      }
-    }
-  }
 `;
