@@ -58,9 +58,7 @@ function getProcessCommand(processId, processDirectory) {
 
 function getDirectoryOfProcessById(processId) {
   return execSync(
-    'lsof -p ' +
-      processId +
-      ' | awk \'$4=="cwd" {for (i=9; i<=NF; i++) printf "%s ", $i}\'',
+    'lsof -p ' + processId + ' | awk \'$4=="cwd" {for (i=9; i<=NF; i++) printf "%s ", $i}\'',
     execOptions
   ).trim();
 }

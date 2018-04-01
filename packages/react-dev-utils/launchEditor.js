@@ -56,7 +56,8 @@ const COMMON_EDITORS_OSX = {
     '/Applications/RubyMine.app/Contents/MacOS/rubymine',
   '/Applications/WebStorm.app/Contents/MacOS/webstorm':
     '/Applications/WebStorm.app/Contents/MacOS/webstorm',
-  '/Applications/MacVim.app/Contents/MacOS/MacVim': 'mvim',
+  '/Applications/MacVim.app/Contents/MacOS/MacVim':
+    'mvim',
 };
 
 const COMMON_EDITORS_LINUX = {
