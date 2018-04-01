@@ -24,7 +24,7 @@
     "prism-theme-one-dark": "~1.0.0",
     "prismjs": "~1.13.0",
     "raw-loader": "~0.5.1",
-    "react": "~16.2.0",
+    "react": "~16.3.0",
     "react-docgen": "~3.0.0-beta11",
     "react-docgen-annotation-resolver": "~1.0.0",
     "react-element-to-jsx-string": "~13.2.0",
@@ -32,7 +32,7 @@
     "react-markings": "~1.2.0",
     "react-responsive": "~4.1.0",
     "react-router-dom": "~4.2.2",
-    "styled-components": "~3.2.3",
+    "styled-components": "~3.2.5",
     "svg4everybody": "~2.1.9",
     "unescape-html": "~1.1.0"
   },
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "husky": "~0.14.3",
-    "lint-staged": "~7.0.0",
+    "lint-staged": "~7.0.2",
     "prettier": "~1.11.1",
     "react-scripts": "~1.1.1"
   }
