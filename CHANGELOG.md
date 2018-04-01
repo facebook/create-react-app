@@ -1,3 +1,16 @@
+## 2.0.0 (March 11, 2018)
+
+#### :rocket: New Feature
+
+* This is initial release of `lighter-styleguide`
+* Update `lighter-react-scripts` to work with `lighter-styleguide`
+* Styleguide entry can be optional
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.0.0`
+* `lighter-styleguide@1.0.0`
+
 ## 1.4.1 (March 11, 2018)
 
 #### :bug: Bug Fix
