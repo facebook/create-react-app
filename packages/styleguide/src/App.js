@@ -108,8 +108,20 @@ class App extends React.Component {
 /* eslint-disable */
 injectGlobal`
   body, html {
-    height: initial;
   }
+
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  * { box-sizing: border-box; }
+  *::after { box-sizing: border-box; }
+  *::before { box-sizing: border-box; }
 `;
 /* eslint-enable */
 
