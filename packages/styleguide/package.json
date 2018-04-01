@@ -1,0 +1,58 @@
+{
+  "name": "@lighting-beetle/lighter-styleguide",
+  "version": "1.0.0",
+  "description": "Lighter styleguide",
+  "main": "src/styleguide.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lightingbeetle/lighter.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lightingbeetle/lighter/issues"
+  },
+  "homepage": "https://github.com/lightingbeetle/lighter#readme",
+  "dependencies": {
+    "array-includes": "~3.0.3",
+    "classnames": "~2.2.5",
+    "common-tags": "~1.7.2",
+    "firacode": "~1.205.0",
+    "object.entries": "~1.0.4",
+    "polished": "~1.9.2",
+    "pretty": "~2.0.0",
+    "prism-theme-one-dark": "~1.0.0",
+    "prismjs": "~1.13.0",
+    "raw-loader": "~0.5.1",
+    "react": "~16.3.0",
+    "react-docgen": "~3.0.0-beta11",
+    "react-docgen-annotation-resolver": "~1.0.0",
+    "react-element-to-jsx-string": "~13.2.0",
+    "react-frame-component": "~2.0.2",
+    "react-markings": "~1.2.0",
+    "react-responsive": "~4.1.0",
+    "react-router-dom": "~4.2.2",
+    "styled-components": "~3.2.5",
+    "svg4everybody": "~2.1.9",
+    "unescape-html": "~1.1.0"
+  },
+  "scripts": {
+    "precommit": "lint-staged",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "husky": "~0.14.3",
+    "lint-staged": "~7.0.2",
+    "prettier": "~1.11.1",
+    "react-scripts": "~1.1.1"
+  }
+}
