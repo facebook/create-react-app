@@ -1,3 +1,35 @@
+## 1.1.2 (April 3, 2018)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#4085](https://github.com/facebook/create-react-app/pull/4085) Resolve `.js` before `.mjs` files to unbreak dependencies with native ESM support. ([@leebyron](https://github.com/leebyron))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#4197](https://github.com/facebook/create-react-app/pull/4197) Add troubleshooting for Github Pages. ([@xnt](https://github.com/xnt))
+
+#### Committers: 2
+- Lee Byron ([leebyron](https://github.com/leebyron))
+- Vicente Plata ([xnt](https://github.com/xnt))
+
+### Migrating from 1.1.1 to 1.1.2
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.1.2
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.1.2
+```
+
 ## 1.1.1 (February 2, 2018)
 
 #### :bug: Bug Fix
