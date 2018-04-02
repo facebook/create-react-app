@@ -70,6 +70,13 @@ const svgoLoader = {
   },
 };
 
+function getLighterStyleguidePath() {
+  const ligterStyleguidePath = path.join(paths.appNodeModules, '@lighting-beetle', 'lighter-styleguide')
+  return fs.existsSync(ligterStyleguidePath) && fs.realpathSync(ligterStyleguidePath);
+}
+
+const lighterStyleguidePath = getLighterStyleguidePath();
+
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
@@ -214,7 +221,9 @@ module.exports = {
             include: [
               paths.appSrc,
               path.join(paths.appNodeModules, 'stringify-object'),
-              fs.realpathSync(path.join(paths.appNodeModules, '@lighting-beetle', 'lighter-styleguide')),
+              // if lighterStyleguide do not exist
+              // return empty array which webpack accepts
+              ...([lighterStyleguidePath || []]),
             ],
             loader: require.resolve('babel-loader'),
             options: {
