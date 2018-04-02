@@ -2,6 +2,16 @@
 
 #### :bug: Bug Fix
 
+* check if `lighter-styleguide` exists
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.0.2`
+
+## 2.0.1 (April 2, 2018)
+
+#### :bug: Bug Fix
+
 * do not check if `styleguide.html` exists
 
 #### :tada: version updates
