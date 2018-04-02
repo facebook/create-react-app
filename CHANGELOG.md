@@ -1,4 +1,14 @@
-## 2.0.0 (March 11, 2018)
+## 2.0.1 (April 2, 2018)
+
+#### :bug: Bug Fix
+
+* do not check if `styleguide.html` exists
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.0.1`
+
+## 2.0.0 (April 1, 2018)
 
 #### :rocket: New Feature
 
