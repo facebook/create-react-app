@@ -89,10 +89,11 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: {
-    // Finally, this is your app's code:
-    components: paths.componentsJs,
-  },
+  entry: Object.assign(
+    {},
+    fs.existsSync(paths.componentsJs) ? { components: paths.componentsJs } : {},
+    fs.existsSync(paths.componentsStaticJs) ? { static: paths.componentsStaticJs } : {}
+  ),
   output: {
     // The build folder.
     path: paths.appBuild,
