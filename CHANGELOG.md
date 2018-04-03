@@ -1,3 +1,28 @@
+## 1.1.3 (April 3, 2018)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#4247](https://github.com/facebook/create-react-app/pull/4247) Fix `environment.dispose is not a function` error caused by a Jest bug. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 1
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+
+### Migrating from 1.1.2 to 1.1.3
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.1.3
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.1.3
+```
+
 ## 1.1.2 (April 3, 2018)
 
 #### :bug: Bug Fix
