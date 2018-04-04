@@ -46,7 +46,14 @@
         "redux-persist": "5.x",
         "redux-responsive": "4.x",
         "redux-thunk": "2.x",
-        "rmw-shell": "1.x",
+        "rmw-shell": "1.x"
+    },
+    "devDependencies": {
+        "enzyme": "^3.x",
+        "react-scripts": "^1.x",
+        "redux-logger": "^3.x",
+        "redux-testkit": "^1.x",
+        "standard": "^11.x",
         "selenium-webdriver": "4.0.0-alpha.1",
         "source-map-explorer": "1.x"
     }

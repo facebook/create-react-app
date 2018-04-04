@@ -27,7 +27,7 @@ const run = (command, args) => {
   }
 };
 
-module.exports = function(
+module.exports = function (
   appPath,
   appName,
   verbose,
@@ -45,7 +45,10 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
+    check: 'npm-check -s -u',
+    analyze: 'source-map-explorer build/static/js/main.*',
     start: 'react-scripts start',
+    standard: 'standard src/**/*.js',
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
@@ -97,15 +100,38 @@ module.exports = function(
     }
   );
 
+  // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
+  // See: https://github.com/npm/npm/issues/1862
+  fs.move(
+    path.join(`${appPath}/functions`, 'gitignore'),
+    path.join(`${appPath}/functions`, '.gitignore'),
+    [],
+    err => {
+      if (err) {
+        // Append if there's already a `.gitignore` file there
+        if (err.code === 'EEXIST') {
+          const data = fs.readFileSync(path.join(appPath, 'gitignore'));
+          fs.appendFileSync(path.join(appPath, '.gitignore'), data);
+          fs.unlinkSync(path.join(appPath, 'gitignore'));
+        } else {
+          throw err;
+        }
+      }
+    }
+  );
+
   let command;
   let baseArgs;
+  let baseDevArgs;
 
   if (useYarn) {
     command = 'yarnpkg';
     baseArgs = ['add'];
+    baseDevArgs = ['add'];
   } else {
     command = 'npm';
-    baseArgs = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    baseArgs = ['install', '-S', verbose && '--verbose'].filter(e => e);
+    baseDevArgs = ['install', '-D', verbose && '--verbose'].filter(e => e);
   }
 
   // Install additional template dependencies, if present
@@ -115,9 +141,16 @@ module.exports = function(
   );
   if (fs.existsSync(templateDependenciesPath)) {
     const templateDependencies = require(templateDependenciesPath).dependencies;
+    const templateDevDependencies = require(templateDependenciesPath).devDependencies;
     const args = baseArgs.concat(
       Object.keys(templateDependencies).map(key => {
         return `${key}@${templateDependencies[key]}`;
+      })
+    );
+
+    const devArgs = baseDevArgs.concat(
+      Object.keys(templateDevDependencies).map(key => {
+        return `${key}@${templateDevDependencies[key]}`;
       })
     );
 
@@ -126,6 +159,13 @@ module.exports = function(
       console.log();
 
       run(command, args);
+    }
+
+    if (devArgs.length > baseDevArgs.length) {
+      console.log(`Installing template dependencies using ${command}...`);
+      console.log();
+
+      run(command, devArgs);
     }
     fs.unlinkSync(templateDependenciesPath);
   }
