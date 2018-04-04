@@ -162,7 +162,7 @@ module.exports = function (
     }
 
     if (devArgs.length > baseDevArgs.length) {
-      console.log(`Installing template dependencies using ${command}...`);
+      console.log(`Installing dev template dependencies using ${command}...`);
       console.log();
 
       run(command, devArgs);
