@@ -1,8 +1,8 @@
-import getMenuItems from './menuItems';
-import locales from './locales';
-import routes from './routes';
-import themes from './themes';
-import grants from './grants';
+import getMenuItems from './menuItems'
+import locales from './locales'
+import routes from './routes'
+import themes from './themes'
+import grants from './grants'
 
 const config = {
   firebase_config: {
@@ -11,7 +11,7 @@ const config = {
     databaseURL: 'https://react-most-wanted-3b1b2.firebaseio.com',
     projectId: 'react-most-wanted-3b1b2',
     storageBucket: 'react-most-wanted-3b1b2.appspot.com',
-    messagingSenderId: '258373383650',
+    messagingSenderId: '258373383650'
   },
   firebase_config_dev: {
     apiKey: 'AIzaSyB31cMH9nJnERC1WCWA7lQHnY08voLs-Z0',
@@ -19,7 +19,7 @@ const config = {
     databaseURL: 'https://react-most-wanted-dev.firebaseio.com',
     projectId: 'react-most-wanted-dev',
     storageBucket: 'react-most-wanted-dev.appspot.com',
-    messagingSenderId: '70650394824',
+    messagingSenderId: '70650394824'
   },
   firebase_providers: [
     'google.com',
@@ -27,11 +27,11 @@ const config = {
     'twitter.com',
     'github.com',
     'password',
-    'phone',
+    'phone'
   ],
   initial_state: {
     theme: 'dark',
-    locale: 'en',
+    locale: 'en'
   },
   drawer_width: 256,
   locales,
@@ -40,6 +40,6 @@ const config = {
   routes,
   getMenuItems,
   firebaseLoad: () => import('./firebase'),
-};
+}
 
-export default config;
+export default config

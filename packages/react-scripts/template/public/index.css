@@ -37,7 +37,6 @@ html, body, #root{
   100% { transform: rotate(360deg); }
 }
 
-
 .oscilloscope {
   border-radius: 30px;
 }

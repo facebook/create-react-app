@@ -7,17 +7,16 @@ const messages = defineMessages({
   page_not_found_demo: 'Seite nicht gefunden demo',
   '404': '404',
   warning_404_message: '404 Seite nicht gefunden',
-  warning_404_description:
-    'Es tut uns leid aber die angeforderte Seite existiert nicht.',
+  warning_404_description: 'Es tut uns leid aber die angeforderte Seite existiert nicht.',
   settings: 'Einstellungen',
   language: 'Sprache',
   theme: 'Thema',
   responsive: 'Responsive',
-  en: 'Englisch',
+  en: 'English',
   de: 'Deutsch',
-  bs: 'Bosnisch',
-  ru: 'Russisch',
-  es: 'Spanische',
+  bs: 'Bosanski',
+  ru: 'Русский',
+  es: 'Español',
   dark: 'Dark',
   light: 'Light',
   ics: 'ICS',
@@ -52,8 +51,7 @@ const messages = defineMessages({
   delete: 'Löschen',
   ok: 'OK',
   delete_account_dialog_title: 'Konto löschen?',
-  delete_account_dialog_message:
-    'Dein Konto wird gelöscht und mit ihm alle Daten!',
+  delete_account_dialog_message: 'Dein Konto wird gelöscht und mit ihm alle Daten!',
   email_not_verified: 'E-Mail ist nicht verifiziert!',
   email_verified: 'E-Mail ist verifiziert',
   send_verification_email: 'Verifizierungs E-Mail senden',
@@ -124,8 +122,7 @@ const messages = defineMessages({
   is_admin_label: 'Administrator',
   predefined_messages: 'Vorgefertigte Nachrichten',
   delete_predefined_chat_message_title: 'Vorgefertigte Nachricht löschen?',
-  delete_predefined_chat_message_message:
-    'Vorgefertigte Nachricht wird gelöscht!',
+  delete_predefined_chat_message_message: 'Vorgefertigte Nachricht wird gelöscht!',
   select_field: 'Feld auswählen',
   sorting: 'Sortierung',
   filters: 'Filter',
@@ -147,6 +144,7 @@ const messages = defineMessages({
   user_label_search: 'Suchen',
   document: 'Document',
   collection: 'Collection',
+  infinitelist: 'Infinitelist',
 });
 
 export default messages;

@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 6
+  - 8
 
 cache:
   directories:
@@ -8,18 +8,22 @@ cache:
   - functions/node_modules
 
 before_install:
-  - npm install codecov.io coveralls
   - chmod +x before_install.sh
   - ./before_install.sh
 
-script:
-  - npm test
 
-after_success:
-  - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
-  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+before_script:
+  - npm test
   - chmod +x build.sh
   - travis_wait 40 ./build.sh
+
+script:
   - chmod +x deploy.sh
   - travis_wait 40 ./deploy.sh
+
+after_script:
+  - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - node node_modules/lighthouse-ci/runlighthouse.js https://react-most-wanted.com
+
+  

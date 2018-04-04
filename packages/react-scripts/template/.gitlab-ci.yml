@@ -1,0 +1,38 @@
+image: node:latest
+
+stages:
+  - test
+  - build
+  - deploy
+
+before_script:
+  - npm -g config set user root
+  - npm install -g firebase-tools
+  - npm install
+
+cache:
+  paths:
+    - node_modules/
+    - functions/node_modules/
+
+test:
+  stage: test
+  script:
+    - echo "Running tests"
+    - npm run test
+
+build:
+  stage: build
+  script:
+    - echo "Building the app"
+    - npm run build
+
+deploy:
+  stage: deploy
+  environment: Production
+  only:
+    - master
+  script:
+    - npm run build
+    - firebase use default --token $FIREBASE_DEPLOY_KEY
+    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --only hosting --token $FIREBASE_DEPLOY_KEY

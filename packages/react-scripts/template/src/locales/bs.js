@@ -1,4 +1,4 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 
 const messages = defineMessages({
   app_name: 'React Najtrazeniji',
@@ -12,11 +12,11 @@ const messages = defineMessages({
   language: 'Jezik',
   theme: 'Tema',
   responsive: 'Responsive',
-  en: 'Engleski',
-  de: 'Njemacki',
+  en: 'English',
+  de: 'Deutsch',
   bs: 'Bosanski',
-  ru: 'Ruski',
-  es: 'Španski',
+  ru: 'Русский',
+  es: 'Español',
   dark: 'Tamna',
   light: 'Svijetla',
   ics: 'ICS',
@@ -51,8 +51,7 @@ const messages = defineMessages({
   delete: 'Izbrisi',
   ok: 'OK',
   delete_account_dialog_title: 'Izbrisati profil?',
-  delete_account_dialog_message:
-    'Tvoj profil i svi njegovi podaci ce biti izbrisani!',
+  delete_account_dialog_message: 'Tvoj profil i svi njegovi podaci ce biti izbrisani!',
   email_not_verified: 'E-Mail nije verificiran!',
   email_verified: 'E-Mail je verificiran',
   send_verification_email: 'Posalji E-Mail za verifikaciju',
@@ -145,6 +144,7 @@ const messages = defineMessages({
   user_label_search: 'Search user',
   document: 'Document',
   collection: 'Collection',
-});
+  infinitelist: 'Infinitelist'
+})
 
-export default messages;
+export default messages

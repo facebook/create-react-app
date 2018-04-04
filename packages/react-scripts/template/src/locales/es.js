@@ -1,4 +1,4 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 
 const messages = defineMessages({
   app_name: 'React Most Wanted',
@@ -12,10 +12,10 @@ const messages = defineMessages({
   language: 'Idioma',
   theme: 'Tema',
   responsive: 'Responsivo',
-  en: 'Inglés',
-  de: 'Alemán',
-  bs: 'Bosnio',
-  ru: 'Ruso',
+  en: 'English',
+  de: 'Deutsch',
+  bs: 'Bosanski',
+  ru: 'Русский',
   es: 'Español',
   dark: 'Oscuro',
   light: 'Claro',
@@ -51,8 +51,7 @@ const messages = defineMessages({
   delete: 'Borrar',
   ok: 'OK',
   delete_account_dialog_title: 'Eliminar cuenta?',
-  delete_account_dialog_message:
-    'Su cuenta será eliminada y perderás toda tu información!',
+  delete_account_dialog_message: 'Su cuenta será eliminada y perderás toda tu información!',
   email_not_verified: 'Correo electrónico sin verificar!',
   email_verified: 'Correo electrónico verificado',
   send_verification_email: 'Enviar correo de verificación',
@@ -123,8 +122,7 @@ const messages = defineMessages({
   is_admin_label: 'Administrador',
   predefined_messages: 'Mensajes predefinidos',
   delete_predefined_chat_message_title: '¿Borrar mensaje predefinido?',
-  delete_predefined_chat_message_message:
-    '¡El mensaje predefinido sera borrado!',
+  delete_predefined_chat_message_message: '¡El mensaje predefinido sera borrado!',
   select_field: 'Seleccionar campo',
   sorting: 'Orden',
   filters: 'Filtros',
@@ -146,6 +144,8 @@ const messages = defineMessages({
   user_label_search: 'Buscar usuario',
   document: 'Documento',
   collection: 'Colección',
-});
+  infinitelist: 'Infinitelist'
 
-export default messages;
+})
+
+export default messages
