@@ -1,3 +1,28 @@
+## 1.1.4 (April 3, 2018)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`
+
+  * [#4250](https://github.com/facebook/create-react-app/pull/4250) Upgrade `detect-port-alt` to fix [#4189](https://github.com/facebook/create-react-app/issues/4189). ([@Timer](https://github.com/Timer))
+
+#### Committers: 1
+- Joe Haddad ([Timer](https://github.com/Timer))
+
+### Migrating from 1.1.3 to 1.1.4
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.1.4
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.1.4
+```
+
 ## 1.1.3 (April 3, 2018)
 
 #### :bug: Bug Fix
