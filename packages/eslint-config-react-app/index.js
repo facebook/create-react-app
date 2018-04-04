@@ -65,6 +65,7 @@ module.exports = {
     'no-dupe-class-members': 'warn',
     'no-dupe-keys': 'warn',
     'no-duplicate-case': 'warn',
+    'no-duplicate-imports': 'warn',
     'no-empty-character-class': 'warn',
     'no-empty-pattern': 'warn',
     'no-eval': 'warn',
