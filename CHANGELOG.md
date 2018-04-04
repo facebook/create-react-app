@@ -1,3 +1,13 @@
+## 2.1.0 (April 4, 2018)
+
+#### :rocket: New Feature
+
+* components config supports dynamic entries based on contents of components dir files
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.1.0`
+
 ## 2.0.1 (April 2, 2018)
 
 #### :bug: Bug Fix
