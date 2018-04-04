@@ -2,7 +2,7 @@
   "name": "rmw-react-scripts",
   "version": "1.0.44",
   "description": "rmw-react-scripts",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "TarikHuber/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
