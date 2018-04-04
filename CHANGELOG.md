@@ -131,7 +131,7 @@ yarn add --exact react-scripts@1.1.1
 * `react-error-overlay`
 
   * [#3474](https://github.com/facebook/create-react-app/pull/3474) Allow the error overlay to be unregistered. ([@Timer](https://github.com/Timer))
-  
+
 * `create-react-app`
 
   * [#3408](https://github.com/facebook/create-react-app/pull/3408) Add `--info` flag to help gather bug reports. ([@tabrindle](https://github.com/tabrindle))
@@ -157,7 +157,7 @@ yarn add --exact react-scripts@1.1.1
 * `create-react-app`
 
   * [#3320](https://github.com/facebook/create-react-app/pull/3320) Fix offline installation to respect proxy from `.npmrc`. ([@mdogadailo](https://github.com/mdogadailo))
-  
+
 * `react-scripts`
 
   * [#3537](https://github.com/facebook/create-react-app/pull/3537) Add `mjs` and `jsx` filename extensions to `file-loader` exclude pattern. ([@iansu](https://github.com/iansu))
