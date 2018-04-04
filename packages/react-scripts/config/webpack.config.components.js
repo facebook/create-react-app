@@ -3,6 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
+const glob = require('glob');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -37,7 +38,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = 'lib/[name].css';
+const cssFilename = (getPath) => getPath('lib/[name].css').replace('react-components', 'main');
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -79,6 +80,21 @@ const svgoLoader = {
   },
 };
 
+const entryFiles = glob.sync(path.join(paths.componentsDir, '/*.js'));
+
+const entries = entryFiles.reduce((entries, entryFile) => {
+  let entryName = path.basename(entryFile, '.js');
+  let entry = path.basename(entryFile);
+
+  if (entryName === 'index') {
+    entryName = 'react-components';
+  } 
+
+  entries[entryName] = path.join(paths.componentsDir, entry);
+
+  return entries;
+}, {});
+
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
@@ -89,11 +105,12 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: Object.assign(
-    {},
-    fs.existsSync(paths.componentsJs) ? { components: paths.componentsJs } : {},
-    fs.existsSync(paths.componentsStaticJs) ? { static: paths.componentsStaticJs } : {}
-  ),
+  // entry: Object.assign(
+  //   {},
+  //   fs.existsSync(paths.componentsJs) && { 'bundle-react': paths.componentsJs },
+  //   fs.existsSync(paths.componentsStaticJs) && { 'bundle-static': paths.componentsStaticJs }
+  // ),
+  entry: entries,
   output: {
     // The build folder.
     path: paths.appBuild,
