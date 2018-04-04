@@ -1,3 +1,28 @@
+## 1.1.4 (April 3, 2018)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`
+
+  * [#4250](https://github.com/facebook/create-react-app/pull/4250) Upgrade `detect-port-alt` to fix [#4189](https://github.com/facebook/create-react-app/issues/4189). ([@Timer](https://github.com/Timer))
+
+#### Committers: 1
+- Joe Haddad ([Timer](https://github.com/Timer))
+
+### Migrating from 1.1.3 to 1.1.4
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.1.4
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.1.4
+```
+
 ## 1.1.3 (April 3, 2018)
 
 #### :bug: Bug Fix
@@ -106,7 +131,7 @@ yarn add --exact react-scripts@1.1.1
 * `react-error-overlay`
 
   * [#3474](https://github.com/facebookincubator/create-react-app/pull/3474) Allow the error overlay to be unregistered. ([@Timer](https://github.com/Timer))
-  
+
 * `create-react-app`
 
   * [#3408](https://github.com/facebookincubator/create-react-app/pull/3408) Add `--info` flag to help gather bug reports. ([@tabrindle](https://github.com/tabrindle))
@@ -132,7 +157,7 @@ yarn add --exact react-scripts@1.1.1
 * `create-react-app`
 
   * [#3320](https://github.com/facebookincubator/create-react-app/pull/3320) Fix offline installation to respect proxy from `.npmrc`. ([@mdogadailo](https://github.com/mdogadailo))
-  
+
 * `react-scripts`
 
   * [#3537](https://github.com/facebookincubator/create-react-app/pull/3537) Add `mjs` and `jsx` filename extensions to `file-loader` exclude pattern. ([@iansu](https://github.com/iansu))
