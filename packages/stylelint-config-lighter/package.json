@@ -1,0 +1,34 @@
+{
+  "name": "@lighting-beetle/stylelint-config-lighter",
+  "version": "1.0.0",
+  "description": "Lighter config for stylelint",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lightingbeetle/stylelint-config-light.git"
+  },
+  "keywords": [
+    "stylelint",
+    "config",
+    "scss",
+    "css"
+  ],
+  "author": "Adam Mockor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lightingbeetle/stylelint-config-light/issues"
+  },
+  "homepage": "https://github.com/lightingbeetle/stylelint-config-light#readme",
+  "dependencies": {
+    "stylelint": "~9.2.0",
+    "stylelint-config-sass-guidelines": "~5.0.0",
+    "stylelint-config-standard": "~18.2.0",
+    "stylelint-scss": "~3.0.0"
+  },
+  "peerDependencies": {
+    "stylelint": "^9.0.0"
+  }
+}
