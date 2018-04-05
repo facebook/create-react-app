@@ -1,6 +1,5 @@
 const functions = require('firebase-functions')
-const admin = require('firebase-admin')
-try { admin.initializeApp() } catch (e) { } // You do that because the admin SDK can only be initialized once.
+const admin = require('../../admin')
 
 exports = module.exports = functions.database.ref('/roles/{roleUid}').onWrite((data, context) => {
   // Exit when the data is not deleted.

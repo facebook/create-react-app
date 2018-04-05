@@ -1,10 +1,9 @@
 const functions = require('firebase-functions')
-const admin = require('firebase-admin')
-try { admin.initializeApp() } catch (e) { } // You do that because the admin SDK can only be initialized once.
+const admin = require('../../admin')
 const notifications = require('../../utils/notifications')
 
 exports = module.exports = functions.database.ref('/user_chat_messages/{senderUid}/{receiverUid}/{messageUid}').onCreate((eventSnapshot, context) => {
-  if (context.auth.admin) {
+  if (context.authType === 'ADMIN') {
     return null
   }
 

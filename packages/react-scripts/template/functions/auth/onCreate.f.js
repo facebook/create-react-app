@@ -1,6 +1,5 @@
 const functions = require('firebase-functions')
-const admin = require('firebase-admin')
-try { admin.initializeApp() } catch (e) { } // You do that because the admin SDK can only be initialized once.
+const admin = require('../admin')
 const nodemailer = require('nodemailer')
 const gmailEmail = encodeURIComponent(functions.config().gmail.email)
 const gmailPassword = encodeURIComponent(functions.config().gmail.password)
@@ -14,43 +13,52 @@ exports = module.exports = functions.auth.user().onCreate((userMetadata, context
   const year = creationTime.format('YYYY')
   const month = creationTime.format('MM')
   const day = creationTime.format('DD')
-  const provider = userMetadata.providerData ? userMetadata.providerData[0] : {}
-  const providerId = provider.providerId ? provider.providerId.replace('.com', '') : provider.providerId
 
-  let promises = []
+  return admin.auth().getUser(userMetadata.uid).then(user => {
+    // User  without provider data
+    console.log(userMetadata.toJSON())
 
-  if (providerId) {
-    promises.push(
-      admin.database()
-        .ref(`/provider_count/${providerId}`)
-        .transaction(current => (current || 0) + 1)
-    )
-  }
+    // User with provider data
+    console.log(user)
 
-  const dayCount = admin.database()
-    .ref(`/user_registrations_per_day/${year}/${month}/${day}`)
-    .transaction(current => (current || 0) + 1)
+    const provider = user.providerData !== [] ? user.providerData[0] : { providerId: email ? 'password' : 'phone' }
+    const providerId = provider.providerId ? provider.providerId.replace('.com', '') : provider.providerId
 
-  const monthCount = admin.database()
-    .ref(`/user_registrations_per_month/${year}/${month}`)
-    .transaction(current => (current || 0) + 1)
+    let promises = []
 
-  const usersCount = admin.database()
-    .ref(`/users_count`)
-    .transaction(current => (current || 0) + 1)
-
-  promises.push(dayCount, monthCount, usersCount)
-
-  if (email) {
-    const mailOptions = {
-      from: `"Tarik Huber" <${gmailEmail}>`,
-      to: email,
-      subject: `Welcome to React Most Wanted!`,
-      text: `Hey ${displayName || ''}!, Welcome to React Most Wanted. I hope you will enjoy the demo application.`
+    if (providerId) {
+      promises.push(
+        admin.database()
+          .ref(`/provider_count/${providerId}`)
+          .transaction(current => (current || 0) + 1)
+      )
     }
 
-    promises.push(mailTransport.sendMail(mailOptions))
-  }
+    const dayCount = admin.database()
+      .ref(`/user_registrations_per_day/${year}/${month}/${day}`)
+      .transaction(current => (current || 0) + 1)
 
-  return Promise.all(promises)
+    const monthCount = admin.database()
+      .ref(`/user_registrations_per_month/${year}/${month}`)
+      .transaction(current => (current || 0) + 1)
+
+    const usersCount = admin.database()
+      .ref(`/users_count`)
+      .transaction(current => (current || 0) + 1)
+
+    promises.push(dayCount, monthCount, usersCount)
+
+    if (email) {
+      const mailOptions = {
+        from: `"Tarik Huber" <${gmailEmail}>`,
+        to: email,
+        subject: `Welcome to React Most Wanted!`,
+        text: `Hey ${displayName || ''}!, Welcome to React Most Wanted. I hope you will enjoy the demo application.`
+      }
+
+      promises.push(mailTransport.sendMail(mailOptions))
+    }
+
+    return Promise.all(promises)
+  })
 })

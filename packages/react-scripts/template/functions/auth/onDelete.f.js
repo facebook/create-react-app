@@ -1,6 +1,5 @@
 const functions = require('firebase-functions')
-const admin = require('firebase-admin')
-try { admin.initializeApp() } catch (e) { } // You do that because the admin SDK can only be initialized once.
+const admin = require('../admin')
 const nodemailer = require('nodemailer')
 const gmailEmail = encodeURIComponent(functions.config().gmail.email)
 const gmailPassword = encodeURIComponent(functions.config().gmail.password)
@@ -10,7 +9,12 @@ exports = module.exports = functions.auth.user().onDelete((userMetadata, context
   const uid = userMetadata.uid
   const email = userMetadata.email
   const displayName = userMetadata.displayName
-  const provider = userMetadata.providerData ? userMetadata.providerData[0] : {}
+
+  console.log(userMetadata.providerData)
+  console.log(userMetadata)
+  console.log(context)
+
+  const provider = userMetadata.providerData.length ? userMetadata.providerData[0] : { providerId: email ? 'password' : 'phone' }
   const providerId = provider.providerId ? provider.providerId.replace('.com', '') : provider.providerId
 
   let promises = []
@@ -27,6 +31,8 @@ exports = module.exports = functions.auth.user().onDelete((userMetadata, context
   })
 
   const deleteUser = admin.database().ref(`/users/${uid}`).remove()
+  const deleteTokens = admin.database().ref(`/notification_tokens/${uid}`).remove()
+  const deleteChats = admin.database().ref(`/users_chats/${uid}`).remove()
 
   const usersCount = admin.database()
     .ref(`/users_count`)
@@ -40,7 +46,7 @@ exports = module.exports = functions.auth.user().onDelete((userMetadata, context
     )
   }
 
-  promises.push(sendEmail, deleteUser, usersCount)
+  promises.push(sendEmail, deleteUser, usersCount, deleteTokens, deleteChats)
 
   return Promise.all(promises)
 })
