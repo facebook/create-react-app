@@ -1,5 +1,6 @@
 const functions = require('firebase-functions')
-const admin = require('../admin')
+const admin = require('firebase-admin')
+try { admin.initializeApp() } catch (e) { }
 const nodemailer = require('nodemailer')
 const gmailEmail = encodeURIComponent(functions.config().gmail.email)
 const gmailPassword = encodeURIComponent(functions.config().gmail.password)

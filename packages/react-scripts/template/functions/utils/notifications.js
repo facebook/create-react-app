@@ -1,4 +1,5 @@
-const admin = require('../admin')
+const admin = require('firebase-admin')
+try { admin.initializeApp() } catch (e) { }
 
 module.exports = {
   notifyUser: (userUid, payload) => {

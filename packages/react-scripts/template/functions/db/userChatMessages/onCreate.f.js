@@ -1,5 +1,6 @@
 const functions = require('firebase-functions')
-const admin = require('../../admin')
+const admin = require('firebase-admin')
+try { admin.initializeApp() } catch (e) { }
 const notifications = require('../../utils/notifications')
 
 exports = module.exports = functions.database.ref('/user_chat_messages/{senderUid}/{receiverUid}/{messageUid}').onCreate((eventSnapshot, context) => {

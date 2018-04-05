@@ -1,4 +1,5 @@
-const admin = require('../admin')
+const admin = require('firebase-admin')
+try { admin.initializeApp() } catch (e) { }
 
 // Source: https://firebase.google.com/docs/auth/admin/manage-users
 const listAllUsers = (userIds = [], nextPageToken) => {
