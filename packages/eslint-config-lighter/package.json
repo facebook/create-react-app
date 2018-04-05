@@ -1,0 +1,35 @@
+{
+  "name": "@lighting-beetle/eslint-config-lighter",
+  "version": "1.0.0",
+  "description": "Lighter config for eslint",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "lighting-beetle/lighter",
+  "keywords": [
+    "lighter",
+    "eslint",
+    "config",
+    "prettier",
+    "js"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lightingbeetle/lighter"
+  },
+  "homepage": "https://github.com/lightingbeetle/lighter",
+  "dependencies": {
+    "babel-eslint": "~8.2.2",
+    "eslint-config-airbnb": "~16.1.0",
+    "eslint-config-prettier": "~2.9.0",
+    "eslint-plugin-import": "~2.10.0",
+    "eslint-plugin-jsx-a11y": "~6.0.2",
+    "eslint-plugin-prettier": "~2.6.0",
+    "eslint-plugin-react": "~7.7.0",
+    "prettier": "~1.11.1"
+  },
+  "peerDependencies": {
+    "eslint": ">= 4.19"
+  }
+}
