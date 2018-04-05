@@ -92,8 +92,8 @@ module.exports = function(api, opts) {
       // don't work without it: https://github.com/babel/babel/issues/7215
       require('@babel/plugin-transform-destructuring').default,
       // class { handleClick = () => { } }
-      // Enable loose mode to use assignment instead of defineProperty, as some
-      // libraries add getters and setters to prototypes
+      // Enable loose mode to use assignment instead of defineProperty
+      // See discussion in https://github.com/facebook/create-react-app/issues/4263
       [
         require('@babel/plugin-proposal-class-properties').default,
         {
