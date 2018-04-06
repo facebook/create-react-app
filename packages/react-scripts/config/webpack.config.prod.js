@@ -238,7 +238,7 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.global\.s?css$/,
+            test: [/\.global\.s?css$/, /semantic.css/],
             use: [
               {
                 loader: 'style-loader',
@@ -288,7 +288,7 @@ module.exports = {
           },
           {
             test: /\.s?css$/,
-            exclude: /\.global\.s?css$/,
+            exclude: [/\.global\.s?css$/, /semantic.css/],
             use: [
               {
                 loader: 'style-loader',
