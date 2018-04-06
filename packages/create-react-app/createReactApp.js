@@ -90,6 +90,11 @@ const program = new commander.Command(packageJson.name)
       )}`
     );
     console.log(
+      `      - a local path relative to the current working directory: ${chalk.green(
+        'file:../my-react-scripts'
+      )}`
+    );
+    console.log(
       `      - a .tgz archive: ${chalk.green(
         'https://mysite.com/my-react-scripts-0.8.2.tgz'
       )}`

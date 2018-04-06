@@ -1874,14 +1874,24 @@ monorepo/
     "private": true
   app1/
     package.json:
-      "dependencies": ["@myorg/comp1": ">=0.0.0", "react": "^16.2.0"],
-      "devDependencies": ["react-scripts": "2.0.0"]
+      "dependencies": {
+        "@myorg/comp1": ">=0.0.0",
+        "react": "^16.2.0"
+      },
+      "devDependencies": {
+        "react-scripts": "2.0.0"
+      }
     src/
       app.js: import comp1 from '@myorg/comp1';
   app2/
     package.json:
-      "dependencies": ["@myorg/comp1": ">=0.0.0", "react": "^16.2.0"],
-      "devDependencies": ["react-scripts": "2.0.0"]
+      "dependencies": {
+        "@myorg/comp1": ">=0.0.0",
+        "react": "^16.2.0"
+      },
+      "devDependencies": {
+        "react-scripts": "2.0.0"
+      }
     src/
       app.js: import comp1 from '@myorg/comp1';
   comp1/
@@ -1893,8 +1903,12 @@ monorepo/
     package.json:
       "name": "@myorg/comp2",
       "version": "0.1.0",
-      "dependencies": ["@myorg/comp1": ">=0.0.0"],
-      "devDependencies": ["react": "^16.2.0"]
+      "dependencies": {
+        "@myorg/comp1": ">=0.0.0"
+      },
+      "devDependencies": {
+        "react": "^16.2.0"
+      }
     index.js: import comp1 from '@myorg/comp1'
 ```
 * Monorepo tools work on a package level, the same level as an npm package.
@@ -2372,6 +2386,16 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://reacttraining.com/react-router/web/api/Router) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
+
+#### Troubleshooting
+
+##### "/dev/tty: No such a device or address"
+
+If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the follwing:
+
+1. Create a new [Personal Access Token](https://github.com/settings/tokens)
+2. `git remote set-url origin https://<user>:<token>@github.com/<user>/<repo>` .
+3. Try `npm run deploy again`
 
 ### [Heroku](https://www.heroku.com/)
 
