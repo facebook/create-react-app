@@ -331,13 +331,22 @@ function run(
       checkNodeVersion(packageName);
       setCaretRangeForRuntimeDeps(packageName);
 
-      const scriptsPath = path.resolve(
+      let scriptsPathPrefix = path.join(
         process.cwd(),
         'node_modules',
         packageName,
+      );
+      
+      if (packageName.startsWith('file:')) {
+        scriptsPathPrefix = packageName.substr(5);
+      } 
+
+      const scriptsPath = path.resolve(
+        scriptsPathPrefix,
         'scripts',
         'init.js'
       );
+      
       const init = require(scriptsPath);
       init(root, appName, verbose, originalDirectory, template);
 
@@ -517,12 +526,21 @@ function checkNpmVersion() {
 }
 
 function checkNodeVersion(packageName) {
-  const packageJsonPath = path.resolve(
+  let packageJsonPathPrefix = path.join(
     process.cwd(),
     'node_modules',
     packageName,
+  );
+  
+  if (packageName.startsWith('file:')) {
+    packageJsonPathPrefix = packageName.substr(5);
+  }
+      
+  const packageJsonPath = path.resolve(
+    packageJsonPathPrefix,
     'package.json'
   );
+
   const packageJson = require(packageJsonPath);
   if (!packageJson.engines || !packageJson.engines.node) {
     return;
@@ -603,7 +621,16 @@ function setCaretRangeForRuntimeDeps(packageName) {
     process.exit(1);
   }
 
-  const packageVersion = packageJson.dependencies[packageName];
+  let packageVersion = packageJson.dependencies[packageName];
+  if (!packageVersion && packageName.startsWith('file:')) {
+    const dependencyKey = Object.keys(packageJson.dependencies).find((dep) => {
+      return (packageJson.dependencies[dep] === packageName);
+    });
+    console.dir(dependencyKey);
+    console.dir(packageJson.dependencies, { colors: true, showHidden: true, depth: null });
+    packageVersion = packageJson.dependencies[dependencyKey];
+  }
+  
   if (typeof packageVersion === 'undefined') {
     console.error(chalk.red(`Unable to find ${packageName} in package.json`));
     process.exit(1);
