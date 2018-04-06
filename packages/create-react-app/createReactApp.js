@@ -619,12 +619,6 @@ function setCaretRangeForRuntimeDeps(packageName) {
     const dependencyKey = Object.keys(packageJson.dependencies).find(dep => {
       return packageJson.dependencies[dep] === packageName;
     });
-    console.dir(dependencyKey);
-    console.dir(packageJson.dependencies, {
-      colors: true,
-      showHidden: true,
-      depth: null,
-    });
     packageVersion = packageJson.dependencies[dependencyKey];
   }
 
