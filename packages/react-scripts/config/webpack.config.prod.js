@@ -183,6 +183,7 @@ module.exports = {
                 options: {
                   // disable type checker - we will use it in fork plugin
                   transpileOnly: true,
+                  configFile: paths.appTsProdConfig
                 },
               },
             ],
@@ -381,7 +382,7 @@ module.exports = {
     // Perform type checking and linting in a separate process to speed up compilation
     new ForkTsCheckerWebpackPlugin({
       async: false,
-      tsconfig: paths.appTsConfig,
+      tsconfig: paths.appTsProdConfig,
       tslint: paths.appTsLint,
     }),
   ],
