@@ -53,6 +53,12 @@ To fix this, create a new file *in the root of the project* called `tsconfig.tes
 
 ## Changelog
 
+### 2.15.0
+* Replace TSLint rules with presets - @nielsdB97
+* Update file-loader exclusion rules - @winstonewert
+* Fix Uglifyjs settings - @meandmax
+* Merge react-script 1.1.x - @wmonk
+
 ### 2.14.0
 * README fixes - @kaminskypavel
 * README fixes - @adambowles
