@@ -298,14 +298,19 @@ module.exports = {
     new webpack.DefinePlugin(env.stringified),
     // Minify the code.
     new UglifyJsPlugin({
-      parallel: true,
-      cache: true,
       uglifyOptions: {
-        ecma: 8,
+        parse: {
+          // we want uglify-js to parse ecma 8 code. However we want it to output
+          // ecma 5 compliant code, to avoid issues with older browsers, this is
+          // whey we put `ecma: 5` to the compress and output section
+          // https://github.com/facebook/create-react-app/pull/4234
+          ecma: 8,
+        },
         compress: {
+          ecma: 5,
           warnings: false,
           // Disabled because of an issue with Uglify breaking seemingly valid code:
-          // https://github.com/facebookincubator/create-react-app/issues/2376
+          // https://github.com/facebook/create-react-app/issues/2376
           // Pending further investigation:
           // https://github.com/mishoo/UglifyJS2/issues/2011
           comparisons: false,
@@ -314,15 +319,20 @@ module.exports = {
           safari10: true,
         },
         output: {
+          ecma: 5,
           comments: false,
           // Turned on because emoji and regex is not minified properly using default
-          // https://github.com/facebookincubator/create-react-app/issues/2488
+          // https://github.com/facebook/create-react-app/issues/2488
           ascii_only: true,
         },
       },
+      // Use multi-process parallel running to improve the build speed
+      // Default number of concurrent runs: os.cpus().length - 1
+      parallel: true,
+      // Enable file caching
+      cache: true,
       sourceMap: shouldUseSourceMap,
-    }),
-    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
+    }),    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,
     }),
