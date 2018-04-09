@@ -58,6 +58,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       'jsx',
       'json',
       'node',
+      'mjs',
     ],
     globals: {
       'ts-jest': {
