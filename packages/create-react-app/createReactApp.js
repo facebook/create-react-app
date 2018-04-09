@@ -342,7 +342,6 @@ function run(
       }
 
       const scriptsPath = path.resolve(scriptsPathPrefix, 'scripts', 'init.js');
-
       const init = require(scriptsPath);
       init(root, appName, verbose, originalDirectory, template);
 
