@@ -11,6 +11,7 @@ function print_help {
   echo "  --node-version <version>  the node version to use while testing [6]"
   echo "  --git-branch <branch>     the git branch to checkout for testing [the current one]"
   echo "  --test-suite <suite>      which test suite to use ('simple', installs', 'kitchensink', 'all') ['all']"
+  echo "  --yarn                    if present, use yarn as the package manager"
   echo "  --interactive             gain a bash shell after the test run"
   echo "  --help                    print this message and exit"
   echo ""
@@ -21,6 +22,7 @@ cd $(dirname $0)
 node_version=6
 current_git_branch=`git rev-parse --abbrev-ref HEAD`
 git_branch=${current_git_branch}
+use_yarn=no
 test_suite=all
 interactive=false
 
@@ -33,6 +35,9 @@ while [ "$1" != "" ]; do
     "--git-branch")
       shift
       git_branch=$1
+      ;;
+    "--yarn")
+      use_yarn=yes
       ;;
     "--test-suite")
       shift
@@ -102,6 +107,7 @@ CMD
 docker run \
   --env CI=true \
   --env NPM_CONFIG_QUIET=true \
+  --env USE_YARN=${use_yarn} \
   --tty \
   --user node \
   --volume ${PWD}/..:/var/create-react-app \

@@ -1,20 +1,16 @@
 {
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "build": "cd packages/react-scripts && node scripts/build.js",
+    "build": "node packages/react-scripts/scripts/build.js",
     "changelog": "lerna-changelog",
-    "create-react-app": "node tasks/cra.js",
+    "create-react-app": "tasks/cra.sh",
     "e2e": "tasks/e2e-simple.sh",
     "e2e:docker": "tasks/local-test.sh",
-    "postinstall": "cd packages/react-error-overlay/ && yarn build:prod",
-    "publish": "tasks/publish.sh",
-    "start": "cd packages/react-scripts && node scripts/start.js",
-    "screencast": "svg-term --cast hItN7sl5yfCPTHxvFg5glhhfp --out screencast.svg --window",
-    "test": "cd packages/react-scripts && node scripts/test.js --env=jsdom",
-    "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
+    "postinstall": "node bootstrap.js && cd packages/react-error-overlay/ && npm run build:prod",
+    "publish": "tasks/release.sh",
+    "start": "node packages/react-scripts/scripts/start.js",
+    "test": "node packages/react-scripts/scripts/test.js --env=jsdom",
+    "format": "prettier --trailing-comma es5 --single-quote --write \"packages/*/*.js\" \"packages/*/!(node_modules)/**/*.js\"",
     "precommit": "lint-staged"
   },
   "devDependencies": {
@@ -24,11 +20,10 @@
     "@types/react-dom": "^15.5.0",
     "eslint": "^4.4.1",
     "husky": "^0.13.2",
-    "lerna": "2.6.0",
+    "lerna": "^2.0.0",
     "lerna-changelog": "^0.6.0",
     "lint-staged": "^3.3.1",
-    "prettier": "1.6.1",
-    "svg-term-cli": "^2.0.3"
+    "prettier": "^1.5.2"
   },
   "lint-staged": {
     "*.js": [
