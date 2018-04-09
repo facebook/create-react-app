@@ -232,7 +232,6 @@ cd test-app
 # Test the build
 yarn build
 # Check for expected output
-pwd
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
