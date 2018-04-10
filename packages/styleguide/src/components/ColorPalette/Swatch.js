@@ -5,11 +5,12 @@ import styled from 'styled-components';
 
 const propTypes = {
   main: bool,
+  theme: string,
   shade: oneOfType([number, string]),
   isActive: bool
 };
 
-const Swatch = ({ children, shade, isActive, ...other }) => {
+const Swatch = ({ children, theme, shade, isActive, ...other }) => {
   const classes = cx({ 'is-active': isActive });
 
   return (
@@ -21,9 +22,7 @@ const Swatch = ({ children, shade, isActive, ...other }) => {
 
 const StyledSwatch = styled.button`
   position: relative;
-  min-width: ${props => props.theme.spaces.xlarge};
-  height: ${props => props.theme.spaces.xlarge};
-  padding: ${props => props.theme.spaces.small};
+  padding: 15px;
   border-width: 0;
   background-color: ${props => props.color};
   z-index: 0;
@@ -39,9 +38,9 @@ const StyledSwatch = styled.button`
 
 const StyledSwatchInfo = styled.span`
   display: inline-block;
-  padding: ${props => props.theme.spaces.mini};
+  padding: 0 3px;
   background: ${props => props.theme.colors.white};
-  font-size: ${props => props.theme.fontSizes.small};
+  font-size: 14px;
 `;
 
 Swatch.displayName = 'Swatch';

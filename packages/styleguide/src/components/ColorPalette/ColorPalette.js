@@ -1,57 +1,144 @@
 import React from 'react';
-import { object, array, oneOfType } from 'prop-types';
-import cx from 'classnames';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 
-import ColorPaletteItem from './ColorPaletteItem';
+import Swatch from './Swatch';
 
-const propTypes = {
-  colors: oneOfType([object, array])
-};
+import scssConfig from '!!sass-extract-loader!./../../style/app-config.scss'; //eslint-disable-line
+console.log(scssConfig);
 
-const CLASS_ROOT = 'color-palette';
+const scssColorPaletteVar = '$color-palette';
+const defaultShade = '500';
 
-const ColorPalette = ({ className, children, colors, ...other }) => {
-  const classes = cx(CLASS_ROOT, className);
-  let ColorPaletteItems;
+const colors = scssConfig.global[scssColorPaletteVar].value;
 
-  if (!Array.isArray(colors)) {
-    // if not array, then object according to prop-types
-    ColorPaletteItems = Object.entries(colors).map(([colorFragment, values]) =>
-      values.map((value, index) => {
-        const isMain = index < 1;
+export default class ColorPalette extends React.Component {
+  static displayName = 'ColorPalette';
 
-        return (
-          <ColorPaletteItem
-            key={`${isMain ? 1 : 0}-${colorFragment}-${value}`}
-            isMain={isMain}
-            theme={colorFragment}
-            weight={value}
-          />
-        );
-      })
-    );
-  } else {
-    // it's array
-    ColorPaletteItems = colors.map(color => (
-      <ColorPaletteItem key={color} isMain theme={color} />
-    ));
+  static propTypes = {
+    themeName: string
+  };
+
+  state = {
+    currentShade: null
+  };
+
+  componentWillMount() {
+    this.setState({
+      currentShade: this.getDefaultShade()
+    });
   }
 
-  return (
-    <StyledList className={classes} {...other}>
-      {ColorPaletteItems}
-    </StyledList>
-  );
-};
+  getColor() {
+    const { themeName } = this.props;
+    return colors[themeName];
+  }
 
-const StyledList = styled.div`
+  getSwatches() {
+    const color = this.getColor();
+    if (color && color.type === 'SassMap') {
+      return color.value;
+    }
+    return [];
+  }
+
+  getDefaultShade() {
+    const color = this.getColor();
+
+    if (color && color.type === 'SassMap') {
+      let shade = defaultShade;
+      if (!Object.prototype.hasOwnProperty.call(color.value, defaultShade)) {
+        [shade] = Object.keys(color.value);
+      }
+      return shade;
+    }
+
+    return null;
+  }
+
+  getBackroundColor(shade = this.state.currentShade) {
+    const color = this.getColor();
+
+    if (shade) {
+      return color.value[shade].value.hex;
+    }
+    return color.value.hex;
+  }
+
+  handleColorChange(e, shade) {
+    this.setState({ currentShade: shade });
+  }
+
+  render() {
+    const { className, children, themeName, ...other } = this.props;
+
+    const colorSwatches = this.getSwatches();
+
+    const swatches = Object.entries(colorSwatches).map(([shade]) => (
+      <Swatch
+        key={shade}
+        theme={themeName}
+        shade={shade}
+        color={this.getBackroundColor(shade)}
+        isActive={shade === this.state.currentShade}
+        onClick={e => this.handleColorChange(e, shade)}
+      />
+    ));
+
+    return !this.getColor() ? (
+      <p>{themeName} is not defined in color palette.</p>
+    ) : (
+      <StyledColorPalette
+        className={className}
+        {...other}
+        style={{ backgroundColor: this.getBackroundColor() }}
+      >
+        <StyledColorInfo>
+          {themeName}{' '}
+          {swatches.length > 0
+            ? `${this.state.currentShade} ${
+                colors[themeName].value[this.state.currentShade].value.hex
+              }`
+            : colors[themeName].value.hex}
+        </StyledColorInfo>
+
+        {swatches.length > 0 && (
+          <StyledSwatches>
+            <StyledSwatchSpacer />
+            {swatches}
+            <StyledSwatchSpacer />
+          </StyledSwatches>
+        )}
+      </StyledColorPalette>
+    );
+  }
+}
+
+const StyledColorPalette = styled.div`
+  position: relative;
   width: 100%;
-  margin: 0 0 ${props => props.theme.spaces.medium};
-  padding: 0 0 10px;
+  margin: 0;
+  padding: 150px 0 0;
+  list-style-type: none;
+  transition: background ease-out 200ms;
 `;
 
-ColorPalette.displayName = 'ColorPalette';
-ColorPalette.propTypes = propTypes;
+const StyledColorInfo = styled.div`
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background: white;
+  padding: 3px 6px;
+`;
 
-export default ColorPalette;
+const StyledSwatches = styled.div`
+  display: flex;
+  padding: 50px 0 0 0;
+  overflow-x: auto;
+  overflow-y: visible;
+`;
+
+const StyledSwatchSpacer = styled.div`
+  height: 1px;
+  flex: 0 0 24px;
+`;
