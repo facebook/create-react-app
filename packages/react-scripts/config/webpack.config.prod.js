@@ -340,7 +340,13 @@ module.exports = {
 
     // SWRVE - Added purgeCSS to cleanup our classes.
     new PurgecssPlugin({
-      paths: [paths.appHtml, ...glob.sync(`${paths.appSrc}/*`)]
+      paths: [
+        paths.appHtml,
+        ...glob.sync(`${paths.appSrc}/**/*.jsx`, { nodir: true }),
+        ...glob.sync(`${paths.appNodeModules}/@swrve/**/src/*.jsx`, {
+          nodir: true
+        })
+      ]
     })
   ],
   // Some libraries import Node modules but don't use them in the browser.
