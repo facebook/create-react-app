@@ -559,7 +559,7 @@ No clashes from other `.button` classnames
 <div class="src__Button-module___button"></div>
 ```
 
-**This is an optional feature.** Regular html stylesheets and js imported stylesheets are fully supported. CSS Modules are only added when explictly named as a css module stylesheet using the extension `.module.css`.
+**This is an optional feature.** Regular html stylesheets and js imported stylesheets are fully supported. CSS Modules are only added when explicitly named as a css module stylesheet using the extension `.module.css`.
 --->
 
 ## Post-Processing CSS
@@ -1562,7 +1562,7 @@ Note that tests run much slower with coverage so it is recommended to run it sep
 
 #### Configuration
 
-The default Jest coverage configuration can be overriden by adding any of the following supported keys to a Jest config in your package.json.
+The default Jest coverage configuration can be overridden by adding any of the following supported keys to a Jest config in your package.json.
 
 Supported overrides:
  - [`collectCoverageFrom`](https://facebook.github.io/jest/docs/en/configuration.html#collectcoveragefrom-array)
