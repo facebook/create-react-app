@@ -1,5 +1,5 @@
 {
-  "name": "sw-react-scripts",
+  "name": "@swrve/swrve-react-scripts",
   "version": "1.1.9",
   "description": "SWRVE Configuration and scripts for Create React App.",
   "repository": "swrve/create-react-app",
