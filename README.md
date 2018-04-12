@@ -224,3 +224,7 @@ We are grateful to the authors of existing related projects for their ideas and 
 * [@eanplatter](https://github.com/eanplatter)
 * [@insin](https://github.com/insin)
 * [@mxstbr](https://github.com/mxstbr)
+
+## License
+
+This project has a MIT license, you can check it out [here](https://github.com/facebook/create-react-app/blob/next/LICENSE).
