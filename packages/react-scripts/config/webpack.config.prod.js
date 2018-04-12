@@ -296,7 +296,7 @@ module.exports = {
                   sourceMap: true,
                   insertAt: 'top',
                   // combine all <link rel="stylesheet" href="blob:..."> tags into one
-                  singleton: true,
+                  // singleton: true,
                 },
               },
               {
