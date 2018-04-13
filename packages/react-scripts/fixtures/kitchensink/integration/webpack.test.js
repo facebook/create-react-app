@@ -26,11 +26,11 @@ describe('Integration', () => {
 
       expect(
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(/.+style_cssModulesInclusion__+\{background:.+;color:.+}/);
+      ).to.match(/.+style_cssModulesInclusion__.+\{background:.+;color:.+}/);
       expect(
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
       ).to.match(
-        /.+assets_cssModulesIndexInclusion__+\{background:.+;color:.+}/
+        /.+assets_cssModulesIndexInclusion__.+\{background:.+;color:.+}/
       );
     });
 
