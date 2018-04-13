@@ -19,6 +19,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -313,7 +314,7 @@ module.exports = {
                 minimize: true,
                 sourceMap: shouldUseSourceMap,
                 modules: true,
-                localIdentName: CSSModulePattern,
+                getLocalIdent: getCSSModuleLocalIdent,
               },
               'postcss-loader',
               postCSSLoaderOptions

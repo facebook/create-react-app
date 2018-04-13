@@ -509,7 +509,7 @@ class Button extends Component {
 }
 ```
 
-**This is not required for React** but many people find this feature convenient. You can read about the benefits of this approach [here](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). However you should be aware that this makes your code less portable to other build tools and environments than Webpack.
+**This is not required for React** but many people find this feature convenient. You can read about the benefits of this approach [here](https://medium.com/seek-blog/block-element-modifying-your-javascript-components-d7f99fcab52b). However you should be aware that this makes your code less portable to other build tools and environments than Webpack.
 
 In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
 
@@ -518,23 +518,23 @@ If you are concerned about using Webpack-specific semantics, you can put all you
 <!---
 ## Adding a CSS Modules stylesheet
 
-This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format **[dir]\_\_[filename]___[classname]**.
+This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format **[filename]\_[classname]\_\_[hash]**.
 
 An advantage of this is the ability to repeat the same classname within many CSS files without worrying about a clash.
 
 ### `Button.module.css`
 
 ```css
-.button {
-  padding: 20px;
+.error {
+  background-color: red;
 }
 ```
 
 ### `another-stylesheet.css`
 
 ```css
-.button {
-  color: green;
+.error {
+  color: red;
 }
 ```
 
@@ -542,25 +542,27 @@ An advantage of this is the ability to repeat the same classname within many CSS
 
 ```js
 import React, { Component } from 'react';
-import './another-stylesheet.css'; // Import regular stylesheet
 import styles from './Button.module.css'; // Import css modules stylesheet as styles
+import './another-stylesheet.css'; // Import regular stylesheet
+
 
 class Button extends Component {
   render() {
-    // You can use them as regular CSS styles
-    return <div className={styles.button} />;
+    // reference as a js object
+    return <button className={styles.error}>Error Button</button>;
   }
 }
 ```
 ### `exported HTML`
-No clashes from other `.button` classnames
+No clashes from other `.error` class names
 
 ```html
-<div class="src__Button-module___button"></div>
+<!-- This button has red background but not red text -->
+<button class="Button_error_ax7yz"></div>
 ```
 
 **This is an optional feature.** Regular html stylesheets and js imported stylesheets are fully supported. CSS Modules are only added when explictly named as a css module stylesheet using the extension `.module.css`.
---->
+-->
 
 ## Post-Processing CSS
 
