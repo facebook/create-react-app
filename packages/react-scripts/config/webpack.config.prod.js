@@ -77,9 +77,6 @@ const CSSModuleRegex = /\.module\.css$/;
 const SASSRegex = /\.(scss|sass)$/;
 const SASSModuleRegex = /\.module\.(scss|sass)$/;
 
-// Pattern that defines CSS modules naming
-const CSSModulePattern = '[path]__[name]___[local]';
-
 // Common function to create any style loader
 const getStyleLoader = (CSSLoaderOptions, firstLoader, firstLoaderOptions) => {
   return ExtractTextPlugin.extract(
@@ -350,7 +347,7 @@ module.exports = {
                 minimize: true,
                 sourceMap: shouldUseSourceMap,
                 modules: true,
-                localIdentName: CSSModulePattern,
+                getLocalIdent: getCSSModuleLocalIdent,
               },
               'sass-loader',
               {
