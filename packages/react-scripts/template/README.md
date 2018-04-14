@@ -2196,33 +2196,20 @@ If you are not using the HTML5 `pushState` history API or not using client-side 
 
 This will make sure that all the asset paths are relative to `index.html`. You will then be able to move your app from `http://mywebsite.com` to `http://mywebsite.com/relativepath` or even `http://mywebsite.com/relative/path` without having to rebuild it.
 
-#### Building for Multiple Environments
+#### Customizing Environment Variables for a Build
 
-Applications are generally split between different environments such as staging, production, and development. To allow the app to run in these different environments one must set environment variables to be able to conditionally run different processes depending on the specified environment.
+You can specify a new environment by creating a custom `env` file. For example, to specify config for a staging environment create a file named `.env.staging`
 
-`create-react-app` handles environment variables in a specific way. [This link](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables) explains how it does but the main facts to know in relation to this are:
-
-1. You cannot override `NODE_ENV`, it is always set to `'production'`
-
-2. It is mandated that you prefix any custom environment variables with `REACT_APP_`
-
-    - So you cannot depend upon using `NODE_ENV` to set the environment of your application.
-
-The ideal way to do this is to use `.env` files as you can specify many environment variables simultaneously. This can be done as so:
-
-1. Within `.env.staging` you can set your environment variables:
-
+1. Within `.env.staging` you can set your environment variables as so:
     - `REACT_APP_API_URL=http://api-staging.example.com`
 
 2. You can use the [env-cmd](https://www.npmjs.com/package/env-cmd) npm package in conjunction with the `.env` file.
-
-    - To install `env-cmd` you can do so either locally or globally:
-
-        - `npm install env-cmd` or `npm install -g env-cmd`
+    - To install `env-cmd` you can do:
+        - `npm install env-cmd`
 
 3. Lastly, within your `package.json`:
 
-```javascript
+``` json
 {
   // ...
   "scripts": {
@@ -2232,7 +2219,8 @@ The ideal way to do this is to use `.env` files as you can specify many environm
   // ...
 }
 ```
-Then you can run `npm run build:staging` or whatever other environment you would like to set up.
+
+Then you can run `npm run build:staging` to build with the staging environment config. You can specify other environments in the same way.
 
 You may use `.env.production` as the fallback option in this case as `'production'` is the default `NODE_ENV`.
 
