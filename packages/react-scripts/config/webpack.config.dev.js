@@ -53,7 +53,11 @@ const SASSRegex = /\.(scss|sass)$/;
 const SASSModuleRegex = /\.module\.(scss|sass)$/;
 
 // Common function to create any style loader
-const getStyleLoader = (CSSLoaderOptions, firstLoader, firstLoaderOptions) => {
+const getStyleLoader = (
+  postStyleLoader,
+  postStyleLoaderOptions = {},
+  CSSLoaderOptions = {}
+) => {
   return [
     require.resolve('style-loader'),
     {
@@ -61,8 +65,8 @@ const getStyleLoader = (CSSLoaderOptions, firstLoader, firstLoaderOptions) => {
       options: CSSLoaderOptions,
     },
     {
-      loader: require.resolve(firstLoader),
-      options: firstLoaderOptions,
+      loader: require.resolve(postStyleLoader),
+      options: postStyleLoaderOptions,
     },
   ];
 };
@@ -266,27 +270,19 @@ module.exports = {
           {
             test: CSSRegex,
             exclude: CSSModuleRegex,
-            use: getStyleLoader(
-              {
-                importLoaders: 1,
-              },
-              'postcss-loader',
-              postCSSLoaderOptions
-            ),
+            use: getStyleLoader('postcss-loader', postCSSLoaderOptions, {
+              importLoaders: 1,
+            }),
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
           {
             test: CSSModuleRegex,
-            use: getStyleLoader(
-              {
-                importLoaders: 1,
-                modules: true,
-                getLocalIdent: getCSSModuleLocalIdent,
-              },
-              'postcss-loader',
-              postCSSLoaderOptions
-            ),
+            use: getStyleLoader('postcss-loader', postCSSLoaderOptions, {
+              importLoaders: 1,
+              modules: true,
+              getLocalIdent: getCSSModuleLocalIdent,
+            }),
           },
           // Opt-in support for SASS (using .scss or .sass extensions).
           // Chains the sass-loader with the css-loader and the style-loader
@@ -296,19 +292,19 @@ module.exports = {
           {
             test: SASSRegex,
             exclude: SASSModuleRegex,
-            use: getStyleLoader({}, 'sass-loader', {}),
+            use: getStyleLoader('sass-loader'),
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
           {
             test: SASSModuleRegex,
             use: getStyleLoader(
+              'sass-loader',
+              {},
               {
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
-              },
-              'sass-loader',
-              {}
+              }
             ),
           },
           // The GraphQL loader preprocesses GraphQL queries in .graphql files.

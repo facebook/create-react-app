@@ -78,7 +78,11 @@ const SASSRegex = /\.(scss|sass)$/;
 const SASSModuleRegex = /\.module\.(scss|sass)$/;
 
 // Common function to create any style loader
-const getStyleLoader = (CSSLoaderOptions, firstLoader, firstLoaderOptions) => {
+const getStyleLoader = (
+  postStyleLoader,
+  postStyleLoaderOptions,
+  CSSLoaderOptions
+) => {
   return ExtractTextPlugin.extract(
     Object.assign(
       {
@@ -94,8 +98,8 @@ const getStyleLoader = (CSSLoaderOptions, firstLoader, firstLoaderOptions) => {
             options: CSSLoaderOptions,
           },
           {
-            loader: require.resolve(firstLoader),
-            options: firstLoaderOptions,
+            loader: require.resolve(postStyleLoader),
+            options: postStyleLoaderOptions,
           },
         ],
       },
@@ -290,32 +294,24 @@ module.exports = {
           {
             test: CSSRegex,
             exclude: CSSModuleRegex,
-            loader: getStyleLoader(
-              {
-                importLoaders: 1,
-                minimize: true,
-                sourceMap: shouldUseSourceMap,
-              },
-              'postcss-loader',
-              postCSSLoaderOptions
-            ),
+            loader: getStyleLoader('postcss-loader', postCSSLoaderOptions, {
+              importLoaders: 1,
+              minimize: true,
+              sourceMap: shouldUseSourceMap,
+            }),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
           {
             test: CSSRegex,
-            loader: getStyleLoader(
-              {
-                importLoaders: 1,
-                minimize: true,
-                sourceMap: shouldUseSourceMap,
-                modules: true,
-                getLocalIdent: getCSSModuleLocalIdent,
-              },
-              'postcss-loader',
-              postCSSLoaderOptions
-            ),
+            loader: getStyleLoader('postcss-loader', postCSSLoaderOptions, {
+              importLoaders: 1,
+              minimize: true,
+              sourceMap: shouldUseSourceMap,
+              modules: true,
+              getLocalIdent: getCSSModuleLocalIdent,
+            }),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // Opt-in support for SASS. The logic here is somewhat similar
@@ -327,12 +323,12 @@ module.exports = {
             test: SASSRegex,
             exclude: SASSModuleRegex,
             loader: getStyleLoader(
-              {
-                minimize: true,
-                sourceMap: shouldUseSourceMap,
-              },
               'sass-loader',
               {
+                sourceMap: shouldUseSourceMap,
+              },
+              {
+                minimize: true,
                 sourceMap: shouldUseSourceMap,
               }
             ),
@@ -343,15 +339,15 @@ module.exports = {
           {
             test: SASSModuleRegex,
             loader: getStyleLoader(
+              'sass-loader',
+              {
+                sourceMap: shouldUseSourceMap,
+              },
               {
                 minimize: true,
                 sourceMap: shouldUseSourceMap,
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
-              },
-              'sass-loader',
-              {
-                sourceMap: shouldUseSourceMap,
               }
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
