@@ -47,29 +47,10 @@ const postCSSLoaderOptions = {
 };
 
 // style files regexes
-const CSSRegex = /\.css$/;
-const CSSModuleRegex = /\.module\.css$/;
-const SASSRegex = /\.(scss|sass)$/;
-const SASSModuleRegex = /\.module\.(scss|sass)$/;
-
-// Common function to create any style loader
-const getStyleLoader = (
-  postStyleLoader,
-  postStyleLoaderOptions = {},
-  CSSLoaderOptions = {}
-) => {
-  return [
-    require.resolve('style-loader'),
-    {
-      loader: require.resolve('css-loader'),
-      options: CSSLoaderOptions,
-    },
-    {
-      loader: require.resolve(postStyleLoader),
-      options: postStyleLoaderOptions,
-    },
-  ];
-};
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.css$/;
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -268,21 +249,41 @@ module.exports = {
           // in development "style" loader enables hot editing of CSS.
           // By default we support CSS Modules with the extension .module.css
           {
-            test: CSSRegex,
-            exclude: CSSModuleRegex,
-            use: getStyleLoader('postcss-loader', postCSSLoaderOptions, {
-              importLoaders: 1,
-            }),
+            test: cssRegex,
+            exclude: cssModuleRegex,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: postCSSLoaderOptions,
+              },
+            ],
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
           {
-            test: CSSModuleRegex,
-            use: getStyleLoader('postcss-loader', postCSSLoaderOptions, {
-              importLoaders: 1,
-              modules: true,
-              getLocalIdent: getCSSModuleLocalIdent,
-            }),
+            test: cssModuleRegex,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  modules: true,
+                  getLocalIdent: getCSSModuleLocalIdent,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: postCSSLoaderOptions,
+              },
+            ],
           },
           // Opt-in support for SASS (using .scss or .sass extensions).
           // Chains the sass-loader with the css-loader and the style-loader
@@ -290,22 +291,37 @@ module.exports = {
           // By default we support SASS Modules with the
           // extensions .module.scss or .module.sass
           {
-            test: SASSRegex,
-            exclude: SASSModuleRegex,
-            use: getStyleLoader('sass-loader'),
+            test: sassRegex,
+            exclude: sassModuleRegex,
+            use: [
+              require.resolve('style-loader'),
+              require.resolve('css-loader'),
+              {
+                loader: require.resolve('postcss-loader'),
+                options: postCSSLoaderOptions,
+              },
+              require.resolve('sass-loader'),
+            ],
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
           {
-            test: SASSModuleRegex,
-            use: getStyleLoader(
-              'sass-loader',
-              {},
+            test: sassModuleRegex,
+            use: [
+              require.resolve('style-loader'),
               {
-                modules: true,
-                getLocalIdent: getCSSModuleLocalIdent,
-              }
-            ),
+                loader: require.resolve('css-loader'),
+                options: {
+                  modules: true,
+                  getLocalIdent: getCSSModuleLocalIdent,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: postCSSLoaderOptions,
+              },
+              require.resolve('sass-loader'),
+            ],
           },
           // The GraphQL loader preprocesses GraphQL queries in .graphql files.
           {
