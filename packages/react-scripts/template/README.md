@@ -87,6 +87,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
     - [Service Worker Considerations](#service-worker-considerations)
   - [Building for Relative Paths](#building-for-relative-paths)
+  - [Customizing Environment Variables for Arbitrary Build Environments](#customizing-environment-variables-for-arbitrary-build-environments)
   - [Azure](#azure)
   - [Firebase](#firebase)
   - [GitHub Pages](#github-pages)
@@ -2210,6 +2211,34 @@ If you are not using the HTML5 `pushState` history API or not using client-side 
 ```
 
 This will make sure that all the asset paths are relative to `index.html`. You will then be able to move your app from `http://mywebsite.com` to `http://mywebsite.com/relativepath` or even `http://mywebsite.com/relative/path` without having to rebuild it.
+
+### Customizing Environment Variables for Arbitrary Build Environments
+
+You can create an arbitrary build environment by creating a custom `.env` file and loading it using [env-cmd](https://www.npmjs.com/package/env-cmd).
+
+For example, to create a build environment for a staging environment:
+
+1. Create a file called `.env.staging`
+1. Set environment variables as you would any other `.env` file (e.g. `REACT_APP_API_URL=http://api-staging.example.com`)
+1. Install [env-cmd](https://www.npmjs.com/package/env-cmd)
+    ```sh
+    $ npm install env-cmd --save
+    $ # or
+    $ yarn add env-cmd
+    ```
+1. Add a new script to your `package.json`, building with your new environment:
+    ```json
+    {
+      "scripts": {
+        "build:staging": "env-cmd .env.staging npm run build",
+      }
+    }
+    ```
+
+Now you can run `npm run build:staging` to build with the staging environment config.
+You can specify other environments in the same way.
+
+Variables in `.env.production` will be used as fallback because `NODE_ENV` will always be set to `production` for a build.
 
 ### [Azure](https://azure.microsoft.com/)
 
