@@ -1811,6 +1811,7 @@ Learn more about React Storybook:
 
 * [GitHub Repo](https://github.com/storybooks/storybook)
 * [Documentation](https://storybook.js.org/basics/introduction/)
+* [Learn Storybook (tutorial)](https://learnstorybook.com)
 * [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
 
 ### Getting Started with Styleguidist
