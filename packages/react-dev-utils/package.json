@@ -19,6 +19,7 @@
     "eslintFormatter.js",
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
+    "getCSSModuleLocalIdent.js",
     "getProcessForPort.js",
     "ignoredFiles.js",
     "inquirer.js",
