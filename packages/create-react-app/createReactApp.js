@@ -143,7 +143,7 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-function printValidationResults(results) {
+printValidationResults = (results) => {
   if (typeof results !== 'undefined') {
     results.forEach(error => {
       console.error(chalk.red(`  *  ${error}`));
@@ -155,7 +155,7 @@ const hiddenProgram = new commander.Command()
   .option(
     '--internal-testing-template <path-to-template>',
     '(internal usage only, DO NOT RELY ON THIS) ' +
-      'use a non-standard application template'
+    'use a non-standard application template'
   )
   .parse(process.argv);
 
@@ -167,7 +167,7 @@ createApp(
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(name, verbose, version, useNpm, template) {
+createApp: (name, verbose, version, useNpm, template) => {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -201,7 +201,7 @@ function createApp(name, verbose, version, useNpm, template) {
     console.log(
       chalk.yellow(
         `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 6 or higher for a better, fully supported experience.\n`
+        `Please update to Node 6 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
@@ -215,7 +215,7 @@ function createApp(name, verbose, version, useNpm, template) {
         console.log(
           chalk.yellow(
             `You are using npm ${npmInfo.npmVersion} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
-              `Please update to npm 3 or higher for a better, fully supported experience.\n`
+            `Please update to npm 3 or higher for a better, fully supported experience.\n`
           )
         );
       }
@@ -226,7 +226,7 @@ function createApp(name, verbose, version, useNpm, template) {
   run(root, appName, version, verbose, originalDirectory, template, useYarn);
 }
 
-function isYarnAvailable() {
+isYarnAvailable: () => {
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
     return true;
@@ -235,12 +235,12 @@ function isYarnAvailable() {
   }
 }
 
-function shouldUseYarn(appDir) {
+shouldUseYarn: (appDir) => {
   const mono = findMonorepo(appDir);
   return (mono.isYarnWs && mono.isAppIncluded) || isYarnAvailable();
 }
 
-function install(root, useYarn, dependencies, verbose, isOnline) {
+install: (root, useYarn, dependencies, verbose, isOnline) => {
   return new Promise((resolve, reject) => {
     let command;
     let args;
@@ -293,7 +293,7 @@ function install(root, useYarn, dependencies, verbose, isOnline) {
   });
 }
 
-function run(
+run: (
   root,
   appName,
   version,
@@ -301,7 +301,7 @@ function run(
   originalDirectory,
   template,
   useYarn
-) {
+) => {
   const packageToInstall = getInstallPackage(version, originalDirectory);
   const allDependencies = ['react', 'react-dom', packageToInstall];
 
@@ -345,7 +345,7 @@ function run(
         console.log(
           chalk.yellow(
             `\nNote: the project was boostrapped with an old unsupported version of tools.\n` +
-              `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
+            `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
           )
         );
       }
@@ -389,7 +389,7 @@ function run(
     });
 }
 
-function getInstallPackage(version, originalDirectory) {
+getInstallPackage: (version, originalDirectory) => {
   let packageToInstall = 'react-scripts';
   const validSemver = semver.valid(version);
   if (validSemver) {
@@ -406,7 +406,7 @@ function getInstallPackage(version, originalDirectory) {
   return packageToInstall;
 }
 
-function getTemporaryDirectory() {
+getTemporaryDirectory: () => {
   return new Promise((resolve, reject) => {
     // Unsafe cleanup lets us recursively delete the directory if it contains
     // contents; by default it only allows removal if it's empty
@@ -430,7 +430,7 @@ function getTemporaryDirectory() {
   });
 }
 
-function extractStream(stream, dest) {
+extractStream: (stream, dest) => {
   return new Promise((resolve, reject) => {
     stream.pipe(
       unpack(dest, err => {
@@ -445,7 +445,7 @@ function extractStream(stream, dest) {
 }
 
 // Extract package name from tarball url or path.
-function getPackageName(installPackage) {
+getPackageName: (installPackage) => {
   if (installPackage.match(/^.+\.(tgz|tar\.gz)$/)) {
     return getTemporaryDirectory()
       .then(obj => {
@@ -499,7 +499,7 @@ function getPackageName(installPackage) {
   return Promise.resolve(installPackage);
 }
 
-function checkNpmVersion() {
+checkNpmVersion: () => {
   let hasMinNpm = false;
   let npmVersion = null;
   try {
@@ -516,7 +516,7 @@ function checkNpmVersion() {
   };
 }
 
-function checkNodeVersion(packageName) {
+checkNodeVersion: (packageName) => {
   const packageJsonPath = path.resolve(
     process.cwd(),
     'node_modules',
@@ -532,8 +532,8 @@ function checkNodeVersion(packageName) {
     console.error(
       chalk.red(
         'You are running Node %s.\n' +
-          'Create React App requires Node %s or higher. \n' +
-          'Please update your version of Node.'
+        'Create React App requires Node %s or higher. \n' +
+        'Please update your version of Node.'
       ),
       process.version,
       packageJson.engines.node
@@ -542,7 +542,7 @@ function checkNodeVersion(packageName) {
   }
 }
 
-function checkAppName(appName) {
+checkAppName: (appName) => {
   const validationResult = validateProjectName(appName);
   if (!validationResult.validForNewPackages) {
     console.error(
@@ -563,16 +563,16 @@ function checkAppName(appName) {
         `We cannot create a project called ${chalk.green(
           appName
         )} because a dependency with the same name exists.\n` +
-          `Due to the way npm works, the following names are not allowed:\n\n`
+        `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
-        chalk.cyan(dependencies.map(depName => `  ${depName}`).join('\n')) +
-        chalk.red('\n\nPlease choose a different project name.')
+      chalk.cyan(dependencies.map(depName => `  ${depName}`).join('\n')) +
+      chalk.red('\n\nPlease choose a different project name.')
     );
     process.exit(1);
   }
 }
 
-function makeCaretRange(dependencies, name) {
+makeCaretRange: (dependencies, name) => {
   const version = dependencies[name];
 
   if (typeof version === 'undefined') {
@@ -594,7 +594,7 @@ function makeCaretRange(dependencies, name) {
   dependencies[name] = patchedVersion;
 }
 
-function setCaretRangeForRuntimeDeps(packageName) {
+setCaretRangeForRuntimeDeps: (packageName) => {
   const packagePath = path.join(process.cwd(), 'package.json');
   const packageJson = require(packagePath);
 
@@ -620,7 +620,7 @@ function setCaretRangeForRuntimeDeps(packageName) {
 // installation, lets remove them now.
 // We also special case IJ-based products .idea because it integrates with CRA:
 // https://github.com/facebook/create-react-app/pull/368#issuecomment-243446094
-function isSafeToCreateProjectIn(root, name) {
+isSafeToCreateProjectIn: (root, name) => {
   const validFiles = [
     '.DS_Store',
     'Thumbs.db',
@@ -679,7 +679,7 @@ function isSafeToCreateProjectIn(root, name) {
   return true;
 }
 
-function getProxy() {
+getProxy: () => {
   if (process.env.https_proxy) {
     return process.env.https_proxy;
   } else {
@@ -694,7 +694,7 @@ function getProxy() {
     }
   }
 }
-function checkThatNpmCanReadCwd() {
+checkThatNpmCanReadCwd: () => {
   const cwd = process.cwd();
   let childOutput = null;
   try {
@@ -730,32 +730,32 @@ function checkThatNpmCanReadCwd() {
   console.error(
     chalk.red(
       `Could not start an npm process in the right directory.\n\n` +
-        `The current directory is: ${chalk.bold(cwd)}\n` +
-        `However, a newly started npm process runs in: ${chalk.bold(
-          npmCWD
-        )}\n\n` +
-        `This is probably caused by a misconfigured system terminal shell.`
+      `The current directory is: ${chalk.bold(cwd)}\n` +
+      `However, a newly started npm process runs in: ${chalk.bold(
+        npmCWD
+      )}\n\n` +
+      `This is probably caused by a misconfigured system terminal shell.`
     )
   );
   if (process.platform === 'win32') {
     console.error(
       chalk.red(`On Windows, this can usually be fixed by running:\n\n`) +
-        `  ${chalk.cyan(
-          'reg'
-        )} delete "HKCU\\Software\\Microsoft\\Command Processor" /v AutoRun /f\n` +
-        `  ${chalk.cyan(
-          'reg'
-        )} delete "HKLM\\Software\\Microsoft\\Command Processor" /v AutoRun /f\n\n` +
-        chalk.red(`Try to run the above two lines in the terminal.\n`) +
-        chalk.red(
-          `To learn more about this problem, read: https://blogs.msdn.microsoft.com/oldnewthing/20071121-00/?p=24433/`
-        )
+      `  ${chalk.cyan(
+        'reg'
+      )} delete "HKCU\\Software\\Microsoft\\Command Processor" /v AutoRun /f\n` +
+      `  ${chalk.cyan(
+        'reg'
+      )} delete "HKLM\\Software\\Microsoft\\Command Processor" /v AutoRun /f\n\n` +
+      chalk.red(`Try to run the above two lines in the terminal.\n`) +
+      chalk.red(
+        `To learn more about this problem, read: https://blogs.msdn.microsoft.com/oldnewthing/20071121-00/?p=24433/`
+      )
     );
   }
   return false;
 }
 
-function checkIfOnline(useYarn) {
+checkIfOnline: (useYarn) => {
   if (!useYarn) {
     // Don't ping the Yarn registry.
     // We'll just assume the best case.

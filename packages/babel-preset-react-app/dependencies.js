@@ -6,7 +6,7 @@
  */
 'use strict';
 
-module.exports = function(api, opts) {
+module.exports = (api, opts) => {
   if (!opts) {
     opts = {};
   }
@@ -24,10 +24,10 @@ module.exports = function(api, opts) {
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
-        '`BABEL_ENV` environment variables. Valid values are "development", ' +
-        '"test", and "production". Instead, received: ' +
-        JSON.stringify(env) +
-        '.'
+      '`BABEL_ENV` environment variables. Valid values are "development", ' +
+      '"test", and "production". Instead, received: ' +
+      JSON.stringify(env) +
+      '.'
     );
   }
 
