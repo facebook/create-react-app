@@ -53,7 +53,7 @@ class App extends React.Component {
 
     // merge styleguide theme and project theme
     const localTheme = Object.keys(theme).reduce((acc, prop) => {
-      if (typeof acc[prop] === 'object') {
+      if (typeof theme[prop] === 'object') {
         acc[prop] = {
           ...theme[prop],
           ...projectTheme[prop]
