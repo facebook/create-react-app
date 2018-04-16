@@ -81,19 +81,24 @@ const svgoLoader = {
 };
 
 // Create dynamic entries based on contents of components directory
-const entryFiles = glob.sync(path.join(paths.componentsDir, '/*.js'));
+const entryFiles = [].concat(
+  glob.sync(path.join(paths.componentsDir, '/*.js')),
+  glob.sync(path.join(paths.componentsDir, '/**/index.js')),
+  glob.sync(path.join(paths.componentsDir, '/**/*.static.js'))
+);
 
 // create entries as object from entry files
 const entries = entryFiles.reduce((entries, entryFile) => {
-  let entryName = path.basename(entryFile, '.js');
-  let entry = path.basename(entryFile);
+  const localPath = entryFile.split(paths.componentsDir)[1];
+
+  let entryName = localPath.split('.js')[0];
   
   // rename index to meaningful name 
-  if (entryName === 'index') {
+  if (entryFile === path.join(paths.componentsDir, '/index.js')) {
     entryName = 'react-components';
   } 
   
-  entries[entryName] = path.join(paths.componentsDir, entry);
+  entries[entryName] = path.join(paths.componentsDir, localPath);
 
   return entries;
 }, {});
