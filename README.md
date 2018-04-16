@@ -227,4 +227,4 @@ We are grateful to the authors of existing related projects for their ideas and 
 
 ## License
 
-This project has a MIT license, you can check it out [here](https://github.com/facebook/create-react-app/blob/next/LICENSE).
+Create React App is open source software licensed as MIT. You can check it out [here](https://github.com/facebook/create-react-app/blob/next/LICENSE).
