@@ -38,7 +38,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = (getPath) => getPath('lib/[name].css').replace('react-components', 'main');
+const cssFilename = (getPath) => getPath('lib/[name].css').replace('index', 'style');
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -92,11 +92,6 @@ const entries = entryFiles.reduce((entries, entryFile) => {
   const localPath = entryFile.split(paths.componentsDir)[1];
 
   let entryName = localPath.split('.js')[0];
-  
-  // rename index to meaningful name 
-  if (entryFile === path.join(paths.componentsDir, '/index.js')) {
-    entryName = 'react-components';
-  } 
   
   entries[entryName] = path.join(paths.componentsDir, localPath);
 
