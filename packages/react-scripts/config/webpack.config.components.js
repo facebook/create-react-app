@@ -238,6 +238,14 @@ module.exports = {
               // @remove-on-eject-begin
               babelrc: false,
               presets: [require.resolve('babel-preset-react-app')],
+              plugins: [
+                [ 
+                  require('babel-plugin-transform-react-remove-prop-types').default,
+                  {
+                    removeImport: true,
+                  },
+                ]
+              ],
               // @remove-on-eject-end
               compact: true,
             },
