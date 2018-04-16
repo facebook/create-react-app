@@ -1,3 +1,21 @@
+## 2.2.0 (April 16, 2018)
+
+#### :rocket: New Feature
+
+* components config supports dynamic entries based on contents of components dir files even in subdirectories (`index.js` and `*.static.js`)
+* remove renaming index with react-components
+* remove react and react-dom from lib build
+* remove prop-types from lib and prod builds
+
+#### :bug: Bug Fix
+
+* fix styleguide localTheme generation
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.2.0`
+* `lighter-styleguide@1.0.1`
+
 ## 2.1.0 (April 5, 2018)
 
 #### :rocket: New Feature
