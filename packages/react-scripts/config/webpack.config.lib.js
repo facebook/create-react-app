@@ -93,11 +93,6 @@ const patternsEntryFiles = [].concat(
 
 function getEntries(type, dirPath, entryFiles) {
   return entryFiles.reduce((entries, entryFile) => {
-    // converts entryFile path to platform specific style
-    // this fixes windows/unix path inconsitence
-    // because node-glob always returns path with unix style path separators
-    entryFile = path.join(entryFile);
-    
     const localPath = entryFile.split(dirPath)[1];
 
     let entryName = path.join(type, localPath.split('.js')[0]);
@@ -232,6 +227,16 @@ module.exports = {
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
         oneOf: [
+          // "url" loader works just like "file" loader but it also embeds
+          // assets smaller than specified size as data URLs to avoid requests.
+          {
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            loader: require.resolve('url-loader'),
+            options: {
+              limit: 10000,
+              name: '[name].[ext]'
+            }
+          },
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
@@ -309,9 +314,7 @@ module.exports = {
                     clearReportedMessages: true,
                     throwError: true
                   }),
-                  require('cssnano')({
-                    preset: 'default',
-                  }),
+                  require('cssnano')
                 ]
               }
             },
@@ -392,9 +395,7 @@ module.exports = {
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     extractSass,
-    new StyleLintPlugin({
-      files: [path.join(paths.appSrc, '**/*.scss')]
-    }),
+    new StyleLintPlugin(),
     new SpriteLoaderPlugin({ plainSprite: true }),
     new FilterWarningsPLugin({
       exclude: /svg-sprite-loader exception. 2 rules applies to/
