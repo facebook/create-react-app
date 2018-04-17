@@ -330,6 +330,7 @@ module.exports = {
             exclude: sassModuleRegex,
             loader: getStyleLoaders(
               {
+                importLoaders: 2,
                 minimize: true,
                 sourceMap: shouldUseSourceMap,
               },
@@ -343,6 +344,7 @@ module.exports = {
             test: sassModuleRegex,
             loader: getStyleLoaders(
               {
+                importLoaders: 2,
                 minimize: true,
                 sourceMap: shouldUseSourceMap,
                 modules: true,
