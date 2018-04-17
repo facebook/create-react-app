@@ -17,7 +17,7 @@ require('../config/env');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
-const config = require('../config/webpack.config.components');
+const config = require('../config/webpack.config.lib');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('@lighting-beetle/lighter-react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('@lighting-beetle/lighter-react-dev-utils/formatWebpackMessages');
@@ -44,6 +44,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
     fs.emptyDirSync(paths.componentsBuild);
+    fs.emptyDirSync(paths.patternsBuild);
     // Merge with the public folder
     return build(previousFileSizes);
   })
@@ -85,7 +86,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
-  console.log('Creating an optimized production build of components...');
+  console.log('Creating an optimized production build of lib...');
 
   let compiler = webpack(config);
   return new Promise((resolve, reject) => {
