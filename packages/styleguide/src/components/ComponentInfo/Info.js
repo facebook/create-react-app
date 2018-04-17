@@ -17,7 +17,7 @@ const Info = ({ values = [], what, ...other }) => (
       <Bar>
         {values.map(value => (
           <BarItem space="tiny" key={value}>
-            <InfoBadge value={value} />
+            <InfoBadge value={value} {...other} />
           </BarItem>
         ))}
       </Bar>
