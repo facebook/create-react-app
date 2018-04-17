@@ -1,14 +1,13 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, object } from 'prop-types';
 
 import Badge from './Badge';
 
-const typeToColorMap = {
+let defaultTypeToColorMap = {
   ready: 'oxley',
   wip: 'wildRice',
   deprecated: 'froly',
   draft: 'whiskey',
-  boosted: 'theme',
   custom: 'malibu',
   universal: 'olivine',
   react: 'portage',
@@ -16,16 +15,26 @@ const typeToColorMap = {
 };
 
 const propTypes = {
-  value: string
+  value: string,
+  typeToColorMap: object
 };
 
-const InfoBadge = ({ value, ...other }) => (
-  <Badge color={typeToColorMap[value]} {...other}>
-    {value}
-  </Badge>
-);
+const InfoBadge = ({
+  value,
+  typeToColorMap = defaultTypeToColorMap,
+  ...other
+}) => {
+  const localTypeToColorMap = { ...defaultTypeToColorMap, ...typeToColorMap };
+
+  return (
+    <Badge color={localTypeToColorMap[value]} {...other}>
+      {value}
+    </Badge>
+  );
+};
 
 InfoBadge.propTypes = propTypes;
 InfoBadge.displayName = 'InfoBadge';
 
 export default InfoBadge;
+export { propTypes };
