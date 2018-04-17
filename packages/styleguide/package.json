@@ -1,6 +1,6 @@
 {
   "name": "@lighting-beetle/lighter-styleguide",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Lighter styleguide",
   "main": "src/styleguide.js",
   "repository": {
