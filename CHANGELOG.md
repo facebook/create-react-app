@@ -1,3 +1,17 @@
+## 2.3.0 (April 17, 2018)
+
+#### :rocket: New Feature
+
+* rename `webpack.config.components.js` to  `webpack.config.lib.js`
+
+#### :nail_care: Enhancement
+* [lighter-react-scripts] rename `webpack.config.components.js` to  `webpack.config.lib.js`
+* [lighter-react-scripts] lib builds to `components/` and `patterns/` folder
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.3.0`
+
 ## 2.2.0 (April 17, 2018)
 
 #### :rocket: New Feature
