@@ -1,4 +1,4 @@
-## 2.2.0 (April 16, 2018)
+## 2.2.0 (April 17, 2018)
 
 #### :rocket: New Feature
 
@@ -7,6 +7,10 @@
 * remove react and react-dom from lib build
 * remove prop-types from lib and prod builds
 
+#### :nail_care: Enhancement
+* styleguide allows to override `typeToColorMap` of <InfoBadge />
+* styleguide <ComponentInfo /> is more flexible
+
 #### :bug: Bug Fix
 
 * fix styleguide localTheme generation
@@ -14,7 +18,7 @@
 #### :tada: version updates
 
 * `lighter-react-scripts@2.2.0`
-* `lighter-styleguide@1.0.1`
+* `lighter-styleguide@1.1.0`
 
 ## 2.1.0 (April 5, 2018)
 
