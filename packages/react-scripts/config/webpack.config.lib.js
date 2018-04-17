@@ -38,7 +38,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = (getPath) => getPath('lib/[name].css').replace('index', 'style');
+const cssFilename = getPath => getPath('[name].css').replace('index', 'style');
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -53,7 +53,7 @@ const extractSass = new ExtractTextPlugin(
   Object.assign(
     {},
     {
-      filename: cssFilename,
+      filename: cssFilename
     },
     extractTextPluginOptions
   )
@@ -75,28 +75,40 @@ const svgoLoader = {
       { collapseGroups: true },
       { mergePaths: true },
       { convertShapeToPath: true },
-      { removeStyleElement: true },
-    ],
-  },
+      { removeStyleElement: true }
+    ]
+  }
 };
 
 // Create dynamic entries based on contents of components directory
-const entryFiles = [].concat(
+const componentsEntryFiles = [].concat(
   glob.sync(path.join(paths.componentsDir, '/*.js')),
   glob.sync(path.join(paths.componentsDir, '/**/index.js')),
   glob.sync(path.join(paths.componentsDir, '/**/*.static.js'))
 );
 
+const patternsEntryFiles = [].concat(
+  glob.sync(path.join(paths.patternsDir, '/**/index.js'))
+);
+
+function getEntries(type, dirPath, entryFiles) {
+  return entryFiles.reduce((entries, entryFile) => {
+    const localPath = entryFile.split(dirPath)[1];
+
+    let entryName = path.join(type, localPath.split('.js')[0]);
+
+    entries[entryName] = path.join(dirPath, localPath);
+
+    return entries;
+  }, {});
+}
+
 // create entries as object from entry files
-const entries = entryFiles.reduce((entries, entryFile) => {
-  const localPath = entryFile.split(paths.componentsDir)[1];
-
-  let entryName = localPath.split('.js')[0];
-  
-  entries[entryName] = path.join(paths.componentsDir, localPath);
-
-  return entries;
-}, {});
+const entries = Object.assign(
+  {},
+  getEntries('components', paths.componentsDir, componentsEntryFiles),
+  getEntries('patterns', paths.patternsDir, patternsEntryFiles)
+);
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -115,8 +127,8 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'lib/[name].js',
-    chunkFilename: 'lib/[name].chunk.js',
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
@@ -125,7 +137,7 @@ module.exports = {
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
 
-    libraryTarget: 'umd',
+    libraryTarget: 'umd'
   },
   externals: {
     react: {
@@ -169,7 +181,7 @@ module.exports = {
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-      'react-native': 'react-native-web',
+      'react-native': 'react-native-web'
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -177,8 +189,8 @@ module.exports = {
       // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
-      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-    ],
+      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])
+    ]
   },
   module: {
     strictExportPresence: true,
@@ -202,13 +214,13 @@ module.exports = {
               // @remove-on-eject-begin
               ignore: false,
               useEslintrc: true,
-              fix: true,
+              fix: true
               // @remove-on-eject-end
             },
-            loader: require.resolve('eslint-loader'),
-          },
+            loader: require.resolve('eslint-loader')
+          }
         ],
-        include: paths.appSrc,
+        include: paths.appSrc
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -222,8 +234,8 @@ module.exports = {
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
-              name: 'lib/[name].[ext]',
-            },
+              name: '[name].[ext]'
+            }
           },
           // Process JS with Babel.
           {
@@ -231,7 +243,13 @@ module.exports = {
             include: [
               paths.appSrc,
               path.join(paths.appNodeModules, 'stringify-object'),
-              fs.realpathSync(path.join(paths.appNodeModules, '@lighting-beetle', 'lighter-styleguide')),
+              fs.realpathSync(
+                path.join(
+                  paths.appNodeModules,
+                  '@lighting-beetle',
+                  'lighter-styleguide'
+                )
+              )
             ],
             loader: require.resolve('babel-loader'),
             options: {
@@ -239,16 +257,17 @@ module.exports = {
               babelrc: false,
               presets: [require.resolve('babel-preset-react-app')],
               plugins: [
-                [ 
-                  require('babel-plugin-transform-react-remove-prop-types').default,
+                [
+                  require('babel-plugin-transform-react-remove-prop-types')
+                    .default,
                   {
-                    removeImport: true,
-                  },
+                    removeImport: true
+                  }
                 ]
               ],
               // @remove-on-eject-end
-              compact: true,
-            },
+              compact: true
+            }
           },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
@@ -266,13 +285,13 @@ module.exports = {
               /\.json$/,
               /\.css/,
               /\.scss$/,
-              paths.icons,
+              paths.icons
             ],
             options: {
-              name: 'lib/[name].[ext]',
-            },
-          },
-        ],
+              name: '[name].[ext]'
+            }
+          }
+        ]
       },
       // ** STOP ** Are you adding a new loader?
       // Make sure to add the new loader(s) before the "file" loader.
@@ -282,7 +301,7 @@ module.exports = {
           use: [
             {
               loader: require.resolve('css-loader'),
-              options: { importLoaders: 1 },
+              options: { importLoaders: 1 }
             },
             {
               loader: require.resolve('postcss-loader'),
@@ -293,21 +312,21 @@ module.exports = {
                   require('postcss-inline-svg')(),
                   require('postcss-reporter')({
                     clearReportedMessages: true,
-                    throwError: true,
+                    throwError: true
                   }),
-                  require('cssnano'),
-                ],
-              },
+                  require('cssnano')
+                ]
+              }
             },
             {
               loader: require.resolve('sass-loader'),
               options: {
-                includePaths: [paths.styles],
-              },
-            },
+                includePaths: [paths.styles]
+              }
+            }
           ],
-          fallback: require.resolve('style-loader'),
-        }),
+          fallback: require.resolve('style-loader')
+        })
       },
       {
         test: /\.svg$/,
@@ -317,13 +336,13 @@ module.exports = {
             loader: require.resolve('svg-sprite-loader'),
             options: {
               extract: true,
-              spriteFilename: 'lib/sprite.svg',
-            },
+              spriteFilename: 'sprite.svg'
+            }
           },
-          svgoLoader,
-        ],
-      },
-    ],
+          svgoLoader
+        ]
+      }
+    ]
   },
   plugins: [
     // Makes some environment variables available to the JS code, for example:
@@ -340,34 +359,34 @@ module.exports = {
           // https://github.com/facebookincubator/create-react-app/issues/2376
           // Pending further investigation:
           // https://github.com/mishoo/UglifyJS2/issues/2011
-          comparisons: false,
+          comparisons: false
         },
         mangle: {
-          safari10: true,
+          safari10: true
         },
         output: {
           comments: false,
           // Turned on because emoji and regex is not minified properly using default
           // https://github.com/facebookincubator/create-react-app/issues/2488
-          ascii_only: true,
-        },
+          ascii_only: true
+        }
       },
       // Use multi-process parallel running to improve the build speed
       // Default number of concurrent runs: os.cpus().length - 1
       parallel: true,
       // Enable file caching
       cache: true,
-      sourceMap: shouldUseSourceMap,
+      sourceMap: shouldUseSourceMap
     }),
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
-      filename: cssFilename,
+      filename: cssFilename
     }),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
     new ManifestPlugin({
-      fileName: 'asset-manifest.json',
+      fileName: 'asset-manifest.json'
     }),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
@@ -379,8 +398,8 @@ module.exports = {
     new StyleLintPlugin(),
     new SpriteLoaderPlugin({ plainSprite: true }),
     new FilterWarningsPLugin({
-      exclude: /svg-sprite-loader exception. 2 rules applies to/,
-    }),
+      exclude: /svg-sprite-loader exception. 2 rules applies to/
+    })
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
@@ -389,6 +408,6 @@ module.exports = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty',
-    child_process: 'empty',
-  },
+    child_process: 'empty'
+  }
 };
