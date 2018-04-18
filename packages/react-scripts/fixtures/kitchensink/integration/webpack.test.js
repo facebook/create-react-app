@@ -34,6 +34,42 @@ describe('Integration', () => {
       );
     });
 
+    it('scss inclusion', async () => {
+      const doc = await initDOM('scss-inclusion');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(/#feature-scss-inclusion\{background:.+;color:.+}/);
+    });
+
+    it('scss modules inclusion', async () => {
+      const doc = await initDOM('scss-modules-inclusion');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(
+        /.+scss-styles_scssModulesInclusion.+\{background:.+;color:.+}/
+      );
+    });
+
+    it('sass inclusion', async () => {
+      const doc = await initDOM('sass-inclusion');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(/#feature-sass-inclusion\{background:.+;color:.+}/);
+    });
+
+    it('sass modules inclusion', async () => {
+      const doc = await initDOM('sass-modules-inclusion');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(
+        /.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/
+      );
+    });
+
     it('graphql files inclusion', async () => {
       const doc = await initDOM('graphql-inclusion');
       const children = doc.getElementById('graphql-inclusion').children;
