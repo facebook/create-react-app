@@ -1,3 +1,13 @@
+## 2.3.0 (April 20, 2018)
+
+#### :bug: Bug Fix
+
+* [lighter-react-scripts] fix weback.config.lib issues with windows style path in entries
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.3.1`
+
 ## 2.3.0 (April 17, 2018)
 
 #### :rocket: New Feature
