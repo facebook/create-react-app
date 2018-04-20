@@ -93,6 +93,11 @@ const patternsEntryFiles = [].concat(
 
 function getEntries(type, dirPath, entryFiles) {
   return entryFiles.reduce((entries, entryFile) => {
+    // converts entryFile path to platform specific style
+    // this fixes windows/unix path inconsitence
+    // because node-glob always returns path with unix style path separators
+    entryFile = path.join(entryFile);
+    
     const localPath = entryFile.split(dirPath)[1];
 
     let entryName = path.join(type, localPath.split('.js')[0]);
