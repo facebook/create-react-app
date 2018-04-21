@@ -75,7 +75,7 @@
     "react-dom": "^16.0.0"
   },
   "optionalDependencies": {
-    "fsevents": "1.1.3"
+    "fsevents": "1.2.0"
   },
   "browserslist": {
     "development": [
