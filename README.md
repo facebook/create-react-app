@@ -224,3 +224,6 @@ We are grateful to the authors of existing related projects for their ideas and 
 * [@eanplatter](https://github.com/eanplatter)
 * [@insin](https://github.com/insin)
 * [@mxstbr](https://github.com/mxstbr)
+
+## License
+Create React App is [MIT licensed](LICENSE).
