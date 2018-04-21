@@ -21,6 +21,65 @@ describe('Integration', () => {
       ).to.match(/#feature-css-inclusion\{background:.+;color:.+}/);
     });
 
+    it('css modules inclusion', async () => {
+      const doc = await initDOM('css-modules-inclusion');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(/.+style_cssModulesInclusion__.+\{background:.+;color:.+}/);
+      expect(
+        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
+      ).to.match(
+        /.+assets_cssModulesIndexInclusion__.+\{background:.+;color:.+}/
+      );
+    });
+
+    it('scss inclusion', async () => {
+      const doc = await initDOM('scss-inclusion');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(/#feature-scss-inclusion\{background:.+;color:.+}/);
+    });
+
+    it('scss modules inclusion', async () => {
+      const doc = await initDOM('scss-modules-inclusion');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(
+        /.+scss-styles_scssModulesInclusion.+\{background:.+;color:.+}/
+      );
+    });
+
+    it('sass inclusion', async () => {
+      const doc = await initDOM('sass-inclusion');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(/#feature-sass-inclusion\{background:.+;color:.+}/);
+    });
+
+    it('sass modules inclusion', async () => {
+      const doc = await initDOM('sass-modules-inclusion');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(
+        /.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/
+      );
+    });
+
+    it('graphql files inclusion', async () => {
+      const doc = await initDOM('graphql-inclusion');
+      const children = doc.getElementById('graphql-inclusion').children;
+
+      // .graphql
+      expect(children[0].textContent.replace(/\s/g, '')).to.equal(
+        '{"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"test"},"value":{"kind":"StringValue","value":"test","block":false}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":40,"source":{"body":"{\\ntest(test:\\"test\\"){\\ntest\\n}\\n}\\n","name":"GraphQLrequest","locationOffset":{"line":1,"column":1}}}}'
+      );
+    });
+
     it('image inclusion', async () => {
       const doc = await initDOM('image-inclusion');
 
@@ -59,6 +118,22 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-svg-inclusion').src).to.match(
         /\/static\/media\/logo\..+\.svg$/
       );
+    });
+
+    it('svg component', async () => {
+      const doc = await initDOM('svg-component');
+
+      expect(doc.getElementById('feature-svg-component').textContent).to.equal(
+        ''
+      );
+    });
+
+    it('svg in css', async () => {
+      const doc = await initDOM('svg-in-css');
+
+      expect(
+        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+      ).to.match(/\/static\/media\/logo\..+\.svg/);
     });
 
     it('unknown ext inclusion', async () => {
