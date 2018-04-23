@@ -136,6 +136,7 @@ module.exports = {
                 extends: [require.resolve('@cognite/eslint-config')],
               },
               ignore: false,
+              emitWarning: true,
               useEslintrc: false,
               // @remove-on-eject-end
             },
