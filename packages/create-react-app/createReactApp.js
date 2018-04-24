@@ -397,7 +397,7 @@ function getInstallPackage(version, originalDirectory) {
     packageToInstall += `@${validSemver}`;
   } else if (version) {
     if (version[0] === '@') {
-      packageToInstall += `@${version.substring(1)}`;
+      packageToInstall += version;
     } else if (version.match(/^file:/)) {
       packageToInstall = `file:${path.resolve(
         originalDirectory,
