@@ -403,7 +403,7 @@ function getInstallPackage(version, originalDirectory) {
         originalDirectory,
         version.match(/^file:(.*)?$/)[1]
       )}`;
-    } else if (version) {
+    } else {
       // for tar.gz or alternative paths
       packageToInstall = version;
     }
