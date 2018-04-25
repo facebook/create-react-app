@@ -246,7 +246,7 @@ function install(root, useYarn, dependencies, verbose, isOnline) {
     let args;
     if (useYarn) {
       command = 'yarnpkg';
-      args = ['add', '--exact'];
+      args = ['add', '--exact', '--ignore-engines'];
       if (!isOnline) {
         args.push('--offline');
       }
