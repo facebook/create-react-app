@@ -358,7 +358,9 @@ module.exports = {
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     extractSass,
-    new StyleLintPlugin(),
+    new StyleLintPlugin({
+      files: [path.join(paths.appSrc, '**/*.scss')]
+    }),
     new SpriteLoaderPlugin({ plainSprite: true }),
     new FilterWarningsPLugin({
       exclude: /svg-sprite-loader exception. 2 rules applies to/,
