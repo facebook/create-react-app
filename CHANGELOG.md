@@ -1,4 +1,14 @@
-## 2.3.0 (April 20, 2018)
+## 2.3.2 (April 26, 2018)
+
+#### :bug: Bug Fix
+
+* [lighter-react-scripts] fix issue with stylint linting node-modules
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.3.2`
+
+## 2.3.1 (April 20, 2018)
 
 #### :bug: Bug Fix
 
