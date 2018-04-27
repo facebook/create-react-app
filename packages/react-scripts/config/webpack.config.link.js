@@ -70,7 +70,7 @@ module.exports = {
   bail: true,
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
-  devtool: 'cheap-module-source-map',
+  devtool: 'source-map',
   // In production, we only want to load the polyfills and the app code.
   entry: component
     ? [require.resolve('./polyfills'), paths.appComponentJs]
