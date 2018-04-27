@@ -1,21 +1,16 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, object } from 'prop-types';
 import styled from 'styled-components';
 
 import Swatch from './Swatch';
 
-import scssConfig from '!!sass-extract-loader!./../../style/app-config.scss'; //eslint-disable-line
-console.log(scssConfig);
-
-const scssColorPaletteVar = '$color-palette';
 const defaultShade = '500';
-
-const colors = scssConfig.global[scssColorPaletteVar].value;
 
 export default class ColorPalette extends React.Component {
   static displayName = 'ColorPalette';
 
   static propTypes = {
+    colors: object,
     themeName: string
   };
 
@@ -31,7 +26,7 @@ export default class ColorPalette extends React.Component {
 
   getColor() {
     const { themeName } = this.props;
-    return colors[themeName];
+    return this.props.colors[themeName];
   }
 
   getSwatches() {
@@ -97,9 +92,10 @@ export default class ColorPalette extends React.Component {
           {themeName}{' '}
           {swatches.length > 0
             ? `${this.state.currentShade} ${
-                colors[themeName].value[this.state.currentShade].value.hex
+                this.props.colors[themeName].value[this.state.currentShade]
+                  .value.hex
               }`
-            : colors[themeName].value.hex}
+            : this.props.colors[themeName].value.hex}
         </StyledColorInfo>
 
         {swatches.length > 0 && (
