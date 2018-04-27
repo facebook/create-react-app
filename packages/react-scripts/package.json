@@ -58,7 +58,7 @@
     "raf": "3.4.0",
     "react-dev-utils": "^5.0.0",
     "resolve": "1.6.0",
-    "sass-loader": "7.0.0",
+    "sass-loader": "7.0.1",
     "style-loader": "0.19.1",
     "svgr": "1.8.1",
     "sw-precache-webpack-plugin": "0.11.4",
