@@ -10,8 +10,8 @@ export default class ColorPalette extends React.Component {
   static displayName = 'ColorPalette';
 
   static propTypes = {
-    colors: object,
-    themeName: string
+    color: object,
+    name: string
   };
 
   state = {
@@ -24,13 +24,8 @@ export default class ColorPalette extends React.Component {
     });
   }
 
-  getColor() {
-    const { themeName } = this.props;
-    return this.props.colors[themeName];
-  }
-
   getSwatches() {
-    const color = this.getColor();
+    const { color } = this.props;
     if (color && color.type === 'SassMap') {
       return color.value;
     }
@@ -38,7 +33,7 @@ export default class ColorPalette extends React.Component {
   }
 
   getDefaultShade() {
-    const color = this.getColor();
+    const { color } = this.props;
 
     if (color && color.type === 'SassMap') {
       let shade = defaultShade;
@@ -52,7 +47,7 @@ export default class ColorPalette extends React.Component {
   }
 
   getBackroundColor(shade = this.state.currentShade) {
-    const color = this.getColor();
+    const { color } = this.props;
 
     if (shade) {
       return color.value[shade].value.hex;
@@ -65,14 +60,13 @@ export default class ColorPalette extends React.Component {
   }
 
   render() {
-    const { className, children, themeName, ...other } = this.props;
+    const { children, name, color, ...other } = this.props;
 
     const colorSwatches = this.getSwatches();
 
     const swatches = Object.entries(colorSwatches).map(([shade]) => (
       <Swatch
         key={shade}
-        theme={themeName}
         shade={shade}
         color={this.getBackroundColor(shade)}
         isActive={shade === this.state.currentShade}
@@ -80,22 +74,18 @@ export default class ColorPalette extends React.Component {
       />
     ));
 
-    return !this.getColor() ? (
-      <p>{themeName} is not defined in color palette.</p>
-    ) : (
+    return (
       <StyledColorPalette
-        className={className}
         {...other}
         style={{ backgroundColor: this.getBackroundColor() }}
       >
         <StyledColorInfo>
-          {themeName}{' '}
+          {name}{' '}
           {swatches.length > 0
             ? `${this.state.currentShade} ${
-                this.props.colors[themeName].value[this.state.currentShade]
-                  .value.hex
+                color.value[this.state.currentShade].value.hex
               }`
-            : this.props.colors[themeName].value.hex}
+            : color.value.hex}
         </StyledColorInfo>
 
         {swatches.length > 0 && (
@@ -117,6 +107,7 @@ const StyledColorPalette = styled.div`
   padding: 150px 0 0;
   list-style-type: none;
   transition: background ease-out 200ms;
+  font-family: ${props => props.theme.fontFamily};
 `;
 
 const StyledColorInfo = styled.div`

@@ -25,11 +25,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 ## Color palette
 ${(
   <div>
-    <ColorPalette colors={colors} themeName="primary" />
-    <ColorPalette colors={colors} themeName="secondary" />
-    <ColorPalette colors={colors} themeName="error" />
-    <ColorPalette colors={colors} themeName="success" />
-    <ColorPalette colors={colors} themeName="grey" />
+    <ColorPalette color={colors.primary} name="primary" />
+    <ColorPalette color={colors.secondary} name="secondary" />
+    <ColorPalette color={colors.error} name="error" />
+    <ColorPalette color={colors.success} name="success" />
+    <ColorPalette color={colors.grey} name="grey" />
   </div>
 )}
 `;
