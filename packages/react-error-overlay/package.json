@@ -48,7 +48,7 @@
     "eslint-plugin-react": "7.1.0",
     "flow-bin": "^0.63.1",
     "html-entities": "1.2.1",
-    "jest": "20.0.4",
+    "jest": "22.4.2",
     "jest-fetch-mock": "1.2.1",
     "object-assign": "4.1.1",
     "promise": "8.0.1",

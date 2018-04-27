@@ -12,17 +12,21 @@
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
-# CLI and app temporary locations
+# App temporary location
 # http://unix.stackexchange.com/a/84980
-temp_cli_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_cli_path'`
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
+custom_registry_url=http://localhost:4873
+original_npm_registry_url=`npm get registry`
+original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
   cd "$root_path"
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
-  rm -rf "$temp_cli_path" $temp_app_path
+  rm -rf "$temp_app_path"
+  npm set registry "$original_npm_registry_url"
+  yarn config set registry "$original_yarn_registry_url"
 }
 
 # Error messages are redirected to stderr
@@ -37,35 +41,6 @@ function handle_exit {
   cleanup
   echo 'Exiting without error.' 1>&2;
   exit
-}
-
-function create_react_app {
-  node "$temp_cli_path"/node_modules/create-react-app/index.js "$@"
-}
-
-function install_package {
-  local pkg=$(basename $1)
-
-  # Clean target (for safety)
-  rm -rf node_modules/$pkg/
-  rm -rf node_modules/**/$pkg/
-
-  # Copy package into node_modules/ ignoring installed deps
-  # rsync -a ${1%/} node_modules/ --exclude node_modules
-  cp -R ${1%/} node_modules/
-  rm -rf node_modules/$pkg/node_modules/
-
-  # Install `dependencies`
-  cd node_modules/$pkg/
-  if [ "$USE_YARN" = "yes" ]
-  then
-    yarn install --production
-  else
-    npm install --only=production
-  fi
-  # Remove our packages to ensure side-by-side versions are used (which we link)
-  rm -rf node_modules/{babel-preset-react-app,eslint-config-react-app,react-dev-utils,react-error-overlay,react-scripts}
-  cd ../..
 }
 
 # Check for the existence of one or more files.
@@ -88,65 +63,40 @@ set -x
 cd ..
 root_path=$PWD
 
-# Clear cache to avoid issues with incorrect packages being used
-if hash yarnpkg 2>/dev/null
-then
-  # AppVeyor uses an old version of yarn.
-  # Once updated to 0.24.3 or above, the workaround can be removed
-  # and replaced with `yarnpkg cache clean`
-  # Issues:
-  #    https://github.com/yarnpkg/yarn/issues/2591
-  #    https://github.com/appveyor/ci/issues/1576
-  #    https://github.com/facebookincubator/create-react-app/pull/2400
-  # When removing workaround, you may run into
-  #    https://github.com/facebookincubator/create-react-app/issues/2030
-  case "$(uname -s)" in
-    *CYGWIN*|MSYS*|MINGW*) yarn=yarn.cmd;;
-    *) yarn=yarnpkg;;
-  esac
-  $yarn cache clean
+# Make sure we don't introduce accidental references to PATENTS.
+EXPECTED='packages/react-error-overlay/fixtures/bundle.mjs
+packages/react-error-overlay/fixtures/bundle.mjs.map
+packages/react-error-overlay/fixtures/bundle_u.mjs
+packages/react-error-overlay/fixtures/bundle_u.mjs.map
+tasks/e2e-simple.sh'
+ACTUAL=$(git grep -l PATENTS)
+if [ "$EXPECTED" != "$ACTUAL" ]; then
+  echo "PATENTS crept into some new files?"
+  diff -u <(echo "$EXPECTED") <(echo "$ACTUAL") || true
+  exit 1
 fi
 
 if hash npm 2>/dev/null
 then
-  # npm 5 is too buggy right now
-  if [ $(npm -v | head -c 1) -eq 5 ]; then
-    npm i -g npm@^4.x
-  fi;
+  npm i -g npm@latest
   npm cache clean || npm cache verify
 fi
 
-# Prevent bootstrap, we only want top-level dependencies
-cp package.json package.json.bak
-grep -v "postinstall" package.json > temp && mv temp package.json
-npm install
-mv package.json.bak package.json
+# Bootstrap monorepo
+yarn
 
-# We need to install create-react-app deps to test it
-cd "$root_path"/packages/create-react-app
-npm install
-cd "$root_path"
+# Start local registry
+tmp_registry_log=`mktemp`
+nohup npx verdaccio@2.7.2 &>$tmp_registry_log &
+# Wait for `verdaccio` to boot
+grep -q 'http address' <(tail -f $tmp_registry_log)
 
-# If the node version is < 6, the script should just give an error.
-nodeVersion=`node --version | cut -d v -f2`
-nodeMajor=`echo $nodeVersion | cut -d. -f1`
-nodeMinor=`echo $nodeVersion | cut -d. -f2`
-if [[ nodeMajor -lt 6 ]]
-then
-  cd $temp_app_path
-  err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
-  [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
-fi
+# Set registry to local registry
+npm set registry "$custom_registry_url"
+yarn config set registry "$custom_registry_url"
 
-if [ "$USE_YARN" = "yes" ]
-then
-  # Install Yarn so that the test can use it to install packages.
-  npm install -g yarn
-  yarn cache clean
-fi
-
-# We removed the postinstall, so do it manually here
-node bootstrap.js
+# Login so we can publish packages
+npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
 
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
@@ -156,8 +106,16 @@ node bootstrap.js
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
 cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
-npm test
-npm run build:prod
+yarn test
+
+if [ $APPVEYOR != 'True' ]; then
+  # Flow started hanging on AppVeyor after we moved to Yarn Workspaces :-(
+  yarn flow
+fi
+
+cd ../..
+cd packages/react-dev-utils/
+yarn test
 cd ../..
 
 # ******************************************************************************
@@ -166,7 +124,7 @@ cd ../..
 # ******************************************************************************
 
 # Test local build command
-npm run build
+yarn build
 # Check for expected output
 exists build/*.html
 exists build/static/js/*.js
@@ -175,55 +133,25 @@ exists build/static/media/*.svg
 exists build/favicon.ico
 
 # Run tests with CI flag
-CI=true npm test
+CI=true yarn test
 # Uncomment when snapshot testing is enabled by default:
 # exists template/src/__snapshots__/App.test.js.snap
 
 # Test local start command
-npm start -- --smoke-test
+yarn start --smoke-test
+
+git clean -df
+./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
-# Next, pack react-scripts and create-react-app so we can verify they work.
+# Install react-scripts prerelease via create-react-app prerelease.
 # ******************************************************************************
-
-# Pack CLI
-cd "$root_path"/packages/create-react-app
-cli_path=$PWD/`npm pack`
-
-# Go to react-scripts
-cd "$root_path"/packages/react-scripts
-
-# Save package.json because we're going to touch it
-cp package.json package.json.orig
-
-# Replace own dependencies (those in the `packages` dir) with the local paths
-# of those packages.
-node "$root_path"/tasks/replace-own-deps.js
-
-# Finally, pack react-scripts
-scripts_path="$root_path"/packages/react-scripts/`npm pack`
-
-# Restore package.json
-rm package.json
-mv package.json.orig package.json
-
-# ******************************************************************************
-# Now that we have packed them, create a clean app folder and install them.
-# ******************************************************************************
-
-# Install the CLI in a temporary location
-cd "$temp_cli_path"
-
-# Initialize package.json before installing the CLI because npm will not install
-# the CLI properly in the temporary location if it is missing.
-npm init --yes
-
-# Now we can install the CLI from the local package.
-npm install "$cli_path"
 
 # Install the app in a temporary location
 cd $temp_app_path
-create_react_app --scripts-version="$scripts_path" test-app
+npx create-react-app test-app --scripts-version=react-scripts-ts
+
+# TODO: verify we installed prerelease
 
 # ******************************************************************************
 # Now that we used create-react-app to create an app depending on react-scripts,
@@ -240,24 +168,24 @@ function verify_env_url {
   # Test relative path build
   awk -v n=2 -v s="  \"homepage\": \".\"," 'NR == n {print s} {print}' package.json > tmp && mv tmp package.json
 
-  npm run build
+  yarn build
   # Disabled until this can be tested
   # grep -F -R --exclude=*.map "../../static/" build/ -q; test $? -eq 0 || exit 1
   grep -F -R --exclude=*.map "\"./static/" build/ -q; test $? -eq 0 || exit 1
   grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1 || exit 1
 
-  PUBLIC_URL="/anabsolute" npm run build
+  PUBLIC_URL="/anabsolute" yarn build
   grep -F -R --exclude=*.map "/anabsolute/static/" build/ -q; test $? -eq 0 || exit 1
   grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1 || exit 1
 
   # Test absolute path build
   sed "2s/.*/  \"homepage\": \"\/testingpath\",/" package.json > tmp && mv tmp package.json
 
-  npm run build
+  yarn build
   grep -F -R --exclude=*.map "/testingpath/static/" build/ -q; test $? -eq 0 || exit 1
   grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1 || exit 1
 
-  PUBLIC_URL="https://www.example.net/overridetest" npm run build
+  PUBLIC_URL="https://www.example.net/overridetest" yarn build
   grep -F -R --exclude=*.map "https://www.example.net/overridetest/static/" build/ -q; test $? -eq 0 || exit 1
   grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1 || exit 1
   grep -F -R --exclude=*.map "testingpath/static" build/ -q; test $? -eq 1 || exit 1
@@ -265,11 +193,11 @@ function verify_env_url {
   # Test absolute url build
   sed "2s/.*/  \"homepage\": \"https:\/\/www.example.net\/testingpath\",/" package.json > tmp && mv tmp package.json
 
-  npm run build
+  yarn build
   grep -F -R --exclude=*.map "/testingpath/static/" build/ -q; test $? -eq 0 || exit 1
   grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1 || exit 1
 
-  PUBLIC_URL="https://www.example.net/overridetest" npm run build
+  PUBLIC_URL="https://www.example.net/overridetest" yarn build
   grep -F -R --exclude=*.map "https://www.example.net/overridetest/static/" build/ -q; test $? -eq 0 || exit 1
   grep -F -R --exclude=*.map "\"/static/" build/ -q; test $? -eq 1 || exit 1
   grep -F -R --exclude=*.map "testingpath/static" build/ -q; test $? -eq 1 || exit 1
@@ -283,14 +211,14 @@ function verify_module_scope {
   # Create stub json file
   echo "{}" >> sample.json
 
-  # Save App.js, we're going to modify it
+  # Save App.tsx, we're going to modify it
   cp src/App.tsx src/App.tsx.bak
 
   # Add an out of scope import
-  echo "import sampleJson from '../sample.json'" | cat - src/App.tsx > src/App.tsx.temp && mv src/App.tsx.temp src/App.tsx
+  echo "import sampleJson from '../sample'" | cat - src/App.tsx > src/App.tsx.temp && mv src/App.tsx.temp src/App.tsx
 
   # Make sure the build fails
-  npm run build; test $? -eq 1 || exit 1
+  yarn build; test $? -eq 1 || exit 1
   # TODO: check for error message
 
   # Restore App.tsx
@@ -302,9 +230,8 @@ function verify_module_scope {
 cd test-app
 
 # Test the build
-npm run build
+yarn build
 # Check for expected output
-pwd
 exists build/*.html
 exists build/static/js/*.js
 exists build/static/css/*.css
@@ -312,12 +239,12 @@ exists build/static/media/*.svg
 exists build/favicon.ico
 
 # Run tests with CI flag
-CI=true npm test
+CI=true yarn test
 # Uncomment when snapshot testing is enabled by default:
-# exists src/__snapshots__/App.test.tsx.snap
+# exists src/__snapshots__/App.test.js.snap
 
 # Test the server
-npm start -- --smoke-test
+yarn start --smoke-test
 
 # Test environment handling
 verify_env_url
@@ -332,21 +259,8 @@ verify_module_scope
 # Eject...
 echo yes | npm run eject
 
-# Ensure Yarn is ran after eject; at the time of this commit, we don't run Yarn
-# after ejecting. Soon, we may only skip Yarn on Windows. Let's try to remove
-# this in the near future.
-if hash yarnpkg 2>/dev/null
-then
-  yarnpkg install --check-files
-fi
-
-# ...but still link to the local packages
-install_package "$root_path"/packages/babel-preset-react-app
-install_package "$root_path"/packages/eslint-config-react-app
-install_package "$root_path"/packages/react-dev-utils
-
 # Test the build
-npm run build
+yarn build
 # Check for expected output
 exists build/*.html
 exists build/static/js/*.js
@@ -355,15 +269,15 @@ exists build/static/media/*.svg
 exists build/favicon.ico
 
 # Run tests, overring the watch option to disable it.
-# `CI=true npm test` won't work here because `npm test` becomes just `jest`.
+# `CI=true yarn test` won't work here because `yarn test` becomes just `jest`.
 # We should either teach Jest to respect CI env variable, or make
 # `scripts/test.js` survive ejection (right now it doesn't).
-npm test -- --watch=no
+yarn test --watch=no
 # Uncomment when snapshot testing is enabled by default:
 # exists src/__snapshots__/App.test.js.snap
 
 # Test the server
-npm start -- --smoke-test
+yarn start --smoke-test
 
 # Test environment handling
 verify_env_url
