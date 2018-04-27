@@ -3,6 +3,12 @@ import React from 'react';
 import { md } from './../utils';
 import ColorPalette from './../components/ColorPalette';
 
+import scssConfig from './../components/ColorPalette/mockScssColorConfig';
+
+const scssColorPaletteVar = '$color-palette';
+
+const colors = scssConfig.global[scssColorPaletteVar].value;
+
 export default md`
 # The quick brown fox jumps over the lazy dog
 
@@ -19,11 +25,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 ## Color palette
 ${(
   <div>
-    <ColorPalette themeName="primary" />
-    <ColorPalette themeName="secondary" />
-    <ColorPalette themeName="error" />
-    <ColorPalette themeName="success" />
-    <ColorPalette themeName="grey" />
+    <ColorPalette colors={colors} themeName="primary" />
+    <ColorPalette colors={colors} themeName="secondary" />
+    <ColorPalette colors={colors} themeName="error" />
+    <ColorPalette colors={colors} themeName="success" />
+    <ColorPalette colors={colors} themeName="grey" />
   </div>
 )}
 `;
