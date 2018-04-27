@@ -84,6 +84,7 @@ const program = new commander.Command(packageJson.name)
       `    A custom ${chalk.cyan('--scripts-version')} can be one of:`
     );
     console.log(`      - a specific npm version: ${chalk.green('0.8.2')}`);
+    console.log(`      - a specific npm tag: ${chalk.green('@next')}`);
     console.log(
       `      - a custom fork published on npm: ${chalk.green(
         'my-react-scripts'
@@ -394,14 +395,18 @@ function getInstallPackage(version, originalDirectory) {
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
-  } else if (version && version.match(/^file:/)) {
-    packageToInstall = `file:${path.resolve(
-      originalDirectory,
-      version.match(/^file:(.*)?$/)[1]
-    )}`;
   } else if (version) {
-    // for tar.gz or alternative paths
-    packageToInstall = version;
+    if (version[0] === '@') {
+      packageToInstall += version;
+    } else if (version.match(/^file:/)) {
+      packageToInstall = `file:${path.resolve(
+        originalDirectory,
+        version.match(/^file:(.*)?$/)[1]
+      )}`;
+    } else {
+      // for tar.gz or alternative paths
+      packageToInstall = version;
+    }
   }
   return packageToInstall;
 }
