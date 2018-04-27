@@ -5,12 +5,11 @@ import styled from 'styled-components';
 
 const propTypes = {
   main: bool,
-  theme: string,
   shade: oneOfType([number, string]),
   isActive: bool
 };
 
-const Swatch = ({ children, theme, shade, isActive, ...other }) => {
+const Swatch = ({ children, shade, isActive, ...other }) => {
   const classes = cx({ 'is-active': isActive });
 
   return (
@@ -22,6 +21,8 @@ const Swatch = ({ children, theme, shade, isActive, ...other }) => {
 
 const StyledSwatch = styled.button`
   position: relative;
+  min-width: 60px;
+  height: 60px;
   padding: 15px;
   border-width: 0;
   background-color: ${props => props.color};
