@@ -41,6 +41,7 @@ const printHostingInstructions = require('react-dev-utils/printHostingInstructio
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
 const { printBrowsers } = require('react-dev-utils/browsersHelper');
+const setThemeColor = require('react-dev-utils/setThemeColor');
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -68,6 +69,7 @@ checkBrowsers(paths.appPath)
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
     fs.emptyDirSync(paths.appBuild);
+    setThemeColor(paths.appPublic);
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
