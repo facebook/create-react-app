@@ -21,9 +21,9 @@ const Swatch = ({ children, shade, isActive, ...other }) => {
 
 const StyledSwatch = styled.button`
   position: relative;
-  min-width: 60px;
-  height: 60px;
-  padding: 15px;
+  min-width: ${props => props.theme.spaces.xlarge};
+  height: ${props => props.theme.spaces.xlarge};
+  padding: ${props => props.theme.spaces.small};
   border-width: 0;
   background-color: ${props => props.color};
   z-index: 0;
@@ -39,9 +39,9 @@ const StyledSwatch = styled.button`
 
 const StyledSwatchInfo = styled.span`
   display: inline-block;
-  padding: 0 3px;
+  padding: ${props => props.theme.spaces.mini};
   background: ${props => props.theme.colors.white};
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.small};
 `;
 
 Swatch.displayName = 'Swatch';
