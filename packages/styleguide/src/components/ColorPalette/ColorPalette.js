@@ -112,20 +112,20 @@ const StyledColorPalette = styled.div`
 
 const StyledColorInfo = styled.div`
   position: absolute;
-  top: 24px;
-  left: 24px;
+  top: ${props => props.theme.spaces.medium};
+  left: ${props => props.theme.spaces.medium};
   background: white;
-  padding: 3px 6px;
+  padding: ${props => props.theme.spaces.tiny};
 `;
 
 const StyledSwatches = styled.div`
   display: flex;
-  padding: 50px 0 0 0;
+  padding: ${props => props.theme.spaces.large} 0 0 0;
   overflow-x: auto;
   overflow-y: visible;
 `;
 
 const StyledSwatchSpacer = styled.div`
   height: 1px;
-  flex: 0 0 24px;
+  flex: 0 0 ${props => props.theme.spaces.medium};
 `;
