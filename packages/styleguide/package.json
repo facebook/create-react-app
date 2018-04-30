@@ -18,7 +18,6 @@
     "classnames": "~2.2.5",
     "common-tags": "~1.7.2",
     "firacode": "~1.205.0",
-    "node-sass": "~4.8.3",
     "object.entries": "~1.0.4",
     "polished": "~1.9.2",
     "pretty": "~2.0.0",
@@ -33,8 +32,6 @@
     "react-markings": "~1.2.0",
     "react-responsive": "~4.1.0",
     "react-router-dom": "~4.2.2",
-    "sass-extract": "~2.1.0",
-    "sass-extract-loader": "~1.1.0",
     "styled-components": "~3.2.5",
     "svg4everybody": "~2.1.9",
     "unescape-html": "~1.1.0"
