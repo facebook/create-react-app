@@ -24,7 +24,7 @@
     "chalk": "^1.1.3",
     "commander": "^2.9.0",
     "cross-spawn": "^4.0.0",
-    "envinfo": "3.4.2",
+    "envinfo": "5.4.0",
     "fs-extra": "^5.0.0",
     "hyperquest": "^2.1.2",
     "react-dev-utils": "^5.0.0",

@@ -121,15 +121,28 @@ const program = new commander.Command(packageJson.name)
   })
   .parse(process.argv);
 
+if (program.info) {
+  console.log(chalk.bold('\nEnvironment Info:'));
+  return envinfo
+    .run(
+      {
+        System: ['OS', 'CPU'],
+        Binaries: ['Node', 'npm', 'Yarn'],
+        Browsers: ['Chrome', 'Edge', 'Internet Explorer', 'Firefox', 'Safari'],
+        npmPackages: ['react', 'react-dom', 'react-scripts'],
+        npmGlobalPackages: ['create-react-app'],
+      },
+      {
+        clipboard: true,
+        duplicates: true,
+        showNotFound: true,
+      }
+    )
+    .then(console.log)
+    .then(() => console.log(chalk.green('Copied To Clipboard!\n')));
+}
+
 if (typeof projectName === 'undefined') {
-  if (program.info) {
-    envinfo.print({
-      packages: ['react', 'react-dom', 'react-scripts'],
-      noNativeIDE: true,
-      duplicates: true,
-    });
-    process.exit(0);
-  }
   console.error('Please specify the project directory:');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
