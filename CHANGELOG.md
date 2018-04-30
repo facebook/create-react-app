@@ -1,3 +1,13 @@
+## 2.3.2 (April 30, 2018)
+
+#### :rocket: New Feature
+
+* [lighter-styleguide] (breaking-change) refactor <ColorPalette /> component - `colors` prop become `color` and `name`
+
+#### :tada: version updates
+
+* `lighter-styleguide@1.2.0`
+
 ## 2.3.2 (April 26, 2018)
 
 #### :bug: Bug Fix
