@@ -17,11 +17,13 @@ export const breakpoints = {
 };
 
 export const spaces = {
+  mini: '3px',
   tiny: '6px',
   small: '12px',
   default: '18px',
   medium: '24px',
-  large: '48px'
+  large: '48px',
+  xlarge: '60px'
 };
 
 export const contentSpacing = spaces.large;
