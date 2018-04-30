@@ -621,7 +621,7 @@ Then in `package.json`, add the following lines to `scripts`:
 ```diff
    "scripts": {
 +    "build-css": "node-sass-chokidar src/ -o src/",
-+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
++    "watch-css": "npm run build-css && npm run build-css -- --watch --recursive",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
@@ -637,7 +637,7 @@ To enable importing files without using relative paths, you can add the  `--incl
 
 ```
 "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-"watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+"watch-css": "npm run build-css && npm run build-css -- --watch --recursive",
 ```
 
 This will allow you to do imports like
@@ -666,7 +666,7 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
 ```diff
    "scripts": {
      "build-css": "node-sass-chokidar src/ -o src/",
-     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+     "watch-css": "npm run build-css && npm run build-css -- --watch --recursive",
 -    "start": "react-scripts start",
 -    "build": "react-scripts build",
 +    "start-js": "react-scripts start",
