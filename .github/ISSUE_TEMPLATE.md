@@ -88,7 +88,7 @@
   To help identify if a problem is specific to a platform, browser, or module version, information about your environment is required.
   This enables the maintainers quickly reproduce the issue and give feedback.
 
-  Run the following command in your react app's folder in terminal.
+  Run the following command in your React app's folder in terminal.
   Note: The result is copied to your clipboard directly.
 
   `npx create-react-app --info`
