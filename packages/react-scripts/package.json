@@ -52,7 +52,7 @@
     "jest": "22.4.1",
     "loader-utils": "^1.1.0",
     "object-assign": "4.1.1",
-    "postcss-flexbugs-fixes": "3.2.0",
+    "postcss-flexbugs-fixes": "3.3.1",
     "postcss-loader": "2.0.10",
     "promise": "8.0.1",
     "raf": "3.4.0",
