@@ -51,9 +51,9 @@ describe('Integration', () => {
         /.+scss-styles_scssModulesInclusion.+\{background:.+;color:.+}/
       );
       expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
       ).to.match(
-        /.+assets_scssModulesIndexInclusion__.+\{background:.+;color:.+}/
+        /.+assets_scssModulesIndexInclusion.+\{background:.+;color:.+}/
       );
     });
 
@@ -74,9 +74,9 @@ describe('Integration', () => {
         /.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/
       );
       expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
+        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
       ).to.match(
-        /.+assets_sassModulesIndexInclusion__.+\{background:.+;color:.+}/
+        /.+assets_sassModulesIndexInclusion.+\{background:.+;color:.+}/
       );
     });
 
