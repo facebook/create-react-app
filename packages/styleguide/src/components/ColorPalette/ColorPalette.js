@@ -108,6 +108,10 @@ const StyledColorPalette = styled.div`
   list-style-type: none;
   transition: background ease-out 200ms;
   font-family: ${props => props.theme.fontFamily};
+
+  &:last-of-type {
+    margin-bottom: ${props => props.theme.spaces.default};
+  }
 `;
 
 const StyledColorInfo = styled.div`
