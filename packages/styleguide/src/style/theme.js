@@ -4,7 +4,7 @@ import { rem } from './utils';
 
 export const sizes = {
   headerHeight: '96px',
-  sidebarWidth: '266px',
+  sidebarWidth: '248px',
   menuWidth: '200px'
 };
 
@@ -90,3 +90,5 @@ export const shadows = {
 export const borderRadius = {
   default: '0'
 };
+
+export const contentWidth = '55rem';
