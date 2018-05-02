@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { md } from './../utils';
-import ColorPalette from './../components/ColorPalette';
+import { ColorPalette, Preview, Card } from './../components';
 
 import scssConfig from './../components/ColorPalette/mockScssColorConfig';
 
@@ -31,5 +31,20 @@ ${(
     <ColorPalette color={colors.success} name="success" />
     <ColorPalette color={colors.grey} name="grey" />
   </div>
+)}
+
+${(
+  <Preview>
+    <Card>
+      <h2>Card title</h2>
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
+        lacinia odio sem nec elit. Donec id elit non mi porta gravida at eget
+        metus. Maecenas faucibus mollis interdum. Maecenas faucibus mollis
+        interdum. Donec ullamcorper nulla non metus auctor fringilla. Donec sed
+        odio dui.
+      </p>
+    </Card>
+  </Preview>
 )}
 `;
