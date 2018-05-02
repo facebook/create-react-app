@@ -92,7 +92,14 @@ module.exports = function(api, opts) {
       // don't work without it: https://github.com/babel/babel/issues/7215
       require('@babel/plugin-transform-destructuring').default,
       // class { handleClick = () => { } }
-      require('@babel/plugin-proposal-class-properties').default,
+      // Enable loose mode to use assignment instead of defineProperty
+      // See discussion in https://github.com/facebook/create-react-app/issues/4263
+      [
+        require('@babel/plugin-proposal-class-properties').default,
+        {
+          loose: true,
+        },
+      ],
       // The following two plugins use Object.assign directly, instead of Babel's
       // extends helper. Note that this assumes `Object.assign` is available.
       // { ...todo, completed: true }

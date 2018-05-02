@@ -1,3 +1,85 @@
+## 1.1.4 (April 3, 2018)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`
+
+  * [#4250](https://github.com/facebook/create-react-app/pull/4250) Upgrade `detect-port-alt` to fix [#4189](https://github.com/facebook/create-react-app/issues/4189). ([@Timer](https://github.com/Timer))
+
+#### Committers: 1
+- Joe Haddad ([Timer](https://github.com/Timer))
+
+### Migrating from 1.1.3 to 1.1.4
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.1.4
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.1.4
+```
+
+## 1.1.3 (April 3, 2018)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#4247](https://github.com/facebook/create-react-app/pull/4247) Fix `environment.dispose is not a function` error caused by a Jest bug. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 1
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+
+### Migrating from 1.1.2 to 1.1.3
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.1.3
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.1.3
+```
+
+## 1.1.2 (April 3, 2018)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#4085](https://github.com/facebook/create-react-app/pull/4085) Resolve `.js` before `.mjs` files to unbreak dependencies with native ESM support. ([@leebyron](https://github.com/leebyron))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#4197](https://github.com/facebook/create-react-app/pull/4197) Add troubleshooting for Github Pages. ([@xnt](https://github.com/xnt))
+
+#### Committers: 2
+- Lee Byron ([leebyron](https://github.com/leebyron))
+- Vicente Plata ([xnt](https://github.com/xnt))
+
+### Migrating from 1.1.1 to 1.1.2
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save --save-exact react-scripts@1.1.2
+```
+
+or
+
+```
+yarn add --exact react-scripts@1.1.2
+```
+
 ## 1.1.1 (February 2, 2018)
 
 #### :bug: Bug Fix
