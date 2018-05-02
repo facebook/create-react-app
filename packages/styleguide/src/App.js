@@ -148,8 +148,8 @@ const PageBody = styled.div`
 
 const PageSidebar = styled(Sidebar)`
   position: absolute;
-  height: 100%;
-  display: flex;
+  min-height: 100%;
+  max-height: 100%;
   flex: 0 0 ${props => rem(props.theme.sizes.sidebarWidth)};
   order: -1;
   overflow: auto;
