@@ -57,9 +57,9 @@ module.exports = {
 ```
 
 
-#### `new ModuleScopePlugin(appSrc: string, allowedFiles?: string[])`
+#### `new ModuleScopePlugin(appSrc: string | string[], allowedFiles?: string[])`
 
-This Webpack plugin ensures that relative imports from app's source directory don't reach outside of it.
+This Webpack plugin ensures that relative imports from app's source directories don't reach outside of it.
 
 ```js
 var path = require('path');
@@ -326,3 +326,40 @@ module.exports = {
   // ...
 }
 ```
+
+#### `getCSSModuleLocalIdent(context: Object, localIdentName: String, localName: String, options: Object): string`
+
+Creates a class name for CSS Modules that uses either the filename or folder name if named `index.module.css`.
+
+For `MyFolder/MyComponent.module.css` and class `MyClass` the output will be `MyComponent.module_MyClass__[hash]`
+For `MyFolder/index.module.css` and class `MyClass` the output will be `MyFolder_MyClass__[hash]`
+
+```js
+const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+
+// In your webpack config:
+// ...
+module: {
+   rules: [
+    {
+      test: /\.module\.css$/,
+      use: [
+        require.resolve('style-loader'),
+        {
+          loader: require.resolve('css-loader'),
+          options: {
+            importLoaders: 1,
+            modules: true,
+            getLocalIdent: getCSSModuleLocalIdent,
+          },
+        },
+        {
+          loader: require.resolve('postcss-loader'),
+          options: postCSSLoaderOptions,
+        },
+      ],
+    }
+   ]
+}
+```
+

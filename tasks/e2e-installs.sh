@@ -102,6 +102,18 @@ git clean -df
 ./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
+# Test --scripts-version with a distribution tag
+# ******************************************************************************
+
+cd "$temp_app_path"
+npx create-react-app --scripts-version=@latest test-app-dist-tag
+cd test-app-dist-tag
+
+# Check corresponding scripts version is installed.
+exists node_modules/react-scripts
+checkDependencies
+
+# ******************************************************************************
 # Test --scripts-version with a version number
 # ******************************************************************************
 

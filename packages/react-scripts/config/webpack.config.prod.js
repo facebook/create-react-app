@@ -19,6 +19,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -68,6 +69,49 @@ const postCSSLoaderOptions = {
       flexbox: 'no-2009',
     }),
   ],
+  sourceMap: shouldUseSourceMap,
+};
+
+// style files regexes
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.css$/;
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
+
+// common function to get style loaders
+const getStyleLoaders = (cssOptions, preProcessor) => {
+  const loaders = [
+    {
+      loader: require.resolve('css-loader'),
+      options: cssOptions,
+    },
+    {
+      loader: require.resolve('postcss-loader'),
+      options: postCSSLoaderOptions,
+    },
+  ];
+  if (preProcessor) {
+    loaders.push({
+      loader: require.resolve(preProcessor),
+      options: {
+        sourceMap: shouldUseSourceMap,
+      },
+    });
+  }
+  return ExtractTextPlugin.extract(
+    Object.assign(
+      {
+        fallback: {
+          loader: require.resolve('style-loader'),
+          options: {
+            hmr: false,
+          },
+        },
+        use: loaders,
+      },
+      extractTextPluginOptions
+    )
+  );
 };
 
 // This is the production configuration.
@@ -254,69 +298,59 @@ module.exports = {
           // in the main CSS file.
           // By default we support CSS Modules with the extension .module.css
           {
-            test: /\.css$/,
-            exclude: /\.module\.css$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: {
-                    loader: require.resolve('style-loader'),
-                    options: {
-                      hmr: false,
-                    },
-                  },
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: postCSSLoaderOptions,
-                    },
-                  ],
-                },
-                extractTextPluginOptions
-              )
-            ),
+            test: cssRegex,
+            exclude: cssModuleRegex,
+            loader: getStyleLoaders({
+              importLoaders: 1,
+              minimize: true,
+              sourceMap: shouldUseSourceMap,
+            }),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
           {
-            test: /\.module\.css$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: {
-                    loader: require.resolve('style-loader'),
-                    options: {
-                      hmr: false,
-                    },
-                  },
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                        modules: true,
-                        localIdentName: '[path]__[name]___[local]',
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: postCSSLoaderOptions,
-                    },
-                  ],
-                },
-                extractTextPluginOptions
-              )
+            test: cssModuleRegex,
+            loader: getStyleLoaders({
+              importLoaders: 1,
+              minimize: true,
+              sourceMap: shouldUseSourceMap,
+              modules: true,
+              getLocalIdent: getCSSModuleLocalIdent,
+            }),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          // Opt-in support for SASS. The logic here is somewhat similar
+          // as in the CSS routine, except that "sass-loader" runs first
+          // to compile SASS files into CSS.
+          // By default we support SASS Modules with the
+          // extensions .module.scss or .module.sass
+          {
+            test: sassRegex,
+            exclude: sassModuleRegex,
+            loader: getStyleLoaders(
+              {
+                importLoaders: 2,
+                minimize: true,
+                sourceMap: shouldUseSourceMap,
+              },
+              'sass-loader'
+            ),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          // Adds support for CSS Modules, but using SASS
+          // using the extension .module.scss or .module.sass
+          {
+            test: sassModuleRegex,
+            loader: getStyleLoaders(
+              {
+                importLoaders: 2,
+                minimize: true,
+                sourceMap: shouldUseSourceMap,
+                modules: true,
+                getLocalIdent: getCSSModuleLocalIdent,
+              },
+              'sass-loader'
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
@@ -378,8 +412,16 @@ module.exports = {
     // Minify the code.
     new UglifyJsPlugin({
       uglifyOptions: {
-        ecma: 8,
+        parse: {
+          // we want uglify-js to parse ecma 8 code. However, we don't want it
+          // to apply any minfication steps that turns valid ecma 5 code
+          // into invalid ecma 5 code. This is why the 'compress' and 'output'
+          // sections only apply transformations that are ecma 5 safe
+          // https://github.com/facebook/create-react-app/pull/4234
+          ecma: 8,
+        },
         compress: {
+          ecma: 5,
           warnings: false,
           // Disabled because of an issue with Uglify breaking seemingly valid code:
           // https://github.com/facebook/create-react-app/issues/2376
@@ -391,6 +433,7 @@ module.exports = {
           safari10: true,
         },
         output: {
+          ecma: 5,
           comments: false,
           // Turned on because emoji and regex is not minified properly using default
           // https://github.com/facebook/create-react-app/issues/2488
@@ -413,7 +456,7 @@ module.exports = {
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
-      publicPath: publicPath
+      publicPath: publicPath,
     }),
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
