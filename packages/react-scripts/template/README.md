@@ -768,7 +768,7 @@ Install React Bootstrap and Bootstrap from npm. React Bootstrap does not include
 npm install --save react-bootstrap bootstrap@3
 ```
 
-version 4:
+For version 4:
 
 ```sh
 npm install bootstrap@4
@@ -780,7 +780,7 @@ Alternatively you may use `yarn`:
 yarn add react-bootstrap bootstrap@3
 ```
 
-version 4:
+For version 4:
 
 ```sh
 yarn add bootstrap@4.0.0-alpha.6
@@ -795,7 +795,7 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 // components takes precedence over default styles.
 ```
 
-version 4:
+For version 4 :
 
 ```js
 import 'bootstrap/dist/css/bootstrap.css';
