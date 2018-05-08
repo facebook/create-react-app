@@ -45,11 +45,11 @@ module.exports = (resolve, rootDir, srcRoots) => {
     },
     transformIgnorePatterns: [
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$',
-      '^.+\\.module\\.css$',
+      '^.+\\.module\\.(css|sass|scss)$',
     ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
-      '^.+\\.module\\.css$': 'identity-obj-proxy',
+      '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },
     moduleFileExtensions: [
       'web.js',
