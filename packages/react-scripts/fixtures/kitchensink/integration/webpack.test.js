@@ -50,6 +50,11 @@ describe('Integration', () => {
       ).to.match(
         /.+scss-styles_scssModulesInclusion.+\{background:.+;color:.+}/
       );
+      expect(
+        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
+      ).to.match(
+        /.+assets_scssModulesIndexInclusion.+\{background:.+;color:.+}/
+      );
     });
 
     it('sass inclusion', async () => {
@@ -67,6 +72,11 @@ describe('Integration', () => {
         doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
       ).to.match(
         /.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/
+      );
+      expect(
+        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
+      ).to.match(
+        /.+assets_sassModulesIndexInclusion.+\{background:.+;color:.+}/
       );
     });
 
