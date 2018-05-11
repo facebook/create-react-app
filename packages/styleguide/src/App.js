@@ -144,6 +144,7 @@ const PageHeader = styled(Header)`
 const PageBody = styled.div`
   display: flex;
   flex: 1 1 auto;
+  min-height: 0;
 `;
 
 const PageSidebar = styled(Sidebar)`
