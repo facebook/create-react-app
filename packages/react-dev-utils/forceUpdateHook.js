@@ -51,50 +51,62 @@ window.__enqueueForceUpdate = function(onSuccess, type) {
     }
   });
 };
+
+function traverseDeep(root, onUpdate) {
+  let node = root;
+  while (true) {
+    node.expirationTime = 1;
+    if (node.alternate) {
+      node.alternate.expirationTime = 1;
+    }
+    if (node.tag === 1) {
+      onUpdate(node);
+    }
+    if (node.child) {
+      node.child.return = node;
+      node = node.child;
+      continue;
+    }
+    if (node === root) {
+      return;
+    }
+    while (!node.sibling) {
+      if (!node.return || node.return === root) {
+        return;
+      }
+      node = node.return;
+    }
+    node.sibling.return = node.return;
+    node = node.sibling;
+  }
+}
+
 function forceUpdateAll(types) {
   const hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
   const renderersById = hook._renderers;
   const ids = Object.keys(renderersById);
-  const renderers = ids.map(id => renderersById[id]);
-  // TODO: support Fiber
-  renderers.forEach(renderer => {
-    const roots = renderer.Mount && renderer.Mount._instancesByReactRootID;
-    const { getNodeFromInstance } = renderer.ComponentTree;
-    if (!roots) {
+  ids.forEach(id => {
+    const renderer = renderersById[id];
+    const roots = hook.getFiberRoots(id);
+    if (!roots.size) {
       return;
     }
-    Object.keys(roots).forEach(key => {
-      function traverseDeep(ins, cb) {
-        cb(ins);
-        if (ins._renderedComponent) {
-          traverseDeep(ins._renderedComponent, cb);
-        } else {
-          for (let key in ins._renderedChildren) {
-            if (ins._renderedChildren.hasOwnProperty(key)) {
-              traverseDeep(ins._renderedChildren[key], cb);
-            }
-          }
-        }
-      }
-      const root = roots[key];
-      traverseDeep(root, inst => {
-        if (!inst._instance) {
-          return;
-        }
-        const { type, type: { __hot__id } } = inst._currentElement;
+    // TODO: this is WAY too brittle.
+    roots.forEach(root => {
+      const reactRoot = root.containerInfo._reactRootContainer;
+      traverseDeep(root.current, node => {
+        const type = node.type;
+        const { __hot__id } = type;
         if (
           types.find(
             t => t === type || (__hot__id && t.__hot__id === __hot__id)
           )
         ) {
-          nodes.push(getNodeFromInstance(inst));
+          nodes.push(renderer.findHostInstanceByFiber(node));
         }
-        const updater = inst._instance.updater;
-        if (!updater || typeof updater.enqueueForceUpdate !== 'function') {
-          return;
-        }
-        updater.enqueueForceUpdate(inst._instance);
+        node.memoizedProps = Object.assign({}, node.memoizedProps);
       });
+      reactRoot.render(root.current.memoizedState.element);
     });
   });
 }
