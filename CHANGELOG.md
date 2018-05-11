@@ -1,3 +1,13 @@
+## 2.3.2 (May 2, 2018)
+
+#### :nail-care: Enhancement
+
+* [lighter-styleguide] refactor <PageLayout />, <PageHeader />, <PageBody /> and <PageSidebar /> styles to use flexbox
+
+#### :tada: version updates
+
+* `lighter-styleguide@1.2.1`
+
 ## 2.3.2 (April 30, 2018)
 
 #### :rocket: New Feature
