@@ -1,3 +1,13 @@
+## 2.3.2 (May 11, 2018)
+
+#### :bug: Bug Fix
+
+* [lighter-styleguide] fix <PageLayout /> scrolling and overflow issue in FF
+
+#### :tada: version updates
+
+* `lighter-styleguide@1.2.2`
+
 ## 2.3.2 (May 2, 2018)
 
 #### :nail-care: Enhancement
