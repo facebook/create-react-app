@@ -38,14 +38,18 @@ const Header = ({
   return (
     <StyledBar className={classes} space="" {...other}>
       <BarItem>{children}</BarItem>
-      <BarItem fill>
+      <BarItem isFilling>
         <Bar space="">
           <MediaQuery minDeviceWidth={theme.breakpoints.m}>
             {matches =>
               typeof project === 'string' ? (
-                <StyledProjectText fill>{getLogo(matches)}</StyledProjectText>
+                <StyledProjectText isFilling>
+                  {getLogo(matches)}
+                </StyledProjectText>
               ) : (
-                <StyledProjectLogo fill>{getLogo(matches)}</StyledProjectLogo>
+                <StyledProjectLogo isFilling>
+                  {getLogo(matches)}
+                </StyledProjectLogo>
               )
             }
           </MediaQuery>
