@@ -17,7 +17,7 @@ export const BarItem = styled.div`
   }
 
   ${props =>
-    props.fill &&
+    props.isFilling &&
     `
     flex: 1 0 1px;
   `};
@@ -30,7 +30,7 @@ export const BarItem = styled.div`
 `;
 
 BarItem.propTypes = {
-  fill: bool,
+  isFilling: bool,
   shrink: bool,
   space: string
 };
