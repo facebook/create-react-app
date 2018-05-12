@@ -202,6 +202,8 @@ Here’s a few common cases where you might want to try something else:
 
 * If you want to use **TypeScript**, consider using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript).
 
+* If you want to use **Parcel** instead of **Webpack** as your bundler, consider using [create-react-app-parcel](https://github.com/sw-yx/create-react-app-parcel).
+
 * Finally, if you need **more customization**, check out [Neutrino](https://neutrino.js.org/) and its [React preset](https://neutrino.js.org/packages/react/).
 
 All of the above tools can work with little to no configuration.
