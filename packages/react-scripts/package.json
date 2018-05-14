@@ -60,7 +60,7 @@
     "resolve": "1.6.0",
     "sass-loader": "7.0.1",
     "style-loader": "0.19.1",
-    "svgr": "1.8.1",
+    "svgr": "1.9.2",
     "sw-precache-webpack-plugin": "0.11.4",
     "thread-loader": "1.1.2",
     "uglifyjs-webpack-plugin": "1.1.6",
