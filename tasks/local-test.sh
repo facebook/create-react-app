@@ -98,7 +98,7 @@ ${apply_changes}
 node --version
 npm --version
 set +x
-${test_command} && echo -e "\n\e[1;32m✔ Job passed\e[0m" || echo -e "\n\e[1;31m✘ Job failes\e[0m"
+${test_command} && echo -e "\n\e[1;32m✔ Job passed\e[0m" || echo -e "\n\e[1;31m✘ Job failed\e[0m"
 $([[ ${interactive} == 'true' ]] && echo 'bash')
 CMD
 
