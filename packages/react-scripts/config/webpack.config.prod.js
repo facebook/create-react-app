@@ -232,8 +232,9 @@ module.exports = {
             // by webpacks internal loaders.
             exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
             options: {
-              publicPath: '../media/',
-              name: "static/media/[name].[hash:8].[ext]"
+              publicPath: "../media",
+              outputPath: "/static/media",
+              name: "[name].[hash:8].[ext]"
             }
           }
           // ** STOP ** Are you adding a new loader?
