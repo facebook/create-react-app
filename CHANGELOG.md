@@ -1,3 +1,15 @@
+## 2.3.3 (May 11, 2018)
+
+#### :bug: Bug Fix
+
+* [lighter-styleguide] fix for Warning: Received `true` for non-boolean attribute `fill`
+* [lighter-react-scripts] fix css nano minimizing keyframes
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.3.3`
+* `lighter-styleguide@1.2.3`
+
 ## 2.3.2 (May 11, 2018)
 
 #### :bug: Bug Fix
