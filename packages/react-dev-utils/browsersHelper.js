@@ -17,7 +17,7 @@ const defaultBrowsers = {
   development: ['chrome', 'firefox', 'edge'].map(
     browser => `last 2 ${browser} versions`
   ),
-  production: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 11'],
+  production: ['>0.25%', 'not op_mini all', 'ie 11'],
 };
 
 function checkBrowsers(dir, retry = true) {
