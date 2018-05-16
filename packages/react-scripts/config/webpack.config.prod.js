@@ -479,4 +479,8 @@ module.exports = {
   // Turn off performance processing because we utilize
   // our own hints via the FileSizeReporter
   performance: false,
+  optimization: {
+    // webpack-manifest-plugin currently does not play well with ConcatenatedModule
+    concatenateModules: false,
+  },
 };
