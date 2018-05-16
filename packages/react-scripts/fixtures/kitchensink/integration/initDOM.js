@@ -36,14 +36,13 @@ if (process.env.E2E_FILE) {
       )
     );
 } else if (process.env.E2E_URL) {
-  getMarkup = () =>
-    new Promise(resolve => {
-      http.get(process.env.E2E_URL, res => {
-        let rawData = '';
-        res.on('data', chunk => (rawData += chunk));
-        res.on('end', () => resolve(rawData));
-      });
+  getMarkup = () => new Promise(resolve => {
+    http.get(process.env.E2E_URL, res => {
+      let rawData = '';
+      res.on('data', chunk => rawData += chunk);
+      res.on('end', () => resolve(rawData));
     });
+  });
 
   resourceLoader = (resource, callback) => resource.defaultFetch(callback);
 } else {
@@ -57,22 +56,21 @@ if (process.env.E2E_FILE) {
   );
 }
 
-export default feature =>
-  new Promise(async resolve => {
-    const markup = await getMarkup();
-    const host = process.env.E2E_URL || 'http://www.example.org/spa:3000';
-    const doc = jsdom.jsdom(markup, {
-      features: {
-        FetchExternalResources: ['script', 'css'],
-        ProcessExternalResources: ['script'],
-      },
-      created: (_, win) =>
-        win.addEventListener('ReactFeatureDidMount', () => resolve(doc), true),
-      deferClose: true,
-      resourceLoader,
-      url: `${host}#${feature}`,
-      virtualConsole: jsdom.createVirtualConsole().sendTo(console),
-    });
-
-    doc.close();
+export default feature => new Promise(async resolve => {
+  const markup = await getMarkup();
+  const host = process.env.E2E_URL || 'http://www.example.org/spa:3000';
+  const doc = jsdom.jsdom(markup, {
+    features: {
+      FetchExternalResources: ['script', 'css'],
+      ProcessExternalResources: ['script'],
+    },
+    created: (_, win) =>
+      win.addEventListener('ReactFeatureDidMount', () => resolve(doc), true),
+    deferClose: true,
+    resourceLoader,
+    url: `${host}#${feature}`,
+    virtualConsole: jsdom.createVirtualConsole().sendTo(console),
   });
+
+  doc.close();
+});

@@ -28,43 +28,25 @@ function isTerminalEditor(editor) {
 // of the app every time
 const COMMON_EDITORS_OSX = {
   '/Applications/Atom.app/Contents/MacOS/Atom': 'atom',
-  '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta':
-    '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta',
+  '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta': '/Applications/Atom Beta.app/Contents/MacOS/Atom Beta',
   '/Applications/Brackets.app/Contents/MacOS/Brackets': 'brackets',
-  '/Applications/Sublime Text.app/Contents/MacOS/Sublime Text':
-    '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl',
-  '/Applications/Sublime Text Dev.app/Contents/MacOS/Sublime Text':
-    '/Applications/Sublime Text Dev.app/Contents/SharedSupport/bin/subl',
-  '/Applications/Sublime Text 2.app/Contents/MacOS/Sublime Text 2':
-    '/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl',
+  '/Applications/Sublime Text.app/Contents/MacOS/Sublime Text': '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl',
+  '/Applications/Sublime Text 2.app/Contents/MacOS/Sublime Text 2': '/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl',
   '/Applications/Visual Studio Code.app/Contents/MacOS/Electron': 'code',
-  '/Applications/Visual Studio Code - Insiders.app/Contents/MacOS/Electron':
-    'code-insiders',
-  '/Applications/AppCode.app/Contents/MacOS/appcode':
-    '/Applications/AppCode.app/Contents/MacOS/appcode',
-  '/Applications/CLion.app/Contents/MacOS/clion':
-    '/Applications/CLion.app/Contents/MacOS/clion',
-  '/Applications/IntelliJ IDEA.app/Contents/MacOS/idea':
-    '/Applications/IntelliJ IDEA.app/Contents/MacOS/idea',
-  '/Applications/PhpStorm.app/Contents/MacOS/phpstorm':
-    '/Applications/PhpStorm.app/Contents/MacOS/phpstorm',
-  '/Applications/PyCharm.app/Contents/MacOS/pycharm':
-    '/Applications/PyCharm.app/Contents/MacOS/pycharm',
-  '/Applications/PyCharm CE.app/Contents/MacOS/pycharm':
-    '/Applications/PyCharm CE.app/Contents/MacOS/pycharm',
-  '/Applications/RubyMine.app/Contents/MacOS/rubymine':
-    '/Applications/RubyMine.app/Contents/MacOS/rubymine',
-  '/Applications/WebStorm.app/Contents/MacOS/webstorm':
-    '/Applications/WebStorm.app/Contents/MacOS/webstorm',
-  '/Applications/MacVim.app/Contents/MacOS/MacVim':
-    'mvim',
+  '/Applications/AppCode.app/Contents/MacOS/appcode': '/Applications/AppCode.app/Contents/MacOS/appcode',
+  '/Applications/CLion.app/Contents/MacOS/clion': '/Applications/CLion.app/Contents/MacOS/clion',
+  '/Applications/IntelliJ IDEA.app/Contents/MacOS/idea': '/Applications/IntelliJ IDEA.app/Contents/MacOS/idea',
+  '/Applications/PhpStorm.app/Contents/MacOS/phpstorm': '/Applications/PhpStorm.app/Contents/MacOS/phpstorm',
+  '/Applications/PyCharm.app/Contents/MacOS/pycharm': '/Applications/PyCharm.app/Contents/MacOS/pycharm',
+  '/Applications/PyCharm CE.app/Contents/MacOS/pycharm': '/Applications/PyCharm CE.app/Contents/MacOS/pycharm',
+  '/Applications/RubyMine.app/Contents/MacOS/rubymine': '/Applications/RubyMine.app/Contents/MacOS/rubymine',
+  '/Applications/WebStorm.app/Contents/MacOS/webstorm': '/Applications/WebStorm.app/Contents/MacOS/webstorm',
 };
 
 const COMMON_EDITORS_LINUX = {
   atom: 'atom',
   Brackets: 'brackets',
   code: 'code',
-  'code-insiders': 'code-insiders',
   emacs: 'emacs',
   'idea.sh': 'idea',
   'phpstorm.sh': 'phpstorm',
@@ -78,7 +60,6 @@ const COMMON_EDITORS_LINUX = {
 const COMMON_EDITORS_WIN = [
   'Brackets.exe',
   'Code.exe',
-  'Code - Insiders.exe',
   'atom.exe',
   'sublime_text.exe',
   'notepad++.exe',
@@ -103,13 +84,7 @@ function addWorkspaceToArgumentsIfExists(args, workspace) {
   return args;
 }
 
-function getArgumentsForLineNumber(
-  editor,
-  fileName,
-  lineNumber,
-  colNumber,
-  workspace
-) {
+function getArgumentsForLineNumber(editor, fileName, lineNumber, workspace) {
   const editorBasename = path.basename(editor).replace(/\.(exe|cmd|bat)$/i, '');
   switch (editorBasename) {
     case 'atom':
@@ -118,29 +93,25 @@ function getArgumentsForLineNumber(
     case 'subl':
     case 'sublime':
     case 'sublime_text':
-      return [fileName + ':' + lineNumber + ':' + colNumber];
     case 'wstorm':
     case 'charm':
       return [fileName + ':' + lineNumber];
     case 'notepad++':
-      return ['-n' + lineNumber, '-c' + colNumber, fileName];
+      return ['-n' + lineNumber, fileName];
     case 'vim':
     case 'mvim':
     case 'joe':
-      return ['+' + lineNumber, fileName];
     case 'emacs':
     case 'emacsclient':
-      return ['+' + lineNumber + ':' + colNumber, fileName];
+      return ['+' + lineNumber, fileName];
     case 'rmate':
     case 'mate':
     case 'mine':
       return ['--line', lineNumber, fileName];
     case 'code':
     case 'Code':
-    case 'code-insiders':
-    case 'Code - Insiders':
       return addWorkspaceToArgumentsIfExists(
-        ['-g', fileName + ':' + lineNumber + ':' + colNumber],
+        ['-g', fileName + ':' + lineNumber],
         workspace
       );
     case 'appcode':
@@ -263,32 +234,20 @@ function printInstructions(fileName, errorMessage) {
 }
 
 let _childProcess = null;
-function launchEditor(fileName, lineNumber, colNumber) {
+function launchEditor(fileName, lineNumber) {
   if (!fs.existsSync(fileName)) {
     return;
   }
 
   // Sanitize lineNumber to prevent malicious use on win32
   // via: https://github.com/nodejs/node/blob/c3bb4b1aa5e907d489619fb43d233c3336bfc03d/lib/child_process.js#L333
-  // and it should be a positive integer
-  if (!(Number.isInteger(lineNumber) && lineNumber > 0)) {
+  if (lineNumber && isNaN(lineNumber)) {
     return;
-  }
-
-  // colNumber is optional, but should be a positive integer too
-  // default is 1
-  if (!(Number.isInteger(colNumber) && colNumber > 0)) {
-    colNumber = 1;
   }
 
   let [editor, ...args] = guessEditor();
-
   if (!editor) {
     printInstructions(fileName, null);
-    return;
-  }
-
-  if (editor.toLowerCase() === 'none') {
     return;
   }
 
@@ -309,13 +268,7 @@ function launchEditor(fileName, lineNumber, colNumber) {
   let workspace = null;
   if (lineNumber) {
     args = args.concat(
-      getArgumentsForLineNumber(
-        editor,
-        fileName,
-        lineNumber,
-        colNumber,
-        workspace
-      )
+      getArgumentsForLineNumber(editor, fileName, lineNumber, workspace)
     );
   } else {
     args.push(fileName);

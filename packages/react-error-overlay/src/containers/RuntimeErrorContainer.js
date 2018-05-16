@@ -33,19 +33,17 @@ class RuntimeErrorContainer extends PureComponent<Props, State> {
 
   previous = () => {
     this.setState((state, props) => ({
-      currentIndex:
-        state.currentIndex > 0
-          ? state.currentIndex - 1
-          : props.errorRecords.length - 1,
+      currentIndex: state.currentIndex > 0
+        ? state.currentIndex - 1
+        : props.errorRecords.length - 1,
     }));
   };
 
   next = () => {
     this.setState((state, props) => ({
-      currentIndex:
-        state.currentIndex < props.errorRecords.length - 1
-          ? state.currentIndex + 1
-          : 0,
+      currentIndex: state.currentIndex < props.errorRecords.length - 1
+        ? state.currentIndex + 1
+        : 0,
     }));
   };
 
@@ -65,14 +63,13 @@ class RuntimeErrorContainer extends PureComponent<Props, State> {
     return (
       <ErrorOverlay shortcutHandler={this.shortcutHandler}>
         <CloseButton close={close} />
-        {totalErrors > 1 && (
+        {totalErrors > 1 &&
           <NavigationBar
             currentError={this.state.currentIndex + 1}
             totalErrors={totalErrors}
             previous={this.previous}
             next={this.next}
-          />
-        )}
+          />}
         <RuntimeError
           errorRecord={errorRecords[this.state.currentIndex]}
           editorHandler={this.props.editorHandler}

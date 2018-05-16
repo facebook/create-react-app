@@ -38,7 +38,7 @@ export type ErrorRecord = {|
 |};
 
 export function listenToRuntimeErrors(
-  crash: ErrorRecord => void,
+  crash: (ErrorRecord) => void,
   filename: string = '/static/js/bundle.js'
 ) {
   function crashWithFrames(error: Error, unhandledRejection = false) {

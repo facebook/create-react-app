@@ -33,16 +33,14 @@ class StackTrace extends Component<Props> {
   renderFrames() {
     const { stackFrames, errorName, contextSize, editorHandler } = this.props;
     const renderedFrames = [];
-    let hasReachedAppCode = false,
-      currentBundle = [],
-      bundleCount = 0;
+    let hasReachedAppCode = false, currentBundle = [], bundleCount = 0;
 
     stackFrames.forEach((frame, index) => {
       const { fileName, _originalFileName: sourceFileName } = frame;
       const isInternalUrl = isInternalFile(sourceFileName, fileName);
       const isThrownIntentionally = !isBultinErrorName(errorName);
-      const shouldCollapse =
-        isInternalUrl && (isThrownIntentionally || hasReachedAppCode);
+      const shouldCollapse = isInternalUrl &&
+        (isThrownIntentionally || hasReachedAppCode);
 
       if (!isInternalUrl) {
         hasReachedAppCode = true;

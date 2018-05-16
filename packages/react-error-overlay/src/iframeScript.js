@@ -15,12 +15,14 @@ import { applyStyles } from './utils/dom/css';
 
 let iframeRoot = null;
 
-function render({
-  currentBuildError,
-  currentRuntimeErrorRecords,
-  dismissRuntimeErrors,
-  editorHandler,
-}) {
+function render(
+  {
+    currentBuildError,
+    currentRuntimeErrorRecords,
+    dismissRuntimeErrors,
+    editorHandler,
+  }
+) {
   if (currentBuildError) {
     return (
       <CompileErrorContainer

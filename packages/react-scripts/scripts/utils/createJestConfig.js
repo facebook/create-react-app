@@ -15,18 +15,18 @@ module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup)
-    ? '<rootDir>/src/setupTests.js'
+    ? '<rootDir>/src/setupTests.ts'
     : undefined;
 
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
-    collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
+    collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}',
-      '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}',
+      '<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)',
+      '<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)',
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
@@ -34,24 +34,36 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^.+\\.(js|jsx|mjs)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
+      '^.+\\.tsx?$': resolve('config/jest/typescriptTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|mjs|css|json)$)': resolve(
         'config/jest/fileTransform.js'
       ),
     },
-    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
+    transformIgnorePatterns: [
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$',
+    ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
     },
     moduleFileExtensions: [
+      'web.ts',
+      'ts',
+      'web.tsx',
+      'tsx',
       'web.js',
       'js',
-      'json',
       'web.jsx',
       'jsx',
+      'json',
       'node',
       'mjs',
     ],
+    globals: {
+      'ts-jest': {
+        tsConfigFile: paths.appTsTestConfig,
+      },
+    },
   };
   if (rootDir) {
     config.rootDir = rootDir;
@@ -62,6 +74,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'coverageReporters',
     'coverageThreshold',
     'snapshotSerializers',
+    'moduleNameMapper',
   ];
   if (overrides) {
     supportedKeys.forEach(key => {

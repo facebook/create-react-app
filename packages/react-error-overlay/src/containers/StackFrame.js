@@ -155,8 +155,8 @@ class StackFrame extends Component<Props, State> {
       }
     }
 
-    const canOpenInEditor =
-      this.getErrorLocation() !== null && this.props.editorHandler !== null;
+    const canOpenInEditor = this.getErrorLocation() !== null &&
+      this.props.editorHandler !== null;
     return (
       <div>
         <div>{functionName}</div>
@@ -170,7 +170,7 @@ class StackFrame extends Component<Props, State> {
             {url}
           </a>
         </div>
-        {codeBlockProps && (
+        {codeBlockProps &&
           <span>
             <a
               onClick={canOpenInEditor ? this.editorHandler : null}
@@ -181,8 +181,7 @@ class StackFrame extends Component<Props, State> {
             <button style={toggleStyle} onClick={this.toggleCompiled}>
               {'View ' + (compiled ? 'source' : 'compiled')}
             </button>
-          </span>
-        )}
+          </span>}
       </div>
     );
   }

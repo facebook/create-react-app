@@ -35,20 +35,18 @@ if (isSmokeTest) {
 }
 
 function prepareUrls(protocol, host, port) {
-  const formatUrl = hostname =>
-    url.format({
-      protocol,
-      hostname,
-      port,
-      pathname: '/',
-    });
-  const prettyPrintUrl = hostname =>
-    url.format({
-      protocol,
-      hostname,
-      port: chalk.bold(port),
-      pathname: '/',
-    });
+  const formatUrl = hostname => url.format({
+    protocol,
+    hostname,
+    port,
+    pathname: '/',
+  });
+  const prettyPrintUrl = hostname => url.format({
+    protocol,
+    hostname,
+    port: chalk.bold(port),
+    pathname: '/',
+  });
 
   const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
   let prettyHost, lanUrlForConfig, lanUrlForTerminal;
@@ -317,20 +315,14 @@ function prepareProxy(proxy, appPublicFolder) {
         // For single page apps, we generally want to fallback to /index.html.
         // However we also want to respect `proxy` for API calls.
         // So if `proxy` is specified as a string, we need to decide which fallback to use.
-        // We use a heuristic: We want to proxy all the requests that are not meant
-        // for static assets and as all the requests for static assets will be using 
-        // `GET` method, we can proxy all non-`GET` requests.
-        // For `GET` requests, if request `accept`s text/html, we pick /index.html.
+        // We use a heuristic: if request `accept`s text/html, we pick /index.html.
         // Modern browsers include text/html into `accept` header when navigating.
         // However API calls like `fetch()` won’t generally accept text/html.
         // If this heuristic doesn’t work well for you, use a custom `proxy` object.
         context: function(pathname, req) {
-          return (
-            req.method !== 'GET' ||
-            (mayProxy(pathname) &&
-              req.headers.accept &&
-              req.headers.accept.indexOf('text/html') === -1)
-          );
+          return mayProxy(pathname) &&
+            req.headers.accept &&
+            req.headers.accept.indexOf('text/html') === -1;
         },
         onProxyReq: proxyReq => {
           // Browers may send Origin headers even with same-origin
@@ -386,40 +378,39 @@ function prepareProxy(proxy, appPublicFolder) {
 
 function choosePort(host, defaultPort) {
   return detect(defaultPort, host).then(
-    port =>
-      new Promise(resolve => {
-        if (port === defaultPort) {
-          return resolve(port);
-        }
-        const message =
-          process.platform !== 'win32' && defaultPort < 1024 && !isRoot()
-            ? `Admin permissions are required to run a server on a port below 1024.`
-            : `Something is already running on port ${defaultPort}.`;
-        if (isInteractive) {
-          clearConsole();
-          const existingProcess = getProcessForPort(defaultPort);
-          const question = {
-            type: 'confirm',
-            name: 'shouldChangePort',
-            message:
-              chalk.yellow(
-                message +
-                  `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
-              ) + '\n\nWould you like to run the app on another port instead?',
-            default: true,
-          };
-          inquirer.prompt(question).then(answer => {
-            if (answer.shouldChangePort) {
-              resolve(port);
-            } else {
-              resolve(null);
-            }
-          });
-        } else {
-          console.log(chalk.red(message));
-          resolve(null);
-        }
-      }),
+    port => new Promise(resolve => {
+      if (port === defaultPort) {
+        return resolve(port);
+      }
+      const message = process.platform !== 'win32' &&
+        defaultPort < 1024 &&
+        !isRoot()
+        ? `Admin permissions are required to run a server on a port below 1024.`
+        : `Something is already running on port ${defaultPort}.`;
+      if (isInteractive) {
+        clearConsole();
+        const existingProcess = getProcessForPort(defaultPort);
+        const question = {
+          type: 'confirm',
+          name: 'shouldChangePort',
+          message: chalk.yellow(
+            message +
+              `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
+          ) + '\n\nWould you like to run the app on another port instead?',
+          default: true,
+        };
+        inquirer.prompt(question).then(answer => {
+          if (answer.shouldChangePort) {
+            resolve(port);
+          } else {
+            resolve(null);
+          }
+        });
+      } else {
+        console.log(chalk.red(message));
+        resolve(null);
+      }
+    }),
     err => {
       throw new Error(
         chalk.red(`Could not find an open port at ${chalk.bold(host)}.`) +

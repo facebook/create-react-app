@@ -89,16 +89,19 @@ inquirer
     const folders = ['config', 'config/jest', 'scripts'];
 
     // Make shallow array of files paths
-    const files = folders.reduce((files, folder) => {
-      return files.concat(
-        fs
-          .readdirSync(path.join(ownPath, folder))
-          // set full path
-          .map(file => path.join(ownPath, folder, file))
-          // omit dirs from file list
-          .filter(file => fs.lstatSync(file).isFile())
-      );
-    }, []);
+    const files = folders.reduce(
+      (files, folder) => {
+        return files.concat(
+          fs
+            .readdirSync(path.join(ownPath, folder))
+            // set full path
+            .map(file => path.join(ownPath, folder, file))
+            // omit dirs from file list
+            .filter(file => fs.lstatSync(file).isFile())
+        );
+      },
+      []
+    );
 
     // Ensure that the app folder is clean and we won't override any files
     folders.forEach(verifyAbsent);
@@ -125,19 +128,18 @@ inquirer
       if (content.match(/\/\/ @remove-file-on-eject/)) {
         return;
       }
-      content =
-        content
-          // Remove dead code from .js files on eject
-          .replace(
-            /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/gm,
-            ''
-          )
-          // Remove dead code from .applescript files on eject
-          .replace(
-            /-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/gm,
-            ''
-          )
-          .trim() + '\n';
+      content = content
+        // Remove dead code from .js files on eject
+        .replace(
+          /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/gm,
+          ''
+        )
+        // Remove dead code from .applescript files on eject
+        .replace(
+          /-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/gm,
+          ''
+        )
+        .trim() + '\n';
       console.log(`  Adding ${cyan(file.replace(ownPath, ''))} to the project`);
       fs.writeFileSync(file.replace(ownPath, appPath), content);
     });
@@ -171,11 +173,9 @@ inquirer
     // Sort the deps
     const unsortedDependencies = appPackage.dependencies;
     appPackage.dependencies = {};
-    Object.keys(unsortedDependencies)
-      .sort()
-      .forEach(key => {
-        appPackage.dependencies[key] = unsortedDependencies[key];
-      });
+    Object.keys(unsortedDependencies).sort().forEach(key => {
+      appPackage.dependencies[key] = unsortedDependencies[key];
+    });
     console.log();
 
     console.log(cyan('Updating the scripts'));
@@ -191,9 +191,7 @@ inquirer
           'node scripts/$1.js'
         );
         console.log(
-          `  Replacing ${cyan(`"${binKey} ${key}"`)} with ${cyan(
-            `"node scripts/${key}.js"`
-          )}`
+          `  Replacing ${cyan(`"${binKey} ${key}"`)} with ${cyan(`"node scripts/${key}.js"`)}`
         );
       });
     });

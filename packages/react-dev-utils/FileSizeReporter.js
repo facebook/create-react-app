@@ -128,12 +128,15 @@ function measureFileSizesBeforeBuild(buildFolder) {
       if (!err && fileNames) {
         sizes = fileNames
           .filter(fileName => /\.(js|css)$/.test(fileName))
-          .reduce((memo, fileName) => {
-            var contents = fs.readFileSync(fileName);
-            var key = removeFileNameHash(buildFolder, fileName);
-            memo[key] = gzipSize(contents);
-            return memo;
-          }, {});
+          .reduce(
+            (memo, fileName) => {
+              var contents = fs.readFileSync(fileName);
+              var key = removeFileNameHash(buildFolder, fileName);
+              memo[key] = gzipSize(contents);
+              return memo;
+            },
+            {}
+          );
       }
       resolve({
         root: buildFolder,

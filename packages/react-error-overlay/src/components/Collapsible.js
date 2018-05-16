@@ -65,9 +65,11 @@ class Collapsible extends Component<Props, State> {
             collapsed ? collapsibleCollapsedStyle : collapsibleExpandedStyle
           }
         >
-          {(collapsed ? '▶' : '▼') +
-            ` ${count} stack frames were ` +
-            (collapsed ? 'collapsed.' : 'expanded.')}
+          {
+            (collapsed ? '▶' : '▼') +
+              ` ${count} stack frames were ` +
+              (collapsed ? 'collapsed.' : 'expanded.')
+          }
         </button>
         <div style={{ display: collapsed ? 'none' : 'block' }}>
           {this.props.children}

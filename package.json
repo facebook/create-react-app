@@ -12,19 +12,21 @@
     "postinstall": "cd packages/react-error-overlay/ && yarn build:prod",
     "publish": "tasks/publish.sh",
     "start": "cd packages/react-scripts && node scripts/start.js",
-    "screencast": "svg-term --cast hItN7sl5yfCPTHxvFg5glhhfp --out screencast.svg --window",
     "test": "cd packages/react-scripts && node scripts/test.js --env=jsdom",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
     "precommit": "lint-staged"
   },
   "devDependencies": {
+    "@types/jest": "^20.0.4",
+    "@types/node": "^7.0.21",
+    "@types/react": "^15.6.1",
+    "@types/react-dom": "^15.5.0",
     "eslint": "^4.4.1",
     "husky": "^0.13.2",
     "lerna": "2.6.0",
     "lerna-changelog": "^0.6.0",
     "lint-staged": "^3.3.1",
-    "prettier": "1.6.1",
-    "svg-term-cli": "^2.0.3"
+    "prettier": "1.6.1"
   },
   "lint-staged": {
     "*.js": [

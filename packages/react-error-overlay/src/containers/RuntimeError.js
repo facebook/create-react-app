@@ -38,8 +38,9 @@ function RuntimeError({ errorRecord, editorHandler }: Props) {
 
   // Make header prettier
   const message = error.message;
-  let headerText =
-    message.match(/^\w*:/) || !errorName ? message : errorName + ': ' + message;
+  let headerText = message.match(/^\w*:/) || !errorName
+    ? message
+    : errorName + ': ' + message;
 
   headerText = headerText
     // TODO: maybe remove this prefix from fbjs?

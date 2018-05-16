@@ -40,7 +40,9 @@ class CompileErrorContainer extends PureComponent<Props, void> {
         >
           <CodeBlock main={true} codeHTML={generateAnsiHTML(error)} />
         </a>
-        <Footer line1="This error occurred during the build time and cannot be dismissed." />
+        <Footer
+          line1="This error occurred during the build time and cannot be dismissed."
+        />
       </ErrorOverlay>
     );
   }
