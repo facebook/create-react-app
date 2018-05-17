@@ -27,6 +27,6 @@
     "@babel/preset-react": "7.0.0-beta.46",
     "babel-plugin-macros": "2.2.1",
     "babel-plugin-transform-dynamic-import": "2.0.0",
-    "babel-plugin-transform-react-remove-prop-types": "0.4.12"
+    "babel-plugin-transform-react-remove-prop-types": "0.4.13"
   }
 }

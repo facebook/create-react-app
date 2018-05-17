@@ -38,17 +38,17 @@ module.exports = {
   },
   // ...
   plugins: [
+    // Generates an `index.html` file with the <script> injected.
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: path.resolve('public/index.html'),
+    }),
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     new InterpolateHtmlPlugin({
       PUBLIC_URL: publicUrl
       // You can pass any key-value pairs, this was just an example.
       // WHATEVER: 42 will replace %WHATEVER% with 42 in index.html.
-    }),
-    // Generates an `index.html` file with the <script> injected.
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: path.resolve('public/index.html'),
     }),
     // ...
   ],
@@ -198,11 +198,11 @@ var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
 var compiler = webpack(config);
 
-compiler.plugin('invalid', function() {
+compiler.hooks.invalid.tap('invalid', function() {
   console.log('Compiling...');
 });
 
-compiler.plugin('done', function(stats) {
+compiler.hooks.done.tap('done', function(stats) {
   var rawMessages = stats.toJson({}, true);
   var messages = formatWebpackMessages(rawMessages);
   if (!messages.errors.length && !messages.warnings.length) {
