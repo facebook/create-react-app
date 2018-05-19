@@ -26,7 +26,7 @@ function cleanup {
   ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
-  # rm -rf "$temp_app_path" "$temp_module_path" || $CI
+  rm -rf "$temp_app_path" "$temp_module_path" || $CI
   npm set registry "$original_npm_registry_url"
   yarn config set registry "$original_yarn_registry_url"
 }
