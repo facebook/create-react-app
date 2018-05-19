@@ -6,77 +6,89 @@
  */
 
 import { expect } from 'chai';
-import initDOM from './initDOM';
+import initDOM, { resourceLoader } from './initDOM';
 
 describe('Integration', () => {
   describe('Webpack plugins', () => {
     it('css inclusion', async () => {
       const doc = await initDOM('css-inclusion');
-
-      expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(/html\{/);
-      expect(
-        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
-      ).to.match(/#feature-css-inclusion\{background:.+;color:.+}/);
+      resourceLoader(
+        { url: url.parse(doc.getElementsByTagName('link')[1].href) },
+        (_, textContent) => {
+          expect(textContent).to.match(/html\{/);
+          expect(textContent).to.match(
+            /#feature-css-inclusion\{background:.+;color:.+}/
+          );
+        }
+      );
     });
 
     it('css modules inclusion', async () => {
       const doc = await initDOM('css-modules-inclusion');
-
-      expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(/.+style_cssModulesInclusion__.+\{background:.+;color:.+}/);
-      expect(
-        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
-      ).to.match(
-        /.+assets_cssModulesIndexInclusion__.+\{background:.+;color:.+}/
+      resourceLoader(
+        { url: url.parse(doc.getElementsByTagName('link')[2].href) },
+        (_, textContent) => {
+          expect(textContent).to.match(
+            /.+style_cssModulesInclusion__.+\{background:.+;color:.+}/
+          );
+          expect(textContent).to.match(
+            /.+assets_cssModulesIndexInclusion__.+\{background:.+;color:.+}/
+          );
+        }
       );
     });
 
     it('scss inclusion', async () => {
       const doc = await initDOM('scss-inclusion');
-
-      expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(/#feature-scss-inclusion\{background:.+;color:.+}/);
+      resourceLoader(
+        { url: url.parse(doc.getElementsByTagName('link')[2].href) },
+        (_, textContent) => {
+          expect(textContent).to.match(
+            /#feature-scss-inclusion\{background:.+;color:.+}/
+          );
+        }
+      );
     });
 
     it('scss modules inclusion', async () => {
       const doc = await initDOM('scss-modules-inclusion');
-
-      expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(
-        /.+scss-styles_scssModulesInclusion.+\{background:.+;color:.+}/
-      );
-      expect(
-        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
-      ).to.match(
-        /.+assets_scssModulesIndexInclusion.+\{background:.+;color:.+}/
+      resourceLoader(
+        { url: url.parse(doc.getElementsByTagName('link')[2].href) },
+        (_, textContent) => {
+          expect(textContent).to.match(
+            /.+scss-styles_scssModulesInclusion.+\{background:.+;color:.+}/
+          );
+          expect(textContent).to.match(
+            /.+assets_scssModulesIndexInclusion.+\{background:.+;color:.+}/
+          );
+        }
       );
     });
 
     it('sass inclusion', async () => {
       const doc = await initDOM('sass-inclusion');
-
-      expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(/#feature-sass-inclusion\{background:.+;color:.+}/);
+      resourceLoader(
+        { url: url.parse(doc.getElementsByTagName('link')[2].href) },
+        (_, textContent) => {
+          expect(textContent).to.match(
+            /#feature-sass-inclusion\{background:.+;color:.+}/
+          );
+        }
+      );
     });
 
     it('sass modules inclusion', async () => {
       const doc = await initDOM('sass-modules-inclusion');
-
-      expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(
-        /.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/
-      );
-      expect(
-        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
-      ).to.match(
-        /.+assets_sassModulesIndexInclusion.+\{background:.+;color:.+}/
+      resourceLoader(
+        { url: url.parse(doc.getElementsByTagName('link')[2].href) },
+        (_, textContent) => {
+          expect(textContent).to.match(
+            /.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/
+          );
+          expect(textContent).to.match(
+            /.+assets_sassModulesIndexInclusion.+\{background:.+;color:.+}/
+          );
+        }
       );
     });
 
@@ -124,9 +136,13 @@ describe('Integration', () => {
 
     it('svg inclusion', async () => {
       const doc = await initDOM('svg-inclusion');
-
-      expect(doc.getElementById('feature-svg-inclusion').src).to.match(
-        /\/static\/media\/logo\..+\.svg$/
+      resourceLoader(
+        { url: url.parse(doc.getElementsByTagName('link')[2].href) },
+        (_, textContent) => {
+          expect(doc.getElementById('feature-svg-inclusion').src).to.match(
+            /\/static\/media\/logo\..+\.svg$/
+          );
+        }
       );
     });
 
