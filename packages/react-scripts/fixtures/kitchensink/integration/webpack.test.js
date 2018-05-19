@@ -136,13 +136,8 @@ describe('Integration', () => {
 
     it('svg inclusion', async () => {
       const doc = await initDOM('svg-inclusion');
-      resourceLoader(
-        { url: url.parse(doc.getElementsByTagName('link')[2].href) },
-        (_, textContent) => {
-          expect(doc.getElementById('feature-svg-inclusion').src).to.match(
-            /\/static\/media\/logo\..+\.svg$/
-          );
-        }
+      expect(doc.getElementById('feature-svg-inclusion').src).to.match(
+        /\/static\/media\/logo\..+\.svg$/
       );
     });
 
@@ -156,10 +151,12 @@ describe('Integration', () => {
 
     it('svg in css', async () => {
       const doc = await initDOM('svg-in-css');
-
-      expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(/\/static\/media\/logo\..+\.svg/);
+      resourceLoader(
+        { url: url.parse(doc.getElementsByTagName('link')[2].href) },
+        (_, textContent) => {
+          expect(textContent).to.match(/\/static\/media\/logo\..+\.svg/);
+        }
+      );
     });
 
     it('unknown ext inclusion', async () => {
