@@ -12,10 +12,8 @@ const stripAnsi = require('strip-ansi');
 const table = require('text-table');
 
 function isError(message) {
-  if (message.fatal || message.severity === 2) {
-    return true;
-  }
-  return false;
+  return !!(message.fatal || message.severity === 2);
+
 }
 
 function formatter(results) {

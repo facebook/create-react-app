@@ -43,16 +43,14 @@ var semver = currentNodeVersion.split('.');
 var major = semver[0];
 
 if (major < 4) {
-  console.error(
-    chalk.red(
-      'You are running Node ' +
-        currentNodeVersion +
-        '.\n' +
-        'Create React App requires Node 4 or higher. \n' +
-        'Please update your version of Node.'
-    )
-  );
-  process.exit(1);
+    console.error(
+        chalk.red(
+            `You are running Node ${currentNodeVersion}.
+Create React App requires Node 4 or higher.
+Please update your version of Node.`
+        )
+    );
+    process.exit(1);
 }
 
 require('./createReactApp');
