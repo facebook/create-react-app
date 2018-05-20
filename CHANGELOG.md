@@ -1,3 +1,13 @@
+## 2.3.4 (May 20, 2018)
+
+#### :bug: Bug Fix
+
+* [lighter-react-scripts] fix do not remove unused font-face declarations from css
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.3.4`
+
 ## 2.3.3 (May 11, 2018)
 
 #### :bug: Bug Fix
