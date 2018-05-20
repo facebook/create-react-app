@@ -7,6 +7,7 @@
 
 import { expect } from 'chai';
 import initDOM, { resourceLoader } from './initDOM';
+import url from 'url';
 
 describe('Integration', () => {
   describe('Webpack plugins', () => {
