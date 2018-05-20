@@ -358,7 +358,7 @@ function run(
       if (version === 'react-scripts@0.9.x') {
         console.log(
           chalk.yellow(
-            `\nNote: the project was boostrapped with an old unsupported version of tools.\n` +
+            `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
               `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
           )
         );
