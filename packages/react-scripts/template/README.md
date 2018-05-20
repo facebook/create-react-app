@@ -27,6 +27,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Post-Processing CSS](#post-processing-css)
 - [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
 - [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
+- [Adding GraphQL files](#adding-graphql-files)
 - [Using the `public` Folder](#using-the-public-folder)
   - [Changing the HTML](#changing-the-html)
   - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system)
@@ -73,6 +74,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Developing Components in Isolation](#developing-components-in-isolation)
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
+- [Sharing Components in a Monorepo](#sharing-components-in-a-monorepo)
 - [Publishing Components to npm](#publishing-components-to-npm)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
   - [Opting Out of Caching](#opting-out-of-caching)
@@ -85,6 +87,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
     - [Service Worker Considerations](#service-worker-considerations)
   - [Building for Relative Paths](#building-for-relative-paths)
+  - [Customizing Environment Variables for Arbitrary Build Environments](#customizing-environment-variables-for-arbitrary-build-environments)
   - [Azure](#azure)
   - [Firebase](#firebase)
   - [GitHub Pages](#github-pages)
@@ -212,7 +215,7 @@ In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, 
 
 * [Exponentiation Operator](https://github.com/rwaldron/exponentiation-operator) (ES2016).
 * [Async/await](https://github.com/tc39/ecmascript-asyncawait) (ES2017).
-* [Object Rest/Spread Properties](https://github.com/sebmarkbage/ecmascript-rest-spread) (stage 3 proposal).
+* [Object Rest/Spread Properties](https://github.com/tc39/proposal-object-rest-spread) (ES2018).
 * [Dynamic import()](https://github.com/tc39/proposal-dynamic-import) (stage 3 proposal)
 * [Class Fields and Static Properties](https://github.com/tc39/proposal-class-public-fields) (part of stage 3 proposal).
 * [JSX](https://facebook.github.io/react/docs/introducing-jsx.html) and [Flow](https://flowtype.org/) syntax.
@@ -507,7 +510,7 @@ class Button extends Component {
 }
 ```
 
-**This is not required for React** but many people find this feature convenient. You can read about the benefits of this approach [here](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). However you should be aware that this makes your code less portable to other build tools and environments than Webpack.
+**This is not required for React** but many people find this feature convenient. You can read about the benefits of this approach [here](https://medium.com/seek-blog/block-element-modifying-your-javascript-components-d7f99fcab52b). However you should be aware that this makes your code less portable to other build tools and environments than Webpack.
 
 In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
 
@@ -516,23 +519,23 @@ If you are concerned about using Webpack-specific semantics, you can put all you
 <!---
 ## Adding a CSS Modules stylesheet
 
-This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format **[dir]\_\_[filename]___[classname]**.
+This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format **[filename]\_[classname]\_\_[hash]**.
 
 An advantage of this is the ability to repeat the same classname within many CSS files without worrying about a clash.
 
 ### `Button.module.css`
 
 ```css
-.button {
-  padding: 20px;
+.error {
+  background-color: red;
 }
 ```
 
 ### `another-stylesheet.css`
 
 ```css
-.button {
-  color: green;
+.error {
+  color: red;
 }
 ```
 
@@ -540,25 +543,27 @@ An advantage of this is the ability to repeat the same classname within many CSS
 
 ```js
 import React, { Component } from 'react';
-import './another-stylesheet.css'; // Import regular stylesheet
 import styles from './Button.module.css'; // Import css modules stylesheet as styles
+import './another-stylesheet.css'; // Import regular stylesheet
+
 
 class Button extends Component {
   render() {
-    // You can use them as regular CSS styles
-    return <div className={styles.button} />;
+    // reference as a js object
+    return <button className={styles.error}>Error Button</button>;
   }
 }
 ```
 ### `exported HTML`
-No clashes from other `.button` classnames
+No clashes from other `.error` class names
 
 ```html
-<div class="src__Button-module___button"></div>
+<!-- This button has red background but not red text -->
+<button class="Button_error_ax7yz"></div>
 ```
 
-**This is an optional feature.** Regular html stylesheets and js imported stylesheets are fully supported. CSS Modules are only added when explictly named as a css module stylesheet using the extension `.module.css`.
---->
+**This is an optional feature.** Regular html stylesheets and js imported stylesheets are fully supported. CSS Modules are only added when explicitly named as a css module stylesheet using the extension `.module.css`.
+-->
 
 ## Post-Processing CSS
 
@@ -727,6 +732,34 @@ Please be advised that this is also a custom feature of Webpack.
 
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).<br>
 An alternative way of handling static assets is described in the next section.
+
+## Adding GraphQL files
+
+> Note: this feature is available with react-scripts@2.0.0 and higher.
+
+If you are using GraphQL, you can **`import` GraphQL files in a JavaScript module**.
+
+By importing GraphQL queries instead of using a [template tag](https://github.com/apollographql/graphql-tag), they are preprocessed at build time. This eliminates the need to process them on the client at run time. It also allows you to separate your GraphQL queries from your code. You can put a GraphQL query in a file with a `.graphql` extension.
+
+Here is an example:
+
+```js
+// query.graphql
+{
+  githubStats(repository: "facebook/react") {
+    stars
+  }
+}
+
+// foo.js
+
+import query from './query.graphql';
+
+console.log(query);
+// {
+//   "kind": "Document",
+// ...
+```
 
 ## Using the `public` Folder
 
@@ -1069,7 +1102,7 @@ Create React App will add decorator support when the specification advances to a
 
 React doesn't prescribe a specific approach to data fetching, but people commonly use either a library like [axios](https://github.com/axios/axios) or the [`fetch()` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) provided by the browser. Conveniently, Create React App includes a polyfill for `fetch()` so you can use it without worrying about the browser support.
 
-The global `fetch` function allows to easily makes AJAX requests. It takes in a URL as an input and returns a `Promise` that resolves to a `Response` object. You can find more information about `fetch` [here](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+The global `fetch` function allows you to easily make AJAX requests. It takes in a URL as an input and returns a `Promise` that resolves to a `Response` object. You can find more information about `fetch` [here](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
 
 This project also includes a [Promise polyfill](https://github.com/then/promise) which provides a full implementation of Promises/A+. A Promise represents the eventual result of an asynchronous operation, you can find more information about Promises [here](https://www.promisejs.org/) and [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). Both axios and `fetch()` use Promises under the hood. You can also use the [`async / await`](https://davidwalsh.name/async-await) syntax to reduce the callback nesting.
 
@@ -1532,7 +1565,7 @@ Note that tests run much slower with coverage so it is recommended to run it sep
 
 #### Configuration
 
-The default Jest coverage configuration can be overriden by adding any of the following supported keys to a Jest config in your package.json.
+The default Jest coverage configuration can be overridden by adding any of the following supported keys to a Jest config in your package.json.
 
 Supported overrides:
  - [`collectCoverageFrom`](https://facebook.github.io/jest/docs/en/configuration.html#collectcoveragefrom-array)
@@ -1581,7 +1614,7 @@ Popular CI servers already set the environment variable `CI` by default but you 
 ```
 language: node_js
 node_js:
-  - 6
+  - 8
 cache:
   directories:
     - node_modules
@@ -1776,9 +1809,9 @@ After that, follow the instructions on the screen.
 
 Learn more about React Storybook:
 
-* Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
 * [GitHub Repo](https://github.com/storybooks/storybook)
 * [Documentation](https://storybook.js.org/basics/introduction/)
+* [Learn Storybook (tutorial)](https://learnstorybook.com)
 * [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
 
 ### Getting Started with Styleguidist
@@ -1818,6 +1851,83 @@ Learn more about React Styleguidist:
 
 * [GitHub Repo](https://github.com/styleguidist/react-styleguidist)
 * [Documentation](https://react-styleguidist.js.org/docs/getting-started.html)
+
+## Sharing Components in a Monorepo
+
+>Note: this feature is available with `react-scripts@2.0.0` and higher.
+
+A typical monorepo folder structure looks like this:
+```
+monorepo/
+  app1/
+  app2/
+  comp1/
+  comp2/
+```
+
+The monorepo allows components to be separated from the app, providing:
+* a level of encapsulation for components
+* sharing of components
+
+### How to Set Up a Monorepo
+Below expands on the monorepo structure above, adding the package.json files required to configure the monorepo for [yarn workspaces](https://yarnpkg.com/en/docs/workspaces).
+```
+monorepo/
+  package.json:
+    "workspaces": ["*"],
+    "private": true
+  app1/
+    package.json:
+      "dependencies": {
+        "@myorg/comp1": ">=0.0.0",
+        "react": "^16.2.0"
+      },
+      "devDependencies": {
+        "react-scripts": "2.0.0"
+      }
+    src/
+      app.js: import comp1 from '@myorg/comp1';
+  app2/
+    package.json:
+      "dependencies": {
+        "@myorg/comp1": ">=0.0.0",
+        "react": "^16.2.0"
+      },
+      "devDependencies": {
+        "react-scripts": "2.0.0"
+      }
+    src/
+      app.js: import comp1 from '@myorg/comp1';
+  comp1/
+    package.json:
+      "name": "@myorg/comp1",
+      "version": "0.1.0"
+    index.js
+  comp2/
+    package.json:
+      "name": "@myorg/comp2",
+      "version": "0.1.0",
+      "dependencies": {
+        "@myorg/comp1": ">=0.0.0"
+      },
+      "devDependencies": {
+        "react": "^16.2.0"
+      }
+    index.js: import comp1 from '@myorg/comp1'
+```
+* Monorepo tools work on a package level, the same level as an npm package.
+* The "workspaces" in the top-level package.json is an array of glob patterns specifying where shared packages are located in the monorepo.
+* The scoping prefixes, e.g. @myorg/, are not required, but are recommended, allowing you to differentiate your packages from others of the same name.  See [scoped packages ](https://docs.npmjs.com/misc/scope) for more info.
+* Using a package in the monorepo is accomplished in the same manner as a published npm package, by specifying the shared package as dependency.
+* In order to pick up the monorepo version of a package, the specified dependency version must semantically match the package version in the monorepo.  See [semver](https://docs.npmjs.com/misc/semver) for info on semantic version matching.
+
+### CRA Apps in a Monorepo
+* CRA apps in a monorepo are just a standard CRA app, they use the same react-script scripts.
+* However, when you use react-scripts for an app in a monorepo, all packages in the monorepo are treated as app sources -- they are watched, linted, transpiled, and tested in the same way as if they were part of the app itself.
+* Without this functionality, each package would need its own build/test/etc functionality and it would be challenging to link all of these together.
+
+### Lerna and Publishing
+[Lerna](https://github.com/lerna/lerna) is a popular tool for managing monorepos.  Lerna can be configured to use yarn workspaces, so it will work with the monorepo structure above.  It's important to note that while lerna helps publish various packages in a monorepo, react-scripts does nothing to help publish a component to npm.  A component which uses JSX or ES6+ features would need to be built by another tool before it can be published to npm.  See [publishing components to npm](#publishing-components-to-npm) for more info.
 
 ## Publishing Components to npm
 
@@ -2103,6 +2213,34 @@ If you are not using the HTML5 `pushState` history API or not using client-side 
 
 This will make sure that all the asset paths are relative to `index.html`. You will then be able to move your app from `http://mywebsite.com` to `http://mywebsite.com/relativepath` or even `http://mywebsite.com/relative/path` without having to rebuild it.
 
+### Customizing Environment Variables for Arbitrary Build Environments
+
+You can create an arbitrary build environment by creating a custom `.env` file and loading it using [env-cmd](https://www.npmjs.com/package/env-cmd).
+
+For example, to create a build environment for a staging environment:
+
+1. Create a file called `.env.staging`
+1. Set environment variables as you would any other `.env` file (e.g. `REACT_APP_API_URL=http://api-staging.example.com`)
+1. Install [env-cmd](https://www.npmjs.com/package/env-cmd)
+    ```sh
+    $ npm install env-cmd --save
+    $ # or
+    $ yarn add env-cmd
+    ```
+1. Add a new script to your `package.json`, building with your new environment:
+    ```json
+    {
+      "scripts": {
+        "build:staging": "env-cmd .env.staging npm run build",
+      }
+    }
+    ```
+
+Now you can run `npm run build:staging` to build with the staging environment config.
+You can specify other environments in the same way.
+
+Variables in `.env.production` will be used as fallback because `NODE_ENV` will always be set to `production` for a build.
+
 ### [Azure](https://azure.microsoft.com/)
 
 See [this](https://medium.com/@to_pe/deploying-create-react-app-on-microsoft-azure-c0f6686a4321) blog post on how to deploy your React app to Microsoft Azure.
@@ -2280,6 +2418,16 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://reacttraining.com/react-router/web/api/Router) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
+
+#### Troubleshooting
+
+##### "/dev/tty: No such a device or address"
+
+If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the follwing:
+
+1. Create a new [Personal Access Token](https://github.com/settings/tokens)
+2. `git remote set-url origin https://<user>:<token>@github.com/<user>/<repo>` .
+3. Try `npm run deploy again`
 
 ### [Heroku](https://www.heroku.com/)
 

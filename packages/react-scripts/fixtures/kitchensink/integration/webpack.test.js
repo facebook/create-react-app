@@ -6,28 +6,77 @@
  */
 
 import { expect } from 'chai';
-import initDOM from './initDOM';
+import initDOM, { resourceLoader } from './initDOM';
+import url from 'url';
+
+const matchCSS = (doc, regexes) => {
+  if (process.env.E2E_FILE) {
+      const elements = doc.getElementsByTagName('link');
+      let href = "";
+      for (const elem of elements) {
+        if (elem.rel === 'stylesheet') {
+          href = elem.href;
+        }
+      }
+      resourceLoader(
+        { url: url.parse(href) },
+        (_, textContent) => {
+          for (const regex of regexes) {
+          expect(textContent).to.match(regex);
+          }
+        }
+      );
+    
+  } else {
+    for (let i = 0; i < regexes.length; ++i) {
+      expect(doc.getElementsByTagName('style')[i].textContent.replace(/\s/g, '')).to.match(regexes[i]);
+    }
+  }
+}
 
 describe('Integration', () => {
   describe('Webpack plugins', () => {
     it('css inclusion', async () => {
       const doc = await initDOM('css-inclusion');
-
-      expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(/html\{/);
-      expect(
-        doc.getElementsByTagName('style')[1].textContent.replace(/\s/g, '')
-      ).to.match(/#feature-css-inclusion\{background:.+;color:.+}/);
+      matchCSS(doc, [/html\{/, /#feature-css-inclusion\{background:.+;color:.+}/]);
     });
 
     it('css modules inclusion', async () => {
       const doc = await initDOM('css-modules-inclusion');
+      matchCSS(doc, [/.+style_cssModulesInclusion__.+\{background:.+;color:.+}/,
+            /.+assets_cssModulesIndexInclusion__.+\{background:.+;color:.+}/]);
+    });
 
-      expect(
-        doc.getElementsByTagName('style')[0].textContent.replace(/\s/g, '')
-      ).to.match(
-        /.+__style-module___cssModulesInclusion+\{background:.+;color:.+}/
+    it('scss inclusion', async () => {
+      const doc = await initDOM('scss-inclusion');
+      matchCSS(doc, [/#feature-scss-inclusion\{background:.+;color:.+}/]);
+    });
+
+    it('scss modules inclusion', async () => {
+      const doc = await initDOM('scss-modules-inclusion');
+      matchCSS(doc, [/.+scss-styles_scssModulesInclusion.+\{background:.+;color:.+}/,
+        /.+assets_scssModulesIndexInclusion.+\{background:.+;color:.+}/]);
+      
+    });
+
+    it('sass inclusion', async () => {
+      const doc = await initDOM('sass-inclusion');
+      matchCSS(doc, [/#feature-sass-inclusion\{background:.+;color:.+}/]);
+    });
+
+    it('sass modules inclusion', async () => {
+      const doc = await initDOM('sass-modules-inclusion');
+      matchCSS(doc, [/.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/,
+            /.+assets_sassModulesIndexInclusion.+\{background:.+;color:.+}/]);
+    });
+
+    it('graphql files inclusion', async () => {
+      const doc = await initDOM('graphql-inclusion');
+      const children = doc.getElementById('graphql-inclusion').children;
+
+      // .graphql
+      expect(children[0].textContent.replace(/\s/g, '')).to.equal(
+        '{"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"test"},"value":{"kind":"StringValue","value":"test","block":false}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":40,"source":{"body":"{\\ntest(test:\\"test\\"){\\ntest\\n}\\n}\\n","name":"GraphQLrequest","locationOffset":{"line":1,"column":1}}}}'
       );
     });
 
@@ -65,10 +114,22 @@ describe('Integration', () => {
 
     it('svg inclusion', async () => {
       const doc = await initDOM('svg-inclusion');
-
       expect(doc.getElementById('feature-svg-inclusion').src).to.match(
         /\/static\/media\/logo\..+\.svg$/
       );
+    });
+
+    it('svg component', async () => {
+      const doc = await initDOM('svg-component');
+
+      expect(doc.getElementById('feature-svg-component').textContent).to.equal(
+        ''
+      );
+    });
+
+    it('svg in css', async () => {
+      const doc = await initDOM('svg-in-css');
+      matchCSS(doc, [/\/static\/media\/logo\..+\.svg/]);
     });
 
     it('unknown ext inclusion', async () => {

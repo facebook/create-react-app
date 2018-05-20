@@ -17,17 +17,15 @@ class WatchMissingNodeModulesPlugin {
   }
 
   apply(compiler) {
-    compiler.plugin('emit', (compilation, callback) => {
-      var missingDeps = compilation.missingDependencies;
+    compiler.hooks.emit.tap('WatchMissingNodeModulesPlugin', compilation => {
+      var missingDeps = Array.from(compilation.missingDependencies);
       var nodeModulesPath = this.nodeModulesPath;
 
       // If any missing files are expected to appear in node_modules...
-      if (missingDeps.some(file => file.indexOf(nodeModulesPath) !== -1)) {
+      if (missingDeps.some(file => file.includes(nodeModulesPath))) {
         // ...tell webpack to watch node_modules recursively until they appear.
-        compilation.contextDependencies.push(nodeModulesPath);
+        compilation.contextDependencies.add(nodeModulesPath);
       }
-
-      callback();
     });
   }
 }

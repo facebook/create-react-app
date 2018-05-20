@@ -69,7 +69,7 @@ module.exports = function(proxy, allowedHost) {
     // as we specified in the config. In development, we always serve from /.
     publicPath: config.output.publicPath,
     // WebpackDevServer is noisy by default so we emit custom message instead
-    // by listening to the compiler events with `compiler.plugin` calls above.
+    // by listening to the compiler events with `compiler.hooks[...].tap` calls above.
     quiet: true,
     // Reportedly, this avoids CPU overload on some systems.
     // https://github.com/facebook/create-react-app/issues/293
