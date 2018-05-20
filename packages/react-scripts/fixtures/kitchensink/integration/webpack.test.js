@@ -13,6 +13,7 @@ describe('Integration', () => {
   describe('Webpack plugins', () => {
     it('css inclusion', async () => {
       const doc = await initDOM('css-inclusion');
+      console.log(doc.documentElement.innerHTML);
       resourceLoader(
         { url: url.parse(doc.getElementsByTagName('link')[1].href) },
         (_, textContent) => {
@@ -26,6 +27,7 @@ describe('Integration', () => {
 
     it('css modules inclusion', async () => {
       const doc = await initDOM('css-modules-inclusion');
+      console.log(doc.documentElement.innerHTML);
       resourceLoader(
         { url: url.parse(doc.getElementsByTagName('link')[2].href) },
         (_, textContent) => {
@@ -41,6 +43,7 @@ describe('Integration', () => {
 
     it('scss inclusion', async () => {
       const doc = await initDOM('scss-inclusion');
+      console.log(doc.documentElement.innerHTML);
       resourceLoader(
         { url: url.parse(doc.getElementsByTagName('link')[2].href) },
         (_, textContent) => {
@@ -53,6 +56,7 @@ describe('Integration', () => {
 
     it('scss modules inclusion', async () => {
       const doc = await initDOM('scss-modules-inclusion');
+      console.log(doc.documentElement.innerHTML);
       resourceLoader(
         { url: url.parse(doc.getElementsByTagName('link')[2].href) },
         (_, textContent) => {
