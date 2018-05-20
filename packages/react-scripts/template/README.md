@@ -348,7 +348,7 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
   "scripts": {
 ```
 
-Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
+Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx,json,css}"` to format your entire project for the first time.
 
 Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://prettier.io/docs/en/editors.html) on the Prettier GitHub page.
 
@@ -2209,6 +2209,16 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://reacttraining.com/react-router/web/api/Router) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
 
+#### Troubleshooting
+
+##### "/dev/tty: No such a device or address"
+
+If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the follwing:
+
+1. Create a new [Personal Access Token](https://github.com/settings/tokens)
+2. `git remote set-url origin https://<user>:<token>@github.com/<user>/<repo>` .
+3. Try `npm run deploy again`
+
 ### [Heroku](https://www.heroku.com/)
 
 Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
@@ -2264,7 +2274,8 @@ With this setup Netlify will build and deploy when you push to git or open a pul
 
 1. [Start a new netlify project](https://app.netlify.com/signup)
 2. Pick your Git hosting service and select your repository
-3. Click `Build your site`
+3. Set `yarn build` as the build command and `build` as the publish directory
+4. Click `Deploy site`
 
 **Support for client-side routing:**
 
