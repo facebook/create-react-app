@@ -66,7 +66,7 @@ describe('Integration', () => {
 
     it('sass modules inclusion', async () => {
       const doc = await initDOM('sass-modules-inclusion');
-      matchCSS([/.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/,
+      matchCSS(doc, [/.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/,
             /.+assets_sassModulesIndexInclusion.+\{background:.+;color:.+}/]);
     });
 
