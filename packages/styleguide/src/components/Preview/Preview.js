@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { string, node, object, bool, oneOf } from 'prop-types';
 import cx from 'classnames';
+import Select from 'react-select';
 import styled from 'styled-components';
 
 import PreviewTitleBar from './PreviewTitleBar';
@@ -10,7 +11,7 @@ import Frame from './Frame';
 import Card from './../Card';
 import Icon from './../Icon';
 
-import { colors } from './../../style/theme';
+import { colors, previewBackgrounds } from './../../style/theme';
 import { ButtonBaseCSS } from '../../style/common';
 
 const CLASS_ROOT = '';
@@ -39,17 +40,42 @@ export default class Preview extends Component {
     super(props);
 
     this.handleToggleCode = this.handleToggleCode.bind(this);
+    this.handlePreviewBackground = this.handlePreviewBackground.bind(this);
   }
 
   state = {
-    isCodeShown: false
+    isCodeShown: false,
+    previewBackground: '',
+    previewBackgrounds: []
   };
+
+  componentDidMount() {
+    const previewBackgroundsArray = [];
+
+    Object.keys(previewBackgrounds).map((key, index) => {
+      return previewBackgroundsArray.push({
+        value: previewBackgrounds[key],
+        label: key
+      });
+    });
+
+    this.setState({
+      previewBackgroundsList: previewBackgroundsArray,
+      previewBackground: previewBackgroundsArray[0]
+    });
+  }
 
   handleToggleCode() {
     this.setState({
       isCodeShown: !this.state.isCodeShown
     });
   }
+
+  handlePreviewBackground = previewBackground => {
+    this.setState({ previewBackground });
+  };
+
+  return;
 
   render() {
     const {
@@ -67,9 +93,21 @@ export default class Preview extends Component {
       ...other
     } = this.props;
 
+    const { previewBackground, previewBackgroundsList } = this.state;
+
     const classes = cx(CLASS_ROOT, className);
 
     const actions = [];
+
+    actions.push(
+      <StyledSelect
+        name="background-select"
+        clearable={false}
+        value={previewBackground.value}
+        onChange={this.handlePreviewBackground}
+        options={previewBackgroundsList}
+      />
+    );
 
     if (hasCodePreview) {
       actions.push(
@@ -80,7 +118,9 @@ export default class Preview extends Component {
       );
     }
 
-    const toReneder = children || (
+    const toReneder = (typeof children === 'function'
+      ? children(this.state.previewBackground)
+      : children) || (
       // eslint-disable-next-line react/no-danger
       <div dangerouslySetInnerHTML={{ __html: html }} />
     );
@@ -97,7 +137,12 @@ export default class Preview extends Component {
 
     return [
       <PreviewTitleBar title={title} actions={actions} key="previewTitle" />,
-      <Card className={classes} {...other} key="previewCard">
+      <Card
+        className={classes}
+        bgColor={previewBackground.value}
+        {...other}
+        key="previewCard"
+      >
         <StyledPreviewLive bgTheme={bgTheme}>{content}</StyledPreviewLive>
         {this.state.isCodeShown &&
           hasCodePreview &&
@@ -122,4 +167,10 @@ const StyledButton = styled.button`
   ${ButtonBaseCSS};
   padding-right: 0;
   text-transform: uppercase;
+`;
+
+const StyledSelect = styled(Select)`
+  &.Select {
+    background-color: grey;
+  }
 `;
