@@ -47,4 +47,12 @@ ${(
     </Card>
   </Preview>
 )}
+
+${(
+  <Preview>
+    {background => (
+      <Card>{`Label: ${background.label} Code: ${background.value}`}</Card>
+    )}
+  </Preview>
+)}
 `;
