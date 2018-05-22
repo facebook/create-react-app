@@ -99,7 +99,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Advanced Configuration](#advanced-configuration)
 - [Troubleshooting](#troubleshooting)
   - [`npm start` doesn’t detect changes](#npm-start-doesnt-detect-changes)
-  - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
+  - [`npm test` hangs or crashes on macOS Sierra](#npm-test-hangs-or-crashes-on-macos-sierra)
   - [`npm run build` exits too early](#npm-run-build-exits-too-early)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
   - [`npm run build` fails to minify](#npm-run-build-fails-to-minify)
@@ -621,7 +621,7 @@ Then in `package.json`, add the following lines to `scripts`:
 ```diff
    "scripts": {
 +    "build-css": "node-sass-chokidar src/ -o src/",
-+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
++    "watch-css": "node-sass-chokidar src/ -o src/ --watch",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
@@ -636,8 +636,8 @@ To share variables between Sass files, you can use Sass imports. For example, `s
 To enable importing files without using relative paths, you can add the  `--include-path` option to the command in `package.json`.
 
 ```
-"build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-"watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+"build-css": "node-sass-chokidar --include-path ./node_modules src/ -o src/",
+"watch-css": "node-sass-chokidar --include-path ./node_modules src/ -o src/ --watch",
 ```
 
 This will allow you to do imports like
@@ -2565,7 +2565,7 @@ If this doesn’t happen, try one of the following workarounds:
 
 If none of these solutions help please leave a comment [in this thread](https://github.com/facebook/create-react-app/issues/659).
 
-### `npm test` hangs on macOS Sierra
+### `npm test` hangs or crashes on macOS Sierra
 
 If you run `npm test` and the console gets stuck after printing `react-scripts test --env=jsdom` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebook/create-react-app#713](https://github.com/facebook/create-react-app/issues/713).
 
