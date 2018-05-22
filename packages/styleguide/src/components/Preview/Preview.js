@@ -11,7 +11,7 @@ import Frame from './Frame';
 import Card from './../Card';
 import Icon from './../Icon';
 
-import { colors, previewBackgrounds } from './../../style/theme';
+import { colors, previewBackgrounds, fontFamily } from './../../style/theme';
 import { ButtonBaseCSS } from '../../style/common';
 
 const CLASS_ROOT = '';
@@ -103,6 +103,7 @@ export default class Preview extends Component {
       <StyledSelect
         name="background-select"
         clearable={false}
+        searchable={false}
         value={previewBackground.value}
         onChange={this.handlePreviewBackground}
         options={previewBackgroundsList}
@@ -171,6 +172,59 @@ const StyledButton = styled.button`
 
 const StyledSelect = styled(Select)`
   &.Select {
-    background-color: grey;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    position: relative;
+    margin: 2px;
+    font-family: ${fontFamily};
+
+    &:hover {
+      border: 2px solid #ee6338;
+      border-width: 2px;
+      margin: 0;
+    }
+  }
+
+  .Select-multi-value-wrapper {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    width: 180px;
+    border: 2px solid #000000;
+    padding: 0 10px;
+  }
+
+  .Select-value {
+    font-size: 16px;
+    color: #737373;
+  }
+
+  .Select-menu {
+    position: absolute;
+    top: 36px;
+
+    .Select-option {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      height: 36px;
+      width: 180px;
+      background-color: #ffffff;
+      border: solid #000000;
+      border-width: 0 2px;
+      padding: 0 10px;
+
+      &:last-child {
+        border-width: 0 2px 2px 2px;
+      }
+
+      &:hover {
+        border: 2px solid #ee6338;
+        border-width: 2px;
+      }
+      &.is-selected {
+        background-color: #fbeee8;
+      }
+    }
   }
 `;
