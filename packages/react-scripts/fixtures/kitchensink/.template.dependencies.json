@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "@babel/plugin-transform-modules-commonjs": "7.0.0-beta.36",
-    "@babel/polyfill": "7.0.0-beta.36",
-    "@babel/register": "7.0.0-beta.36",
+    "@babel/plugin-transform-modules-commonjs": "7.0.0-beta.46",
+    "@babel/polyfill": "7.0.0-beta.46",
+    "@babel/register": "7.0.0-beta.46",
     "bootstrap": "4.1.0",
     "chai": "3.5.0",
     "jsdom": "9.8.3",

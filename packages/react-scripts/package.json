@@ -68,7 +68,7 @@
     "url-loader": "1.0.1",
     "webpack": "4.8.3",
     "webpack-dev-server": "3.1.4",
-    "webpack-manifest-plugin": "2.0.2",
+    "webpack-manifest-plugin": "2.0.3",
     "whatwg-fetch": "2.0.4"
   },
   "devDependencies": {

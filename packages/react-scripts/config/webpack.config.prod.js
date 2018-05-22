@@ -115,8 +115,6 @@ module.exports = {
         .replace(/\\/g, '/'),
   },
   optimization: {
-    // webpack-manifest-plugin currently does not play well with ConcatenatedModule
-    concatenateModules: false,
     minimizer: [
       new UglifyJsPlugin({
         uglifyOptions: {
