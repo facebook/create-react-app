@@ -23,7 +23,6 @@ const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
 const resolveFrom = require('resolve-from');
 const paths = require('../config/paths');
-const { findMonorepo } = require('react-dev-utils/workspaceUtils');
 
 function isInGitRepository() {
   try {
@@ -178,18 +177,10 @@ module.exports = function(
     fs.unlinkSync(templateDependenciesPath);
   }
 
-  // yarn ws bug not creating app/node_modules/.bin link to hoisted react-scripts
-  // -- workaround: install react-scripts again to create link
-  // bug in yarn 1.3.2, fixed in nightly 1.4.1-20180211.2236
-  const rerunYarn = useYarn && findMonorepo(appPath).isAppIncluded;
-  if (rerunYarn) {
-    console.log('Detected app in yarn workspace, running install again');
-  }
-
   // Install react and react-dom for backward compatibility with old CRA cli
   // which doesn't install react and react-dom along with react-scripts
   // or template is presetend (via --internal-testing-template)
-  if (!isReactInstalled(appPackage) || template || rerunYarn) {
+  if (!isReactInstalled(appPackage) || template) {
     console.log(`Installing react and react-dom using ${command}...`);
     console.log();
 
