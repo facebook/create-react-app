@@ -104,6 +104,7 @@ export default class Preview extends Component {
         name="background-select"
         clearable={false}
         searchable={false}
+        closeOnSelect={false}
         value={previewBackground.value}
         onChange={this.handlePreviewBackground}
         options={previewBackgroundsList}
