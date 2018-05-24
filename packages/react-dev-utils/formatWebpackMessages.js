@@ -133,6 +133,11 @@ function formatMessage(message, isError) {
     );
   }
 
+  if (lines[1].match(/sass-loader.+node-sass.+install/)) {
+    lines[1] =
+      'You need to install `node-sass` to compile Sass files.\nPlease run `npm i node-sass` or `yarn add node-sass` in your workspace.';
+  }
+
   lines[0] = chalk.inverse(lines[0]);
 
   // Reassemble the message.
