@@ -31,6 +31,22 @@ function formatMessage(message, isError) {
     lines.splice(1, 1);
   }
 
+  // Use webpack-provided file name when present
+  // Before:
+  // ./template/src/App.scss (/~/css-loader??ref--6-oneOf-5-1!/~/postcss-loader/lib??postcss!/~/sass-loader/lib/loader.js!./template/src/App.scss)
+  // After:
+  // ./template/src/App.scss
+  var fileNameRegex = /(.+) [(].+[)]/;
+  if (lines[0].match(fileNameRegex)) {
+    var fileName = fileNameRegex.exec(lines[0]).pop();
+    if (
+      lines[0].indexOf(fileName + ')') ===
+      lines[0].length - fileName.length - 1
+    ) {
+      lines[0] = fileName;
+    }
+  }
+
   // Remove webpack-specific loader notation from filename.
   // Before:
   // ./~/css-loader!./~/postcss-loader!./src/App.css
