@@ -906,7 +906,7 @@ If you rely on the `NODE_PATH` environment variable to import modules from absol
 + module.system.node.resolve_dirname=./src
 ```
 
-Remember to use a relative path (prefixed by `./`) otherwise Flow will not bheave properly!
+Remember to use a relative path (prefixed by `./`) otherwise Flow will not behave properly!
 
 
 To learn more about Flow, check out [its documentation](https://flowtype.org/).
