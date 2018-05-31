@@ -1,4 +1,4 @@
-# Create React App [![Build Status](https://travis-ci.org/facebook/create-react-app.svg?branch=master)](https://travis-ci.org/facebook/create-react-app)
+# Create React App [![Build Status](https://travis-ci.org/facebook/create-react-app.svg?branch=master)](https://travis-ci.org/facebook/create-react-app) [![Open Source Helpers](https://www.codetriage.com/facebookincubator/create-react-app/badges/users.svg)](https://www.codetriage.com/facebookincubator/create-react-app)
 
 Create React apps with no build configuration.
 
