@@ -150,7 +150,7 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
-    const messages = formatWebpackMessages(stats.toJson({}, true));
+    const messages = formatWebpackMessages(stats.toJson(config.stats, true));
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
