@@ -897,7 +897,7 @@ Now you can run `npm run flow` (or `yarn flow`) to check the files for type erro
 You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/flow/) for a better integrated experience.
 In the future we plan to integrate it into Create React App even more closely.
 
-If you rely on the `NODE_PATH` environment variable to import modules from absolute paths, remember to modify your `.flowconfig` accordingly, just add the following two lines:
+If you rely on the `NODE_PATH` environment variable set to `src` to import modules from absolute paths, remember to modify your `.flowconfig` accordingly, just add the following two lines:
 
 ```diff
 [options]
