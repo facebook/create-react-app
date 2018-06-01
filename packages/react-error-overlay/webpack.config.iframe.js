@@ -8,8 +8,10 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './src/iframeScript.js',
   output: {
     path: path.join(__dirname, './lib'),
@@ -18,10 +20,47 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        include: path.resolve(__dirname, './src'),
-        use: 'babel-loader',
+        oneOf: [
+          // Source
+          {
+            test: /\.js$/,
+            include: [path.resolve(__dirname, './src')],
+            use: {
+              loader: 'babel-loader',
+            },
+          },
+          // Dependencies
+          {
+            test: /\.js$/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                babelrc: false,
+                compact: false,
+                presets: ['babel-preset-react-app/dependencies'],
+              },
+            },
+          },
+        ],
       },
+    ],
+  },
+  optimization: {
+    minimizer: [
+      // This code is embedded as a string, so it would never be optimized
+      // elsewhere.
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          compress: {
+            warnings: false,
+            comparisons: false,
+          },
+          output: {
+            comments: false,
+            ascii_only: false,
+          },
+        },
+      }),
     ],
   },
   plugins: [
@@ -31,18 +70,6 @@ module.exports = {
       'process.env': { NODE_ENV: '"production"' },
       // This prevents our bundled React from accidentally hijacking devtools.
       __REACT_DEVTOOLS_GLOBAL_HOOK__: '({})',
-    }),
-    // This code is embedded as a string, so it would never be optimized
-    // elsewhere.
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        comparisons: false,
-      },
-      output: {
-        comments: false,
-        ascii_only: false,
-      },
     }),
   ],
 };

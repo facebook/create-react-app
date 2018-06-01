@@ -49,7 +49,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
-test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-installs.sh"
+test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-installs.sh && ./tasks/e2e-monorepos.sh"
 case ${test_suite} in
   "all")
     ;;
@@ -61,6 +61,9 @@ case ${test_suite} in
     ;;
   "installs")
     test_command="./tasks/e2e-installs.sh"
+    ;;
+  "monorepos")
+    test_command="./tasks/e2e-monorepos.sh"
     ;;
   *)
     ;;
@@ -95,7 +98,7 @@ ${apply_changes}
 node --version
 npm --version
 set +x
-${test_command} && echo -e "\n\e[1;32m✔ Job passed\e[0m" || echo -e "\n\e[1;31m✘ Job failes\e[0m"
+${test_command} && echo -e "\n\e[1;32m✔ Job passed\e[0m" || echo -e "\n\e[1;31m✘ Job failed\e[0m"
 $([[ ${interactive} == 'true' ]] && echo 'bash')
 CMD
 

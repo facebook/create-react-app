@@ -56,8 +56,9 @@ const COMMON_EDITORS_OSX = {
     '/Applications/RubyMine.app/Contents/MacOS/rubymine',
   '/Applications/WebStorm.app/Contents/MacOS/webstorm':
     '/Applications/WebStorm.app/Contents/MacOS/webstorm',
-  '/Applications/MacVim.app/Contents/MacOS/MacVim':
-    'mvim',
+  '/Applications/MacVim.app/Contents/MacOS/MacVim': 'mvim',
+  '/Applications/GoLand.app/Contents/MacOS/goland':
+    '/Applications/GoLand.app/Contents/MacOS/goland',
 };
 
 const COMMON_EDITORS_LINUX = {
@@ -73,6 +74,7 @@ const COMMON_EDITORS_LINUX = {
   sublime_text: 'sublime_text',
   vim: 'vim',
   'webstorm.sh': 'webstorm',
+  'goland.sh': 'goland',
 };
 
 const COMMON_EDITORS_WIN = [
@@ -94,6 +96,8 @@ const COMMON_EDITORS_WIN = [
   'rubymine64.exe',
   'webstorm.exe',
   'webstorm64.exe',
+  'goland.exe',
+  'goland64.exe',
 ];
 
 function addWorkspaceToArgumentsIfExists(args, workspace) {
@@ -156,6 +160,8 @@ function getArgumentsForLineNumber(
     case 'rubymine64':
     case 'webstorm':
     case 'webstorm64':
+    case 'goland':
+    case 'goland64':
       return addWorkspaceToArgumentsIfExists(
         ['--line', lineNumber, fileName],
         workspace
@@ -188,23 +194,19 @@ function guessEditor() {
         }
       }
     } else if (process.platform === 'win32') {
+      // Some processes need elevated rights to get its executable path.
+      // Just filter them out upfront. This also saves 10-20ms on the command.
       const output = child_process
-        .execSync('powershell -Command "Get-Process | Select-Object Path"', {
-          stdio: ['pipe', 'pipe', 'ignore'],
-        })
+        .execSync(
+          'wmic process where "executablepath is not null" get executablepath'
+        )
         .toString();
       const runningProcesses = output.split('\r\n');
       for (let i = 0; i < runningProcesses.length; i++) {
-        // `Get-Process` sometimes returns empty lines
-        if (!runningProcesses[i]) {
-          continue;
-        }
-
-        const fullProcessPath = runningProcesses[i].trim();
-        const shortProcessName = path.basename(fullProcessPath);
-
-        if (COMMON_EDITORS_WIN.indexOf(shortProcessName) !== -1) {
-          return [fullProcessPath];
+        const processPath = runningProcesses[i].trim();
+        const processName = path.basename(processPath);
+        if (COMMON_EDITORS_WIN.indexOf(processName) !== -1) {
+          return [processPath];
         }
       }
     } else if (process.platform === 'linux') {
