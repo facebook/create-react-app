@@ -24,6 +24,12 @@
         ".write": "auth != null && $uid === auth.uid "
       }
     },
+    "disable_notifications": {
+      "$uid": {
+        ".read": "auth != null && $uid === auth.uid ",
+        ".write": "auth != null && $uid === auth.uid "
+      }
+    },
     "user_chats": {
       "$uid": {
         ".read": "auth != null && $uid===auth.uid",

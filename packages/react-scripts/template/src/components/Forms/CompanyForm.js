@@ -4,12 +4,12 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import { Avatar } from 'rmw-shell/lib/containers/Avatar';
-import FontIcon from 'material-ui/FontIcon';
-import FlatButton from 'material-ui/FlatButton';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
 import { setDialogIsOpen } from 'rmw-shell/lib/store/dialogs/actions';
 import { ImageCropDialog } from 'rmw-shell/lib/containers/ImageCropDialog';
 import { withRouter } from 'react-router-dom';
-import muiThemeable from 'material-ui/styles/muiThemeable';
+import { withTheme } from '@material-ui/core/styles'
 import PropTypes from 'prop-types';
 
 
@@ -52,10 +52,10 @@ class Form extends Component {
               size={120}
               component={Avatar}
               icon={
-                <FontIcon
+                <Icon
                   className="material-icons">
                   business
-              </FontIcon>
+              </Icon>
               }
               ref="photoURL"
               withRef
@@ -63,7 +63,7 @@ class Form extends Component {
           </div>
 
 
-          <FlatButton
+          <Button
             onClick={() => {
               setDialogIsOpen('new_company_photo', true)
             }}
@@ -71,10 +71,10 @@ class Form extends Component {
             containerElement='label'
             primary={true}
             icon={
-              <FontIcon
+              <Icon
                 className="material-icons">
                 photo_camera
-            </FontIcon>
+            </Icon>
             }
           />
         </div>
@@ -85,8 +85,8 @@ class Form extends Component {
               name="name"
               disabled={!initialized}
               component={TextField}
-              hintText={intl.formatMessage({ id: 'name_hint' })}
-              floatingLabelText={intl.formatMessage({ id: 'name_label' })}
+              placeholder={intl.formatMessage({ id: 'name_hint' })}
+              label={intl.formatMessage({ id: 'name_label' })}
               ref="name"
               withRef
             />
@@ -97,8 +97,8 @@ class Form extends Component {
               name="full_name"
               disabled={!initialized}
               component={TextField}
-              hintText={intl.formatMessage({ id: 'full_name_hint' })}
-              floatingLabelText={intl.formatMessage({ id: 'full_name_label' })}
+              placeholder={intl.formatMessage({ id: 'full_name_hint' })}
+              label={intl.formatMessage({ id: 'full_name_label' })}
               ref="full_name"
               withRef
             />
@@ -109,8 +109,8 @@ class Form extends Component {
               name="vat"
               disabled={!initialized}
               component={TextField}
-              hintText={intl.formatMessage({ id: 'vat_hint' })}
-              floatingLabelText={intl.formatMessage({ id: 'vat_label' })}
+              placeholder={intl.formatMessage({ id: 'vat_hint' })}
+              label={intl.formatMessage({ id: 'vat_label' })}
               ref="vat"
               withRef
             />
@@ -122,10 +122,10 @@ class Form extends Component {
               name="description"
               disabled={!initialized}
               component={TextField}
-              multiLine={true}
+              multiline={true}
               rows={2}
-              hintText={intl.formatMessage({ id: 'description_hint' })}
-              floatingLabelText={intl.formatMessage({ id: 'description_label' })}
+              placeholder={intl.formatMessage({ id: 'description_hint' })}
+              label={intl.formatMessage({ id: 'description_label' })}
               ref="description"
               withRef
             />
@@ -174,4 +174,4 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps, { setDialogIsOpen }
-)(injectIntl(withRouter(muiThemeable()(Form))));
+)(injectIntl(withRouter(withTheme()(Form))));

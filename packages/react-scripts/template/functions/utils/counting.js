@@ -4,7 +4,7 @@ module.exports = {
       return
     }
 
-    const collectionRef = data.ref.parent
+    const collectionRef = data.after.ref.parent
     const countRef = collectionRef.parent.child(counterName)
 
     // Return the promise from countRef.transaction() so our function

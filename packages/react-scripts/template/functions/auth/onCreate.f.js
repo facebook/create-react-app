@@ -7,20 +7,20 @@ const gmailPassword = encodeURIComponent(functions.config().gmail.password)
 const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`)
 const moment = require('moment')
 
-exports = module.exports = functions.auth.user().onCreate((userMetadata, context) => {
-  const email = userMetadata.email // The email of the user.
-  const displayName = userMetadata.displayName // The display name of the user.
-  const creationTime = moment(userMetadata.creationTime)
+exports = module.exports = functions.auth.user().onCreate((userRecord, context) => {
+  const email = userRecord.email // The email of the user.
+  const displayName = userRecord.displayName // The display name of the user.
+  const creationTime = moment(userRecord.creationTime)
   const year = creationTime.format('YYYY')
   const month = creationTime.format('MM')
   const day = creationTime.format('DD')
 
-  return admin.auth().getUser(userMetadata.uid).then(user => {
+  return admin.auth().getUser(userRecord.uid).then(user => {
     // User  without provider data
-    console.log(userMetadata.toJSON())
+    console.log('Event user data', userRecord)
 
     // User with provider data
-    console.log(user)
+    console.log('Auth user data', user)
 
     const provider = user.providerData !== [] ? user.providerData[0] : { providerId: email ? 'password' : 'phone' }
     const providerId = provider.providerId ? provider.providerId.replace('.com', '') : provider.providerId

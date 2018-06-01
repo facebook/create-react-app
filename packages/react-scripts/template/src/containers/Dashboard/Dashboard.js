@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import FlatButton from 'material-ui/FlatButton'
+import Button from '@material-ui/core/Button'
 import { injectIntl, intlShape } from 'react-intl'
 import { GitHubIcon } from 'rmw-shell/lib/components/Icons'
 import { Activity } from 'rmw-shell'
-import muiThemeable from 'material-ui/styles/muiThemeable'
-import { Line, Bar } from 'react-chartjs-2'
+import { withTheme } from '@material-ui/core/styles'
+import { Line, Bar, Doughnut } from 'react-chartjs-2'
 import { withFirebase } from 'firekit-provider'
 import CountUp from 'react-countup'
-import FontIcon from 'material-ui/FontIcon'
-import ReactEcharts from 'echarts-for-react'
+import Icon from '@material-ui/core/Icon'
 
 const currentYear = new Date().getFullYear()
 const daysPath = `/user_registrations_per_day/${currentYear}/${new Date().toISOString().slice(5, 7)}`
@@ -17,7 +16,7 @@ const monthsPath = `/user_registrations_per_month/${currentYear}`
 const providerPath = `/provider_count`
 
 class Dashboard extends Component {
-  componentDidMount () {
+  componentDidMount() {
     const { watchPath } = this.props
 
     watchPath(daysPath)
@@ -26,8 +25,8 @@ class Dashboard extends Component {
     watchPath('users_count')
   }
 
-  render () {
-    const { muiTheme, intl, days, months, providers, usersCount } = this.props
+  render() {
+    const { theme, intl, days, months, providers, usersCount } = this.props
 
     let daysLabels = []
     let daysData = []
@@ -47,18 +46,18 @@ class Dashboard extends Component {
           label: intl.formatDate(Date.now(), { month: 'long' }),
           fill: false,
           lineTension: 0.1,
-          backgroundColor: muiTheme.palette.primary1Color,
-          borderColor: muiTheme.palette.primary1Color,
+          backgroundColor: theme.palette.primary.main,
+          borderColor: theme.palette.primary.main,
           borderCapStyle: 'butt',
           borderDash: [],
           borderDashOffset: 0.0,
           borderJoinStyle: 'miter',
-          pointBorderColor: muiTheme.palette.accent1Color,
+          pointBorderColor: theme.palette.secondary.main,
           pointBackgroundColor: '#fff',
           pointBorderWidth: 1,
           pointHoverRadius: 5,
-          pointHoverBackgroundColor: muiTheme.palette.primary1Color,
-          pointHoverBorderColor: muiTheme.palette.accent1Color,
+          pointHoverBackgroundColor: theme.palette.primary.main,
+          pointHoverBorderColor: theme.palette.secondary.main,
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
@@ -88,18 +87,18 @@ class Dashboard extends Component {
           fill: false,
           maintainAspectRatio: true,
           lineTension: 0.1,
-          backgroundColor: muiTheme.palette.primary1Color,
-          borderColor: muiTheme.palette.primary1Color,
+          backgroundColor: theme.palette.primary.main,
+          borderColor: theme.palette.primary.main,
           borderCapStyle: 'butt',
           borderDash: [],
           borderDashOffset: 0.0,
           borderJoinStyle: 'miter',
-          pointBorderColor: muiTheme.palette.accent1Color,
+          pointBorderColor: theme.palette.secondary.main,
           pointBackgroundColor: '#fff',
           pointBorderWidth: 1,
           pointHoverRadius: 5,
-          pointHoverBackgroundColor: muiTheme.palette.primary1Color,
-          pointHoverBorderColor: muiTheme.palette.accent1Color,
+          pointHoverBackgroundColor: theme.palette.primary.main,
+          pointHoverBorderColor: theme.palette.secondary.main,
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
@@ -108,50 +107,32 @@ class Dashboard extends Component {
       ]
     }
 
-    let providerOptionsData = []
+    let providersData = []
+    let providersLabels = []
+    let providersBackgrounColors = []
 
     if (providers) {
       Object.keys(providers).sort().map((key) => {
-        providerOptionsData.push({ name: intl.formatMessage({ id: key }), value: providers[key], color: 'red' })
+        providersLabels.push(intl.formatMessage({ id: key }))
+        providersBackgrounColors.push(intl.formatMessage({ id: `${key}_color` }))
+        providersData.push(providers[key])
         return key
       })
     }
 
-    const providerOptions = {
-      title: {
-        text: 'Providers',
-        x: 'center',
-        textStyle: {
-          color: muiTheme.palette.primary1Color
-        }
-      },
-      tooltip: {
-        trigger: 'item',
-        formatter: '{a} <br/>{b} : {c} ({d}%)'
-      },
-      calculable: true,
-      series: [
-        {
-          name: 'Provider',
-          type: 'pie',
-          roseType: 'radius',
-          radius: [40, 110],
-          data: providerOptionsData,
-          itemStyle: {
-            emphasis: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-          }
-        }
-      ]
+    const providersComponentData = {
+      labels: providersLabels,
+      datasets: [{
+        data: providersData,
+        backgroundColor: providersBackgrounColors,
+        hoverBackgroundColor: providersBackgrounColors
+      }]
     }
 
     return (
       <Activity
         iconElementRight={
-          <FlatButton
+          <Button
             style={{ marginTop: 4 }}
             href='https://github.com/TarikHuber/react-most-wanted'
             target='_blank'
@@ -160,9 +141,9 @@ class Dashboard extends Component {
             icon={<GitHubIcon />}
           />
         }
-        title={intl.formatMessage({ id: 'dashboard' })} >
+        title={intl.formatMessage({ id: 'dashboard' })}>
 
-        <div style={{ margin: 5, marginTop: 16, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly' }}>
+        <div style={{ margin: 5, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
           <div style={{ flexGrow: 1, flexShrink: 1, maxWidth: 600 }}>
             <Line
               options={{
@@ -184,33 +165,31 @@ class Dashboard extends Component {
         </div>
 
         <br />
-        <div style={{ margin: 5, marginTop: 16, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly' }}>
+        <div style={{ margin: 5, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
 
-          <div style={{ flexGrow: 1, flexShrink: 1, width: '100%', maxWidth: 600 }}>
-            <ReactEcharts
-              option={providerOptions}
-              notMerge
-              lazyUpdate
-              theme={'theme_name'} />
+          <div style={{ flexGrow: 1, flexShrink: 1, maxWidth: 600 }}>
+            <Doughnut
+              data={providersComponentData}
+            />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: 30 }}>
             <CountUp
               style={{
                 fontSize: 100,
-                color: muiTheme.palette.primary1Color,
-                fontFamily: muiTheme.fontFamily
+                color: theme.palette.primary.main,
+                fontFamily: theme.fontFamily
               }}
               start={0}
               end={usersCount}
             />
             <div>
-              <FontIcon
-                color={muiTheme.palette.accent1Color}
+              <Icon
+                color='secondary'
                 className='material-icons'
                 style={{ fontSize: 70, marginLeft: 16 }}>
                 group
-              </FontIcon>
+              </Icon>
             </div>
 
           </div>
@@ -238,4 +217,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps
-)(injectIntl(muiThemeable()(withFirebase(Dashboard))))
+)(injectIntl(withTheme()(withFirebase(Dashboard))))

@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import muiThemeable from 'material-ui/styles/muiThemeable';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { injectIntl, intlShape } from 'react-intl'
 import { Activity } from 'rmw-shell'
-import RaisedButton from 'material-ui/RaisedButton'
-import {withFirebase} from 'firekit-provider';
-import TextField from 'material-ui/TextField'
+import Button from '@material-ui/core/Button'
+import { withFirebase } from 'firekit-provider'
+import TextField from '@material-ui/core/TextField'
 // eslint-disable-next-line
 import firestore from 'firebase/firestore'
+import Typography from '@material-ui/core/Typography'
 
 class Document extends Component {
 
@@ -19,20 +19,20 @@ class Document extends Component {
     };
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.handleWatch()
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.handleUnwatch()
   }
 
   handleSave = () => {
-    const { firebaseApp }= this.props
+    const { firebaseApp } = this.props
 
-    let firestore=firebaseApp.firestore()
+    let firestore = firebaseApp.firestore()
 
-    const docRef=firestore.doc('samples/sandwichData')
+    const docRef = firestore.doc('samples/sandwichData')
 
     docRef.set({
       hotDogStatus: this.state.value
@@ -40,65 +40,54 @@ class Document extends Component {
   }
 
   handleWatch = () => {
-    const { watchDoc }= this.props
+    const { watchDoc } = this.props
 
     watchDoc('samples/sandwichData')
   }
 
   handleUnwatch = () => {
-    const { unwatchDoc }= this.props
+    const { unwatchDoc } = this.props
 
     unwatchDoc('samples/sandwichData')
   }
 
   handleDestroy = () => {
-    const { destroyDoc }= this.props
+    const { destroyDoc } = this.props
 
     destroyDoc('samples/sandwichData')
   }
 
   render() {
-    const { intl, muiTheme, sandwichData, isWatching }= this.props
+    const { intl, sandwichData, isWatching } = this.props
 
     return (
-      <Activity title={intl.formatMessage({id: 'document'})}>
+      <Activity title={intl.formatMessage({ id: 'document' })}>
 
-        <div style={{padding: 15}}>
-          <h1 style={{color: muiTheme.palette.textColor}}>{`${intl.formatMessage({id: 'hot_dog_status'})}: ${sandwichData.hotDogStatus}`}</h1>
+        <div style={{ padding: 15 }}>
+          <Typography variant="display2" gutterBottom>
+            {`${intl.formatMessage({ id: 'hot_dog_status' })}: ${sandwichData.hotDogStatus}`}
+          </Typography>
           <TextField
             value={this.state.value}
-            onChange={(ev, value)=>{
-              this.setState({value})
+            onChange={(e) => {
+              this.setState({ value: e.target.value })
             }}
-            hintText={intl.formatMessage({id: 'hot_dog_status'})}
-            ref={(input)=>{if(input){this.input=input}}}
+            hintText={intl.formatMessage({ id: 'hot_dog_status' })}
+            ref={(input) => { if (input) { this.input = input } }}
           /><br />
-          <RaisedButton
-            onClick={this.handleSave}
-            label="Save"
-            primary={true}
-            style={{margin: 12, marginLeft:0}}
-          />
-          <RaisedButton
-            disabled={isWatching}
-            onClick={this.handleWatch}
-            label="Watch"
-            primary={true}
-            style={{margin: 12, marginLeft:0}}
-          />
-          <RaisedButton
-            disabled={!isWatching}
-            onClick={this.handleUnwatch}
-            label="Unwatch"
-            primary={true}
-            style={{margin: 12, marginLeft:0}}
-          />
-          <RaisedButton
-            onClick={this.handleDestroy}
-            label="Destroy"
-            primary={true}
-            style={{margin: 12, marginLeft:0}}
-          />
+          <Button variant="raised" color="primary" onClick={this.handleSave} style={{ margin: 12, marginLeft: 0 }} >
+            Save
+      </Button>
+          <Button variant="raised" color="primary" onClick={this.handleWatch} disabled={isWatching} style={{ margin: 12, marginLeft: 0 }} >
+            Watch
+      </Button>
+          <Button variant="raised" color="primary" onClick={this.handleUnwatch} disabled={!isWatching} style={{ margin: 12, marginLeft: 0 }} >
+            Unwatch
+      </Button>
+          <Button variant="raised" color="secondary" onClick={this.handleDestroy} style={{ margin: 12, marginLeft: 0 }} >
+            Destroy
+      </Button>
+
         </div>
 
       </Activity>
@@ -114,8 +103,8 @@ Document.propTypes = {
 const mapStateToProps = (state) => {
   const { docs, initialization } = state;
 
-  const sandwichData=docs['samples/sandwichData']?docs['samples/sandwichData']:{}
-  const isWatching=initialization['samples/sandwichData']?true:false
+  const sandwichData = docs['samples/sandwichData'] ? docs['samples/sandwichData'] : {}
+  const isWatching = initialization['samples/sandwichData'] ? true : false
 
   return {
     sandwichData,
@@ -125,4 +114,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps, {}
-)(injectIntl(withFirebase(muiThemeable()(Document))));
+)(injectIntl(withFirebase(Document)));

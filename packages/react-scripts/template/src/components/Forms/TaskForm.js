@@ -1,113 +1,87 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { injectIntl } from 'react-intl'
-import { Field, reduxForm } from 'redux-form'
+import { injectIntl, intlShape } from 'react-intl'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { TextField } from 'redux-form-material-ui'
-import RaisedButton from 'material-ui/RaisedButton'
-import { SuperSelectField } from 'rmw-shell/lib/components/ReduxFormFields'
-import Avatar from 'material-ui/Avatar'
-import FontIcon from 'material-ui/FontIcon'
+import { setDialogIsOpen } from 'rmw-shell/lib/store/dialogs/actions'
+import { withRouter } from 'react-router-dom'
+import { withTheme } from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
 
-class TaskForm extends Component {
-  componentDidMount() {
-    this.refs.title // the Field
-      .getRenderedComponent() // on Field, returns ReduxFormMaterialUITextField
-      .getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
-      .focus() // on TextField
-  }
-
+class Form extends Component {
   render() {
-    const { handleSubmit, intl, users, initialized } = this.props
-
-    let userSource = []
-
-    if (users) {
-      userSource = users.map(user => {
-        return { id: user.key, name: user.val.displayName }
-      })
-    }
+    const {
+      handleSubmit,
+      intl,
+      initialized
+    } = this.props
 
     return (
-      <form onSubmit={handleSubmit} style={{ height: '100%', alignItems: 'strech' }}>
-        <div>
-          <Field
-            name='title'
-            disabled={!initialized}
-            component={TextField}
-            hintText={intl.formatMessage({ id: 'title_hint' })}
-            floatingLabelText={intl.formatMessage({ id: 'title_label' })}
-            ref='title'
-            withRef
-          />
-        </div>
+      <form onSubmit={handleSubmit} style={{
+        height: '100%',
+        alignItems: 'strech',
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center'
+      }}>
+        <button type='submit' style={{ display: 'none' }} />
 
         <div>
-          <Field
-            name='description'
-            component={TextField}
-            disabled={!initialized}
-            floatingLabelText='Description'
-            hintText='Enter description'
-            multiLine
-            rows={3}
-            ref='description'
-            withRef
-          />
-        </div>
-        <div>
-          <Field
-            name='helper'
-            component={SuperSelectField}
-            showAutocompleteThreshold={5}
-            elementHeight={60}
-            hintText='Helper'>
-            {userSource.map((val, i) => {
-              return (
-                <div key={val.id} value={val.id ? val.id : i} label={val.name}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar
-                      src={users[i] ? users[i].val.photoURL : undefined}
-                      alt='person'
-                      icon={
-                        <FontIcon className='material-icons' >
-                          person
-                        </FontIcon>}
-                    />
-                    <div style={{ marginLeft: 15 }}>
-                      {val.name}
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </Field>
-        </div>
-        <br />
+          <div>
+            <Field
+              name='title'
+              disabled={!initialized}
+              component={TextField}
+              placeholder={intl.formatMessage({ id: 'title_hint' })}
+              label={intl.formatMessage({ id: 'title_label' })}
+              ref='title'
+              withRef
+            />
+          </div>
 
-        <div>
-          <RaisedButton
-            label={intl.formatMessage({ id: 'submit' })}
-            type='submit'
-            primary
-            disabled={!initialized}
-          />
+          <div>
+            <Field
+              name='description'
+              disabled={!initialized}
+              component={TextField}
+              multiline
+              placeholder={intl.formatMessage({ id: 'description_hint' })}
+              label={intl.formatMessage({ id: 'description_label' })}
+              ref='description'
+              withRef
+            />
+          </div>
         </div>
+
       </form>
     )
   }
 }
 
+Form.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  intl: intlShape.isRequired,
+  initialized: PropTypes.bool.isRequired,
+  setDialogIsOpen: PropTypes.func.isRequired,
+  dialogs: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
+}
+
+Form = reduxForm({ form: 'task' })(Form)
+const selector = formValueSelector('task')
+
 const mapStateToProps = state => {
-  const { intl, lists } = state
+  const { intl, vehicleTypes, users, dialogs } = state
 
   return {
     intl,
-    users: lists.users
+    vehicleTypes,
+    users,
+    dialogs,
+    photoURL: selector(state, 'photoURL')
   }
 }
 
-TaskForm = reduxForm({ form: 'task' })(TaskForm)
-
 export default connect(
-  mapStateToProps
-)(injectIntl(TaskForm))
+  mapStateToProps, { setDialogIsOpen }
+)(injectIntl(withRouter(withTheme()(Form))))

@@ -15,9 +15,9 @@ exports = module.exports = functions.database.ref('/user_roles/{userUid}/{roleUi
       snapshot.forEach(grant => {
         let grantRef = false
 
-        console.log('User role changed:', eventSnapshot.val())
+        console.log('User role changed:', eventSnapshot.after.val())
 
-        if (eventSnapshot.val()) {
+        if (eventSnapshot.after.val()) {
           grantRef = admin.database().ref(`user_grants/${userUid}/${grant.key}`).set(true).then(() => {
             console.log('Grant added:', grant.key)
           })
