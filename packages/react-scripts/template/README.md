@@ -330,21 +330,23 @@ Now we can make sure every file is formatted correctly by adding a few lines to 
 
 Add the following line to `scripts` section:
 
-```diff
-+ "husky": {
-+   "hooks": {
-+     "pre-commit": "lint-staged"
-+   }
-+ },
-  "scripts": {
-```
+ ```diff
+   "scripts": {
+     "start": "react-scripts start",
+     "build": "react-scripts build",
+ ```
 
-Next we add a 'lint-staged' field to the `package.json`, for example:
+Next we add 'lint-staged' and 'husky' fields to the `package.json`, for example:
 
 ```diff
   "dependencies": {
     // ...
   },
++ "husky": {
++   "hooks": {
++     "pre-commit": "lint-staged"
++   }
++ },
 + "lint-staged": {
 +   "src/**/*.{js,jsx,json,css}": [
 +     "prettier --single-quote --write",
