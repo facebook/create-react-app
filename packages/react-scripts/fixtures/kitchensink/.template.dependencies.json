@@ -6,7 +6,7 @@
     "bootstrap": "4.1.0",
     "chai": "3.5.0",
     "jsdom": "9.8.3",
-    "mocha": "3.2.0",
+    "jest": "23.1.0",
     "node-sass": "4.8.3",
     "normalize.css": "7.0.0",
     "prop-types": "15.5.6",

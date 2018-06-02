@@ -50,7 +50,7 @@ if (process.env.E2E_FILE) {
   it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {
     expect(
       new Error("This isn't the error you are looking for.")
-    ).to.be.undefined();
+    ).to.BeUndefined();
   });
 }
 
