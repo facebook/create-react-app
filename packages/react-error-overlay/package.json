@@ -26,9 +26,7 @@
     "warning"
   ],
   "author": "Joe Haddad <timer150@gmail.com>",
-  "files": [
-    "lib/index.js"
-  ],
+  "files": ["lib/index.js"],
   "devDependencies": {
     "@babel/code-frame": "7.0.0-beta.46",
     "@babel/core": "7.0.0-beta.46",
@@ -36,7 +34,7 @@
     "anser": "1.4.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^8.2.2",
-    "babel-jest": "^22.4.3",
+    "babel-jest": "^23.0.1",
     "babel-loader": "^8.0.0-beta.0",
     "babel-preset-react-app": "^3.1.1",
     "chalk": "^2.3.2",
@@ -50,7 +48,7 @@
     "eslint-plugin-react": "7.8.2",
     "flow-bin": "^0.63.1",
     "html-entities": "1.2.1",
-    "jest": "22.4.3",
+    "jest": "23.1.0",
     "jest-fetch-mock": "1.5.0",
     "object-assign": "4.1.1",
     "promise": "8.0.1",
@@ -64,21 +62,13 @@
     "webpack": "^4.8.1"
   },
   "jest": {
-    "setupFiles": [
-      "./src/__tests__/setupJest.js"
-    ],
+    "setupFiles": ["./src/__tests__/setupJest.js"],
     "collectCoverage": true,
-    "coverageReporters": [
-      "json"
-    ],
+    "coverageReporters": ["json"],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
       "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
     ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/fixtures/",
-      "setupJest.js"
-    ]
+    "testPathIgnorePatterns": ["/node_modules/", "/fixtures/", "setupJest.js"]
   }
 }

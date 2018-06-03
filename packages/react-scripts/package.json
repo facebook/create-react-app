@@ -10,13 +10,7 @@
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"
   },
-  "files": [
-    "bin",
-    "config",
-    "scripts",
-    "template",
-    "utils"
-  ],
+  "files": ["bin", "config", "scripts", "template", "utils"],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
@@ -26,7 +20,7 @@
     "autoprefixer": "8.5.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "8.2.3",
-    "babel-jest": "22.4.3",
+    "babel-jest": "23.0.1",
     "babel-loader": "8.0.0-beta.0",
     "babel-plugin-named-asset-import": "^0.1.0",
     "babel-preset-react-app": "^3.1.1",
@@ -49,7 +43,7 @@
     "html-webpack-plugin": "3.2.0",
     "identity-obj-proxy": "3.0.0",
     "loader-utils": "^1.1.0",
-    "jest": "22.4.3",
+    "jest": "23.1.0",
     "mini-css-extract-plugin": "^0.4.0",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.3.1",
@@ -84,11 +78,6 @@
       "last 2 firefox versions",
       "last 2 edge versions"
     ],
-    "production": [
-      ">1%",
-      "last 4 versions",
-      "Firefox ESR",
-      "not ie < 11"
-    ]
+    "production": [">1%", "last 4 versions", "Firefox ESR", "not ie < 11"]
   }
 }
