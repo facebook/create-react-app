@@ -146,12 +146,13 @@ PORT=3001 \
 grep -q 'You can now view' <(tail -f $tmp_server_log)
 
 # Test "development" environment
+# AppVeyor hangs unless we forceExit: https://github.com/facebook/jest/issues/2288
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/jest --config='jest.integration.config.js'
+  node_modules/.bin/jest --config='jest.integration.config.js' --forceExit
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
