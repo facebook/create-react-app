@@ -44,7 +44,7 @@ module.exports = (resolve, rootDir, srcRoots) => {
       ),
     },
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$',
+      '/node_modules/.+\\.(js|jsx|mjs)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
     moduleNameMapper: {
