@@ -2106,7 +2106,7 @@ Once the build is complete, you should have a JSON file located at `build/bundle
 
 The quickest way to get insight into your bundle is to drag and drop that JSON file into [Webpack Visualizer](https://chrisbateman.github.io/webpack-visualizer/).
 
-Another very popular tool is [`webpack-bundle-analyzer`](https://www.npmjs.com/package/webpack-bundle-analyzer).
+Another very popular tool is [`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer).
 
 To use `webpack-bundle-analyzer`, start by installing it from NPM:
 
@@ -2124,7 +2124,6 @@ In `package.json`, add the following line to `scripts`:
 +    "analyze": "npm run build -- --stats && webpack-bundle-analyzer build/bundle-stats.json",
      "start": "react-scripts start",
      "build": "react-scripts build",
-     "build:with-stats": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
 ```
 
