@@ -190,6 +190,7 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   yarn test --no-cache --testPathPattern=src
 
 # Test "development" environment
+# AppVeyor hangs unless we forceExit: https://github.com/facebook/jest/issues/2288
 tmp_server_log=`mktemp`
 PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -201,7 +202,7 @@ E2E_URL="http://localhost:3002" \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/jest --config='jest.integration.config.js'
+  node_modules/.bin/jest --config='jest.integration.config.js' --forceExit
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
