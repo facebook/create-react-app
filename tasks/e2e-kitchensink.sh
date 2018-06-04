@@ -152,7 +152,7 @@ E2E_URL="http://localhost:3001" \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/jest --config='jest.integration.config.js' --forceExit
+  node_modules/.bin/jest --config='jest.integration.config.js' --forceExit --detectOpenHandles
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
@@ -202,7 +202,7 @@ E2E_URL="http://localhost:3002" \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/jest --config='jest.integration.config.js' --forceExit
+  node_modules/.bin/jest --config='jest.integration.config.js' --forceExit --detectOpenHandles
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
