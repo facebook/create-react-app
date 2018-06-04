@@ -34,12 +34,14 @@ describe('Integration', () => {
           'x-from-development-env'
         );
       }
+      doc.defaultView.close();
     });
 
     it('NODE_PATH', async () => {
       const doc = await initDOM('node-path');
 
       expect(doc.getElementById('feature-node-path').childElementCount).toBe(4);
+      doc.defaultView.close();
     });
 
     it('PUBLIC_URL', async () => {
@@ -55,6 +57,7 @@ describe('Integration', () => {
       expect(
         doc.querySelector('head link[rel="shortcut icon"]').getAttribute('href')
       ).toBe(`${prefix}/favicon.ico`);
+      doc.defaultView.close();
     });
 
     it('shell env variables', async () => {
@@ -63,6 +66,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-shell-env-variables').textContent
       ).toBe('fromtheshell.');
+      doc.defaultView.close();
     });
 
     it('expand .env variables', async () => {
@@ -80,6 +84,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-expand-env-existing').textContent
       ).toBe('fromtheshell');
+      doc.defaultView.close();
     });
   });
 });
