@@ -108,7 +108,6 @@ function verifyBuild {
 pushd "$temp_app_path"
 cp -r "$root_path/packages/react-scripts/fixtures/monorepos/yarn-ws" .
 cd "yarn-ws"
-cp -r "$root_path/packages/react-scripts/fixtures/monorepos/packages" .
 yarn
 
 # Test cra-app1

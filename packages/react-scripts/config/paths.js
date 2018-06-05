@@ -125,7 +125,7 @@ if (checkForMonorepo) {
   // the monorepo as if they are app source
   const mono = findMonorepo(appDirectory);
   if (mono.isAppIncluded) {
-    Array.prototype.push.apply(module.exports.srcPaths, mono.pkgs);
+    Array.prototype.push.apply(module.exports.srcPaths, mono.srcPkgPaths);
   }
   module.exports.useYarn = module.exports.useYarn || mono.isYarnWs;
 }

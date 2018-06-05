@@ -1884,7 +1884,10 @@ monorepo/
       },
       "devDependencies": {
         "react-scripts": "2.0.0"
-      }
+      },
+      "craSourceWorkspaces" : [
+        "comp*"
+      ]
     src/
       app.js: import comp1 from '@myorg/comp1';
   app2/
@@ -1895,7 +1898,10 @@ monorepo/
       },
       "devDependencies": {
         "react-scripts": "2.0.0"
-      }
+      },
+      "craSourceWorkspaces" : [
+        "comp*"
+      ]
     src/
       app.js: import comp1 from '@myorg/comp1';
   comp1/
@@ -1916,7 +1922,8 @@ monorepo/
     index.js: import comp1 from '@myorg/comp1'
 ```
 * Monorepo tools work on a package level, the same level as an npm package.
-* The "workspaces" in the top-level package.json is an array of glob patterns specifying where shared packages are located in the monorepo.
+* The "workspaces" entry in the top-level package.json is an array of glob patterns specifying where shared packages are located in the monorepo.
+* The "craSourceWorkspaces" entry in an app's package.json is array of glob patterns similar to "workspaces", but specifying which packages in the monorepo should be treated as source.
 * The scoping prefixes, e.g. @myorg/, are not required, but are recommended, allowing you to differentiate your packages from others of the same name.  See [scoped packages ](https://docs.npmjs.com/misc/scope) for more info.
 * Using a package in the monorepo is accomplished in the same manner as a published npm package, by specifying the shared package as dependency.
 * In order to pick up the monorepo version of a package, the specified dependency version must semantically match the package version in the monorepo.  See [semver](https://docs.npmjs.com/misc/semver) for info on semantic version matching.
