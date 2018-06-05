@@ -265,7 +265,7 @@ function onProxyError(proxy) {
 
 function prepareProxy(proxy, appPublicFolder) {
   // `proxy` lets you specify alternate servers for specific requests.
-  // It can either be a string or an object conforming to the Webpack dev server proxy configuration
+  // It can be a string, array or an object conforming to the Webpack dev server proxy configuration
   // https://webpack.github.io/docs/webpack-dev-server.html
   if (!proxy) {
     return undefined;
@@ -347,6 +347,41 @@ function prepareProxy(proxy, appPublicFolder) {
         xfwd: true,
       },
     ];
+  }
+
+  // If the proxy is an array
+  if (proxy.constructor === Array) {
+    return proxy.map(function(config) {
+      let target;
+      if (process.platform === 'win32') {
+        target = resolveLoopback(config.target);
+      } else {
+        target = config.target;
+      }
+      return Object.assign({}, config, {
+        context: function(pathname) {
+          if (!mayProxy(pathname)) {
+            return false;
+          }
+          if (typeof config.context === 'string') {
+            return pathname.match(config.context);
+          }
+          return config.context.findIndex(function (contextItem) {
+            return pathname.match(contextItem);
+          }) >= 0;
+        },
+        onProxyReq: proxyReq => {
+          // Browers may send Origin headers even with same-origin
+          // requests. To prevent CORS issues, we have to change
+          // the Origin to match the target URL.
+          if (proxyReq.getHeader('origin')) {
+            proxyReq.setHeader('origin', target);
+          }
+        },
+        target,
+        onError: onProxyError(target),
+      });
+    });
   }
 
   // Otherwise, proxy is an object so create an array of proxies to pass to webpackDevServer

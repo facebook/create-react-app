@@ -1244,6 +1244,18 @@ Matches are regular expressions, so that you can use a regexp to match multiple 
 }
 ```
 
+If you proxy multiple urls to the same endpoint, you can use an array with a `context` parameter.
+```js
+  // ...
+  "proxy": [{
+    "context": ["/foo", "/bar/[^/]*[.]html"],
+    "target": "<url_1>",
+    // ...
+  }],
+  // ...
+}
+```
+
 ### Configuring a WebSocket Proxy
 
 When setting up a WebSocket proxy, there are a some extra considerations to be aware of.
