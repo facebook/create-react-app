@@ -1288,13 +1288,13 @@ To do this, set the `HTTPS` environment variable to `true`, then start the dev s
 set HTTPS=true&&npm start
 ```
 
+(Note: the lack of whitespace is intentional.)
+
 #### Windows (Powershell)
 
 ```Powershell
 ($env:HTTPS = $true) -and (npm start)
 ```
-
-(Note: the lack of whitespace is intentional.)
 
 #### Linux, macOS (Bash)
 
