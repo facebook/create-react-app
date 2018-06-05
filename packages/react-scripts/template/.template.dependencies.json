@@ -2,6 +2,7 @@
     "dependencies": {
         "@material-ui/core": "1.x",
         "@material-ui/icons": "1.x",
+        "a2hs": "1.x",
         "chart.js": "2.x",
         "echarts": "4.x",
         "echarts-for-react": "2.x",
