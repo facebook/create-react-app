@@ -30,7 +30,9 @@ const findPkgs = (rootPath, globPatterns) => {
 };
 
 const findMonorepo = appDir => {
-  const appPkg = require(path.resolve(appDir, 'package.json'));
+  const appPkg = JSON.parse(
+    fs.readFileSync(path.resolve(appDir, 'package.json'))
+  );
   const monoPkgPath = findPkg.sync(path.resolve(appDir, '..'));
   const monoPkg = monoPkgPath && require(monoPkgPath);
   const workspaces = monoPkg && monoPkg.workspaces;
