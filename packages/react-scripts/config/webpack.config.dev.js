@@ -222,7 +222,12 @@ module.exports = {
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
-              require.resolve('thread-loader'),
+              {
+                loader: require.resolve('thread-loader'),
+                options: {
+                  poolTimeout: Infinity // keep workers alive for more effective watch mode
+                },
+              },
               {
                 loader: require.resolve('babel-loader'),
                 options: {
