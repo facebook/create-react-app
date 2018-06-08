@@ -30,7 +30,7 @@
       "not ie < 11"
     ]
   },
-  "craSourceWorkspaces": [
+  "sourceWorkspaces": [
     "packages/comp*"
   ]
 }

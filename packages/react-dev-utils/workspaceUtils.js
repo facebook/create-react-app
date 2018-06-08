@@ -38,7 +38,7 @@ const findMonorepo = appDir => {
   const workspaces = monoPkg && monoPkg.workspaces;
   const patterns = (workspaces && workspaces.packages) || workspaces;
   const isYarnWs = Boolean(patterns);
-  const srcPatterns = appPkg && appPkg.craSourceWorkspaces;
+  const srcPatterns = appPkg && appPkg.sourceWorkspaces;
   const allPkgs = patterns && findPkgs(path.dirname(monoPkgPath), patterns);
   const allSrcPkgs =
     srcPatterns && findPkgs(path.dirname(monoPkgPath), srcPatterns);
