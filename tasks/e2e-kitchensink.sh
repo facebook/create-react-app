@@ -146,7 +146,6 @@ PORT=3001 \
 grep -q 'You can now view' <(tail -f $tmp_server_log)
 
 # Test "development" environment
-# AppVeyor hangs unless we forceExit: https://github.com/facebook/jest/issues/2288
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
@@ -190,7 +189,6 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   yarn test --no-cache --testPathPattern=src
 
 # Test "development" environment
-# AppVeyor hangs unless we forceExit: https://github.com/facebook/jest/issues/2288
 tmp_server_log=`mktemp`
 PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
