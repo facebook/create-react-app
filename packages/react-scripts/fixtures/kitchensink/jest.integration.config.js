@@ -1,4 +1,4 @@
 module.exports = {
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
   testMatch: ['**/integration/*.test.js'],
 };
