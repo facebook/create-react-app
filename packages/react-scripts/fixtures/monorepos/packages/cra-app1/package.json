@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "comp2": "^1.0.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
   },
   "devDependencies": {
     "react-scripts": "latest"
