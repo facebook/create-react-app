@@ -15,7 +15,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-array-destructuring').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('array spread', async () => {
@@ -24,7 +24,7 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-array-spread').childElementCount).toBe(
         4
       );
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('async/await', async () => {
@@ -33,7 +33,7 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-async-await').childElementCount).toBe(
         4
       );
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('class properties', async () => {
@@ -42,7 +42,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-class-properties').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('computed properties', async () => {
@@ -51,7 +51,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-computed-properties').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('custom interpolation', async () => {
@@ -60,7 +60,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-custom-interpolation').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('default parameters', async () => {
@@ -69,7 +69,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-default-parameters').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('destructuring and await', async () => {
@@ -78,7 +78,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-destructuring-and-await').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('generators', async () => {
@@ -87,7 +87,7 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-generators').childElementCount).toBe(
         4
       );
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('object destructuring', async () => {
@@ -96,7 +96,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-object-destructuring').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('object spread', async () => {
@@ -105,14 +105,14 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-object-spread').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('promises', async () => {
       const doc = await initDOM('promises');
 
       expect(doc.getElementById('feature-promises').childElementCount).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('rest + default', async () => {
@@ -121,7 +121,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-rest-and-default').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('rest parameters', async () => {
@@ -130,7 +130,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-rest-parameters').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
 
     it('template interpolation', async () => {
@@ -139,7 +139,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-template-interpolation').childElementCount
       ).toBe(4);
-      // doc.defaultView.close();
+      doc.defaultView.close();
     });
   });
 });
