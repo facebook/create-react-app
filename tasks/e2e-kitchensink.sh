@@ -146,6 +146,7 @@ PORT=3001 \
 grep -q 'You can now view' <(tail -f $tmp_server_log)
 
 # Test "development" environment
+# Run integration tests sequentially using --runInBand to reduce Travis CI flakiness
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
@@ -189,6 +190,7 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   yarn test --no-cache --testPathPattern=src
 
 # Test "development" environment
+# Run integration tests sequentially using --runInBand to reduce Travis CI flakiness
 tmp_server_log=`mktemp`
 PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
