@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "bootstrap": "4.1.1",
-    "jsdom": "11.11.0",
     "jest": "23.1.0",
     "node-sass": "4.8.3",
     "normalize.css": "7.0.0",
