@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import 'raf/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';

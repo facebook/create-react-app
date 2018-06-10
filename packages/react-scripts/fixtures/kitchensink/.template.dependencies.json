@@ -5,6 +5,7 @@
     "node-sass": "4.8.3",
     "normalize.css": "7.0.0",
     "prop-types": "15.5.6",
+    "raf": "3.4.0",
     "test-integrity": "1.0.0"
   }
 }
