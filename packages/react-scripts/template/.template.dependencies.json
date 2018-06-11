@@ -13,6 +13,8 @@
         "firekit-provider": "0.x",
         "github-markdown-css": "2.x",
         "intl": "1.x",
+        "downshift": "1.x",
+        "match-sorter": "2.x",
         "intl-locales-supported": "1.x",
         "material-ui": "1.0.0-beta.47",
         "material-ui-filter": "2.x",
