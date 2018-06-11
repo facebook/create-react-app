@@ -124,7 +124,7 @@ npm link "$temp_module_path/node_modules/test-integrity"
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  yarn build
+  yarn build --max_old_space_size=4096
 
 # Check for expected output
 exists build/*.html
@@ -176,7 +176,7 @@ npm link "$temp_module_path/node_modules/test-integrity"
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  yarn build
+  yarn build --max_old_space_size=4096
 
 # Check for expected output
 exists build/*.html
