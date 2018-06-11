@@ -146,13 +146,13 @@ PORT=3001 \
 grep -q 'You can now view' <(tail -f $tmp_server_log)
 
 # Test "development" environment
-# Run integration tests sequentially using --runInBand to reduce Travis CI flakiness
+# https://facebook.github.io/jest/docs/en/troubleshooting.html#tests-are-extremely-slow-on-docker-and-or-continuous-integration-ci-server
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/jest --runInBand --no-cache --config='jest.integration.config.js'
+  node_modules/.bin/jest --maxWorkers=4 --no-cache --config='jest.integration.config.js'
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
@@ -190,7 +190,6 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   yarn test --no-cache --testPathPattern=src
 
 # Test "development" environment
-# Run integration tests sequentially using --runInBand to reduce Travis CI flakiness
 tmp_server_log=`mktemp`
 PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
@@ -202,7 +201,7 @@ E2E_URL="http://localhost:3002" \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/jest --runInBand --no-cache --config='jest.integration.config.js'
+  node_modules/.bin/jest --maxWorkers=4 --no-cache --config='jest.integration.config.js'
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
