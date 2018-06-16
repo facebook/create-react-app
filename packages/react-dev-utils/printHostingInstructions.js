@@ -92,7 +92,7 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
     console.log(`      ${chalk.dim('// ...')}`);
     console.log(
       `      ${chalk.yellow('"predeploy"')}: ${chalk.yellow(
-        '"npm run build",'
+        `"${useYarn ? 'yarn' : 'npm run'} build",`
       )}`
     );
     console.log(
