@@ -25,7 +25,7 @@ packages:
   '@*/*':
     # scoped packages
     access: $all
-    publish: $ll
+    publish: $all
     proxy: npmjs
 
   '**':
