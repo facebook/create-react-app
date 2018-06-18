@@ -151,7 +151,7 @@ E2E_URL="http://localhost:3001" \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
+  node_modules/.bin/mocha --timeout 30000 --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
@@ -159,7 +159,7 @@ E2E_FILE=./build/index.html \
   NODE_ENV=production \
   BABEL_ENV=test \
   PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
+  node_modules/.bin/mocha --timeout 30000 --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
 
 # ******************************************************************************
 # Finally, let's check that everything still works after ejecting.
@@ -200,7 +200,7 @@ E2E_URL="http://localhost:3002" \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
+  node_modules/.bin/mocha --timeout 30000 --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
@@ -209,7 +209,7 @@ E2E_FILE=./build/index.html \
   BABEL_ENV=test \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/mocha --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
+  node_modules/.bin/mocha --timeout 30000 --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
 
 # Cleanup
 cleanup
