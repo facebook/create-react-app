@@ -28,7 +28,10 @@ class BuiltEmitter extends Component {
   }
 
   render() {
-    const { props: { feature }, handleReady } = this;
+    const {
+      props: { feature },
+      handleReady,
+    } = this;
     return (
       <div>
         {createElement(feature, {
@@ -133,6 +136,11 @@ class App extends Component {
         break;
       case 'graphql-inclusion':
         import('./features/webpack/GraphQLInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'mjs-inclusion':
+        import('./features/webpack/esModuleExtInclusion').then(f =>
           this.setFeature(f.default)
         );
         break;

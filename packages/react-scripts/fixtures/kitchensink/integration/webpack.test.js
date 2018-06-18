@@ -11,40 +11,43 @@ import url from 'url';
 
 const matchCSS = (doc, regexes) => {
   if (process.env.E2E_FILE) {
-      const elements = doc.getElementsByTagName('link');
-      let href = "";
-      for (const elem of elements) {
-        if (elem.rel === 'stylesheet') {
-          href = elem.href;
-        }
+    const elements = doc.getElementsByTagName('link');
+    let href = '';
+    for (const elem of elements) {
+      if (elem.rel === 'stylesheet') {
+        href = elem.href;
       }
-      resourceLoader(
-        { url: url.parse(href) },
-        (_, textContent) => {
-          for (const regex of regexes) {
-          expect(textContent).to.match(regex);
-          }
-        }
-      );
-    
+    }
+    resourceLoader({ url: url.parse(href) }, (_, textContent) => {
+      for (const regex of regexes) {
+        expect(textContent).to.match(regex);
+      }
+    });
   } else {
     for (let i = 0; i < regexes.length; ++i) {
-      expect(doc.getElementsByTagName('style')[i].textContent.replace(/\s/g, '')).to.match(regexes[i]);
+      expect(
+        doc.getElementsByTagName('style')[i].textContent.replace(/\s/g, '')
+      ).to.match(regexes[i]);
     }
   }
-}
+};
 
 describe('Integration', () => {
   describe('Webpack plugins', () => {
     it('css inclusion', async () => {
       const doc = await initDOM('css-inclusion');
-      matchCSS(doc, [/html\{/, /#feature-css-inclusion\{background:.+;color:.+}/]);
+      matchCSS(doc, [
+        /html\{/,
+        /#feature-css-inclusion\{background:.+;color:.+}/,
+      ]);
     });
 
     it('css modules inclusion', async () => {
       const doc = await initDOM('css-modules-inclusion');
-      matchCSS(doc, [/.+style_cssModulesInclusion__.+\{background:.+;color:.+}/,
-            /.+assets_cssModulesIndexInclusion__.+\{background:.+;color:.+}/]);
+      matchCSS(doc, [
+        /.+style_cssModulesInclusion__.+\{background:.+;color:.+}/,
+        /.+assets_cssModulesIndexInclusion__.+\{background:.+;color:.+}/,
+      ]);
     });
 
     it('scss inclusion', async () => {
@@ -54,9 +57,10 @@ describe('Integration', () => {
 
     it('scss modules inclusion', async () => {
       const doc = await initDOM('scss-modules-inclusion');
-      matchCSS(doc, [/.+scss-styles_scssModulesInclusion.+\{background:.+;color:.+}/,
-        /.+assets_scssModulesIndexInclusion.+\{background:.+;color:.+}/]);
-      
+      matchCSS(doc, [
+        /.+scss-styles_scssModulesInclusion.+\{background:.+;color:.+}/,
+        /.+assets_scssModulesIndexInclusion.+\{background:.+;color:.+}/,
+      ]);
     });
 
     it('sass inclusion', async () => {
@@ -66,8 +70,10 @@ describe('Integration', () => {
 
     it('sass modules inclusion', async () => {
       const doc = await initDOM('sass-modules-inclusion');
-      matchCSS(doc, [/.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/,
-            /.+assets_sassModulesIndexInclusion.+\{background:.+;color:.+}/]);
+      matchCSS(doc, [
+        /.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/,
+        /.+assets_sassModulesIndexInclusion.+\{background:.+;color:.+}/,
+      ]);
     });
 
     it('graphql files inclusion', async () => {
@@ -78,6 +84,12 @@ describe('Integration', () => {
       expect(children[0].textContent.replace(/\s/g, '')).to.equal(
         '{"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"test"},"value":{"kind":"StringValue","value":"test","block":false}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":40,"source":{"body":"{\\ntest(test:\\"test\\"){\\ntest\\n}\\n}\\n","name":"GraphQLrequest","locationOffset":{"line":1,"column":1}}}}'
       );
+    });
+
+    it('ES .mjs files inclusion', async () => {
+      const doc = await initDOM('mjs-inclusion');
+      const text = doc.getElementById('mjs-inclusion__component').textContent;
+      expect(text).to.equal('.mjs support');
     });
 
     it('image inclusion', async () => {
