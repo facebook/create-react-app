@@ -54,6 +54,7 @@ npm init react-app my-app
 *`npm init <initializer>` is available since npm 6+*
 
 ### Yarn
+
 ```sh
 yarn create react-app my-app
 ```
