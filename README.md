@@ -39,25 +39,25 @@ Just create a project, and you’re good to go.
 To create a new app, you may choose one of the following methods:
 
 ### npx
+
 ```sh
 npx create-react-app my-app
 ```
 
 *([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))*
 
-### npm init
+### NPM
 
-Since npm of 6+ `npm init <name> <...args>` command may be used as an alias for `npx create-<name> <...args>`:
 ```sh
 npm init react-app my-app
 ```
-
-### yarn create
-Since v0.25.0 yarn has alias for `create-*` commands:
-
+*`npm init <initializer>` is available since npm 6+*
+### Yarn
 ```sh
 yarn create react-app my-app
 ```
+*`yarn create` command is available since Yarn 0.25+*
+
 ---
 It will create a directory called `my-app` inside the current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transitive dependencies:
