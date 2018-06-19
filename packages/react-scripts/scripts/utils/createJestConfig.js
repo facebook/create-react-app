@@ -21,6 +21,8 @@ module.exports = (resolve, rootDir, srcRoots) => {
 
   const toRelRootDir = f => '<rootDir>/' + path.relative(rootDir || '', f);
 
+  const resolveRelRoot = f => toRelRootDir(resolve(f));
+
   const setupTestsFile = fs.existsSync(paths.testsSetup)
     ? toRelRootDir(paths.testsSetup)
     : undefined;
@@ -31,7 +33,7 @@ module.exports = (resolve, rootDir, srcRoots) => {
     collectCoverageFrom: srcRoots
       .map(root => path.join(toRelRootDir(root), '**/*.{js,jsx,mjs}'))
       .concat(['!**/build*/**']),
-    setupFiles: [resolve('config/polyfills.js')],
+    setupFiles: [resolveRelRoot('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
       '**/__tests__/**/*.{js,jsx,mjs}',
@@ -42,10 +44,10 @@ module.exports = (resolve, rootDir, srcRoots) => {
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
-      '^.+\\.(js|jsx|mjs)$': resolve('config/jest/babelTransform.js'),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^.+\\.(graphql)$': resolve('config/jest/graphqlTransform.js'),
-      '^(?!.*\\.(js|jsx|mjs|css|json|graphql)$)': resolve(
+      '^.+\\.(js|jsx|mjs)$': resolveRelRoot('config/jest/babelTransform.js'),
+      '^.+\\.css$': resolveRelRoot('config/jest/cssTransform.js'),
+      '^.+\\.(graphql)$': resolveRelRoot('config/jest/graphqlTransform.js'),
+      '^(?!.*\\.(js|jsx|mjs|css|json|graphql)$)': resolveRelRoot(
         'config/jest/fileTransform.js'
       ),
     },
