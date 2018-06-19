@@ -31,7 +31,7 @@ const findPkgs = (rootPath, globPatterns) => {
 
 const findMonorepo = appDir => {
   const monoPkgPath = findPkg.sync(path.resolve(appDir, '..'));
-  const monoRootPath = path.dirname(monoPkgPath);
+  const monoRootPath = monoPkgPath && path.dirname(monoPkgPath);
   const monoPkg = monoPkgPath && require(monoPkgPath);
   const workspaces = monoPkg && monoPkg.workspaces;
   const patterns = (workspaces && workspaces.packages) || workspaces;
