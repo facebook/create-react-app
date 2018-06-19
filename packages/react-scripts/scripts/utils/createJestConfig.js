@@ -15,23 +15,29 @@ const paths = require('../../config/paths');
 module.exports = (resolve, rootDir, srcRoots) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
-  const setupTestsFile = fs.existsSync(paths.testsSetup)
-    ? '<rootDir>/src/setupTests.js'
-    : undefined;
+  if (paths.isMonorepo) {
+    rootDir = paths.monorepoRoot;
+  }
 
   const toRelRootDir = f => '<rootDir>/' + path.relative(rootDir || '', f);
+
+  const setupTestsFile = fs.existsSync(paths.testsSetup)
+    ? toRelRootDir(paths.testsSetup)
+    : undefined;
 
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
-    collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
+    collectCoverageFrom: srcRoots
+      .map(root => path.join(toRelRootDir(root), '**/*.{js,jsx,mjs}'))
+      .concat(['!**/build*/**']),
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
       '**/__tests__/**/*.{js,jsx,mjs}',
       '**/?(*.)(spec|test).{js,jsx,mjs}',
     ],
-    // where to search for files/tests
+    // where to search for files/tests within rootDir
     roots: srcRoots.map(toRelRootDir),
     testEnvironment: 'node',
     testURL: 'http://localhost',
