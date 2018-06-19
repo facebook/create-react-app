@@ -1111,7 +1111,7 @@ You can learn more about making AJAX requests from React components in [the FAQ 
 ## Integrating with an API Backend
 
 These tutorials will help you to integrate your app with an API backend running on another port,
-using `fetch()` to access it.
+using `fetch()` or `axios` to access it.
 
 ### Node
 Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
@@ -2423,7 +2423,7 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 
 ##### "/dev/tty: No such a device or address"
 
-If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the follwing:
+If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the following:
 
 1. Create a new [Personal Access Token](https://github.com/settings/tokens)
 2. `git remote set-url origin https://<user>:<token>@github.com/<user>/<repo>` .
