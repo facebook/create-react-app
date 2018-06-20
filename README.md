@@ -51,14 +51,14 @@ npx create-react-app my-app
 ```sh
 npm init react-app my-app
 ```
-*`npm init <initializer>` is available since npm 6+*
+*`npm init <initializer>` is available in npm 6+*
 
 ### Yarn
 
 ```sh
 yarn create react-app my-app
 ```
-*`yarn create` command is available since Yarn 0.25+*
+*`yarn create` is available in Yarn 0.25+*
 
 It will create a directory called `my-app` inside the current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transitive dependencies:
