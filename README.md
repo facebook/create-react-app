@@ -18,8 +18,18 @@ npm start
 
 *([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))*
 
+Or if you have [yarn](https://yarnpkg.com/) installed
+
+```sh
+yarn create react-app my-app
+cd my-app
+yarn start
+```
+
+NOTE: We support both [npm](https://npmjs.com) and [yarn](https://yarnpkg.com/). However, **they can't be used together in one project** so you need to pick one.
+
 Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
-When you’re ready to deploy to production, create a minified bundle with `npm run build`.
+When you’re ready to deploy to production, create a minified bundle with `npm run build` or `yarn build`.
 
 <p align='center'>
 <img src='https://cdn.rawgit.com/facebook/create-react-app/27b42ac/screencast.svg' width='600' alt='npm start'>
@@ -44,7 +54,13 @@ To create a new app, you may choose one of the following methods:
 npx create-react-app my-app
 ```
 
-*([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))*
+*([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f) or you can use [yarn](http://yarnpkg.com/) by running)*
+
+```sh
+yarn create react-app my-app
+```
+
+*If you used `yarn` to create your app, running `npm install something` later would [corrupt your tree](https://github.com/yarnpkg/yarn/issues/5240). To install a package run `yarn add module-name`. This guide does its best to provide equivalent yarn commands where appropriate.*
 
 ### npm
 
