@@ -36,13 +36,29 @@ Just create a project, and you’re good to go.
 
 **You’ll need to have Node >= 6 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
-To create a new app, run a single command:
+To create a new app, you may choose one of the following methods:
+
+### npx
 
 ```sh
 npx create-react-app my-app
 ```
 
 *([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))*
+
+### npm
+
+```sh
+npm init react-app my-app
+```
+*`npm init <initializer>` is available in npm 6+*
+
+### Yarn
+
+```sh
+yarn create react-app my-app
+```
+*`yarn create` is available in Yarn 0.25+*
 
 It will create a directory called `my-app` inside the current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transitive dependencies:
