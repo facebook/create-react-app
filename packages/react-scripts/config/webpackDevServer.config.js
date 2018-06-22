@@ -16,8 +16,26 @@ const config = require('./webpack.config.dev');
 const paths = require('./paths');
 const fs = require('fs');
 
-const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
+
+function httpsConfig(env) {
+  const https = env.HTTPS;
+  const sslCrtFile = env.SSL_CRT_FILE;
+  const sslKeyFile = env.SSL_KEY_FILE;
+
+  if (https === 'true') {
+    if (sslCrtFile && sslKeyFile) {
+      return {
+        key: fs.readFileSync(sslKeyFile),
+        cert: fs.readFileSync(sslCrtFile)
+      };
+    } else {
+      return true;
+    }
+  } else {
+    return false;
+  }
+};
 
 module.exports = function(proxy, allowedHost) {
   return {
@@ -81,7 +99,7 @@ module.exports = function(proxy, allowedHost) {
       ignored: ignoredFiles(paths.appSrc),
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === 'https',
+    https: httpsConfig(process.env),
     host,
     overlay: false,
     historyApiFallback: {
