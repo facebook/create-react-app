@@ -1428,6 +1428,16 @@ Import it in [`src/setupTests.js`](#initializing-test-environment) to make its m
 import 'jest-enzyme';
 ```
 
+Jest does not handle [`unhandled promise rejections`](https://github.com/facebook/jest/issues/3251) well. In particular, it does not show module name and stack trace. You can add the following [`snippet`](https://github.com/facebook/jest/issues/3251#issuecomment-299183885) to [`src/setupTests.js`](#initializing-test-environment):
+
+```js
+if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
+  process.on('unhandledRejection', reason => { throw reason });
+  // Avoid memory leak by adding too many listeners.
+  process.env.LISTENING_TO_UNHANDLED_REJECTION = true
+}
+```
+
 ### Using Third Party Assertion Libraries
 
 We recommend that you use `expect()` for assertions and `jest.fn()` for spies. If you are having issues with them please [file those against Jest](https://github.com/facebook/jest/issues/new), and we’ll fix them. We intend to keep making them better for React, supporting, for example, [pretty-printing React elements as JSX](https://github.com/facebook/jest/pull/1566).
