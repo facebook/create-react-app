@@ -41,7 +41,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prebuild": "node ./prebuild.js"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
@@ -50,9 +51,16 @@
     ]
   },
   "devDependencies": {
+    "babel-cli": "~6.26.0",
+    "babel-preset-env": "~1.7.0",
     "husky": "~0.14.3",
     "lint-staged": "~7.2.0",
     "prettier": "~1.13.5",
-    "react-scripts": "~1.1.1"
-  }
+    "react-scripts": "~1.1.1",
+    "shelljs": "~0.8.2"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "ie 11"
+  ]
 }
