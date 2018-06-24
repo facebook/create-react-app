@@ -23,7 +23,6 @@
     "pretty": "~2.0.0",
     "prism-theme-one-dark": "~1.0.0",
     "prismjs": "~1.15.0",
-    "raw-loader": "~0.5.1",
     "react": "~16.4.1",
     "react-docgen": "~3.0.0-beta12",
     "react-docgen-annotation-resolver": "~1.0.0",
@@ -56,6 +55,7 @@
     "husky": "~0.14.3",
     "lint-staged": "~7.2.0",
     "prettier": "~1.13.5",
+    "raw-loader": "~0.5.1",
     "react-scripts": "~1.1.1",
     "shelljs": "~0.8.2"
   },
