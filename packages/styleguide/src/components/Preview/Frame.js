@@ -49,12 +49,13 @@ class Frame extends Component {
   };
 
   render() {
-    const { children, scripts, ...other } = this.props;
+    const { children, scripts, head, ...other } = this.props;
 
     // get string if array was passed
     const scriptsStr = Array.isArray(scripts) ? scripts.join() : scripts;
+    const headStr = Array.isArray(head) ? head.join() : head;
 
-    const initialContent = `<!DOCTYPE html><html><head></head><body><div></div>${scriptsStr}</body></html>`;
+    const initialContent = `<!DOCTYPE html><html><head>${headStr}</head><body><div></div>${scriptsStr}</body></html>`;
 
     return (
       <StyledIframe
