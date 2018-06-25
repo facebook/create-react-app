@@ -7,9 +7,14 @@
 
 const fs = require('fs');
 const http = require('http');
-const jsdom = require('jsdom');
 const path = require('path');
 const { expect } = require('chai');
+let jsdom;
+try {
+  jsdom = require("jsdom/lib/old-api.js"); // jsdom >= 10.x
+} catch (e) {
+  jsdom = require("jsdom"); // jsdom <= 9.x
+}
 
 let getMarkup;
 export let resourceLoader;
