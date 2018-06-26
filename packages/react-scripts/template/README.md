@@ -1451,7 +1451,7 @@ Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerpla
 // this will ensure they're removed after each test.
 import 'react-testing-library/cleanup-after-each';
 
-// this adds jest-dom's custom assertsions
+// this adds jest-dom's custom assertions
 import 'jest-dom/extend-expect';
 ```
 
