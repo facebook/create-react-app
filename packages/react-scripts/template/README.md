@@ -864,7 +864,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // components takes precedence over default styles.
 ```
 
-Import required React Bootstrap components within ```src/App.js``` file or your custom component files:
+Import required Reactstrap components within ```src/App.js``` file or your custom component files:
 
 ```js
 import { Button } from 'reactstrap';
