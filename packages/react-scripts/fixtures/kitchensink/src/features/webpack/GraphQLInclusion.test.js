@@ -7,11 +7,15 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import GraphQLInclusion from './GraphQLInclusion';
+import { GraphLExtension, GQLExtension } from './GraphQLInclusion';
 
 describe('graphql files inclusion', () => {
-  it('renders without crashing', () => {
+  it('renders without crashing with GraphLExtension', () => {
     const div = document.createElement('div');
     ReactDOM.render(<GraphQLInclusion />, div);
+  });
+  it('renders without crashing with GQLExtension', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<GQLExtension />, div);
   });
 });
