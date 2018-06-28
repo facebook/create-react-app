@@ -26,8 +26,12 @@ function isLikelyASyntaxError(message) {
 function formatMessage(message, isError) {
   var lines = message.split('\n');
 
-  // Remove the useless Module Warning message webpack sometimes outputs
-  if (lines.length > 2 && lines[1].indexOf('Module Warning') !== -1) {
+  // Remove the useless Module Warning or Module Error message webpack sometimes outputs
+  if (
+    lines.length > 2 &&
+    (lines[1].indexOf('Module Warning') !== -1 ||
+      lines[1].indexOf('Module Error') !== -1)
+  ) {
     lines.splice(1, 1);
   }
 
