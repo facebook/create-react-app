@@ -765,22 +765,13 @@ You don’t have to use [reactstrap](https://reactstrap.github.io/) together wit
 Install  reactstrap and Bootstrap from npm. reactstrap does not include Bootstrap CSS so this needs to be installed as well:
 
 ```sh
-npm install bootstrap --save
-npm install --save reactstrap react react-dom
+npm install --save reactstrap bootstrap@4
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add bootstrap reactstrap react react-dom
-```
-
-Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
-
-```js
-import 'bootstrap/dist/css/bootstrap.min.css';
-// Put any other imports below so that CSS from your
-// components takes precedence over default styles.
+yarn add bootstrap@4 reactstrap 
 ```
 
 Import required Reactstrap components within ```src/App.js``` file or your custom component files:
@@ -789,7 +780,7 @@ Import required Reactstrap components within ```src/App.js``` file or your custo
 import { Button } from 'reactstrap';
 ```
 
-Now you are ready to use the imported Reactstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/zx6658/d9f128cd57ca69e583ea2b5fea074238/raw/a56701c142d0c622eb6c20a457fbc01d708cb485/App.js) redone using Reactstrap.
+Now you are ready to use the imported reactstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/zx6658/d9f128cd57ca69e583ea2b5fea074238/raw/a56701c142d0c622eb6c20a457fbc01d708cb485/App.js) redone using reactstrap.
 
 ### Using a Custom Theme
 
