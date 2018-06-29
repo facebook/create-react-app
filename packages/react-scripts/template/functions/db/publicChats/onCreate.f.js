@@ -1,6 +1,6 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-try { admin.initializeApp() } catch (e) { }
+try { admin.initializeApp() } catch (e) { console.log(e) }
 
 exports = module.exports = functions.database.ref('/public_chats/{taskUid}').onCreate((eventSnapshot, context) => {
   const authorName = eventSnapshot.child('authorName').val()
@@ -27,14 +27,10 @@ exports = module.exports = functions.database.ref('/public_chats/{taskUid}').onC
 
     if (registrationTokens.length) {
       return admin.messaging().sendToDevice(registrationTokens, payload)
-        .then(function (response) {
-          console.log('Successfully sent message:', response)
-        })
-        .catch(function (error) {
-          console.log('Error sending message:', error)
-        })
     } else {
       console.log('Not tokens registered')
     }
+
+    return null
   })
 })

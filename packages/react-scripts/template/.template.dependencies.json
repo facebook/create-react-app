@@ -4,6 +4,7 @@
         "@material-ui/icons": "1.x",
         "a2hs": "1.x",
         "chart.js": "2.x",
+        "downshift": "2.x",
         "echarts": "4.x",
         "echarts-for-react": "2.x",
         "firebase": "5.x",
@@ -13,9 +14,8 @@
         "firekit-provider": "0.x",
         "github-markdown-css": "2.x",
         "intl": "1.x",
-        "downshift": "1.x",
-        "match-sorter": "2.x",
         "intl-locales-supported": "1.x",
+        "match-sorter": "2.x",
         "material-ui": "1.0.0-beta.47",
         "material-ui-filter": "2.x",
         "material-ui-image": "3.x",
@@ -23,6 +23,7 @@
         "material-ui-responsive-menu": "1.x",
         "material-ui-selectable-menu-list": "1.x",
         "material-ui-superselectfield": "1.x",
+        "muishift": "0.x",
         "prop-types": "15.x",
         "react": "16.x",
         "react-chartjs-2": "2.x",
@@ -43,7 +44,6 @@
         "react-redux": "5.x",
         "react-router": "4.x",
         "react-router-dom": "4.x",
-        "react-select": "1.x",
         "react-toastify": "4.x",
         "react-virtualized": "9.x",
         "redux": "4.x",
@@ -51,17 +51,13 @@
         "redux-form-material-ui": "5.0.0-beta.2",
         "redux-persist": "5.x",
         "redux-thunk": "2.x",
-        "rmw-shell": "3.x",
-        "selenium-webdriver": "4.0.0-alpha.1",
-        "source-map-explorer": "1.x"
+        "rmw-shell": "3.x"
     },
     "devDependencies": {
-        "enzyme": "^3.x",
-        "react-scripts": "^1.x",
-        "redux-logger": "^3.x",
-        "redux-testkit": "^1.x",
-        "standard": "^11.x",
-        "selenium-webdriver": "4.0.0-alpha.1",
-        "source-map-explorer": "1.x"
+        "enzyme": "3.x",
+        "react-scripts": "1.x",
+        "redux-logger": "3.x",
+        "redux-testkit": "1.x",
+        "standard": "11.x"
     }
 }

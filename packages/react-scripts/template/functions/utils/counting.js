@@ -1,7 +1,7 @@
 module.exports = {
   handleListChange: (data, context, counterName) => {
     if (data.after.exists() && data.before.exists()) {
-      return
+      return null
     }
 
     const collectionRef = data.after.ref.parent
@@ -15,8 +15,6 @@ module.exports = {
       } else {
         return (current || 0) - 1
       }
-    }).then(() => {
-      console.log(`${counterName} counter updated.`)
     })
   },
   handleRecount: (data, context, listName, correction = 0) => {
@@ -29,5 +27,6 @@ module.exports = {
       return collectionRef.once('value')
         .then(messagesData => counterRef.set(messagesData.numChildren() + correction))
     }
+    return null
   }
 }

@@ -8,18 +8,18 @@ cache:
   - functions/node_modules
 
 before_install:
-  - chmod +x before_install.sh
-  - ./before_install.sh
+  - chmod +x ./continuous_deployment/before_install.sh
+  - ./continuous_deployment/before_install.sh
 
 
 before_script:
   - npm test
-  - chmod +x build.sh
-  - travis_wait 40 ./build.sh
+  - chmod +x ./continuous_deployment/build.sh
+  - travis_wait 40 ./continuous_deployment/build.sh
 
 script:
-  - chmod +x deploy.sh
-  - travis_wait 40 ./deploy.sh
+  - chmod +x ./continuous_deployment/deploy.sh
+  - travis_wait 40 ./continuous_deployment/deploy.sh
 
 after_script:
   - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js

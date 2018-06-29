@@ -6,7 +6,7 @@ import { Activity } from 'rmw-shell'
 //import { ResponsiveMenu } from 'material-ui-responsive-menu';
 import { withTheme, withStyles } from '@material-ui/core/styles'
 import { setDialogIsOpen } from 'rmw-shell/lib/store/dialogs/actions'
-import CompanyForm from '../../components/Forms/CompanyForm';
+import CompanyForm from '../../components/Forms/Company';
 import { withRouter } from 'react-router-dom';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';

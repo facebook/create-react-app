@@ -1,12 +1,23 @@
 {
   "database": {
-    "rules": "database.rules.json"
+    "rules": "firebase/database.rules.json"
   },
-  "storage": {
-    "rules": "storage.rules"
+  "firestore": {
+    "rules": "firebase/firestore.rules",
+    "indexes": "firebase/firestore.indexes.json"
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix ./functions run lint"
+    ]
   },
   "hosting": {
     "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
@@ -25,8 +36,7 @@
       }
     ]
   },
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+  "storage": {
+    "rules": "firebase/storage.rules"
   }
 }

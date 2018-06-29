@@ -1,13 +1,14 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-try { admin.initializeApp() } catch (e) { }
+try { admin.initializeApp() } catch (e) { console.log(e) }
 const nodemailer = require('nodemailer')
-const gmailEmail = encodeURIComponent(functions.config().gmail.email)
-const gmailPassword = encodeURIComponent(functions.config().gmail.password)
+const gmailEmail = encodeURIComponent(functions.config().gmail ? functions.config().gmail.email : '')
+const gmailPassword = encodeURIComponent(functions.config().gmail ? functions.config().gmail.password : '')
 const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`)
 const moment = require('moment')
 
-exports = module.exports = functions.auth.user().onCreate((userRecord, context) => {
+exports = module.exports = functions.auth.user().onCreate((uRecord, context) => {
+  const userRecord = uRecord || {}
   const email = userRecord.email // The email of the user.
   const displayName = userRecord.displayName // The display name of the user.
   const creationTime = moment(userRecord.creationTime)
@@ -35,9 +36,7 @@ exports = module.exports = functions.auth.user().onCreate((userRecord, context) 
       )
     }
 
-    const dayCount = admin.database()
-      .ref(`/user_registrations_per_day/${year}/${month}/${day}`)
-      .transaction(current => (current || 0) + 1)
+    const dayCount = admin.database().ref(`/user_registrations_per_day/${year}/${month}/${day}`).transaction(current => (current || 0) + 1)
 
     const monthCount = admin.database()
       .ref(`/user_registrations_per_month/${year}/${month}`)

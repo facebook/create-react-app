@@ -1,6 +1,6 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-try { admin.initializeApp() } catch (e) { }
+try { admin.initializeApp() } catch (e) { console.log(e) }
 
 exports = module.exports = functions.database.ref('/role_grants/{roleUid}/{grantUid}').onWrite((eventSnapshot, context) => {
   const roleUid = context.params.roleUid
@@ -23,13 +23,9 @@ exports = module.exports = functions.database.ref('/role_grants/{roleUid}/{grant
             console.log('User role changed:', eventSnapshot.val())
 
             if (eventSnapshot.val()) {
-              grantRef = admin.database().ref(`user_grants/${userUid}/${grantUid}`).set(true).then(() => {
-                console.log('Grant added:', grantUid)
-              })
+              grantRef = admin.database().ref(`user_grants/${userUid}/${grantUid}`).set(true)
             } else {
-              grantRef = admin.database().ref(`user_grants/${userUid}/${grantUid}`).remove().then(() => {
-                console.log('Grant removed:', grantUid)
-              })
+              grantRef = admin.database().ref(`user_grants/${userUid}/${grantUid}`).remove()
             }
 
             promises.push(grantRef)

@@ -104,6 +104,7 @@ const styles = theme => ({
   },
   card: {
     minWidth: 275,
+    maxWidth: 350,
     margin: 15,
     [theme.breakpoints.only('xs')]: {
       width: '100%',
@@ -152,11 +153,14 @@ class LandingPage extends Component {
 
 
   render() {
-    const { classes, history } = this.props
+    const { classes, history, theme } = this.props
 
     return (
       <div className={classes.main}>
         <Helmet>
+          <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="apple-mobile-web-app-status-bar-style" content={theme.palette.primary.main} />
+          <meta name="msapplication-navbutton-color" content={theme.palette.primary.main} />
           <title>REACT MOST WANTED</title>
         </Helmet>
         <AppBar position='static'>
@@ -233,28 +237,50 @@ class LandingPage extends Component {
                 <Card className={classes.card}>
                   <CardContent>
                     <Typography variant="headline" component="h2">Installation</Typography>
-                    <Typography className={classes.pos} color="textSecondary"> to do   </Typography>
+                    <br />
+                    <Typography  >{`Just run this script to start:`}</Typography>
+                    <br />
+                    <Typography className={classes.pos} color="textSecondary"> npx create-react-app test-app --scripts-version rmw-react-scripts   </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">Learn More</Button>
+                    <Button size="small" onClick={() => {
+                      var win = window.open('https://github.com/TarikHuber/rmw-shell', '_blank')
+                      win.focus();
+                    }} >Learn More</Button>
                   </CardActions>
                 </Card>
                 <Card className={classes.card}>
                   <CardContent>
                     <Typography variant="headline" component="h2">Usage</Typography>
-                    <Typography className={classes.pos} color="textSecondary"> to do   </Typography>
+                    <br />
+                    <Typography  >{`Set your configuration to the App component:`}</Typography>
+                    <br />
+                    <Typography className={classes.pos} color="textSecondary">
+                      {`import App from 'rmw-shell'`}
+                      <br />
+                      {`<App appConfig={{ configureStore, ...config }} />`}
+                    </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">Learn More</Button>
+                    <Button size="small" onClick={() => {
+                      var win = window.open('https://github.com/TarikHuber/react-most-wanted', '_blank')
+                      win.focus();
+                    }} >Learn More</Button>
                   </CardActions>
                 </Card>
                 <Card className={classes.card}>
                   <CardContent>
-                    <Typography variant="headline" component="h2">Open Source</Typography>
-                    <Typography className={classes.pos} color="textSecondary"> to do   </Typography>
+                    <Typography variant="headline" component="h2">What is this?</Typography>
+                    <Typography noWrap={false} color="textSecondary">
+                      {`This is a OPEN SOURCE demo application that demonstartes the usage of the rmw-shell library 
+                    with react, Material-UI and firebase.  `}
+                      <br />
+                      {` This demo has no purpose to do something as an app. 
+                    It is here just to show how everthing works together. `}
+                    </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">Learn More</Button>
+                    <Button size="small" onClick={() => { history.push('/signin') }} >Get started</Button>
                   </CardActions>
                 </Card>
               </div>

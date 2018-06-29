@@ -12,14 +12,14 @@ require('github-markdown-css')
 class About extends Component {
   // Sorry for using setState here but I have to remove 'marked' from the dependencies
   // because of a vulnerability issue
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       text: ''
     }
   }
 
-  componentWillMount() {
+  componentWillMount () {
     fetch(README)
       .then(response => response.text())
       .then(text => {
@@ -27,7 +27,7 @@ class About extends Component {
       })
   }
 
-  render() {
+  render () {
     const { intl } = this.props
 
     return (
@@ -45,7 +45,7 @@ class About extends Component {
         title={intl.formatMessage({ id: 'about' })}>
 
         <Scrollbar>
-          <div style={{ backgroundColor: 'white', padding: 5 }}>
+          <div style={{ backgroundColor: 'white', padding: 12 }}>
             <ReactMarkdown
               className='markdown-body'
               source={this.state.text}

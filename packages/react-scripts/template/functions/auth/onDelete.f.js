@@ -1,9 +1,9 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-try { admin.initializeApp() } catch (e) { }
+try { admin.initializeApp() } catch (e) { console.log(e) }
 const nodemailer = require('nodemailer')
-const gmailEmail = encodeURIComponent(functions.config().gmail.email)
-const gmailPassword = encodeURIComponent(functions.config().gmail.password)
+const gmailEmail = encodeURIComponent(functions.config().gmail ? functions.config().gmail.email : '')
+const gmailPassword = encodeURIComponent(functions.config().gmail ? functions.config().gmail.password : '')
 const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`)
 
 exports = module.exports = functions.auth.user().onDelete((userMetadata, context) => {
@@ -29,6 +29,7 @@ exports = module.exports = functions.auth.user().onDelete((userMetadata, context
 
   const sendEmail = mailTransport.sendMail(mailOptions).then(() => {
     console.log('Account deletion confirmation email sent to:', email)
+    return null
   })
 
   const deleteUser = admin.database().ref(`/users/${uid}`).remove()

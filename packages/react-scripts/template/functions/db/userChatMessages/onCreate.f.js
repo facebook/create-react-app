@@ -1,6 +1,6 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-try { admin.initializeApp() } catch (e) { }
+try { admin.initializeApp() } catch (e) { console.log(e) }
 const notifications = require('../../utils/notifications')
 
 exports = module.exports = functions.database.ref('/user_chat_messages/{senderUid}/{receiverUid}/{messageUid}').onCreate((eventSnapshot, context) => {
@@ -17,6 +17,8 @@ exports = module.exports = functions.database.ref('/user_chat_messages/{senderUi
   const receiverChatUnreadRef = admin.database().ref(`/user_chats/${receiverUid}/${senderUid}/unread`)
   const receiverChatMessageRef = admin.database().ref(`/user_chat_messages/${receiverUid}/${senderUid}/${messageUid}`)
   const senderChatMessageRef = admin.database().ref(`/user_chat_messages/${senderUid}/${receiverUid}/${messageUid}`)
+  const setSenderMessageReceived = () => senderChatMessageRef.update({ isReceived: context.timestamp })
+  const setSenderChatReceived = () => senderChatRef.update({ isReceived: context.timestamp })
 
   console.log(`Message ${messageUid} ${snapValues.message} created! Sender ${senderUid}, receiver ${receiverUid}`)
 
@@ -38,7 +40,7 @@ exports = module.exports = functions.database.ref('/user_chat_messages/{senderUi
   }
 
   const udateReceiverChatMessage = receiverChatMessageRef.update(snapValues).then(() => {
-    senderChatMessageRef.update({
+    return senderChatMessageRef.update({
       isSend: context.timestamp
     })
   })
@@ -77,15 +79,9 @@ exports = module.exports = functions.database.ref('/user_chat_messages/{senderUi
       }
     }
 
-    notifyUser = notifications.notifyUser(receiverUid, payload).then(() => {
-      senderChatMessageRef.update({
-        isReceived: context.timestamp
-      }).then(() => {
-        senderChatRef.update({
-          isReceived: context.timestamp
-        })
-      })
-    })
+    notifyUser = notifications.notifyUser(receiverUid, payload)
+      .then(setSenderMessageReceived)
+      .then(setSenderChatReceived)
   }
 
   return Promise.all([

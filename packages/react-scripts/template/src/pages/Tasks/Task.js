@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import Activity from 'rmw-shell/lib/components/Activity'
 import { setDialogIsOpen } from 'rmw-shell/lib/store/dialogs/actions'
-import Form from '../../components/Forms/TaskForm';
+import Form from '../../components/Forms/Task';
 import { withRouter } from 'react-router-dom';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
