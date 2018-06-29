@@ -774,6 +774,14 @@ Alternatively you may use `yarn`:
 yarn add bootstrap@4 reactstrap 
 ```
 
+Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
+
+```js
+import 'bootstrap/dist/css/bootstrap.min.css';
+// Put any other imports below so that CSS from your
+// components takes precedence over default styles.
+```
+
 Import required Reactstrap components within ```src/App.js``` file or your custom component files:
 
 ```js
