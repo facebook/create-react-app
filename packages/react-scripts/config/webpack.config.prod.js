@@ -199,6 +199,7 @@ module.exports = {
               // @remove-on-eject-begin
               babelrc: false,
               presets: [require.resolve('babel-preset-react-app')],
+              plugins: [require.resolve('add-react-displayname')],
               // @remove-on-eject-end
               compact: true,
             },
