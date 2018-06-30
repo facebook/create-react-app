@@ -843,7 +843,7 @@ Alternatively, you can force the linter to ignore any line by adding `// eslint-
 
 You don’t have to use [reactstrap](https://reactstrap.github.io/) together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
 
-Install  reactstrap and Bootstrap from npm. reactstrap does not include Bootstrap CSS so this needs to be installed as well:
+Install reactstrap and Bootstrap from npm. reactstrap does not include Bootstrap CSS so this needs to be installed as well:
 
 ```sh
 npm install --save reactstrap bootstrap@4
