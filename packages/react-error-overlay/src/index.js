@@ -6,7 +6,10 @@
  */
 
 /* @flow */
-import { listenToRuntimeErrors } from './listenToRuntimeErrors';
+import {
+  listenToRuntimeErrors,
+  crashWithFrames,
+} from './listenToRuntimeErrors';
 import { iframeStyle } from './styles';
 import { applyStyles } from './utils/dom/css';
 
@@ -45,6 +48,14 @@ export function setEditorHandler(handler: EditorHandler | null) {
 export function reportBuildError(error: string) {
   currentBuildError = error;
   update();
+}
+
+export function reportRuntimeError(
+  error: Error,
+  options?: RuntimeReportingOption = {}
+) {
+  currentRuntimeErrorOptions = options;
+  crashWithFrames(handleRuntimeError)(error);
 }
 
 export function dismissBuildError() {
