@@ -381,6 +381,7 @@ module.exports = {
             exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
+              publicPath: publicPath === './' ? '../../' : publicPath,
             },
           },
           // ** STOP ** Are you adding a new loader?
