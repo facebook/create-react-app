@@ -96,6 +96,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Now](#now)
   - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
+  - [Digital Ocean](#digital-ocean)
 - [Advanced Configuration](#advanced-configuration)
 - [Troubleshooting](#troubleshooting)
   - [`npm start` doesn’t detect changes](#npm-start-doesnt-detect-changes)
@@ -2531,6 +2532,9 @@ When asked about the project path, make sure to specify the `build` folder, for 
 ```
 
 Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
+
+### [Digital Ocean](https://www.digitalocean.com/)
+To deploy your application automatically to a DO droplet see [this article](https://medium.com/@omarandstuff/create-react-app-automatic-deploy-to-a-digital-ocean-droplet-5fb2f819bc53).
 
 ## Advanced Configuration
 
