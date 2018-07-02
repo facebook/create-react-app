@@ -181,6 +181,7 @@ module.exports = {
             },
           },
           // The notation here is somewhat confusing.
+          // "sass" loader compiles Sass code to CSS.
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
           // "style" loader normally turns CSS into JS modules injecting <style>,
@@ -193,7 +194,7 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,
+            test: /\.(css|sass|scss)$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -232,12 +233,25 @@ module.exports = {
                         ],
                       },
                     },
+                    {
+                      loader: require.resolve('sass-loader'),
+                    },
                   ],
                 },
                 extractTextPluginOptions
               )
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          // "svg-react" loader transforms svg files into react components.
+          {
+            exclude: '/node_modules/',
+            test: /\.svg$/,
+            loader: require.resolve('svg-react-loader'),
+            query: {
+              // This is bugged at the moment
+              // classIdPrefix: '[name]-[hash:8]__',
+            },
           },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.

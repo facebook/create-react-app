@@ -15,6 +15,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
@@ -176,13 +178,14 @@ module.exports = {
               cacheDirectory: true,
             },
           },
+          // "sass" loader compiles Sass code to CSS.
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
           // "style" loader turns CSS into JS modules that inject <style> tags.
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           {
-            test: /\.css$/,
+            test: /\.(css|sass|scss)$/,
             use: [
               require.resolve('style-loader'),
               {
@@ -211,7 +214,20 @@ module.exports = {
                   ],
                 },
               },
+              {
+                loader: require.resolve('sass-loader'),
+              },
             ],
+          },
+          // "svg-react" loader transforms svg files into react components.
+          {
+            exclude: '/node_modules/',
+            test: /\.svg$/,
+            loader: require.resolve('svg-react-loader'),
+            query: {
+              // This is bugged at the moment
+              // classIdPrefix: '[name]-[hash:8]__',
+            },
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
@@ -262,6 +278,7 @@ module.exports = {
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+    new BundleAnalyzerPlugin(),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
     // solution that requires the user to opt into importing specific locales.
