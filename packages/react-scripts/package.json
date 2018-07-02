@@ -1,6 +1,6 @@
 {
   "name": "@bluealba/react-scripts",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@bluealba/eslint-config-react-app": "^2.1.1",
+    "@bluealba/eslint-config-react-app": "^2.1.0",
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
