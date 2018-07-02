@@ -135,7 +135,7 @@ module.exports = {
               eslintPath: require.resolve('eslint'),
               // @remove-on-eject-begin
               baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
+                extends: [require.resolve('@bluealba/eslint-config-react-app')],
               },
               ignore: false,
               useEslintrc: false,
