@@ -114,7 +114,13 @@ module.exports = {
     'default-case': ['warn', { commentPattern: '^no default$' }],
     'dot-location': ['warn', 'property'],
     eqeqeq: ['warn', 'allow-null'],
-    indent: ['warn', 'tab'],
+    indent: [
+      'warn',
+      'tab',
+      {
+        SwitchCase: 1,
+      },
+    ],
     'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
@@ -155,6 +161,7 @@ module.exports = {
         allowSamePrecedence: false,
       },
     ],
+    'no-mixed-spaces-and-tabs': ['warn', 'smart-tabs'],
     'no-multi-str': 'warn',
     'no-native-reassign': 'warn',
     'no-negated-in-lhs': 'warn',
