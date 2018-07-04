@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Loadable from 'react-loadable'
 import LoadingComponent from 'rmw-shell/lib/components/LoadingComponent'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import registerServiceWorker from 'rmw-shell/lib/registerServiceWorker'
+import registerServiceWorker from 'rmw-shell/lib/utils/registerServiceWorker'
 import A2HSProvider from 'a2hs'
 
 const MainAsync = Loadable({

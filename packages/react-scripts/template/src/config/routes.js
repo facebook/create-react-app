@@ -4,14 +4,14 @@ import RestrictedRoute from 'rmw-shell/lib/containers/RestrictedRoute'
 
 const MyLoadable = (opts, preloadComponents) => makeLoadable({ ...opts, firebase: () => import('./firebase') }, preloadComponents)
 
-const AsyncDashboard = MyLoadable({ loader: () => import('./pages/Dashboard') });
-const AsyncAbout = MyLoadable({ loader: () => import('./pages/About/About') });
-const AsyncCompany = MyLoadable({ loader: () => import('./pages/Companies/Company') });
-const AsyncCompanies = MyLoadable({ loader: () => import('./pages/Companies/Companies') }, [AsyncCompany]);
-const AsyncTask = MyLoadable({ loader: () => import('./pages/Tasks/Task') });
-const AsyncTasks = MyLoadable({ loader: () => import('./pages/Tasks/Tasks') }, [AsyncTask]);
-const AsyncDocument = MyLoadable({ loader: () => import('./pages/Document') });
-const AsyncCollection = MyLoadable({ loader: () => import('./pages/Collection') });
+const AsyncDashboard = MyLoadable({ loader: () => import('../pages/Dashboard') })
+const AsyncAbout = MyLoadable({ loader: () => import('../pages/About') })
+const AsyncCompany = MyLoadable({ loader: () => import('../pages/Companies/Company') })
+const AsyncCompanies = MyLoadable({ loader: () => import('../pages/Companies/Companies') }, [AsyncCompany])
+const AsyncTask = MyLoadable({ loader: () => import('../pages/Tasks/Task') })
+const AsyncTasks = MyLoadable({ loader: () => import('../pages/Tasks/Tasks') }, [AsyncTask])
+const AsyncDocument = MyLoadable({ loader: () => import('../pages/Document') })
+const AsyncCollection = MyLoadable({ loader: () => import('../pages/Collection') })
 
 const routes = [
   <RestrictedRoute type='private' path="/" exact component={AsyncDashboard} />,

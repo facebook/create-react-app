@@ -51,7 +51,7 @@
         "redux-form-material-ui": "5.0.0-beta.2",
         "redux-persist": "5.x",
         "redux-thunk": "2.x",
-        "rmw-shell": "3.x"
+        "rmw-shell": "4.x"
     },
     "devDependencies": {
         "enzyme": "3.x",
