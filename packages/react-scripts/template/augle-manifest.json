@@ -1,0 +1,12 @@
+{
+	"main": "./index.html",
+	"admin": "./admin.html",
+	"//" : "This is comment: 'verCode' version code need to be changes with each release, its an integer and should be always greater then previous release version code",
+	"verCode": 1,
+	"//" : "This is comment: 'version' version is a user readable string, usually semver notation of the release",
+	"version": "0.1.0",
+	"//" : "This is comment: 'modelId' should be unique across the augle platform, user reverse domain name notation, Example: com.augle.apps",
+	"modelId": "{place your model id here}",
+	"//" : "This is comment: 'type' augle app type",
+	"type": "webapp"
+}

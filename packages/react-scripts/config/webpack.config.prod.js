@@ -16,11 +16,11 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const InterpolateHtmlPlugin = require('augle-react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const eslintFormatter = require('augle-react-dev-utils/eslintFormatter');
+const ModuleScopePlugin = require('augle-react-dev-utils/ModuleScopePlugin');
+const getCSSModuleLocalIdent = require('augle-react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -85,7 +85,6 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
   }
   return loaders;
 };
-
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
@@ -97,7 +96,11 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: {
+    polyfills: require.resolve('./polyfills'),
+    index: paths.appIndexJs,
+    admin: paths.appAdminJs
+  },
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -114,58 +117,60 @@ module.exports = {
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
   },
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          parse: {
-            // we want uglify-js to parse ecma 8 code. However, we don't want it
-            // to apply any minfication steps that turns valid ecma 5 code
-            // into invalid ecma 5 code. This is why the 'compress' and 'output'
-            // sections only apply transformations that are ecma 5 safe
-            // https://github.com/facebook/create-react-app/pull/4234
-            ecma: 8,
-          },
-          compress: {
-            ecma: 5,
-            warnings: false,
-            // Disabled because of an issue with Uglify breaking seemingly valid code:
-            // https://github.com/facebook/create-react-app/issues/2376
-            // Pending further investigation:
-            // https://github.com/mishoo/UglifyJS2/issues/2011
-            comparisons: false,
-          },
-          mangle: {
-            safari10: true,
-          },
-          output: {
-            ecma: 5,
-            comments: false,
-            // Turned on because emoji and regex is not minified properly using default
-            // https://github.com/facebook/create-react-app/issues/2488
-            ascii_only: true,
-          },
-        },
-        // Use multi-process parallel running to improve the build speed
-        // Default number of concurrent runs: os.cpus().length - 1
-        parallel: true,
-        // Enable file caching
-        cache: true,
-        sourceMap: shouldUseSourceMap,
-      }),
-      new OptimizeCSSAssetsPlugin(),
-    ],
-    // Automatically split vendor and commons
-    // https://twitter.com/wSokra/status/969633336732905474
-    // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-    splitChunks: {
-      chunks: 'all',
-      name: 'vendors',
-    },
-    // Keep the runtime chunk seperated to enable long term caching
-    // https://twitter.com/wSokra/status/969679223278505985
-    runtimeChunk: true,
-  },
+  // optimization: {
+  //   // webpack-manifest-plugin currently does not play well with ConcatenatedModule
+  //   concatenateModules: false,
+  //   minimizer: [
+  //     new UglifyJsPlugin({
+  //       uglifyOptions: {
+  //         parse: {
+  //           // we want uglify-js to parse ecma 8 code. However, we don't want it
+  //           // to apply any minfication steps that turns valid ecma 5 code
+  //           // into invalid ecma 5 code. This is why the 'compress' and 'output'
+  //           // sections only apply transformations that are ecma 5 safe
+  //           // https://github.com/facebook/create-react-app/pull/4234
+  //           ecma: 8,
+  //         },
+  //         compress: {
+  //           ecma: 5,
+  //           warnings: false,
+  //           // Disabled because of an issue with Uglify breaking seemingly valid code:
+  //           // https://github.com/facebook/create-react-app/issues/2376
+  //           // Pending further investigation:
+  //           // https://github.com/mishoo/UglifyJS2/issues/2011
+  //           comparisons: false,
+  //         },
+  //         mangle: {
+  //           safari10: true,
+  //         },
+  //         output: {
+  //           ecma: 5,
+  //           comments: false,
+  //           // Turned on because emoji and regex is not minified properly using default
+  //           // https://github.com/facebook/create-react-app/issues/2488
+  //           ascii_only: true,
+  //         },
+  //       },
+  //       // Use multi-process parallel running to improve the build speed
+  //       // Default number of concurrent runs: os.cpus().length - 1
+  //       parallel: true,
+  //       // Enable file caching
+  //       cache: true,
+  //       sourceMap: shouldUseSourceMap,
+  //     }),
+  //     new OptimizeCSSAssetsPlugin(),
+  //   ],
+  //   // Automatically split vendor and commons
+  //   // https://twitter.com/wSokra/status/969633336732905474
+  //   // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
+  //   splitChunks: {
+  //     chunks: 'all',
+  //     name: 'vendors',
+  //   },
+  //   // Keep the runtime chunk seperated to enable long term caching
+  //   // https://twitter.com/wSokra/status/969679223278505985
+  //   runtimeChunk: true,
+  // },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
@@ -205,6 +210,11 @@ module.exports = {
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
     ],
   },
+  externals: {
+    'react': 'React', // Case matters here
+    'react-dom' : 'ReactDOM', // Case matters here,
+    'firebase': 'firebase'
+	},
   module: {
     strictExportPresence: true,
     rules: [
@@ -224,7 +234,7 @@ module.exports = {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
               baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
+                extends: [require.resolve('augle-eslint-config-react-app')],
               },
               // @remove-on-eject-begin
               ignore: false,
@@ -268,10 +278,10 @@ module.exports = {
                   // @remove-on-eject-begin
                   babelrc: false,
                   // @remove-on-eject-end
-                  presets: [require.resolve('babel-preset-react-app')],
+                  presets: [require.resolve('augle-babel-preset-react-app')],
                   plugins: [
                     [
-                      require.resolve('babel-plugin-named-asset-import'),
+                      require.resolve('augle-babel-plugin-named-asset-import'),
                       {
                         loaderMap: {
                           svg: {
@@ -301,7 +311,7 @@ module.exports = {
                   babelrc: false,
                   compact: false,
                   presets: [
-                    require.resolve('babel-preset-react-app/dependencies'),
+                    require.resolve('augle-babel-preset-react-app/dependencies'),
                   ],
                   cacheDirectory: true,
                   highlightCode: true,
@@ -394,6 +404,26 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      chunks: ['polyfills', 'index'],
+      filename: `./${path.basename(paths.appHtml)}`,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      chunks: ['polyfills', 'admin'],
+      template: paths.adminHtml,
+      filename: `./${path.basename(paths.adminHtml)}`,
       minify: {
         removeComments: true,
         collapseWhitespace: true,

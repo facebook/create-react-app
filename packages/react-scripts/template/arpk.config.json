@@ -1,0 +1,4 @@
+{
+	"manifestDir": "./",
+	"buildFiles": ["build/**"]
+}

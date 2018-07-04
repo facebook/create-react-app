@@ -1,4 +1,4 @@
-# babel-preset-react-app
+# augle-babel-preset-react-app
 
 This package includes the Babel preset used by [Create React App](https://github.com/facebook/create-react-app).<br>
 Please refer to its documentation:
@@ -16,10 +16,10 @@ If you want to use this Babel preset in a project not built with Create React Ap
 
 First, [install Babel](https://babeljs.io/docs/setup/).
 
-Then install babel-preset-react-app.
+Then install augle-babel-preset-react-app.
 
 ```sh
-npm install babel-preset-react-app --save-dev
+npm install augle-babel-preset-react-app --save-dev
 ```
 
 Then create a file named `.babelrc` with following contents in the root folder of your project:

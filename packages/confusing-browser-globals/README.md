@@ -1,4 +1,4 @@
-# confusing-browser-globals
+# augle-confusing-browser-globals
 
 A curated list of browser globals that commonly cause confusion and are not recommended to use without an explicit `window.` qualifier.
 
@@ -22,18 +22,18 @@ This package exports a list of globals that are often used by mistake. You can f
 ## Installation
 
 ```
-npm install --save confusing-browser-globals
+npm install --save augle-confusing-browser-globals
 ```
 
 
 ## Usage
 
-If you use Create React App, you don't need to configure anything, as this rule is already included in the default `eslint-config-react-app` preset.
+If you use Create React App, you don't need to configure anything, as this rule is already included in the default `augle-eslint-config-react-app` preset.
 
 If you maintain your own ESLint configuration, you can do this:
 
 ```js
-var restrictedGlobals = require('confusing-browser-globals');
+var restrictedGlobals = require('augle-confusing-browser-globals');
 
 module.exports = {
   rules: {

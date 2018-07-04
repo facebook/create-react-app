@@ -18,8 +18,8 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const execSync = require('child_process').execSync;
-const spawn = require('react-dev-utils/crossSpawn');
-const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
+const spawn = require('augle-react-dev-utils/crossSpawn');
+const { defaultBrowsers } = require('augle-react-dev-utils/browsersHelper');
 const os = require('os');
 
 function isInGitRepository() {
@@ -91,14 +91,22 @@ module.exports = function(
   appPackage.dependencies = appPackage.dependencies || {};
 
   // Setup the script rules
+
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test --env=jsdom',
-    eject: 'react-scripts eject',
+    start: 'augle-react-scripts start',
+    "build-arpk": "gulp arpk",
+    build: 'augle-react-scripts build && gulp arpk',
+    test: 'augle-react-scripts test --env=jsdom',
+    eject: 'augle-react-scripts eject',
+  };
+
+  appPackage.devDependencies = {
+    "augle-arpk-build": "^0.4.13",
+    "gulp": "gulpjs/gulp#4.0"
   };
 
   appPackage.browserslist = defaultBrowsers;
+  appPackage.homepage = "./";
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),

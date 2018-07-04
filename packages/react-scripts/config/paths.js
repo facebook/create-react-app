@@ -11,7 +11,7 @@
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
-const findMonorepo = require('react-dev-utils/workspaceUtils').findMonorepo;
+const findMonorepo = require('augle-react-dev-utils/workspaceUtils').findMonorepo;
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
@@ -75,7 +75,9 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
+  adminHtml: resolveApp('public/admin.html'),
   appIndexJs: resolveApp('src/index.js'),
+  appAdminJs: resolveApp('src/admin.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
