@@ -1,6 +1,6 @@
 {
-  "name": "react-dev-utils",
-  "version": "5.0.0",
+  "name": "augle-react-dev-utils",
+  "version": "5.0.4",
   "description": "Webpack utilities used by Create React App",
   "repository": "facebook/create-react-app",
   "license": "MIT",
@@ -59,7 +59,8 @@
     "shell-quote": "1.6.1",
     "sockjs-client": "1.1.4",
     "strip-ansi": "4.0.0",
-    "text-table": "0.2.0"
+    "text-table": "0.2.0",
+    "loader-utils": "^1.1.0"
   },
   "devDependencies": {
     "jest": "22.4.3"

@@ -36,12 +36,12 @@ const webpack = require('webpack');
 const bfj = require('bfj');
 const config = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
-const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
-const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
-const printBuildError = require('react-dev-utils/printBuildError');
-const { printBrowsers } = require('react-dev-utils/browsersHelper');
+const checkRequiredFiles = require('augle-react-dev-utils/checkRequiredFiles');
+const formatWebpackMessages = require('augle-react-dev-utils/formatWebpackMessages');
+const printHostingInstructions = require('augle-react-dev-utils/printHostingInstructions');
+const FileSizeReporter = require('augle-react-dev-utils/FileSizeReporter');
+const printBuildError = require('augle-react-dev-utils/printBuildError');
+const { printBrowsers } = require('augle-react-dev-utils/browsersHelper');
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -62,7 +62,7 @@ const writeStatsJson = argv.indexOf('--stats') !== -1;
 
 // We require that you explictly set browsers and do not fall back to
 // browserslist defaults.
-const { checkBrowsers } = require('react-dev-utils/browsersHelper');
+const { checkBrowsers } = require('augle-react-dev-utils/browsersHelper');
 checkBrowsers(paths.appPath)
   .then(() => {
     // First, read the current file sizes in build directory.

@@ -32,15 +32,15 @@ if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
 const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const clearConsole = require('react-dev-utils/clearConsole');
-const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+const clearConsole = require('augle-react-dev-utils/clearConsole');
+const checkRequiredFiles = require('augle-react-dev-utils/checkRequiredFiles');
 const {
   choosePort,
   createCompiler,
   prepareProxy,
   prepareUrls,
-} = require('react-dev-utils/WebpackDevServerUtils');
-const openBrowser = require('react-dev-utils/openBrowser');
+} = require('augle-react-dev-utils/WebpackDevServerUtils');
+const openBrowser = require('augle-react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
 const createDevServerConfig = require('../config/webpackDevServer.config');
@@ -75,7 +75,7 @@ if (process.env.HOST) {
 
 // We require that you explictly set browsers and do not fall back to
 // browserslist defaults.
-const { checkBrowsers } = require('react-dev-utils/browsersHelper');
+const { checkBrowsers } = require('augle-react-dev-utils/browsersHelper');
 checkBrowsers(paths.appPath)
   .then(() => {
     // We attempt to use the default port but if it is busy, we offer the user to
