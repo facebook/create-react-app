@@ -41,19 +41,9 @@ function formatMessage(message, isError) {
   }
 
   // Remove unnecessary stack added by `thread-loader`
-  var threadLoaderIndex = -1;
-  lines.forEach(function(line, index) {
-    if (threadLoaderIndex !== -1) {
-      return;
-    }
-    if (/thread.loader/i.test(line)) {
-      threadLoaderIndex = index;
-    }
+  lines = lines.filter(function(line) {
+    return /thread.loader/i.test(line) === false;
   });
-
-  if (threadLoaderIndex !== -1) {
-    lines = lines.slice(0, threadLoaderIndex);
-  }
 
   lines = lines.filter(function(line) {
     // Webpack adds a list of entry points to warning messages:
