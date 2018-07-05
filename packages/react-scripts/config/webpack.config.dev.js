@@ -76,7 +76,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 module.exports = {
   mode: 'development',
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
-  // See the discussion in https://github.com/facebook/create-react-app/issues/343.
+  // See the discussion in https://github.com/facebook/create-react-app/issues/343
   devtool: 'cheap-module-source-map',
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
