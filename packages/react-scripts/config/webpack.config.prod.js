@@ -309,6 +309,12 @@ module.exports = {
               },
             ],
           },
+          // Process any dependencies using .mjs files such as graphql
+          {
+            test: /\.mjs$/,
+            include: /node_modules/,
+            type: 'javascript/auto',
+          },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
           // `MiniCSSExtractPlugin` extracts styles into CSS
