@@ -7,9 +7,16 @@
 
 import React from 'react';
 import A from './assets/graphql.graphql';
+import B from './assets/graphql.gql';
 
-export default () => (
+export const GraphLQLExtension = () => (
   <p id="graphql-inclusion">
     <span>{JSON.stringify(A)}</span>
+  </p>
+);
+
+export const GQLExtension = () => (
+  <p id="graphql-inclusion">
+    <span>{JSON.stringify(B)}</span>
   </p>
 );
