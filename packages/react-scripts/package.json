@@ -1,6 +1,6 @@
 {
   "name": "@bluealba/react-scripts",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -51,6 +51,7 @@
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
+		"prettier-eslint-cli": "^4.7.0",
     "promise": "8.0.1",
     "raf": "3.4.0",
     "react-dev-utils": "^5.0.1",
