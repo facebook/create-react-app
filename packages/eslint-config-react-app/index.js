@@ -87,7 +87,7 @@ module.exports = {
 
   parser: 'babel-eslint',
 
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'prettier'],
 
   env: {
     browser: true,
@@ -114,14 +114,6 @@ module.exports = {
     'default-case': ['warn', { commentPattern: '^no default$' }],
     'dot-location': ['warn', 'property'],
     eqeqeq: ['warn', 'allow-null'],
-    indent: [
-      'warn',
-      'tab',
-      {
-        SwitchCase: 1,
-      },
-    ],
-    'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
     'no-cond-assign': ['warn', 'except-parens'],
@@ -161,7 +153,6 @@ module.exports = {
         allowSamePrecedence: false,
       },
     ],
-    'no-mixed-spaces-and-tabs': ['warn', 'smart-tabs'],
     'no-multi-str': 'warn',
     'no-native-reassign': 'warn',
     'no-negated-in-lhs': 'warn',
@@ -186,7 +177,6 @@ module.exports = {
     'no-throw-literal': 'warn',
     'no-undef': 'error',
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
-    'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
       'warn',
@@ -225,14 +215,11 @@ module.exports = {
       },
     ],
     'no-with': 'warn',
-    'no-whitespace-before-property': 'warn',
     'prefer-const': 'warn',
     quotes: ['error', 'double', 'avoid-escape'],
     radix: 'warn',
     'require-yield': 'warn',
-    'rest-spread-spacing': ['warn', 'never'],
     strict: ['error', 'global'],
-    'unicode-bom': ['warn', 'never'],
     'use-isnan': 'warn',
     'valid-typeof': 'warn',
     'no-restricted-properties': [
@@ -272,10 +259,14 @@ module.exports = {
     'react/forbid-prop-types': ['warn', { forbid: ['any', 'array', 'object'] }],
     'react/jsx-uses-react': 'warn',
     'react/jsx-uses-vars': 'warn',
+    'react/no-children-prop': 'warn',
     'react/no-danger-with-children': 'warn',
     'react/no-deprecated': 'warn',
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
+    'react/no-string-refs': 'warn',
+    'react/no-unescaped-entities': 'warn',
+    'react/no-unknown-property': 'warn',
     'react/prop-types': 'warn',
     'react/react-in-jsx-scope': 'error',
     'react/require-render-return': 'error',
@@ -305,5 +296,10 @@ module.exports = {
     'flowtype/define-flow-type': 'warn',
     'flowtype/require-valid-file-annotation': 'warn',
     'flowtype/use-flow-type': 'warn',
+
+    // https://prettier.io/docs/en/eslint.html
+    'prettier/prettier': 'error',
   },
+
+  extends: ['prettier', 'prettier/react'],
 };

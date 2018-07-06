@@ -1,6 +1,6 @@
 {
   "name": "@bluealba/eslint-config-react-app",
-  "version": "2.1.2",
+  "version": "2.2.1",
   "description": "ESLint configuration used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -13,9 +13,11 @@
   "peerDependencies": {
     "babel-eslint": "^7.2.3",
     "eslint": "^4.1.1",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-flowtype": "^2.34.1",
     "eslint-plugin-import": "^2.6.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0"
+    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-prettier": "^2.6.0"
   }
 }
