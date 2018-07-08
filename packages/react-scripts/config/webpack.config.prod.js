@@ -69,6 +69,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
           require('postcss-flexbugs-fixes'),
           autoprefixer({
             flexbox: 'no-2009',
+            grid: true,
           }),
         ],
         sourceMap: shouldUseSourceMap,
