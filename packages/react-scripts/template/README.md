@@ -25,6 +25,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Code Splitting](#code-splitting)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
+- [Adding a custom Post-Processing CSS configuration](#adding-a-custom-post-processing-css-configuration)
 - [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
 - [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
 - [Adding GraphQL files](#adding-graphql-files)
@@ -598,6 +599,83 @@ becomes this:
 
 If you need to disable autoprefixing for some reason, [follow this section](https://github.com/postcss/autoprefixer#disabling).
 
+## Adding a custom Post-Processing CSS configuration
+
+Create React App already uses PostCSS as described in the [Post-Processing CSS](#post-processing-css) section. However, you may want to customize your project's PostCSS configuration. You cannot access the `postcss.config.js` directly unless you [eject](#npm-run-eject) your Create React App first. If you don't want to eject, however, you can manually integrate PostCSS in teh following way.
+
+First, let’s install the command-line interface for PostCSS:
+
+```sh
+npm install --save-dev postcss postcss-cli npm-run-all
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add postcss postcss-cli npm-run-all
+```
+
+`npm-run-all` will be required for running the following `watch-postcss` automatically with `npm start`, and run `build-postcss` as a part of `npm run build`.
+
+Then in `package.json`, add the following lines to `scripts`:
+
+```diff
+   "scripts": {
++    "build-postcss": "postcss --env=production --dir=src/ --ext=css --base=src/ src/*.pcss src/**/*.pcss",
++    "watch-postcss": "postcss --dir=src/ --ext=css --verbose --base=src/ -w src/*.pcss src/**/*.pcss",
+-    "start": "react-scripts start",
+-    "build": "react-scripts build",
++    "start-js": "react-scripts start",
++    "start": "npm-run-all -p watch-postcss start-js",
++    "build-js": "react-scripts build",
++    "build": "npm-run-all build-postcss build-js",
+     "test": "react-scripts test --env=jsdom",
+```
+
+Now you can rename `src/App.css` to `src/App.pcss` and run `npm run watch-postcss`. The watcher will find every PostCSS file in `src` subdirectories, and create a corresponding CSS file next to it, in our case overwriting `src/App.css`. Since `src/App.js` still imports `src/App.css`, the styles become a part of your application. You can now edit `src/App.pcss`, and `src/App.css` will be regenerated.
+
+Then, remove all CSS files from the source control adding the following lines to your `.gitignore` file:
+
+```diff
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
++# css
++src/**/*.css
++
+ # dependencies
+ /node_modules
+```
+
+Now create a new `postcss.config.js` file in the root directory.
+
+```js
+module.exports = ctx => ({
+  plugins: []
+});
+```
+
+Using the `ctx` variable, it will be possible to differentiate the PostCSS plug-ins depending on the environment (note that the `build-postcss` script previously defined, set the environment name to be `production`).
+
+Now, let's say we want to use the `precss` and `autoprefixer` plug-ins in development mode and add the `cssnano` one when running `npm run build` only. First we need to install all the plug-ins as development dependencies with the following command:
+
+```sh
+npm install --save-dev autoprefixer precss cssnano
+```
+
+Then edid the `postcss.config.js` to include the new installed packages:
+
+```js
+module.exports = ctx => ({
+  plugins: [
+    require('precss'),
+    require('autoprefixer'),
+    ctx.env === 'production' ? require('cssnano') : false,
+  ]
+});
+```
+
+Now running `npm start` and `npm run build` will use your custom `PostCSS` configuration.
+
 ## Adding a CSS Preprocessor (Sass, Less etc.)
 
 Generally, we recommend that you don’t reuse the same CSS classes across different components. For example, instead of using a `.Button` CSS class in `<AcceptButton>` and `<RejectButton>` components, we recommend creating a `<Button>` component with its own `.Button` styles, that both `<AcceptButton>` and `<RejectButton>` can render (but [not inherit](https://facebook.github.io/react/docs/composition-vs-inheritance.html)).
@@ -852,7 +930,7 @@ npm install --save reactstrap bootstrap@4
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add bootstrap@4 reactstrap 
+yarn add bootstrap@4 reactstrap
 ```
 
 Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
