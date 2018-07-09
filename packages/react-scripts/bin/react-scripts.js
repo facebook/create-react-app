@@ -30,7 +30,7 @@ switch (script) {
   case 'start':
   case 'test': {
     const result = spawn.sync(
-      'node',
+      process.execPath,
       nodeArgs
         .concat(require.resolve('../scripts/' + script))
         .concat(args.slice(scriptIndex + 1)),
