@@ -29,13 +29,6 @@ function getStackFrames(
     enhancedFramesPromise = map(parsedFrames, contextSize);
   }
   return enhancedFramesPromise.then(enhancedFrames => {
-    if (
-      enhancedFrames
-        .map(f => f._originalFileName)
-        .filter(f => f != null && f.indexOf('node_modules') === -1).length === 0
-    ) {
-      return null;
-    }
     return enhancedFrames.filter(
       ({ functionName }) =>
         functionName == null ||
