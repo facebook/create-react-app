@@ -11,6 +11,7 @@ const chalk = require('chalk');
 const url = require('url');
 const globalModules = require('global-modules');
 const fs = require('fs');
+const execSync = require('child_process').execSync;
 
 function printHostingInstructions(
   appPackage,
@@ -113,12 +114,13 @@ function printStaticServerInstructions(buildFolder, useYarn) {
   console.log('You may serve it with a static server:');
   console.log();
 
-  if (!fs.existsSync(`${globalModules}/serve`)) {
-    if (useYarn) {
+  if (useYarn) {
+    const yarnGlobalDir = execSync('yarn global dir').toString().replace('\n','');
+    if (!fs.existsSync(`${yarnGlobalModules}/node_modules/serve`)) {
       console.log(`  ${chalk.cyan('yarn')} global add serve`);
-    } else {
-      console.log(`  ${chalk.cyan('npm')} install -g serve`);
     }
+  } else if (!fs.existsSync(`${globalModules}/serve`)) {
+    console.log(`  ${chalk.cyan('npm')} install -g serve`);
   }
   console.log(`  ${chalk.cyan('serve')} -s ${buildFolder}`);
 }
