@@ -37,8 +37,13 @@ function formatMessage(message, isError) {
     lines.splice(1, 1);
   }
 
+  // Remove other thread-loader noise
+  if (lines.length > 2 && /thread.loader/i.test(lines[1])) {
+    lines.splice(1, 1);
+  }
+
+  // Remove extra newline.
   if (lines.length > 2 && lines[1] === '') {
-    // Remove extra newline.
     lines.splice(1, 1);
   }
 
