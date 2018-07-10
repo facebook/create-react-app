@@ -116,7 +116,7 @@ function printStaticServerInstructions(buildFolder, useYarn) {
 
   if (useYarn) {
     const yarnGlobalDir = execSync('yarn global dir').toString().replace('\n','');
-    if (!fs.existsSync(`${yarnGlobalModules}/node_modules/serve`)) {
+    if (!fs.existsSync(`${yarnGlobalDir}/node_modules/serve`)) {
       console.log(`  ${chalk.cyan('yarn')} global add serve`);
     }
   } else if (!fs.existsSync(`${globalModules}/serve`)) {
