@@ -298,7 +298,7 @@ module.exports = {
     'flowtype/use-flow-type': 'warn',
 
     // https://prettier.io/docs/en/eslint.html
-    'prettier/prettier': 'error',
+    'prettier/prettier': 'warn',
   },
 
   extends: ['prettier', 'prettier/react'],

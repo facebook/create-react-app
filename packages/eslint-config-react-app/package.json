@@ -1,6 +1,6 @@
 {
   "name": "@bluealba/eslint-config-react-app",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "ESLint configuration used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
