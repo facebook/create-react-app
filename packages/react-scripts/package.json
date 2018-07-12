@@ -26,7 +26,7 @@
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.2",
-    "babel-preset-react-app": "^3.1.1",
+    "babel-preset-react-app": "^3.1.2",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
