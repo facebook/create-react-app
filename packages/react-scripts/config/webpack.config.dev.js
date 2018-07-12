@@ -219,16 +219,6 @@ module.exports = {
               },
             ],
           },
-          // "svg-react" loader transforms svg files into react components.
-          {
-            exclude: '/node_modules/',
-            test: /\.svg$/,
-            loader: require.resolve('svg-react-loader'),
-            query: {
-              // This is bugged at the moment
-              // classIdPrefix: '[name]-[hash:8]__',
-            },
-          },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.

@@ -243,16 +243,6 @@ module.exports = {
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
-          // "svg-react" loader transforms svg files into react components.
-          {
-            exclude: '/node_modules/',
-            test: /\.svg$/,
-            loader: require.resolve('svg-react-loader'),
-            query: {
-              // This is bugged at the moment
-              // classIdPrefix: '[name]-[hash:8]__',
-            },
-          },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules

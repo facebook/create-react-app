@@ -1,6 +1,6 @@
 {
   "name": "@bluealba/react-scripts",
-  "version": "1.1.10",
+  "version": "1.2.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -52,7 +52,6 @@
     "resolve": "1.6.0",
     "sass-loader": "^7.0.3",
     "style-loader": "0.19.0",
-    "svg-react-loader": "^0.4.5",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
