@@ -1,6 +1,6 @@
 {
   "name": "@bluealba/eslint-config-react-app",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "ESLint configuration used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -10,7 +10,7 @@
   "files": [
     "index.js"
   ],
-  "peerDependencies": {
+  "dependencies": {
     "babel-eslint": "^7.2.3",
     "eslint": "^4.1.1",
     "eslint-config-prettier": "^2.9.0",
