@@ -1,6 +1,6 @@
-import { defineMessages } from 'react-intl'
+import {defineMessages} from 'react-intl';
 
-const messages = defineMessages({
+const messages=defineMessages({
   app_name: 'React Najtrazeniji',
   dashboard: 'Pregled',
   about: 'Opis',
@@ -12,11 +12,11 @@ const messages = defineMessages({
   language: 'Jezik',
   theme: 'Tema',
   responsive: 'Responsive',
-  en: 'English',
-  de: 'Deutsch',
+  en: 'Engleski',
+  de: 'Njemacki',
   bs: 'Bosanski',
-  ru: 'Русский',
-  es: 'Español',
+  ru: 'Ruski',
+  es: 'Španski',
   dark: 'Tamna',
   light: 'Svijetla',
   ics: 'ICS',
@@ -144,7 +144,6 @@ const messages = defineMessages({
   user_label_search: 'Search user',
   document: 'Document',
   collection: 'Collection',
-  infinitelist: 'Infinitelist'
-})
+});
 
-export default messages
+export default messages;

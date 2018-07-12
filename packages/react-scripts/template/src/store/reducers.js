@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import initState from './init'
-import { appReducers } from 'rmw-shell/lib/store/reducers'
-import rootReducer from 'rmw-shell/lib/store/rootReducer'
+import { appReducers } from '../../../src/store/reducers'
+import rootReducer from '../../../src/store/rootReducer'
 
 const appReducer = combineReducers({
   ...appReducers

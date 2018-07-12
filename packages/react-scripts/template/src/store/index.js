@@ -6,7 +6,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/es/storage' // default: localStorage if web, AsyncStorage if react-native
 import initState from './init'
 
-export default function configureStore () {
+export default function configureStore() {
   let store
 
   const logger = createLogger({})
@@ -31,7 +31,7 @@ export default function configureStore () {
   const persistorConfig = {
     key: 'root',
     storage,
-    blacklist: ['form', 'connection', 'initialization', 'messaging']
+    blacklist: ['auth', 'form', 'connection', 'initialization', 'messaging', 'simpleValues', 'theme']
   }
 
   const reducer = persistReducer(persistorConfig, reducers)

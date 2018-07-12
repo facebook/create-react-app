@@ -1,38 +1,27 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { TextField } from 'redux-form-material-ui';
-import { Avatar } from 'rmw-shell/lib/containers/Avatar';
-import Icon from '@material-ui/core/Icon';
-import Button from '@material-ui/core/Button';
-import { setDialogIsOpen } from 'rmw-shell/lib/store/dialogs/actions';
-import { ImageCropDialog } from 'rmw-shell/lib/containers/ImageCropDialog';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { injectIntl, intlShape } from 'react-intl'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
+import { TextField } from 'redux-form-material-ui'
+import { setDialogIsOpen } from 'rmw-shell/lib/store/dialogs/actions'
+import { ImageCropDialog } from 'rmw-shell/lib/containers/ImageCropDialog'
+import { withRouter } from 'react-router-dom'
 import { withTheme } from '@material-ui/core/styles'
-import PropTypes from 'prop-types';
-
-
+import PropTypes from 'prop-types'
+import AvatarImageField from 'rmw-shell/lib/components/ReduxFormFields/AvatarImageField'
 
 class Form extends Component {
-
-  handlePhotoUploadSuccess = (snapshot) => {
-    const { setDialogIsOpen, change } = this.props;
-    change('photoURL', snapshot.downloadURL);
-    setDialogIsOpen('new_company_photo', undefined);
-  }
-
-  render() {
+  render () {
     const {
       handleSubmit,
       intl,
       initialized,
       setDialogIsOpen,
       dialogs,
-      match,
-    } = this.props;
+      match
+    } = this.props
 
-    const uid = match.params.uid;
+    const uid = match.params.uid
 
     return (
       <form onSubmit={handleSubmit} style={{
@@ -42,91 +31,66 @@ class Form extends Component {
         flexWrap: 'wrap',
         justifyContent: 'center'
       }}>
-        <button type="submit" style={{ display: 'none' }} />
+        <button type='submit' style={{ display: 'none' }} />
 
         <div style={{ margin: 15, display: 'flex', flexDirection: 'column' }}>
 
-          <div>
-            <Field
-              name="photoURL"
-              size={120}
-              component={Avatar}
-              icon={
-                <Icon
-                  className="material-icons">
-                  business
-              </Icon>
-              }
-              ref="photoURL"
-              withRef
-            />
-          </div>
-
-
-          <Button
-            onClick={() => {
-              setDialogIsOpen('new_company_photo', true)
-            }}
-            disabled={uid === undefined || !initialized}
-            containerElement='label'
-            primary={true}
-            icon={
-              <Icon
-                className="material-icons">
-                photo_camera
-            </Icon>
-            }
+          <AvatarImageField
+            name='photoURL'
+            disabled={!initialized}
+            uid={uid}
+            change={this.props.change}
+            initialized={initialized}
+            intl={intl}
+            path={'companies'}
           />
-        </div>
 
-        <div>
           <div>
             <Field
-              name="name"
+              name='name'
               disabled={!initialized}
               component={TextField}
               placeholder={intl.formatMessage({ id: 'name_hint' })}
               label={intl.formatMessage({ id: 'name_label' })}
-              ref="name"
+              ref='name'
               withRef
             />
           </div>
 
           <div>
             <Field
-              name="full_name"
+              name='full_name'
               disabled={!initialized}
               component={TextField}
               placeholder={intl.formatMessage({ id: 'full_name_hint' })}
               label={intl.formatMessage({ id: 'full_name_label' })}
-              ref="full_name"
+              ref='full_name'
               withRef
             />
           </div>
 
           <div>
             <Field
-              name="vat"
+              name='vat'
               disabled={!initialized}
               component={TextField}
               placeholder={intl.formatMessage({ id: 'vat_hint' })}
               label={intl.formatMessage({ id: 'vat_label' })}
-              ref="vat"
+              ref='vat'
               withRef
             />
           </div>
 
-
           <div>
             <Field
-              name="description"
+              name='description'
               disabled={!initialized}
               component={TextField}
-              multiline={true}
+              multiline
               rows={2}
               placeholder={intl.formatMessage({ id: 'description_hint' })}
               label={intl.formatMessage({ id: 'description_label' })}
-              ref="description"
+              ref='description'
               withRef
             />
           </div>
@@ -143,7 +107,7 @@ class Form extends Component {
         </div>
 
       </form>
-    );
+    )
   }
 }
 
@@ -153,15 +117,14 @@ Form.propTypes = {
   initialized: PropTypes.bool.isRequired,
   setDialogIsOpen: PropTypes.func.isRequired,
   dialogs: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-};
+  match: PropTypes.object.isRequired
+}
 
-
-Form = reduxForm({ form: 'company' })(Form);
+Form = reduxForm({ form: 'company' })(Form)
 const selector = formValueSelector('company')
 
 const mapStateToProps = state => {
-  const { intl, vehicleTypes, users, dialogs } = state;
+  const { intl, vehicleTypes, users, dialogs } = state
 
   return {
     intl,
@@ -169,9 +132,9 @@ const mapStateToProps = state => {
     users,
     dialogs,
     photoURL: selector(state, 'photoURL')
-  };
-};
+  }
+}
 
 export default connect(
   mapStateToProps, { setDialogIsOpen }
-)(injectIntl(withRouter(withTheme()(Form))));
+)(injectIntl(withRouter(withTheme()(Form))))

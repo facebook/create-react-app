@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withTheme, withStyles } from '@material-ui/core/styles'
 import { injectIntl, intlShape } from 'react-intl'
-import { Activity } from 'rmw-shell'
+import { Activity } from '../../../../src'
 import Button from '@material-ui/core/Button'
-import { withFirebase } from 'firekit-provider'
+import { withFirebase } from 'firekit-provider';
 import TextField from '@material-ui/core/TextField'
 // eslint-disable-next-line
 import firestore from 'firebase/firestore'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@material-ui/core/Typography';
 
 class Document extends Component {
 
@@ -58,7 +59,7 @@ class Document extends Component {
   }
 
   render() {
-    const { intl, sandwichData, isWatching } = this.props
+    const { intl, theme, sandwichData, isWatching } = this.props
 
     return (
       <Activity title={intl.formatMessage({ id: 'document' })}>
@@ -114,4 +115,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps, {}
-)(injectIntl(withFirebase(Document)));
+)(injectIntl(withFirebase(withTheme()(Document))));

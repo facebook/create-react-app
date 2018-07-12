@@ -1,8 +1,8 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from 'react-intl'
 
 const messages = defineMessages({
   app_name: 'React Most Wanted',
-  dashboard: 'Dashboard',
+  dashboard: 'Dashboard2',
   about: 'About',
   page_not_found_demo: 'Page not found demo',
   '404': '404',
@@ -13,10 +13,10 @@ const messages = defineMessages({
   theme: 'Theme',
   responsive: 'Responsive',
   en: 'English',
-  de: 'Deutsch',
-  bs: 'Bosanski',
-  ru: 'Русский',
-  es: 'Español',
+  de: 'German',
+  bs: 'Bosnian',
+  ru: 'Russian',
+  es: 'Spanish',
   dark: 'Dark',
   light: 'Light',
   ics: 'ICS',
@@ -144,8 +144,9 @@ const messages = defineMessages({
   user_label_search: 'Search user',
   document: 'Document',
   collection: 'Collection',
-  infinitelist: 'Infinitelist',
+  night_mode: 'Night mode',
+  day_mode: 'Day mode'
 
-});
+})
 
-export default messages;
+export default messages
