@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withTheme, withStyles } from '@material-ui/core/styles'
 import { injectIntl, intlShape } from 'react-intl'
-import { Activity } from '../../../../src'
+import { Activity } from 'rmw-shell'
 import Button from '@material-ui/core/Button'
 import { withFirebase } from 'firekit-provider';
 import TextField from '@material-ui/core/TextField'
@@ -74,7 +73,7 @@ class Collection extends Component {
   }
 
   render() {
-    const { intl, theme, posts, isWatching } = this.props
+    const { intl, posts, isWatching } = this.props
 
     return (
       <Activity title={intl.formatMessage({ id: 'collection' })}>
@@ -139,4 +138,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps, {}
-)(injectIntl(withFirebase(withTheme()(Collection))));
+)(injectIntl(withFirebase(Collection)))

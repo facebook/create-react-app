@@ -1,17 +1,17 @@
+import AvatarImageField from 'rmw-shell/lib/components/ReduxFormFields/AvatarImageField'
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
+import { ImageCropDialog } from 'rmw-shell/lib/containers/ImageCropDialog'
+import { TextField } from 'redux-form-material-ui'
 import { connect } from 'react-redux'
 import { injectIntl, intlShape } from 'react-intl'
-import { Field, reduxForm, formValueSelector } from 'redux-form'
-import { TextField } from 'redux-form-material-ui'
 import { setDialogIsOpen } from 'rmw-shell/lib/store/dialogs/actions'
-import { ImageCropDialog } from 'rmw-shell/lib/containers/ImageCropDialog'
 import { withRouter } from 'react-router-dom'
 import { withTheme } from '@material-ui/core/styles'
-import PropTypes from 'prop-types'
-import AvatarImageField from 'rmw-shell/lib/components/ReduxFormFields/AvatarImageField'
 
 class Form extends Component {
-  render () {
+  render() {
     const {
       handleSubmit,
       intl,

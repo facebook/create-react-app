@@ -1,8 +1,8 @@
-import {defineMessages} from 'react-intl';
+import { defineMessages } from 'react-intl'
 
-const messages=defineMessages({
-  app_name: 'React Самый разыскиваемый',
-  dashboard: 'Панель мониторинга',
+const messages = defineMessages({
+  app_name: 'React Самый Нужный',
+  dashboard: 'Дашборд',
   about: 'О нас',
   page_not_found_demo: 'Страница не найдена Демо',
   '404': '404',
@@ -12,16 +12,16 @@ const messages=defineMessages({
   language: 'Язык',
   theme: 'Темы',
   responsive: 'Адаптивный',
-  en: 'Английский',
-  de: 'Немецкий',
-  bs: 'Боснийский',
+  en: 'English',
+  de: 'Deutsch',
+  bs: 'Bosanski',
   ru: 'Русский',
-  es: 'Испанский',
+  es: 'Español',
   dark: 'Темная',
   light: 'Светла',
   ics: 'ICS',
   sign_out: 'Выход',
-  sign_in: 'Войти',
+  sign_in: 'Вход',
   sign_up: 'Зарегистрироваться',
   sign_in_with_google: 'Войти через Гугл',
   sign_in_with_facebook: 'Войти через Фейсбук',
@@ -144,7 +144,28 @@ const messages=defineMessages({
   user_label_search: 'Поиск людей',
   document: 'Документ',
   collection: 'Коллекция',
+  infinitelist: 'Бесконечный скроллинг',
+  mark_chat_as_unread: 'Пометить как непрочитанное',
+  delete_chat: 'Удалить чат',
+  search: 'Поиск',
+  update_available: 'Доступна новая версия этого приложения.',
+  load_update: 'Обновить',
+  enable_notifications_message: 'Включить уведомления?',
+  enable: 'Включить',
+  no_thanks: 'Нет, Спасибо',
+  creation_time: 'Время создания',
+  night_mode: 'Ночной режим',
+  day_mode: 'Дневной режим',
+  default: 'Стандарт',
+  red: 'Красная',
+  green: 'Зеленая',
+  notifications: 'Уведомления',
+  disable_notifications_dialog_title: 'Отключить уведомления',
+  disable_notifications_dialog_message: 'Все уведомления на всех ваших устройствах будут отключены!',
+  update_title: 'Доступно обновление!',
+  update_message: 'Нажмите здесь, чтобы получить новую версию.',
+  install: 'Установить'
 
-});
+})
 
-export default messages;
+export default messages

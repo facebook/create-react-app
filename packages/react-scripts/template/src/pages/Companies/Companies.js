@@ -13,7 +13,7 @@ import { withRouter } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar'
 import { withFirebase } from 'firekit-provider'
 import isGranted from 'rmw-shell/lib/utils/auth'
-import { Activity, Scrollbar } from '../../../../src'
+import { Activity, Scrollbar } from 'rmw-shell'
 
 class Companies extends Component {
   componentDidMount () {
@@ -47,7 +47,7 @@ class Companies extends Component {
   }
 
   render () {
-    const { intl, companies, theme, history, isGranted, classes } = this.props
+    const { intl, companies, theme, history, isGranted } = this.props
 
     return (
       <Activity

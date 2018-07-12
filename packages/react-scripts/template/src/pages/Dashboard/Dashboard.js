@@ -3,12 +3,13 @@ import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import { injectIntl, intlShape } from 'react-intl'
 import { GitHubIcon } from 'rmw-shell/lib/components/Icons'
-import { Activity } from '../../../../src'
+import { Activity } from 'rmw-shell'
 import { withTheme } from '@material-ui/core/styles'
 import { Line, Bar, Doughnut } from 'react-chartjs-2'
 import { withFirebase } from 'firekit-provider'
 import CountUp from 'react-countup'
 import Icon from '@material-ui/core/Icon'
+import Scrollbar from 'rmw-shell/lib/components/Scrollbar/Scrollbar'
 
 const currentYear = new Date().getFullYear()
 const daysPath = `/user_registrations_per_day/${currentYear}/${new Date().toISOString().slice(5, 7)}`
@@ -16,7 +17,7 @@ const monthsPath = `/user_registrations_per_month/${currentYear}`
 const providerPath = `/provider_count`
 
 class Dashboard extends Component {
-  componentDidMount () {
+  componentDidMount() {
     const { watchPath } = this.props
 
     watchPath(daysPath)
@@ -25,7 +26,7 @@ class Dashboard extends Component {
     watchPath('users_count')
   }
 
-  render () {
+  render() {
     const { theme, intl, days, months, providers, usersCount } = this.props
 
     let daysLabels = []
@@ -143,58 +144,59 @@ class Dashboard extends Component {
         }
         title={intl.formatMessage({ id: 'dashboard' })}>
 
-        <div style={{ margin: 5, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
-          <div style={{ flexGrow: 1, flexShrink: 1, maxWidth: 600 }}>
-            <Line
-              options={{
-                maintainAspectRatio: true
-              }}
-              data={monthsComponentData}
-            />
-          </div>
+        <Scrollbar>
+          <div style={{ margin: 5, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div style={{ flexGrow: 1, flexShrink: 1, maxWidth: 600 }}>
+              <Line
+                options={{
+                  maintainAspectRatio: true
+                }}
+                data={monthsComponentData}
+              />
+            </div>
 
-          <div style={{ flexGrow: 1, flexShrink: 1, maxWidth: 600 }}>
-            <Bar
-              options={{
-                maintainAspectRatio: true
-              }}
-              data={daysComponentData}
-            />
-          </div>
-
-        </div>
-
-        <br />
-        <div style={{ margin: 5, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
-
-          <div style={{ flexGrow: 1, flexShrink: 1, maxWidth: 600 }}>
-            <Doughnut
-              data={providersComponentData}
-            />
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: 30 }}>
-            <CountUp
-              style={{
-                fontSize: 100,
-                color: theme.palette.primary.main,
-                fontFamily: theme.fontFamily
-              }}
-              start={0}
-              end={usersCount}
-            />
-            <div>
-              <Icon
-                color='secondary'
-                className='material-icons'
-                style={{ fontSize: 70, marginLeft: 16 }}>
-                group
-              </Icon>
+            <div style={{ flexGrow: 1, flexShrink: 1, maxWidth: 600 }}>
+              <Bar
+                options={{
+                  maintainAspectRatio: true
+                }}
+                data={daysComponentData}
+              />
             </div>
 
           </div>
-        </div>
 
+          <br />
+          <div style={{ margin: 5, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
+
+            <div style={{ flexGrow: 1, flexShrink: 1, maxWidth: 600 }}>
+              <Doughnut
+                data={providersComponentData}
+              />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: 30 }}>
+              <CountUp
+                style={{
+                  fontSize: 100,
+                  color: theme.palette.primary.main,
+                  fontFamily: theme.fontFamily
+                }}
+                start={0}
+                end={usersCount}
+              />
+              <div>
+                <Icon
+                  color='secondary'
+                  className='material-icons'
+                  style={{ fontSize: 70, marginLeft: 16 }}>
+                  group
+              </Icon>
+              </div>
+
+            </div>
+          </div>
+        </Scrollbar>
       </Activity >
     )
   }

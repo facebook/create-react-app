@@ -1,22 +1,33 @@
-import React, { Component } from 'react'
-import IconButton from '@material-ui/core/IconButton'
-import { injectIntl, intlShape } from 'react-intl'
-import { GitHubIcon } from 'rmw-shell/lib/components/Icons'
-import Activity from 'rmw-shell/lib/containers/Activity'
-import Scrollbar from 'rmw-shell/lib/components/Scrollbar'
-import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
+import LockIcon from '@material-ui/icons/Lock'
+import React, { Component } from 'react'
+import Toolbar from '@material-ui/core/Toolbar'
+import Tooltip from '@material-ui/core/Tooltip'
+import Typography from '@material-ui/core/Typography'
+import { GitHubIcon } from 'rmw-shell/lib/components/Icons'
 import { Helmet } from 'react-helmet'
 import { withRouter } from 'react-router-dom'
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
 
 const styles = theme => ({
+  main: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   root: {
-    height: '100%'
+    flexGrow: 1,
+    flex: '1 0 100%'
+    // height: '100%',
+    // overflow: 'hidden'
   },
   hero: {
     height: '100%',
-    minHeight: '80vh',
+    // minHeight: '80vh',
     flex: '0 0 auto',
     display: 'flex',
     justifyContent: 'center',
@@ -53,9 +64,9 @@ const styles = theme => ({
   },
   content: {
     height: '100%',
-    paddingTop: theme.spacing.unit * 8,
+    // paddingTop: theme.spacing.unit * 8,
     [theme.breakpoints.up('sm')]: {
-      paddingTop: theme.spacing.unit * 12
+      paddingTop: theme.spacing.unit
     }
   },
   button: {
@@ -78,81 +89,208 @@ const styles = theme => ({
   stepIcon: {
     marginBottom: theme.spacing.unit
   },
-  markdownElement: {}
+  markdownElement: {},
+  cardsContent: {
+    padding: 15,
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+    [theme.breakpoints.only('xs')]: {
+      width: '100%',
+      padding: 0,
+      paddingTop: 15
+    }
+
+  },
+  card: {
+    minWidth: 275,
+    maxWidth: 350,
+    margin: 15,
+    [theme.breakpoints.only('xs')]: {
+      width: '100%',
+      margin: 0,
+      marginTop: 7
+    }
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  cardTitle: {
+    marginBottom: 16,
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
 
 })
 
 class LandingPage extends Component {
-  render () {
-    const { intl, classes, history } = this.props
+
+
+  isAuthorised = () => {
+    try {
+      const key = Object.keys(localStorage).find(e => e.match(/persist:root/))
+      const data = JSON.parse(localStorage.getItem(key))
+      const auth = JSON.parse(data.auth)
+
+      return auth && auth.isAuthorised
+
+    } catch (ex) {
+      return false
+    }
+  }
+
+  componentDidMount() {
+    const { history } = this.props
+
+    if (this.isAuthorised()) {
+      history.push('/signin')
+    }
+  }
+
+
+  render() {
+    const { classes, history, theme } = this.props
 
     return (
-      <Activity
-        appBarContent={
-          <IconButton
-            color='inherit'
-            href='https://github.com/TarikHuber/react-most-wanted'
-            target='_blank'
-            rel='noopener'
-          >
-            <GitHubIcon />
-          </IconButton>
-        }>
+      <div className={classes.main}>
+        <Helmet>
+          <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="apple-mobile-web-app-status-bar-style" content={theme.palette.primary.main} />
+          <meta name="msapplication-navbutton-color" content={theme.palette.primary.main} />
+          <title>REACT MOST WANTED</title>
+        </Helmet>
+        <AppBar position='static'>
+          <Toolbar disableGutters>
+            <div style={{ flex: 1 }} />
 
-        <Scrollbar>
-          <div className={classes.root}>
-            <Helmet>
-              <title>REACT MOST WANTED</title>
-            </Helmet>
-            <div className={classes.hero}>
-              <div className={classes.content}>
-                <img
-                  src='/rmw.svg'
-                  alt='Material-UI Logo'
-                  className={classes.logo}
-                />
-                <div className={classes.text}>
-                  <Typography
-                    variant='display2'
-                    align='center'
-                    component='h1'
-                    color='inherit'
-                    gutterBottom
-                    className={classes.title}
-                  >
-                    {'REACT MOST WANTED'}
-                  </Typography>
-                  <Typography
-                    variant='headline'
-                    component='h2'
-                    color='inherit'
-                    gutterBottom
-                    className={classes.headline}
-                  >
-                    {'React Starter-Kit with all Most Wanted features.'}
-                  </Typography>
-                  <Button
-                    onClick={() => { history.push('/signin') }}
-                    className={classes.button}
-                    variant='outlined'
-                    color='primary'
-                  >
-                    {'Get Started'}
-                  </Button>
-                </div>
+            <Tooltip id="tooltip-icon1" title="Sign in">
+              <IconButton
+                name='signin'
+                aria-label='Open Github'
+                color='inherit'
+                onClick={() => { history.push('/signin') }}
+                rel='noopener'
+              >
+                <LockIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip id="tooltip-icon2" title="GitHub repository">
+              <IconButton
+                name='github'
+                aria-label='Open Github'
+                color='inherit'
+                href='https://github.com/TarikHuber/react-most-wanted'
+                target='_blank'
+                rel='noopener'
+              >
+                <GitHubIcon />
+              </IconButton>
+            </Tooltip>
+          </Toolbar>
+        </AppBar>
+
+        <div className={classes.root}>
+
+
+          <div className={classes.hero}>
+            <div className={classes.content}>
+              <img
+                src='/rmw.svg'
+                alt='Material-UI Logo'
+                className={classes.logo}
+              />
+              <div className={classes.text}>
+                <Typography
+                  variant='display2'
+                  align='center'
+                  component='h1'
+                  color='inherit'
+                  gutterBottom
+                  className={classes.title}
+                >
+                  {'REACT MOST WANTED'}
+                </Typography>
+                <Typography
+                  variant='headline'
+                  component='h2'
+                  color='inherit'
+                  gutterBottom
+                  className={classes.headline}
+                >
+                  {'React Starter-Kit with all Most Wanted features.'}
+                </Typography>
+                <Button
+                  onClick={() => { history.push('/signin') }}
+                  className={classes.button}
+                  variant='outlined'
+                  color='primary'
+                >
+                  {'Get Started'}
+                </Button>
+              </div>
+
+              <div className={classes.cardsContent}>
+                <Card className={classes.card}>
+                  <CardContent>
+                    <Typography variant="headline" component="h2">Installation</Typography>
+                    <br />
+                    <Typography  >{`Just run this script to start:`}</Typography>
+                    <br />
+                    <Typography className={classes.pos} color="textSecondary"> npx create-react-app test-app --scripts-version rmw-react-scripts   </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" onClick={() => {
+                      var win = window.open('https://github.com/TarikHuber/rmw-shell', '_blank')
+                      win.focus();
+                    }} >Learn More</Button>
+                  </CardActions>
+                </Card>
+                <Card className={classes.card}>
+                  <CardContent>
+                    <Typography variant="headline" component="h2">Usage</Typography>
+                    <br />
+                    <Typography  >{`Set your configuration to the App component:`}</Typography>
+                    <br />
+                    <Typography className={classes.pos} color="textSecondary">
+                      {`import App from 'rmw-shell'`}
+                      <br />
+                      {`<App appConfig={{ configureStore, ...config }} />`}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" onClick={() => {
+                      var win = window.open('https://github.com/TarikHuber/react-most-wanted', '_blank')
+                      win.focus();
+                    }} >Learn More</Button>
+                  </CardActions>
+                </Card>
+                <Card className={classes.card}>
+                  <CardContent>
+                    <Typography variant="headline" component="h2">What is this?</Typography>
+                    <Typography noWrap={false} color="textSecondary">
+                      {`This is a OPEN SOURCE demo application that demonstartes the usage of the rmw-shell library 
+                    with react, Material-UI and firebase.  `}
+                      <br />
+                      {` This demo has no purpose to do something as an app. 
+                    It is here just to show how everthing works together. `}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" onClick={() => { history.push('/signin') }} >Get started</Button>
+                  </CardActions>
+                </Card>
               </div>
             </div>
-
           </div>
-        </Scrollbar>
+        </div>
+      </div>
 
-      </Activity>
     )
   }
 }
 
-LandingPage.propTypes = {
-  intl: intlShape.isRequired
-}
-
-export default withRouter(injectIntl(withStyles(styles, { withTheme: true })(LandingPage)))
+export default withRouter(withStyles(styles, { withTheme: true })(LandingPage))

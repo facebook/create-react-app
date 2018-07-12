@@ -34,12 +34,12 @@ const config = {
     locale: 'en'
   },
   drawer_width: 256,
-  routes,
-  getMenuItems,
   locales,
   themes,
   grants,
-  firebaseLoad: () => import('./firebase')
+  routes,
+  getMenuItems,
+  firebaseLoad: () => import('./firebase'),
 }
 
 export default config

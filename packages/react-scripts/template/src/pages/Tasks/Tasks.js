@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import { withTheme, withStyles } from '@material-ui/core/styles'
+import { withTheme } from '@material-ui/core/styles'
 import { injectIntl, intlShape } from 'react-intl'
-import Activity from 'rmw-shell/lib/containers/Activity'
+import { Activity } from 'rmw-shell'
 import { setDialogIsOpen } from 'rmw-shell/lib/store/dialogs/actions'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -26,7 +26,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { withFirebase } from 'firekit-provider'
 import green from '@material-ui/core/colors/green'
 import Scrollbar from 'rmw-shell/lib/components/Scrollbar'
-import withWidth, { isWidthDown } from '@material-ui/core/withWidth'
+import withWidth from '@material-ui/core/withWidth'
 import moment from 'moment'
 
 class Tasks extends Component {
@@ -96,7 +96,6 @@ class Tasks extends Component {
 
 
   userAvatar = (key, task) => {
-    const { auth } = this.props;
 
     if (task.completed) {
       return <Avatar style={{ backgroundColor: green[500] }}> <Icon > done </Icon>  </Avatar>
@@ -108,7 +107,7 @@ class Tasks extends Component {
   }
 
   renderList(tasks) {
-    const { auth, intl, history, width, setDialogIsOpen } = this.props;
+    const { auth, intl, history, setDialogIsOpen } = this.props;
 
     if (tasks === undefined) {
       return <div></div>

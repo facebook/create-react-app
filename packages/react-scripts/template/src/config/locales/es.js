@@ -1,6 +1,6 @@
-import {defineMessages} from 'react-intl';
+import { defineMessages } from 'react-intl'
 
-const messages=defineMessages({
+const messages = defineMessages({
   app_name: 'React Most Wanted',
   dashboard: 'Panel',
   about: 'Acerca',
@@ -12,10 +12,10 @@ const messages=defineMessages({
   language: 'Idioma',
   theme: 'Tema',
   responsive: 'Responsivo',
-  en: 'Inglés',
-  de: 'Alemán',
-  bs: 'Bosnio',
-  ru: 'Ruso',
+  en: 'English',
+  de: 'Deutsch',
+  bs: 'Bosanski',
+  ru: 'Русский',
   es: 'Español',
   dark: 'Oscuro',
   light: 'Claro',
@@ -143,8 +143,9 @@ const messages=defineMessages({
   hot_dog_status: 'Hot dog status',
   user_label_search: 'Buscar usuario',
   document: 'Documento',
-  collection: 'Colección'
+  collection: 'Colección',
+  infinitelist: 'Infinitelist'
 
-});
+})
 
-export default messages;
+export default messages

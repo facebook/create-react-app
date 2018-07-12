@@ -1,5 +1,5 @@
 import config from '../config'
-import { isAuthorised } from '../../../src/utils/auth'
+import { isAuthorised } from 'rmw-shell/lib/utils/auth'
 
 export const initState = {
   auth: { isAuthorised: isAuthorised() },
