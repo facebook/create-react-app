@@ -109,7 +109,6 @@ injectGlobal`
   body {
     padding: 0;
     margin: 0;
-    height: 100%;
     text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
   }
@@ -120,15 +119,11 @@ injectGlobal`
 `;
 /* eslint-enable */
 
-const PageLayout = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
+const PageLayout = styled.div``;
 
 const PageHeader = styled(Header)`
+  position: sticky;
+  top: 0;
   width: 100%;
   height: ${props => rem(props.theme.sizes.headerHeight)};
   display: flex;
@@ -142,15 +137,24 @@ const PageHeader = styled(Header)`
 `;
 
 const PageBody = styled.div`
+  position: relative;
   display: flex;
   flex: 1 1 auto;
   min-height: 0;
+  align-items: flex-start;
+
+  @media (max-width: calc(${props => props.theme.breakpoints.l} - 1px)) {
+    &.is-active {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
 `;
 
 const PageSidebar = styled(Sidebar)`
-  position: absolute;
-  min-height: 100%;
-  max-height: 100%;
+  position: fixed;
+  top: 6rem;
+  height: calc(100vh - 6rem);
   flex: 0 0 ${props => rem(props.theme.sizes.sidebarWidth)};
   order: -1;
   overflow: auto;
@@ -159,8 +163,7 @@ const PageSidebar = styled(Sidebar)`
   z-index: ${props => props.theme.zIndex.sidebar};
 
   @media (min-width: ${props => props.theme.breakpoints.l}) {
-    margin-left: 0;
-    position: relative;
+    position: sticky;
     transform: translateX(0);
   }
 
