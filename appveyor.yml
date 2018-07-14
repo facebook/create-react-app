@@ -9,6 +9,8 @@ environment:
     - nodejs_version: 8
       test_suite: "kitchensink"
     - nodejs_version: 8
+      test_suite: "kitchensink-eject"
+    - nodejs_version: 8
       test_suite: "monorepos"
     - nodejs_version: 6
       test_suite: "simple"
@@ -16,6 +18,8 @@ environment:
       test_suite: "installs"
     - nodejs_version: 6
       test_suite: "kitchensink"
+    - nodejs_version: 6
+      test_suite: "kitchensink-eject"
     - nodejs_version: 6
       test_suite: "monorepos"
 cache:
