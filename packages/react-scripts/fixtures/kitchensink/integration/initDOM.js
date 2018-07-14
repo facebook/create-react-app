@@ -62,6 +62,7 @@ export default feature =>
       created: (_, win) =>
         win.addEventListener('ReactFeatureDidMount', () => resolve(doc), true),
       deferClose: true,
+      pretendToBeVisual: true,
       resourceLoader,
       url: `${host}#${feature}`,
       virtualConsole: jsdom.createVirtualConsole().sendTo(console),
