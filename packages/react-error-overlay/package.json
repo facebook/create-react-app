@@ -36,7 +36,7 @@
     "anser": "1.4.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^8.2.2",
-    "babel-jest": "^23.4.1",
+    "babel-jest": "^23.4.0",
     "babel-loader": "^8.0.0-beta.0",
     "babel-preset-react-app": "^3.1.1",
     "chalk": "^2.3.2",
