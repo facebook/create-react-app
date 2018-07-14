@@ -30,3 +30,4 @@ matrix:
       env: TEST_SUITE=old-node
     - node_js: 6
       env: TEST_SUITE=kitchensink
+      env: TEST_SUITE=kitchensink-eject
