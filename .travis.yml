@@ -29,7 +29,7 @@ env:
     - TEST_SUITE=monorepos
 matrix:
   include:
-    - node_js: 0.10
+    - node_js: 4
       env: TEST_SUITE=old-node
     - node_js: 6
       env: TEST_SUITE=kitchensink

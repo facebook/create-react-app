@@ -42,7 +42,7 @@ var currentNodeVersion = process.versions.node;
 var semver = currentNodeVersion.split('.');
 var major = semver[0];
 
-if (major < 4) {
+if (major < 8) {
   console.error(
     chalk.red(
       'You are running Node ' +
