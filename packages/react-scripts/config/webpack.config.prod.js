@@ -287,8 +287,7 @@ module.exports = {
                     throwError: true,
                   }),
                   require('cssnano')({
-                    reduceIdents: false,
-                    discardUnused: { fontFace: false },
+                    preset: 'default',
                   }),
                 ],
               },
