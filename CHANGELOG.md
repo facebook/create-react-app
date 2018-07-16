@@ -1,3 +1,23 @@
+## 2.4.0 (July 16, 2018)
+
+#### :rocket: New Feature
+* [lighter-react-scripts] do not inline images
+
+#### :nail_care: Enhancement
+* [lighter-react-scripts] update dependencies
+* [lighter-styleguide] update styleguide deps
+* [lighter-styleguide] styleguide is now buildable
+
+#### :bug: Bug Fix
+* [lighter-styleguide] Refactor styleguide layout to prevent scroll to top on refresh
+* [lighter-styleguide] fix Preview iframeHead not working
+* [lighter-react-scripts] cssnano no logner applies not safe optimalizations
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.4.0`
+* `lighter-styleguide@1.2.4`
+
 ## 2.3.4 (May 20, 2018)
 
 #### :bug: Bug Fix
