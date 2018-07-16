@@ -2,25 +2,25 @@ image: Visual Studio 2017
 
 environment:
   matrix:
-    - nodejs_version: 8
+    - nodejs_version: 10
       test_suite: "simple"
-    - nodejs_version: 8
+    - nodejs_version: 10
       test_suite: "installs"
-    - nodejs_version: 8
+    - nodejs_version: 10
       test_suite: "kitchensink"
-    - nodejs_version: 8
+    - nodejs_version: 10
       test_suite: "kitchensink-eject"
-    - nodejs_version: 8
+    - nodejs_version: 10
       test_suite: "monorepos"
-    - nodejs_version: 6
+    - nodejs_version: 8
       test_suite: "simple"
-    - nodejs_version: 6
+    - nodejs_version: 8
       test_suite: "installs"
-    - nodejs_version: 6
+    - nodejs_version: 8
       test_suite: "kitchensink"
-    - nodejs_version: 6
+    - nodejs_version: 8
       test_suite: "kitchensink-eject"
-    - nodejs_version: 6
+    - nodejs_version: 8
       test_suite: "monorepos"
 cache:
   - node_modules -> appveyor.cleanup-cache.txt
@@ -36,6 +36,9 @@ platform:
 
 install:
   - ps: Install-Product node $env:nodejs_version $env:platform
+  - ps: |
+      (New-Object Net.WebClient).DownloadFile("https://yarnpkg.com/latest.msi", "$env:temp\yarn.msi")
+      cmd /c start /wait msiexec.exe /i $env:temp\yarn.msi /quiet /qn /norestart
 
 build: off
 
@@ -46,4 +49,5 @@ skip_commits:
 test_script:
   - node --version
   - npm --version
+  - yarn --version
   - bash tasks/e2e-%test_suite%.sh
