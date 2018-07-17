@@ -35,6 +35,7 @@ describe('Integration', () => {
           'x-from-development-env'
         );
       }
+      doc.defaultView.close();
     });
 
     it('NODE_PATH', async () => {
@@ -43,6 +44,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-node-path').childElementCount
       ).to.equal(4);
+      doc.defaultView.close();
     });
 
     it('PUBLIC_URL', async () => {
@@ -58,6 +60,7 @@ describe('Integration', () => {
       expect(
         doc.querySelector('head link[rel="shortcut icon"]').getAttribute('href')
       ).to.equal(`${prefix}/favicon.ico`);
+      doc.defaultView.close();
     });
 
     it('shell env variables', async () => {
@@ -66,6 +69,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-shell-env-variables').textContent
       ).to.equal('fromtheshell.');
+      doc.defaultView.close();
     });
 
     it('expand .env variables', async () => {
@@ -83,6 +87,7 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-expand-env-existing').textContent
       ).to.equal('fromtheshell');
+      doc.defaultView.close();
     });
   });
 });
