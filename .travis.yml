@@ -5,6 +5,7 @@ node_js:
   - 8
   - 9
 cache:
+  yarn: true
   directories:
   - node_modules
   - packages/create-react-app/node_modules
