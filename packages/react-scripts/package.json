@@ -23,6 +23,7 @@
   "dependencies": {
     "@babel/core": "7.0.0-beta.46",
     "@babel/runtime": "7.0.0-beta.46",
+    "@svgr/webpack": "2.1.1",
     "autoprefixer": "8.5.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "8.2.3",
@@ -62,7 +63,6 @@
     "resolve": "1.6.0",
     "sass-loader": "7.0.1",
     "style-loader": "0.21.0",
-    "svgr": "1.9.2",
     "sw-precache-webpack-plugin": "0.11.5",
     "thread-loader": "1.1.5",
     "uglifyjs-webpack-plugin": "1.2.5",
