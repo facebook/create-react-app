@@ -178,14 +178,6 @@ module.exports = {
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
-    'no-unused-expressions': [
-      'warn',
-      {
-        allowShortCircuit: true,
-        allowTernary: true,
-        allowTaggedTemplates: true,
-      },
-    ],
     'no-unused-labels': 'warn',
     'no-unused-vars': [
       'warn',
@@ -291,5 +283,13 @@ module.exports = {
     'flowtype/define-flow-type': 'warn',
     'flowtype/require-valid-file-annotation': 'warn',
     'flowtype/use-flow-type': 'warn',
+    'flowtype/no-unused-expressions': [
+      'warn',
+      {
+        allowShortCircuit: true,
+        allowTernary: true,
+        allowTaggedTemplates: true,
+      },
+    ],
   },
 };
