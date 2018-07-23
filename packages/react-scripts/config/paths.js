@@ -47,11 +47,37 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
+// If you're building for something that requires a specifically named
+// build folder, set the name of the output folder with BUILD_DIR.
+// Errors on usage of 'src' or 'public', to prevent overwriting.
+// Otherwise defaults to the original 'build'
+const getBuildDir = () => {
+  const BUILD_DIR =
+    process.env.BUILD_DIR &&
+    process.env.BUILD_DIR.toLowerCase().replace(/\//g, '');
+
+  const forbiddenBuildDirs = ['src', 'public', '.git', 'node_modules'];
+
+  if (BUILD_DIR) {
+    if (forbiddenBuildDirs.indexOf(BUILD_DIR) === -1) {
+      return BUILD_DIR;
+    } else {
+      throw new Error(
+        "Cannot overwrite directory '" +
+          BUILD_DIR +
+          "'. Please change the BUILD_DIR env variable to something that is not being used by the create-react-app folder structure"
+      );
+    }
+  }
+
+  return 'build';
+};
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp(getBuildDir()),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
@@ -72,7 +98,7 @@ const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp(getBuildDir()),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
@@ -97,7 +123,7 @@ if (useTemplate) {
   module.exports = {
     dotenv: resolveOwn('template/.env'),
     appPath: resolveApp('.'),
-    appBuild: resolveOwn('../../build'),
+    appBuild: resolveOwn('../../' + getBuildDir()),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
     appIndexJs: resolveOwn('template/src/index.js'),
