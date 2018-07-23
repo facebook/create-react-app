@@ -52,32 +52,37 @@ function getServedPath(appPackageJson) {
 // Errors on usage of 'src' or 'public', to prevent overwriting.
 // Otherwise defaults to the original 'build'
 const getBuildDir = () => {
-  const BUILD_DIR =
-    process.env.BUILD_DIR &&
-    process.env.BUILD_DIR.toLowerCase().replace(/\//g, '');
+  const DIR = process.env.BUILD_DIR;
 
   const forbiddenBuildDirs = ['src', 'public', '.git', 'node_modules'];
+  const pathSegments = DIR.split(path.sep).filter(i => i.length);
 
-  if (BUILD_DIR) {
-    if (forbiddenBuildDirs.indexOf(BUILD_DIR) === -1) {
-      return BUILD_DIR;
-    } else {
+  const containsForbidden = pathSegments
+    .map(seg => forbiddenBuildDirs.includes(seg))
+    .some(value => value);
+
+  if (DIR) {
+    if (containsForbidden) {
       throw new Error(
-        "Cannot overwrite directory '" +
-          BUILD_DIR +
+        "Cannot build into directory '" +
+          DIR +
           "'. Please change the BUILD_DIR env variable to something that is not being used by the create-react-app folder structure"
       );
+    } else {
+      return DIR;
     }
   }
 
   return 'build';
 };
 
+const buildDir = getBuildDir();
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp(getBuildDir()),
+  appBuild: resolveApp(buildDir),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
@@ -98,7 +103,7 @@ const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp(getBuildDir()),
+  appBuild: resolveApp(buildDir),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
@@ -123,7 +128,7 @@ if (useTemplate) {
   module.exports = {
     dotenv: resolveOwn('template/.env'),
     appPath: resolveApp('.'),
-    appBuild: resolveOwn('../../' + getBuildDir()),
+    appBuild: resolveOwn('../../' + buildDir),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
     appIndexJs: resolveOwn('template/src/index.js'),
