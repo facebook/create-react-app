@@ -15,10 +15,11 @@ const url = require('url');
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
 const envPublicUrl = process.env.PUBLIC_URL;
 const customAppBuildPath = process.env.REACT_APP_APP_BUILD_PATH;
+const envDevModule = process.env.MODULE;
 
 function ensureSlash(path, needsSlash) {
   const hasSlash = path.endsWith('/');
@@ -31,7 +32,7 @@ function ensureSlash(path, needsSlash) {
   }
 }
 
-const normalizeName = name => {
+const normalizeName = (name) => {
   if (name.substring(0, 9) === '@ehrocks/') {
     return name.replace('@ehrocks/', '');
   }
@@ -49,7 +50,7 @@ function camelize(str) {
   });
 }
 
-const getPublicUrl = appPackageJson =>
+const getPublicUrl = (appPackageJson) =>
   envPublicUrl || require(appPackageJson).homepage;
 
 const getExportPublicUrl = (appPackageJson, isProduction) =>
@@ -57,17 +58,17 @@ const getExportPublicUrl = (appPackageJson, isProduction) =>
     ? getExportPublicProductionUrl(appPackageJson)
     : getExportPublicStagingUrl(appPackageJson);
 
-const getExportPublicProductionUrl = appPackageJson =>
+const getExportPublicProductionUrl = (appPackageJson) =>
   `${process.env.CDN_PATH_PRODUCTION}/${normalizeName(
     require(appPackageJson).name
   )}/production/${require(appPackageJson).version}`;
 
-const getExportPublicStagingUrl = appPackageJson =>
+const getExportPublicStagingUrl = (appPackageJson) =>
   `${process.env.CDN_PATH_STAGING}/${normalizeName(
     require(appPackageJson).name
   )}/staging/${require(appPackageJson).version}`;
 
-const getName = appPackageJson => require(appPackageJson).name;
+const getName = (appPackageJson) => require(appPackageJson).name;
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
 // "public path" at which the app is served.
@@ -88,7 +89,7 @@ function getExportServedPath(appPackageJson, isProduction) {
   return ensureSlash(servedUrl, true);
 }
 
-const getLibName = appPackageJson => {
+const getLibName = (appPackageJson) => {
   const name = normalizeName(getName(appPackageJson));
   return camelize(name);
 };
@@ -101,7 +102,9 @@ module.exports = {
     : resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appIndexJs: envDevModule
+    ? resolveApp(`src/modules/${envDevModule}/dev/index.js`)
+    : resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),
@@ -109,16 +112,17 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  exportServedPath: isProduction =>
+  exportServedPath: (isProduction) =>
     getExportServedPath(resolveApp('package.json'), isProduction),
   appExportIndex: resolveApp('src/index.js'),
-  appExportBuild: isProduction =>
+  appExportBuild: (isProduction) =>
     !isProduction ? resolveApp('distStaging') : resolveApp('distProduction'),
-  libName: getLibName(resolveApp('package.json')),
+  libName: getLibName(resolveApp('package.json'))
 };
 
 // @remove-on-eject-begin
-const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
+const resolveOwn = (relativePath) =>
+  path.resolve(__dirname, '..', relativePath);
 
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
@@ -129,7 +133,9 @@ module.exports = {
     : resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appIndexJs: envDevModule
+    ? resolveApp(`src/modules/${envDevModule}/dev/index.js`)
+    : resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),
@@ -137,15 +143,15 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  exportServedPath: isProduction =>
+  exportServedPath: (isProduction) =>
     getExportServedPath(resolveApp('package.json'), isProduction),
   appExportIndex: resolveApp('src/index.js'),
-  appExportBuild: isProduction =>
+  appExportBuild: (isProduction) =>
     !isProduction ? resolveApp('distStaging') : resolveApp('distProduction'),
   libName: getLibName(resolveApp('package.json')),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
-  ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
+  ownNodeModules: resolveOwn('node_modules') // This is empty on npm 3
 };
 
 const ownPackageJson = require('../package.json');
@@ -167,7 +173,9 @@ if (
       : resolveOwn('../../build'),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
-    appIndexJs: resolveOwn('template/src/index.js'),
+    appIndexJs: envDevModule
+      ? resolveApp(`template/src/modules/${envDevModule}/dev/index.js`)
+      : resolveApp('template/src/index.js'),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
     yarnLockFile: resolveOwn('template/yarn.lock'),
@@ -175,15 +183,15 @@ if (
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
-    exportServedPath: isProduction =>
+    exportServedPath: (isProduction) =>
       getExportServedPath(resolveApp('package.json'), isProduction),
     appExportIndex: resolveApp('src/index.js'),
-    appExportBuild: isProduction =>
+    appExportBuild: (isProduction) =>
       !isProduction ? resolveApp('distStaging') : resolveApp('distProduction'),
     libName: getLibName(resolveApp('package.json')),
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
-    ownNodeModules: resolveOwn('node_modules'),
+    ownNodeModules: resolveOwn('node_modules')
   };
 }
 // @remove-on-eject-end
