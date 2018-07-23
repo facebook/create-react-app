@@ -47,11 +47,42 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
+// If you're building for something that requires a specifically named
+// build folder, set the name of the output folder with BUILD_DIR.
+// Errors on usage of 'src' or 'public', to prevent overwriting.
+// Otherwise defaults to the original 'build'
+const getBuildDir = () => {
+  const DIR = process.env.BUILD_DIR;
+
+  if (DIR) {
+    const forbiddenBuildDirs = ['src', 'public', '.git', 'node_modules'];
+    const pathSegments = DIR.split(path.sep).filter(i => i.length);
+
+    const containsForbidden = pathSegments
+      .map(seg => forbiddenBuildDirs.includes(seg))
+      .some(value => value);
+
+    if (containsForbidden) {
+      throw new Error(
+        "Cannot build into directory '" +
+          DIR +
+          "'. Please change the BUILD_DIR env variable to something that is not being used by the create-react-app folder structure"
+      );
+    } else {
+      return DIR;
+    }
+  }
+
+  return 'build';
+};
+
+const buildDir = getBuildDir();
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp(buildDir),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
@@ -72,7 +103,7 @@ const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp(buildDir),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
@@ -97,7 +128,7 @@ if (useTemplate) {
   module.exports = {
     dotenv: resolveOwn('template/.env'),
     appPath: resolveApp('.'),
-    appBuild: resolveOwn('../../build'),
+    appBuild: resolveOwn('../../' + buildDir),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
     appIndexJs: resolveOwn('template/src/index.js'),
