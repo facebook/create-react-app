@@ -54,14 +54,14 @@ function getServedPath(appPackageJson) {
 const getBuildDir = () => {
   const DIR = process.env.BUILD_DIR;
 
-  const forbiddenBuildDirs = ['src', 'public', '.git', 'node_modules'];
-  const pathSegments = DIR.split(path.sep).filter(i => i.length);
-
-  const containsForbidden = pathSegments
-    .map(seg => forbiddenBuildDirs.includes(seg))
-    .some(value => value);
-
   if (DIR) {
+    const forbiddenBuildDirs = ['src', 'public', '.git', 'node_modules'];
+    const pathSegments = DIR.split(path.sep).filter(i => i.length);
+
+    const containsForbidden = pathSegments
+      .map(seg => forbiddenBuildDirs.includes(seg))
+      .some(value => value);
+
     if (containsForbidden) {
       throw new Error(
         "Cannot build into directory '" +
