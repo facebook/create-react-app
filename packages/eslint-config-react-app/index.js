@@ -116,7 +116,7 @@ module.exports = {
     'no-this-before-super': 'warn',
     'no-throw-literal': 'warn',
     'no-undef': 'error',
-    'no-restricted-globals': ['error'].concat(restrictedGlobals),
+    'no-restricted-globals': ['warn'].concat(restrictedGlobals),
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
