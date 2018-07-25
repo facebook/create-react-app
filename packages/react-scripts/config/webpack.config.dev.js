@@ -245,6 +245,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      templateParameters: env.raw,
+    }),
+    // Generates an `dev.html` file with the <script> injected.
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: path.resolve(__dirname, 'dev.html'),
+      filename: 'dev.html',
+      templateParameters: env.raw,
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),

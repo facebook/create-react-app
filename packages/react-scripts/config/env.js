@@ -22,6 +22,10 @@ if (!NODE_ENV) {
   );
 }
 
+if (!process.env.DESKPRO_ENV) {
+  process.env.DESKPRO_ENV = 'live';
+}
+
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 var dotenvFiles = [
   `${paths.dotenv}.${NODE_ENV}.local`,
@@ -85,6 +89,8 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
+        // if running in isolated dev mode, or in dev mode where app is in-app
+        DESKPRO_ENV: process.env.DESKPRO_ENV,
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
@@ -93,6 +99,7 @@ function getClientEnvironment(publicUrl) {
       env[key] = JSON.stringify(raw[key]);
       return env;
     }, {}),
+    DESKPRO_ENV: process.env.DESKPRO_ENV,
   };
 
   return { raw, stringified };

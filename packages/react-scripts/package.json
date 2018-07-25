@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
+  "name": "@deskpro/apps-react-scripts",
   "version": "1.1.4",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "@deskpro/apps-create",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/deskpro/apps-create/issues"
   },
   "files": [
     "bin",
@@ -26,6 +26,7 @@
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.2",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-react-app": "^3.1.2",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
@@ -43,7 +44,7 @@
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
-    "html-webpack-plugin": "2.29.0",
+    "html-webpack-plugin": "3.2.0",
     "jest": "20.0.4",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",

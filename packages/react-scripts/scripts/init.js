@@ -34,6 +34,7 @@ module.exports = function(
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
+  appPackage.devDependencies = appPackage.devDependencies || {};
 
   // Setup the script rules
   appPackage.scripts = {
@@ -41,6 +42,47 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    lint: 'react-scripts eslint src test',
+    format: 'react-scripts prettier --write "{src,test}/**/*.js"',
+    'format:check':
+      'react-scripts prettier --list-different "{src,test}/**/*.js"',
+  };
+
+  Object.assign(appPackage.dependencies, {
+    '@deskpro/apps-sdk-core': '^2.0.0',
+    '@deskpro/apps-sdk-react': '^2.0.0',
+    'prop-types': '^15.6.2',
+  });
+
+  appPackage.deskpro = {
+    version: '0.1.0',
+    title: appName,
+    isSingle: true,
+    scope: 'agent',
+    storage: [],
+    settings: [],
+    deskproApiTags: [],
+    externalApis: [],
+  };
+
+  appPackage.eslintConfig = {
+    extends: 'react-app',
+    rules: {
+      'jsx-a11y/href-no-hash': 'off',
+    },
+    overrides: [
+      {
+        files: 'test/**/*.js',
+        env: {
+          jest: true,
+        },
+      },
+    ],
+  };
+
+  appPackage.prettier = {
+    trailingComma: 'all',
+    singleQuote: true,
   };
 
   fs.writeFileSync(
@@ -147,13 +189,27 @@ module.exports = function(
   console.log(`Success! Created ${appName} at ${appPath}`);
   console.log('Inside that directory, you can run several commands:');
   console.log();
+  console.log(chalk.cyan(`  ${displayedCommand} dev`));
+  console.log(
+    '    Starts the development server in isolation with basic mocking for'
+  );
+  console.log(
+    '    the Deskpro API client. See the README for more info on mock data.'
+  );
+  console.log();
   console.log(chalk.cyan(`  ${displayedCommand} start`));
-  console.log('    Starts the development server.');
+  console.log(
+    '    Starts the development server for use in a real Deskpro site.'
+  );
+  console.log(
+    '    Use this when you want to see your app in a real Deskpro instance'
+  );
+  console.log('    running in dev mode. See the README for more details.');
   console.log();
   console.log(
     chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)
   );
-  console.log('    Bundles the app into static files for production.');
+  console.log('    Bundles the app into a ZIP for distribution.');
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
