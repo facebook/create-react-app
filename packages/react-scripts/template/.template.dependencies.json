@@ -1,7 +1,7 @@
 {
     "dependencies": {
         "@material-ui/core": "1.x",
-        "@material-ui/icons": "1.x",
+        "@material-ui/icons": "2.x",
         "a2hs": "1.x",
         "chart.js": "2.x",
         "downshift": "2.x",
@@ -39,7 +39,7 @@
         "react-loadable": "5.x",
         "react-markdown": "3.x",
         "react-materialui-notifications": "0.x",
-        "react-mic": "9.x",
+        "react-mic": "11.x",
         "react-player": "1.x",
         "react-redux": "5.x",
         "react-router": "4.x",
