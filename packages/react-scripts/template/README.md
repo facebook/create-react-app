@@ -1983,8 +1983,8 @@ although to facilitate local testing, that policy
 If your production web server does not support HTTPS, then the service worker
 registration will fail, but the rest of your web app will remain functional.
 
-1. Service workers are [not currently supported](https://jakearchibald.github.io/isserviceworkerready/)
-in all web browsers. Service worker registration [won't be attempted](src/registerServiceWorker.js)
+1. Service workers are [not supported](https://jakearchibald.github.io/isserviceworkerready/#moar)
+in older web browsers. Service worker registration [won't be attempted](src/registerServiceWorker.js)
 on browsers that lack support.
 
 1. The service worker is only enabled in the [production environment](#deployment),
