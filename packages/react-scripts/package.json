@@ -1,6 +1,6 @@
 {
   "name": "@cognite/react-scripts",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Cognite fork of configuration and scripts for Create React App.",
   "repository": "https://github.com/cognitedata/create-react-app",
   "license": "MIT",
