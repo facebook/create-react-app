@@ -1,36 +1,19 @@
-# Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
+# Blue Abla - Create React App
 
-Create React apps with no build configuration.
+This is a fork of [Create React App](https://github.com/facebookincubator/create-react-app/). Please refer to their docs for more in-depth details.
 
-* [Creating an App](#creating-an-app) – How to create a new app.
-* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
-
-Create React App works on macOS, Windows, and Linux.<br>
-If something doesn’t work, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new).
+This fork supports Sass and Prettier out of the box, and includes Blue Alba's linting rules.
 
 ## Quick Overview
 
 ```sh
-npx create-react-app my-app
+npx create-react-app my-app --scripts-verion @bluealba/react-scripts
 cd my-app
 npm start
 ```
-
-*([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))*
-
 Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
+You can also check out [http://localhost:8888/](http://localhost:8888/) to see the Bundle Analyzer.<br>
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
-
-<p align='center'>
-<img src='https://cdn.rawgit.com/facebookincubator/create-react-app/6ab67e6b96457720d843aa3c557ff951a41bafc2/screencast.svg' width='600' alt=''>
-</p>
-
-### Get Started Immediately
-
-You **don’t** need to install or configure tools like Webpack or Babel.<br>
-They are preconfigured and hidden so that you can focus on the code.
-
-Just create a project, and you’re good to go.
 
 ## Creating an App
 
@@ -102,6 +85,10 @@ The build is minified and the filenames include the hashes.<br>
 By default, it also [includes a service worker](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app) so that your app loads from local cache on future visits.
 
 Your app is ready to be deployed.
+
+### `npm run format` or `yarn format`
+
+Formats your code using prettier rules.
 
 ## User Guide
 

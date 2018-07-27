@@ -34,6 +34,10 @@ module.exports = function(
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
+  // Fix for vscode autoimports
+  appPackage.devDependencies = {
+    typescript: '^3.0.0-dev.20180706',
+  };
 
   // Setup the script rules
   appPackage.scripts = {
@@ -42,6 +46,21 @@ module.exports = function(
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
     format: 'react-scripts format',
+  };
+
+  appPackage.eslintConfig = {
+    extends: '@bluealba/eslint-config-react-app',
+  };
+
+  appPackage.prettier = {
+    arrowParens: 'avoid',
+    bracketSpacing: true,
+    jsxBracketSameLine: false,
+    printWidth: 80,
+    semi: true,
+    singleQuote: false,
+    trailingComma: 'es5',
+    useTabs: true,
   };
 
   fs.writeFileSync(
@@ -168,6 +187,9 @@ module.exports = function(
   console.log(
     '    and scripts into the app directory. If you do this, you can’t go back!'
   );
+  console.log();
+  console.log(chalk.cyan(`  ${displayedCommand} format`));
+  console.log('    Format all files in your code using prettier');
   console.log();
   console.log('We suggest that you begin by typing:');
   console.log();
