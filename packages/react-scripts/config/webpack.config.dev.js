@@ -182,7 +182,6 @@ module.exports = {
           // By default we support CSS Modules with the extension .module.css
           {
             test: /\.s?css$/,
-            include: [paths.appSrc, paths.sharedLibSrc, paths.chatbotSrc],
             exclude: /\.module\.s?css$/,
             use: [
               require.resolve('style-loader'),
@@ -205,7 +204,6 @@ module.exports = {
           // using the extension .module.css
           {
             test: /\.module\.s?css$/,
-            include: [paths.appSrc, paths.sharedLibSrc, paths.chatbotSrc],
             use: [
               require.resolve('style-loader'),
               {
