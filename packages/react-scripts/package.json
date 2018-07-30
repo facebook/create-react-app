@@ -33,7 +33,7 @@
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "2.4.1",
     "css-loader": "0.28.11",
-    "cssnano": "^4.0.4",
+    "cssnano": "4.0.4",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
     "eslint-loader": "2.0.0",
