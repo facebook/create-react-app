@@ -1,3 +1,12 @@
+## 2.4.1 (July 30, 2018)
+
+#### :bug: Bug Fix
+* [lighter-react-scripts] bump cssnano package to fix issues with border declaration
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.4.1`
+
 ## 2.4.0 (July 16, 2018)
 
 #### :rocket: New Feature
