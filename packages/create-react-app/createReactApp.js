@@ -121,15 +121,28 @@ const program = new commander.Command(packageJson.name)
   })
   .parse(process.argv);
 
+if (program.info) {
+  console.log(chalk.bold('\nEnvironment Info:'));
+  return envinfo
+    .run(
+      {
+        System: ['OS', 'CPU'],
+        Binaries: ['Node', 'npm', 'Yarn'],
+        Browsers: ['Chrome', 'Edge', 'Internet Explorer', 'Firefox', 'Safari'],
+        npmPackages: ['react', 'react-dom', 'react-scripts'],
+        npmGlobalPackages: ['create-react-app'],
+      },
+      {
+        clipboard: true,
+        duplicates: true,
+        showNotFound: true,
+      }
+    )
+    .then(console.log)
+    .then(() => console.log(chalk.green('Copied To Clipboard!\n')));
+}
+
 if (typeof projectName === 'undefined') {
-  if (program.info) {
-    envinfo.print({
-      packages: ['react', 'react-dom', 'react-scripts'],
-      noNativeIDE: true,
-      duplicates: true,
-    });
-    process.exit(0);
-  }
   console.error('Please specify the project directory:');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
@@ -201,7 +214,9 @@ function createApp(name, verbose, version, useNpm, template) {
   if (!semver.satisfies(process.version, '>=6.0.0')) {
     console.log(
       chalk.yellow(
-        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
+        `You are using Node ${
+          process.version
+        } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
           `Please update to Node 6 or higher for a better, fully supported experience.\n`
       )
     );
@@ -215,7 +230,9 @@ function createApp(name, verbose, version, useNpm, template) {
       if (npmInfo.npmVersion) {
         console.log(
           chalk.yellow(
-            `You are using npm ${npmInfo.npmVersion} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
+            `You are using npm ${
+              npmInfo.npmVersion
+            } so the project will be boostrapped with an old unsupported version of tools.\n\n` +
               `Please update to npm 3 or higher for a better, fully supported experience.\n`
           )
         );
@@ -345,7 +362,7 @@ function run(
       if (version === 'react-scripts@0.9.x') {
         console.log(
           chalk.yellow(
-            `\nNote: the project was boostrapped with an old unsupported version of tools.\n` +
+            `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
               `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
           )
         );
@@ -396,7 +413,7 @@ function getInstallPackage(version, originalDirectory) {
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
   } else if (version) {
-    if (version[0] === '@') {
+    if (version[0] === '@' && version.indexOf('/') === -1) {
       packageToInstall += version;
     } else if (version.match(/^file:/)) {
       packageToInstall = `file:${path.resolve(

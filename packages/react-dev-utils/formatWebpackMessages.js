@@ -46,7 +46,7 @@ function formatMessage(message, isError) {
     if (threadLoaderIndex !== -1) {
       return;
     }
-    if (line.indexOf('from thread-loader (worker') !== -1) {
+    if (/thread.loader/i.test(line)) {
       threadLoaderIndex = index;
     }
   });

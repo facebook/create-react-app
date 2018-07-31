@@ -85,19 +85,18 @@
 ### Environment
 
 <!--
-  Please fill in all the relevant fields by running these commands in terminal.
+  To help identify if a problem is specific to a platform, browser, or module version, information about your environment is required.
+  This enables the maintainers quickly reproduce the issue and give feedback.
+
+  Run the following command in your React app's folder in terminal.
+  Note: The result is copied to your clipboard directly.
+
+  `npx create-react-app --info`
+
+  Paste the output of the command in the section below.
 -->
 
-1. `node -v`: 
-2. `npm -v`:
-3. `yarn --version` (if you use Yarn):
-4. `npm ls react-scripts` (if you haven’t ejected): 
-
-Then, specify:
-
-1. Operating system:
-2. Browser and version (if relevant):
-
+(paste the output of the command here)
 
 ### Steps to Reproduce
 

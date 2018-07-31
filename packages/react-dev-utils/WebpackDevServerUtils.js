@@ -131,7 +131,7 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
-  compiler.plugin('invalid', () => {
+  compiler.hooks.invalid.tap('invalid', () => {
     if (isInteractive) {
       clearConsole();
     }
@@ -142,7 +142,7 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.plugin('done', stats => {
+  compiler.hooks.done.tap('done', stats => {
     if (isInteractive) {
       clearConsole();
     }
