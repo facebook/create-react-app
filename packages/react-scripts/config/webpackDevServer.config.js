@@ -7,12 +7,14 @@
  */
 // @remove-on-eject-end
 'use strict';
-
+const express = require('express');
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
+
+const appVersion = require(paths.appPackageJson).version;
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
@@ -98,6 +100,17 @@ module.exports = function(proxy, allowedHost) {
       // it used the same host and port.
       // https://github.com/facebookincubator/create-react-app/issues/2272#issuecomment-302832432
       app.use(noopServiceWorkerMiddleware());
+
+      // In production. Deskpro is loading the app and assets from : <deskpro-base-url>/apps/<app id>/v<version>/files,
+      // for example http://deskpro-dev/file.php/apps/2/v0.1.0/files/index.hml. In dev mode, webpack dev server is not
+      // happy about serving files from a different path other than / so we use the `before` escape hatch to add our
+      // custom url. see https://github.com/webpack/webpack-dev-server/issues/954
+      //
+
+      app.use(
+        `${config.output.publicPath.slice(0, -1)}/v${appVersion}/files/`,
+        express.static(paths.appPublic)
+      );
     },
   };
 };

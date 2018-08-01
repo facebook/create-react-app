@@ -49,16 +49,26 @@ module.exports = function(
   };
 
   Object.assign(appPackage.dependencies, {
-    '@deskpro/apps-sdk-core': '^2.0.0',
-    '@deskpro/apps-sdk-react': '^2.0.0',
+    '@deskpro/apps-sdk': '^1.0.0',
+    '@deskpro/apps-components': '^1.0.0',
     'prop-types': '^15.6.2',
   });
 
   appPackage.deskpro = {
-    version: '0.1.0',
+    version: '2.3.0',
     title: appName,
     isSingle: true,
     scope: 'agent',
+    targets: [
+      {
+        target: 'ticket-sidebar',
+        url: 'index.html',
+      },
+      {
+        target: 'install',
+        url: 'install.html',
+      },
+    ],
     storage: [],
     settings: [],
     deskproApiTags: [],
