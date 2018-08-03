@@ -13,6 +13,8 @@ const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMi
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
+const deskproManifest = require('./deskproManifest');
+const deskproCors = require('./deskproCors');
 
 const appVersion = require(paths.appPackageJson).version;
 
@@ -92,8 +94,10 @@ module.exports = function(proxy, allowedHost) {
     public: allowedHost,
     proxy,
     before(app) {
-      // This lets us open files from the runtime error overlay.
-      app.use(errorOverlayMiddleware());
+      // we have to enable cors to allow serving json files, like manifest.json
+      app.use(deskproCors()),
+        // This lets us open files from the runtime error overlay.
+        app.use(errorOverlayMiddleware());
       // This service worker file is effectively a 'no-op' that will reset any
       // previous service worker registered for the same host:port combination.
       // We do this in development to avoid hitting the production cache if
@@ -106,11 +110,17 @@ module.exports = function(proxy, allowedHost) {
       // happy about serving files from a different path other than / so we use the `before` escape hatch to add our
       // custom url. see https://github.com/webpack/webpack-dev-server/issues/954
       //
-
+      // However we should not server index.html directly otherwise it does not get processed by CRA
+      //
       app.use(
-        `${config.output.publicPath.slice(0, -1)}/v${appVersion}/files/`,
-        express.static(paths.appPublic)
+        `${config.output.publicPath.slice(0, -1)}/v${appVersion}/files/assets`,
+        express.static(`${paths.appPublic}/assets`)
       );
+
+      // In dev mode we also serve the Deskpro App manifest from the root, but we create it on the fly
+      app.use('/manifest.json', function(req, res) {
+        res.send(deskproManifest(paths.appPackageJson));
+      });
     },
   };
 };

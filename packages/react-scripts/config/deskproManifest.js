@@ -1,5 +1,6 @@
 const fs = require('fs');
 const chalk = require('chalk');
+const paths = require('./paths');
 
 /**
  * Copies properties from source onto destination
@@ -112,14 +113,15 @@ function normalizeSettings(manifest) {
 /**
  * Returns the
  *
- * @param {String} sourcePackageJson
- * @param {String} destination
- * @return {string}
+ * @param {String} [sourcePackageJson]
+ * @return {Object}
  */
-module.exports = function(sourcePackageJson, destination) {
+module.exports = function(sourcePackageJson) {
+  const source = sourcePackageJson || paths.appPackageJson;
+
   let packageJson;
   try {
-    const content = fs.readFileSync(sourcePackageJson);
+    const content = fs.readFileSync(fs.realpathSync(source));
     packageJson = JSON.parse(content.toString('utf8'));
   } catch (e) {
     console.error(
@@ -161,5 +163,5 @@ module.exports = function(sourcePackageJson, destination) {
   cloneProperties(packageJson.deskpro, manifestJson, Object.keys(manifestJson));
   normalizeSettings(manifestJson);
 
-  fs.writeFileSync(destination, JSON.stringify(manifestJson));
+  return JSON.parse(JSON.stringify(manifestJson));
 };

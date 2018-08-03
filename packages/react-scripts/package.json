@@ -21,6 +21,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "archiver": "^2.1.1",
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
@@ -62,7 +63,6 @@
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
-    "babel-plugin-external-helpers": "^6.22.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
   },

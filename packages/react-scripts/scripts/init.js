@@ -51,6 +51,7 @@ module.exports = function(
   Object.assign(appPackage.dependencies, {
     '@deskpro/apps-sdk': '^1.0.0',
     '@deskpro/apps-components': '^1.0.0',
+    '@deskpro/apps-installer': '0.4.5',
     'prop-types': '^15.6.2',
   });
 
@@ -66,7 +67,7 @@ module.exports = function(
       },
       {
         target: 'install',
-        url: 'install.html',
+        url: 'html/install.html',
       },
     ],
     storage: [],
