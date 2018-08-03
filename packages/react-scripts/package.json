@@ -2,6 +2,9 @@
   "name": "@deskpro/apps-react-scripts",
   "version": "0.1.0",
   "description": "Configuration and scripts for Create React App.",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": "@deskpro/apps-create",
   "license": "MIT",
   "engines": {
