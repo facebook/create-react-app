@@ -55,6 +55,20 @@ module.exports = function(
     'prop-types': '^15.6.2',
   });
 
+  // author information and description are required for deskpro apps
+
+  Object.assign(appPackage, {
+    description: 'What does your app do?',
+  });
+
+  Object.assign(appPackage, {
+    author: {
+      name: 'Your name or company name',
+      email: 'your@email.com',
+      url: 'https://your.app.homepage',
+    },
+  });
+
   appPackage.deskpro = {
     version: '2.3.0',
     title: appName,
