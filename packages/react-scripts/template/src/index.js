@@ -5,9 +5,17 @@
  * bootup behaviour.
  */
 
+import { AppFrame } from '@deskpro/apps-components';
+import { createApp } from '@deskpro/apps-sdk';
+import ReactDOM from 'react-dom';
 import React from 'react';
-import { bootReactApp } from '@deskpro/apps-sdk-react';
-import './styles.css';
 import App from './App';
 
-bootReactApp(dpapp => <App />);
+createApp(dpapp => props =>
+  ReactDOM.render(
+    <AppFrame {...props}>
+      <App dpapp={dpapp} />
+    </AppFrame>,
+    document.getElementById('root')
+  )
+);

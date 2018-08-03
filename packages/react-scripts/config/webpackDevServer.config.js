@@ -7,12 +7,16 @@
  */
 // @remove-on-eject-end
 'use strict';
-
+const express = require('express');
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
+const deskproManifest = require('./deskproManifest');
+const deskproCors = require('./deskproCors');
+
+const appVersion = require(paths.appPackageJson).version;
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
@@ -90,14 +94,33 @@ module.exports = function(proxy, allowedHost) {
     public: allowedHost,
     proxy,
     before(app) {
-      // This lets us open files from the runtime error overlay.
-      app.use(errorOverlayMiddleware());
+      // we have to enable cors to allow serving json files, like manifest.json
+      app.use(deskproCors()),
+        // This lets us open files from the runtime error overlay.
+        app.use(errorOverlayMiddleware());
       // This service worker file is effectively a 'no-op' that will reset any
       // previous service worker registered for the same host:port combination.
       // We do this in development to avoid hitting the production cache if
       // it used the same host and port.
       // https://github.com/facebookincubator/create-react-app/issues/2272#issuecomment-302832432
       app.use(noopServiceWorkerMiddleware());
+
+      // In production. Deskpro is loading the app and assets from : <deskpro-base-url>/apps/<app id>/v<version>/files,
+      // for example http://deskpro-dev/file.php/apps/2/v0.1.0/files/index.hml. In dev mode, webpack dev server is not
+      // happy about serving files from a different path other than / so we use the `before` escape hatch to add our
+      // custom url. see https://github.com/webpack/webpack-dev-server/issues/954
+      //
+      // However we should not server index.html directly otherwise it does not get processed by CRA
+      //
+      app.use(
+        `${config.output.publicPath.slice(0, -1)}/v${appVersion}/files/assets`,
+        express.static(`${paths.appPublic}/assets`)
+      );
+
+      // In dev mode we also serve the Deskpro App manifest from the root, but we create it on the fly
+      app.use('/manifest.json', function(req, res) {
+        res.send(deskproManifest(paths.appPackageJson));
+      });
     },
   };
 };

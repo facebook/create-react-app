@@ -33,6 +33,7 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
+const deskproBuild = require('./deskproBuild');
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -106,7 +107,8 @@ measureFileSizesBeforeBuild(paths.appBuild)
       printBuildError(err);
       process.exit(1);
     }
-  );
+  )
+  .then(deskproBuild);
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
