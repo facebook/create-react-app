@@ -1,14 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Greeting from './Greeting';
 
 class App extends React.Component {
   static propTypes = {
     dpapp: PropTypes.object.isRequired,
   };
 
-  render() {
+  state = {
+    me: null,
+  };
+
+  componentDidMount() {
     const { dpapp } = this.props;
-    return <h1>Hi</h1>;
+    dpapp.context.getMe().then(me => this.setState({ me }));
+  }
+
+  render() {
+    return <Greeting {...this.state} />;
   }
 }
 

@@ -49,10 +49,16 @@ module.exports = function(
   };
 
   Object.assign(appPackage.dependencies, {
-    '@deskpro/apps-sdk': '^0.3.8',
+    '@deskpro/apps-sdk': '^0.4.0',
     '@deskpro/apps-components': '^0.3.8',
     '@deskpro/apps-installer': '0.4.5',
     'prop-types': '^15.6.2',
+  });
+
+  Object.assign(appPackage.devDependencies, {
+    enzyme: '^3.3.0',
+    'enzyme-adapter-react-16': '^1.1.1',
+    'react-test-renderer': '^16.4.2',
   });
 
   // author information and description are required for deskpro apps

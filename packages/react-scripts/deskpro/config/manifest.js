@@ -1,6 +1,6 @@
 const fs = require('fs');
 const chalk = require('chalk');
-const paths = require('./paths');
+const paths = require('../../config/paths');
 
 /**
  * Copies properties from source onto destination

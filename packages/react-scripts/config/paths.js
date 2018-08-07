@@ -52,7 +52,6 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appDevHtml: resolveApp('public/dev.html'),
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
@@ -61,6 +60,8 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  deskproAppDevHtml: resolveApp('public/dev.html'),
+  deskproHelpdeskStub: resolveApp('test/integration/helpdeskStub.js'),
 };
 
 // @remove-on-eject-begin
@@ -73,7 +74,6 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appDevHtml: resolveApp('public/dev.html'),
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
@@ -85,6 +85,8 @@ module.exports = {
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
+  deskproAppDevHtml: resolveApp('public/dev.html'),
+  deskproHelpdeskStub: resolveApp('test/integration/helpdeskStub.js'),
 };
 
 const ownPackageJson = require('../package.json');

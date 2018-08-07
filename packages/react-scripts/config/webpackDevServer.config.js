@@ -13,8 +13,8 @@ const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMi
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
-const deskproManifest = require('./deskproManifest');
-const deskproCors = require('./deskproCors');
+const deskproManifest = require('../deskpro/config/manifest');
+const deskproCors = require('../deskpro/config/cors');
 
 const appVersion = require(paths.appPackageJson).version;
 

@@ -14,20 +14,22 @@
       }
 
       #testAppFrame {
-        position: fixed;
-        width: 100%;
+        position: absolute;
+        width: 240px;
         height: 100%;
         overflow: hidden;
         border: 1px solid #ccc;
-        padding: 0;
-        margin: 0;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
       }
     </style>
   </head>
   <body>
     <iframe
       id="testAppFrame"
-      src="/index.html"
+      src="/index.html?dp.widgetId=dev"
       height="100%"
       width="100%"
     ></iframe>

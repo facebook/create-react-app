@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Greeting renders correctly in the loading state 1`] = `
+<p>
+  Loading...
+</p>
+`;
+
+exports[`Greeting renders correctly in the ready state 1`] = `
+<h1>
+  Hi, 
+  Joe Kool
+</h1>
+`;
