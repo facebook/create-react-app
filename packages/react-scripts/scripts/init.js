@@ -36,6 +36,9 @@ module.exports = function(
   appPackage.dependencies = appPackage.dependencies || {};
   appPackage.devDependencies = appPackage.devDependencies || {};
 
+  //as per this issue: https://github.com/facebook/create-react-app/issues/1487
+  appPackage.homepage = '.';
+
   // Setup the script rules
   appPackage.scripts = {
     start: 'PORT=31080 react-scripts start',
