@@ -64,7 +64,11 @@
   "devDependencies": {
     "jest": "23.4.2"
   },
+  
   "scripts": {
     "test": "jest"
+  },
+  "jest": {
+    "testURL": "http://localhost"
   }
 }

@@ -64,6 +64,7 @@
     "webpack": "^4.8.1"
   },
   "jest": {
+    "testURL": "http://localhost",
     "setupFiles": [
       "./src/__tests__/setupJest.js"
     ],
