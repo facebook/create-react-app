@@ -321,6 +321,18 @@ function launchEditor(fileName, lineNumber, colNumber) {
     process.platform === 'win32' &&
     !WINDOWS_FILE_NAME_WHITELIST.test(fileName.trim())
   ) {
+    console.log();
+    console.log(
+      chalk.red('Could not open ' + path.basename(fileName) + ' in the editor.')
+    );
+    console.log();
+    console.log(
+      'When running on Windows, file names are checked against a whitelist ' +
+        'to protect against remote code execution attacks. File names may ' +
+        'consist only of alphanumeric characters (all languages), periods, ' +
+        'dashes, slashes, and underscores.'
+    );
+    console.log();
     return;
   }
 
