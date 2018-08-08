@@ -266,6 +266,15 @@ function printInstructions(fileName, errorMessage) {
 
 let _childProcess = null;
 function launchEditor(fileName, lineNumber, colNumber) {
+  // Use a whitelist to validate user-provided file names. This doesn't cover
+  // the entire range of valid filenames but should cover almost all of them in
+  // practice. Allows letters, numbers, periods, dashes, slashes, and
+  // underscores. Opting to use a whitelist instead of a blacklist because
+  // getting this wrong leaves us vulnerable to a RCE attack.
+  if (!/^[a-zA-Z0-9/.-\\_]+$/.test(fileName.trim())) {
+    return;
+  }
+
   if (!fs.existsSync(fileName)) {
     return;
   }
