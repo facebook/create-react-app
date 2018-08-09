@@ -329,9 +329,9 @@ module.exports = {
               'sass-loader'
             ),
           },
-          // The GraphQL loader preprocesses GraphQL queries in .graphql files.
+          // The GraphQL loader preprocesses GraphQL queries in .graphql and .gql files.
           {
-            test: /\.(graphql)$/,
+            test: /\.(graphql|gql)$/,
             loader: 'graphql-tag/loader',
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
