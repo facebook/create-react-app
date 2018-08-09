@@ -225,7 +225,7 @@ module.exports = {
               {
                 loader: require.resolve('thread-loader'),
                 options: {
-                  poolTimeout: Infinity, // keep workers alive for more effective watch mode
+                  poolTimeout: Infinity // keep workers alive for more effective watch mode
                 },
               },
               {
@@ -266,7 +266,7 @@ module.exports = {
               {
                 loader: require.resolve('thread-loader'),
                 options: {
-                  poolTimeout: Infinity, // keep workers alive for more effective watch mode
+                  poolTimeout: Infinity // keep workers alive for more effective watch mode
                 },
               },
               {
@@ -329,7 +329,7 @@ module.exports = {
               'sass-loader'
             ),
           },
-          // The GraphQL loader preprocesses GraphQL queries in .graphql and .gql files.
+          // The GraphQL loader preprocesses GraphQL queries in .graphql files.
           {
             test: /\.(graphql|gql)$/,
             loader: 'graphql-tag/loader',
