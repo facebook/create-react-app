@@ -1,8 +1,8 @@
 {
-  "name": "react-scripts",
+  "name": "@guestyci/guesty-react-scripts",
   "version": "1.1.0",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebook/create-react-app",
+  "description": "Guesty Configuration and scripts for Create React App.",
+  "repository": "guestyorg/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
