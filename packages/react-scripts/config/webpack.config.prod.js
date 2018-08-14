@@ -261,7 +261,12 @@ module.exports = {
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
-              require.resolve('thread-loader'),
+              {
+                loader: require.resolve('thread-loader'),
+                options: {
+                  workers: process.env.CI && 2, // prevent CI builds from crashing
+                },
+              },
               {
                 loader: require.resolve('babel-loader'),
                 options: {
@@ -294,7 +299,12 @@ module.exports = {
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
-              require.resolve('thread-loader'),
+              {
+                loader: require.resolve('thread-loader'),
+                options: {
+                  workers: process.env.CI && 2, // prevent CI builds from crashing
+                },
+              },
               {
                 loader: require.resolve('babel-loader'),
                 options: {

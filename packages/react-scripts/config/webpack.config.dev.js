@@ -225,7 +225,8 @@ module.exports = {
               {
                 loader: require.resolve('thread-loader'),
                 options: {
-                  poolTimeout: Infinity // keep workers alive for more effective watch mode
+                  poolTimeout: Infinity, // keep workers alive for more effective watch mode
+                  workers: process.env.CI && 2, // prevent CI builds from crashing
                 },
               },
               {
@@ -266,7 +267,8 @@ module.exports = {
               {
                 loader: require.resolve('thread-loader'),
                 options: {
-                  poolTimeout: Infinity // keep workers alive for more effective watch mode
+                  poolTimeout: Infinity, // keep workers alive for more effective watch mode
+                  workers: process.env.CI && 2, // prevent CI builds from crashing
                 },
               },
               {
