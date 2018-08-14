@@ -16,7 +16,7 @@
     "index.js"
   ],
   "devDependencies": {
-    "jest": "23.4.2"
+    "jest": "23.5.0"
   },
   "jest": {
     "testURL": "http://localhost"
