@@ -25,7 +25,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@deskpro/apps-sdk": "^0.5.0",
+    "@deskpro/apps-sdk": "^0.5.1",
     "archiver": "^2.1.1",
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
