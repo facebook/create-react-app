@@ -52,6 +52,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       'node',
       'mjs',
     ],
+    testResultsProcessor: '<rootDir>/node_modules/jest-junit-reporter',
   };
   if (rootDir) {
     config.rootDir = rootDir;
