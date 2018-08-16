@@ -78,9 +78,9 @@
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
+    "jest-junit-reporter": "^1.1.0",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "jest-junit-reporter": "^1.1.0"
+    "react-dom": "^16.0.0"
   },
   "optionalDependencies": {
     "fsevents": "^1.1.3"
