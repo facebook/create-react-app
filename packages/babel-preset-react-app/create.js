@@ -27,6 +27,7 @@ module.exports = function(api, opts, env) {
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+  var isModern = validateBoolOption('modern', opts.modern, false);
 
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
@@ -38,7 +39,30 @@ module.exports = function(api, opts, env) {
     );
   }
 
-  return {
+  function getEnvOptions({ isModern }) {
+    const defaultOpts = {
+      // `entry` transforms `@babel/polyfill` into individual requires for
+      // the targeted browsers. This is safer than `usage` which performs
+      // static code analysis to determine what's required.
+      // This is probably a fine default to help trim down bundles when
+      // end-users inevitably import '@babel/polyfill'.
+      useBuiltIns: 'entry',
+      // Do not transform modules to CJS
+      modules: false,
+    };
+
+    if (isModern) {
+      return Object.assign(defaultOpts, {
+        targets: {
+          esmodules: true,
+        },
+      });
+    }
+
+    return defaultOpts;
+  }
+
+  const babelPreset = {
     presets: [
       isEnvTest && [
         // ES features necessary for user's Node version
@@ -52,16 +76,7 @@ module.exports = function(api, opts, env) {
       (isEnvProduction || isEnvDevelopment) && [
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
-        {
-          // `entry` transforms `@babel/polyfill` into individual requires for
-          // the targeted browsers. This is safer than `usage` which performs
-          // static code analysis to determine what's required.
-          // This is probably a fine default to help trim down bundles when
-          // end-users inevitably import '@babel/polyfill'.
-          useBuiltIns: 'entry',
-          // Do not transform modules to CJS
-          modules: false,
-        },
+        getEnvOptions({ isModern }),
       ],
       [
         require('@babel/preset-react').default,
@@ -103,7 +118,7 @@ module.exports = function(api, opts, env) {
         },
       ],
       // Polyfills the runtime needed for async/await and generators
-      [
+      !isModern && [
         require('@babel/plugin-transform-runtime').default,
         {
           helpers: false,
@@ -119,13 +134,14 @@ module.exports = function(api, opts, env) {
         },
       ],
       // function* () { yield 42; yield 43; }
-      !isEnvTest && [
-        require('@babel/plugin-transform-regenerator').default,
-        {
-          // Async functions are converted to generators by @babel/preset-env
-          async: false,
-        },
-      ],
+      !isEnvTest &&
+        !isModern && [
+          require('@babel/plugin-transform-regenerator').default,
+          {
+            // Async functions are converted to generators by @babel/preset-env
+            async: false,
+          },
+        ],
       // Adds syntax support for import()
       require('@babel/plugin-syntax-dynamic-import').default,
       isEnvTest &&
@@ -133,4 +149,8 @@ module.exports = function(api, opts, env) {
         require('babel-plugin-transform-dynamic-import').default,
     ].filter(Boolean),
   };
+
+  // console.log('PRESET', JSON.stringify(babelPreset)
+
+  return babelPreset;
 };
