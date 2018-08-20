@@ -1,3 +1,12 @@
+## 2.4.2 (August 20, 2018)
+
+#### :bug: Bug Fix
+* [lighter-react-scripts] pass `Element` to JSDOM as global (fixes issue with tabbable)
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.4.2`
+
 ## 2.4.1 (July 30, 2018)
 
 #### :bug: Bug Fix
