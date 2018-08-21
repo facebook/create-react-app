@@ -22,6 +22,8 @@ module.exports = function create(env) {
     // in practice some other transforms (such as object-rest-spread)
     // don't work without it: https://github.com/babel/babel/issues/7215
     require.resolve('babel-plugin-transform-es2015-destructuring'),
+    // styled-components
+    require.resolve('babel-plugin-styled-components'),
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
     // The following two plugins use Object.assign directly, instead of Babel's
