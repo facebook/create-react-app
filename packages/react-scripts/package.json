@@ -1,6 +1,6 @@
 {
   "name": "@bluealba/react-scripts",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
