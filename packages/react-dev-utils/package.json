@@ -57,7 +57,7 @@
     "react-error-overlay": "^4.0.0",
     "recursive-readdir": "2.2.2",
     "shell-quote": "1.6.1",
-    "sockjs-client": "1.1.4",
+    "sockjs-client": "1.1.5",
     "strip-ansi": "4.0.0",
     "text-table": "0.2.0"
   },
