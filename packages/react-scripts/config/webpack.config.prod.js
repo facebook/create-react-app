@@ -383,8 +383,8 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     process.env.UPLOAD_SOURCE_MAP_TO_SENTRY
       ? new SentryPlugin({
-          organization: process.env.SENTRY_ORGANISATION || 'employment-hero',
-          project: process.env.SENTRY_PROJECT || 'frontend-core',
+          organization: process.env.SENTRY_ORGANISATION,
+          project: process.env.SENTRY_PROJECT,
           apiKey: process.env.SENTRY_API_KEY,
           release: process.env.SENTRY_RELEASE_NAME,
         })
