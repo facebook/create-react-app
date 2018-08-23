@@ -64,7 +64,8 @@
   },
   "devDependencies": {
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "webpack-sentry-plugin": "^1.16.0"
   },
   "optionalDependencies": {
     "fsevents": "^1.1.3"

@@ -18,6 +18,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const SentryPlugin = require('webpack-sentry-plugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -380,7 +381,15 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-  ],
+    process.env.UPLOAD_SOURCE_MAP_TO_SENTRY
+      ? new SentryPlugin({
+          organization: process.env.SENTRY_ORGANISATION || 'employment-hero',
+          project: process.env.SENTRY_PROJECT || 'frontend-core',
+          apiKey: process.env.SENTRY_API_KEY,
+          release: process.env.SENTRY_RELEASE_NAME,
+        })
+      : null,
+  ].filter(Boolean),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
