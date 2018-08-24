@@ -1,6 +1,6 @@
 {
   "name": "@deskpro/apps-react-scripts",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "description": "Configuration and scripts for Create React App.",
   "publishConfig": {
     "access": "public"
@@ -25,9 +25,10 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@deskpro/apps-sdk": "^0.7.1",
+    "@deskpro/apps-sdk": "^0.7.2",
     "archiver": "^2.1.1",
     "autoprefixer": "7.1.6",
+    "babel-cli": "^6.26.0",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",

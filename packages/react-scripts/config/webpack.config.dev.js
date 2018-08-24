@@ -20,7 +20,9 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
-const deskproManifest = require('../deskpro/config/manifest');
+
+const deskproManifest = require('../deskpro/manifest');
+const deskproInstaller = require('../deskpro/installer');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -42,7 +44,8 @@ module.exports = {
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
 
-  entry: {
+  entry: deskproInstaller.filterWebackEntries({
+    install: [require.resolve('./polyfills'), paths.deskproInstaller],
     dev: [
       require.resolve('./polyfills'),
       require.resolve('react-dev-utils/webpackHotDevClient'),
@@ -72,7 +75,7 @@ module.exports = {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     ],
-  },
+  }),
 
   output: {
     // Add /* filename */ comments to generated require()s in the output.
@@ -104,7 +107,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx', '.css'],
     alias: {
       // @remove-on-eject-begin
       // Resolve Babel runtime relative to react-scripts.
@@ -260,7 +263,7 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
       templateParameters: env.raw,
-      excludeChunks: ['dev'],
+      excludeChunks: ['dev', 'install'],
     }),
     // Generates an `dev.html` file with the <script> injected.
     new HtmlWebpackPlugin({
@@ -268,8 +271,17 @@ module.exports = {
       template: path.resolve(__dirname, 'dev.html'),
       filename: 'dev.html',
       templateParameters: env.raw,
-      excludeChunks: ['main'],
+      chunks: ['dev'],
     }),
+    // Generates an `install.html` file with the <script> injected.
+    deskproInstaller.useBundled
+      ? null
+      : new HtmlWebpackPlugin({
+          inject: true,
+          template: paths.appHtml,
+          templateParameters: env.raw,
+          chunks: ['install'],
+        }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
@@ -295,9 +307,11 @@ module.exports = {
 
     // deskpro: we export some global variables like the manifest
     new webpack.DefinePlugin({
-      DPAPP_MANIFEST: JSON.stringify(deskproManifest(paths.appPackageJson)),
+      DPAPP_MANIFEST: JSON.stringify(
+        deskproManifest.extract(paths.appPackageJson)
+      ),
     }),
-  ],
+  ].filter(x => !!x),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {

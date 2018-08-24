@@ -13,7 +13,7 @@ const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMi
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
-const deskproManifest = require('../deskpro/config/manifest');
+const deskproManifest = require('../deskpro/manifest');
 const deskproCors = require('../deskpro/config/cors');
 
 const appVersion = require(paths.appPackageJson).version;
@@ -119,7 +119,7 @@ module.exports = function(proxy, allowedHost) {
 
       // In dev mode we also serve the Deskpro App manifest from the root, but we create it on the fly
       app.use('/manifest.json', function(req, res) {
-        res.send(deskproManifest(paths.appPackageJson));
+        res.send(deskproManifest.extract(paths.appPackageJson));
       });
     },
   };

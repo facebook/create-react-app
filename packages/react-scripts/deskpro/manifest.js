@@ -1,6 +1,7 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const chalk = require('chalk');
-const paths = require('../../config/paths');
+
+const paths = require('../config/paths');
 
 /**
  * Copies properties from source onto destination
@@ -111,12 +112,12 @@ function normalizeSettings(manifest) {
 }
 
 /**
- * Returns the
+ * Extract the manifest from a package.json file
  *
  * @param {String} [sourcePackageJson]
  * @return {Object}
  */
-module.exports = function(sourcePackageJson) {
+function extract(sourcePackageJson) {
   const source = sourcePackageJson || paths.appPackageJson;
 
   let packageJson;
@@ -164,4 +165,21 @@ module.exports = function(sourcePackageJson) {
   normalizeSettings(manifestJson);
 
   return JSON.parse(JSON.stringify(manifestJson));
+}
+
+/**
+ * Extracts and writes the app's manifest to destination
+ *
+ * @param {String} sourcePackageJson
+ * @param {String} destination
+ * @return {string}
+ */
+function extractAndwrite(sourcePackageJson, destination) {
+  const manifestJson = extract(sourcePackageJson);
+  return fs.writeJson(destination, manifestJson);
+}
+
+module.exports = {
+  extract: extract,
+  extractAndwrite: extractAndwrite,
 };

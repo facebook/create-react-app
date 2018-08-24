@@ -62,6 +62,8 @@ module.exports = {
   servedPath: getServedPath(resolveApp('package.json')),
   deskproAppDevHtml: resolveApp('public/dev.html'),
   deskproHelpdeskStub: resolveApp('test/integration/helpdeskStub.js'),
+  deskproInstaller: resolveApp('src/installer.js'),
+  deskproInstallerPackage: resolveApp('node_modules/@deskpro/apps-installer'),
 };
 
 // @remove-on-eject-begin
@@ -87,6 +89,8 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
   deskproAppDevHtml: resolveApp('public/dev.html'),
   deskproHelpdeskStub: resolveApp('test/integration/helpdeskStub.js'),
+  deskproInstaller: resolveApp('src/installer.js'),
+  deskproInstallerPackage: resolveApp('node_modules/@deskpro/apps-installer'),
 };
 
 const ownPackageJson = require('../package.json');
