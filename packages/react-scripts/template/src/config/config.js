@@ -30,7 +30,10 @@ const config = {
     'phone'
   ],
   initial_state: {
-    theme: 'dark',
+    themeSource: {
+      isNightModeOn: true,
+      source: 'light'
+    },
     locale: 'en'
   },
   drawer_width: 256,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import IconButton from 'material-ui/IconButton'
+import IconButton from '@material-ui/core/IconButton'
 import { injectIntl, intlShape } from 'react-intl'
 import { GitHubIcon } from 'rmw-shell/lib/components/Icons'
 import { Activity } from 'rmw-shell'
@@ -12,14 +12,14 @@ require('github-markdown-css')
 class About extends Component {
   // Sorry for using setState here but I have to remove 'marked' from the dependencies
   // because of a vulnerability issue
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       text: ''
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     fetch(README)
       .then(response => response.text())
       .then(text => {
@@ -27,7 +27,7 @@ class About extends Component {
       })
   }
 
-  render () {
+  render() {
     const { intl } = this.props
 
     return (
