@@ -91,7 +91,7 @@ module.exports = function(
       },
       {
         target: 'install',
-        url: 'html/install.html',
+        url: 'install.html',
       },
     ],
     storage: [],
