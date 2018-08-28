@@ -55,7 +55,7 @@ module.exports = function(
   Object.assign(appPackage.dependencies, {
     '@deskpro/apps-sdk': sdkVersion,
     '@deskpro/apps-components': sdkVersion,
-    '@deskpro/apps-installer': '0.4.5',
+    '@deskpro/apps-installer': '^1.0.4',
     'prop-types': '^15.6.2',
   });
 
