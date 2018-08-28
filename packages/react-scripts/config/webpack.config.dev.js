@@ -279,6 +279,7 @@ module.exports = {
       : new HtmlWebpackPlugin({
           inject: true,
           template: paths.appHtml,
+          filename: 'install.html',
           templateParameters: env.raw,
           chunks: ['install'],
         }),
