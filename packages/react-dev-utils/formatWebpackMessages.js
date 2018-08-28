@@ -52,7 +52,10 @@ function formatMessage(message, isError) {
   });
 
   if (threadLoaderIndex !== -1) {
-    lines = lines.slice(0, threadLoaderIndex);
+    // Naïvely get rid of the thread-loader entry and
+    // the following two lines, which are a blank, followed
+    // by the absolute file path
+    lines.splice(threadLoaderIndex, 3);
   }
 
   lines = lines.filter(function(line) {
