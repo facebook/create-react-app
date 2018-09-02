@@ -39,5 +39,8 @@
     "yarn.lock": [
       "git rm --cached"
     ]
+  },
+  "resolutions": {
+    "@babel/core": "7.0.0-beta.46"
   }
 }
