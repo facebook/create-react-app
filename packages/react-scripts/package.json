@@ -68,7 +68,7 @@
     "uglifyjs-webpack-plugin": "1.2.5",
     "url-loader": "1.0.1",
     "webpack": "4.8.3",
-    "webpack-dev-server": "3.1.5",
+    "webpack-dev-server": "3.1.7",
     "webpack-manifest-plugin": "2.0.3",
     "whatwg-fetch": "2.0.4"
   },
