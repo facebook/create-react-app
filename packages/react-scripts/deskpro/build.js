@@ -39,7 +39,8 @@ module.exports = function(data) {
       () =>
         docs.bundle(path.resolve(paths.appPackageJson, '..'), paths.appBuild),
       err => {
-        console.log(chalk.red('Failed to write the deskpro app manifest.\n'));
+        console.log(chalk.red('Failed to bundle application docs.\n'));
+        console.log(err);
         printBuildError(err);
         process.exit(1);
       }
@@ -48,7 +49,7 @@ module.exports = function(data) {
       // package the app
       () => packager(path.resolve(paths.appPackageJson, '..'), 'app.zip'),
       err => {
-        console.log(chalk.red('Failed to write the deskpro app manifest.\n'));
+        console.log(chalk.red('Failed to package the app.\n'));
         printBuildError(err);
         process.exit(1);
       }

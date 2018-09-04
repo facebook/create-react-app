@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const paths = require('../config/paths');
+const path = require('path');
 
 const useCustom = fs.existsSync(paths.deskproInstaller);
 const useBundled = !useCustom && fs.existsSync(paths.deskproInstallerPackage);
@@ -21,10 +22,12 @@ function filterWebackEntries(entries) {
 
 function filterDistFiles(src, dest) {
   // prevent the installer overwritting the manifest and app icon
-  return !src.endsWith('manifest.json') && !src.endsWith('icon.png');
+  return !src.endsWith('/manifest.json') && !src.endsWith('/icon.png');
 }
-
 function filterBuildFiles(src, dest) {
+  if (fs.lstatSync(src).isDirectory()) {
+    return true;
+  }
   return src.match(/\/install[^/]+$/);
 }
 
@@ -54,6 +57,7 @@ function bundle(source, destination) {
       ? filterBuildFiles
       : filterDistFiles;
   const actualDestination = fs.realpathSync(destination);
+
   return fs.copy(distributionSource, actualDestination, {
     filter: copyFilter,
     overwrite: true,
