@@ -34,7 +34,10 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const bfj = require('bfj');
-const config = require('../config/webpack.config.prod');
+const {
+  createWebpackConfig,
+  publicPath,
+} = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -59,6 +62,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // Process CLI arguments
 const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
+const buildModern = argv.indexOf('--modern') !== -1;
 
 // We require that you explictly set browsers and do not fall back to
 // browserslist defaults.
@@ -109,7 +113,6 @@ checkBrowsers(paths.appPath)
 
       const appPackage = require(paths.appPackageJson);
       const publicUrl = paths.publicUrl;
-      const publicPath = config.output.publicPath;
       const buildFolder = path.relative(process.cwd(), paths.appBuild);
       printHostingInstructions(
         appPackage,
@@ -135,9 +138,18 @@ checkBrowsers(paths.appPath)
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
-  console.log('Creating an optimized production build...');
+  console.log(
+    `Creating an optimized ${
+      buildModern ? 'modern and legacy ' : ''
+    }production build...`
+  );
 
-  let compiler = webpack(config);
+  const configs = [
+    createWebpackConfig({ isModernBuild: buildModern }),
+    buildModern &&
+      createWebpackConfig({ isModernBuild: buildModern, modern: true }),
+  ].filter(Boolean);
+  let compiler = webpack(configs);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) {
