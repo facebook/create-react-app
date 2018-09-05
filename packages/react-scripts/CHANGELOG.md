@@ -1,5 +1,10 @@
 # `backpack-react-scripts` Change Log
 
+## 5.2.0 - 2018-09-06
+### Added
+- Rebased onto `upstream/master` v1.1.5 (dc74990b89b5c6e143b522c759be3dac2c286514)
+- Upgraded dependencies, mostly `eslint` based.
+
 ## 5.1.1 - 2018-04-11
 ### Fixed
 - `backpack-react-scripts` listed inside of `devDependencies` instead of `dependencies`

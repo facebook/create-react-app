@@ -104,7 +104,7 @@ module.exports = function(
     command = 'npm';
     args = ['install', '--save-dev', verbose && '--verbose'].filter(e => e);
   }
-  args.push('react@^15', 'react-dom@^15');
+  args.push('react', 'react-dom');
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
