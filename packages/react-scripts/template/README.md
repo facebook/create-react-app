@@ -631,6 +631,8 @@ Then in `package.json`, add the following lines to `scripts`:
 
 Now you can rename `src/App.css` to `src/App.scss` and run `npm run watch-css`. The watcher will find every Sass file in `src` subdirectories, and create a corresponding CSS file next to it, in our case overwriting `src/App.css`. Since `src/App.js` still imports `src/App.css`, the styles become a part of your application. You can now edit `src/App.scss`, and `src/App.css` will be regenerated.
 
+>Note: To minify `src/App.css` add `--output-style compressed` to `watch-css`.
+
 To share variables between Sass files, you can use Sass imports. For example, `src/App.scss` and other component style files could include `@import "./shared.scss";` with variable definitions.
 
 To enable importing files without using relative paths, you can add the  `--include-path` option to the command in `package.json`.
@@ -852,7 +854,7 @@ npm install --save reactstrap bootstrap@4
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add bootstrap@4 reactstrap 
+yarn add bootstrap@4 reactstrap
 ```
 
 Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
