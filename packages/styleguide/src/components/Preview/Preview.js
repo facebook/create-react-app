@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { string, node, object, bool, oneOf } from 'prop-types';
 import cx from 'classnames';
 import styled from 'styled-components';
+import chroma from 'chroma-js';
 
 import PreviewTitleBar from './PreviewTitleBar';
 import CodeExample from './CodeExample';
@@ -45,6 +46,22 @@ export default class Preview extends Component {
     isCodeShown: false
   };
 
+  componentDidMount() {
+    const previewBackgroundsArray = [];
+
+    Object.keys(previewBackgrounds).map(key => {
+      return previewBackgroundsArray.push({
+        value: previewBackgrounds[key],
+        label: key
+      });
+    });
+
+    this.setState({
+      previewBackgroundsList: previewBackgroundsArray,
+      previewBackground: previewBackgroundsArray[0]
+    });
+  }
+
   handleToggleCode() {
     this.setState({
       isCodeShown: !this.state.isCodeShown
@@ -69,7 +86,40 @@ export default class Preview extends Component {
 
     const classes = cx(CLASS_ROOT, className);
 
+    const colourStyles = {
+      option: (styles, { data, isActive }) => {
+        const color = chroma(data.value);
+        return {
+          ...styles,
+          backgroundColor: isActive ? 'black' : data.value,
+          color: chroma.contrast(color, 'white') > 2 ? 'white' : 'black',
+          cursor: 'pointer'
+        };
+      },
+      container: () => {},
+      control: () => {},
+      valueContainer: () => {},
+      singleValue: () => {},
+      indicatorSeparator: () => {}
+    };
+
     const actions = [];
+
+    actions.push(
+      <StyledSelect
+        name="background-select"
+        className="select-wrapper"
+        classNamePrefix="select"
+        isSearchable={false}
+        isClearable={false}
+        bgTheme={previewBackground.value}
+        value={previewBackground}
+        placeholder={previewBackground.value}
+        onChange={this.handlePreviewBackground}
+        options={previewBackgroundsList}
+        styles={colourStyles}
+      />
+    );
 
     if (hasCodePreview) {
       actions.push(
@@ -115,6 +165,7 @@ export default class Preview extends Component {
 }
 
 const StyledPreviewLive = styled.div`
+  transition: all 200ms ease-in-out;
   background-color: ${props => props.theme.colors[props.bgTheme]};
 `;
 
@@ -122,4 +173,37 @@ const StyledButton = styled.button`
   ${ButtonBaseCSS};
   padding-right: 0;
   text-transform: uppercase;
+`;
+
+const StyledSelect = styled(Select)`
+  &.select-wrapper {
+    position: relative;
+    font-family: ${fontFamily};
+    font-size: 14px;
+  }
+
+  .select__control {
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 130px;
+  }
+
+  .select__value-container {
+    display: inline-flex;
+    justify-content: flex-end;
+  }
+
+  .select__single-value,
+  .select__option {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .select__menu {
+    border-radius: 0 !important;
+    text-align: center;
+  }
 `;
