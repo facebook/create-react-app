@@ -46,10 +46,7 @@
     "prebuild": "node ./prebuild.js"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
-      "prettier --single-quote --write",
-      "git add"
-    ]
+    "src/**/*.{js,jsx,json,css}": ["prettier --single-quote --write", "git add"]
   },
   "devDependencies": {
     "babel-cli": "~6.26.0",
