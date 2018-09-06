@@ -184,8 +184,8 @@ export default class Preview extends Component {
 }
 
 const StyledPreviewLive = styled.div`
-  transition: all 200ms ease-in-out;
   background-color: ${props => props.theme.colors[props.bgTheme]};
+  transition: all 200ms ease-in-out;
 `;
 
 const StyledButton = styled.button`
@@ -219,6 +219,9 @@ const StyledSelect = styled(Select)`
   .select__option {
     text-transform: uppercase;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .select__menu {
