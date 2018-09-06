@@ -184,7 +184,15 @@ module.exports = function(
   console.log();
   console.log('installing... more package')
   console.log()
-  exec('yarn add mobx mobx-react react-router-dom recompose styled-components react-app-rewire-mobx react-app-rewired', (err, stdout, stderr) => {
+  exec('yarn add mobx mobx-react react-router-dom recompose styled-components', (err, stdout, stderr) => {
+    if (err) {
+      // node couldn't execute the command
+      return;
+    }
+
+    console.log(`${stdout}`);
+  })
+  exec('yarn add -D react-app-rewire-mobx react-app-rewired eslint prettier babel-eslint eslint-config-prettier eslint-plugin-flowtype eslint-plugin-prettier', (err, stdout, stderr) => {
     if (err) {
       // node couldn't execute the command
       return;
