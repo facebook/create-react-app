@@ -204,17 +204,6 @@ module.exports = {
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
         oneOf: [
-          // "url" loader works like "file" loader except that it embeds assets
-          // smaller than specified limit in bytes as data URLs to avoid requests.
-          // A missing `test` is equivalent to a match.
-          {
-            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-            loader: require.resolve('url-loader'),
-            options: {
-              limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
-            },
-          },
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
@@ -315,9 +304,12 @@ module.exports = {
   plugins: [
     new StaticSiteGeneratorPlugin({
       entry: 'app',
-      globals: Object.assign({}, new JSDOM().window, {
-        __lighterIsServer__: true,
-      }),
+      globals: Object.assign(
+        {}, 
+        new JSDOM().window, 
+        { Element: new JSDOM().window.Element }, 
+        { __lighterIsServer__: true, }
+      ),
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:

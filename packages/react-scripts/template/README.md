@@ -506,7 +506,7 @@ class Button extends Component {
 }
 ```
 
-**This is not required for React** but many people find this feature convenient. You can read about the benefits of this approach [here](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). However you should be aware that this makes your code less portable to other build tools and environments than Webpack.
+**This is not required for React** but many people find this feature convenient. You can read about the benefits of this approach [here](https://medium.com/seek-blog/block-element-modifying-your-javascript-components-d7f99fcab52b). However you should be aware that this makes your code less portable to other build tools and environments than Webpack.
 
 In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
 
@@ -1428,6 +1428,48 @@ Import it in [`src/setupTests.js`](#initializing-test-environment) to make its m
 import 'jest-enzyme';
 ```
 
+#### Use `react-testing-library`
+
+As an alternative or companion to `enzyme`, you may consider using `react-testing-library`. [`react-testing-library`](https://github.com/kentcdodds/react-testing-library) is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it's recommended to use with [`jest-dom`](https://github.com/gnapse/jest-dom) for improved assertions.
+
+To install `react-testing-library` and `jest-dom`, you can run:
+
+```sh
+npm install --save react-testing-library jest-dom
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add react-testing-library jest-dom
+```
+
+Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerplate in your test files:
+
+```js
+// react-testing-library renders your components to document.body,
+// this will ensure they're removed after each test.
+import 'react-testing-library/cleanup-after-each';
+
+// this adds jest-dom's custom assertions
+import 'jest-dom/extend-expect';
+```
+
+Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Welcome to React".
+
+```js
+import React from 'react';
+import { render } from 'react-testing-library';
+import App from './App';
+
+it('renders welcome message', () => {
+  const { getByText } = render(<App />);
+  expect(getByText('Welcome to React')).toBeInTheDOM();
+});
+```
+
+Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from [the `react-testing-library` documentation](https://github.com/kentcdodds/react-testing-library) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
+
 ### Using Third Party Assertion Libraries
 
 We recommend that you use `expect()` for assertions and `jest.fn()` for spies. If you are having issues with them please [file those against Jest](https://github.com/facebook/jest/issues/new), and we’ll fix them. We intend to keep making them better for React, supporting, for example, [pretty-printing React elements as JSX](https://github.com/facebook/jest/pull/1566).
@@ -2209,6 +2251,16 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://reacttraining.com/react-router/web/api/Router) about different history implementations in React Router.
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
 
+#### Troubleshooting
+
+##### "/dev/tty: No such a device or address"
+
+If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the follwing:
+
+1. Create a new [Personal Access Token](https://github.com/settings/tokens)
+2. `git remote set-url origin https://<user>:<token>@github.com/<user>/<repo>` .
+3. Try `npm run deploy again`
+
 ### [Heroku](https://www.heroku.com/)
 
 Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
@@ -2264,7 +2316,8 @@ With this setup Netlify will build and deploy when you push to git or open a pul
 
 1. [Start a new netlify project](https://app.netlify.com/signup)
 2. Pick your Git hosting service and select your repository
-3. Click `Build your site`
+3. Set `yarn build` as the build command and `build` as the publish directory
+4. Click `Deploy site`
 
 **Support for client-side routing:**
 

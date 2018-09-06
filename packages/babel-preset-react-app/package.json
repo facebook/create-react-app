@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-react-app",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Babel preset used by Create React App",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -8,7 +8,11 @@
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "create.js",
+    "dev.js",
+    "prod.js",
+    "test.js"
   ],
   "dependencies": {
     "babel-plugin-dynamic-import-node": "1.1.0",

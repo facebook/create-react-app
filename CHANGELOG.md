@@ -1,3 +1,63 @@
+## 2.4.2 (August 20, 2018)
+
+#### :bug: Bug Fix
+* [lighter-react-scripts] pass `Element` to JSDOM as global (fixes issue with tabbable)
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.4.2`
+
+## 2.4.1 (July 30, 2018)
+
+#### :bug: Bug Fix
+* [lighter-react-scripts] bump cssnano package to fix issues with border declaration
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.4.1`
+
+## 2.4.0 (July 16, 2018)
+
+#### :rocket: New Feature
+* [lighter-react-scripts] do not inline images
+
+#### :nail_care: Enhancement
+* [lighter-react-scripts] update dependencies
+* [lighter-styleguide] update styleguide deps
+* [lighter-styleguide] styleguide is now buildable
+
+#### :bug: Bug Fix
+* [lighter-styleguide] Refactor styleguide layout to prevent scroll to top on refresh
+* [lighter-styleguide] fix Preview iframeHead not working
+* [lighter-react-scripts] cssnano no logner applies not safe optimalizations
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.4.0`
+* `lighter-styleguide@1.2.4`
+
+## 2.3.4 (May 20, 2018)
+
+#### :bug: Bug Fix
+
+* [lighter-react-scripts] fix do not remove unused font-face declarations from css
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.3.4`
+
+## 2.3.3 (May 11, 2018)
+
+#### :bug: Bug Fix
+
+* [lighter-styleguide] fix for Warning: Received `true` for non-boolean attribute `fill`
+* [lighter-react-scripts] fix css nano minimizing keyframes
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.3.3`
+* `lighter-styleguide@1.2.3`
+
 ## 2.3.2 (May 11, 2018)
 
 #### :bug: Bug Fix

@@ -214,16 +214,6 @@ module.exports = {
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
         oneOf: [
-          // "url" loader works just like "file" loader but it also embeds
-          // assets smaller than specified size as data URLs to avoid requests.
-          {
-            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-            loader: require.resolve('url-loader'),
-            options: {
-              limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
-            },
-          },
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
@@ -297,7 +287,7 @@ module.exports = {
                     throwError: true,
                   }),
                   require('cssnano')({
-                    reduceIdents: false
+                    preset: 'default',
                   }),
                 ],
               },
@@ -331,9 +321,12 @@ module.exports = {
   plugins: [
     new StaticSiteGeneratorPlugin({
       entry: 'app',
-      globals: Object.assign({}, new JSDOM().window, {
-        __lighterIsServer__: true,
-      }),
+      globals: Object.assign(
+        {}, 
+        new JSDOM().window, 
+        { Element: new JSDOM().window.Element }, 
+        { __lighterIsServer__: true, }
+      ),
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
@@ -404,7 +397,6 @@ module.exports = {
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
-      publicPath: publicPath
     }),
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
