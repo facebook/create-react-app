@@ -1,0 +1,19 @@
+{
+    "parser": "babel-eslint",
+    "extends": ["airbnb", "prettier", "prettier/react", "prettier/flowtype"],
+    "plugins": ["prettier", "flowtype"],
+    "env": {
+      "browser": true,
+      "jasmine": true
+    },
+    "rules": {
+      "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+      "react/prefer-stateless-function": [0, { "ignorePureComponents": true }],
+      "prettier/prettier": ["error", { "singleQuote": true }],
+      "react/prop-types": "off",
+      "no-unused-vars": "off",
+      "spaced-comment": "off",
+      "no-confusing-arrow": 0
+    }
+  }
+  
