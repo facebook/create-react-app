@@ -19,7 +19,6 @@
     "classnames": "~2.2.5",
     "common-tags": "~1.8.0",
     "firacode": "~1.205.0",
-    "npm": "^6.0.1",
     "object.entries": "~1.0.4",
     "polished": "~1.9.2",
     "pretty": "~2.0.0",
@@ -28,14 +27,14 @@
     "react": "~16.4.1",
     "react-docgen": "~3.0.0-beta12",
     "react-docgen-annotation-resolver": "~1.0.0",
-    "react-dom": "~16.3.2",
-    "react-element-to-jsx-string": "~13.2.0",
-    "react-frame-component": "~2.0.2",
-    "react-markings": "~1.2.0",
+    "react-dom": "~16.4.1",
+    "react-element-to-jsx-string": "~14.0.1",
+    "react-frame-component": "~4.0.0",
+    "react-markings": "~1.3.0",
     "react-responsive": "~4.1.0",
-    "react-router-dom": "~4.2.2",
+    "react-router-dom": "~4.3.1",
     "react-select": "~2.0.0",
-    "styled-components": "~3.2.5",
+    "styled-components": "~3.3.3",
     "svg4everybody": "~2.1.9",
     "unescape-html": "~1.1.0"
   },
@@ -48,7 +47,10 @@
     "prebuild": "node ./prebuild.js"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": ["prettier --single-quote --write", "git add"]
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
   },
   "devDependencies": {
     "babel-cli": "~6.26.0",
