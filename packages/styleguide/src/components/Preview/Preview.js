@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { string, node, object, bool, oneOf } from 'prop-types';
 import cx from 'classnames';
+import Select from 'react-select';
 import styled from 'styled-components';
+import chroma from 'chroma-js';
 
 import PreviewTitleBar from './PreviewTitleBar';
 import CodeExample from './CodeExample';
@@ -10,7 +12,7 @@ import Frame from './Frame';
 import Card from './../Card';
 import Icon from './../Icon';
 
-import { colors } from './../../style/theme';
+import { colors, previewBackgrounds, fontFamily } from './../../style/theme';
 import { ButtonBaseCSS } from '../../style/common';
 
 const CLASS_ROOT = '';
@@ -39,17 +41,43 @@ export default class Preview extends Component {
     super(props);
 
     this.handleToggleCode = this.handleToggleCode.bind(this);
+    this.handleBackroundsToArray = this.handleBackroundsToArray.bind(this);
+    this.handlePreviewBackground = this.handlePreviewBackground.bind(this);
   }
 
   state = {
-    isCodeShown: false
+    isCodeShown: false,
+    previewBackground: '',
+    previewBackgrounds: []
   };
+
+  componentDidMount() {
+    this.setState({
+      previewBackground: this.handleBackroundsToArray()
+    });
+  }
 
   handleToggleCode() {
     this.setState({
       isCodeShown: !this.state.isCodeShown
     });
   }
+
+  handleBackroundsToArray = () => {
+    const previewBackgroundsArray = Object.keys(previewBackgrounds).map(key => {
+      return {
+        value: previewBackgrounds[key],
+        label: key
+      };
+    });
+    return previewBackgroundsArray;
+  };
+
+  handlePreviewBackground = previewBackground => {
+    this.setState({ previewBackground });
+  };
+
+  return;
 
   render() {
     const {
@@ -67,9 +95,44 @@ export default class Preview extends Component {
       ...other
     } = this.props;
 
+    const { previewBackground } = this.state;
+
     const classes = cx(CLASS_ROOT, className);
 
+    const colourStyles = {
+      option: (styles, { data, isActive }) => {
+        const color = chroma(data.value);
+        return {
+          ...styles,
+          backgroundColor: isActive ? 'black' : data.value,
+          color: chroma.contrast(color, 'white') > 2 ? 'white' : 'black',
+          cursor: 'pointer'
+        };
+      },
+      container: () => {},
+      control: () => {},
+      valueContainer: () => {},
+      singleValue: () => {},
+      indicatorSeparator: () => {}
+    };
+
     const actions = [];
+
+    actions.push(
+      <StyledSelect
+        name="background-select"
+        className="select-wrapper"
+        classNamePrefix="select"
+        isSearchable={false}
+        isClearable={false}
+        bgTheme={previewBackground.value}
+        value={previewBackground}
+        placeholder={previewBackground.value}
+        onChange={this.handlePreviewBackground}
+        options={this.handleBackroundsToArray()}
+        styles={colourStyles}
+      />
+    );
 
     if (hasCodePreview) {
       actions.push(
@@ -80,7 +143,9 @@ export default class Preview extends Component {
       );
     }
 
-    const toReneder = children || (
+    const toReneder = (typeof children === 'function'
+      ? children(this.state.previewBackground)
+      : children) || (
       // eslint-disable-next-line react/no-danger
       <div dangerouslySetInnerHTML={{ __html: html }} />
     );
@@ -97,7 +162,12 @@ export default class Preview extends Component {
 
     return [
       <PreviewTitleBar title={title} actions={actions} key="previewTitle" />,
-      <Card className={classes} {...other} key="previewCard">
+      <Card
+        className={classes}
+        bgColor={previewBackground.value}
+        {...other}
+        key="previewCard"
+      >
         <StyledPreviewLive bgTheme={bgTheme}>{content}</StyledPreviewLive>
         {this.state.isCodeShown &&
           hasCodePreview &&
@@ -116,10 +186,47 @@ export default class Preview extends Component {
 
 const StyledPreviewLive = styled.div`
   background-color: ${props => props.theme.colors[props.bgTheme]};
+  transition: all 200ms ease-in-out;
 `;
 
 const StyledButton = styled.button`
   ${ButtonBaseCSS};
   padding-right: 0;
   text-transform: uppercase;
+`;
+
+const StyledSelect = styled(Select)`
+  &.select-wrapper {
+    position: relative;
+    font-family: ${fontFamily};
+    font-size: 14px;
+  }
+
+  .select__control {
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 130px;
+  }
+
+  .select__value-container {
+    display: inline-flex;
+    justify-content: flex-end;
+  }
+
+  .select__single-value,
+  .select__option {
+    text-transform: uppercase;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .select__menu {
+    border-radius: 0 !important;
+    text-align: center;
+  }
 `;

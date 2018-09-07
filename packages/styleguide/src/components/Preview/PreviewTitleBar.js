@@ -24,7 +24,9 @@ const PreviewTitleBar = ({ className, title, actions = [], ...other }) => {
       {actions && (
         <BarItem>
           <Bar>
-            {actions.map(action => <BarItem key={action}>{action}</BarItem>)}
+            {actions.map((action, actionIndex) => (
+              <BarItem key={actionIndex}>{action}</BarItem>
+            ))}
           </Bar>
         </BarItem>
       )}
