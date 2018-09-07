@@ -6,7 +6,7 @@ import Main from '../containers/main'
 const Routes = () => (
   <Router>
     <div>
-      <Route path="/test" component={Main} />
+      <Route path="/" component={Main} />
     </div>
   </Router>
 )
