@@ -18,6 +18,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const spawn = require('react-dev-utils/crossSpawn');
+const { exec } = require('child_process')
 
 module.exports = function(
   appPath,
@@ -37,9 +38,9 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test --env=jsdom',
+    start: 'react-app-rewired start --scripts-version sendit-react-scripts',
+    build: 'react-app-rewired build --scripts-version sendit-react-scripts',
+    test: 'react-app-rewired test --scripts-version sendit-react-scripts --env=jsdom',
     eject: 'react-scripts eject',
   };
 
@@ -181,7 +182,25 @@ module.exports = function(
     );
   }
   console.log();
-  console.log('Happy hacking!');
+  console.log('installing... more package')
+  console.log()
+  exec('yarn add mobx mobx-react react-router-dom recompose styled-components', (err, stdout, stderr) => {
+    if (err) {
+      // node couldn't execute the command
+      return;
+    }
+
+    console.log(`${stdout}`);
+    exec('yarn add -D react-app-rewire-mobx react-app-rewired eslint prettier babel-eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-flowtype eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react', (err, stdout, stderr) => {
+      if (err) {
+        // node couldn't execute the command
+        return;
+      }
+  
+      console.log(`${stdout}`);
+      console.log('Happy hacking!');
+    })
+  })
 };
 
 function isReactInstalled(appPackage) {
