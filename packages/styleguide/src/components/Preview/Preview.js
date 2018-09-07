@@ -41,6 +41,7 @@ export default class Preview extends Component {
     super(props);
 
     this.handleToggleCode = this.handleToggleCode.bind(this);
+    this.handleBackroundsToArray = this.handleBackroundsToArray.bind(this);
     this.handlePreviewBackground = this.handlePreviewBackground.bind(this);
   }
 
@@ -51,18 +52,8 @@ export default class Preview extends Component {
   };
 
   componentDidMount() {
-    const previewBackgroundsArray = [];
-
-    Object.keys(previewBackgrounds).map(key => {
-      return previewBackgroundsArray.push({
-        value: previewBackgrounds[key],
-        label: key
-      });
-    });
-
     this.setState({
-      previewBackgroundsList: previewBackgroundsArray,
-      previewBackground: previewBackgroundsArray[0]
+      previewBackground: this.handleBackroundsToArray()
     });
   }
 
@@ -71,6 +62,16 @@ export default class Preview extends Component {
       isCodeShown: !this.state.isCodeShown
     });
   }
+
+  handleBackroundsToArray = () => {
+    const previewBackgroundsArray = Object.keys(previewBackgrounds).map(key => {
+      return {
+        value: previewBackgrounds[key],
+        label: key
+      };
+    });
+    return previewBackgroundsArray;
+  };
 
   handlePreviewBackground = previewBackground => {
     this.setState({ previewBackground });
@@ -94,7 +95,7 @@ export default class Preview extends Component {
       ...other
     } = this.props;
 
-    const { previewBackground, previewBackgroundsList } = this.state;
+    const { previewBackground } = this.state;
 
     const classes = cx(CLASS_ROOT, className);
 
@@ -128,7 +129,7 @@ export default class Preview extends Component {
         value={previewBackground}
         placeholder={previewBackground.value}
         onChange={this.handlePreviewBackground}
-        options={previewBackgroundsList}
+        options={this.handleBackroundsToArray()}
         styles={colourStyles}
       />
     );
