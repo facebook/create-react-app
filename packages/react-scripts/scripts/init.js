@@ -192,7 +192,7 @@ module.exports = function(
 
     console.log(`${stdout}`);
   })
-  exec('yarn add -D react-app-rewire-mobx react-app-rewired eslint prettier babel-eslint eslint-config-prettier eslint-plugin-flowtype eslint-plugin-prettier', (err, stdout, stderr) => {
+  exec('yarn add -D react-app-rewire-mobx react-app-rewired eslint prettier babel-eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-flowtype eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react', (err, stdout, stderr) => {
     if (err) {
       // node couldn't execute the command
       return;
