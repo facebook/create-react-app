@@ -20,6 +20,9 @@
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
+  "scripts": {
+    "start": "node ./bin/react-scripts.js"
+  },
   "dependencies": {
     "@babel/core": "7.0.0-beta.46",
     "@babel/runtime": "7.0.0-beta.46",
