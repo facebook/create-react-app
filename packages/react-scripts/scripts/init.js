@@ -202,13 +202,15 @@ function isReactInstalled(appPackage) {
   );
 }
 
-const questions = new Promise(function (resolve, reject) {
-  rl.question('If you are sendit developer select private\nPrivate ? Y/n :', (answer) => {
-    console.log(`Thank you for your valuable feedback: ${answer}`)
-    resolve(answer)
-    rl.close();
-  })
-})
+function questions () {
+  return new Promise(function (resolve, reject) {
+    rl.question('If you are sendit developer select private\nPrivate ? Y/n :', (answer) => {
+      console.log(`Thank you for your valuable feedback: ${answer}`)
+      resolve(answer)
+      rl.close();
+    })
+  }) 
+}
 
 function installDependency () {
   return new Promise(function(resolve, reject) {
@@ -239,7 +241,7 @@ function installDevDependency () {
 }
 
 async function installMorePackage () {
-  const answer = await questions
+  const answer = await questions()
   console.log(answer)
   if (answer === 'y' || answer === 'Y') {
     
