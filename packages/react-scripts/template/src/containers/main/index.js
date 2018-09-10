@@ -8,23 +8,23 @@ type Props = {
 }
 
 const Container = styled.div`
-  display: flex
-  flex-direction: column
-  flex: 1
-  align-items: center
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
 `
 
 const Header = styled.h1.attrs({
-  isbig: props => props.isbig ? '3em' : '2em'
+  isbig: props => (props.isbig ? '3em' : '2em')
 })`
-  font-size: ${props => props.isbig}
+  font-size: ${props => props.isbig};
 `
 
 const Page1 = (props: Props) => {
   const { ExampleStore, title } = props
   return (
-    <Container >
-      <Header isbig >{ExampleStore.exampleData.text}</Header>
+    <Container>
+      <Header isbig>{ExampleStore.exampleData.text}</Header>
       <Header>{title} </Header>
     </Container>
   )
