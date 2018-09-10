@@ -1,9 +1,7 @@
 {
   "dependencies": {
-    "backpack-react-scripts": "*",
     "bpk-component-button": "*",
     "bpk-component-code": "*",
-    "bpk-component-grid": "*",
     "bpk-component-text": "*",
     "bpk-mixins": "*",
     "bpk-stylesheets": "*"
