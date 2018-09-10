@@ -184,23 +184,7 @@ module.exports = function(
   console.log();
   console.log('installing... more package')
   console.log()
-  exec('yarn add mobx mobx-react react-router-dom recompose styled-components', (err, stdout, stderr) => {
-    if (err) {
-      // node couldn't execute the command
-      return;
-    }
-
-    console.log(`${stdout}`);
-    exec('yarn add -D react-app-rewire-mobx react-app-rewired eslint prettier babel-eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-flowtype eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react', (err, stdout, stderr) => {
-      if (err) {
-        // node couldn't execute the command
-        return;
-      }
-  
-      console.log(`${stdout}`);
-      console.log('Happy hacking!');
-    })
-  })
+  installMorePackage()
 };
 
 function isReactInstalled(appPackage) {
@@ -210,4 +194,52 @@ function isReactInstalled(appPackage) {
     typeof dependencies.react !== 'undefined' &&
     typeof dependencies['react-dom'] !== 'undefined'
   );
+}
+
+const questions = new Promise(function (resolve, reject) {
+  rl.question('If you are sendit developer select private\nPrivate ? Y/n :', (answer) => {
+    console.log(`Thank you for your valuable feedback: ${answer}`)
+    resolve(answer)
+    rl.close();
+  })
+})
+
+function installDependency () {
+  return new Promise(function(resolve, reject) {
+    exec('yarn add mobx mobx-react react-router-dom recompose styled-components', (err, stdout, stderr) => {
+      if (err) {
+        // node couldn't execute the command
+        return;
+      }
+  
+      console.log(`${stdout}`)
+      resolve(true)
+    })
+  }) 
+}
+
+function installDevDependency () {
+  return new Promise(function(resolve, reject) {
+    exec('yarn add -D react-app-rewire-mobx react-app-rewired eslint prettier babel-eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-flowtype eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react', (err, stdout, stderr) => {
+      if (err) {
+        // node couldn't execute the command
+        return;
+      }
+  
+      console.log(`${stdout}`);
+      resolve(true)
+    })
+  })
+}
+
+async function installMorePackage () {
+  const answer = await questions
+  console.log(answer)
+  if (answer === 'y' || answer === 'Y') {
+    
+  } else {
+    await installDependency()
+    await installDevDependency()
+    console.log('Happy hacking!')
+  }
 }
