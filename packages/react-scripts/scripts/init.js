@@ -20,6 +20,9 @@ const chalk = require('chalk');
 const spawn = require('react-dev-utils/crossSpawn');
 const { exec } = require('child_process');
 const readline = require('readline');
+const _ = require('lodash');
+
+_.templateSettings.interpolate = /<%=([\s\S]+?)%>/g;
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -191,7 +194,7 @@ module.exports = function(
   console.log();
   console.log('installing... more package');
   console.log();
-  installMorePackage(appName);
+  installMorePackage(appName, appPath);
 };
 
 function isReactInstalled(appPackage) {
@@ -205,14 +208,10 @@ function isReactInstalled(appPackage) {
 
 function questions() {
   return new Promise(function(resolve, reject) {
-    rl.question(
-      'If you are sendit developer select private\nPrivate ? Y/n :',
-      answer => {
-        console.log(`Thank you for your valuable feedback: ${answer}`);
-        resolve(answer);
-        rl.close();
-      }
-    );
+    rl.question('Do you need deployment file\n Type Y or N ? :', answer => {
+      resolve(answer);
+      rl.close();
+    });
   });
 }
 
@@ -225,8 +224,6 @@ function installDependency() {
           // node couldn't execute the command
           return;
         }
-
-        console.log(`${stdout}`);
         resolve(true);
       }
     );
@@ -242,16 +239,15 @@ function installDevDependency() {
           // node couldn't execute the command
           return;
         }
-
-        console.log(`${stdout}`);
         resolve(true);
       }
     );
   });
 }
 
-function cloneDeploymentTemplate() {
+function cloneDeploymentTemplate(appPath) {
   return new Promise(function(resolve, reject) {
+    console.log('cloning Deployment Template');
     const repository =
       'https://gitlab.com/sendit-th/template-deployment-frontend.git';
     exec(`git clone ${repository}`, (err, stdout, stderr) => {
@@ -261,25 +257,75 @@ function cloneDeploymentTemplate() {
       }
       console.log(`${stdout}`);
       fs.moveSync(
-        `${__dirname}/template-deployment-frontend/gitlab-ci.yml`,
-        `${__dirname}/.gitlab-ci.yml`
+        `${appPath}/template-deployment-frontend/gitlab-ci.yml`,
+        `${appPath}/.gitlab-ci.yml`
       );
       fs.moveSync(
-        `${__dirname}/template-deployment-frontend/deployment`,
-        `${__dirname}/deployment`
+        `${appPath}/template-deployment-frontend/deployment`,
+        `${appPath}/deployment`
       );
-      fs.removeSync(`${__dirname}/template-deployment-frontend`);
+      fs.removeSync(`${appPath}/template-deployment-frontend`);
       resolve(true);
     });
   });
 }
 
-async function installMorePackage(appName) {
+async function renameFiles(packageName, appPath) {
+  const defaultDeployment = {
+    registryName: packageName,
+    projectRepoName: packageName,
+    helmProductionName: `prod-th-${packageName}`,
+    nameOverride: `prod-th-${packageName}`,
+    webHttp: `prod-th-${packageName}-http`,
+  };
+  const [
+    gitlabCiYml,
+    productionThYaml,
+    stagingThYaml,
+    developmentThYaml,
+    nginxFile,
+  ] = await Promise.all([
+    fs.readFile(path.join(appPath, '.gitlab-ci.yml')),
+    fs.readFile(path.join(appPath, 'deployment', 'values-production-th.yaml')),
+    fs.readFile(path.join(appPath, 'deployment', 'values-staging-th.yaml')),
+    fs.readFile(path.join(appPath, 'deployment', 'values-development-th.yaml')),
+    fs.readFile(
+      path.join(appPath, 'deployment', 'nginx', 'conf.d', 'site.conf')
+    ),
+  ]);
+  await Promise.all([
+    fs.writeFile(
+      path.join(appPath, '.gitlab-ci.yml'),
+      _.template(gitlabCiYml.toString())(defaultDeployment)
+    ),
+    fs.writeFile(
+      path.join(appPath, 'deployment', 'values-production-th.yaml'),
+      _.template(productionThYaml.toString())(defaultDeployment)
+    ),
+    fs.writeFile(
+      path.join(appPath, 'deployment', 'values-staging-th.yaml'),
+      _.template(stagingThYaml.toString())(defaultDeployment)
+    ),
+    fs.writeFile(
+      path.join(appPath, 'deployment', 'values-production-th.yaml'),
+      _.template(developmentThYaml.toString())(defaultDeployment)
+    ),
+    fs.writeFile(
+      path.join(appPath, 'deployment', 'nginx', 'conf.d', 'site.conf'),
+      _.template(nginxFile.toString())(defaultDeployment)
+    ),
+  ]);
+}
+
+async function installMorePackage(appName, appPath) {
   const answer = await questions();
+  console.log(appPath);
+  console.log('installing .......');
   if (answer === 'y' || answer === 'Y') {
     await installDependency();
     await installDevDependency();
-    await cloneDeploymentTemplate();
+    await cloneDeploymentTemplate(appPath);
+    renameFiles(appName, appPath);
   } else {
     await installDependency();
     await installDevDependency();
