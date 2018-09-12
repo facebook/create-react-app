@@ -52,6 +52,8 @@ module.exports = function(
     test:
       'react-app-rewired test --scripts-version sendit-react-scripts --env=jsdom',
     eject: 'react-scripts eject',
+    storybook: 'start-storybook -p 6006',
+    'build-storybook': 'build-storybook',
   };
 
   fs.writeFileSync(
@@ -192,7 +194,6 @@ module.exports = function(
     );
   }
   console.log();
-  console.log('installing... more package');
   console.log();
   installMorePackage(appName, appPath);
 };
@@ -233,7 +234,7 @@ function installDependency() {
 function installDevDependency() {
   return new Promise(function(resolve, reject) {
     exec(
-      'yarn add -D react-app-rewire-mobx react-app-rewired eslint prettier babel-eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-flowtype eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react',
+      'yarn add -D react-app-rewire-mobx react-app-rewired eslint prettier babel-eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-flowtype eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react @storybook/react @storybook/addon-actions @storybook/addon-links @storybook/addons',
       (err, stdout, stderr) => {
         if (err) {
           // node couldn't execute the command
