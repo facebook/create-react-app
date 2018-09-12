@@ -8,6 +8,7 @@
     },
     "rules": {
       "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
       "react/prefer-stateless-function": [0, { "ignorePureComponents": true }],
       "prettier/prettier": ["error", { "singleQuote": true }],
       "react/prop-types": "off",
