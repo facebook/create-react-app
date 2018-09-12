@@ -79,7 +79,7 @@ function prepareUrls(protocol, host, port) {
     prettyHost = host;
   }
   const localUrlForTerminal = prettyPrintUrl(prettyHost);
-  const localUrlForBrowser = formatUrl(prettyHost);
+  const localUrlForBrowser = process.env.BROWSER_URL || formatUrl(prettyHost);
   return {
     lanUrlForConfig,
     lanUrlForTerminal,
