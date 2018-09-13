@@ -52,7 +52,7 @@ function formatMessage(message, isError) {
   });
 
   if (threadLoaderIndex !== -1) {
-    lines = lines.slice(0, threadLoaderIndex);
+    lines.splice(threadLoaderIndex, 1);
   }
 
   lines = lines.filter(function(line) {
