@@ -46,6 +46,17 @@ export default class Preview extends Component {
     hasCodePreview: true
   };
 
+  componentWillReceiveProps(props) {
+    if (props.bgTheme !== this.state.previewBackground.label) {
+      this.setState({
+        previewBackground: {
+          label: props.bgTheme,
+          value: previewBackgrounds[props.bgTheme]
+        }
+      });
+    }
+  }
+
   constructor(props) {
     super(props);
 
@@ -55,9 +66,10 @@ export default class Preview extends Component {
 
   state = {
     isCodeShown: false,
-    previewBackground: previewBackgrounds
-      ? getBackgroundsAsArray(previewBackgrounds)[0]
-      : {}
+    previewBackground: {
+      label: this.props.bgTheme,
+      value: previewBackgrounds[this.props.bgTheme]
+    }
   };
 
   handleToggleCode() {
@@ -141,8 +153,8 @@ export default class Preview extends Component {
     const childrenToRender =
       typeof children === 'function'
         ? children({
-            bgColor: previewBackground.label,
-            bgColorValue: previewBackground.value
+            bgTheme: previewBackground.label,
+            bgThemeValue: previewBackground.value
           })
         : children;
 
