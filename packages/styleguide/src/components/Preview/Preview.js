@@ -138,17 +138,20 @@ export default class Preview extends Component {
       );
     }
 
-    const toReneder = (typeof children === 'function'
-      ? children({
-          bgColor: previewBackground.label,
-          bgColorValue: previewBackground.value
-        })
-      : children) || (
+    const childrenToRender =
+      typeof children === 'function'
+        ? children({
+            bgColor: previewBackground.label,
+            bgColorValue: previewBackground.value
+          })
+        : children;
+
+    const toReneder = childrenToRender || (
       // eslint-disable-next-line react/no-danger
       <div dangerouslySetInnerHTML={{ __html: html }} />
     );
 
-    const toCode = code || children || html;
+    const toCode = code || childrenToRender || html;
 
     const content = isIframe ? (
       <Frame head={iframeHead} scripts={iframeScripts}>
