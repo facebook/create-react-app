@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, node, object, bool, oneOf } from 'prop-types';
+import { string, node, object, bool } from 'prop-types';
 import cx from 'classnames';
 import styled from 'styled-components';
 import chroma from 'chroma-js';
@@ -16,6 +16,15 @@ import { ButtonBaseCSS } from '../../style/common';
 
 const CLASS_ROOT = '';
 
+function getBackgroundsAsArray(previewBackgrounds) {
+  return Object.keys(previewBackgrounds).map(key => {
+    return {
+      value: previewBackgrounds[key],
+      label: key
+    };
+  });
+}
+
 export default class Preview extends Component {
   static displayName = 'Preview';
 
@@ -23,7 +32,7 @@ export default class Preview extends Component {
     title: string,
     code: node,
     codeJSXOptions: object,
-    bgTheme: oneOf(['white', 'grey', 'black']),
+    bgTheme: string,
     hasCodePreview: bool,
     html: string,
     isIframe: bool,
@@ -40,35 +49,21 @@ export default class Preview extends Component {
     super(props);
 
     this.handleToggleCode = this.handleToggleCode.bind(this);
-    this.handleBackroundsToArray = this.handleBackroundsToArray.bind(this);
     this.handlePreviewBackground = this.handlePreviewBackground.bind(this);
   }
 
   state = {
-    isCodeShown: false
+    isCodeShown: false,
+    previewBackground: previewBackgrounds
+      ? getBackgroundsAsArray(previewBackgrounds)[0]
+      : {}
   };
-
-  componentDidMount() {
-    this.setState({
-      previewBackground: this.handleBackroundsToArray()
-    });
-  }
 
   handleToggleCode() {
     this.setState({
       isCodeShown: !this.state.isCodeShown
     });
   }
-
-  handleBackroundsToArray = () => {
-    const previewBackgroundsArray = Object.keys(previewBackgrounds).map(key => {
-      return {
-        value: previewBackgrounds[key],
-        label: key
-      };
-    });
-    return previewBackgroundsArray;
-  };
 
   handlePreviewBackground = previewBackground => {
     this.setState({ previewBackground });
@@ -115,21 +110,23 @@ export default class Preview extends Component {
 
     const actions = [];
 
-    actions.push(
-      <StyledSelect
-        name="background-select"
-        className="select-wrapper"
-        classNamePrefix="select"
-        isSearchable={false}
-        isClearable={false}
-        bgTheme={previewBackground.value}
-        value={previewBackground}
-        placeholder={previewBackground.value}
-        onChange={this.handlePreviewBackground}
-        options={this.handleBackroundsToArray()}
-        styles={colourStyles}
-      />
-    );
+    if (bgTheme) {
+      actions.push(
+        <StyledSelect
+          name="background-select"
+          className="select-wrapper"
+          classNamePrefix="select"
+          isSearchable={false}
+          isClearable={false}
+          bgTheme={previewBackground.value}
+          value={previewBackground}
+          placeholder={previewBackground.value}
+          onChange={this.handlePreviewBackground}
+          options={getBackgroundsAsArray(previewBackgrounds)}
+          styles={colourStyles}
+        />
+      );
+    }
 
     if (hasCodePreview) {
       actions.push(
@@ -140,7 +137,12 @@ export default class Preview extends Component {
       );
     }
 
-    const toReneder = children || (
+    const toReneder = (typeof children === 'function'
+      ? children({
+          bgColor: previewBackground.label,
+          bgColorValue: previewBackground.value
+        })
+      : children) || (
       // eslint-disable-next-line react/no-danger
       <div dangerouslySetInnerHTML={{ __html: html }} />
     );
@@ -157,8 +159,13 @@ export default class Preview extends Component {
 
     return [
       <PreviewTitleBar title={title} actions={actions} key="previewTitle" />,
-      <Card className={classes} {...other} key="previewCard">
-        <StyledPreviewLive bgTheme={bgTheme}>{content}</StyledPreviewLive>
+      <Card
+        className={classes}
+        bgColor={previewBackground.value}
+        {...other}
+        key="previewCard"
+      >
+        <StyledPreviewLive>{content}</StyledPreviewLive>
         {this.state.isCodeShown &&
           hasCodePreview &&
           toCode && (
@@ -175,7 +182,6 @@ export default class Preview extends Component {
 }
 
 const StyledPreviewLive = styled.div`
-  background-color: ${props => props.theme.colors[props.bgTheme]};
   transition: all 200ms ease-in-out;
 `;
 
