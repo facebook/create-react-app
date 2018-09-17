@@ -65,7 +65,7 @@
     "svgr": "1.9.2",
     "sw-precache-webpack-plugin": "0.11.5",
     "thread-loader": "1.1.5",
-    "uglifyjs-webpack-plugin": "1.2.5",
+    "terser-webpack-plugin": "^1.0.0",
     "url-loader": "1.0.1",
     "webpack": "4.8.3",
     "webpack-dev-server": "3.1.7",
