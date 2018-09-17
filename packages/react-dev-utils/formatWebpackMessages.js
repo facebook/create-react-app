@@ -125,11 +125,11 @@ function formatMessage(message, isError) {
 
   // Clean up export errors.
   // TODO: we should really send a PR to Webpack for this.
-  var exportError = /\s*(.+?)\s*(")?export '(.+?)' was not found in '(.+?)'/;
+  var exportError = /\s*(.*?)\s*(?:")?export '(.+?)' was not found in '(.+?)'/;
   if (lines[1].match(exportError)) {
     lines[1] = lines[1].replace(
       exportError,
-      "$1 '$4' does not contain an export named '$3'."
+      "$1  '$3' does not contain an export named '$2'."
     );
   }
 
