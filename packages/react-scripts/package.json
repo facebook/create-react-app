@@ -38,7 +38,7 @@
     "dotenv-expand": "4.2.0",
     "eslint": "4.19.1",
     "eslint-config-react-app": "^2.1.0",
-    "eslint-loader": "2.0.0",
+    "eslint-loader": "Timer/eslint-loader#e242479990d520213425a0180e5c749b2e71c1ce",
     "eslint-plugin-flowtype": "2.46.3",
     "eslint-plugin-import": "2.11.0",
     "eslint-plugin-jsx-a11y": "6.0.3",
