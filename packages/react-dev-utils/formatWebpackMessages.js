@@ -41,9 +41,12 @@ function formatMessage(message, isError) {
     lines.splice(1, 1);
   }
 
-  // Simplify `ModuleBuildError` before parsing
+  // Simplify `ModuleBuildError` before parsing (these may be nested so we use a while loop)
   // https://github.com/webpack/webpack/blob/c77030573de96b8293c69dd396492f8e2d46561e/lib/ModuleBuildError.js
-  if (lines[1].match(/Module build failed \(from.*?\):/)) {
+  while (
+    lines.length > 2 &&
+    lines[1].match(/Module build failed \(from.*?\):/)
+  ) {
     lines.splice(1, 1);
     lines[1] = 'Module build failed: ' + lines[1];
   }
@@ -93,9 +96,22 @@ function formatMessage(message, isError) {
   // Cleans up syntax error messages.
   if (lines[1].indexOf('Module build failed: ') === 0) {
     lines[1] = lines[1].replace(
+      'Module build failed: Syntax Error ',
+      friendlySyntaxErrorLabel
+    );
+    lines[1] = lines[1].replace(
       /Module build failed: .*?: /,
       friendlySyntaxErrorLabel + ' '
     );
+    lines[1] = lines[1].trim();
+
+    if (lines[1] === friendlySyntaxErrorLabel && lines[2] === '') {
+      lines.splice(2, 1);
+      if (lines.length > 2) {
+        lines[1] += ' ' + lines[2];
+        lines.splice(2, 1);
+      }
+    }
   }
 
   // Clean up export errors.
@@ -120,6 +136,7 @@ function formatMessage(message, isError) {
     /^\s*at\s((?!webpack:).)*:\d+:\d+[\s)]*(\n|$)/gm,
     ''
   ); // at ... ...:x:y
+  message = message.replace(/^\s*at\s<anonymous>(\n|$)/gm, ''); // at <anonymous>
 
   return message.trim();
 }
