@@ -8,7 +8,10 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "base.js",
+    "dev.js",
+    "prod.js"
   ],
   "peerDependencies": {
     "babel-eslint": "^8.2.2",
@@ -19,6 +22,6 @@
     "eslint-plugin-react": "^7.8.2"
   },
   "dependencies": {
-    "confusing-browser-globals": "^1.0.0"
+    "confusing-browser-globals": "^1.0.0 || ^2.0.0 || 2.0.0-next.b2fd8db8"
   }
 }
