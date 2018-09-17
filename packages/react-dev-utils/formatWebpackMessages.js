@@ -26,8 +26,24 @@ function isLikelyASyntaxError(message) {
 function formatMessage(message, isError) {
   var lines = message.split('\n');
 
+  // Remove the useless Module Warning or Module Error message webpack sometimes outputs,
+  // it interferes with the thread loader stack clipping of the next few lines
+  if (
+    lines.length > 2 &&
+    (lines[1].indexOf('Module Warning') !== -1 ||
+      lines[1].indexOf('Module Error') !== -1 ||
+      /thread.loader/i.test(lines[1]))
+  ) {
+    lines.splice(1, 1);
+  }
+
+  // Remove other thread-loader noise
+  if (lines.length > 2 && /thread.loader/i.test(lines[1])) {
+    lines.splice(1, 1);
+  }
+
+  // Remove extra newline.
   if (lines.length > 2 && lines[1] === '') {
-    // Remove extra newline.
     lines.splice(1, 1);
   }
 
