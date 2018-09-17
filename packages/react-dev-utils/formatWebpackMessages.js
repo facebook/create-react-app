@@ -26,6 +26,28 @@ function isLikelyASyntaxError(message) {
 function formatMessage(message, isError) {
   var lines = message.split('\n');
 
+  // Strip `WorkerError` header off message before parsing
+  // https://github.com/webpack-contrib/thread-loader/blob/6fb5daff313c4839196cf533bdcdf14815a386d2/src/WorkerError.js
+  lines = lines.filter(function(message) {
+    return message.indexOf('Thread Loader (Worker') === -1;
+  });
+
+  // Strip `ModuleError` header off message before parsing
+  // https://github.com/webpack/webpack/blob/c77030573de96b8293c69dd396492f8e2d46561e/lib/ModuleError.js
+  var moduleErrorPrefix = 'Module Error: ';
+  if (lines[1].indexOf(moduleErrorPrefix) === 0) {
+    lines[1] = lines[1].slice(moduleErrorPrefix.length);
+  } else if (lines[1].match(/Module Error \(from.*?\):/)) {
+    lines.splice(1, 1);
+  }
+
+  // Simplify `ModuleBuildError` before parsing
+  // https://github.com/webpack/webpack/blob/c77030573de96b8293c69dd396492f8e2d46561e/lib/ModuleBuildError.js
+  if (lines[1].match(/Module build failed \(from.*?\):/)) {
+    lines.splice(1, 1);
+    lines[1] = 'Module build failed: ' + lines[1];
+  }
+
   if (lines.length > 2 && lines[1] === '') {
     // Remove extra newline.
     lines.splice(1, 1);
@@ -38,21 +60,6 @@ function formatMessage(message, isError) {
   // ./src/App.css
   if (lines[0].lastIndexOf('!') !== -1) {
     lines[0] = lines[0].substr(lines[0].lastIndexOf('!') + 1);
-  }
-
-  // Remove unnecessary stack added by `thread-loader`
-  var threadLoaderIndex = -1;
-  lines.forEach(function(line, index) {
-    if (threadLoaderIndex !== -1) {
-      return;
-    }
-    if (/thread.loader/i.test(line)) {
-      threadLoaderIndex = index;
-    }
-  });
-
-  if (threadLoaderIndex !== -1) {
-    lines = lines.slice(0, threadLoaderIndex);
   }
 
   lines = lines.filter(function(line) {
@@ -86,8 +93,8 @@ function formatMessage(message, isError) {
   // Cleans up syntax error messages.
   if (lines[1].indexOf('Module build failed: ') === 0) {
     lines[1] = lines[1].replace(
-      'Module build failed: SyntaxError:',
-      friendlySyntaxErrorLabel
+      /Module build failed: .*?: /,
+      friendlySyntaxErrorLabel + ' '
     );
   }
 
