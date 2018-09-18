@@ -140,9 +140,6 @@ const getMonorepoPkgPaths = () => {
   if (monoPkgPath) {
     // get monorepo config from yarn workspace
     const pkgPatterns = require(monoPkgPath).workspaces;
-    if (pkgPatterns == null) {
-      return [];
-    }
     const pkgPaths = findPkgs(path.dirname(monoPkgPath), pkgPatterns);
     // only include monorepo pkgs if app itself is included in monorepo
     if (pkgPaths.indexOf(appDirectory) !== -1) {
