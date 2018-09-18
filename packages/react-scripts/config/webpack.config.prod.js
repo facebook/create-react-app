@@ -133,6 +133,12 @@ module.exports = {
             // Pending further investigation:
             // https://github.com/mishoo/UglifyJS2/issues/2011
             comparisons: false,
+            // Disabled because of an issue with Uglify breaking seemingly valid code:
+            // https://github.com/mishoo/UglifyJS2/issues/3122
+            // although fixed, the fixed version of uglify-es hasn't been release and
+            // it seems like it won't since it is no longer mantained:
+            // https://github.com/mishoo/UglifyJS2/issues/3156
+            reduce_vars: false
           },
           mangle: {
             safari10: true,
