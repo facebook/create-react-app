@@ -21,42 +21,34 @@ module.exports = (resolve, rootDir, isEjecting) => {
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
-    collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
+    collectCoverageFrom: ['src/**/*.{js,jsx}'],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}',
-      '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}',
+      '<rootDir>/src/**/__tests__/**/*.{js,jsx}',
+      '<rootDir>/src/**/?(*.)(spec|test).{js,jsx}',
     ],
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
-      '^.+\\.(js|jsx|mjs)$': isEjecting
+      '^.+\\.(js|jsx)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^.+\\.(graphql)$': resolve('config/jest/graphqlTransform.js'),
-      '^(?!.*\\.(js|jsx|mjs|css|json|graphql)$)': resolve(
+      '^(?!.*\\.(js|jsx|css|json|graphql)$)': resolve(
         'config/jest/fileTransform.js'
       ),
     },
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$',
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },
-    moduleFileExtensions: [
-      'web.js',
-      'js',
-      'json',
-      'web.jsx',
-      'jsx',
-      'node',
-      'mjs',
-    ],
+    moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'node'],
   };
   if (rootDir) {
     config.rootDir = rootDir;
