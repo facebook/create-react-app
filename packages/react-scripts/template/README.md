@@ -1770,7 +1770,7 @@ After that, follow the instructions on the screen.
 
 Learn more about React Storybook:
 
-* Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
+* Screencast: [Getting Started with React Storybook](https://www.youtube.com/watch?v=E2c183LS4lA)
 * [GitHub Repo](https://github.com/storybooks/storybook)
 * [Documentation](https://storybook.js.org/basics/introduction/)
 * [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
