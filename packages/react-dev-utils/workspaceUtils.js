@@ -31,11 +31,12 @@ const findPkgs = (rootPath, globPatterns) => {
 
 const findMonorepo = appDir => {
   const monoPkgPath = findPkg.sync(path.resolve(appDir, '..'));
+  const monoRootPath = monoPkgPath && path.dirname(monoPkgPath);
   const monoPkg = monoPkgPath && require(monoPkgPath);
   const workspaces = monoPkg && monoPkg.workspaces;
   const patterns = (workspaces && workspaces.packages) || workspaces;
   const isYarnWs = Boolean(patterns);
-  const allPkgs = patterns && findPkgs(path.dirname(monoPkgPath), patterns);
+  const allPkgs = patterns && findPkgs(monoRootPath, patterns);
   const isIncluded = dir => allPkgs && allPkgs.indexOf(dir) !== -1;
   const isAppIncluded = isIncluded(appDir);
   const pkgs = allPkgs
@@ -46,6 +47,7 @@ const findMonorepo = appDir => {
     isAppIncluded,
     isYarnWs,
     pkgs,
+    rootPath: monoRootPath,
   };
 };
 

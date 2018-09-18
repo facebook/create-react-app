@@ -107,7 +107,7 @@ inquirer
 
     // Prepare Jest config early in case it throws
     const jestConfig = createJestConfig(
-      filePath => path.posix.join('<rootDir>', filePath),
+      filePath => path.posix.join('.', filePath),
       null,
       paths.srcPaths
     );

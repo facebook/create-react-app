@@ -126,6 +126,8 @@ if (checkForMonorepo) {
   const mono = findMonorepo(appDirectory);
   if (mono.isAppIncluded) {
     Array.prototype.push.apply(module.exports.srcPaths, mono.pkgs);
+    module.exports.isMonorepo = true;
+    module.exports.monorepoRoot = mono.rootPath;
   }
   module.exports.useYarn = module.exports.useYarn || mono.isYarnWs;
 }
