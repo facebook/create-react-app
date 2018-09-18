@@ -11,7 +11,8 @@
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
-const findMonorepo = require('react-dev-utils/workspaceUtils').findMonorepo;
+const findPkg = require('find-pkg');
+const globby = require('globby');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
@@ -57,6 +58,7 @@ module.exports = {
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
@@ -78,6 +80,7 @@ module.exports = {
   appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
@@ -103,6 +106,7 @@ if (useTemplate) {
     appIndexJs: resolveOwn('template/src/index.js'),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
+    yarnLockFile: resolveOwn('template/yarn.lock'),
     testsSetup: resolveOwn('template/src/setupTests.js'),
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
@@ -116,16 +120,40 @@ if (useTemplate) {
 
 module.exports.srcPaths = [module.exports.appSrc];
 
-module.exports.useYarn = fs.existsSync(
-  path.join(module.exports.appPath, 'yarn.lock')
-);
+const findPkgs = (rootPath, globPatterns) => {
+  const globOpts = {
+    cwd: rootPath,
+    strict: true,
+    absolute: true,
+  };
+  return globPatterns
+    .reduce(
+      (pkgs, pattern) =>
+        pkgs.concat(globby.sync(path.join(pattern, 'package.json'), globOpts)),
+      []
+    )
+    .map(f => path.dirname(path.normalize(f)));
+};
+
+const getMonorepoPkgPaths = () => {
+  const monoPkgPath = findPkg.sync(path.resolve(appDirectory, '..'));
+  if (monoPkgPath) {
+    // get monorepo config from yarn workspace
+    const pkgPatterns = require(monoPkgPath).workspaces;
+    if (pkgPatterns == null) {
+      return [];
+    }
+    const pkgPaths = findPkgs(path.dirname(monoPkgPath), pkgPatterns);
+    // only include monorepo pkgs if app itself is included in monorepo
+    if (pkgPaths.indexOf(appDirectory) !== -1) {
+      return pkgPaths.filter(f => fs.realpathSync(f) !== appDirectory);
+    }
+  }
+  return [];
+};
 
 if (checkForMonorepo) {
   // if app is in a monorepo (lerna or yarn workspace), treat other packages in
   // the monorepo as if they are app source
-  const mono = findMonorepo(appDirectory);
-  if (mono.isAppIncluded) {
-    Array.prototype.push.apply(module.exports.srcPaths, mono.pkgs);
-  }
-  module.exports.useYarn = module.exports.useYarn || mono.isYarnWs;
+  Array.prototype.push.apply(module.exports.srcPaths, getMonorepoPkgPaths());
 }
