@@ -19,15 +19,15 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
-    "eslint": "4.19.1",
+    "eslint": "5.1.0",
     "execa": "^0.10.0",
     "husky": "^0.14.3",
     "lerna": "2.9.1",
     "lerna-changelog": "^0.7.0",
-    "lint-staged": "^7.0.5",
+    "lint-staged": "^7.2.0",
     "meow": "^4.0.0",
     "multimatch": "^2.1.0",
-    "prettier": "1.12.1",
+    "prettier": "1.13.7",
     "svg-term-cli": "^2.1.1",
     "tempy": "^0.2.1"
   },
