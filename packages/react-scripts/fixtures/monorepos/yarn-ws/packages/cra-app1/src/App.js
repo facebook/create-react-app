@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import Comp2 from 'comp2';
+import NwbComp from 'nwbcomp';
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <Comp2 />
+        <NwbComp />
       </div>
     );
   }
