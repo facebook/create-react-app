@@ -43,7 +43,7 @@ function printFileSizesAfterBuild(
             name: path.basename(asset.name),
             size: size,
             sizeLabel:
-              filesize(size) + (difference ? ' (' + difference + ')' : '')
+              filesize(size) + (difference ? ' (' + difference + ')' : ''),
           };
         })
     )
@@ -98,6 +98,7 @@ function printFileSizesAfterBuild(
 function removeFileNameHash(buildFolder, fileName) {
   return fileName
     .replace(buildFolder, '')
+    .replace(/\\/g, '/')
     .replace(
       /\/?(.*)(\.[0-9a-f]+)(\.chunk)?(\.js|\.css)/,
       (match, p1, p2, p3, p4) => p1 + p4
