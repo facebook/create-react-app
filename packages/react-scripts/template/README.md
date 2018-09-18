@@ -1852,9 +1852,6 @@ Learn more about React Styleguidist:
 * [Documentation](https://react-styleguidist.js.org/docs/getting-started.html)
 
 ## Sharing Components in a Monorepo
-
->Note: this feature is available with `react-scripts@2.0.0` and higher.
-
 A typical monorepo folder structure looks like this:
 ```
 monorepo/
