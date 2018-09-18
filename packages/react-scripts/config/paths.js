@@ -11,8 +11,6 @@
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
-const findPkg = require('find-pkg');
-const globby = require('globby');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
@@ -65,8 +63,6 @@ module.exports = {
   servedPath: getServedPath(resolveApp('package.json')),
 };
 
-let checkForMonorepo = true;
-
 // @remove-on-eject-begin
 const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 
@@ -90,13 +86,17 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
 };
 
-// detect if template should be used, ie. when cwd is react-scripts itself
-const useTemplate =
-  appDirectory === fs.realpathSync(path.join(__dirname, '..'));
+const ownPackageJson = require('../package.json');
+const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
+const reactScriptsLinked =
+  fs.existsSync(reactScriptsPath) &&
+  fs.lstatSync(reactScriptsPath).isSymbolicLink();
 
-checkForMonorepo = !useTemplate;
-
-if (useTemplate) {
+// config before publish: we're in ./packages/react-scripts/config/
+if (
+  !reactScriptsLinked &&
+  __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
+) {
   module.exports = {
     dotenv: resolveOwn('template/.env'),
     appPath: resolveApp('.'),
@@ -117,40 +117,3 @@ if (useTemplate) {
   };
 }
 // @remove-on-eject-end
-
-module.exports.srcPaths = [module.exports.appSrc];
-
-const findPkgs = (rootPath, globPatterns) => {
-  const globOpts = {
-    cwd: rootPath,
-    strict: true,
-    absolute: true,
-  };
-  return globPatterns
-    .reduce(
-      (pkgs, pattern) =>
-        pkgs.concat(globby.sync(path.join(pattern, 'package.json'), globOpts)),
-      []
-    )
-    .map(f => path.dirname(path.normalize(f)));
-};
-
-const getMonorepoPkgPaths = () => {
-  const monoPkgPath = findPkg.sync(path.resolve(appDirectory, '..'));
-  if (monoPkgPath) {
-    // get monorepo config from yarn workspace
-    const pkgPatterns = require(monoPkgPath).workspaces;
-    const pkgPaths = findPkgs(path.dirname(monoPkgPath), pkgPatterns);
-    // only include monorepo pkgs if app itself is included in monorepo
-    if (pkgPaths.indexOf(appDirectory) !== -1) {
-      return pkgPaths.filter(f => fs.realpathSync(f) !== appDirectory);
-    }
-  }
-  return [];
-};
-
-if (checkForMonorepo) {
-  // if app is in a monorepo (lerna or yarn workspace), treat other packages in
-  // the monorepo as if they are app source
-  Array.prototype.push.apply(module.exports.srcPaths, getMonorepoPkgPaths());
-}

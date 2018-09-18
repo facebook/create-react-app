@@ -18,7 +18,6 @@ script:
  - 'if [ $TEST_SUITE = "installs" ]; then tasks/e2e-installs.sh; fi'
  - 'if [ $TEST_SUITE = "kitchensink" ]; then tasks/e2e-kitchensink.sh; fi'
  - 'if [ $TEST_SUITE = "kitchensink-eject" ]; then tasks/e2e-kitchensink-eject.sh; fi'
- - 'if [ $TEST_SUITE = "monorepos" ]; then tasks/e2e-monorepos.sh; fi'
  - 'if [ $TEST_SUITE = "old-node" ]; then tasks/e2e-old-node.sh; fi'
 env:
   matrix:
@@ -26,7 +25,6 @@ env:
     - TEST_SUITE=installs
     - TEST_SUITE=kitchensink
     - TEST_SUITE=kitchensink-eject
-    - TEST_SUITE=monorepos
 matrix:
   include:
     - node_js: 4
