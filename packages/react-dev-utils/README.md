@@ -18,7 +18,7 @@ If you don’t use Create React App, or if you [ejected](https://github.com/face
 
 There is no single entry point. You can only import individual top-level modules.
 
-#### `new InterpolateHtmlPlugin(replacements: {[key:string]: string})`
+#### `new InterpolateHtmlPlugin(replacements: {[key:string]: string}, options?: { makeReplacementRegexp?: function })`
 
 This Webpack plugin lets us interpolate custom variables into `index.html`.<br>
 It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/html-webpack-plugin) 2.x via its [events](https://github.com/ampedandwired/html-webpack-plugin#events).
@@ -49,6 +49,9 @@ module.exports = {
       PUBLIC_URL: publicUrl
       // You can pass any key-value pairs, this was just an example.
       // WHATEVER: 42 will replace %WHATEVER% with 42 in index.html.
+    }, {
+      // Override default %WHATEVER% replacement template.
+      makeReplacementRegexp: (key, escapeRegexp) => new RegExp('%' + escapeRegexp(key) + '%', 'g')
     }),
     // ...
   ],
@@ -362,4 +365,3 @@ module: {
    ]
 }
 ```
-

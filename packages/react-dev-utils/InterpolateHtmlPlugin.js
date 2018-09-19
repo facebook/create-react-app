@@ -17,8 +17,9 @@
 const escapeStringRegexp = require('escape-string-regexp');
 
 class InterpolateHtmlPlugin {
-  constructor(replacements) {
+  constructor(replacements, { makeReplacementRegexp } = {}) {
     this.replacements = replacements;
+    this.makeReplacementRegexp = makeReplacementRegexp || makeReplacementRegexpDefault;
   }
 
   apply(compiler) {
@@ -30,7 +31,7 @@ class InterpolateHtmlPlugin {
           Object.keys(this.replacements).forEach(key => {
             const value = this.replacements[key];
             data.html = data.html.replace(
-              new RegExp('%' + escapeStringRegexp(key) + '%', 'g'),
+              this.makeReplacementRegexp(key, escapeStringRegexp),
               value
             );
           });
@@ -38,6 +39,10 @@ class InterpolateHtmlPlugin {
       );
     });
   }
+}
+
+function makeReplacementRegexpDefault(key, escapeRegexp) {
+  return new RegExp('%' + escapeRegexp(key) + '%', 'g');
 }
 
 module.exports = InterpolateHtmlPlugin;
