@@ -76,7 +76,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
 - [Publishing Components to npm](#publishing-components-to-npm)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
-  - [Opting Out of Caching](#opting-out-of-caching)
+  - [Why Opt-in?](#why-opt-in)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
@@ -1856,10 +1856,28 @@ Create React App doesn't provide any built-in functionality to publish a compone
 
 ## Making a Progressive Web App
 
-By default, the production build is a fully functional, offline-first
-[Progressive Web App](https://developers.google.com/web/progressive-web-apps/).
+The production build has all the tools necessary to generate a first-class
+[Progressive Web App](https://developers.google.com/web/progressive-web-apps/),
+but **the offline/cache-first behavior is opt-in only**. By default,
+the build process will generate a service worker file, but it will not be
+registered, so it will not take control of your production web app.
 
-Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
+In order to opt-in to the offline-first behavior, developers should look for the
+following in their [`src/index.js`](src/index.js) file:
+
+```js
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+```
+
+As the comment states, switching `serviceWorker.unregister()` to
+`serviceWorker.register()` will opt you in to using the service worker.
+
+### Why Opt-in?
+
+Offline-first Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
 
  * All static site assets are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
  * Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.
@@ -1872,32 +1890,13 @@ precache all of your local assets and keep them up to date as you deploy updates
 The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
 for handling all requests for local assets, including
 [navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
-for `/` and `/index.html`, ensuring that your web app is consistently fast, even
-on a slow or unreliable network.
-
->Note: If you are using the `pushState` history API and want to enable
-cache-first navigations for URLs other than `/` and `/index.html`, please
-[follow these steps](#service-worker-considerations).
-
-### Opting Out of Caching
-
-If you would prefer not to enable service workers prior to your initial
-production deployment, then remove the call to `registerServiceWorker()`
-from [`src/index.js`](src/index.js).
-
-If you had previously enabled service workers in your production deployment and
-have decided that you would like to disable them for all your existing users,
-you can swap out the call to `registerServiceWorker()` in
-[`src/index.js`](src/index.js) first by modifying the service worker import:
-```javascript
-import { unregister } from './registerServiceWorker';
-```
-and then call `unregister()` instead.
-After the user visits a page that has `unregister()`,
-the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
-it may take up to 24 hours for the cache to be invalidated.
+for your HTML, ensuring that your web app is consistently fast, even on a slow
+or unreliable network.
 
 ### Offline-First Considerations
+
+If you do decide to opt-in to service worker registration, please take the
+following into account:
 
 1. Service workers [require HTTPS](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers#you_need_https),
 although to facilitate local testing, that policy
@@ -1966,6 +1965,11 @@ icons, names, and branding colors to use when the web app is displayed.
 [The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations
 will affect your users' experience.
+
+Progressive web apps that have been added to the homescreen will load faster and
+work offline when there's an active service worker. That being said, the
+metadata from the web app manifest will still be used regardless of whether or
+not you opt-in to service worker registration.
 
 ## Analyzing the Bundle Size
 
@@ -2080,27 +2084,20 @@ If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
-When users install your app to the homescreen of their device the default configuration will make a shortcut to `/`. This may not work if you don't use a client-side router and expect the app to be served from `/index.html`. In this case, the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to `./index.html`.
-
-### Service Worker Considerations
-
-[Navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
-for URLs like `/todos/42` will not be intercepted by the
-[service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers)
-created by the production build. Navigations for those URLs will always
-require a network connection, as opposed to navigations for `/` and
-`/index.html`, both of which will be served from the cache by the service worker
-and work without requiring a network connection.
-
-If you are using the `pushState` history API and would like to enable service
-worker support for navigations to URLs like `/todos/42`, you need to
-[`npm eject`](#npm-run-eject) and enable the [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
+On a production build, and when you've [opted-in](#why-opt-in),
+a [service worker](https://developers.google.com/web/fundamentals/primers/service-workers/) will automatically handle all navigation requests, like for
+`/todos/42`, by serving the cached copy of your `index.html`. This
+service worker navigation routing can be configured or disabled by
+[`eject`ing](#npm-run-eject) and then modifying the
+[`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
 options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
 
->Note: This is a [change in default behavior](https://github.com/facebook/create-react-app/issues/3248),
-as earlier versions of `create-react-app` shipping with `navigateFallback`
-enabled by default.
+When users install your app to the homescreen of their device the default configuration will make a shortcut to `/index.html`. This may not work for client-side routers which expect the app to be served from `/`. Edit the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to match the required URL scheme, for example:
+
+```js
+  "start_url": ".",
+```
 
 ### Building for Relative Paths
 
