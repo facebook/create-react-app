@@ -45,7 +45,7 @@ module.exports = function(api, opts, env) {
         require('@babel/preset-env').default,
         {
           targets: {
-            node: '6.12',
+            node: 'current',
           },
         },
       ],
@@ -53,6 +53,14 @@ module.exports = function(api, opts, env) {
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
+          // We want Create React App to be IE 9 compatible until React itself
+          // no longer works with IE 9
+          targets: {
+            ie: 9,
+          },
+          // Users cannot override this behavior because this Babel
+          // configuration is highly tuned for ES5 support
+          ignoreBrowserslistConfig: true,
           // `entry` transforms `@babel/polyfill` into individual requires for
           // the targeted browsers. This is safer than `usage` which performs
           // static code analysis to determine what's required.
