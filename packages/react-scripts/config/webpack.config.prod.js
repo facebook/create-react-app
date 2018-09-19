@@ -174,6 +174,9 @@ module.exports = {
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
+    // Since create-react-app doesn't support all ES6 features in dependencies,
+    // prefer to load the ES5 over the ES6 if a package provides both.
+    mainFields: ['browser', 'main', 'module'],
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
