@@ -21,8 +21,8 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@babel/core": "7.0.0-beta.46",
-    "@babel/runtime": "7.0.0-beta.46",
+    "@babel/core": "7.0.0-rc.1",
+    "@babel/runtime": "7.0.0-rc.1",
     "autoprefixer": "8.5.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "8.2.3",
