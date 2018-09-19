@@ -15,6 +15,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const safePostCssParser = require('postcss-safe-parser');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
@@ -152,7 +153,9 @@ module.exports = {
         cache: true,
         sourceMap: shouldUseSourceMap,
       }),
-      new OptimizeCSSAssetsPlugin({ cssProcessorOptions: { safe: true } }),
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: { parser: safePostCssParser },
+      }),
     ],
     // Automatically split vendor and commons
     // https://twitter.com/wSokra/status/969633336732905474
