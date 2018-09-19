@@ -27,7 +27,7 @@
     "lint-staged": "^7.0.5",
     "meow": "^5.0.0",
     "multimatch": "^2.1.0",
-    "prettier": "1.12.1",
+    "prettier": "1.14.3",
     "svg-term-cli": "^2.1.1",
     "tempy": "^0.2.1"
   },

@@ -28,7 +28,10 @@ class BuiltEmitter extends Component {
   }
 
   render() {
-    const { props: { feature }, handleReady } = this;
+    const {
+      props: { feature },
+      handleReady,
+    } = this;
     return (
       <div>
         {createElement(feature, {
