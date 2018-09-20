@@ -17,6 +17,7 @@
     "crossSpawn.js",
     "errorOverlayMiddleware.js",
     "eslintFormatter.js",
+    "evalSourceMapMiddleware.js",
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
     "getCSSModuleLocalIdent.js",
