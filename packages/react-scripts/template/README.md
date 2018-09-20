@@ -851,7 +851,7 @@ npm install --save reactstrap bootstrap@4
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add bootstrap@4 reactstrap 
+yarn add bootstrap@4 reactstrap
 ```
 
 Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
@@ -1807,9 +1807,9 @@ After that, follow the instructions on the screen.
 
 Learn more about React Storybook:
 
-* [GitHub Repo](https://github.com/storybooks/storybook)
-* [Documentation](https://storybook.js.org/basics/introduction/)
 * [Learn Storybook (tutorial)](https://learnstorybook.com)
+* [Documentation](https://storybook.js.org/basics/introduction/)
+* [GitHub Repo](https://github.com/storybooks/storybook)
 * [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
 
 ### Getting Started with Styleguidist
