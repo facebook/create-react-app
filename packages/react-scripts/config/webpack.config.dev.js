@@ -185,6 +185,7 @@ module.exports = {
               // @remove-on-eject-begin
               baseConfig: {
                 extends: [require.resolve('eslint-config-react-app')],
+                settings: { react: { version: '999.999.999' } },
               },
               ignore: false,
               useEslintrc: false,
