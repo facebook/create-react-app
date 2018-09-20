@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`formats various webpack errors correctly eslint errors 1`] = `
+Object {
+  "errors": Array [
+    "[7m./template/src/App.js[27m
+  [1mLine 8:[22m  'c' is not defined  [31m[4mno-undef[24m[39m
+
+Search for the [4m[31mkeywords[39m[24m to learn more about each error.",
+  ],
+  "warnings": Array [],
+}
+`;
+
+exports[`formats various webpack errors correctly eslint warning 1`] = `
+Object {
+  "errors": Array [],
+  "warnings": Array [
+    "[7m./template/src/App.js[27m
+  [1mLine 7:[22m  'unUsed' is defined but never used  [33m[4mno-unused-vars[24m[39m",
+  ],
+}
+`;
+
+exports[`formats various webpack errors correctly export not found 1`] = `
+Object {
+  "errors": Array [
+    "[7m./template/src/index.js 1:182-185[27m
+  './App' does not contain an export named 'App'.",
+  ],
+  "warnings": Array [],
+}
+`;
+
+exports[`formats various webpack errors correctly invalid css syntax 1`] = `
+Object {
+  "errors": Array [
+    "[7m./template/src/App.css[27m
+Syntax error: (19:1) Unexpected }
+
+  17 |   font-size: calc(10px + 2vmin);
+  18 |   color: white;
+> 19 | }
+     | ^
+  20 | 
+  21 | .App-link {",
+  ],
+  "warnings": Array [],
+}
+`;
+
+exports[`formats various webpack errors correctly invalid js syntax (babel) 1`] = `
+Object {
+  "errors": Array [
+    "[7m./template/src/App.js[27m
+Syntax error: Expected corresponding JSX closing tag for <div> (10:27)
+
+   8 |   render() {
+   9 |     return (
+> 10 |       <div className=\\"App\\"></p>
+     |                            ^
+  11 |         <header className=\\"App-header\\">
+  12 |           <img src={logo} className=\\"App-logo\\" alt=\\"logo\\" />
+  13 |           <p>",
+  ],
+  "warnings": Array [],
+}
+`;
+
+exports[`formats various webpack errors correctly module not found 1`] = `
+Object {
+  "errors": Array [
+    "[7m./template/src/App.js[27m
+Module not found: Can't resolve 'blabla' in '/Users/joe/Documents/Development/OSS/create-react-app/packages/react-scripts/template/src'",
+  ],
+  "warnings": Array [
+    "[7m./template/src/App.js[27m
+  [1mLine 5:[22m  'bla' is defined but never used  [33m[4mno-unused-vars[24m[39m",
+  ],
+}
+`;

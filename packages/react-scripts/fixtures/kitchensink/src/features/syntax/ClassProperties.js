@@ -27,7 +27,9 @@ export default class extends Component {
   render() {
     return (
       <div id="feature-class-properties">
-        {this.users.map(user => <div key={user.id}>{user.name}</div>)}
+        {this.users.map(user => (
+          <div key={user.id}>{user.name}</div>
+        ))}
       </div>
     );
   }
