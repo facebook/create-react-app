@@ -64,5 +64,29 @@ module.exports = function(api, opts) {
         },
       ],
     ].filter(Boolean),
+    plugins: [
+      // Polyfills the runtime needed for async/await, generators, and friends
+      // https://babeljs.io/docs/en/babel-plugin-transform-runtime
+      [
+        require('@babel/plugin-transform-runtime').default,
+        {
+          corejs: false,
+          helpers: false,
+          regenerator: true,
+          // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
+          // We should turn this on once the lowest version of Node LTS
+          // supports ES Modules.
+          useESModules: isEnvDevelopment || isEnvProduction,
+        },
+      ],
+      // function* () { yield 42; yield 43; }
+      !isEnvTest && [
+        require('@babel/plugin-transform-regenerator').default,
+        {
+          // Async functions are converted to generators by @babel/preset-env
+          async: false,
+        },
+      ],
+    ].filter(Boolean),
   };
 };
