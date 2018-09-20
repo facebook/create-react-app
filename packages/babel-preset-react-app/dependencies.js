@@ -87,6 +87,8 @@ module.exports = function(api, opts) {
           async: false,
         },
       ],
+      // Adds syntax support for import()
+      require('@babel/plugin-syntax-dynamic-import').default,
     ].filter(Boolean),
   };
 };
