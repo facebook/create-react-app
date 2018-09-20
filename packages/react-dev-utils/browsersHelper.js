@@ -13,12 +13,7 @@ const inquirer = require('inquirer');
 const pkgUp = require('pkg-up');
 const fs = require('fs');
 
-const defaultBrowsers = {
-  development: ['chrome', 'firefox', 'edge'].map(
-    browser => `last 2 ${browser} versions`
-  ),
-  production: ['>0.25%', 'not op_mini all', 'ie 11'],
-};
+const defaultBrowsers = ['>0.25%', 'not op_mini all', 'ie 11'];
 
 function checkBrowsers(dir, retry = true) {
   const current = browserslist.findConfig(dir);
@@ -66,16 +61,7 @@ function checkBrowsers(dir, retry = true) {
             console.log();
             console.log(chalk.green('Set target browsers:'));
             console.log();
-            console.log(
-              `\t${chalk.bold('Production')}: ${chalk.cyan(
-                defaultBrowsers.production.join(', ')
-              )}`
-            );
-            console.log(
-              `\t${chalk.bold('Development')}: ${chalk.cyan(
-                defaultBrowsers.development.join(', ')
-              )}`
-            );
+            console.log(`\t${chalk.cyan(defaultBrowsers.join(', '))}`);
             console.log();
           })
           // Swallow any error
@@ -88,20 +74,4 @@ function checkBrowsers(dir, retry = true) {
   });
 }
 
-function printBrowsers(dir) {
-  return checkBrowsers(dir).then(browsers => {
-    if (browsers == null) {
-      console.log('Built the bundle with default browser support.');
-      return;
-    }
-    browsers = browsers[process.env.NODE_ENV] || browsers;
-    if (Array.isArray(browsers)) {
-      browsers = browsers.join(', ');
-    }
-    console.log(
-      `Built the bundle with browser support for ${chalk.cyan(browsers)}.`
-    );
-  });
-}
-
-module.exports = { defaultBrowsers, checkBrowsers, printBrowsers };
+module.exports = { defaultBrowsers, checkBrowsers };
