@@ -61,12 +61,9 @@ module.exports = function(api, opts, env) {
           // Users cannot override this behavior because this Babel
           // configuration is highly tuned for ES5 support
           ignoreBrowserslistConfig: true,
-          // `entry` transforms `@babel/polyfill` into individual requires for
-          // the targeted browsers. This is safer than `usage` which performs
-          // static code analysis to determine what's required.
-          // This is probably a fine default to help trim down bundles when
-          // end-users inevitably import '@babel/polyfill'.
-          useBuiltIns: 'entry',
+          // If users import all core-js they're probably not concerned with
+          // bundle size. We shouldn't rely on magic to try and shrink it.
+          useBuiltIns: false,
           // Do not transform modules to CJS
           modules: false,
         },
