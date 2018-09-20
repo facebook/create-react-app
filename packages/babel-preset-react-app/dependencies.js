@@ -48,8 +48,43 @@ module.exports = function(api, opts) {
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
+          // We want Create React App to be IE 9 compatible until React itself
+          // no longer works with IE 9
+          targets: {
+            ie: 9,
+          },
+          // Users cannot override this behavior because this Babel
+          // configuration is highly tuned for ES5 support
+          ignoreBrowserslistConfig: true,
+          // If users import all core-js they're probably not concerned with
+          // bundle size. We shouldn't rely on magic to try and shrink it.
+          useBuiltIns: false,
           // Do not transform modules to CJS
           modules: false,
+        },
+      ],
+    ].filter(Boolean),
+    plugins: [
+      // Polyfills the runtime needed for async/await, generators, and friends
+      // https://babeljs.io/docs/en/babel-plugin-transform-runtime
+      [
+        require('@babel/plugin-transform-runtime').default,
+        {
+          corejs: false,
+          helpers: false,
+          regenerator: true,
+          // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
+          // We should turn this on once the lowest version of Node LTS
+          // supports ES Modules.
+          useESModules: isEnvDevelopment || isEnvProduction,
+        },
+      ],
+      // function* () { yield 42; yield 43; }
+      !isEnvTest && [
+        require('@babel/plugin-transform-regenerator').default,
+        {
+          // Async functions are converted to generators by @babel/preset-env
+          async: false,
         },
       ],
     ].filter(Boolean),
