@@ -59,9 +59,11 @@ function checkBrowsers(dir, retry = true) {
 
             browserslist.clearCaches();
             console.log();
-            console.log(chalk.green('Set target browsers:'));
-            console.log();
-            console.log(`\t${chalk.cyan(defaultBrowsers.join(', '))}`);
+            console.log(
+              `${chalk.green('Set target browsers:')} ${chalk.cyan(
+                defaultBrowsers.join(', ')
+              )}`
+            );
             console.log();
           })
           // Swallow any error
