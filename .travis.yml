@@ -4,7 +4,11 @@ language: node_js
 node_js:
   - 8
   - 10
-cache: yarn
+cache:
+  directories:
+  - node_modules
+  - packages/create-react-app/node_modules
+  - packages/react-scripts/node_modules
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH="$HOME/.yarn/bin:$PATH"
