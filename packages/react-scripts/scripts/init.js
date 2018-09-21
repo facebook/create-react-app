@@ -18,7 +18,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const execSync = require('child_process').execSync;
-const spawn = require('react-dev-utils/crossSpawn');
+const spawn = require('cross-spawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
 
