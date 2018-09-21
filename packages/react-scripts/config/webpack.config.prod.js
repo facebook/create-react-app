@@ -23,6 +23,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -269,6 +270,17 @@ module.exports = {
                   // @remove-on-eject-begin
                   babelrc: false,
                   presets: [require.resolve('babel-preset-react-app')],
+                  // Make sure we have a unique cache identifier, erring on the
+                  // side of caution.
+                  // We remove this when the user ejects because the default
+                  // is sane and uses Babel options. Instead of options, we use
+                  // the react-scripts and babel-preset-react-app versions.
+                  cacheIdentifier: getCacheIdentifier('production', [
+                    'babel-plugin-named-asset-import',
+                    'babel-preset-react-app',
+                    'react-dev-utils',
+                    'react-scripts',
+                  ]),
                   // @remove-on-eject-end
                   plugins: [
                     [
@@ -310,6 +322,14 @@ module.exports = {
                   cacheDirectory: true,
                   // Save disk space when time isn't as important
                   cacheCompression: true,
+                  // @remove-on-eject-begin
+                  cacheIdentifier: getCacheIdentifier('production', [
+                    'babel-plugin-named-asset-import',
+                    'babel-preset-react-app',
+                    'react-dev-utils',
+                    'react-scripts',
+                  ]),
+                  // @remove-on-eject-end
                   highlightCode: true,
                 },
               },
