@@ -3,8 +3,8 @@
 This package includes some utilities used by [Create React App](https://github.com/facebook/create-react-app).<br>
 Please refer to its documentation:
 
-* [Getting Started](https://github.com/facebook/create-react-app/blob/master/README.md#getting-started) – How to create a new app.
-* [User Guide](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+- [Getting Started](https://github.com/facebook/create-react-app/blob/master/README.md#getting-started) – How to create a new app.
+- [User Guide](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
 
 ## Usage in Create React App Projects
 
@@ -360,4 +360,14 @@ module: {
     },
   ];
 }
+```
+
+#### `getCacheIdentifier(environment: string, packages: string[]): string`
+
+Returns a cache identifier (string) consisting of the specified environment and related package versions, e.g.,
+
+```js
+var getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
+
+getCacheIdentifier('prod', ['react-dev-utils', 'chalk']); // # => 'prod:react-dev-utils@5.0.0:chalk@2.4.1'
 ```
