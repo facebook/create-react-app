@@ -42,7 +42,7 @@
     "chalk": "^2.3.2",
     "chokidar": "^2.0.2",
     "cross-env": "5.1.4",
-    "eslint": "4.19.1",
+    "eslint": "5.6.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-flowtype": "2.46.1",
     "eslint-plugin-import": "2.9.0",
