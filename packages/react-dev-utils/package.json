@@ -24,6 +24,7 @@
     "getCSSModuleLocalIdent.js",
     "getProcessForPort.js",
     "ignoredFiles.js",
+    "InlineChunkHtmlPlugin.js",
     "inquirer.js",
     "InterpolateHtmlPlugin.js",
     "launchEditor.js",
