@@ -49,7 +49,7 @@ const url = require('url');
 const hyperquest = require('hyperquest');
 const envinfo = require('envinfo');
 const os = require('os');
-const findMonorepo = require('react-dev-utils/workspaceUtils').findMonorepo;
+
 const packageJson = require('./package.json');
 
 // These files should be allowed to remain on a failed install,
@@ -204,7 +204,7 @@ function createApp(name, verbose, version, useNpm, template) {
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
 
-  const useYarn = useNpm ? false : shouldUseYarn(root);
+  const useYarn = useNpm ? false : shouldUseYarn();
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -214,7 +214,9 @@ function createApp(name, verbose, version, useNpm, template) {
   if (!semver.satisfies(process.version, '>=6.0.0')) {
     console.log(
       chalk.yellow(
-        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
+        `You are using Node ${
+          process.version
+        } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
           `Please update to Node 6 or higher for a better, fully supported experience.\n`
       )
     );
@@ -228,7 +230,9 @@ function createApp(name, verbose, version, useNpm, template) {
       if (npmInfo.npmVersion) {
         console.log(
           chalk.yellow(
-            `You are using npm ${npmInfo.npmVersion} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
+            `You are using npm ${
+              npmInfo.npmVersion
+            } so the project will be boostrapped with an old unsupported version of tools.\n\n` +
               `Please update to npm 3 or higher for a better, fully supported experience.\n`
           )
         );
@@ -240,18 +244,13 @@ function createApp(name, verbose, version, useNpm, template) {
   run(root, appName, version, verbose, originalDirectory, template, useYarn);
 }
 
-function isYarnAvailable() {
+function shouldUseYarn() {
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
     return true;
   } catch (e) {
     return false;
   }
-}
-
-function shouldUseYarn(appDir) {
-  const mono = findMonorepo(appDir);
-  return (mono.isYarnWs && mono.isAppIncluded) || isYarnAvailable();
 }
 
 function install(root, useYarn, dependencies, verbose, isOnline) {
@@ -409,7 +408,7 @@ function getInstallPackage(version, originalDirectory) {
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
   } else if (version) {
-    if (version[0] === '@') {
+    if (version[0] === '@' && version.indexOf('/') === -1) {
       packageToInstall += version;
     } else if (version.match(/^file:/)) {
       packageToInstall = `file:${path.resolve(

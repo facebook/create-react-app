@@ -79,7 +79,7 @@ yarn
 
 # Start local registry
 tmp_registry_log=`mktemp`
-nohup npx verdaccio@2.7.2 -c tasks/verdaccio.yaml &>$tmp_registry_log &
+nohup npx verdaccio@3.2.0 -c tasks/verdaccio.yaml &>$tmp_registry_log &
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
@@ -88,7 +88,7 @@ npm set registry "$custom_registry_url"
 yarn config set registry "$custom_registry_url"
 
 # Login so we can publish packages
-npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
+(cd && npx npm-auth-to-token@1.0.0 -u user -p password -e user@example.com -r "$custom_registry_url")
 
 # Publish the monorepo
 git clean -df
@@ -145,6 +145,10 @@ PORT=3001 \
   NODE_PATH=src \
   nohup yarn start &>$tmp_server_log &
 grep -q 'You can now view' <(tail -f $tmp_server_log)
+
+# Before running Mocha, specify that it should use our preset
+# TODO: this is very hacky and we should find some other solution
+echo '{"presets":["react-app"]}' > .babelrc
 
 # Test "development" environment
 E2E_URL="http://localhost:3001" \

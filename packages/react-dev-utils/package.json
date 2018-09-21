@@ -17,6 +17,7 @@
     "crossSpawn.js",
     "errorOverlayMiddleware.js",
     "eslintFormatter.js",
+    "evalSourceMapMiddleware.js",
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
     "getCSSModuleLocalIdent.js",
@@ -34,11 +35,10 @@
     "printHostingInstructions.js",
     "WatchMissingNodeModulesPlugin.js",
     "WebpackDevServerUtils.js",
-    "webpackHotDevClient.js",
-    "workspaceUtils.js"
+    "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "@babel/code-frame": "7.0.0-beta.46",
+    "@babel/code-frame": "7.0.0",
     "address": "1.0.3",
     "browserslist": "3.2.6",
     "chalk": "2.4.1",
@@ -46,9 +46,7 @@
     "detect-port-alt": "1.1.6",
     "escape-string-regexp": "1.0.5",
     "filesize": "3.6.1",
-    "find-pkg": "1.0.0",
     "global-modules": "1.0.0",
-    "globby": "8.0.1",
     "gzip-size": "4.1.0",
     "inquirer": "5.1.0",
     "is-root": "1.0.0",
@@ -57,14 +55,15 @@
     "react-error-overlay": "^4.0.0",
     "recursive-readdir": "2.2.2",
     "shell-quote": "1.6.1",
-    "sockjs-client": "1.1.4",
+    "sockjs-client": "1.1.5",
     "strip-ansi": "4.0.0",
     "text-table": "0.2.0"
   },
   "devDependencies": {
-    "jest": "23.4.1"
+    "cross-env": "^5.2.0",
+    "jest": "23.6.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "cross-env FORCE_COLOR=true jest"
   }
 }

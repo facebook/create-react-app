@@ -6,21 +6,28 @@
  */
 'use strict';
 
-module.exports = function(api, opts) {
+const validateBoolOption = (name, value, defaultValue) => {
+  if (typeof value === 'undefined') {
+    value = defaultValue;
+  }
+
+  if (typeof value !== 'boolean') {
+    throw new Error(`Preset react-app: '${name}' option must be a boolean.`);
+  }
+
+  return value;
+};
+
+module.exports = function(api, opts, env) {
   if (!opts) {
     opts = {};
   }
 
-  // This is similar to how `env` works in Babel:
-  // https://babeljs.io/docs/usage/babelrc/#env-option
-  // We are not using `env` because it’s ignored in versions > babel-core@6.10.4:
-  // https://github.com/babel/babel/issues/4539
-  // https://github.com/facebook/create-react-app/issues/720
-  // It’s also nice that we can enforce `NODE_ENV` being specified.
-  var env = process.env.BABEL_ENV || process.env.NODE_ENV;
   var isEnvDevelopment = env === 'development';
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
+  var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
@@ -40,8 +47,6 @@ module.exports = function(api, opts) {
           targets: {
             node: 'current',
           },
-          // Do not transform modules to CJS
-          modules: false,
         },
       ],
       (isEnvProduction || isEnvDevelopment) && [
@@ -63,8 +68,45 @@ module.exports = function(api, opts) {
           modules: false,
         },
       ],
+      [
+        require('@babel/preset-react').default,
+        {
+          // Adds component stack to warning messages
+          // Adds __self attribute to JSX which React will use for some warnings
+          development: isEnvDevelopment || isEnvTest,
+          // Will use the native built-in instead of trying to polyfill
+          // behavior for any plugins that require one.
+          useBuiltIns: true,
+        },
+      ],
+      isFlowEnabled && [require('@babel/preset-flow').default],
     ].filter(Boolean),
     plugins: [
+      // Experimental macros support. Will be documented after it's had some time
+      // in the wild.
+      require('babel-plugin-macros'),
+      // Necessary to include regardless of the environment because
+      // in practice some other transforms (such as object-rest-spread)
+      // don't work without it: https://github.com/babel/babel/issues/7215
+      require('@babel/plugin-transform-destructuring').default,
+      // class { handleClick = () => { } }
+      // Enable loose mode to use assignment instead of defineProperty
+      // See discussion in https://github.com/facebook/create-react-app/issues/4263
+      [
+        require('@babel/plugin-proposal-class-properties').default,
+        {
+          loose: true,
+        },
+      ],
+      // The following two plugins use Object.assign directly, instead of Babel's
+      // extends helper. Note that this assumes `Object.assign` is available.
+      // { ...todo, completed: true }
+      [
+        require('@babel/plugin-proposal-object-rest-spread').default,
+        {
+          useBuiltIns: true,
+        },
+      ],
       // Polyfills the runtime needed for async/await, generators, and friends
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
       [
@@ -79,6 +121,13 @@ module.exports = function(api, opts) {
           useESModules: isEnvDevelopment || isEnvProduction,
         },
       ],
+      isEnvProduction && [
+        // Remove PropTypes from production build
+        require('babel-plugin-transform-react-remove-prop-types').default,
+        {
+          removeImport: true,
+        },
+      ],
       // function* () { yield 42; yield 43; }
       !isEnvTest && [
         require('@babel/plugin-transform-regenerator').default,
@@ -89,6 +138,9 @@ module.exports = function(api, opts) {
       ],
       // Adds syntax support for import()
       require('@babel/plugin-syntax-dynamic-import').default,
+      isEnvTest &&
+        // Transform dynamic import to require
+        require('babel-plugin-transform-dynamic-import').default,
     ].filter(Boolean),
   };
 };
