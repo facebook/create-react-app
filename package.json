@@ -5,6 +5,7 @@
   ],
   "scripts": {
     "build": "cd packages/react-scripts && node scripts/build.js",
+    "package": "cd packages/react-scripts-packaged && npm run package",
     "changelog": "lerna-changelog",
     "create-react-app": "node tasks/cra.js",
     "e2e": "tasks/e2e-simple.sh",
@@ -12,6 +13,7 @@
     "postinstall": "cd packages/react-error-overlay/ && yarn build:prod",
     "publish": "tasks/publish.sh",
     "start": "cd packages/react-scripts && node scripts/start.js",
+    "start:packaged": "cd packages/react-scripts-packaged/test && npm install && npm start",
     "screencast": "svg-term --cast hItN7sl5yfCPTHxvFg5glhhfp --out screencast.svg --window",
     "test": "cd packages/react-scripts && node scripts/test.js --env=jsdom",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
@@ -27,12 +29,7 @@
     "svg-term-cli": "^2.0.3"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --trailing-comma es5 --single-quote --write",
-      "git add"
-    ],
-    "yarn.lock": [
-      "git rm --cached"
-    ]
+    "*.js": ["prettier --trailing-comma es5 --single-quote --write", "git add"],
+    "yarn.lock": ["git rm --cached"]
   }
 }
