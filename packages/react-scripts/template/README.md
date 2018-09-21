@@ -90,6 +90,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Heroku](#heroku)
   - [Netlify](#netlify)
   - [Now](#now)
+  - [Roast.io](#roast)
   - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
 - [Advanced Configuration](#advanced-configuration)
@@ -2348,6 +2349,16 @@ Now offers a zero-configuration single-command deployment. You can use `now` to 
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
 Details are available in [this article.](https://zeit.co/blog/unlimited-static)
+
+### [Roast](https://www.roast.io/)
+
+[Roast.io](https://www.roast.io/) offers zero-configuration server side rendered (via `ReactDOMServer.renderToString`) hosting on a CDN.
+
+1. Install the `roast` command-line tool via node with `npm install -g roast`
+2. Run `roast deploy` from your project directory
+3. Choose `build` as the path to deploy.
+
+push state URLs and server-side rendering are enabled by default.
 
 ### [S3](https://aws.amazon.com/s3) and [CloudFront](https://aws.amazon.com/cloudfront/)
 
