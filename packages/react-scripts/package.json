@@ -23,6 +23,7 @@
   "dependencies": {
     "@babel/core": "7.1.0",
     "@babel/runtime": "7.0.0",
+    "@svgr/webpack": "2.4.1",
     "autoprefixer": "9.1.5",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
@@ -63,7 +64,6 @@
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
-    "svgr": "1.9.2",
     "sw-precache-webpack-plugin": "0.11.5",
     "terser-webpack-plugin": "1.1.0",
     "thread-loader": "1.2.0",
