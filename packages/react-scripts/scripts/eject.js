@@ -63,7 +63,7 @@ inquirer
             .join('\n') +
           '\n\n' +
           chalk.red(
-            'Remove untracked files, stash or commit any changes, and try again.'
+            'Remove untracked files, stash or commit any changes, and try again. Doing so, makes it easier to resolve any unintended consequences eject may have on your changes.\n'
           )
       );
       process.exit(1);
