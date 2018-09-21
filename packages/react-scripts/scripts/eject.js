@@ -21,7 +21,7 @@ const chalk = require('chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
-const spawnSync = require('react-dev-utils/crossSpawn').sync;
+const spawnSync = require('cross-spawn').sync;
 const os = require('os');
 
 const green = chalk.green;
