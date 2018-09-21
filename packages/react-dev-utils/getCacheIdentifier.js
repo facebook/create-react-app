@@ -8,7 +8,7 @@
 'use strict';
 
 module.exports = function getCacheIdentifier(environment, packages) {
-  let cacheIdentifier = `${environment}`;
+  let cacheIdentifier = environment == null ? '' : environment.toString();
   for (const packageName of packages) {
     cacheIdentifier += `:${packageName}@`;
     try {
