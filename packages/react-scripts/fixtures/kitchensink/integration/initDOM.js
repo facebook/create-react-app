@@ -9,7 +9,6 @@ const fs = require('fs');
 const http = require('http');
 const jsdom = require('jsdom');
 const path = require('path');
-const { expect } = require('chai');
 
 let getMarkup;
 let resourceLoader;
@@ -52,7 +51,7 @@ if (process.env.E2E_FILE) {
     () => {
       expect(
         new Error("This isn't the error you are looking for.")
-      ).to.be.undefined();
+      ).toBeUndefined();
     }
   );
 }
