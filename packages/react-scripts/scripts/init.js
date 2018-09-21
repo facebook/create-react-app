@@ -97,6 +97,11 @@ module.exports = function(
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
   };
+  
+  // Setup the eslint config
+  appPackage.eslintConfig = {
+    'extends': 'react-app'
+  };
 
   appPackage.browserslist = defaultBrowsers;
 
