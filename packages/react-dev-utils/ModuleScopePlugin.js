@@ -50,8 +50,7 @@ class ModuleScopePlugin {
       // Error if in a parent directory of src/
       const requestRelative = path.relative(appSrc, requestFullPath);
       if (
-        requestRelative.startsWith('../') ||
-        requestRelative.startsWith('..\\')
+        requestRelative.startsWith('../') || requestRelative.startsWith('..\\')
       ) {
         callback(
           new Error(
