@@ -32,6 +32,11 @@ module.exports = function(api, opts) {
   }
 
   return {
+    // Babel assumes ES Modules, which isn't safe until CommonJS
+    // dies. This changes the behavior to assume CommonJS unless
+    // an `import` or `export` is present in the file.
+    // https://github.com/webpack/webpack/issues/4039#issuecomment-419284940
+    sourceType: 'unambiguous',
     presets: [
       isEnvTest && [
         // ES features necessary for user's Node version
