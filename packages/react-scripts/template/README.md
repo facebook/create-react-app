@@ -74,10 +74,9 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Developing Components in Isolation](#developing-components-in-isolation)
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
-- [Sharing Components in a Monorepo](#sharing-components-in-a-monorepo)
 - [Publishing Components to npm](#publishing-components-to-npm)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
-  - [Opting Out of Caching](#opting-out-of-caching)
+  - [Why Opt-in?](#why-opt-in)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
@@ -218,7 +217,7 @@ In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, 
 * [Object Rest/Spread Properties](https://github.com/tc39/proposal-object-rest-spread) (ES2018).
 * [Dynamic import()](https://github.com/tc39/proposal-dynamic-import) (stage 3 proposal)
 * [Class Fields and Static Properties](https://github.com/tc39/proposal-class-public-fields) (part of stage 3 proposal).
-* [JSX](https://facebook.github.io/react/docs/introducing-jsx.html) and [Flow](https://flowtype.org/) syntax.
+* [JSX](https://facebook.github.io/react/docs/introducing-jsx.html) and [Flow](https://flow.org/) syntax.
 
 Learn more about [different proposal stages](https://babeljs.io/docs/plugins/#presets-stage-x-experimental-presets-).
 
@@ -852,7 +851,7 @@ npm install --save reactstrap bootstrap@4
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add bootstrap@4 reactstrap 
+yarn add bootstrap@4 reactstrap
 ```
 
 Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
@@ -886,20 +885,20 @@ Here is an example of adding a [customized Bootstrap](https://medium.com/@tacoma
 
 Flow is a static type checker that helps you write code with fewer bugs. Check out this [introduction to using static types in JavaScript](https://medium.com/@preethikasireddy/why-use-static-types-in-javascript-part-1-8382da1e0adb) if you are new to this concept.
 
-Recent versions of [Flow](http://flowtype.org/) work with Create React App projects out of the box.
+Recent versions of [Flow](https://flow.org/) work with Create React App projects out of the box.
 
 To add Flow to a Create React App project, follow these steps:
 
 1. Run `npm install --save flow-bin` (or `yarn add flow-bin`).
 2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
-3. Run `npm run flow init` (or `yarn flow init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
+3. Run `npm run flow init` (or `yarn flow init`) to create a [`.flowconfig` file](https://flow.org/en/docs/config/) in the root directory.
 4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
 
 Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
 You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/flow/) for a better integrated experience.
 In the future we plan to integrate it into Create React App even more closely.
 
-To learn more about Flow, check out [its documentation](https://flowtype.org/).
+To learn more about Flow, check out [its documentation](https://flow.org/).
 
 ## Adding a Router
 
@@ -1808,9 +1807,9 @@ After that, follow the instructions on the screen.
 
 Learn more about React Storybook:
 
-* [GitHub Repo](https://github.com/storybooks/storybook)
-* [Documentation](https://storybook.js.org/basics/introduction/)
 * [Learn Storybook (tutorial)](https://learnstorybook.com)
+* [Documentation](https://storybook.js.org/basics/introduction/)
+* [GitHub Repo](https://github.com/storybooks/storybook)
 * [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
 
 ### Getting Started with Styleguidist
@@ -1851,93 +1850,34 @@ Learn more about React Styleguidist:
 * [GitHub Repo](https://github.com/styleguidist/react-styleguidist)
 * [Documentation](https://react-styleguidist.js.org/docs/getting-started.html)
 
-## Sharing Components in a Monorepo
-
->Note: this feature is available with `react-scripts@2.0.0` and higher.
-
-A typical monorepo folder structure looks like this:
-```
-monorepo/
-  app1/
-  app2/
-  comp1/
-  comp2/
-```
-
-The monorepo allows components to be separated from the app, providing:
-* a level of encapsulation for components
-* sharing of components
-
-### How to Set Up a Monorepo
-Below expands on the monorepo structure above, adding the package.json files required to configure the monorepo for [yarn workspaces](https://yarnpkg.com/en/docs/workspaces).
-```
-monorepo/
-  package.json:
-    "workspaces": ["*"],
-    "private": true
-  app1/
-    package.json:
-      "dependencies": {
-        "@myorg/comp1": ">=0.0.0",
-        "react": "^16.2.0"
-      },
-      "devDependencies": {
-        "react-scripts": "2.0.0"
-      }
-    src/
-      app.js: import comp1 from '@myorg/comp1';
-  app2/
-    package.json:
-      "dependencies": {
-        "@myorg/comp1": ">=0.0.0",
-        "react": "^16.2.0"
-      },
-      "devDependencies": {
-        "react-scripts": "2.0.0"
-      }
-    src/
-      app.js: import comp1 from '@myorg/comp1';
-  comp1/
-    package.json:
-      "name": "@myorg/comp1",
-      "version": "0.1.0"
-    index.js
-  comp2/
-    package.json:
-      "name": "@myorg/comp2",
-      "version": "0.1.0",
-      "dependencies": {
-        "@myorg/comp1": ">=0.0.0"
-      },
-      "devDependencies": {
-        "react": "^16.2.0"
-      }
-    index.js: import comp1 from '@myorg/comp1'
-```
-* Monorepo tools work on a package level, the same level as an npm package.
-* The "workspaces" in the top-level package.json is an array of glob patterns specifying where shared packages are located in the monorepo.
-* The scoping prefixes, e.g. @myorg/, are not required, but are recommended, allowing you to differentiate your packages from others of the same name.  See [scoped packages ](https://docs.npmjs.com/misc/scope) for more info.
-* Using a package in the monorepo is accomplished in the same manner as a published npm package, by specifying the shared package as dependency.
-* In order to pick up the monorepo version of a package, the specified dependency version must semantically match the package version in the monorepo.  See [semver](https://docs.npmjs.com/misc/semver) for info on semantic version matching.
-
-### CRA Apps in a Monorepo
-* CRA apps in a monorepo are just a standard CRA app, they use the same react-script scripts.
-* However, when you use react-scripts for an app in a monorepo, all packages in the monorepo are treated as app sources -- they are watched, linted, transpiled, and tested in the same way as if they were part of the app itself.
-* Without this functionality, each package would need its own build/test/etc functionality and it would be challenging to link all of these together.
-
-### Lerna and Publishing
-[Lerna](https://github.com/lerna/lerna) is a popular tool for managing monorepos.  Lerna can be configured to use yarn workspaces, so it will work with the monorepo structure above.  It's important to note that while lerna helps publish various packages in a monorepo, react-scripts does nothing to help publish a component to npm.  A component which uses JSX or ES6+ features would need to be built by another tool before it can be published to npm.  See [publishing components to npm](#publishing-components-to-npm) for more info.
-
 ## Publishing Components to npm
 
 Create React App doesn't provide any built-in functionality to publish a component to npm. If you're ready to extract a component from your project so other people can use it, we recommend moving it to a separate directory outside of your project and then using a tool like [nwb](https://github.com/insin/nwb#react-components-and-libraries) to prepare it for publishing.
 
 ## Making a Progressive Web App
 
-By default, the production build is a fully functional, offline-first
-[Progressive Web App](https://developers.google.com/web/progressive-web-apps/).
+The production build has all the tools necessary to generate a first-class
+[Progressive Web App](https://developers.google.com/web/progressive-web-apps/),
+but **the offline/cache-first behavior is opt-in only**. By default,
+the build process will generate a service worker file, but it will not be
+registered, so it will not take control of your production web app.
 
-Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
+In order to opt-in to the offline-first behavior, developers should look for the
+following in their [`src/index.js`](src/index.js) file:
+
+```js
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+```
+
+As the comment states, switching `serviceWorker.unregister()` to
+`serviceWorker.register()` will opt you in to using the service worker.
+
+### Why Opt-in?
+
+Offline-first Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
 
  * All static site assets are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
  * Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.
@@ -1950,32 +1890,13 @@ precache all of your local assets and keep them up to date as you deploy updates
 The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
 for handling all requests for local assets, including
 [navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
-for `/` and `/index.html`, ensuring that your web app is consistently fast, even
-on a slow or unreliable network.
-
->Note: If you are using the `pushState` history API and want to enable
-cache-first navigations for URLs other than `/` and `/index.html`, please
-[follow these steps](#service-worker-considerations).
-
-### Opting Out of Caching
-
-If you would prefer not to enable service workers prior to your initial
-production deployment, then remove the call to `registerServiceWorker()`
-from [`src/index.js`](src/index.js).
-
-If you had previously enabled service workers in your production deployment and
-have decided that you would like to disable them for all your existing users,
-you can swap out the call to `registerServiceWorker()` in
-[`src/index.js`](src/index.js) first by modifying the service worker import:
-```javascript
-import { unregister } from './registerServiceWorker';
-```
-and then call `unregister()` instead.
-After the user visits a page that has `unregister()`,
-the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
-it may take up to 24 hours for the cache to be invalidated.
+for your HTML, ensuring that your web app is consistently fast, even on a slow
+or unreliable network.
 
 ### Offline-First Considerations
+
+If you do decide to opt-in to service worker registration, please take the
+following into account:
 
 1. Service workers [require HTTPS](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers#you_need_https),
 although to facilitate local testing, that policy
@@ -1983,8 +1904,8 @@ although to facilitate local testing, that policy
 If your production web server does not support HTTPS, then the service worker
 registration will fail, but the rest of your web app will remain functional.
 
-1. Service workers are [not currently supported](https://jakearchibald.github.io/isserviceworkerready/)
-in all web browsers. Service worker registration [won't be attempted](src/registerServiceWorker.js)
+1. Service workers are [not supported](https://jakearchibald.github.io/isserviceworkerready/#moar)
+in older web browsers. Service worker registration [won't be attempted](src/registerServiceWorker.js)
 on browsers that lack support.
 
 1. The service worker is only enabled in the [production environment](#deployment),
@@ -2044,6 +1965,11 @@ icons, names, and branding colors to use when the web app is displayed.
 [The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations
 will affect your users' experience.
+
+Progressive web apps that have been added to the homescreen will load faster and
+work offline when there's an active service worker. That being said, the
+metadata from the web app manifest will still be used regardless of whether or
+not you opt-in to service worker registration.
 
 ## Analyzing the Bundle Size
 
@@ -2158,27 +2084,20 @@ If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
-When users install your app to the homescreen of their device the default configuration will make a shortcut to `/`. This may not work if you don't use a client-side router and expect the app to be served from `/index.html`. In this case, the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to `./index.html`.
-
-### Service Worker Considerations
-
-[Navigation requests](https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests)
-for URLs like `/todos/42` will not be intercepted by the
-[service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers)
-created by the production build. Navigations for those URLs will always
-require a network connection, as opposed to navigations for `/` and
-`/index.html`, both of which will be served from the cache by the service worker
-and work without requiring a network connection.
-
-If you are using the `pushState` history API and would like to enable service
-worker support for navigations to URLs like `/todos/42`, you need to
-[`npm eject`](#npm-run-eject) and enable the [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
+On a production build, and when you've [opted-in](#why-opt-in),
+a [service worker](https://developers.google.com/web/fundamentals/primers/service-workers/) will automatically handle all navigation requests, like for
+`/todos/42`, by serving the cached copy of your `index.html`. This
+service worker navigation routing can be configured or disabled by
+[`eject`ing](#npm-run-eject) and then modifying the
+[`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
 options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
 
->Note: This is a [change in default behavior](https://github.com/facebook/create-react-app/issues/3248),
-as earlier versions of `create-react-app` shipping with `navigateFallback`
-enabled by default.
+When users install your app to the homescreen of their device the default configuration will make a shortcut to `/index.html`. This may not work for client-side routers which expect the app to be served from `/`. Edit the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to match the required URL scheme, for example:
+
+```js
+  "start_url": ".",
+```
 
 ### Building for Relative Paths
 
