@@ -161,6 +161,13 @@ Read instructions below for using assets from JavaScript and HTML.
 You can, however, create more top-level directories.<br>
 They will not be included in the production build so you can use them for things like documentation.
 
+`import` command with absolute paths can be used as an opt in alongside the default relative paths (example below) provided start script is prefixed `NODE_PATH=./src npm run start` and for windows `NODE_PATH=./src && npm run start`
+
+     import Mypage from './Mypage/Mypage.jsx';
+     import Button1 from 'ui/buttons/Button1.jsx';
+     
+     
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -172,6 +179,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+For absolute path opt in prefix start script `NODE_PATH=./src npm run start` and for windows `NODE_PATH=./src && npm run start`
 
 ### `npm test`
 
