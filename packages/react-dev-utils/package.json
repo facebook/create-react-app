@@ -20,6 +20,7 @@
     "evalSourceMapMiddleware.js",
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
+    "getCacheIdentifier.js",
     "getCSSModuleLocalIdent.js",
     "getProcessForPort.js",
     "ignoredFiles.js",
