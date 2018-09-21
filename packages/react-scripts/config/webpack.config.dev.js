@@ -249,6 +249,8 @@ module.exports = {
                   // It enables caching results in ./node_modules/.cache/babel-loader/
                   // directory for faster rebuilds.
                   cacheDirectory: true,
+                  // Don't waste time on Gzipping the cache
+                  cacheCompression: false,
                   highlightCode: true,
                 },
               },
@@ -276,6 +278,8 @@ module.exports = {
                     require.resolve('babel-preset-react-app/dependencies'),
                   ],
                   cacheDirectory: true,
+                  // Don't waste time on Gzipping the cache
+                  cacheCompression: false,
                   highlightCode: true,
                 },
               },

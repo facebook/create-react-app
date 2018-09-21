@@ -282,6 +282,9 @@ module.exports = {
                       },
                     ],
                   ],
+                  cacheDirectory: true,
+                  // Save disk space when time isn't as important
+                  cacheCompression: true,
                   compact: true,
                   highlightCode: true,
                 },
@@ -305,6 +308,8 @@ module.exports = {
                     require.resolve('babel-preset-react-app/dependencies'),
                   ],
                   cacheDirectory: true,
+                  // Save disk space when time isn't as important
+                  cacheCompression: true,
                   highlightCode: true,
                 },
               },
