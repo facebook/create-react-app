@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  test-node-10:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run:
+          command: tasks/e2e-kitchensink.sh
+
+  test-node-8:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run: yarn --no-progress
+      - run:
+          command: tasks/e2e-kitchensink.sh
+
+# Workflows enables us to run multiple jobs in parallel
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - test-node-8
+      - test-node-10
