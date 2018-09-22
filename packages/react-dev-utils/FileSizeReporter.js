@@ -28,7 +28,7 @@ function printFileSizesAfterBuild(
   var assets = (webpackStats.stats || [webpackStats])
     .map(stats =>
       stats
-        .toJson()
+        .toJson({ all: false, assets: true })
         .assets.filter(asset => /\.(js|css)$/.test(asset.name))
         .map(asset => {
           var fileContents = fs.readFileSync(path.join(root, asset.name));

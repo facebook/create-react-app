@@ -150,7 +150,11 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
-    const messages = formatWebpackMessages(stats.toJson({}, true));
+    // We only construct the warnings and errors for speed:
+    // https://github.com/facebook/create-react-app/issues/4492#issuecomment-421959548
+    const messages = formatWebpackMessages(
+      stats.toJson({ all: false, warnings: true, errors: true })
+    );
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
