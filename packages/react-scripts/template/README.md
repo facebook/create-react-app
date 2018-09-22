@@ -2345,7 +2345,7 @@ If, when deploying, you get `/dev/tty: No such a device or address` or a similar
 
 1. Create a new [Personal Access Token](https://github.com/settings/tokens)
 2. `git remote set-url origin https://<user>:<token>@github.com/<user>/<repo>` .
-3. Try `npm run deploy again`
+3. Try `npm run deploy` again
 
 ### [Heroku](https://www.heroku.com/)
 
