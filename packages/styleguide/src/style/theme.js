@@ -83,6 +83,12 @@ export const colors = {
   ...functionalColors
 };
 
+export const previewBackgrounds = {
+  white: colors.white,
+  dark: colors.greyDark,
+  accent: colors.accent
+};
+
 export const shadows = {
   default: '0 24px 48px -12px rgba(0,0,0,0.05)'
 };
