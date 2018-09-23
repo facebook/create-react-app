@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, node, object, bool } from 'prop-types';
+import { string, node, object, bool, arrayOf } from 'prop-types';
 import cx from 'classnames';
 import styled from 'styled-components';
 import chroma from 'chroma-js';
@@ -16,13 +16,13 @@ import { ButtonBaseCSS } from '../../style/common';
 
 const CLASS_ROOT = '';
 
-function getBackgroundsAsArray(previewBackgrounds) {
-  return Object.keys(previewBackgrounds).map(key => {
-    return {
+function getBackgroundsAsArray(previewBackgrounds, excludedColors = []) {
+  return Object.keys(previewBackgrounds)
+    .filter(colorName => !excludedColors.includes(colorName))
+    .map(key => ({
       value: previewBackgrounds[key],
       label: key
-    };
-  });
+    }));
 }
 
 export default class Preview extends Component {
@@ -33,6 +33,7 @@ export default class Preview extends Component {
     code: node,
     codeJSXOptions: object,
     bgTheme: string,
+    bgThemeExcludedColors: arrayOf(string),
     hasCodePreview: bool,
     html: string,
     isIframe: bool,
@@ -42,6 +43,7 @@ export default class Preview extends Component {
 
   static defaultProps = {
     bgTheme: 'white',
+    bgThemeExcludedColors: [],
     hasCodePreview: true
   };
 
@@ -91,6 +93,7 @@ export default class Preview extends Component {
       code,
       codeJSXOptions,
       bgTheme,
+      bgThemeExcludedColors,
       isIframe,
       iframeHead,
       iframeScripts,
@@ -122,7 +125,12 @@ export default class Preview extends Component {
 
     const actions = [];
 
-    if (bgTheme) {
+    const bgColorsOptions = getBackgroundsAsArray(
+      previewBackgrounds,
+      bgThemeExcludedColors
+    );
+
+    if (bgTheme && bgColorsOptions.length) {
       actions.push(
         <StyledSelect
           name="background-select"
@@ -134,7 +142,7 @@ export default class Preview extends Component {
           value={previewBackground}
           placeholder={previewBackground.value}
           onChange={this.handlePreviewBackground}
-          options={getBackgroundsAsArray(previewBackgrounds)}
+          options={bgColorsOptions}
           styles={colourStyles}
         />
       );
