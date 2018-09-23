@@ -69,13 +69,6 @@ const functionalColors = {
   redDamask: '#cb6b4d'
 };
 
-export const previewBackgrounds = {
-  white: '#FFFFFF',
-  greyLight: '#F7F7F7',
-  grey: '#919191',
-  greyDark: '#565656'
-};
-
 /* *** TODO temp names (while full design won't exist) *** */
 export const colors = {
   accent: '#f85013',
@@ -88,6 +81,12 @@ export const colors = {
   warning: '#e74c2b',
   error: '#e06c75',
   ...functionalColors
+};
+
+export const previewBackgrounds = {
+  white: colors.white,
+  dark: colors.greyDark,
+  accent: colors.accent
 };
 
 export const shadows = {
