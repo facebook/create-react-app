@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { string, node, object, bool } from 'prop-types';
+import { string, node, object, bool, arrayOf } from 'prop-types';
 import cx from 'classnames';
 import Select from 'react-select';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import chroma from 'chroma-js';
 
 import PreviewTitleBar from './PreviewTitleBar';
@@ -12,21 +12,20 @@ import Frame from './Frame';
 import Card from './../Card';
 import Icon from './../Icon';
 
-import { colors, previewBackgrounds, fontFamily } from './../../style/theme';
 import { ButtonBaseCSS } from '../../style/common';
 
 const CLASS_ROOT = '';
 
-function getBackgroundsAsArray(previewBackgrounds) {
-  return Object.keys(previewBackgrounds).map(key => {
-    return {
+function getBackgroundsAsArray(previewBackgrounds, excludedColors = []) {
+  return Object.keys(previewBackgrounds)
+    .filter(colorName => !excludedColors.includes(colorName))
+    .map(key => ({
       value: previewBackgrounds[key],
       label: key
-    };
-  });
+    }));
 }
 
-export default class Preview extends Component {
+class Preview extends Component {
   static displayName = 'Preview';
 
   static propTypes = {
@@ -34,6 +33,7 @@ export default class Preview extends Component {
     code: node,
     codeJSXOptions: object,
     bgTheme: string,
+    bgThemeExcludedColors: arrayOf(string),
     hasCodePreview: bool,
     html: string,
     isIframe: bool,
@@ -43,8 +43,23 @@ export default class Preview extends Component {
 
   static defaultProps = {
     bgTheme: 'white',
+    bgThemeExcludedColors: [],
     hasCodePreview: true
   };
+
+  componentWillReceiveProps(props) {
+    if (
+      this.state.previewBackground &&
+      props.bgTheme !== this.state.previewBackground.label
+    ) {
+      this.setState({
+        previewBackground: {
+          label: props.bgTheme,
+          value: props.theme.previewBackgrounds[props.bgTheme]
+        }
+      });
+    }
+  }
 
   constructor(props) {
     super(props);
@@ -55,8 +70,11 @@ export default class Preview extends Component {
 
   state = {
     isCodeShown: false,
-    previewBackground: previewBackgrounds
-      ? getBackgroundsAsArray(previewBackgrounds)[0]
+    previewBackground: this.props.theme.previewBackgrounds
+      ? {
+          label: this.props.bgTheme,
+          value: this.props.theme.previewBackgrounds[this.props.bgTheme]
+        }
       : {}
   };
 
@@ -80,11 +98,13 @@ export default class Preview extends Component {
       code,
       codeJSXOptions,
       bgTheme,
+      bgThemeExcludedColors,
       isIframe,
       iframeHead,
       iframeScripts,
       hasCodePreview,
       html,
+      theme,
       ...other
     } = this.props;
 
@@ -111,44 +131,53 @@ export default class Preview extends Component {
 
     const actions = [];
 
-    if (bgTheme) {
-      actions.push(
-        <StyledSelect
-          name="background-select"
-          className="select-wrapper"
-          classNamePrefix="select"
-          isSearchable={false}
-          isClearable={false}
-          bgTheme={previewBackground.value}
-          value={previewBackground}
-          placeholder={previewBackground.value}
-          onChange={this.handlePreviewBackground}
-          options={getBackgroundsAsArray(previewBackgrounds)}
-          styles={colourStyles}
-        />
+    if (bgTheme && theme.previewBackgrounds) {
+      const bgColorsOptions = getBackgroundsAsArray(
+        theme.previewBackgrounds,
+        bgThemeExcludedColors
       );
+
+      if (bgColorsOptions.length) {
+        actions.push(
+          <StyledSelect
+            name="background-select"
+            className="select-wrapper"
+            classNamePrefix="select"
+            isSearchable={false}
+            isClearable={false}
+            value={previewBackground}
+            placeholder={previewBackground.value}
+            onChange={this.handlePreviewBackground}
+            options={bgColorsOptions}
+            styles={colourStyles}
+          />
+        );
+      }
     }
 
     if (hasCodePreview) {
       actions.push(
         <StyledButton onClick={this.handleToggleCode}>
-          <Icon name="code" fill={colors.orange} />
+          <Icon name="code" fill={theme.colors.accent} />
           {this.state.isCodeShown ? 'Hide code' : 'Show code'}
         </StyledButton>
       );
     }
 
-    const toReneder = (typeof children === 'function'
-      ? children({
-          bgColor: previewBackground.label,
-          bgColorValue: previewBackground.value
-        })
-      : children) || (
+    const childrenToRender =
+      typeof children === 'function'
+        ? children({
+            bgTheme: previewBackground.label,
+            bgThemeValue: previewBackground.value
+          })
+        : children;
+
+    const toReneder = childrenToRender || (
       // eslint-disable-next-line react/no-danger
       <div dangerouslySetInnerHTML={{ __html: html }} />
     );
 
-    const toCode = code || children || html;
+    const toCode = code || childrenToRender || html;
 
     const content = isIframe ? (
       <Frame head={iframeHead} scripts={iframeScripts}>
@@ -182,6 +211,8 @@ export default class Preview extends Component {
   }
 }
 
+export default withTheme(Preview);
+
 const StyledPreviewLive = styled.div`
   transition: all 200ms ease-in-out;
 `;
@@ -195,7 +226,7 @@ const StyledButton = styled.button`
 const StyledSelect = styled(Select)`
   &.select-wrapper {
     position: relative;
-    font-family: ${fontFamily};
+    font-family: ${props => props.theme.fontFamily};
     font-size: 14px;
   }
 
