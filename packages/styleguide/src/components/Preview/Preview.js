@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { string, node, object, bool, arrayOf } from 'prop-types';
 import cx from 'classnames';
 import Select from 'react-select';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import chroma from 'chroma-js';
 
 import PreviewTitleBar from './PreviewTitleBar';
@@ -12,7 +12,6 @@ import Frame from './Frame';
 import Card from './../Card';
 import Icon from './../Icon';
 
-import { colors, previewBackgrounds, fontFamily } from './../../style/theme';
 import { ButtonBaseCSS } from '../../style/common';
 
 const CLASS_ROOT = '';
@@ -26,7 +25,7 @@ function getBackgroundsAsArray(previewBackgrounds, excludedColors = []) {
     }));
 }
 
-export default class Preview extends Component {
+class Preview extends Component {
   static displayName = 'Preview';
 
   static propTypes = {
@@ -49,11 +48,14 @@ export default class Preview extends Component {
   };
 
   componentWillReceiveProps(props) {
-    if (props.bgTheme !== this.state.previewBackground.label) {
+    if (
+      this.state.previewBackground &&
+      props.bgTheme !== this.state.previewBackground.label
+    ) {
       this.setState({
         previewBackground: {
           label: props.bgTheme,
-          value: previewBackgrounds[props.bgTheme]
+          value: props.theme.previewBackgrounds[props.bgTheme]
         }
       });
     }
@@ -68,10 +70,12 @@ export default class Preview extends Component {
 
   state = {
     isCodeShown: false,
-    previewBackground: {
-      label: this.props.bgTheme,
-      value: previewBackgrounds[this.props.bgTheme]
-    }
+    previewBackground: this.props.theme.previewBackgrounds
+      ? {
+          label: this.props.bgTheme,
+          value: this.props.theme.previewBackgrounds[this.props.bgTheme]
+        }
+      : {}
   };
 
   handleToggleCode() {
@@ -100,6 +104,7 @@ export default class Preview extends Component {
       iframeScripts,
       hasCodePreview,
       html,
+      theme,
       ...other
     } = this.props;
 
@@ -126,33 +131,34 @@ export default class Preview extends Component {
 
     const actions = [];
 
-    const bgColorsOptions = getBackgroundsAsArray(
-      previewBackgrounds,
-      bgThemeExcludedColors
-    );
-
-    if (bgTheme && bgColorsOptions.length) {
-      actions.push(
-        <StyledSelect
-          name="background-select"
-          className="select-wrapper"
-          classNamePrefix="select"
-          isSearchable={false}
-          isClearable={false}
-          bgTheme={previewBackground.value}
-          value={previewBackground}
-          placeholder={previewBackground.value}
-          onChange={this.handlePreviewBackground}
-          options={bgColorsOptions}
-          styles={colourStyles}
-        />
+    if (bgTheme && theme.previewBackgrounds) {
+      const bgColorsOptions = getBackgroundsAsArray(
+        theme.previewBackgrounds,
+        bgThemeExcludedColors
       );
+
+      if (bgColorsOptions.length) {
+        actions.push(
+          <StyledSelect
+            name="background-select"
+            className="select-wrapper"
+            classNamePrefix="select"
+            isSearchable={false}
+            isClearable={false}
+            value={previewBackground}
+            placeholder={previewBackground.value}
+            onChange={this.handlePreviewBackground}
+            options={bgColorsOptions}
+            styles={colourStyles}
+          />
+        );
+      }
     }
 
     if (hasCodePreview) {
       actions.push(
         <StyledButton onClick={this.handleToggleCode}>
-          <Icon name="code" fill={colors.orange} />
+          <Icon name="code" fill={theme.colors.accent} />
           {this.state.isCodeShown ? 'Hide code' : 'Show code'}
         </StyledButton>
       );
@@ -205,6 +211,8 @@ export default class Preview extends Component {
   }
 }
 
+export default withTheme(Preview);
+
 const StyledPreviewLive = styled.div`
   transition: all 200ms ease-in-out;
 `;
@@ -218,7 +226,7 @@ const StyledButton = styled.button`
 const StyledSelect = styled(Select)`
   &.select-wrapper {
     position: relative;
-    font-family: ${fontFamily};
+    font-family: ${props => props.theme.fontFamily};
     font-size: 14px;
   }
 
