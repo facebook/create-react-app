@@ -326,13 +326,14 @@ yarn add husky lint-staged prettier
 
 Now we can make sure every file is formatted correctly by adding a few lines to the `package.json` in the project root.
 
-Add the following line to `scripts` section:
+Add the following field to the `package.json` section:
 
 ```diff
-  "scripts": {
-+   "precommit": "lint-staged",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
++  "husky": {
++    "hooks": {
++      "pre-commit": "lint-staged"
++    }
++  }
 ```
 
 Next we add a 'lint-staged' field to the `package.json`, for example:
@@ -2310,7 +2311,7 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 
 ##### "/dev/tty: No such a device or address"
 
-If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the follwing:
+If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the following:
 
 1. Create a new [Personal Access Token](https://github.com/settings/tokens)
 2. `git remote set-url origin https://<user>:<token>@github.com/<user>/<repo>` .

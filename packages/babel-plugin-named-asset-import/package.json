@@ -12,6 +12,6 @@
     "index.js"
   ],
   "peerDependencies": {
-    "@babel/core": "7.1.0"
+    "@babel/core": "^7.1.0"
   }
 }
