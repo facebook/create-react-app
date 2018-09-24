@@ -8,10 +8,11 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
-    "index.js",
     "create.js",
     "dependencies.js",
     "dev.js",
+    "index.js",
+    "overrides.js",
     "prod.js",
     "test.js"
   ],
