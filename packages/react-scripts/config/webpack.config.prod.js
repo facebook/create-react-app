@@ -266,7 +266,7 @@ module.exports = {
               // improves compile time on larger projects
               require.resolve('thread-loader'),
               {
-                loader: require.resolve('babel-loader'),
+                loader: require.resolve('babel-preset-react-app/loader'),
                 options: {
                   // @remove-on-eject-begin
                   babelrc: false,
