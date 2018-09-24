@@ -228,6 +228,9 @@ module.exports = {
                 },
               },
               {
+                // We need to use our own loader until `babel-loader` supports
+                // customization
+                // https://github.com/babel/babel-loader/pull/687
                 loader: require.resolve('babel-preset-react-app/loader'),
                 options: {
                   // @remove-on-eject-begin
