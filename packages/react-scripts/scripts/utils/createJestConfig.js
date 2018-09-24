@@ -35,10 +35,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^.+\\.(graphql)$': resolve('config/jest/graphqlTransform.js'),
-      '^(?!.*\\.(js|jsx|css|json|graphql)$)': resolve(
-        'config/jest/fileTransform.js'
-      ),
+      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
     },
     transformIgnorePatterns: [
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$',
