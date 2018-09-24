@@ -27,7 +27,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Post-Processing CSS](#post-processing-css)
 - [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
 - [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
-- [Adding GraphQL files](#adding-graphql-files)
 - [Using the `public` Folder](#using-the-public-folder)
   - [Changing the HTML](#changing-the-html)
   - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system)
@@ -731,34 +730,6 @@ Please be advised that this is also a custom feature of Webpack.
 
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).<br>
 An alternative way of handling static assets is described in the next section.
-
-## Adding GraphQL files
-
-> Note: this feature is available with react-scripts@2.0.0 and higher.
-
-If you are using GraphQL, you can **`import` GraphQL files in a JavaScript module**.
-
-By importing GraphQL queries instead of using a [template tag](https://github.com/apollographql/graphql-tag), they are preprocessed at build time. This eliminates the need to process them on the client at run time. It also allows you to separate your GraphQL queries from your code. You can put a GraphQL query in a file with a `.graphql` extension.
-
-Here is an example:
-
-```js
-// query.graphql
-{
-  githubStats(repository: "facebook/react") {
-    stars
-  }
-}
-
-// foo.js
-
-import query from './query.graphql';
-
-console.log(query);
-// {
-//   "kind": "Document",
-// ...
-```
 
 ## Using the `public` Folder
 

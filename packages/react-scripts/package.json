@@ -46,8 +46,6 @@
     "eslint-plugin-react": "7.11.1",
     "file-loader": "1.1.11",
     "fs-extra": "7.0.0",
-    "graphql": "0.13.2",
-    "graphql-tag": "2.9.2",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "identity-obj-proxy": "3.0.0",
     "jest": "23.6.0",
