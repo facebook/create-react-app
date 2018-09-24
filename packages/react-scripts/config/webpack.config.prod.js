@@ -299,9 +299,6 @@ module.exports = {
                   cacheDirectory: true,
                   // Save disk space when time isn't as important
                   cacheCompression: true,
-                  overrides: require.resolve(
-                    'babel-preset-react-app/overrides'
-                  ),
                   compact: true,
                   highlightCode: true,
                 },

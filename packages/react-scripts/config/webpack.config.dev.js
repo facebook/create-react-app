@@ -264,9 +264,6 @@ module.exports = {
                   cacheDirectory: true,
                   // Don't waste time on Gzipping the cache
                   cacheCompression: false,
-                  overrides: require.resolve(
-                    'babel-preset-react-app/overrides'
-                  ),
                   highlightCode: true,
                 },
               },
