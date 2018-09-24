@@ -623,7 +623,7 @@ Then in `package.json`, add the following lines to `scripts`:
 +    "watch-css": "node-sass-chokidar src/ -o src/ --watch",
      "start": "react-scripts start",
      "build": "react-scripts build",
-     "test": "react-scripts test --env=jsdom",
+     "test": "react-scripts test",
 ```
 
 >Note: To use a different preprocessor, replace `build-css` and `watch-css` commands according to your preprocessor’s documentation.
@@ -672,7 +672,7 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
 +    "start": "npm-run-all -p watch-css start-js",
 +    "build-js": "react-scripts build",
 +    "build": "npm-run-all build-css build-js",
-     "test": "react-scripts test --env=jsdom",
+     "test": "react-scripts test",
      "eject": "react-scripts eject"
    }
 ```
@@ -1676,23 +1676,14 @@ The build command will check for linter warnings and fail if any are found.
 
 ### Disabling jsdom
 
-By default, the `package.json` of the generated project looks like this:
-
-```js
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom"
-```
-
-If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/jsdom), you can safely remove `--env=jsdom`, and your tests will run faster:
+If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/jsdom), you can safely set `--env=node`, and your tests will run faster:
 
 ```diff
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
--   "test": "react-scripts test --env=jsdom"
-+   "test": "react-scripts test"
+-   "test": "react-scripts test"
++   "test": "react-scripts test --env=node"
 ```
 
 To help you make up your mind, here is a list of APIs that **need jsdom**:
@@ -1730,7 +1721,7 @@ There are various ways to setup a debugger for your Jest tests. We cover debuggi
 Add the following to the `scripts` section in your project's `package.json`
 ```json
 "scripts": {
-    "test:debug": "react-scripts --inspect-brk test --runInBand --env=jsdom"
+    "test:debug": "react-scripts --inspect-brk test --runInBand"
   }
 ```
 Place `debugger;` statements in any test and run:
@@ -1766,8 +1757,7 @@ Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debu
       "args": [
         "test",
         "--runInBand",
-        "--no-cache",
-        "--env=jsdom"
+        "--no-cache"
       ],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
@@ -2004,7 +1994,7 @@ Then in `package.json`, add the following line to `scripts`:
 +    "analyze": "source-map-explorer build/static/js/main.*",
      "start": "react-scripts start",
      "build": "react-scripts build",
-     "test": "react-scripts test --env=jsdom",
+     "test": "react-scripts test",
 ```
 
 Then to analyze the bundle run the production build then run the analyze
@@ -2493,7 +2483,7 @@ If none of these solutions help please leave a comment [in this thread](https://
 
 ### `npm test` hangs or crashes on macOS Sierra
 
-If you run `npm test` and the console gets stuck after printing `react-scripts test --env=jsdom` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebook/create-react-app#713](https://github.com/facebook/create-react-app/issues/713).
+If you run `npm test` and the console gets stuck after printing `react-scripts test` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebook/create-react-app#713](https://github.com/facebook/create-react-app/issues/713).
 
 We recommend deleting `node_modules` in your project and running `npm install` (or `yarn` if you use it) first. If it doesn't help, you can try one of the numerous workarounds mentioned in these issues:
 

@@ -83,7 +83,7 @@ function resolveJestDefaultEnvironment(name) {
   });
 }
 let cleanArgv = [];
-let env = 'node';
+let env = 'jsdom';
 let next;
 do {
   next = argv.shift();
