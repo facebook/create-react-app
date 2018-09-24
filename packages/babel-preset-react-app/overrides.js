@@ -13,7 +13,11 @@ module.exports = {
     if (source.indexOf('.macro') !== -1 || source.indexOf('/macro') !== -1) {
       return {
         ...config.options,
-        cacheBustingKey: crypto.randomBytes(32).toString('hex'),
+        caller: {
+          name: `babel-preset-react-app:${crypto
+            .randomBytes(32)
+            .toString('hex')}`,
+        },
       };
     }
     return config.options;
