@@ -303,7 +303,6 @@ module.exports = {
                   // Save disk space when time isn't as important
                   cacheCompression: true,
                   compact: true,
-                  highlightCode: true,
                 },
               },
             ],
@@ -335,7 +334,6 @@ module.exports = {
                     'react-scripts',
                   ]),
                   // @remove-on-eject-end
-                  highlightCode: true,
                 },
               },
             ],

@@ -267,7 +267,6 @@ module.exports = {
                   cacheDirectory: true,
                   // Don't waste time on Gzipping the cache
                   cacheCompression: false,
-                  highlightCode: true,
                 },
               },
             ],
@@ -304,7 +303,6 @@ module.exports = {
                     'react-scripts',
                   ]),
                   // @remove-on-eject-end
-                  highlightCode: true,
                 },
               },
             ],
