@@ -13,7 +13,12 @@ const inquirer = require('inquirer');
 const pkgUp = require('pkg-up');
 const fs = require('fs');
 
-const defaultBrowsers = ['>0.25%', 'not op_mini all', 'ie 11'];
+const defaultBrowsers = [
+  '>0.2%',
+  'not dead',
+  'not ie <= 11',
+  'not op_mini all',
+];
 
 function shouldSetBrowsers(isInteractive) {
   if (!isInteractive) {
