@@ -314,6 +314,7 @@ module.exports = {
           // Unlike the application JS, we only compile the standard ES features.
           {
             test: /\.js$/,
+            exclude: [/@babel\/runtime/],
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects

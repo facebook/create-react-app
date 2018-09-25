@@ -79,7 +79,7 @@ module.exports = {
   mode: 'development',
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebook/create-react-app/issues/343
-  devtool: 'cheap-module-source-map',
+  devtool: false,
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   entry: [
@@ -275,6 +275,7 @@ module.exports = {
           // Unlike the application JS, we only compile the standard ES features.
           {
             test: /\.js$/,
+            exclude: [/@babel\/runtime/],
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
