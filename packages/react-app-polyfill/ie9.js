@@ -29,4 +29,4 @@ require('core-js/fn/array/from');
 // React 16+ relies on Map, Set, and requestAnimationFrame
 require('core-js/es6/map');
 require('core-js/es6/set');
-require('raf').polyfill(global);
+require('raf').polyfill(window);
