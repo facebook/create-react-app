@@ -50,14 +50,12 @@
     "jest": "23.6.0",
     "loader-utils": "1.1.0",
     "mini-css-extract-plugin": "0.4.3",
-    "object-assign": "4.1.1",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.0.6",
     "postcss-safe-parser": "4.0.1",
-    "promise": "8.0.2",
-    "raf": "3.4.0",
+    "react-app-polyfill": "^0.0.0",
     "react-dev-utils": "^5.0.0",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
@@ -68,8 +66,7 @@
     "url-loader": "1.1.1",
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",
-    "webpack-manifest-plugin": "2.0.4",
-    "whatwg-fetch": "3.0.0"
+    "webpack-manifest-plugin": "2.0.4"
   },
   "devDependencies": {
     "react": "^16.3.2",
