@@ -6,6 +6,18 @@
  */
 'use strict';
 
+const validateBoolOption = (name, value, defaultValue) => {
+  if (typeof value === 'undefined') {
+    value = defaultValue;
+  }
+
+  if (typeof value !== 'boolean') {
+    throw new Error(`Preset react-app: '${name}' option must be a boolean.`);
+  }
+
+  return value;
+};
+
 module.exports = function(api, opts) {
   if (!opts) {
     opts = {};
@@ -21,6 +33,7 @@ module.exports = function(api, opts) {
   var isEnvDevelopment = env === 'development';
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
+  var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, false);
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
@@ -76,7 +89,7 @@ module.exports = function(api, opts) {
         require('@babel/plugin-transform-runtime').default,
         {
           corejs: false,
-          helpers: false,
+          helpers: areHelpersEnabled,
           regenerator: true,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
