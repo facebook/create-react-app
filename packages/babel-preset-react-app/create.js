@@ -17,7 +17,7 @@ module.exports = function(api, opts, env) {
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
-  var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
+  var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, false);
 
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(

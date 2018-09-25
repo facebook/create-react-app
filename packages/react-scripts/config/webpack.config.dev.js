@@ -234,7 +234,12 @@ module.exports = {
                 options: {
                   // @remove-on-eject-begin
                   babelrc: false,
-                  presets: [require.resolve('babel-preset-react-app')],
+                  presets: [
+                    [
+                      require.resolve('babel-preset-react-app'),
+                      { helpers: true },
+                    ],
+                  ],
                   // Make sure we have a unique cache identifier, erring on the
                   // side of caution.
                   // We remove this when the user ejects because the default
