@@ -15,8 +15,7 @@
     "loader.js",
     "overrides.js",
     "prod.js",
-    "test.js",
-    "utils.js"
+    "test.js"
   ],
   "dependencies": {
     "@babel/core": "7.1.0",
