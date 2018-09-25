@@ -60,7 +60,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
             autoprefixer: {
               flexbox: 'no-2009',
             },
-            stage: 4,
+            stage: 3,
           }),
         ],
       },
