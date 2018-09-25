@@ -208,7 +208,7 @@ inquirer
     // Add Babel config
     console.log(`  Adding ${cyan('Babel')} preset`);
     appPackage.babel = {
-      presets: [['react-app', { helpers: true }]],
+      presets: ['react-app'],
     };
 
     // Add ESlint config

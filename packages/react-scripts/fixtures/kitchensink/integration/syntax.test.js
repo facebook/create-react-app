@@ -90,15 +90,6 @@ describe('Integration', () => {
       doc.defaultView.close();
     });
 
-    it('babel node modules', async () => {
-      const doc = await initDOM('babel-node-modules');
-
-      expect(
-        doc.getElementById('feature-babel-node-modules').childElementCount
-      ).toBe(1);
-      doc.defaultView.close();
-    });
-
     it('object destructuring', async () => {
       const doc = await initDOM('object-destructuring');
 
