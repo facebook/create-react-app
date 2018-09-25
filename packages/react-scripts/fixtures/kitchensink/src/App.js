@@ -134,6 +134,11 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
+      case 'babel-node-modules':
+        import('./features/syntax/NodeModulesCompilation').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
       case 'image-inclusion':
         import('./features/webpack/ImageInclusion').then(f =>
           this.setFeature(f.default)

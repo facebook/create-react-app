@@ -113,7 +113,7 @@ module.exports = function(api, opts, env) {
         require('@babel/plugin-transform-runtime').default,
         {
           corejs: false,
-          helpers: false,
+          helpers: true,
           regenerator: true,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS

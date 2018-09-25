@@ -2,6 +2,7 @@
   "dependencies": {
     "bootstrap": "4.1.1",
     "jest": "23.6.0",
+    "ky": "0.3.0",
     "node-sass": "4.8.3",
     "normalize.css": "7.0.0",
     "prop-types": "15.5.6",
