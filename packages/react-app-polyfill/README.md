@@ -24,8 +24,8 @@ You can import the entry point for the minimal version you intend to support. Fo
 #### Internet Explorer 9
 
 ```js
-// # index.js
-import 'react-app-polyfill/ie9'; // make this the first line of your application
+// This must be the first line in src/index.js
+import 'react-app-polyfill/ie9';
 
 // ...
 ```
@@ -33,8 +33,8 @@ import 'react-app-polyfill/ie9'; // make this the first line of your application
 #### Internet Explorer 11
 
 ```js
-// # index.js
-import 'react-app-polyfill/ie11'; // make this the first line of your application
+// This must be the first line in src/index.js
+import 'react-app-polyfill/ie11';
 
 // ...
 ```
