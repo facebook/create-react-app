@@ -19,7 +19,7 @@ Each polyfill ensures the following language features are present:
 
 ### Entry Points
 
-There is no single entry point. You can only import individual browser support levels.
+You can import the entry point for the minimal version you intend to support. For example, if you import the IE9 entry point, this will include IE10 and IE11 support.
 
 #### Internet Explorer 9
 
