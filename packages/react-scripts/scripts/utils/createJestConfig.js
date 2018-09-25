@@ -54,7 +54,17 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
   };
   if (rootDir) {
-    config.rootDir = rootDir;
+    const path = require('path');
+    config.rootDir = path.dirname(paths.appPackageJson);
+    const jestSrcDir = paths.appSrc.replace(config.rootDir, '<rootDir>');
+    const jestTestDir = paths.testSrc.replace(config.rootDir, '<rootDir>');
+    const setupTestsFile = fs.existsSync(paths.testsSetup) ? paths.testsSetup.replace(config.rootDir, '<rootDir>') : undefined;
+    config.testMatch = [
+      `${jestSrcDir}/**/__tests__/**/*.{js,jsx,mjs}`,
+      `${jestSrcDir}/**/?(*.)(spec|test).{js,jsx,mjs}`,
+      `${jestTestDir}/**/?(*.)(spec|test).{js,jsx,mjs}`,
+    ];
+    config.setupTestFrameworkScriptFile = setupTestsFile;
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
