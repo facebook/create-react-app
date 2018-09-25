@@ -24,6 +24,7 @@ webpack(config).watch({}, (err, stats) => {
 });
 
 function copyPublicFolder() {
+  fs.existsSync(paths.appPublic) &&
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
     filter: file => file !== paths.appHtml
