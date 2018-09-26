@@ -275,6 +275,7 @@ module.exports = {
                 options: {
                   // @remove-on-eject-begin
                   babelrc: false,
+                  configFile: false,
                   presets: [require.resolve('babel-preset-react-app')],
                   // Make sure we have a unique cache identifier, erring on the
                   // side of caution.
@@ -323,6 +324,7 @@ module.exports = {
                 loader: require.resolve('babel-loader'),
                 options: {
                   babelrc: false,
+                  configFile: false,
                   compact: false,
                   presets: [
                     [
