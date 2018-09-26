@@ -102,6 +102,13 @@ function formatMessage(message, isError) {
     ];
   }
 
+  if (lines[1].match(/Cannot find module.+node-sass/)) {
+    lines[1] =
+      'To import Sass files in this project, you need to install node-sass.\n';
+    lines[1] +=
+      'Please run `npm i node-sass --save` or `yarn add node-sass` inside your workspace.';
+  }
+
   // Cleans up syntax error messages.
   if (lines[1].indexOf('Module build failed: ') === 0) {
     lines[1] = lines[1].replace(
@@ -131,12 +138,6 @@ function formatMessage(message, isError) {
       exportError,
       "$1  '$3' does not contain an export named '$2'."
     );
-  }
-
-  if (lines[1].match(/sass-loader.+node-sass.+install/)) {
-    lines[1] = 'You need to install `node-sass` to compile Sass files.\n';
-    lines[1] +=
-      'Please run `npm i node-sass` or `yarn add node-sass` inside your workspace.';
   }
 
   lines[0] = chalk.inverse(lines[0]);
