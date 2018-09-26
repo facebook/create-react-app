@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest"
   },
-  "repository": "facebookincubator/create-react-app",
+  "repository": "facebook/create-react-app",
   "keywords": [
     "eslint",
     "globals"
@@ -16,6 +16,6 @@
     "index.js"
   ],
   "devDependencies": {
-    "jest": "22.1.1"
+    "jest": "23.6.0"
   }
 }

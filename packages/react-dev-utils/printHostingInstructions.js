@@ -39,7 +39,7 @@ function printHostingInstructions(
   console.log();
   console.log('Find out more about deployment here:');
   console.log();
-  console.log(`  ${chalk.yellow('http://bit.ly/2vY88Kr')}`);
+  console.log(`  ${chalk.yellow('http://bit.ly/CRA-deploy')}`);
   console.log();
 }
 
@@ -92,7 +92,7 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
     console.log(`      ${chalk.dim('// ...')}`);
     console.log(
       `      ${chalk.yellow('"predeploy"')}: ${chalk.yellow(
-        '"npm run build",'
+        `"${useYarn ? 'yarn' : 'npm run'} build",`
       )}`
     );
     console.log(
