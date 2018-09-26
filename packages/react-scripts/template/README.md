@@ -25,8 +25,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Code Splitting](#code-splitting)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Adding a CSS Modules stylesheet](#adding-a-css-modules-stylesheet)
+- [Adding a Sass stylesheet](#adding-a-sass-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
-- [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
 - [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
 - [Using the `public` Folder](#using-the-public-folder)
   - [Changing the HTML](#changing-the-html)
@@ -567,6 +567,32 @@ No clashes from other `.error` class names
 
 **This is an optional feature.** Regular html stylesheets and js imported stylesheets are fully supported. CSS Modules are only added when explicitly named as a css module stylesheet using the extension `.module.css`.
 
+## Adding a Sass stylesheet
+
+Generally, we recommend that you don’t reuse the same CSS classes across different components. For example, instead of using a `.Button` CSS class in `<AcceptButton>` and `<RejectButton>` components, we recommend creating a `<Button>` component with its own `.Button` styles, that both `<AcceptButton>` and `<RejectButton>` can render (but [not inherit](https://facebook.github.io/react/docs/composition-vs-inheritance.html)).
+
+Following this rule often makes CSS preprocessors less useful, as features like mixins and nesting are replaced by component composition. You can, however, integrate a CSS preprocessor if you find it valuable.
+
+To use Sass, first install `node-sass`:
+
+```bash
+$ npm install node-sass --save
+$ # or
+$ yarn add node-sass
+```
+
+Now you can rename `src/App.css` to `src/App.scss` and update `src/App.js` to import `src/App.scss`.
+This file and any other file will be automatically compiled if imported with the extension `.scss` or `.sass`.
+
+To share variables between Sass files, you can use Sass imports. For example, `src/App.scss` and other component style files could include `@import "./shared.scss";` with variable definitions.
+
+This will allow you to do imports like
+
+```scss
+@import 'styles/_colors.scss'; // assuming a styles directory under src/
+@import 'nprogress/nprogress'; // importing a css file from the nprogress node module
+```
+
 ## Post-Processing CSS
 
 This project setup minifies your CSS and adds vendor prefixes to it automatically through [Autoprefixer](https://github.com/postcss/autoprefixer) so you don’t need to worry about it.
@@ -599,100 +625,6 @@ becomes this:
 ```
 
 If you need to disable autoprefixing for some reason, [follow this section](https://github.com/postcss/autoprefixer#disabling).
-
-## Adding a CSS Preprocessor (Sass, Less etc.)
-
-Generally, we recommend that you don’t reuse the same CSS classes across different components. For example, instead of using a `.Button` CSS class in `<AcceptButton>` and `<RejectButton>` components, we recommend creating a `<Button>` component with its own `.Button` styles, that both `<AcceptButton>` and `<RejectButton>` can render (but [not inherit](https://facebook.github.io/react/docs/composition-vs-inheritance.html)).
-
-Following this rule often makes CSS preprocessors less useful, as features like mixins and nesting are replaced by component composition. You can, however, integrate a CSS preprocessor if you find it valuable. In this walkthrough, we will be using Sass, but you can also use Less, or another alternative.
-
-First, let’s install the command-line interface for Sass:
-
-```sh
-npm install --save node-sass-chokidar
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add node-sass-chokidar
-```
-
-Then in `package.json`, add the following lines to `scripts`:
-
-```diff
-   "scripts": {
-+    "build-css": "node-sass-chokidar src/ -o src/",
-+    "watch-css": "node-sass-chokidar src/ -o src/ --watch",
-     "start": "react-scripts start",
-     "build": "react-scripts build",
-     "test": "react-scripts test",
-```
-
-> Note: To use a different preprocessor, replace `build-css` and `watch-css` commands according to your preprocessor’s documentation.
-
-Now you can rename `src/App.css` to `src/App.scss` and run `npm run watch-css`. The watcher will find every Sass file in `src` subdirectories, and create a corresponding CSS file next to it, in our case overwriting `src/App.css`. Since `src/App.js` still imports `src/App.css`, the styles become a part of your application. You can now edit `src/App.scss`, and `src/App.css` will be regenerated.
-
-To share variables between Sass files, you can use Sass imports. For example, `src/App.scss` and other component style files could include `@import "./shared.scss";` with variable definitions.
-
-To enable importing files without using relative paths, you can add the `--include-path` option to the command in `package.json`.
-
-```
-"build-css": "node-sass-chokidar --include-path ./node_modules src/ -o src/",
-"watch-css": "node-sass-chokidar --include-path ./node_modules src/ -o src/ --watch",
-```
-
-This will allow you to do imports like
-
-```scss
-@import 'styles/_colors.scss'; // assuming a styles directory under src/
-@import 'nprogress/nprogress'; // importing a css file from the nprogress node module
-```
-
-At this point you might want to remove all CSS files from the source control, and add `src/**/*.css` to your `.gitignore` file. It is generally a good practice to keep the build products outside of the source control.
-
-As a final step, you may find it convenient to run `watch-css` automatically with `npm start`, and run `build-css` as a part of `npm run build`. You can use the `&&` operator to execute two scripts sequentially. However, there is no cross-platform way to run two scripts in parallel, so we will install a package for this:
-
-```sh
-npm install --save npm-run-all
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add npm-run-all
-```
-
-Then we can change `start` and `build` scripts to include the CSS preprocessor commands:
-
-```diff
-   "scripts": {
-     "build-css": "node-sass-chokidar src/ -o src/",
-     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
--    "start": "react-scripts start",
--    "build": "react-scripts build",
-+    "start-js": "react-scripts start",
-+    "start": "npm-run-all -p watch-css start-js",
-+    "build-js": "react-scripts build",
-+    "build": "npm-run-all build-css build-js",
-     "test": "react-scripts test",
-     "eject": "react-scripts eject"
-   }
-```
-
-Now running `npm start` and `npm run build` also builds Sass files.
-
-**Why `node-sass-chokidar`?**
-
-`node-sass` has been reported as having the following issues:
-
-- `node-sass --watch` has been reported to have _performance issues_ in certain conditions when used in a virtual machine or with docker.
-
-- Infinite styles compiling [#1939](https://github.com/facebook/create-react-app/issues/1939)
-
-- `node-sass` has been reported as having issues with detecting new files in a directory [#1891](https://github.com/sass/node-sass/issues/1891)
-
-`node-sass-chokidar` is used here as it addresses these issues.
 
 ## Adding Images, Fonts, and Files
 
