@@ -20,7 +20,7 @@ environment:
       test_suite: "kitchensink-eject"
 cache:
   - '%APPDATA%\npm-cache -> appveyor.cleanup-cache.txt'
-  - '%LOCALAPPDATA%\Yarn -> appveyor.cleanup-cache.txt'
+  - '%LOCALAPPDATA%\Yarn\Cache -> appveyor.cleanup-cache.txt'
 
 clone_depth: 50
 
