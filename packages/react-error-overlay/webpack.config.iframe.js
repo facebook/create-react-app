@@ -8,7 +8,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
@@ -32,12 +32,15 @@ module.exports = {
           // Dependencies
           {
             test: /\.js$/,
+            exclude: /@babel(?:\/|\\{1,2})runtime/,
             use: {
               loader: 'babel-loader',
               options: {
                 babelrc: false,
                 compact: false,
-                presets: ['babel-preset-react-app/dependencies'],
+                presets: [
+                  ['babel-preset-react-app/dependencies', { helpers: true }],
+                ],
               },
             },
           },
@@ -49,8 +52,8 @@ module.exports = {
     minimizer: [
       // This code is embedded as a string, so it would never be optimized
       // elsewhere.
-      new UglifyJsPlugin({
-        uglifyOptions: {
+      new TerserPlugin({
+        terserOptions: {
           compress: {
             warnings: false,
             comparisons: false,

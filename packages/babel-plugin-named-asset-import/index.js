@@ -7,7 +7,12 @@ function namedAssetImportPlugin({ types: t }) {
 
   return {
     visitor: {
-      ImportDeclaration(path, { opts: { loaderMap } }) {
+      ImportDeclaration(
+        path,
+        {
+          opts: { loaderMap },
+        }
+      ) {
         const sourcePath = path.node.source.value;
         const ext = extname(sourcePath).substr(1);
 

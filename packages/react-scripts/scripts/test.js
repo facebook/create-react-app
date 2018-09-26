@@ -53,7 +53,7 @@ argv.push(
     createJestConfig(
       relativePath => path.resolve(__dirname, '..', relativePath),
       path.resolve(paths.appSrc, '..'),
-      paths.srcPaths
+      false
     )
   )
 );
@@ -83,7 +83,7 @@ function resolveJestDefaultEnvironment(name) {
   });
 }
 let cleanArgv = [];
-let env = 'node';
+let env = 'jsdom';
 let next;
 do {
   next = argv.shift();
