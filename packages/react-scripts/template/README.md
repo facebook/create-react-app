@@ -2406,7 +2406,9 @@ This will only work for locales that have been explicitly imported before.
 
 ### `npm run build` fails to minify
 
-Migrate to v2.x
+Starting in Create React App v2, we now compile all ES.Next features found in `node_modules`.  
+This means you can consume packages and not worry about them being syntax-incompatible with any browser.  
+If you're seeing this error, you're likely using an old version of `react-scripts` and need to upgrade to `react-scripts@>=2.0.0`.
 
 ## Alternatives to Ejecting
 
