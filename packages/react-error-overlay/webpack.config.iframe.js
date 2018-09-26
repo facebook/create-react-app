@@ -32,7 +32,7 @@ module.exports = {
           // Dependencies
           {
             test: /\.js$/,
-            exclude: /@babel\/runtime/,
+            exclude: /@babel(?:\/|\\{1,2})runtime/,
             use: {
               loader: 'babel-loader',
               options: {
