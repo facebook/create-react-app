@@ -146,10 +146,6 @@ PORT=3001 \
   nohup yarn start &>$tmp_server_log &
 grep -q 'You can now view' <(tail -f $tmp_server_log)
 
-# We haven't ejected yet which means there's no `babel` key
-# in package.json yet
-echo '{"presets":["react-app"]}' > .babelrc
-
 # Test "development" environment
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
