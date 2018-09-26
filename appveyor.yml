@@ -2,25 +2,23 @@ image: Visual Studio 2017
 
 environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
-  allow_failures:
-    - test_suite: "installs"
   matrix:
     - nodejs_version: 10
-      test_suite: "simple"
+      test_suite: 'simple'
     - nodejs_version: 10
-      test_suite: "installs"
+      test_suite: 'installs'
     - nodejs_version: 10
-      test_suite: "kitchensink"
+      test_suite: 'kitchensink'
     - nodejs_version: 10
-      test_suite: "kitchensink-eject"
+      test_suite: 'kitchensink-eject'
     - nodejs_version: 8
-      test_suite: "simple"
+      test_suite: 'simple'
     - nodejs_version: 8
-      test_suite: "installs"
+      test_suite: 'installs'
     - nodejs_version: 8
-      test_suite: "kitchensink"
+      test_suite: 'kitchensink'
     - nodejs_version: 8
-      test_suite: "kitchensink-eject"
+      test_suite: 'kitchensink-eject'
 cache:
   - '%APPDATA%\npm-cache -> appveyor.cleanup-cache.txt'
   - '%LOCALAPPDATA%\Yarn\Cache -> appveyor.cleanup-cache.txt'
@@ -29,6 +27,8 @@ clone_depth: 50
 
 matrix:
   fast_finish: true
+  allow_failures:
+    - test_suite: 'installs'
 
 platform:
   - x64
