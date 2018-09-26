@@ -76,8 +76,9 @@
     "fsevents": "1.2.4"
   },
   "browserslist": [
-    ">0.25%",
-    "not op_mini all",
-    "ie 11"
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
   ]
 }
