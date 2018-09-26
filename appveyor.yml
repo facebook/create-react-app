@@ -19,8 +19,8 @@ environment:
     - nodejs_version: 8
       test_suite: "kitchensink-eject"
 cache:
-  - node_modules -> appveyor.cleanup-cache.txt
-  - packages\react-scripts\node_modules -> appveyor.cleanup-cache.txt
+  - '%APPDATA%\npm-cache -> appveyor.cleanup-cache.txt'
+  - '%LOCALAPPDATA%\Yarn -> appveyor.cleanup-cache.txt'
 
 clone_depth: 50
 
@@ -46,4 +46,5 @@ test_script:
   - node --version
   - npm --version
   - yarn --version
+  - yarn cache dir
   - bash tasks/e2e-%test_suite%.sh
