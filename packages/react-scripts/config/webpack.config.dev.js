@@ -8,7 +8,6 @@
 // @remove-on-eject-end
 'use strict';
 
-const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -57,8 +56,11 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
         ident: 'postcss',
         plugins: () => [
           require('postcss-flexbugs-fixes'),
-          autoprefixer({
-            flexbox: 'no-2009',
+          require('postcss-preset-env')({
+            autoprefixer: {
+              flexbox: 'no-2009',
+            },
+            stage: 3,
           }),
         ],
       },
@@ -80,10 +82,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
-  // The first two entry points enable "hot" CSS and auto-refreshes for JS.
   entry: [
-    // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
     // When you save a file, the client will either apply hot updates (in case
@@ -275,6 +274,7 @@ module.exports = {
           // Unlike the application JS, we only compile the standard ES features.
           {
             test: /\.js$/,
+            exclude: /@babel\/runtime/,
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
@@ -290,7 +290,10 @@ module.exports = {
                   babelrc: false,
                   compact: false,
                   presets: [
-                    require.resolve('babel-preset-react-app/dependencies'),
+                    [
+                      require.resolve('babel-preset-react-app/dependencies'),
+                      { helpers: true },
+                    ],
                   ],
                   cacheDirectory: true,
                   // Don't waste time on Gzipping the cache
@@ -303,6 +306,11 @@ module.exports = {
                     'react-scripts',
                   ]),
                   // @remove-on-eject-end
+                  // If an error happens in a package, it's possible to be
+                  // because it was compiled. Thus, we don't want the browser
+                  // debugger to show the original code. Instead, the code
+                  // being evaluated would be much more helpful.
+                  sourceMaps: false,
                 },
               },
             ],

@@ -27,6 +27,7 @@ module.exports = function(api, opts, env) {
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+  var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
 
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
@@ -113,7 +114,7 @@ module.exports = function(api, opts, env) {
         require('@babel/plugin-transform-runtime').default,
         {
           corejs: false,
-          helpers: false,
+          helpers: areHelpersEnabled,
           regenerator: true,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS

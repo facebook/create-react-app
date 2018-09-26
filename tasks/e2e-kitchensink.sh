@@ -146,10 +146,6 @@ PORT=3001 \
   nohup yarn start &>$tmp_server_log &
 grep -q 'You can now view' <(tail -f $tmp_server_log)
 
-# Before running Mocha, specify that it should use our preset
-# TODO: this is very hacky and we should find some other solution
-echo '{"presets":["react-app"]}' > .babelrc
-
 # Test "development" environment
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
