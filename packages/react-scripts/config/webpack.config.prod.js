@@ -144,7 +144,7 @@ module.exports = {
           },
           output: {
             ecma: 5,
-            comments: false,
+            comments: "some",
             // Turned on because emoji and regex is not minified properly using default
             // https://github.com/facebook/create-react-app/issues/2488
             ascii_only: true,
