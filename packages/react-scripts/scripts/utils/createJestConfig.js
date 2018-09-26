@@ -54,8 +54,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
   };
   if (rootDir) {
-    const path = require('path');
-    config.rootDir = path.dirname(paths.appPackageJson);
+    config.rootDir = paths.appPath;
     const jestSrcDir = paths.appSrc.replace(config.rootDir, '<rootDir>');
     const jestTestDir = paths.testSrc.replace(config.rootDir, '<rootDir>');
     const setupTestsFile = fs.existsSync(paths.testsSetup) ? paths.testsSetup.replace(config.rootDir, '<rootDir>') : undefined;
