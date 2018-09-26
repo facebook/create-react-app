@@ -37,6 +37,7 @@ module.exports = {
               loader: 'babel-loader',
               options: {
                 babelrc: false,
+                configFile: false,
                 compact: false,
                 presets: [
                   ['babel-preset-react-app/dependencies', { helpers: true }],
