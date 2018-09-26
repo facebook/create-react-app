@@ -102,6 +102,13 @@ function formatMessage(message, isError) {
     ];
   }
 
+  if (lines[1].match(/Cannot find module.+node-sass/)) {
+    lines[1] =
+      'To import Sass files in this project, you need to install node-sass.\n';
+    lines[1] +=
+      'Please run `npm i node-sass --save` or `yarn add node-sass` inside your workspace.';
+  }
+
   // Cleans up syntax error messages.
   if (lines[1].indexOf('Module build failed: ') === 0) {
     lines[1] = lines[1].replace(
