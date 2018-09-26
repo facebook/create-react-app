@@ -1,6 +1,9 @@
 image: Visual Studio 2017
 
 environment:
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+  allow_failures:
+    - test_suite: "installs"
   matrix:
     - nodejs_version: 10
       test_suite: "simple"
