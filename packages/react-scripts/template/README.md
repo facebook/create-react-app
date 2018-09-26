@@ -49,7 +49,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Proxying API Requests in Development](#proxying-api-requests-in-development)
   - ["Invalid Host Header" Errors After Configuring Proxy](#invalid-host-header-errors-after-configuring-proxy)
   - [Configuring the Proxy Manually](#configuring-the-proxy-manually)
-  - [Configuring a WebSocket Proxy](#configuring-a-websocket-proxy)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
@@ -1095,92 +1094,36 @@ We don’t recommend this approach.
 
 ### Configuring the Proxy Manually
 
-> Note: this feature is available with `react-scripts@1.0.0` and higher.
+> Note: this feature is available with `react-scripts@2.0.0` and higher.
 
-If the `proxy` option is **not** flexible enough for you, you can specify an object in the following form (in `package.json`).<br>
-You may also specify any configuration value [`http-proxy-middleware`](https://github.com/chimurai/http-proxy-middleware#options) or [`http-proxy`](https://github.com/nodejitsu/node-http-proxy#options) supports.
+If the `proxy` option is **not** flexible enough for you, you can get direct access to the Express app instance and hook up your own middleware.
 
-```js
-{
-  // ...
-  "proxy": {
-    "/api": {
-      "target": "<url>",
-      "ws": true
-      // ...
-    }
-  }
-  // ...
-}
+First, install `http-proxy-middleware` using npm or Yarn:
+
+```bash
+$ npm install http-proxy-middleware --save
+$ # or
+$ yarn add http-proxy-middleware
 ```
 
-All requests matching this path will be proxies, no exceptions. This includes requests for `text/html`, which the standard `proxy` option does not proxy.
-
-If you need to specify multiple proxies, you may do so by specifying additional entries.
-Matches are regular expressions, so that you can use a regexp to match multiple paths.
+Next, create `src/setupProxy.js` and place the following contents in it:
 
 ```js
-{
+const proxy = require('http-proxy-middleware');
+
+module.exports = function(app) {
   // ...
-  "proxy": {
-    // Matches any request starting with /api
-    "/api": {
-      "target": "<url_1>",
-      "ws": true
-      // ...
-    },
-    // Matches any request starting with /foo
-    "/foo": {
-      "target": "<url_2>",
-      "ssl": true,
-      "pathRewrite": {
-        "^/foo": "/foo/beta"
-      }
-      // ...
-    },
-    // Matches /bar/abc.html but not /bar/sub/def.html
-    "/bar/[^/]*[.]html": {
-      "target": "<url_3>",
-      // ...
-    },
-    // Matches /baz/abc.html and /baz/sub/def.html
-    "/baz/.*/.*[.]html": {
-      "target": "<url_4>"
-      // ...
-    }
-  }
-  // ...
-}
+};
 ```
 
-### Configuring a WebSocket Proxy
-
-When setting up a WebSocket proxy, there are a some extra considerations to be aware of.
-
-If you’re using a WebSocket engine like [Socket.io](https://socket.io/), you must have a Socket.io server running that you can use as the proxy target. Socket.io will not work with a standard WebSocket server. Specifically, don't expect Socket.io to work with [the websocket.org echo test](http://websocket.org/echo.html).
-
-There’s some good documentation available for [setting up a Socket.io server](https://socket.io/docs/).
-
-Standard WebSockets **will** work with a standard WebSocket server as well as the websocket.org echo test. You can use libraries like [ws](https://github.com/websockets/ws) for the server, with [native WebSockets in the browser](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
-
-Either way, you can proxy WebSocket requests manually in `package.json`:
+You can now register proxies as you wish! Here's an example using the above `http-proxy-middleware`:
 
 ```js
-{
-  // ...
-  "proxy": {
-    "/socket": {
-      // Your compatible WebSocket server
-      "target": "ws://<socket_url>",
-      // Tell http-proxy-middleware that this is a WebSocket proxy.
-      // Also allows you to proxy WebSocket requests without an additional HTTP request
-      // https://github.com/chimurai/http-proxy-middleware#external-websocket-upgrade
-      "ws": true
-      // ...
-    }
-  }
-  // ...
-}
+const proxy = require('http-proxy-middleware');
+
+module.exports = function(app) {
+  app.use(proxy('/api', { target: 'http://localhost:5000/' }));
+};
 ```
 
 ## Using HTTPS in Development
