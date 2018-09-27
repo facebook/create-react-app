@@ -58,8 +58,6 @@ module.exports = function(api, opts) {
           targets: {
             node: 'current',
           },
-          // Do not transform modules to CJS
-          modules: false,
         },
       ],
       (isEnvProduction || isEnvDevelopment) && [
