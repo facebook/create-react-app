@@ -12,7 +12,7 @@
     "dependencies.js",
     "dev.js",
     "index.js",
-    "loader.js",
+    "webpack-overrides.js",
     "prod.js",
     "test.js"
   ],
