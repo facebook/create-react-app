@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@babel/core": "7.1.0",
-    "@babel/runtime": "7.0.0",
     "@svgr/webpack": "2.4.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",

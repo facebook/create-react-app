@@ -72,13 +72,6 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
   return loaders;
 };
 
-// This path will correctly resolve to our @babel/runtime when invoked
-// by babel-loader
-const relativeRuntimePath = path.relative(
-  path.dirname(require.resolve('babel-loader')),
-  path.dirname(require.resolve('@babel/runtime/package.json'))
-);
-
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
@@ -236,9 +229,7 @@ module.exports = {
                   presets: [
                     [
                       require.resolve('babel-preset-react-app'),
-                      {
-                        absoluteRuntime: relativeRuntimePath,
-                      },
+                      { absoluteRuntime: true },
                     ],
                   ],
                   // Make sure we have a unique cache identifier, erring on the
@@ -299,10 +290,7 @@ module.exports = {
                   presets: [
                     [
                       require.resolve('babel-preset-react-app/dependencies'),
-                      {
-                        helpers: true,
-                        absoluteRuntime: relativeRuntimePath,
-                      },
+                      { helpers: true, absoluteRuntime: true },
                     ],
                   ],
                   cacheDirectory: true,
