@@ -11,6 +11,7 @@ const formatWebpackMessages = require('../formatWebpackMessages');
 
 // TODO: test these messages by actually running a build so we can validate
 // webpack upgrades didn't break any of our massaging
+// https://github.com/facebook/create-react-app/pull/5137
 describe('formats various webpack errors correctly', () => {
   it('invalid js syntax (babel)', () => {
     const json = {
