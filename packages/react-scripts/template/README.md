@@ -515,6 +515,8 @@ If you are concerned about using Webpack-specific semantics, you can put all you
 
 This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format **[filename]\_[classname]\_\_[hash]**.
 
+> **Tip:** Should you want to preprocess a stylesheet with Sass then make sure to [follow the installation instructions](#adding-a-sass-stylesheet) and then change the stylesheet file extension as follows: *[name].module.scss* or *[name].module.sass*.
+
 An advantage of this is the ability to repeat the same classname within many CSS files without worrying about a clash.
 
 ### `Button.module.css`
@@ -584,6 +586,8 @@ This will allow you to do imports like
 @import 'styles/_colors.scss'; // assuming a styles directory under src/
 @import 'nprogress/nprogress'; // importing a css file from the nprogress node module
 ```
+
+> **Tip:** You can opt into using this feature with [CSS modules](#adding-a-css-modules-stylesheet) too!
 
 ## Post-Processing CSS
 
