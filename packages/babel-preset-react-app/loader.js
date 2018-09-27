@@ -6,7 +6,28 @@
  */
 'use strict';
 
-const loader = require('babel-loader');
-const overrides = require('./overrides');
+const crypto = require('crypto');
 
-module.exports = loader.custom(() => overrides);
+module.exports = function() {
+  return {
+    // This function transforms the Babel configuration on a per-file basis
+    config(config, { source }) {
+      // Babel Macros are notoriously hard to cache, so they shouldn't be
+      // https://github.com/babel/babel/issues/8497
+      // We naively detect macros using their package suffix and insert a random
+      // caller name, a valid option accepted by Babel, to compose a one-time
+      // cacheIdentifier for the file. We cannot tune the loader options on a per
+      // file basis.
+      if (source.indexOf('.macro') !== -1 || source.indexOf('/macro') !== -1) {
+        return {
+          ...config.options,
+          caller: {
+            name: 'babel-preset-react-app',
+            craInvalidationToken: crypto.randomBytes(32).toString('hex'),
+          },
+        };
+      }
+      return config.options;
+    },
+  };
+};
