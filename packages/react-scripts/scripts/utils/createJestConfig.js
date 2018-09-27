@@ -11,7 +11,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
 
-module.exports = (resolve, rootDir, isEjecting) => {
+module.exports = (resolve, rootDir) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup)
@@ -31,9 +31,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     testEnvironment: 'jsdom',
     testURL: 'http://localhost',
     transform: {
-      '^.+\\.(js|jsx)$': isEjecting
-        ? '<rootDir>/node_modules/babel-jest'
-        : resolve('config/jest/babelTransform.js'),
+      '^.+\\.(js|jsx)$': resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
     },
