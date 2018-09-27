@@ -6,6 +6,8 @@
  */
 'use strict';
 
+const path = require('path');
+
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
     value = defaultValue;
@@ -33,7 +35,21 @@ module.exports = function(api, opts) {
   var isEnvDevelopment = env === 'development';
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
+
   var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, false);
+  var useAbsoluteRuntime = validateBoolOption(
+    'absoluteRuntime',
+    opts.absoluteRuntime,
+    true
+  );
+
+  var absoluteRuntimePath = undefined;
+  if (useAbsoluteRuntime) {
+    absoluteRuntimePath = path.dirname(
+      require.resolve('@babel/runtime/package.json')
+    );
+  }
+
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
@@ -95,6 +111,10 @@ module.exports = function(api, opts) {
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.
           useESModules: isEnvDevelopment || isEnvProduction,
+          // Undocumented option that lets us encapsulate our runtime, ensuring
+          // the correct version is used
+          // https://github.com/babel/babel/blob/090c364a90fe73d36a30707fc612ce037bdbbb24/packages/babel-plugin-transform-runtime/src/index.js#L35-L42
+          absoluteRuntime: absoluteRuntimePath,
         },
       ],
       // Adds syntax support for import()
