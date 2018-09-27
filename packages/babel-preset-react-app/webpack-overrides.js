@@ -8,6 +8,8 @@
 
 const crypto = require('crypto');
 
+const macroCheck = new RegExp('[./]macro');
+
 module.exports = function() {
   return {
     // This function transforms the Babel configuration on a per-file basis
@@ -18,7 +20,7 @@ module.exports = function() {
       // to the caller, a valid option accepted by Babel, to compose a one-time
       // cacheIdentifier for the file. We cannot tune the loader options on a per
       // file basis.
-      if (/[./]macro/.test(source)) {
+      if (macroCheck.test(source)) {
         return Object.assign({}, config.options, {
           caller: Object.assign({}, config.options.caller, {
             craInvalidationToken: crypto.randomBytes(32).toString('hex'),
