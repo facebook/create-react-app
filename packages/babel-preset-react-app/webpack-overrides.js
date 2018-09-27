@@ -19,13 +19,11 @@ module.exports = function() {
       // cacheIdentifier for the file. We cannot tune the loader options on a per
       // file basis.
       if (source.indexOf('.macro') !== -1 || source.indexOf('/macro') !== -1) {
-        return {
-          ...config.options,
-          caller: {
-            name: 'babel-preset-react-app',
+        return Object.assign({}, config.options, {
+          caller: Object.assign({}, config.options.caller, {
             craInvalidationToken: crypto.randomBytes(32).toString('hex'),
-          },
-        };
+          }),
+        });
       }
       return config.options;
     },

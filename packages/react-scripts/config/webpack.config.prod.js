@@ -274,7 +274,9 @@ module.exports = {
                 // https://github.com/babel/babel-loader/pull/687
                 loader: require.resolve('babel-loader'),
                 options: {
-                  customize: require.resolve('babel-preset-react-app/loader'),
+                  customize: require.resolve(
+                    'babel-preset-react-app/webpack-overrides'
+                  ),
                   // @remove-on-eject-begin
                   babelrc: false,
                   configFile: false,
