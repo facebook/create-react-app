@@ -1,0 +1,8 @@
+{
+  "name": "builds-with-multiple-runtimes",
+  "description": "Tests that a build succeeds with multiple runtime versions",
+  "dependencies": {
+    "dva": "2.4.0",
+    "ky": "0.3.0"
+  }
+}
