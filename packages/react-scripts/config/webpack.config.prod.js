@@ -490,9 +490,14 @@ module.exports = {
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
     new WorkboxWebpackPlugin.GenerateSW({
-      exclude: [/\.map$/, /^(?:asset-)manifest.*\.js(?:on)?$/],
+      clientsClaim: true,
+      exclude: [/\.map$/, /asset-manifest\.json$/],
+      importWorkboxFrom: 'local',
       navigateFallback: '/index.html',
-      navigateFallbackWhitelist: [/^(?!\/__).*/], // fix for Firebase
+      navigateFallbackBlacklist: [
+        new RegExp('^/_'),
+        new RegExp('/[^/]+.[^/]+$'),
+      ],
     }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
