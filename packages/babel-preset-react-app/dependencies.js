@@ -97,14 +97,6 @@ module.exports = function(api, opts) {
           useESModules: isEnvDevelopment || isEnvProduction,
         },
       ],
-      // function* () { yield 42; yield 43; }
-      !isEnvTest && [
-        require('@babel/plugin-transform-regenerator').default,
-        {
-          // Async functions are converted to generators by @babel/preset-env
-          async: false,
-        },
-      ],
       // Adds syntax support for import()
       require('@babel/plugin-syntax-dynamic-import').default,
       isEnvTest &&
