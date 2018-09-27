@@ -277,7 +277,16 @@ module.exports = {
                   // @remove-on-eject-begin
                   babelrc: false,
                   configFile: false,
-                  presets: [require.resolve('babel-preset-react-app')],
+                  presets: [
+                    [
+                      require.resolve('babel-preset-react-app'),
+                      {
+                        absoluteRuntime: path.dirname(
+                          require.resolve('@babel/runtime/package.json')
+                        ),
+                      },
+                    ],
+                  ],
                   // Make sure we have a unique cache identifier, erring on the
                   // side of caution.
                   // We remove this when the user ejects because the default
@@ -329,7 +338,12 @@ module.exports = {
                   presets: [
                     [
                       require.resolve('babel-preset-react-app/dependencies'),
-                      { helpers: true },
+                      {
+                        helpers: true,
+                        absoluteRuntime: path.dirname(
+                          require.resolve('@babel/runtime/package.json')
+                        ),
+                      },
                     ],
                   ],
                   cacheDirectory: true,
