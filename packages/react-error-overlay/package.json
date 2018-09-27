@@ -32,7 +32,6 @@
   "devDependencies": {
     "@babel/code-frame": "7.0.0",
     "@babel/core": "7.1.0",
-    "@babel/runtime": "7.0.0",
     "anser": "1.4.7",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
