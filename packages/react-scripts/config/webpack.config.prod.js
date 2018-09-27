@@ -495,6 +495,7 @@ module.exports = {
       importWorkboxFrom: 'local',
       navigateFallback: publicUrl + '/index.html',
       navigateFallbackBlacklist: [
+        // Exclude URLs starting with /_, as they're likely an API call
         new RegExp('^/_'),
         new RegExp('/[^/]+.[^/]+$'),
       ],
