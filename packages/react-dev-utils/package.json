@@ -52,6 +52,7 @@
     "gzip-size": "5.0.0",
     "inquirer": "6.2.0",
     "is-root": "2.0.0",
+    "loader-utils": "1.1.0",
     "opn": "5.4.0",
     "pkg-up": "2.0.0",
     "react-error-overlay": "^5.0.0",
