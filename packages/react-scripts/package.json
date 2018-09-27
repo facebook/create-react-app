@@ -59,13 +59,13 @@
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
-    "sw-precache-webpack-plugin": "0.11.5",
     "terser-webpack-plugin": "1.1.0",
     "thread-loader": "1.2.0",
     "url-loader": "1.1.1",
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",
-    "webpack-manifest-plugin": "2.0.4"
+    "webpack-manifest-plugin": "2.0.4",
+    "workbox-webpack-plugin": "3.6.1"
   },
   "devDependencies": {
     "react": "^16.3.2",
