@@ -9,8 +9,41 @@
 
 const babelJest = require('babel-jest');
 
-module.exports = babelJest.createTransformer({
+const isDependency = filename => filename.indexOf('/node_modules/') !== -1;
+
+const transformer = babelJest.createTransformer({
   presets: [require.resolve('babel-preset-react-app')],
   babelrc: false,
   configFile: false,
 });
+const dependenciesTransformer = babelJest.createTransformer({
+  presets: [require.resolve('babel-preset-react-app/dependencies')],
+  babelrc: false,
+  configFile: false,
+});
+
+module.exports = {
+  canInstrument: true,
+  getCacheKey(fileData, filename, configString, options) {
+    if (isDependency(filename)) {
+      return dependenciesTransformer.getCacheKey(
+        fileData,
+        filename,
+        configString,
+        options
+      );
+    }
+    return transformer.getCacheKey(fileData, filename, configString, options);
+  },
+  process(src, filename, config, transformOptions) {
+    if (isDependency(filename)) {
+      return dependenciesTransformer.process(
+        src,
+        filename,
+        config,
+        transformOptions
+      );
+    }
+    return transformer.process(src, filename, config, transformOptions);
+  },
+};
