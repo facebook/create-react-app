@@ -493,7 +493,7 @@ module.exports = {
       clientsClaim: true,
       exclude: [/\.map$/, /asset-manifest\.json$/],
       importWorkboxFrom: 'local',
-      navigateFallback: '/index.html',
+      navigateFallback: publicUrl + '/index.html',
       navigateFallbackBlacklist: [
         new RegExp('^/_'),
         new RegExp('/[^/]+.[^/]+$'),
