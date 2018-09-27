@@ -28,7 +28,10 @@ class BuiltEmitter extends Component {
   }
 
   render() {
-    const { props: { feature }, handleReady } = this;
+    const {
+      props: { feature },
+      handleReady,
+    } = this;
     return (
       <div>
         {createElement(feature, {
@@ -86,6 +89,26 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
+      case 'scss-inclusion':
+        import('./features/webpack/ScssInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'scss-modules-inclusion':
+        import('./features/webpack/ScssModulesInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'sass-inclusion':
+        import('./features/webpack/SassInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'sass-modules-inclusion':
+        import('./features/webpack/SassModulesInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
       case 'custom-interpolation':
         import('./features/syntax/CustomInterpolation').then(f =>
           this.setFeature(f.default)
@@ -108,11 +131,6 @@ class App extends Component {
         break;
       case 'generators':
         import('./features/syntax/Generators').then(f =>
-          this.setFeature(f.default)
-        );
-        break;
-      case 'graphql-inclusion':
-        import('./features/webpack/GraphQLInclusion').then(f =>
           this.setFeature(f.default)
         );
         break;

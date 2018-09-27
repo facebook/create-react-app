@@ -57,7 +57,7 @@ packages/
 ### Package Descriptions
 #### [babel-preset-react-app](https://github.com/facebook/create-react-app/tree/master/packages/babel-preset-react-app)
 This package is a babel preset intended to be used with `react-scripts`.<br>
-It targets platforms that React is designed to support (IE 9+) and enables experimental features used heavily at Facebook.<br>
+It targets platforms that React is designed to support (IE 11+) and enables experimental features used heavily at Facebook.<br>
 This package is enabled by default for all `create-react-app` scaffolded applications.
 #### [create-react-app](https://github.com/facebook/create-react-app/tree/master/packages/create-react-app)
 The global CLI command code can be found in this directory, and shouldn't often be changed. It should run on Node 0.10+.

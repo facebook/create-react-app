@@ -39,12 +39,10 @@ module.exports = {
   },
 
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 2018,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
-      generators: true,
-      experimentalObjectRestSpread: true,
     },
   },
 
@@ -53,7 +51,7 @@ module.exports = {
     'array-callback-return': 'warn',
     'default-case': ['warn', { commentPattern: '^no default$' }],
     'dot-location': ['warn', 'property'],
-    eqeqeq: ['warn', 'allow-null'],
+    eqeqeq: ['warn', 'smart'],
     'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
@@ -131,7 +129,7 @@ module.exports = {
     'no-unused-vars': [
       'warn',
       {
-        args: 'all',
+        args: 'none',
         ignoreRestSiblings: true,
       },
     ],
@@ -186,6 +184,7 @@ module.exports = {
     'import/no-webpack-loader-syntax': 'error',
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
+    'react/forbid-foreign-prop-types': ['warn', { allowInPropTypes: true }],
     'react/jsx-no-comment-textnodes': 'warn',
     'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
     'react/jsx-no-target-blank': 'warn',

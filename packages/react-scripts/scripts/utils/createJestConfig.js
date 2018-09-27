@@ -8,63 +8,48 @@
 'use strict';
 
 const fs = require('fs');
-const path = require('path');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
 
-module.exports = (resolve, rootDir, srcRoots) => {
+module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup)
     ? '<rootDir>/src/setupTests.js'
     : undefined;
 
-  const toRelRootDir = f => '<rootDir>/' + path.relative(rootDir || '', f);
-
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
-    collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
-    setupFiles: [resolve('config/polyfills.js')],
+    collectCoverageFrom: ['src/**/*.{js,jsx}'],
+    setupFiles: ['react-app-polyfill/jsdom'],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
-      '**/__tests__/**/*.{js,jsx,mjs}',
-      '**/?(*.)(spec|test).{js,jsx,mjs}',
+      '<rootDir>/src/**/__tests__/**/*.{js,jsx}',
+      '<rootDir>/src/**/?(*.)(spec|test).{js,jsx}',
     ],
-    // where to search for files/tests
-    roots: srcRoots.map(toRelRootDir),
-    testEnvironment: 'node',
+    testEnvironment: 'jsdom',
     testURL: 'http://localhost',
     transform: {
-      '^.+\\.(js|jsx|mjs)$': resolve('config/jest/babelTransform.js'),
+      '^.+\\.(js|jsx)$': isEjecting
+        ? '<rootDir>/node_modules/babel-jest'
+        : resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^.+\\.(graphql)$': resolve('config/jest/graphqlTransform.js'),
-      '^(?!.*\\.(js|jsx|mjs|css|json|graphql)$)': resolve(
-        'config/jest/fileTransform.js'
-      ),
+      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
     },
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$',
-      '^.+\\.module\\.css$',
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$',
+      '^.+\\.module\\.(css|sass|scss)$',
     ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
-      '^.+\\.module\\.css$': 'identity-obj-proxy',
+      '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },
-    moduleFileExtensions: [
-      'web.js',
-      'mjs',
-      'js',
-      'json',
-      'web.jsx',
-      'jsx',
-      'node',
-    ],
+    moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'node'],
   };
   if (rootDir) {
     config.rootDir = rootDir;
   }
-
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
     'collectCoverageFrom',
