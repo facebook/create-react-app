@@ -37,9 +37,15 @@ module.exports = function(api, opts) {
   var isEnvTest = env === 'test';
 
   var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, false);
-  var absoluteRuntime = opts.absoluteRuntime;
-  if (absoluteRuntime === true) {
-    absoluteRuntime = path.dirname(
+  var useAbsoluteRuntime = validateBoolOption(
+    'absoluteRuntime',
+    opts.absoluteRuntime,
+    true
+  );
+
+  var absoluteRuntimePath = undefined;
+  if (useAbsoluteRuntime) {
+    absoluteRuntimePath = path.dirname(
       require.resolve('@babel/runtime/package.json')
     );
   }
@@ -108,7 +114,7 @@ module.exports = function(api, opts) {
           // Undocumented option that lets us encapsulate our runtime, ensuring
           // the correct version is used
           // https://github.com/babel/babel/blob/090c364a90fe73d36a30707fc612ce037bdbbb24/packages/babel-plugin-transform-runtime/src/index.js#L35-L42
-          absoluteRuntime,
+          absoluteRuntime: absoluteRuntimePath,
         },
       ],
       // Adds syntax support for import()
