@@ -659,6 +659,26 @@ Please be advised that this is also a custom feature of Webpack.
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).<br>
 An alternative way of handling static assets is described in the next section.
 
+### Adding SVGs
+
+One way to add SVG files was described in the section above. However `react-scripts@2.0.0` added an ability to import SVGs as React components through the fantastic [@svgr/webpack](https://github.com/smooth-code/svgr/tree/master/packages/webpack). You can use either of the two approaches. In your code it would look like:
+
+```js
+import logoUrl, { ReactComponent as Logo } from './logo.svg'
+
+console.log(logoUrl); // /logo.84287d09.svg
+
+const App = () => (
+  <div>
+    {/* logoUrl is the URL of your SVG file */}
+    <img src={logoUrl} alt="Logo" />
+
+    {/* Logo is an actual React component */}
+    <Logo />
+  </div>
+)
+```
+
 ## Using the `public` Folder
 
 > Note: this feature is available with `react-scripts@0.5.0` and higher.
