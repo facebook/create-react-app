@@ -18,7 +18,7 @@ module.exports = function() {
       // to the caller, a valid option accepted by Babel, to compose a one-time
       // cacheIdentifier for the file. We cannot tune the loader options on a per
       // file basis.
-      if (source.indexOf('.macro') !== -1 || source.indexOf('/macro') !== -1) {
+      if (/[./]macro/.test(source)) {
         return Object.assign({}, config.options, {
           caller: Object.assign({}, config.options.caller, {
             craInvalidationToken: crypto.randomBytes(32).toString('hex'),
