@@ -497,9 +497,9 @@ module.exports = {
       navigateFallbackBlacklist: [
         // Exclude URLs starting with /_, as they're likely an API call
         new RegExp('^/_'),
-        // Exclude URLs not ending with a /, as they're likely a resource from
-        // the public/ directory
-        new RegExp('/[^/]+.[^/]+$'),
+        // Exclude URLs containing a dot, as they're likely a resource in
+        // public/ and not a SPA route
+        new RegExp('/[^/]+[.][^/]+$'),
       ],
     }),
   ],
