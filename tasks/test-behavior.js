@@ -31,6 +31,8 @@ function startApp({ root }) {
   if (!/Compiled successfully/.test(output)) {
     throw new Error(output);
   }
+
+  console.log('\t = application started: ', output);
 }
 
 function buildApp({ root }) {
@@ -41,6 +43,8 @@ function buildApp({ root }) {
   if (!/Compiled successfully/.test(output)) {
     throw new Error(output);
   }
+
+  console.log('\t = application built: ', output);
 }
 
 console.log(`=> checking ${fixtures.length} fixtures`);
