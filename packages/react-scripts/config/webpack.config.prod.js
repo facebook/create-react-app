@@ -158,7 +158,10 @@ module.exports = {
         sourceMap: shouldUseSourceMap,
       }),
       new OptimizeCSSAssetsPlugin({
-        cssProcessorOptions: { parser: safePostCssParser },
+        cssProcessorOptions: {
+          parser: safePostCssParser,
+          map: { inline: false, annotation: true },
+        },
       }),
     ],
     // Automatically split vendor and commons
