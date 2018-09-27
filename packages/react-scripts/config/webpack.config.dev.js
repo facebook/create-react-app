@@ -230,8 +230,11 @@ module.exports = {
                     [
                       require.resolve('babel-preset-react-app'),
                       {
-                        absoluteRuntime: path.dirname(
-                          require.resolve('@babel/runtime/package.json')
+                        absoluteRuntime: path.relative(
+                          path.dirname(require.resolve('babel-loader')),
+                          path.dirname(
+                            require.resolve('@babel/runtime/package.json')
+                          )
                         ),
                       },
                     ],
@@ -296,8 +299,11 @@ module.exports = {
                       require.resolve('babel-preset-react-app/dependencies'),
                       {
                         helpers: true,
-                        absoluteRuntime: path.dirname(
-                          require.resolve('@babel/runtime/package.json')
+                        absoluteRuntime: path.relative(
+                          path.dirname(require.resolve('babel-loader')),
+                          path.dirname(
+                            require.resolve('@babel/runtime/package.json')
+                          )
                         ),
                       },
                     ],
