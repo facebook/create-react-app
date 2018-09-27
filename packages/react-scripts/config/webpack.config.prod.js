@@ -499,7 +499,7 @@ module.exports = {
         new RegExp('^/_'),
         // Exclude URLs containing a dot, as they're likely a resource in
         // public/ and not a SPA route
-        new RegExp('/[^/]+[.][^/]+$'),
+        new RegExp('/[^/]+\\.[^/]+$'),
       ],
     }),
   ],
