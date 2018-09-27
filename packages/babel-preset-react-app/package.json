@@ -12,8 +12,7 @@
     "dependencies.js",
     "dev.js",
     "index.js",
-    "loader.js",
-    "overrides.js",
+    "webpack-overrides.js",
     "prod.js",
     "test.js"
   ],
@@ -31,7 +30,7 @@
     "@babel/preset-flow": "7.0.0",
     "@babel/preset-react": "7.0.0",
     "@babel/runtime": "7.0.0",
-    "babel-loader": "8.0.2",
+    "babel-loader": "8.0.4",
     "babel-plugin-macros": "2.4.2",
     "babel-plugin-transform-dynamic-import": "2.1.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.18"
