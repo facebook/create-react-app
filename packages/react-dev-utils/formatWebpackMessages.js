@@ -32,6 +32,11 @@ function formatMessage(message, isError) {
     return message.indexOf('Thread Loader (Worker') === -1;
   });
 
+  // Add empty line for errors from third-party webpack plugins
+  if (lines.length < 2) {
+    lines[1] = '';
+  }
+
   // Strip `ModuleWarning` head off message before parsing (because of ESLint)
   // https://github.com/webpack/webpack/blob/c77030573de96b8293c69dd396492f8e2d46561e/lib/ModuleWarning.js
   var moduleWarningPrefix = 'Module Warning: ';
