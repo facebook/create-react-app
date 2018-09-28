@@ -92,20 +92,8 @@ git clean -df
 ./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
-# Now that we have published them, create a clean app folder and install them.
+# Now that we have published them, run all tests as if they were released.
 # ******************************************************************************
-
-# Install the app in a temporary location
-cd $temp_app_path
-npx create-react-app test-behavior
-
-# ******************************************************************************
-# Now that we used create-react-app to create an app depending on react-scripts,
-# let's run through all of our behavior tests.
-# ******************************************************************************
-
-# Enter the app directory
-cd "$temp_app_path/test-behavior"
 
 # Smoke tests
 ./node_modules/.bin/jest --config fixtures/smoke/jest.config.js
