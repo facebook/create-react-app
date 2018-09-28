@@ -284,10 +284,10 @@ module.exports = {
                 // https://github.com/babel/babel-loader/pull/687
                 loader: require.resolve('babel-loader'),
                 options: {
+                  // @remove-on-eject-begin
                   customize: require.resolve(
                     'babel-preset-react-app/webpack-overrides'
                   ),
-                  // @remove-on-eject-begin
                   babelrc: false,
                   configFile: false,
                   presets: [require.resolve('babel-preset-react-app')],
