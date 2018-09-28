@@ -76,7 +76,7 @@ yarn
 
 # Start local registry
 tmp_registry_log=`mktemp`
-nohup npx verdaccio@3.2.0 -c tasks/verdaccio.yaml &>$tmp_registry_log &
+(cd && nohup npx verdaccio@3.8.2 -c "$root_path"/tasks/verdaccio.yaml &>$tmp_registry_log &)
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
@@ -92,22 +92,14 @@ git clean -df
 ./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
 # ******************************************************************************
-# Now that we have published them, create a clean app folder and install them.
+# Now that we have published them, run all tests as if they were released.
 # ******************************************************************************
 
-# Install the app in a temporary location
-cd $temp_app_path
-npx create-react-app test-behavior
+# Smoke tests
+./node_modules/.bin/jest --config fixtures/smoke/jest.config.js
 
-# ******************************************************************************
-# Now that we used create-react-app to create an app depending on react-scripts,
-# let's run through all of our behavior tests.
-# ******************************************************************************
-
-# Enter the app directory
-cd "$temp_app_path/test-behavior"
-
-node "$root_path"/tasks/test-behavior.js "$temp_app_path/test-behavior"
+# Output tests
+./node_modules/.bin/jest --config fixtures/output/jest.config.js
 
 # Cleanup
 cleanup
