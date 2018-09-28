@@ -324,6 +324,12 @@ module.exports = {
                         },
                       },
                     ],
+                    [
+                      require.resolve('babel-plugin-react-remove-properties'),
+                      {
+                        properties: ['data-cy', 'data-test', 'data-testid']
+                      },
+                    ],
                   ],
                   cacheDirectory: true,
                   // Save disk space when time isn't as important

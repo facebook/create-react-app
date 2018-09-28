@@ -1,8 +1,8 @@
 {
-  "name": "react-scripts",
+  "name": "cypress-dot-io-attribute-removal-react-scripts",
   "version": "2.0.1",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebook/create-react-app",
+  "description": "Configuration and scripts for Create React App, including removal of test attributes like data-test.",
+  "repository": "colinyoung/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
@@ -28,6 +28,7 @@
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.4",
     "babel-plugin-named-asset-import": "^0.2.0",
+    "babel-plugin-react-remove-properties": "^0.2.5",
     "babel-preset-react-app": "^5.0.0",
     "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
