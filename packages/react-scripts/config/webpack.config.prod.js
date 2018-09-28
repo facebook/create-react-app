@@ -280,6 +280,10 @@ module.exports = {
               {
                 loader: require.resolve('thread-loader'),
                 options: {
+                  // Forwards the process args (such as --require) to the child
+                  // workers. Ensures that the worker operates in the same kind
+                  // of environment than the current one (important in case a
+                  // preloaded script modifies the env)
                   workerNodeArgs: process.execArgv,
                 },
               },
@@ -340,6 +344,10 @@ module.exports = {
               {
                 loader: require.resolve('thread-loader'),
                 options: {
+                  // Forwards the process args (such as --require) to the child
+                  // workers. Ensures that the worker operates in the same kind
+                  // of environment than the current one (important in case a
+                  // preloaded script modifies the env)
                   workerNodeArgs: process.execArgv,
                 },
               },
