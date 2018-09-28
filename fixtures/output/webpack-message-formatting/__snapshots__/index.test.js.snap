@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`webpack message formatting formats babel syntax error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+[31mFailed to compile.
+[39m
+[7m./src/App.js[27m
+Syntax error: Unterminated JSX contents (8:12)
+
+[0m [90m  6 | [39m      [33m<[39m[33mdiv[39m[33m>[39m
+ [90m  7 | [39m        [33m<[39m[33mspan[39m[33m>[39m
+[31m[1m>[22m[39m[90m  8 | [39m      [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m    | [39m            [31m[1m^[22m[39m
+ [90m  9 | [39m    )[33m;[39m
+ [90m 10 | [39m  }
+ [90m 11 | [39m}[0m
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats css syntax error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+[31mFailed to compile.
+[39m
+[7m./src/AppCss.css[27m
+Syntax Error: (3:2) Unexpected }
+
+ [90m 1 | [39m[33m.App[39m [33m{[39m
+ [90m 2 | [39m  color[33m:[39m red[33m;[39m
+[31m[1m>[22m[39m[90m 3 | [39m[33m}[39m[33m}[39m
+ [90m   | [39m [31m[1m^[22m[39m
+ [90m 4 | [39m
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats eslint error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+[31mFailed to compile.
+[39m
+[7m./src/App.js[27m
+  [1mLine 4:[22m  'b' is not defined  [31m[4mno-undef[24m[39m
+
+Search for the [4m[31mkeywords[39m[24m to learn more about each error.
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats eslint warning 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "Creating an optimized production build...
+[33mCompiled with warnings.
+[39m
+[7m./src/App.js[27m
+  [1mLine 3:[22m  'foo' is defined but never used  [33m[4mno-unused-vars[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+",
+}
+`;
+
+exports[`webpack message formatting formats missing package 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+[31mFailed to compile.
+[39m
+Module not found: Error: Can't resolve 'unknown-package' in '/private/var/folders/c3/vytj6_h56b77f_g72smntm3m0000gn/T/bf26e1d3700ad14275f6eefb5e4417c1/src'
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats unknown export 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+[31mFailed to compile.
+[39m
+[7m./src/App.js[27m
+1:1677-1680 './AppUnknownExport' does not contain an export named 'bar'.
+
+
+",
+  "stdout": "",
+}
+`;

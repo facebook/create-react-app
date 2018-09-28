@@ -98,5 +98,8 @@ git clean -df
 # Smoke tests
 ./node_modules/.bin/jest --config fixtures/smoke/jest.config.js
 
+# Output tests
+./node_modules/.bin/jest --config fixtures/output/jest.config.js
+
 # Cleanup
 cleanup

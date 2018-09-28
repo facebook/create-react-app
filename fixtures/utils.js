@@ -42,4 +42,28 @@ async function isSuccessfulProduction({ directory }) {
   }
 }
 
-module.exports = { bootstrap, isSuccessfulDevelopment, isSuccessfulProduction };
+async function getOutputProduction({ directory, env = {} }) {
+  try {
+    const { stdout, stderr } = await execa(
+      './node_modules/.bin/react-scripts',
+      ['build'],
+      { cwd: directory, env: Object.assign({}, { FORCE_COLOR: '1' }, env) }
+    );
+    return { stdout, stderr };
+  } catch (err) {
+    return {
+      stdout: '',
+      stderr: err.message
+        .split('\n')
+        .slice(2)
+        .join('\n'),
+    };
+  }
+}
+
+module.exports = {
+  bootstrap,
+  isSuccessfulDevelopment,
+  isSuccessfulProduction,
+  getOutputProduction,
+};

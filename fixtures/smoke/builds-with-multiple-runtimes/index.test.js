@@ -2,7 +2,7 @@ const {
   bootstrap,
   isSuccessfulDevelopment,
   isSuccessfulProduction,
-} = require('../utils');
+} = require('../../utils');
 beforeEach(async () => {
   await bootstrap({ directory: global.testDirectory, template: __dirname });
 });
