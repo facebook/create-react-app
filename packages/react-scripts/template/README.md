@@ -118,7 +118,7 @@ When you run `create-react-app`, it always creates the project with the latest v
 
 To update an existing project to a new version of `react-scripts`, [open the changelog](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md), find the version you’re currently on (check `package.json` in this folder if you’re not sure), and apply the migration instructions for the newer versions.
 
-In most cases bumping the `react-scripts` version in `package.json` and running `npm install` in this folder should be enough, but it’s good to consult the [changelog](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md) for potential breaking changes.
+In most cases bumping the `react-scripts` version in `package.json` and running `npm install` (or `yarn install`) in this folder should be enough, but it’s good to consult the [changelog](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md) for potential breaking changes.
 
 We commit to keeping the breaking changes minimal so you can upgrade `react-scripts` painlessly.
 
@@ -366,20 +366,20 @@ If you use a custom server for your app in production and want to modify the tit
 The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
 
 ```sh
-npm install --save react-router
+npm install --save react-router-dom
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add react-router
+yarn add react-router-dom
 ```
 
-This works for any library, not just `react-router`.
+This works for any library, not just `react-router-dom`.
 
 ## Importing a Component
 
-This project setup supports ES6 modules thanks to Babel.<br>
+This project setup supports ES6 modules thanks to Webpack.<br>
 While you can still use `require()` and `module.exports`, we encourage you to use [`import` and `export`](http://exploringjs.com/es6/ch_modules.html) instead.
 
 For example:
@@ -513,9 +513,11 @@ If you are concerned about using Webpack-specific semantics, you can put all you
 
 ## Adding a CSS Modules stylesheet
 
+> Note: this feature is available with `react-scripts@2.0.0` and higher.
+
 This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the **[name].module.css** file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format **[filename]\_[classname]\_\_[hash]**.
 
-> **Tip:** Should you want to preprocess a stylesheet with Sass then make sure to [follow the installation instructions](#adding-a-sass-stylesheet) and then change the stylesheet file extension as follows: *[name].module.scss* or *[name].module.sass*.
+> **Tip:** Should you want to preprocess a stylesheet with Sass then make sure to [follow the installation instructions](#adding-a-sass-stylesheet) and then change the stylesheet file extension as follows: _[name].module.scss_ or _[name].module.sass_.
 
 An advantage of this is the ability to repeat the same classname within many CSS files without worrying about a clash.
 
@@ -563,6 +565,8 @@ No clashes from other `.error` class names
 
 ## Adding a Sass stylesheet
 
+> Note: this feature is available with `react-scripts@2.0.0` and higher.
+
 Generally, we recommend that you don’t reuse the same CSS classes across different components. For example, instead of using a `.Button` CSS class in `<AcceptButton>` and `<RejectButton>` components, we recommend creating a `<Button>` component with its own `.Button` styles, that both `<AcceptButton>` and `<RejectButton>` can render (but [not inherit](https://facebook.github.io/react/docs/composition-vs-inheritance.html)).
 
 Following this rule often makes CSS preprocessors less useful, as features like mixins and nesting are replaced by component composition. You can, however, integrate a CSS preprocessor if you find it valuable.
@@ -584,7 +588,7 @@ This will allow you to do imports like
 
 ```scss
 @import 'styles/_colors.scss'; // assuming a styles directory under src/
-@import 'nprogress/nprogress'; // importing a css file from the nprogress node module
+@import '~nprogress/nprogress'; // importing a css file from the nprogress node module
 ```
 
 > **Tip:** You can opt into using this feature with [CSS modules](#adding-a-css-modules-stylesheet) too!
@@ -805,7 +809,7 @@ To learn more about Flow, check out [its documentation](https://flow.org/).
 
 ## Adding a Router
 
-Create React App doesn't prescribe a specific routing solution, but [React Router](https://reacttraining.com/react-router/) is the most popular one.
+Create React App doesn't prescribe a specific routing solution, but [React Router](https://reacttraining.com/react-router/web/) is the most popular one.
 
 To add it, run:
 
@@ -1103,7 +1107,7 @@ We don’t recommend this approach.
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.
 
-If the `proxy` option is **not** flexible enough for you, you can get direct access to the Express app instance and hook up your own middleware.
+If the `proxy` option is **not** flexible enough for you, you can get direct access to the Express app instance and hook up your own proxy middleware.
 
 First, install `http-proxy-middleware` using npm or Yarn:
 
@@ -1206,7 +1210,9 @@ Then, on the server, you can replace `__SERVER_DATA__` with a JSON of real data 
 
 ## Running Tests
 
-> Note: this feature is available with `react-scripts@0.3.0` and higher.<br> >[Read the migration guide to learn how to enable it in older projects!](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030)
+> Note: this feature is available with `react-scripts@0.3.0` and higher.<br>
+
+> [Read the migration guide to learn how to enable it in older projects!](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030)
 
 Create React App uses [Jest](https://facebook.github.io/jest/) as its test runner. To prepare for this integration, we did a [major revamp](https://facebook.github.io/jest/blog/2016/09/01/jest-15.html) of Jest so if you heard bad things about it years ago, give it another try.
 
