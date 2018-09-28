@@ -1,5 +1,6 @@
 const execa = require('execa');
 const fs = require('fs-extra');
+const getPort = require('get-port');
 const path = require('path');
 const os = require('os');
 
@@ -18,7 +19,7 @@ async function isSuccessfulDevelopment({ directory }) {
     ['start', '--smoke-test'],
     {
       cwd: directory,
-      env: { BROWSER: 'none' },
+      env: { BROWSER: 'none', PORT: await getPort() },
     }
   );
 
