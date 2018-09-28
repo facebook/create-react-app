@@ -10,7 +10,7 @@ async function bootstrap({ directory, template }) {
       fs.copy(path.join(template, file), path.join(directory, file))
     )
   );
-  await execa('yarnpkg', ['install'], { cwd: directory });
+  await execa('yarnpkg', ['install', '--mutex', 'network'], { cwd: directory });
 }
 
 async function isSuccessfulDevelopment({ directory }) {
