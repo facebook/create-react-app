@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const getPort = require('get-port');
 const path = require('path');
 const os = require('os');
+const stripAnsi = require('strip-ansi');
 
 async function bootstrap({ directory, template }) {
   await Promise.all(
@@ -47,16 +48,21 @@ async function getOutputProduction({ directory, env = {} }) {
     const { stdout, stderr } = await execa(
       './node_modules/.bin/react-scripts',
       ['build'],
-      { cwd: directory, env: Object.assign({}, { FORCE_COLOR: '1' }, env) }
+      {
+        cwd: directory,
+        env: Object.assign({}, { CI: 'false', FORCE_COLOR: '0' }, env),
+      }
     );
-    return { stdout, stderr };
+    return { stdout: stripAnsi(stdout), stderr: stripAnsi(stderr) };
   } catch (err) {
     return {
       stdout: '',
-      stderr: err.message
-        .split('\n')
-        .slice(2)
-        .join('\n'),
+      stderr: stripAnsi(
+        err.message
+          .split(os.EOL)
+          .slice(2)
+          .join(os.EOL)
+      ),
     };
   }
 }
