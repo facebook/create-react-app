@@ -277,7 +277,16 @@ module.exports = {
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
-              require.resolve('thread-loader'),
+              {
+                loader: require.resolve('thread-loader'),
+                options: {
+                  // Forwards the process args (such as --require) to the child
+                  // workers. Ensures that the worker operates in the same kind
+                  // of environment than the current one (important in case a
+                  // preloaded script modifies the env)
+                  workerNodeArgs: process.execArgv,
+                },
+              },
               {
                 // We need to use our own loader until `babel-loader` supports
                 // customization
@@ -332,7 +341,16 @@ module.exports = {
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
-              require.resolve('thread-loader'),
+              {
+                loader: require.resolve('thread-loader'),
+                options: {
+                  // Forwards the process args (such as --require) to the child
+                  // workers. Ensures that the worker operates in the same kind
+                  // of environment than the current one (important in case a
+                  // preloaded script modifies the env)
+                  workerNodeArgs: process.execArgv,
+                },
+              },
               {
                 loader: require.resolve('babel-loader'),
                 options: {
