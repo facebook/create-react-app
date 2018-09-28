@@ -277,7 +277,12 @@ module.exports = {
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
-              require.resolve('thread-loader'),
+              {
+                loader: require.resolve('thread-loader'),
+                options: {
+                  workerNodeArgs: process.execArgv,
+                },
+              },
               {
                 // We need to use our own loader until `babel-loader` supports
                 // customization
@@ -332,7 +337,12 @@ module.exports = {
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
-              require.resolve('thread-loader'),
+              {
+                loader: require.resolve('thread-loader'),
+                options: {
+                  workerNodeArgs: process.execArgv,
+                },
+              },
               {
                 loader: require.resolve('babel-loader'),
                 options: {
