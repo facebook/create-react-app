@@ -245,6 +245,16 @@ module.exports = {
         include: paths.appSrc,
       },
       {
+        // `mjs` support is still in its infancy in the ecosystem, so we don't
+        // support it.
+        // Modules who define their `browser` or `module` key as `mjs` force
+        // the use of this extension, so we need to tell webpack to fall back
+        // to auto mode (ES Module interop, allows ESM to import CommonJS).
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      },
+      {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
