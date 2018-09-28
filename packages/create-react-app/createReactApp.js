@@ -540,6 +540,11 @@ function checkNodeVersion(packageName) {
     packageName,
     'package.json'
   );
+
+  if (!fs.existsSync(packageJsonPath)) {
+    return;
+  }
+
   const packageJson = require(packageJsonPath);
   if (!packageJson.engines || !packageJson.engines.node) {
     return;
