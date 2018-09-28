@@ -4,5 +4,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest"
-  }
+  },
+  "browserslist": [
+    ">0.2%"
+  ]
 }
