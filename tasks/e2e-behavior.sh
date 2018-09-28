@@ -76,7 +76,7 @@ yarn
 
 # Start local registry
 tmp_registry_log=`mktemp`
-nohup npx verdaccio@3.2.0 -c tasks/verdaccio.yaml &>$tmp_registry_log &
+nohup npx verdaccio@3.8.2 -c tasks/verdaccio.yaml &>$tmp_registry_log &
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
@@ -107,7 +107,8 @@ npx create-react-app test-behavior
 # Enter the app directory
 cd "$temp_app_path/test-behavior"
 
-node "$root_path"/tasks/test-behavior.js "$temp_app_path/test-behavior"
+# Smoke tests
+./node_modules/.bin/jest --config fixtures/smoke/jest.config.js
 
 # Cleanup
 cleanup
