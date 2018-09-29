@@ -15,6 +15,14 @@ var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
 var gzipSize = require('gzip-size').sync;
 
+function canReadAsset(asset) {
+  return (
+    /\.(js|css)$/.test(asset.name) &&
+    !/service-worker\.js/.test(asset.name) &&
+    !/precache-manifest\.[0-9a-f]+\.js/.test(asset.name)
+  );
+}
+
 // Prints a detailed summary of build files.
 function printFileSizesAfterBuild(
   webpackStats,
@@ -29,7 +37,7 @@ function printFileSizesAfterBuild(
     .map(stats =>
       stats
         .toJson({ all: false, assets: true })
-        .assets.filter(asset => /\.(js|css)$/.test(asset.name))
+        .assets.filter(canReadAsset)
         .map(asset => {
           var fileContents = fs.readFileSync(path.join(root, asset.name));
           var size = gzipSize(fileContents);
@@ -127,14 +135,12 @@ function measureFileSizesBeforeBuild(buildFolder) {
     recursive(buildFolder, (err, fileNames) => {
       var sizes;
       if (!err && fileNames) {
-        sizes = fileNames
-          .filter(fileName => /\.(js|css)$/.test(fileName))
-          .reduce((memo, fileName) => {
-            var contents = fs.readFileSync(fileName);
-            var key = removeFileNameHash(buildFolder, fileName);
-            memo[key] = gzipSize(contents);
-            return memo;
-          }, {});
+        sizes = fileNames.filter(canReadAsset).reduce((memo, fileName) => {
+          var contents = fs.readFileSync(fileName);
+          var key = removeFileNameHash(buildFolder, fileName);
+          memo[key] = gzipSize(contents);
+          return memo;
+        }, {});
       }
       resolve({
         root: buildFolder,
