@@ -340,19 +340,25 @@ function run(
         () => packageName
       );
     })
-    .then(packageName => {
+    .then(async packageName => {
       checkNodeVersion(packageName);
       setCaretRangeForRuntimeDeps(packageName);
 
-      const scriptsPath = path.resolve(
-        process.cwd(),
-        'node_modules',
-        packageName,
-        'scripts',
-        'init.js'
+      const pnpPath = path.resolve(process.cwd(), '.pnp.js');
+
+      const nodeArgs = fs.existsSync(pnpPath) ? ['--require', pnpPath] : [];
+
+      await executeNodeScript(
+        {
+          cwd: process.cwd(),
+          args: nodeArgs,
+        },
+        [root, appName, verbose, originalDirectory, template],
+        `
+        var init = require('${packageName}/scripts/init.js');
+        init.apply(null, JSON.parse(process.argv[1]));
+      `
       );
-      const init = require(scriptsPath);
-      init(root, appName, verbose, originalDirectory, template);
 
       if (version === 'react-scripts@0.9.x') {
         console.log(
@@ -796,6 +802,26 @@ function checkIfOnline(useYarn) {
       } else {
         resolve(err == null);
       }
+    });
+  });
+}
+
+function executeNodeScript({ cwd, args }, data, source) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(
+      process.execPath,
+      [...args, '-e', source, '--', JSON.stringify(data)],
+      { stdio: 'inherit' }
+    );
+
+    child.on('close', code => {
+      if (code !== 0) {
+        reject({
+          command: `${command} ${args.join(' ')}`,
+        });
+        return;
+      }
+      resolve();
     });
   });
 }
