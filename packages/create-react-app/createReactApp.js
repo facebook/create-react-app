@@ -811,13 +811,13 @@ function executeNodeScript({ cwd, args }, data, source) {
     const child = spawn(
       process.execPath,
       [...args, '-e', source, '--', JSON.stringify(data)],
-      { stdio: 'inherit' }
+      { cwd, stdio: 'inherit' }
     );
 
     child.on('close', code => {
       if (code !== 0) {
         reject({
-          command: `${command} ${args.join(' ')}`,
+          command: `node ${args.join(' ')}`,
         });
         return;
       }
