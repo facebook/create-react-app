@@ -17,7 +17,7 @@ process.on('unhandledRejection', err => {
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
-const execSync = require('child_process').execSync;
+const { execSync } = require('child_process');
 const spawn = require('react-dev-utils/crossSpawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
@@ -243,9 +243,7 @@ module.exports = (appPath, appName, verbose, originalDirectory, template) => {
   console.log('Happy hacking!');
 };
 
-function isReactInstalled(appPackage) {
-  const dependencies = appPackage.dependencies || {};
-
+function isReactInstalled({ dependencies = {} }) {
   return (
     typeof dependencies.react !== 'undefined' &&
     typeof dependencies['react-dom'] !== 'undefined'

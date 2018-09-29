@@ -16,7 +16,7 @@ process.on('unhandledRejection', err => {
 
 const fs = require('fs-extra');
 const path = require('path');
-const execSync = require('child_process').execSync;
+const { execSync } = require('child_process');
 const chalk = require('chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
@@ -24,8 +24,7 @@ const inquirer = require('react-dev-utils/inquirer');
 const spawnSync = require('react-dev-utils/crossSpawn').sync;
 const os = require('os');
 
-const green = chalk.green;
-const cyan = chalk.cyan;
+const { green, cyan } = chalk;
 
 function getGitStatus() {
   try {
@@ -72,8 +71,7 @@ inquirer
 
     console.log('Ejecting...');
 
-    const ownPath = paths.ownPath;
-    const appPath = paths.appPath;
+    const { ownPath, appPath } = paths;
 
     function verifyAbsent(file) {
       if (fs.existsSync(path.join(appPath, file))) {
