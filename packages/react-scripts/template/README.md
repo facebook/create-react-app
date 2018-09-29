@@ -2226,8 +2226,8 @@ If, when deploying, you get `/dev/tty: No such a device or address` or a similar
 
 If, when deploying, you get `Cannot read property 'email' of null`, try the following:
 
-1. `git config --global user.name <your_name>`
-2. `git config --global user.email <your_email>`
+1. `git config --global user.name '<your_name>'`
+2. `git config --global user.email '<your_email>'`
 3. Try `npm run deploy` again
 
 ### [Heroku](https://www.heroku.com/)
