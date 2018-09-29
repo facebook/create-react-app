@@ -19,7 +19,7 @@ describe('webpack message formatting', () => {
     semaphore.release();
   });
 
-  it('formats babel syntax error', async () => {
+  xit('formats babel syntax error', async () => {
     fs.copySync(
       path.join(__dirname, 'src', 'AppBabel.js'),
       path.join(testDirectory, 'src', 'App.js')
