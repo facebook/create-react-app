@@ -21,13 +21,12 @@ const envPublicUrl = process.env.PUBLIC_URL;
 
 function ensureSlash(inputPath, needsSlash) {
   const hasSlash = inputPath.endsWith('/');
-  if (hasSlash && !needsSlash) {
-    return inputPath.slice(0, -1);
-  } else if (!hasSlash && needsSlash) {
-    return `${inputPath}/`;
-  } else {
-    return inputPath;
-  }
+
+  return hasSlash && !needsSlash
+    ? inputPath.slice(0, -1)
+    : !hasSlash && needsSlash
+      ? `${inputPath}/`
+      : inputPath;
 }
 
 const getPublicUrl = appPackageJson =>
