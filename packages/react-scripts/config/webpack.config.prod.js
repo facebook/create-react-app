@@ -57,10 +57,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
   const loaders = [
     {
       loader: MiniCssExtractPlugin.loader,
-      options: Object.assign(
-        {},
-        shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined
-      ),
+      options: shouldUseRelativeAssetPaths ? { publicPath: '../../' } : {},
     },
     {
       loader: require.resolve('css-loader'),
