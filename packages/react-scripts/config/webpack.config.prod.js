@@ -283,111 +283,79 @@ module.exports = {
           {
             test: /\.(js|jsx)$/,
             include: paths.appSrc,
-            use: [
-              // This loader parallelizes code compilation, it is optional but
-              // improves compile time on larger projects
-              {
-                loader: require.resolve('thread-loader'),
-                options: {
-                  // Forwards the process args (such as --require) to the child
-                  // workers. Ensures that the worker operates in the same kind
-                  // of environment than the current one (important in case a
-                  // preloaded script modifies the env)
-                  workerNodeArgs: process.execArgv,
-                },
-              },
-              {
-                loader: require.resolve('babel-loader'),
-                options: {
-                  customize: require.resolve(
-                    'babel-preset-react-app/webpack-overrides'
-                  ),
-                  // @remove-on-eject-begin
-                  babelrc: false,
-                  configFile: false,
-                  presets: [require.resolve('babel-preset-react-app')],
-                  // Make sure we have a unique cache identifier, erring on the
-                  // side of caution.
-                  // We remove this when the user ejects because the default
-                  // is sane and uses Babel options. Instead of options, we use
-                  // the react-scripts and babel-preset-react-app versions.
-                  cacheIdentifier: getCacheIdentifier('production', [
-                    'babel-plugin-named-asset-import',
-                    'babel-preset-react-app',
-                    'react-dev-utils',
-                    'react-scripts',
-                  ]),
-                  // @remove-on-eject-end
-                  plugins: [
-                    [
-                      require.resolve('babel-plugin-named-asset-import'),
-                      {
-                        loaderMap: {
-                          svg: {
-                            ReactComponent:
-                              '@svgr/webpack?-prettier,-svgo![path]',
-                          },
-                        },
+
+            loader: require.resolve('babel-loader'),
+            options: {
+              customize: require.resolve(
+                'babel-preset-react-app/webpack-overrides'
+              ),
+              // @remove-on-eject-begin
+              babelrc: false,
+              configFile: false,
+              presets: [require.resolve('babel-preset-react-app')],
+              // Make sure we have a unique cache identifier, erring on the
+              // side of caution.
+              // We remove this when the user ejects because the default
+              // is sane and uses Babel options. Instead of options, we use
+              // the react-scripts and babel-preset-react-app versions.
+              cacheIdentifier: getCacheIdentifier('production', [
+                'babel-plugin-named-asset-import',
+                'babel-preset-react-app',
+                'react-dev-utils',
+                'react-scripts',
+              ]),
+              // @remove-on-eject-end
+              plugins: [
+                [
+                  require.resolve('babel-plugin-named-asset-import'),
+                  {
+                    loaderMap: {
+                      svg: {
+                        ReactComponent: '@svgr/webpack?-prettier,-svgo![path]',
                       },
-                    ],
-                  ],
-                  cacheDirectory: true,
-                  // Save disk space when time isn't as important
-                  cacheCompression: true,
-                  compact: true,
-                },
-              },
-            ],
+                    },
+                  },
+                ],
+              ],
+              cacheDirectory: true,
+              // Save disk space when time isn't as important
+              cacheCompression: true,
+              compact: true,
+            },
           },
           // Process any JS outside of the app with Babel.
           // Unlike the application JS, we only compile the standard ES features.
           {
             test: /\.js$/,
             exclude: /@babel(?:\/|\\{1,2})runtime/,
-            use: [
-              // This loader parallelizes code compilation, it is optional but
-              // improves compile time on larger projects
-              {
-                loader: require.resolve('thread-loader'),
-                options: {
-                  // Forwards the process args (such as --require) to the child
-                  // workers. Ensures that the worker operates in the same kind
-                  // of environment than the current one (important in case a
-                  // preloaded script modifies the env)
-                  workerNodeArgs: process.execArgv,
-                },
-              },
-              {
-                loader: require.resolve('babel-loader'),
-                options: {
-                  babelrc: false,
-                  configFile: false,
-                  compact: false,
-                  presets: [
-                    [
-                      require.resolve('babel-preset-react-app/dependencies'),
-                      { helpers: true },
-                    ],
-                  ],
-                  cacheDirectory: true,
-                  // Save disk space when time isn't as important
-                  cacheCompression: true,
-                  // @remove-on-eject-begin
-                  cacheIdentifier: getCacheIdentifier('production', [
-                    'babel-plugin-named-asset-import',
-                    'babel-preset-react-app',
-                    'react-dev-utils',
-                    'react-scripts',
-                  ]),
-                  // @remove-on-eject-end
-                  // If an error happens in a package, it's possible to be
-                  // because it was compiled. Thus, we don't want the browser
-                  // debugger to show the original code. Instead, the code
-                  // being evaluated would be much more helpful.
-                  sourceMaps: false,
-                },
-              },
-            ],
+            loader: require.resolve('babel-loader'),
+            options: {
+              babelrc: false,
+              configFile: false,
+              compact: false,
+              presets: [
+                [
+                  require.resolve('babel-preset-react-app/dependencies'),
+                  { helpers: true },
+                ],
+              ],
+              cacheDirectory: true,
+              // Save disk space when time isn't as important
+              cacheCompression: true,
+              // @remove-on-eject-begin
+              cacheIdentifier: getCacheIdentifier('production', [
+                'babel-plugin-named-asset-import',
+                'babel-preset-react-app',
+                'react-dev-utils',
+                'react-scripts',
+              ]),
+              // @remove-on-eject-end
+              // If an error happens in a package, it's possible to be
+              // because it was compiled. Thus, we don't want the browser
+              // debugger to show the original code. Instead, the code
+              // being evaluated would be much more helpful.
+              sourceMaps: false,
+            },
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
