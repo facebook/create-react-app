@@ -82,7 +82,7 @@ function resolveJestDefaultEnvironment(name) {
     basedir: jestConfigDir,
   });
 }
-let cleanArgv = [];
+const cleanArgv = [];
 let env = 'jsdom';
 let next;
 do {

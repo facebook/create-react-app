@@ -28,7 +28,7 @@ const { green, cyan } = chalk;
 
 function getGitStatus() {
   try {
-    let stdout = execSync(`git status --porcelain`, {
+    const stdout = execSync(`git status --porcelain`, {
       stdio: ['pipe', 'pipe', 'ignore'],
     }).toString();
     return stdout.trim();
