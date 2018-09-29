@@ -194,12 +194,10 @@ module.exports = (appPath, appName, verbose, originalDirectory, template) => {
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for
   // backward compatibility with old global-cli's.
-  let cdpath;
-  if (originalDirectory && path.join(originalDirectory, appName) === appPath) {
-    cdpath = appName;
-  } else {
-    cdpath = appPath;
-  }
+  const cdpath =
+    originalDirectory && path.join(originalDirectory, appName) === appPath
+      ? appName
+      : appPath;
 
   // Change displayed command to yarn instead of yarnpkg
   const displayedCommand = useYarn ? 'yarn' : 'npm';
