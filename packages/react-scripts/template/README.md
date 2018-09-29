@@ -2222,6 +2222,14 @@ If, when deploying, you get `/dev/tty: No such a device or address` or a similar
 2. `git remote set-url origin https://<user>:<token>@github.com/<user>/<repo>` .
 3. Try `npm run deploy` again
 
+##### "Cannot read property 'email' of null"
+
+If, when deploying, you get `Cannot read property 'email' of null`, try the following:
+
+1. `git config --global user.name '<your_name>'`
+2. `git config --global user.email '<your_email>'`
+3. Try `npm run deploy` again
+
 ### [Heroku](https://www.heroku.com/)
 
 Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
