@@ -135,11 +135,13 @@ describe('webpack message formatting', () => {
 
     const response = await getOutputDevelopment({ directory: testDirectory });
     if (process.platform === 'darwin') {
-      expect(response).toMatch(
+      expect(response.stderr).toMatch(
         `Cannot find file: 'export5.js' does not match the corresponding name on disk: './src/Export5.js'.`
       );
     } else {
-      expect(response).toMatch(`Cannot find file './export5.js' in './src'.`);
+      expect(response.stderr).toMatch(
+        `Cannot find file './export5.js' in './src'.`
+      );
     }
   });
 
