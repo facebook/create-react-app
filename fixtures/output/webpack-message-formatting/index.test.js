@@ -53,6 +53,26 @@ describe('webpack message formatting', () => {
     expect(response).toMatchSnapshot();
   });
 
+  it('formats aliased unknown export', async () => {
+    fs.copySync(
+      path.join(__dirname, 'src', 'AppAliasUnknownExport.js'),
+      path.join(testDirectory, 'src', 'App.js')
+    );
+
+    const response = await getOutputProduction({ directory: testDirectory });
+    expect(response).toMatchSnapshot();
+  });
+
+  it('formats no default export', async () => {
+    fs.copySync(
+      path.join(__dirname, 'src', 'AppNoDefault.js'),
+      path.join(testDirectory, 'src', 'App.js')
+    );
+
+    const response = await getOutputProduction({ directory: testDirectory });
+    expect(response).toMatchSnapshot();
+  });
+
   xit('formats missing package', async () => {
     fs.copySync(
       path.join(__dirname, 'src', 'AppMissingPackage.js'),

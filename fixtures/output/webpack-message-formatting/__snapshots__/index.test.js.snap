@@ -113,6 +113,20 @@ Module not found: Error: Can't resolve 'unknown-package' in '/private/var/folder
 }
 `;
 
+exports[`webpack message formatting formats no default export 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Attempted import error: './ExportNoDefault' does not contain a default export (imported as 'myImport').
+
+
+",
+  "stdout": "",
+}
+`;
+
 exports[`webpack message formatting formats unknown export 1`] = `
 Object {
   "stderr": "Creating an optimized production build...

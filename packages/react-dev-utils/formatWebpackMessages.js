@@ -50,6 +50,10 @@ function formatMessage(message, isError) {
     /^.*export '(.+?)' was not found in '(.+?)'.*$/gm,
     `Attempted import error: '$1' is not exported from '$2'.`
   );
+  message = message.replace(
+    /^.*export 'default' \(imported as '(.+?)'\) was not found in '(.+?)'.*$/gm,
+    `Attempted import error: '$2' does not contain a default export (imported as '$1').`
+  );
   lines = message.split('\n');
 
   // Remove leading newline
