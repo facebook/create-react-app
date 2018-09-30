@@ -81,12 +81,9 @@ class ModuleNotFoundPlugin {
       } else if (isFile) {
         details = [`Cannot find file '${target}' in '${context}'.`];
       } else {
-        console.log('UNKNOWN REQUEST TYPE: ' + details[1]);
         details = [err.message];
       }
     } else {
-      console.log('UNKNOWN REQUEST: ' + JSON.stringify(details));
-      console.log(err, file);
       details = [err.message];
     }
     err.message = [file, ...details].join('\n').replace('Error: ', '');
