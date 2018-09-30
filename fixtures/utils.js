@@ -67,6 +67,39 @@ async function isSuccessfulProduction({ directory }) {
   }
 }
 
+async function getOutputDevelopment({ directory, env = {} }) {
+  try {
+    const { stdout, stderr } = await execa(
+      './node_modules/.bin/react-scripts',
+      ['start', '--smoke-test'],
+      {
+        cwd: directory,
+        env: Object.assign(
+          {},
+          {
+            BROWSER: 'none',
+            PORT: await getPort(),
+            CI: 'false',
+            FORCE_COLOR: '0',
+          },
+          env
+        ),
+      }
+    );
+    return { stdout: stripAnsi(stdout), stderr: stripAnsi(stderr) };
+  } catch (err) {
+    return {
+      stdout: '',
+      stderr: stripAnsi(
+        err.message
+          .split(os.EOL)
+          .slice(2)
+          .join(os.EOL)
+      ),
+    };
+  }
+}
+
 async function getOutputProduction({ directory, env = {} }) {
   try {
     const { stdout, stderr } = await execa(
@@ -95,5 +128,6 @@ module.exports = {
   bootstrap,
   isSuccessfulDevelopment,
   isSuccessfulProduction,
+  getOutputDevelopment,
   getOutputProduction,
 };

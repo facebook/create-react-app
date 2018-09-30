@@ -1,4 +1,8 @@
-const { bootstrap, getOutputProduction } = require('../../utils');
+const {
+  bootstrap,
+  getOutputDevelopment,
+  getOutputProduction,
+} = require('../../utils');
 const fs = require('fs-extra');
 const path = require('path');
 const Semaphore = require('async-sema');
@@ -102,5 +106,25 @@ describe('webpack message formatting', () => {
         path.join(testDirectory, 'node_modules', 'node-sass')
       );
     }
+  });
+
+  xit('formats file not found error', async () => {
+    fs.copySync(
+      path.join(__dirname, 'src', 'AppUnknownFile.js'),
+      path.join(testDirectory, 'src', 'App.js')
+    );
+
+    const response = await getOutputProduction({ directory: testDirectory });
+    expect(response).toMatchSnapshot();
+  });
+
+  xit('formats case sensitive path error', async () => {
+    fs.copySync(
+      path.join(__dirname, 'src', 'AppIncorrectCase.js'),
+      path.join(testDirectory, 'src', 'App.js')
+    );
+
+    const response = await getOutputDevelopment({ directory: testDirectory });
+    expect(response).toMatchSnapshot();
   });
 });

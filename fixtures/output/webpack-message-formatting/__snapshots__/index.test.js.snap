@@ -22,6 +22,19 @@ Syntax error: Unterminated JSX contents (8:13)
 }
 `;
 
+exports[`webpack message formatting formats case sensitive path error 1`] = `
+Object {
+  "stderr": "Starting the development server...
+
+Failed to compile.
+
+./src/App.js
+Module not found: \`/private/var/folders/c3/vytj6_h56b77f_g72smntm3m0000gn/T/4654404388655bb36ea2f1a7fa9ca174/src/export5.js\` does not match the corresponding path on disk \`Export5.js\`.
+",
+  "stdout": "",
+}
+`;
+
 exports[`webpack message formatting formats css syntax error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
@@ -71,6 +84,19 @@ Search for the keywords to learn more about each warning.
 To ignore, add // eslint-disable-next-line to the line before.
 
 ",
+}
+`;
+
+exports[`webpack message formatting formats file not found error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+Module not found: Error: Can't resolve './ThisFileSouldNotExist' in '/private/var/folders/c3/vytj6_h56b77f_g72smntm3m0000gn/T/70b07b626476276cde42eea49620873c/src'
+
+
+",
+  "stdout": "",
 }
 `;
 
