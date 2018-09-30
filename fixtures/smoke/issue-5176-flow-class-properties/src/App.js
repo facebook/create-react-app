@@ -1,6 +1,5 @@
 class App {
-  constructor(props) {
-    super(props);
+  constructor() {
     this.foo = this.foo.bind(this);
   }
   foo: void => void;
