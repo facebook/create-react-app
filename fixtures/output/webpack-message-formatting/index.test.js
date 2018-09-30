@@ -136,4 +136,14 @@ describe('webpack message formatting', () => {
     const response = await getOutputDevelopment({ directory: testDirectory });
     expect(response).toMatchSnapshot();
   });
+
+  it('formats out of scope error', async () => {
+    fs.copySync(
+      path.join(__dirname, 'src', 'AppOutOfScopeImport.js'),
+      path.join(testDirectory, 'src', 'App.js')
+    );
+
+    const response = await getOutputProduction({ directory: testDirectory });
+    expect(response).toMatchSnapshot();
+  });
 });

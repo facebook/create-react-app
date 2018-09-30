@@ -145,6 +145,21 @@ Attempted import error: './ExportNoDefault' does not contain a default export (i
 }
 `;
 
+exports[`webpack message formatting formats out of scope error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+You attempted to import ../OutOfScopeImport which falls outside of the project src/ directory. Relative imports outside of src/ are not supported.
+You can either move it inside src/, or add a symlink to it from project's node_modules/.
+
+
+",
+  "stdout": "",
+}
+`;
+
 exports[`webpack message formatting formats unknown export 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
