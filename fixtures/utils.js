@@ -6,12 +6,13 @@ const os = require('os');
 const stripAnsi = require('strip-ansi');
 
 async function bootstrap({ directory, template }) {
+  const shouldInstallScripts = process.env.CI && process.env.CI !== 'false';
   await Promise.all(
     ['public/', 'src/', 'package.json'].map(async file =>
       fs.copy(path.join(template, file), path.join(directory, file))
     )
   );
-  if (process.env.CI && process.env.CI !== 'false') {
+  if (shouldInstallScripts) {
     const packageJson = fs.readJsonSync(path.join(directory, 'package.json'));
     packageJson.dependencies = Object.assign(packageJson.dependencies, {
       'react-scripts': 'latest',
@@ -19,6 +20,22 @@ async function bootstrap({ directory, template }) {
     fs.writeJsonSync(path.join(directory, 'package.json'), packageJson);
   }
   await execa('yarnpkg', ['install', '--mutex', 'network'], { cwd: directory });
+  if (!shouldInstallScripts) {
+    fs.ensureSymlinkSync(
+      path.resolve(
+        path.join(
+          __dirname,
+          '..',
+          'packages',
+          'react-scripts',
+          'bin',
+          'react-scripts.js'
+        )
+      ),
+      path.join(directory, 'node_modules', '.bin', 'react-scripts')
+    );
+    await execa('yarnpkg', ['link', 'react-scripts'], { cwd: directory });
+  }
 }
 
 async function isSuccessfulDevelopment({ directory }) {
