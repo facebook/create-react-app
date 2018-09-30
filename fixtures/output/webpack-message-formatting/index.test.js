@@ -49,7 +49,7 @@ describe('webpack message formatting', () => {
     expect(response).toMatchSnapshot();
   });
 
-  it('formats missing package', async () => {
+  xit('formats missing package', async () => {
     fs.copySync(
       path.join(__dirname, 'src', 'AppMissingPackage.js'),
       path.join(testDirectory, 'src', 'App.js')
