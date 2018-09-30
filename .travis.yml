@@ -25,10 +25,9 @@ env:
     - TEST_SUITE=installs
     - TEST_SUITE=kitchensink
     - TEST_SUITE=kitchensink-eject
+    - TEST_SUITE=behavior
 matrix:
   include:
-    - node_js: 8
-      env: TEST_SUITE=behavior
     - os: osx
       node_js: 8
       env: TEST_SUITE=behavior
