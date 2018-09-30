@@ -67,6 +67,16 @@ function formatMessage(message, isError) {
   // Clean up file name
   lines[0] = lines[0].replace(/^(.*) \d+:\d+-\d+$/, '$1');
 
+  // Cleans up verbose "module not found" messages for files and packages.
+  if (lines[1] && lines[1].indexOf('Module not found: ') === 0) {
+    lines = [
+      lines[0],
+      lines[1]
+        .replace('Error: ', '')
+        .replace('Module not found: Cannot find file:', 'Cannot find file:'),
+    ];
+  }
+
   // Add helpful message for users trying to use Sass for the first time
   if (lines[1] && lines[1].match(/Cannot find module.+node-sass/)) {
     lines[1] = 'To import Sass files, you first need to install node-sass.\n';

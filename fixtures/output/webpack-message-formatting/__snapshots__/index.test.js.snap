@@ -43,7 +43,7 @@ Object {
 Failed to compile.
 
 ./src/App.js
-Module not found: Error: [CaseSensitivePathsPlugin] \`/private/var/folders/c3/vytj6_h56b77f_g72smntm3m0000gn/T/c2500b126b76bdcdcc34acd482835b9f/src/export5.js\` does not match the corresponding path on disk \`Export5.js\`.
+Cannot find file: 'export5.js' does not match the corresponding name on disk: './src/Export5.js'.
 ",
   "stdout": "",
 }

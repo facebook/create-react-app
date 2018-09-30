@@ -42,13 +42,28 @@ class ModuleNotFoundPlugin {
   prettierError(err) {
     let { details: _details = '', origin } = err;
 
+    if (origin == null) {
+      const caseSensitivity =
+        err.message &&
+        /\[CaseSensitivePathsPlugin\] `(.*?)` .* `(.*?)`/.exec(err.message);
+      if (caseSensitivity) {
+        const [, incorrectPath, actualName] = caseSensitivity;
+        const actualFile = this.getRelativePath(
+          path.join(path.dirname(incorrectPath), actualName)
+        );
+        const incorrectName = path.basename(incorrectPath);
+        err.message = `Cannot find file: '${incorrectName}' does not match the corresponding name on disk: '${actualFile}'.`;
+      }
+      return err;
+    }
+
     const file = this.getRelativePath(origin.resource);
     let details = _details.split('\n');
 
     const request = /resolve '(.*?)' in '(.*?)'/.exec(details);
     if (request) {
-      const isModule = details[1] && /module/.test(details[1]);
-      const isFile = details[1] && /file/.test(details[1]);
+      const isModule = details[1] && details[1].includes('module');
+      const isFile = details[1] && details[1].includes('file');
 
       let [, target, context] = request;
       context = this.getRelativePath(context);
@@ -101,6 +116,29 @@ class ModuleNotFoundPlugin {
           },
         });
       },
+    });
+    compiler.hooks.normalModuleFactory.tap('ModuleNotFoundPlugin', nmf => {
+      nmf.hooks.afterResolve.intercept({
+        register(tap) {
+          if (tap.name !== 'CaseSensitivePathsPlugin') {
+            return tap;
+          }
+          return Object.assign({}, tap, {
+            fn: (compilation, callback) => {
+              tap.fn(compilation, (err, ...args) => {
+                if (
+                  err &&
+                  err.message &&
+                  err.message.includes('CaseSensitivePathsPlugin')
+                ) {
+                  err = prettierError(err);
+                }
+                callback(err, ...args);
+              });
+            },
+          });
+        },
+      });
     });
   }
 }
