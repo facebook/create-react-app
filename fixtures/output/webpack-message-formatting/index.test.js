@@ -127,7 +127,7 @@ describe('webpack message formatting', () => {
     expect(response).toMatchSnapshot();
   });
 
-  it('formats case sensitive path error', async () => {
+  xit('formats case sensitive path error', async () => {
     fs.copySync(
       path.join(__dirname, 'src', 'AppIncorrectCase.js'),
       path.join(testDirectory, 'src', 'App.js')
