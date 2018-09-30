@@ -36,19 +36,6 @@ Syntax error: Unterminated JSX contents (8:13)
 }
 `;
 
-exports[`webpack message formatting formats case sensitive path error 1`] = `
-Object {
-  "stderr": "Starting the development server...
-
-Failed to compile.
-
-./src/App.js
-Cannot find file: 'export5.js' does not match the corresponding name on disk: './src/Export5.js'.
-",
-  "stdout": "",
-}
-`;
-
 exports[`webpack message formatting formats css syntax error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
