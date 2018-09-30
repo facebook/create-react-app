@@ -14,7 +14,7 @@ async function bootstrap({ directory, template }) {
   );
   if (shouldInstallScripts) {
     const packageJson = fs.readJsonSync(path.join(directory, 'package.json'));
-    packageJson.dependencies = Object.assign(packageJson.dependencies, {
+    packageJson.dependencies = Object.assign({}, packageJson.dependencies, {
       'react-scripts': 'latest',
     });
     fs.writeJsonSync(path.join(directory, 'package.json'), packageJson);
