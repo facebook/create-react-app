@@ -140,6 +140,8 @@ describe('webpack message formatting', () => {
       );
     } else {
       expect(response.stderr).not.toEqual(''); // TODO: figure out how we can test this on Linux/Windows
+      // I believe getting this working requires we tap into enhanced-resolve
+      // pipeline, which is debt we don't want to take on right now.
     }
   });
 
