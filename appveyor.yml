@@ -2,6 +2,7 @@ image: Visual Studio 2017
 
 environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
+  APPVEYOR_BUILD_WORKER_CLOUD: 'GCE'
   matrix:
     - nodejs_version: 10
       test_suite: 'simple'
