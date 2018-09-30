@@ -134,7 +134,15 @@ describe('webpack message formatting', () => {
     );
 
     const response = await getOutputDevelopment({ directory: testDirectory });
-    expect(response).toMatchSnapshot();
+    if (process.platform === 'darwin') {
+      expect(response).stringContaining(
+        `Cannot find file: 'export5.js' does not match the corresponding name on disk: './src/Export5.js'.`
+      );
+    } else {
+      expect(response).stringContaining(
+        `Cannot find file './export5.js' in './src'.`
+      );
+    }
   });
 
   it('formats out of scope error', async () => {
