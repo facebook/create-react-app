@@ -17,6 +17,7 @@ class ModuleNotFoundPlugin {
     this.yarnLockFile = yarnLockFile;
 
     this.useYarnCommand = this.useYarnCommand.bind(this);
+    this.getRelativePath = this.getRelativePath.bind(this);
     this.prettierError = this.prettierError.bind(this);
   }
 
@@ -28,24 +29,31 @@ class ModuleNotFoundPlugin {
     }
   }
 
-  prettierError(err) {
-    const { details: _details, origin } = err;
-
-    // Format the file to be a relative path (if possible)
-    let file = path.relative(this.appPath, origin.resource);
+  getRelativePath(_file) {
+    let file = path.relative(this.appPath, _file);
     if (file.startsWith('..')) {
-      file = origin.resource;
+      file = _file;
     } else if (!file.startsWith('.')) {
       file = '.' + path.sep + file;
     }
+    return file;
+  }
 
+  prettierError(err) {
+    let { details: _details = '', origin } = err;
+
+    const file = this.getRelativePath(origin.resource);
     let details = _details.split('\n');
-    const isModule = details[1] && /module/.test(details[1]);
+
     const request = /resolve '(.*?)' in '(.*?)'/.exec(details);
     if (request) {
-      const isYarn = this.useYarnCommand();
-      const [, target] = request;
+      const isModule = details[1] && /module/.test(details[1]);
+      const isFile = details[1] && /file/.test(details[1]);
+
+      let [, target, context] = request;
+      context = this.getRelativePath(context);
       if (isModule) {
+        const isYarn = this.useYarnCommand();
         details = [
           `Cannot find module: '${target}'. Make sure this package is installed.`,
           '',
@@ -55,6 +63,8 @@ class ModuleNotFoundPlugin {
               : chalk.bold(`npm install ${target}`)) +
             '.',
         ];
+      } else if (isFile) {
+        details = [`Cannot find file '${target}' in '${context}'.`];
       } else {
         details = [err.message];
       }
@@ -62,6 +72,12 @@ class ModuleNotFoundPlugin {
       details = [err.message];
     }
     err.message = [file, ...details].join('\n').replace('Error: ', '');
+
+    const isModuleScopePluginError =
+      err.error && err.error.__module_scope_plugin;
+    if (isModuleScopePluginError) {
+      err.message = err.message.replace('Module not found: ', '');
+    }
     return err;
   }
 

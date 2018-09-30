@@ -117,7 +117,7 @@ describe('webpack message formatting', () => {
     expect(response).toMatchSnapshot();
   });
 
-  xit('formats file not found error', async () => {
+  it('formats file not found error', async () => {
     fs.copySync(
       path.join(__dirname, 'src', 'AppUnknownFile.js'),
       path.join(testDirectory, 'src', 'App.js')
@@ -127,7 +127,7 @@ describe('webpack message formatting', () => {
     expect(response).toMatchSnapshot();
   });
 
-  xit('formats case sensitive path error', async () => {
+  it('formats case sensitive path error', async () => {
     fs.copySync(
       path.join(__dirname, 'src', 'AppIncorrectCase.js'),
       path.join(testDirectory, 'src', 'App.js')
