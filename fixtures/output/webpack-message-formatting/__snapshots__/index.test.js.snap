@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`webpack message formatting formats aliased unknown export 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Attempted import error: 'bar' is not exported from './AppUnknownExport' (imported as 'bar2').
+
+
+",
+  "stdout": "",
+}
+`;
+
 exports[`webpack message formatting formats babel syntax error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
