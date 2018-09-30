@@ -86,6 +86,7 @@ class ModuleNotFoundPlugin {
       }
     } else {
       console.log('UNKNOWN REQUEST: ' + JSON.stringify(details));
+      console.log(err, file);
       details = [err.message];
     }
     err.message = [file, ...details].join('\n').replace('Error: ', '');
