@@ -119,7 +119,10 @@ Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
 
-Module not found: Error: Can't resolve 'unknown-package' in '/private/var/folders/c3/vytj6_h56b77f_g72smntm3m0000gn/T/6b5c1989bc1537c8284ff3a581876126/src'
+./src/App.js
+Cannot find module: 'unknown-package'. Make sure this package is installed.
+
+You can install this package by running: yarn add unknown-package.
 
 
 ",
@@ -162,7 +165,7 @@ Failed to compile.
 
 ./src/AppSass.scss
 To import Sass files, you first need to install node-sass.
-Run \`npm i node-sass --save\` or \`yarn add node-sass\` inside your workspace.
+Run \`npm install node-sass\` or \`yarn add node-sass\` inside your workspace.
 
 
 ",
