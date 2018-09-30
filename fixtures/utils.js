@@ -11,6 +11,13 @@ async function bootstrap({ directory, template }) {
       fs.copy(path.join(template, file), path.join(directory, file))
     )
   );
+  if (process.env.CI && process.env.CI !== 'false') {
+    const packageJson = fs.readJsonSync(path.join(directory, 'package.json'));
+    packageJson.dependencies = Object.assign(packageJson.dependencies, {
+      'react-scripts': 'latest',
+    });
+    fs.writeJsonSync(path.join(directory, 'package.json'), packageJson);
+  }
   await execa('yarnpkg', ['install', '--mutex', 'network'], { cwd: directory });
 }
 
