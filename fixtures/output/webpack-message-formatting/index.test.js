@@ -19,7 +19,7 @@ describe('webpack message formatting', () => {
     semaphore.release();
   });
 
-  xit('formats babel syntax error', async () => {
+  it('formats babel syntax error', async () => {
     fs.copySync(
       path.join(__dirname, 'src', 'AppBabel.js'),
       path.join(testDirectory, 'src', 'App.js')
@@ -29,8 +29,7 @@ describe('webpack message formatting', () => {
     expect(response).toMatchSnapshot();
   });
 
-  xit('formats css syntax error', async () => {
-    // TODO: fix me!
+  it('formats css syntax error', async () => {
     fs.copySync(
       path.join(__dirname, 'src', 'AppCss.js'),
       path.join(testDirectory, 'src', 'App.js')
@@ -40,8 +39,7 @@ describe('webpack message formatting', () => {
     expect(response).toMatchSnapshot();
   });
 
-  xit('formats unknown export', async () => {
-    // TODO: fix me!
+  it('formats unknown export', async () => {
     fs.copySync(
       path.join(__dirname, 'src', 'AppUnknownExport.js'),
       path.join(testDirectory, 'src', 'App.js')
@@ -51,8 +49,7 @@ describe('webpack message formatting', () => {
     expect(response).toMatchSnapshot();
   });
 
-  xit('formats missing package', async () => {
-    // TODO: fix me!
+  it('formats missing package', async () => {
     fs.copySync(
       path.join(__dirname, 'src', 'AppMissingPackage.js'),
       path.join(testDirectory, 'src', 'App.js')
