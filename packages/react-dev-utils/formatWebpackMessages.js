@@ -73,10 +73,9 @@ function formatMessage(message, isError) {
   }
 
   if (lines[1] && lines[1].match(/Cannot find module.+node-sass/)) {
-    lines[1] =
-      'To import Sass files in this project, you need to install node-sass.\n';
+    lines[1] = 'To import Sass files, you first need to install node-sass.\n';
     lines[1] +=
-      'Please run `npm i node-sass --save` or `yarn add node-sass` inside your workspace.';
+      'Run `npm i node-sass --save` or `yarn add node-sass` inside your workspace.';
   }
 
   lines[0] = chalk.inverse(lines[0]);

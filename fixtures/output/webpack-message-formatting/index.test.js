@@ -82,4 +82,25 @@ describe('webpack message formatting', () => {
     const response = await getOutputProduction({ directory: testDirectory });
     expect(response).toMatchSnapshot();
   });
+
+  it('helps when users tries to use sass', async () => {
+    fs.copySync(
+      path.join(__dirname, 'src', 'AppSass.js'),
+      path.join(testDirectory, 'src', 'App.js')
+    );
+
+    fs.moveSync(
+      path.join(testDirectory, 'node_modules', 'node-sass'),
+      path.join(testDirectory, 'node_modules', 'node-sass-bak')
+    );
+    try {
+      const response = await getOutputProduction({ directory: testDirectory });
+      expect(response).toMatchSnapshot();
+    } finally {
+      fs.moveSync(
+        path.join(testDirectory, 'node_modules', 'node-sass-bak'),
+        path.join(testDirectory, 'node_modules', 'node-sass')
+      );
+    }
+  });
 });
