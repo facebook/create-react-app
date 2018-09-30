@@ -28,5 +28,8 @@ env:
     - TEST_SUITE=behavior
 matrix:
   include:
+    - os: osx
+      node_js: 8
+      env: TEST_SUITE=behavior
     - node_js: 4
       env: TEST_SUITE=old-node

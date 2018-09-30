@@ -1,9 +1,7 @@
 {
   "dependencies": {
-    "node-sass": "4.x",
     "react": "latest",
-    "react-dom": "latest",
-    "react-scripts": "latest"
+    "react-dom": "latest"
   },
   "browserslist": [
     ">0.2%"

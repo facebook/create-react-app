@@ -1,12 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`webpack message formatting formats aliased unknown export 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Attempted import error: 'bar' is not exported from './AppUnknownExport' (imported as 'bar2').
+
+
+",
+  "stdout": "",
+}
+`;
+
 exports[`webpack message formatting formats babel syntax error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
 
 ./src/App.js
-Syntax error: Unterminated JSX contents (8:12)
+Syntax error: Unterminated JSX contents (8:13)
 
    6 |       <div>
    7 |         <span>
@@ -25,16 +39,16 @@ Syntax error: Unterminated JSX contents (8:12)
 exports[`webpack message formatting formats css syntax error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
-[31mFailed to compile.
-[39m
-[7m./src/AppCss.css[27m
-Syntax Error: (3:2) Unexpected }
+Failed to compile.
 
- [90m 1 | [39m[33m.App[39m [33m{[39m
- [90m 2 | [39m  color[33m:[39m red[33m;[39m
-[31m[1m>[22m[39m[90m 3 | [39m[33m}[39m[33m}[39m
- [90m   | [39m [31m[1m^[22m[39m
- [90m 4 | [39m
+./src/AppCss.css
+Syntax error: Unexpected } (3:2)
+
+  1 | .App {
+  2 |   color: red;
+> 3 | }}
+    |  ^
+  4 |
 
 
 ",
@@ -74,12 +88,58 @@ To ignore, add // eslint-disable-next-line to the line before.
 }
 `;
 
+exports[`webpack message formatting formats file not found error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Cannot find file './ThisFileSouldNotExist' in './src'.
+
+
+",
+  "stdout": "",
+}
+`;
+
 exports[`webpack message formatting formats missing package 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
-[31mFailed to compile.
-[39m
-Module not found: Error: Can't resolve 'unknown-package' in '/private/var/folders/c3/vytj6_h56b77f_g72smntm3m0000gn/T/bf26e1d3700ad14275f6eefb5e4417c1/src'
+Failed to compile.
+
+./src/App.js
+Cannot find module: 'unknown-package'. Make sure this package is installed.
+
+You can install this package by running: yarn add unknown-package.
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats no default export 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Attempted import error: './ExportNoDefault' does not contain a default export (imported as 'myImport').
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats out of scope error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+You attempted to import ../OutOfScopeImport which falls outside of the project src/ directory. Relative imports outside of src/ are not supported.
+You can either move it inside src/, or add a symlink to it from project's node_modules/.
 
 
 ",
@@ -93,7 +153,22 @@ Object {
 Failed to compile.
 
 ./src/App.js
-1:1677-1680 './AppUnknownExport' does not contain an export named 'bar'.
+Attempted import error: 'bar' is not exported from './AppUnknownExport'.
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting helps when users tries to use sass 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/AppSass.scss
+To import Sass files, you first need to install node-sass.
+Run \`npm install node-sass\` or \`yarn add node-sass\` inside your workspace.
 
 
 ",
