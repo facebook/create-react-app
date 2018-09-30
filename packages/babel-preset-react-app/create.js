@@ -99,6 +99,7 @@ module.exports = function(api, opts, env) {
     plugins: [
       // Strip flow types before any other transform, emulating the behavior
       // order as-if the browser supported all of the succeeding features
+      // https://github.com/facebook/create-react-app/pull/5182
       isFlowEnabled &&
         require('@babel/plugin-transform-flow-strip-types').default,
       // Experimental macros support. Will be documented after it's had some time
