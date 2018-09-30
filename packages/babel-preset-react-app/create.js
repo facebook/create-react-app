@@ -95,9 +95,12 @@ module.exports = function(api, opts, env) {
           useBuiltIns: true,
         },
       ],
-      isFlowEnabled && [require('@babel/preset-flow').default],
     ].filter(Boolean),
     plugins: [
+      // Strip flow types before any other transform, emulating the behavior
+      // order as-if the browser supported all of the succeeding features
+      isFlowEnabled &&
+        require('@babel/plugin-transform-flow-strip-types').default,
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
