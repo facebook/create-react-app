@@ -113,19 +113,8 @@ describe('webpack message formatting', () => {
       path.join(testDirectory, 'src', 'App.js')
     );
 
-    fs.moveSync(
-      path.join(testDirectory, 'node_modules', 'node-sass'),
-      path.join(testDirectory, 'node_modules', 'node-sass-bak')
-    );
-    try {
-      const response = await getOutputProduction({ directory: testDirectory });
-      expect(response).toMatchSnapshot();
-    } finally {
-      fs.moveSync(
-        path.join(testDirectory, 'node_modules', 'node-sass-bak'),
-        path.join(testDirectory, 'node_modules', 'node-sass')
-      );
-    }
+    const response = await getOutputProduction({ directory: testDirectory });
+    expect(response).toMatchSnapshot();
   });
 
   xit('formats file not found error', async () => {
