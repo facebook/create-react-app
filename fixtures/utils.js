@@ -68,7 +68,7 @@ async function isSuccessfulProduction({ directory }) {
 }
 
 async function isSuccessfulTest({ directory, jestEnvironment = 'jsdom' }) {
-  const { status, stdout, stderr } = await execa(
+  const { status, stdout, stderr, ...rest } = await execa(
     './node_modules/.bin/react-scripts',
     ['test', '--env', jestEnvironment, '--ci'],
     {
@@ -78,7 +78,11 @@ async function isSuccessfulTest({ directory, jestEnvironment = 'jsdom' }) {
   );
 
   if (status !== 0) {
-    throw new Error(`stdout: ${stdout}${os.EOL + os.EOL}stderr: ${stderr}`);
+    console.log(rest);
+    throw new Error(
+      `status: ${status}${os.EOL + os.EOL}stdout: ${stdout}${os.EOL +
+        os.EOL}stderr: ${stderr}`
+    );
   }
 }
 
