@@ -40,6 +40,7 @@ class ModuleNotFoundPlugin {
   }
 
   prettierError(err) {
+    console.log(err.origin, err.details, err.module);
     let { details: _details = '', origin } = err;
 
     if (origin == null) {
