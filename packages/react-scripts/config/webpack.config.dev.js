@@ -160,9 +160,6 @@ module.exports = {
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
     ],
-    // Plug'n'Play relies on symlink for its virtual paths (ie peer dependencies), which Webpack
-    // always resolve to the absolute path on disk by default.
-    symlinks: false,
   },
   resolveLoader: {
     plugins: [
@@ -170,9 +167,6 @@ module.exports = {
       // from the current package.
       PnpWebpackPlugin.moduleLoader(module),
     ],
-    // Plug'n'Play relies on symlink for its virtual paths (ie peer dependencies), which Webpack
-    // always resolve to the absolute path on disk by default.
-    symlinks: false,
   },
   module: {
     strictExportPresence: true,
