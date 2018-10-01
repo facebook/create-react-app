@@ -14,7 +14,7 @@ async function bootstrap({ directory, template }) {
   );
   if (shouldInstallScripts) {
     const packageJson = fs.readJsonSync(path.join(directory, 'package.json'));
-    packageJson.dependencies = Object.assign(packageJson.dependencies, {
+    packageJson.dependencies = Object.assign({}, packageJson.dependencies, {
       'react-scripts': 'latest',
     });
     fs.writeJsonSync(path.join(directory, 'package.json'), packageJson);
@@ -65,6 +65,17 @@ async function isSuccessfulProduction({ directory }) {
   if (!/Compiled successfully/.test(stdout)) {
     throw new Error(`stdout: ${stdout}${os.EOL + os.EOL}stderr: ${stderr}`);
   }
+}
+
+async function isSuccessfulTest({ directory, jestEnvironment = 'jsdom' }) {
+  await execa(
+    './node_modules/.bin/react-scripts',
+    ['test', '--env', jestEnvironment, '--ci'],
+    {
+      cwd: directory,
+      env: { CI: 'true' },
+    }
+  );
 }
 
 async function getOutputDevelopment({ directory, env = {} }) {
@@ -128,6 +139,7 @@ module.exports = {
   bootstrap,
   isSuccessfulDevelopment,
   isSuccessfulProduction,
+  isSuccessfulTest,
   getOutputDevelopment,
   getOutputProduction,
 };
