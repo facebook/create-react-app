@@ -83,7 +83,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Static Server](#static-server)
   - [Other Solutions](#other-solutions)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
-    - [Service Worker Considerations](#service-worker-considerations)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [Customizing Environment Variables for Arbitrary Build Environments](#customizing-environment-variables-for-arbitrary-build-environments)
   - [Azure](#azure)
@@ -1753,9 +1752,9 @@ Offline-first Progressive Web Apps are faster and more reliable than traditional
 
 - All static site assets are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.
 - Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.
-- On mobile devices, your app can be added directly to the user's home screen, app icon and all. You can also re-engage users using web **push notifications**. This eliminates the need for the app store.
+- On mobile devices, your app can be added directly to the user's home screen, app icon and all. This eliminates the need for the app store.
 
-The [`sw-precache-webpack-plugin`](https://github.com/goldhand/sw-precache-webpack-plugin)
+The [`workbox-webpack-plugin`](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)
 is integrated into production configuration,
 and it will take care of generating a service worker file that will automatically
 precache all of your local assets and keep them up to date as you deploy updates.
@@ -1793,17 +1792,6 @@ following into account:
    instructions for using other methods. _Be sure to always use an
    incognito window to avoid complications with your browser cache._
 
-1. If possible, configure your production environment to serve the generated
-   `service-worker.js` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
-   If that's not possible—[GitHub Pages](#github-pages), for instance, does not
-   allow you to change the default 10 minute HTTP cache lifetime—then be aware
-   that if you visit your production site, and then revisit again before
-   `service-worker.js` has expired from your HTTP cache, you'll continue to get
-   the previously cached assets from the service worker. If you have an immediate
-   need to view your updated production deployment, performing a shift-refresh
-   will temporarily disable the service worker and retrieve all assets from the
-   network.
-
 1. Users aren't always familiar with offline-first web apps. It can be useful to
    [let the user know](https://developers.google.com/web/fundamentals/instant-and-offline/offline-ux#inform_the_user_when_the_app_is_ready_for_offline_consumption)
    when the service worker has finished populating your caches (showing a "This web
@@ -1818,12 +1806,7 @@ following into account:
 
 1. By default, the generated service worker file will not intercept or cache any
    cross-origin traffic, like HTTP [API requests](#integrating-with-an-api-backend),
-   images, or embeds loaded from a different domain. If you would like to use a
-   runtime caching strategy for those requests, you can [`eject`](#npm-run-eject)
-   and then configure the
-   [`runtimeCaching`](https://github.com/GoogleChrome/sw-precache#runtimecaching-arrayobject)
-   option in the `SWPrecacheWebpackPlugin` section of
-   [`webpack.config.prod.js`](../config/webpack.config.prod.js).
+   images, or embeds loaded from a different domain.
 
 ### Progressive Web App Metadata
 
