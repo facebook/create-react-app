@@ -18,6 +18,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const getLocalIdent = require('./getLocalIdent');
 
 // Options for PostCSS as we reference these options twice
 // Adds vendor prefixing to support IE9 and above
@@ -211,8 +212,7 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                   modules: true,
-                  localIdentRegExp: /.*\/([^/]+)\/src/,
-                  localIdentName: '[1]__[folder]__[local]',
+                  getLocalIdent
                 },
               },
               {
