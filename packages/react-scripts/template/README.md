@@ -1713,7 +1713,6 @@ Learn more about React Storybook:
 - [GitHub Repo](https://github.com/storybooks/storybook)
 - [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
 
-<!--
 ### Getting Started with Styleguidist
 
 Styleguidist combines a style guide, where all your components are presented on a single page with their props documentation and usage examples, with an environment for developing components in isolation, similar to Storybook. In Styleguidist you write examples in Markdown, where each code snippet is rendered as a live editable playground.
