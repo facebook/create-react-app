@@ -23,10 +23,9 @@ const getLocalIdent = (context, localIdentName, localName) => {
       .split('.')[0] || ''
 
   let moduleName =
-    fileName.startsWith('index') ||
-    fileName.startsWith('styles')
-      ? parentFolderName
-      : fileName;
+    /^[A-Z]/.test(fileName)
+      ? fileName
+      : parentFolderName;
 
   return `${projectName}__${moduleName}__${localName}`;
 }
