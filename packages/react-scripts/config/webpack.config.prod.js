@@ -20,6 +20,7 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const getLocalIdent = require('./getLocalIdent');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -236,6 +237,7 @@ module.exports = {
                         modules: true,
                         localIdentRegExp: /.*\/([^/]+)\/src/,
                         localIdentName: '[1]__[folder]__[local]',
+                        getLocalIdent,
                       },
                     },
                     {
