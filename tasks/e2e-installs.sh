@@ -229,5 +229,16 @@ npx create-react-app test-app-nested-paths-t3/aa/bb/cc/dd
 cd test-app-nested-paths-t3/aa/bb/cc/dd
 yarn start --smoke-test
 
+# ******************************************************************************
+# Test when PnP is enabled
+# ******************************************************************************
+cd "$temp_app_path"
+npx create-react-app test-app-pnp --use-pnp
+cd test-app-pnp
+! exists node_modules
+exists .pnp.js
+yarn start --smoke-test
+yarn build
+
 # Cleanup
 cleanup

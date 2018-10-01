@@ -1,3 +1,7 @@
+## 2.0.2 (October 1, 2018)
+
+TODO (work in progress)
+
 ## 1.1.5 (August 24, 2018)
 
 * `react-scripts`

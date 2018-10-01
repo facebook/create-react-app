@@ -18,9 +18,13 @@ Each polyfill ensures the following language features are present:
 First, install the package using Yarn or npm:
 
 ```bash
-$ npm install react-app-polyfill --save
-$ # or
-$ yarn add react-app-polyfill
+npm install react-app-polyfill
+```
+
+or
+
+```bash
+yarn add react-app-polyfill
 ```
 
 Now, you can import the entry point for the minimal version you intend to support. For example, if you import the IE9 entry point, this will include IE10 and IE11 support.

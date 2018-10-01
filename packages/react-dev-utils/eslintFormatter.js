@@ -42,6 +42,9 @@ function formatter(results) {
       }
 
       let line = message.line || 0;
+      if (message.column) {
+        line += ':' + message.column;
+      }
       let position = chalk.bold('Line ' + line + ':');
       return [
         '',
