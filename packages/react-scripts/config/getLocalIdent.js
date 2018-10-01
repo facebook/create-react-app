@@ -3,18 +3,18 @@
 const getLocalIdent = (context, localIdentName, localName) => {
   const projectNameMatches = /.*\/([^/]+)\/src|lib\/([^/]+)/.exec(
     context.resourcePath
-  ) || []
+  ) || [];
 
   const projectName =
-    projectNameMatches[2] || projectNameMatches[1] || 'babylon'
+    projectNameMatches[2] || projectNameMatches[1] || 'babylon';
 
   const pathInsideSrc = context.resourcePath.split(
     new RegExp(`${projectName}/(?:src/)?`, 'g')
-  )[1] || context.resourcePath
+  )[1] || context.resourcePath;
 
   const parentFolderName = pathInsideSrc ?
     pathInsideSrc.split('/').slice(-2, -1)[0] :
-    context.resourcePath.split('/').slice(-2, -1)[0]
+    context.resourcePath.split('/').slice(-2, -1)[0];
 
   const moduleName =
     pathInsideSrc
@@ -26,9 +26,9 @@ const getLocalIdent = (context, localIdentName, localName) => {
     moduleName.startsWith('index') ||
     moduleName.startsWith('styles')
       ? parentFolderName
-      : moduleName
+      : moduleName;
 
-  return `${projectName}__${finalisedFolderName}__${localName}`
+  return `${projectName}__${finalisedFolderName}__${localName}`;
 }
 
 module.exports = getLocalIdent
