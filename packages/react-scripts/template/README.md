@@ -1118,7 +1118,7 @@ We don’t recommend this approach.
 
 If the `proxy` option is **not** flexible enough for you, you can get direct access to the Express app instance and hook up your own proxy middleware.
 
-You can use this feature in conjunction with the `proxy` property in `package.json`, but it is recommended you consolidate all of your logic into `src/setupTests.js`.
+You can use this feature in conjunction with the `proxy` property in `package.json`, but it is recommended you consolidate all of your logic into `src/setupProxy.js`.
 
 First, install `http-proxy-middleware` using npm or Yarn:
 
