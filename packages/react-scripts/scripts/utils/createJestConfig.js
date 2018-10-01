@@ -47,6 +47,10 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },
     moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'node'],
+    watchPlugins: [
+      require.resolve('jest-watch-typeahead/filename'),
+      require.resolve('jest-watch-typeahead/testname'),
+    ],
   };
   if (rootDir) {
     config.rootDir = rootDir;
