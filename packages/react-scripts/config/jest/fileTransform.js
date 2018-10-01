@@ -27,10 +27,7 @@ module.exports = {
           ref: null,
           key: null,
           props: Object.assign({}, props, {
-            children: '/* ${assetFilename.slice(
-              1,
-              assetFilename.length - 1
-            )} */'
+            children: ${assetFilename}
           })
         }),
       };`;
