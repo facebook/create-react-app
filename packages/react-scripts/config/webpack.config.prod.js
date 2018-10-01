@@ -370,6 +370,11 @@ module.exports = {
               importLoaders: 1,
               sourceMap: shouldUseSourceMap,
             }),
+            // Don't consider CSS imports dead code even if the
+            // containing package claims to have no side effects.
+            // Remove this when webpack adds a warning or an error for this.
+            // See https://github.com/webpack/webpack/issues/6571
+            sideEffects: true,
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
@@ -397,6 +402,11 @@ module.exports = {
               },
               'sass-loader'
             ),
+            // Don't consider CSS imports dead code even if the
+            // containing package claims to have no side effects.
+            // Remove this when webpack adds a warning or an error for this.
+            // See https://github.com/webpack/webpack/issues/6571
+            sideEffects: true,
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
