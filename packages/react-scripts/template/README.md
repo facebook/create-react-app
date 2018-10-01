@@ -28,6 +28,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding a Sass stylesheet](#adding-a-sass-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
 - [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
+- [Adding SVGs](#adding-svgs)
 - [Using the `public` Folder](#using-the-public-folder)
   - [Changing the HTML](#changing-the-html)
   - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system)
@@ -83,7 +84,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Static Server](#static-server)
   - [Other Solutions](#other-solutions)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
-    - [Service Worker Considerations](#service-worker-considerations)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [Customizing Environment Variables for Arbitrary Build Environments](#customizing-environment-variables-for-arbitrary-build-environments)
   - [Azure](#azure)
@@ -661,23 +661,22 @@ An alternative way of handling static assets is described in the next section.
 
 ### Adding SVGs
 
-One way to add SVG files was described in the section above. However `react-scripts@2.0.0` added an ability to import SVGs as React components through the fantastic [@svgr/webpack](https://github.com/smooth-code/svgr/tree/master/packages/webpack). You can use either of the two approaches. In your code it would look like:
+> Note: this feature is available with `react-scripts@2.0.0` and higher.
+
+One way to add SVG files was described in the section above. You can also import SVGs directly as React components. You can use either of the two approaches. In your code it would look like this:
 
 ```js
-import logoUrl, { ReactComponent as Logo } from './logo.svg'
-
-console.log(logoUrl); // /logo.84287d09.svg
+import { ReactComponent as Logo } from './logo.svg'
 
 const App = () => (
   <div>
-    {/* logoUrl is the URL of your SVG file */}
-    <img src={logoUrl} alt="Logo" />
-
     {/* Logo is an actual React component */}
     <Logo />
   </div>
-)
+);
 ```
+
+This is handy if you don't want to load SVG as a separate file. Don't forget the curly braces in the import! The `ReactComponent` import name is special and tells Create React App that you want a React component that renders an SVG, rather than its filename.
 
 ## Using the `public` Folder
 
