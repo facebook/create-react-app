@@ -684,8 +684,8 @@ An alternative way of handling static assets is described in the next section.
 One way to add SVG files was described in the section above. You can also import SVGs directly as React components. You can use either of the two approaches. In your code it would look like this:
 
 ```js
-import { ReactComponent as Logo } from './logo.svg'
- const App = () => (
+import { ReactComponent as Logo } from './logo.svg';
+const App = () => (
   <div>
     {/* Logo is an actual React component */}
     <Logo />
@@ -807,14 +807,28 @@ Now you are ready to use the imported reactstrap components within your componen
 
 ### Using a Custom Theme
 
+> Note: this feature is available with `react-scripts@2.0.0` and higher.
+
 Sometimes you might need to tweak the visual styles of Bootstrap (or equivalent package).<br>
-We suggest the following approach:
+As of `react-scripts@2.0.0` you can import `.scss` files. This makes it possible to use a package's built-in Sass variables for global style preferences.
 
-- Create a new package that depends on the package you wish to customize, e.g. Bootstrap.
-- Add the necessary build steps to tweak the theme, and publish your package on npm.
-- Install your own theme npm package as a dependency of your app.
+To customize Bootstrap, create a file called `src/custom.scss` (or similar) and import the Bootstrap source stylesheet. Add any overrides _before_ the imported file(s). You can reference [Bootstrap's documentation](http://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables) for the names of the available variables.
 
-Here is an example of adding a [customized Bootstrap](https://medium.com/@tacomanator/customizing-create-react-app-aa9ffb88165) that follows these steps.
+```scss
+// Override default variables before the import
+$body-bg: #000;
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+```
+
+> **Note:** You must prefix imports from `node_modules` with `~` as displayed above.
+
+Finally, import the newly created `.scss` file instead of the default Bootstrap `.css` in the beginning of your `src/index.js` file, for example:
+
+```javascript
+import './custom.scss';
+```
 
 ## Adding Flow
 
