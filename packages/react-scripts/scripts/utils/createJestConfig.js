@@ -22,7 +22,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
-    setupFiles: ['react-app-polyfill/jsdom'],
+    resolver: require.resolve('jest-pnp-resolver'),
+    setupFiles: [require.resolve('react-app-polyfill/jsdom')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.{js,jsx}',
