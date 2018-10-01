@@ -233,8 +233,7 @@ yarn start --smoke-test
 # Test when PnP is enabled
 # ******************************************************************************
 cd "$temp_app_path"
-echo $OSTYPE
-YARN_PLUGNPLAY_OVERRIDE=1 npx create-react-app test-app-pnp
+npx create-react-app test-app-pnp --use-pnp
 cd test-app-pnp
 ! exists node_modules
 exists .pnp.js
