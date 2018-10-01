@@ -95,25 +95,31 @@ function verifyPackageTree() {
             `  ${chalk.bold(chalk.red(maybeDep))} (version: ${chalk.bold(
               chalk.red(depPackageJson.version)
             )}) \n\n` +
-            `Manually installing incompatible versions is known to cause hard-to-debug issues.\n` +
-            `To fix the dependency tree, try following the steps below in the exact order:\n\n` +
+            `Manually installing incompatible versions is known to cause hard-to-debug issues.\n\n` +
+            chalk.red(
+              `If prefer to ignore this check, add ${chalk.bold(
+                'SKIP_PREFLIGHT_CHECK=true'
+              )} to an ${chalk.bold('.env')} file in your project.\n` +
+                `That will permanently disable this message but you might encounter other issues.\n\n`
+            ) +
+            `To ${chalk.green(
+              'fix'
+            )} the dependency tree, try following the steps below in the exact order:\n\n` +
             `  ${chalk.cyan('1.')} Delete ${chalk.bold(
               'package-lock.json'
             )} (${chalk.underline('not')} ${chalk.bold(
               'package.json'
-            )}!) and/or ${chalk.bold(
-              'yarn.lock'
-            )} in your project folder.\n\n` +
+            )}!) and/or ${chalk.bold('yarn.lock')} in your project folder.\n` +
             `  ${chalk.cyan('2.')} Delete ${chalk.bold(
               'node_modules'
-            )} in your project folder.\n\n` +
+            )} in your project folder.\n` +
             `  ${chalk.cyan('3.')} Remove "${chalk.bold(
               dep
             )}" from ${chalk.bold('dependencies')} and/or ${chalk.bold(
               'devDependencies'
             )} in the ${chalk.bold(
               'package.json'
-            )} file in your project folder.\n\n` +
+            )} file in your project folder.\n` +
             `  ${chalk.cyan('4.')} Run ${chalk.bold(
               'npm install'
             )} or ${chalk.bold(
