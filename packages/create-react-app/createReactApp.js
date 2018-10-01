@@ -76,6 +76,7 @@ const program = new commander.Command(packageJson.name)
     'use a non-standard version of react-scripts'
   )
   .option('--use-npm')
+  .option('--use-pnp')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -178,10 +179,11 @@ createApp(
   program.verbose,
   program.scriptsVersion,
   program.useNpm,
+  program.usePnp,
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(name, verbose, version, useNpm, template) {
+function createApp(name, verbose, version, useNpm, usePnp, template) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -241,7 +243,16 @@ function createApp(name, verbose, version, useNpm, template) {
       version = 'react-scripts@0.9.x';
     }
   }
-  run(root, appName, version, verbose, originalDirectory, template, useYarn);
+  run(
+    root,
+    appName,
+    version,
+    verbose,
+    originalDirectory,
+    template,
+    useYarn,
+    usePnp
+  );
 }
 
 function shouldUseYarn() {
@@ -253,7 +264,7 @@ function shouldUseYarn() {
   }
 }
 
-function install(root, useYarn, dependencies, verbose, isOnline) {
+function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
   return new Promise((resolve, reject) => {
     let command;
     let args;
@@ -262,6 +273,9 @@ function install(root, useYarn, dependencies, verbose, isOnline) {
       args = ['add', '--exact'];
       if (!isOnline) {
         args.push('--offline');
+      }
+      if (usePnp) {
+        args.push('--enable-pnp');
       }
       [].push.apply(args, dependencies);
 
@@ -287,6 +301,12 @@ function install(root, useYarn, dependencies, verbose, isOnline) {
         '--loglevel',
         'error',
       ].concat(dependencies);
+
+      if (usePnp) {
+        console.log(chalk.yellow("NPM doesn't support PnP."));
+        console.log(chalk.yellow('Falling back to the regular installs.'));
+        console.log();
+      }
     }
 
     if (verbose) {
@@ -313,7 +333,8 @@ function run(
   verbose,
   originalDirectory,
   template,
-  useYarn
+  useYarn,
+  usePnp
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
   const allDependencies = ['react', 'react-dom', packageToInstall];
@@ -336,23 +357,34 @@ function run(
       );
       console.log();
 
-      return install(root, useYarn, allDependencies, verbose, isOnline).then(
-        () => packageName
-      );
+      return install(
+        root,
+        useYarn,
+        usePnp,
+        allDependencies,
+        verbose,
+        isOnline
+      ).then(() => packageName);
     })
-    .then(packageName => {
+    .then(async packageName => {
       checkNodeVersion(packageName);
       setCaretRangeForRuntimeDeps(packageName);
 
-      const scriptsPath = path.resolve(
-        process.cwd(),
-        'node_modules',
-        packageName,
-        'scripts',
-        'init.js'
+      const pnpPath = path.resolve(process.cwd(), '.pnp.js');
+
+      const nodeArgs = fs.existsSync(pnpPath) ? ['--require', pnpPath] : [];
+
+      await executeNodeScript(
+        {
+          cwd: process.cwd(),
+          args: nodeArgs,
+        },
+        [root, appName, verbose, originalDirectory, template],
+        `
+        var init = require('${packageName}/scripts/init.js');
+        init.apply(null, JSON.parse(process.argv[1]));
+      `
       );
-      const init = require(scriptsPath);
-      init(root, appName, verbose, originalDirectory, template);
 
       if (version === 'react-scripts@0.9.x') {
         console.log(
@@ -540,6 +572,11 @@ function checkNodeVersion(packageName) {
     packageName,
     'package.json'
   );
+
+  if (!fs.existsSync(packageJsonPath)) {
+    return;
+  }
+
   const packageJson = require(packageJsonPath);
   if (!packageJson.engines || !packageJson.engines.node) {
     return;
@@ -791,6 +828,26 @@ function checkIfOnline(useYarn) {
       } else {
         resolve(err == null);
       }
+    });
+  });
+}
+
+function executeNodeScript({ cwd, args }, data, source) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(
+      process.execPath,
+      [...args, '-e', source, '--', JSON.stringify(data)],
+      { cwd, stdio: 'inherit' }
+    );
+
+    child.on('close', code => {
+      if (code !== 0) {
+        reject({
+          command: `node ${args.join(' ')}`,
+        });
+        return;
+      }
+      resolve();
     });
   });
 }

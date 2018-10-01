@@ -43,13 +43,16 @@ class InlineChunkHtmlPlugin {
         assets.headTags = assets.headTags.map(tagFunction);
         assets.bodyTags = assets.bodyTags.map(tagFunction);
       });
-      hooks.afterEmit.tap('InlineChunkHtmlPlugin', () => {
-        Object.keys(compilation.assets).forEach(assetName => {
-          if (this.tests.some(test => assetName.match(test))) {
-            delete compilation.assets[assetName];
-          }
-        });
-      });
+
+      // Still emit the runtime chunk for users who do not use our generated
+      // index.html file.
+      // hooks.afterEmit.tap('InlineChunkHtmlPlugin', () => {
+      //   Object.keys(compilation.assets).forEach(assetName => {
+      //     if (this.tests.some(test => assetName.match(test))) {
+      //       delete compilation.assets[assetName];
+      //     }
+      //   });
+      // });
     });
   }
 }

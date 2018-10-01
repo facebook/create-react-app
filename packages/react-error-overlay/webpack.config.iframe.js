@@ -76,4 +76,5 @@ module.exports = {
       __REACT_DEVTOOLS_GLOBAL_HOOK__: '({})',
     }),
   ],
+  performance: false,
 };

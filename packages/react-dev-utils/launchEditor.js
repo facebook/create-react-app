@@ -67,6 +67,7 @@ const COMMON_EDITORS_LINUX = {
   code: 'code',
   'code-insiders': 'code-insiders',
   emacs: 'emacs',
+  gvim: 'gvim',
   'idea.sh': 'idea',
   'phpstorm.sh': 'phpstorm',
   'pycharm.sh': 'pycharm',
@@ -136,6 +137,7 @@ function getArgumentsForLineNumber(
     case 'vim':
     case 'mvim':
     case 'joe':
+    case 'gvim':
       return ['+' + lineNumber, fileName];
     case 'emacs':
     case 'emacsclient':
