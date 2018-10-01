@@ -16,19 +16,19 @@ const getLocalIdent = (context, localIdentName, localName) => {
     pathInsideSrc.split('/').slice(-2, -1)[0] :
     context.resourcePath.split('/').slice(-2, -1)[0];
 
-  const moduleName =
+  const fileName =
     pathInsideSrc
       .split('/')
       .slice(-1)[0]
       .split('.')[0] || ''
 
-  let finalisedFolderName =
-    moduleName.startsWith('index') ||
-    moduleName.startsWith('styles')
+  let moduleName =
+    fileName.startsWith('index') ||
+    fileName.startsWith('styles')
       ? parentFolderName
-      : moduleName;
+      : fileName;
 
-  return `${projectName}__${finalisedFolderName}__${localName}`;
+  return `${projectName}__${moduleName}__${localName}`;
 }
 
 module.exports = getLocalIdent

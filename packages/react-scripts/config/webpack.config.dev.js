@@ -212,8 +212,6 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                   modules: true,
-                  localIdentRegExp: /.*\/([^/]+)\/src/,
-                  localIdentName: '[1]__[folder]__[local]',
                   getLocalIdent
                 },
               },

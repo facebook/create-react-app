@@ -235,8 +235,6 @@ module.exports = {
                         minimize: true,
                         sourceMap: true,
                         modules: true,
-                        localIdentRegExp: /.*\/([^/]+)\/src/,
-                        localIdentName: '[1]__[folder]__[local]',
                         getLocalIdent,
                       },
                     },
