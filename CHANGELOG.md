@@ -1,5 +1,12 @@
 ## 2.0.3 (October 1, 2018)
 
+Create React App v2 brings a year's worth of updates with a single dependency update.
+We summarized all of the changes in a blog post!<br>
+
+Check it out: **[Create React App 2.0: Babel 7, Sass, and More](https://reactjs.org/blog/2018/10/01/create-react-app-v2.html)**.
+
+Have you read it? Now let's see how to update your app to the latest version.
+
 # Migrating from 1.x to 2.0.3
 
 Inside any created project that has not been ejected, run:
@@ -595,4 +602,4 @@ If you used 2.x alphas, please [follow these instructions](https://gist.github.c
 
 ## Releases Before 2.x
 
-Please refer to [CHANGELOG-0.x.md](./CHANGELOG-0.x.md) for earlier versions.
+Please refer to [CHANGELOG-1.x.md](./CHANGELOG-1.x.md) for earlier versions.
