@@ -1846,8 +1846,7 @@ following into account:
 
 1. By default, the generated service worker file will not intercept or cache any
    cross-origin traffic, like HTTP [API requests](#integrating-with-an-api-backend),
-   images, or embeds loaded from a different domain. If you would like to use a
-   runtime caching strategy for those requests, you can add in a [`runtimeCaching`](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#generateSW-runtimeCaching) to section to a custom `workbox.config.js` file.
+   images, or embeds loaded from a different domain.
 
 ### Progressive Web App Metadata
 
