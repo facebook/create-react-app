@@ -272,6 +272,10 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       command = 'yarnpkg';
       args = ['add', '--exact'];
       if (!isOnline) {
+        console.log(chalk.yellow('You appear to be offline.'));
+        console.log(chalk.yellow('Falling back to the local Yarn cache.'));
+        console.log();
+
         args.push('--offline');
       }
       if (usePnp) {
@@ -286,12 +290,6 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       // This is why for npm, we run checkThatNpmCanReadCwd() early instead.
       args.push('--cwd');
       args.push(root);
-
-      if (!isOnline) {
-        console.log(chalk.yellow('You appear to be offline.'));
-        console.log(chalk.yellow('Falling back to the local Yarn cache.'));
-        console.log();
-      }
     } else {
       command = 'npm';
       args = [
