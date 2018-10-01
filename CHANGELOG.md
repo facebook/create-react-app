@@ -175,6 +175,7 @@ If you used 2.x alphas, please [follow these instructions](https://gist.github.c
 #### :rocket: New Feature
 
 - `react-scripts`
+  - [#5218](https://github.com/facebook/create-react-app/pull/5218) Support globalSetup and globalTeardown Jest options ([@gaearon](https://github.com/gaearon))
   - [#5073](https://github.com/facebook/create-react-app/pull/5073) Add user defined proxy via middleware ([@Timer](https://github.com/Timer))
   - [#3945](https://github.com/facebook/create-react-app/pull/3945) Allow bundles to be analyzed with Webpack-specific tools ([@joshwcomeau](https://github.com/joshwcomeau))
   - [#4195](https://github.com/facebook/create-react-app/pull/4195) Sass loader ([@Fabianopb](https://github.com/Fabianopb))
