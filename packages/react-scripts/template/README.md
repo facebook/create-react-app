@@ -223,7 +223,7 @@ While we recommend using experimental proposals with some caution, Facebook heav
 
 Note that **this project includes no [polyfills](https://github.com/facebook/create-react-app/blob/next/packages/react-app-polyfill/README.md)** by default.
 
-If you use any other ES6+ features that need **runtime support** (such as `Array.from()` or `Symbol`), make sure you are including the appropriate polyfills manually, or that the browsers you are targeting already support them.
+If you use any other ES6+ features that need **runtime support** (such as `Array.from()` or `Symbol`), make sure you are [including the appropriate polyfills manually](https://github.com/facebook/create-react-app/blob/next/packages/react-app-polyfill/README.md), or that the browsers you are targeting already support them.
 
 ## Syntax Highlighting in the Editor
 
