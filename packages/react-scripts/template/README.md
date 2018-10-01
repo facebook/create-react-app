@@ -810,7 +810,7 @@ Now you are ready to use the imported reactstrap components within your componen
 Sometimes you might need to tweak the visual styles of Bootstrap (or equivalent package).<br>
 As of `react-scripts@2.0.0` you can import `.scss` files. This makes it possible to use a package's built-in Sass variables for global style preferences.
 
-To customize Bootstrap, create a `.scss` file and import the Bootstrap source stlysheet. Add any overrides _before_ the imported file(s). You can reference [Bootstrap's documentation](http://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables) for the names of the available variables.
+To customize Bootstrap, create a `.scss` file and import the Bootstrap source stylesheet. Add any overrides _before_ the imported file(s). You can reference [Bootstrap's documentation](http://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables) for the names of the available variables.
 
 ```scss
 // Override default variables before the import
