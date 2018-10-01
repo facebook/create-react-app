@@ -592,6 +592,8 @@ This will allow you to do imports like
 
 > **Tip:** You can opt into using this feature with [CSS modules](#adding-a-css-modules-stylesheet) too!
 
+> **Note:** You must prefix imports from `node_modules` with `~` as displayed above.
+
 ## Post-Processing CSS
 
 This project setup minifies your CSS and adds vendor prefixes to it automatically through [Autoprefixer](https://github.com/postcss/autoprefixer) so you don’t need to worry about it.
