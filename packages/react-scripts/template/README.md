@@ -1040,7 +1040,7 @@ The global `fetch` function allows you to easily make AJAX requests. It takes in
 A Promise represents the eventual result of an asynchronous operation, you can find more information about Promises [here](https://www.promisejs.org/) and [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). Both axios and `fetch()` use Promises under the hood. You can also use the [`async / await`](https://davidwalsh.name/async-await) syntax to reduce the callback nesting.
 
 Make sure the [`fetch()` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) are available in your target audience's browsers.
-For example, support in Internet Explorer requires a [polyfill](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md).
+For example, support in Internet Explorer requires a [polyfill](https://github.com/facebook/create-react-app/blob/next/packages/react-app-polyfill/README.md).
 
 You can learn more about making AJAX requests from React components in [the FAQ entry on the React website](https://reactjs.org/docs/faq-ajax.html).
 
@@ -2446,9 +2446,9 @@ This will only work for locales that have been explicitly imported before.
 
 ### `npm run build` fails to minify
 
-Starting in Create React App v2, we now compile all ES.Next features found in `node_modules`. This means you can consume packages and not worry about them being syntax-incompatible with any browser.
+Before `react-scripts@2.0.0`, this problem was caused by third party `node_modules` using modern JavaScript features because the minifier couldn't handle them during the build. This has been solved by compiling standard modern JavaScript features inside `node_modules` in `react-scripts@2.0.0` and higher.
 
-If you're seeing this error, you're likely using an old version of `react-scripts` and need to upgrade to `react-scripts@>=2.0.0`.
+If you're seeing this error, you're likely using an old version of `react-scripts`. You can either fix it by avoiding a dependency that uses modern syntax, or by upgrading to `react-scripts@>=2.0.0` and following the migration instructions in the changelog.
 
 ## Alternatives to Ejecting
 
