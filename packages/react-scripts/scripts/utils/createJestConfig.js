@@ -22,8 +22,20 @@ module.exports = (resolve, rootDir, isEjecting) => {
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
-    resolver: require.resolve('jest-pnp-resolver'),
-    setupFiles: [require.resolve('react-app-polyfill/jsdom')],
+
+    // TODO: this breaks Yarn PnP on eject.
+    // But we can't simply emit this because it'll be an absolute path.
+    // The proper fix is to write jest.config.js on eject instead of a package.json key.
+    // Then these can always stay as require.resolve()s.
+    resolver: isEjecting
+      ? 'jest-pnp-resolver'
+      : require.resolve('jest-pnp-resolver'),
+    setupFiles: [
+      isEjecting
+        ? 'react-app-polyfill/jsdom'
+        : require.resolve('react-app-polyfill/jsdom'),
+    ],
+
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.{js,jsx}',
