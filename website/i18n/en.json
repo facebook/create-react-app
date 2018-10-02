@@ -25,8 +25,7 @@
     "links": {
       "Docs": "Docs",
       "API": "API",
-      "Help": "Help",
-      "Blog": "Blog"
+      "Help": "Help"
     },
     "categories": {
       "Docusaurus": "Docusaurus",
