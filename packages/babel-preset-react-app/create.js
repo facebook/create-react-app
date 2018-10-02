@@ -20,6 +20,12 @@ const validateBoolOption = (name, value, defaultValue) => {
   return value;
 };
 
+// @babel/preset-env provides good validations and error messages for bogus
+// options. Here we are simply falling back to default if the overrides are
+// falsey.
+const validatePresetEnvOptions = (options, defaultOptions) =>
+  options || defaultOptions;
+
 module.exports = function(api, opts, env) {
   if (!opts) {
     opts = {};
@@ -31,6 +37,11 @@ module.exports = function(api, opts, env) {
 
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
   var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
+  var isRegeneratorEnabled = validateBoolOption(
+    'regenerator',
+    opts.regenerator,
+    true
+  );
   var useAbsoluteRuntime = validateBoolOption(
     'absoluteRuntime',
     opts.absoluteRuntime,
@@ -43,6 +54,13 @@ module.exports = function(api, opts, env) {
       require.resolve('@babel/runtime/package.json')
     );
   }
+
+  // We allow for separate preset overrides for production/development and test.
+  var presetEnvOverrides = validatePresetEnvOptions(opts.presetEnv, undefined);
+  var presetEnvTestOverrides = validatePresetEnvOptions(
+    opts.presetEnvTest,
+    undefined
+  );
 
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
@@ -59,32 +77,38 @@ module.exports = function(api, opts, env) {
       isEnvTest && [
         // ES features necessary for user's Node version
         require('@babel/preset-env').default,
-        {
-          targets: {
-            node: 'current',
+        Object.assign(
+          {
+            targets: {
+              node: 'current',
+            },
           },
-        },
+          presetEnvTestOverrides
+        ),
       ],
       (isEnvProduction || isEnvDevelopment) && [
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
-        {
-          // We want Create React App to be IE 9 compatible until React itself
-          // no longer works with IE 9
-          targets: {
-            ie: 9,
+        Object.assign(
+          {
+            // We want Create React App to be IE 9 compatible until React itself
+            // no longer works with IE 9
+            targets: {
+              ie: 9,
+            },
+            // Users cannot override this behavior because this Babel
+            // configuration is highly tuned for ES5 support
+            ignoreBrowserslistConfig: true,
+            // If users import all core-js they're probably not concerned with
+            // bundle size. We shouldn't rely on magic to try and shrink it.
+            useBuiltIns: false,
+            // Do not transform modules to CJS
+            modules: false,
+            // Exclude transforms that make all code slower
+            exclude: ['transform-typeof-symbol'],
           },
-          // Users cannot override this behavior because this Babel
-          // configuration is highly tuned for ES5 support
-          ignoreBrowserslistConfig: true,
-          // If users import all core-js they're probably not concerned with
-          // bundle size. We shouldn't rely on magic to try and shrink it.
-          useBuiltIns: false,
-          // Do not transform modules to CJS
-          modules: false,
-          // Exclude transforms that make all code slower
-          exclude: ['transform-typeof-symbol'],
-        },
+          presetEnvOverrides
+        ),
       ],
       [
         require('@babel/preset-react').default,
@@ -136,7 +160,7 @@ module.exports = function(api, opts, env) {
         {
           corejs: false,
           helpers: areHelpersEnabled,
-          regenerator: true,
+          regenerator: isRegeneratorEnabled,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.
