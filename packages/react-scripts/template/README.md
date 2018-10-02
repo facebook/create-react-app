@@ -869,7 +869,7 @@ yarn upgrade babel-plugin-relay@dev
 Then, wherever you use the `graphql` template tag, import the macro:
 
 ```js
-import graphql from "babel-plugin-relay/macro";
+import graphql from 'babel-plugin-relay/macro';
 // instead of:
 //   import { graphql } from "babel-plugin-relay"
 
@@ -1211,13 +1211,15 @@ You can now register proxies as you wish! Here's an example using the above `htt
 const proxy = require('http-proxy-middleware');
 
 module.exports = function(app) {
-  app.use('/api', proxy({ target: 'http://localhost:5000/' }));
+  app.use(proxy('/api', { target: 'http://localhost:5000/' }));
 };
 ```
 
 > **Note:** You do not need to import this file anywhere. It is automatically registered when you start the development server.
 
 > **Note:** This file only supports Node's JavaScript syntax. Be sure to only use supported language features (i.e. no support for Flow, ES Modules, etc).
+
+> **Note:** Passing the path to the proxy function allows you to use globbing and/or pattern matching on the path, which is more flexible than the express route matching.
 
 ## Using HTTPS in Development
 
