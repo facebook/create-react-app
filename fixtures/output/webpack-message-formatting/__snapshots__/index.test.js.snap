@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`webpack message formatting formats aliased unknown export 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Attempted import error: 'bar' is not exported from './AppUnknownExport' (imported as 'bar2').
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats babel syntax error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Syntax error: Unterminated JSX contents (8:13)
+
+   6 |       <div>
+   7 |         <span>
+>  8 |       </div>
+     |             ^
+   9 |     );
+  10 |   }
+  11 | }
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats css syntax error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/AppCss.css
+Syntax error: Unexpected } (3:2)
+
+  1 | .App {
+  2 |   color: red;
+> 3 | }}
+    |  ^
+  4 |
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats eslint error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+  Line 4:  'b' is not defined  no-undef
+
+Search for the keywords to learn more about each error.
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats eslint warning 1`] = `
+Object {
+  "stderr": "",
+  "stdout": "Creating an optimized production build...
+Compiled with warnings.
+
+./src/App.js
+  Line 3:  'foo' is defined but never used  no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+",
+}
+`;
+
+exports[`webpack message formatting formats file not found error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Cannot find file './ThisFileSouldNotExist' in './src'.
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats missing package 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Cannot find module: 'unknown-package'. Make sure this package is installed.
+
+You can install this package by running: yarn add unknown-package.
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats no default export 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Attempted import error: './ExportNoDefault' does not contain a default export (imported as 'myImport').
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats out of scope error 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+You attempted to import ../OutOfScopeImport which falls outside of the project src/ directory. Relative imports outside of src/ are not supported.
+You can either move it inside src/, or add a symlink to it from project's node_modules/.
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting formats unknown export 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/App.js
+Attempted import error: 'bar' is not exported from './AppUnknownExport'.
+
+
+",
+  "stdout": "",
+}
+`;
+
+exports[`webpack message formatting helps when users tries to use sass 1`] = `
+Object {
+  "stderr": "Creating an optimized production build...
+Failed to compile.
+
+./src/AppSass.scss
+To import Sass files, you first need to install node-sass.
+Run \`npm install node-sass\` or \`yarn add node-sass\` inside your workspace.
+
+
+",
+  "stdout": "",
+}
+`;
