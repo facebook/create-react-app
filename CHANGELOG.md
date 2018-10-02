@@ -5,7 +5,7 @@ We summarized all of the changes in a blog post!<br>
 
 Check it out: **[Create React App 2.0: Babel 7, Sass, and More](https://reactjs.org/blog/2018/10/01/create-react-app-v2.html)**.
 
-Have you read it? Now let's see how to update your app to the latest version.
+It provides a high-level overview of new features and improvements. Now let's see how to update your app to the latest version in detail.
 
 # Migrating from 1.x to 2.0.3
 
@@ -17,9 +17,43 @@ $ # or
 $ yarn add --exact react-scripts@2.0.3
 ```
 
-Next, follow the migration instructions below that are relevant to you.
+Like any major release, it contains a few breaking changes. We expect that they won't affect every users, but we provide them in detail below. We recommend to scan over these sections to see if something affects you. If we missed something, please file a new issue.
 
-## Use dynamic `import()` instead of `require.ensure()`
+## Breaking Change: IE 9, IE 10, and IE 11 are no longer supported by default (but you can opt in!)
+
+We have dropped default support for Internet Explorer 9, 10, and 11. If you still need to support these browsers, follow the instructions below.
+
+First, install `react-app-polyfill`:
+
+```bash
+$ npm install react-app-polyfill --save
+$ # or
+$ yarn add react-app-polyfill
+```
+
+Next, place one of the following lines at the very top of `src/index.js`:
+
+```js
+import 'react-app-polyfill/ie9'; // For IE 9-11 support
+import 'react-app-polyfill/ie11'; // For IE 11 support
+```
+
+You can read more about [these polyfills here](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill).
+
+## Breaking Change: Dynamic `import()` of a CommonJS module now has a `.default` property
+
+[Webpack 4 changed the behavior of `import()`](https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655) to be closer in line with the specification.
+
+Previously, importing a CommonJS module did not require you specify the default export. In most cases, this is now required.
+If you see errors in your application about `... is not a function`, you likely need to update your dynamic import, e.g.:
+
+```js
+const throttle = await import('lodash/throttle');
+// replace with
+const throttle = await import('lodash/throttle').then(m => m.default);
+```
+
+## Breaking Change: `require.ensure()` is superseded by dynamic `import()`
 
 We previously allowed code splitting with a webpack-specific directive, `require.ensure()`. It is now disabled in favor of `import()`. To switch to `import()`, follow the examples below:
 
@@ -52,7 +86,7 @@ Promise.all([import('module-a'), import('module-b')]).then(([a, b]) => {
 });
 ```
 
-## The default Jest environment was changed to `jsdom`
+## Breaking Change: The default Jest environment was changed to `jsdom`
 
 Look at the `test` entry in the `scripts` section of your `package.json`.
 Here's a table how to change it from "before" and "after", depending on what you have there:
@@ -62,17 +96,10 @@ Here's a table how to change it from "before" and "after", depending on what you
 | `react-scripts test --env=jsdom` | `react-scripts test`            |
 | `react-scripts test`             | `react-scripts test --env=node` |
 
-## `.mjs` file extension support was removed
 
-Change the extension of any files in your project using `.mjs` to just `.js`.
+## Breaking Change: Move advanced proxy configuration to `src/setupProxy.js`
 
-It was removed because of inconsistent support from underlying tools. We will add it back after it stops being experimental, and Jest gets built-in support for it.
-
-## Move advanced proxy configuration to `src/setupProxy.js`
-
-This change is only required if you used the _advanced_ proxy configuration in v1.
-
-To check if action is required, look for the `proxy` key in `package.json`. Then, follow the table below.
+To check if action is required, look for the `proxy` key in `package.json` and follow this table:
 
 1. I couldn't find a `proxy` key in `package.json`
    - No action is required!
@@ -81,9 +108,9 @@ To check if action is required, look for the `proxy` key in `package.json`. Then
 3. The value of `proxy` is an object
    - Follow the migration instructions below.
 
-If your `proxy` is an object, that means you are using the advanced proxy configuration.
+**It's worth highlighting: if your `proxy` field is a `string`, e.g. `http://localhost:5000`, or you don't have it, skip this section. This feature is still supported and has the same behavior.**
 
-**Again, if your `proxy` field is a `string`, e.g. `http://localhost:5000`, you do not need to do anything. This feature is still supported and has the same behavior.**
+If your `proxy` is an object, that means you are using the advanced proxy configuration. It has become fully customizable so we removed the limited support for the object-style configuration. Here's how to recreate it.
 
 First, install `http-proxy-middleware` using npm or Yarn:
 
@@ -129,39 +156,12 @@ module.exports = function(app) {
 
 You can also use completely custom logic there now! This wasn't possible before.
 
-## Internet Explorer is no longer supported by default (but you can opt in!)
+## Breaking Change:  `.mjs` file extension support was removed
 
-We have dropped default support for Internet Explorer 9, 10, and 11. If you still need to support these browsers, follow the instructions below.
+Change the extension of any files in your project using `.mjs` to just `.js`.
 
-First, install `react-app-polyfill`:
+It was removed because of inconsistent support from underlying tools. We will add it back after it stops being experimental, and Jest gets built-in support for it.
 
-```bash
-$ npm install react-app-polyfill --save
-$ # or
-$ yarn add react-app-polyfill
-```
-
-Next, place one of the following lines at the very top of `src/index.js`:
-
-```js
-import 'react-app-polyfill/ie9'; // For IE 9-11 support
-import 'react-app-polyfill/ie11'; // For IE 11 support
-```
-
-You can read more about [these polyfills here](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill).
-
-## The behavior of a CommonJS `import()` has changed
-
-[Webpack 4 changed the behavior of `import()`](https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655) to be closer in line with the specification.
-
-Previously, importing a CommonJS module did not require you specify the default export. In most cases, this is now required.
-If you see errors in your application about `... is not a function`, you likely need to update your dynamic import, e.g.:
-
-```js
-const throttle = await import('lodash/throttle');
-// replace with
-const throttle = await import('lodash/throttle').then(m => m.default);
-```
 
 ## **Anything missing?**
 
