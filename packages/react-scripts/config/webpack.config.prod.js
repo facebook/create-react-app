@@ -318,6 +318,7 @@ module.exports = {
               ]),
               // @remove-on-eject-end
               plugins: [
+                'lodash',
                 [
                   require.resolve('babel-plugin-named-asset-import'),
                   {
