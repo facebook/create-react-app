@@ -27,6 +27,10 @@ If you previously ejected but now want to upgrade, one common solution is to fin
 
 Like any major release, `react-scripts@2.0` contains a few breaking changes. We expect that they won't affect every user, but we recommend to scan over these sections to see if something is relevant to you. If we missed something, please file a new issue.
 
+### Node 6 is no longer supported
+
+Please upgrade to Node 8 (LTS) or later.
+
 ### IE 9, IE 10, and IE 11 are no longer supported by default (but you can opt in!)
 
 We have dropped default support for Internet Explorer 9, 10, and 11. If you still need to support these browsers, follow the instructions below.
@@ -34,9 +38,13 @@ We have dropped default support for Internet Explorer 9, 10, and 11. If you stil
 First, install `react-app-polyfill`:
 
 ```bash
-$ npm install react-app-polyfill --save
-$ # or
-$ yarn add react-app-polyfill
+npm install react-app-polyfill
+```
+
+or
+
+```
+yarn add react-app-polyfill
 ```
 
 Next, place one of the following lines at the very top of `src/index.js`:
