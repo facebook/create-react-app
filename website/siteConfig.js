@@ -25,7 +25,11 @@ const siteConfig = {
   //   organizationName: 'JoelMarcey'
 
   // For no header links in the top nav bar -> headerLinks: [],
-  headerLinks: [{ doc: 'doc1', label: 'Docs' }, { doc: 'doc4', label: 'API' }],
+  headerLinks: [
+    { doc: 'doc1', label: 'Docs' },
+    { doc: 'doc4', label: 'API' },
+    { href: 'https://reactjs.org/community/support.html', label: 'Help' },
+  ],
 
   /* path to images for header/footer */
   headerIcon: 'img/docusaurus.svg',
