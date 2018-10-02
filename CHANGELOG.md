@@ -1,6 +1,6 @@
 ## 2.0.3 (October 1, 2018)
 
-Create React App v2 brings a year's worth of updates with a single dependency update.
+Create React App 2.0 brings a year’s worth of improvements in a single dependency update.
 We summarized all of the changes in a blog post!<br>
 
 Check it out: **[Create React App 2.0: Babel 7, Sass, and More](https://reactjs.org/blog/2018/10/01/create-react-app-v2.html)**.
@@ -19,11 +19,9 @@ $ yarn add --exact react-scripts@2.0.3
 
 Next, follow the migration instructions below that are relevant to you.
 
-## You may no longer code split with `require.ensure()`
+## Use dynamic `import()` instead of `require.ensure()`
 
-We previously allowed code splitting with a webpack-specific directive, `require.ensure()`. It is now disabled in favor of `import()`.
-
-To switch to `import()`, follow the examples below:
+We previously allowed code splitting with a webpack-specific directive, `require.ensure()`. It is now disabled in favor of `import()`. To switch to `import()`, follow the examples below:
 
 **Single Module**
 
@@ -72,7 +70,7 @@ It was removed because of inconsistent support from underlying tools. We will ad
 
 ## Move advanced proxy configuration to `src/setupProxy.js`
 
-This change is only required for individuals who used the _advanced_ proxy configuration in v1.
+This change is only required if you used the _advanced_ proxy configuration in v1.
 
 To check if action is required, look for the `proxy` key in `package.json`. Then, follow the table below.
 
