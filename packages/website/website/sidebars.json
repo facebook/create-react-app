@@ -1,0 +1,7 @@
+{
+  "docs": {
+    "Getting started": ["getting-started"],
+    "User guide": ["user-guide"],
+    "Scripts": ["scripts"]
+  }
+}
