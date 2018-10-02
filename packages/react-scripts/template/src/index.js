@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import registerServiceWorker from 'rmw-shell/lib/utils/registerServiceWorker'
+import * as serviceWorker from 'rmw-shell/lib/utils/registerServiceWorker'
 import App, { MainAsync } from './App'
 
 ReactDOM.render(<App />, document.getElementById('root'), () => {
@@ -9,4 +9,4 @@ ReactDOM.render(<App />, document.getElementById('root'), () => {
   }, 1500)
 })
 
-registerServiceWorker()
+serviceWorker.register()
