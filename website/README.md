@@ -34,9 +34,6 @@ my-docusaurus/
     doc-2.md
     doc-3.md
   website/
-    blog/
-      2016-3-11-oldest-post.md
-      2017-10-24-newest-post.md
     core/
     node_modules/
     pages/
@@ -66,22 +63,6 @@ Edit me...
 ```
 
 For more information about docs, click [here](https://docusaurus.io/docs/en/navigation)
-
-## Editing an existing blog post
-
-Edit blog posts by navigating to `website/blog` and editing the corresponding post:
-
-`website/blog/post-to-be-edited.md`
-```markdown
----
-id: post-needs-edit
-title: This Blog Post Needs To Be Edited
----
-
-Edit me...
-```
-
-For more information about blog posts, click [here](https://docusaurus.io/docs/en/adding-blog)
 
 # Adding Content
 
@@ -115,36 +96,6 @@ My new content here..
 ```
 
 For more information about adding new docs, click [here](https://docusaurus.io/docs/en/navigation)
-
-## Adding a new blog post
-
-1. Make sure there is a header link to your blog in `website/siteConfig.js`:
-
-`website/siteConfig.js`
-```javascript
-headerLinks: [
-    ...
-    { blog: true, label: 'Blog' },
-    ...
-]
-```
-
-2. Create the blog post with the format `YYYY-MM-DD-My-Blog-Post-Title.md` in `website/blog`:
-
-`website/blog/2018-05-21-New-Blog-Post.md`
-
-```markdown
----
-author: Frank Li
-authorURL: https://twitter.com/foobarbaz
-authorFBID: 503283835
-title: New Blog Post
----
-
-Lorem Ipsum...
-```
-
-For more information about blog posts, click [here](https://docusaurus.io/docs/en/adding-blog)
 
 ## Adding items to your site's top navigation bar
 
