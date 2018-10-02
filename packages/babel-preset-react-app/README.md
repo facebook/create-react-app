@@ -51,3 +51,47 @@ Make sure you have a `tsconfig.json` file at the root directory. You can also us
   "presets": [["react-app", { "flow": false, "typescript": true }]]
 }
 ```
+
+## Usage within NPM packages
+
+If you are creating an NPM package that contains a React component you can use the options for `commonjs` and `esmodules` to create proper builds for `lib`, `es` and `dist` folders. The configuration example below will work for most common cases but will not be suitable to all projects. Similar setups are used by popular NPM packages such as [react-redux](https://github.com/reduxjs/react-redux) and [react-router](https://github.com/ReactTraining/react-router/tree/master/packages/react-router).
+
+### `babel.config.js`
+
+When building for `lib`, `es` folders you want to set the `absoluteRuntime` to false. When building for the `dist` folder, you also want to disable helpers (because Rollup manages helpers automatically).
+
+Note that it is recommended to set `NODE_ENV` environment variable to "production" when building an NPM package. Setting `NODE_ENV` to "development" will put the `@babel/preset-react` plugin into development mode, which is undesirable for a published NPM package.
+
+```js
+const { NODE_ENV, MODULES_ENV } = process.env;
+
+const isEnvTest = NODE_ENV === 'test';
+if (!isEnvTest) {
+  // force production mode for package builds
+  process.env.NODE_ENV = 'production';
+}
+
+const useCommonJS = isEnvTest || MODULES_ENV === 'commonjs';
+const useESModules = MODULES_ENV === 'esmodules';
+
+module.exports = {
+  presets: [
+    // for testing with jest/jsdom
+    useCommonJS && isEnvTest && 'babel-preset-react-app/test',
+    // building for lib folder
+    useCommonJS &&
+      !isEnvTest && [
+        'babel-preset-react-app/commonjs',
+        { absoluteRuntime: false },
+      ],
+    // building for es folder
+    useESModules && [
+      'babel-preset-react-app/esmodules',
+      { absoluteRuntime: false },
+    ],
+    // building for dist folder
+    !useCommonJS &&
+      !useESModules && ['babel-preset-react-app', { helpers: false }],
+  ].filter(Boolean),
+};
+```

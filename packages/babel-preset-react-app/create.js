@@ -29,10 +29,15 @@ module.exports = function(api, opts, env) {
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
 
+  var useCommonJS = validateBoolOption(
+    'useCommonJS',
+    opts.useCommonJS,
+    isEnvTest
+  );
   var useESModules = validateBoolOption(
     'useESModules',
     opts.useESModules,
-    isEnvDevelopment || isEnvProduction
+    false
   );
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
   var isTypeScriptEnabled = validateBoolOption(
@@ -54,6 +59,24 @@ module.exports = function(api, opts, env) {
     );
   }
 
+  // When building for commonjs or esmodules environments we need to choose
+  // different targets.
+  let targets;
+  if (useCommonJS) {
+    // For commonjs we target the oldest supported version of node.
+    // For tests we target the installed version of node.
+    // https://babeljs.io/docs/en/babel-preset-env#targetsnode
+    targets = { node: isEnvTest ? 'current' : 6 };
+  } else if (useESModules) {
+    // For esmodules we use the special esmodules target.
+    // https://babeljs.io/docs/en/babel-preset-env#targetsesmodules
+    targets = { esmodules: true };
+  } else {
+    // We want Create React App to be IE 9 compatible until React itself
+    // no longer works with IE 9
+    targets = { ie: 9 };
+  }
+
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
@@ -63,6 +86,11 @@ module.exports = function(api, opts, env) {
         '.'
     );
   }
+  if (useESModules && useCommonJS) {
+    throw new Error(
+      '`babel-preset-react-app` does not support setting both useESModules and useCommonJS to true.'
+    );
+  }
 
   return {
     presets: [
@@ -70,28 +98,22 @@ module.exports = function(api, opts, env) {
         // ES features necessary for user's Node version
         require('@babel/preset-env').default,
         {
-          targets: {
-            node: 'current',
-          },
+          targets,
         },
       ],
       (isEnvProduction || isEnvDevelopment) && [
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
-          // We want Create React App to be IE 9 compatible until React itself
-          // no longer works with IE 9
-          targets: {
-            ie: 9,
-          },
+          targets,
           // Users cannot override this behavior because this Babel
           // configuration is highly tuned for ES5 support
           ignoreBrowserslistConfig: true,
           // If users import all core-js they're probably not concerned with
           // bundle size. We shouldn't rely on magic to try and shrink it.
           useBuiltIns: false,
-          // Do not transform modules to CJS
-          modules: false,
+          // Do not transform modules to CJS (unless we're targeting commonJS)
+          modules: useCommonJS ? 'cjs' : false,
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
@@ -157,11 +179,12 @@ module.exports = function(api, opts, env) {
         {
           corejs: false,
           helpers: areHelpersEnabled,
-          regenerator: true,
+          // We only need to use regenerator in environments that don't support generators.
+          regenerator: !(useESModules || useCommonJS),
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
-          // We should turn this on once the lowest version of Node LTS
-          // supports ES Modules.
-          useESModules,
+          // We want to enable this for all builds except commonjs. This allows for smaller
+          // builds since it doesn't need to preserve commonjs semantics.
+          useESModules: !useCommonJS,
           // Undocumented option that lets us encapsulate our runtime, ensuring
           // the correct version is used
           // https://github.com/babel/babel/blob/090c364a90fe73d36a30707fc612ce037bdbbb24/packages/babel-plugin-transform-runtime/src/index.js#L35-L42
@@ -177,7 +200,7 @@ module.exports = function(api, opts, env) {
       ],
       // Adds syntax support for import()
       require('@babel/plugin-syntax-dynamic-import').default,
-      isEnvTest &&
+      useCommonJS &&
         // Transform dynamic import to require
         require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),

@@ -8,9 +8,11 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
+    "commonjs.js",
     "create.js",
     "dependencies.js",
     "dev.js",
+    "esmodules.js",
     "index.js",
     "webpack-overrides.js",
     "prod.js",
@@ -35,6 +37,7 @@
     "babel-loader": "8.0.5",
     "babel-plugin-dynamic-import-node": "2.2.0",
     "babel-plugin-macros": "2.5.0",
+    "babel-plugin-transform-dynamic-import": "2.1.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24"
   }
 }
