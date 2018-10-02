@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`issue #5234 (mjs files are imported as static files) correctly bundles files in development 1`] = `
+Object {
+  "graphql": "undefined",
+  "parse": "function",
+  "test": "/static/media/Test.4478d87c.mjs",
+}
+`;

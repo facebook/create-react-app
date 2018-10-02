@@ -206,7 +206,6 @@ module.exports = {
         // the use of this extension, so we need to tell webpack to fall back
         // to auto mode (ES Module interop, allows ESM to import CommonJS).
         test: /\.mjs$/,
-        include: /node_modules/,
         type: 'javascript/auto',
       },
       {
@@ -271,10 +270,23 @@ module.exports = {
               cacheCompression: false,
             },
           },
+          // Make sure `mjs` files get processed as files, not JS. We don't
+          // support `mjs`, so we deliver a file for now.
+          {
+            test: /\.mjs$/,
+            include: paths.appSrc,
+            loader: require.resolve('file-loader'),
+            options: {
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
           // Process any JS outside of the app with Babel.
           // Unlike the application JS, we only compile the standard ES features.
+          // `mjs` needs to be included here because some libraries forcibly
+          // import files with the `mjs` extension, or have set their `browser`
+          // or `module` field to a `mjs` file.
           {
-            test: /\.js$/,
+            test: /\.m?js$/,
             exclude: /@babel(?:\/|\\{1,2})runtime/,
             loader: require.resolve('babel-loader'),
             options: {
