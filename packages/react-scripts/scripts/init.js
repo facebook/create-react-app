@@ -51,11 +51,11 @@ module.exports = function(
       'react-scripts prettier --list-different "{src,test}/**/*.js"',
   };
 
-  const sdkVersion = '^0.8.0';
+  const sdkVersion = '~0.8.2';
   Object.assign(appPackage.dependencies, {
     '@deskpro/apps-sdk': sdkVersion,
     '@deskpro/apps-components': sdkVersion,
-    '@deskpro/apps-installer': '^1.0.4',
+    '@deskpro/apps-installer': '~1.0.7',
     'prop-types': '^15.6.2',
   });
 
