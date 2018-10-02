@@ -4,30 +4,45 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "cd packages/react-scripts && node scripts/build.js",
+    "build": "cd packages/react-scripts && node bin/react-scripts.js build",
     "changelog": "lerna-changelog",
     "create-react-app": "node tasks/cra.js",
     "e2e": "tasks/e2e-simple.sh",
     "e2e:docker": "tasks/local-test.sh",
     "postinstall": "cd packages/react-error-overlay/ && yarn build:prod",
     "publish": "tasks/publish.sh",
-    "start": "cd packages/react-scripts && node scripts/start.js",
-    "screencast": "svg-term --cast hItN7sl5yfCPTHxvFg5glhhfp --out screencast.svg --window",
-    "test": "cd packages/react-scripts && node scripts/test.js --env=jsdom",
-    "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
-    "precommit": "lint-staged"
+    "start": "cd packages/react-scripts && node bin/react-scripts.js start",
+    "screencast": "node ./tasks/screencast.js",
+    "screencast:error": "svg-term --cast jyu19xGl88FQ3poMY8Hbmfw8y --out screencast-error.svg --window --at 12000 --no-cursor",
+    "test": "cd packages/react-scripts && node bin/react-scripts.js test",
+    "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'"
   },
   "devDependencies": {
-    "eslint": "^4.4.1",
-    "husky": "^0.13.2",
-    "lerna": "2.6.0",
-    "lerna-changelog": "^0.6.0",
-    "lint-staged": "^3.3.1",
-    "prettier": "1.6.1",
-    "svg-term-cli": "^2.0.3"
+    "async-sema": "^2.1.3",
+    "eslint": "5.6.0",
+    "execa": "1.0.0",
+    "fs-extra": "^7.0.0",
+    "get-port": "^4.0.0",
+    "globby": "^8.0.1",
+    "husky": "1.0.0-rc.15",
+    "jest": "^23.6.0",
+    "lerna": "2.9.1",
+    "lerna-changelog": "^0.8.0",
+    "lint-staged": "^7.0.5",
+    "meow": "^5.0.0",
+    "multimatch": "^2.1.0",
+    "prettier": "1.14.3",
+    "strip-ansi": "^4.0.0",
+    "svg-term-cli": "^2.1.1",
+    "tempy": "^0.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js,md,css}": [
       "prettier --trailing-comma es5 --single-quote --write",
       "git add"
     ],
