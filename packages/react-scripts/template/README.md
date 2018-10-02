@@ -2508,7 +2508,7 @@ There might be a problem with the project dependency tree.
 It is likely not a bug in Create React App, but something you need to fix locally.
 ```
 
-This can be caused by a variety of issues. Reading the error message should point you in the offending packages.
+This can be caused by a variety of issues. Reading the error message should point you in the direction of the offending packages.
 
 To fix the dependency tree, try following the steps below in the exact order:
 
