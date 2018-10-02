@@ -31,7 +31,7 @@ Like any major release, `react-scripts@2.0` contains a few breaking changes. We 
 
 Please upgrade to Node 8 (LTS) or later.
 
-### IE 9, IE 10, and IE 11 are no longer supported by default (but you can opt in!)
+### Polyfills for IE 9, IE 10, and IE 11 are no included by default (but you can opt in!)
 
 We have dropped default support for Internet Explorer 9, 10, and 11. If you still need to support these browsers, follow the instructions below.
 
