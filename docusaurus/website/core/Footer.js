@@ -47,7 +47,7 @@ class Footer extends React.Component {
           <div>
             <h5>Community</h5>
             <a
-              href="http://stackoverflow.com/questions/tagged/"
+              href="https://stackoverflow.com/questions/tagged/create-react-app"
               target="_blank"
               rel="noreferrer noopener"
             >
