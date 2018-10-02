@@ -1,6 +1,6 @@
-## 2.0.2 (October 1, 2018)
+## 2.0.3 and Newer Versions
 
-TODO (work in progress)
+**Please refer to [CHANGELOG.md](./CHANGELOG.md) for the newer versions.**
 
 ## 1.1.5 (August 24, 2018)
 
