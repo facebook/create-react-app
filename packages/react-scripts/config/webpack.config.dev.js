@@ -19,6 +19,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
+const getClientEnvironment = require('./env');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
@@ -85,8 +86,6 @@ module.exports = {
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   entry: [
-    // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
     // When you save a file, the client will either apply hot updates (in case
