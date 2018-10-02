@@ -72,8 +72,7 @@ class Document extends Component {
             onChange={(e) => {
               this.setState({ value: e.target.value })
             }}
-            hintText={intl.formatMessage({ id: 'hot_dog_status' })}
-            ref={(input) => { if (input) { this.input = input } }}
+            placeholder={intl.formatMessage({ id: 'hot_dog_status' })}
           /><br />
           <Button variant="raised" color="primary" onClick={this.handleSave} style={{ margin: 12, marginLeft: 0 }} >
             Save

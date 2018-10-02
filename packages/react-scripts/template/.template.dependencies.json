@@ -18,7 +18,7 @@
         "match-sorter": "2.x",
         "material-ui-filter": "2.x",
         "material-ui-image": "3.x",
-        "material-ui-pickers": "^1.0.0-rc.9",
+        "material-ui-pickers": "^1.0.0-rc.14",
         "material-ui-responsive-menu": "1.x",
         "material-ui-selectable-menu-list": "1.x",
         "muishift": "1.x",
@@ -53,11 +53,11 @@
     },
     "devDependencies": {
         "enzyme": "3.x",
-        "react-scripts": "1.x",
+        "react-scripts": "2.x",
         "redux-logger": "3.x",
         "redux-testkit": "1.x",
         "selenium-webdriver": "^4.0.0-alpha.1",
         "source-map-explorer": "1.x",
-        "standard": "11.x"
+        "standard": "12.x"
     }
 }

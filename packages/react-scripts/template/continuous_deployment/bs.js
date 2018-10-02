@@ -6,49 +6,49 @@ var test = require('./bs_test.js')
 
 // Input capabilities
 var iPhone = {
-  'browserName': 'iPhone',
-  'device': 'iPhone 7',
-  'realMobile': 'true',
-  'os_version': '10.3',
+  browserName: 'iPhone',
+  device: 'iPhone 7',
+  realMobile: 'true',
+  os_version: '10.3',
   'browserstack.user': process.argv[2],
   'browserstack.key': process.argv[3]
 }
 
 var android = {
-  'browserName': 'android',
-  'device': 'Samsung Galaxy S8',
-  'realMobile': 'true',
-  'os_version': '7.0',
+  browserName: 'android',
+  device: 'Samsung Galaxy S8',
+  realMobile: 'true',
+  os_version: '7.0',
   'browserstack.user': process.argv[2],
   'browserstack.key': process.argv[3]
 }
 
 var desktopFF = {
-  'browserName': 'Firefox',
-  'browser_version': '59.0',
-  'os': 'Windows',
-  'os_version': '10',
-  'resolution': '1024x768',
+  browserName: 'Firefox',
+  browser_version: '59.0',
+  os: 'Windows',
+  os_version: '10',
+  resolution: '1024x768',
   'browserstack.user': process.argv[2],
   'browserstack.key': process.argv[3]
 }
 
 var desktopEdge = {
-  'browserName': 'Edge',
-  'browser_version': '16.0',
-  'os': 'Windows',
-  'os_version': '10',
-  'resolution': '1024x768',
+  browserName: 'Edge',
+  browser_version: '16.0',
+  os: 'Windows',
+  os_version: '10',
+  resolution: '1024x768',
   'browserstack.user': process.argv[2],
   'browserstack.key': process.argv[3]
 }
 
 var desktopIE = {
-  'browserName': 'IE',
-  'browser_version': '11.0',
-  'os': 'Windows',
-  'os_version': '10',
-  'resolution': '1024x768',
+  browserName: 'Chrome',
+  browser_version: '69.0',
+  os: 'Windows',
+  os_version: '10',
+  resolution: '1024x768',
   'browserstack.user': process.argv[2],
   'browserstack.key': process.argv[3]
 }
