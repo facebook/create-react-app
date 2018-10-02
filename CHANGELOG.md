@@ -12,14 +12,22 @@ It provides a high-level overview of new features and improvements. Now let's se
 Inside any created project that has not been ejected, run:
 
 ```bash
-$ npm install --save --save-exact react-scripts@2.0.3
-$ # or
-$ yarn add --exact react-scripts@2.0.3
+npm install --save --save-exact react-scripts@2.0.3
 ```
 
-Like any major release, it contains a few breaking changes. We expect that they won't affect every users, but we provide them in detail below. We recommend to scan over these sections to see if something affects you. If we missed something, please file a new issue.
+or
 
-## Breaking Change: IE 9, IE 10, and IE 11 are no longer supported by default (but you can opt in!)
+```
+yarn add --exact react-scripts@2.0.3
+```
+
+If you previously ejected but now want to upgrade, one common solution is to find the commits where you ejected (and any subsequent commits changing the configuration), revert them, upgrade, and later optionally eject again. It’s also possible that the feature you ejected for (maybe Sass or CSS Modules?) is now supported out of the box. You can find a list of notable new features in the **[Create React App 2.0 blog post](https://reactjs.org/blog/2018/10/01/create-react-app-v2.html)**.
+
+## Breaking Changes
+
+Like any major release, `react-scripts@2.0` contains a few breaking changes. We expect that they won't affect every user, but we recommend to scan over these sections to see if something is relevant to you. If we missed something, please file a new issue.
+
+### IE 9, IE 10, and IE 11 are no longer supported by default (but you can opt in!)
 
 We have dropped default support for Internet Explorer 9, 10, and 11. If you still need to support these browsers, follow the instructions below.
 
@@ -40,7 +48,7 @@ import 'react-app-polyfill/ie11'; // For IE 11 support
 
 You can read more about [these polyfills here](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill).
 
-## Breaking Change: Dynamic `import()` of a CommonJS module now has a `.default` property
+### Dynamic `import()` of a CommonJS module now has a `.default` property
 
 [Webpack 4 changed the behavior of `import()`](https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655) to be closer in line with the specification.
 
@@ -53,7 +61,7 @@ const throttle = await import('lodash/throttle');
 const throttle = await import('lodash/throttle').then(m => m.default);
 ```
 
-## Breaking Change: `require.ensure()` is superseded by dynamic `import()`
+### `require.ensure()` is superseded by dynamic `import()`
 
 We previously allowed code splitting with a webpack-specific directive, `require.ensure()`. It is now disabled in favor of `import()`. To switch to `import()`, follow the examples below:
 
@@ -86,7 +94,7 @@ Promise.all([import('module-a'), import('module-b')]).then(([a, b]) => {
 });
 ```
 
-## Breaking Change: The default Jest environment was changed to `jsdom`
+### The default Jest environment was changed to `jsdom`
 
 Look at the `test` entry in the `scripts` section of your `package.json`.
 Here's a table how to change it from "before" and "after", depending on what you have there:
@@ -97,7 +105,7 @@ Here's a table how to change it from "before" and "after", depending on what you
 | `react-scripts test`             | `react-scripts test --env=node` |
 
 
-## Breaking Change: Move advanced proxy configuration to `src/setupProxy.js`
+### Object `proxy` configuration is superseded by `src/setupProxy.js`
 
 To check if action is required, look for the `proxy` key in `package.json` and follow this table:
 
@@ -115,9 +123,13 @@ If your `proxy` is an object, that means you are using the advanced proxy config
 First, install `http-proxy-middleware` using npm or Yarn:
 
 ```bash
-$ npm install http-proxy-middleware --save
-$ # or
-$ yarn add http-proxy-middleware
+npm install http-proxy-middleware
+```
+
+or
+
+```
+yarn add http-proxy-middleware
 ```
 
 Next, create `src/setupProxy.js` and place the following contents in it:
@@ -156,14 +168,17 @@ module.exports = function(app) {
 
 You can also use completely custom logic there now! This wasn't possible before.
 
-## Breaking Change:  `.mjs` file extension support was removed
+### `.mjs` file extension support is removed
 
 Change the extension of any files in your project using `.mjs` to just `.js`.
 
 It was removed because of inconsistent support from underlying tools. We will add it back after it stops being experimental, and Jest gets built-in support for it.
 
+### `PropTypes` definitions are now removed in production
 
-## **Anything missing?**
+Normally, this shouldn't affect your logic and should make the resulting bundle smaller. However, you may be relying on PropTypes definition for production logic. This is not recommended, and will break now. If a library does it, one possible solution is to file an issue in it with a proposal to use a different field (not `propTypes`) to signal that the declaration needs to be retained.
+
+### Anything missing?
 
 This was a large release, and we might have missed something.
 
@@ -173,7 +188,7 @@ Please [file an issue](https://github.com/facebook/create-react-app/issues/new)
 
 If you used 2.x alphas, please [follow these instructions](https://gist.github.com/gaearon/8650d1c70e436e5eff01f396dffc4114).
 
-### Detailed Changelog
+# Detailed Changelog
 
 **For a readable summary of the changes, [check out our blog post](https://reactjs.org/blog/2018/10/01/create-react-app-v2.html).**
 
