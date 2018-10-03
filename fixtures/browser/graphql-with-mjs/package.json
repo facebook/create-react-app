@@ -4,6 +4,7 @@
     "graphql": "14.0.2",
     "react-apollo": "2.2.1",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "serve": "10.0.2"
   }
 }

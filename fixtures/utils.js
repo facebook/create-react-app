@@ -135,6 +135,36 @@ async function getOutputProduction({ directory, env = {} }) {
   }
 }
 
+async function startDevelopmentServer({ directory, env = {} }) {
+  const port = await getPort();
+  execa('./node_modules/.bin/react-scripts', ['start'], {
+    cwd: directory,
+    env: Object.assign(
+      {},
+      {
+        BROWSER: 'none',
+        PORT: port,
+        CI: 'false',
+        FORCE_COLOR: '0',
+      },
+      env
+    ),
+  });
+  return port;
+}
+
+async function startProductionServer({ directory, env = {} }) {
+  const port = await getPort();
+  await execa('./node_modules/.bin/react-scripts', ['build'], {
+    cwd: directory,
+    env: Object.assign({}, { CI: 'false' }, env),
+  });
+  execa('./node_modules/.bin/serve', ['-s', 'build', '-p', port], {
+    cwd: directory,
+  });
+  return port;
+}
+
 module.exports = {
   bootstrap,
   isSuccessfulDevelopment,
@@ -142,4 +172,6 @@ module.exports = {
   isSuccessfulTest,
   getOutputDevelopment,
   getOutputProduction,
+  startDevelopmentServer,
+  startProductionServer,
 };
