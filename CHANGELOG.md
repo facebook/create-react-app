@@ -1,3 +1,55 @@
+## 2.0.4 (October 3, 2018)
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#5281](https://github.com/facebook/create-react-app/pull/5281) Fix code minifying ([@Timer](https://github.com/Timer))
+  - [#5246](https://github.com/facebook/create-react-app/pull/5246) Fix `GENERATE_SOURCEMAP` env not working for css sourcemap ([@crux153](https://github.com/crux153))
+- `babel-preset-react-app`
+  - [#5278](https://github.com/facebook/create-react-app/pull/5278) Disable Symbol typeof transform ([@gaearon](https://github.com/gaearon))
+
+#### :nail_care: Enhancement
+
+- `create-react-app`
+  - [#5270](https://github.com/facebook/create-react-app/pull/5270) Caches the Yarn resolution for faster installs ([@arcanis](https://github.com/arcanis))
+  - [#5269](https://github.com/facebook/create-react-app/pull/5269) Adds a version check when using --use-pnp ([@arcanis](https://github.com/arcanis))
+- `react-scripts`
+  - [#5258](https://github.com/facebook/create-react-app/pull/5258) Add `.mjs` support back to webpack ([@Timer](https://github.com/Timer))
+
+#### :memo: Documentation
+
+- Other
+  - [#5228](https://github.com/facebook/create-react-app/pull/5228) removed create-react-app-parcel link ([@lockround](https://github.com/lockround))
+  - [#5254](https://github.com/facebook/create-react-app/pull/5254) Update README links for CSS modules and SASS ([@yuyokk](https://github.com/yuyokk))
+  - [#5249](https://github.com/facebook/create-react-app/pull/5249) Set the color palette to something a bit more React-y ([@selbekk](https://github.com/selbekk))
+  - [#5244](https://github.com/facebook/create-react-app/pull/5244) Update favicon and OpenGraph images ([@selbekk](https://github.com/selbekk))
+  - [#5242](https://github.com/facebook/create-react-app/pull/5242) 5238 Removing sample pages ([@selbekk](https://github.com/selbekk))
+  - [#5243](https://github.com/facebook/create-react-app/pull/5243) Set the project name and owner correctly ([@selbekk](https://github.com/selbekk))
+  - [#5239](https://github.com/facebook/create-react-app/pull/5239) 5238 removing blog from Docusaurus ([@selbekk](https://github.com/selbekk))
+  - [#5227](https://github.com/facebook/create-react-app/pull/5227) Initial setup of Docusaurus ([@amyrlam](https://github.com/amyrlam))
+- `react-scripts`
+  - [#5252](https://github.com/facebook/create-react-app/pull/5252) Revert change to http-proxy-middleware docs ([@iansu](https://github.com/iansu))
+  - [#5226](https://github.com/facebook/create-react-app/pull/5226) Fix usage of http-proxy-middleware ([@banyan](https://github.com/banyan))
+  - [#5233](https://github.com/facebook/create-react-app/pull/5233) DOCS: Add Relay example ([@zachasme](https://github.com/zachasme))
+
+#### :house: Internal
+
+- [#5263](https://github.com/facebook/create-react-app/pull/5263) Add browser test for graphql ([@Timer](https://github.com/Timer))
+
+#### Committers: 11
+
+- Amy Lam ([@amyrlam](https://github.com/amyrlam))
+- Crux ([@crux153](https://github.com/crux153))
+- Dan Abramov ([@gaearon](https://github.com/gaearon))
+- Ian Sutherland ([@iansu](https://github.com/iansu))
+- Iurii Kucherov ([@yuyokk](https://github.com/yuyokk))
+- Joe Haddad ([@Timer](https://github.com/Timer))
+- Kohei Hasegawa ([@banyan](https://github.com/banyan))
+- Kristofer Selbekk ([@selbekk](https://github.com/selbekk))
+- Maël Nison ([@arcanis](https://github.com/arcanis))
+- Shubham Tiwari ([@lockround](https://github.com/lockround))
+- Zacharias Knudsen ([@zachasme](https://github.com/zachasme))
+
 ## 2.0.3 (October 1, 2018)
 
 Create React App 2.0 brings a year’s worth of improvements in a single dependency update.
@@ -111,7 +163,6 @@ Here's a table how to change it from "before" and "after", depending on what you
 | -------------------------------- | ------------------------------- |
 | `react-scripts test --env=jsdom` | `react-scripts test`            |
 | `react-scripts test`             | `react-scripts test --env=node` |
-
 
 ### Object `proxy` configuration is superseded by `src/setupProxy.js`
 
