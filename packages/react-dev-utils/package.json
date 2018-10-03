@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "6.0.3",
+  "version": "6.0.4",
   "description": "Webpack utilities used by Create React App",
   "repository": "facebook/create-react-app",
   "license": "MIT",
@@ -57,7 +57,7 @@
     "loader-utils": "1.1.0",
     "opn": "5.4.0",
     "pkg-up": "2.0.0",
-    "react-error-overlay": "^5.0.3",
+    "react-error-overlay": "^5.0.4",
     "recursive-readdir": "2.2.2",
     "shell-quote": "1.6.1",
     "sockjs-client": "1.1.5",
