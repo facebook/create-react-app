@@ -95,6 +95,9 @@ git clean -df
 # Now that we have published them, run all tests as if they were released.
 # ******************************************************************************
 
+# Browser tests
+CI=true ./node_modules/.bin/jest --config fixtures/browser/jest.config.js
+
 # Smoke tests
 CI=true ./node_modules/.bin/jest --config fixtures/smoke/jest.config.js
 
