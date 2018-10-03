@@ -28,7 +28,10 @@ class BuiltEmitter extends Component {
   }
 
   render() {
-    const { props: { feature }, handleReady } = this;
+    const {
+      props: { feature },
+      handleReady,
+    } = this;
     return (
       <div>
         {createElement(feature, {
@@ -78,6 +81,31 @@ class App extends Component {
         break;
       case 'css-inclusion':
         import('./features/webpack/CssInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'css-modules-inclusion':
+        import('./features/webpack/CssModulesInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'scss-inclusion':
+        import('./features/webpack/ScssInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'scss-modules-inclusion':
+        import('./features/webpack/ScssModulesInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'sass-inclusion':
+        import('./features/webpack/SassInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'sass-modules-inclusion':
+        import('./features/webpack/SassModulesInclusion').then(f =>
           this.setFeature(f.default)
         );
         break;
@@ -166,6 +194,16 @@ class App extends Component {
         break;
       case 'svg-inclusion':
         import('./features/webpack/SvgInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'svg-component':
+        import('./features/webpack/SvgComponent').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'svg-in-css':
+        import('./features/webpack/SvgInCss').then(f =>
           this.setFeature(f.default)
         );
         break;
