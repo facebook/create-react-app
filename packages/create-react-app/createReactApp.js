@@ -258,6 +258,13 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
     }
   }
 
+  if (useYarn) {
+    fs.copySync(
+      require.resolve('./yarn.lock.cached'),
+      path.join(root, 'yarn.lock')
+    );
+  }
+
   run(
     root,
     appName,
@@ -422,7 +429,7 @@ function run(
       console.log();
 
       // On 'exit' we will delete these files from target directory.
-      const knownGeneratedFiles = ['package.json', 'node_modules'];
+      const knownGeneratedFiles = ['package.json', 'yarn.lock', 'node_modules'];
       const currentFiles = fs.readdirSync(path.join(root));
       currentFiles.forEach(file => {
         knownGeneratedFiles.forEach(fileToMatch => {
