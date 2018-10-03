@@ -31,5 +31,5 @@ matrix:
     - os: osx
       node_js: 8
       env: TEST_SUITE=behavior
-    - node_js: 4
+    - node_js: 6
       env: TEST_SUITE=old-node
