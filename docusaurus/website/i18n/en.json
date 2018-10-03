@@ -4,16 +4,26 @@
     "next": "Next",
     "previous": "Previous",
     "tagline": "Create React apps with no build configuration.",
-    "docs": {},
+    "docs": {
+      "getting-started": {
+        "title": "Getting started",
+        "sidebar_label": "Getting started"
+      },
+      "README": {
+        "title": "README"
+      },
+      "user-guide": {
+        "title": "User guide",
+        "sidebar_label": "User guide"
+      }
+    },
     "links": {
-      "Docs": "Docs",
-      "API": "API",
+      "Getting started": "Getting started",
       "Help": "Help"
     },
     "categories": {
-      "Docusaurus": "Docusaurus",
-      "First Category": "First Category",
-      "Second Category": "Second Category"
+      "Getting Started": "Getting Started",
+      "User Guide": "User Guide"
     }
   },
   "pages-strings": {
