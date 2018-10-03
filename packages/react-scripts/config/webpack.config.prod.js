@@ -240,6 +240,15 @@ module.exports = {
     rules: [
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
+      // webpack 4 turned on stricter defaults for .mjs, preventing it from
+      // performing ESM/CommonJS interoperation. While the ecosystem is
+      // fleshing out experimental .mjs support, we need to relax this
+      // constraint.
+      // https://github.com/facebook/create-react-app/pull/5258#discussion_r222155465
+      {
+        test: /\.mjs$/,
+        type: 'javascript/auto',
+      },
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
