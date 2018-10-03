@@ -243,6 +243,14 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
       version = 'react-scripts@0.9.x';
     }
   }
+
+  if (useYarn) {
+    fs.copySync(
+      require.resolve('./yarn.lock.cached'),
+      path.join(root, 'yarn.lock')
+    );
+  }
+
   run(
     root,
     appName,
