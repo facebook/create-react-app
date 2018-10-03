@@ -15,7 +15,8 @@
   },
   "files": [
     "index.js",
-    "createReactApp.js"
+    "createReactApp.js",
+    "yarn.lock.cached"
   ],
   "bin": {
     "create-react-app": "./index.js"
