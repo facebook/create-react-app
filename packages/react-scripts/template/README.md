@@ -1859,7 +1859,7 @@ following into account:
    registration will fail, but the rest of your web app will remain functional.
 
 1. Service workers are [not supported](https://jakearchibald.github.io/isserviceworkerready/#moar)
-   in older web browsers. Service worker registration [won't be attempted](src/registerServiceWorker.js)
+   in older web browsers. Service worker registration [won't be attempted](src/serviceWorker.js)
    on browsers that lack support.
 
 1. The service worker is only enabled in the [production environment](#deployment),
@@ -1882,7 +1882,7 @@ following into account:
    fetched the latest updates that will be available the next time they load the
    page (showing a "New content is available; please refresh." message). Showing
    this messages is currently left as an exercise to the developer, but as a
-   starting point, you can make use of the logic included in [`src/registerServiceWorker.js`](src/registerServiceWorker.js), which
+   starting point, you can make use of the logic included in [`src/serviceWorker.js`](src/serviceWorker.js), which
    demonstrates which service worker lifecycle events to listen for to detect each
    scenario, and which as a default, just logs appropriate messages to the
    JavaScript console.
