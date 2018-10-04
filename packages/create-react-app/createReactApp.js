@@ -258,7 +258,7 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
     }
   }
 
-  if (useYarn) {
+  if (useYarn && !version) {
     fs.copySync(
       require.resolve('./yarn.lock.cached'),
       path.join(root, 'yarn.lock')
