@@ -602,7 +602,7 @@ This project setup minifies your CSS and adds vendor prefixes to it automaticall
 
 Support for new CSS features like the [`all` property](https://developer.mozilla.org/en-US/docs/Web/CSS/all), [`break` properties](https://www.w3.org/TR/css-break-3/#breaking-controls), [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables), and [media query ranges](https://www.w3.org/TR/mediaqueries-4/#range-context) are automatically polyfilled to add support for older browsers.
 
-You can customize your target support browsers by adjusting the `browserslist` key in `package.json` accoring to the [Browserslist specification](https://github.com/browserslist/browserslist#readme).
+You can customize your target support browsers by adjusting the `browserslist` key in `package.json` according to the [Browserslist specification](https://github.com/browserslist/browserslist#readme).
 
 For example, this:
 
