@@ -68,7 +68,7 @@ function registerValidSW(swUrl, config) {
               console.log('New content is available; please refresh.');
 
               // Execute callback
-              if (config.onUpdate) {
+              if (config && config.onUpdate) {
                 config.onUpdate(registration);
               }
             } else {
