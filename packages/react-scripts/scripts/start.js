@@ -112,7 +112,20 @@ checkBrowsers(paths.appPath, isInteractive)
         clearConsole();
       }
       console.log(chalk.cyan('Starting the development server...\n'));
-      openBrowser(urls.localUrlForBrowser);
+      
+      /** Creates a function to control when the browser is open only once :) */
+      const openBrowserIfNotOpen = ((isBrowserOpen) => () => {
+        if (isBrowserOpen) {
+          return;
+        }
+
+        isBrowserOpen = true;
+        openBrowser(urls.localUrlForBrowser);
+      })(false);
+
+      /** Taps on the done or failed events */
+      compiler.hooks.done.tap('openBrowserIfNotOpen', () => openBrowserIfNotOpen());
+      compiler.hooks.failed.tap('openBrowserIfNotOpen', () => openBrowserIfNotOpen());
     });
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {
