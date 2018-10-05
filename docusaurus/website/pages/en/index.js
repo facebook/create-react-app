@@ -9,7 +9,6 @@ const React = require('react');
 
 const CompLibrary = require('../../core/CompLibrary.js');
 
-const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
 const Container = CompLibrary.Container;
 const GridBlock = CompLibrary.GridBlock;
 
@@ -21,10 +20,6 @@ function imgUrl(img) {
 
 function docUrl(doc, language) {
   return `${siteConfig.baseUrl}docs/${language ? `${language}/` : ''}${doc}`;
-}
-
-function pageUrl(page, language) {
-  return siteConfig.baseUrl + (language ? `${language}/` : '') + page;
 }
 
 class Button extends React.Component {
@@ -77,7 +72,7 @@ class HomeSplash extends React.Component {
     const language = this.props.language || '';
     return (
       <SplashContainer>
-        <Logo img_src={imgUrl('docusaurus.svg')} />
+        <Logo img_src={imgUrl('logo.svg')} />
         <div className="inner">
           <ProjectTitle />
           <PromoSection>
@@ -104,68 +99,22 @@ const Block = props => (
 );
 
 const Features = () => (
-  <Block layout="fourColumn">
+  <Block layout="threeColumn" align="left">
     {[
       {
-        content: 'This is the content of my feature',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'top',
-        title: 'Feature One',
+        content:
+          'There is just one build dependency. It uses Webpack, Babel, ESLint, and other amazing projects, but provides a cohesive curated experience on top of them.',
+        title: 'One dependency',
       },
       {
-        content: 'The content of my second feature',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'top',
-        title: 'Feature Two',
+        content:
+          "You don't need to configure anything. Reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.",
+        title: 'No configuration required',
       },
-    ]}
-  </Block>
-);
-
-const FeatureCallout = () => (
-  <div
-    className="productShowcaseSection paddingBottom"
-    style={{ textAlign: 'center' }}
-  >
-    <h2>Feature Callout</h2>
-    <MarkdownBlock>These are features of this project</MarkdownBlock>
-  </div>
-);
-
-const LearnHow = () => (
-  <Block background="light">
-    {[
       {
-        content: 'Talk about learning how to use this',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'right',
-        title: 'Learn How',
-      },
-    ]}
-  </Block>
-);
-
-const TryOut = () => (
-  <Block id="try">
-    {[
-      {
-        content: 'Talk about trying this out',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'left',
-        title: 'Try it Out',
-      },
-    ]}
-  </Block>
-);
-
-const Description = () => (
-  <Block background="dark">
-    {[
-      {
-        content: 'This is another description of how this project is useful',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'right',
-        title: 'Description',
+        content:
+          'You can “eject” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up right where you left off.',
+        title: 'No lock-in',
       },
     ]}
   </Block>
@@ -180,10 +129,6 @@ class Index extends React.Component {
         <HomeSplash language={language} />
         <div className="mainContainer">
           <Features />
-          <FeatureCallout />
-          <LearnHow />
-          <TryOut />
-          <Description />
         </div>
       </div>
     );
