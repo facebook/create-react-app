@@ -28,6 +28,7 @@ const siteConfig = {
   headerLinks: [
     { doc: 'getting-started', label: 'Getting started' },
     { href: 'https://reactjs.org/community/support.html', label: 'Help' },
+    { href: 'https://www.github.com/facebook/create-react-app', label: 'GitHub' },
   ],
 
   /* path to images for header/footer */
@@ -77,7 +78,7 @@ const siteConfig = {
 
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
-  //   repoUrl: 'https://github.com/facebook/test-site',
+  repoUrl: 'https://github.com/facebook/create-react-app',
 };
 
 module.exports = siteConfig;
