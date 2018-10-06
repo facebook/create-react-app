@@ -1,5 +1,5 @@
 {
-  "name": "eslint-config-react-app",
+  "name": "@ehrocks/eslint-config-react-app",
   "version": "3.0.3",
   "description": "ESLint configuration used by Create React App",
   "repository": "facebook/create-react-app",

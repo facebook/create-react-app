@@ -1,6 +1,6 @@
 {
   "name": "eh-react-scripts",
-  "version": "2.0.4-beta2",
+  "version": "2.0.4-beta3",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebook/create-react-app",
   "license": "MIT",
@@ -37,7 +37,7 @@
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
     "eslint": "5.6.0",
-    "eslint-config-react-app": "^3.0.3",
+    "@ehrocks/eslint-config-react-app": "^3.0.3",
     "eslint-loader": "2.1.1",
     "eslint-plugin-flowtype": "2.50.1",
     "eslint-plugin-import": "2.14.0",
