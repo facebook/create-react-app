@@ -242,7 +242,29 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
       // Fall back to latest supported react-scripts for npm 3
       version = 'react-scripts@0.9.x';
     }
+  } else if (usePnp) {
+    const yarnInfo = checkYarnVersion();
+    if (!yarnInfo.hasMinYarnPnp) {
+      if (yarnInfo.yarnVersion) {
+        chalk.yellow(
+          `You are using Yarn ${
+            yarnInfo.yarnVersion
+          } together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
+            `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
+        );
+      }
+      // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
+      usePnp = false;
+    }
   }
+
+  if (useYarn) {
+    fs.copySync(
+      require.resolve('./yarn.lock.cached'),
+      path.join(root, 'yarn.lock')
+    );
+  }
+
   run(
     root,
     appName,
@@ -407,7 +429,7 @@ function run(
       console.log();
 
       // On 'exit' we will delete these files from target directory.
-      const knownGeneratedFiles = ['package.json', 'node_modules'];
+      const knownGeneratedFiles = ['package.json', 'yarn.lock', 'node_modules'];
       const currentFiles = fs.readdirSync(path.join(root));
       currentFiles.forEach(file => {
         knownGeneratedFiles.forEach(fileToMatch => {
@@ -562,6 +584,23 @@ function checkNpmVersion() {
   return {
     hasMinNpm: hasMinNpm,
     npmVersion: npmVersion,
+  };
+}
+
+function checkYarnVersion() {
+  let hasMinYarnPnp = false;
+  let yarnVersion = null;
+  try {
+    yarnVersion = execSync('yarnpkg --version')
+      .toString()
+      .trim();
+    hasMinYarnPnp = semver.gte(yarnVersion, '1.12.0');
+  } catch (err) {
+    // ignore
+  }
+  return {
+    hasMinYarnPnp: hasMinYarnPnp,
+    yarnVersion: yarnVersion,
   };
 }
 

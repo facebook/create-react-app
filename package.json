@@ -15,7 +15,8 @@
     "screencast": "node ./tasks/screencast.js",
     "screencast:error": "svg-term --cast jyu19xGl88FQ3poMY8Hbmfw8y --out screencast-error.svg --window --at 12000 --no-cursor",
     "test": "cd packages/react-scripts && node bin/react-scripts.js test",
-    "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'"
+    "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
+    "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
     "async-sema": "^2.1.3",
@@ -32,6 +33,7 @@
     "meow": "^5.0.0",
     "multimatch": "^2.1.0",
     "prettier": "1.14.3",
+    "puppeteer": "^1.8.0",
     "strip-ansi": "^4.0.0",
     "svg-term-cli": "^2.1.1",
     "tempy": "^0.2.1"

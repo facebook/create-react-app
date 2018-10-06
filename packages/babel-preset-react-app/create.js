@@ -82,6 +82,8 @@ module.exports = function(api, opts, env) {
           useBuiltIns: false,
           // Do not transform modules to CJS
           modules: false,
+          // Exclude transforms that make all code slower
+          exclude: ['transform-typeof-symbol'],
         },
       ],
       [

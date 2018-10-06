@@ -1,6 +1,6 @@
 {
   "name": "create-react-app",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "keywords": [
     "react"
   ],
@@ -15,7 +15,8 @@
   },
   "files": [
     "index.js",
-    "createReactApp.js"
+    "createReactApp.js",
+    "yarn.lock.cached"
   ],
   "bin": {
     "create-react-app": "./index.js"

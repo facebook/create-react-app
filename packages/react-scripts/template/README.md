@@ -96,7 +96,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
 - [Advanced Configuration](#advanced-configuration)
-- [Troubleshooting](#troubleshooting)
+- [Troubleshooting](#troubleshooting-1)
   - [`npm start` doesn’t detect changes](#npm-start-doesnt-detect-changes)
   - [`npm test` hangs or crashes on macOS Sierra](#npm-test-hangs-or-crashes-on-macos-sierra)
   - [`npm run build` exits too early](#npm-run-build-exits-too-early)
@@ -163,6 +163,8 @@ Read instructions below for using assets from JavaScript and HTML.
 
 You can, however, create more top-level directories.<br>
 They will not be included in the production build so you can use them for things like documentation.
+
+If you have Git installed and your project is not part of a larger repository, then a new repository will be initialized resulting in an additional `.git/` top-level directory.
 
 ## Available Scripts
 
@@ -869,7 +871,7 @@ yarn upgrade babel-plugin-relay@dev
 Then, wherever you use the `graphql` template tag, import the macro:
 
 ```js
-import graphql from "babel-plugin-relay/macro";
+import graphql from 'babel-plugin-relay/macro';
 // instead of:
 //   import { graphql } from "babel-plugin-relay"
 
@@ -1219,6 +1221,8 @@ module.exports = function(app) {
 
 > **Note:** This file only supports Node's JavaScript syntax. Be sure to only use supported language features (i.e. no support for Flow, ES Modules, etc).
 
+> **Note:** Passing the path to the proxy function allows you to use globbing and/or pattern matching on the path, which is more flexible than the express route matching.
+
 ## Using HTTPS in Development
 
 > Note: this feature is available with `react-scripts@0.4.0` and higher.
@@ -1455,6 +1459,48 @@ Import it in [`src/setupTests.js`](#initializing-test-environment) to make its m
 ```js
 import 'jest-enzyme';
 ```
+
+#### Use `react-testing-library`
+
+As an alternative or companion to `enzyme`, you may consider using `react-testing-library`. [`react-testing-library`](https://github.com/kentcdodds/react-testing-library) is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it's recommended to use with [`jest-dom`](https://github.com/gnapse/jest-dom) for improved assertions.
+
+To install `react-testing-library` and `jest-dom`, you can run:
+
+```sh
+npm install --save react-testing-library jest-dom
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add react-testing-library jest-dom
+```
+
+Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerplate in your test files:
+
+```js
+// react-testing-library renders your components to document.body,
+// this will ensure they're removed after each test.
+import 'react-testing-library/cleanup-after-each';
+
+// this adds jest-dom's custom assertions
+import 'jest-dom/extend-expect';
+```
+
+Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Welcome to React".
+
+```js
+import React from 'react';
+import { render } from 'react-testing-library';
+import App from './App';
+
+it('renders welcome message', () => {
+  const { getByText } = render(<App />);
+  expect(getByText('Welcome to React')).toBeInTheDOM();
+});
+```
+
+Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from [the `react-testing-library` documentation](https://github.com/kentcdodds/react-testing-library) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
 
 ### Using Third Party Assertion Libraries
 
@@ -1857,7 +1903,7 @@ following into account:
    registration will fail, but the rest of your web app will remain functional.
 
 1. Service workers are [not supported](https://jakearchibald.github.io/isserviceworkerready/#moar)
-   in older web browsers. Service worker registration [won't be attempted](src/registerServiceWorker.js)
+   in older web browsers. Service worker registration [won't be attempted](src/serviceWorker.js)
    on browsers that lack support.
 
 1. The service worker is only enabled in the [production environment](#deployment),
@@ -1880,7 +1926,7 @@ following into account:
    fetched the latest updates that will be available the next time they load the
    page (showing a "New content is available; please refresh." message). Showing
    this messages is currently left as an exercise to the developer, but as a
-   starting point, you can make use of the logic included in [`src/registerServiceWorker.js`](src/registerServiceWorker.js), which
+   starting point, you can make use of the logic included in [`src/serviceWorker.js`](src/serviceWorker.js), which
    demonstrates which service worker lifecycle events to listen for to detect each
    scenario, and which as a default, just logs appropriate messages to the
    JavaScript console.

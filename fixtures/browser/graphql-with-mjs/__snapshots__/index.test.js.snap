@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`graphql with mjs entrypoint correctly bundles files in development 1`] = `"Pikachu"`;
+
+exports[`graphql with mjs entrypoint correctly bundles files in production 1`] = `"Pikachu"`;

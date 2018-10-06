@@ -76,6 +76,8 @@ module.exports = function(api, opts) {
           },
           // Do not transform modules to CJS
           modules: false,
+          // Exclude transforms that make all code slower
+          exclude: ['transform-typeof-symbol'],
         },
       ],
       (isEnvProduction || isEnvDevelopment) && [
@@ -95,6 +97,8 @@ module.exports = function(api, opts) {
           useBuiltIns: false,
           // Do not transform modules to CJS
           modules: false,
+          // Exclude transforms that make all code slower
+          exclude: ['transform-typeof-symbol'],
         },
       ],
     ].filter(Boolean),
