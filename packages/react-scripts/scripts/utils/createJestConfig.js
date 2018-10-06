@@ -37,10 +37,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
 
     setupTestFrameworkScriptFile: setupTestsFile,
-    testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.{js,jsx}',
-      '<rootDir>/src/**/?(*.)(spec|test).{js,jsx}',
-    ],
+    testMatch: ['<rootDir>/src/**/?(*.)(spec|test).{js,jsx}'],
     testEnvironment: 'jsdom',
     testURL: 'http://localhost',
     transform: {
