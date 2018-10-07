@@ -4,7 +4,10 @@ title: Getting started
 sidebar_label: Getting started
 ---
 
-## Quick Overview
+Create React App is an officially supported way to create single-page React 
+applications. It offers a modern build setup with no configuration.
+
+## Quick Start
 
 ```sh
 npx create-react-app my-app
@@ -58,7 +61,9 @@ yarn create react-app my-app
 
 _`yarn create` is available in Yarn 0.25+_
 
-It will create a directory called `my-app` inside the current folder.<br>
+## Output
+
+Running either of these commands will create a directory called `my-app` inside the current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transitive dependencies:
 
 ```
@@ -88,6 +93,8 @@ Once the installation is done, you can open your project folder:
 cd my-app
 ```
 
+## Scripts
+
 Inside the newly created project, you can run some built-in commands:
 
 ### `npm start` or `yarn start`
@@ -114,6 +121,6 @@ By default, runs tests related to files changed since the last commit.
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
+The build is minified and the filenames include the hashes.
 
 Your app is ready to be deployed.
