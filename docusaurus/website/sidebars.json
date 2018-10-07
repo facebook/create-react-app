@@ -29,7 +29,8 @@
       "using-the-public-folder",
       "using-global-variables",
       "adding-bootstrap",
-      "adding-flow"
+      "adding-flow",
+      "adding-relay"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],

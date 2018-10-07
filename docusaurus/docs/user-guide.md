@@ -11,7 +11,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Table of Contents
 
-- [Adding Relay](#adding-relay)
 - [Adding a Router](#adding-a-router)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
@@ -32,40 +31,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Advanced Configuration](#advanced-configuration)
 - [Alternatives to Ejecting](#alternatives-to-ejecting)
-
-## Adding Relay
-
-Relay is a framework for building data-driven React applications powered by GraphQL. The current release candidate of Relay works with Create React App projects out of the box using Babel Macros. Simply set up your project as laid out in the [Relay documentation](https://facebook.github.io/relay/), then make sure you have a version of the babel plugin providing the macro.
-
-To add it, run:
-
-```sh
-npm install --save --dev babel-plugin-relay@dev
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn upgrade babel-plugin-relay@dev
-```
-
-Then, wherever you use the `graphql` template tag, import the macro:
-
-```js
-import graphql from 'babel-plugin-relay/macro';
-// instead of:
-//   import { graphql } from "babel-plugin-relay"
-
-graphql`
-  query UserQuery {
-    viewer {
-      id
-    }
-  }
-`;
-```
-
-To learn more about Relay, check out [its documentation](https://facebook.github.io/relay/).
 
 ## Adding a Router
 
