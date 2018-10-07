@@ -41,7 +41,8 @@
       "pre-rendering-into-static-html-files",
       "injecting-data-from-the-server-into-the-page",
       "making-a-progressive-web-app",
-      "advanced-configuration"
+      "advanced-configuration",
+      "alternatives-to-ejecting"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
