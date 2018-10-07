@@ -35,7 +35,8 @@
       "adding-custom-environment-variables",
       "fetching-data-with-ajax-requests",
       "integrating-with-an-api-backend",
-      "using-https-in-development"
+      "using-https-in-development",
+      "generating-dynamic-meta-tags-on-the-server"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
