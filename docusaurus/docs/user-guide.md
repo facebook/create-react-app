@@ -11,9 +11,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Table of Contents
 
-- [Integrating with an API Backend](#integrating-with-an-api-backend)
-  - [Node](#node)
-  - [Ruby on Rails](#ruby-on-rails)
 - [Using HTTPS in Development](#using-https-in-development)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
@@ -24,28 +21,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Advanced Configuration](#advanced-configuration)
 - [Alternatives to Ejecting](#alternatives-to-ejecting)
-
-## Integrating with an API Backend
-
-These tutorials will help you to integrate your app with an API backend running on another port,
-using `fetch()` to access it.
-
-### Node
-
-Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
-You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo).
-
-### Ruby on Rails
-
-Check out [this tutorial](https://www.fullstackreact.com/articles/how-to-get-create-react-app-to-work-with-your-rails-api/).
-You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo-rails).
-
-### API Platform (PHP and Symfony)
-
-[API Platform](https://api-platform.com) is a framework designed to build API-driven projects.
-It allows to create hypermedia and GraphQL APIs in minutes.
-It is shipped with an official Progressive Web App generator as well as a dynamic administration interface, both built for Create React App.
-Check out [this tutorial](https://api-platform.com/docs/distribution).
 
 ## Using HTTPS in Development
 

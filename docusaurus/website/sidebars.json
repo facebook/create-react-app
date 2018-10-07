@@ -33,7 +33,8 @@
       "adding-relay",
       "adding-a-router",
       "adding-custom-environment-variables",
-      "fetching-data-with-ajax-requests"
+      "fetching-data-with-ajax-requests",
+      "integrating-with-an-api-backend"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
