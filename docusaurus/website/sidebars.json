@@ -28,7 +28,8 @@
       "adding-images-fonts-and-files",
       "using-the-public-folder",
       "using-global-variables",
-      "adding-bootstrap"
+      "adding-bootstrap",
+      "adding-flow"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
