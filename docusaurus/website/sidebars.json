@@ -30,7 +30,8 @@
       "using-global-variables",
       "adding-bootstrap",
       "adding-flow",
-      "adding-relay"
+      "adding-relay",
+      "adding-a-router"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
