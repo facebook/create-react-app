@@ -34,7 +34,8 @@
       "adding-a-router",
       "adding-custom-environment-variables",
       "fetching-data-with-ajax-requests",
-      "integrating-with-an-api-backend"
+      "integrating-with-an-api-backend",
+      "using-https-in-development"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
