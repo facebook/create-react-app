@@ -32,6 +32,14 @@
         "title": "Running Tests",
         "sidebar_label": "Running tests"
       },
+      "sending-feedback": {
+        "title": "Sending feedback",
+        "sidebar_label": "Feedback"
+      },
+      "something-missing": {
+        "title": "Something missing?",
+        "sidebar_label": "Something missing?"
+      },
       "troubleshooting": {
         "title": "Troubleshooting",
         "sidebar_label": "Troubleshooting"
