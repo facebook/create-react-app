@@ -5,6 +5,10 @@
     "previous": "Previous",
     "tagline": "Create React apps with no build configuration.",
     "docs": {
+      "available-scripts": {
+        "title": "Available Scripts",
+        "sidebar_label": "Scripts"
+      },
       "getting-started": {
         "title": "Getting started",
         "sidebar_label": "Getting started"
@@ -19,7 +23,8 @@
     },
     "links": {
       "Getting started": "Getting started",
-      "Help": "Help"
+      "Help": "Help",
+      "GitHub": "GitHub"
     },
     "categories": {
       "Getting Started": "Getting Started",
