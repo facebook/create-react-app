@@ -16,7 +16,10 @@
       "developing-components-in-isolation",
       "analyzing-the-bundle-size"
     ],
-    "How-to": ["changing-the-page-title"],
+    "How-to": [
+      "changing-the-page-title",
+      "installing-a-dependency"
+    ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
     "Support": [
