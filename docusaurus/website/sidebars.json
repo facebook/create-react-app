@@ -3,7 +3,7 @@
     "Getting Started": ["getting-started"],
     "User Guide": ["user-guide", "available-scripts"],
     "Testing": ["running-tests", "debugging-tests"],
-    "Deployment": ["deployment"],
+    "Deployment": ["publishing-components-to-npm", "deployment"],
     "Support": ["troubleshooting"]
   }
 }

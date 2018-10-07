@@ -7,14 +7,34 @@
     "docs": {
       "available-scripts": {
         "title": "Available Scripts",
-        "sidebar_label": "Scripts"
+        "sidebar_label": "Available scripts"
+      },
+      "debugging-tests": {
+        "title": "Debugging Tests",
+        "sidebar_label": "Debugging tests"
+      },
+      "deployment": {
+        "title": "Deployment",
+        "sidebar_label": "Deployment"
       },
       "getting-started": {
         "title": "Getting started",
         "sidebar_label": "Getting started"
       },
+      "publishing-components-to-npm": {
+        "title": "Publishing components to npm",
+        "sidebar_label": "Publishing to npm"
+      },
       "README": {
         "title": "README"
+      },
+      "running-tests": {
+        "title": "Running Tests",
+        "sidebar_label": "Running tests"
+      },
+      "troubleshooting": {
+        "title": "Troubleshooting",
+        "sidebar_label": "Troubleshooting"
       },
       "user-guide": {
         "title": "User guide",
@@ -28,7 +48,10 @@
     },
     "categories": {
       "Getting Started": "Getting Started",
-      "User Guide": "User Guide"
+      "User Guide": "User Guide",
+      "Testing": "Testing",
+      "Deployment": "Deployment",
+      "Support": "Support"
     }
   },
   "pages-strings": {
