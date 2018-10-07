@@ -31,7 +31,8 @@
       "adding-bootstrap",
       "adding-flow",
       "adding-relay",
-      "adding-a-router"
+      "adding-a-router",
+      "adding-custom-environment-variables"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
