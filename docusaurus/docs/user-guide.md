@@ -12,7 +12,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 ## Table of Contents
 
 - [Updating to New Releases](#updating-to-new-releases)
-- [Sending Feedback](#sending-feedback)
 - [Folder Structure](#folder-structure)
 - [Supported Browsers](#supported-browsers)
 - [Supported Language Features](#supported-language-features)
@@ -59,7 +58,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Developing Components in Isolation](#developing-components-in-isolation)
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
-- [Publishing Components to npm](#publishing-components-to-npm)
 - [Making a Progressive Web App](#making-a-progressive-web-app)
   - [Why Opt-in?](#why-opt-in)
   - [Offline-First Considerations](#offline-first-considerations)
@@ -85,10 +83,6 @@ To update an existing project to a new version of `react-scripts`, [open the cha
 In most cases bumping the `react-scripts` version in `package.json` and running `npm install` (or `yarn install`) in this folder should be enough, but it’s good to consult the [changelog](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md) for potential breaking changes.
 
 We commit to keeping the breaking changes minimal so you can upgrade `react-scripts` painlessly.
-
-## Sending Feedback
-
-We are always open to [your feedback](https://github.com/facebook/create-react-app/issues).
 
 ## Folder Structure
 
@@ -1335,10 +1329,6 @@ Learn more about React Styleguidist:
 
 - [GitHub Repo](https://github.com/styleguidist/react-styleguidist)
 - [Documentation](https://react-styleguidist.js.org/docs/getting-started.html)
-
-## Publishing Components to npm
-
-Create React App doesn't provide any built-in functionality to publish a component to npm. If you're ready to extract a component from your project so other people can use it, we recommend moving it to a separate directory outside of your project and then using a tool like [nwb](https://github.com/insin/nwb#react-components-and-libraries) to prepare it for publishing.
 
 ## Making a Progressive Web App
 
