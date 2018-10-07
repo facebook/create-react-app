@@ -21,7 +21,8 @@
       "installing-a-dependency",
       "importing-a-component",
       "code-splitting",
-      "adding-a-stylesheet"
+      "adding-a-stylesheet",
+      "adding-a-css-modules-stylesheet"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
