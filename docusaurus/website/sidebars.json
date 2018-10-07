@@ -39,7 +39,8 @@
       "using-https-in-development",
       "generating-dynamic-meta-tags-on-the-server",
       "pre-rendering-into-static-html-files",
-      "injecting-data-from-the-server-into-the-page"
+      "injecting-data-from-the-server-into-the-page",
+      "making-a-progressive-web-app"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
