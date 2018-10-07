@@ -268,7 +268,7 @@ If you used 2.x alphas, please [follow these instructions](https://gist.github.c
   - [#5058](https://github.com/facebook/create-react-app/pull/5058) Inline the webpack runtime chunk ([@Timer](https://github.com/Timer))
 - `babel-preset-react-app`
   - [#5047](https://github.com/facebook/create-react-app/pull/5047) Allow dynamic import proposal in node_modules ([@Timer](https://github.com/Timer))
-  - [#3865](https://github.com/facebook/create-react-app/pull/3865) feat: add opt-out for prestet-flow to work with @babel/preset-typescript ([@oieduardorabelo](https://github.com/oieduardorabelo))
+  - [#3865](https://github.com/facebook/create-react-app/pull/3865) Add opt-out for preset-flow to work with @babel/preset-typescript ([@oieduardorabelo](https://github.com/oieduardorabelo))
   - [#3675](https://github.com/facebook/create-react-app/pull/3675) add experimental babel-plugin-macros support ([@kentcdodds](https://github.com/kentcdodds))
 - `babel-preset-react-app`, `confusing-browser-globals`, `eslint-config-react-app`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
   - [#4077](https://github.com/facebook/create-react-app/pull/4077) Webpack 4 ([@andriijas](https://github.com/andriijas))
