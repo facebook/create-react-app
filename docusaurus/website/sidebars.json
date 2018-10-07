@@ -24,7 +24,8 @@
       "adding-a-stylesheet",
       "adding-a-css-modules-stylesheet",
       "adding-a-sass-stylesheet",
-      "post-processing-css"
+      "post-processing-css",
+      "adding-images-fonts-and-files"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
