@@ -42,7 +42,7 @@ Please be advised that this is also a custom feature of Webpack.
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).<br>
 An alternative way of handling static assets is described in the next section.
 
-### Adding SVGs
+## Adding SVGs
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.
 

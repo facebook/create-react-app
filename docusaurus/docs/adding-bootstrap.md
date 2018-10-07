@@ -33,7 +33,7 @@ import { Button } from 'reactstrap';
 
 Now you are ready to use the imported reactstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/zx6658/d9f128cd57ca69e583ea2b5fea074238/raw/a56701c142d0c622eb6c20a457fbc01d708cb485/App.js) redone using reactstrap.
 
-### Using a Custom Theme
+## Using a Custom Theme
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.
 

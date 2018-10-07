@@ -22,7 +22,7 @@ serviceWorker.unregister();
 As the comment states, switching `serviceWorker.unregister()` to
 `serviceWorker.register()` will opt you in to using the service worker.
 
-### Why Opt-in?
+## Why Opt-in?
 
 Offline-first Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:
 
@@ -42,7 +42,7 @@ for handling all requests for local assets, including
 for your HTML, ensuring that your web app is consistently fast, even on a slow
 or unreliable network.
 
-### Offline-First Considerations
+## Offline-First Considerations
 
 If you do decide to opt-in to service worker registration, please take the
 following into account:
@@ -86,7 +86,7 @@ following into account:
    cross-origin traffic, like HTTP [API requests](/docs/integrating-with-an-api-backend),
    images, or embeds loaded from a different domain.
 
-### Progressive Web App Metadata
+## Progressive Web App Metadata
 
 The default configuration includes a web app manifest located at
 [`public/manifest.json`](public/manifest.json), that you can customize with

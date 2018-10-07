@@ -5,12 +5,12 @@ title: Using the `public` Folder
 
 > Note: this feature is available with `react-scripts@0.5.0` and higher.
 
-### Changing the HTML
+## Changing the HTML
 
 The `public` folder contains the HTML file so you can tweak it, for example, to [set the page title](/docs/changing-the-page-title).
 The `<script>` tag with the compiled code will be added to it automatically during the build process.
 
-### Adding Assets Outside of the Module System
+## Adding Assets Outside of the Module System
 
 You can also add other assets to the `public` folder.
 
@@ -53,7 +53,7 @@ Keep in mind the downsides of this approach:
 - Missing files will not be called at compilation time, and will cause 404 errors for your users.
 - Result filenames won’t include content hashes so you’ll need to add query arguments or rename them every time they change.
 
-### When to Use the `public` Folder
+## When to Use the `public` Folder
 
 Normally we recommend importing [stylesheets](/docs/adding-a-stylesheet), [images, and fonts](/docs/adding-images-fonts-and-files) from JavaScript.
 The `public` folder is useful as a workaround for a number of less common cases:

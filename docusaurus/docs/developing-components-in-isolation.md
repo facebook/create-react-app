@@ -18,7 +18,7 @@ Create React App doesn’t include any tools for this by default, but you can ea
 
 You can also deploy your Storybook or style guide as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
 
-### Getting Started with Storybook
+## Getting Started with Storybook
 
 Storybook is a development environment for React UI components. It allows you to browse a component library, view the different states of each component, and interactively develop and test components.
 
@@ -43,7 +43,7 @@ Learn more about React Storybook:
 - [GitHub Repo](https://github.com/storybooks/storybook)
 - [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
 
-### Getting Started with Styleguidist
+## Getting Started with Styleguidist
 
 Styleguidist combines a style guide, where all your components are presented on a single page with their props documentation and usage examples, with an environment for developing components in isolation, similar to Storybook. In Styleguidist you write examples in Markdown, where each code snippet is rendered as a live editable playground.
 

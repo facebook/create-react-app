@@ -9,7 +9,7 @@ This project setup supports code splitting via [dynamic `import()`](http://2alit
 
 Here is an example:
 
-### `moduleA.js`
+## `moduleA.js`
 
 ```js
 const moduleA = 'Hello';
@@ -17,7 +17,7 @@ const moduleA = 'Hello';
 export { moduleA };
 ```
 
-### `App.js`
+## `App.js`
 
 ```js
 import React, { Component } from 'react';
@@ -49,7 +49,7 @@ This will make `moduleA.js` and all its unique dependencies as a separate chunk 
 
 You can also use it with `async` / `await` syntax if you prefer it.
 
-### With React Router
+## With React Router
 
 If you are using React Router check out [this tutorial](http://serverless-stack.com/chapters/code-splitting-in-create-react-app.html) on how to use code splitting with it. You can find the companion GitHub repository [here](https://github.com/AnomalyInnovations/serverless-stack-demo-client/tree/code-splitting-in-create-react-app).
 

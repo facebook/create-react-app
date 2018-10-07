@@ -4,8 +4,6 @@ title: Running Tests
 sidebar_label: Running tests
 ---
 
-## Running Tests
-
 > Note: this feature is available with `react-scripts@0.3.0` and higher.<br>
 
 > [Read the migration guide to learn how to enable it in older projects!](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030)
@@ -18,7 +16,7 @@ While Jest provides browser globals such as `window` thanks to [jsdom](https://g
 
 We recommend that you use a separate tool for browser end-to-end tests if you need them. They are beyond the scope of Create React App.
 
-### Filename Conventions
+## Filename Conventions
 
 Jest will look for test files with any of the following popular naming conventions:
 
@@ -30,7 +28,7 @@ The `.test.js` / `.spec.js` files (or the `__tests__` folders) can be located at
 
 We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Colocation also helps find tests more quickly in larger projects.
 
-### Command Line Interface
+## Command Line Interface
 
 When you run `npm test`, Jest will launch in the watch mode. Every time you save a file, it will re-run the tests, just like `npm start` recompiles the code.
 
@@ -38,7 +36,7 @@ The watcher includes an interactive command-line interface with the ability to r
 
 ![Jest watch mode](http://facebook.github.io/jest/img/blog/15-watch.gif)
 
-### Version Control Integration
+## Version Control Integration
 
 By default, when you run `npm test`, Jest will only run the tests related to files changed since the last commit. This is an optimization designed to make your tests run fast regardless of how many tests you have. However it assumes that you don’t often commit the code that doesn’t pass the tests.
 
@@ -46,7 +44,7 @@ Jest will always explicitly mention that it only ran tests related to the files 
 
 Jest will always run all tests on a [continuous integration](#continuous-integration) server or if the project is not inside a Git or Mercurial repository.
 
-### Writing Tests
+## Writing Tests
 
 To create tests, add `it()` (or `test()`) blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping but this is neither required nor recommended.
 
@@ -64,7 +62,7 @@ it('sums numbers', () => {
 All `expect()` matchers supported by Jest are [extensively documented here](https://facebook.github.io/jest/docs/en/expect.html#content).<br>
 You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://facebook.github.io/jest/docs/en/expect.html#tohavebeencalled) to create “spies” or mock functions.
 
-### Testing Components
+## Testing Components
 
 There is a broad spectrum of component testing techniques. They range from a “smoke test” verifying that a component renders without throwing, to shallow rendering and testing some of the output, to full rendering and testing component lifecycle and state changes.
 
@@ -101,7 +99,7 @@ As of Enzyme 3, you will need to install Enzyme along with an Adapter correspond
 
 The adapter will also need to be configured in your [global setup file](#initializing-test-environment):
 
-#### `src/setupTests.js`
+### `src/setupTests.js`
 
 ```js
 import { configure } from 'enzyme';
@@ -170,7 +168,7 @@ Import it in [`src/setupTests.js`](#initializing-test-environment) to make its m
 import 'jest-enzyme';
 ```
 
-### Using Third Party Assertion Libraries
+## Using Third Party Assertion Libraries
 
 We recommend that you use `expect()` for assertions and `jest.fn()` for spies. If you are having issues with them please [file those against Jest](https://github.com/facebook/jest/issues/new), and we’ll fix them. We intend to keep making them better for React, supporting, for example, [pretty-printing React elements as JSX](https://github.com/facebook/jest/pull/1566).
 
@@ -183,7 +181,7 @@ import { expect } from 'chai';
 
 and then use them in your tests like you normally do.
 
-### Initializing Test Environment
+## Initializing Test Environment
 
 > Note: this feature is available with `react-scripts@0.4.0` and higher.
 
@@ -191,7 +189,7 @@ If your app uses a browser API that you need to mock in your tests or if you jus
 
 For example:
 
-#### `src/setupTests.js`
+### `src/setupTests.js`
 
 ```js
 const localStorageMock = {
@@ -211,12 +209,12 @@ global.localStorage = localStorageMock;
 >  }
 > ```
 
-### Focusing and Excluding Tests
+## Focusing and Excluding Tests
 
 You can replace `it()` with `xit()` to temporarily exclude a test from being executed.<br>
 Similarly, `fit()` lets you focus on a specific test without running any other tests.
 
-### Coverage Reporting
+## Coverage Reporting
 
 Jest has an integrated coverage reporter that works well with ES6 and requires no configuration.<br>
 Run `npm test -- --coverage` (note extra `--` in the middle) to include a coverage report like this:
@@ -225,7 +223,7 @@ Run `npm test -- --coverage` (note extra `--` in the middle) to include a covera
 
 Note that tests run much slower with coverage so it is recommended to run it separately from your normal workflow.
 
-#### Configuration
+### Configuration
 
 The default Jest coverage configuration can be overridden by adding any of the following supported keys to a Jest config in your package.json.
 
@@ -261,7 +259,7 @@ Example package.json:
 }
 ```
 
-### Continuous Integration
+## Continuous Integration
 
 By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`.
 
@@ -269,9 +267,9 @@ When creating a build of your application with `npm run build` linter warnings a
 
 Popular CI servers already set the environment variable `CI` by default but you can do this yourself too:
 
-### On CI servers
+## On CI servers
 
-#### Travis CI
+### Travis CI
 
 1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis. You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
 1. Add a `.travis.yml` file to your git repository.
@@ -291,13 +289,13 @@ script:
 1. Trigger your first build with a git push.
 1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
 
-#### CircleCI
+### CircleCI
 
 Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React App project.
 
-### On your own environment
+## On your own environment
 
-##### Windows (cmd.exe)
+#### Windows (cmd.exe)
 
 ```cmd
 set CI=true&&npm test
@@ -309,7 +307,7 @@ set CI=true&&npm run build
 
 (Note: the lack of whitespace is intentional.)
 
-##### Windows (Powershell)
+#### Windows (Powershell)
 
 ```Powershell
 ($env:CI = $true) -and (npm test)
@@ -319,7 +317,7 @@ set CI=true&&npm run build
 ($env:CI = $true) -and (npm run build)
 ```
 
-##### Linux, macOS (Bash)
+#### Linux, macOS (Bash)
 
 ```bash
 CI=true npm test
@@ -335,7 +333,7 @@ The test command will force Jest to run tests once instead of launching the watc
 
 The build command will check for linter warnings and fail if any are found.
 
-### Disabling jsdom
+## Disabling jsdom
 
 If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/jsdom), you can safely set `--env=node`, and your tests will run faster:
 
@@ -361,11 +359,11 @@ In contrast, **jsdom is not needed** for the following APIs:
 
 Finally, jsdom is also not needed for [snapshot testing](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html).
 
-### Snapshot Testing
+## Snapshot Testing
 
 Snapshot testing is a feature of Jest that automatically generates text snapshots of your components and saves them on the disk so if the UI output changes, you get notified without manually writing any assertions on the component output. [Read more about snapshot testing.](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
 
-### Editor Integration
+## Editor Integration
 
 If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.
 

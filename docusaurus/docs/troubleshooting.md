@@ -4,7 +4,7 @@ title: Troubleshooting
 sidebar_label: Troubleshooting
 ---
 
-### `npm start` doesn’t detect changes
+## `npm start` doesn’t detect changes
 
 When you save a file while `npm start` is running, the browser should refresh with the updated code.<br>
 If this doesn’t happen, try one of the following workarounds:
@@ -18,7 +18,7 @@ If this doesn’t happen, try one of the following workarounds:
 
 If none of these solutions help please leave a comment [in this thread](https://github.com/facebook/create-react-app/issues/659).
 
-### `npm test` hangs or crashes on macOS Sierra
+## `npm test` hangs or crashes on macOS Sierra
 
 If you run `npm test` and the console gets stuck after printing `react-scripts test` to the console there might be a problem with your [Watchman](https://facebook.github.io/watchman/) installation as described in [facebook/create-react-app#713](https://github.com/facebook/create-react-app/issues/713).
 
@@ -42,7 +42,7 @@ If this still doesn’t help, try running `launchctl unload -F ~/Library/LaunchA
 
 There are also reports that _uninstalling_ Watchman fixes the issue. So if nothing else helps, remove it from your system and try again.
 
-### `npm run build` exits too early
+## `npm run build` exits too early
 
 It is reported that `npm run build` can fail on machines with limited memory and no swap space, which is common in cloud environments. Even with small projects this command can increase RAM usage in your system by hundreds of megabytes, so if you have less than 1 GB of available memory your build is likely to fail with the following message:
 
@@ -50,12 +50,12 @@ It is reported that `npm run build` can fail on machines with limited memory and
 
 If you are completely sure that you didn't terminate the process, consider [adding some swap space](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04) to the machine you’re building on, or build the project locally.
 
-### `npm run build` fails on Heroku
+## `npm run build` fails on Heroku
 
 This may be a problem with case sensitive filenames.
 Please refer to [this section](/docs/deployment#resolving-heroku-deployment-errors).
 
-### Moment.js locales are missing
+## Moment.js locales are missing
 
 If you use a [Moment.js](https://momentjs.com/), you might notice that only the English locale is available by default. This is because the locale files are large, and you probably only need a subset of [all the locales provided by Moment.js](https://momentjs.com/#multiple-locale-support).
 
@@ -81,7 +81,7 @@ moment.locale('fr');
 
 This will only work for locales that have been explicitly imported before.
 
-### `npm run build` fails to minify
+## `npm run build` fails to minify
 
 Before `react-scripts@2.0.0`, this problem was caused by third party `node_modules` using modern JavaScript features because the minifier couldn't handle them during the build. This has been solved by compiling standard modern JavaScript features inside `node_modules` in `react-scripts@2.0.0` and higher.
 

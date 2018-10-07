@@ -11,7 +11,7 @@ This project supports [CSS Modules](https://github.com/css-modules/css-modules) 
 
 CSS Modules let you use the same CSS class name in different files without worrying about naming clashes. Learn more about CSS Modules [here](https://css-tricks.com/css-modules-part-1-need/).
 
-### `Button.module.css`
+## `Button.module.css`
 
 ```css
 .error {
@@ -19,7 +19,7 @@ CSS Modules let you use the same CSS class name in different files without worry
 }
 ```
 
-### `another-stylesheet.css`
+## `another-stylesheet.css`
 
 ```css
 .error {
@@ -27,7 +27,7 @@ CSS Modules let you use the same CSS class name in different files without worry
 }
 ```
 
-### `Button.js`
+## `Button.js`
 
 ```js
 import React, { Component } from 'react';
@@ -42,7 +42,7 @@ class Button extends Component {
 }
 ```
 
-### Result
+## Result
 
 No clashes from other `.error` class names
 

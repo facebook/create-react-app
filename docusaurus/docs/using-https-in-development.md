@@ -9,7 +9,7 @@ You may require the dev server to serve pages over HTTPS. One particular case wh
 
 To do this, set the `HTTPS` environment variable to `true`, then start the dev server as usual with `npm start`:
 
-#### Windows (cmd.exe)
+### Windows (cmd.exe)
 
 ```cmd
 set HTTPS=true&&npm start
@@ -17,13 +17,13 @@ set HTTPS=true&&npm start
 
 (Note: the lack of whitespace is intentional.)
 
-#### Windows (Powershell)
+### Windows (Powershell)
 
 ```Powershell
 ($env:HTTPS = $true) -and (npm start)
 ```
 
-#### Linux, macOS (Bash)
+### Linux, macOS (Bash)
 
 ```bash
 HTTPS=true npm start
