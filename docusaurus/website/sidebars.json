@@ -23,7 +23,8 @@
       "code-splitting",
       "adding-a-stylesheet",
       "adding-a-css-modules-stylesheet",
-      "adding-a-sass-stylesheet"
+      "adding-a-sass-stylesheet",
+      "post-processing-css"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
