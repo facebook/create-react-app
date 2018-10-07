@@ -7,6 +7,7 @@
       "debugging-in-the-editor",
       "formatting-code-automatically",
       "proxying-api-requests-in-development",
+      "developing-components-in-isolation",
       "analyzing-the-bundle-size"
     ],
     "Testing": ["running-tests", "debugging-tests"],
