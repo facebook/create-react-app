@@ -4,7 +4,8 @@
       "getting-started", 
       "folder-structure", 
       "available-scripts",
-      "supported-browsers"
+      "supported-browsers",
+      "supported-language-features"
     ],
     "Development": [
       "syntax-highlighting-in-the-editor", 

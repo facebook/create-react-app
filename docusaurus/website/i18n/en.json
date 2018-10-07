@@ -5,6 +5,10 @@
     "previous": "Previous",
     "tagline": "Create React apps with no build configuration.",
     "docs": {
+      "analyzing-the-bundle-size": {
+        "title": "Analyzing the Bundle Size",
+        "sidebar_label": "Analyzing bundle size"
+      },
       "available-scripts": {
         "title": "Available Scripts",
         "sidebar_label": "Available scripts"
@@ -20,6 +24,9 @@
         "title": "Deployment",
         "sidebar_label": "Deployment"
       },
+      "developing-components-in-isolation": {
+        "title": "Developing Components in Isolation"
+      },
       "folder-structure": {
         "title": "Folder structure"
       },
@@ -34,6 +41,10 @@
       "lint-output-in-the-editor": {
         "title": "Displaying Lint Output in the Editor",
         "sidebar_label": "In-editor linting"
+      },
+      "proxying-api-requests-in-development": {
+        "title": "Proxying API Requests in Development",
+        "sidebar_label": "Proxying in development"
       },
       "publishing-components-to-npm": {
         "title": "Publishing components to npm",
@@ -54,6 +65,9 @@
         "title": "Something missing?",
         "sidebar_label": "Something missing?"
       },
+      "supported-browsers": {
+        "title": "Supported Browsers"
+      },
       "syntax-highlighting-in-the-editor": {
         "title": "Syntax highlighting in the editor",
         "sidebar_label": "Syntax highlighting"
@@ -61,6 +75,9 @@
       "troubleshooting": {
         "title": "Troubleshooting",
         "sidebar_label": "Troubleshooting"
+      },
+      "updating-to-new-releases": {
+        "title": "Updating to New Releases"
       },
       "user-guide": {
         "title": "User guide",
