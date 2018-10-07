@@ -20,7 +20,8 @@
       "changing-the-page-title",
       "installing-a-dependency",
       "importing-a-component",
-      "code-splitting"
+      "code-splitting",
+      "adding-a-stylesheet"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
