@@ -1,6 +1,6 @@
 ---
 id: changing-the-page-title
-title: Changing the `<title>`
+title: Changing the <title />
 ---
 
 You can find the source HTML file in the `public` folder of the generated project. You may edit the `<title>` tag in it to change the title from “React App” to anything else.
