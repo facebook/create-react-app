@@ -32,7 +32,8 @@
       "adding-flow",
       "adding-relay",
       "adding-a-router",
-      "adding-custom-environment-variables"
+      "adding-custom-environment-variables",
+      "fetching-data-with-ajax-requests"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
