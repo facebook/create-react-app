@@ -33,11 +33,13 @@
       "adding-relay",
       "adding-a-router",
       "adding-custom-environment-variables",
+      "can-i-use-decorators",
       "fetching-data-with-ajax-requests",
       "integrating-with-an-api-backend",
       "using-https-in-development",
       "generating-dynamic-meta-tags-on-the-server",
-      "pre-rendering-into-static-html-files"
+      "pre-rendering-into-static-html-files",
+      "injecting-data-from-the-server-into-the-page"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
@@ -46,9 +48,6 @@
       "updating-to-new-releases",
       "sending-feedback", 
       "something-missing"
-    ],
-    "Frequently Asked Questions": [
-      "can-i-use-decorators"
     ]
   }
 }
