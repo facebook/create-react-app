@@ -11,7 +11,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Table of Contents
 
-- [Can I Use Decorators?](#can-i-use-decorators)
 - [Fetching Data with AJAX Requests](#fetching-data-with-ajax-requests)
 - [Integrating with an API Backend](#integrating-with-an-api-backend)
   - [Node](#node)
@@ -26,22 +25,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Advanced Configuration](#advanced-configuration)
 - [Alternatives to Ejecting](#alternatives-to-ejecting)
-
-## Can I Use Decorators?
-
-Some popular libraries use [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841) in their documentation.<br>
-Create React App intentionally doesn’t support decorator syntax at the moment because:
-
-- It is an experimental proposal and is subject to change (in fact, it has already changed once, and will change again).
-- Most libraries currently support only the old version of the proposal — which will never be a standard.
-
-However in many cases you can rewrite decorator-based code without decorators just as fine.<br>
-Please refer to these two threads for reference:
-
-- [#214](https://github.com/facebook/create-react-app/issues/214)
-- [#411](https://github.com/facebook/create-react-app/issues/411)
-
-Create React App will add decorator support when the specification advances to a stable stage.
 
 ## Fetching Data with AJAX Requests
 
