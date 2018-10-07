@@ -1,6 +1,11 @@
 {
   "docs": {
-    "Getting Started": ["getting-started", "folder-structure", "available-scripts"],
+    "Getting Started": [
+      "getting-started", 
+      "folder-structure", 
+      "available-scripts",
+      "supported-browsers"
+    ],
     "Development": [
       "syntax-highlighting-in-the-editor", 
       "lint-output-in-the-editor", 

@@ -11,7 +11,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Table of Contents
 
-- [Supported Browsers](#supported-browsers)
 - [Supported Language Features](#supported-language-features)
 - [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
@@ -52,11 +51,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Advanced Configuration](#advanced-configuration)
 - [Alternatives to Ejecting](#alternatives-to-ejecting)
-
-## Supported Browsers
-
-By default, the generated project supports all modern browsers.<br>
-Support for Internet Explorer 9, 10, and 11 requires [polyfills](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md).
 
 ### Supported Language Features
 
