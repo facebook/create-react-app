@@ -29,6 +29,6 @@ This will allow you to do imports like
 @import '~nprogress/nprogress'; // importing a css file from the nprogress node module
 ```
 
-> **Tip:** You can opt into using this feature with [CSS modules](#adding-a-css-modules-stylesheet) too!
+> **Tip:** You can opt into using this feature with [CSS modules](/docs/adding-a-css-modules-stylesheet) too!
 
 > **Note:** You must prefix imports from `node_modules` with `~` as displayed above.

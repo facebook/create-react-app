@@ -5,6 +5,39 @@
     "previous": "Previous",
     "tagline": "Create React apps with no build configuration.",
     "docs": {
+      "adding-a-css-modules-stylesheet": {
+        "title": "Adding a CSS Modules Stylesheet"
+      },
+      "adding-a-router": {
+        "title": "Adding a Router"
+      },
+      "adding-a-sass-stylesheet": {
+        "title": "Adding a Sass Stylesheet"
+      },
+      "adding-a-stylesheet": {
+        "title": "Adding a Stylesheet"
+      },
+      "adding-bootstrap": {
+        "title": "Adding Bootstrap"
+      },
+      "adding-custom-environment-variables": {
+        "title": "Adding Custom Environment Variables"
+      },
+      "adding-flow": {
+        "title": "Adding Flow"
+      },
+      "adding-images-fonts-and-files": {
+        "title": "Adding Images, Fonts, and Files"
+      },
+      "adding-relay": {
+        "title": "Adding Relay"
+      },
+      "advanced-configuration": {
+        "title": "Advanced Configuration"
+      },
+      "alternatives-to-ejecting": {
+        "title": "Alternatives to Ejecting"
+      },
       "analyzing-the-bundle-size": {
         "title": "Analyzing the Bundle Size",
         "sidebar_label": "Analyzing bundle size"
@@ -12,6 +45,15 @@
       "available-scripts": {
         "title": "Available Scripts",
         "sidebar_label": "Available scripts"
+      },
+      "can-i-use-decorators": {
+        "title": "Can I Use Decorators?"
+      },
+      "changing-the-page-title": {
+        "title": "Changing the <title />"
+      },
+      "code-splitting": {
+        "title": "Code Splitting"
       },
       "debugging-in-the-editor": {
         "title": "Debugging in the Editor"
@@ -27,6 +69,13 @@
       "developing-components-in-isolation": {
         "title": "Developing Components in Isolation"
       },
+      "documentation-intro": {
+        "title": "Welcome to the Documentation",
+        "sidebar_label": "About the docs"
+      },
+      "fetching-data-with-ajax-requests": {
+        "title": "Fetching Data with AJAX Requests"
+      },
       "folder-structure": {
         "title": "Folder structure"
       },
@@ -34,13 +83,37 @@
         "title": "Formatting Code Automatically",
         "sidebar_label": "Formatting code"
       },
+      "generating-dynamic-meta-tags-on-the-server": {
+        "title": "Generating Dynamic `<meta>` Tags on the Server"
+      },
       "getting-started": {
         "title": "Getting started",
         "sidebar_label": "Getting started"
       },
+      "importing-a-component": {
+        "title": "Importing a Component"
+      },
+      "injecting-data-from-the-server-into-the-page": {
+        "title": "Injecting Data from the Server into the Page"
+      },
+      "installing-a-dependency": {
+        "title": "Installing a Dependency"
+      },
+      "integrating-with-an-api-backend": {
+        "title": "Integrating with an API Backend"
+      },
       "lint-output-in-the-editor": {
         "title": "Displaying Lint Output in the Editor",
         "sidebar_label": "In-editor linting"
+      },
+      "making-a-progressive-web-app": {
+        "title": "Making a Progressive Web App"
+      },
+      "post-processing-css": {
+        "title": "Post-Processing CSS"
+      },
+      "pre-rendering-into-static-html-files": {
+        "title": "Pre-Rendering into Static HTML Files"
       },
       "proxying-api-requests-in-development": {
         "title": "Proxying API Requests in Development",
@@ -68,6 +141,9 @@
       "supported-browsers": {
         "title": "Supported Browsers"
       },
+      "supported-language-features": {
+        "title": "Supported Language Features"
+      },
       "syntax-highlighting-in-the-editor": {
         "title": "Syntax highlighting in the editor",
         "sidebar_label": "Syntax highlighting"
@@ -79,9 +155,14 @@
       "updating-to-new-releases": {
         "title": "Updating to New Releases"
       },
-      "user-guide": {
-        "title": "User guide",
-        "sidebar_label": "User guide"
+      "using-global-variables": {
+        "title": "Using Global Variables"
+      },
+      "using-https-in-development": {
+        "title": "Using HTTPS in Development"
+      },
+      "using-the-public-folder": {
+        "title": "Using the `public` Folder"
       }
     },
     "links": {
@@ -90,8 +171,10 @@
       "GitHub": "GitHub"
     },
     "categories": {
+      "Welcome": "Welcome",
       "Getting Started": "Getting Started",
       "Development": "Development",
+      "How-to": "How-to",
       "Testing": "Testing",
       "Deployment": "Deployment",
       "Support": "Support"
