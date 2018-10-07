@@ -6,7 +6,8 @@
       "lint-output-in-the-editor", 
       "debugging-in-the-editor",
       "formatting-code-automatically",
-      "proxying-api-requests-in-development"
+      "proxying-api-requests-in-development",
+      "analyzing-the-bundle-size"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
