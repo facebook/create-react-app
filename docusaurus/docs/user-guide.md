@@ -56,9 +56,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
 - [Injecting Data from the Server into the Page](#injecting-data-from-the-server-into-the-page)
-- [Debugging Tests](#debugging-tests)
-  - [Debugging Tests in Chrome](#debugging-tests-in-chrome)
-  - [Debugging Tests in Visual Studio Code](#debugging-tests-in-visual-studio-code)
 - [Developing Components in Isolation](#developing-components-in-isolation)
   - [Getting Started with Storybook](#getting-started-with-storybook)
   - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
@@ -1279,68 +1276,6 @@ Similarly to the previous section, you can leave some placeholders in the HTML t
 
 Then, on the server, you can replace `__SERVER_DATA__` with a JSON of real data right before sending the response. The client code can then read `window.SERVER_DATA` to use it. **Make sure to [sanitize the JSON before sending it to the client](https://medium.com/node-security/the-most-common-xss-vulnerability-in-react-js-applications-2bdffbcc1fa0) as it makes your app vulnerable to XSS attacks.**
 
-## Debugging Tests
-
-There are various ways to setup a debugger for your Jest tests. We cover debugging in Chrome and [Visual Studio Code](https://code.visualstudio.com/).
-
-> Note: debugging tests requires Node 8 or higher.
-
-### Debugging Tests in Chrome
-
-Add the following to the `scripts` section in your project's `package.json`
-
-```json
-"scripts": {
-    "test:debug": "react-scripts --inspect-brk test --runInBand"
-  }
-```
-
-Place `debugger;` statements in any test and run:
-
-```bash
-$ npm run test:debug
-```
-
-This will start running your Jest tests, but pause before executing to allow a debugger to attach to the process.
-
-Open the following in Chrome
-
-```
-about:inspect
-```
-
-After opening that link, the Chrome Developer Tools will be displayed. Select `inspect` on your process and a breakpoint will be set at the first line of the react script (this is done simply to give you time to open the developer tools and to prevent Jest from executing before you have time to do so). Click the button that looks like a "play" button in the upper right hand side of the screen to continue execution. When Jest executes the test that contains the debugger statement, execution will pause and you can examine the current scope and call stack.
-
-> Note: the --runInBand cli option makes sure Jest runs test in the same process rather than spawning processes for individual tests. Normally Jest parallelizes test runs across processes but it is hard to debug many processes at the same time.
-
-### Debugging Tests in Visual Studio Code
-
-Debugging Jest tests is supported out of the box for [Visual Studio Code](https://code.visualstudio.com).
-
-Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) configuration file:
-
-```
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Debug CRA Tests",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
-      "args": [
-        "test",
-        "--runInBand",
-        "--no-cache"
-      ],
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    }
-  ]
-}
-```
 
 ## Developing Components in Isolation
 

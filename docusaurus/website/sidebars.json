@@ -2,6 +2,6 @@
   "docs": {
     "Getting Started": ["getting-started"],
     "User Guide": ["user-guide", "available-scripts"],
-    "Testing": ["running-tests"]
+    "Testing": ["running-tests", "debugging-tests"]
   }
 }
