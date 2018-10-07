@@ -19,7 +19,8 @@
     "How-to": [
       "changing-the-page-title",
       "installing-a-dependency",
-      "importing-a-component"
+      "importing-a-component",
+      "code-splitting"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
