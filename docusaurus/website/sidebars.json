@@ -26,7 +26,8 @@
       "adding-a-sass-stylesheet",
       "post-processing-css",
       "adding-images-fonts-and-files",
-      "using-the-public-folder"
+      "using-the-public-folder",
+      "using-global-variables"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
