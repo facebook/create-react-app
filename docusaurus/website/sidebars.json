@@ -4,7 +4,8 @@
     "Development": [
       "syntax-highlighting-in-the-editor", 
       "lint-output-in-the-editor", 
-      "debugging-in-the-editor"
+      "debugging-in-the-editor",
+      "formatting-code-automatically"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],

@@ -9,6 +9,9 @@
         "title": "Available Scripts",
         "sidebar_label": "Available scripts"
       },
+      "debugging-in-the-editor": {
+        "title": "Debugging in the Editor"
+      },
       "debugging-tests": {
         "title": "Debugging Tests",
         "sidebar_label": "Debugging tests"
@@ -17,9 +20,20 @@
         "title": "Deployment",
         "sidebar_label": "Deployment"
       },
+      "folder-structure": {
+        "title": "Folder structure"
+      },
+      "formatting-code-automatically": {
+        "title": "Formatting Code Automatically",
+        "sidebar_label": "Formatting code"
+      },
       "getting-started": {
         "title": "Getting started",
         "sidebar_label": "Getting started"
+      },
+      "lint-output-in-the-editor": {
+        "title": "Displaying Lint Output in the Editor",
+        "sidebar_label": "In-editor linting"
       },
       "publishing-components-to-npm": {
         "title": "Publishing components to npm",
@@ -40,6 +54,10 @@
         "title": "Something missing?",
         "sidebar_label": "Something missing?"
       },
+      "syntax-highlighting-in-the-editor": {
+        "title": "Syntax highlighting in the editor",
+        "sidebar_label": "Syntax highlighting"
+      },
       "troubleshooting": {
         "title": "Troubleshooting",
         "sidebar_label": "Troubleshooting"
@@ -56,7 +74,7 @@
     },
     "categories": {
       "Getting Started": "Getting Started",
-      "User Guide": "User Guide",
+      "Development": "Development",
       "Testing": "Testing",
       "Deployment": "Deployment",
       "Support": "Support"
