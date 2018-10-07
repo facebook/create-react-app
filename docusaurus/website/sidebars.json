@@ -5,7 +5,8 @@
       "syntax-highlighting-in-the-editor", 
       "lint-output-in-the-editor", 
       "debugging-in-the-editor",
-      "formatting-code-automatically"
+      "formatting-code-automatically",
+      "proxying-api-requests-in-development"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
