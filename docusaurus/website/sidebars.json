@@ -40,7 +40,8 @@
       "generating-dynamic-meta-tags-on-the-server",
       "pre-rendering-into-static-html-files",
       "injecting-data-from-the-server-into-the-page",
-      "making-a-progressive-web-app"
+      "making-a-progressive-web-app",
+      "advanced-configuration"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
