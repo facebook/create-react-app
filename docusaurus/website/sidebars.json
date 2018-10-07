@@ -4,6 +4,6 @@
     "User Guide": ["user-guide", "available-scripts"],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
-    "Support": ["troubleshooting", "sending-feedback"]
+    "Support": ["troubleshooting", "sending-feedback", "something-missing"]
   }
 }
