@@ -1,6 +1,59 @@
 {
   "docs": {
-    "Getting Started": ["getting-started"],
-    "User Guide": ["user-guide"]
+    "Welcome": [
+      "documentation-intro"
+    ],
+    "Getting Started": [
+      "getting-started", 
+      "folder-structure", 
+      "available-scripts",
+      "supported-browsers",
+      "supported-language-features"
+    ],
+    "Development": [
+      "syntax-highlighting-in-the-editor", 
+      "lint-output-in-the-editor", 
+      "debugging-in-the-editor",
+      "formatting-code-automatically",
+      "proxying-api-requests-in-development",
+      "developing-components-in-isolation",
+      "analyzing-the-bundle-size"
+    ],
+    "How-to": [
+      "changing-the-page-title",
+      "installing-a-dependency",
+      "importing-a-component",
+      "code-splitting",
+      "adding-a-stylesheet",
+      "adding-a-css-modules-stylesheet",
+      "adding-a-sass-stylesheet",
+      "post-processing-css",
+      "adding-images-fonts-and-files",
+      "using-the-public-folder",
+      "using-global-variables",
+      "adding-bootstrap",
+      "adding-flow",
+      "adding-relay",
+      "adding-a-router",
+      "adding-custom-environment-variables",
+      "can-i-use-decorators",
+      "fetching-data-with-ajax-requests",
+      "integrating-with-an-api-backend",
+      "using-https-in-development",
+      "generating-dynamic-meta-tags-on-the-server",
+      "pre-rendering-into-static-html-files",
+      "injecting-data-from-the-server-into-the-page",
+      "making-a-progressive-web-app",
+      "advanced-configuration",
+      "alternatives-to-ejecting"
+    ],
+    "Testing": ["running-tests", "debugging-tests"],
+    "Deployment": ["publishing-components-to-npm", "deployment"],
+    "Support": [
+      "troubleshooting", 
+      "updating-to-new-releases",
+      "sending-feedback", 
+      "something-missing"
+    ]
   }
 }
