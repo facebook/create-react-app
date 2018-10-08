@@ -40,8 +40,7 @@
       "proxying-api-requests-in-development",
       "fetching-data-with-ajax-requests",
       "integrating-with-an-api-backend",
-      "changing-the-page-title",
-      "generating-dynamic-meta-tags-on-the-server",
+      "title-and-meta-tags",
       "injecting-data-from-the-server-into-the-page"
     ],
     "Testing": ["running-tests", "debugging-tests"],
