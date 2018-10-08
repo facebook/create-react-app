@@ -4,6 +4,8 @@ title: Setting up your Editor
 sidebar_label: Setting up your Editor
 ---
 
+Create React App comes with a bunch of tools that improve the editing experience - if configured correctly. Here's a few tips to maximize your productivity:
+
 ## Syntax highlighting
 
 To configure the syntax highlighting in your favorite text editor, head to the [relevant Babel documentation page](https://babeljs.io/docs/editors) and follow the instructions. Some of the most popular editors are covered.
