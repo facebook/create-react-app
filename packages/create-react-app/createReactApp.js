@@ -594,7 +594,11 @@ function checkYarnVersion() {
     yarnVersion = execSync('yarnpkg --version')
       .toString()
       .trim();
-    hasMinYarnPnp = semver.gte(yarnVersion, '1.12.0');
+    let trimmedYarnVersion = /^(.+?)[-+].+$/.exec(yarnVersion);
+    if (trimmedYarnVersion) {
+      trimmedYarnVersion = trimmedYarnVersion.pop();
+    }
+    hasMinYarnPnp = semver.gte(trimmedYarnVersion || yarnVersion, '1.12.0');
   } catch (err) {
     // ignore
   }
