@@ -40,8 +40,7 @@
       "proxying-api-requests-in-development",
       "fetching-data-with-ajax-requests",
       "integrating-with-an-api-backend",
-      "title-and-meta-tags",
-      "injecting-data-from-the-server-into-the-page"
+      "title-and-meta-tags"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["publishing-components-to-npm", "deployment"],
@@ -53,8 +52,7 @@
     ],
     "Support": [
       "troubleshooting", 
-      "sending-feedback", 
-      "something-missing"
+      "sending-feedback"
     ]
   }
 }

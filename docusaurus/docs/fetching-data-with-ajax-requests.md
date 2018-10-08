@@ -1,6 +1,7 @@
 ---
 id: fetching-data-with-ajax-requests
 title: Fetching Data with AJAX Requests
+sidebar_label: Fetching Data
 ---
 
 React doesn't prescribe a specific approach to data fetching, but people commonly use either a library like [axios](https://github.com/axios/axios) or the [`fetch()` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) provided by the browser.

@@ -1,6 +1,7 @@
 ---
 id: integrating-with-an-api-backend
 title: Integrating with an API Backend
+sidebar_label: Integrating with an API
 ---
 
 These tutorials will help you to integrate your app with an API backend running on another port,

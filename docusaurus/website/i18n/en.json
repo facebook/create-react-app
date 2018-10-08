@@ -6,22 +6,26 @@
     "tagline": "Create React apps with no build configuration.",
     "docs": {
       "adding-a-css-modules-stylesheet": {
-        "title": "Adding a CSS Modules Stylesheet"
+        "title": "Adding a CSS Modules Stylesheet",
+        "sidebar_label": "Adding CSS Modules"
       },
       "adding-a-router": {
         "title": "Adding a Router"
       },
       "adding-a-sass-stylesheet": {
-        "title": "Adding a Sass Stylesheet"
+        "title": "Adding a Sass Stylesheet",
+        "sidebar_label": "Adding Sass Stylesheets"
       },
       "adding-a-stylesheet": {
-        "title": "Adding a Stylesheet"
+        "title": "Adding a Stylesheet",
+        "sidebar_label": "Adding stylesheets"
       },
       "adding-bootstrap": {
         "title": "Adding Bootstrap"
       },
       "adding-custom-environment-variables": {
-        "title": "Adding Custom Environment Variables"
+        "title": "Adding Custom Environment Variables",
+        "sidebar_label": "Environment Variables"
       },
       "adding-flow": {
         "title": "Adding Flow"
@@ -49,9 +53,6 @@
       "can-i-use-decorators": {
         "title": "Can I Use Decorators?"
       },
-      "changing-the-page-title": {
-        "title": "Changing the <title />"
-      },
       "code-splitting": {
         "title": "Code Splitting"
       },
@@ -71,13 +72,11 @@
         "sidebar_label": "About the docs"
       },
       "fetching-data-with-ajax-requests": {
-        "title": "Fetching Data with AJAX Requests"
+        "title": "Fetching Data with AJAX Requests",
+        "sidebar_label": "Fetching Data"
       },
       "folder-structure": {
         "title": "Folder structure"
-      },
-      "generating-dynamic-meta-tags-on-the-server": {
-        "title": "Generating Dynamic `<meta>` Tags on the Server"
       },
       "getting-started": {
         "title": "Getting started",
@@ -86,14 +85,12 @@
       "importing-a-component": {
         "title": "Importing a Component"
       },
-      "injecting-data-from-the-server-into-the-page": {
-        "title": "Injecting Data from the Server into the Page"
-      },
       "installing-a-dependency": {
         "title": "Installing a Dependency"
       },
       "integrating-with-an-api-backend": {
-        "title": "Integrating with an API Backend"
+        "title": "Integrating with an API Backend",
+        "sidebar_label": "Integrating with an API"
       },
       "making-a-progressive-web-app": {
         "title": "Making a Progressive Web App"
@@ -102,7 +99,8 @@
         "title": "Post-Processing CSS"
       },
       "pre-rendering-into-static-html-files": {
-        "title": "Pre-Rendering into Static HTML Files"
+        "title": "Pre-Rendering into Static HTML Files",
+        "sidebar_label": "Pre-Rendering Static HTML"
       },
       "proxying-api-requests-in-development": {
         "title": "Proxying API Requests in Development",
@@ -122,15 +120,15 @@
       },
       "setting-up-your-editor": {
         "title": "Setting up your Editor",
-        "sidebar_label": "Setting up your Editor"
-      },
-      "something-missing": {
-        "title": "Something missing?",
-        "sidebar_label": "Something missing?"
+        "sidebar_label": "Editor setup"
       },
       "supported-browsers-features": {
         "title": "Supported Browsers and Features",
         "sidebar_label": "Browsers and Features"
+      },
+      "title-and-meta-tags": {
+        "title": "Title and Meta Tags",
+        "sidebar_label": "Title & Meta Tags"
       },
       "troubleshooting": {
         "title": "Troubleshooting",
@@ -143,10 +141,11 @@
         "title": "Using Global Variables"
       },
       "using-https-in-development": {
-        "title": "Using HTTPS in Development"
+        "title": "Using HTTPS in Development",
+        "sidebar_label": "HTTPS in Development"
       },
       "using-the-public-folder": {
-        "title": "Using the `public` Folder"
+        "title": "Using the public Folder"
       }
     },
     "links": {
