@@ -11,10 +11,7 @@
       "updating-to-new-releases"
     ],
     "Development": [
-      "syntax-highlighting-in-the-editor", 
-      "lint-output-in-the-editor", 
-      "debugging-in-the-editor",
-      "formatting-code-automatically",
+      "setting-up-your-editor",
       "developing-components-in-isolation",
       "analyzing-the-bundle-size",
       "using-https-in-development"

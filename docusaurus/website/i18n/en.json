@@ -55,9 +55,6 @@
       "code-splitting": {
         "title": "Code Splitting"
       },
-      "debugging-in-the-editor": {
-        "title": "Debugging in the Editor"
-      },
       "debugging-tests": {
         "title": "Debugging Tests",
         "sidebar_label": "Debugging tests"
@@ -79,10 +76,6 @@
       "folder-structure": {
         "title": "Folder structure"
       },
-      "formatting-code-automatically": {
-        "title": "Formatting Code Automatically",
-        "sidebar_label": "Formatting code"
-      },
       "generating-dynamic-meta-tags-on-the-server": {
         "title": "Generating Dynamic `<meta>` Tags on the Server"
       },
@@ -101,10 +94,6 @@
       },
       "integrating-with-an-api-backend": {
         "title": "Integrating with an API Backend"
-      },
-      "lint-output-in-the-editor": {
-        "title": "Displaying Lint Output in the Editor",
-        "sidebar_label": "In-editor linting"
       },
       "making-a-progressive-web-app": {
         "title": "Making a Progressive Web App"
@@ -131,6 +120,10 @@
         "title": "Sending feedback",
         "sidebar_label": "Feedback"
       },
+      "setting-up-your-editor": {
+        "title": "Setting up your Editor",
+        "sidebar_label": "Setting up your Editor"
+      },
       "something-missing": {
         "title": "Something missing?",
         "sidebar_label": "Something missing?"
@@ -138,10 +131,6 @@
       "supported-browsers-features": {
         "title": "Supported Browsers and Features",
         "sidebar_label": "Browsers and Features"
-      },
-      "syntax-highlighting-in-the-editor": {
-        "title": "Syntax highlighting in the editor",
-        "sidebar_label": "Syntax highlighting"
       },
       "troubleshooting": {
         "title": "Troubleshooting",
