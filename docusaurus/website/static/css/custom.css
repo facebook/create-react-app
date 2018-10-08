@@ -1,5 +1,20 @@
 /* your custom css */
 
+.homeContainer {
+  background: #282c34;
+  color: white;
+  padding: 80px 0;
+}
+
+.homeContainer .button {
+  background: #24292e;
+  border-color: white;
+}
+
+.homeContainer * {
+  color: inherit;
+}
+
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }
 
