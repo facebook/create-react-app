@@ -7,8 +7,8 @@
       "getting-started", 
       "folder-structure", 
       "available-scripts",
-      "supported-browsers",
-      "supported-language-features"
+      "supported-browsers-features",
+      "updating-to-new-releases"
     ],
     "Development": [
       "syntax-highlighting-in-the-editor", 
@@ -57,7 +57,6 @@
     ],
     "Support": [
       "troubleshooting", 
-      "updating-to-new-releases",
       "sending-feedback", 
       "something-missing"
     ]

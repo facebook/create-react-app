@@ -1,7 +1,15 @@
 ---
-id: supported-language-features
-title: Supported Language Features
+id: supported-browsers-features
+title: Supported Browsers and Features
+sidebar_label: Browsers and Features
 ---
+
+## Supported Browsers 
+
+By default, the generated project supports all modern browsers.<br>
+Support for Internet Explorer 9, 10, and 11 requires [polyfills](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md).
+
+## Supported Language Features
 
 This project supports a superset of the latest JavaScript standard.<br>
 In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, it also supports:

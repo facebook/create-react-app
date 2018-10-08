@@ -123,9 +123,6 @@
         "title": "Publishing components to npm",
         "sidebar_label": "Publishing to npm"
       },
-      "README": {
-        "title": "README"
-      },
       "running-tests": {
         "title": "Running Tests",
         "sidebar_label": "Running tests"
@@ -138,11 +135,9 @@
         "title": "Something missing?",
         "sidebar_label": "Something missing?"
       },
-      "supported-browsers": {
-        "title": "Supported Browsers"
-      },
-      "supported-language-features": {
-        "title": "Supported Language Features"
+      "supported-browsers-features": {
+        "title": "Supported Browsers and Features",
+        "sidebar_label": "Browsers and Features"
       },
       "syntax-highlighting-in-the-editor": {
         "title": "Syntax highlighting in the editor",
@@ -174,9 +169,12 @@
       "Welcome": "Welcome",
       "Getting Started": "Getting Started",
       "Development": "Development",
-      "How-to": "How-to",
+      "Styles and Assets": "Styles and Assets",
+      "Building your App": "Building your App",
+      "Back-End Integration": "Back-End Integration",
       "Testing": "Testing",
       "Deployment": "Deployment",
+      "Advanced Usage": "Advanced Usage",
       "Support": "Support"
     }
   },
