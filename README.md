@@ -2,4 +2,4 @@
 
 **This is a fork of Facebook's [Create React App](https://github.com/facebook/create-react-app).**
 
-Please see refer to the `react-scripts` package [readme](packages/react-scripts/README.md) for details on how to use backpack-react-scripts.
+Please see refer to the `react-scripts` package [readme](packages/react-scripts/README.md) for details on how to use backpack-react-scripts and [changelog](packages/react-scripts/CHANGELOG.md) for details of what we've changed.
