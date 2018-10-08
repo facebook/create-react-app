@@ -19,17 +19,19 @@
       "developing-components-in-isolation",
       "analyzing-the-bundle-size"
     ],
-    "How-to": [
-      "changing-the-page-title",
-      "installing-a-dependency",
-      "importing-a-component",
-      "code-splitting",
+    "Styles and Assets": [
       "adding-a-stylesheet",
       "adding-a-css-modules-stylesheet",
       "adding-a-sass-stylesheet",
       "post-processing-css",
       "adding-images-fonts-and-files",
       "using-the-public-folder",
+      "code-splitting"
+    ],
+    "How-to": [
+      "changing-the-page-title",
+      "installing-a-dependency",
+      "importing-a-component",
       "using-global-variables",
       "adding-bootstrap",
       "adding-flow",
