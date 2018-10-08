@@ -1,7 +1,7 @@
 ---
 id: setting-up-your-editor
 title: Setting up your Editor
-sidebar_label: Setting up your Editor
+sidebar_label: Editor setup
 ---
 
 Create React App comes with a bunch of tools that improve the editing experience - if configured correctly. Here's a few tips to maximize your productivity:
