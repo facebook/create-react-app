@@ -1,6 +1,6 @@
 ---
 id: making-a-progressive-web-app
-title: Making a Progressive Web App
+title: Making A Progressive Web App
 ---
 
 The production build has all the tools necessary to generate a first-class

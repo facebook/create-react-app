@@ -1,6 +1,6 @@
 ---
 id: title-and-meta-tags
-title: Title and Meta Tags
+title: Title And Meta Tags
 sidebar_label: Title & Meta Tags
 ---
 

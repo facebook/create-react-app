@@ -1,7 +1,6 @@
 ---
 id: running-tests
 title: Running Tests
-sidebar_label: Running tests
 ---
 
 > Note: this feature is available with `react-scripts@0.3.0` and higher.<br>

@@ -1,7 +1,7 @@
 ---
 id: analyzing-the-bundle-size
 title: Analyzing the Bundle Size
-sidebar_label: Analyzing bundle size
+sidebar_label: Analyzing Bundle Size
 ---
 
 [Source map explorer](https://www.npmjs.com/package/source-map-explorer) analyzes

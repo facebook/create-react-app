@@ -1,6 +1,6 @@
 ---
 id: developing-components-in-isolation
-title: Developing Components in Isolation
+title: Developing Components In Isolation
 ---
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states.

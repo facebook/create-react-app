@@ -1,6 +1,6 @@
 ---
 id: pre-rendering-into-static-html-files
-title: Pre-Rendering into Static HTML Files
+title: Pre-Rendering Into Static HTML Files
 sidebar_label: Pre-Rendering Static HTML
 ---
 

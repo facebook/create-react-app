@@ -1,6 +1,6 @@
 ---
 id: adding-a-router
-title: Adding a Router
+title: Adding A Router
 ---
 
 Create React App doesn't prescribe a specific routing solution, but [React Router](https://reacttraining.com/react-router/web/) is the most popular one.

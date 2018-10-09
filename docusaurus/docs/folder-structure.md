@@ -1,6 +1,6 @@
 ---
 id: folder-structure
-title: Folder structure
+title: Folder Structure
 ---
 
 After creation, your project should look like this:

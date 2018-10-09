@@ -1,10 +1,9 @@
 ---
 id: getting-started
-title: Getting started
-sidebar_label: Getting started
+title: Getting Started
 ---
 
-Create React App is an officially supported way to create single-page React 
+Create React App is an officially supported way to create single-page React
 applications. It offers a modern build setup with no configuration.
 
 ## Quick Start

@@ -1,6 +1,6 @@
 ---
 id: sending-feedback
-title: Sending feedback
+title: Sending Feedback
 sidebar_label: Feedback
 ---
 

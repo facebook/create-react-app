@@ -1,10 +1,10 @@
 ---
 id: supported-browsers-features
-title: Supported Browsers and Features
-sidebar_label: Browsers and Features
+title: Supported Browsers And Features
+sidebar_label: Browsers & Features
 ---
 
-## Supported Browsers 
+## Supported Browsers
 
 By default, the generated project supports all modern browsers.<br>
 Support for Internet Explorer 9, 10, and 11 requires [polyfills](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md).

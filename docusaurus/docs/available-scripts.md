@@ -1,7 +1,7 @@
 ---
 id: available-scripts
 title: Available Scripts
-sidebar_label: Available scripts
+sidebar_label: Available Scripts
 ---
 
 In the project directory, you can run:
