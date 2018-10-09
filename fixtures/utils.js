@@ -19,7 +19,9 @@ async function bootstrap({ directory, template }) {
     });
     fs.writeJsonSync(path.join(directory, 'package.json'), packageJson);
   }
-  await execa('yarnpkg', ['install', '--mutex', 'network'], { cwd: directory });
+  await execa('yarnpkg', ['install', '--enable-pnp', '--mutex', 'network'], {
+    cwd: directory,
+  });
   if (!shouldInstallScripts) {
     fs.ensureSymlinkSync(
       path.resolve(
