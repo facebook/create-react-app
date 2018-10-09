@@ -96,7 +96,8 @@ git clean -df
 # ******************************************************************************
 
 # Run all tests
-(cd test && CI=true ../node_modules/.bin/jest)
+cd test/
+CI=true ../node_modules/.bin/jest
 
 # Cleanup
 cleanup
