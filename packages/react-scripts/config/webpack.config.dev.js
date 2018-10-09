@@ -247,7 +247,6 @@ module.exports = {
               plugins: [
                 [
                   require.resolve('babel-plugin-named-asset-import'),
-                  require.resolve('babel-plugin-styled-components'),
                   {
                     loaderMap: {
                       svg: {
