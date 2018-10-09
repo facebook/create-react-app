@@ -4,8 +4,8 @@
       "documentation-intro"
     ],
     "Getting Started": [
-      "getting-started", 
-      "folder-structure", 
+      "getting-started",
+      "folder-structure",
       "available-scripts",
       "supported-browsers-features",
       "updating-to-new-releases"
@@ -43,7 +43,7 @@
       "title-and-meta-tags"
     ],
     "Testing": ["running-tests", "debugging-tests"],
-    "Deployment": ["publishing-components-to-npm", "deployment"],
+    "Deployment": ["deployment"],
     "Advanced Usage": [
       "can-i-use-decorators",
       "pre-rendering-into-static-html-files",
@@ -51,7 +51,7 @@
       "alternatives-to-ejecting"
     ],
     "Support": [
-      "troubleshooting", 
+      "troubleshooting",
       "sending-feedback"
     ]
   }
