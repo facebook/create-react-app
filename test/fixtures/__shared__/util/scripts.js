@@ -33,23 +33,39 @@ module.exports = class ReactScripts {
 
   async start({ smoke = false, env = {} } = {}) {
     const port = await getPort();
-    return await execaSafe(
+    const options = {
+      cwd: this.root,
+      env: Object.assign(
+        {},
+        {
+          CI: 'false',
+          FORCE_COLOR: '0',
+          BROWSER: 'none',
+          PORT: port,
+        },
+        env
+      ),
+    };
+
+    if (smoke) {
+      return await execaSafe(
+        './node_modules/.bin/react-scripts',
+        ['start', '--smoke-test'],
+        options
+      );
+    }
+    const startProcess = execa(
       './node_modules/.bin/react-scripts',
-      ['start', smoke && '--smoke-test'].filter(Boolean),
-      {
-        cwd: this.root,
-        env: Object.assign(
-          {},
-          {
-            CI: 'false',
-            FORCE_COLOR: '0',
-            BROWSER: 'none',
-            PORT: port,
-          },
-          env
-        ),
-      }
+      ['start'],
+      options
     );
+    await new Promise(resolve => setTimeout(resolve, 2000)); // let dev server warm up
+    return {
+      port,
+      done() {
+        startProcess.kill('SIGKILL');
+      },
+    };
   }
 
   async build({ env = {} } = {}) {
@@ -57,6 +73,24 @@ module.exports = class ReactScripts {
       cwd: this.root,
       env: Object.assign({}, { CI: 'false', FORCE_COLOR: '0' }, env),
     });
+  }
+
+  async serve() {
+    const port = await getPort();
+    const serveProcess = execa(
+      './node_modules/.bin/serve',
+      ['-s', 'build', '-p', port],
+      {
+        cwd: this.root,
+      }
+    );
+    await new Promise(resolve => setTimeout(resolve, 1000)); // let serve warm up
+    return {
+      port,
+      done() {
+        serveProcess.kill('SIGKILL');
+      },
+    };
   }
 
   async test({ jestEnvironment = 'jsdom', env = {} } = {}) {
