@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { bar } from 'unknown-package';
 
-class App extends Component {
+class App extends React.Component {
   componentDidMount() {
     bar();
   }

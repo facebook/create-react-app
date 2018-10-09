@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ApolloClient, { gql } from 'apollo-boost';
 import { ApolloProvider, Query } from 'react-apollo';
 
@@ -14,7 +14,7 @@ const client = new ApolloClient({
   uri: 'https://graphql-pokemon.now.sh/graphql',
 });
 
-class Pokemon extends Component {
+class Pokemon extends React.Component {
   render() {
     const { name } = this.props.pokemon;
     return (
@@ -25,7 +25,7 @@ class Pokemon extends Component {
   }
 }
 
-class Data extends Component {
+class Data extends React.Component {
   state = {};
   componentDidCatch() {
     this.setState({ hasError: true });
@@ -50,7 +50,7 @@ class Data extends Component {
   }
 }
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <ApolloProvider client={client}>

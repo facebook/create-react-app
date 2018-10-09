@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component, createElement } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class BuiltEmitter extends Component {
+class BuiltEmitter extends React.Component {
   static propTypes = {
     feature: PropTypes.func.isRequired,
   };
@@ -18,7 +18,7 @@ class BuiltEmitter extends Component {
 
     // Class components must call this.props.onReady when they're ready for the test.
     // We will assume functional components are ready immediately after mounting.
-    if (!Component.isPrototypeOf(feature)) {
+    if (!React.Component.isPrototypeOf(feature)) {
       this.handleReady();
     }
   }
@@ -34,7 +34,7 @@ class BuiltEmitter extends Component {
     } = this;
     return (
       <div>
-        {createElement(feature, {
+        {React.createElement(feature, {
           onReady: handleReady,
         })}
       </div>
@@ -42,7 +42,7 @@ class BuiltEmitter extends Component {
   }
 }
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
