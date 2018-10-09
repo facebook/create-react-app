@@ -36,13 +36,13 @@
       "adding-custom-environment-variables",
       "making-a-progressive-web-app"
     ],
+    "Testing": ["running-tests", "debugging-tests"],
     "Back-End Integration": [
       "proxying-api-requests-in-development",
       "fetching-data-with-ajax-requests",
       "integrating-with-an-api-backend",
       "title-and-meta-tags"
     ],
-    "Testing": ["running-tests", "debugging-tests"],
     "Deployment": ["deployment"],
     "Advanced Usage": [
       "can-i-use-decorators",
