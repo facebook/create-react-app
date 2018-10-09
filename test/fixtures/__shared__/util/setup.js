@@ -16,6 +16,7 @@ module.exports = class TestSetup {
     this.teardown = this.teardown.bind(this);
 
     this.settings = { pnp };
+    this.isLocal = !(process.env.CI && process.env.CI !== 'false');
   }
 
   async setup() {
@@ -29,7 +30,7 @@ module.exports = class TestSetup {
     await fs.remove(path.resolve(this.testDirectory, 'test.partial.js'));
     await fs.remove(path.resolve(this.testDirectory, '.disable-pnp'));
 
-    const shouldInstallScripts = process.env.CI && process.env.CI !== 'false';
+    const shouldInstallScripts = !this.isLocal;
     if (shouldInstallScripts) {
       const packageJson = await fs.readJson(
         path.resolve(this.testDirectory, 'package.json')

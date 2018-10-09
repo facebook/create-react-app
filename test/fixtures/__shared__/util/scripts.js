@@ -1,7 +1,5 @@
 const execa = require('execa');
-const fs = require('fs-extra');
 const getPort = require('get-port');
-const path = require('path');
 const os = require('os');
 const stripAnsi = require('strip-ansi');
 
@@ -9,11 +7,13 @@ function execaSafe(...args) {
   return execa(...args)
     .then(({ stdout, stderr, ...rest }) => ({
       fulfilled: true,
+      rejected: false,
       stdout: stripAnsi(stdout),
       stderr: stripAnsi(stderr),
       ...rest,
     }))
     .catch(err => ({
+      fulfilled: false,
       rejected: true,
       reason: err,
       stdout: '',
@@ -31,10 +31,42 @@ module.exports = class ReactScripts {
     this.root = root;
   }
 
+  async start({ smoke = false, env = {} } = {}) {
+    const port = await getPort();
+    return await execaSafe(
+      './node_modules/.bin/react-scripts',
+      ['start', smoke && '--smoke-test'].filter(Boolean),
+      {
+        cwd: this.root,
+        env: Object.assign(
+          {},
+          {
+            CI: 'false',
+            FORCE_COLOR: '0',
+            BROWSER: 'none',
+            PORT: port,
+          },
+          env
+        ),
+      }
+    );
+  }
+
   async build({ env = {} } = {}) {
     return await execaSafe('./node_modules/.bin/react-scripts', ['build'], {
       cwd: this.root,
       env: Object.assign({}, { CI: 'false', FORCE_COLOR: '0' }, env),
     });
+  }
+
+  async test({ jestEnvironment = 'jsdom', env = {} } = {}) {
+    return await execaSafe(
+      './node_modules/.bin/react-scripts',
+      ['test', '--env', jestEnvironment, '--ci'],
+      {
+        cwd: this.root,
+        env: Object.assign({}, { CI: 'true' }, env),
+      }
+    );
   }
 };
