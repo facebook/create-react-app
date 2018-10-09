@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`webpack message formatting formats aliased unknown export 1`] = `
+exports[`formats aliased unknown export 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
@@ -14,7 +14,7 @@ Attempted import error: 'bar' is not exported from './AppUnknownExport' (importe
 }
 `;
 
-exports[`webpack message formatting formats babel syntax error 1`] = `
+exports[`formats babel syntax error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
@@ -36,7 +36,7 @@ Syntax error: Unterminated JSX contents (8:13)
 }
 `;
 
-exports[`webpack message formatting formats css syntax error 1`] = `
+exports[`formats css syntax error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
@@ -56,7 +56,7 @@ Syntax error: Unexpected } (3:2)
 }
 `;
 
-exports[`webpack message formatting formats eslint error 1`] = `
+exports[`formats eslint error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
@@ -72,7 +72,7 @@ Search for the keywords to learn more about each error.
 }
 `;
 
-exports[`webpack message formatting formats eslint warning 1`] = `
+exports[`formats eslint warning 1`] = `
 Object {
   "stderr": "",
   "stdout": "Creating an optimized production build...
@@ -88,7 +88,7 @@ To ignore, add // eslint-disable-next-line to the line before.
 }
 `;
 
-exports[`webpack message formatting formats file not found error 1`] = `
+exports[`formats file not found error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
@@ -102,7 +102,7 @@ Cannot find file './ThisFileSouldNotExist' in './src'.
 }
 `;
 
-exports[`webpack message formatting formats missing package 1`] = `
+exports[`formats missing package 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
@@ -118,7 +118,7 @@ You can install this package by running: yarn add unknown-package.
 }
 `;
 
-exports[`webpack message formatting formats no default export 1`] = `
+exports[`formats no default export 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
@@ -132,7 +132,7 @@ Attempted import error: './ExportNoDefault' does not contain a default export (i
 }
 `;
 
-exports[`webpack message formatting formats out of scope error 1`] = `
+exports[`formats out of scope error 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
@@ -147,7 +147,7 @@ You can either move it inside src/, or add a symlink to it from project's node_m
 }
 `;
 
-exports[`webpack message formatting formats unknown export 1`] = `
+exports[`formats unknown export 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
@@ -161,7 +161,7 @@ Attempted import error: 'bar' is not exported from './AppUnknownExport'.
 }
 `;
 
-exports[`webpack message formatting helps when users tries to use sass 1`] = `
+exports[`helps when users tries to use sass 1`] = `
 Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
