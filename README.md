@@ -82,7 +82,7 @@ my-app
     ├── index.css
     ├── index.js
     ├── logo.svg
-    └── registerServiceWorker.js
+    └── serviceWorker.js
 ```
 
 No configuration or complicated folder structures, just the files you need to build your app.<br>
