@@ -130,6 +130,11 @@ const StyledHeader = styled.header`
 
 const StyledTable = styled(Table)`
   margin-bottom: 0;
+  th,
+  td {
+    font-family: ${props => props.theme.fontFamily};
+    font-size: ${props => props.theme.fontSizes.small};
+  }
 
   td > div > *:last-child {
     margin-bottom: 0;
