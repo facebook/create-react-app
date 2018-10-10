@@ -95,8 +95,7 @@ module.exports = class TestSetup {
 
   async teardown() {
     if (this.testDirectory != null) {
-      // await fs.remove(this.testDirectory);
-      console.log(this.testDirectory);
+      await fs.remove(this.testDirectory);
       this.testDirectory = null;
       this._scripts = null;
     }
