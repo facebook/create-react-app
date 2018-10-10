@@ -2,6 +2,7 @@ const execa = require('execa');
 const getPort = require('get-port');
 const os = require('os');
 const stripAnsi = require('strip-ansi');
+const waitForLocalhost = require('wait-for-localhost');
 
 function execaSafe(...args) {
   return execa(...args)
@@ -48,14 +49,10 @@ module.exports = class ReactScripts {
     };
 
     if (smoke) {
-      return await execaSafe(
-        'npx',
-        ['-c', 'react-scripts start --smoke-test'],
-        options
-      );
+      return await execaSafe('yarnpkg', ['start', '--smoke-test'], options);
     }
-    const startProcess = execa('npx', ['-c', 'react-scripts start'], options);
-    await new Promise(resolve => setTimeout(resolve, 2000)); // let dev server warm up
+    const startProcess = execa('yarnpkg', ['start'], options);
+    await waitForLocalhost(port);
     return {
       port,
       done() {
@@ -65,7 +62,7 @@ module.exports = class ReactScripts {
   }
 
   async build({ env = {} } = {}) {
-    return await execaSafe('npx', ['-c', 'react-scripts build'], {
+    return await execaSafe('yarnpkg', ['build'], {
       cwd: this.root,
       env: Object.assign({}, { CI: 'false', FORCE_COLOR: '0' }, env),
     });
@@ -73,14 +70,14 @@ module.exports = class ReactScripts {
 
   async serve() {
     const port = await getPort();
-    const serveProcess = execa.shell(
-      `npx`,
-      ['-c', `serve -s build/ -p ${port}`],
+    const serveProcess = execa(
+      'yarnpkg',
+      ['serve', '--', '-p', port, '-s', 'build/'],
       {
         cwd: this.root,
       }
     );
-    await new Promise(resolve => setTimeout(resolve, 1000)); // let serve warm up
+    await waitForLocalhost(port);
     return {
       port,
       done() {
@@ -91,8 +88,8 @@ module.exports = class ReactScripts {
 
   async test({ jestEnvironment = 'jsdom', env = {} } = {}) {
     return await execaSafe(
-      'npx',
-      ['-c', `react-scripts test --env ${jestEnvironment} --ci`],
+      'yarnpkg',
+      ['test', '--env', jestEnvironment, '--ci'],
       {
         cwd: this.root,
         env: Object.assign({}, { CI: 'true' }, env),

@@ -30,19 +30,25 @@ module.exports = class TestSetup {
     await fs.remove(path.resolve(this.testDirectory, 'test.partial.js'));
     await fs.remove(path.resolve(this.testDirectory, '.disable-pnp'));
 
+    const packageJson = await fs.readJson(
+      path.resolve(this.testDirectory, 'package.json')
+    );
+
     const shouldInstallScripts = !this.isLocal;
     if (shouldInstallScripts) {
-      const packageJson = await fs.readJson(
-        path.resolve(this.testDirectory, 'package.json')
-      );
       packageJson.dependencies = Object.assign({}, packageJson.dependencies, {
         'react-scripts': 'latest',
       });
-      await fs.writeJson(
-        path.resolve(this.testDirectory, 'package.json'),
-        packageJson
-      );
     }
+    packageJson.scripts = Object.assign({}, packageJson.scripts, {
+      start: 'react-scripts start',
+      build: 'react-scripts build',
+      test: 'react-scripts test',
+    });
+    await fs.writeJson(
+      path.resolve(this.testDirectory, 'package.json'),
+      packageJson
+    );
 
     await execa(
       'yarnpkg',
