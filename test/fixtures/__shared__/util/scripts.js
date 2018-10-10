@@ -3,9 +3,8 @@ const getPort = require('get-port');
 const os = require('os');
 const stripAnsi = require('strip-ansi');
 
-function execaShellSafe(...args) {
-  return execa
-    .shell(...args)
+function execaSafe(...args) {
+  return execa(...args)
     .then(({ stdout, stderr, ...rest }) => ({
       fulfilled: true,
       rejected: false,
@@ -49,9 +48,13 @@ module.exports = class ReactScripts {
     };
 
     if (smoke) {
-      return await execaShellSafe('yarnpkg start --smoke-test', options);
+      return await execaSafe(
+        'npx',
+        ['-c', 'react-scripts start --smoke-test'],
+        options
+      );
     }
-    const startProcess = execa.shell('yarnpkg start', options);
+    const startProcess = execa('npx', ['-c', 'react-scripts start'], options);
     await new Promise(resolve => setTimeout(resolve, 2000)); // let dev server warm up
     return {
       port,
@@ -62,7 +65,7 @@ module.exports = class ReactScripts {
   }
 
   async build({ env = {} } = {}) {
-    return await execaShellSafe('yarnpkg build', {
+    return await execaSafe('npx', ['-c', 'react-scripts build'], {
       cwd: this.root,
       env: Object.assign({}, { CI: 'false', FORCE_COLOR: '0' }, env),
     });
@@ -70,9 +73,13 @@ module.exports = class ReactScripts {
 
   async serve() {
     const port = await getPort();
-    const serveProcess = execa.shell(`yarnpkg serve-static -p ${port}`, {
-      cwd: this.root,
-    });
+    const serveProcess = execa.shell(
+      `npx`,
+      ['-c', `serve:build -s build/ -p ${port}`],
+      {
+        cwd: this.root,
+      }
+    );
     await new Promise(resolve => setTimeout(resolve, 1000)); // let serve warm up
     return {
       port,
@@ -83,9 +90,13 @@ module.exports = class ReactScripts {
   }
 
   async test({ jestEnvironment = 'jsdom', env = {} } = {}) {
-    return await execaShellSafe(`yarnpkg test --env ${jestEnvironment} --ci`, {
-      cwd: this.root,
-      env: Object.assign({}, { CI: 'true' }, env),
-    });
+    return await execaSafe(
+      'npx',
+      ['-c', `react-scripts test --env ${jestEnvironment} --ci`],
+      {
+        cwd: this.root,
+        env: Object.assign({}, { CI: 'true' }, env),
+      }
+    );
   }
 };

@@ -45,7 +45,7 @@ module.exports = class TestSetup {
       start: 'react-scripts start',
       build: 'react-scripts build',
       test: 'react-scripts test',
-      'serve-static': 'serve -s build',
+      'serve:build': 'serve',
     });
 
     await fs.writeJson(
