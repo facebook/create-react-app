@@ -69,13 +69,9 @@ module.exports = class ReactScripts {
 
   async serve() {
     const port = await getPort();
-    const serveProcess = execa(
-      'yarnpkg',
-      ['serve', '-s', 'build', '-p', port],
-      {
-        cwd: this.root,
-      }
-    );
+    const serveProcess = execa('yarnpkg', ['serve-static', '-p', port], {
+      cwd: this.root,
+    });
     await new Promise(resolve => setTimeout(resolve, 1000)); // let serve warm up
     return {
       port,
