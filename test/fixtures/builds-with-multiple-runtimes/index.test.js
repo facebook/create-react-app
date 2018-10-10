@@ -1,4 +1,4 @@
-require('../__shared__/test-setup');
+const testSetup = require('../__shared__/test-setup');
 
 test('builds in development', async () => {
   const { fulfilled } = await testSetup.scripts.start({ smoke: true });

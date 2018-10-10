@@ -5,15 +5,17 @@ const TestSetup = require('./util/setup');
 const fixturePath = path.dirname(module.parent.filename);
 const fixtureName = path.basename(fixturePath);
 const disablePnp = fs.existsSync(path.resolve(fixturePath, '.disable-pnp'));
-global.testSetup = new TestSetup(fixtureName, fixturePath, {
+const testSetup = new TestSetup(fixtureName, fixturePath, {
   pnp: !disablePnp,
 });
 
 beforeAll(async () => {
-  await global.testSetup.setup();
+  await testSetup.setup();
 }, 1000 * 60 * 5);
 afterAll(async () => {
-  await global.testSetup.teardown();
+  await testSetup.teardown();
 });
 
 beforeEach(() => jest.setTimeout(1000 * 60 * 5));
+
+module.exports = testSetup;

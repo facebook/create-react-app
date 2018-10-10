@@ -1,4 +1,4 @@
-require('../__shared__/test-setup');
+const testSetup = require('../__shared__/test-setup');
 
 const puppeteer = require('puppeteer');
 
