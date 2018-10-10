@@ -19,7 +19,6 @@
     "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
-    "async-sema": "^2.1.3",
     "eslint": "5.6.0",
     "execa": "1.0.0",
     "fs-extra": "^7.0.0",
@@ -36,7 +35,8 @@
     "puppeteer": "^1.8.0",
     "strip-ansi": "^4.0.0",
     "svg-term-cli": "^2.1.1",
-    "tempy": "^0.2.1"
+    "tempy": "^0.2.1",
+    "wait-for-localhost": "2.0.1"
   },
   "husky": {
     "hooks": {
