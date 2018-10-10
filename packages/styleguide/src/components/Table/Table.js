@@ -61,8 +61,7 @@ const Table = ({ columns = [], data = [], isResponsive, ...other }) => {
   );
 };
 
-const border = (theme, size = '1px') =>
-  `${size} solid ${theme.colors.greyDarker}`;
+const border = (theme, size = '1px') => `${size} solid ${theme.colors.grey}`;
 
 const StyledResponsiveTable = styled.div`
   display: block;
