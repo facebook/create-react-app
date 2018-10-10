@@ -48,9 +48,13 @@ module.exports = class ReactScripts {
     };
 
     if (smoke) {
-      return await execaSafe('yarnpkg', ['start', '--smoke-test'], options);
+      return await execaSafe(
+        'yarnpkg',
+        ['--silent', 'start', '--smoke-test'],
+        options
+      );
     }
-    const startProcess = execa('yarnpkg', ['start'], options);
+    const startProcess = execa('yarnpkg', ['--silent', 'start'], options);
     await new Promise(resolve => setTimeout(resolve, 2000)); // let dev server warm up
     return {
       port,
@@ -61,7 +65,7 @@ module.exports = class ReactScripts {
   }
 
   async build({ env = {} } = {}) {
-    return await execaSafe('yarnpkg', ['build'], {
+    return await execaSafe('yarnpkg', ['--silent', 'build'], {
       cwd: this.root,
       env: Object.assign({}, { CI: 'false', FORCE_COLOR: '0' }, env),
     });
@@ -69,9 +73,13 @@ module.exports = class ReactScripts {
 
   async serve() {
     const port = await getPort();
-    const serveProcess = execa('yarnpkg', ['serve-static', '-p', port], {
-      cwd: this.root,
-    });
+    const serveProcess = execa(
+      'yarnpkg',
+      ['--silent', 'serve-static', '-p', port],
+      {
+        cwd: this.root,
+      }
+    );
     await new Promise(resolve => setTimeout(resolve, 1000)); // let serve warm up
     return {
       port,
@@ -84,7 +92,7 @@ module.exports = class ReactScripts {
   async test({ jestEnvironment = 'jsdom', env = {} } = {}) {
     return await execaSafe(
       'yarnpkg',
-      ['test', '--env', jestEnvironment, '--ci'],
+      ['--silent', 'test', '--env', jestEnvironment, '--ci'],
       {
         cwd: this.root,
         env: Object.assign({}, { CI: 'true' }, env),
