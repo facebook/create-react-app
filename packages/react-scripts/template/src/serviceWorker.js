@@ -56,7 +56,7 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
-      registration.onupdatefound = () => {
+      registration.addEventListener('updatefound', () => {
         const installingWorker = registration.installing;
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
@@ -84,7 +84,7 @@ function registerValidSW(swUrl, config) {
             }
           }
         };
-      };
+      });
     })
     .catch(error => {
       console.error('Error during service worker registration:', error);
