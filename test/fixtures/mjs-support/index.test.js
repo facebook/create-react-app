@@ -9,7 +9,7 @@ test('can use mjs library in development', async () => {
   try {
     const page = await browser.newPage();
     await page.goto(`http://localhost:${port}/`);
-    await page.waitForSelector('.Pokemon-Name-Data');
+    await page.waitForSelector('.Pokemon-Name-Data', { timeout: 0 });
     const output = await page.evaluate(() => {
       return Array.from(
         document.getElementsByClassName('Pokemon-Name-Data')
@@ -29,7 +29,7 @@ test('can use mjs library in production', async () => {
   try {
     const page = await browser.newPage();
     await page.goto(`http://localhost:${port}/`);
-    await page.waitForSelector('.Pokemon-Name-Data');
+    await page.waitForSelector('.Pokemon-Name-Data', { timeout: 0 });
     const output = await page.evaluate(() => {
       return Array.from(
         document.getElementsByClassName('Pokemon-Name-Data')
