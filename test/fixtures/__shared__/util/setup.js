@@ -15,8 +15,8 @@ module.exports = class TestSetup {
     this.setup = this.setup.bind(this);
     this.teardown = this.teardown.bind(this);
 
-    this.settings = { pnp };
     this.isLocal = !(process.env.CI && process.env.CI !== 'false');
+    this.settings = { pnp: pnp && !this.isLocal };
   }
 
   async setup() {
@@ -95,7 +95,8 @@ module.exports = class TestSetup {
 
   async teardown() {
     if (this.testDirectory != null) {
-      await fs.remove(this.testDirectory);
+      // await fs.remove(this.testDirectory);
+      console.log(this.testDirectory);
       this.testDirectory = null;
       this._scripts = null;
     }
