@@ -97,7 +97,7 @@ git clean -df
 
 # Run all tests
 cd test/
-CI=true ../node_modules/.bin/jest --maxWorkers 2
+CI=true ../node_modules/.bin/jest
 
 # Cleanup
 cleanup
