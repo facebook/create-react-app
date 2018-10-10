@@ -11,7 +11,7 @@ global.testSetup = new TestSetup(fixtureName, fixturePath, {
 
 beforeAll(async () => {
   await global.testSetup.setup();
-}, 1000 * 30);
+}, 1000 * 60 * 5);
 afterAll(async () => {
   await global.testSetup.teardown();
 });
