@@ -4,13 +4,25 @@ const os = require('os');
 const stripAnsi = require('strip-ansi');
 const waitForLocalhost = require('wait-for-localhost');
 
+function stripYarn(output) {
+  let lines = output.split('\n');
+
+  let runIndex = lines.findIndex(line => line.match(/^yarn run/));
+  if (runIndex !== -1) {
+    lines.splice(0, runIndex + 2);
+    lines = lines.filter(line => !line.match(/^info Visit.*yarnpkg/));
+  }
+
+  return lines.join('\n');
+}
+
 function execaSafe(...args) {
   return execa(...args)
     .then(({ stdout, stderr, ...rest }) => ({
       fulfilled: true,
       rejected: false,
-      stdout: stripAnsi(stdout),
-      stderr: stripAnsi(stderr),
+      stdout: stripYarn(stripAnsi(stdout)),
+      stderr: stripYarn(stripAnsi(stderr)),
       ...rest,
     }))
     .catch(err => ({
@@ -18,11 +30,13 @@ function execaSafe(...args) {
       rejected: true,
       reason: err,
       stdout: '',
-      stderr: stripAnsi(
-        err.message
-          .split(os.EOL)
-          .slice(2)
-          .join(os.EOL)
+      stderr: stripYarn(
+        stripAnsi(
+          err.message
+            .split(os.EOL)
+            .slice(2)
+            .join(os.EOL)
+        )
       ),
     }));
 }
