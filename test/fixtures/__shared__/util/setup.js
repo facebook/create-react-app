@@ -45,6 +45,7 @@ module.exports = class TestSetup {
       build: 'react-scripts build',
       test: 'react-scripts test',
     });
+    packageJson.license = packageJson.license || 'UNLICENSED';
     await fs.writeJson(
       path.resolve(this.testDirectory, 'package.json'),
       packageJson
