@@ -1,10 +1,10 @@
 ---
 id: documentation-intro
-title: Welcome To The Documentation
+title: About The Docs
 sidebar_label: About The Docs
 ---
 
-Please navigate via the table of content for finding what you are looking for.
+Welcome to the documentation! Please navigate via the table of contents to find what you are looking for.
 
 ## Something Missing?
 

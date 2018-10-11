@@ -1,18 +1,16 @@
 ---
 id: supported-browsers-features
 title: Supported Browsers And Features
-sidebar_label: Browsers & Features
+sidebar_label: Supported Browsers And Features
 ---
 
 ## Supported Browsers
 
-By default, the generated project supports all modern browsers.<br>
-Support for Internet Explorer 9, 10, and 11 requires [polyfills](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md).
+By default, the generated project supports all modern browsers. Support for Internet Explorer 9, 10, and 11 requires [polyfills](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md).
 
 ## Supported Language Features
 
-This project supports a superset of the latest JavaScript standard.<br>
-In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, it also supports:
+This project supports a superset of the latest JavaScript standard. In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, it also supports:
 
 - [Exponentiation Operator](https://github.com/rwaldron/exponentiation-operator) (ES2016).
 - [Async/await](https://github.com/tc39/ecmascript-asyncawait) (ES2017).
