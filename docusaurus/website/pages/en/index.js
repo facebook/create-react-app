@@ -145,6 +145,25 @@ const GetStarted = props => (
   </Block>
 );
 
+const Update = props => (
+  <Block layout="twoColumn" {...props}>
+    {[
+      {
+        image: imgUrl('update.png'),
+        imageAlign: 'left',
+      },
+      {
+        title: 'Easy-to-maintain toolchain',
+        content: `Keeping a build toolchain up to date with the latest and greatest can be a daunting and time-consuming
+        task for even the most seasoned developer. Create React App extracts all of those concerns into a single
+        dependency, which are **easy to update** and **battle tested by thousands**
+
+        npm install react-scripts@latest`,
+      },
+    ]}
+  </Block>
+);
+
 class Index extends React.Component {
   render() {
     const language = this.props.language || '';
@@ -155,6 +174,7 @@ class Index extends React.Component {
         <div className="mainContainer">
           <Features align="center" />
           <GetStarted align="left" />
+          <Update align="left" />
         </div>
       </div>
     );
