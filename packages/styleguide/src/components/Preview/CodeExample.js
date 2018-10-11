@@ -33,6 +33,11 @@ const getJSXAsStringFromMarkup = (markup, options) => {
       .join('\n');
   }
 
+  // if it's pure text, return it
+  if (typeof markup === 'string') {
+    return markup;
+  }
+
   return '';
 };
 
