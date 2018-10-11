@@ -14,9 +14,9 @@ import { ButtonBaseCSS } from '../../style/common';
 
 const getJSXAsStringFromMarkup = (markup, options) => {
   const reactElementToJSXStringOptions = {
-    ...options,
     showFunctions: true,
-    functionValue: () => ''
+    functionValue: () => '',
+    ...options
   };
 
   // valid element can be passed to reactElementToJSXString directly
