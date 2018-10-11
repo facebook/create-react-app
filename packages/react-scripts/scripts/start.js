@@ -72,6 +72,10 @@ if (process.env.HOST) {
   console.log(
     `Learn more here: ${chalk.yellow('http://bit.ly/CRA-advanced-config')}`
   );
+  /**
+   * This is necessary here on purpose to add a new line in the console.
+   * @see [wait forth push]
+   */
   console.log();
 }
 
