@@ -68,7 +68,7 @@
         "title": "Developing Components In Isolation"
       },
       "documentation-intro": {
-        "title": "Welcome To The Documentation",
+        "title": "About The Docs",
         "sidebar_label": "About The Docs"
       },
       "fetching-data-with-ajax-requests": {
@@ -114,7 +114,7 @@
       },
       "supported-browsers-features": {
         "title": "Supported Browsers And Features",
-        "sidebar_label": "Browsers & Features"
+        "sidebar_label": "Supported Browsers And Features"
       },
       "title-and-meta-tags": {
         "title": "Title And Meta Tags",
