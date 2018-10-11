@@ -10,4 +10,4 @@ export { default as Note, NoteWarning, NoteError, Dos, Donts } from './Note';
 export { default as Page } from './Page';
 export { default as Preview } from './Preview';
 export { default as Table } from './Table';
-export { H1, H2, H3, H4, H5, P } from './Typography';
+export { H1, H2, H3, H4, H5, P, Link } from './Typography';
