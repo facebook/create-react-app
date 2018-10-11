@@ -79,7 +79,9 @@ class HomeSplash extends React.Component {
             <Button href={docUrl('getting-started', language)}>
               Get started
             </Button>
-            <Button href={docUrl('documentation-intro', language)}>Documentation</Button>
+            <Button href={docUrl('documentation-intro', language)}>
+              Documentation
+            </Button>
           </PromoSection>
         </div>
       </SplashContainer>
@@ -93,12 +95,16 @@ const Block = props => (
     id={props.id}
     background={props.background}
   >
-    <GridBlock align="center" contents={props.children} layout={props.layout} />
+    <GridBlock
+      align={props.align}
+      contents={props.children}
+      layout={props.layout}
+    />
   </Container>
 );
 
-const Features = () => (
-  <Block layout="threeColumn" align="left">
+const Features = props => (
+  <Block layout="threeColumn" {...props}>
     {[
       {
         content:
@@ -119,6 +125,26 @@ const Features = () => (
   </Block>
 );
 
+const GetStarted = props => (
+  <Block layout="twoColumn" background="light" {...props}>
+    {[
+      {
+        title: 'Get started coding in a matter of seconds!',
+        content: `With Create React App, you get to focus on **writing React, not boilerplate**.
+          All you need to do is run a command, install some dependencies, and decide what's for dinner.
+
+          npx create-react-app my-app
+          `,
+      },
+      {
+        image:
+          'https://camo.githubusercontent.com/29765c4a32f03bd01d44edef1cd674225e3c906b/68747470733a2f2f63646e2e7261776769742e636f6d2f66616365626f6f6b2f6372656174652d72656163742d6170702f323762343261632f73637265656e636173742e737667',
+        imageAlign: 'right',
+      },
+    ]}
+  </Block>
+);
+
 class Index extends React.Component {
   render() {
     const language = this.props.language || '';
@@ -127,7 +153,8 @@ class Index extends React.Component {
       <div>
         <HomeSplash language={language} />
         <div className="mainContainer">
-          <Features />
+          <Features align="center" />
+          <GetStarted align="left" />
         </div>
       </div>
     );
