@@ -134,10 +134,12 @@ const GetStarted = props => (
       {
         title: 'Get started coding in a matter of seconds!',
         content: `With Create React App, you get to focus on **writing React, not boilerplate**.
-          All you need to do is run a command, install some dependencies, and decide what's for dinner.
+All you need to do is run a command, install some dependencies, and decide what's for dinner.
 
-          npx create-react-app my-app
-          `,
+\`\`\`sh
+npx create-react-app my-app
+\`\`\`
+`,
       },
       {
         image:
@@ -158,10 +160,12 @@ const Update = props => (
       {
         title: 'Easy-to-maintain toolchain',
         content: `Keeping a build toolchain up to date with the latest and greatest can be a daunting and time-consuming
-        task for even the most seasoned developer. Create React App extracts all of those concerns into a single
-        dependency, which are **easy to update** and **battle tested by thousands**
+task for even the most seasoned developer. Create React App extracts all of those concerns into a single
+dependency, which are **easy to update** and **battle tested by thousands**
 
-        npm install react-scripts@latest`,
+\`\`\`sh
+npm install react-scripts@latest
+\`\`\``,
       },
     ]}
   </Block>
