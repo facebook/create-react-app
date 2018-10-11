@@ -161,7 +161,7 @@ const Update = props => (
         title: 'Easy-to-maintain toolchain',
         content: `Keeping a build toolchain up to date with the latest and greatest can be a daunting and time-consuming
 task for even the most seasoned developer. Create React App extracts all of those concerns into a single
-dependency, which are **easy to update** and **battle tested by thousands**
+dependency, which are **easy to update** and **battle tested by thousands**.
 
 \`\`\`sh
 npm install react-scripts@latest
