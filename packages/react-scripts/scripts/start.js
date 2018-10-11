@@ -74,7 +74,7 @@ if (process.env.HOST) {
   );
   /**
    * This is necessary here on purpose to add a new line in the console.
-   * @see [wait forth push]
+   * @see https://github.com/facebook/create-react-app/pull/5407
    */
   console.log();
 }
