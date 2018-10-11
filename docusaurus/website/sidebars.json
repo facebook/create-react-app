@@ -4,56 +4,54 @@
       "documentation-intro"
     ],
     "Getting Started": [
-      "getting-started", 
-      "folder-structure", 
+      "getting-started",
+      "folder-structure",
       "available-scripts",
-      "supported-browsers",
-      "supported-language-features"
+      "supported-browsers-features",
+      "updating-to-new-releases"
     ],
     "Development": [
-      "syntax-highlighting-in-the-editor", 
-      "lint-output-in-the-editor", 
-      "debugging-in-the-editor",
-      "formatting-code-automatically",
-      "proxying-api-requests-in-development",
+      "setting-up-your-editor",
       "developing-components-in-isolation",
-      "analyzing-the-bundle-size"
+      "analyzing-the-bundle-size",
+      "using-https-in-development"
     ],
-    "How-to": [
-      "changing-the-page-title",
-      "installing-a-dependency",
-      "importing-a-component",
-      "code-splitting",
+    "Styles and Assets": [
       "adding-a-stylesheet",
       "adding-a-css-modules-stylesheet",
       "adding-a-sass-stylesheet",
       "post-processing-css",
       "adding-images-fonts-and-files",
       "using-the-public-folder",
+      "code-splitting"
+    ],
+    "Building your App": [
+      "installing-a-dependency",
+      "importing-a-component",
       "using-global-variables",
       "adding-bootstrap",
       "adding-flow",
       "adding-relay",
       "adding-a-router",
       "adding-custom-environment-variables",
-      "can-i-use-decorators",
+      "making-a-progressive-web-app"
+    ],
+    "Testing": ["running-tests", "debugging-tests"],
+    "Back-End Integration": [
+      "proxying-api-requests-in-development",
       "fetching-data-with-ajax-requests",
       "integrating-with-an-api-backend",
-      "using-https-in-development",
-      "generating-dynamic-meta-tags-on-the-server",
+      "title-and-meta-tags"
+    ],
+    "Deployment": ["deployment"],
+    "Advanced Usage": [
+      "can-i-use-decorators",
       "pre-rendering-into-static-html-files",
-      "injecting-data-from-the-server-into-the-page",
-      "making-a-progressive-web-app",
       "advanced-configuration",
       "alternatives-to-ejecting"
     ],
-    "Testing": ["running-tests", "debugging-tests"],
-    "Deployment": ["publishing-components-to-npm", "deployment"],
     "Support": [
-      "troubleshooting", 
-      "updating-to-new-releases",
-      "sending-feedback", 
-      "something-missing"
+      "troubleshooting"
     ]
   }
 }

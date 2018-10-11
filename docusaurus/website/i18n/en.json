@@ -6,28 +6,32 @@
     "tagline": "Create React apps with no build configuration.",
     "docs": {
       "adding-a-css-modules-stylesheet": {
-        "title": "Adding a CSS Modules Stylesheet"
+        "title": "Adding A CSS Modules Stylesheet",
+        "sidebar_label": "Adding CSS Modules"
       },
       "adding-a-router": {
-        "title": "Adding a Router"
+        "title": "Adding A Router"
       },
       "adding-a-sass-stylesheet": {
-        "title": "Adding a Sass Stylesheet"
+        "title": "Adding A Sass Stylesheet",
+        "sidebar_label": "Adding Sass Stylesheets"
       },
       "adding-a-stylesheet": {
-        "title": "Adding a Stylesheet"
+        "title": "Adding A Stylesheet",
+        "sidebar_label": "Adding Stylesheets"
       },
       "adding-bootstrap": {
         "title": "Adding Bootstrap"
       },
       "adding-custom-environment-variables": {
-        "title": "Adding Custom Environment Variables"
+        "title": "Adding Custom Environment Variables",
+        "sidebar_label": "Environment Variables"
       },
       "adding-flow": {
         "title": "Adding Flow"
       },
       "adding-images-fonts-and-files": {
-        "title": "Adding Images, Fonts, and Files"
+        "title": "Adding Images, Fonts, And Files"
       },
       "adding-relay": {
         "title": "Adding Relay"
@@ -36,133 +40,102 @@
         "title": "Advanced Configuration"
       },
       "alternatives-to-ejecting": {
-        "title": "Alternatives to Ejecting"
+        "title": "Alternatives To Ejecting"
       },
       "analyzing-the-bundle-size": {
         "title": "Analyzing the Bundle Size",
-        "sidebar_label": "Analyzing bundle size"
+        "sidebar_label": "Analyzing Bundle Size"
       },
       "available-scripts": {
         "title": "Available Scripts",
-        "sidebar_label": "Available scripts"
+        "sidebar_label": "Available Scripts"
       },
       "can-i-use-decorators": {
         "title": "Can I Use Decorators?"
       },
-      "changing-the-page-title": {
-        "title": "Changing the <title />"
-      },
       "code-splitting": {
         "title": "Code Splitting"
       },
-      "debugging-in-the-editor": {
-        "title": "Debugging in the Editor"
-      },
       "debugging-tests": {
         "title": "Debugging Tests",
-        "sidebar_label": "Debugging tests"
+        "sidebar_label": "Debugging Tests"
       },
       "deployment": {
         "title": "Deployment",
         "sidebar_label": "Deployment"
       },
       "developing-components-in-isolation": {
-        "title": "Developing Components in Isolation"
+        "title": "Developing Components In Isolation"
       },
       "documentation-intro": {
-        "title": "Welcome to the Documentation",
-        "sidebar_label": "About the docs"
+        "title": "Welcome To The Documentation",
+        "sidebar_label": "About The Docs"
       },
       "fetching-data-with-ajax-requests": {
-        "title": "Fetching Data with AJAX Requests"
+        "title": "Fetching Data with AJAX Requests",
+        "sidebar_label": "Fetching Data"
       },
       "folder-structure": {
-        "title": "Folder structure"
-      },
-      "formatting-code-automatically": {
-        "title": "Formatting Code Automatically",
-        "sidebar_label": "Formatting code"
-      },
-      "generating-dynamic-meta-tags-on-the-server": {
-        "title": "Generating Dynamic `<meta>` Tags on the Server"
+        "title": "Folder Structure"
       },
       "getting-started": {
-        "title": "Getting started",
-        "sidebar_label": "Getting started"
+        "title": "Getting Started"
       },
       "importing-a-component": {
-        "title": "Importing a Component"
-      },
-      "injecting-data-from-the-server-into-the-page": {
-        "title": "Injecting Data from the Server into the Page"
+        "title": "Importing A Component"
       },
       "installing-a-dependency": {
-        "title": "Installing a Dependency"
+        "title": "Installing A Dependency"
       },
       "integrating-with-an-api-backend": {
-        "title": "Integrating with an API Backend"
-      },
-      "lint-output-in-the-editor": {
-        "title": "Displaying Lint Output in the Editor",
-        "sidebar_label": "In-editor linting"
+        "title": "Integrating With An API Backend",
+        "sidebar_label": "Integrating With An API"
       },
       "making-a-progressive-web-app": {
-        "title": "Making a Progressive Web App"
+        "title": "Making A Progressive Web App"
       },
       "post-processing-css": {
         "title": "Post-Processing CSS"
       },
       "pre-rendering-into-static-html-files": {
-        "title": "Pre-Rendering into Static HTML Files"
+        "title": "Pre-Rendering Into Static HTML Files",
+        "sidebar_label": "Pre-Rendering Static HTML"
       },
       "proxying-api-requests-in-development": {
-        "title": "Proxying API Requests in Development",
-        "sidebar_label": "Proxying in development"
-      },
-      "publishing-components-to-npm": {
-        "title": "Publishing components to npm",
-        "sidebar_label": "Publishing to npm"
-      },
-      "README": {
-        "title": "README"
+        "title": "Proxying API Requests In Development",
+        "sidebar_label": "Proxying In Development"
       },
       "running-tests": {
-        "title": "Running Tests",
-        "sidebar_label": "Running tests"
+        "title": "Running Tests"
       },
-      "sending-feedback": {
-        "title": "Sending feedback",
-        "sidebar_label": "Feedback"
+      "setting-up-your-editor": {
+        "title": "Setting Up Your Editor",
+        "sidebar_label": "Editor Setup"
       },
-      "something-missing": {
-        "title": "Something missing?",
-        "sidebar_label": "Something missing?"
+      "supported-browsers-features": {
+        "title": "Supported Browsers And Features",
+        "sidebar_label": "Browsers & Features"
       },
-      "supported-browsers": {
-        "title": "Supported Browsers"
-      },
-      "supported-language-features": {
-        "title": "Supported Language Features"
-      },
-      "syntax-highlighting-in-the-editor": {
-        "title": "Syntax highlighting in the editor",
-        "sidebar_label": "Syntax highlighting"
+      "title-and-meta-tags": {
+        "title": "Title And Meta Tags",
+        "sidebar_label": "Title & Meta Tags"
       },
       "troubleshooting": {
         "title": "Troubleshooting",
         "sidebar_label": "Troubleshooting"
       },
       "updating-to-new-releases": {
-        "title": "Updating to New Releases"
+        "title": "Updating To New Releases"
       },
       "using-global-variables": {
         "title": "Using Global Variables"
       },
       "using-https-in-development": {
-        "title": "Using HTTPS in Development"
+        "title": "Using HTTPS In Development",
+        "sidebar_label": "HTTPS In Development"
       },
       "using-the-public-folder": {
-        "title": "Using the `public` Folder"
+        "title": "Using The public Folder"
       }
     },
     "links": {
@@ -174,9 +147,12 @@
       "Welcome": "Welcome",
       "Getting Started": "Getting Started",
       "Development": "Development",
-      "How-to": "How-to",
+      "Styles and Assets": "Styles and Assets",
+      "Building your App": "Building your App",
       "Testing": "Testing",
+      "Back-End Integration": "Back-End Integration",
       "Deployment": "Deployment",
+      "Advanced Usage": "Advanced Usage",
       "Support": "Support"
     }
   },

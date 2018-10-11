@@ -1,6 +1,6 @@
 ---
 id: using-the-public-folder
-title: Using the `public` Folder
+title: Using The public Folder
 ---
 
 > Note: this feature is available with `react-scripts@0.5.0` and higher.

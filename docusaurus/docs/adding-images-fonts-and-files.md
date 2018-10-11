@@ -1,6 +1,6 @@
 ---
 id: adding-images-fonts-and-files
-title: Adding Images, Fonts, and Files
+title: Adding Images, Fonts, And Files
 ---
 
 With Webpack, using static assets like images and fonts works similarly to CSS.

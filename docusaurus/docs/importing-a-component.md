@@ -1,6 +1,6 @@
 ---
 id: importing-a-component
-title: Importing a Component
+title: Importing A Component
 ---
 
 This project setup supports ES6 modules thanks to Webpack.<br>

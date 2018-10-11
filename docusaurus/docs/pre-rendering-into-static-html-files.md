@@ -1,6 +1,7 @@
 ---
 id: pre-rendering-into-static-html-files
-title: Pre-Rendering into Static HTML Files
+title: Pre-Rendering Into Static HTML Files
+sidebar_label: Pre-Rendering Static HTML
 ---
 
 If you’re hosting your `build` with a static hosting provider you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot) or [react-snap](https://github.com/stereobooster/react-snap) to generate HTML pages for each route, or relative link, in your application. These pages will then seamlessly become active, or “hydrated”, when the JavaScript bundle has loaded.

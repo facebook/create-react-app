@@ -1,6 +1,7 @@
 ---
 id: adding-a-sass-stylesheet
-title: Adding a Sass Stylesheet
+title: Adding A Sass Stylesheet
+sidebar_label: Adding Sass Stylesheets
 ---
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.

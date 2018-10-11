@@ -1,7 +1,7 @@
 ---
 id: debugging-tests
 title: Debugging Tests
-sidebar_label: Debugging tests
+sidebar_label: Debugging Tests
 ---
 
 There are various ways to setup a debugger for your Jest tests. We cover debugging in Chrome and [Visual Studio Code](https://code.visualstudio.com/).

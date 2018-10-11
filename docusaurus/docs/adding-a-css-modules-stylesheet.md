@@ -1,6 +1,7 @@
 ---
 id: adding-a-css-modules-stylesheet
-title: Adding a CSS Modules Stylesheet
+title: Adding A CSS Modules Stylesheet
+sidebar_label: Adding CSS Modules
 ---
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.
