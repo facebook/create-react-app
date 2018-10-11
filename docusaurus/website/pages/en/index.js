@@ -91,7 +91,7 @@ class HomeSplash extends React.Component {
 
 const Block = props => (
   <Container
-    padding={['bottom', 'top']}
+    padding={props.padding}
     id={props.id}
     background={props.background}
   >
@@ -102,6 +102,9 @@ const Block = props => (
     />
   </Container>
 );
+Block.defaultProps = {
+  padding: ['bottom', 'top'],
+};
 
 const Features = props => (
   <Block layout="threeColumn" {...props}>
@@ -164,6 +167,71 @@ const Update = props => (
   </Block>
 );
 
+const FineGrainedFeatures = props => (
+  <Block layout="fourColumn" align="center" padding={['bottom']} {...props}>
+    {[
+      {
+        title: 'Webpack 4',
+        content:
+          'Webpack 4 gives you lightning fast rebuilds and code-splitting out of the box',
+      },
+      {
+        title: 'Babel 7',
+        content:
+          'Babel 7 transpiles your code faster than ever, now with support for the new Fragment syntax `</>`',
+      },
+      {
+        title: 'ES2015+',
+        content:
+          'Create React App is set up for you to use the features of the future',
+      },
+      {
+        title: 'Jest',
+        content:
+          'The best test runner in the business is set up for you by default',
+      },
+      {
+        title: 'Dev-server',
+        content:
+          'No-hassle local development thanks to the built-in dev-server',
+      },
+      {
+        title: 'PostCSS',
+        content:
+          'Prefixing of new CSS features are done for you through Autoprefixer',
+      },
+      {
+        title: 'SASS',
+        content: 'Now you can write your styles with the power of SASS',
+      },
+      {
+        title: 'CSS Modules',
+        content: 'CSS Modules are also supported out of the box',
+      },
+      {
+        title: 'Babel Macros',
+        content:
+          'Need some extra Babel-power? Babel Macros gives you just that!',
+      },
+      {
+        title: 'SVGs in React',
+        content:
+          'Now you can import your SVGs and use them as React components',
+      },
+      {
+        title: 'Progressive Web Apps',
+        content:
+          'Every app created by Create React App is a fully Lighthouse-compliant PWA - opt in.',
+      },
+      {
+        title: 'Great DX',
+        content:
+          "Create React App is made for you - the developer. And we've made your day-to-day so much better",
+      },
+    ]}
+  </Block>
+);
+
 class Index extends React.Component {
   render() {
     const language = this.props.language || '';
@@ -175,6 +243,7 @@ class Index extends React.Component {
           <Features align="center" />
           <GetStarted align="left" />
           <Update align="left" />
+          <FineGrainedFeatures align="center" />
         </div>
       </div>
     );
