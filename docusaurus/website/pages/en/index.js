@@ -79,7 +79,9 @@ class HomeSplash extends React.Component {
             <Button href={docUrl('getting-started', language)}>
               Getting Started
             </Button>
-            <Button href={docUrl('documentation-intro', language)}>Documentation</Button>
+            <Button href={docUrl('documentation-intro', language)}>
+              Documentation
+            </Button>
           </PromoSection>
         </div>
       </SplashContainer>
@@ -89,16 +91,23 @@ class HomeSplash extends React.Component {
 
 const Block = props => (
   <Container
-    padding={['bottom', 'top']}
+    padding={props.padding}
     id={props.id}
     background={props.background}
   >
-    <GridBlock align="center" contents={props.children} layout={props.layout} />
+    <GridBlock
+      align={props.align}
+      contents={props.children}
+      layout={props.layout}
+    />
   </Container>
 );
+Block.defaultProps = {
+  padding: ['bottom', 'top'],
+};
 
-const Features = () => (
-  <Block layout="threeColumn" align="left">
+const Features = props => (
+  <Block layout="threeColumn" {...props}>
     {[
       {
         content:
@@ -119,6 +128,114 @@ const Features = () => (
   </Block>
 );
 
+const GetStarted = props => (
+  <Block layout="twoColumn" background="light" {...props}>
+    {[
+      {
+        title: 'Get started coding in a matter of seconds!',
+        content: `With Create React App, you get to focus on **writing React, not boilerplate**.
+All you need to do is run a command, install some dependencies, and decide what's for dinner.
+
+\`\`\`sh
+npx create-react-app my-app
+\`\`\`
+`,
+      },
+      {
+        image:
+          'https://camo.githubusercontent.com/29765c4a32f03bd01d44edef1cd674225e3c906b/68747470733a2f2f63646e2e7261776769742e636f6d2f66616365626f6f6b2f6372656174652d72656163742d6170702f323762343261632f73637265656e636173742e737667',
+        imageAlign: 'right',
+      },
+    ]}
+  </Block>
+);
+
+const Update = props => (
+  <Block layout="twoColumn" {...props}>
+    {[
+      {
+        image: imgUrl('update.png'),
+        imageAlign: 'left',
+      },
+      {
+        title: 'Easy-to-maintain toolchain',
+        content: `Keeping a build toolchain up to date with the latest and greatest can be a daunting and time-consuming
+task for even the most seasoned developer. Create React App extracts all of those concerns into a single
+dependency, which are **easy to update** and **battle tested by thousands**.
+
+\`\`\`sh
+npm install react-scripts@latest
+\`\`\``,
+      },
+    ]}
+  </Block>
+);
+
+const FineGrainedFeatures = props => (
+  <Block layout="fourColumn" align="center" padding={['bottom']} {...props}>
+    {[
+      {
+        title: 'Webpack 4',
+        content:
+          'Webpack 4 gives you lightning fast rebuilds and code-splitting out of the box',
+      },
+      {
+        title: 'Babel 7',
+        content:
+          'Babel 7 transpiles your code faster than ever, now with support for the new Fragment syntax `</>`',
+      },
+      {
+        title: 'ES2015+',
+        content:
+          'Create React App is set up for you to use the features of the future',
+      },
+      {
+        title: 'Jest',
+        content:
+          'The best test runner in the business is set up for you by default',
+      },
+      {
+        title: 'Dev-server',
+        content:
+          'No-hassle local development thanks to the built-in dev-server',
+      },
+      {
+        title: 'PostCSS',
+        content:
+          'Prefixing of new CSS features are done for you through Autoprefixer',
+      },
+      {
+        title: 'SASS',
+        content: 'Now you can write your styles with the power of SASS',
+      },
+      {
+        title: 'CSS Modules',
+        content: 'CSS Modules are also supported out of the box',
+      },
+      {
+        title: 'Babel Macros',
+        content:
+          'Need some extra Babel-power? Babel Macros gives you just that',
+      },
+      {
+        title: 'SVGs in React',
+        content:
+          'Now you can import your SVGs and use them as React components',
+      },
+      {
+        title: 'Progressive Web Apps',
+        content:
+          'Every app created by Create React App is a fully Lighthouse-compliant PWA - opt in',
+      },
+      {
+        title: 'Great DX',
+        content:
+          "Create React App is made for you - the developer. And we've made your day-to-day so much better",
+      },
+    ]}
+  </Block>
+);
+
 class Index extends React.Component {
   render() {
     const language = this.props.language || '';
@@ -127,7 +244,10 @@ class Index extends React.Component {
       <div>
         <HomeSplash language={language} />
         <div className="mainContainer">
-          <Features />
+          <Features align="center" />
+          <GetStarted align="left" />
+          <Update align="left" />
+          <FineGrainedFeatures align="center" />
         </div>
       </div>
     );

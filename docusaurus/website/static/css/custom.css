@@ -19,10 +19,17 @@
   text-decoration: underline;
 }
 
+.navigationSlider .slidingNav ul {
+  background: #282c34;
+}
+
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }
 
 @media only screen and (min-width: 1024px) {
+  .navigationSlider .slidingNav ul {
+    background: none;
+  }
 }
 
 @media only screen and (max-width: 1023px) {
