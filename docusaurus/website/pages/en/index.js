@@ -215,7 +215,7 @@ const FineGrainedFeatures = props => (
       {
         title: 'Babel Macros',
         content:
-          'Need some extra Babel-power? Babel Macros gives you just that!',
+          'Need some extra Babel-power? Babel Macros gives you just that',
       },
       {
         title: 'SVGs in React',
@@ -225,7 +225,7 @@ const FineGrainedFeatures = props => (
       {
         title: 'Progressive Web Apps',
         content:
-          'Every app created by Create React App is a fully Lighthouse-compliant PWA - opt in.',
+          'Every app created by Create React App is a fully Lighthouse-compliant PWA - opt in',
       },
       {
         title: 'Great DX',
