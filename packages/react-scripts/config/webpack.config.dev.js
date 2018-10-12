@@ -223,7 +223,9 @@ module.exports = {
           {
             test: /\.(ts|tsx)$/,
             loader: 'awesome-typescript-loader',
-            plugins: [new CheckerPlugin()],
+            options: {
+              plugins: [new CheckerPlugin()],
+            },
           },
           // Process application JS with Babel.
           // The preset includes JSX, Flow, and some ESnext features.
