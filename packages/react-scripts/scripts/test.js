@@ -22,13 +22,45 @@ process.on('unhandledRejection', err => {
 
 // Ensure environment variables are read.
 require('../config/env');
+// @remove-on-eject-begin
+// Do the preflight check (only happens before eject).
+const verifyPackageTree = require('./utils/verifyPackageTree');
+if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
+  verifyPackageTree();
+}
+// @remove-on-eject-end
 
 const jest = require('jest');
+const execSync = require('child_process').execSync;
 let argv = process.argv.slice(2);
 
-// Watch unless on CI or in coverage mode
-if (!process.env.CI && argv.indexOf('--coverage') < 0) {
-  argv.push('--watch');
+function isInGitRepository() {
+  try {
+    execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function isInMercurialRepository() {
+  try {
+    execSync('hg --cwd . root', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+// Watch unless on CI, in coverage mode, or explicitly running all tests
+if (
+  !process.env.CI &&
+  argv.indexOf('--coverage') === -1 &&
+  argv.indexOf('--watchAll') === -1
+) {
+  // https://github.com/facebook/create-react-app/issues/5210
+  const hasSourceControl = isInGitRepository() || isInMercurialRepository();
+  argv.push(hasSourceControl ? '--watch' : '--watchAll');
 }
 
 // @remove-on-eject-begin
@@ -72,7 +104,7 @@ function resolveJestDefaultEnvironment(name) {
   });
 }
 let cleanArgv = [];
-let env = 'node';
+let env = 'jsdom';
 let next;
 do {
   next = argv.shift();
