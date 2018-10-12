@@ -1,8 +1,10 @@
-/* eslint-disable import/prefer-default-export */
-import { css } from 'styled-components';
-import { rem } from './utils';
+import React from 'react';
+import styled from 'styled-components';
 
-export const ButtonBaseCSS = css`
+import { rem } from './../../style/utils';
+
+/* Styles have to be on the top because of Tag and TagTitle */
+const StyledButton = styled.button`
   display: inline-block;
   min-height: ${rem(24)};
   margin-bottom: ${props => props.theme.spaces.small};
@@ -23,3 +25,11 @@ export const ButtonBaseCSS = css`
     margin-top: -2px;
   }
 `;
+
+const Button = ({ children, variant, ...other }) => {
+  return <StyledButton {...other}>{children}</StyledButton>;
+};
+
+Button.displayName = 'Button';
+
+export default Button;

@@ -12,7 +12,7 @@ import Frame from './Frame';
 import Card from './../Card';
 import Icon from './../Icon';
 
-import { ButtonBaseCSS } from '../../style/common';
+import Button from './../Button';
 
 const CLASS_ROOT = '';
 
@@ -157,10 +157,10 @@ class Preview extends Component {
 
     if (hasCodePreview) {
       actions.push(
-        <StyledButton onClick={this.handleToggleCode}>
+        <Button onClick={this.handleToggleCode}>
           <Icon name="code" fill={theme.colors.accent} />
-          {this.state.isCodeShown ? 'Hide code' : 'Show code'}
-        </StyledButton>
+          {this.state.isCodeShown ? 'HIDE CODE' : 'SHOW CODE'}
+        </Button>
       );
     }
 
@@ -215,12 +215,6 @@ export default withTheme(Preview);
 
 const StyledPreviewLive = styled.div`
   transition: all 200ms ease-in-out;
-`;
-
-const StyledButton = styled.button`
-  ${ButtonBaseCSS};
-  padding-right: 0;
-  text-transform: uppercase;
 `;
 
 const StyledSelect = styled(Select)`
