@@ -6,7 +6,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        <main className="App-header">
+          <h1 className="is-a11y">Create React App</h1>
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.
@@ -19,7 +20,7 @@ class App extends Component {
           >
             Learn React
           </a>
-        </header>
+        </main>
       </div>
     );
   }

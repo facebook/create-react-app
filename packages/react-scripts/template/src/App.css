@@ -22,6 +22,17 @@
   color: #61dafb;
 }
 
+.is-a11y {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
