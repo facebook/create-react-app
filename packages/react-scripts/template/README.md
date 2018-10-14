@@ -598,6 +598,14 @@ This will allow you to do imports like
 
 > **Note:** You must prefix imports from `node_modules` with `~` as displayed above.
 
+> **Note:** If you're using Flow, add the following to your `.flowconfig` so it'll recognize the `.sass` or `.scss` imports.
+
+```
+[options]
+module.file_ext=.sass
+module.file_ext=.scss
+```
+
 ## Post-Processing CSS
 
 This project setup minifies your CSS and adds vendor prefixes to it automatically through [Autoprefixer](https://github.com/postcss/autoprefixer) so you don’t need to worry about it.
