@@ -1,3 +1,92 @@
+## 2.0.5 (October 14, 2018)
+
+#### :bug: Bug Fix
+* `react-dev-utils`
+  * [#5431](https://github.com/facebook/create-react-app/pull/5431) Fix click-to-open on Windows. ([@gaearon](https://github.com/gaearon))
+  * [#5335](https://github.com/facebook/create-react-app/pull/5335) Fix file size report after build. ([@OskarPersson](https://github.com/OskarPersson))
+
+* `create-react-app`
+  * [#5362](https://github.com/facebook/create-react-app/pull/5362) Fix CI: non-semver compliant Yarn versions. ([@Timer](https://github.com/Timer))
+
+* `react-scripts`
+  * [#5301](https://github.com/facebook/create-react-app/pull/5301) Fix TypeError when registering service workers without config. ([@peterbe](https://github.com/peterbe))
+
+#### :nail_care: Enhancement
+* `babel-preset-react-app`
+  * [#4984](https://github.com/facebook/create-react-app/pull/4984) Use the correct dependency for `babel-plugin-dynamic-import-node`. ([@vikr01](https://github.com/vikr01))
+
+* `react-scripts`
+  * [#5354](https://github.com/facebook/create-react-app/pull/5354) Add environment variable to optionaly disable inlining of chunks. ([@0xdeafcafe](https://github.com/0xdeafcafe))
+  * [#5330](https://github.com/facebook/create-react-app/pull/5330) Update `eslint-plugin-jsx-a11y` version. ([@AlmeroSteyn](https://github.com/AlmeroSteyn))
+
+#### :memo: Documentation
+* `react-scripts`
+  * [#5321](https://github.com/facebook/create-react-app/pull/5321) Added note on update to `.flowconfig` for .scss imports. ([@rlueder](https://github.com/rlueder))
+  * [#5394](https://github.com/facebook/create-react-app/pull/5394) Correct instructions for HTTPS and PowerShell. ([@gavinbarron](https://github.com/gavinbarron))
+  * [#5410](https://github.com/facebook/create-react-app/pull/5410) Updates to clarify the "waiting" SW behavior. ([@jeffposnick](https://github.com/jeffposnick))
+  * [#5302](https://github.com/facebook/create-react-app/pull/5302) Update README.md. ([@simonCordovaByte9](https://github.com/simonCordovaByte9))
+  * [#5334](https://github.com/facebook/create-react-app/pull/5334) Update README due to deprecation of react-testing-library's toBeInTheDOM. ([@rrebase](https://github.com/rrebase))
+  * [#5326](https://github.com/facebook/create-react-app/pull/5326) README link fixes. ([@davidgilbertson](https://github.com/davidgilbertson))
+  * [#5327](https://github.com/facebook/create-react-app/pull/5327) Updated the URL in index.html. ([@behzod](https://github.com/behzod))
+  * [#5296](https://github.com/facebook/create-react-app/pull/5296) Adding documentation about git init. ([@ryancogswell](https://github.com/ryancogswell))
+  * [#5290](https://github.com/facebook/create-react-app/pull/5290) Add react-testing-library documentation/examples (#4679). ([@gnapse](https://github.com/gnapse))
+  * [#5286](https://github.com/facebook/create-react-app/pull/5286) Fix broken links to src/serviceWorker.js. ([@adambowles](https://github.com/adambowles))
+* Other
+  * [#5374](https://github.com/facebook/create-react-app/pull/5374) Add the new SVGs feature from the template README to the root README. ([@neo](https://github.com/neo))
+  * [#5371](https://github.com/facebook/create-react-app/pull/5371) Update path to serviceWorker.js in graphical folder structure. ([@jonscottclark](https://github.com/jonscottclark))
+  * [#5337](https://github.com/facebook/create-react-app/pull/5337) Fix typo. ([@mvasin](https://github.com/mvasin))
+
+* `eslint-config-react-app`
+  * [#5416](https://github.com/facebook/create-react-app/pull/5416) Fix eslint config docs. ([@ludovicofischer](https://github.com/ludovicofischer))
+
+#### :house: Internal
+* Other
+  * [#5365](https://github.com/facebook/create-react-app/pull/5365) Clean up the behavior tests. ([@Timer](https://github.com/Timer))
+
+* `create-react-app`
+  * [#5362](https://github.com/facebook/create-react-app/pull/5362) Fix CI: non-semver compliant Yarn versions. ([@Timer](https://github.com/Timer))
+* `react-scripts`
+  * [#5317](https://github.com/facebook/create-react-app/pull/5317) Remove unused require for getCacheIdentifier after ejecting. ([@benbrandt](https://github.com/benbrandt))
+
+#### Committers: 23
+- Adam Bowles ([adambowles](https://github.com/adambowles))
+- Alex Forbes-Reed ([0xdeafcafe](https://github.com/0xdeafcafe))
+- Almero Steyn ([AlmeroSteyn](https://github.com/AlmeroSteyn))
+- Behzod Saidov ([behzod](https://github.com/behzod))
+- Ben Brandt ([benbrandt](https://github.com/benbrandt))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- David Gilbertson ([davidgilbertson](https://github.com/davidgilbertson))
+- Ernesto García ([gnapse](https://github.com/gnapse))
+- Gavin Barron ([gavinbarron](https://github.com/gavinbarron))
+- Jeffrey Posnick ([jeffposnick](https://github.com/jeffposnick))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Jon Clark ([jonscottclark](https://github.com/jonscottclark))
+- Kristofer Selbekk ([selbekk](https://github.com/selbekk))
+- Ludovico Fischer ([ludovicofischer](https://github.com/ludovicofischer))
+- Mikhail Vasin ([mvasin](https://github.com/mvasin))
+- Oskar Persson ([OskarPersson](https://github.com/OskarPersson))
+- Peter Bengtsson ([peterbe](https://github.com/peterbe))
+- Rafael Lüder ([rlueder](https://github.com/rlueder))
+- Ragnar Rebase ([rrebase](https://github.com/rrebase))
+- Ryan Cogswell ([ryancogswell](https://github.com/ryancogswell))
+- Vikram Rangaraj ([vikr01](https://github.com/vikr01))
+- Wenchen Li ([neo](https://github.com/neo))
+- [simonCordovaByte9](https://github.com/simonCordovaByte9)
+
+### Migrating from 2.0.4 to 2.0.5
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@2.0.5
+```
+
+or
+
+```
+yarn add --exact react-scripts@2.0.5
+```
+
 ## 2.0.4 (October 3, 2018)
 
 #### :bug: Bug Fix
@@ -49,6 +138,20 @@
 - Maël Nison ([@arcanis](https://github.com/arcanis))
 - Shubham Tiwari ([@lockround](https://github.com/lockround))
 - Zacharias Knudsen ([@zachasme](https://github.com/zachasme))
+
+### Migrating from 2.0.3 to 2.0.4
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@2.0.4
+```
+
+or
+
+```
+yarn add --exact react-scripts@2.0.4
+```
 
 ## 2.0.3 (October 1, 2018)
 
