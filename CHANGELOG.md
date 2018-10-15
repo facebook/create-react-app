@@ -330,7 +330,7 @@ module.exports = function(app) {
 
 You can also use completely custom logic there now! This wasn't possible before.
 
-You may need to add the `onProxyReq` option if you're running into CORS issues:
+You may need to [add the `onProxyReq` option](https://github.com/facebook/create-react-app/blob/dc74990b89b5c6e143b522c759be3dac2c286514/packages/react-dev-utils/WebpackDevServerUtils.js#L314-L348) if you're running into CORS issues:
 
 ```js
 {
