@@ -330,6 +330,20 @@ module.exports = function(app) {
 
 You can also use completely custom logic there now! This wasn't possible before.
 
+You may need to add the `onProxyReq` option if you're running into CORS issues:
+
+```js
+{
+  target,
+  changeOrigin: true,
+  onProxyReq(proxyReq) {
+    if (proxyReq.getHeader("origin")) {
+      proxyReq.setHeader("origin", target)
+    }
+  }
+}
+```
+
 ### `.mjs` file extension support is removed
 
 Change the extension of any files in your project using `.mjs` to just `.js`.
