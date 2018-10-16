@@ -78,8 +78,9 @@ export const colors = {
   grey: '#f2f2f2',
   greyDark: '#949494',
   success: '#98c379',
-  warning: '#e74c2b',
+  warning: '#e8d571',
   error: '#e06c75',
+  info: '#61afef',
   ...functionalColors
 };
 

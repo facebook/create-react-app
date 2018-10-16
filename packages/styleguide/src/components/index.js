@@ -8,7 +8,14 @@ export { default as ComponentDocs } from './ComponentDocs';
 export { default as ComponentInfo } from './ComponentInfo';
 export { default as DocsTable } from './DocsTable';
 export { default as Icon } from './Icon';
-export { default as Note, NoteWarning, NoteError, Dos, Donts } from './Note';
+export {
+  default as Note,
+  NoteWarning,
+  NoteError,
+  NoteInfo,
+  Dos,
+  Donts
+} from './Note';
 export { default as Page } from './Page';
 export { default as Preview } from './Preview';
 export { default as Table } from './Table';

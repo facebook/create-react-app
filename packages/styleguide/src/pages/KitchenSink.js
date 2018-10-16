@@ -1,7 +1,17 @@
 import React from 'react';
 
 import { md } from './../utils';
-import { ColorPalette, Preview, Card } from './../components';
+import {
+  ColorPalette,
+  Preview,
+  Card,
+  Note,
+  NoteError,
+  NoteWarning,
+  NoteInfo,
+  Dos,
+  Donts,
+} from './../components';
 
 import scssConfig from './../components/ColorPalette/mockScssColorConfig';
 
@@ -45,6 +55,25 @@ ${(
         odio dui.
       </p>
     </Card>
+  </Preview>
+)}
+
+${(
+  <Preview>
+    {background => (
+      <Card>{`Label: ${background.label} Code: ${background.value}`}</Card>
+    )}
+  </Preview>
+)}
+
+${(
+  <Preview>
+    <Note title="Note" />
+    <NoteWarning title="Note Warning" />
+    <NoteError title="Note Error" />
+    <NoteInfo title="Note Info" />
+    <Dos title="Dos" />
+    <Donts title="Donts" />
   </Preview>
 )}
 `;
