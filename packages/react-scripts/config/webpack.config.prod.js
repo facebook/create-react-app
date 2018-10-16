@@ -325,7 +325,8 @@ module.exports = {
                   {
                     loaderMap: {
                       svg: {
-                        ReactComponent: '@svgr/webpack?-prettier,-svgo![path]',
+                        ReactComponent:
+                          '@svgr/webpack?-prettier,+ref,-svgo![path]',
                       },
                     },
                   },
@@ -476,7 +477,8 @@ module.exports = {
     }),
     // Inlines the webpack runtime script. This script is too small to warrant
     // a network request.
-    shouldInlineRuntimeChunk && new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
+    shouldInlineRuntimeChunk &&
+      new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
