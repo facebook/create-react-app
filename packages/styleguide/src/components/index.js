@@ -6,6 +6,7 @@ export { default as Code, CodeBlock, CodeJSX, CodeBlockJSX } from './Code';
 export { default as ColorPalette, ColorPaletteItem } from './ColorPalette';
 export { default as ComponentDocs } from './ComponentDocs';
 export { default as ComponentInfo } from './ComponentInfo';
+export { default as DocsTable } from './DocsTable';
 export { default as Icon } from './Icon';
 export { default as Note, NoteWarning, NoteError, Dos, Donts } from './Note';
 export { default as Page } from './Page';

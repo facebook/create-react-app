@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { string, array, oneOf, func } from 'prop-types';
 import styled from 'styled-components';
 
-import Table from './../Table';
+import DocsTable from './../DocsTable';
 import Card from './../Card';
-import Code from './../Code';
 import { H3 } from './../Typography';
-import { md } from './../../utils';
 import { Bar, BarItem } from '../Bar';
 import InfoBadge from '../Badge/InfoBadge';
 
@@ -53,34 +51,6 @@ class ComponentDocs extends Component {
   }
 
   render() {
-    const columns = [
-      {
-        key: 'prop',
-        label: 'Prop'
-      },
-      {
-        key: 'type',
-        label: 'Type',
-        render: (data, column) => <td key={column.key}>{md([data])}</td>
-      },
-      {
-        key: 'default',
-        label: 'Default',
-        render: (data, column) => (
-          <td key={column.key}>
-            <Code language="js" inline={false}>
-              {data}
-            </Code>
-          </td>
-        )
-      },
-      {
-        key: 'description',
-        label: 'Description',
-        render: (data, column) => <td key={column.key}>{md([data])}</td>
-      }
-    ];
-
     const data = sortTableData(
       excludeProps(this.props.excludes, getTableData(this.state.info))
     );
@@ -107,12 +77,7 @@ class ComponentDocs extends Component {
             )}
           </Bar>
         </StyledHeader>
-        <StyledTable
-          key="ComponentDocs-table"
-          columns={columns}
-          data={data}
-          hasOutsideBorder={false}
-        />
+        <StyledDocsTable data={data} hasOutsideBorder={false} />
       </StyledComponentDocs>
     );
   }
@@ -128,7 +93,7 @@ const StyledHeader = styled.header`
   padding-right: ${props => props.theme.spaces.medium};
 `;
 
-const StyledTable = styled(Table)`
+const StyledDocsTable = styled(DocsTable)`
   margin-bottom: 0;
   th,
   td {

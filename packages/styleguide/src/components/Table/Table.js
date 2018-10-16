@@ -3,7 +3,7 @@ import { arrayOf, bool, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
 import { rem } from '../../style/utils';
 
-const propTypes = {
+export const propTypes = {
   /** Labels for columns in the table. Value of the key in columns match with the key name in data */
   columns: arrayOf(
     shape({
