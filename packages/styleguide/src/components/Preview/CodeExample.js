@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { object, arrayOf, oneOf } from 'prop-types';
 
@@ -7,7 +8,7 @@ import reactElementToJSXString from 'react-element-to-jsx-string';
 import pretty from 'pretty';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { CodeBlock } from '../Code/';
+import Code from '../Code/';
 import Button from '../Button';
 
 const getJSXAsStringFromMarkup = (markup, options) => {
@@ -53,12 +54,60 @@ export default class CodeExample extends React.Component {
 
   state = {
     codePreviewType: this.props.codeTypes && this.props.codeTypes[0],
+    copyButtonText: 'Copy to clipboard',
+    copyButtonClass: '',
   };
+
+  constructor(props) {
+    super(props);
+
+    this.codeBlockRef = React.createRef();
+  }
 
   handleCodePreviewTypeToggle(e, type) {
     this.setState({
       codePreviewType: type,
     });
+  }
+
+  handleCopyCode(e, element) {
+    const selection = window.getSelection();
+    const range = document.createRange();
+    const elem = ReactDOM.findDOMNode(element);
+    range.selectNodeContents(elem);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    let newText = 'Copied!';
+    let newClass = 'success';
+
+    try {
+      document.execCommand('copy');
+      // selection.removeAllRanges();
+    } catch (e) {
+      newText = 'Error! Press Ctrl + C';
+      newClass = 'error';
+    }
+
+    const {
+      copyButtonText: originalText,
+      copyButtonClass: originalClass,
+    } = this.state;
+
+    this.setState(
+      {
+        copyButtonText: newText,
+        copyButtonClass: newClass,
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            copyButtonText: originalText,
+            copyButtonClass: originalClass,
+          });
+        }, 1200);
+      }
+    );
   }
 
   render() {
@@ -84,9 +133,9 @@ export default class CodeExample extends React.Component {
     }
 
     return (
-      <div {...other}>
+      <StyledWrapper {...other}>
         {codeTypes.map(codeType => (
-          <StyledButton
+          <StyledCodeTypeToggle
             key={codeType}
             role="button"
             onClick={e => this.handleCodePreviewTypeToggle(e, codeType)}
@@ -95,17 +144,51 @@ export default class CodeExample extends React.Component {
             }
           >
             {codeType.toUpperCase()}
-          </StyledButton>
+          </StyledCodeTypeToggle>
         ))}
-        <CodeBlock language={this.state.codePreviewType}>
+        <StyledCopyButton
+          className={this.state.copyButtonClass}
+          onClick={e => this.handleCopyCode(e, this.codeBlockRef.current)}
+        >
+          {this.state.copyButtonText}
+        </StyledCopyButton>
+        <Code
+          inline={false}
+          ref={this.codeBlockRef}
+          language={this.state.codePreviewType}
+        >
           {codeToShow}
-        </CodeBlock>
-      </div>
+        </Code>
+      </StyledWrapper>
     );
   }
 }
 
-const StyledButton = styled(Button)`
+const StyledCopyButton = styled(Button)`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translateY(100%);
+  margin-bottom: 0;
+
+  background: ${props => props.theme.colors.white};
+
+  &:hover {
+    background: ${props => props.theme.colors.grey};
+  }
+
+  &.success {
+    background: ${props => props.theme.colors.success};
+  }
+
+  &.error {
+    background: ${props => props.theme.colors.error};
+  }
+`;
+
+const StyledWrapper = styled.div`position: relative;`;
+
+const StyledCodeTypeToggle = styled(Button)`
   margin-bottom: 0;
   border-top-left-radius: ${props => props.theme.borderRadius.default};
   border-top-right-radius: ${props => props.theme.borderRadius.default};
