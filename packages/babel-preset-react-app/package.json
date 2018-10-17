@@ -16,8 +16,10 @@
     "prod.js",
     "test.js"
   ],
+  "peerDependencies": {
+    "@babel/core": "7.2.2"
+  },
   "dependencies": {
-    "@babel/core": "7.2.2",
     "@babel/plugin-proposal-class-properties": "7.3.0",
     "@babel/plugin-proposal-decorators": "7.3.0",
     "@babel/plugin-proposal-object-rest-spread": "7.3.2",
