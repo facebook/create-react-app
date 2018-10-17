@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { ReactComponent as Logo } from './logo.svg';
+import { ReactComponent as Logo } from './assets/logo.svg';
 
 export default () => {
   return <Logo id="feature-svg-component" />;
