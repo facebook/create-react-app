@@ -21,10 +21,10 @@ module.exports = {
       return `module.exports = {
         __esModule: true,
         default: ${assetFilename},
-        ReactComponent: (props) => ({
+        ReactComponent: ({ svgRef, ...props }) => ({
           $$typeof: Symbol.for('react.element'),
           type: 'svg',
-          ref: null,
+          ref: svgRef || null,
           key: null,
           props: Object.assign({}, props, {
             children: ${assetFilename}

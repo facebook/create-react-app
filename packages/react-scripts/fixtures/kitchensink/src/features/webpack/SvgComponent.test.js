@@ -22,6 +22,6 @@ describe('svg component', () => {
     ReactDOM.render(<SvgComponentWithRef svgRef={someRef} />, div);
     const svgElement = div.getElementsByTagName('svg');
     expect(svgElement).toHaveLength(1);
-    expect(svgElement[0]).toBe(someRef);
+    expect(svgElement[0]).toBe(someRef.current);
   });
 });
