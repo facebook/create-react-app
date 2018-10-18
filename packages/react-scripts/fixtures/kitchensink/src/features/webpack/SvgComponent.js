@@ -12,6 +12,6 @@ export default () => {
   return <Logo id="feature-svg-component" />;
 };
 
-export const SvgComponentWithRef = ({ svgRef }) => (
-  <Logo id="feature-svg-component-with-ref" svgRef={svgRef} />
-);
+export const SvgComponentWithRef = React.forwardRef((props, ref) => (
+  <Logo id="feature-svg-component-with-ref" ref={ref} />
+));

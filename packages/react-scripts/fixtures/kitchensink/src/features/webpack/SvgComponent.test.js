@@ -16,10 +16,10 @@ describe('svg component', () => {
     expect(div.textContent).toBe('logo.svg');
   });
 
-  it('svg root element ref is passed svgRef', () => {
+  it('svg root element equals the passed ref', () => {
     const div = document.createElement('div');
     const someRef = React.createRef();
-    ReactDOM.render(<SvgComponentWithRef svgRef={someRef} />, div);
+    ReactDOM.render(<SvgComponentWithRef ref={someRef} />, div);
     const svgElement = div.getElementsByTagName('svg');
     expect(svgElement).toHaveLength(1);
     expect(svgElement[0]).toBe(someRef.current);
