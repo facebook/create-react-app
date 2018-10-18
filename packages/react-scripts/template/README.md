@@ -860,6 +860,63 @@ In the future we plan to integrate it into Create React App even more closely.
 
 To learn more about Flow, check out [its documentation](https://flow.org/).
 
+## Loading `.graphql` files
+
+You can load `.gql` and `.graphql` files by using [`babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros) included with Create React App.
+
+To load the files, first install the [`graphl-tag.macro`](https://www.npmjs.com/package/graphql-tag.macro) package by running
+
+```sh
+npm install --save-dev graphl-tag.macro
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add --dev graphql-tag.macro
+```
+
+Then, whenever you want to load `.gql` or `.graphql` files, import the `loader` from the macro package:
+
+```js
+import { loader } from 'graphql.macro';
+
+const query = loader('./foo.graphql');
+```
+
+And your results get automatically inlined! This means that if the file above, `foo.graphql`, contains the following:
+
+```graphql
+gql`
+  query {
+    hello {
+      world
+    }
+  }
+`;
+```
+
+The previous example turns into:
+
+```javascript
+const query = {
+  'kind': 'Document',
+  'definitions': [{
+    ...
+  }],
+  'loc': {
+    ...
+    'source': {
+      'body': '\\\\n  query {\\\\n    hello {\\\\n      world\\\\n    }\\\\n  }\\\\n',
+      'name': 'GraphQL request',
+      ...
+    }
+  }
+};
+```
+
+You can also use the `gql` template tag the same way as you would use the non-macro version from `graphql-tag` package, with the added benefit of inlined parsing results.
+
 ## Adding Relay
 
 Relay is a framework for building data-driven React applications powered by GraphQL. The current release candidate of Relay works with Create React App projects out of the box using Babel Macros. Simply set up your project as laid out in the [Relay documentation](https://facebook.github.io/relay/), then make sure you have a version of the babel plugin providing the macro.
