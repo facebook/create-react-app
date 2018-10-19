@@ -9,7 +9,6 @@ const React = require('react');
 
 const CompLibrary = require('../../core/CompLibrary.js');
 
-const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
 const Container = CompLibrary.Container;
 const GridBlock = CompLibrary.GridBlock;
 
@@ -21,10 +20,6 @@ function imgUrl(img) {
 
 function docUrl(doc, language) {
   return `${siteConfig.baseUrl}docs/${language ? `${language}/` : ''}${doc}`;
-}
-
-function pageUrl(page, language) {
-  return siteConfig.baseUrl + (language ? `${language}/` : '') + page;
 }
 
 class Button extends React.Component {
@@ -77,15 +72,16 @@ class HomeSplash extends React.Component {
     const language = this.props.language || '';
     return (
       <SplashContainer>
-        <Logo img_src={imgUrl('docusaurus.svg')} />
+        <Logo img_src={imgUrl('logo.svg')} />
         <div className="inner">
           <ProjectTitle />
           <PromoSection>
-            <Button href="#try">Try It Out</Button>
             <Button href={docUrl('getting-started', language)}>
-              Get started
+              Getting Started
             </Button>
-            <Button href={docUrl('user-guide', language)}>User guide</Button>
+            <Button href={docUrl('documentation-intro', language)}>
+              Documentation
+            </Button>
           </PromoSection>
         </div>
       </SplashContainer>
@@ -95,77 +91,80 @@ class HomeSplash extends React.Component {
 
 const Block = props => (
   <Container
-    padding={['bottom', 'top']}
+    padding={props.padding}
     id={props.id}
     background={props.background}
   >
-    <GridBlock align="center" contents={props.children} layout={props.layout} />
+    <GridBlock
+      align={props.align}
+      contents={props.children}
+      layout={props.layout}
+    />
   </Container>
 );
+Block.defaultProps = {
+  padding: ['bottom', 'top'],
+};
 
-const Features = () => (
-  <Block layout="fourColumn">
+const Features = props => (
+  <Block layout="threeColumn" {...props}>
     {[
       {
-        content: 'This is the content of my feature',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'top',
-        title: 'Feature One',
+        title: 'Less to Learn',
+        content:
+          "You don't need to learn and configure many build tools. Instant reloads help you focus on development. When it's time to deploy, your bundles are optimized automatically.",
       },
       {
-        content: 'The content of my second feature',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'top',
-        title: 'Feature Two',
+        title: 'Only One Dependency',
+        content:
+          'Your app only needs one build dependency. We test Create React App to make sure that all of its underlying pieces work together seamlessly – no complicated version mismatches.',
+      },
+      {
+        title: 'No Lock-In',
+        content:
+          'Under the hood, we use Webpack, Babel, ESLint, and other amazing projects to power your app. If you ever want an advanced configuration, you can ”eject” from Create React App and edit their config files directly.',
       },
     ]}
   </Block>
 );
 
-const FeatureCallout = () => (
-  <div
-    className="productShowcaseSection paddingBottom"
-    style={{ textAlign: 'center' }}
-  >
-    <h2>Feature Callout</h2>
-    <MarkdownBlock>These are features of this project</MarkdownBlock>
-  </div>
-);
-
-const LearnHow = () => (
-  <Block background="light">
+const GetStarted = props => (
+  <Block layout="twoColumn" background="light" {...props}>
     {[
       {
-        content: 'Talk about learning how to use this',
-        image: imgUrl('docusaurus.svg'),
+        title: 'Get started in seconds',
+        content: `Whether you’re using React or another library, Create React App lets you **focus on code, not build tools**.
+
+To create a project called \`my-app\`, run this command:
+
+\`\`\`sh
+npx create-react-app my-app
+\`\`\`
+`,
+      },
+      {
+        image:
+          'https://camo.githubusercontent.com/29765c4a32f03bd01d44edef1cd674225e3c906b/68747470733a2f2f63646e2e7261776769742e636f6d2f66616365626f6f6b2f6372656174652d72656163742d6170702f323762343261632f73637265656e636173742e737667',
         imageAlign: 'right',
-        title: 'Learn How',
       },
     ]}
   </Block>
 );
 
-const TryOut = () => (
-  <Block id="try">
+const Update = props => (
+  <Block layout="twoColumn" {...props}>
     {[
       {
-        content: 'Talk about trying this out',
-        image: imgUrl('docusaurus.svg'),
+        image: imgUrl('update.png'),
         imageAlign: 'left',
-        title: 'Try it Out',
       },
-    ]}
-  </Block>
-);
-
-const Description = () => (
-  <Block background="dark">
-    {[
       {
-        content: 'This is another description of how this project is useful',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'right',
-        title: 'Description',
+        title: 'Easy to maintain',
+        content: `Updating your build tooling is typically a daunting and time-consuming task. When new versions of Create React App are released, you can upgrade using a single command:
+
+\`\`\`sh
+npm install react-scripts@latest
+\`\`\``,
       },
     ]}
   </Block>
@@ -179,11 +178,9 @@ class Index extends React.Component {
       <div>
         <HomeSplash language={language} />
         <div className="mainContainer">
-          <Features />
-          <FeatureCallout />
-          <LearnHow />
-          <TryOut />
-          <Description />
+          <Features align="left" />
+          <GetStarted align="left" />
+          <Update align="left" />
         </div>
       </div>
     );
