@@ -1,6 +1,6 @@
 ---
 id: adding-a-stylesheet
-title: Adding A Stylesheet
+title: Adding a Stylesheet
 sidebar_label: Adding Stylesheets
 ---
 

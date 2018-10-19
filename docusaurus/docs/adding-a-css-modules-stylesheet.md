@@ -1,6 +1,6 @@
 ---
 id: adding-a-css-modules-stylesheet
-title: Adding A CSS Modules Stylesheet
+title: Adding a CSS Modules Stylesheet
 sidebar_label: Adding CSS Modules
 ---
 

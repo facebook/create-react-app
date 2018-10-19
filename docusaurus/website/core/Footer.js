@@ -8,12 +8,18 @@
 const React = require('react');
 
 class Footer extends React.Component {
-  docUrl(doc, language) {
+  docUrl(doc) {
+    // FIXME: this is a second argument but for some reason /en/ links don't work.
+    let language = '';
+
     const baseUrl = this.props.config.baseUrl;
     return `${baseUrl}docs/${language ? `${language}/` : ''}${doc}`;
   }
 
-  pageUrl(doc, language) {
+  pageUrl(doc) {
+    // FIXME: this is a second argument but for some reason /en/ links don't work.
+    let language = '';
+
     const baseUrl = this.props.config.baseUrl;
     return baseUrl + (language ? `${language}/` : '') + doc;
   }
@@ -34,11 +40,15 @@ class Footer extends React.Component {
           </a>
           <div>
             <h5>Docs</h5>
-            <a href={this.docUrl('documentation-intro', this.props.language)}>
-              About The Docs
-            </a>
             <a href={this.docUrl('getting-started', this.props.language)}>
-              Getting Started
+              Get Started
+            </a>
+            <a
+              href="https://reactjs.org/"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Learn React
             </a>
           </div>
           <div>
@@ -50,8 +60,8 @@ class Footer extends React.Component {
             >
               Stack Overflow
             </a>
-            <a 
-              href="https://spectrum.chat/react" 
+            <a
+              href="https://spectrum.chat/react"
               target="_blank"
               rel="noreferrer noopener"
             >
@@ -67,7 +77,9 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>More</h5>
-            <a href="https://www.github.com/facebook/create-react-app">GitHub</a>
+            <a href="https://www.github.com/facebook/create-react-app">
+              GitHub
+            </a>
             <a
               className="github-button"
               href={this.props.config.repoUrl}

@@ -6,18 +6,18 @@
     "tagline": "Set up a modern web app by running one command.",
     "docs": {
       "adding-a-css-modules-stylesheet": {
-        "title": "Adding A CSS Modules Stylesheet",
+        "title": "Adding a CSS Modules Stylesheet",
         "sidebar_label": "Adding CSS Modules"
       },
       "adding-a-router": {
-        "title": "Adding A Router"
+        "title": "Adding a Router"
       },
       "adding-a-sass-stylesheet": {
-        "title": "Adding A Sass Stylesheet",
+        "title": "Adding a Sass Stylesheet",
         "sidebar_label": "Adding Sass Stylesheets"
       },
       "adding-a-stylesheet": {
-        "title": "Adding A Stylesheet",
+        "title": "Adding a Stylesheet",
         "sidebar_label": "Adding Stylesheets"
       },
       "adding-bootstrap": {
@@ -31,7 +31,7 @@
         "title": "Adding Flow"
       },
       "adding-images-fonts-and-files": {
-        "title": "Adding Images, Fonts, And Files"
+        "title": "Adding Images, Fonts, and Files"
       },
       "adding-relay": {
         "title": "Adding Relay"
@@ -40,7 +40,7 @@
         "title": "Advanced Configuration"
       },
       "alternatives-to-ejecting": {
-        "title": "Alternatives To Ejecting"
+        "title": "Alternatives to Ejecting"
       },
       "analyzing-the-bundle-size": {
         "title": "Analyzing the Bundle Size",
@@ -65,11 +65,11 @@
         "sidebar_label": "Deployment"
       },
       "developing-components-in-isolation": {
-        "title": "Developing Components In Isolation"
+        "title": "Developing Components in Isolation"
       },
       "documentation-intro": {
-        "title": "About The Docs",
-        "sidebar_label": "About The Docs"
+        "title": "About the Documentation",
+        "sidebar_label": "About Docs"
       },
       "fetching-data-with-ajax-requests": {
         "title": "Fetching Data with AJAX Requests",
@@ -82,28 +82,28 @@
         "title": "Getting Started"
       },
       "importing-a-component": {
-        "title": "Importing A Component"
+        "title": "Importing a Component"
       },
       "installing-a-dependency": {
-        "title": "Installing A Dependency"
+        "title": "Installing a Dependency"
       },
       "integrating-with-an-api-backend": {
-        "title": "Integrating With An API Backend",
-        "sidebar_label": "Integrating With An API"
+        "title": "Integrating with an API Backend",
+        "sidebar_label": "Integrating with an API"
       },
       "making-a-progressive-web-app": {
-        "title": "Making A Progressive Web App"
+        "title": "Making a Progressive Web App"
       },
       "post-processing-css": {
         "title": "Post-Processing CSS"
       },
       "pre-rendering-into-static-html-files": {
-        "title": "Pre-Rendering Into Static HTML Files",
+        "title": "Pre-Rendering into Static HTML Files",
         "sidebar_label": "Pre-Rendering Static HTML"
       },
       "proxying-api-requests-in-development": {
-        "title": "Proxying API Requests In Development",
-        "sidebar_label": "Proxying In Development"
+        "title": "Proxying API Requests in Development",
+        "sidebar_label": "Proxying in Development"
       },
       "running-tests": {
         "title": "Running Tests"
@@ -113,11 +113,11 @@
         "sidebar_label": "Editor Setup"
       },
       "supported-browsers-features": {
-        "title": "Supported Browsers And Features",
-        "sidebar_label": "Supported Browsers And Features"
+        "title": "Supported Browsers and Features",
+        "sidebar_label": "Supported Browsers and Features"
       },
       "title-and-meta-tags": {
-        "title": "Title And Meta Tags",
+        "title": "Title and Meta Tags",
         "sidebar_label": "Title & Meta Tags"
       },
       "troubleshooting": {
@@ -125,17 +125,17 @@
         "sidebar_label": "Troubleshooting"
       },
       "updating-to-new-releases": {
-        "title": "Updating To New Releases"
+        "title": "Updating to New Releases"
       },
       "using-global-variables": {
         "title": "Using Global Variables"
       },
       "using-https-in-development": {
-        "title": "Using HTTPS In Development",
-        "sidebar_label": "HTTPS In Development"
+        "title": "Using HTTPS in Development",
+        "sidebar_label": "HTTPS in Development"
       },
       "using-the-public-folder": {
-        "title": "Using The public Folder"
+        "title": "Using the Public Folder"
       }
     },
     "links": {

@@ -1,6 +1,6 @@
 ---
 id: adding-a-sass-stylesheet
-title: Adding A Sass Stylesheet
+title: Adding a Sass Stylesheet
 sidebar_label: Adding Sass Stylesheets
 ---
 

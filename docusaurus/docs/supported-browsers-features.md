@@ -1,7 +1,7 @@
 ---
 id: supported-browsers-features
-title: Supported Browsers And Features
-sidebar_label: Supported Browsers And Features
+title: Supported Browsers and Features
+sidebar_label: Supported Browsers and Features
 ---
 
 ## Supported Browsers

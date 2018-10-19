@@ -1,7 +1,7 @@
 ---
 id: using-https-in-development
-title: Using HTTPS In Development
-sidebar_label: HTTPS In Development
+title: Using HTTPS in Development
+sidebar_label: HTTPS in Development
 ---
 
 > Note: this feature is available with `react-scripts@0.4.0` and higher.

@@ -1,6 +1,6 @@
 ---
 id: updating-to-new-releases
-title: Updating To New Releases
+title: Updating to New Releases
 ---
 
 Create React App is divided into two packages:
