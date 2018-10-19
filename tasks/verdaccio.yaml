@@ -1,6 +1,6 @@
 #
-# This is the default config file. It allows all users to do anything,
-# so don't use it on production systems.
+# This is based on verdaccio's default config file. It allows all users
+# to do anything, so don't use it on production systems.
 #
 # Look here for more config file examples:
 # https://github.com/verdaccio/verdaccio/tree/master/conf
@@ -25,7 +25,7 @@ packages:
   '@*/*':
     # scoped packages
     access: $all
-    publish: $ll
+    publish: $all
     proxy: npmjs
 
   '**':

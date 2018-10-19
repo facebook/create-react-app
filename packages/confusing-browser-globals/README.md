@@ -18,13 +18,11 @@ handleClick() { // missing `event` argument
 
 This package exports a list of globals that are often used by mistake. You can feed this list to a static analysis tool like ESLint to prevent their usage without an explicit `window.` qualifier.
 
-
 ## Installation
 
 ```
 npm install --save confusing-browser-globals
 ```
-
 
 ## Usage
 
@@ -38,10 +36,9 @@ var restrictedGlobals = require('confusing-browser-globals');
 module.exports = {
   rules: {
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
-  }
+  },
 };
 ```
-
 
 ## License
 

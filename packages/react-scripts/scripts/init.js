@@ -81,9 +81,9 @@ module.exports = function(
   originalDirectory,
   template
 ) {
-  const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
-    .name;
-  const ownPath = path.join(appPath, 'node_modules', ownPackageName);
+  const ownPath = path.dirname(
+    require.resolve(path.join(__dirname, '..', 'package.json'))
+  );
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
@@ -94,10 +94,16 @@ module.exports = function(
   appPackage.scripts = {
     start: 'react-scripts start',
     build: 'react-scripts build',
-    test: 'react-scripts test --env=jsdom',
+    test: 'react-scripts test',
     eject: 'react-scripts eject',
   };
 
+  // Setup the eslint config
+  appPackage.eslintConfig = {
+    extends: 'react-app',
+  };
+
+  // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;
 
   fs.writeFileSync(

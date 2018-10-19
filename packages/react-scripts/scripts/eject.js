@@ -109,7 +109,7 @@ inquirer
     const jestConfig = createJestConfig(
       filePath => path.posix.join('<rootDir>', filePath),
       null,
-      paths.srcPaths
+      true
     );
 
     console.log();
@@ -205,6 +205,18 @@ inquirer
     console.log(`  Adding ${cyan('Jest')} configuration`);
     appPackage.jest = jestConfig;
 
+    // Add Babel config
+    console.log(`  Adding ${cyan('Babel')} preset`);
+    appPackage.babel = {
+      presets: ['react-app'],
+    };
+
+    // Add ESlint config
+    console.log(`  Adding ${cyan('ESLint')} configuration`);
+    appPackage.eslintConfig = {
+      extends: 'react-app',
+    };
+
     fs.writeFileSync(
       path.join(appPath, 'package.json'),
       JSON.stringify(appPackage, null, 2) + os.EOL
@@ -224,7 +236,7 @@ inquirer
       }
     }
 
-    if (paths.useYarn) {
+    if (fs.existsSync(paths.yarnLockFile)) {
       const windowsCmdFilePath = path.join(
         appPath,
         'node_modules',
