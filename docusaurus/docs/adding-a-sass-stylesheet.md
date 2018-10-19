@@ -33,3 +33,11 @@ This will allow you to do imports like
 > **Tip:** You can opt into using this feature with [CSS modules](/docs/adding-a-css-modules-stylesheet) too!
 
 > **Note:** You must prefix imports from `node_modules` with `~` as displayed above.
+
+> **Note:** If you're using Flow, add the following to your `.flowconfig` so it'll recognize the `.sass` or `.scss` imports.
+>
+> ```
+> [options]
+> module.file_ext=.sass
+> module.file_ext=.scss
+> ```

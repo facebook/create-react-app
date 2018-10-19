@@ -21,7 +21,7 @@ set HTTPS=true&&npm start
 ### Windows (Powershell)
 
 ```Powershell
-($env:HTTPS = $true) -and (npm start)
+($env:HTTPS = "true") -and (npm start)
 ```
 
 ### Linux, macOS (Bash)

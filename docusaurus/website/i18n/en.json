@@ -3,7 +3,7 @@
   "localized-strings": {
     "next": "Next",
     "previous": "Previous",
-    "tagline": "Create React apps with no build configuration.",
+    "tagline": "Set up a modern web app by running one command.",
     "docs": {
       "adding-a-css-modules-stylesheet": {
         "title": "Adding A CSS Modules Stylesheet",

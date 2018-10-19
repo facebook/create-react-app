@@ -82,6 +82,8 @@ This test mounts a component and makes sure that it didn’t throw during render
 
 When you encounter bugs caused by changing components, you will gain a deeper insight into which parts of them are worth testing in your application. This might be a good time to introduce more specific tests asserting specific expected output or behavior.
 
+### Option 1: Shallow Rendering
+
 If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). To install it, run:
 
 ```sh
@@ -166,6 +168,47 @@ Import it in [`src/setupTests.js`](#initializing-test-environment) to make its m
 ```js
 import 'jest-enzyme';
 ```
+
+### Option 2: React Testing Library
+
+As an alternative or companion to `enzyme`, you may consider using `react-testing-library`. [`react-testing-library`](https://github.com/kentcdodds/react-testing-library) is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it's recommended to use with [`jest-dom`](https://github.com/gnapse/jest-dom) for improved assertions.
+
+To install `react-testing-library` and `jest-dom`, you can run:
+
+```sh
+npm install --save react-testing-library jest-dom
+```
+
+Alternatively you may use `yarn`:
+
+```sh
+yarn add react-testing-library jest-dom
+```
+
+Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerplate in your test files:
+
+```js
+// react-testing-library renders your components to document.body,
+// this will ensure they're removed after each test.
+import 'react-testing-library/cleanup-after-each';
+// this adds jest-dom's custom assertions
+import 'jest-dom/extend-expect';
+```
+
+Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Welcome to React".
+
+```js
+import React from 'react';
+import { render } from 'react-testing-library';
+import App from './App';
+
+it('renders welcome message', () => {
+  const { getByText } = render(<App />);
+  expect(getByText('Welcome to React')).toBeInTheDocument();
+});
+```
+
+Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from [the `react-testing-library` documentation](https://github.com/kentcdodds/react-testing-library) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
 
 ## Using Third Party Assertion Libraries
 
@@ -309,11 +352,11 @@ set CI=true&&npm run build
 #### Windows (Powershell)
 
 ```Powershell
-($env:CI = $true) -and (npm test)
+($env:CI = "true") -and (npm test)
 ```
 
 ```Powershell
-($env:CI = $true) -and (npm run build)
+($env:CI = "true") -and (npm run build)
 ```
 
 #### Linux, macOS (Bash)
