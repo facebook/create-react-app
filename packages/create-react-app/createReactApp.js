@@ -170,7 +170,7 @@ const hiddenProgram = new commander.Command()
   .option(
     '--internal-testing-template <path-to-template>',
     '(internal usage only, DO NOT RELY ON THIS) ' +
-      'use a non-standard application template'
+    'use a non-standard application template'
   )
   .parse(process.argv);
 
@@ -213,13 +213,13 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
     process.exit(1);
   }
 
-  if (!semver.satisfies(process.version, '>=6.0.0')) {
+  if (!semver.satisfies(process.version, '>=8.9.0')) {
     console.log(
       chalk.yellow(
         `You are using Node ${
-          process.version
+        process.version
         } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 6 or higher for a better, fully supported experience.\n`
+        `Please update to Node 6 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
@@ -233,9 +233,9 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
         console.log(
           chalk.yellow(
             `You are using npm ${
-              npmInfo.npmVersion
+            npmInfo.npmVersion
             } so the project will be boostrapped with an old unsupported version of tools.\n\n` +
-              `Please update to npm 3 or higher for a better, fully supported experience.\n`
+            `Please update to npm 3 or higher for a better, fully supported experience.\n`
           )
         );
       }
@@ -248,9 +248,9 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
       if (yarnInfo.yarnVersion) {
         chalk.yellow(
           `You are using Yarn ${
-            yarnInfo.yarnVersion
+          yarnInfo.yarnVersion
           } together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
-            `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
+          `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
         );
       }
       // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
@@ -412,7 +412,7 @@ function run(
         console.log(
           chalk.yellow(
             `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
-              `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
+            `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
           )
         );
       }
@@ -629,8 +629,8 @@ function checkNodeVersion(packageName) {
     console.error(
       chalk.red(
         'You are running Node %s.\n' +
-          'Create React App requires Node %s or higher. \n' +
-          'Please update your version of Node.'
+        'Create React App requires Node %s or higher. \n' +
+        'Please update your version of Node.'
       ),
       process.version,
       packageJson.engines.node
@@ -660,10 +660,10 @@ function checkAppName(appName) {
         `We cannot create a project called ${chalk.green(
           appName
         )} because a dependency with the same name exists.\n` +
-          `Due to the way npm works, the following names are not allowed:\n\n`
+        `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
-        chalk.cyan(dependencies.map(depName => `  ${depName}`).join('\n')) +
-        chalk.red('\n\nPlease choose a different project name.')
+      chalk.cyan(dependencies.map(depName => `  ${depName}`).join('\n')) +
+      chalk.red('\n\nPlease choose a different project name.')
     );
     process.exit(1);
   }
@@ -827,26 +827,26 @@ function checkThatNpmCanReadCwd() {
   console.error(
     chalk.red(
       `Could not start an npm process in the right directory.\n\n` +
-        `The current directory is: ${chalk.bold(cwd)}\n` +
-        `However, a newly started npm process runs in: ${chalk.bold(
-          npmCWD
-        )}\n\n` +
-        `This is probably caused by a misconfigured system terminal shell.`
+      `The current directory is: ${chalk.bold(cwd)}\n` +
+      `However, a newly started npm process runs in: ${chalk.bold(
+        npmCWD
+      )}\n\n` +
+      `This is probably caused by a misconfigured system terminal shell.`
     )
   );
   if (process.platform === 'win32') {
     console.error(
       chalk.red(`On Windows, this can usually be fixed by running:\n\n`) +
-        `  ${chalk.cyan(
-          'reg'
-        )} delete "HKCU\\Software\\Microsoft\\Command Processor" /v AutoRun /f\n` +
-        `  ${chalk.cyan(
-          'reg'
-        )} delete "HKLM\\Software\\Microsoft\\Command Processor" /v AutoRun /f\n\n` +
-        chalk.red(`Try to run the above two lines in the terminal.\n`) +
-        chalk.red(
-          `To learn more about this problem, read: https://blogs.msdn.microsoft.com/oldnewthing/20071121-00/?p=24433/`
-        )
+      `  ${chalk.cyan(
+        'reg'
+      )} delete "HKCU\\Software\\Microsoft\\Command Processor" /v AutoRun /f\n` +
+      `  ${chalk.cyan(
+        'reg'
+      )} delete "HKLM\\Software\\Microsoft\\Command Processor" /v AutoRun /f\n\n` +
+      chalk.red(`Try to run the above two lines in the terminal.\n`) +
+      chalk.red(
+        `To learn more about this problem, read: https://blogs.msdn.microsoft.com/oldnewthing/20071121-00/?p=24433/`
+      )
     );
   }
   return false;
