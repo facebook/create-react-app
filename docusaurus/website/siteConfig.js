@@ -10,7 +10,7 @@
 
 const siteConfig = {
   title: 'Create React App', // Title for your website.
-  tagline: 'Create React apps with no build configuration.',
+  tagline: 'Set up a modern web app by running one command.',
   url: 'https://facebook.github.io', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:

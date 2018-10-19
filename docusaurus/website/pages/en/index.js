@@ -110,19 +110,19 @@ const Features = props => (
   <Block layout="threeColumn" {...props}>
     {[
       {
+        title: 'Less to Learn',
         content:
-          'There is just one build dependency. It uses Webpack, Babel, ESLint, and other amazing projects, but provides a cohesive curated experience on top of them.',
-        title: 'One dependency',
+          "You don't need to learn and configure many build tools. Instant reloads help you focus on development. When it's time to deploy, your bundles are optimized automatically.",
       },
       {
+        title: 'Only One Dependency',
         content:
-          "You don't need to configure anything. Reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.",
-        title: 'No configuration required',
+          'Your app only needs one build dependency. We test Create React App to make sure that all of its underlying pieces work together seamlessly – no complicated version mismatches.',
       },
       {
+        title: 'No Lock-In',
         content:
-          'You can “eject” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up right where you left off.',
-        title: 'No lock-in',
+          'Under the hood, we use Webpack, Babel, ESLint, and other amazing projects to power your app. If you ever want an advanced configuration, you can ”eject” from Create React App and edit their config files directly.',
       },
     ]}
   </Block>
@@ -132,9 +132,10 @@ const GetStarted = props => (
   <Block layout="twoColumn" background="light" {...props}>
     {[
       {
-        title: 'Get started coding in a matter of seconds!',
-        content: `With Create React App, you get to focus on **writing React, not boilerplate**.
-All you need to do is run a command, install some dependencies, and decide what's for dinner.
+        title: 'Get started in seconds',
+        content: `Whether you’re using React or another library, Create React App lets you **focus on code, not build tools**.
+
+To create a project called \`my-app\`, run this command:
 
 \`\`\`sh
 npx create-react-app my-app
@@ -158,79 +159,12 @@ const Update = props => (
         imageAlign: 'left',
       },
       {
-        title: 'Easy-to-maintain toolchain',
-        content: `Keeping a build toolchain up to date with the latest and greatest can be a daunting and time-consuming
-task for even the most seasoned developer. Create React App extracts all of those concerns into a single
-dependency, which are **easy to update** and **battle tested by thousands**.
+        title: 'Easy to maintain',
+        content: `Updating your build tooling is typically a daunting and time-consuming task. When new versions of Create React App are released, you can upgrade using a single command:
 
 \`\`\`sh
 npm install react-scripts@latest
 \`\`\``,
-      },
-    ]}
-  </Block>
-);
-
-const FineGrainedFeatures = props => (
-  <Block layout="fourColumn" align="center" padding={['bottom']} {...props}>
-    {[
-      {
-        title: 'Webpack 4',
-        content:
-          'Webpack 4 gives you lightning fast rebuilds and code-splitting out of the box',
-      },
-      {
-        title: 'Babel 7',
-        content:
-          'Babel 7 transpiles your code faster than ever, now with support for the new Fragment syntax `</>`',
-      },
-      {
-        title: 'ES2015+',
-        content:
-          'Create React App is set up for you to use the features of the future',
-      },
-      {
-        title: 'Jest',
-        content:
-          'The best test runner in the business is set up for you by default',
-      },
-      {
-        title: 'Dev-server',
-        content:
-          'No-hassle local development thanks to the built-in dev-server',
-      },
-      {
-        title: 'PostCSS',
-        content:
-          'Prefixing of new CSS features are done for you through Autoprefixer',
-      },
-      {
-        title: 'SASS',
-        content: 'Now you can write your styles with the power of SASS',
-      },
-      {
-        title: 'CSS Modules',
-        content: 'CSS Modules are also supported out of the box',
-      },
-      {
-        title: 'Babel Macros',
-        content:
-          'Need some extra Babel-power? Babel Macros gives you just that',
-      },
-      {
-        title: 'SVGs in React',
-        content:
-          'Now you can import your SVGs and use them as React components',
-      },
-      {
-        title: 'Progressive Web Apps',
-        content:
-          'Every app created by Create React App is a fully Lighthouse-compliant PWA - opt in',
-      },
-      {
-        title: 'Great DX',
-        content:
-          "Create React App is made for you - the developer. And we've made your day-to-day so much better",
       },
     ]}
   </Block>
@@ -244,10 +178,9 @@ class Index extends React.Component {
       <div>
         <HomeSplash language={language} />
         <div className="mainContainer">
-          <Features align="center" />
+          <Features align="left" />
           <GetStarted align="left" />
           <Update align="left" />
-          <FineGrainedFeatures align="center" />
         </div>
       </div>
     );
