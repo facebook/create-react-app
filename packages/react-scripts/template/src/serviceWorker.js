@@ -58,23 +58,16 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
+      //a new service worker has previously finished installing, and is now waiting
+      if (registration.waiting && registration.active) {
+        newerSwAvailable();
+      }
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
-              // At this point, the updated precached content has been fetched,
-              // but the previous service worker will still serve the older
-              // content until all client tabs are closed.
-              console.log(
-                'New content is available and will be used when all ' +
-                  'tabs for this page are closed. See http://bit.ly/CRA-PWA.'
-              );
-
-              // Execute callback
-              if (config && config.onUpdate) {
-                config.onUpdate(registration);
-              }
+              newerSwAvailable();
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a
@@ -89,6 +82,18 @@ function registerValidSW(swUrl, config) {
           }
         };
       };
+      function newerSwAvailable(){
+        // At this point, the updated precached content has been fetched,
+        // but the previous service worker will still serve the older
+        // content until all client tabs are closed.
+        console.log(
+          'New content is available and will be used when all ' +
+            'tabs for this page are closed. See http://bit.ly/CRA-PWA.'
+        );
+        if (config && config.onUpdate) {
+          config.onUpdate(registration);
+        }
+      }
     })
     .catch(error => {
       console.error('Error during service worker registration:', error);
