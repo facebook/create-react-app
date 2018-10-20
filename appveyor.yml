@@ -20,6 +20,11 @@ environment:
       test_suite: 'kitchensink'
     - nodejs_version: 8
       test_suite: 'kitchensink-eject'
+  access_token:
+    secure: # <your token here>
+  github_email:
+    secure: # <your email here>
+
 cache:
   - '%APPDATA%\npm-cache -> appveyor.cleanup-cache.txt'
   - '%LOCALAPPDATA%\Yarn\Cache -> appveyor.cleanup-cache.txt'
@@ -48,3 +53,10 @@ test_script:
   - yarn --version
   - yarn cache dir
   - bash tasks/e2e-%test_suite%.sh
+
+deploy_script:
+  - git config --global credential.helper store
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - git config --global user.email %github_email%
+  - git config --global user.name # <your name here> e.g. "IlyaFinkelshteyn"
+  - git subtree push --prefix website origin gh-pages
