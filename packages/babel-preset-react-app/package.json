@@ -29,6 +29,7 @@
     "@babel/plugin-transform-runtime": "7.1.0",
     "@babel/preset-env": "7.1.0",
     "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "7.1.0",
     "@babel/runtime": "7.0.0",
     "babel-loader": "8.0.4",
     "babel-plugin-dynamic-import-node": "2.2.0",
