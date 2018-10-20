@@ -4,7 +4,7 @@ title: Developing Components in Isolation
 ---
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states.
-For an example, a simple button component could have following states:
+For an example, a simple button component could have the following states:
 
 - In a regular state, with a text label.
 - In the disabled mode.
