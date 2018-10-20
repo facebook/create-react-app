@@ -2,9 +2,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Below you will find some information on how to perform common tasks.
 
-**To learn more about what your app can do, refer to the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).**
+## Documentation
 
-**To learn React, check out [React documentation](https://reactjs.org/).**
+You can learn more about how to work with this project in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out [React documentation](https://reactjs.org/).
 
 ## Available Scripts
 
