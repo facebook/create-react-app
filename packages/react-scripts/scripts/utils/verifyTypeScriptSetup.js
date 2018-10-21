@@ -12,6 +12,11 @@ const chalk = require('chalk');
 const fs = require('fs');
 const resolve = require('resolve');
 const paths = require('../../config/paths');
+const os = require('os');
+
+function writeJson(fileName, object) {
+  fs.writeFileSync(fileName, JSON.stringify(object, null, 2) + os.EOL);
+}
 
 function verifyTypeScriptSetup() {
   if (!fs.existsSync(paths.appTsConfig)) {
@@ -52,6 +57,75 @@ function verifyTypeScriptSetup() {
     );
     console.error();
     process.exit(1);
+  }
+
+  const messages = [];
+  let tsconfig;
+  try {
+    tsconfig = require(paths.appTsConfig);
+  } catch (_) {
+    console.error(
+      chalk.red.bold(
+        'Could not parse',
+        chalk.cyan('tsconfig.json') + '.',
+        'Please make sure it contains syntactically correct JSON.'
+      )
+    );
+    process.exit(1);
+  }
+
+  if (tsconfig.compilerOptions == null) {
+    tsconfig.compilerOptions = {};
+  }
+
+  if (tsconfig.compilerOptions.isolatedModules !== true) {
+    tsconfig.compilerOptions.isolatedModules = true;
+    messages.push(
+      `${chalk.cyan(
+        'compilerOptions.isolatedModules'
+      )} must be ${chalk.cyan.bold('true')}`
+    );
+  }
+  if (tsconfig.compilerOptions.noEmit !== true) {
+    tsconfig.compilerOptions.noEmit = true;
+    messages.push(
+      `${chalk.cyan('compilerOptions.noEmit')} must be ${chalk.cyan.bold(
+        'true'
+      )}`
+    );
+  }
+  if (tsconfig.compilerOptions.jsx !== 'preserve') {
+    tsconfig.compilerOptions.jsx = 'preserve';
+    messages.push(
+      `${chalk.cyan('compilerOptions.jsx')} must be ${chalk.cyan.bold(
+        'preserve'
+      )}`
+    );
+  }
+  if (tsconfig.include == null) {
+    tsconfig.include = ['src'];
+    messages.push(
+      `${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`
+    );
+  }
+  if (tsconfig.exclude == null) {
+    tsconfig.exclude = ['**/__tests__/**', '**/?*(spec|test).*'];
+    messages.push(`${chalk.cyan('exclude')} should exclude test files`);
+  }
+
+  if (messages.length > 0) {
+    console.warn(
+      chalk.bold(
+        'The following changes are being made to your',
+        chalk.cyan('tsconfig.json'),
+        'file:'
+      )
+    );
+    messages.forEach(message => {
+      console.warn('  - ' + message);
+    });
+    console.warn();
+    writeJson(paths.appTsConfig, tsconfig);
   }
 }
 
