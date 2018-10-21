@@ -15,6 +15,7 @@ const siteConfig = {
   // For github.io type URLs, you would set the url and baseUrl like:
   url: 'https://facebook.github.io',
   baseUrl: '/create-react-app/',
+  editUrl: 'https://github.com/facebook/create-react-app/edit/master/docusaurus/docs/',
 
   // Used for publishing and more
   projectName: 'create-react-app',
