@@ -17,7 +17,7 @@ This project supports a superset of the latest JavaScript standard. In addition 
 - [Object Rest/Spread Properties](https://github.com/tc39/proposal-object-rest-spread) (ES2018).
 - [Dynamic import()](https://github.com/tc39/proposal-dynamic-import) (stage 3 proposal)
 - [Class Fields and Static Properties](https://github.com/tc39/proposal-class-public-fields) (part of stage 3 proposal).
-- [JSX](https://facebook.github.io/react/docs/introducing-jsx.html) and [Flow](https://flow.org/) syntax.
+- [JSX](https://facebook.github.io/react/docs/introducing-jsx.html), [Flow](./adding-flow) and [TypeScript](./adding-typescript).
 
 Learn more about [different proposal stages](https://babeljs.io/docs/plugins/#presets-stage-x-experimental-presets-).
 

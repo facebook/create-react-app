@@ -142,7 +142,7 @@ Please refer to the [User Guide](https://facebook.github.io/create-react-app/doc
 
 Your environment will have everything you need to build a modern single-page React app:
 
-- React, JSX, ES6, and Flow syntax support.
+- React, JSX, ES6, TypeScript and Flow syntax support.
 - Language extras beyond ES6 like the object spread operator.
 - Autoprefixed CSS, so you don’t need `-webkit-` or other prefixes.
 - A fast interactive unit test runner with built-in support for coverage reporting.
@@ -174,8 +174,6 @@ Here’s a few common cases where you might want to try something else:
 - If you want to do **server rendering** with React and Node.js, check out [Next.js](https://github.com/zeit/next.js/) or [Razzle](https://github.com/jaredpalmer/razzle). Create React App is agnostic of the backend, and just produces static HTML/JS/CSS bundles.
 
 - If your website is **mostly static** (for example, a portfolio or a blog), consider using [Gatsby](https://www.gatsbyjs.org/) instead. Unlike Create React App, it pre-renders the website into HTML at the build time.
-
-- If you want to use **TypeScript**, consider using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript).
 
 - Finally, if you need **more customization**, check out [Neutrino](https://neutrino.js.org/) and its [React preset](https://neutrino.js.org/packages/react/).
 
