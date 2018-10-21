@@ -23,6 +23,7 @@ const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -410,27 +411,15 @@ module.exports = {
     }),
     // TypeScript type checking
     fs.existsSync(paths.appTsConfig) &&
-      (() => {
-        let ForkTsCheckerWebpackPlugin;
-        try {
-          ForkTsCheckerWebpackPlugin = require(resolve.sync(
-            'fork-ts-checker-webpack-plugin',
-            { basedir: paths.appNodeModules }
-          ));
-        } catch (e) {
-          // Fail silently.
-          // Type checking using this plugin is optional.
-          // The user may decide to install `fork-ts-checker-webpack-plugin` or use `tsc -w`.
-          return null;
-        }
-
-        return new ForkTsCheckerWebpackPlugin({
-          async: false,
-          checkSyntacticErrors: true,
-          tsconfig: paths.appTsConfig,
-          watch: paths.appSrc,
-        });
-      })(),
+      new ForkTsCheckerWebpackPlugin({
+        typescript: resolve.sync('typescript', {
+          basedir: paths.appNodeModules,
+        }),
+        async: false,
+        checkSyntacticErrors: true,
+        tsconfig: paths.appTsConfig,
+        watch: paths.appSrc,
+      }),
   ].filter(Boolean),
 
   // Some libraries import Node modules but don't use them in the browser.
