@@ -91,7 +91,11 @@ module.exports = function({ types: t }) {
         ) {
           return;
         }
-        const { id: { name }, params, body } = path.node.declaration;
+        const {
+          id: { name },
+          params,
+          body,
+        } = path.node.declaration;
 
         const generatedName = `__hot__${state.file.opts.filename}$$${name}`;
 
