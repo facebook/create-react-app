@@ -8,7 +8,7 @@ Relay is a framework for building data-driven React applications powered by Grap
 To add it, run:
 
 ```sh
-npm install --save --dev babel-plugin-relay@dev
+npm install --save babel-plugin-relay@dev
 ```
 
 Alternatively you may use `yarn`:
