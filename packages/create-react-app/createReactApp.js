@@ -213,19 +213,6 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
     process.exit(1);
   }
 
-  if (!semver.satisfies(process.version, '>=6.0.0')) {
-    console.log(
-      chalk.yellow(
-        `You are using Node ${
-          process.version
-        } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 6 or higher for a better, fully supported experience.\n`
-      )
-    );
-    // Fall back to latest supported react-scripts on Node 4
-    version = 'react-scripts@0.9.x';
-  }
-
   if (!useYarn) {
     const npmInfo = checkNpmVersion();
     if (!npmInfo.hasMinNpm) {

@@ -36,35 +36,18 @@
 
 'use strict';
 
-var chalk = require('chalk');
+const chalk = require('chalk');
+const semver = require('semver');
 
-var currentNodeVersion = process.versions.node;
-var semver = currentNodeVersion.split('.');
-var major = semver[0];
-var minor = semver[1];
-
-if (major < 8) {
-  console.error(
+if (!semver.satisfies(process.version, '>=8.9.0')) {
+  console.log(
     chalk.red(
-      'You are running Node ' +
-        currentNodeVersion +
-        '.\n' +
+      'You are using Node ' +
+        process.version +
         'Create React App requires Node 8.9.0 or higher. \n' +
         'Please update your version of Node.'
     )
   );
-  process.exit(1);
-} else if (major == 8 && minor < 9) {
-  console.error(
-    chalk.red(
-      'You are running Node ' +
-        currentNodeVersion +
-        '.\n' +
-        'Create React App requires Node 8.9.0 or higher. \n' +
-        'Please update your version of Node.'
-    )
-  );
-  process.exit(1);
 }
 
 require('./createReactApp');
