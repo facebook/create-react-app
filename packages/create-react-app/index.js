@@ -41,6 +41,7 @@ var chalk = require('chalk');
 var currentNodeVersion = process.versions.node;
 var semver = currentNodeVersion.split('.');
 var major = semver[0];
+var minor = semver[1];
 
 if (major < 8) {
   console.error(
@@ -48,7 +49,18 @@ if (major < 8) {
       'You are running Node ' +
         currentNodeVersion +
         '.\n' +
-        'Create React App requires Node 8 or higher. \n' +
+        'Create React App requires Node 8.9.0 or higher. \n' +
+        'Please update your version of Node.'
+    )
+  );
+  process.exit(1);
+} else if (major == 8 && minor < 9) {
+  console.error(
+    chalk.red(
+      'You are running Node ' +
+        currentNodeVersion +
+        '.\n' +
+        'Create React App requires Node 8.9.0 or higher. \n' +
         'Please update your version of Node.'
     )
   );

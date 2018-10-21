@@ -8,7 +8,7 @@
   "repository": "facebook/create-react-app",
   "license": "MIT",
   "engines": {
-    "node": ">=4"
+    "node": ">=8.9.0"
   },
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"
