@@ -18,19 +18,13 @@ To add TypeScript to a Create React App project, follow these steps:
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "esnext",
-    "moduleResolution": "node",
     "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "noEmit": true,
     "skipLibCheck": true,
     "strict": true
-  },
-  "include": ["src"]
+  }
 }
 ```
 

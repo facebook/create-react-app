@@ -78,6 +78,22 @@ function verifyTypeScriptSetup() {
     tsconfig.compilerOptions = {};
   }
 
+  if (tsconfig.compilerOptions.module !== 'esnext') {
+    tsconfig.compilerOptions.module = 'esnext';
+    messages.push(
+      `${chalk.cyan('compilerOptions.module')} must be ${chalk.cyan.bold(
+        'esnext'
+      )}`
+    );
+  }
+  if (tsconfig.compilerOptions.moduleResolution !== 'node') {
+    tsconfig.compilerOptions.moduleResolution = 'node';
+    messages.push(
+      `${chalk.cyan(
+        'compilerOptions.moduleResolution'
+      )} must be ${chalk.cyan.bold('node')}`
+    );
+  }
   if (tsconfig.compilerOptions.isolatedModules !== true) {
     tsconfig.compilerOptions.isolatedModules = true;
     messages.push(
