@@ -15,7 +15,7 @@ const path = require('path');
 const paths = require('../../config/paths');
 
 function verifyTypeScriptSetup() {
-  if (!paths.appIndexJs.endsWith('.tsx')) {
+  if (!paths.appIndexJs.endsWith('.ts') || !paths.appIndexJs.endsWith('.tsx')) {
     return;
   }
 
