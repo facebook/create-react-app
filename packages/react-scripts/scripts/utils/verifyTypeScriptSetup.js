@@ -41,7 +41,7 @@ function verifyTypeScriptSetup() {
   let firstTimeSetup = false;
 
   if (!fs.existsSync(paths.appTsConfig)) {
-    if (!paths.appIndexJs.match(/\.ts?$/)) {
+    if (!paths.appIndexJs.match(/\.tsx?$/)) {
       return;
     }
     writeJson(paths.appTsConfig, {});
