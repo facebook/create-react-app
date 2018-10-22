@@ -41,6 +41,15 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
+// webpack build target
+const webpackTarget = process.env.WEBPACK_TARGET || 'web';
+const isNode = [
+  'node',
+  'electron-main',
+  'electron-render',
+  'node-webkit',
+].includes(webpackTarget);
+
 // common function to get style loaders
 const getStyleLoaders = (cssOptions, preProcessor) => {
   const loaders = [
@@ -410,14 +419,20 @@ module.exports = {
 
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
-  node: {
-    dgram: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-    child_process: 'empty',
-  },
+  // Disable mocks on node enabled target.
+  node: isNode
+    ? {}
+    : {
+        dgram: 'empty',
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty',
+        child_process: 'empty',
+      },
   // Turn off performance processing because we utilize
   // our own hints via the FileSizeReporter
   performance: false,
+  // Set the webpack build target.
+  // https://webpack.js.org/configuration/target/
+  target: webpackTarget,
 };
