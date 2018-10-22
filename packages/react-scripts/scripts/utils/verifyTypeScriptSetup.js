@@ -19,6 +19,24 @@ function writeJson(fileName, object) {
   fs.writeFileSync(fileName, JSON.stringify(object, null, 2) + os.EOL);
 }
 
+const compilerOptions = {
+  // These are suggested values and will be set when not present in the
+  // tsconfig.json
+  target: { suggested: 'es5' },
+  allowJs: { suggested: true },
+  skipLibCheck: { suggested: true },
+  esModuleInterop: { suggested: true },
+  allowSyntheticDefaultImports: { suggested: true },
+  strict: { suggested: true },
+
+  // This values are required and cannot be changed by the user
+  module: { value: 'esnext', reason: 'for import() and import/export' },
+  moduleResolution: { value: 'node', reason: 'to match webpack resolution' },
+  isolatedModules: { value: true, reason: 'implementation limitation' },
+  noEmit: { value: true },
+  jsx: { value: 'preserve', reason: 'JSX is compiled by Babel' },
+};
+
 function verifyTypeScriptSetup() {
   if (!fs.existsSync(paths.appTsConfig)) {
     if (!paths.appIndexJs.match(/\.ts?$/)) {
@@ -81,23 +99,6 @@ function verifyTypeScriptSetup() {
   if (tsconfig.compilerOptions == null) {
     tsconfig.compilerOptions = {};
   }
-
-  const compilerOptions = {
-    target: { suggested: 'es5' },
-    allowJs: { suggested: true },
-    skipLibCheck: { suggested: true },
-    module: { value: 'esnext', reason: 'for import() and import/export' },
-    moduleResolution: { value: 'node', reason: 'to match webpack resolution' },
-    isolatedModules: { value: true, reason: 'implementation limitation' },
-    noEmit: { value: true },
-    jsx: { value: 'preserve', reason: 'JSX is compiled by Babel' },
-    esModuleInterop: { value: true, reason: 'Babel compatibility' },
-    allowSyntheticDefaultImports: {
-      value: true,
-      reason: 'Babel compatibility',
-    },
-    strict: { suggested: true },
-  };
 
   for (const option of Object.keys(compilerOptions)) {
     const { value, suggested, reason } = compilerOptions[option];
