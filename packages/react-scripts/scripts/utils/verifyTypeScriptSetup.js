@@ -29,7 +29,7 @@ const compilerOptions = {
   allowSyntheticDefaultImports: { suggested: true },
   strict: { suggested: true },
 
-  // This values are required and cannot be changed by the user
+  // These values are required and cannot be changed by the user
   module: { value: 'esnext', reason: 'for import() and import/export' },
   moduleResolution: { value: 'node', reason: 'to match webpack resolution' },
   resolveJsonModule: { value: true, reason: 'to match webpack loader' },
