@@ -32,6 +32,7 @@ const compilerOptions = {
   // This values are required and cannot be changed by the user
   module: { value: 'esnext', reason: 'for import() and import/export' },
   moduleResolution: { value: 'node', reason: 'to match webpack resolution' },
+  resolveJsonModule: { value: true, reason: 'to match webpack loader' },
   isolatedModules: { value: true, reason: 'implementation limitation' },
   noEmit: { value: true },
   jsx: { value: 'preserve', reason: 'JSX is compiled by Babel' },
