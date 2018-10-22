@@ -14,8 +14,6 @@ To add TypeScript to a Create React App project, follow these steps:
 3. Create a [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) at the root directory with `{}` in it.
 4. Restart your development server (if applicable). This will set sensible defaults and the required values in your [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
-5. Copy [loaders.d.ts](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/loaders.d.ts) from the template to your `src` directory.
-
 Type errors will show up in the same console as the build one.
 
 We recommend using [VSCode](https://code.visualstudio.com/) for a better integrated experience.
