@@ -11,7 +11,7 @@ To add TypeScript to a Create React App project, follow these steps:
 
 1. Run `npm install --save typescript @types/react @types/react-dom @types/jest` (or `yarn add typescript @types/react @types/react-dom @types/jest`).
 
-2. Rename the `.js` files you want to convert: use `.tsx` if they use JSX or `.ts` if not (e.g. `git mv src/index.js src/index.tsx`).
+2. Rename the `.js` files you want to convert: use `.tsx` if they use JSX or `.ts` if not (e.g. `git mv src/index.js src/index.tsx`). **Note that the entrypoint must be named either `src/index.ts` or `src/index.tsx` to enable TypeScript in your project.**
 
 3. Copy [loaders.d.ts](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/loaders.d.ts) from the template to your `src` directory.
 
