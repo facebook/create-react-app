@@ -11,6 +11,7 @@
 const chalk = require('chalk');
 const fs = require('fs');
 const resolve = require('resolve');
+const path = require('path');
 const paths = require('../../config/paths');
 const os = require('os');
 
@@ -142,6 +143,22 @@ function verifyTypeScriptSetup() {
     console.warn();
     writeJson(paths.appTsConfig, tsconfig);
   }
+
+  // Copy type declarations associated with this version of `react-scripts`
+  const declaredTypes = path.resolve(
+    __dirname,
+    '..',
+    '..',
+    'config',
+    'react-app.d.ts'
+  );
+  const declaredTypesContent = fs
+    .readFileSync(declaredTypes, 'utf8')
+    .replace(/\/\/ @remove-file-on-eject\r?\n/, '');
+  fs.writeFileSync(
+    path.resolve(paths.appSrc, 'react-app.d.ts'),
+    declaredTypesContent
+  );
 }
 
 module.exports = verifyTypeScriptSetup;
