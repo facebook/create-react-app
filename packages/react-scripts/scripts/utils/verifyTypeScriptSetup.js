@@ -38,11 +38,14 @@ const compilerOptions = {
 };
 
 function verifyTypeScriptSetup() {
+  let firstTimeSetup = false;
+
   if (!fs.existsSync(paths.appTsConfig)) {
     if (!paths.appIndexJs.match(/\.ts?$/)) {
       return;
     }
     writeJson(paths.appTsConfig, {});
+    firstTimeSetup = true;
   }
 
   const isYarn = fs.existsSync(paths.yarnLockFile);
@@ -98,6 +101,7 @@ function verifyTypeScriptSetup() {
 
   if (tsconfig.compilerOptions == null) {
     tsconfig.compilerOptions = {};
+    firstTimeSetup = true;
   }
 
   for (const option of Object.keys(compilerOptions)) {
@@ -134,17 +138,28 @@ function verifyTypeScriptSetup() {
   }
 
   if (messages.length > 0) {
-    console.warn(
-      chalk.bold(
-        'The following changes are being made to your',
-        chalk.cyan('tsconfig.json'),
-        'file:'
-      )
-    );
-    messages.forEach(message => {
-      console.warn('  - ' + message);
-    });
-    console.warn();
+    if (firstTimeSetup) {
+      console.log(
+        chalk.bold(
+          'Your',
+          chalk.cyan('tsconfig.json'),
+          'has been populated with default values.'
+        )
+      );
+      console.log();
+    } else {
+      console.warn(
+        chalk.bold(
+          'The following changes are being made to your',
+          chalk.cyan('tsconfig.json'),
+          'file:'
+        )
+      );
+      messages.forEach(message => {
+        console.warn('  - ' + message);
+      });
+      console.warn();
+    }
     writeJson(paths.appTsConfig, tsconfig);
   }
 
