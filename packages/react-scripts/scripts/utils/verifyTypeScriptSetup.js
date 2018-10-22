@@ -133,7 +133,7 @@ function verifyTypeScriptSetup() {
     );
   }
   if (tsconfig.exclude == null) {
-    tsconfig.exclude = ['**/__tests__/**', '**/?*(spec|test).*'];
+    tsconfig.exclude = ['**/__tests__/**', '**/?*test.*', '**/?*spec.*'];
     messages.push(`${chalk.cyan('exclude')} should exclude test files`);
   }
 
