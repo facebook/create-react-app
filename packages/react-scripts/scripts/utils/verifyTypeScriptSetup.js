@@ -78,46 +78,45 @@ function verifyTypeScriptSetup() {
     tsconfig.compilerOptions = {};
   }
 
-  if (tsconfig.compilerOptions.module !== 'esnext') {
-    tsconfig.compilerOptions.module = 'esnext';
-    messages.push(
-      `${chalk.cyan('compilerOptions.module')} must be ${chalk.cyan.bold(
-        'esnext'
-      )}`
-    );
+  const compilerOptions = {
+    target: { suggested: 'es5' },
+    allowJs: { suggested: true },
+    skipLibCheck: { suggested: true },
+    module: { value: 'esnext', reason: 'for import() and import/export' },
+    moduleResolution: { value: 'node', reason: 'to match webpack resolution' },
+    isolatedModules: { value: true, reason: 'implementation limitation' },
+    noEmit: { value: true },
+    jsx: { value: 'preserve', reason: 'JSX is compiled by Babel' },
+    esModuleInterop: { value: true, reason: 'Babel compatibility' },
+    allowSyntheticDefaultImports: {
+      value: true,
+      reason: 'Babel compatibility',
+    },
+    strict: { suggested: true },
+  };
+
+  for (const option of Object.keys(compilerOptions)) {
+    const { value, suggested, reason } = compilerOptions[option];
+    if (suggested != null) {
+      if (tsconfig.compilerOptions[option] === undefined) {
+        tsconfig.compilerOptions[option] = suggested;
+        messages.push(
+          `${chalk.cyan('compilerOptions.' + option)} to be ${chalk.bold(
+            'suggested'
+          )} value: ${chalk.cyan.bold(suggested)} (this can be changed)`
+        );
+      }
+    } else if (tsconfig.compilerOptions[option] !== value) {
+      tsconfig.compilerOptions[option] = value;
+      messages.push(
+        `${chalk.cyan('compilerOptions.' + option)} ${chalk.bold(
+          'must'
+        )} be ${chalk.cyan.bold(value)}` +
+          (reason != null ? ` (${reason})` : '')
+      );
+    }
   }
-  if (tsconfig.compilerOptions.moduleResolution !== 'node') {
-    tsconfig.compilerOptions.moduleResolution = 'node';
-    messages.push(
-      `${chalk.cyan(
-        'compilerOptions.moduleResolution'
-      )} must be ${chalk.cyan.bold('node')}`
-    );
-  }
-  if (tsconfig.compilerOptions.isolatedModules !== true) {
-    tsconfig.compilerOptions.isolatedModules = true;
-    messages.push(
-      `${chalk.cyan(
-        'compilerOptions.isolatedModules'
-      )} must be ${chalk.cyan.bold('true')}`
-    );
-  }
-  if (tsconfig.compilerOptions.noEmit !== true) {
-    tsconfig.compilerOptions.noEmit = true;
-    messages.push(
-      `${chalk.cyan('compilerOptions.noEmit')} must be ${chalk.cyan.bold(
-        'true'
-      )}`
-    );
-  }
-  if (tsconfig.compilerOptions.jsx !== 'preserve') {
-    tsconfig.compilerOptions.jsx = 'preserve';
-    messages.push(
-      `${chalk.cyan('compilerOptions.jsx')} must be ${chalk.cyan.bold(
-        'preserve'
-      )}`
-    );
-  }
+
   if (tsconfig.include == null) {
     tsconfig.include = ['src'];
     messages.push(
