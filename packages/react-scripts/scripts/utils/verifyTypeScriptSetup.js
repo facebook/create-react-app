@@ -73,7 +73,9 @@ function verifyTypeScriptSetup() {
         chalk.cyan.bold('typescript'),
         'by running',
         chalk.cyan.bold(
-          isYarn ? 'yarn add typescript' : 'npm install typescript'
+          isYarn
+            ? 'yarn add typescript @types/react @types/react-dom @types/jest'
+            : 'npm install typescript @types/react @types/react-dom @types/jest'
         ) + '.'
       )
     );

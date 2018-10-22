@@ -9,7 +9,7 @@ Recent versions of [TypeScript](https://www.typescriptlang.org/) work with Creat
 
 To add TypeScript to a Create React App project, follow these steps:
 
-1. Run `npm install --save typescript @types/react @types/react-dom @types/jest` (or `yarn add typescript @types/react @types/react-dom @types/jest`).
+1. Run `npm install typescript @types/react @types/react-dom @types/jest` (or `yarn add typescript @types/react @types/react-dom @types/jest`).
 2. Rename `src/index.js` to `src/index.tsx` or create an empty [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) at the root project directory.
 3. Restart your development server (if applicable). This will set sensible defaults and the required values in your [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
