@@ -28,6 +28,7 @@ const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
+const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -539,6 +540,8 @@ module.exports = {
         checkSyntacticErrors: true,
         tsconfig: paths.appTsConfig,
         watch: paths.appSrc,
+        silent: true,
+        formatter: typescriptFormatter,
       }),
   ].filter(Boolean),
   // Some libraries import Node modules but don't use them in the browser.
