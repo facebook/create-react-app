@@ -52,10 +52,11 @@ function verifyTypeScriptSetup() {
   const isYarn = fs.existsSync(paths.yarnLockFile);
 
   // Ensure typescript is installed
+  let ts;
   try {
-    resolve.sync('typescript', {
+    ts = require(resolve.sync('typescript', {
       basedir: paths.appNodeModules,
-    });
+    }));
   } catch (_) {
     console.error(
       chalk.red(
@@ -88,7 +89,16 @@ function verifyTypeScriptSetup() {
   const messages = [];
   let tsconfig;
   try {
-    tsconfig = require(paths.appTsConfig);
+    const { config, error } = ts.readConfigFile(
+      paths.appTsConfig,
+      ts.sys.readFile
+    );
+
+    if (error) {
+      throw error;
+    }
+
+    tsconfig = config;
   } catch (_) {
     console.error(
       chalk.red.bold(
