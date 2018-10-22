@@ -21,7 +21,10 @@ function writeJson(fileName, object) {
 
 function verifyTypeScriptSetup() {
   if (!fs.existsSync(paths.appTsConfig)) {
-    return;
+    if (!paths.appIndexJs.match(/\.ts?$/)) {
+      return;
+    }
+    writeJson(paths.appTsConfig, {});
   }
 
   const isYarn = fs.existsSync(paths.yarnLockFile);
