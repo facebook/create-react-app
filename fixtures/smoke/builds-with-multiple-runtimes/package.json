@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "dva": "2.4.0",
+    "ky": "0.3.0",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
