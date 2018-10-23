@@ -22,6 +22,7 @@
       "adding-a-sass-stylesheet",
       "post-processing-css",
       "adding-images-fonts-and-files",
+      "loading-graphql-files",
       "using-the-public-folder",
       "code-splitting"
     ],

@@ -94,6 +94,10 @@
         "title": "Integrating with an API Backend",
         "sidebar_label": "Integrating with an API"
       },
+      "loading-graphql-files": {
+        "title": "Loading .graphql Files",
+        "sidebar_label": "Loading .graphql Files"
+      },
       "making-a-progressive-web-app": {
         "title": "Making a Progressive Web App"
       },
