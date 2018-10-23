@@ -103,6 +103,12 @@ function verifyTypeScriptSetup() {
     },
   };
 
+  const formatDiagnosticHost = {
+    getCanonicalFileName: fileName => fileName,
+    getCurrentDirectory: ts.sys.getCurrentDirectory,
+    getNewLine: () => os.EOL,
+  };
+
   const messages = [];
   let appTsConfig;
   let parsedTsConfig;
@@ -114,7 +120,7 @@ function verifyTypeScriptSetup() {
     );
 
     if (error) {
-      throw error;
+      throw new Error(ts.formatDiagnostic(error, formatDiagnosticHost));
     }
 
     appTsConfig = readTsConfig;
@@ -132,11 +138,13 @@ function verifyTypeScriptSetup() {
     });
 
     if (result.errors && result.errors.length) {
-      throw result.errors[0];
+      throw new Error(
+        ts.formatDiagnostic(result.errors[0], formatDiagnosticHost)
+      );
     }
 
     parsedCompilerOptions = result.options;
-  } catch (_) {
+  } catch (e) {
     console.error(
       chalk.red.bold(
         'Could not parse',
@@ -144,6 +152,7 @@ function verifyTypeScriptSetup() {
         'Please make sure it contains syntactically correct JSON.'
       )
     );
+    console.error(e && e.message ? `Details: ${e.message}` : '');
     process.exit(1);
   }
 
