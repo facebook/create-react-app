@@ -19,25 +19,6 @@ function writeJson(fileName, object) {
   fs.writeFileSync(fileName, JSON.stringify(object, null, 2) + os.EOL);
 }
 
-const compilerOptions = {
-  // These are suggested values and will be set when not present in the
-  // tsconfig.json
-  target: { suggested: 'es5' },
-  allowJs: { suggested: true },
-  skipLibCheck: { suggested: true },
-  esModuleInterop: { suggested: true },
-  allowSyntheticDefaultImports: { suggested: true },
-  strict: { suggested: true },
-
-  // These values are required and cannot be changed by the user
-  module: { value: 'esnext', reason: 'for import() and import/export' },
-  moduleResolution: { value: 'node', reason: 'to match webpack resolution' },
-  resolveJsonModule: { value: true, reason: 'to match webpack loader' },
-  isolatedModules: { value: true, reason: 'implementation limitation' },
-  noEmit: { value: true },
-  jsx: { value: 'preserve', reason: 'JSX is compiled by Babel' },
-};
-
 function verifyTypeScriptSetup() {
   let firstTimeSetup = false;
 
@@ -86,8 +67,44 @@ function verifyTypeScriptSetup() {
     process.exit(1);
   }
 
+  const compilerOptions = {
+    // These are suggested values and will be set when not present in the
+    // tsconfig.json
+    // 'parsedValue' matches the output value from ts.parseJsonConfigFileContent()
+    target: {
+      parsedValue: ts.ScriptTarget.ES5,
+      suggested: 'es5',
+    },
+    allowJs: { suggested: true },
+    skipLibCheck: { suggested: true },
+    esModuleInterop: { suggested: true },
+    allowSyntheticDefaultImports: { suggested: true },
+    strict: { suggested: true },
+
+    // These values are required and cannot be changed by the user
+    module: {
+      parsedValue: ts.ModuleKind.ESNext,
+      value: 'esnext',
+      reason: 'for import() and import/export',
+    },
+    moduleResolution: {
+      parsedValue: ts.ModuleResolutionKind.NodeJs,
+      value: 'node',
+      reason: 'to match webpack resolution',
+    },
+    resolveJsonModule: { value: true, reason: 'to match webpack loader' },
+    isolatedModules: { value: true, reason: 'implementation limitation' },
+    noEmit: { value: true },
+    jsx: {
+      parsedValue: ts.JsxEmit.Preserve,
+      value: 'preserve',
+      reason: 'JSX is compiled by Babel',
+    },
+  };
+
   const messages = [];
   let tsconfig;
+  let parsedOptions;
   try {
     const { config, error } = ts.readConfigFile(
       paths.appTsConfig,
@@ -99,6 +116,21 @@ function verifyTypeScriptSetup() {
     }
 
     tsconfig = config;
+
+    // Get TS to parse and resolve any "extends"
+    // Calling this function also mutates the tsconfig above,
+    // adding in "include" and "exclude", but the compilerOptions remain untouched
+    const result = ts.parseJsonConfigFileContent(
+      config,
+      ts.sys,
+      path.dirname(paths.appTsConfig)
+    );
+
+    if (result.errors && result.errors.length) {
+      throw result.errors[0];
+    }
+
+    parsedOptions = result.options;
   } catch (_) {
     console.error(
       chalk.red.bold(
@@ -116,9 +148,12 @@ function verifyTypeScriptSetup() {
   }
 
   for (const option of Object.keys(compilerOptions)) {
-    const { value, suggested, reason } = compilerOptions[option];
+    const { parsedValue, value, suggested, reason } = compilerOptions[option];
+
+    const valueToCheck = parsedValue === undefined ? value : parsedValue;
+
     if (suggested != null) {
-      if (tsconfig.compilerOptions[option] === undefined) {
+      if (parsedOptions[option] === undefined) {
         tsconfig.compilerOptions[option] = suggested;
         messages.push(
           `${chalk.cyan('compilerOptions.' + option)} to be ${chalk.bold(
@@ -126,7 +161,7 @@ function verifyTypeScriptSetup() {
           )} value: ${chalk.cyan.bold(suggested)} (this can be changed)`
         );
       }
-    } else if (tsconfig.compilerOptions[option] !== value) {
+    } else if (parsedOptions[option] !== valueToCheck) {
       tsconfig.compilerOptions[option] = value;
       messages.push(
         `${chalk.cyan('compilerOptions.' + option)} ${chalk.bold(
@@ -137,6 +172,7 @@ function verifyTypeScriptSetup() {
     }
   }
 
+  // tsconfig will have the merged "include" and "exclude" by this point
   if (tsconfig.include == null) {
     tsconfig.include = ['src'];
     messages.push(
