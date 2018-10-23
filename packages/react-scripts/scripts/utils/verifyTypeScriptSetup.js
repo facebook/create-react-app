@@ -14,6 +14,7 @@ const resolve = require('resolve');
 const path = require('path');
 const paths = require('../../config/paths');
 const os = require('os');
+const immer = require('react-dev-utils/immer').produce;
 
 function writeJson(fileName, object) {
   fs.writeFileSync(fileName, JSON.stringify(object, null, 2) + os.EOL);
@@ -103,10 +104,11 @@ function verifyTypeScriptSetup() {
   };
 
   const messages = [];
-  let tsconfig;
-  let parsedOptions;
+  let appTsConfig;
+  let parsedTsConfig;
+  let parsedCompilerOptions;
   try {
-    const { config, error } = ts.readConfigFile(
+    const { config: readTsConfig, error } = ts.readConfigFile(
       paths.appTsConfig,
       ts.sys.readFile
     );
@@ -115,22 +117,25 @@ function verifyTypeScriptSetup() {
       throw error;
     }
 
-    tsconfig = config;
+    appTsConfig = readTsConfig;
 
     // Get TS to parse and resolve any "extends"
     // Calling this function also mutates the tsconfig above,
     // adding in "include" and "exclude", but the compilerOptions remain untouched
-    const result = ts.parseJsonConfigFileContent(
-      config,
-      ts.sys,
-      path.dirname(paths.appTsConfig)
-    );
+    let result;
+    parsedTsConfig = immer(readTsConfig, config => {
+      result = ts.parseJsonConfigFileContent(
+        config,
+        ts.sys,
+        path.dirname(paths.appTsConfig)
+      );
+    });
 
     if (result.errors && result.errors.length) {
       throw result.errors[0];
     }
 
-    parsedOptions = result.options;
+    parsedCompilerOptions = result.options;
   } catch (_) {
     console.error(
       chalk.red.bold(
@@ -142,8 +147,8 @@ function verifyTypeScriptSetup() {
     process.exit(1);
   }
 
-  if (tsconfig.compilerOptions == null) {
-    tsconfig.compilerOptions = {};
+  if (appTsConfig.compilerOptions == null) {
+    appTsConfig.compilerOptions = {};
     firstTimeSetup = true;
   }
 
@@ -153,16 +158,16 @@ function verifyTypeScriptSetup() {
     const valueToCheck = parsedValue === undefined ? value : parsedValue;
 
     if (suggested != null) {
-      if (parsedOptions[option] === undefined) {
-        tsconfig.compilerOptions[option] = suggested;
+      if (parsedCompilerOptions[option] === undefined) {
+        appTsConfig.compilerOptions[option] = suggested;
         messages.push(
           `${chalk.cyan('compilerOptions.' + option)} to be ${chalk.bold(
             'suggested'
           )} value: ${chalk.cyan.bold(suggested)} (this can be changed)`
         );
       }
-    } else if (parsedOptions[option] !== valueToCheck) {
-      tsconfig.compilerOptions[option] = value;
+    } else if (parsedCompilerOptions[option] !== valueToCheck) {
+      appTsConfig.compilerOptions[option] = value;
       messages.push(
         `${chalk.cyan('compilerOptions.' + option)} ${chalk.bold(
           'must'
@@ -173,14 +178,14 @@ function verifyTypeScriptSetup() {
   }
 
   // tsconfig will have the merged "include" and "exclude" by this point
-  if (tsconfig.include == null) {
-    tsconfig.include = ['src'];
+  if (parsedTsConfig.include == null) {
+    appTsConfig.include = ['src'];
     messages.push(
       `${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`
     );
   }
-  if (tsconfig.exclude == null) {
-    tsconfig.exclude = ['**/__tests__/**', '**/?*test.*', '**/?*spec.*'];
+  if (parsedTsConfig.exclude == null) {
+    appTsConfig.exclude = ['**/__tests__/**', '**/?*test.*', '**/?*spec.*'];
     messages.push(`${chalk.cyan('exclude')} should exclude test files`);
   }
 
@@ -207,7 +212,7 @@ function verifyTypeScriptSetup() {
       });
       console.warn();
     }
-    writeJson(paths.appTsConfig, tsconfig);
+    writeJson(paths.appTsConfig, appTsConfig);
   }
 
   // Copy type declarations associated with this version of `react-scripts`
