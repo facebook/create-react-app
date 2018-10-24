@@ -148,13 +148,14 @@ module.exports = function(
         path.resolve(appSrc, f)
       );
       for (const jsFile of jsFiles) {
-        const tsFile = replaceExtension(jsFile, '.tsx');
+        const tsFile = replaceExtension(jsFile, '.ts');
+        const tsxFile = replaceExtension(jsFile, '.tsx');
         // If the TypeScript version already existed in the template, just
         // remove the JavaScript version
-        if (fs.existsSync(tsFile)) {
+        if (fs.existsSync(tsFile) || fs.existsSync(tsxFile)) {
           fs.removeSync(jsFile);
         } else {
-          fs.renameSync(jsFile, tsFile);
+          fs.renameSync(jsFile, tsxFile);
         }
       }
     } else {
