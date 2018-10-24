@@ -120,8 +120,11 @@ cd "$temp_app_path"
 npx create-react-app --scripts-version=@latest test-app-dist-tag
 cd test-app-dist-tag
 
-# Check corresponding scripts version is installed.
+# Check corresponding scripts version is installed and no TypeScript is present.
 exists node_modules/react-scripts
+! exists node_modules/typescript
+! exists src/index.tsx
+exists src/index.js
 checkDependencies
 
 # ******************************************************************************
