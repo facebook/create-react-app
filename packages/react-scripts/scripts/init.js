@@ -19,7 +19,6 @@ const path = require('path');
 const chalk = require('chalk');
 const execSync = require('child_process').execSync;
 const spawn = require('react-dev-utils/crossSpawn');
-const globby = require('react-dev-utils/globby').sync;
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
 
@@ -131,7 +130,7 @@ module.exports = function(
   // Copy the files for the user
   const templatePath = template
     ? path.resolve(originalDirectory, template)
-    : path.join(ownPath, 'template');
+    : path.join(ownPath, useTypeScript ? 'template-typescript' : 'template');
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {
@@ -139,34 +138,6 @@ module.exports = function(
       `Could not locate supplied template: ${chalk.green(templatePath)}`
     );
     return;
-  }
-
-  if (!template) {
-    const appSrc = path.join(appPath, 'src');
-    if (useTypeScript) {
-      const jsFiles = globby('**/*.js', { cwd: appSrc }).map(f =>
-        path.resolve(appSrc, f)
-      );
-      for (const jsFile of jsFiles) {
-        const tsFile = replaceExtension(jsFile, '.ts');
-        const tsxFile = replaceExtension(jsFile, '.tsx');
-        // If the TypeScript version already existed in the template, just
-        // remove the JavaScript version
-        if (fs.existsSync(tsFile) || fs.existsSync(tsxFile)) {
-          fs.removeSync(jsFile);
-        } else {
-          fs.renameSync(jsFile, tsxFile);
-        }
-      }
-    } else {
-      // Remove TypeScript files from template
-      const tsFiles = globby('**/*.(ts|tsx)', { cwd: appSrc }).map(f =>
-        path.resolve(appSrc, f)
-      );
-      for (const tsFile of tsFiles) {
-        fs.removeSync(tsFile);
-      }
-    }
   }
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
