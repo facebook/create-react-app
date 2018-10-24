@@ -143,11 +143,6 @@ exists node_modules/react-scripts
 grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
-# Check that the TypeScript template passes smoke tests, build, and normal tests
-yarn start --smoke-test
-yarn build
-CI=true yarn test
-
 # ******************************************************************************
 # Test --use-npm flag
 # ******************************************************************************
@@ -175,6 +170,11 @@ exists node_modules/react-scripts
 exists node_modules/typescript
 exists src/index.tsx
 checkTypeScriptDependencies
+
+# Check that the TypeScript template passes smoke tests, build, and normal tests
+yarn start --smoke-test
+yarn build
+CI=true yarn test
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
