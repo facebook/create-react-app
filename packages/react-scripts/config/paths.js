@@ -46,7 +46,7 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
-const moduleFileExtensions = [
+let moduleFileExtensions = [
   'web.mjs',
   'mjs',
   'web.js',
@@ -150,5 +150,9 @@ if (
   };
 }
 // @remove-on-eject-end
+
+if (!fs.existsSync(module.exports.appTsConfig)) {
+  moduleFileExtensions = moduleFileExtensions.filter(e => !e.includes('ts'));
+}
 
 module.exports.moduleFileExtensions = moduleFileExtensions;
