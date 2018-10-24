@@ -19,6 +19,7 @@ const path = require('path');
 const chalk = require('chalk');
 const execSync = require('child_process').execSync;
 const spawn = require('react-dev-utils/crossSpawn');
+const globby = require('react-dev-utils/globby').sync;
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
 
@@ -74,6 +75,12 @@ function tryGitInit(appPath) {
   }
 }
 
+function replaceExtension(filePath, newExtension) {
+  const nFileName =
+    path.basename(filePath, path.extname(filePath)) + newExtension;
+  return path.join(path.dirname(filePath), nFileName);
+}
+
 module.exports = function(
   appPath,
   appName,
@@ -89,6 +96,8 @@ module.exports = function(
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
+
+  const useTypeScript = appPackage.dependencies['typescript'] != null;
 
   // Setup the script rules
   appPackage.scripts = {
@@ -130,6 +139,33 @@ module.exports = function(
       `Could not locate supplied template: ${chalk.green(templatePath)}`
     );
     return;
+  }
+
+  if (!template) {
+    const appSrc = path.join(appPath, 'src');
+    if (useTypeScript) {
+      const jsFiles = globby('**/*.js', { cwd: appSrc }).map(f =>
+        path.resolve(appSrc, f)
+      );
+      for (const jsFile of jsFiles) {
+        const tsFile = replaceExtension(jsFile);
+        // If the TypeScript version already existed in the template, just
+        // remove the JavaScript version
+        if (fs.existsSync(tsFile)) {
+          fs.removeSync(jsFile);
+        } else {
+          fs.renameSync(jsFile, tsFile);
+        }
+      }
+    } else {
+      // Remove TypeScript files from template
+      const tsFiles = globby('**/*.(ts|tsx)', { cwd: appSrc }).map(f =>
+        path.resolve(appSrc, f)
+      );
+      for (const tsFile of tsFiles) {
+        fs.removeSync(tsFile);
+      }
+    }
   }
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
