@@ -74,12 +74,6 @@ function tryGitInit(appPath) {
   }
 }
 
-function replaceExtension(filePath, newExtension) {
-  const nFileName =
-    path.basename(filePath, path.extname(filePath)) + newExtension;
-  return path.join(path.dirname(filePath), nFileName);
-}
-
 module.exports = function(
   appPath,
   appName,
