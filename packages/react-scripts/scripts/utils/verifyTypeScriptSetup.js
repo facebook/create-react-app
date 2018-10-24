@@ -98,6 +98,7 @@ function verifyTypeScriptSetup() {
     esModuleInterop: { suggested: true },
     allowSyntheticDefaultImports: { suggested: true },
     strict: { suggested: true },
+    forceConsistentCasingInFileNames: { suggested: true },
 
     // These values are required and cannot be changed by the user
     module: {
