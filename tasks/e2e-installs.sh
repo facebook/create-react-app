@@ -169,6 +169,7 @@ cd test-app-typescript
 exists node_modules/react-scripts
 exists node_modules/typescript
 exists src/index.tsx
+exists tsconfig.json
 checkTypeScriptDependencies
 
 # Check that the TypeScript template passes smoke tests, build, and normal tests
