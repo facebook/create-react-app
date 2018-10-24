@@ -60,6 +60,9 @@ function registerValidSW(swUrl, config) {
     .then(registration => {
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
+        if (installingWorker == null) {
+          return;
+        }
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
@@ -100,9 +103,10 @@ function checkValidServiceWorker(swUrl, config) {
   fetch(swUrl)
     .then(response => {
       // Ensure service worker exists, and that we really are getting a JS file.
+      const contentType = response.headers.get('content-type');
       if (
         response.status === 404 ||
-        response.headers.get('content-type').indexOf('javascript') === -1
+        (contentType != null && contentType.indexOf('javascript') === -1)
       ) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then(registration => {
