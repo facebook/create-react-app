@@ -23,6 +23,7 @@
     "getCacheIdentifier.js",
     "getCSSModuleLocalIdent.js",
     "getProcessForPort.js",
+    "globby.js",
     "ignoredFiles.js",
     "immer.js",
     "InlineChunkHtmlPlugin.js",
