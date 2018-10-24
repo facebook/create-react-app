@@ -59,6 +59,17 @@ function checkDependencies {
   fi
 }
 
+# Check for accidental dependencies in package.json
+function checkTypeScriptDependencies {
+  if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
+  grep -v -q -E '^\s*"(@types\/.+)|typescript|(react(-dom|-scripts)?)"'; then
+   echo "Dependencies are correct"
+  else
+   echo "There are extraneous dependencies in package.json"
+   exit 1
+  fi
+}
+
 # Exit the script with a helpful error message when any error is encountered
 trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 
@@ -139,6 +150,18 @@ exists node_modules/react-scripts
 [ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
 grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
+
+# ******************************************************************************
+# Test --typescript flag
+# ******************************************************************************
+
+cd "$temp_app_path"
+npx create-react-app --typescript test-app-typescript
+cd test-app-typescript
+
+# Check corresponding scripts version is installed.
+exists node_modules/react-scripts
+checkTypeScriptDependencies
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
