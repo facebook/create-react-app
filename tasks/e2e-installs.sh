@@ -164,8 +164,10 @@ cd "$temp_app_path"
 npx create-react-app --typescript test-app-typescript
 cd test-app-typescript
 
-# Check corresponding scripts version is installed.
+# Check corresponding template is installed.
 exists node_modules/react-scripts
+exists node_modules/typescript
+exists src/index.tsx
 checkTypeScriptDependencies
 
 # ******************************************************************************
