@@ -210,10 +210,6 @@ function verifyTypeScriptSetup() {
       `${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`
     );
   }
-  if (parsedTsConfig.exclude == null) {
-    appTsConfig.exclude = ['**/__tests__/**', '**/?*test.*', '**/?*spec.*'];
-    messages.push(`${chalk.cyan('exclude')} should exclude test files`);
-  }
 
   if (messages.length > 0) {
     if (firstTimeSetup) {
