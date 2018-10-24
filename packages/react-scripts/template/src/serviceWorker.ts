@@ -28,7 +28,10 @@ type Config = {
 export function register(config: Config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
-    const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
+    const publicUrl = new URL(
+      (process as { env: { [key: string]: string } }).env.PUBLIC_URL,
+      window.location.href
+    );
     if (publicUrl.origin !== window.location.origin) {
       // Our service worker won't work if PUBLIC_URL is on a different origin
       // from what our page is served on. This might happen if a CDN is used to
@@ -59,12 +62,15 @@ export function register(config: Config) {
   }
 }
 
-function registerValidSW(swUrl, config) {
+function registerValidSW(swUrl: string, config: Config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
+        if (installingWorker == null) {
+          return;
+        }
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
@@ -100,14 +106,15 @@ function registerValidSW(swUrl, config) {
     });
 }
 
-function checkValidServiceWorker(swUrl, config) {
+function checkValidServiceWorker(swUrl: string, config: Config) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl)
     .then(response => {
       // Ensure service worker exists, and that we really are getting a JS file.
+      const contentType = response.headers.get('content-type');
       if (
         response.status === 404 ||
-        response.headers.get('content-type').indexOf('javascript') === -1
+        (contentType != null && contentType.indexOf('javascript') === -1)
       ) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then(registration => {
