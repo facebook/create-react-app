@@ -167,7 +167,7 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --typescript test-app-typescript
+npx create-react-app test-app-typescript --typescript
 cd test-app-typescript
 
 # Check corresponding template is installed.
