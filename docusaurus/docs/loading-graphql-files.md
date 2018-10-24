@@ -4,18 +4,16 @@ title: Loading .graphql Files
 sidebar_label: Loading .graphql Files
 ---
 
-You can load `.gql` and `.graphql` files by using [`babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros) included with Create React App.
-
-To load the files, first install the [`graphl-tag.macro`](https://www.npmjs.com/package/graphql-tag.macro) package by running
+To load `.gql` and `.graphql` files, first install the [`graphl-tag.macro`](https://www.npmjs.com/package/graphql-tag.macro) package by running
 
 ```sh
-npm install --save-dev graphl-tag.macro
+npm install --save graphl-tag.macro
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add --dev graphql-tag.macro
+yarn add graphql-tag.macro
 ```
 
 Then, whenever you want to load `.gql` or `.graphql` files, import the `loader` from the macro package:
