@@ -112,6 +112,9 @@ yarn config set registry "$custom_registry_url"
 git clean -df
 ./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
+echo "Create React App Version: "
+npx create-react-app --version
+
 # ******************************************************************************
 # Test --scripts-version with a distribution tag
 # ******************************************************************************
