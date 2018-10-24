@@ -39,6 +39,9 @@ const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
+// Check if TypeScript is setup
+const useTypeScript = fs.existsSync(paths.appTsConfig);
+
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -150,7 +153,9 @@ module.exports = {
     // https://github.com/facebook/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: paths.moduleFileExtensions.map(ext => `.${ext}`),
+    extensions: paths.moduleFileExtensions
+      .map(ext => `.${ext}`)
+      .filter(ext => useTypeScript || !ext.includes('ts')),
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -411,7 +416,7 @@ module.exports = {
       publicPath: publicPath,
     }),
     // TypeScript type checking
-    fs.existsSync(paths.appTsConfig) &&
+    useTypeScript &&
       new ForkTsCheckerWebpackPlugin({
         typescript: resolve.sync('typescript', {
           basedir: paths.appNodeModules,

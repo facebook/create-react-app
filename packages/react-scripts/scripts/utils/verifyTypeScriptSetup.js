@@ -15,16 +15,33 @@ const path = require('path');
 const paths = require('../../config/paths');
 const os = require('os');
 const immer = require('react-dev-utils/immer').produce;
+const globby = require('react-dev-utils/globby').sync;
 
 function writeJson(fileName, object) {
   fs.writeFileSync(fileName, JSON.stringify(object, null, 2) + os.EOL);
+}
+
+function verifyNoTypeScript() {
+  const typescriptFiles = globby('**/*.(ts|tsx)', { cwd: paths.appSrc });
+  if (typescriptFiles.length > 0) {
+    console.warn(
+      chalk.yellow(
+        `We detected TypeScript in your project (${chalk.bold(
+          `src${path.sep}${typescriptFiles[0]}`
+        )}) and created a ${chalk.bold('tsconfig.json')} file for you.`
+      )
+    );
+    console.warn();
+    return false;
+  }
+  return true;
 }
 
 function verifyTypeScriptSetup() {
   let firstTimeSetup = false;
 
   if (!fs.existsSync(paths.appTsConfig)) {
-    if (!paths.appIndexJs.match(/\.tsx?$/)) {
+    if (verifyNoTypeScript()) {
       return;
     }
     writeJson(paths.appTsConfig, {});
@@ -41,14 +58,12 @@ function verifyTypeScriptSetup() {
     }));
   } catch (_) {
     console.error(
-      chalk.red(
-        'We detected a',
-        chalk.bold('tsconfig.json'),
-        "in your package root but couldn't find an installation of",
-        chalk.bold('typescript') + '.'
+      chalk.bold.red(
+        `It looks like you're trying to use TypeScript but do not have ${chalk.bold(
+          'typescript'
+        )} installed.`
       )
     );
-    console.error();
     console.error(
       chalk.bold(
         'Please install',
@@ -60,9 +75,11 @@ function verifyTypeScriptSetup() {
       )
     );
     console.error(
-      'If you are not trying to use TypeScript, please remove the ' +
-        chalk.cyan('tsconfig.json') +
-        ' file from your package root.'
+      chalk.bold(
+        'If you are not trying to use TypeScript, please remove the ' +
+          chalk.cyan('tsconfig.json') +
+          ' file from your package root (and any TypeScript files).'
+      )
     );
     console.error();
     process.exit(1);
