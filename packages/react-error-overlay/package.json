@@ -4,7 +4,6 @@
   "description": "An overlay for displaying stack frames.",
   "main": "lib/index.js",
   "scripts": {
-    "prepublishOnly": "npm run build:prod && npm test",
     "start": "cross-env NODE_ENV=development node build.js --watch",
     "test": "cross-env NODE_ENV=test jest",
     "build": "cross-env NODE_ENV=development node build.js",
