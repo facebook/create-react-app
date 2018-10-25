@@ -3,6 +3,31 @@ id: adding-bootstrap
 title: Adding Bootstrap
 ---
 
+Install Bootstrap from npm. 
+
+```sh
+npm install --save bootstrap@4
+```
+
+Import Bootstrap CSS in the beginning of your `src/index.css` file:
+
+```index.css
+@import "../node_modules/bootstrap/dist/css/bootstrap.css";
+```
+
+Now, you are ready to use bootstrap.
+
+```Sample Usage
+const sample = () => (
+    <div className="pt-5 text-center">
+        <h2>Sample</h2>
+    </div>
+);
+```
+
+
+## Adding Reactstrap
+
 You don’t have to use [reactstrap](https://reactstrap.github.io/) together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
 
 Install reactstrap and Bootstrap from npm. reactstrap does not include Bootstrap CSS so this needs to be installed as well:
