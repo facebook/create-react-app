@@ -3,12 +3,10 @@
 // If you need to add additional declarations, please do so in a new file.
 
 declare namespace NodeJS {
-  interface Process {
-    env: {
-      [key: string]: string | undefined;
-      NODE_ENV: 'development' | 'production' | 'test';
-      PUBLIC_URL: string;
-    };
+  interface ProcessEnv {
+    [key: string]: string | undefined
+    NODE_ENV: 'development' | 'production' | 'test'
+    PUBLIC_URL: string
   }
 }
 
