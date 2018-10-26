@@ -4,10 +4,10 @@ title: Loading .graphql Files
 sidebar_label: Loading .graphql Files
 ---
 
-To load `.gql` and `.graphql` files, first install the [`graphl-tag.macro`](https://www.npmjs.com/package/graphql-tag.macro) package by running
+To load `.gql` and `.graphql` files, first install the [`graphl.macro`](https://www.npmjs.com/package/graphql.macro) package by running
 
 ```sh
-npm install --save graphl-tag.macro
+npm install --save graphl.macro
 ```
 
 Alternatively you may use `yarn`:
@@ -56,3 +56,16 @@ const query = {
 ```
 
 You can also use the `gql` template tag the same way you would use the non-macro version from `graphql-tag` package with the added benefit of inlined parsing results.
+
+```js
+import { gql } from 'graphql.macro';
+ 
+const query = gql`
+  query User {
+    user(id: 5) {
+      lastName
+      ...UserEntry1
+    }
+  }
+`;
+```
