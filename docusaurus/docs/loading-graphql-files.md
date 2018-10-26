@@ -13,7 +13,7 @@ npm install --save graphl.macro
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add graphql-tag.macro
+yarn add graphql.macro
 ```
 
 Then, whenever you want to load `.gql` or `.graphql` files, import the `loader` from the macro package:
