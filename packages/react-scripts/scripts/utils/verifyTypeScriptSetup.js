@@ -212,6 +212,11 @@ function verifyTypeScriptSetup() {
     );
   }
 
+  if (parsedTsConfig.exclude == null) {
+    appTsConfig.exclude = ['src/setupProxy.js'];
+    messages.push(`${chalk.cyan('exclude')} should exclude setupProxy.js`);
+  }
+
   if (messages.length > 0) {
     if (firstTimeSetup) {
       console.log(
