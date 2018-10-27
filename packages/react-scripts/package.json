@@ -15,6 +15,7 @@
     "config",
     "scripts",
     "template",
+    "template-typescript",
     "utils"
   ],
   "bin": {
@@ -43,6 +44,7 @@
     "eslint-plugin-jsx-a11y": "6.1.2",
     "eslint-plugin-react": "7.11.1",
     "file-loader": "2.0.0",
+    "fork-ts-checker-webpack-plugin-alt": "0.4.10",
     "fs-extra": "7.0.0",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "identity-obj-proxy": "3.0.0",
@@ -66,7 +68,7 @@
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",
     "webpack-manifest-plugin": "2.0.4",
-    "workbox-webpack-plugin": "3.6.2"
+    "workbox-webpack-plugin": "3.6.3"
   },
   "devDependencies": {
     "react": "^16.3.2",

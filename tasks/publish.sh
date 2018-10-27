@@ -35,5 +35,13 @@ fi
 cd packages/react-error-overlay/
 npm run build:prod
 cd ../..
+
+# Get 2FA when not CI
+otp=""
+if [ -z $CI ]; then
+  echo "Please enter npm two-factor auth code: "
+  read otp
+fi
+
 # Go!
-./node_modules/.bin/lerna publish --independent "$@"
+NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish --independent --npm-client=npm "$@"
