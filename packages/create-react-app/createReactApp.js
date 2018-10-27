@@ -373,10 +373,12 @@ function run(
   const packageToInstall = getInstallPackage(version, originalDirectory);
   const allDependencies = ['react', 'react-dom', packageToInstall];
   if (useTypescript) {
+    // TODO: get user's node version instead of installing latest
     allDependencies.push(
+      '@types/jest',
+      '@types/node',
       '@types/react',
       '@types/react-dom',
-      '@types/jest',
       'typescript'
     );
   }
