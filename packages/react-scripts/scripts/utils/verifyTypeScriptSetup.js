@@ -237,6 +237,22 @@ function verifyTypeScriptSetup() {
     }
     writeJson(paths.appTsConfig, appTsConfig);
   }
+
+  // Copy type declarations associated with this version of `react-scripts`
+  const declaredTypes = path.resolve(
+    __dirname,
+    '..',
+    '..',
+    'config',
+    'react-app.d.ts'
+  );
+  const declaredTypesContent = fs
+    .readFileSync(declaredTypes, 'utf8')
+    .replace(/\/\/ @remove-file-on-eject\r?\n/, '');
+  fs.writeFileSync(
+    path.resolve(paths.appSrc, 'react-app.d.ts'),
+    declaredTypesContent
+  );
 }
 
 module.exports = verifyTypeScriptSetup;
