@@ -28,6 +28,7 @@ const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
+const beameryConfig = require('./beamery/webpack.config');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -117,14 +118,14 @@ module.exports = {
     // This does not produce a real file. It's just the virtual path that is
     // served by WebpackDevServer in development. This is the JS bundle
     // containing code from all our entry points, and the Webpack runtime.
-    filename: 'static/js/bundle.js',
+    filename: `static/js/${beameryConfig.filenamePrefix}bundle.js`,
     // There are also additional JS chunk files if you use code splitting.
-    chunkFilename: 'static/js/[name].chunk.js',
+    chunkFilename: `static/js/${beameryConfig.filenamePrefix}[name].chunk.js`,
     // This is the URL that app is served from. We use "/" in development.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
-      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
+      beameryConfig.devtoolRoot + path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   optimization: {
     // Automatically split vendor and commons
