@@ -78,7 +78,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     },
   ];
   if (preProcessor) {
-    loaders.push(require.resolve(preProcessor));
+    loaders.push(preProcessor);
   }
   return loaders;
 };
@@ -315,9 +315,7 @@ module.exports = {
           {
             test: cssRegex,
             exclude: cssModuleRegex,
-            use: getStyleLoaders({
-              importLoaders: 1,
-            }),
+            use: getStyleLoaders({ importLoaders: 1 }),
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
           // using the extension .module.css
@@ -337,7 +335,17 @@ module.exports = {
           {
             test: sassRegex,
             exclude: sassModuleRegex,
-            use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
+            use: getStyleLoaders(
+              { importLoaders: 2 },
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  includePaths: process.env.SASS_INCLUDEPATHS.split(
+                    path.delimiter
+                  ).filter(Boolean),
+                },
+              }
+            ),
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
@@ -349,7 +357,14 @@ module.exports = {
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
               },
-              'sass-loader'
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  includePaths: process.env.SASS_INCLUDEPATHS.split(
+                    path.delimiter
+                  ).filter(Boolean),
+                },
+              }
             ),
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.

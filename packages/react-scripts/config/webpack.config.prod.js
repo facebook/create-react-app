@@ -103,12 +103,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     },
   ];
   if (preProcessor) {
-    loaders.push({
-      loader: require.resolve(preProcessor),
-      options: {
-        sourceMap: shouldUseSourceMap,
-      },
-    });
+    loaders.push(preProcessor);
   }
   return loaders;
 };
@@ -422,7 +417,15 @@ module.exports = {
                 importLoaders: 2,
                 sourceMap: shouldUseSourceMap,
               },
-              'sass-loader'
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  sourceMap: shouldUseSourceMap,
+                  includePaths: process.env.SASS_INCLUDEPATHS.split(
+                    path.delimiter
+                  ).filter(Boolean),
+                },
+              }
             ),
             // Don't consider CSS imports dead code even if the
             // containing package claims to have no side effects.
@@ -441,7 +444,15 @@ module.exports = {
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
               },
-              'sass-loader'
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  sourceMap: shouldUseSourceMap,
+                  includePaths: process.env.SASS_INCLUDEPATHS.split(
+                    path.delimiter
+                  ).filter(Boolean),
+                },
+              }
             ),
           },
           // "file" loader makes sure assets end up in the `build` folder.

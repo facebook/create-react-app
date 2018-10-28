@@ -48,6 +48,8 @@ dotenvFiles.forEach(dotenvFile => {
   }
 });
 
+const appDirectory = fs.realpathSync(process.cwd());
+
 // We support resolving modules according to `NODE_PATH`.
 // This lets you use absolute paths in imports inside large monorepos:
 // https://github.com/facebook/create-react-app/issues/253.
@@ -57,10 +59,15 @@ dotenvFiles.forEach(dotenvFile => {
 // Otherwise, we risk importing Node.js core modules into an app instead of Webpack shims.
 // https://github.com/facebook/create-react-app/issues/1023#issuecomment-265344421
 // We also resolve them to make sure all tools using them work consistently.
-const appDirectory = fs.realpathSync(process.cwd());
 process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .split(path.delimiter)
   .filter(folder => folder && !path.isAbsolute(folder))
+  .map(folder => path.resolve(appDirectory, folder))
+  .join(path.delimiter);
+
+process.env.SASS_INCLUDEPATHS = (process.env.SASS_INCLUDEPATHS || '')
+  .split(path.delimiter)
+  .filter(folder => folder)
   .map(folder => path.resolve(appDirectory, folder))
   .join(path.delimiter);
 
