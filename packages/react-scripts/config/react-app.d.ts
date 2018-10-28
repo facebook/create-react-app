@@ -3,7 +3,6 @@
 // If you need to add additional declarations, please do so in a new file.
 
 /// <reference types="node" />
-/// <reference types="jest" />
 /// <reference types="react" />
 /// <reference types="react-dom" />
 
