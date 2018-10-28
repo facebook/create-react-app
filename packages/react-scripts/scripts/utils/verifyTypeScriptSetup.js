@@ -237,6 +237,14 @@ function verifyTypeScriptSetup() {
     }
     writeJson(paths.appTsConfig, appTsConfig);
   }
+
+  // Reference `react-scripts` types
+  if (!fs.existsSync(paths.appTypeDeclarations)) {
+    fs.writeFileSync(
+      paths.appTypeDeclarations,
+      `/// <reference types="react-scripts" />${os.EOL}`
+    );
+  }
 }
 
 module.exports = verifyTypeScriptSetup;
