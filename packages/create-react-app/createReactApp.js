@@ -376,9 +376,9 @@ function run(
     // TODO: get user's node version instead of installing latest
     allDependencies.push(
       '@types/node',
-      '@types/jest',
       '@types/react',
       '@types/react-dom',
+      '@types/jest',
       'typescript'
     );
   }
