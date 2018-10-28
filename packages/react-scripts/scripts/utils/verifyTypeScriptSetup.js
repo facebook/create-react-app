@@ -120,6 +120,13 @@ function verifyTypeScriptSetup() {
       value: 'preserve',
       reason: 'JSX is compiled by Babel',
     },
+    // We do not support absolute imports, though this may come as a future
+    // enhancement
+    baseUrl: {
+      value: undefined,
+      reason: 'absolute imports are not supported (yet)',
+    },
+    paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
 
   const formatDiagnosticHost = {
@@ -184,12 +191,13 @@ function verifyTypeScriptSetup() {
     const { parsedValue, value, suggested, reason } = compilerOptions[option];
 
     const valueToCheck = parsedValue === undefined ? value : parsedValue;
+    const coloredOption = chalk.cyan('compilerOptions.' + option);
 
     if (suggested != null) {
       if (parsedCompilerOptions[option] === undefined) {
         appTsConfig.compilerOptions[option] = suggested;
         messages.push(
-          `${chalk.cyan('compilerOptions.' + option)} to be ${chalk.bold(
+          `${coloredOption} to be ${chalk.bold(
             'suggested'
           )} value: ${chalk.cyan.bold(suggested)} (this can be changed)`
         );
@@ -197,9 +205,9 @@ function verifyTypeScriptSetup() {
     } else if (parsedCompilerOptions[option] !== valueToCheck) {
       appTsConfig.compilerOptions[option] = value;
       messages.push(
-        `${chalk.cyan('compilerOptions.' + option)} ${chalk.bold(
-          'must'
-        )} be ${chalk.cyan.bold(value)}` +
+        `${coloredOption} ${chalk.bold(
+          valueToCheck == null ? 'must not' : 'must'
+        )} be ${valueToCheck == null ? 'set' : chalk.cyan.bold(value)}` +
           (reason != null ? ` (${reason})` : '')
       );
     }
