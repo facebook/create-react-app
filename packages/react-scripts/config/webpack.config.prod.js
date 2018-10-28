@@ -552,6 +552,13 @@ module.exports = {
           noEmit: true,
           jsx: 'preserve',
         },
+        reportFiles: [
+          '**',
+          '!**/__tests__/**',
+          '!**/?(*.)(spec|test).*',
+          '!src/setupProxy.js',
+          '!src/setupTests.*',
+        ],
         watch: paths.appSrc,
         silent: true,
         formatter: typescriptFormatter,
