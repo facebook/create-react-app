@@ -375,7 +375,6 @@ function run(
   if (useTypescript) {
     // TODO: get user's node version instead of installing latest
     allDependencies.push(
-      '@types/jest',
       '@types/node',
       '@types/react',
       '@types/react-dom',
