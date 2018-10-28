@@ -34,5 +34,27 @@ pluginTester({
       output:
         'import { ReactComponent as foo1 } from "@svgr/webpack?-prettier,-svgo!foo.svg";',
     },
+
+    defaultExport: {
+      code: 'export * from "foo";',
+      output: 'export * from "foo";',
+    },
+    namedExport: {
+      code: 'export { foo } from "foo";',
+      output: 'export { foo } from "foo";',
+    },
+    namedExportRenamed: {
+      code: 'export { foo as foo1 } from "foo.svg";',
+      output: 'export { foo as foo1 } from "foo.svg";',
+    },
+    svgNamedExport: {
+      code: 'export { Url as foo1 } from "foo.svg";',
+      output: 'export { Url as foo1 } from "foo.svg";',
+    },
+    svgReactComponentNamedExport: {
+      code: 'export { ReactComponent as foo1 } from "foo.svg";',
+      output:
+        'export { ReactComponent as foo1 } from "@svgr/webpack?-prettier,-svgo!foo.svg";',
+    },
   },
 });
