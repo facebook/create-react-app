@@ -314,7 +314,7 @@ module.exports = {
               ),
               // @remove-on-eject-begin
               babelrc: true,
-              configFile: false,
+              rootMode: 'upward-optional',
               presets: [],
               // Make sure we have a unique cache identifier, erring on the
               // side of caution.
