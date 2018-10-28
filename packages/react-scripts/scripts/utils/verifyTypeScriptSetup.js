@@ -101,6 +101,7 @@ function verifyTypeScriptSetup() {
     forceConsistentCasingInFileNames: { suggested: true },
 
     // These values are required and cannot be changed by the user
+    // Keep this in sync with the webpack config
     module: {
       parsedValue: ts.ModuleKind.ESNext,
       value: 'esnext',
