@@ -8,9 +8,9 @@ title: Adding TypeScript
 To add [TypeScript](https://www.typescriptlang.org/) to a Create React App project, first install it:
 
 ```bash
-$ npm install --save typescript @types/jest @types/node @types/react @types/react-dom
+$ npm install --save typescript @types/node @types/react @types/react-dom
 $ # or
-$ yarn add typescript @types/jest @types/node @types/react @types/react-dom
+$ yarn add typescript @types/node @types/react @types/react-dom
 ```
 
 Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
