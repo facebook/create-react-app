@@ -432,6 +432,7 @@ module.exports = {
           noEmit: true,
           jsx: 'preserve',
         },
+        reportFiles: ['**', '!**/__tests__/**', '!**/?(*.)(spec|test).*'],
         watch: paths.appSrc,
         silent: true,
         formatter: typescriptFormatter,
