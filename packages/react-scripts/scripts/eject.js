@@ -258,8 +258,8 @@ inquirer
           ownContent + os.EOL + content
         );
       } catch (e) {
-        // It's not essential that this succeeds,
-        // The user should know to clean this up
+        // It's not essential that this succeeds, the TypeScript user should
+        // be able to re-create these types with ease.
       }
     }
 
