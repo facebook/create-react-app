@@ -183,8 +183,8 @@ CI=true yarn test
 # Eject...
 echo yes | npm run eject
 
-# Ensure env file was removed
-! exists src/react-app-env.d.ts
+# Ensure env file still exists
+exists src/react-app-env.d.ts
 
 # Check that the TypeScript template passes ejected smoke tests, build, and normal tests
 yarn start --smoke-test
