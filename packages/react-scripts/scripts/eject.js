@@ -255,7 +255,7 @@ inquirer
 
         fs.writeFileSync(
           paths.appTypeDeclarations,
-          ownContent + os.EOL + content
+          (ownContent + os.EOL + content).trim() + os.EOL
         );
       } catch (e) {
         // It's not essential that this succeeds, the TypeScript user should
