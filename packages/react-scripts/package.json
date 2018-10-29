@@ -13,6 +13,7 @@
   "files": [
     "bin",
     "config",
+    "lib",
     "scripts",
     "template",
     "template-typescript",
