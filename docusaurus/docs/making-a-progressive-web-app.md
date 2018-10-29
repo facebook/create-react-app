@@ -73,7 +73,7 @@ following into account:
    If your production web server does not support HTTPS, then the service worker
    registration will fail, but the rest of your web app will remain functional.
 
-1. The service worker is only enabled in the [production environment](/docs/deployment),
+1. The service worker is only enabled in the [production environment](deployment.md),
    e.g. the output of `npm run build`. It's recommended that you do not enable an
    offline-first service worker in a development environment, as it can lead to
    frustration when previously cached assets are used and do not include the latest
@@ -82,12 +82,12 @@ following into account:
 1. If you _need_ to test your offline-first service worker locally, build
    the application (using `npm run build`) and run a simple http server from your
    build directory. After running the build script, `create-react-app` will give
-   instructions for one way to test your production build locally and the [deployment instructions](/docs/deployment) have
+   instructions for one way to test your production build locally and the [deployment instructions](deployment.md) have
    instructions for using other methods. _Be sure to always use an
    incognito window to avoid complications with your browser cache._
 
 1. By default, the generated service worker file will not intercept or cache any
-   cross-origin traffic, like HTTP [API requests](/docs/integrating-with-an-api-backend),
+   cross-origin traffic, like HTTP [API requests](integrating-with-an-api-backend.md),
    images, or embeds loaded from a different domain.
 
 ## Progressive Web App Metadata

@@ -14,7 +14,7 @@ The page will reload if you make edits. You will also see any lint errors in the
 
 ## `npm test`
 
-Launches the test runner in the interactive watch mode. See the section about [running tests](/docs/running-tests) for more information.
+Launches the test runner in the interactive watch mode. See the section about [running tests](running-tests.md) for more information.
 
 ## `npm run build`
 
@@ -22,7 +22,7 @@ Builds the app for production to the `build` folder. It correctly bundles React 
 
 The build is minified and the filenames include the hashes. Your app is ready to be deployed!
 
-See the section about [deployment](/docs/deployment) for more information.
+See the section about [deployment](deployment.md) for more information.
 
 ## `npm run eject`
 

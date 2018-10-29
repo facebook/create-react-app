@@ -7,7 +7,7 @@ title: Using the Public Folder
 
 ## Changing the HTML
 
-The `public` folder contains the HTML file so you can tweak it, for example, to [set the page title](/docs/changing-the-page-title).
+The `public` folder contains the HTML file so you can tweak it, for example, to [set the page title](changing-the-page-title.md).
 The `<script>` tag with the compiled code will be added to it automatically during the build process.
 
 ## Adding Assets Outside of the Module System
@@ -15,7 +15,7 @@ The `<script>` tag with the compiled code will be added to it automatically duri
 You can also add other assets to the `public` folder.
 
 Note that we normally encourage you to `import` assets in JavaScript files instead.
-For example, see the sections on [adding a stylesheet](/docs/adding-a-stylesheet) and [adding images and fonts](/docs/adding-images-fonts-and-files).
+For example, see the sections on [adding a stylesheet](adding-a-stylesheet.md) and [adding images and fonts](adding-images-fonts-and-files.md).
 This mechanism provides a number of benefits:
 
 - Scripts and stylesheets get minified and bundled together to avoid extra network requests.
@@ -55,7 +55,7 @@ Keep in mind the downsides of this approach:
 
 ## When to Use the `public` Folder
 
-Normally we recommend importing [stylesheets](/docs/adding-a-stylesheet), [images, and fonts](/docs/adding-images-fonts-and-files) from JavaScript.
+Normally we recommend importing [stylesheets](adding-a-stylesheet.md), [images, and fonts](adding-images-fonts-and-files.md) from JavaScript.
 The `public` folder is useful as a workaround for a number of less common cases:
 
 - You need a file with a specific name in the build output, such as [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
