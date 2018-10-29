@@ -240,6 +240,8 @@ inquirer
       try {
         // Read app declarations file
         let content = fs.readFileSync(paths.appTypeDeclarations, 'utf8');
+        const ownContent =
+          fs.readFileSync(paths.ownTypeDeclarations, 'utf8').trim() + os.EOL;
 
         // Remove react-scripts reference since they're getting a copy of the types in their project
         content =
@@ -251,14 +253,10 @@ inquirer
             )
             .trim() + os.EOL;
 
-        if (content === os.EOL) {
-          // Remove the file if it is empty
-          fs.removeSync(paths.appTypeDeclarations);
-        } else {
-          // The user probably added their own additional types, so let's just
-          // write it without ours
-          fs.writeFileSync(paths.appTypeDeclarations, content);
-        }
+        fs.writeFileSync(
+          paths.appTypeDeclarations,
+          ownContent + os.EOL + content
+        );
       } catch (e) {
         // It's not essential that this succeeds,
         // The user should know to clean this up
