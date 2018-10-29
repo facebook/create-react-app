@@ -170,6 +170,7 @@ exists node_modules/react-scripts
 exists node_modules/typescript
 exists src/index.tsx
 exists tsconfig.json
+exists src/react-app-env.d.ts
 checkTypeScriptDependencies
 
 # Check that the TypeScript template passes smoke tests, build, and normal tests
