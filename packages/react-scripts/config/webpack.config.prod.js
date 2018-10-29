@@ -44,7 +44,7 @@ const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
-const isEhBuild = !!process.env.REACT_APP_EH_BUILD;
+const disabledChunkHash = !!process.env.DISABLED_CHUNK_HASH;
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -126,10 +126,12 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: isEhBuild
+    filename: disabledChunkHash
       ? 'static/js/[name].js'
       : 'static/js/[name].[chunkhash:8].js',
-    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+    chunkFilename: disabledChunkHash
+      ? 'static/js/[name].chunk.js'
+      : 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
 
@@ -206,13 +208,13 @@ module.exports = {
     // Automatically split vendor and commons
     // https://twitter.com/wSokra/status/969633336732905474
     // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-    // splitChunks: {
-    //   chunks: 'all',
-    //   name: false,
-    // },
-    // // Keep the runtime chunk seperated to enable long term caching
-    // // https://twitter.com/wSokra/status/969679223278505985
-    // runtimeChunk: true,
+    splitChunks: {
+      chunks: 'all',
+      name: true,
+    },
+    // Keep the runtime chunk seperated to enable long term caching
+    // https://twitter.com/wSokra/status/969679223278505985
+    runtimeChunk: true,
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -503,10 +505,12 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: isEhBuild
+      filename: disabledChunkHash
         ? 'static/css/[name].css'
         : 'static/css/[name].[contenthash:8].css',
-      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+      chunkFilename: disabledChunkHash
+        ? 'static/css/[name].chunk.css'
+        : 'static/css/[name].[contenthash:8].chunk.css',
     }),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
