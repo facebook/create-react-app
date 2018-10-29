@@ -178,6 +178,19 @@ yarn start --smoke-test
 yarn build
 CI=true yarn test
 
+# Check eject behaves and works
+
+# Eject...
+echo yes | npm run eject
+
+# Ensure env file was removed
+! exists src/react-app-env.d.ts
+
+# Check that the TypeScript template passes ejected smoke tests, build, and normal tests
+yarn start --smoke-test
+yarn build
+CI=true yarn test
+
 # ******************************************************************************
 # Test --scripts-version with a tarball url
 # ******************************************************************************
