@@ -13,7 +13,7 @@
   "files": [
     "bin",
     "config",
-    "lib",
+    "lib/react-app.d.ts",
     "scripts",
     "template",
     "template-typescript",
