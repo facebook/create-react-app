@@ -94,7 +94,7 @@ function verifyTypeScriptSetup() {
       suggested: 'es5',
     },
     allowJs: { suggested: true },
-    skipLibCheck: { suggested: true },
+    skipLibCheck: { suggested: false },
     esModuleInterop: { suggested: true },
     allowSyntheticDefaultImports: { suggested: true },
     strict: { suggested: true },
