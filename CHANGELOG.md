@@ -1,6 +1,6 @@
 ## 2.1.0 (October 29, 2018)
 
-Create React App 2.1 adds support for TypeScript! Read [the documentation](https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/adding-typescript.md) to get started.
+Create React App 2.1 adds support for TypeScript! Read [the documentation](https://facebook.github.io/create-react-app/docs/adding-typescript) to get started.
 
 New applications can be created using TypeScript by running:
 
