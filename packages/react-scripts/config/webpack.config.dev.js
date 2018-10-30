@@ -46,7 +46,7 @@ const webpackTarget = process.env.WEBPACK_TARGET || 'web';
 const isNode = [
   'node',
   'electron-main',
-  'electron-render',
+  'electron-renderer',
   'node-webkit',
 ].includes(webpackTarget);
 
