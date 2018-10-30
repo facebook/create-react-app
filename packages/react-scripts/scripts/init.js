@@ -95,10 +95,15 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test',
-    eject: 'react-scripts eject',
+    'start': 'BMR_ENV=development react-scripts start',
+    'start-standalone': 'react-scripts start',
+    'build': 'BMR_ENV=production react-scripts build',
+    'build-dev': 'BMR_ENV=development react-scripts build',
+    'build-staging': 'BMR_ENV=staging react-scripts build',
+    'test': 'react-scripts test',
+    'test-coverage': 'react-scripts test --coverage',
+    'test-watch': 'react-scripts test --watch',
+    'eject': 'react-scripts eject',
   };
 
   // Setup the eslint config

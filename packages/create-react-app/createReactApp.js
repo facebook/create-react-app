@@ -379,6 +379,7 @@ function run(
       '@types/react',
       '@types/react-dom',
       '@types/jest',
+      '@types/single-spa-react',
       'typescript'
     );
   }

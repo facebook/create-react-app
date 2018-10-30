@@ -32,6 +32,7 @@ const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
+const beameryConfig = require('./beamery/webpack.config');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -131,13 +132,13 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].[chunkhash:8].js',
-    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+    filename: `static/js/${beameryConfig.filenamePrefix}[name].[chunkhash:8].js`,
+    chunkFilename: `static/js/${beameryConfig.filenamePrefix}[name].[chunkhash:8].chunk.js`,
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
-      path
+      beameryConfig.devtoolRoot + path
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
   },
@@ -298,7 +299,7 @@ module.exports = {
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: `static/media/${beameryConfig.filenamePrefix}[name].[hash:8].[ext]`,
             },
           },
           // Process application JS with Babel.
@@ -456,7 +457,7 @@ module.exports = {
             // by webpacks internal loaders.
             exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
             options: {
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: `static/media/${beameryConfig.filenamePrefix}[name].[hash:8].[ext]`,
             },
           },
           // ** STOP ** Are you adding a new loader?
@@ -504,8 +505,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: 'static/css/[name].[contenthash:8].css',
-      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+      filename: `static/css/${beameryConfig.filenamePrefix}[name].[contenthash:8].css`,
+      chunkFilename: `static/css/${beameryConfig.filenamePrefix}[name].[contenthash:8].chunk.css`,
     }),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
