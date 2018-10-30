@@ -245,7 +245,6 @@ inquirer
           (ownContent + os.EOL + content).trim() + os.EOL
         );
       } catch (e) {
-        console.error('error setting types: ' + e);
         // It's not essential that this succeeds, the TypeScript user should
         // be able to re-create these types with ease.
       }
