@@ -6,7 +6,7 @@ sidebar_label: HTTPS in Development
 
 > Note: this feature is available with `react-scripts@0.4.0` and higher.
 
-You may require the dev server to serve pages over HTTPS. One particular case where this could be useful is when using [the "proxy" feature](/docs/proxying-api-requests-in-development) to proxy requests to an API server when that API server is itself serving HTTPS.
+You may require the dev server to serve pages over HTTPS. One particular case where this could be useful is when using [the "proxy" feature](proxying-api-requests-in-development.md) to proxy requests to an API server when that API server is itself serving HTTPS.
 
 To do this, set the `HTTPS` environment variable to `true`, then start the dev server as usual with `npm start`:
 

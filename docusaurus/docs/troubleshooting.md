@@ -53,7 +53,7 @@ If you are completely sure that you didn't terminate the process, consider [addi
 ## `npm run build` fails on Heroku
 
 This may be a problem with case sensitive filenames.
-Please refer to [this section](/docs/deployment#resolving-heroku-deployment-errors).
+Please refer to [this section](deployment.md#resolving-heroku-deployment-errors).
 
 ## Moment.js locales are missing
 

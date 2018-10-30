@@ -8,7 +8,7 @@ sidebar_label: Adding CSS Modules
 
 This project supports [CSS Modules](https://github.com/css-modules/css-modules) alongside regular stylesheets using the `[name].module.css` file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format `[filename]\_[classname]\_\_[hash]`.
 
-> **Tip:** Should you want to preprocess a stylesheet with Sass then make sure to [follow the installation instructions](/docs/adding-a-sass-stylesheet) and then change the stylesheet file extension as follows: `[name].module.scss` or `[name].module.sass`.
+> **Tip:** Should you want to preprocess a stylesheet with Sass then make sure to [follow the installation instructions](adding-a-sass-stylesheet.md) and then change the stylesheet file extension as follows: `[name].module.scss` or `[name].module.sass`.
 
 CSS Modules let you use the same CSS class name in different files without worrying about naming clashes. Learn more about CSS Modules [here](https://css-tricks.com/css-modules-part-1-need/).
 

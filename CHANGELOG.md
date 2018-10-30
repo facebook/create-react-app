@@ -1,54 +1,167 @@
+## 2.1.0 (October 29, 2018)
+
+Create React App 2.1 adds support for TypeScript! Read [the documentation](https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/adding-typescript.md) to get started.
+
+New applications can be created using TypeScript by running:
+
+```bash
+$ npx create-react-app my-app --typescript
+```
+
+#### :rocket: New Feature
+
+- `create-react-app`, `react-scripts`
+  - [#5550](https://github.com/facebook/create-react-app/pull/5550) Add TypeScript app creation ([@Timer](https://github.com/Timer))
+- `babel-preset-react-app`, `react-scripts`
+  - [#4837](https://github.com/facebook/create-react-app/pull/4837) TypeScript support using Babel 7 ([@brunolemos](https://github.com/brunolemos))
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#5611](https://github.com/facebook/create-react-app/pull/5611) Remove react-scripts type reference on eject. ([@Timer](https://github.com/Timer))
+  - [#5614](https://github.com/facebook/create-react-app/pull/5614) Ignore json files from TypeScript type checking. ([@brunolemos](https://github.com/brunolemos))
+  - [#5609](https://github.com/facebook/create-react-app/pull/5609) Remove unsupported options. ([@Timer](https://github.com/Timer))
+  - [#5608](https://github.com/facebook/create-react-app/pull/5608) Ignore test files from reported type errors. ([@Timer](https://github.com/Timer))
+  - [#5589](https://github.com/facebook/create-react-app/pull/5589) Update react-app.d.ts. ([@brunolemos](https://github.com/brunolemos))
+  - [#5557](https://github.com/facebook/create-react-app/pull/5557) Add typings for process.env. ([@brunolemos](https://github.com/brunolemos))
+  - [#5532](https://github.com/facebook/create-react-app/pull/5532) Use TypeScript parser to read tsconfig.json. ([@brunolemos](https://github.com/brunolemos))
+  - [#5527](https://github.com/facebook/create-react-app/pull/5527) Update Workbox dependency. ([@jeffposnick](https://github.com/jeffposnick))
+- `react-dev-utils`, `react-scripts`
+  - [#5549](https://github.com/facebook/create-react-app/pull/5549) Automatically setup TypeScript when detected. ([@Timer](https://github.com/Timer))
+  - [#5537](https://github.com/facebook/create-react-app/pull/5537) Respect tsconfig.json extends when validating config. ([@ianschmitz](https://github.com/ianschmitz))
+
+#### :nail_care: Enhancement
+
+- `create-react-app`, `react-scripts`
+  - [#5593](https://github.com/facebook/create-react-app/pull/5593) Refine how TypeScript types are handled. ([@Timer](https://github.com/Timer))
+- `react-scripts`
+  - [#5531](https://github.com/facebook/create-react-app/pull/5531) Enable TypeScript json module resolver. ([@brunolemos](https://github.com/brunolemos))
+  - [#5524](https://github.com/facebook/create-react-app/pull/5524) Validate tsconfig when using TypeScript. ([@Timer](https://github.com/Timer))
+  - [#5516](https://github.com/facebook/create-react-app/pull/5516) Check for TypeScript install in preflight. ([@Timer](https://github.com/Timer))
+  - [#5515](https://github.com/facebook/create-react-app/pull/5515) Always type check TypeScript when being used. ([@Timer](https://github.com/Timer))
+- `react-dev-utils`, `react-scripts`
+  - [#5529](https://github.com/facebook/create-react-app/pull/5529) Add TypeScript error formatting. ([@Timer](https://github.com/Timer))
+
+#### :memo: Documentation
+
+- Other
+  - [#5552](https://github.com/facebook/create-react-app/pull/5552) Fixing Internal Links. ([@ehfeng](https://github.com/ehfeng))
+  - [#5551](https://github.com/facebook/create-react-app/pull/5551) Add Algolia search bar to Docusaurus. ([@amyrlam](https://github.com/amyrlam))
+  - [#5533](https://github.com/facebook/create-react-app/pull/5533) Simplified TypeScript steps. ([@brunolemos](https://github.com/brunolemos))
+  - [#5492](https://github.com/facebook/create-react-app/pull/5492) Add "edit" feature to Docusaurus pages. ([@amyrlam](https://github.com/amyrlam))
+  - [#5499](https://github.com/facebook/create-react-app/pull/5499) Fix title on Safari. ([@yuyokk](https://github.com/yuyokk))
+  - [#5494](https://github.com/facebook/create-react-app/pull/5494) Fix typo. ([@noelyoo](https://github.com/noelyoo))
+  - [#5493](https://github.com/facebook/create-react-app/pull/5493) Fixed typo in getting-started. ([@jessepeterman](https://github.com/jessepeterman))
+  - [#5344](https://github.com/facebook/create-react-app/pull/5344) Add some headings to the getting started section. ([@selbekk](https://github.com/selbekk))
+  - [#5251](https://github.com/facebook/create-react-app/pull/5251) Add SoMe links to documentation. ([@selbekk](https://github.com/selbekk))
+- `react-scripts`
+  - [#5512](https://github.com/facebook/create-react-app/pull/5512) Update doc links in template README. ([@iansu](https://github.com/iansu))
+  - [#5475](https://github.com/facebook/create-react-app/pull/5475) Fix typo. ([@thompk2](https://github.com/thompk2))
+  - [#5449](https://github.com/facebook/create-react-app/pull/5449) Remove dot from the end of the link to fix it when using from GitHub. ([@ranyitz](https://github.com/ranyitz))
+
+#### :house: Internal
+
+- `react-scripts`
+  - [#5607](https://github.com/facebook/create-react-app/pull/5607) Turn on certain TypeScript options. ([@Timer](https://github.com/Timer))
+  - [#5559](https://github.com/facebook/create-react-app/pull/5559) Change import syntax from typescript declaration. ([@brunolemos](https://github.com/brunolemos))
+  - [#5469](https://github.com/facebook/create-react-app/pull/5469) Avoid pushing .pnp folder to git. ([@NShahri](https://github.com/NShahri))
+  - [#5527](https://github.com/facebook/create-react-app/pull/5527) Update Workbox dependency. ([@jeffposnick](https://github.com/jeffposnick))
+- `eslint-config-react-app`
+  - [#5586](https://github.com/facebook/create-react-app/pull/5586) Fixing the code splitting links in the ESLint output. ([@jheijmans](https://github.com/jheijmans))
+
+#### Committers: 15
+
+- Amy Lam ([amyrlam](https://github.com/amyrlam))
+- Bruno Lemos ([brunolemos](https://github.com/brunolemos))
+- Eric Feng ([ehfeng](https://github.com/ehfeng))
+- Ian Schmitz ([ianschmitz](https://github.com/ianschmitz))
+- Ian Sutherland ([iansu](https://github.com/iansu))
+- Iurii Kucherov ([yuyokk](https://github.com/yuyokk))
+- Jeffrey Posnick ([jeffposnick](https://github.com/jeffposnick))
+- Jeroen Heijmans ([jheijmans](https://github.com/jheijmans))
+- Jesse Peterman ([jessepeterman](https://github.com/jessepeterman))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Kit Thompson ([thompk2](https://github.com/thompk2))
+- Kristofer Selbekk ([selbekk](https://github.com/selbekk))
+- Nima Shahri ([NShahri](https://github.com/NShahri))
+- Noel Yoo ([noelyoo](https://github.com/noelyoo))
+- Ran Yitzhaki ([ranyitz](https://github.com/ranyitz))
+
+### Migrating from 2.0.5 to 2.1.0
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@2.1.0
+```
+
+or
+
+```
+yarn add --exact react-scripts@2.1.0
+```
+
 ## 2.0.5 (October 14, 2018)
 
 #### :bug: Bug Fix
-* `react-dev-utils`
-  * [#5431](https://github.com/facebook/create-react-app/pull/5431) Fix click-to-open on Windows. ([@gaearon](https://github.com/gaearon))
-  * [#5335](https://github.com/facebook/create-react-app/pull/5335) Fix file size report after build. ([@OskarPersson](https://github.com/OskarPersson))
 
-* `create-react-app`
-  * [#5362](https://github.com/facebook/create-react-app/pull/5362) Fix CI: non-semver compliant Yarn versions. ([@Timer](https://github.com/Timer))
+- `react-dev-utils`
 
-* `react-scripts`
-  * [#5301](https://github.com/facebook/create-react-app/pull/5301) Fix TypeError when registering service workers without config. ([@peterbe](https://github.com/peterbe))
+  - [#5431](https://github.com/facebook/create-react-app/pull/5431) Fix click-to-open on Windows. ([@gaearon](https://github.com/gaearon))
+  - [#5335](https://github.com/facebook/create-react-app/pull/5335) Fix file size report after build. ([@OskarPersson](https://github.com/OskarPersson))
+
+- `create-react-app`
+
+  - [#5362](https://github.com/facebook/create-react-app/pull/5362) Fix CI: non-semver compliant Yarn versions. ([@Timer](https://github.com/Timer))
+
+- `react-scripts`
+  - [#5301](https://github.com/facebook/create-react-app/pull/5301) Fix TypeError when registering service workers without config. ([@peterbe](https://github.com/peterbe))
 
 #### :nail_care: Enhancement
-* `babel-preset-react-app`
-  * [#4984](https://github.com/facebook/create-react-app/pull/4984) Use the correct dependency for `babel-plugin-dynamic-import-node`. ([@vikr01](https://github.com/vikr01))
 
-* `react-scripts`
-  * [#5354](https://github.com/facebook/create-react-app/pull/5354) Add environment variable to optionaly disable inlining of chunks. ([@0xdeafcafe](https://github.com/0xdeafcafe))
-  * [#5330](https://github.com/facebook/create-react-app/pull/5330) Update `eslint-plugin-jsx-a11y` version. ([@AlmeroSteyn](https://github.com/AlmeroSteyn))
+- `babel-preset-react-app`
+
+  - [#4984](https://github.com/facebook/create-react-app/pull/4984) Use the correct dependency for `babel-plugin-dynamic-import-node`. ([@vikr01](https://github.com/vikr01))
+
+- `react-scripts`
+  - [#5354](https://github.com/facebook/create-react-app/pull/5354) Add environment variable to optionaly disable inlining of chunks. ([@0xdeafcafe](https://github.com/0xdeafcafe))
+  - [#5330](https://github.com/facebook/create-react-app/pull/5330) Update `eslint-plugin-jsx-a11y` version. ([@AlmeroSteyn](https://github.com/AlmeroSteyn))
 
 #### :memo: Documentation
-* `react-scripts`
-  * [#5321](https://github.com/facebook/create-react-app/pull/5321) Added note on update to `.flowconfig` for .scss imports. ([@rlueder](https://github.com/rlueder))
-  * [#5394](https://github.com/facebook/create-react-app/pull/5394) Correct instructions for HTTPS and PowerShell. ([@gavinbarron](https://github.com/gavinbarron))
-  * [#5410](https://github.com/facebook/create-react-app/pull/5410) Updates to clarify the "waiting" SW behavior. ([@jeffposnick](https://github.com/jeffposnick))
-  * [#5302](https://github.com/facebook/create-react-app/pull/5302) Update README.md. ([@simonCordovaByte9](https://github.com/simonCordovaByte9))
-  * [#5334](https://github.com/facebook/create-react-app/pull/5334) Update README due to deprecation of react-testing-library's toBeInTheDOM. ([@rrebase](https://github.com/rrebase))
-  * [#5326](https://github.com/facebook/create-react-app/pull/5326) README link fixes. ([@davidgilbertson](https://github.com/davidgilbertson))
-  * [#5327](https://github.com/facebook/create-react-app/pull/5327) Updated the URL in index.html. ([@behzod](https://github.com/behzod))
-  * [#5296](https://github.com/facebook/create-react-app/pull/5296) Adding documentation about git init. ([@ryancogswell](https://github.com/ryancogswell))
-  * [#5290](https://github.com/facebook/create-react-app/pull/5290) Add react-testing-library documentation/examples (#4679). ([@gnapse](https://github.com/gnapse))
-  * [#5286](https://github.com/facebook/create-react-app/pull/5286) Fix broken links to src/serviceWorker.js. ([@adambowles](https://github.com/adambowles))
-* Other
-  * [#5374](https://github.com/facebook/create-react-app/pull/5374) Add the new SVGs feature from the template README to the root README. ([@neo](https://github.com/neo))
-  * [#5371](https://github.com/facebook/create-react-app/pull/5371) Update path to serviceWorker.js in graphical folder structure. ([@jonscottclark](https://github.com/jonscottclark))
-  * [#5337](https://github.com/facebook/create-react-app/pull/5337) Fix typo. ([@mvasin](https://github.com/mvasin))
 
-* `eslint-config-react-app`
-  * [#5416](https://github.com/facebook/create-react-app/pull/5416) Fix eslint config docs. ([@ludovicofischer](https://github.com/ludovicofischer))
+- `react-scripts`
+  - [#5321](https://github.com/facebook/create-react-app/pull/5321) Added note on update to `.flowconfig` for .scss imports. ([@rlueder](https://github.com/rlueder))
+  - [#5394](https://github.com/facebook/create-react-app/pull/5394) Correct instructions for HTTPS and PowerShell. ([@gavinbarron](https://github.com/gavinbarron))
+  - [#5410](https://github.com/facebook/create-react-app/pull/5410) Updates to clarify the "waiting" SW behavior. ([@jeffposnick](https://github.com/jeffposnick))
+  - [#5302](https://github.com/facebook/create-react-app/pull/5302) Update README.md. ([@simonCordovaByte9](https://github.com/simonCordovaByte9))
+  - [#5334](https://github.com/facebook/create-react-app/pull/5334) Update README due to deprecation of react-testing-library's toBeInTheDOM. ([@rrebase](https://github.com/rrebase))
+  - [#5326](https://github.com/facebook/create-react-app/pull/5326) README link fixes. ([@davidgilbertson](https://github.com/davidgilbertson))
+  - [#5327](https://github.com/facebook/create-react-app/pull/5327) Updated the URL in index.html. ([@behzod](https://github.com/behzod))
+  - [#5296](https://github.com/facebook/create-react-app/pull/5296) Adding documentation about git init. ([@ryancogswell](https://github.com/ryancogswell))
+  - [#5290](https://github.com/facebook/create-react-app/pull/5290) Add react-testing-library documentation/examples (#4679). ([@gnapse](https://github.com/gnapse))
+  - [#5286](https://github.com/facebook/create-react-app/pull/5286) Fix broken links to src/serviceWorker.js. ([@adambowles](https://github.com/adambowles))
+- Other
+
+  - [#5374](https://github.com/facebook/create-react-app/pull/5374) Add the new SVGs feature from the template README to the root README. ([@neo](https://github.com/neo))
+  - [#5371](https://github.com/facebook/create-react-app/pull/5371) Update path to serviceWorker.js in graphical folder structure. ([@jonscottclark](https://github.com/jonscottclark))
+  - [#5337](https://github.com/facebook/create-react-app/pull/5337) Fix typo. ([@mvasin](https://github.com/mvasin))
+
+- `eslint-config-react-app`
+  - [#5416](https://github.com/facebook/create-react-app/pull/5416) Fix eslint config docs. ([@ludovicofischer](https://github.com/ludovicofischer))
 
 #### :house: Internal
-* Other
-  * [#5365](https://github.com/facebook/create-react-app/pull/5365) Clean up the behavior tests. ([@Timer](https://github.com/Timer))
 
-* `create-react-app`
-  * [#5362](https://github.com/facebook/create-react-app/pull/5362) Fix CI: non-semver compliant Yarn versions. ([@Timer](https://github.com/Timer))
-* `react-scripts`
-  * [#5317](https://github.com/facebook/create-react-app/pull/5317) Remove unused require for getCacheIdentifier after ejecting. ([@benbrandt](https://github.com/benbrandt))
+- Other
+
+  - [#5365](https://github.com/facebook/create-react-app/pull/5365) Clean up the behavior tests. ([@Timer](https://github.com/Timer))
+
+- `create-react-app`
+  - [#5362](https://github.com/facebook/create-react-app/pull/5362) Fix CI: non-semver compliant Yarn versions. ([@Timer](https://github.com/Timer))
+- `react-scripts`
+  - [#5317](https://github.com/facebook/create-react-app/pull/5317) Remove unused require for getCacheIdentifier after ejecting. ([@benbrandt](https://github.com/benbrandt))
 
 #### Committers: 23
+
 - Adam Bowles ([adambowles](https://github.com/adambowles))
 - Alex Forbes-Reed ([0xdeafcafe](https://github.com/0xdeafcafe))
 - Almero Steyn ([AlmeroSteyn](https://github.com/AlmeroSteyn))

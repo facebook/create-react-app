@@ -79,11 +79,11 @@ If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
-On a production build, and when you've [opted-in](/docs/making-a-progressive-web-app#why-opt-in),
+On a production build, and when you've [opted-in](making-a-progressive-web-app.md#why-opt-in),
 a [service worker](https://developers.google.com/web/fundamentals/primers/service-workers/) will automatically handle all navigation requests, like for
 `/todos/42`, by serving the cached copy of your `index.html`. This
 service worker navigation routing can be configured or disabled by
-[`eject`ing](/docs/available-scripts#npm-run-eject) and then modifying the
+[`eject`ing](available-scripts.md#npm-run-eject) and then modifying the
 [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
 options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).

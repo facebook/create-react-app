@@ -115,6 +115,8 @@ module.exports = {
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
+  appTypeDeclarations: resolveApp('src/react-app-env.d.ts'),
+  ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
 };
 
 const ownPackageJson = require('../package.json');
@@ -147,6 +149,8 @@ if (
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
+    appTypeDeclarations: resolveOwn('template/src/react-app-env.d.ts'),
+    ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
   };
 }
 // @remove-on-eject-end
