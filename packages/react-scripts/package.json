@@ -64,6 +64,7 @@
     "react-dev-utils": "^6.1.0",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
+    "single-spa-react": "^2.8.1",
     "style-loader": "0.23.0",
     "terser-webpack-plugin": "1.1.0",
     "url-loader": "1.1.1",

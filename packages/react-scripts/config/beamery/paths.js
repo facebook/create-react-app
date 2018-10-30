@@ -1,3 +1,5 @@
+'use strict';
+
 const ENVS = {
   DEVELOPMENT: 'development',
   PRODUCTION: 'production',
@@ -8,6 +10,7 @@ const ENVS = {
 const paths = {
   buildPath: 'dist',
   publicPath: false,
+  appIndexJs: 'src/index.full',
 };
 
 switch (process.env.BMR_ENV) {
@@ -22,6 +25,7 @@ switch (process.env.BMR_ENV) {
     break;
   case ENVS.STANDALONE:
   default:
+    paths.appIndexJs = 'src/index';
     break;
 }
 
