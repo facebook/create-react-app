@@ -15,7 +15,8 @@ const fs = require('fs');
 function formatter(message, useColors) {
   const colors = new chalk.constructor({ enabled: useColors });
   const messageColor = message.isWarningSeverity() ? colors.yellow : colors.red;
-
+  const fileAndNumberColor = colors.bold.cyan;
+  
   const source =
     message.getFile() &&
     fs.existsSync(message.getFile()) &&
@@ -34,7 +35,11 @@ function formatter(message, useColors) {
   }
 
   return [
-    messageColor.bold(`Type ${message.getSeverity().toLowerCase()}: `) +
+    messageColor.bold(`Type ${message.getSeverity().toLowerCase()} in `) +
+      fileAndNumberColor(
+        `${message.getFile()}(${message.getLine()},${message.getCharacter()})`
+      ) +
+      messageColor(':'),
       message.getContent() +
       '  ' +
       messageColor.underline(`TS${message.code}`),
