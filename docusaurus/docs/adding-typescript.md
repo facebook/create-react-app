@@ -3,6 +3,8 @@ id: adding-typescript
 title: Adding TypeScript
 ---
 
+> Note: this feature is available with `react-scripts@2.1.0` and higher.
+
 [TypeScript](https://www.typescriptlang.org/) is a typed superset of JavaScript that compiles to plain JavaScript.
 
 To add [TypeScript](https://www.typescriptlang.org/) to a Create React App project, first install it:
