@@ -13,6 +13,7 @@
   "files": [
     "bin",
     "config",
+    "lib",
     "scripts",
     "template",
     "template-typescript",
@@ -21,7 +22,7 @@
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
-  "types": "./config/react-app.d.ts",
+  "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.1.0",
     "@svgr/webpack": "2.4.1",

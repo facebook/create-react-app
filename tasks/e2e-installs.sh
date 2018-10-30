@@ -170,9 +170,23 @@ exists node_modules/react-scripts
 exists node_modules/typescript
 exists src/index.tsx
 exists tsconfig.json
+exists src/react-app-env.d.ts
 checkTypeScriptDependencies
 
 # Check that the TypeScript template passes smoke tests, build, and normal tests
+yarn start --smoke-test
+yarn build
+CI=true yarn test
+
+# Check eject behaves and works
+
+# Eject...
+echo yes | npm run eject
+
+# Ensure env file still exists
+exists src/react-app-env.d.ts
+
+# Check that the TypeScript template passes ejected smoke tests, build, and normal tests
 yarn start --smoke-test
 yarn build
 CI=true yarn test
