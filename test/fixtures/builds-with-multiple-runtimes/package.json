@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "dva": "2.4.0",
-    "history": "4.7.2",
-    "ky": "0.3.0",
-    "react": "latest",
-    "react-dom": "latest"
-  }
-}
