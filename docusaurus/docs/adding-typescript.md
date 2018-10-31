@@ -17,12 +17,18 @@ $ yarn add typescript @types/node @types/react @types/react-dom @types/jest
 
 Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
 
+To create a Create React App project with [TypeScript](https://www.typescriptlang.org/), use `--typescript` options:
+
+```bash
+create-react-app my-app --typescript
+```
+
 Type errors will show up in the same console as the build one.
 
 To learn more about TypeScript, check out [its documentation](https://www.typescriptlang.org/).
 
 > **Note:** You are not required to make a [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), one will be made for you.
-> You are allowed to edit the generated TypeScript configuration.
+> You are allowed to edit the generated TypeScript configuration. Excepts for [some options](https://github.com/facebook/create-react-app/blob/87e3d4fd1080d290f675d0461e3d3656752628ab/packages/react-scripts/scripts/utils/verifyTypeScriptSetup.js#L105-L129). Some notable options are `baseUrl` which is use for absolute imports.
 
 > **Note:** If you are currently using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript/), see [this blog post](https://vincenttunru.com/migrate-create-react-app-typescript-to-create-react-app/) for instructions on how to migrate to Create React App.
 
