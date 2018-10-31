@@ -8,12 +8,18 @@
 const React = require('react');
 
 class Footer extends React.Component {
-  docUrl(doc, language) {
+  docUrl(doc) {
+    // FIXME: this is a second argument but for some reason /en/ links don't work.
+    let language = '';
+
     const baseUrl = this.props.config.baseUrl;
     return `${baseUrl}docs/${language ? `${language}/` : ''}${doc}`;
   }
 
-  pageUrl(doc, language) {
+  pageUrl(doc) {
+    // FIXME: this is a second argument but for some reason /en/ links don't work.
+    let language = '';
+
     const baseUrl = this.props.config.baseUrl;
     return baseUrl + (language ? `${language}/` : '') + doc;
   }
@@ -35,27 +41,34 @@ class Footer extends React.Component {
           <div>
             <h5>Docs</h5>
             <a href={this.docUrl('getting-started', this.props.language)}>
-              Getting Started
+              Get Started
             </a>
-            <a href={this.docUrl('user-guide', this.props.language)}>
-              User Guide
-            </a>
-            <a href={this.docUrl('doc3.html', this.props.language)}>
-              API Reference (or other categories)
+            <a
+              href="https://reactjs.org/"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Learn React
             </a>
           </div>
           <div>
             <h5>Community</h5>
             <a
-              href="http://stackoverflow.com/questions/tagged/"
+              href="https://stackoverflow.com/questions/tagged/create-react-app"
               target="_blank"
               rel="noreferrer noopener"
             >
               Stack Overflow
             </a>
-            <a href="https://discordapp.com/">Project Chat</a>
             <a
-              href="https://twitter.com/"
+              href="https://spectrum.chat/react"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Spectrum
+            </a>
+            <a
+              href="https://twitter.com/reactjs"
               target="_blank"
               rel="noreferrer noopener"
             >
@@ -64,12 +77,14 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>More</h5>
-            <a href="https://github.com/">GitHub</a>
+            <a href="https://www.github.com/facebook/create-react-app">
+              GitHub
+            </a>
             <a
               className="github-button"
               href={this.props.config.repoUrl}
               data-icon="octicon-star"
-              data-count-href="/facebook/docusaurus/stargazers"
+              data-count-href="/facebook/create-react-app/stargazers"
               data-show-count="true"
               data-count-aria-label="# stargazers on GitHub"
               aria-label="Star this project on GitHub"

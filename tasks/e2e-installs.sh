@@ -59,6 +59,17 @@ function checkDependencies {
   fi
 }
 
+# Check for accidental dependencies in package.json
+function checkTypeScriptDependencies {
+  if ! awk '/"dependencies": {/{y=1;next}/},/{y=0; next}y' package.json | \
+  grep -v -q -E '^\s*"(@types\/.+)|typescript|(react(-dom|-scripts)?)"'; then
+   echo "Dependencies are correct"
+  else
+   echo "There are extraneous dependencies in package.json"
+   exit 1
+  fi
+}
+
 # Exit the script with a helpful error message when any error is encountered
 trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 
@@ -101,6 +112,9 @@ yarn config set registry "$custom_registry_url"
 git clean -df
 ./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
 
+echo "Create React App Version: "
+npx create-react-app --version
+
 # ******************************************************************************
 # Test --scripts-version with a distribution tag
 # ******************************************************************************
@@ -109,8 +123,11 @@ cd "$temp_app_path"
 npx create-react-app --scripts-version=@latest test-app-dist-tag
 cd test-app-dist-tag
 
-# Check corresponding scripts version is installed.
+# Check corresponding scripts version is installed and no TypeScript is present.
 exists node_modules/react-scripts
+! exists node_modules/typescript
+! exists src/index.tsx
+exists src/index.js
 checkDependencies
 
 # ******************************************************************************
@@ -139,6 +156,40 @@ exists node_modules/react-scripts
 [ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
 grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
+
+# ******************************************************************************
+# Test --typescript flag
+# ******************************************************************************
+
+cd "$temp_app_path"
+npx create-react-app test-app-typescript --typescript
+cd test-app-typescript
+
+# Check corresponding template is installed.
+exists node_modules/react-scripts
+exists node_modules/typescript
+exists src/index.tsx
+exists tsconfig.json
+exists src/react-app-env.d.ts
+checkTypeScriptDependencies
+
+# Check that the TypeScript template passes smoke tests, build, and normal tests
+yarn start --smoke-test
+yarn build
+CI=true yarn test
+
+# Check eject behaves and works
+
+# Eject...
+echo yes | npm run eject
+
+# Ensure env file still exists
+exists src/react-app-env.d.ts
+
+# Check that the TypeScript template passes ejected smoke tests, build, and normal tests
+yarn start --smoke-test
+yarn build
+CI=true yarn test
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
