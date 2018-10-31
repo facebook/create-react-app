@@ -46,5 +46,28 @@ pluginTester({
         'import { logoUrl } from "logo.svg";\n' +
         'import { ReactComponent as Logo } from "@svgr/webpack?-prettier,-svgo!logo.svg";',
     },
+    namedExport: {
+      code: 'export { logo } from "logo";',
+      output: 'export { logo } from "logo";',
+    },
+    namedExportRenamed: {
+      code: 'export { Url as logo } from "logo";',
+      output: 'export { Url as logo } from "logo";',
+    },
+    svgNamedExport: {
+      code: 'export { logo } from "logo.svg";',
+      output: 'export { logo } from "logo.svg";',
+    },
+    svgReactComponentNamedExport: {
+      code: 'export { ReactComponent as Logo } from "logo.svg";',
+      output:
+        'export { ReactComponent as Logo } from "@svgr/webpack?-prettier,-svgo!logo.svg";',
+    },
+    svgMultipleExport: {
+      code: 'export { logoUrl , ReactComponent as Logo } from "logo.svg";',
+      output:
+        'export { logoUrl } from "logo.svg";\n' +
+        'export { ReactComponent as Logo } from "@svgr/webpack?-prettier,-svgo!logo.svg";',
+    },
   },
 });
