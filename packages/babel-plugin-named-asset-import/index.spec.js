@@ -1,5 +1,5 @@
-import pluginTester from 'babel-plugin-tester';
-import namedAssetImport from './index';
+const pluginTester = require('babel-plugin-tester');
+const namedAssetImport = require('./index');
 
 pluginTester({
   plugin: namedAssetImport,
