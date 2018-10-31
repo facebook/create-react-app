@@ -30,6 +30,11 @@ module.exports = function(api, opts, env) {
   var isEnvTest = env === 'test';
 
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+  var isTypeScriptEnabled = validateBoolOption(
+    'typescript',
+    opts.typescript,
+    true
+  );
   var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
   var useAbsoluteRuntime = validateBoolOption(
     'absoluteRuntime',
@@ -97,6 +102,7 @@ module.exports = function(api, opts, env) {
           useBuiltIns: true,
         },
       ],
+      isTypeScriptEnabled && [require('@babel/preset-typescript').default],
     ].filter(Boolean),
     plugins: [
       // Strip flow types before any other transform, emulating the behavior
