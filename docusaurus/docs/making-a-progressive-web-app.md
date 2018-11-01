@@ -15,7 +15,7 @@ following in their [`src/index.js`](https://github.com/facebook/create-react-app
 ```js
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
+// Learn more about service workers: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
 serviceWorker.unregister();
 ```
 
