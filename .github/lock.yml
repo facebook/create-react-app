@@ -2,6 +2,7 @@
 
 # Number of days of inactivity before a closed issue or pull request is locked
 daysUntilLock: 7
+setLockReason: false
 
 issues:
   # Comment to post when locking a stale Issue.
