@@ -5,6 +5,13 @@ const { extname } = require('path');
 function namedAssetImportPlugin({ types: t }) {
   const visited = new WeakSet();
 
+  let generateNewSource = function(loaderMap, moduleName, sourcePath) {
+    const ext = extname(sourcePath).substr(1);
+    const extMap = loaderMap[ext];
+    return extMap[moduleName]
+      ? extMap[moduleName].replace(/\[path\]/, sourcePath)
+      : sourcePath;
+  };
   return {
     visitor: {
       ExportNamedDeclaration(
@@ -28,7 +35,7 @@ function namedAssetImportPlugin({ types: t }) {
           path.replaceWithMultiple(
             path.node.specifiers.map(specifier => {
               if (t.isExportDefaultSpecifier(specifier)) {
-                const newDefaultImport = t.exportDeclaration(
+                const defaultDeclaration = t.exportDeclaration(
                   [
                     t.exportDefaultSpecifier(
                       t.identifier(specifier.local.name)
@@ -37,11 +44,11 @@ function namedAssetImportPlugin({ types: t }) {
                   t.stringLiteral(sourcePath)
                 );
 
-                visited.add(newDefaultImport);
-                return newDefaultImport;
+                visited.add(defaultDeclaration);
+                return defaultDeclaration;
               }
 
-              const newImport = t.exportNamedDeclaration(
+              const namedDeclaration = t.exportNamedDeclaration(
                 null,
                 [
                   t.exportSpecifier(
@@ -50,17 +57,12 @@ function namedAssetImportPlugin({ types: t }) {
                   ),
                 ],
                 t.stringLiteral(
-                  loaderMap[ext][specifier.local.name]
-                    ? loaderMap[ext][specifier.local.name].replace(
-                        /\[path\]/,
-                        sourcePath
-                      )
-                    : sourcePath
+                  generateNewSource(loaderMap, specifier.local.name, sourcePath)
                 )
               );
 
-              visited.add(newImport);
-              return newImport;
+              visited.add(namedDeclaration);
+              return namedDeclaration;
             })
           );
         }
@@ -82,7 +84,7 @@ function namedAssetImportPlugin({ types: t }) {
           path.replaceWithMultiple(
             path.node.specifiers.map(specifier => {
               if (t.isImportDefaultSpecifier(specifier)) {
-                const newDefaultImport = t.importDeclaration(
+                const defaultDeclaration = t.importDeclaration(
                   [
                     t.importDefaultSpecifier(
                       t.identifier(specifier.local.name)
@@ -91,11 +93,11 @@ function namedAssetImportPlugin({ types: t }) {
                   t.stringLiteral(sourcePath)
                 );
 
-                visited.add(newDefaultImport);
-                return newDefaultImport;
+                visited.add(defaultDeclaration);
+                return defaultDeclaration;
               }
 
-              const newImport = t.importDeclaration(
+              const namedDeclaration = t.importDeclaration(
                 [
                   t.importSpecifier(
                     t.identifier(specifier.local.name),
@@ -103,17 +105,16 @@ function namedAssetImportPlugin({ types: t }) {
                   ),
                 ],
                 t.stringLiteral(
-                  loaderMap[ext][specifier.imported.name]
-                    ? loaderMap[ext][specifier.imported.name].replace(
-                        /\[path\]/,
-                        sourcePath
-                      )
-                    : sourcePath
+                  generateNewSource(
+                    loaderMap,
+                    specifier.imported.name,
+                    sourcePath
+                  )
                 )
               );
 
-              visited.add(newImport);
-              return newImport;
+              visited.add(namedDeclaration);
+              return namedDeclaration;
             })
           );
         }
