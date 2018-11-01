@@ -1,3 +1,59 @@
+## 2.1.1 (October 31, 2018)
+
+Happy Halloween 🎃 👻! This spooky release brings a treat: decorator support in TypeScript files!
+
+#### :bug: Bug Fix
+
+- `babel-preset-react-app`
+  - [#5659](https://github.com/facebook/create-react-app/pull/5659) Add support for decorators. ([@Timer](https://github.com/Timer))
+- `react-scripts`
+  - [#5621](https://github.com/facebook/create-react-app/pull/5621) fix 'Duplicate string index signature' in ProcessEnv. ([@xiaoxiangmoe](https://github.com/xiaoxiangmoe))
+
+#### :nail_care: Enhancement
+
+- `babel-preset-react-app`
+  - [#5659](https://github.com/facebook/create-react-app/pull/5659) Add support for decorators. ([@Timer](https://github.com/Timer))
+
+#### :memo: Documentation
+
+- [#5658](https://github.com/facebook/create-react-app/pull/5658) Update making-a-progressive-web-app.md. ([@jakeboone02](https://github.com/jakeboone02))
+- [#5635](https://github.com/facebook/create-react-app/pull/5635) Update minimum node version to 8.10 in README. ([@iansu](https://github.com/iansu))
+- [#5629](https://github.com/facebook/create-react-app/pull/5629) Add link to cra-ts migration guide. ([@Vinnl](https://github.com/Vinnl))
+
+#### :house: Internal
+
+- `react-error-overlay`
+  - [#4709](https://github.com/facebook/create-react-app/pull/4709) Expose `reportRuntimeError`. ([@hipstersmoothie](https://github.com/hipstersmoothie))
+- `babel-plugin-named-asset-import`
+  - [#5575](https://github.com/facebook/create-react-app/pull/5575) add tests for named-asset-imports plugin. ([@NShahri](https://github.com/NShahri))
+- `react-scripts`
+  - [#5651](https://github.com/facebook/create-react-app/pull/5651) Make serviceWorker config argument optional in typescript. ([@eddedd88](https://github.com/eddedd88))
+
+#### Committers: 8
+
+- Andrew Lisowski ([hipstersmoothie](https://github.com/hipstersmoothie))
+- Eduardo Duran ([eddedd88](https://github.com/eddedd88))
+- Ian Sutherland ([iansu](https://github.com/iansu))
+- Jake Boone ([jakeboone02](https://github.com/jakeboone02))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Nima Shahri ([NShahri](https://github.com/NShahri))
+- Vincent ([Vinnl](https://github.com/Vinnl))
+- ZHAO Jinxiang ([xiaoxiangmoe](https://github.com/xiaoxiangmoe))
+
+### Migrating from 2.1.0 to 2.1.1
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@2.1.1
+```
+
+or
+
+```
+yarn add --exact react-scripts@2.1.1
+```
+
 ## 2.1.0 (October 29, 2018)
 
 Create React App 2.1 adds support for TypeScript! Read [the documentation](https://facebook.github.io/create-react-app/docs/adding-typescript) to get started.
