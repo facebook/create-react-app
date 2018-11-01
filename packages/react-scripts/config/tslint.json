@@ -1,0 +1,28 @@
+{
+  "defaultSeverity": "warning",
+  "rules": {
+    "await-promise": true,
+    "new-parens": true,
+    "no-angle-bracket-type-assertion": true,
+    "no-conditional-assignment": true,
+    "no-debugger": true,
+    "no-duplicate-super": true,
+    "no-duplicate-switch-case": true,
+    "no-duplicate-variable": true,
+    "no-eval": true,
+    "no-floating-promises": true,
+    "no-for-in-array": true,
+    "no-invalid-template-strings": true,
+    "no-invalid-this": true,
+    "no-namespace": true,
+    "no-sparse-arrays": true,
+    "no-string-throw": true,
+    "no-switch-case-fall-through": true,
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "no-unused-variable": true,
+    "triple-equals": true,
+    "use-isnan": true
+    //   "no-implicit-dependencies": true,
+    // TODO: Add tslint-microsoft-contrib for a11y rules
+  }
+}

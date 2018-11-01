@@ -544,6 +544,7 @@ module.exports = {
         async: false,
         checkSyntacticErrors: true,
         tsconfig: paths.appTsConfig,
+        tslint: path.resolve(__dirname, 'tslint.json'),
         compilerOptions: {
           module: 'esnext',
           moduleResolution: 'node',
