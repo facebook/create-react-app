@@ -1,14 +1,15 @@
 {
   "name": "react-scripts",
-  "version": "2.1.1",
+  "version": "2.1.0",
+  "frontierVersion": "1.0.0",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebook/create-react-app",
+  "repository": "joeycozza/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/joeycozza/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -30,11 +31,11 @@
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.4",
-    "babel-plugin-named-asset-import": "^0.2.3",
-    "babel-preset-react-app": "^6.1.0",
+    "babel-plugin-named-asset-import": "^0.2.2",
+    "babel-preset-react-app": "^6.0.0",
     "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
-    "chalk": "2.4.1",
+    "chalk": "^2.4.1",
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
@@ -50,6 +51,7 @@
     "fs-extra": "7.0.0",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "identity-obj-proxy": "3.0.0",
+    "inquirer": "^6.2.0",
     "jest": "23.6.0",
     "jest-pnp-resolver": "1.0.1",
     "jest-resolve": "23.6.0",
@@ -61,7 +63,7 @@
     "postcss-preset-env": "6.0.6",
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^0.1.3",
-    "react-dev-utils": "^6.1.1",
+    "react-dev-utils": "^6.1.0",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
