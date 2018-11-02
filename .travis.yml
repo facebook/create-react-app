@@ -2,11 +2,11 @@ language: node_js
 node_js:
   - 10
 install:
-  - npm i
-  - cd packages/react-scripts && npm i
-  - cd ../../
+  - "npm i"
+  - "cd packages/react-scripts && npm i"
+  - "cd ../../"
 before_deploy:
-  - cd packages && tar -zcf react-scripts-$TRAVIS_TAG.tgz react-scripts
+  - "cd packages && tar -zcf react-scripts-$TRAVIS_TAG.tgz react-scripts"
 deploy:
   provider: releases
   skip_cleanup: true
