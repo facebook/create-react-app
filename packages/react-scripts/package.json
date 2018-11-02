@@ -70,7 +70,8 @@
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",
     "webpack-manifest-plugin": "2.0.4",
-    "workbox-webpack-plugin": "3.6.3"
+    "workbox-webpack-plugin": "3.6.3",
+    "yargs": "^12.0.2"
   },
   "devDependencies": {
     "react": "^16.3.2",

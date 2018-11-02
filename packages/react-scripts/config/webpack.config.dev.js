@@ -40,7 +40,7 @@ const publicUrl = '';
 const env = getClientEnvironment(publicUrl);
 
 // Check if TypeScript is setup
-const useTypeScript = fs.existsSync(paths.appTsConfig);
+const useTypeScript = !paths.disableType && fs.existsSync(paths.appTsConfig);
 
 // style files regexes
 const cssRegex = /\.css$/;
