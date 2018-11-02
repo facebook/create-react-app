@@ -1,14 +1,14 @@
 # Configuration for lock-threads - https://github.com/dessant/lock-threads
 
 # Number of days of inactivity before a closed issue or pull request is locked
-daysUntilLock: 7
+daysUntilLock: 5
 setLockReason: false
 
 issues:
   # Comment to post when locking a stale Issue.
   lockComment: >
     The conversation for this issue has been locked because the issue is
-    closed. If you would like to contribute please open a new issue.
+    closed. If you have a question or comment, please open a new issue.
 
 pulls:
 # Comment to post when locking a stale Pull Request.
