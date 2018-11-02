@@ -91,7 +91,6 @@ function namedAssetImportPlugin({ types: t }) {
                 t.stringLiteral(sourcePath)
               );
 
-              visited.add(defaultDeclaration);
               return defaultDeclaration;
             }
 
@@ -111,7 +110,6 @@ function namedAssetImportPlugin({ types: t }) {
               )
             );
 
-            visited.add(namedDeclaration);
             return namedDeclaration;
           }
         );
