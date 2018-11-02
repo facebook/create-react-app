@@ -3,7 +3,7 @@
 const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
-const chalk = require('chalk');
+const fsCli = require('fs-cli-goodies');
 const inquirer = require('inquirer');
 const osUtils = require('./osUtils');
 
@@ -14,30 +14,8 @@ module.exports = {
   cleanupFrontierCode,
 };
 
-function help() {
-  const g = chalk.green;
-  const y = chalk.gray;
-  const b = chalk.yellow;
-
-  const TITLE = chalk.bold.underline('Frontier React Scripts');
-  const DESC = 'The Coolest React-Scripterizer You Ever Seen.';
-
-  return `
-       ${g('┏━━┓')}
-   ${y('┏━┓')} ${g('┗━━┛')} ${y('┏━━━━┓')}    ${TITLE}
-   ${y('┗━┛')} ${b('┏━━┓')} ${y('┃    ┃')}
-${g('┏━━━━┓')} ${b('┗━━┛')} ${y('┗━━━━┛')}    ${DESC}
-${g('┃    ┃')}  ${b('//')} ${y('┏━━━━┓')} ${g('⏠')}
-${g('┗━━━━┛')} ${b('/ /')} ${y('┃    ┃')} ${g('⏡')}
-    ${b('\\\\ │ │')} ${y('┗━━━━┛')}
-        ${b('\\ \\ //')}
-         ${b('\\ \\')}
-          ${b('\\ \\')}
-`;
-}
-
 async function promptForConfig() {
-  console.log(help());
+  console.log(fsCli.fsLogo('Frontier React Scripts'));
   const questions = [
     {
       type: 'checkbox',
