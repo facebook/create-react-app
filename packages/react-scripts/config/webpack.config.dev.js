@@ -442,7 +442,8 @@ module.exports = {
         ],
         watch: paths.appSrc,
         silent: true,
-        formatter: typescriptFormatter,
+        // Create formatter which displays filepath with appPath excluded
+        formatter: typescriptFormatter(paths.appPath.replace(/\\/g, '/')),
       }),
   ].filter(Boolean),
 

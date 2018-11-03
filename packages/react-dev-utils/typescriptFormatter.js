@@ -12,40 +12,47 @@ const codeFrame = require('@babel/code-frame').codeFrameColumns;
 const chalk = require('chalk');
 const fs = require('fs');
 
-function formatter(message, useColors) {
-  const colors = new chalk.constructor({ enabled: useColors });
-  const messageColor = message.isWarningSeverity() ? colors.yellow : colors.red;
-  const fileAndNumberColor = colors.bold.cyan;
-  
-  const source =
-    message.getFile() &&
-    fs.existsSync(message.getFile()) &&
-    fs.readFileSync(message.getFile(), 'utf-8');
-  let frame = '';
+function makeFormatter(appPath) {
+  return function formatter(message, useColors) {
+    const colors = new chalk.constructor({ enabled: useColors });
+    const messageColor = message.isWarningSeverity()
+      ? colors.yellow
+      : colors.red;
+    const fileAndNumberColor = colors.bold.cyan;
 
-  if (source) {
-    frame = codeFrame(
-      source,
-      { start: { line: message.line, column: message.character } },
-      { highlightCode: useColors }
-    )
-      .split('\n')
-      .map(str => '  ' + str)
-      .join(os.EOL);
-  }
+    const source =
+      message.getFile() &&
+      fs.existsSync(message.getFile()) &&
+      fs.readFileSync(message.getFile(), 'utf-8');
+    let frame = '';
 
-  return [
-    messageColor.bold(`Type ${message.getSeverity().toLowerCase()} in `) +
-      fileAndNumberColor(
-        `${message.getFile()}(${message.getLine()},${message.getCharacter()})`
-      ) +
-      messageColor(':'),
-      message.getContent() +
-      '  ' +
-      messageColor.underline(`TS${message.code}`),
-    '',
-    frame,
-  ].join(os.EOL);
+    if (source) {
+      frame = codeFrame(
+        source,
+        { start: { line: message.line, column: message.character } },
+        { highlightCode: useColors }
+      )
+        .split('\n')
+        .map(str => '  ' + str)
+        .join(os.EOL);
+    }
+
+    return [
+      messageColor.bold(`Type ${message.getSeverity().toLowerCase()} in `) +
+        fileAndNumberColor(
+          `${message
+            .getFile()
+            .replace(
+              appPath,
+              ''
+            )}(${message.getLine()},${message.getCharacter()})`
+        ) +
+        messageColor(':'),
+      message.getContent() + '  ' + messageColor.underline(`TS${message.code}`),
+      '',
+      frame,
+    ].join(os.EOL);
+  };
 }
 
-module.exports = formatter;
+module.exports = makeFormatter;
