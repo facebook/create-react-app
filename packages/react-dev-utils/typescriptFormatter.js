@@ -13,6 +13,7 @@ const chalk = require('chalk');
 const fs = require('fs');
 
 function makeFormatter(appPath) {
+  const pathToExclude = appPath + '/';
   return function formatter(message, useColors) {
     const colors = new chalk.constructor({ enabled: useColors });
     const messageColor = message.isWarningSeverity()
@@ -43,7 +44,7 @@ function makeFormatter(appPath) {
           `${message
             .getFile()
             .replace(
-              appPath,
+              pathToExclude,
               ''
             )}(${message.getLine()},${message.getCharacter()})`
         ) +
