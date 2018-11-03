@@ -120,7 +120,7 @@ async function checkValidServiceWorker(swUrl: string, config?: Config) {
       await unregister();
       window.location.reload();
     } else {
-      // Service worker found. Proceed as normal.as
+      // Service worker found. Proceed as normal.
       await registerValidSW(swUrl, config);
     }
   } catch {
