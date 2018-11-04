@@ -232,7 +232,7 @@ Now, after you create a production build with `npm run build`, you can deploy it
     Hosting URL: https://example-app-fd690.firebaseapp.com
 ```
 
-For more information see [Add Firebase to your JavaScript Project](https://firebase.google.com/docs/web/setup).
+For more information see [Firebase Hosting](https://firebase.google.com/docs/hosting).
 
 ## [GitHub Pages](https://pages.github.com/)
 
