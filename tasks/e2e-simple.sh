@@ -118,6 +118,10 @@ cd packages/react-dev-utils/
 yarn test
 cd ../..
 
+cd packages/babel-plugin-named-asset-import/
+yarn test
+cd ../..
+
 cd packages/confusing-browser-globals/
 yarn test
 cd ../..
