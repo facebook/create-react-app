@@ -18,8 +18,8 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const execSync = require('child_process').execSync;
-const spawn = require('react-dev-utils/crossSpawn');
-const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
+const spawn = require('@ehrocks/react-dev-utils/crossSpawn');
+const { defaultBrowsers } = require('@ehrocks/react-dev-utils/browsersHelper');
 const os = require('os');
 
 function isInGitRepository() {

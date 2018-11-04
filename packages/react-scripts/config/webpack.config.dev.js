@@ -13,17 +13,17 @@ const webpack = require('webpack');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const InterpolateHtmlPlugin = require('@ehrocks/react-dev-utils/InterpolateHtmlPlugin');
+const WatchMissingNodeModulesPlugin = require('@ehrocks/react-dev-utils/WatchMissingNodeModulesPlugin');
+const ModuleScopePlugin = require('@ehrocks/react-dev-utils/ModuleScopePlugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const getCSSModuleLocalIdent = require('@ehrocks/react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
+const ModuleNotFoundPlugin = require('@ehrocks/react-dev-utils/ModuleNotFoundPlugin');
 // @remove-on-eject-begin
-const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
+const getCacheIdentifier = require('@ehrocks/react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -84,7 +84,7 @@ module.exports = {
   mode: 'development',
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebook/create-react-app/issues/343
-  devtool: 'cheap-module-source-map',
+  devtool: process.env.BOOST ? 'eval' : 'cheap-module-source-map', // EH custom
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   entry: [
@@ -100,7 +100,7 @@ module.exports = {
     // require.resolve('webpack/hot/dev-server'),
     require.resolve('webpack-dev-server/client') + '?http://localhost:8010/',
     require.resolve('webpack/hot/dev-server'),
-    // require.resolve('react-dev-utils/webpackHotDevClient'),
+    // require.resolve('@ehrocks/react-dev-utils/webpackHotDevClient'),
     // Finally, this is your app's code:
     paths.appIndexJs,
     // We include the app code last so that if there is a runtime error during
@@ -109,7 +109,7 @@ module.exports = {
   ],
   output: {
     // Add /* filename */ comments to generated require()s in the output.
-    pathinfo: true,
+    pathinfo: process.env.BOOST ? false : true, // EH custom
 
     // Export to lib
     library: paths.libName,
@@ -132,8 +132,14 @@ module.exports = {
     // https://twitter.com/wSokra/status/969633336732905474
     // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
     splitChunks: {
-      chunks: 'all',
-      name: true,
+      // EH custom
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors~main',
+          chunks: 'all',
+        },
+      },
     },
     // Keep the runtime chunk seperated to enable long term caching
     // https://twitter.com/wSokra/status/969679223278505985
@@ -193,7 +199,9 @@ module.exports = {
         use: [
           {
             options: {
-              formatter: require.resolve('react-dev-utils/eslintFormatter'),
+              formatter: require.resolve(
+                '@ehrocks/react-dev-utils/eslintFormatter'
+              ),
               eslintPath: require.resolve('eslint'),
               // @remove-on-eject-begin
               baseConfig: {
@@ -247,7 +255,7 @@ module.exports = {
               cacheIdentifier: getCacheIdentifier('development', [
                 'babel-plugin-named-asset-import',
                 'babel-preset-react-app',
-                'react-dev-utils',
+                '@ehrocks/react-dev-utils',
                 'react-scripts',
               ]),
               // @remove-on-eject-end
@@ -295,7 +303,7 @@ module.exports = {
               cacheIdentifier: getCacheIdentifier('development', [
                 'babel-plugin-named-asset-import',
                 'babel-preset-react-app',
-                'react-dev-utils',
+                '@ehrocks/react-dev-utils',
                 'react-scripts',
               ]),
               // @remove-on-eject-end

@@ -12,21 +12,21 @@ const path = require('path');
 const webpack = require('webpack');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
+const InlineChunkHtmlPlugin = require('@ehrocks/react-dev-utils/InlineChunkHtmlPlugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const InterpolateHtmlPlugin = require('@ehrocks/react-dev-utils/InterpolateHtmlPlugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const ModuleScopePlugin = require('@ehrocks/react-dev-utils/ModuleScopePlugin');
+const getCSSModuleLocalIdent = require('@ehrocks/react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
+const ModuleNotFoundPlugin = require('@ehrocks/react-dev-utils/ModuleNotFoundPlugin');
 // @remove-on-eject-begin
-const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
+const getCacheIdentifier = require('@ehrocks/react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -209,8 +209,14 @@ module.exports = {
     // https://twitter.com/wSokra/status/969633336732905474
     // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
     splitChunks: {
-      chunks: 'all',
-      name: true,
+      // EH custom
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors~main',
+          chunks: 'all',
+        },
+      },
     },
     // Keep the runtime chunk seperated to enable long term caching
     // https://twitter.com/wSokra/status/969679223278505985
@@ -270,7 +276,9 @@ module.exports = {
         use: [
           {
             options: {
-              formatter: require.resolve('react-dev-utils/eslintFormatter'),
+              formatter: require.resolve(
+                '@ehrocks/react-dev-utils/eslintFormatter'
+              ),
               eslintPath: require.resolve('eslint'),
               // @remove-on-eject-begin
               // TODO: consider separate config for production,
@@ -326,7 +334,7 @@ module.exports = {
               cacheIdentifier: getCacheIdentifier('production', [
                 'babel-plugin-named-asset-import',
                 'babel-preset-react-app',
-                'react-dev-utils',
+                '@ehrocks/react-dev-utils',
                 'react-scripts',
               ]),
               // @remove-on-eject-end
@@ -371,7 +379,7 @@ module.exports = {
               cacheIdentifier: getCacheIdentifier('production', [
                 'babel-plugin-named-asset-import',
                 'babel-preset-react-app',
-                'react-dev-utils',
+                '@ehrocks/react-dev-utils',
                 'react-scripts',
               ]),
               // @remove-on-eject-end
