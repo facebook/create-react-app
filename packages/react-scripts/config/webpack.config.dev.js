@@ -74,11 +74,17 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
             stage: 3,
           }),
         ],
+        sourceMap: true,
       },
     },
   ];
   if (preProcessor) {
-    loaders.push(require.resolve(preProcessor));
+    loaders.push({
+      loader: require.resolve(preProcessor),
+      options: {
+        sourceMap: true,
+      },
+    });
   }
   return loaders;
 };
@@ -317,6 +323,7 @@ module.exports = {
             exclude: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
+              sourceMap: true,
             }),
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
@@ -327,6 +334,7 @@ module.exports = {
               importLoaders: 1,
               modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
+              sourceMap: true,
             }),
           },
           // Opt-in support for SASS (using .scss or .sass extensions).
@@ -337,7 +345,13 @@ module.exports = {
           {
             test: sassRegex,
             exclude: sassModuleRegex,
-            use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
+            use: getStyleLoaders(
+              {
+                importLoaders: 2,
+                sourceMap: true,
+              },
+              'sass-loader'
+            ),
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
@@ -348,6 +362,7 @@ module.exports = {
                 importLoaders: 2,
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
+                sourceMap: true,
               },
               'sass-loader'
             ),
