@@ -7,7 +7,7 @@ title: Using the Public Folder
 
 ## Changing the HTML
 
-The `public` folder contains the HTML file so you can tweak it, for example, to [set the page title](changing-the-page-title.md).
+The `public` folder contains the HTML file so you can tweak it, for example, to [set the page title](title-and-meta-tags.md).
 The `<script>` tag with the compiled code will be added to it automatically during the build process.
 
 ## Adding Assets Outside of the Module System
