@@ -1,16 +1,15 @@
 {
-    "name": "tslint-config-react-app",
-    "version": "1.0.0",
-    "description": "TSLint configuration used by Create React App",
-    "repository": "facebook/create-react-app",
-    "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/facebook/create-react-app/issues"
-    },
-    "main": "index.js",
-    "peerDependencies": {
-      "tslint": "5.x",
-      "tslint-microsoft-contrib": "5.x"
-    }
+  "name": "tslint-config-react-app",
+  "version": "1.0.0",
+  "description": "TSLint configuration used by Create React App",
+  "repository": "facebook/create-react-app",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/facebook/create-react-app/issues"
+  },
+  "main": "index.js",
+  "peerDependencies": {
+    "tslint": "5.x",
+    "tslint-microsoft-contrib": "5.x"
   }
-  
+}
