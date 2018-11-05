@@ -424,7 +424,7 @@ module.exports = {
         async: false,
         checkSyntacticErrors: true,
         tsconfig: paths.appTsConfig,
-        tslint: path.resolve(__dirname, 'tslint.json'),
+        tslint: require.resolve('tslint-config-react-app'),
         compilerOptions: {
           module: 'esnext',
           moduleResolution: 'node',
