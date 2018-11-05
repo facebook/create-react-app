@@ -73,7 +73,7 @@ when the service worker has finished populating your caches (showing a &quot;Thi
 app works offline!&quot; message) and also let them know when the service worker has
 fetched the latest updates that will be available the next time they load the
 page (showing a &quot;New content is available once existing tabs are closed.&quot; message). Showing
-this messages is currently left as an exercise to the developer, but as a
+these messages is currently left as an exercise to the developer, but as a
 starting point, you can make use of the logic included in <a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/serviceWorker.js"><code>src/serviceWorker.js</code></a>, which
 demonstrates which service worker lifecycle events to listen for to detect each
 scenario, and which as a default, just logs appropriate messages to the
@@ -100,10 +100,10 @@ images, or embeds loaded from a different domain.</p></li>
 </ol>
 <h2><a class="anchor" aria-hidden="true" id="progressive-web-app-metadata"></a><a href="#progressive-web-app-metadata" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Progressive Web App Metadata</h2>
 <p>The default configuration includes a web app manifest located at
-<a href="public/manifest.json"><code>public/manifest.json</code></a>, that you can customize with
+<a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/public/manifest.json"><code>public/manifest.json</code></a>, that you can customize with
 details specific to your web application.</p>
 <p>When a user adds a web app to their homescreen using Chrome or Firefox on
-Android, the metadata in <a href="public/manifest.json"><code>manifest.json</code></a> determines what
+Android, the metadata in <a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/public/manifest.json"><code>manifest.json</code></a> determines what
 icons, names, and branding colors to use when the web app is displayed.
 <a href="https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/">The Web App Manifest guide</a>
 provides more context about what each field means, and how your customizations
@@ -119,4 +119,4 @@ not you opt-in to service worker registration.</p>
                 indexName: 'create-react-app',
                 inputSelector: '#search_input_react'
               });
-            </script><script src="http://localhost:35729/livereload.js"></script></body></html>
+            </script></body></html>
