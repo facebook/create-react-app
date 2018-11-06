@@ -176,7 +176,9 @@ module.exports = function(env) {
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
     },
     optimization: {
+      minimize: isEnvProduction,
       minimizer: [
+        // This is only used in production mode
         new TerserPlugin({
           terserOptions: {
             parse: {
@@ -219,6 +221,7 @@ module.exports = function(env) {
           cache: true,
           sourceMap: shouldUseSourceMap,
         }),
+        // This is only used in production mode
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
             parser: safePostCssParser,
