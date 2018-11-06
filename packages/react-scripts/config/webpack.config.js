@@ -561,12 +561,25 @@ module.exports = function(env) {
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin(env.stringified),
-      new MiniCssExtractPlugin({
-        // Options similar to the same options in webpackOptions.output
-        // both options are optional
-        filename: 'static/css/[name].[contenthash:8].css',
-        chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-      }),
+      // This is necessary to emit hot updates (currently CSS only):
+      isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+      // Watcher doesn't work well if you mistype casing in a path so we use
+      // a plugin that prints an error when you attempt to do this.
+      // See https://github.com/facebook/create-react-app/issues/240
+      isEnvDevelopment && new CaseSensitivePathsPlugin(),
+      // If you require a missing module and then `npm install` it, you still have
+      // to restart the development server for Webpack to discover it. This plugin
+      // makes the discovery automatic so you don't have to restart.
+      // See https://github.com/facebook/create-react-app/issues/186
+      isEnvDevelopment &&
+        new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+      isEnvProduction &&
+        new MiniCssExtractPlugin({
+          // Options similar to the same options in webpackOptions.output
+          // both options are optional
+          filename: 'static/css/[name].[contenthash:8].css',
+          chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+        }),
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
       // having to parse `index.html`.
