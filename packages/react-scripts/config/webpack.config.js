@@ -323,8 +323,9 @@ module.exports = function(env) {
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.
           oneOf: [
-            // "url" loader works just like "file" loader but it also embeds
-            // assets smaller than specified size as data URLs to avoid requests.
+            // "url" loader works like "file" loader except that it embeds assets
+            // smaller than specified limit in bytes as data URLs to avoid requests.
+            // A missing `test` is equivalent to a match.
             {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
               loader: require.resolve('url-loader'),
@@ -334,11 +335,10 @@ module.exports = function(env) {
               },
             },
             // Process application JS with Babel.
-            // The preset includes JSX, Flow, TypeScript and some ESnext features.
+            // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: paths.appSrc,
-
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
@@ -353,12 +353,17 @@ module.exports = function(env) {
                 // We remove this when the user ejects because the default
                 // is sane and uses Babel options. Instead of options, we use
                 // the react-scripts and babel-preset-react-app versions.
-                cacheIdentifier: getCacheIdentifier('production', [
-                  'babel-plugin-named-asset-import',
-                  'babel-preset-react-app',
-                  'react-dev-utils',
-                  'react-scripts',
-                ]),
+                cacheIdentifier: getCacheIdentifier(
+                  isEnvProduction
+                    ? 'production'
+                    : isEnvDevelopment && 'development',
+                  [
+                    'babel-plugin-named-asset-import',
+                    'babel-preset-react-app',
+                    'react-dev-utils',
+                    'react-scripts',
+                  ]
+                ),
                 // @remove-on-eject-end
                 plugins: [
                   [
@@ -373,10 +378,12 @@ module.exports = function(env) {
                     },
                   ],
                 ],
+                // This is a feature of `babel-loader` for webpack (not Babel itself).
+                // It enables caching results in ./node_modules/.cache/babel-loader/
+                // directory for faster rebuilds.
                 cacheDirectory: true,
-                // Save disk space when time isn't as important
-                cacheCompression: true,
-                compact: true,
+                cacheCompression: isEnvProduction,
+                compact: isEnvProduction,
               },
             },
             // Process any JS outside of the app with Babel.
@@ -396,15 +403,19 @@ module.exports = function(env) {
                   ],
                 ],
                 cacheDirectory: true,
-                // Save disk space when time isn't as important
-                cacheCompression: true,
+                cacheCompression: isEnvProduction,
                 // @remove-on-eject-begin
-                cacheIdentifier: getCacheIdentifier('production', [
-                  'babel-plugin-named-asset-import',
-                  'babel-preset-react-app',
-                  'react-dev-utils',
-                  'react-scripts',
-                ]),
+                cacheIdentifier: getCacheIdentifier(
+                  isEnvProduction
+                    ? 'production'
+                    : isEnvDevelopment && 'development',
+                  [
+                    'babel-plugin-named-asset-import',
+                    'babel-preset-react-app',
+                    'react-dev-utils',
+                    'react-scripts',
+                  ]
+                ),
                 // @remove-on-eject-end
                 // If an error happens in a package, it's possible to be
                 // because it was compiled. Thus, we don't want the browser
@@ -435,25 +446,23 @@ module.exports = function(env) {
             // using the extension .module.css
             {
               test: cssModuleRegex,
-              loader: getStyleLoaders({
+              use: getStyleLoaders({
                 importLoaders: 1,
-                sourceMap: shouldUseSourceMap,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
               }),
             },
-            // Opt-in support for SASS. The logic here is somewhat similar
-            // as in the CSS routine, except that "sass-loader" runs first
-            // to compile SASS files into CSS.
+            // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
             // extensions .module.scss or .module.sass
             {
               test: sassRegex,
               exclude: sassModuleRegex,
-              loader: getStyleLoaders(
+              use: getStyleLoaders(
                 {
                   importLoaders: 2,
-                  sourceMap: shouldUseSourceMap,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
                 'sass-loader'
               ),
@@ -467,24 +476,25 @@ module.exports = function(env) {
             // using the extension .module.scss or .module.sass
             {
               test: sassModuleRegex,
-              loader: getStyleLoaders(
+              use: getStyleLoaders(
                 {
                   importLoaders: 2,
-                  sourceMap: shouldUseSourceMap,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
                   modules: true,
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
                 'sass-loader'
               ),
             },
-            // "file" loader makes sure assets end up in the `build` folder.
-            // When you `import` an asset, you get its filename.
+            // "file" loader makes sure those assets get served by WebpackDevServer.
+            // When you `import` an asset, you get its (virtual) filename.
+            // In production, they would get copied to the `build` folder.
             // This loader doesn't use a "test" so it will catch all modules
             // that fall through the other loaders.
             {
               loader: require.resolve('file-loader'),
               // Exclude `js` files to keep "css" loader working as it injects
-              // it's runtime that would otherwise be processed through "file" loader.
+              // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
