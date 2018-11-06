@@ -305,8 +305,6 @@ module.exports = function(env) {
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
                 // @remove-on-eject-begin
-                // TODO: consider separate config for production,
-                // e.g. to enable no-console and no-debugger only in production.
                 baseConfig: {
                   extends: [require.resolve('eslint-config-react-app')],
                   settings: { react: { version: '999.999.999' } },
