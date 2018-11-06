@@ -45,7 +45,7 @@ For every test case added there is just a little chore to do:
 
 - add a test case in the appropriate integration test file, which calls and awaits `initDOM` with the previous `SwitchCase` string
 
-An usual flow for the test itself is something similar to:
+A usual flow for the test itself is something similar to:
 
 - add an `id` attribute in a target HTML tag in the feature itself
 
