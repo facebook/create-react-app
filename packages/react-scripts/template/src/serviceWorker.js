@@ -88,7 +88,7 @@ function registerValidSW(swUrl, config) {
         // content until all client tabs are closed.
         console.log(
           'New content is available and will be used when all ' +
-            'tabs for this page are closed. See http://bit.ly/CRA-PWA.'
+            'tabs for this page are closed. See http://bit.ly/CRA2-PWA.'
         );
         if (config && config.onUpdate) {
           config.onUpdate(registration, sw);
