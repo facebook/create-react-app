@@ -53,6 +53,10 @@ function verifyPackageTree() {
   while (true) {
     const previousDir = currentDir;
     currentDir = path.resolve(currentDir, '..');
+    if (currentDir === process.cwd()) {
+      // We've reached the working directory.
+      break;
+    }
     if (currentDir === previousDir) {
       // We've reached the root.
       break;
