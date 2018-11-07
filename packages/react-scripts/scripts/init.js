@@ -22,6 +22,7 @@ const spawn = require('react-dev-utils/crossSpawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
 const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
+const frontierInit = require('./utils/frontierInit');
 
 function isInGitRepository() {
   try {
@@ -75,13 +76,14 @@ function tryGitInit(appPath) {
   }
 }
 
-module.exports = function(
+module.exports = async function(
   appPath,
   appName,
   verbose,
   originalDirectory,
   template
 ) {
+  const answers = await frontierInit.promptForConfig(appPath);
   const ownPath = path.dirname(
     require.resolve(path.join(__dirname, '..', 'package.json'))
   );
@@ -113,6 +115,8 @@ module.exports = function(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2) + os.EOL
   );
+
+  frontierInit.packageJsonWritten();
 
   const readmeExists = fs.existsSync(path.join(appPath, 'README.md'));
   if (readmeExists) {
@@ -195,6 +199,8 @@ module.exports = function(
     }
   }
 
+  frontierInit.installFrontierDependencies(appPath, answers, useYarn, ownPath);
+
   if (useTypeScript) {
     verifyTypeScriptSetup();
   }
@@ -216,6 +222,8 @@ module.exports = function(
 
   // Change displayed command to yarn instead of yarnpkg
   const displayedCommand = useYarn ? 'yarn' : 'npm';
+
+  frontierInit.cleanupFrontierCode(appPath);
 
   console.log();
   console.log(`Success! Created ${appName} at ${appPath}`);
