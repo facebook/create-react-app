@@ -60,14 +60,14 @@ function registerValidSW(swUrl, config) {
     .then(registration => {
       //a new service worker has previously finished installing, and is now waiting
       if (registration.waiting && registration.active) {
-        newerSwAvailable();
+        newerSwAvailable(registration.waiting);
       }
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
-              newerSwAvailable();
+              newerSwAvailable(installingWorker);
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a
@@ -82,7 +82,7 @@ function registerValidSW(swUrl, config) {
           }
         };
       };
-      function newerSwAvailable(){
+      function newerSwAvailable(sw){
         // At this point, the updated precached content has been fetched,
         // but the previous service worker will still serve the older
         // content until all client tabs are closed.
@@ -91,7 +91,7 @@ function registerValidSW(swUrl, config) {
             'tabs for this page are closed. See http://bit.ly/CRA-PWA.'
         );
         if (config && config.onUpdate) {
-          config.onUpdate(registration);
+          config.onUpdate(registration, sw);
         }
       }
     })
