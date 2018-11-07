@@ -217,6 +217,10 @@ function createApp(
   );
 
   const useYarn = useNpm ? false : shouldUseYarn();
+  const yarnUsesDefaultRegistry =
+    execSync('yarn config get registry').toString() ===
+    'https://registry.yarnpkg.com';
+
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -268,7 +272,7 @@ function createApp(
     }
   }
 
-  if (useYarn) {
+  if (useYarn && yarnUsesDefaultRegistry) {
     fs.copySync(
       require.resolve('./yarn.lock.cached'),
       path.join(root, 'yarn.lock')
