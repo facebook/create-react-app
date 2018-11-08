@@ -28,23 +28,23 @@ issues:
   # Comment to post when marking Issues as stale.
   markComment: >
     This issue has been automatically marked as stale because it has not had any
-    recent activity. It will be closed in 7 days if no further activity occurs.
+    recent activity. It will be closed in 5 days if no further activity occurs.
 
   # Comment to post when closing a stale Issue.
   closeComment: >
     This issue has been automatically closed because it has not had any recent
-    activity. The conversation will be locked in 7 days unless the issue is
+    activity. The conversation will be locked in 5 days unless the issue is
     reopened.
 
 pulls:
   # Comment to post when marking Pull Request as stale.
   markComment: >
     This pull request has been automatically marked as stale because it has not
-    had any recent activity. It will be closed in 7 days if no further activity
+    had any recent activity. It will be closed in 5 days if no further activity
     occurs.
 
   # Comment to post when closing a stale Pull Request.
   closeComment: >
     This pull request has been automatically closed because it has not had any
-    recent activity. The conversation will be locked in 7 days unless the pull
+    recent activity. The conversation will be locked in 5 days unless the pull
     request is reopened. Thank you for your contribution.
