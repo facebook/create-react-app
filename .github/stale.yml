@@ -33,8 +33,7 @@ issues:
   # Comment to post when closing a stale Issue.
   closeComment: >
     This issue has been automatically closed because it has not had any recent
-    activity. The conversation will be locked in 5 days unless the issue is
-    reopened.
+    activity. If you have a question or comment, please open a new issue.
 
 pulls:
   # Comment to post when marking Pull Request as stale.
@@ -46,5 +45,5 @@ pulls:
   # Comment to post when closing a stale Pull Request.
   closeComment: >
     This pull request has been automatically closed because it has not had any
-    recent activity. The conversation will be locked in 5 days unless the pull
-    request is reopened. Thank you for your contribution.
+    recent activity. If you have a question or comment, please open a new
+    issue. Thank you for your contribution!
