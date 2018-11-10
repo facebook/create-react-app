@@ -7,6 +7,11 @@ title: Adding TypeScript
 
 [TypeScript](https://www.typescriptlang.org/) is a typed superset of JavaScript that compiles to plain JavaScript.
 
+To create a typed React App project run it:
+```bash
+$ npx create-react-app my-app --typescript
+```
+
 To add [TypeScript](https://www.typescriptlang.org/) to a Create React App project, first install it:
 
 ```bash
