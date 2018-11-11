@@ -90,8 +90,8 @@ function verifyTypeScriptSetup() {
     // tsconfig.json
     // 'parsedValue' matches the output value from ts.parseJsonConfigFileContent()
     target: {
-      parsedValue: ts.ScriptTarget.ES5,
-      suggested: 'es5',
+      parsedValue: ts.ScriptTarget.Latest,
+      suggested: 'esnext',
     },
     lib: { suggested: ['dom', 'dom.iterable', 'esnext'] },
     allowJs: { suggested: true },
