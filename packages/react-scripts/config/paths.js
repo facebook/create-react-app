@@ -57,7 +57,7 @@ const moduleFileExtensions = [
   'tsx',
   'json',
   'web.jsx',
-  'jsx',
+  'jsx'
 ];
 
 // Resolve file paths in the same order as webpack
@@ -89,7 +89,7 @@ module.exports = {
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json')),
+  servedPath: getServedPath(resolveApp('package.json'))
 };
 
 // @remove-on-eject-begin
@@ -116,7 +116,7 @@ module.exports = {
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
   appTypeDeclarations: resolveApp('src/react-app-env.d.ts'),
-  ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
+  ownTypeDeclarations: resolveOwn('lib/react-app.d.ts')
 };
 
 const ownPackageJson = require('../package.json');
@@ -150,7 +150,7 @@ if (
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
     appTypeDeclarations: resolveOwn('template/src/react-app-env.d.ts'),
-    ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
+    ownTypeDeclarations: resolveOwn('lib/react-app.d.ts')
   };
 }
 // @remove-on-eject-end
