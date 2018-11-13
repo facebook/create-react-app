@@ -303,28 +303,28 @@ module.exports = function(webpackEnv) {
 
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
-        {
-          test: /\.(js|mjs|jsx)$/,
-          enforce: 'pre',
-          use: [
-            {
-              options: {
-                // formatter: require.resolve('react-dev-utils/eslintFormatter'), // make eslintless 
-                // eslintPath: require.resolve('eslint'), // make eslintless
+        // {  // make eslintless - start
+          // test: /\.(js|mjs|jsx)$/,
+          // enforce: 'pre',
+          // use: [
+            // {
+              // options: {
+                // formatter: require.resolve('react-dev-utils/eslintFormatter'),
+                // eslintPath: require.resolve('eslint'),
                 // @remove-on-eject-begin
-                baseConfig: {
-                  // extends: [require.resolve('eslint-config-react-app')], // make eslintless 
-                  settings: { react: { version: '999.999.999' } },
-                },
-                ignore: false,
-                // useEslintrc: false, // make eslintless 
+                // baseConfig: {
+                  // extends: [require.resolve('eslint-config-react-app')],
+                  // settings: { react: { version: '999.999.999' } },
+                // },
+                // ignore: false,
+                // useEslintrc: false,
                 // @remove-on-eject-end
-              },
-              // loader: require.resolve('eslint-loader'), // make eslintless 
-            },
-          ],
-          include: paths.appSrc,
-        },
+              // },
+              // loader: require.resolve('eslint-loader'),
+            // },
+          // ],
+          // include: paths.appSrc,
+        // },  // make eslintless - end
         {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall

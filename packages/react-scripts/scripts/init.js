@@ -102,9 +102,9 @@ module.exports = function(
   };
 
   // Setup the eslint config
-  // appPackage.eslintConfig = {
+  // appPackage.eslintConfig = { // make eslintless - start
   //   extends: 'react-app',
-  // }; // make eslintless 
+  // }; // make eslintless - end
 
   // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;
