@@ -309,18 +309,18 @@ module.exports = function(webpackEnv) {
           use: [
             {
               options: {
-                formatter: require.resolve('react-dev-utils/eslintFormatter'),
-                eslintPath: require.resolve('eslint'),
+                // formatter: require.resolve('react-dev-utils/eslintFormatter'), // make eslintless 
+                // eslintPath: require.resolve('eslint'), // make eslintless
                 // @remove-on-eject-begin
                 baseConfig: {
-                  extends: [require.resolve('eslint-config-react-app')],
+                  // extends: [require.resolve('eslint-config-react-app')], // make eslintless 
                   settings: { react: { version: '999.999.999' } },
                 },
                 ignore: false,
-                useEslintrc: false,
+                // useEslintrc: false, // make eslintless 
                 // @remove-on-eject-end
               },
-              loader: require.resolve('eslint-loader'),
+              // loader: require.resolve('eslint-loader'), // make eslintless 
             },
           ],
           include: paths.appSrc,
