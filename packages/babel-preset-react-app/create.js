@@ -108,8 +108,13 @@ module.exports = function(api, opts, env) {
       // Strip flow types before any other transform, emulating the behavior
       // order as-if the browser supported all of the succeeding features
       // https://github.com/facebook/create-react-app/pull/5182
-      isFlowEnabled &&
+      // We will conditionally enable this plugin below in overrides as it clashes with
+      // @babel/plugin-proposal-decorators when using TypeScript.
+      // https://github.com/facebook/create-react-app/issues/5741
+      isFlowEnabled && [
         require('@babel/plugin-transform-flow-strip-types').default,
+        false,
+      ],
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
@@ -172,6 +177,10 @@ module.exports = function(api, opts, env) {
         require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),
     overrides: [
+      isFlowEnabled && {
+        test: /\.(js|mjs|jsx)$/,
+        plugins: [require('@babel/plugin-transform-flow-strip-types').default],
+      },
       isTypeScriptEnabled && {
         test: /\.tsx?$/,
         plugins: [
