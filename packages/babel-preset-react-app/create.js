@@ -178,7 +178,7 @@ module.exports = function(api, opts, env) {
     ].filter(Boolean),
     overrides: [
       isFlowEnabled && {
-        test: /\.(js|mjs|jsx)$/,
+        exclude: /\.tsx?$/,
         plugins: [require('@babel/plugin-transform-flow-strip-types').default],
       },
       isTypeScriptEnabled && {
