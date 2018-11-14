@@ -615,6 +615,7 @@ module.exports = function(webpackEnv) {
         }),
       // TypeScript type checking
       useTypeScript &&
+        `${process.env.TS_TRANSPILE_ONLY}`.toLocaleUpperCase() !== 'true' &&
         new ForkTsCheckerWebpackPlugin({
           typescript: resolve.sync('typescript', {
             basedir: paths.appNodeModules,
