@@ -29,3 +29,5 @@ To learn more about TypeScript, check out [its documentation](https://www.typesc
 > **Note:** We recommend using [VSCode](https://code.visualstudio.com/) for a better integrated experience.
 
 > **Note:** Constant enums and namespaces are not supported.
+
+> **Note:** If you want to ignore typescript errors and only transpile use environemnt varialbe TS_TRANSPILE_ONLY=true in .env file
