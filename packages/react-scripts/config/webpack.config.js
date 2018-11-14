@@ -54,6 +54,14 @@ const imageInlineSizeLimit = parseInt(
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
+let workboxConfig = options => options;
+// Get react-scripts configuration overrides if available
+try {
+  workboxConfig = require(paths.appWorkboxConfigJs);
+} catch (e) {
+  // Do nothing if we could not find a react-scripts configuration file
+}
+
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -652,21 +660,23 @@ module.exports = function(webpackEnv) {
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the Webpack build.
       isEnvProduction &&
-        new WorkboxWebpackPlugin.GenerateSW({
-          clientsClaim: true,
-          exclude: [/\.map$/, /asset-manifest\.json$/],
-          importWorkboxFrom: 'cdn',
-          navigateFallback: publicUrl + '/index.html',
-          navigateFallbackBlacklist: [
-            // Exclude URLs starting with /_, as they're likely an API call
-            new RegExp('^/_'),
-            // Exclude any URLs whose last part seems to be a file extension
-            // as they're likely a resource and not a SPA route.
-            // URLs containing a "?" character won't be blacklisted as they're likely
-            // a route with query params (e.g. auth callbacks).
-            new RegExp('/[^/?]+\\.[^/]+$'),
-          ],
-        }),
+        new WorkboxWebpackPlugin.GenerateSW(
+          workboxConfig({
+            clientsClaim: true,
+            exclude: [/\.map$/, /asset-manifest\.json$/],
+            importWorkboxFrom: 'cdn',
+            navigateFallback: publicUrl + '/index.html',
+            navigateFallbackBlacklist: [
+              // Exclude URLs starting with /_, as they're likely an API call
+              new RegExp('^/_'),
+              // Exclude any URLs whose last part seems to be a file extension
+              // as they're likely a resource and not a SPA route.
+              // URLs containing a "?" character won't be blacklisted as they're likely
+              // a route with query params (e.g. auth callbacks).
+              new RegExp('/[^/?]+\\.[^/]+$'),
+            ],
+          })
+        ),
       // TypeScript type checking
       useTypeScript &&
         new ForkTsCheckerWebpackPlugin({
