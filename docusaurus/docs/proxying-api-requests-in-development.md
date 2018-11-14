@@ -6,7 +6,8 @@ sidebar_label: Proxying in Development
 
 > Note: this feature is available with `react-scripts@0.2.3` and higher.
 
-People often serve the front-end React app from the same host and port as their backend implementation.<br>
+People often serve the front-end React app from the same host and port as their backend implementation.
+
 For example, a production setup might look like this after the app is deployed:
 
 ```
@@ -15,15 +16,15 @@ For example, a production setup might look like this after the app is deployed:
 /api/todos    - server handles any /api/* requests using the backend implementation
 ```
 
-Such setup is **not** required. However, if you **do** have a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
+Such setup is **not** required. However, **with** a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
 
-To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field to your `package.json`, for example:
+To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field to `package.json`, for example:
 
-```js
+```json
   "proxy": "http://localhost:4000",
 ```
 
-This way, when you `fetch('/api/todos')` in development, the development server will recognize that it’s not a static asset, and will proxy your request to `http://localhost:4000/api/todos` as a fallback. The development server will **only** attempt to send requests without `text/html` in its `Accept` header to the proxy.
+This way, when `fetch('/api/todos')` is used in development, the development server will recognize that it is not a static asset, and will proxy the request to `http://localhost:4000/api/todos` as a fallback. The development server will **only** attempt to send requests without `text/html` in its `Accept` header to the proxy.
 
 Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
 
@@ -33,12 +34,11 @@ Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-
 
 Keep in mind that `proxy` only has effect in development (with `npm start`), and it is up to you to ensure that URLs like `/api/todos` point to the right thing in production. You don’t have to use the `/api` prefix. Any unrecognized request without a `text/html` accept header will be redirected to the specified `proxy`.
 
-The `proxy` option supports HTTP, HTTPS and WebSocket connections.<br>
-If the `proxy` option is **not** flexible enough for you, alternatively you can:
+The `proxy` option supports HTTP, HTTPS and WebSocket connections.
 
-- [Configure the proxy yourself](#configuring-the-proxy-manually)
-- Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
-- Use [environment variables](adding-custom-environment-variables.md) to inject the right server host and port into your app.
+The `proxy` can also be [configured manually](/docs/configuring-the-proxy-manually). This requires more setup but allows for greater control than the `package.json` `proxy` simple option.
+
+The alternative to proxying is talking directly to a remote API. For static sites, or those served from different hosts/ports than the API they are talking to, then a proxy is not only not needed but not desirable. For those cases, the remote server usually has CORS enabled ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)) to respond to requests. The app will need a way to specify what the API endpoint is though. Use [environment variables](adding-custom-environment-variables.md) to inject the right server host and port into your app to specify those. This has the added benefit of being able to have different values and inject them at run or build time.
 
 ## "Invalid Host Header" Errors After Configuring Proxy
 
