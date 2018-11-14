@@ -324,6 +324,7 @@ function prepareProxy(proxy, appPublicFolder) {
       // If this heuristic doesn’t work well for you, use a custom `proxy` object.
       context: function(pathname, req) {
         return (
+          req.upgrade ||
           req.method !== 'GET' ||
           (mayProxy(pathname) &&
             req.headers.accept &&
