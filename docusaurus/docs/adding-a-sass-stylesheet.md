@@ -38,6 +38,10 @@ This will allow you to do imports like
 >
 > ```
 > [options]
+> module.file_ext=.js
+> module.file_ext=.jsx
+> module.file_ext=.mjs
+> module.file_ext=.json
 > module.file_ext=.sass
 > module.file_ext=.scss
 > ```
