@@ -496,6 +496,7 @@ function getInstallPackage(version, originalDirectory) {
       packageToInstall = version;
     }
   }
+  console.log('packageToInstall', packageToInstall);
   return packageToInstall;
 }
 
