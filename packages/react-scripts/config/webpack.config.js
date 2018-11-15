@@ -271,6 +271,7 @@ module.exports = function(webpackEnv) {
       extensions: paths.moduleFileExtensions
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
+      mainFields: isEnvProduction ? ['main'] : ['main:dev', 'main'],
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -345,7 +346,9 @@ module.exports = function(webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
+              include: isEnvProduction
+                ? [paths.appSrc]
+                : [paths.appSrc, ...paths.appWorkspaces],
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
