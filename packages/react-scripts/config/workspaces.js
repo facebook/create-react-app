@@ -52,8 +52,9 @@ const getPackagePaths = workspaces => {
 
 const resolveBabelLoaderPaths = workspaces => {
   const packageJsonPaths = getPackagePaths(workspaces);
+  const babelLoaderPaths = [];
 
-  const babelLoaderPaths = packageJsonPaths.filter(absPkgPath => {
+  packageJsonPaths.map(absPkgPath => {
     const packageJson = loadPackageJson(absPkgPath);
     const hasMainDev = Reflect.has(packageJson, 'main:dev');
 
@@ -61,7 +62,7 @@ const resolveBabelLoaderPaths = workspaces => {
       const mainDevPath = path.dirname(packageJson['main:dev']);
       const packageAbsDir = path.dirname(absPkgPath);
       const absDevPath = path.join(packageAbsDir, mainDevPath);
-      return absDevPath;
+      babelLoaderPaths.push(absDevPath);
     }
   });
 
@@ -69,20 +70,31 @@ const resolveBabelLoaderPaths = workspaces => {
 };
 
 const resolve = appDirectory => {
+  if (!appDirectory) {
+    throw new Error('appDirectory not provided');
+  }
+
+  if (!appDirectory instanceof String) {
+    throw new Error('appDirectory should be a string');
+  }
+
   const nill = [];
 
   const workspaces = getWorkspacesRootConfig(appDirectory);
+  console.log('Yarn Workspaces detected.');
 
   if (workspaces.length === 0) {
     return nill;
   }
 
   const babelLoaderPaths = resolveBabelLoaderPaths(workspaces);
+  console.log('Exporting "dev:main" paths to Webpack.');
 
   if (babelLoaderPaths === 0) {
     return nill;
   }
 
+  // process.exit();
   return babelLoaderPaths;
 };
 

@@ -27,6 +27,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
+const workspaces = require('./workspaces');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
@@ -55,6 +56,10 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 module.exports = function(webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
+
+  const workspacesDevelopmentPaths = isEnvDevelopment
+    ? workspaces.resolve(paths.appPath)
+    : [];
 
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -271,7 +276,7 @@ module.exports = function(webpackEnv) {
       extensions: paths.moduleFileExtensions
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
-      mainFields: isEnvProduction ? ['main'] : ['main:dev', 'main'],
+      mainFields: ['module:dev', 'main:dev', 'module', 'main'],
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -346,9 +351,7 @@ module.exports = function(webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: isEnvProduction
-                ? [paths.appSrc]
-                : [paths.appSrc, ...paths.appWorkspaces],
+              include: [paths.appSrc, ...workspacesDevelopmentPaths],
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
