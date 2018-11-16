@@ -77,6 +77,13 @@ It will get copied to the `build` folder when you run `npm run build`.
 
 If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
+If you're using [NGINX](https://www.nginx.com/), you need to add the following rule to your config, as per [this Stack Overflow answer](https://stackoverflow.com/a/43954597):
+```
+location / {
+  try_files $uri /index.html;
+}
+```
+
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
 On a production build, and when you've [opted-in](making-a-progressive-web-app.md#why-opt-in),
