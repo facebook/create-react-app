@@ -51,7 +51,8 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-const workspacesSettings = workspaces.init(paths);
+const workspacesConfig = workspaces.init(paths);
+console.log(workspacesConfig.paths);
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -274,7 +275,7 @@ module.exports = function(webpackEnv) {
       extensions: paths.moduleFileExtensions
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
-      mainFields: ['main:dev', 'main'],
+      mainFields: [workspacesConfig.packageEntry, 'main'],
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -349,7 +350,12 @@ module.exports = function(webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: [paths.appSrc, workspacesSettings.paths],
+              include:
+                isEnvDevelopment && workspacesConfig.development
+                  ? [paths.appSrc, workspacesConfig.paths]
+                  : isEnvProduction && workspacesConfig.production
+                    ? [paths.appSrc, workspacesConfig.paths]
+                    : paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
