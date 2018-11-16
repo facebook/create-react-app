@@ -1,3 +1,5 @@
+'use strict';
+
 const fse = require('fs-extra');
 const path = require('path');
 const findUp = require('find-up');
@@ -104,7 +106,7 @@ const guard = (appDirectory, appPackageJson) => {
     throw new Error('appDirectory not provided');
   }
 
-  if (!appDirectory instanceof String) {
+  if (typeof appDirectory !== 'string') {
     throw new Error('appDirectory should be a string');
   }
 
@@ -112,7 +114,7 @@ const guard = (appDirectory, appPackageJson) => {
     throw new Error('appPackageJson not provided');
   }
 
-  if (!appPackageJson instanceof String) {
+  if (typeof appPackageJson !== 'string') {
     throw new Error('appPackageJson should be a string');
   }
 };
@@ -142,7 +144,7 @@ const init = paths => {
   }
 
   if (Reflect.has(appSettings, 'production')) {
-    config.development = appSettings.production ? true : false;
+    config.production = appSettings.production ? true : false;
   }
 
   if (Reflect.has(appSettings, 'package-entry')) {

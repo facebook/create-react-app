@@ -60,6 +60,14 @@ module.exports = function(webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
+  const workspacesMainFields = [workspacesConfig.packageEntry, 'main'];
+  const mainFields =
+    isEnvDevelopment && workspacesConfig.development
+      ? workspacesMainFields
+      : isEnvProduction && workspacesConfig.production
+        ? workspacesMainFields
+        : undefined;
+
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
   // In development, we always serve from the root. This makes config easier.
@@ -275,7 +283,7 @@ module.exports = function(webpackEnv) {
       extensions: paths.moduleFileExtensions
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
-      mainFields: [workspacesConfig.packageEntry, 'main'],
+      mainFields,
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
