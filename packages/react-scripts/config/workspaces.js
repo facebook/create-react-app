@@ -88,7 +88,7 @@ const resolve = appDirectory => {
   }
 
   const babelLoaderPaths = resolveBabelLoaderPaths(workspaces);
-  console.log('Exporting "dev:main" paths to Webpack.');
+  console.log('Exporting "main:dev" paths to Webpack babel-loader.');
 
   if (babelLoaderPaths === 0) {
     return nill;

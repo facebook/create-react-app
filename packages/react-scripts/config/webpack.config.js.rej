@@ -1,0 +1,7 @@
+diff a/packages/react-scripts/config/webpack.config.js b/packages/react-scripts/config/webpack.config.js	(rejected hunks)
+@@ -60,2 +60,3 @@ module.exports = function(webpackEnv) {
+-  const workspacesDevelopmentPaths = isEnvDevelopment ?
+-    workspaces.resolve(paths.appPath) : [];
++  const workspacesDevelopmentPaths = isEnvDevelopment
++    ? workspaces.resolve(paths.appPath)
++    : [];
