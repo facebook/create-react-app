@@ -423,7 +423,7 @@ function run(
           cwd: process.cwd(),
           args: nodeArgs,
         },
-        [root, appName, verbose, originalDirectory, template],
+        [root, appName, verbose, originalDirectory, template, packageName],
         `
         var init = require('${packageName}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));

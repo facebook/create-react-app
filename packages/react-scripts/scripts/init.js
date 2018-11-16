@@ -80,7 +80,8 @@ module.exports = function(
   appName,
   verbose,
   originalDirectory,
-  template
+  template,
+  packageName
 ) {
   const ownPath = path.dirname(
     require.resolve(path.join(__dirname, '..', 'package.json'))
@@ -196,7 +197,7 @@ module.exports = function(
   }
 
   if (useTypeScript) {
-    verifyTypeScriptSetup();
+    verifyTypeScriptSetup(packageName);
   }
 
   if (tryGitInit(appPath)) {
