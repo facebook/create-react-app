@@ -51,3 +51,11 @@ TypeScript is enabled by default. Make sure you have a `tsconfig.json` file at t
   "presets": [["react-app", { "flow": false, "typescript": true }]]
 }
 ```
+
+## Absolute Runtime Paths
+By default, `babel-preset-react-app` will make `@babel/runtime` imports to use absolute file system paths. To avoid that and use `node_modules/` relative paths set off the `absoluteRuntime` option on `.babelrc`:
+
+```
+{
+  "presets": [["react-app", { "absoluteRuntime": false }]]
+}
