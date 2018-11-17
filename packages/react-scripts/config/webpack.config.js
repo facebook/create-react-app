@@ -13,6 +13,7 @@ const isWsl = require('is-wsl');
 const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
+const glob = require('glob');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -60,11 +61,84 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
+// Lighter custom entries
+function getEntries(type, dirPath, entryFiles) {
+  return entryFiles.reduce((entries, entryFile) => {
+    // converts entryFile path to platform specific style
+    // this fixes windows/unix path inconsitence
+    // because node-glob always returns path with unix style path separators
+    entryFile = path.join(entryFile);
+
+    const localPath = entryFile.split(dirPath)[1];
+
+    let entryName = path.join(type, localPath.split('.js')[0]);
+
+    entries[entryName] = path.join(dirPath, localPath);
+
+    return entries;
+  }, {});
+}
+
+// Create dynamic entries based on contents of components directory
+const componentsEntryFiles = [].concat(
+  glob.sync(path.join(paths.componentsDir, '/*.js')),
+  glob.sync(path.join(paths.componentsDir, '/**/index.js')),
+  glob.sync(path.join(paths.componentsDir, '/**/*.static.js'))
+);
+
+// Create dynamic entries based on contents of components directory
+const libEntryFiles = [].concat(
+  glob.sync(path.join(paths.libDir, '/*.(js|scss|css)'))
+);
+
+const patternsEntryFiles = [].concat(
+  glob.sync(path.join(paths.patternsDir, '/**/index.js'))
+);
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function(webpackEnv) {
+module.exports = function(webpackEnv, isStyleguide) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
+
+  const entries = Object.assign(
+    {},
+    // Include an alternative client for WebpackDevServer. A client's job is to
+    // connect to WebpackDevServer by a socket and get notified about changes.
+    // When you save a file, the client will either apply hot updates (in case
+    // of CSS changes), or refresh the page (in case of JS changes). When you
+    // make a syntax error, this client will display a syntax error overlay.
+    // Note: instead of the default WebpackDevServer client, we use a custom one
+    // to bring better experience for Create React App users. You can replace
+    // the line below with these two lines if you prefer the stock client:
+    // require.resolve('webpack-dev-server/client') + '?/',
+    // require.resolve('webpack/hot/dev-server'),
+    isEnvDevelopment
+      ? { hotDevClient: require.resolve('react-dev-utils/webpackHotDevClient') }
+      : {},
+    getEntries('lib', paths.libDir, libEntryFiles),
+    isEnvProduction
+      ? {
+          ...getEntries(
+            'components',
+            paths.componentsDir,
+            componentsEntryFiles
+          ),
+          ...getEntries('patterns', paths.patternsDir, patternsEntryFiles),
+        }
+      : {},
+    isStyleguide
+      ? {
+          styleguide: paths.styleguideIndexJs,
+        }
+      : {
+          // Finally, this is your app's code:
+          app: paths.appIndexJs,
+          // We include the app code last so that if there is a runtime error during
+          // initialization, it doesn't blow up the WebpackDevServer client, and
+          // changing JS code would still trigger a refresh.
+        }
+  );
 
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -153,25 +227,7 @@ module.exports = function(webpackEnv) {
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: [
-      // Include an alternative client for WebpackDevServer. A client's job is to
-      // connect to WebpackDevServer by a socket and get notified about changes.
-      // When you save a file, the client will either apply hot updates (in case
-      // of CSS changes), or refresh the page (in case of JS changes). When you
-      // make a syntax error, this client will display a syntax error overlay.
-      // Note: instead of the default WebpackDevServer client, we use a custom one
-      // to bring better experience for Create React App users. You can replace
-      // the line below with these two lines if you prefer the stock client:
-      // require.resolve('webpack-dev-server/client') + '?/',
-      // require.resolve('webpack/hot/dev-server'),
-      isEnvDevelopment &&
-        require.resolve('react-dev-utils/webpackHotDevClient'),
-      // Finally, this is your app's code:
-      paths.appIndexJs,
-      // We include the app code last so that if there is a runtime error during
-      // initialization, it doesn't blow up the WebpackDevServer client, and
-      // changing JS code would still trigger a refresh.
-    ].filter(Boolean),
+    entry: entries,
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,

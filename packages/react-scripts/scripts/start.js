@@ -51,10 +51,10 @@ const createDevServerConfig = require('../config/webpackDevServer.config');
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
-// Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appIndexJs])) {
-  process.exit(1);
-}
+// // Warn and crash if required files are missing
+// if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+//   process.exit(1);
+// }
 
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
@@ -84,6 +84,8 @@ choosePort(HOST, DEFAULT_PORT)
       return;
     }
     const config = configFactory('development');
+    const configStyleguide = configFactory('development', true);
+
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
     const useTypeScript = fs.existsSync(paths.appTsConfig);
@@ -97,7 +99,8 @@ choosePort(HOST, DEFAULT_PORT)
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler({
       appName,
-      config,
+      config, 
+      configStyleguide,
       devSocket,
       urls,
       useYarn,
@@ -112,22 +115,6 @@ choosePort(HOST, DEFAULT_PORT)
       proxyConfig,
       urls.lanUrlForConfig
     );
-
-    // custom rewrite to serve /styleguide(/)* as styleguide.html
-    serverConfig.historyApiFallback = {
-      rewrites: [
-        {
-          from: /^\/styleguide\/?.*$/,
-          to: () => '/styleguide.html',
-        },
-        {
-          from: /^\/.+$/,
-          to: context => {
-            return context.parsedUrl.pathname + '.html';
-          },
-        },
-      ],
-    };
 
     const devServer = new WebpackDevServer(compiler, serverConfig);
     // Launch WebpackDevServer.
@@ -165,6 +152,7 @@ choosePort(HOST, DEFAULT_PORT)
   .catch(err => {
     if (err && err.message) {
       console.log(err.message);
+      console.log('err:', err);
     }
     process.exit(1);
   });
