@@ -8,15 +8,63 @@
 // @remove-on-eject-end
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
+const chalk = require('chalk');
+const crypto = require('crypto');
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const paths = require('./paths');
-const fs = require('fs');
 
-const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
+
+// Get the https config
+// Return cert files if provided in env, otherwise just true or false
+function httpsConfig() {
+  const { SSL_CRT_FILE, SSL_KEY_FILE, HTTPS } = process.env;
+  const https = HTTPS === 'true';
+
+  if (https && SSL_CRT_FILE && SSL_KEY_FILE) {
+    const cwd = process.cwd();
+    const crtFile = path.resolve(cwd, SSL_CRT_FILE);
+    const keyFile = path.resolve(cwd, SSL_KEY_FILE);
+    if (!fs.existsSync(crtFile)) {
+      throw new Error(
+        `You specified ${chalk.cyan(
+          'SSL_CRT_FILE'
+        )} in your env, but the file "${chalk.yellow(crtFile)}" doesn't exist.`
+      );
+    }
+    if (!fs.existsSync(keyFile)) {
+      throw new Error(
+        `You specified ${chalk.cyan(
+          'SSL_KEY_FILE'
+        )} in your env, but the file "${chalk.yellow(keyFile)}" doesn't exist.`
+      );
+    }
+    const config = {
+      key: fs.readFileSync(keyFile),
+      cert: fs.readFileSync(crtFile),
+    };
+    try {
+      crypto.publicEncrypt(config.cert, new Buffer(''));
+    } catch (err) {
+      throw new Error(`The certificate "${chalk.yellow(crtFile)}" is invalid.`);
+    }
+
+    try {
+      crypto.privateEncrypt(config.key, new Buffer(''));
+    } catch (err) {
+      throw new Error(
+        `The certificate key "${chalk.yellow(keyFile)}" is invalid.`
+      );
+    }
+    return config;
+  }
+  return https;
+}
 
 module.exports = function(proxy, allowedHost) {
   return {
@@ -80,7 +128,7 @@ module.exports = function(proxy, allowedHost) {
       ignored: ignoredFiles(paths.appSrc),
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === 'https',
+    https: httpsConfig(),
     host,
     overlay: false,
     historyApiFallback: {
