@@ -1,14 +1,14 @@
 {
   "name": "@lighting-beetle/lighter-react-scripts",
-  "version": "2.7.0",
-  "description": "Configuration and scripts for Lighter",
-  "repository": "lighting-beetle/lighter",
+  "version": "3.0.0-alpha.1",
+  "description": "Configuration and scripts for Create React App.",
+  "repository": "lightingbeetle/lighter",
   "license": "MIT",
   "engines": {
     "node": ">=8.10"
   },
   "bugs": {
-    "url": "https://github.com/lightingbeetle/lighter"
+    "url": "https://github.com/lightingbeetle/lighter/issues"
   },
   "files": [
     "bin",
@@ -20,7 +20,7 @@
     "utils"
   ],
   "bin": {
-    "lighter-react-scripts": "./bin/lighter-react-scripts.js"
+    "react-scripts": "./bin/lighter-react-scripts.js"
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
