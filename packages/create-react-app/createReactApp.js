@@ -133,7 +133,12 @@ if (program.info) {
         System: ['OS', 'CPU'],
         Binaries: ['Node', 'npm', 'Yarn'],
         Browsers: ['Chrome', 'Edge', 'Internet Explorer', 'Firefox', 'Safari'],
-        npmPackages: ['react', 'react-dom', 'react-scripts'],
+        npmPackages: [
+          'react',
+          'react-dom',
+          '@lighting-beetle/lighter-react-scripts',
+          '@lighting-beetle/styleguide',
+        ],
         npmGlobalPackages: ['create-react-app'],
       },
       {
@@ -211,7 +216,7 @@ function createApp(
     process.exit(1);
   }
 
-  console.log(`Creating a new React app in ${chalk.green(root)}.`);
+  console.log(`Creating a new Lighter app in ${chalk.green(root)}.`);
   console.log();
 
   const packageJson = {
@@ -234,14 +239,11 @@ function createApp(
   if (!semver.satisfies(process.version, '>=8.10.0')) {
     console.log(
       chalk.yellow(
-        `You are using Node ${
-          process.version
-        } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
+        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
           `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
       )
     );
-    // Fall back to latest supported react-scripts on Node 4
-    version = 'react-scripts@0.9.x';
+    process.exit(1);
   }
 
   if (!useYarn) {
@@ -250,15 +252,12 @@ function createApp(
       if (npmInfo.npmVersion) {
         console.log(
           chalk.yellow(
-            `You are using npm ${
-              npmInfo.npmVersion
-            } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
+            `You are using npm ${npmInfo.npmVersion} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
               `Please update to npm 5 or higher for a better, fully supported experience.\n`
           )
         );
       }
-      // Fall back to latest supported react-scripts for npm 3
-      version = 'react-scripts@0.9.x';
+      process.exit(1);
     }
   } else if (usePnp) {
     const yarnInfo = checkYarnVersion();
@@ -266,9 +265,7 @@ function createApp(
       if (yarnInfo.yarnVersion) {
         console.log(
           chalk.yellow(
-            `You are using Yarn ${
-              yarnInfo.yarnVersion
-            } together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
+            `You are using Yarn ${yarnInfo.yarnVersion} together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
               `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
           )
         );
@@ -391,41 +388,22 @@ function run(
   usePnp,
   useTypescript
 ) {
-  const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = ['react', 'react-dom', packageToInstall];
-
-  console.log('Installing packages. This might take a couple of minutes.');
-  getPackageName(packageToInstall)
-    .then(packageName =>
-      checkIfOnline(useYarn).then(isOnline => ({
-        isOnline: isOnline,
-        packageName: packageName,
-      }))
-    )
-    .then(info => {
-      const isOnline = info.isOnline;
-      const packageName = info.packageName;
-      console.log(
-        `Installing ${chalk.cyan('react')}, ${chalk.cyan(
-          'react-dom'
-        )}, and ${chalk.cyan(packageName)}...`
-      );
-      console.log();
-
-      return install(root, useYarn, allDependencies, verbose, isOnline).then(
-        () => packageName
-      );
-    })
-    .then(packageName => {
-      checkNodeVersion(packageName);
-      setCaretRangeForRuntimeDeps(packageName);
-
-      const scriptsPath = path.resolve(
-        process.cwd(),
-        'node_modules',
-        packageName,
-        'scripts',
-        'init.js'
+  getInstallPackage(version, originalDirectory).then(packageToInstall => {
+    const allDependencies = [
+      'react',
+      'react-dom',
+      '@lighting-beetle/lighter-styleguide',
+      packageToInstall,
+    ];
+    if (useTypescript) {
+      allDependencies.push(
+        // TODO: get user's node version instead of installing latest
+        '@types/node',
+        '@types/react',
+        '@types/react-dom',
+        // TODO: get version of Jest being used instead of installing latest
+        '@types/jest',
+        'typescript'
       );
     }
 
@@ -532,7 +510,7 @@ function run(
 }
 
 function getInstallPackage(version, originalDirectory) {
-  let packageToInstall = 'react-scripts';
+  let packageToInstall = '@lighting-beetle/lighter-react-scripts';
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
@@ -762,7 +740,12 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
+  const dependencies = [
+    'react',
+    'react-dom',
+    '@lighting-beetle/lighter-react-scripts',
+    '@lighting-beetle/lighter-styleguide',
+  ].sort();
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
