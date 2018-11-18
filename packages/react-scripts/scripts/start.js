@@ -83,8 +83,27 @@ choosePort(HOST, DEFAULT_PORT)
       // We have not found a port.
       return;
     }
-    const config = configFactory('development');
-    const configStyleguide = configFactory('development', true);
+
+    let hasAppHtml;
+    try {
+      fs.accessSync(paths.appHtml, fs.F_OK);
+      hasAppHtml = true;
+    } catch (e) {} //eslint-disable-line
+
+    const configs = [
+      configFactory('development', {
+        hasAppHtml,
+      }),
+    ];
+
+    try {
+      fs.accessSync(paths.styleguideIndexJs, fs.F_OK);
+      configs.push(
+        configFactory('development', {
+          hasStyleguide: true,
+        })
+      );
+    } catch (e) {} // eslint-disable-line
 
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;

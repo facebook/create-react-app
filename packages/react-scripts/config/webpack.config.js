@@ -97,9 +97,11 @@ const patternsEntryFiles = [].concat(
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function(webpackEnv, isStyleguide) {
+module.exports = function(webpackEnv, options = {}) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
+
+  const { hasStyleguide, hasAppHtml } = options;
 
   const entries = Object.assign(
     {},
@@ -127,7 +129,7 @@ module.exports = function(webpackEnv, isStyleguide) {
           ...getEntries('patterns', paths.patternsDir, patternsEntryFiles),
         }
       : {},
-    isStyleguide
+    hasStyleguide
       ? {
           styleguide: paths.styleguideIndexJs,
         }
@@ -620,32 +622,34 @@ module.exports = function(webpackEnv, isStyleguide) {
       ],
     },
     plugins: [
-      // Generates an `index.html` file with the <script> injected.
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            template: paths.appHtml,
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      ),
+      // Generates an `styleguide.html` file with the <script> injected.
+      hasStyleguide ||
+        (hasAppHtml &&
+          new HtmlWebpackPlugin(
+            Object.assign(
+              {},
+              {
+                inject: true,
+                template: hasStyleguide ? paths.styleguideHtml : paths.appHtml,
+              },
+              isEnvProduction
+                ? {
+                    minify: {
+                      removeComments: true,
+                      collapseWhitespace: true,
+                      removeRedundantAttributes: true,
+                      useShortDoctype: true,
+                      removeEmptyAttributes: true,
+                      removeStyleLinkTypeAttributes: true,
+                      keepClosingSlash: true,
+                      minifyJS: true,
+                      minifyCSS: true,
+                      minifyURLs: true,
+                    },
+                  }
+                : undefined
+            )
+          )),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
