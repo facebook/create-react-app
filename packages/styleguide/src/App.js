@@ -2,19 +2,16 @@ import React from 'react';
 import {} from 'prop-types';
 import { BrowserRouter } from 'react-router-dom';
 
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 
 import * as theme from './style/theme';
 import { rem } from './style/utils';
 
-import { init, RouteTracker } from './components/GoogleAnalytics';
 import Header from './components/Header/';
 import Sidebar from './components/Sidebar/';
 import Navigation from './components/Navigation/';
 import NavigationButton from './components/NavigationButton/';
 import Sitemap from './components/Sitemap';
-
-import MdxWrapper from './utils/mdx';
 
 class App extends React.Component {
   static displayName = 'App';
@@ -50,72 +47,64 @@ class App extends React.Component {
       name,
       theme: projectTheme = {},
       styleguideBasePath = '/styleguide/',
-      gaId,
     } = config;
 
     const activeClass = this.state.isNavActive ? 'is-active' : '';
 
     // merge styleguide theme and project theme
-    const localTheme = Object.keys(projectTheme).reduce((acc, prop) => {
-      if (prop === 'previewBackgrounds') {
-        acc[prop] = projectTheme[prop];
-
-        return acc;
-      }
-
+    const localTheme = Object.keys(theme).reduce((acc, prop) => {
       if (typeof theme[prop] === 'object') {
         acc[prop] = {
-          ...(theme[prop] || {}),
+          ...theme[prop],
           ...projectTheme[prop],
         };
       } else {
-        acc[prop] = projectTheme[prop];
+        acc[prop] = theme[prop];
       }
 
       return acc;
-    }, Object.assign({}, theme));
+    }, {});
 
     return (
-      <MdxWrapper>
-        <GlobalStyle />
-        <BrowserRouter basename={styleguideBasePath}>
-          {gaId && init({ gaId }) && <RouteTracker />}
-          <ThemeProvider theme={localTheme}>
-            <PageLayout>
-              <PageHeader
-                key="header"
-                project={logo || name}
-                projectSmall={logoSmall || name}
-                pageTitle="Bar"
-                infoText={`v${version}`}
-                {...other}
-              >
-                <NavigationButton
-                  onClick={() => this.handleClick()}
-                  isActive={this.state.isNavActive}
+      <BrowserRouter basename={styleguideBasePath}>
+        <ThemeProvider theme={localTheme}>
+          <PageLayout>
+            <PageHeader
+              key="header"
+              project={logo || name}
+              projectSmall={logoSmall || name}
+              pageTitle="Bar"
+              infoText={`v${version}`}
+              {...other}
+            >
+              <NavigationButton
+                onClick={() => this.handleClick()}
+                isActive={this.state.isNavActive}
+              />
+            </PageHeader>
+            <PageBody className={activeClass}>
+              <PageContent>
+                <Sitemap routes={routes} />
+              </PageContent>
+              <PageSidebar>
+                <Navigation
+                  routes={routes}
+                  onNavLinkClick={() => this.handleNavLinkClick()}
                 />
-              </PageHeader>
-              <PageBody className={activeClass}>
-                <PageContent>
-                  <Sitemap routes={routes} />
-                </PageContent>
-                <PageSidebar>
-                  <Navigation
-                    routes={routes}
-                    onNavLinkClick={() => this.handleNavLinkClick()}
-                  />
-                </PageSidebar>
-              </PageBody>
-            </PageLayout>
-          </ThemeProvider>
-        </BrowserRouter>
-      </MdxWrapper>
+              </PageSidebar>
+            </PageBody>
+          </PageLayout>
+        </ThemeProvider>
+      </BrowserRouter>
     );
   }
 }
 
 /* eslint-disable */
-const GlobalStyle = createGlobalStyle`
+injectGlobal`
+  body, html {
+  }
+
   html,
   body {
     padding: 0;
@@ -133,11 +122,9 @@ const GlobalStyle = createGlobalStyle`
 const PageLayout = styled.div``;
 
 const PageHeader = styled(Header)`
-  position: fixed;
+  position: sticky;
   top: 0;
-  right: 0;
-  left: 0;
-  max-width: 100%;
+  width: 100%;
   height: ${props => rem(props.theme.sizes.headerHeight)};
   display: flex;
   flex: 0 0 auto;
@@ -151,15 +138,11 @@ const PageHeader = styled(Header)`
 
 const PageBody = styled.div`
   position: relative;
-  height: calc(100vh - 6rem);
   display: flex;
   flex: 1 1 auto;
   min-height: 0;
   align-items: flex-start;
-  z-index: ${props => props.theme.zIndex.content};
-  top: 6rem;
-  overflow: hidden;
-  
+
   @media (max-width: calc(${props => props.theme.breakpoints.l} - 1px)) {
     &.is-active {
       overflow-x: hidden;
@@ -179,11 +162,6 @@ const PageSidebar = styled(Sidebar)`
   transition: transform 0.3s ease-in-out 0s;
   z-index: ${props => props.theme.zIndex.sidebar};
 
-  /* IE */
-  @media all and (-ms-high-contrast: none) {
-    left: 0;
-  }
-
   @media (min-width: ${props => props.theme.breakpoints.l}) {
     position: sticky;
     transform: translateX(0);
@@ -197,7 +175,6 @@ const PageSidebar = styled(Sidebar)`
 const PageContent = styled.main`
   position: relative;
   flex: 1 1 auto;
-  align-self: stretch;
   overflow-x: hidden;
   overflow-y: auto;
   padding: ${props => rem(props.theme.spaces.default)} 0;
@@ -206,16 +183,6 @@ const PageContent = styled.main`
   .is-active & {
     transform: translateX(${props => rem(props.theme.sizes.sidebarWidth)});
     opacity: 0.5;
-  }
-
-  /* IE */
-  @media (min-width: ${props =>
-      props.theme.breakpoints.l}) and (-ms-high-contrast: none) {
-    max-width: calc(100vw - 16.75em);
-    transform: translateX(${props => rem(props.theme.sizes.sidebarWidth)});
-    .is-active & {
-      left: ${props => rem(props.theme.sizes.sidebarWidth)};
-    }
   }
 
   @media (min-width: ${props => props.theme.breakpoints.l}) {

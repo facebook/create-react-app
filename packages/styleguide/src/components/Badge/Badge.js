@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { rem } from './../../style/utils';
 
 const propTypes = {
-  /** Color as a string from styleguide theme */
   color: string,
 };
 
@@ -24,7 +23,6 @@ const StyledBadge = styled.span`
   text-transform: capitalize;
 `;
 
-Badge.displayName = 'Badge';
 Badge.propTypes = propTypes;
 
 export default Badge;

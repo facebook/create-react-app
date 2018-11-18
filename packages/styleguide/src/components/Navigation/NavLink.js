@@ -8,7 +8,7 @@ import { rem, getColor } from './../../style/utils';
 
 const propTypes = {
   href: string,
-  isActive: bool
+  isActive: bool,
 };
 
 const CLASS_ROOT = 'sg-nav__link';

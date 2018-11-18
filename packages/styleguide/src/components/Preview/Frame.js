@@ -11,11 +11,11 @@ class Frame extends Component {
   static displayName = 'Frame';
 
   static propTypes = {
-    scripts: string
+    scripts: string,
   };
 
   static defaultProps = {
-    scripts: ''
+    scripts: '',
   };
 
   componentDidMount() {

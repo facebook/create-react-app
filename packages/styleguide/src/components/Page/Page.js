@@ -1,12 +1,10 @@
 import React from 'react';
-import { func, node, oneOfType } from 'prop-types';
+import { node } from 'prop-types';
 import cx from 'classnames';
 import styled from 'styled-components';
-import { components } from './../../utils/mdx';
 
 const propTypes = {
-  /** Page content */
-  render: oneOfType([node, func]).isRequired
+  render: node,
 };
 
 const CLASS_ROOT = '';
@@ -14,15 +12,9 @@ const CLASS_ROOT = '';
 const Page = ({ className, render, ...other }) => {
   const classes = cx(CLASS_ROOT, className);
 
-  const Render = render;
-
   return (
     <StyledPage className={classes} {...other}>
-      {typeof render === 'function' ? (
-        <Render components={components} />
-      ) : (
-        render
-      )}
+      {render}
     </StyledPage>
   );
 };

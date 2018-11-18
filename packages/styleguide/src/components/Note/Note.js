@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import cx from 'classnames';
 
 const propTypes = {
-  /** Note title */
-  title: string.isRequired,
-  /** Type influences note visal style */
-  type: oneOf(['warning', 'success', 'error', 'info'])
+  title: string,
+  /* type influences set styles */
+  type: oneOf(['warning', 'success', 'error', 'info']),
 };
 
 const CLASS_ROOT = 'note';

@@ -16,37 +16,32 @@ export const H1 = styled.h1`
   line-height: 1.3333;
   margin-bottom: ${props => props.theme.spaces.large};
 `;
-H1.displayName = 'H1';
 
-export const H2 = styled.h2`
+export const H2 = styled.h1`
   ${baseCSS};
   font-size: ${rem(36)};
   line-height: 1.3333;
 `;
-H2.displayName = 'H2';
 
-export const H3 = styled.h3`
+export const H3 = styled.h1`
   ${baseCSS};
   font-size: ${rem(24)};
   line-height: 1.3333;
 `;
-H3.displayName = 'H3';
 
-export const H4 = styled.h4`
+export const H4 = styled.h1`
   ${baseCSS};
   font-size: ${props => rem(props.theme.fontSizes.base)};
   line-height: ${props => props.theme.lineHeights.base};
 `;
-H4.displayName = 'H4';
 
-export const H5 = styled.h5`
+export const H5 = styled.h1`
   ${baseCSS};
   color: ${props => props.theme.colors.greyDark};
   font-size: ${props => rem(props.theme.fontSizes.base)};
   line-height: ${props => props.theme.lineHeights.base};
   text-transform: uppercase;
 `;
-H5.displayName = 'H5';
 
 export const P = styled.p`
   font-family: ${props => props.theme.fontFamily};
@@ -56,7 +51,6 @@ export const P = styled.p`
   margin-bottom: ${props => props.theme.spaces.medium};
   max-width: ${props => props.theme.contentWidth};
 `;
-P.displayName = 'P';
 
 export const Link = styled.a`
   font-family: ${props => props.theme.fontFamily};
@@ -68,4 +62,3 @@ export const Link = styled.a`
     text-decoration: none;
   }
 `;
-Link.displayName = 'Link';

@@ -7,7 +7,7 @@ import { Bar, BarItem } from './../Bar';
 
 const propTypes = {
   values: arrayOf(string),
-  what: string
+  what: string,
 };
 
 const Info = ({ values = [], what, ...other }) => (

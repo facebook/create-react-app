@@ -3,7 +3,7 @@ import { array } from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
 const propTypes = {
-  routes: array
+  routes: array,
 };
 
 // flatten routes to single level array
@@ -14,7 +14,7 @@ const getRoutes = (nodes, path = '') => {
     const modifiedNode = {
       ...node,
       leaf: !node.nodes,
-      absolutePath: path + node.path
+      absolutePath: path + node.path,
     };
 
     result.push(modifiedNode);

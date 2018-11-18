@@ -2,8 +2,6 @@ import React from 'react';
 import { string, array } from 'prop-types';
 import cx from 'classnames';
 
-import styled from 'styled-components';
-
 import { Bar, BarItem } from './../Bar';
 import { H5 } from './../Typography';
 
@@ -39,7 +37,7 @@ const PreviewTitleBar = ({ className, title, actions = [], ...other }) => {
 PreviewTitleBar.displayName = 'PreviewTitleBar';
 PreviewTitleBar.propTypes = propTypes;
 
-const StyledBar = styled(Bar)`
+const StyledBar = Bar.withComponent('header').extend`
   margin-bottom: ${props => props.theme.spaces.small};
 `;
 

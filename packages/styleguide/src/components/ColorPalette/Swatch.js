@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const propTypes = {
   main: bool,
   shade: oneOfType([number, string]),
-  isActive: bool
+  isActive: bool,
 };
 
 const Swatch = ({ children, shade, isActive, ...other }) => {

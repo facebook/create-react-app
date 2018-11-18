@@ -11,14 +11,12 @@ let defaultTypeToColorMap = {
   custom: 'malibu',
   universal: 'olivine',
   react: 'portage',
-  html: 'coralTree'
+  html: 'coralTree',
 };
 
 const propTypes = {
-  /** Value is key from `typeToColorMap` prop. */
   value: string,
-  /** Default map of available states. */
-  typeToColorMap: object
+  typeToColorMap: object,
 };
 
 const InfoBadge = ({

@@ -11,7 +11,7 @@ const propTypes = {
   alt: string,
   name: string,
   size: oneOf(['default', 'large']),
-  fill: string
+  fill: string,
 };
 
 const CLASS_ROOT = 'icon';
@@ -35,12 +35,12 @@ const Icon = ({ className, name, alt, size, fill, ...other }) => {
 Icon.displayName = 'Icon';
 Icon.propTypes = propTypes;
 Icon.defaultProps = {
-  size: 'default'
+  size: 'default',
 };
 
 const iconSizes = {
   default: '1rem',
-  large: '1.5rem'
+  large: '1.5rem',
 };
 
 const StyledIcon = styled.svg`

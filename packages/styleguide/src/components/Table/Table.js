@@ -8,20 +8,18 @@ export const propTypes = {
   columns: arrayOf(
     shape({
       key: string.isRequired,
-      label: string
+      label: string,
     })
   ),
   /** Data to print out in the table. */
   data: arrayOf(object),
-  /** Outside border */
   hasOutsideBorder: bool,
-  /** Responsivness of table */
-  isResponsive: bool
+  isResponsive: bool,
 };
 
 const defaultProps = {
   hasOutsideBorder: true,
-  isResponsive: true
+  isResponsive: true,
 };
 
 const Table = ({ columns = [], data = [], isResponsive, ...other }) => {
@@ -45,12 +43,13 @@ const Table = ({ columns = [], data = [], isResponsive, ...other }) => {
       <tbody>
         {data.map((row, i) => (
           <tr key={i.toString()}>
-            {columns.map(column =>
-              column.render ? (
-                column.render(row[column.key], column)
-              ) : (
-                <td key={column.key}>{row[column.key]}</td>
-              )
+            {columns.map(
+              column =>
+                column.render ? (
+                  column.render(row[column.key], column)
+                ) : (
+                  <td key={column.key}>{row[column.key]}</td>
+                )
             )}
           </tr>
         ))}
