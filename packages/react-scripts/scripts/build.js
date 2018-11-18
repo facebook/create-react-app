@@ -56,8 +56,28 @@ if (!checkRequiredFiles([paths.appIndexJs])) {
   process.exit(1);
 }
 
+// Process CLI arguments
+const argv = process.argv.slice(2);
+const writeStatsJson = argv.indexOf('--stats') !== -1;
+
+let hasAppHtml;
+let hasStyleguide;
+
+try {
+  fs.accessSync(paths.appHtml, fs.F_OK);
+  hasAppHtml = true;
+} catch (e) {} //eslint-disable-line
+
+try {
+  fs.accessSync(paths.styleguideIndexJs, fs.F_OK);
+  hasStyleguide = true;
+} catch (e) {} // eslint-disable-line
+
 // Generate configuration
-const config = configFactory('production');
+const config = configFactory('production', {
+  hasAppHtml,
+  hasStyleguide,
+});
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
