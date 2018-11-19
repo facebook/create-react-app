@@ -5,7 +5,7 @@ const { extname } = require('path');
 function namedAssetImportPlugin({ types: t }) {
   const visited = new WeakSet();
 
-  function generateNewSource(loaderMap, moduleName, sourcePath) {
+  function generateNewSourcePath(loaderMap, moduleName, sourcePath) {
     const ext = extname(sourcePath).substr(1);
     const extMap = loaderMap[ext];
     return extMap[moduleName]
@@ -13,7 +13,7 @@ function namedAssetImportPlugin({ types: t }) {
       : sourcePath;
   }
 
-  function replaceNotVisitedSpecifiers(path, loaderMap, callback) {
+  function replaceMatchingSpecifiers(path, loaderMap, callback) {
     const sourcePath = path.node.source.value;
     const ext = extname(sourcePath).substr(1);
 
@@ -45,35 +45,27 @@ function namedAssetImportPlugin({ types: t }) {
           return;
         }
 
-        replaceNotVisitedSpecifiers(
-          path,
-          loaderMap,
-          (specifier, sourcePath) => {
-            if (t.isExportDefaultSpecifier(specifier)) {
-              const defaultDeclaration = t.exportDeclaration(
-                [t.exportDefaultSpecifier(t.identifier(specifier.local.name))],
-                t.stringLiteral(sourcePath)
-              );
-
-              return defaultDeclaration;
-            }
-
-            const namedDeclaration = t.exportNamedDeclaration(
-              null,
-              [
-                t.exportSpecifier(
-                  t.identifier(specifier.local.name),
-                  t.identifier(specifier.exported.name)
-                ),
-              ],
-              t.stringLiteral(
-                generateNewSource(loaderMap, specifier.local.name, sourcePath)
-              )
+        replaceMatchingSpecifiers(path, loaderMap, (specifier, sourcePath) => {
+          if (t.isExportDefaultSpecifier(specifier)) {
+            return t.exportDeclaration(
+              [t.exportDefaultSpecifier(t.identifier(specifier.local.name))],
+              t.stringLiteral(sourcePath)
             );
-
-            return namedDeclaration;
           }
-        );
+
+          return t.exportNamedDeclaration(
+            null,
+            [
+              t.exportSpecifier(
+                t.identifier(specifier.local.name),
+                t.identifier(specifier.exported.name)
+              ),
+            ],
+            t.stringLiteral(
+              generateNewSourcePath(loaderMap, specifier.local.name, sourcePath)
+            )
+          );
+        });
       },
       ImportDeclaration(
         path,
@@ -81,38 +73,30 @@ function namedAssetImportPlugin({ types: t }) {
           opts: { loaderMap },
         }
       ) {
-        replaceNotVisitedSpecifiers(
-          path,
-          loaderMap,
-          (specifier, sourcePath) => {
-            if (t.isImportDefaultSpecifier(specifier)) {
-              const defaultDeclaration = t.importDeclaration(
-                [t.importDefaultSpecifier(t.identifier(specifier.local.name))],
-                t.stringLiteral(sourcePath)
-              );
-
-              return defaultDeclaration;
-            }
-
-            const namedDeclaration = t.importDeclaration(
-              [
-                t.importSpecifier(
-                  t.identifier(specifier.local.name),
-                  t.identifier(specifier.imported.name)
-                ),
-              ],
-              t.stringLiteral(
-                generateNewSource(
-                  loaderMap,
-                  specifier.imported.name,
-                  sourcePath
-                )
-              )
+        replaceMatchingSpecifiers(path, loaderMap, (specifier, sourcePath) => {
+          if (t.isImportDefaultSpecifier(specifier)) {
+            return t.importDeclaration(
+              [t.importDefaultSpecifier(t.identifier(specifier.local.name))],
+              t.stringLiteral(sourcePath)
             );
-
-            return namedDeclaration;
           }
-        );
+
+          return t.importDeclaration(
+            [
+              t.importSpecifier(
+                t.identifier(specifier.local.name),
+                t.identifier(specifier.imported.name)
+              ),
+            ],
+            t.stringLiteral(
+              generateNewSourcePath(
+                loaderMap,
+                specifier.imported.name,
+                sourcePath
+              )
+            )
+          );
+        });
       },
     },
   };
