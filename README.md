@@ -188,7 +188,7 @@ We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md]
 ## React Native
 
 Looking for something similar, but for React Native?<br>
-Check out [Create React Native App](https://github.com/react-community/create-react-native-app/).
+Check out [Expo CLI](https://github.com/expo/expo-cli).
 
 ## Acknowledgements
 
