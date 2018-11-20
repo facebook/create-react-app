@@ -30,8 +30,8 @@ module.exports = function(api, opts, env) {
   var isEnvTest = env === 'test';
 
   var useESModules = validateBoolOption(
-    'allowESModules',
-    opts.allowESModules,
+    'useESModules',
+    opts.useESModules,
     isEnvDevelopment || isEnvProduction
   );
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
