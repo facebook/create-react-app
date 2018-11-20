@@ -14,6 +14,14 @@ cd my-app
 npm start
 ```
 
+.. or with typescript support (available with `react-scripts@2.1.0` and higher):
+
+```sh
+npx create-react-app my-app --typescript
+cd my-app
+npm start
+```
+
 _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
 
 Then open [http://localhost:3000/](http://localhost:3000/) to see your app. 
@@ -59,6 +67,10 @@ yarn create react-app my-app
 ```
 
 _`yarn create` is available in Yarn 0.25+_
+
+### Adding typescript support
+
+To add [TypeScript](https://www.typescriptlang.org/) support when creating a new project, add the --typescript parameter to any of the methods above. e.g. `npx create-react-app my-app --typescript` for npx, `npm init react-app my-app --typescript' for npm or `yarn create react-app my-app --typescript` for yarn.
 
 ## Output
 
