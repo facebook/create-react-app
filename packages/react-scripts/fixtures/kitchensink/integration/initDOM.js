@@ -7,11 +7,12 @@
 
 const fs = require('fs');
 const http = require('http');
-const jsdom = require('jsdom/lib/old-api.js');
+const jsdom = require('jsdom');
 const path = require('path');
+const { expect } = require('chai');
 
 let getMarkup;
-export let resourceLoader;
+let resourceLoader;
 
 if (process.env.E2E_FILE) {
   const file = path.isAbsolute(process.env.E2E_FILE)
@@ -46,11 +47,14 @@ if (process.env.E2E_FILE) {
 
   resourceLoader = (resource, callback) => resource.defaultFetch(callback);
 } else {
-  it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {
-    expect(
-      new Error("This isn't the error you are looking for.")
-    ).toBeUndefined();
-  });
+  it.only(
+    'can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)',
+    () => {
+      expect(
+        new Error("This isn't the error you are looking for.")
+      ).to.be.undefined();
+    }
+  );
 }
 
 export default feature =>
@@ -58,10 +62,13 @@ export default feature =>
     const markup = await getMarkup();
     const host = process.env.E2E_URL || 'http://www.example.org/spa:3000';
     const doc = jsdom.jsdom(markup, {
+      features: {
+        FetchExternalResources: ['script', 'css'],
+        ProcessExternalResources: ['script'],
+      },
       created: (_, win) =>
         win.addEventListener('ReactFeatureDidMount', () => resolve(doc), true),
       deferClose: true,
-      pretendToBeVisual: true,
       resourceLoader,
       url: `${host}#${feature}`,
       virtualConsole: jsdom.createVirtualConsole().sendTo(console),

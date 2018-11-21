@@ -161,23 +161,23 @@ class StackFrame extends Component<Props, State> {
       <div>
         <div>{functionName}</div>
         <div style={linkStyle}>
-          <span
+          <a
             style={canOpenInEditor ? anchorStyle : null}
             onClick={canOpenInEditor ? this.editorHandler : null}
             onKeyDown={canOpenInEditor ? this.onKeyDown : null}
             tabIndex={canOpenInEditor ? '0' : null}
           >
             {url}
-          </span>
+          </a>
         </div>
         {codeBlockProps && (
           <span>
-            <span
+            <a
               onClick={canOpenInEditor ? this.editorHandler : null}
               style={canOpenInEditor ? codeAnchorStyle : null}
             >
               <CodeBlock {...codeBlockProps} />
-            </span>
+            </a>
             <button style={toggleStyle} onClick={this.toggleCompiled}>
               {'View ' + (compiled ? 'source' : 'compiled')}
             </button>

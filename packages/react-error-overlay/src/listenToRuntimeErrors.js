@@ -37,40 +37,34 @@ export type ErrorRecord = {|
   stackFrames: StackFrame[],
 |};
 
-export const crashWithFrames = (crash: ErrorRecord => void) => (
-  error: Error,
-  unhandledRejection = false
-) => {
-  getStackFrames(error, unhandledRejection, CONTEXT_SIZE)
-    .then(stackFrames => {
-      if (stackFrames == null) {
-        return;
-      }
-      crash({
-        error,
-        unhandledRejection,
-        contextSize: CONTEXT_SIZE,
-        stackFrames,
-      });
-    })
-    .catch(e => {
-      console.log('Could not get the stack frames of error:', e);
-    });
-};
-
 export function listenToRuntimeErrors(
   crash: ErrorRecord => void,
   filename: string = '/static/js/bundle.js'
 ) {
-  const crashWithFramesRunTime = crashWithFrames(crash);
-
-  registerError(window, error => crashWithFramesRunTime(error, false));
-  registerPromise(window, error => crashWithFramesRunTime(error, true));
+  function crashWithFrames(error: Error, unhandledRejection = false) {
+    getStackFrames(error, unhandledRejection, CONTEXT_SIZE)
+      .then(stackFrames => {
+        if (stackFrames == null) {
+          return;
+        }
+        crash({
+          error,
+          unhandledRejection,
+          contextSize: CONTEXT_SIZE,
+          stackFrames,
+        });
+      })
+      .catch(e => {
+        console.log('Could not get the stack frames of error:', e);
+      });
+  }
+  registerError(window, error => crashWithFrames(error, false));
+  registerPromise(window, error => crashWithFrames(error, true));
   registerStackTraceLimit();
   registerReactStack();
   permanentRegisterConsole('error', (warning, stack) => {
     const data = massageWarning(warning, stack);
-    crashWithFramesRunTime(
+    crashWithFrames(
       // $FlowFixMe
       {
         message: data.message,

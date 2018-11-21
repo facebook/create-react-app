@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import 'react-app-polyfill/ie9';
+import './utils/pollyfills.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CompileErrorContainer from './containers/CompileErrorContainer';

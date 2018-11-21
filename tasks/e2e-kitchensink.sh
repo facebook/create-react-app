@@ -22,7 +22,6 @@ original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
-  unset BROWSERSLIST
   ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
@@ -68,6 +67,7 @@ root_path=$PWD
 if hash npm 2>/dev/null
 then
   npm i -g npm@latest
+  npm cache clean || npm cache verify
 fi
 
 # Bootstrap monorepo
@@ -79,7 +79,7 @@ yarn
 
 # Start local registry
 tmp_registry_log=`mktemp`
-(cd && nohup npx verdaccio@3.8.2 -c "$root_path"/tasks/verdaccio.yaml &>$tmp_registry_log &)
+nohup npx verdaccio@2.7.2 &>$tmp_registry_log &
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
@@ -88,7 +88,7 @@ npm set registry "$custom_registry_url"
 yarn config set registry "$custom_registry_url"
 
 # Login so we can publish packages
-(cd && npx npm-auth-to-token@1.0.0 -u user -p password -e user@example.com -r "$custom_registry_url")
+npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
 
 # Publish the monorepo
 git clean -df
@@ -114,8 +114,53 @@ yarn add test-integrity@^2.0.1
 # Enter the app directory
 cd "$temp_app_path/test-kitchensink"
 
-# In kitchensink, we want to test all transforms
-export BROWSERSLIST='ie 9'
+# Link to test module
+npm link "$temp_module_path/node_modules/test-integrity"
+
+# Test the build
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  PUBLIC_URL=http://www.example.org/spa/ \
+  yarn build
+
+# Check for expected output
+exists build/*.html
+exists build/static/js/main.*.js
+
+# Unit tests
+REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true \
+  NODE_PATH=src \
+  NODE_ENV=test \
+  yarn test --no-cache --testPathPattern=src
+
+# Test "development" environment
+tmp_server_log=`mktemp`
+PORT=3001 \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  NODE_PATH=src \
+  nohup yarn start &>$tmp_server_log &
+grep -q 'You can now view' <(tail -f $tmp_server_log)
+E2E_URL="http://localhost:3001" \
+  REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
+  CI=true NODE_PATH=src \
+  NODE_ENV=development \
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+
+# Test "production" environment
+E2E_FILE=./build/index.html \
+  CI=true \
+  NODE_PATH=src \
+  NODE_ENV=production \
+  PUBLIC_URL=http://www.example.org/spa/ \
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+
+# ******************************************************************************
+# Finally, let's check that everything still works after ejecting.
+# ******************************************************************************
+
+# Eject...
+echo yes | npm run eject
 
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
@@ -131,36 +176,32 @@ exists build/*.html
 exists build/static/js/main.*.js
 
 # Unit tests
-# https://facebook.github.io/jest/docs/en/troubleshooting.html#tests-are-extremely-slow-on-docker-and-or-continuous-integration-ci-server
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  yarn test --no-cache --runInBand --testPathPattern=src
+  yarn test --no-cache --testPathPattern=src
 
-# Prepare "development" environment
+# Test "development" environment
 tmp_server_log=`mktemp`
-PORT=3001 \
+PORT=3002 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   NODE_PATH=src \
   nohup yarn start &>$tmp_server_log &
 grep -q 'You can now view' <(tail -f $tmp_server_log)
-
-# Test "development" environment
-E2E_URL="http://localhost:3001" \
+E2E_URL="http://localhost:3002" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
-  BABEL_ENV=test \
-  node_modules/.bin/jest --no-cache --runInBand --config='jest.integration.config.js'
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
+
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
-  NODE_PATH=src \
   NODE_ENV=production \
-  BABEL_ENV=test \
+  NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/jest --no-cache --runInBand --config='jest.integration.config.js'
+  node_modules/.bin/mocha --require babel-register --require babel-polyfill integration/*.test.js
 
 # Cleanup
 cleanup

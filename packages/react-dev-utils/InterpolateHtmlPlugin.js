@@ -6,7 +6,7 @@
  */
 
 // This Webpack plugin lets us interpolate custom variables into `index.html`.
-// Usage: `new InterpolateHtmlPlugin(HtmlWebpackPlugin, { 'MY_VARIABLE': 42 })`
+// Usage: `new InterpolateHtmlPlugin({ 'MY_VARIABLE': 42 })`
 // Then, you can use %MY_VARIABLE% in your `index.html`.
 
 // It works in tandem with HtmlWebpackPlugin.
@@ -17,16 +17,15 @@
 const escapeStringRegexp = require('escape-string-regexp');
 
 class InterpolateHtmlPlugin {
-  constructor(htmlWebpackPlugin, replacements) {
-    this.htmlWebpackPlugin = htmlWebpackPlugin;
+  constructor(replacements) {
     this.replacements = replacements;
   }
 
   apply(compiler) {
-    compiler.hooks.compilation.tap('InterpolateHtmlPlugin', compilation => {
-      this.htmlWebpackPlugin
-        .getHooks(compilation)
-        .beforeEmit.tap('InterpolateHtmlPlugin', data => {
+    compiler.plugin('compilation', compilation => {
+      compilation.plugin(
+        'html-webpack-plugin-before-html-processing',
+        (data, callback) => {
           // Run HTML through a series of user-specified string replacements.
           Object.keys(this.replacements).forEach(key => {
             const value = this.replacements[key];
@@ -35,7 +34,9 @@ class InterpolateHtmlPlugin {
               value
             );
           });
-        });
+          callback(null, data);
+        }
+      );
     });
   }
 }
