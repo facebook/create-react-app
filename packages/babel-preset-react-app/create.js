@@ -29,6 +29,11 @@ module.exports = function(api, opts, env) {
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
 
+  var useESModules = validateBoolOption(
+    'useESModules',
+    opts.useESModules,
+    isEnvDevelopment || isEnvProduction
+  );
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
   var isTypeScriptEnabled = validateBoolOption(
     'typescript',
@@ -151,7 +156,7 @@ module.exports = function(api, opts, env) {
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.
-          useESModules: isEnvDevelopment || isEnvProduction,
+          useESModules,
           // Undocumented option that lets us encapsulate our runtime, ensuring
           // the correct version is used
           // https://github.com/babel/babel/blob/090c364a90fe73d36a30707fc612ce037bdbbb24/packages/babel-plugin-transform-runtime/src/index.js#L35-L42
