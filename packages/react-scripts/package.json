@@ -13,13 +13,7 @@
   "bugs": {
     "url": "https://github.com/facebookincubator/create-react-app/issues"
   },
-  "files": [
-    "bin",
-    "config",
-    "scripts",
-    "template",
-    "utils"
-  ],
+  "files": ["bin", "config", "scripts", "template", "utils"],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
@@ -72,6 +66,6 @@
     "react-dom": "^15.5.4"
   },
   "optionalDependencies": {
-    "fsevents": "1.1.2"
+    "fsevents": "1.2.4"
   }
 }
