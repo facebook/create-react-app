@@ -1,6 +1,6 @@
 {
   "name": "@swrve/swrve-react-scripts",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "SWRVE Configuration and scripts for Create React App.",
   "repository": "swrve/create-react-app",
   "license": "MIT",
