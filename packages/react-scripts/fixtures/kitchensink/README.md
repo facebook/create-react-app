@@ -18,11 +18,11 @@ Each time a new feature is added, it is advised to add at least one test coverin
 
 Features are categorized by their scope:
 
- - *env*, all those which deal with environment variables (e.g. `NODE_PATH`)
- 
- - *syntax*, all those which showcase a single EcmaScript syntax feature that is expected to be transpiled by **Babel**
+- _env_, all those which deal with environment variables (e.g. `NODE_PATH`)
 
- - *webpack*, all those which make use of webpack settings, loaders or plugins
+- _syntax_, all those which showcase a single EcmaScript syntax feature that is expected to be transpiled by **Babel**
+
+- _webpack_, all those which make use of webpack settings, loaders or plugins
 
 ### Using it as Unit Tests
 
@@ -41,14 +41,12 @@ Test are written in `integration/{env|syntax|webpack}.test.js`, depending on the
 
 For every test case added there is just a little chore to do:
 
- - a `case` statement must be added in `src/App.js`, which simply perform a dynamic `import()` of the feature
+- a `case` statement must be added in `src/App.js`, which simply perform a dynamic `import()` of the feature
 
- - add a test case in the appropriate integration test file, which calls and awaits `initDOM` with the previous `SwitchCase` string
- 
-An usual flow for the test itself is something similar to:
- 
- - add an `id` attribute in a target HTML tag in the feature itself
+- add a test case in the appropriate integration test file, which calls and awaits `initDOM` with the previous `SwitchCase` string
 
- - since `initDOM` returns a `Document` element, the previous `id` attribute is used to target the feature's DOM and `expect` accordingly
+A usual flow for the test itself is something similar to:
 
-These tests are run by **mocha** (why not **jest**? See [this issue](https://github.com/facebook/jest/issues/2288)) and the environments used are both `development` and `production`.
+- add an `id` attribute in a target HTML tag in the feature itself
+
+- since `initDOM` returns a `Document` element, the previous `id` attribute is used to target the feature's DOM and `expect` accordingly

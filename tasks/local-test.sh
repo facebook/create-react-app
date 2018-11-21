@@ -8,9 +8,9 @@ function print_help {
   echo "Usage: ${0} [OPTIONS]"
   echo ""
   echo "OPTIONS:"
-  echo "  --node-version <version>  the node version to use while testing [6]"
+  echo "  --node-version <version>  the node version to use while testing [8]"
   echo "  --git-branch <branch>     the git branch to checkout for testing [the current one]"
-  echo "  --test-suite <suite>      which test suite to use ('simple', installs', 'kitchensink', 'all') ['all']"
+  echo "  --test-suite <suite>      which test suite to use ('simple', installs', 'kitchensink', 'kitchensink-eject', 'all') ['all']"
   echo "  --interactive             gain a bash shell after the test run"
   echo "  --help                    print this message and exit"
   echo ""
@@ -18,7 +18,7 @@ function print_help {
 
 cd $(dirname $0)
 
-node_version=6
+node_version=8
 current_git_branch=`git rev-parse --abbrev-ref HEAD`
 git_branch=${current_git_branch}
 test_suite=all
@@ -49,7 +49,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
-test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-installs.sh"
+test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-kitchensink-eject.sh && ./tasks/e2e-installs.sh"
 case ${test_suite} in
   "all")
     ;;
@@ -58,6 +58,9 @@ case ${test_suite} in
     ;;
   "kitchensink")
     test_command="./tasks/e2e-kitchensink.sh"
+    ;;
+  "kitchensink-eject")
+    test_command="./tasks/e2e-kitchensink-eject.sh"
     ;;
   "installs")
     test_command="./tasks/e2e-installs.sh"
@@ -95,7 +98,7 @@ ${apply_changes}
 node --version
 npm --version
 set +x
-${test_command} && echo -e "\n\e[1;32m✔ Job passed\e[0m" || echo -e "\n\e[1;31m✘ Job failes\e[0m"
+${test_command} && echo -e "\n\e[1;32m✔ Job passed\e[0m" || echo -e "\n\e[1;31m✘ Job failed\e[0m"
 $([[ ${interactive} == 'true' ]] && echo 'bash')
 CMD
 

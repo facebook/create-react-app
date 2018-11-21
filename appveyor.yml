@@ -1,34 +1,44 @@
 image: Visual Studio 2017
 
 environment:
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+  APPVEYOR_BUILD_WORKER_CLOUD: 'GCE'
   matrix:
+    - nodejs_version: 10
+      test_suite: 'simple'
+    - nodejs_version: 10
+      test_suite: 'installs'
+    - nodejs_version: 10
+      test_suite: 'kitchensink'
+    - nodejs_version: 10
+      test_suite: 'kitchensink-eject'
     - nodejs_version: 8
-      test_suite: "simple"
+      test_suite: 'simple'
     - nodejs_version: 8
-      test_suite: "installs"
+      test_suite: 'installs'
     - nodejs_version: 8
-      test_suite: "kitchensink"
-    - nodejs_version: 6
-      test_suite: "simple"
-    - nodejs_version: 6
-      test_suite: "installs"
-    - nodejs_version: 6
-      test_suite: "kitchensink"
-
+      test_suite: 'kitchensink'
+    - nodejs_version: 8
+      test_suite: 'kitchensink-eject'
 cache:
-  - node_modules -> appveyor.cleanup-cache.txt
-  - packages\react-scripts\node_modules -> appveyor.cleanup-cache.txt
+  - '%APPDATA%\npm-cache -> appveyor.cleanup-cache.txt'
+  - '%LOCALAPPDATA%\Yarn\Cache -> appveyor.cleanup-cache.txt'
 
 clone_depth: 50
 
 matrix:
   fast_finish: true
+  allow_failures:
+    - test_suite: 'installs'
 
 platform:
   - x64
 
 install:
   - ps: Install-Product node $env:nodejs_version $env:platform
+  - ps: |
+      (New-Object Net.WebClient).DownloadFile("https://nightly.yarnpkg.com/latest.msi", "$env:temp\yarn.msi")
+      cmd /c start /wait msiexec.exe /i $env:temp\yarn.msi /quiet /qn /norestart
 
 build: off
 
@@ -39,4 +49,6 @@ skip_commits:
 test_script:
   - node --version
   - npm --version
+  - yarn --version
+  - yarn cache dir
   - bash tasks/e2e-%test_suite%.sh

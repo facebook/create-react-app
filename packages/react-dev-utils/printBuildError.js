@@ -13,11 +13,11 @@ module.exports = function printBuildError(err) {
   const message = err != null && err.message;
   const stack = err != null && err.stack;
 
-  // Add more helpful message for UglifyJs error
+  // Add more helpful message for Terser error
   if (
     stack &&
     typeof message === 'string' &&
-    message.indexOf('from UglifyJs') !== -1
+    message.indexOf('from Terser') !== -1
   ) {
     try {
       const matched = /(.+)\[(.+):(.+),(.+)\]\[.+\]/.exec(stack);
@@ -37,7 +37,7 @@ module.exports = function printBuildError(err) {
     } catch (ignored) {
       console.log('Failed to minify the bundle.', err);
     }
-    console.log('Read more here: http://bit.ly/2tRViJ9');
+    console.log('Read more here: http://bit.ly/CRA-build-minify');
   } else {
     console.log((message || err) + '\n');
   }
