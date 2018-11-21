@@ -13,6 +13,7 @@ const fs = require('fs');
 const resolve = require('resolve');
 const path = require('path');
 const paths = require('../../config/paths');
+const pkgJson = require('../../package.json');
 const os = require('os');
 const immer = require('react-dev-utils/immer').produce;
 const globby = require('react-dev-utils/globby').sync;
@@ -35,6 +36,16 @@ function verifyNoTypeScript() {
     return false;
   }
   return true;
+}
+
+function hasCSSModules() {
+  const cssModuleFiles = globby('**/*.module.(c|sa|sc)ss', {
+    cwd: paths.appSrc,
+  });
+  if (cssModuleFiles.length > 0) {
+    return true;
+  }
+  return false;
 }
 
 function verifyTypeScriptSetup() {
@@ -129,6 +140,15 @@ function verifyTypeScriptSetup() {
     },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
+
+  if (hasCSSModules()) {
+    // We don't install this to the user's project. Instead it's a dependency
+    // of `react-scripts`. TypeScript won't fail or throw errors if the plugin
+    // isn't found.
+    compilerOptions.plugins = {
+      suggested: [{ name: 'typescript-plugin-css-modules' }],
+    };
+  }
 
   const formatDiagnosticHost = {
     getCanonicalFileName: fileName => fileName,
@@ -252,7 +272,7 @@ function verifyTypeScriptSetup() {
   if (!fs.existsSync(paths.appTypeDeclarations)) {
     fs.writeFileSync(
       paths.appTypeDeclarations,
-      `/// <reference types="react-scripts" />${os.EOL}`
+      `/// <reference types="${pkgJson.name}" />${os.EOL}`
     );
   }
 }
