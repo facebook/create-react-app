@@ -8,7 +8,8 @@ it('reads a typescript file with no syntax error', () => {
 });
 
 it('supports decorators', () => {
+  expect((App as any).annotated).toBe(true);
+
   const app = new App();
-  expect((app as any).annotated).toBe(true);
   expect(app.decorated).toBe(42);
 });
