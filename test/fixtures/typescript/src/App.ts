@@ -11,7 +11,7 @@ class App {
   static foo: MyObject = { bar: true, baz: { n: 123 } };
   n = App.foo.baz!.n;
   @propertyDecorator
-  decorated;
+  decorated = 5;
 }
 
 function annotation(target: any) {
@@ -19,14 +19,9 @@ function annotation(target: any) {
 }
 
 function propertyDecorator(target: any, key: string) {
-  if (delete target[key]) {
-    Object.defineProperty(target, key, {
-      get() {
-        return 42;
-      },
-      enumerable: true,
-    });
-  }
+  arguments[2].initializer = function() {
+    return 42;
+  };
 }
 
 export default App;
