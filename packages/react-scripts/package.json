@@ -62,6 +62,7 @@
     "style-loader": "0.19.1",
     "svgr": "1.8.1",
     "sw-precache-webpack-plugin": "0.11.4",
+    "tailwindcss": "^0.7.2",
     "thread-loader": "1.1.2",
     "uglifyjs-webpack-plugin": "1.1.6",
     "url-loader": "0.6.2",
@@ -72,8 +73,7 @@
   },
   "devDependencies": {
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "tailwindcss": "^0.7.2"
+    "react-dom": "^16.0.0"
   },
   "optionalDependencies": {
     "fsevents": "1.2.0"
