@@ -32,7 +32,7 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project as dependencies in `package.json`.
 
-The distinction is pretty arbitrary for front-end apps that produce static bundles. Technically you don't need any of these dependencies on the server, not even the runtime ones. So by that logic even react might be seen as a development dependency.
+We put them all in `dependencies` because distinction between `dependencies` and `devDependencies` is pretty arbitrary for front-end apps that produce static bundles. Technically you don't need any of these dependencies on the server, not even the runtime ones. So by that logic even react might be seen as a development dependency.
 
 We used to try to separate them but as explained above, it isn't really consistent in the first place. There's no technical reason why this distinction is useful for apps that have no Node runtime. In addition, it used to cause problems for some Heroku deployments that didn't install development dependencies (and thus weren't able to build the project on the server or test it right before deployment).
 
