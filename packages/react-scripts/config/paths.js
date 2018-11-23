@@ -61,6 +61,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  tailwindConfig: resolveApp('tailwind.js'),
 };
 
 let checkForMonorepo = true;
@@ -82,6 +83,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  tailwindConfig: resolveApp('tailwind.js'),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
@@ -107,6 +109,7 @@ if (useTemplate) {
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
+    tailwindConfig: resolveApp('template/tailwind.js'),
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
@@ -119,6 +122,9 @@ module.exports.srcPaths = [module.exports.appSrc];
 module.exports.useYarn = fs.existsSync(
   path.join(module.exports.appPath, 'yarn.lock')
 );
+
+// detect if Tailwind CSS should be used
+module.exports.useTailwind = fs.existsSync(module.exports.tailwindConfig);
 
 if (checkForMonorepo) {
   // if app is in a monorepo (lerna or yarn workspace), treat other packages in

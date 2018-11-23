@@ -38,12 +38,16 @@ const postCSSLoaderOptions = {
   // Necessary for external CSS imports to work
   // https://github.com/facebook/create-react-app/issues/2677
   ident: 'postcss',
-  plugins: () => [
-    require('postcss-flexbugs-fixes'),
-    autoprefixer({
-      flexbox: 'no-2009',
-    }),
-  ],
+  plugins: () =>
+    [
+      require('postcss-flexbugs-fixes'),
+      paths.useTailwind
+        ? require('tailwindcss')(paths.tailwindConfig)
+        : undefined,
+      autoprefixer({
+        flexbox: 'no-2009',
+      }),
+    ].filter(Boolean),
 };
 
 // style files regexes

@@ -72,7 +72,8 @@
   },
   "devDependencies": {
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "tailwindcss": "^0.7.2"
   },
   "optionalDependencies": {
     "fsevents": "1.2.0"
