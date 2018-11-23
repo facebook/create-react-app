@@ -30,7 +30,13 @@ See the section about [deployment](deployment.md) for more information.
 
 If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project as dependencies in `package.json`. You have full control over them and can always rearrange `package.json` as you deem reasonable. You can read [more here](https://stackoverflow.com/questions/44868453/create-react-app-install-devdepencies-in-dependencies-section)
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project as dependencies in `package.json`.
+
+The distinction is pretty arbitrary for front-end apps that produce static bundles. Technically you don't need any of these dependencies on the server, not even the runtime ones. So by that logic even react might be seen as a development dependency.
+
+We used to try to separate them but as explained above, it isn't really consistent in the first place. There's no technical reason why this distinction is useful for apps that have no Node runtime. In addition, it used to cause problems for some Heroku deployments that didn't install development dependencies (and thus weren't able to build the project on the server or test it right before deployment).
+
+You have full control over them and can always rearrange `package.json` as you deem reasonable.
 
 All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point, you’re on your own.
 
