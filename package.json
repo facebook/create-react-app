@@ -31,7 +31,7 @@
     "lint-staged": "^8.0.4",
     "meow": "^5.0.0",
     "multimatch": "^2.1.0",
-    "prettier": "1.14.3",
+    "prettier": "1.15.2",
     "puppeteer": "^1.8.0",
     "strip-ansi": "^4.0.0",
     "svg-term-cli": "^2.1.1",
@@ -44,7 +44,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,md,css}": [
+    "*.{js,md,css,html}": [
       "prettier --trailing-comma es5 --single-quote --write",
       "git add"
     ],
