@@ -44,6 +44,12 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
+// Tailwind CSS config file from env or default config file
+const tailwindConfigFile =
+  process.env.TAILWIND_CONFIG_FILE || paths.tailwindConfig;
+// detect if Tailwind CSS should be used
+const useTailwind = fs.existsSync(tailwindConfigFile);
+
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -99,15 +105,19 @@ module.exports = function(webpackEnv) {
           // Necessary for external CSS imports to work
           // https://github.com/facebook/create-react-app/issues/2677
           ident: 'postcss',
-          plugins: () => [
-            require('postcss-flexbugs-fixes'),
-            require('postcss-preset-env')({
-              autoprefixer: {
-                flexbox: 'no-2009',
-              },
-              stage: 3,
-            }),
-          ],
+          plugins: () =>
+            [
+              require('postcss-flexbugs-fixes'),
+              useTailwind
+                ? require('tailwindcss')(tailwindConfigFile)
+                : undefined,
+              require('postcss-preset-env')({
+                autoprefixer: {
+                  flexbox: 'no-2009',
+                },
+                stage: 3,
+              }),
+            ].filter(Boolean),
           sourceMap: isEnvProduction && shouldUseSourceMap,
         },
       },
