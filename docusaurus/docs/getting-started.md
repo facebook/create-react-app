@@ -62,7 +62,7 @@ _`yarn create` is available in Yarn 0.25+_
 
 ## Output
 
-Running amy of these commands will create a directory called `my-app` inside the current folder. Inside that directory, it will generate the initial project structure and install the transitive dependencies:
+Running any of these commands will create a directory called `my-app` inside the current folder. Inside that directory, it will generate the initial project structure and install the transitive dependencies:
 
 ```
 my-app
@@ -108,7 +108,7 @@ The page will automatically reload if you make changes to the code. You will see
 
 Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
 
-[Read more about testing](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests).
+[Read more about testing](https://facebook.github.io/create-react-app/docs/running-tests).
 
 ### `npm run build` or `yarn build`
 

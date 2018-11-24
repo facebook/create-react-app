@@ -1,4 +1,4 @@
-# Create React App [![Build Status](https://travis-ci.org/facebook/create-react-app.svg?branch=master)](https://travis-ci.org/facebook/create-react-app)
+# Create React App [![Build Status](https://travis-ci.org/facebook/create-react-app.svg?branch=master)](https://travis-ci.org/facebook/create-react-app) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/pulls) 
 
 Create React apps with no build configuration.
 
@@ -34,7 +34,7 @@ Just create a project, and you’re good to go.
 
 ## Creating an App
 
-**You’ll need to have Node >= 6 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
+**You’ll need to have Node 8.10.0 or later on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
 To create a new app, you may choose one of the following methods:
 
@@ -134,7 +134,7 @@ Please refer to the [User Guide](https://facebook.github.io/create-react-app/doc
 
 - **One Dependency:** There is just one build dependency. It uses Webpack, Babel, ESLint, and other amazing projects, but provides a cohesive curated experience on top of them.
 
-- **No Configuration Required:** You don't need to configure anything. Reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.
+- **No Configuration Required:** You don't need to configure anything. A reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.
 
 - **No Lock-In:** You can “eject” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up right where you left off.
 
@@ -142,7 +142,7 @@ Please refer to the [User Guide](https://facebook.github.io/create-react-app/doc
 
 Your environment will have everything you need to build a modern single-page React app:
 
-- React, JSX, ES6, and Flow syntax support.
+- React, JSX, ES6, TypeScript and Flow syntax support.
 - Language extras beyond ES6 like the object spread operator.
 - Autoprefixed CSS, so you don’t need `-webkit-` or other prefixes.
 - A fast interactive unit test runner with built-in support for coverage reporting.
@@ -163,19 +163,17 @@ Create React App is a great fit for:
 - **Starting new single-page React applications.**
 - **Creating examples** with React for your libraries and components.
 
-Here’s a few common cases where you might want to try something else:
+Here are few common cases where you might want to try something else:
 
 - If you want to **try React** without hundreds of transitive build tool dependencies, consider [using a single HTML file or an online sandbox instead](https://reactjs.org/docs/try-react.html).
 
-- If you need to **integrate React code with a server-side template framework** like Rails or Django, or if you’re **not building a single-page app**, consider using [nwb](https://github.com/insin/nwb), or [Neutrino](https://neutrino.js.org/) which are more flexible. For Rails specifically, you can use [Rails Webpacker](https://github.com/rails/webpacker).
+- If you need to **integrate React code with a server-side template framework** like Rails, Django or Symfony, or if you’re **not building a single-page app**, consider using [nwb](https://github.com/insin/nwb), or [Neutrino](https://neutrino.js.org/) which are more flexible. For Rails specifically, you can use [Rails Webpacker](https://github.com/rails/webpacker). For Symfony, try [Symfony's Webpack Encore](https://symfony.com/doc/current/frontend/encore/reactjs.html).
 
 - If you need to **publish a React component**, [nwb](https://github.com/insin/nwb) can [also do this](https://github.com/insin/nwb#react-components-and-libraries), as well as [Neutrino's react-components preset](https://neutrino.js.org/packages/react-components/).
 
 - If you want to do **server rendering** with React and Node.js, check out [Next.js](https://github.com/zeit/next.js/) or [Razzle](https://github.com/jaredpalmer/razzle). Create React App is agnostic of the backend, and just produces static HTML/JS/CSS bundles.
 
 - If your website is **mostly static** (for example, a portfolio or a blog), consider using [Gatsby](https://www.gatsbyjs.org/) instead. Unlike Create React App, it pre-renders the website into HTML at the build time.
-
-- If you want to use **TypeScript**, consider using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript).
 
 - Finally, if you need **more customization**, check out [Neutrino](https://neutrino.js.org/) and its [React preset](https://neutrino.js.org/packages/react/).
 
@@ -190,7 +188,7 @@ We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md]
 ## React Native
 
 Looking for something similar, but for React Native?<br>
-Check out [Create React Native App](https://github.com/react-community/create-react-native-app/).
+Check out [Expo CLI](https://github.com/expo/expo-cli).
 
 ## Acknowledgements
 

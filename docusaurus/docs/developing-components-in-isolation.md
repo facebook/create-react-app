@@ -4,7 +4,7 @@ title: Developing Components in Isolation
 ---
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states.
-For an example, a simple button component could have following states:
+For an example, a simple button component could have the following states:
 
 - In a regular state, with a text label.
 - In the disabled mode.
@@ -22,16 +22,10 @@ You can also deploy your Storybook or style guide as a static app. This way, eve
 
 Storybook is a development environment for React UI components. It allows you to browse a component library, view the different states of each component, and interactively develop and test components.
 
-First, install the following npm package globally:
+Run the following command inside your app’s directory:
 
 ```sh
-npm install -g @storybook/cli
-```
-
-Then, run the following command inside your app’s directory:
-
-```sh
-getstorybook
+npx -p @storybook/cli sb init
 ```
 
 After that, follow the instructions on the screen.

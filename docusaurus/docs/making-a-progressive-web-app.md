@@ -61,7 +61,7 @@ following into account:
    app works offline!" message) and also let them know when the service worker has
    fetched the latest updates that will be available the next time they load the
    page (showing a "New content is available once existing tabs are closed." message). Showing
-   this messages is currently left as an exercise to the developer, but as a
+   these messages is currently left as an exercise to the developer, but as a
    starting point, you can make use of the logic included in [`src/serviceWorker.js`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/serviceWorker.js), which
    demonstrates which service worker lifecycle events to listen for to detect each
    scenario, and which as a default, just logs appropriate messages to the
@@ -73,7 +73,7 @@ following into account:
    If your production web server does not support HTTPS, then the service worker
    registration will fail, but the rest of your web app will remain functional.
 
-1. The service worker is only enabled in the [production environment](/docs/deployment),
+1. The service worker is only enabled in the [production environment](deployment.md),
    e.g. the output of `npm run build`. It's recommended that you do not enable an
    offline-first service worker in a development environment, as it can lead to
    frustration when previously cached assets are used and do not include the latest
@@ -82,22 +82,22 @@ following into account:
 1. If you _need_ to test your offline-first service worker locally, build
    the application (using `npm run build`) and run a simple http server from your
    build directory. After running the build script, `create-react-app` will give
-   instructions for one way to test your production build locally and the [deployment instructions](/docs/deployment) have
+   instructions for one way to test your production build locally and the [deployment instructions](deployment.md) have
    instructions for using other methods. _Be sure to always use an
    incognito window to avoid complications with your browser cache._
 
 1. By default, the generated service worker file will not intercept or cache any
-   cross-origin traffic, like HTTP [API requests](/docs/integrating-with-an-api-backend),
+   cross-origin traffic, like HTTP [API requests](integrating-with-an-api-backend.md),
    images, or embeds loaded from a different domain.
 
 ## Progressive Web App Metadata
 
 The default configuration includes a web app manifest located at
-[`public/manifest.json`](public/manifest.json), that you can customize with
+[`public/manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/public/manifest.json), that you can customize with
 details specific to your web application.
 
 When a user adds a web app to their homescreen using Chrome or Firefox on
-Android, the metadata in [`manifest.json`](public/manifest.json) determines what
+Android, the metadata in [`manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/public/manifest.json) determines what
 icons, names, and branding colors to use when the web app is displayed.
 [The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations

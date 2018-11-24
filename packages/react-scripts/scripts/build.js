@@ -22,11 +22,13 @@ process.on('unhandledRejection', err => {
 // Ensure environment variables are read.
 require('../config/env');
 // @remove-on-eject-begin
-// Do the preflight check (only happens before eject).
+// Do the preflight checks (only happens before eject).
 const verifyPackageTree = require('./utils/verifyPackageTree');
 if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
   verifyPackageTree();
 }
+const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
+verifyTypeScriptSetup();
 // @remove-on-eject-end
 
 const path = require('path');
@@ -34,7 +36,7 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const bfj = require('bfj');
-const config = require('../config/webpack.config.prod');
+const configFactory = require('../config/webpack.config');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -61,6 +63,9 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // Process CLI arguments
 const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
+
+// Generate configuration
+const config = configFactory('production');
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.

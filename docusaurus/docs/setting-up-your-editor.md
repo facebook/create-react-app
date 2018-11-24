@@ -63,7 +63,7 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
 }
 ```
 
-> Note: the URL may be different if you've made adjustments via the [HOST or PORT environment variables](/docs/advanced-configuration).
+> Note: the URL may be different if you've made adjustments via the [HOST or PORT environment variables](advanced-configuration.md).
 
 Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
 
@@ -75,7 +75,7 @@ You would need to have [WebStorm](https://www.jetbrains.com/webstorm/) and [JetB
 
 In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and select `JavaScript Debug`. Paste `http://localhost:3000` into the URL field and save the configuration.
 
-> Note: the URL may be different if you've made adjustments via the [HOST or PORT environment variables](/docs/advanced-configuration).
+> Note: the URL may be different if you've made adjustments via the [HOST or PORT environment variables](advanced-configuration.md).
 
 Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
 
@@ -120,7 +120,7 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
     // ...
   },
 + "lint-staged": {
-+   "src/**/*.{js,jsx,json,css}": [
++   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
 +     "prettier --single-quote --write",
 +     "git add"
 +   ]
@@ -128,6 +128,6 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
   "scripts": {
 ```
 
-Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
+Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"` to format your entire project for the first time.
 
 Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://prettier.io/docs/en/editors.html) on the Prettier GitHub page.
