@@ -34,7 +34,7 @@ This will allow you to do imports like
 
 > **Note:** You must prefix imports from `node_modules` with `~` as displayed above.
 
-> **Note:** If you're using Flow, add the following to your `.flowconfig` so it'll recognize the `.sass` or `.scss` imports.
+> **Note:** If you're using Flow, overwrite the [module.file_ext](https://flow.org/en/docs/config/options/#toc-module-file-ext-string) setting in your `.flowconfig` so it'll recognize the `.sass` or `.scss` imports.
 >
 > ```
 > [options]
