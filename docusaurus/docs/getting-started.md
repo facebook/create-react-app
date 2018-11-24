@@ -108,7 +108,7 @@ The page will automatically reload if you make changes to the code. You will see
 
 Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
 
-[Read more about testing](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests).
+[Read more about testing](https://facebook.github.io/create-react-app/docs/running-tests).
 
 ### `npm run build` or `yarn build`
 
