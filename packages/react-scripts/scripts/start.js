@@ -120,6 +120,12 @@ choosePort(HOST, DEFAULT_PORT)
           from: /^\/styleguide\/?.*$/,
           to: () => '/styleguide.html',
         },
+        {
+          from: /^\/.+$/,
+          to: context => {
+            return context.parsedUrl.pathname + '.html';
+          },
+        },
       ],
     };
 
