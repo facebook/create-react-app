@@ -135,13 +135,11 @@ if (program.info) {
         npmGlobalPackages: ['create-react-app'],
       },
       {
-        clipboard: true,
         duplicates: true,
         showNotFound: true,
       }
     )
-    .then(console.log)
-    .then(() => console.log(chalk.green('Copied To Clipboard!\n')));
+    .then(console.log);
 }
 
 if (typeof projectName === 'undefined') {
