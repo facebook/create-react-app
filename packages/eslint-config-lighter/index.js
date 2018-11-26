@@ -39,6 +39,7 @@ module.exports = {
         ignoreRestSiblings: true
       }
     ],
+    "no-param-reassign": [2, { "props": false }],
     "prettier/prettier": [
       "error",
       {
