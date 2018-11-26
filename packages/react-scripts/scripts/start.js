@@ -94,9 +94,11 @@ checkBrowsers(paths.appPath, isInteractive)
     const config = configFactory('development');
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
+    const useTypeScript = fs.existsSync(paths.appTsConfig);
     const urls = prepareUrls(protocol, HOST, port);
+    const reloadFn = () => devServer.sockWrite(devServer.sockets, 'content-changed');
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(webpack, config, appName, urls, useYarn);
+    const compiler = createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, reloadFn);
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
