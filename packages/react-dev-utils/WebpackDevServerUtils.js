@@ -150,7 +150,7 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
       });
     });
 
-    compiler.hooks.forkTsCheckerReceive.tap('fork-ts-checker-done', async msgs => {
+    compiler.hooks.forkTsCheckerReceive.tap('fork-ts-checker-done', msgs => {
       const format = (message) => `${message.file}\n${typescriptFormatter(message, true)}`;
 
       tsMessagesResolver({
