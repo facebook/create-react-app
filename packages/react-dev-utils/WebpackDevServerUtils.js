@@ -20,20 +20,6 @@ const getProcessForPort = require('./getProcessForPort');
 const typescriptFormatter = require('./typescriptFormatter');
 
 const isInteractive = process.stdout.isTTY;
-let handleCompile;
-
-// You can safely remove this after ejecting.
-// We only use this block for testing of Create React App itself:
-const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
-if (isSmokeTest) {
-  handleCompile = (err, stats) => {
-    if (err || stats.hasErrors() || stats.hasWarnings()) {
-      process.exit(1);
-    } else {
-      process.exit(0);
-    }
-  };
-}
 
 function prepareUrls(protocol, host, port) {
   const formatUrl = hostname =>
@@ -119,13 +105,27 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
   // It lets us listen to some events and provide our own custom messages.
   let compiler;
   try {
-    compiler = webpack(config, handleCompile);
+    compiler = webpack(config);
   } catch (err) {
     console.log(chalk.red('Failed to compile.'));
     console.log();
     console.log(err.message || err);
     console.log();
     process.exit(1);
+  }
+
+  // You can safely remove this after ejecting.
+  // We only use this block for testing of Create React App itself:
+  const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
+  if (isSmokeTest) {
+    compiler.hooks.failed.tap('smokeTest', () => process.exit(1));
+    compiler.hooks.done.tap('smokeTest', stats => {
+      if (stats.hasErrors() || stats.hasWarnings()) {
+        process.exit(1);
+      } else {
+        process.exit(0);
+      }
+    });
   }
 
   // "invalid" event fires when you have changed a file, and Webpack is
