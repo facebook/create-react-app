@@ -14,6 +14,7 @@ const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
 const glob = require('glob');
+const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -41,6 +42,8 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 const postcssNormalize = require('postcss-normalize');
 
 const appPackageJson = require(paths.appPackageJson);
+
+const { JSDOM } = require('jsdom');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -256,6 +259,8 @@ module.exports = function(webpackEnv, options = {}) {
       // Prevents conflicts when multiple Webpack runtimes (from different apps)
       // are used on the same page.
       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
+      libraryTarget: 'umd',
+      globalObject: 'this',
     },
     optimization: {
       minimize: isEnvProduction,
@@ -618,6 +623,14 @@ module.exports = function(webpackEnv, options = {}) {
       ],
     },
     plugins: [
+      new StaticSiteGeneratorPlugin({
+        entry: 'app',
+        globals: Object.assign(
+          {},
+          new JSDOM(``, { url: 'http://localhost' }).window,
+          { __lighterIsServer__: true }
+        ),
+      }),
       // Generates an `styleguide.html` file with the <script> injected.
       (hasStyleguide || hasAppHtml) &&
         new HtmlWebpackPlugin(
