@@ -161,12 +161,16 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
 
     compiler.hooks.afterCompile.tap('afterCompile', async compilation => {
       // If any errors already exist, skip this.
-      if (compilation.errors.length > 0) return;
+      if (compilation.errors.length > 0) {
+        return;
+      }
 
       const messages = await tsMessagesPromise;
       compilation.errors.push(...messages.errors);
       compilation.warnings.push(...messages.warnings);
-      if (messages.errors.length > 0 || messages.warnings.length > 0) reload();
+      if (messages.errors.length > 0 || messages.warnings.length > 0) {
+        reload();
+      }
     });
   }
 
