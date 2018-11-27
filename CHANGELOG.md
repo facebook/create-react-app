@@ -1,5 +1,15 @@
 ## 2.5.0 (November 27, 2018)
 
+#### :bug: Bug Fix
+
+* [lighter-styleguide] fix styleguide theme merging ([#45](https://github.com/lightingbeetle/lighter/pull/45))
+
+#### :tada: version updates
+
+* `lighter-styleguide@1.3.1`
+
+## 2.5.0 (November 27, 2018)
+
 #### :rocket: New Feature
 * [lighter-react-scripts] added possibility to use urls without '.html' extension ([#44](https://github.com/lightingbeetle/lighter/pull/44))
 * [lighter-styleguide] implement background selection on `Preview` component ([#25](https://github.com/lightingbeetle/lighter/pull/25), [#29](https://github.com/lightingbeetle/lighter/pull/29), [#30](https://github.com/lightingbeetle/lighter/pull/30))
