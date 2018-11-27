@@ -21,7 +21,7 @@ function getBackgroundsAsArray(previewBackgrounds, excludedColors = []) {
     .filter(colorName => !excludedColors.includes(colorName))
     .map(key => ({
       value: previewBackgrounds[key],
-      label: key
+      label: key,
     }));
 }
 
@@ -38,13 +38,13 @@ class Preview extends Component {
     html: string,
     isIframe: bool,
     iframeHead: node,
-    iframeScripts: string
+    iframeScripts: string,
   };
 
   static defaultProps = {
     bgTheme: 'white',
     bgThemeExcludedColors: [],
-    hasCodePreview: true
+    hasCodePreview: true,
   };
 
   componentWillReceiveProps(props) {
@@ -55,8 +55,8 @@ class Preview extends Component {
       this.setState({
         previewBackground: {
           label: props.bgTheme,
-          value: props.theme.previewBackgrounds[props.bgTheme]
-        }
+          value: props.theme.previewBackgrounds[props.bgTheme],
+        },
       });
     }
   }
@@ -73,14 +73,14 @@ class Preview extends Component {
     previewBackground: this.props.theme.previewBackgrounds
       ? {
           label: this.props.bgTheme,
-          value: this.props.theme.previewBackgrounds[this.props.bgTheme]
+          value: this.props.theme.previewBackgrounds[this.props.bgTheme],
         }
-      : {}
+      : {},
   };
 
   handleToggleCode() {
     this.setState({
-      isCodeShown: !this.state.isCodeShown
+      isCodeShown: !this.state.isCodeShown,
     });
   }
 
@@ -119,14 +119,14 @@ class Preview extends Component {
           ...styles,
           backgroundColor: isActive ? 'black' : data.value,
           color: chroma.contrast(color, 'white') > 2 ? 'white' : 'black',
-          cursor: 'pointer'
+          cursor: 'pointer',
         };
       },
       container: () => {},
       control: () => {},
       valueContainer: () => {},
       singleValue: () => {},
-      indicatorSeparator: () => {}
+      indicatorSeparator: () => {},
     };
 
     const actions = [];
@@ -164,12 +164,14 @@ class Preview extends Component {
       );
     }
 
+    const renderAsFunctionContext = {
+      bgTheme: previewBackground.label,
+      bgThemeValue: previewBackground.value,
+    };
+
     const childrenToRender =
       typeof children === 'function'
-        ? children({
-            bgTheme: previewBackground.label,
-            bgThemeValue: previewBackground.value
-          })
+        ? children(renderAsFunctionContext)
         : children;
 
     const toReneder = childrenToRender || (
@@ -177,7 +179,12 @@ class Preview extends Component {
       <div dangerouslySetInnerHTML={{ __html: html }} />
     );
 
-    const toCode = code || childrenToRender || html;
+    const toCode =
+      (code && typeof code === 'function'
+        ? code(renderAsFunctionContext)
+        : code) ||
+      childrenToRender ||
+      html;
 
     const content = isIframe ? (
       <Frame head={iframeHead} scripts={iframeScripts}>
@@ -206,7 +213,7 @@ class Preview extends Component {
               {toCode}
             </CodeExample>
           )}
-      </Card>
+      </Card>,
     ];
   }
 }
