@@ -40,7 +40,9 @@ export default class extends Component {
     return (
       <div id="feature-object-destructuring">
         {this.state.users.map(user => {
-          const { id, name } = user;
+          const { id, ...rest } = user;
+          // eslint-disable-next-line no-unused-vars
+          const [{ name, ...innerRest }] = [{ ...rest }];
           return <div key={id}>{name}</div>;
         })}
       </div>

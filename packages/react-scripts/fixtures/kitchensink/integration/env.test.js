@@ -67,5 +67,22 @@ describe('Integration', () => {
         doc.getElementById('feature-shell-env-variables').textContent
       ).to.equal('fromtheshell.');
     });
+
+    it('expand .env variables', async () => {
+      const doc = await initDOM('expand-env-variables');
+
+      expect(doc.getElementById('feature-expand-env-1').textContent).to.equal(
+        'basic'
+      );
+      expect(doc.getElementById('feature-expand-env-2').textContent).to.equal(
+        'basic'
+      );
+      expect(doc.getElementById('feature-expand-env-3').textContent).to.equal(
+        'basic'
+      );
+      expect(
+        doc.getElementById('feature-expand-env-existing').textContent
+      ).to.equal('fromtheshell');
+    });
   });
 });
