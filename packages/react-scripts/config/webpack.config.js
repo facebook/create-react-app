@@ -345,7 +345,7 @@ module.exports = function(webpackEnv) {
             // Process WebWorker JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
-              test: /\.worker\.(js|mjs|jsx|ts|tsx)$/,
+              test: /\.worker\.(js|mjs|ts)$/,
               include: paths.appSrc,
               use: [
                 require.resolve('worker-loader'),
