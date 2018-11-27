@@ -21,7 +21,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNavActive: false
+      isNavActive: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleNavLinkClick = this.handleNavLinkClick.bind(this);
@@ -46,24 +46,30 @@ class App extends React.Component {
       logoSmall,
       name,
       theme: projectTheme = {},
-      styleguideBasePath = '/styleguide/'
+      styleguideBasePath = '/styleguide/',
     } = config;
 
     const activeClass = this.state.isNavActive ? 'is-active' : '';
 
     // merge styleguide theme and project theme
-    const localTheme = Object.keys(theme).reduce((acc, prop) => {
+    const localTheme = Object.keys(projectTheme).reduce((acc, prop) => {
+      if (prop === 'previewBackgrounds') {
+        acc[prop] = projectTheme[prop];
+
+        return acc;
+      }
+
       if (typeof theme[prop] === 'object') {
         acc[prop] = {
-          ...theme[prop],
-          ...projectTheme[prop]
+          ...(theme[prop] || {}),
+          ...projectTheme[prop],
         };
       } else {
-        acc[prop] = theme[prop];
+        acc[prop] = projectTheme[prop];
       }
 
       return acc;
-    }, {});
+    }, Object.assign({}, theme));
 
     return (
       <BrowserRouter basename={styleguideBasePath}>
