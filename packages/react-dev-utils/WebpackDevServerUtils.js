@@ -114,20 +114,6 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
     process.exit(1);
   }
 
-  // You can safely remove this after ejecting.
-  // We only use this block for testing of Create React App itself:
-  const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
-  if (isSmokeTest) {
-    compiler.hooks.failed.tap('smokeTest', () => process.exit(1));
-    compiler.hooks.done.tap('smokeTest', stats => {
-      if (stats.hasErrors() || stats.hasWarnings()) {
-        process.exit(1);
-      } else {
-        process.exit(0);
-      }
-    });
-  }
-
   // "invalid" event fires when you have changed a file, and Webpack is
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
@@ -240,6 +226,25 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
       );
     }
   });
+
+  // You can safely remove this after ejecting.
+  // We only use this block for testing of Create React App itself:
+  const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
+  if (isSmokeTest) {
+    compiler.hooks.failed.tap('smokeTest', async () => {
+      await tsMessagesPromise;
+      process.exit(1)
+    });
+    compiler.hooks.done.tap('smokeTest', async stats => {
+      await tsMessagesPromise;
+      if (stats.hasErrors() || stats.hasWarnings()) {
+        process.exit(1);
+      } else {
+        process.exit(0);
+      }
+    });
+  }
+
   return compiler;
 }
 
