@@ -1,3 +1,30 @@
+## 2.5.0 (November 27, 2018)
+
+#### :rocket: New Feature
+* [lighter-react-scripts] added possibility to use urls without '.html' extension ([#44](https://github.com/lightingbeetle/lighter/pull/44))
+* [lighter-styleguide] implement background selection on `Preview` component ([#25](https://github.com/lightingbeetle/lighter/pull/25), [#29](https://github.com/lightingbeetle/lighter/pull/29), [#30](https://github.com/lightingbeetle/lighter/pull/30))
+* [lighter-styleguide] show pure text in code example of preview ([#36](https://github.com/lightingbeetle/lighter/pull/36))
+* [lighter-styleguide] new `Button` component ([#32](https://github.com/lightingbeetle/lighter/pull/32))
+* [lighter-styleguide] new `DocsTable` ([#40](https://github.com/lightingbeetle/lighter/pull/40))
+* [lighter-styleguide] copy code example to clipboard ([#37](https://github.com/lightingbeetle/lighter/pull/37))
+* [lighter-styleguide] new `NoteInfo` variant ([#34](https://github.com/lightingbeetle/lighter/pull/34))
+* [eslint-config-lighter] update `no-param-reassign` rule to ignore props ([#42](https://github.com/lightingbeetle/lighter/pull/42))
+
+#### :bug: Bug Fix
+* [lighter-styleguide] show html of preview children as function ([#30](https://github.com/lightingbeetle/lighter/pull/30))
+* [lighter-styleguide] fix default font size and family for `ComponentDocs` table ([#38](https://github.com/lightingbeetle/lighter/pull/38))
+* [lighter-styleguide] add missing `Link` export ([#35](https://github.com/lightingbeetle/lighter/pull/35))
+* [lighter-styleguide] allow to override default `codeJSXOptions` ([#41](https://github.com/lightingbeetle/lighter/pull/41))
+
+#### :memo: Docs
+* [lighter-styleguide] add Preview docs ([#31](https://github.com/lightingbeetle/lighter/pull/31))
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.5.0`
+* `lighter-styleguide@1.3.0`
+* `eslint-config-lighte@1.1.0`
+
 ## 2.4.2 (August 20, 2018)
 
 #### :bug: Bug Fix
