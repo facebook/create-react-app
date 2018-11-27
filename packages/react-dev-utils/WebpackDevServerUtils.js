@@ -317,15 +317,19 @@ function prepareProxy(proxy, appPublicFolder) {
         // For single page apps, we generally want to fallback to /index.html.
         // However we also want to respect `proxy` for API calls.
         // So if `proxy` is specified as a string, we need to decide which fallback to use.
-        // We use a heuristic: if request `accept`s text/html, we pick /index.html.
+        // We use a heuristic: We want to proxy all the requests that are not meant
+        // for static assets and as all the requests for static assets will be using 
+        // `GET` method, we can proxy all non-`GET` requests.
+        // For `GET` requests, if request `accept`s text/html, we pick /index.html.
         // Modern browsers include text/html into `accept` header when navigating.
         // However API calls like `fetch()` won’t generally accept text/html.
         // If this heuristic doesn’t work well for you, use a custom `proxy` object.
         context: function(pathname, req) {
           return (
-            mayProxy(pathname) &&
-            req.headers.accept &&
-            req.headers.accept.indexOf('text/html') === -1
+            req.method !== 'GET' ||
+            (mayProxy(pathname) &&
+              req.headers.accept &&
+              req.headers.accept.indexOf('text/html') === -1)
           );
         },
         onProxyReq: proxyReq => {

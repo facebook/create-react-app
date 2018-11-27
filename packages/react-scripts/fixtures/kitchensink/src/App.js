@@ -184,6 +184,11 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
+      case 'expand-env-variables':
+        import('./features/env/ExpandEnvVariables').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
       default:
         throw new Error(`Missing feature "${feature}"`);
     }

@@ -13,6 +13,7 @@ import { isInternalFile } from '../utils/isInternalFile';
 import { isBultinErrorName } from '../utils/isBultinErrorName';
 
 import type { StackFrame as StackFrameType } from '../utils/stack-frame';
+import type { ErrorLocation } from '../utils/parseCompileError';
 
 const traceStyle = {
   fontSize: '1em',
@@ -25,17 +26,12 @@ type Props = {|
   stackFrames: StackFrameType[],
   errorName: string,
   contextSize: number,
-  launchEditorEndpoint: ?string,
+  editorHandler: (errorLoc: ErrorLocation) => void,
 |};
 
 class StackTrace extends Component<Props> {
   renderFrames() {
-    const {
-      stackFrames,
-      errorName,
-      contextSize,
-      launchEditorEndpoint,
-    } = this.props;
+    const { stackFrames, errorName, contextSize, editorHandler } = this.props;
     const renderedFrames = [];
     let hasReachedAppCode = false,
       currentBundle = [],
@@ -59,7 +55,7 @@ class StackTrace extends Component<Props> {
           contextSize={contextSize}
           critical={index === 0}
           showCode={!shouldCollapse}
-          launchEditorEndpoint={launchEditorEndpoint}
+          editorHandler={editorHandler}
         />
       );
       const lastElement = index === stackFrames.length - 1;
