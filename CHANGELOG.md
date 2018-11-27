@@ -2,6 +2,16 @@
 
 #### :bug: Bug Fix
 
+* [lighter-styleguide] allow to pass function to `Preview` `code` prop ([#47](https://github.com/lightingbeetle/lighter/pull/47))
+
+#### :tada: version updates
+
+* `lighter-styleguide@1.3.2`
+
+## 2.5.0 (November 27, 2018)
+
+#### :bug: Bug Fix
+
 * [lighter-styleguide] fix styleguide theme merging ([#45](https://github.com/lightingbeetle/lighter/pull/45))
 
 #### :tada: version updates
