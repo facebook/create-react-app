@@ -49,6 +49,7 @@ const url = require('url');
 const hyperquest = require('hyperquest');
 const envinfo = require('envinfo');
 const os = require('os');
+const clipboard = require('clipboardy');
 
 const packageJson = require('./package.json');
 
@@ -135,12 +136,13 @@ if (program.info) {
         npmGlobalPackages: ['create-react-app'],
       },
       {
-        clipboard: false,
+        console: true,
         duplicates: true,
         showNotFound: true,
       }
     )
-    .then(console.log);
+    .then(info => clipboard.write(info))
+    .catch(e => console.log(chalk.bold('--info command failed'), e));
 }
 
 if (typeof projectName === 'undefined') {
