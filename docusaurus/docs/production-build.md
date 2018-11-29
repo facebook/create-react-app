@@ -13,7 +13,7 @@ When running a production build of freshly created Create React App application,
 
 `1.[hash].chunk.js`
 
-- This is your _vendor_ code, which includes modules you've imported from within `node_modules`. One of the potential advantages with splitting your _vendor_ and _application_ code, [long term caching techniques](#static-file-caching) to improve application loading performance. Since _vendor_ code tends to change less often than the actual _application_ code, the browser will be able to cache them separately, and won't re-download them each time the app code changes.
+- This is your _vendor_ code, which includes modules you've imported from within `node_modules`. One of the potential advantages with splitting your _vendor_ and _application_ code is to enable [long term caching techniques](#static-file-caching) to improve application loading performance. Since _vendor_ code tends to change less often than the actual _application_ code, the browser will be able to cache them separately, and won't re-download them each time the app code changes.
 
 `runtime~main.[hash].js`
 
