@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": "src",
+    "paths": {
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "examples",
+    "public"
+  ]
+}

@@ -30,7 +30,7 @@ const cyan = chalk.cyan;
 function getGitStatus() {
   try {
     let stdout = execSync(`git status --porcelain`, {
-      stdio: ['pipe', 'pipe', 'ignore'],
+      stdio: ['pipe', 'pipe', 'ignore']
     }).toString();
     return stdout.trim();
   } catch (e) {
@@ -43,7 +43,7 @@ inquirer
     type: 'confirm',
     name: 'shouldEject',
     message: 'Are you sure you want to eject? This action is permanent.',
-    default: false,
+    default: false
   })
   .then(answer => {
     if (!answer.shouldEject) {
@@ -87,7 +87,7 @@ inquirer
       }
     }
 
-    const folders = ['config', 'config/jest', 'scripts'];
+    const folders = ['config', 'config/jest', 'config/ssr', 'scripts'];
 
     // Make shallow array of files paths
     const files = folders.reduce((files, folder) => {
@@ -208,13 +208,13 @@ inquirer
     // Add Babel config
     console.log(`  Adding ${cyan('Babel')} preset`);
     appPackage.babel = {
-      presets: ['react-app'],
+      presets: ['react-app']
     };
 
     // Add ESlint config
     console.log(`  Adding ${cyan('ESLint')} configuration`);
     appPackage.eslintConfig = {
-      extends: 'react-app',
+      extends: 'react-app'
     };
 
     fs.writeFileSync(
@@ -296,7 +296,7 @@ inquirer
     } else {
       console.log(cyan('Running npm install...'));
       spawnSync('npm', ['install', '--loglevel', 'error'], {
-        stdio: 'inherit',
+        stdio: 'inherit'
       });
     }
     console.log(green('Ejected successfully!'));

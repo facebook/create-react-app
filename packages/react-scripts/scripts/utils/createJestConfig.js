@@ -10,6 +10,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
+const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
@@ -34,36 +35,35 @@ module.exports = (resolve, rootDir, isEjecting) => {
     setupFiles: [
       isEjecting
         ? 'react-app-polyfill/jsdom'
-        : require.resolve('react-app-polyfill/jsdom'),
+        : require.resolve('react-app-polyfill/jsdom')
     ],
 
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
-      '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}',
+      '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}'
     ],
     testEnvironment: 'jsdom',
     testURL: 'http://localhost',
     transform: {
-      '^.+\\.(js|jsx|ts|tsx)$': isEjecting
+      '^.+\\.(js|jsx|mjs)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': resolve(
-        'config/jest/fileTransform.js'
-      ),
+      '^.+\\.(css|less|scss|sass)$': resolve('config/jest/cssTransform.js'),
+      '^.+\\.tsx?$': resolve('config/jest/typescriptTransform.js'),
+      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js')
     },
     transformIgnorePatterns: [
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
-      '^.+\\.module\\.(css|sass|scss)$',
+      '^.+\\.module\\.(css|sass|scss|less)$'
     ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
-      '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+      '^.+\\.module\\.(css|sass|scss|less)$': 'identity-obj-proxy'
     },
     moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
       ext => !ext.includes('mjs')
-    ),
+    )
   };
   if (rootDir) {
     config.rootDir = rootDir;
@@ -78,7 +78,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'resetMocks',
     'resetModules',
     'snapshotSerializers',
-    'watchPathIgnorePatterns',
+    'watchPathIgnorePatterns'
   ];
   if (overrides) {
     supportedKeys.forEach(key => {
@@ -99,7 +99,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
               chalk.bold('setupTestFrameworkScriptFile') +
               ' in your package.json.\n\n' +
               'Remove it from Jest configuration, and put the initialization code in ' +
-              chalk.bold('src/setupTests.js') +
+              chalk.bold(`src/setupTests.${useTypeScript ? 'tsx' : 'js'}`) +
               '.\nThis file will be loaded automatically.\n'
           )
         );

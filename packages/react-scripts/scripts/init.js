@@ -21,7 +21,7 @@ const execSync = require('child_process').execSync;
 const spawn = require('react-dev-utils/crossSpawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
-const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
+// const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
 
 function isInGitRepository() {
   try {
@@ -54,7 +54,7 @@ function tryGitInit(appPath) {
 
     execSync('git add -A', { stdio: 'ignore' });
     execSync('git commit -m "Initial commit from Create React App"', {
-      stdio: 'ignore',
+      stdio: 'ignore'
     });
     return true;
   } catch (e) {
@@ -75,13 +75,35 @@ function tryGitInit(appPath) {
   }
 }
 
-module.exports = function(
+module.exports = async function(
   appPath,
   appName,
   verbose,
   originalDirectory,
   template
 ) {
+  const typescript = 'typescript';
+  const javascript = 'javascript (deprecated)';
+  const less = 'less';
+  const scss = 'scss';
+  const { type, cssType } = await require('inquirer').prompt([
+    {
+      type: 'list',
+      name: 'type',
+      message: 'Choose your develop language:',
+      default: typescript,
+      choices: [typescript, javascript]
+    },
+    {
+      type: 'list',
+      name: 'cssType',
+      message: 'Choose your css type processor language:',
+      default: less,
+      choices: [less, scss]
+    }
+  ]);
+  const useTypeScript = type === typescript;
+
   const ownPath = path.dirname(
     require.resolve(path.join(__dirname, '..', 'package.json'))
   );
@@ -91,19 +113,18 @@ module.exports = function(
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
 
-  const useTypeScript = appPackage.dependencies['typescript'] != null;
-
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test',
-    eject: 'react-scripts eject',
+    start: 'byted-react-scripts start',
+    build: 'byted-react-scripts build',
+    test: 'byted-react-scripts test',
+    eject: 'byted-react-scripts eject',
+    size: 'byted-react-scripts build --size'
   };
 
   // Setup the eslint config
   appPackage.eslintConfig = {
-    extends: 'react-app',
+    extends: 'react-app'
   };
 
   // Setup the browsers list
@@ -125,9 +146,18 @@ module.exports = function(
   // Copy the files for the user
   const templatePath = template
     ? path.resolve(originalDirectory, template)
-    : path.join(ownPath, useTypeScript ? 'template-typescript' : 'template');
+    : path.join(ownPath, 'template');
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
+    const jsTplPath = path.resolve(appPath, '_js');
+    const tsTplPath = path.resolve(appPath, '_ts');
+    if (useTypeScript) {
+      fs.copySync(tsTplPath, appPath);
+    } else {
+      fs.copySync(jsTplPath, appPath);
+    }
+    fs.removeSync(tsTplPath);
+    fs.removeSync(jsTplPath);
   } else {
     console.error(
       `Could not locate supplied template: ${chalk.green(templatePath)}`
@@ -137,22 +167,39 @@ module.exports = function(
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862
-  try {
-    fs.moveSync(
-      path.join(appPath, 'gitignore'),
-      path.join(appPath, '.gitignore'),
-      []
-    );
-  } catch (err) {
-    // Append if there's already a `.gitignore` file there
-    if (err.code === 'EEXIST') {
-      const data = fs.readFileSync(path.join(appPath, 'gitignore'));
-      fs.appendFileSync(path.join(appPath, '.gitignore'), data);
-      fs.unlinkSync(path.join(appPath, 'gitignore'));
-    } else {
-      throw err;
+  ['gitignore', !useTypeScript && 'eslintrc.json'].forEach(filename => {
+    if (!filename) {
+      return;
     }
-  }
+    const fullFilename = path.join(appPath, filename);
+    const fullDotFilename = path.join(appPath, `.${filename}`);
+    try {
+      if (!fs.existsSync(fullFilename)) {
+        return;
+      }
+      fs.moveSync(fullFilename, fullDotFilename, []);
+    } catch (err) {
+      // Append if there's already a `.gitignore` file there
+      if (err.code === 'EEXIST') {
+        const data = fs.readFileSync(path.join(appPath, filename));
+        fs.appendFileSync(path.join(appPath, `.${filename}`), data);
+        fs.unlinkSync(path.join(appPath, filename));
+      } else {
+        throw err;
+      }
+    }
+  });
+
+  const buildShellFiles = [
+    path.join(appPath, 'build.sh'),
+    path.join(appPath, 'scm_build.sh')
+  ];
+  buildShellFiles.forEach(f => {
+    fs
+      .writeFile(f, require(f + '.js').default(appName))
+      .then(() => fs.remove(f + '.js'))
+      .catch(() => {});
+  });
 
   let command;
   let args;
@@ -165,6 +212,39 @@ module.exports = function(
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
   args.push('react', 'react-dom');
+
+  const devDeps = [];
+  if (useTypeScript) {
+    // Install dev dependencies
+    devDeps.push(
+      '@types/node',
+      '@types/react',
+      '@types/react-dom',
+      '@types/jest',
+      'tslint'
+    );
+  } else {
+    devDeps.push('eslint-config-byted');
+  }
+
+  if (cssType === less) {
+    devDeps.push('less-loader', 'less');
+  } else {
+    devDeps.push('sass-loader', 'node-sass');
+  }
+
+  console.log(
+    `Installing ${devDeps.join(', ')} as dev dependencies ${command}...`
+  );
+  console.log();
+
+  const devProc = spawn.sync(command, args.concat('-D').concat(devDeps), {
+    stdio: 'inherit'
+  });
+  if (devProc.status !== 0) {
+    console.error(`\`${command} ${args.concat(devDeps).join(' ')}\` failed`);
+    return;
+  }
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -181,6 +261,7 @@ module.exports = function(
     fs.unlinkSync(templateDependenciesPath);
   }
 
+  const deps = ['react', 'react-dom'];
   // Install react and react-dom for backward compatibility with old CRA cli
   // which doesn't install react and react-dom along with react-scripts
   // or template is presetend (via --internal-testing-template)
@@ -188,16 +269,16 @@ module.exports = function(
     console.log(`Installing react and react-dom using ${command}...`);
     console.log();
 
-    const proc = spawn.sync(command, args, { stdio: 'inherit' });
+    const proc = spawn.sync(command, args.concat(deps), { stdio: 'inherit' });
     if (proc.status !== 0) {
-      console.error(`\`${command} ${args.join(' ')}\` failed`);
+      console.error(`\`${command} ${args.concat(deps).join(' ')}\` failed`);
       return;
     }
   }
 
-  if (useTypeScript) {
-    verifyTypeScriptSetup();
-  }
+  // if (useTypeScript) {
+  //   verifyTypeScriptSetup();
+  // }
 
   if (tryGitInit(appPath)) {
     console.log();

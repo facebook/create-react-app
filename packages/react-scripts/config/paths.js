@@ -57,7 +57,7 @@ const moduleFileExtensions = [
   'tsx',
   'json',
   'web.jsx',
-  'jsx',
+  'jsx'
 ];
 
 // Resolve file paths in the same order as webpack
@@ -81,15 +81,19 @@ module.exports = {
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
+  appIndexJsSSR: resolveModule(resolveApp, 'src/ssr'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
+  appTsProdConfig: resolveApp('tsconfig.prod.json'),
+  appTsSSRConfig: resolveApp('tsconfig.ssr.json'),
+  appTsLint: resolveApp('tslint.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json')),
+  servedPath: getServedPath(resolveApp('package.json'))
 };
 
 // @remove-on-eject-begin
@@ -103,9 +107,14 @@ module.exports = {
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
+  appIndexJsSSR: resolveModule(resolveApp, 'src/ssr'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
+  appTsTestConfig: resolveApp('tsconfig.test.json'),
+  appTsProdConfig: resolveApp('tsconfig.prod.json'),
+  appTsSSRConfig: resolveApp('tsconfig.ssr.json'),
+  appTsLint: resolveApp('tslint.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),
   proxySetup: resolveApp('src/setupProxy.js'),
@@ -137,6 +146,7 @@ if (
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
     appIndexJs: resolveModule(resolveOwn, 'template/src/index'),
+    appIndexJsSSR: resolveModule(resolveOwn, 'template/src/ssr'),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
     appTsConfig: resolveOwn('template/tsconfig.json'),
@@ -144,6 +154,11 @@ if (
     testsSetup: resolveModule(resolveOwn, 'template/src/setupTests'),
     proxySetup: resolveOwn('template/src/setupProxy.js'),
     appNodeModules: resolveOwn('node_modules'),
+    appTsConfig: resolveOwn('template/tsconfig.json'),
+    appTsProdConfig: resolveOwn('template/tsconfig.prod.json'),
+    appTsLint: resolveOwn('template/tslint.json'),
+    appTsTestConfig: resolveOwn('template/tsconfig.test.json'),
+    appTsSSRConfig: resolveOwn('template/tsconfig.ssr.json'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
     // These properties only exist before ejecting:

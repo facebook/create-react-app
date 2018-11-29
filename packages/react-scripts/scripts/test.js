@@ -28,8 +28,8 @@ const verifyPackageTree = require('./utils/verifyPackageTree');
 if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
   verifyPackageTree();
 }
-const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
-verifyTypeScriptSetup();
+// const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
+// verifyTypeScriptSetup();
 // @remove-on-eject-end
 
 const jest = require('jest');
@@ -88,21 +88,21 @@ const resolve = require('resolve');
 function resolveJestDefaultEnvironment(name) {
   const jestDir = path.dirname(
     resolve.sync('jest', {
-      basedir: __dirname,
+      basedir: __dirname
     })
   );
   const jestCLIDir = path.dirname(
     resolve.sync('jest-cli', {
-      basedir: jestDir,
+      basedir: jestDir
     })
   );
   const jestConfigDir = path.dirname(
     resolve.sync('jest-config', {
-      basedir: jestCLIDir,
+      basedir: jestCLIDir
     })
   );
   return resolve.sync(name, {
-    basedir: jestConfigDir,
+    basedir: jestConfigDir
   });
 }
 let cleanArgv = [];

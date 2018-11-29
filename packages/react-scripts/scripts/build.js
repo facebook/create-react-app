@@ -27,10 +27,11 @@ const verifyPackageTree = require('./utils/verifyPackageTree');
 if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
   verifyPackageTree();
 }
-const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
-verifyTypeScriptSetup();
+// const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
+// verifyTypeScriptSetup();
 // @remove-on-eject-end
 
+const cp = require('child_process');
 const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
@@ -141,68 +142,99 @@ checkBrowsers(paths.appPath, isInteractive)
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
+  let ssrDefer = { resolve: null, reject: null, promise: null };
+  ssrDefer.promise = new Promise((r, j) => {
+    ssrDefer.resolve = r;
+    ssrDefer.reject = j;
+  });
+
+  // if has ssr.js or ssr.tsx, try to render a bundle.ssr.js for ssr.
+  if (fs.existsSync(paths.appIndexJsSSR)) {
+    console.log('Creating ssr bundle...');
+    const ssrCP = cp.fork(
+      path.resolve(__dirname, '../config/webpack.config.ssr'),
+      [],
+      {
+        stdio: 'inherit',
+        env: { ...process.env, NODE_ENV: 'development' }
+      }
+    );
+
+    ssrCP.once('error', err => {
+      console.log(err);
+      ssrDefer.resolve();
+      ssrCP.removeAllListeners('exit');
+    });
+    ssrCP.once('exit', () => ssrDefer.resolve());
+  } else {
+    ssrDefer.resolve();
+  }
+
   console.log('Creating an optimized production build...');
 
   let compiler = webpack(config);
-  return new Promise((resolve, reject) => {
-    compiler.run((err, stats) => {
-      let messages;
-      if (err) {
-        if (!err.message) {
-          return reject(err);
+  return Promise.all([
+    new Promise((resolve, reject) => {
+      compiler.run((err, stats) => {
+        let messages;
+        if (err) {
+          if (!err.message) {
+            return reject(err);
+          }
+          messages = formatWebpackMessages({
+            errors: [err.message],
+            warnings: []
+          });
+        } else {
+          messages = formatWebpackMessages(
+            stats.toJson({ all: false, warnings: true, errors: true })
+          );
         }
-        messages = formatWebpackMessages({
-          errors: [err.message],
-          warnings: [],
-        });
-      } else {
-        messages = formatWebpackMessages(
-          stats.toJson({ all: false, warnings: true, errors: true })
-        );
-      }
-      if (messages.errors.length) {
-        // Only keep the first error. Others are often indicative
-        // of the same problem, but confuse the reader with noise.
-        if (messages.errors.length > 1) {
-          messages.errors.length = 1;
+        if (messages.errors.length) {
+          // Only keep the first error. Others are often indicative
+          // of the same problem, but confuse the reader with noise.
+          if (messages.errors.length > 1) {
+            messages.errors.length = 1;
+          }
+          return reject(new Error(messages.errors.join('\n\n')));
         }
-        return reject(new Error(messages.errors.join('\n\n')));
-      }
-      if (
-        process.env.CI &&
-        (typeof process.env.CI !== 'string' ||
-          process.env.CI.toLowerCase() !== 'false') &&
-        messages.warnings.length
-      ) {
-        console.log(
-          chalk.yellow(
-            '\nTreating warnings as errors because process.env.CI = true.\n' +
-              'Most CI servers set it automatically.\n'
-          )
-        );
-        return reject(new Error(messages.warnings.join('\n\n')));
-      }
+        if (
+          process.env.CI &&
+          (typeof process.env.CI !== 'string' ||
+            process.env.CI.toLowerCase() !== 'false') &&
+          messages.warnings.length
+        ) {
+          console.log(
+            chalk.yellow(
+              '\nTreating warnings as errors because process.env.CI = true.\n' +
+                'Most CI servers set it automatically.\n'
+            )
+          );
+          return reject(new Error(messages.warnings.join('\n\n')));
+        }
 
-      const resolveArgs = {
-        stats,
-        previousFileSizes,
-        warnings: messages.warnings,
-      };
-      if (writeStatsJson) {
-        return bfj
-          .write(paths.appBuild + '/bundle-stats.json', stats.toJson())
-          .then(() => resolve(resolveArgs))
-          .catch(error => reject(new Error(error)));
-      }
+        const resolveArgs = {
+          stats,
+          previousFileSizes,
+          warnings: messages.warnings
+        };
+        if (writeStatsJson) {
+          return bfj
+            .write(paths.appBuild + '/bundle-stats.json', stats.toJson())
+            .then(() => resolve(resolveArgs))
+            .catch(error => reject(new Error(error)));
+        }
 
-      return resolve(resolveArgs);
-    });
-  });
+        return resolve(resolveArgs);
+      });
+    }),
+    ssrDefer.promise
+  ]).then(results => results[0]);
 }
 
 function copyPublicFolder() {
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
-    filter: file => file !== paths.appHtml,
+    filter: file => file !== paths.appHtml
   });
 }

@@ -14,8 +14,8 @@ const resolve = require('resolve');
 const path = require('path');
 const paths = require('../../config/paths');
 const os = require('os');
-const immer = require('react-dev-utils/immer').produce;
-const globby = require('react-dev-utils/globby').sync;
+const immer = require('immer').produce;
+const globby = require('globby').sync;
 
 function writeJson(fileName, object) {
   fs.writeFileSync(fileName, JSON.stringify(object, null, 2) + os.EOL);
@@ -54,7 +54,7 @@ function verifyTypeScriptSetup() {
   let ts;
   try {
     ts = require(resolve.sync('typescript', {
-      basedir: paths.appNodeModules,
+      basedir: paths.appNodeModules
     }));
   } catch (_) {
     console.error(
@@ -91,7 +91,7 @@ function verifyTypeScriptSetup() {
     // 'parsedValue' matches the output value from ts.parseJsonConfigFileContent()
     target: {
       parsedValue: ts.ScriptTarget.ES5,
-      suggested: 'es5',
+      suggested: 'es5'
     },
     lib: { suggested: ['dom', 'dom.iterable', 'esnext'] },
     allowJs: { suggested: true },
@@ -106,15 +106,19 @@ function verifyTypeScriptSetup() {
     module: {
       parsedValue: ts.ModuleKind.ESNext,
       value: 'esnext',
-      reason: 'for import() and import/export',
+      reason: 'for import() and import/export'
     },
     moduleResolution: {
       parsedValue: ts.ModuleResolutionKind.NodeJs,
       value: 'node',
-      reason: 'to match webpack resolution',
+      reason: 'to match webpack resolution'
     },
     resolveJsonModule: { value: true, reason: 'to match webpack loader' },
-    isolatedModules: { value: true, reason: 'implementation limitation' },
+    isolatedModules: {
+      value: false,
+      reason:
+        "this can be changed. For example, if you don't need to import an enum from d.ts as a value using in js, you can set to true."
+    },
     noEmit: { value: true },
     jsx: {
       parsedValue: ts.JsxEmit.Preserve,
@@ -133,7 +137,7 @@ function verifyTypeScriptSetup() {
   const formatDiagnosticHost = {
     getCanonicalFileName: fileName => fileName,
     getCurrentDirectory: ts.sys.getCurrentDirectory,
-    getNewLine: () => os.EOL,
+    getNewLine: () => os.EOL
   };
 
   const messages = [];
@@ -248,13 +252,21 @@ function verifyTypeScriptSetup() {
     writeJson(paths.appTsConfig, appTsConfig);
   }
 
-  // Reference `react-scripts` types
-  if (!fs.existsSync(paths.appTypeDeclarations)) {
-    fs.writeFileSync(
-      paths.appTypeDeclarations,
-      `/// <reference types="react-scripts" />${os.EOL}`
-    );
-  }
+  // Copy type declarations associated with this version of `react-scripts`
+  const declaredTypes = path.resolve(
+    __dirname,
+    '..',
+    '..',
+    'config',
+    'react-app.d.ts'
+  );
+  const declaredTypesContent = fs
+    .readFileSync(declaredTypes, 'utf8')
+    .replace(/\/\/ @remove-file-on-eject\r?\n/, '');
+  fs.writeFileSync(
+    path.resolve(paths.appSrc, 'react-app.d.ts'),
+    declaredTypesContent
+  );
 }
 
 module.exports = verifyTypeScriptSetup;
