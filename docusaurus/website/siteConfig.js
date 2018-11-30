@@ -9,8 +9,8 @@
 // site configuration options.
 
 const siteConfig = {
-  title: 'Create React App', // Title for your website.
-  tagline: 'Set up a modern web app by running one command.',
+  title: 'Create Vue App', // Title for your website.
+  tagline: 'Set up a modern web app by running one command - now in Vue!.',
   url: 'https://facebook.github.io', // Your website URL
   // For github.io type URLs, you would set the url and baseUrl like:
   url: 'https://facebook.github.io',
