@@ -1,0 +1,4 @@
+[build]
+  base    = "docusaurus/website"
+  publish = "build"
+  command = "yarn build"
