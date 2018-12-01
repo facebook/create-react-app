@@ -24,6 +24,7 @@ import type { ErrorLocation } from './utils/parseCompileError';
 type RuntimeReportingOptions = {|
   onError: () => void,
   filename?: string,
+  className?: string,
 |};
 
 type EditorHandler = (errorLoc: ErrorLocation) => void;
@@ -138,7 +139,13 @@ function update() {
   // We need to schedule the first render.
   isLoadingIframe = true;
   const loadingIframe = window.document.createElement('iframe');
-  applyStyles(loadingIframe, iframeStyle);
+
+  if (currentRuntimeErrorOptions && currentRuntimeErrorOptions.className) {
+    loadingIframe.className = currentRuntimeErrorOptions.className;
+  } else {
+    applyStyles(loadingIframe, iframeStyle);
+  }
+
   loadingIframe.onload = function() {
     const iframeDocument = loadingIframe.contentDocument;
     if (iframeDocument != null && iframeDocument.body != null) {
