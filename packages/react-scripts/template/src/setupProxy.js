@@ -2,6 +2,6 @@
 // docs here: https://github.com/fs-webdev/exo#proxy
 const setProxies = require('exo/proxy');
 
-module.exports = function(app) {
+module.exports = (app) => {
   setProxies(app);
 }
