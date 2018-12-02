@@ -34,7 +34,9 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 We put them all in dependencies because the distinction between dependencies and development dependencies is pretty arbitrary for front-end apps that produce static bundles. Technically you don't need any of these dependencies on the server, not even the runtime ones. So by that logic even `react` might be seen as a development dependency.
 
-We used to try to separate them but as explained above, it isn't really consistent in the first place. There's no technical reason why this distinction is useful for apps that have no Node runtime. In addition, it used to cause problems for some Heroku deployments that didn't install development dependencies (and thus weren't able to build the project on the server or test it right before deployment).
+We used to try to separate them but as explained above, it isn't really consistent in the first place. There's no technical reason why this distinction is useful for apps that have no Node runtime. 
+
+In addition, it used to cause problems for some Heroku deployments that didn't install development dependencies (and thus weren't able to build the project on the server or test it right before deployment).
 
 You have full control over them and can always rearrange `package.json` as you deem reasonable.
 
