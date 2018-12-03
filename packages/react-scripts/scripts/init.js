@@ -97,7 +97,7 @@ module.exports = async function(
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
+    start: 'PORT=5000 react-scripts start',
     build: 'react-scripts build',
     test: 'react-scripts test',
     eject: 'react-scripts eject',

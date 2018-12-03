@@ -53,6 +53,7 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
   const defaultModules = [
     'http-proxy-middleware@0.19.0',
     'react-router-dom@4.3.1',
+    'fs-webdev/exo'
   ];
   installModulesSync(defaultModules, useYarn);
 }
