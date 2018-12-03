@@ -15,7 +15,7 @@ export default function Hello() {
     <h3>
       {value.toString().slice(0, 5)}
       <br />
-      hello
+      hello!!!!
       <br />
       class: <CounterClass hocChild />
       <br />

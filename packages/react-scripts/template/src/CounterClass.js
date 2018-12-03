@@ -17,14 +17,14 @@ export default class Counter extends Component {
   }
   render() {
     return (
-      <>
+      <span>
         {this.state.value}{' '}
         {this.props.hocChild && (
           <>
             (inner HOC: <HFF />)
           </>
         )}
-      </>
+      </span>
     );
   }
 }
