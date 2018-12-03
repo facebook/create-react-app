@@ -120,7 +120,7 @@ module.exports = function({ types: t }) {
           template(
             `
             module.hot.dispose(() => {
-              window.__enqueueForceUpdate(NAME);
+              setTimeout(() => window.__enqueueForceUpdate(NAME));
             });
             `
           )({ NAME: t.Identifier(name) }),

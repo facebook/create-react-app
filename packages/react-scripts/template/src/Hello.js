@@ -10,11 +10,12 @@ const HFF = HOCFunction(CounterFunction);
 
 export default function Hello() {
   const [value] = useState(Math.random());
+
   return (
     <h3>
       {value.toString().slice(0, 5)}
       <br />
-      hello!!
+      hello!
       <br />
       class: <CounterClass hocChild />
       <br />
