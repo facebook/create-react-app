@@ -1,4 +1,8 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
+import CounterFunction from './CounterFunction';
+import HOCFunction from './HOCFunction';
+
+const HFF = HOCFunction(CounterFunction);
 
 export default class Counter extends Component {
   state = { value: 0 };
@@ -12,6 +16,15 @@ export default class Counter extends Component {
     clearInterval(this.interval);
   }
   render() {
-    return this.state.value;
+    return (
+      <>
+        {this.state.value}{' '}
+        {this.props.hocChild && (
+          <>
+            (inner HOC: <HFF />)
+          </>
+        )}
+      </>
+    );
   }
 }
