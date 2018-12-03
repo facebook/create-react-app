@@ -178,6 +178,9 @@ module.exports = function(webpackEnv) {
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+      // Added to prevent conflicts within app when multiple webpack runtimes
+      // (from different compilation) are used on the same webpage.
+      jsonpFunction: '__REACT_APP',
     },
     optimization: {
       minimize: isEnvProduction,
