@@ -112,21 +112,13 @@ module.exports = function({ types: t }) {
           decorateFunctionId(t, name, generatedName),
           template(
             `
-            if (!module.hot.data) {
-              module.hot.accept();
-            } else {
-              module.hot.data.acceptNext = () => module.hot.accept();
-            }
+            module.hot.accept();
             `
           )(),
           template(
             `
-            module.hot.dispose(data => {
-              window.__enqueueForceUpdate(() => {
-                if (typeof data.acceptNext === 'function') {
-                  data.acceptNext();
-                }
-              }, NAME);
+            module.hot.dispose(() => {
+              window.__enqueueForceUpdate(NAME);
             });
             `
           )({ NAME: t.Identifier(name) }),
