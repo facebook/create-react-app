@@ -1,0 +1,4 @@
+- frags
+- error handling
+- hocs?
+- render props
