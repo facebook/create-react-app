@@ -5,7 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 window.__enqueueForceUpdate = function(type) {
-  console.log(type);
+  console.log('force', type);
+};
+
+window.__renderHook = function(type) {
+  console.log('render', type);
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));

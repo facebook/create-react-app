@@ -1,6 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
 import HOCFunction from './HOCFunction';
-
 const HFF = HOCFunction(Counter);
 
 export default function Counter(props) {

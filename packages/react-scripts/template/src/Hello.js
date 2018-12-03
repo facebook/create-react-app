@@ -3,7 +3,6 @@ import CounterClass from './CounterClass';
 import CounterFunction from './CounterFunction';
 import HOCClass from './HOCClass';
 import HOCFunction from './HOCFunction';
-
 const HCC = HOCClass(CounterClass);
 const HCF = HOCClass(CounterFunction);
 const HFC = HOCFunction(CounterClass);
@@ -15,7 +14,7 @@ export default function Hello() {
     <h3>
       {value.toString().slice(0, 5)}
       <br />
-      hello!!!!
+      hello!!
       <br />
       class: <CounterClass hocChild />
       <br />

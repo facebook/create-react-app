@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import CounterFunction from './CounterFunction';
 import HOCFunction from './HOCFunction';
-
 const HFF = HOCFunction(CounterFunction);
 
 export default class Counter extends Component {

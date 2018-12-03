@@ -55,7 +55,9 @@ function exportHoistedFunctionCallProxy(t, name, generatedName) {
   return template(
     `
     export default function NAME() {
-      return window[GEN_NAME].apply(this, arguments);
+      var result = window[GEN_NAME].apply(this, arguments);
+      window.__renderHook(NAME);
+      return result;
     }
     `,
     { sourceType: 'module' }
