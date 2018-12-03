@@ -110,7 +110,7 @@ module.exports = {
   // ...
   plugins: [
     // Generates an `index.html` file with the <script> injected.
-    new ExtractHtmlManifestPlugin({
+    new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve('public/index.html'),
     }),
