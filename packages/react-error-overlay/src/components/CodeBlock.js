@@ -10,6 +10,7 @@ import React from 'react';
 import { redTransparent, yellowTransparent } from '../styles';
 
 const _preStyle = {
+  position: 'relative',
   display: 'block',
   padding: '0.5em',
   marginTop: '0.5em',
