@@ -89,6 +89,41 @@ module.exports = {
 };
 ```
 
+#### `new ExtractHtmlManifestPlugin(htmlWebpackPlugin: HtmlWebpackPlugin, { fileName?: string, serializer?: (any) => string } )`
+
+This Webpack plugin generates manifest of assets injected to `index.html` by HtmlWebpackPlugin.<br>
+It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/html-webpack-plugin) 4.x.
+
+```js
+var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractHtmlManifestPlugin = require('react-dev-utils/ExtractHtmlManifestPlugin');
+
+// Webpack config
+var publicUrl = '/my-custom-url';
+
+module.exports = {
+  output: {
+    // ...
+    publicPath: publicUrl + '/',
+  },
+  // ...
+  plugins: [
+    // Generates an `index.html` file with the <script> injected.
+    new ExtractHtmlManifestPlugin({
+      inject: true,
+      template: path.resolve('public/index.html'),
+    }),
+    // Generate `html-manifest.json` file.
+    new ExtractHtmlManifestPlugin(HtmlWebpackPlugin, {
+      fileName: 'html-manifest.json',
+    }),
+    // ...
+  ],
+  // ...
+};
+```
+
 #### `new ModuleScopePlugin(appSrc: string | string[], allowedFiles?: string[])`
 
 This Webpack plugin ensures that relative imports from app's source directories don't reach outside of it.

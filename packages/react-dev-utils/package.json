@@ -18,6 +18,7 @@
     "errorOverlayMiddleware.js",
     "eslintFormatter.js",
     "evalSourceMapMiddleware.js",
+    "ExtractHtmlManifestPlugin.js",
     "FileSizeReporter.js",
     "formatWebpackMessages.js",
     "getCacheIdentifier.js",

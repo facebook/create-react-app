@@ -22,6 +22,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const ExtractHtmlManifestPlugin = require('react-dev-utils/ExtractHtmlManifestPlugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
@@ -556,6 +557,11 @@ module.exports = function(webpackEnv) {
       // in `package.json`, in which case it will be the pathname of that URL.
       // In development, this will be an empty string.
       new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
+      // Generates file html-manifest.json to output folder. HTML page can be
+      // reconstructed using this file.
+      new ExtractHtmlManifestPlugin(HtmlWebpackPlugin, {
+        filename: 'html-manifest.json',
+      }),
       // This gives some necessary context to module not found errors, such as
       // the requesting resource.
       new ModuleNotFoundPlugin(paths.appPath),
