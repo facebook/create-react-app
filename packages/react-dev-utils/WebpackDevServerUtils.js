@@ -100,7 +100,7 @@ function printInstructions(appName, urls, useYarn) {
   console.log();
 }
 
-function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, reload) {
+function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, devSocket) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   let compiler;
@@ -136,27 +136,14 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
       });
     });
 
-    compiler.hooks.forkTsCheckerReceive.tap('fork-ts-checker-done', msgs => {
-      const format = (message) => `${message.file}\n${typescriptFormatter(message, true)}`;
+    compiler.hooks.forkTsCheckerReceive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
+      const allMsgs = [...diagnostics, ...lints];
+      const format = message =>`${message.file}\n${typescriptFormatter(message, true)}`;
 
       tsMessagesResolver({
-        errors: msgs.filter(msg => msg.severity === 'error').map(format),
-        warnings: msgs.filter(msg => msg.severity === 'warning').map(format)
+        errors: allMsgs.filter(msg => msg.severity === 'error').map(format),
+        warnings: allMsgs.filter(msg => msg.severity === 'warning').map(format),
       });
-    });
-
-    compiler.hooks.afterCompile.tap('afterCompile', async compilation => {
-      // If any errors already exist, skip this.
-      if (compilation.errors.length > 0) {
-        return;
-      }
-
-      const messages = await tsMessagesPromise;
-      compilation.errors.push(...messages.errors);
-      compilation.warnings.push(...messages.warnings);
-      if (messages.errors.length > 0 || messages.warnings.length > 0) {
-        reload();
-      }
     });
   }
 
@@ -179,9 +166,20 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
         chalk.yellow('Files successfully emitted, waiting for typecheck results...')
       );
 
-      const tsMessages = await tsMessagesPromise;
-      statsData.errors.push(...tsMessages.errors);
-      statsData.warnings.push(...tsMessages.warnings);
+      const messages = await tsMessagesPromise;
+      statsData.errors.push(...messages.errors);
+      statsData.warnings.push(...messages.warnings);
+      // Push errors and warnings into compilation result
+      // to show them after page refresh triggered by user.
+      stats.compilation.errors.push(...messages.errors);
+      stats.compilation.warnings.push(...messages.warnings);
+
+      if (messages.errors.length > 0) {
+        devSocket.errors(messages.errors);
+      } else if (messages.warnings.length > 0) {
+        devSocket.warnings(messages.warnings);
+      }
+
       process.stdout.clearLine();
       process.stdout.cursorTo(0);
     }

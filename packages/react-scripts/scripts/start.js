@@ -96,9 +96,12 @@ checkBrowsers(paths.appPath, isInteractive)
     const appName = require(paths.appPackageJson).name;
     const useTypeScript = fs.existsSync(paths.appTsConfig);
     const urls = prepareUrls(protocol, HOST, port);
-    const reloadFn = () => devServer.sockWrite(devServer.sockets, 'content-changed');
+    const devSocket = {
+      warnings: warnings => devServer.sockWrite(devServer.sockets, 'warnings', warnings),
+      errors: errors => devServer.sockWrite(devServer.sockets, 'errors', errors),
+    };
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, reloadFn);
+    const compiler = createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, devSocket);
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
