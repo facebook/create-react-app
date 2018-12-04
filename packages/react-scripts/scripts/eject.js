@@ -310,7 +310,7 @@ inquirer
     console.log(green('Ejected successfully!'));
     console.log();
 
-    console.log(cyan('Adding ejected files to git staging area...'));
+    console.log(cyan('Staging ejected files for commit...'));
     spawnSync(
       'git',
       ['add', path.join(appPath, 'config'), path.join(appPath, 'scripts')],
