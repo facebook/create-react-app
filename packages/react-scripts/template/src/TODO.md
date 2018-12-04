@@ -1,5 +1,9 @@
 - frags
 - error handling
+  - offer a way to reset?
+- hooks
+  - remount on error?
+  - compare introspection?
 - hocs?
   - with self as input
   - returning a class

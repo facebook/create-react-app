@@ -14,7 +14,6 @@ HCC.__setImpl(HOCClass(CounterClass));
 HCF.__setImpl(HOCClass(CounterFunction));
 HFC.__setImpl(HOCFunction(CounterClass));
 HFF.__setImpl(HOCFunction(CounterFunction));
-
 Hello.__setImpl(function HelloImpl() {
   const [value] = useState(Math.random());
 
@@ -22,7 +21,7 @@ Hello.__setImpl(function HelloImpl() {
     <h3>
       {value.toString().slice(0, 5)}
       <br />
-      world
+      hello world!!!
       <br />
       class: <CounterClass hocChild />
       <br />
