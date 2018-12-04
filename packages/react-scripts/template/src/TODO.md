@@ -1,4 +1,19 @@
 - frags
 - error handling
 - hocs?
+  - with self as input
+  - returning a class
+  - HOC itself by mistake
+    - protect against nested?
+- type equality
+  - memo and friends
+  - nested / applied twice
+  - mutually recursive
+  - re-exports
+    - same HOC applied early, two callsites
+- classes
+  - how to detect and reload?
 - render props
+- directives?
+- when to accept?
+- test integrations

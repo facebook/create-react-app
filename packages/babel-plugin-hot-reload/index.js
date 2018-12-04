@@ -83,6 +83,8 @@ function decorateFunctionId(t, name, generatedName) {
 }
 
 module.exports = function({ types: t }) {
+  return { visitor: {} };
+
   return {
     visitor: {
       ExportDefaultDeclaration(path, state) {

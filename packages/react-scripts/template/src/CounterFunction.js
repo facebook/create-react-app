@@ -1,11 +1,16 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useReducer, useLayoutEffect } from 'react';
 import HOCFunction from './HOCFunction';
-const HFF = HOCFunction(Counter);
 
-export default function Counter(props) {
-  const [value, setValue] = useState(0);
+let Counter = window.__createProxy(module, 'Counter');
+let HFF = window.__createProxy(module, 'HFF');
+
+HFF.__setImpl(HOCFunction(Counter));
+Counter.__setImpl(function CounterImpl(props) {
+  const [value, dispatch] = useReducer((v, a) => {
+    return a === 'inc' ? v + 1 : v;
+  }, 0);
   useLayoutEffect(() => {
-    const id = setInterval(() => setValue(c => c + 1), 1000);
+    const id = setInterval(() => dispatch('inc'), 1000);
     return () => clearInterval(id);
   }, []);
   return (
@@ -18,4 +23,6 @@ export default function Counter(props) {
       )}
     </span>
   );
-}
+});
+
+export default Counter;

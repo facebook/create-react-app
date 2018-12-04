@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import CounterFunction from './CounterFunction';
 import HOCFunction from './HOCFunction';
-const HFF = HOCFunction(CounterFunction);
+
+const HFF = window.__createProxy(module, 'HFF');
+HFF.__setImpl(HOCFunction(CounterFunction));
 
 export default class Counter extends Component {
   state = { value: 0 };
