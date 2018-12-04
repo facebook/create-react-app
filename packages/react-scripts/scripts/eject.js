@@ -38,6 +38,20 @@ function getGitStatus() {
   }
 }
 
+function tryGitAdd(appPath) {
+  try {
+    spawnSync(
+      'git',
+      ['add', path.join(appPath, 'config'), path.join(appPath, 'scripts')],
+      {
+        stdio: 'inherit',
+      }
+    );
+  } catch (e) {
+    return '';
+  }
+}
+
 console.log(
   chalk.cyan.bold(
     'NOTE: Create React App 2 supports TypeScript, Sass, CSS Modules and more without ejecting: ' +
@@ -310,15 +324,10 @@ inquirer
     console.log(green('Ejected successfully!'));
     console.log();
 
-    console.log(cyan('Staging ejected files for commit...'));
-    spawnSync(
-      'git',
-      ['add', path.join(appPath, 'config'), path.join(appPath, 'scripts')],
-      {
-        stdio: 'inherit',
-      }
-    );
-    console.log();
+    if (tryGitAdd(appPath)) {
+      console.log(cyan('Added ejected files to Staging for commit.'));
+      console.log();
+    }
 
     console.log(
       green('Please consider sharing why you ejected in this survey:')
