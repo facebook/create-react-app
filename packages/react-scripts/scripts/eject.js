@@ -310,6 +310,16 @@ inquirer
     console.log(green('Ejected successfully!'));
     console.log();
 
+    console.log(cyan('Adding ejected files to git staging area...'));
+    spawnSync(
+      'git',
+      ['add', path.join(appPath, 'config'), path.join(appPath, 'scripts')],
+      {
+        stdio: 'inherit',
+      }
+    );
+    console.log();
+
     console.log(
       green('Please consider sharing why you ejected in this survey:')
     );
