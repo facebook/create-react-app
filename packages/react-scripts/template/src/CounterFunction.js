@@ -1,11 +1,9 @@
 import React, { useReducer, useLayoutEffect } from 'react';
 import HOCFunction from './HOCFunction';
 
-let Counter = window.__createProxy(module, 'Counter');
-let HFF = window.__createProxy(module, 'HFF');
+let HFF = HOCFunction(Counter);
 
-HFF.__setImpl(HOCFunction(Counter));
-Counter.__setImpl(function CounterImpl(props) {
+function Counter(props) {
   const [value, dispatch] = useReducer((v, a) => {
     return a === 'inc' ? v + 1 : v;
   }, 0);
@@ -23,6 +21,6 @@ Counter.__setImpl(function CounterImpl(props) {
       )}
     </span>
   );
-});
+}
 
 export default Counter;

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import CounterFunction from './CounterFunction';
 import HOCFunction from './HOCFunction';
 
-const HFF = window.__createProxy(module, 'HFF');
-HFF.__setImpl(HOCFunction(CounterFunction));
+const HFF = HOCFunction(CounterFunction);
 
 export default class Counter extends Component {
   state = { value: 0 };
@@ -22,7 +21,7 @@ export default class Counter extends Component {
         {this.state.value}{' '}
         {this.props.hocChild && (
           <>
-            (inner HOC: <HFF />)
+            (inner HOC: <HFF /> {HFF.field})
           </>
         )}
       </span>

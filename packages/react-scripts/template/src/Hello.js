@@ -4,17 +4,12 @@ import CounterFunction from './CounterFunction';
 import HOCClass from './HOCClass';
 import HOCFunction from './HOCFunction';
 
-let Hello = window.__createProxy(module, 'Hello');
-let HCC = window.__createProxy(module, 'CounterClass');
-let HCF = window.__createProxy(module, 'HCF');
-let HFC = window.__createProxy(module, 'HFC');
-let HFF = window.__createProxy(module, 'HFF');
+let HCC = HOCClass(CounterClass, 'red');
+let HCF = HOCClass(CounterFunction, 'orange');
+let HFC = HOCFunction(CounterClass, 'yellow');
+let HFF = HOCFunction(CounterFunction, 'green');
 
-HCC.__setImpl(HOCClass(CounterClass, 'red'));
-HCF.__setImpl(HOCClass(CounterFunction, 'orange'));
-HFC.__setImpl(HOCFunction(CounterClass, 'yellow'));
-HFF.__setImpl(HOCFunction(CounterFunction, 'green'));
-Hello.__setImpl(function HelloImpl() {
+function Hello() {
   const [value] = useState(Math.random());
 
   return (
@@ -30,6 +25,6 @@ Hello.__setImpl(function HelloImpl() {
       hocs: <HCC /> <HCF /> <HFC /> <HFF />
     </h3>
   );
-});
+}
 
 export default Hello;
