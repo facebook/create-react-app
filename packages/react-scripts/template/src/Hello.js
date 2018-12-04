@@ -10,10 +10,10 @@ let HCF = window.__createProxy(module, 'HCF');
 let HFC = window.__createProxy(module, 'HFC');
 let HFF = window.__createProxy(module, 'HFF');
 
-HCC.__setImpl(HOCClass(CounterClass));
-HCF.__setImpl(HOCClass(CounterFunction));
-HFC.__setImpl(HOCFunction(CounterClass));
-HFF.__setImpl(HOCFunction(CounterFunction));
+HCC.__setImpl(HOCClass(CounterClass, 'red'));
+HCF.__setImpl(HOCClass(CounterFunction, 'orange'));
+HFC.__setImpl(HOCFunction(CounterClass, 'yellow'));
+HFF.__setImpl(HOCFunction(CounterFunction, 'green'));
 Hello.__setImpl(function HelloImpl() {
   const [value] = useState(Math.random());
 
@@ -21,7 +21,7 @@ Hello.__setImpl(function HelloImpl() {
     <h3>
       {value.toString().slice(0, 5)}
       <br />
-      hello world!!!
+      hello world!
       <br />
       class: <CounterClass hocChild />
       <br />

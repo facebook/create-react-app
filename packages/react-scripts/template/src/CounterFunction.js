@@ -18,7 +18,7 @@ Counter.__setImpl(function CounterImpl(props) {
       {value}
       {props.hocChild && (
         <>
-          (inner HOC: <HFF />)
+          (inner HOC: <HFF /> {HFF.field})
         </>
       )}
     </span>
