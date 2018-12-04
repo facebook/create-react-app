@@ -8,35 +8,25 @@ export function HotContainer({ children }) {
   return <HotContext.Provider value={inc}>{children}</HotContext.Provider>;
 }
 
-window.__createProxy = function(m, localId) {
+window.__assign = function(m, localId, value) {
   m.hot.accept();
   m.hot.dispose(() => {
-    setTimeout(() => window.__enqueueForceUpdate());
+    setTimeout(() => _invalidate());
   });
   const id = m.i + '$' + localId;
-
-  if (!window[`${id}_proxy`]) {
-    function P(...args) {
-      let impl = window[`${id}_impl`];
-      if (impl.prototype && impl.prototype.isReactComponent) {
-        return new impl(...args);
-      }
-      let res = impl.apply(this, arguments);
-      window.__renderHook();
-      return res;
-    }
-    window[`${id}_proxy`] = P;
-    P.__setImpl = impl => {
-      window[`${id}_impl`] = impl;
-    };
+  window['latest_' + id] = value;
+  let orig = window['orig_' + id];
+  if (!orig) {
+    // Can fall back to a custom convention, e.g.
+    // orig.__apply__ if React respects that.
+    orig = new Proxy(value, {
+      apply(target, thisArg, args) {
+        let ret = window['latest_' + id].apply(null, args);
+        React.useContext(HotContext);
+        return ret;
+      },
+    });
+    window['orig_' + id] = orig;
   }
-  return window[`${id}_proxy`];
-};
-
-window.__enqueueForceUpdate = function(type) {
-  _invalidate();
-};
-
-window.__renderHook = function(type) {
-  React.useContext(HotContext);
+  return orig;
 };

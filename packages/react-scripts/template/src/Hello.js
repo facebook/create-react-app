@@ -4,12 +4,12 @@ import CounterFunction from './CounterFunction';
 import HOCClass from './HOCClass';
 import HOCFunction from './HOCFunction';
 
-let HCC = HOCClass(CounterClass, 'red');
-let HCF = HOCClass(CounterFunction, 'orange');
-let HFC = HOCFunction(CounterClass, 'yellow');
-let HFF = HOCFunction(CounterFunction, 'green');
+let HCC;
+let HCF;
+let HFC;
+let HFF;
 
-function Hello() {
+let Hello = window.__assign(module, 'Hello', function Hello() {
   const [value] = useState(Math.random());
 
   return (
@@ -25,6 +25,11 @@ function Hello() {
       hocs: <HCC /> <HCF /> <HFC /> <HFF />
     </h3>
   );
-}
+});
+
+HCC = window.__assign(module, 'HCC', HOCClass(CounterClass, 'red'));
+HCF = window.__assign(module, 'HCF', HOCClass(CounterFunction, 'orange'));
+HFC = window.__assign(module, 'HFC', HOCFunction(CounterClass, 'yellow'));
+HFF = window.__assign(module, 'HFF', HOCFunction(CounterFunction, 'green'));
 
 export default Hello;

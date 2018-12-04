@@ -1,9 +1,10 @@
 import React, { useReducer, useLayoutEffect } from 'react';
 import HOCFunction from './HOCFunction';
 
-let HFF = HOCFunction(Counter);
+let HFF;
+let Counter;
 
-function Counter(props) {
+Counter = window.__assign(module, 'Counter', function Counter(props) {
   const [value, dispatch] = useReducer((v, a) => {
     return a === 'inc' ? v + 1 : v;
   }, 0);
@@ -13,7 +14,7 @@ function Counter(props) {
   }, []);
   return (
     <span>
-      {value}
+      {value}{' '}
       {props.hocChild && (
         <>
           (inner HOC: <HFF /> {HFF.field})
@@ -21,6 +22,7 @@ function Counter(props) {
       )}
     </span>
   );
-}
+});
+HFF = window.__assign(module, 'HFF', HOCFunction(Counter));
 
 export default Counter;
