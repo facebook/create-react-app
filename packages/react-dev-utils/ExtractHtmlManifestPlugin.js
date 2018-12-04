@@ -28,6 +28,7 @@ class ExtractHtmlManifestPlugin {
       },
       opts || {}
     );
+    this.output = '{}';
   }
 
   apply(compiler) {
@@ -35,11 +36,13 @@ class ExtractHtmlManifestPlugin {
       this.htmlWebpackPlugin
         .getHooks(compilation)
         .beforeAssetTagGeneration.tap('ExtractHtmlManifestPlugin', data => {
-          var outputFolder = compiler.options.output.path;
-          var outputFile = path.resolve(outputFolder, this.opts.fileName);
-          var output = this.opts.serialize(data.assets);
-          fs.writeFileSync(outputFile, output, 'utf8');
+          this.output = this.opts.serialize(data.assets);
         });
+    });
+    compiler.hooks.afterEmit.tap('ExtractHtmlManifestPlugin', () => {
+      var outputFolder = compiler.options.output.path;
+      var outputFile = path.resolve(outputFolder, this.opts.fileName);
+      fs.writeFileSync(outputFile, this.output, 'utf8');
     });
   }
 }
