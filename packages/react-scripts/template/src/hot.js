@@ -8,8 +8,9 @@ export function HotContainer({ children }) {
   return <HotContext.Provider value={inc}>{children}</HotContext.Provider>;
 }
 
-let storage = new Map();
-let latestRawFunctions = new Map();
+let idToPersistentType = new Map();
+let idToRawFunction = new Map();
+let proxies = new WeakSet();
 
 function getKind(type) {
   if (typeof type === 'function') {
@@ -21,6 +22,8 @@ function getKind(type) {
   } else if (type !== null && typeof type === 'object') {
     if (type.$$typeof === Symbol.for('react.memo')) {
       return 'memo';
+    } else if (type.$$typeof === Symbol.for('react.lazy')) {
+      return 'lazy';
     }
   }
   return 'other';
@@ -30,17 +33,25 @@ function init(rawType, id) {
   let kind = getKind(rawType);
   switch (kind) {
     case 'function': {
-      latestRawFunctions.set(id, rawType);
-      return new Proxy(rawType, {
+      if (proxies.has(rawType)) {
+        return rawType;
+      }
+      idToRawFunction.set(id, rawType);
+      const proxy = new Proxy(rawType, {
         apply(target, thisArg, args) {
-          let ret = latestRawFunctions.get(id).apply(null, args);
+          let ret = idToRawFunction.get(id).apply(null, args);
           React.useContext(HotContext);
           return ret;
         },
       });
+      proxies.add(proxy);
+      return proxy;
     }
     case 'memo': {
       rawType.type = init(rawType.type, id);
+      return rawType;
+    }
+    case 'lazy': {
       return rawType;
     }
     default: {
@@ -57,11 +68,14 @@ function accept(type, nextRawType, id) {
   }
   switch (kind) {
     case 'function': {
-      latestRawFunctions.set(id, nextRawType);
+      idToRawFunction.set(id, nextRawType);
       return true;
     }
     case 'memo': {
       return accept(type.type, nextRawType.type, id);
+    }
+    case 'lazy': {
+      return true;
     }
     default: {
       return false;
@@ -75,10 +89,10 @@ window.__assign = function(webpackModule, localId, nextRawType) {
     setTimeout(() => _invalidate());
   });
   const id = webpackModule.i + '$' + localId;
-  let type = storage.get(id);
+  let type = idToPersistentType.get(id);
   if (!accept(type, nextRawType, id)) {
     type = init(nextRawType, id);
-    storage.set(id, type);
+    idToPersistentType.set(id, type);
   }
   return type;
 };

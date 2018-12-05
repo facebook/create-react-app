@@ -24,6 +24,8 @@
 
 lazy()?
 
+- lazy of memo of proxy
+
 - maybe Proxy?
 - do I want to preserve type? elementType? or what?
   or lazy element?
