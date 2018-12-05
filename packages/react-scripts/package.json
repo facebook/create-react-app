@@ -1,12 +1,11 @@
 {
   "name": "babylon-react-scripts",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebook/create-react-app",
   "license": "MIT",
   "publishConfig": {
-    "registry":
-      "https://artifactory.ops.babylontech.co.uk/artifactory/api/npm/babylon-virtual-npm/"
+    "registry": "https://artifactory.ops.babylontech.co.uk/artifactory/api/npm/babylon-virtual-npm/"
   },
   "engines": {
     "node": ">=6"
@@ -58,12 +57,14 @@
     "jest-pnp-resolver": "1.0.1",
     "jest-resolve": "23.6.0",
     "mini-css-extract-plugin": "0.4.3",
+    "null-loader": "^0.1.1",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.0.6",
     "postcss-safe-parser": "4.0.1",
+    "raw-loader": "^0.5.1",
     "react-app-polyfill": "^0.1.3",
     "react-dev-utils": "^6.1.1",
     "resolve": "1.8.1",
