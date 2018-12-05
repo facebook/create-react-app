@@ -8,25 +8,77 @@ export function HotContainer({ children }) {
   return <HotContext.Provider value={inc}>{children}</HotContext.Provider>;
 }
 
-window.__assign = function(m, localId, value) {
-  m.hot.accept();
-  m.hot.dispose(() => {
+let storage = new Map();
+let latestRawFunctions = new Map();
+
+function getKind(type) {
+  if (typeof type === 'function') {
+    if (type.prototype && type.prototype.isReactComponent) {
+      return 'class';
+    } else {
+      return 'function';
+    }
+  } else if (type !== null && typeof type === 'object') {
+    if (type.$$typeof === Symbol.for('react.memo')) {
+      return 'memo';
+    }
+  }
+  return 'other';
+}
+
+function init(rawType, id) {
+  let kind = getKind(rawType);
+  switch (kind) {
+    case 'function': {
+      latestRawFunctions.set(id, rawType);
+      return new Proxy(rawType, {
+        apply(target, thisArg, args) {
+          let ret = latestRawFunctions.get(id).apply(null, args);
+          React.useContext(HotContext);
+          return ret;
+        },
+      });
+    }
+    case 'memo': {
+      rawType.type = init(rawType.type, id);
+      return rawType;
+    }
+    default: {
+      return rawType;
+    }
+  }
+}
+
+function accept(type, nextRawType, id) {
+  let kind = getKind(type);
+  let nextKind = getKind(nextRawType);
+  if (kind !== nextKind) {
+    return false;
+  }
+  switch (kind) {
+    case 'function': {
+      latestRawFunctions.set(id, nextRawType);
+      return true;
+    }
+    case 'memo': {
+      return accept(type.type, nextRawType.type, id);
+    }
+    default: {
+      return false;
+    }
+  }
+}
+
+window.__assign = function(webpackModule, localId, nextRawType) {
+  webpackModule.hot.accept();
+  webpackModule.hot.dispose(() => {
     setTimeout(() => _invalidate());
   });
-  const id = m.i + '$' + localId;
-  window['latest_' + id] = value;
-  let orig = window['orig_' + id];
-  if (!orig) {
-    // Can fall back to a custom convention, e.g.
-    // orig.__apply__ if React respects that.
-    orig = new Proxy(value, {
-      apply(target, thisArg, args) {
-        let ret = window['latest_' + id].apply(null, args);
-        React.useContext(HotContext);
-        return ret;
-      },
-    });
-    window['orig_' + id] = orig;
+  const id = webpackModule.i + '$' + localId;
+  let type = storage.get(id);
+  if (!accept(type, nextRawType, id)) {
+    type = init(nextRawType, id);
+    storage.set(id, type);
   }
-  return orig;
+  return type;
 };
