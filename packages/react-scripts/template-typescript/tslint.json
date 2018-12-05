@@ -4,7 +4,11 @@
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts",
-      "coverage/lcov-report/*.js"
+      "coverage/lcov-report/*.js",
+      "src/serviceWorker.ts"
     ]
+  },
+  "rules": {
+    "ordered-imports": false
   }
 }
