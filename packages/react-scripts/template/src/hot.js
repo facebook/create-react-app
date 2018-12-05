@@ -8,6 +8,12 @@ export function HotContainer({ children }) {
   return <HotContext.Provider value={inc}>{children}</HotContext.Provider>;
 }
 
+let CurrentOwner =
+  React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+function readContext(Ctx) {
+  CurrentOwner.currentDispatcher.readContext(Ctx);
+}
+
 let idToPersistentType = new Map();
 let idToRawFunction = new Map();
 let proxies = new WeakSet();
@@ -24,6 +30,8 @@ function getKind(type) {
       return 'memo';
     } else if (type.$$typeof === Symbol.for('react.lazy')) {
       return 'lazy';
+    } else if (type.$$typeof === Symbol.for('react.forward_ref')) {
+      return 'forward_ref';
     }
   }
   return 'other';
@@ -40,7 +48,7 @@ function init(rawType, id) {
       const proxy = new Proxy(rawType, {
         apply(target, thisArg, args) {
           let ret = idToRawFunction.get(id).apply(null, args);
-          React.useContext(HotContext);
+          readContext(HotContext);
           return ret;
         },
       });
@@ -52,6 +60,10 @@ function init(rawType, id) {
       return rawType;
     }
     case 'lazy': {
+      return rawType;
+    }
+    case 'forward_ref': {
+      rawType.render = init(rawType.render, id);
       return rawType;
     }
     default: {
@@ -73,6 +85,9 @@ function accept(type, nextRawType, id) {
     }
     case 'memo': {
       return accept(type.type, nextRawType.type, id);
+    }
+    case 'forward_ref': {
+      return accept(type.render, nextRawType.render, id);
     }
     case 'lazy': {
       return true;

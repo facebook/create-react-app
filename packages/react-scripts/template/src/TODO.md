@@ -21,30 +21,7 @@
 - directives?
 - when to accept?
 - test integrations
-
-lazy()?
-
-- lazy of memo of proxy
-
-- maybe Proxy?
-- do I want to preserve type? elementType? or what?
-  or lazy element?
-
-- what about static fields
-
-  - we either break Foo.thing or <Foo />.type?
-  - maybe we never wrap, but point to latest from current one?
-  - could also bail out
-
+- exotic (lazy, memo, fwd)
 - how to force update all (incl. inside memo)
-
-let A = createA();
-B() {
-<A />
-}
-
-- two kinds of edits
-  - reeval child with new data
-  - remember new self
-
-* think in terms of "assign"?
+- don't accept module if either assignment failed
+- displayName etc

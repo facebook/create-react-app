@@ -1,8 +1,9 @@
-import React, { memo, useReducer, useLayoutEffect } from 'react';
+import React, { forwardRef, memo, useReducer, useLayoutEffect } from 'react';
 import HOCFunction from './HOCFunction';
 
 let HFF;
 let Counter;
+let Fwd;
 
 Counter = window.__assign(
   module,
@@ -18,7 +19,7 @@ Counter = window.__assign(
       }, []);
       return (
         <span>
-          {value}{' '}
+          {value}
           {props.hocChild && (
             <>
               (inner HOC: <HFF /> {HFF.field})
@@ -29,6 +30,15 @@ Counter = window.__assign(
     })
   )
 );
-HFF = window.__assign(module, 'HFF', HOCFunction(Counter));
+Fwd = window.__assign(
+  module,
+  'FWD',
+  forwardRef((props, ref) => (
+    <span ref={ref}>
+      <Counter {...props} />
+    </span>
+  ))
+);
+HFF = window.__assign(module, 'HFF', HOCFunction(Fwd));
 
-export default Counter;
+export default Fwd;
