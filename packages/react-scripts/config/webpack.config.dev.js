@@ -196,14 +196,8 @@ module.exports = {
             options: {
               formatter: require.resolve('react-dev-utils/eslintFormatter'),
               eslintPath: require.resolve('eslint'),
-              // @remove-on-eject-begin
-              baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
-                settings: { react: { version: '999.999.999' } },
-              },
               ignore: false,
-              useEslintrc: false,
-              // @remove-on-eject-end
+              useEslintrc: true,
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -422,33 +416,33 @@ module.exports = {
     }),
     // TypeScript type checking
     useTypeScript &&
-      new ForkTsCheckerWebpackPlugin({
-        typescript: resolve.sync('typescript', {
-          basedir: paths.appNodeModules,
-        }),
-        async: false,
-        checkSyntacticErrors: true,
-        tsconfig: paths.appTsConfig,
-        compilerOptions: {
-          module: 'esnext',
-          moduleResolution: 'node',
-          resolveJsonModule: true,
-          isolatedModules: true,
-          noEmit: true,
-          jsx: 'preserve',
-        },
-        reportFiles: [
-          '**',
-          '!**/*.json',
-          '!**/__tests__/**',
-          '!**/?(*.)(spec|test).*',
-          '!src/setupProxy.js',
-          '!src/setupTests.*',
-        ],
-        watch: paths.appSrc,
-        silent: true,
-        formatter: typescriptFormatter,
+    new ForkTsCheckerWebpackPlugin({
+      typescript: resolve.sync('typescript', {
+        basedir: paths.appNodeModules,
       }),
+      async: false,
+      checkSyntacticErrors: true,
+      tsconfig: paths.appTsConfig,
+      compilerOptions: {
+        module: 'esnext',
+        moduleResolution: 'node',
+        resolveJsonModule: true,
+        isolatedModules: true,
+        noEmit: true,
+        jsx: 'preserve',
+      },
+      reportFiles: [
+        '**',
+        '!**/*.json',
+        '!**/__tests__/**',
+        '!**/?(*.)(spec|test).*',
+        '!src/setupProxy.js',
+        '!src/setupTests.*',
+      ],
+      watch: paths.appSrc,
+      silent: true,
+      formatter: typescriptFormatter,
+    }),
   ].filter(Boolean),
 
   // Some libraries import Node modules but don't use them in the browser.
