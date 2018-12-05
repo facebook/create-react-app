@@ -47,8 +47,10 @@ function tryGitAdd(appPath) {
         stdio: 'inherit',
       }
     );
+
+    return true;
   } catch (e) {
-    return '';
+    return false;
   }
 }
 
@@ -325,7 +327,7 @@ inquirer
     console.log();
 
     if (tryGitAdd(appPath)) {
-      console.log(cyan('Added ejected files to Staging for commit.'));
+      console.log(cyan('Staged ejected files for commit.'));
       console.log();
     }
 
