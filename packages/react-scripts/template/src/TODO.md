@@ -1,6 +1,18 @@
+- other strategies:
+  - seb suggested walking down the tree and reconciling
+- write down constraints.
+
+  - actually, tests!
+
 - frags
 - error handling
+  - reenable overlay
   - offer a way to reset?
+  - suppress error dialog?
+  - suppress messages?
+  - check types? debug tools?
+- directives?
+  - !
 - hooks
   - remount on error?
   - compare introspection?
@@ -18,10 +30,12 @@
 - classes
   - how to detect and reload?
 - render props
-- directives?
 - when to accept?
 - test integrations
 - exotic (lazy, memo, fwd)
 - how to force update all (incl. inside memo)
 - don't accept module if either assignment failed
 - displayName etc
+- false positives for things getting wrapped
+- forwardRef
+  - make sure refs _on_ proxies actually work
