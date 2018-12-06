@@ -47,7 +47,8 @@ function init(rawType, id) {
       idToRawFunction.set(id, rawType);
       const proxy = new Proxy(rawType, {
         apply(target, thisArg, args) {
-          let ret = idToRawFunction.get(id).apply(null, args);
+          let freshRawType = idToRawFunction.get(id);
+          let ret = freshRawType.apply(null, args);
           readContext(HotContext);
           return ret;
         },

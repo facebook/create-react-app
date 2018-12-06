@@ -21,7 +21,7 @@ let Hello = window.__assign(module, 'Hello', function Hello() {
       <h3>
         {value.toString().slice(0, 5)}
         <br />
-        hello world!
+        hello world!!
         <br />
         class: <CounterClass hocChild />
         <br />
