@@ -33,7 +33,7 @@ When you run `npm test`, Jest will launch in the watch mode. Every time you save
 
 The watcher includes an interactive command-line interface with the ability to run all tests, or focus on a search pattern. It is designed this way so that you can keep it open and enjoy fast re-runs. You can learn the commands from the “Watch Usage” note that the watcher prints after every run:
 
-![Jest watch mode](http://facebook.github.io/jest/img/blog/15-watch.gif)
+![Jest watch mode](https://jestjs.io/img/blog/15-watch.gif)
 
 ## Version Control Integration
 
@@ -264,7 +264,7 @@ Similarly, `fit()` lets you focus on a specific test without running any other t
 Jest has an integrated coverage reporter that works well with ES6 and requires no configuration.<br>
 Run `npm test -- --coverage` (note extra `--` in the middle) to include a coverage report like this:
 
-![coverage report](http://i.imgur.com/5bFhnTS.png)
+![coverage report](https://i.imgur.com/5bFhnTS.png)
 
 Note that tests run much slower with coverage so it is recommended to run it separately from your normal workflow.
 
