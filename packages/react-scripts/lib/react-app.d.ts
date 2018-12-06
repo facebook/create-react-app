@@ -34,6 +34,11 @@ declare module '*.png' {
   export default src;
 }
 
+declare module '*.webp' {
+    const src: string;
+    export default src;
+}
+
 declare module '*.svg' {
   import * as React from 'react';
 
@@ -41,11 +46,6 @@ declare module '*.svg' {
 
   const src: string;
   export default src;
-}
-
-declare module '*.webp' {
-    const src: string;
-    export default src;
 }
 
 declare module '*.module.css' {
