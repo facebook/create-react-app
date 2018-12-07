@@ -41,5 +41,6 @@ Fwd = window.__assign(
   ))
 );
 HFF = window.__assign(module, 'HFF', HOCFunction(Fwd));
+window.__commit(module);
 
 export default Fwd;

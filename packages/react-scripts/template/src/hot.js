@@ -1,10 +1,10 @@
 import React from 'react';
 
 let HotContext = React.createContext();
-let _invalidate;
+let invalidate;
 export function HotContainer({ children }) {
   const [inc, setInc] = React.useState(0);
-  _invalidate = () => setInc(c => c + 1);
+  invalidate = () => setInc(c => c + 1);
   return <HotContext.Provider value={inc}>{children}</HotContext.Provider>;
 }
 
@@ -249,10 +249,6 @@ function accept(type, nextRawType, id) {
 }
 
 window.__assign = function(webpackModule, localId, nextRawType) {
-  webpackModule.hot.accept();
-  webpackModule.hot.dispose(() => {
-    setTimeout(() => _invalidate());
-  });
   const id = webpackModule.i + '$' + localId;
   let type = idToPersistentType.get(id);
   if (!accept(type, nextRawType, id)) {
@@ -260,4 +256,13 @@ window.__assign = function(webpackModule, localId, nextRawType) {
     idToPersistentType.set(id, type);
   }
   return type;
+};
+
+window.__commit = function(webpackModule) {
+  // TODO: we should abort self-accept if one of types changed.
+  // but it doesn't seem like webpack lets us do this yet.
+  webpackModule.hot.accept();
+  webpackModule.hot.dispose(() => {
+    setTimeout(() => invalidate());
+  });
 };

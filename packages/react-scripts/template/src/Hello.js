@@ -13,6 +13,8 @@ let HCF;
 let HFC;
 let HFF;
 
+console.log('running Hello');
+
 let Hello = window.__assign(module, 'Hello', function Hello() {
   const [value] = useState(Math.random());
   return (
@@ -52,5 +54,6 @@ HCC = window.__assign(module, 'HCC', HOCClass(CounterClass, 'red'));
 HCF = window.__assign(module, 'HCF', HOCClass(CounterFunction, 'orange'));
 HFC = window.__assign(module, 'HFC', HOCFunction(CounterClass, 'yellow'));
 HFF = window.__assign(module, 'HFF', HOCFunction(CounterFunction, 'green'));
+window.__commit(module);
 
 export default Hello;
