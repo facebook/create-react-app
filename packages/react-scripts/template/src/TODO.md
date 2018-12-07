@@ -4,38 +4,38 @@
 
   - actually, tests!
 
-- frags
-- error handling
+* don't accept module if either assignment failed
+* frags
+* error handling
   - reenable overlay
   - offer a way to reset?
   - suppress error dialog?
   - suppress messages?
   - check types? debug tools?
-- directives?
+* directives?
   - !
-- hooks
+* hooks
   - remount on error?
   - compare introspection?
-- hocs?
+* hocs?
   - with self as input
   - returning a class
   - HOC itself by mistake
     - protect against nested?
-- type equality
+* type equality
   - memo and friends
   - nested / applied twice
   - mutually recursive
   - re-exports
     - same HOC applied early, two callsites
-- classes
+* classes
   - how to detect and reload?
-- render props
-- when to accept?
-- test integrations
-- exotic (lazy, memo, fwd)
-- how to force update all (incl. inside memo)
-- don't accept module if either assignment failed
-- displayName etc
-- false positives for things getting wrapped
-- forwardRef
+* render props
+* when to accept?
+* test integrations
+* exotic (lazy, memo, fwd)
+* how to force update all (incl. inside memo)
+* displayName etc
+* false positives for things getting wrapped
+* forwardRef
   - make sure refs _on_ proxies actually work

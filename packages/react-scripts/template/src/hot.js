@@ -45,12 +45,130 @@ function init(rawType, id) {
         return rawType;
       }
       idToRawFunction.set(id, rawType);
+
+      let abandonedHooks = [];
+      let isAbandoningHooks = false;
+      let previousHooks = [];
+      const NEVER = {};
+      const NOOP = {};
+
       const proxy = new Proxy(rawType, {
         apply(target, thisArg, args) {
-          let freshRawType = idToRawFunction.get(id);
-          let ret = freshRawType.apply(null, args);
           readContext(HotContext);
-          return ret;
+
+          let realDispatcher = CurrentOwner.currentDispatcher;
+          let freshRawType = idToRawFunction.get(id);
+          let currentHooks = [];
+
+          function callNoopHook([hook, inputLength]) {
+            let inputs;
+            if (inputLength) {
+              inputs = new Array(inputLength).fill(NOOP);
+            }
+            switch (hook) {
+              case realDispatcher.useState:
+                realDispatcher.useState();
+                break;
+              case realDispatcher.useRef:
+                realDispatcher.useRef();
+                break;
+              case realDispatcher.useReducer:
+                realDispatcher.useReducer(state => state);
+                break;
+              case realDispatcher.useLayoutEffect:
+                realDispatcher.useLayoutEffect(() => {}, inputs);
+                break;
+              case realDispatcher.useEffect:
+                realDispatcher.useEffect(() => {}, inputs);
+                break;
+              case realDispatcher.useMemo:
+                realDispatcher.useMemo(() => {}, inputs);
+                break;
+              case realDispatcher.useCallback:
+                realDispatcher.useCallback(() => {}, inputs);
+                break;
+              case realDispatcher.readContext:
+              case realDispatcher.useContext:
+                break;
+              default:
+                throw new Error('TODO');
+            }
+          }
+
+          // Pad left abandoned Hooks
+          for (let i = 0; i < abandonedHooks.length; i++) {
+            const hook = abandonedHooks[i];
+            callNoopHook(hook);
+          }
+
+          CurrentOwner.currentDispatcher = new Proxy(realDispatcher, {
+            get(target, prop, receiver) {
+              const hook = Reflect.get(...arguments);
+              return new Proxy(hook, {
+                apply(t, thisArg, argumentsList) {
+                  // TODO: check if type matches up and throw
+                  // TODO: reset individual state if primitive type differs
+                  switch (hook) {
+                    case realDispatcher.useLayoutEffect:
+                    case realDispatcher.useEffect:
+                    case realDispatcher.useMemo:
+                    case realDispatcher.useCallback:
+                      {
+                        let inputs = argumentsList[1];
+                        if (inputs) {
+                          if (inputs.length === 0) {
+                            // Allows us to clean up if this Hook is removed later.
+                            argumentsList[1] = inputs = [NEVER];
+                          }
+                          currentHooks.push([hook, inputs.length]);
+                        } else {
+                          currentHooks.push([hook]);
+                        }
+                      }
+                      break;
+                    default:
+                      currentHooks.push([hook]);
+                      break;
+                  }
+                  return Reflect.apply(t, thisArg, argumentsList);
+                },
+              });
+            },
+          });
+          let ret;
+          try {
+            ret = freshRawType.apply(null, args);
+            isAbandoningHooks = false;
+          } catch (err) {
+            if (isAbandoningHooks) {
+              isAbandoningHooks = false;
+              throw err;
+            }
+            isAbandoningHooks = true;
+          } finally {
+            CurrentOwner.currentDispatcher = realDispatcher;
+          }
+
+          // Pad right missing Hooks
+          for (let i = currentHooks.length; i < previousHooks.length; i++) {
+            const hook = previousHooks[i];
+            callNoopHook(hook);
+            currentHooks.push(hook);
+          }
+
+          previousHooks = currentHooks;
+
+          if (isAbandoningHooks) {
+            const [, reset] = realDispatcher.useState();
+            previousHooks.push([realDispatcher.useState]);
+            abandonedHooks = previousHooks;
+            previousHooks = [];
+            reset();
+          }
+
+          return (
+            <React.Fragment key={abandonedHooks.length}>{ret}</React.Fragment>
+          );
         },
       });
       proxies.add(proxy);
@@ -82,7 +200,10 @@ function accept(type, nextRawType, id) {
   switch (kind) {
     case 'function': {
       idToRawFunction.set(id, nextRawType);
-      return true;
+      const forceRemount =
+        nextRawType.toString().indexOf('//!') !== -1 ||
+        nextRawType.toString().indexOf('// !') !== -1;
+      return !forceRemount;
     }
     case 'memo': {
       return accept(type.type, nextRawType.type, id);

@@ -17,9 +17,11 @@ Counter = window.__assign(
         const id = setInterval(() => dispatch('inc'), 1000);
         return () => clearInterval(id);
       }, []);
+      const [x] = React.useState(100);
+
       return (
         <span>
-          {value}
+          {x} {value}
           {props.hocChild && (
             <>
               (inner HOC: <HFF /> {HFF.field})
