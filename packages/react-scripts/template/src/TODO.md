@@ -1,10 +1,12 @@
 - other strategies:
   - seb suggested walking down the tree and reconciling
 - write down constraints.
-
   - actually, tests!
 
 * don't accept module if either assignment failed
+
+  - write down why granular invalidation is useful
+
 * frags
 * error handling
   - reenable overlay
