@@ -106,6 +106,10 @@ function init(rawType, id) {
               const hook = Reflect.get(...arguments);
               return new Proxy(hook, {
                 apply(t, thisArg, argumentsList) {
+                  let prevHook = previousHooks[currentHooks.length];
+                  if (prevHook && prevHook[0] !== hook) {
+                    throw new Error('Hook mismatch.');
+                  }
                   // TODO: check if type matches up and throw
                   // TODO: reset individual state if primitive type differs
                   switch (hook) {
@@ -160,8 +164,9 @@ function init(rawType, id) {
 
           if (isAbandoningHooks) {
             const [, reset] = realDispatcher.useState();
+            // Shift Hooks to recover. This leaks memory. Ideallly we'd reset.
             previousHooks.push([realDispatcher.useState]);
-            abandonedHooks = previousHooks;
+            abandonedHooks.push(...previousHooks);
             previousHooks = [];
             reset();
           }
