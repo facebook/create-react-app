@@ -12,6 +12,9 @@
   - suppress error dialog?
   - suppress messages?
   - check types? debug tools?
+
+- highlight updates
+
 * directives?
   - !
 * hooks
