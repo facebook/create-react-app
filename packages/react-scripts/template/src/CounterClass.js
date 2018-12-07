@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CounterFunction from './CounterFunction';
 import HOCFunction from './HOCFunction';
 
-const HFF = HOCFunction(CounterFunction);
+let HFF;
 
 export default class Counter extends Component {
   state = { value: 0 };
@@ -28,3 +28,6 @@ export default class Counter extends Component {
     );
   }
 }
+
+HFF = window.__assign(module, 'HFF', HOCFunction(CounterFunction));
+module.hot.accept(['./CounterFunction', './HOCFunction'], window.__invalidate);

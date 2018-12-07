@@ -3,8 +3,6 @@ import Hello from './Hello';
 import Layout from './Layout';
 import './App.css';
 
-console.log('running App');
-
 let App = window.__assign(module, 'App', function App({ children }) {
   return (
     <Layout>
@@ -12,6 +10,6 @@ let App = window.__assign(module, 'App', function App({ children }) {
     </Layout>
   );
 });
-window.__commit(module);
+module.hot.accept(['./Layout', './Hello'], window.__invalidate);
 
 export default App;

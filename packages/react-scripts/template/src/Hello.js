@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useState } from 'react';
 import HOCClass from './HOCClass';
 import HOCFunction from './HOCFunction';
 import CounterClass from './CounterClass';
-import CounterFunction from './CounterFunction';
+import CounterFunction, { N } from './CounterFunction';
 
 let LazyCC;
 let LazyCF;
@@ -13,14 +13,12 @@ let HCF;
 let HFC;
 let HFF;
 
-console.log('running Hello');
-
 let Hello = window.__assign(module, 'Hello', function Hello() {
   const [value] = useState(Math.random());
   return (
     <Suspense fallback={<div />}>
       <h3>
-        {value.toString().slice(0, 5)}
+        {N} - {value.toString().slice(0, 5)}
         <br />
         hello world!
         <br />
@@ -54,6 +52,9 @@ HCC = window.__assign(module, 'HCC', HOCClass(CounterClass, 'red'));
 HCF = window.__assign(module, 'HCF', HOCClass(CounterFunction, 'orange'));
 HFC = window.__assign(module, 'HFC', HOCFunction(CounterClass, 'yellow'));
 HFF = window.__assign(module, 'HFF', HOCFunction(CounterFunction, 'green'));
-window.__commit(module);
+module.hot.accept(
+  ['./CounterFunction', './CounterClass', './HOCFunction', './HOCClass'],
+  window.__invalidate
+);
 
 export default Hello;

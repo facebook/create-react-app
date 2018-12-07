@@ -41,6 +41,8 @@ Fwd = window.__assign(
   ))
 );
 HFF = window.__assign(module, 'HFF', HOCFunction(Fwd));
-window.__commit(module);
 
+module.hot.accept(['./HOCFunction'], window.__invalidate);
+
+export let N = 10;
 export default Fwd;
