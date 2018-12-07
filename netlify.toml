@@ -1,0 +1,10 @@
+[build]
+  base    = "docusaurus/website"
+  publish = "docusaurus/website/build"
+  command = "yarn build"
+  
+
+# A redirect rule with all the supported properties
+[[redirects]]
+  from = "/"
+  to = "/create-react-app"
