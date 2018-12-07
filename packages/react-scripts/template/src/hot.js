@@ -60,11 +60,7 @@ function init(rawType, id) {
           let freshRawType = idToRawFunction.get(id);
           let currentHooks = [];
 
-          function callNoopHook([hook, inputLength]) {
-            let inputs;
-            if (inputLength) {
-              inputs = new Array(inputLength).fill(NOOP);
-            }
+          function callNoopHook([hook, data]) {
             switch (hook) {
               case realDispatcher.useState:
                 realDispatcher.useState();
@@ -75,18 +71,38 @@ function init(rawType, id) {
               case realDispatcher.useReducer:
                 realDispatcher.useReducer(state => state);
                 break;
-              case realDispatcher.useLayoutEffect:
+              case realDispatcher.useLayoutEffect: {
+                let inputs;
+                if (data) {
+                  inputs = new Array(data).fill(NOOP);
+                }
                 realDispatcher.useLayoutEffect(() => {}, inputs);
                 break;
-              case realDispatcher.useEffect:
+              }
+              case realDispatcher.useEffect: {
+                let inputs;
+                if (data) {
+                  inputs = new Array(data).fill(NOOP);
+                }
                 realDispatcher.useEffect(() => {}, inputs);
                 break;
-              case realDispatcher.useMemo:
+              }
+              case realDispatcher.useMemo: {
+                let inputs;
+                if (data) {
+                  inputs = new Array(data).fill(NOOP);
+                }
                 realDispatcher.useMemo(() => {}, inputs);
                 break;
-              case realDispatcher.useCallback:
+              }
+              case realDispatcher.useCallback: {
+                let inputs;
+                if (data) {
+                  inputs = new Array(data).fill(NOOP);
+                }
                 realDispatcher.useCallback(() => {}, inputs);
                 break;
+              }
               case realDispatcher.readContext:
               case realDispatcher.useContext:
                 break;
@@ -110,9 +126,16 @@ function init(rawType, id) {
                   if (prevHook && prevHook[0] !== hook) {
                     throw new Error('Hook mismatch.');
                   }
-                  // TODO: check if type matches up and throw
-                  // TODO: reset individual state if primitive type differs
                   switch (hook) {
+                    case realDispatcher.useState:
+                      if (
+                        prevHook &&
+                        typeof prevHook[1] !== typeof argumentsList[0]
+                      ) {
+                        throw new Error('State type mismatch.');
+                      }
+                      currentHooks.push([hook, argumentsList[0]]);
+                      break;
                     case realDispatcher.useLayoutEffect:
                     case realDispatcher.useEffect:
                     case realDispatcher.useMemo:
