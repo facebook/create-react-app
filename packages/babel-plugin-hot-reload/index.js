@@ -46,27 +46,23 @@ function hotAssign(name, func) {
   ];
 }
 
-function getExportDefaultDeclaration(t) {
-  return function ExportDefaultDeclaration(path) {
-    const { type } = path.node.declaration;
-    if (
-      type !== 'FunctionDeclaration' ||
-      !functionReturnsElement(path.node.declaration)
-    ) {
-      return;
-    }
-    const {
-      id: { name },
-    } = path.node.declaration;
-    path.replaceWithMultiple(hotAssign(name, path.node.declaration));
-  };
-}
-
 module.exports = function({ types }) {
   return {
     name: 'hot-reload',
     visitor: {
-      ExportDefaultDeclaration: getExportDefaultDeclaration(types),
+      ExportDefaultDeclaration(path) {
+        const { type } = path.node.declaration;
+        if (
+          type !== 'FunctionDeclaration' ||
+          !functionReturnsElement(path.node.declaration)
+        ) {
+          return;
+        }
+        const {
+          id: { name },
+        } = path.node.declaration;
+        path.replaceWithMultiple(hotAssign(name, path.node.declaration));
+      },
     },
   };
 };
