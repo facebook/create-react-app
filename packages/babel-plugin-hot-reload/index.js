@@ -1,7 +1,5 @@
 'use strict';
 
-const template = require('babel-template');
-
 function functionReturnsElement(path) {
   const { body } = path.body;
   const last = body[body.length - 1];
@@ -15,119 +13,81 @@ function functionReturnsElement(path) {
   return true;
 }
 
-function hoistFunctionalComponentToWindow(
-  t,
-  name,
-  generatedName,
-  params,
-  body
-) {
-  return template(
-    `
-    window[GEN_NAME] = function NAME(PARAMS) {
-      BODY
+function hotAssign(name, func) {
+  return [
+    {
+      type: 'VariableDeclaration',
+      kind: 'let',
+      declarations: [
+        {
+          type: 'VariableDeclarator',
+          id: { type: 'Identifier', name: name },
+          init: {
+            type: 'CallExpression',
+            callee: {
+              type: 'MemberExpression',
+              object: { type: 'Identifier', name: 'window' },
+              property: { type: 'Identifier', name: '__assign' },
+              computed: false,
+            },
+            arguments: [
+              { type: 'Identifier', name: 'module' },
+              { type: 'StringLiteral', value: name },
+              func,
+            ],
+          },
+        },
+      ],
+    },
+    {
+      type: 'ExportDefaultDeclaration',
+      declaration: { type: 'Identifier', name: name },
+    },
+  ];
+}
+
+function getExportDefaultDeclaration(t) {
+  return function ExportDefaultDeclaration(path) {
+    const { type } = path.node.declaration;
+    if (
+      type !== 'FunctionDeclaration' ||
+      !functionReturnsElement(path.node.declaration)
+    ) {
+      return;
     }
-    `
-  )({
-    GEN_NAME: t.StringLiteral(generatedName),
-    NAME: t.Identifier(`__hot__${name}__`),
-    PARAMS: params,
-    BODY: body,
-  });
+    const {
+      id: { name },
+    } = path.node.declaration;
+    path.replaceWithMultiple(hotAssign(name, path.node.declaration));
+
+    // const generatedName = `__hot__${state.file.opts.filename}$$${name}`;
+
+    // path.replaceWithMultiple([
+    //   hoistFunctionalComponentToWindow(t, name, generatedName, params, body),
+    //   decorateFunctionName(t, name, generatedName),
+    //   exportHoistedFunctionCallProxy(t, name, generatedName),
+    //   decorateFunctionId(t, name, generatedName),
+    //   template(
+    //     `
+    //   module.hot.accept();
+    //   `
+    //   )(),
+    //   template(
+    //     `
+    //   module.hot.dispose(() => {
+    //     setTimeout(() => window.__enqueueForceUpdate(NAME));
+    //   });
+    //   `
+    //   )({ NAME: t.Identifier(name) }),
+    // ]);
+  };
 }
 
-function decorateFunctionName(t, name, generatedName) {
-  return template(
-    `
-    try {
-      Object.defineProperty(window[GEN_NAME], 'name', {
-        value: NAME
-      });
-    } catch (_ignored) {}
-    `
-  )({
-    GEN_NAME: t.StringLiteral(generatedName),
-    NAME: t.StringLiteral(name),
-  });
-}
-
-function exportHoistedFunctionCallProxy(t, name, generatedName) {
-  return template(
-    `
-    export default function NAME() {
-      var result = window[GEN_NAME].apply(this, arguments);
-      window.__renderHook(NAME);
-      return result;
-    }
-    `,
-    { sourceType: 'module' }
-  )({
-    GEN_NAME: t.StringLiteral(generatedName),
-    NAME: t.Identifier(name),
-  });
-}
-
-function decorateFunctionId(t, name, generatedName) {
-  return template(
-    `
-    try {
-      Object.defineProperty(NAME, '__hot__id', {
-        value: GEN_NAME
-      });
-    } catch (_ignored) {}
-    `
-  )({
-    GEN_NAME: t.StringLiteral(generatedName),
-    NAME: t.Identifier(name),
-  });
-}
-
-module.exports = function({ types: t }) {
-  return { visitor: {} };
-
+module.exports = function({ types }) {
   return {
+    name: 'hot-reload',
     visitor: {
-      ExportDefaultDeclaration(path, state) {
-        const { type } = path.node.declaration;
-        if (
-          type !== 'FunctionDeclaration' ||
-          !functionReturnsElement(path.node.declaration)
-        ) {
-          return;
-        }
-        const {
-          id: { name },
-          params,
-          body,
-        } = path.node.declaration;
-
-        const generatedName = `__hot__${state.file.opts.filename}$$${name}`;
-
-        path.replaceWithMultiple([
-          hoistFunctionalComponentToWindow(
-            t,
-            name,
-            generatedName,
-            params,
-            body
-          ),
-          decorateFunctionName(t, name, generatedName),
-          exportHoistedFunctionCallProxy(t, name, generatedName),
-          decorateFunctionId(t, name, generatedName),
-          template(
-            `
-            module.hot.accept();
-            `
-          )(),
-          template(
-            `
-            module.hot.dispose(() => {
-              setTimeout(() => window.__enqueueForceUpdate(NAME));
-            });
-            `
-          )({ NAME: t.Identifier(name) }),
-        ]);
-      },
+      ExportDefaultDeclaration: getExportDefaultDeclaration(types),
     },
   };
 };

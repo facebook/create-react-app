@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hot-reload single default: single default 1`] = `
+"
+import React from 'react';
+import Hello from './Hello';
+import Layout from './Layout';
+import './App.css';
+
+export default function App({ children }) {
+  return (
+    <Layout>
+      <Hello />
+    </Layout>
+  );
+}
+
+module.hot.accept(['./Layout', './Hello'], window.__invalidate);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import React from 'react';
+import Hello from './Hello';
+import Layout from './Layout';
+import './App.css';
+
+let App = window.__assign(module, \\"App\\", function App({
+  children
+}) {
+  return <Layout>
+      <Hello />
+    </Layout>;
+});
+
+export default App;
+module.hot.accept(['./Layout', './Hello'], window.__invalidate);
+"
+`;

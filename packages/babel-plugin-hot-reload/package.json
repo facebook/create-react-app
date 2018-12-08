@@ -7,7 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "BSD-3-Clause",
-  "dependencies": {
-    "babel-template": "6.24.1"
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/template": "^7.1.2",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-plugin-tester": "^5.5.2",
+    "jest": "^23.6.0"
   }
 }
