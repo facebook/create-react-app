@@ -13,7 +13,7 @@ let HCF;
 let HFC;
 let HFF;
 
-let Hello = window.__assign(module, 'Hello', function Hello() {
+export default function Hello() {
   const [value] = useState(Math.random());
   return (
     <Suspense fallback={<div />}>
@@ -34,7 +34,7 @@ let Hello = window.__assign(module, 'Hello', function Hello() {
       </h3>
     </Suspense>
   );
-});
+}
 
 LazyCC = window.__assign(
   module,
@@ -56,5 +56,3 @@ module.hot.accept(
   ['./CounterFunction', './CounterClass', './HOCFunction', './HOCClass'],
   window.__invalidate
 );
-
-export default Hello;
