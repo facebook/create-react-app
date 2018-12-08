@@ -22,15 +22,15 @@ First, install this package, ESLint and the necessary plugins.
 npm install --save-dev eslint-config-react-app babel-eslint@9.x eslint@5.x eslint-plugin-flowtype@2.x eslint-plugin-import@2.x eslint-plugin-jsx-a11y@6.x eslint-plugin-react@7.x
 ```
 
-Then create a file named `.eslintrc` with following contents in the root folder of your project:
+Then create a file named `.eslintrc.json` with following contents in the root folder of your project:
 
-```js
+```json
 {
   "extends": "react-app"
 }
 ```
 
-That's it! You can override the settings from `eslint-config-react-app` by editing the `.eslintrc` file. Learn more about [configuring ESLint](http://eslint.org/docs/user-guide/configuring) on the ESLint website.
+That's it! You can override the settings from `eslint-config-react-app` by editing the `.eslintrc.json` file. Learn more about [configuring ESLint](http://eslint.org/docs/user-guide/configuring) on the ESLint website.
 
 ## Accessibility Checks
 
@@ -55,7 +55,7 @@ The following rules from the [eslint-plugin-jsx-a11y](https://github.com/evcohen
 - [role-supports-aria-props](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/role-supports-aria-props.md)
 - [scope](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/scope.md)
 
-If you want to enable even more accessibility rules, you can create an `.eslintrc` file in the root of your project with this content:
+If you want to enable even more accessibility rules, you can create an `.eslintrc.json` file in the root of your project with this content:
 
 ```json
 {
