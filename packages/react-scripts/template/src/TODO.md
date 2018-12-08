@@ -6,6 +6,9 @@
 * don't accept module if either assignment failed
 
   - write down why granular invalidation is useful
+    https://mobile.twitter.com/wSokra/status/1071503979014692865
+
+- effects can change arg num
 
 * frags
 * error handling
