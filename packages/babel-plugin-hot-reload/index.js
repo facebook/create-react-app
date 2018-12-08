@@ -59,27 +59,6 @@ function getExportDefaultDeclaration(t) {
       id: { name },
     } = path.node.declaration;
     path.replaceWithMultiple(hotAssign(name, path.node.declaration));
-
-    // const generatedName = `__hot__${state.file.opts.filename}$$${name}`;
-
-    // path.replaceWithMultiple([
-    //   hoistFunctionalComponentToWindow(t, name, generatedName, params, body),
-    //   decorateFunctionName(t, name, generatedName),
-    //   exportHoistedFunctionCallProxy(t, name, generatedName),
-    //   decorateFunctionId(t, name, generatedName),
-    //   template(
-    //     `
-    //   module.hot.accept();
-    //   `
-    //   )(),
-    //   template(
-    //     `
-    //   module.hot.dispose(() => {
-    //     setTimeout(() => window.__enqueueForceUpdate(NAME));
-    //   });
-    //   `
-    //   )({ NAME: t.Identifier(name) }),
-    // ]);
   };
 }
 
