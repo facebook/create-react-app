@@ -95,7 +95,7 @@ function verifyTypeScriptSetup() {
     },
     lib: { suggested: ['dom', 'dom.iterable', 'esnext'] },
     allowJs: { suggested: true },
-    skipLibCheck: { suggested: false },
+    skipLibCheck: { suggested: true },
     esModuleInterop: { suggested: true },
     allowSyntheticDefaultImports: { suggested: true },
     strict: { suggested: true },
