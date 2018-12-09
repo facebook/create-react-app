@@ -165,7 +165,6 @@ module.exports = function({ types }) {
           AssignmentExpression(path) {
             if (isAssignmentCandidate(path.node)) {
               if (!isHotCall(path.node.right)) {
-                console.log('replacing', path.node.left.name);
                 path.node.right = hotRegister(
                   path.node.left.name,
                   path.node.right
