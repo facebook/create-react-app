@@ -91,7 +91,6 @@ function hotRegister(name, content) {
 }
 
 function hotDeclare(path) {
-  console.log('replacing', path.node.id);
   path.replaceWith({
     type: 'VariableDeclarator',
     id: {
