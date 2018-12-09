@@ -15,30 +15,12 @@ function functionReturnsElement(path) {
 
 function hotAssign(types, name, func) {
   return [
-    {
-      type: 'VariableDeclaration',
-      kind: 'let',
-      declarations: [
-        {
-          type: 'VariableDeclarator',
-          id: { type: 'Identifier', name: name },
-          init: {
-            type: 'CallExpression',
-            callee: {
-              type: 'MemberExpression',
-              object: { type: 'Identifier', name: 'window' },
-              property: { type: 'Identifier', name: '__assign' },
-              computed: false,
-            },
-            arguments: [
-              { type: 'Identifier', name: 'module' },
-              { type: 'StringLiteral', value: name },
-              func,
-            ],
-          },
-        },
-      ],
-    },
+    types.variableDeclaration('var', [
+      types.variableDeclarator(
+        types.identifier(name),
+        hotRegister(types, name, func)
+      ),
+    ]),
     types.exportDefaultDeclaration({ type: 'Identifier', name: name }),
   ];
 }
@@ -74,6 +56,9 @@ function isAssignmentCandidate(assignment) {
 }
 
 function hotRegister(t, name, content) {
+  if (t.isFunctionDeclaration(content)) {
+    content.type = 'FunctionExpression'; // TODO: why do we have to do this hack?
+  }
   return t.callExpression(
     t.memberExpression(t.identifier('window'), t.identifier('__assign')),
     [t.identifier('module'), t.stringLiteral(name), content]
@@ -81,14 +66,12 @@ function hotRegister(t, name, content) {
 }
 
 function hotDeclare(types, path) {
-  path.replaceWith({
-    type: 'VariableDeclarator',
-    id: {
-      type: 'Identifier',
-      name: path.node.id.name,
-    },
-    init: hotRegister(types, path.node.id.name, path.node.init),
-  });
+  path.replaceWith(
+    types.variableDeclarator(
+      types.identifier(path.node.id.name),
+      hotRegister(types, path.node.id.name, path.node.init)
+    )
+  );
 }
 
 module.exports = function({ types }) {

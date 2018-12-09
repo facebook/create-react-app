@@ -67,7 +67,7 @@ import Hello from './Hello';
 import Layout from './Layout';
 import './App.css';
 
-let App = window.__assign(module, \\"App\\", function App({
+var App = window.__assign(module, \\"App\\", function App({
   children
 }) {
   return <Layout>
