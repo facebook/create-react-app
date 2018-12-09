@@ -4,14 +4,14 @@ import HOCFunction from './HOCFunction';
 import CounterClass from './CounterClass';
 import CounterFunction, { N } from './CounterFunction';
 
-let LazyCC;
-let LazyCF;
-let DblCC;
-let DblCF;
-let HCC;
-let HCF;
-let HFC;
-let HFF;
+let LazyCC = lazy(() => import('./CounterClass')),
+  LazyCF = lazy(() => import('./CounterFunction'));
+let DblCC = CounterClass,
+  DblCF = CounterFunction;
+let HCC = HOCClass(CounterClass, 'red'),
+  HCF = HOCClass(CounterFunction, 'orange'),
+  HFC = HOCFunction(CounterClass, 'yellow'),
+  HFF = HOCFunction(CounterFunction, 'green');
 
 export default function Hello() {
   const [value] = useState(Math.random());
@@ -36,15 +36,6 @@ export default function Hello() {
   );
 }
 
-LazyCC = lazy(() => import('./CounterClass'));
-LazyCF = lazy(() => import('./CounterFunction'));
-
-DblCC = CounterClass;
-DblCF = CounterFunction;
-HCC = HOCClass(CounterClass, 'red');
-HCF = HOCClass(CounterFunction, 'orange');
-HFC = HOCFunction(CounterClass, 'yellow');
-HFF = HOCFunction(CounterFunction, 'green');
 module.hot.accept(
   ['./CounterFunction', './CounterClass', './HOCFunction', './HOCClass'],
   window.__invalidate

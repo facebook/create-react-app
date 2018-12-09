@@ -1,11 +1,14 @@
 import React, { forwardRef, memo, useReducer, useLayoutEffect } from 'react';
 import HOCFunction from './HOCFunction';
 
-let HFF;
-let Counter;
-let Fwd;
+let Fwd = forwardRef((props, ref) => (
+  <span ref={ref}>
+    <Counter {...props} />
+  </span>
+));
+let HFF = HOCFunction(Fwd);
 
-Counter = memo(
+let Counter = memo(
   memo(function Counter(props) {
     const [value, dispatch] = useReducer((v, a) => {
       return a === 'inc' ? v + 1 : v;
@@ -27,13 +30,6 @@ Counter = memo(
     );
   })
 );
-
-Fwd = forwardRef((props, ref) => (
-  <span ref={ref}>
-    <Counter {...props} />
-  </span>
-));
-HFF = HOCFunction(Fwd);
 
 module.hot.accept(['./HOCFunction'], window.__invalidate);
 
