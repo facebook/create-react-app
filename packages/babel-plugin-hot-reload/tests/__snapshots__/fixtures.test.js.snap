@@ -3,11 +3,14 @@
 exports[`hot-reload assignment: assignment 1`] = `
 "
 let LazyCC;
+LazyCC = 5;
+
 let DoubleLazyCC = LazyCC;
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
 let LazyCC;
+LazyCC = window.__assign(module, \\"LazyCC\\", 5);
 
 let DoubleLazyCC = window.__assign(module, \\"DoubleLazyCC\\", LazyCC);
 "

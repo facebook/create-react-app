@@ -69,7 +69,29 @@ function isVariableCandidate(declaration) {
   );
 }
 
+function isAssignmentCandidate(assignment) {
+  return isIdentifierCandidate(assignment.left) && assignment.operator === '=';
+}
+
+function hotRegister(name, content) {
+  return {
+    type: 'CallExpression',
+    callee: {
+      type: 'MemberExpression',
+      object: { type: 'Identifier', name: 'window' },
+      property: { type: 'Identifier', name: '__assign' },
+      computed: false,
+    },
+    arguments: [
+      { type: 'Identifier', name: 'module' },
+      { type: 'StringLiteral', value: name },
+      content,
+    ],
+  };
+}
+
 function hotDeclare(path) {
+  console.log('replacing', path.node.id);
   path.replaceWith({
     type: 'VariableDeclarator',
     id: {
@@ -127,6 +149,29 @@ module.exports = function({ types }) {
           VariableDeclarator(path) {
             if (isVariableCandidate(path.node)) {
               hotDeclare(path);
+            }
+          },
+        });
+      },
+      ExpressionStatement(path) {
+        if (path.parent.type !== 'Program') {
+          // Only traverse top level variable declaration
+          return;
+        }
+        if (this.file.code.includes('no-hot')) {
+          return;
+        }
+
+        path.traverse({
+          AssignmentExpression(path) {
+            if (isAssignmentCandidate(path.node)) {
+              if (!isHotCall(path.node.right)) {
+                console.log('replacing', path.node.left.name);
+                path.node.right = hotRegister(
+                  path.node.left.name,
+                  path.node.right
+                );
+              }
             }
           },
         });
