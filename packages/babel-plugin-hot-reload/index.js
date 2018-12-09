@@ -53,11 +53,17 @@ function isHotCall(call) {
   );
 }
 
+function isIdentifierCandidate(identifier) {
+  return (
+    identifier.type === 'Identifier' &&
+    identifier.name[0] >= 'A' &&
+    identifier.name[0] <= 'Z'
+  );
+}
+
 function isVariableCandidate(declaration) {
   return (
-    declaration.id.type === 'Identifier' &&
-    declaration.id.name[0] >= 'A' &&
-    declaration.id.name[0] <= 'Z' &&
+    isIdentifierCandidate(declaration.id) &&
     declaration.init &&
     !isHotCall(declaration.init)
   );
