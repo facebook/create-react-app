@@ -117,6 +117,11 @@ module.exports = function(api, opts, env) {
       // in practice some other transforms (such as object-rest-spread)
       // don't work without it: https://github.com/babel/babel/issues/7215
       require('@babel/plugin-transform-destructuring').default,
+      {
+        // Use loose mode for performance:
+        // https://github.com/facebook/create-react-app/issues/5602
+        loose: true,
+      },
       // Turn on legacy decorators for TypeScript files
       isTypeScriptEnabled && [
         require('@babel/plugin-proposal-decorators').default,

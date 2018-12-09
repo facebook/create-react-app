@@ -16,7 +16,8 @@
     "eslint-plugin-flowtype": "2.x",
     "eslint-plugin-import": "2.x",
     "eslint-plugin-jsx-a11y": "6.x",
-    "eslint-plugin-react": "7.x"
+    "eslint-plugin-react": "7.x",
+    "eslint-plugin-react-hooks": "0.x"
   },
   "dependencies": {
     "confusing-browser-globals": "^1.0.5"
