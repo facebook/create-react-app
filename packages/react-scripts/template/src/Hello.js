@@ -36,22 +36,15 @@ export default function Hello() {
   );
 }
 
-LazyCC = window.__assign(
-  module,
-  'LazyCC',
-  lazy(() => import('./CounterClass'))
-);
-LazyCF = window.__assign(
-  module,
-  'LazyCF',
-  lazy(() => import('./CounterFunction'))
-);
-DblCC = window.__assign(module, 'DblCC', CounterClass);
-DblCF = window.__assign(module, 'DblCF', CounterFunction);
-HCC = window.__assign(module, 'HCC', HOCClass(CounterClass, 'red'));
-HCF = window.__assign(module, 'HCF', HOCClass(CounterFunction, 'orange'));
-HFC = window.__assign(module, 'HFC', HOCFunction(CounterClass, 'yellow'));
-HFF = window.__assign(module, 'HFF', HOCFunction(CounterFunction, 'green'));
+LazyCC = lazy(() => import('./CounterClass'));
+LazyCF = lazy(() => import('./CounterFunction'));
+
+DblCC = CounterClass;
+DblCF = CounterFunction;
+HCC = HOCClass(CounterClass, 'red');
+HCF = HOCClass(CounterFunction, 'orange');
+HFC = HOCFunction(CounterClass, 'yellow');
+HFF = HOCFunction(CounterFunction, 'green');
 module.hot.accept(
   ['./CounterFunction', './CounterClass', './HOCFunction', './HOCClass'],
   window.__invalidate

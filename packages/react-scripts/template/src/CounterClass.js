@@ -29,5 +29,5 @@ export default class Counter extends Component {
   }
 }
 
-HFF = window.__assign(module, 'HFF', HOCFunction(CounterFunction));
+HFF = HOCFunction(CounterFunction);
 module.hot.accept(['./CounterFunction', './HOCFunction'], window.__invalidate);
