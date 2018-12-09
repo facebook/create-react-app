@@ -13,7 +13,7 @@ function functionReturnsElement(path) {
   return true;
 }
 
-function hotAssign(name, func) {
+function hotAssign(types, name, func) {
   return [
     {
       type: 'VariableDeclaration',
@@ -39,11 +39,52 @@ function hotAssign(name, func) {
         },
       ],
     },
-    {
-      type: 'ExportDefaultDeclaration',
-      declaration: { type: 'Identifier', name: name },
-    },
+    types.exportDefaultDeclaration({ type: 'Identifier', name: name }),
   ];
+}
+
+function isHotCall(call) {
+  return (
+    call &&
+    call.type === 'CallExpression' &&
+    call.callee.type === 'MemberExpression' &&
+    call.callee.object.name === 'window' &&
+    call.callee.property.name === '__assign'
+  );
+}
+
+function isVariableCandidate(declaration) {
+  return (
+    declaration.id.type === 'Identifier' &&
+    declaration.id.name[0] >= 'A' &&
+    declaration.id.name[0] <= 'Z' &&
+    declaration.init &&
+    !isHotCall(declaration.init)
+  );
+}
+
+function hotDeclare(path) {
+  path.replaceWith({
+    type: 'VariableDeclarator',
+    id: {
+      type: 'Identifier',
+      name: path.node.id.name,
+    },
+    init: {
+      type: 'CallExpression',
+      callee: {
+        type: 'MemberExpression',
+        object: { type: 'Identifier', name: 'window' },
+        property: { type: 'Identifier', name: '__assign' },
+        computed: false,
+      },
+      arguments: [
+        { type: 'Identifier', name: 'module' },
+        { type: 'StringLiteral', value: path.node.id.name },
+        path.node.init,
+      ],
+    },
+  });
 }
 
 module.exports = function({ types }) {
@@ -51,6 +92,10 @@ module.exports = function({ types }) {
     name: 'hot-reload',
     visitor: {
       ExportDefaultDeclaration(path) {
+        if (this.file.code.includes('no-hot')) {
+          return;
+        }
+
         const { type } = path.node.declaration;
         if (
           type !== 'FunctionDeclaration' ||
@@ -61,7 +106,24 @@ module.exports = function({ types }) {
         const {
           id: { name },
         } = path.node.declaration;
-        path.replaceWithMultiple(hotAssign(name, path.node.declaration));
+        path.replaceWithMultiple(hotAssign(types, name, path.node.declaration));
+      },
+      VariableDeclaration(path) {
+        if (path.parent.type !== 'Program') {
+          // Only traverse top level variable declaration
+          return;
+        }
+        if (this.file.code.includes('no-hot')) {
+          return;
+        }
+
+        path.traverse({
+          VariableDeclarator(path) {
+            if (isVariableCandidate(path.node)) {
+              hotDeclare(path);
+            }
+          },
+        });
       },
     },
   };

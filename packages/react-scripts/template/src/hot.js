@@ -1,3 +1,4 @@
+// no-hot
 import React from 'react';
 
 let HotContext = React.createContext();

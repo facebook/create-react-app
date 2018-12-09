@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`hot-reload single default: single default 1`] = `
+exports[`hot-reload default export: default export 1`] = `
 "
 import React from 'react';
 import Hello from './Hello';
@@ -34,5 +34,18 @@ let App = window.__assign(module, \\"App\\", function App({
 
 export default App;
 module.hot.accept(['./Layout', './Hello'], window.__invalidate);
+"
+`;
+
+exports[`hot-reload lazy component: lazy component 1`] = `
+"
+import { lazy } from 'react';
+const LazyCC = lazy(() => import('./CounterClass'));
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import { lazy } from 'react';
+
+const LazyCC = window.__assign(module, \\"LazyCC\\", lazy(() => import('./CounterClass')));
 "
 `;
