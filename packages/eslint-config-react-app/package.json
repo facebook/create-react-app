@@ -20,6 +20,6 @@
     "eslint-plugin-react-hooks": "next"
   },
   "dependencies": {
-    "confusing-browser-globals": "^1.0.5",
+    "confusing-browser-globals": "^1.0.5"
   }
 }
