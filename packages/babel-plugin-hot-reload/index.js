@@ -73,21 +73,11 @@ function isAssignmentCandidate(assignment) {
   return isIdentifierCandidate(assignment.left) && assignment.operator === '=';
 }
 
-function hotRegister(name, content) {
-  return {
-    type: 'CallExpression',
-    callee: {
-      type: 'MemberExpression',
-      object: { type: 'Identifier', name: 'window' },
-      property: { type: 'Identifier', name: '__assign' },
-      computed: false,
-    },
-    arguments: [
-      { type: 'Identifier', name: 'module' },
-      { type: 'StringLiteral', value: name },
-      content,
-    ],
-  };
+function hotRegister(t, name, content) {
+  return t.callExpression(
+    t.memberExpression(t.identifier('window'), t.identifier('__assign')),
+    [t.identifier('module'), t.stringLiteral(name), content]
+  );
 }
 
 function hotDeclare(path) {
@@ -166,6 +156,7 @@ module.exports = function({ types }) {
             if (isAssignmentCandidate(path.node)) {
               if (!isHotCall(path.node.right)) {
                 path.node.right = hotRegister(
+                  types,
                   path.node.left.name,
                   path.node.right
                 );
