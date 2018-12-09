@@ -16,6 +16,33 @@ let DoubleLazyCC = window.__assign(module, \\"DoubleLazyCC\\", LazyCC);
 "
 `;
 
+exports[`hot-reload default export class: default export class 1`] = `
+"
+import React from 'react';
+import Hello from './Hello';
+
+export default class App extends React.Component {
+  render() {
+    return <Hello />;
+  }
+}
+
+module.hot.accept(['./Hello'], window.__invalidate);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import React from 'react';
+import Hello from './Hello';
+export default class App extends React.Component {
+  render() {
+    return <Hello />;
+  }
+
+}
+module.hot.accept(['./Hello'], window.__invalidate);
+"
+`;
+
 exports[`hot-reload default export: default export 1`] = `
 "
 import React from 'react';
