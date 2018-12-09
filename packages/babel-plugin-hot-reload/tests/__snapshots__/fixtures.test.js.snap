@@ -1,5 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`hot-reload assignment: assignment 1`] = `
+"
+let LazyCC;
+let DoubleLazyCC = LazyCC;
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+let LazyCC;
+
+let DoubleLazyCC = window.__assign(module, \\"DoubleLazyCC\\", LazyCC);
+"
+`;
+
 exports[`hot-reload default export: default export 1`] = `
 "
 import React from 'react';
