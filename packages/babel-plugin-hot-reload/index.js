@@ -80,27 +80,14 @@ function hotRegister(t, name, content) {
   );
 }
 
-function hotDeclare(path) {
+function hotDeclare(types, path) {
   path.replaceWith({
     type: 'VariableDeclarator',
     id: {
       type: 'Identifier',
       name: path.node.id.name,
     },
-    init: {
-      type: 'CallExpression',
-      callee: {
-        type: 'MemberExpression',
-        object: { type: 'Identifier', name: 'window' },
-        property: { type: 'Identifier', name: '__assign' },
-        computed: false,
-      },
-      arguments: [
-        { type: 'Identifier', name: 'module' },
-        { type: 'StringLiteral', value: path.node.id.name },
-        path.node.init,
-      ],
-    },
+    init: hotRegister(types, path.node.id.name, path.node.init),
   });
 }
 
@@ -137,7 +124,7 @@ module.exports = function({ types }) {
         path.traverse({
           VariableDeclarator(path) {
             if (isVariableCandidate(path.node)) {
-              hotDeclare(path);
+              hotDeclare(types, path);
             }
           },
         });
