@@ -28,5 +28,3 @@ export default class Counter extends Component {
     );
   }
 }
-
-module.hot.accept(['./CounterFunction', './HOCFunction'], window.__invalidate);

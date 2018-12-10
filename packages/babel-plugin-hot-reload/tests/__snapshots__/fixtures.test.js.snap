@@ -27,19 +27,17 @@ export default class App extends React.Component {
   }
 }
 
-module.hot.accept(['./Hello'], window.__invalidate);
-
       ↓ ↓ ↓ ↓ ↓ ↓
 
 import React from 'react';
 import Hello from './components/Hello';
+module.hot.accept(\\"./components/Hello\\", window.__invalidate);
 export default class App extends React.Component {
   render() {
     return <Hello />;
   }
 
 }
-module.hot.accept(['./Hello'], window.__invalidate);
 "
 `;
 
@@ -58,13 +56,13 @@ export default function App({ children }) {
   );
 }
 
-module.hot.accept(['./Layout', './Hello'], window.__invalidate);
-
       ↓ ↓ ↓ ↓ ↓ ↓
 
 import React from 'react';
 import Hello from './components/Hello';
+module.hot.accept(\\"./components/Hello\\", window.__invalidate);
 import Layout from './components/Layout';
+module.hot.accept(\\"./components/Layout\\", window.__invalidate);
 import './App.css';
 
 var App = window.__assign(module, \\"App\\", function App({
@@ -76,7 +74,6 @@ var App = window.__assign(module, \\"App\\", function App({
 });
 
 export default App;
-module.hot.accept(['./Layout', './Hello'], window.__invalidate);
 "
 `;
 

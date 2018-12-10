@@ -1,4 +1,6 @@
 'use strict';
+const sysPath = require('path');
+const fs = require('fs');
 
 function functionReturnsElement(path) {
   const { body } = path.body;
@@ -74,10 +76,72 @@ function hotDeclare(types, path) {
   );
 }
 
+function isFile(path) {
+  try {
+    const stats = fs.lstatSync(path);
+    return stats.isFile();
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      return false;
+    }
+    throw err;
+  }
+}
+
+function naiveResolve(path, exts = ['js', 'jsx', 'ts', 'tsx']) {
+  return [path, ...exts.map(ext => path + '.' + ext)].find(isFile) || null;
+}
+
+function shouldReloadFile(file) {
+  // TODO: this is really naive
+  const contents = fs.readFileSync(file, 'utf8');
+  return contents.includes('React');
+}
+
 module.exports = function({ types }) {
   return {
     name: 'hot-reload',
     visitor: {
+      ImportDeclaration(path) {
+        if (!types.isStringLiteral(path.node.source)) {
+          return;
+        }
+
+        const target = path.node.source.value;
+        if (!target.startsWith('.')) {
+          return;
+        }
+
+        const file = naiveResolve(
+          sysPath.resolve(sysPath.dirname(this.file.opts.filename), target)
+        );
+        if (file == null) {
+          return;
+        }
+
+        if (shouldReloadFile(file)) {
+          path.insertAfter(
+            types.expressionStatement(
+              types.callExpression(
+                types.memberExpression(
+                  types.memberExpression(
+                    types.identifier('module'),
+                    types.identifier('hot')
+                  ),
+                  types.identifier('accept')
+                ),
+                [
+                  types.stringLiteral(target),
+                  types.memberExpression(
+                    types.identifier('window'),
+                    types.identifier('__invalidate')
+                  ),
+                ]
+              )
+            )
+          );
+        }
+      },
       ExportDefaultDeclaration(path) {
         if (this.file.code.includes('no-hot')) {
           return;

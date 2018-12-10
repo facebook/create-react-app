@@ -31,7 +31,5 @@ let Counter = memo(
   })
 );
 
-module.hot.accept(['./HOCFunction'], window.__invalidate);
-
 export let N = 10;
 export default Fwd;

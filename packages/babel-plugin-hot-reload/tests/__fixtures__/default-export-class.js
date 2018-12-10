@@ -6,5 +6,3 @@ export default class App extends React.Component {
     return <Hello />;
   }
 }
-
-module.hot.accept(['./Hello'], window.__invalidate);

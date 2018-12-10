@@ -35,8 +35,3 @@ export default function Hello() {
     </Suspense>
   );
 }
-
-module.hot.accept(
-  ['./CounterFunction', './CounterClass', './HOCFunction', './HOCClass'],
-  window.__invalidate
-);

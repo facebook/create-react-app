@@ -10,5 +10,3 @@ export default function App({ children }) {
     </Layout>
   );
 }
-
-module.hot.accept(['./Layout', './Hello'], window.__invalidate);
