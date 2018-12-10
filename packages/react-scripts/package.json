@@ -31,6 +31,7 @@
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.4",
+    "babel-plugin-bundled-import-meta": "^0.2.0",
     "babel-plugin-named-asset-import": "^0.2.2",
     "babel-preset-react-app": "^6.0.0",
     "bfj": "6.1.1",
@@ -59,6 +60,7 @@
     "mini-css-extract-plugin": "0.4.3",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
+    "polymer-webpack-loader": "^2.0.3",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.0.6",
@@ -73,6 +75,7 @@
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",
     "webpack-manifest-plugin": "2.0.4",
+    "webpack-wci18n": "github:fs-webdev/webpack-wci18n#modules",
     "workbox-webpack-plugin": "3.6.3"
   },
   "devDependencies": {
