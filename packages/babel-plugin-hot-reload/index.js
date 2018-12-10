@@ -103,6 +103,10 @@ module.exports = function({ types }) {
     name: 'hot-reload',
     visitor: {
       ImportDeclaration(path) {
+        if (this.file.code.includes('no-hot')) {
+          return;
+        }
+
         if (!types.isStringLiteral(path.node.source)) {
           return;
         }
