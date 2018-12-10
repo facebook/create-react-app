@@ -5,15 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
-
 class InlineChunkHtmlPlugin {
   constructor(htmlWebpackPlugin, tests) {
     this.htmlWebpackPlugin = htmlWebpackPlugin;
     this.tests = tests;
   }
 
-  getInlinedTag(publicPath, assets, tag) {
+  static findHtmlWebpackPlugin(plugins) {
+    return plugins.find(plugin => plugin.constructor.name === 'HtmlWebpackPlugin');
+  }
+
+  getInlinedTag(publicPath, assets, tag, isXhtml) {
     if (tag.tagName !== 'script' || !(tag.attributes && tag.attributes.src)) {
       return tag;
     }
@@ -25,7 +27,12 @@ class InlineChunkHtmlPlugin {
     if (asset == null) {
       return tag;
     }
-    return { tagName: 'script', innerHTML: asset.source(), closeTag: true };
+    let innerHTML = asset.source();
+    if (isXhtml) {
+      innerHTML = `<![CDATA[${innerHTML}]]>`;
+    }
+
+    return { tagName: 'script', innerHTML, closeTag: true };
   }
 
   apply(compiler) {
@@ -34,9 +41,14 @@ class InlineChunkHtmlPlugin {
       publicPath += '/';
     }
 
+    const htmlWebpackPlugin = InlineChunkHtmlPlugin.findHtmlWebpackPlugin(compiler.options.plugins);
+    let isXhtml = false;
+    if (htmlWebpackPlugin) {
+      isXhtml = htmlWebpackPlugin.options.xhtml;
+    }
+
     compiler.hooks.compilation.tap('InlineChunkHtmlPlugin', compilation => {
-      const tagFunction = tag =>
-        this.getInlinedTag(publicPath, compilation.assets, tag);
+      const tagFunction = tag => this.getInlinedTag(publicPath, compilation.assets, tag, isXhtml);
 
       const hooks = this.htmlWebpackPlugin.getHooks(compilation);
       hooks.alterAssetTagGroups.tap('InlineChunkHtmlPlugin', assets => {
