@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+'use strict';
+
 class InlineChunkHtmlPlugin {
   constructor(htmlWebpackPlugin, tests) {
     this.htmlWebpackPlugin = htmlWebpackPlugin;
