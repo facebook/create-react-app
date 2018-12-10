@@ -19,7 +19,7 @@ let DoubleLazyCC = window.__assign(module, \\"DoubleLazyCC\\", LazyCC);
 exports[`hot-reload default export class: default export class 1`] = `
 "
 import React from 'react';
-import Hello from './Hello';
+import Hello from './components/Hello';
 
 export default class App extends React.Component {
   render() {
@@ -32,7 +32,7 @@ module.hot.accept(['./Hello'], window.__invalidate);
       ↓ ↓ ↓ ↓ ↓ ↓
 
 import React from 'react';
-import Hello from './Hello';
+import Hello from './components/Hello';
 export default class App extends React.Component {
   render() {
     return <Hello />;
@@ -46,8 +46,8 @@ module.hot.accept(['./Hello'], window.__invalidate);
 exports[`hot-reload default export: default export 1`] = `
 "
 import React from 'react';
-import Hello from './Hello';
-import Layout from './Layout';
+import Hello from './components/Hello';
+import Layout from './components/Layout';
 import './App.css';
 
 export default function App({ children }) {
@@ -63,8 +63,8 @@ module.hot.accept(['./Layout', './Hello'], window.__invalidate);
       ↓ ↓ ↓ ↓ ↓ ↓
 
 import React from 'react';
-import Hello from './Hello';
-import Layout from './Layout';
+import Hello from './components/Hello';
+import Layout from './components/Layout';
 import './App.css';
 
 var App = window.__assign(module, \\"App\\", function App({
