@@ -93,11 +93,27 @@ const svgoLoader = {
 };
 
 function getLighterStyleguidePath() {
-  const ligterStyleguidePath = path.join(paths.appNodeModules, '@lighting-beetle', 'lighter-styleguide')
-  return fs.existsSync(ligterStyleguidePath) && fs.realpathSync(ligterStyleguidePath);
+  const ligterStyleguidePath = path.join(
+    paths.appNodeModules,
+    '@lighting-beetle',
+    'lighter-styleguide'
+  );
+  return (
+    fs.existsSync(ligterStyleguidePath) && fs.realpathSync(ligterStyleguidePath)
+  );
 }
 
 const lighterStyleguidePath = getLighterStyleguidePath();
+
+const filesScripts = fs
+  .readdirSync(paths.scriptsDir)
+  .filter(item => item.match(/\.js$/))
+  .map(file => {
+    const name = `${path.basename(file, '.js')}`;
+    return {
+      [`${name === 'index' ? 'static' : name}`]: `${paths.scriptsDir}/${file}`,
+    };
+  });
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -118,9 +134,10 @@ module.exports = {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     },
-    fs.existsSync(paths.styleguideIndexJs) ? { styleguide: paths.styleguideIndexJs } : {},
-    fs.existsSync(paths.staticJs) ? { static: paths.staticJs } : {},
-    fs.existsSync(paths.polyfills) ? { polyfills: paths.polyfills } : {}
+    fs.existsSync(paths.styleguideIndexJs)
+      ? { styleguide: paths.styleguideIndexJs }
+      : {},
+    ...filesScripts
   ),
   output: {
     // The build folder.
@@ -222,7 +239,7 @@ module.exports = {
               path.join(paths.appNodeModules, 'stringify-object'),
               // if lighterStyleguide do not exist
               // return empty array which webpack accepts
-              ...([lighterStyleguidePath || []]),
+              ...[lighterStyleguidePath || []],
             ],
             loader: require.resolve('babel-loader'),
             options: {
@@ -230,12 +247,13 @@ module.exports = {
               babelrc: false,
               presets: [require.resolve('babel-preset-react-app')],
               plugins: [
-                [ 
-                  require('babel-plugin-transform-react-remove-prop-types').default,
+                [
+                  require('babel-plugin-transform-react-remove-prop-types')
+                    .default,
                   {
                     removeImport: true,
                   },
-                ]
+                ],
               ],
               // @remove-on-eject-end
               compact: true,
@@ -322,10 +340,10 @@ module.exports = {
     new StaticSiteGeneratorPlugin({
       entry: 'app',
       globals: Object.assign(
-        {}, 
-        new JSDOM().window, 
-        { Element: new JSDOM().window.Element }, 
-        { __lighterIsServer__: true, }
+        {},
+        new JSDOM().window,
+        { Element: new JSDOM().window.Element },
+        { __lighterIsServer__: true }
       ),
     }),
     // Makes some environment variables available in index.html.
@@ -335,26 +353,29 @@ module.exports = {
     // in `package.json`, in which case it will be the pathname of that URL.
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
-    ...(fs.existsSync(paths.styleguideIndexJs) ? [
-      new HtmlWebpackPlugin({
-        inject: true,
-        template: paths.styleguideHtml,
-        filename: 'styleguide.html',
-        chunks: ['hotDevClient', 'polyfills', 'styleguide'],
-        chunksSortMode: 'manual',
-        minify: {
-          removeComments: true,
-          collapseWhitespace: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          keepClosingSlash: true,
-          minifyJS: true,
-          minifyCSS: true,
-          minifyURLs: true,
-        },
-    })] : []),
+    ...(fs.existsSync(paths.styleguideIndexJs)
+      ? [
+          new HtmlWebpackPlugin({
+            inject: true,
+            template: paths.styleguideHtml,
+            filename: 'styleguide.html',
+            chunks: ['hotDevClient', 'polyfills', 'styleguide'],
+            chunksSortMode: 'manual',
+            minify: {
+              removeComments: true,
+              collapseWhitespace: true,
+              removeRedundantAttributes: true,
+              useShortDoctype: true,
+              removeEmptyAttributes: true,
+              removeStyleLinkTypeAttributes: true,
+              keepClosingSlash: true,
+              minifyJS: true,
+              minifyCSS: true,
+              minifyURLs: true,
+            },
+          }),
+        ]
+      : []),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.
@@ -436,7 +457,7 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     extractSass,
     new StyleLintPlugin({
-      files: [path.join(paths.appSrc, '**/*.scss')]
+      files: [path.join(paths.appSrc, '**/*.scss')],
     }),
     new SpriteLoaderPlugin({ plainSprite: true }),
     new FilterWarningsPLugin({

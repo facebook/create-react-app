@@ -71,11 +71,27 @@ const svgoLoader = {
 };
 
 function getLighterStyleguidePath() {
-  const ligterStyleguidePath = path.join(paths.appNodeModules, '@lighting-beetle', 'lighter-styleguide')
-  return fs.existsSync(ligterStyleguidePath) && fs.realpathSync(ligterStyleguidePath);
+  const ligterStyleguidePath = path.join(
+    paths.appNodeModules,
+    '@lighting-beetle',
+    'lighter-styleguide'
+  );
+  return (
+    fs.existsSync(ligterStyleguidePath) && fs.realpathSync(ligterStyleguidePath)
+  );
 }
 
 const lighterStyleguidePath = getLighterStyleguidePath();
+
+const filesScripts = fs
+  .readdirSync(paths.scriptsDir)
+  .filter(item => item.match(/\.js$/))
+  .map(file => {
+    const name = `${path.basename(file, '.js')}`;
+    return {
+      [`${name === 'index' ? 'static' : name}`]: `${paths.scriptsDir}/${file}`,
+    };
+  });
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -109,9 +125,10 @@ module.exports = {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     },
-    fs.existsSync(paths.styleguideIndexJs) ? { styleguide: paths.styleguideIndexJs } : {},
-    fs.existsSync(paths.staticJs) ? { static: paths.staticJs } : {},
-    fs.existsSync(paths.polyfills) ? { polyfills: paths.polyfills } : {}
+    fs.existsSync(paths.styleguideIndexJs)
+      ? { styleguide: paths.styleguideIndexJs }
+      : {},
+    ...scriptsFiles
   ),
   output: {
     // Add /* filename */ comments to generated require()s in the output.
@@ -212,7 +229,7 @@ module.exports = {
               path.join(paths.appNodeModules, 'stringify-object'),
               // if lighterStyleguide do not exist
               // return empty array which webpack accepts
-              ...([lighterStyleguidePath || []]),
+              ...[lighterStyleguidePath || []],
             ],
             loader: require.resolve('babel-loader'),
             options: {
@@ -305,10 +322,10 @@ module.exports = {
     new StaticSiteGeneratorPlugin({
       entry: 'app',
       globals: Object.assign(
-        {}, 
-        new JSDOM().window, 
-        { Element: new JSDOM().window.Element }, 
-        { __lighterIsServer__: true, }
+        {},
+        new JSDOM().window,
+        { Element: new JSDOM().window.Element },
+        { __lighterIsServer__: true }
       ),
     }),
     // Makes some environment variables available in index.html.
@@ -317,14 +334,17 @@ module.exports = {
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
-    ...(fs.existsSync(paths.styleguideIndexJs) ? [
-      new HtmlWebpackPlugin({
-      inject: true,
-      template: paths.styleguideHtml,
-      filename: 'styleguide.html',
-      chunks: ['hotDevClient', 'polyfills', 'styleguide'],
-      chunksSortMode: 'manual',
-    })] : []),
+    ...(fs.existsSync(paths.styleguideIndexJs)
+      ? [
+          new HtmlWebpackPlugin({
+            inject: true,
+            template: paths.styleguideHtml,
+            filename: 'styleguide.html',
+            chunks: ['hotDevClient', 'polyfills', 'styleguide'],
+            chunksSortMode: 'manual',
+          }),
+        ]
+      : []),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
@@ -351,7 +371,7 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     extractSass,
     new StyleLintPlugin({
-      files: [path.join(paths.appSrc, '**/*.scss')]
+      files: [path.join(paths.appSrc, '**/*.scss')],
     }),
     new SpriteLoaderPlugin({ plainSprite: true }),
     new FilterWarningsPLugin({
