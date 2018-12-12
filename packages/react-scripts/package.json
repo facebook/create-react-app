@@ -75,7 +75,7 @@
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",
     "webpack-manifest-plugin": "2.0.4",
-    "webpack-wci18n": "github:fs-webdev/webpack-wci18n#modules",
+    "webpack-wci18n": "github:fs-webdev/webpack-wci18n",
     "workbox-webpack-plugin": "3.6.3"
   },
   "devDependencies": {
