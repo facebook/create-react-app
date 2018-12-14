@@ -31,6 +31,20 @@ const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
 verifyTypeScriptSetup();
 // @remove-on-eject-end
 
+const socketData = {
+  defaultInterface: 'localhost', // local interface ipv4+ipv6
+  defaultPort: 3000,
+  randomPortValue: 0,
+  firstRandomPort: 3005,
+  isPort: n => (n = +n) >= 0 && n <= 65535, // verify numeric within range inclusive, NaN → false
+};
+// these interface names do both ipv4+ipv6 and detect-port-alt has special code for it
+socketData.skipDetectArg = intf =>
+  ['0.0.0.0', '::', '127.0.0.1']
+    .concat(socketData.defaultInterface)
+    .includes(intf);
+
+const detect = require('detect-port-alt');
 const fs = require('fs');
 const chalk = require('chalk');
 const webpack = require('webpack');
@@ -57,8 +71,8 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Tools like Cloud9 rely on this.
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
-const HOST = process.env.HOST || '0.0.0.0';
+const DEFAULT_PORT = parseInt(process.env.PORT, 10); // may number out of range or NaN: figure out inside Promise
+const HOST = process.env.HOST || socketData.defaultInterface;
 
 if (process.env.HOST) {
   console.log(
@@ -81,12 +95,18 @@ if (process.env.HOST) {
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
 checkBrowsers(paths.appPath, isInteractive)
-  .then(() => {
-    // We attempt to use the default port but if it is busy, we offer the user to
-    // run on a different port. `choosePort()` Promise resolves to the next free port.
-    return choosePort(HOST, DEFAULT_PORT);
-  })
+  .then(
+    () =>
+      // this onFulfilled gets the proper port number
+      socketData.isPort(DEFAULT_PORT)
+        ? DEFAULT_PORT !== socketData.randomPortValue
+          ? DEFAULT_PORT // provided port number good: use it
+          : detect(socketData.firstRandomPort, socketData.skipDetectArg(HOST) ? undefined : HOST) // free port 3005 - 3014
+        : socketData.defaultPort // port empty or not a number: use 3000
+  )
+  .then(port => choosePort(HOST, port)) // this onFulFilled asks interactively for action if port could not be determined
   .then(port => {
+    // this onFulfilled starts Webpack Development Server if port was successully determined
     if (port == null) {
       // We have not found a port.
       return;
