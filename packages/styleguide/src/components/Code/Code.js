@@ -31,7 +31,9 @@ export default class PreviewCode extends Component {
   state = {
     __html: Prism.highlight(
       this.props.children,
-      Prism.languages[this.props.language]
+      typeof Prism.languages[this.props.language] !== 'undefined'
+        ? Prism.languages[this.props.language]
+        : Prism.languages.html
     )
   };
 
