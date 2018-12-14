@@ -8,6 +8,7 @@ import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-json';
 import 'prismjs/components/prism-diff';
+import 'prismjs/components/prism-sass';
 import 'prism-theme-one-dark/prism-onedark.css';
 import 'firacode/distr/fira_code.css';
 
