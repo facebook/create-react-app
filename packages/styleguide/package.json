@@ -14,6 +14,8 @@
   },
   "homepage": "https://github.com/lightingbeetle/lighter#readme",
   "dependencies": {
+    "@mdx-js/loader": "~0.16.6",
+    "@mdx-js/mdx": "~0.16.6",
     "array-includes": "~3.0.3",
     "chroma-js": "~1.3.7",
     "classnames": "~2.2.5",
@@ -40,8 +42,8 @@
   },
   "scripts": {
     "precommit": "lint-staged",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "prebuild": "node ./prebuild.js"
@@ -59,6 +61,7 @@
     "lint-staged": "~7.2.0",
     "prettier": "~1.13.5",
     "raw-loader": "~0.5.1",
+    "react-app-rewired": "~1.6.2",
     "react-scripts": "~1.1.1",
     "shelljs": "~0.8.2"
   },
