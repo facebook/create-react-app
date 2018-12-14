@@ -181,6 +181,7 @@ const PageSidebar = styled(Sidebar)`
 const PageContent = styled.main`
   position: relative;
   flex: 1 1 auto;
+  align-self: stretch;
   overflow-x: hidden;
   overflow-y: auto;
   padding: ${props => rem(props.theme.spaces.default)} 0;
