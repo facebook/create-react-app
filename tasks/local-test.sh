@@ -88,7 +88,7 @@ if [ ${git_branch} != ${current_git_branch} ]; then
 fi
 
 read -r -d '' command <<- CMD
-echo "prefix=~/.npm" > ~/.npmrc
+touch ~/.npmrc
 mkdir ~/.npm
 export PATH=\$PATH:~/.npm/bin
 set -x
@@ -105,6 +105,7 @@ CMD
 docker run \
   --env CI=true \
   --env NPM_CONFIG_QUIET=true \
+  --env NPM_CONFIG_PREFIX=/home/node/.npm \
   --tty \
   --user node \
   --volume ${PWD}/..:/var/create-react-app \
