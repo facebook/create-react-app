@@ -222,6 +222,11 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
+      case 'wasm-inclusion':
+        import('./features/webpack/WasmInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
       default:
         throw new Error(`Missing feature "${feature}"`);
     }

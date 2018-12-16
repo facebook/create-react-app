@@ -146,5 +146,11 @@ describe('Integration', () => {
       );
       doc.defaultView.close();
     });
+
+    it('wasm inclusion', async () => {
+      const doc = await initDOM('wasm-inclusion');
+
+      expect(doc.getElementById('wasm-inclusion').textContent).toBe('11');
+    });
   });
 });
