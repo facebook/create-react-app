@@ -1,4 +1,5 @@
 import React from 'react';
-import { add } from './assets/add.wasm';
+import * as wasm from './assets/add.wasm';
+console.log(wasm);
 
-export default () => <span id="wasm-inclusion">{add(1, 10)}</span>;
+export default () => <span id="wasm-inclusion">{wasm.add(1, 10)}</span>;
