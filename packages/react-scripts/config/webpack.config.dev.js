@@ -128,7 +128,7 @@ module.exports = {
     fs.existsSync(paths.styleguideIndexJs)
       ? { styleguide: paths.styleguideIndexJs }
       : {},
-    ...scriptsFiles
+    ...filesScripts
   ),
   output: {
     // Add /* filename */ comments to generated require()s in the output.
