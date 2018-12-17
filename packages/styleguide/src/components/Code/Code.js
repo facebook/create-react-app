@@ -95,8 +95,7 @@ const Highlight = styled.code.attrs({
     font-size: ${props =>
       em(props.theme.fontSizes.small, props.theme.fontSizes.base)}
     line-height: ${props =>
-      stripUnit(props.theme.fontSizes.base) *
-      props.theme.lineHeights.base /
+      (stripUnit(props.theme.fontSizes.base) * props.theme.lineHeights.base) /
       stripUnit(props.theme.fontSizes.small)};
     white-space: pre-wrap;
     max-height: ${rem('300px')};
