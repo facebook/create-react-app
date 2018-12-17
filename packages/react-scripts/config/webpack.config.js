@@ -324,6 +324,7 @@ module.exports = function(webpackEnv) {
             },
           ],
           include: paths.appSrc,
+          exclude: /[/\\]node_modules[/\\]/,
         },
         {
           // "oneOf" will traverse all following loaders until one will
@@ -346,6 +347,7 @@ module.exports = function(webpackEnv) {
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: paths.appSrc,
+              exclude: /[/\\]node_modules[/\\]/,
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
