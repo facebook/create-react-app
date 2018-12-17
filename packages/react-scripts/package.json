@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@lighting-beetle/lighter-react-dev-utils": "1.0.0",
+    "@mdx-js/loader": "~0.16.6",
     "autoprefixer": "8.6.3",
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.5",
