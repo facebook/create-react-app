@@ -1,7 +1,13 @@
-import { Card, Preview, Button } from './../components';
+import { Card, Preview, Button, Table, Code, InfoBadge } from './../components';
 
-# Hello 1
-## Hello 2
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+# Hello 1 with a lot of word-punctuation. -- + -- hello, no more, than this is needed?! hopefully!!! <InfoBadge value="ready" /> and there is another text
+## Hello-2-and other stuff.Please
 ### Hello 3
 #### Hello 4
 ##### Hello 5
@@ -16,6 +22,12 @@ this is my first mdx paragraph
 `inline code is a breeze in mdx`
 
 ## Code block example
+
+[Link to Hello 1](#hello-1-with-a-lot-of-word-punctuation-hello-no-more-than-this-is-needed-hopefully-and-there-is-another-text)
+
+[Link to Hello 2](#hello-2-and-other-stuff-please)
+
+[Some link to Hello 3](#hello-3)
 
 ```jsx
 Code block is something similar
