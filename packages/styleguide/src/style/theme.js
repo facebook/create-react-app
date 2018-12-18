@@ -5,7 +5,7 @@ import { rem } from './utils';
 export const sizes = {
   headerHeight: '96px',
   sidebarWidth: '248px',
-  menuWidth: '200px'
+  menuWidth: '200px',
 };
 
 export const breakpoints = {
@@ -13,7 +13,7 @@ export const breakpoints = {
   s: '480px',
   m: '640px',
   l: '960px',
-  xl: '1280px'
+  xl: '1280px',
 };
 
 export const spaces = {
@@ -23,7 +23,7 @@ export const spaces = {
   default: '18px',
   medium: '24px',
   large: '48px',
-  xlarge: '60px'
+  xlarge: '60px',
 };
 
 export const contentSpacing = spaces.large;
@@ -33,25 +33,26 @@ export const fontFamily = 'Arial, "Helvetica Neue", Helvetica, sans-serif';
 export const fontSizes = {
   base: '16px',
   small: '14px',
-  tiny: '12px'
+  tiny: '12px',
 };
 
 export const fontWeights = {
   normal: 400,
-  bold: 700
+  bold: 700,
 };
 
 export const lineHeights = {
-  base: 1.5
+  base: 1.5,
 };
 
 export const nav = {
-  listTopBottomIndent: rem(5) // TODO refactor/remove
+  listTopBottomIndent: rem(5), // TODO refactor/remove
 };
 
 export const zIndex = {
+  content: 2,
   header: 3,
-  sidebar: 4 // header + 1
+  sidebar: 4, // header + 1
 };
 
 const functionalColors = {
@@ -66,7 +67,7 @@ const functionalColors = {
   wildRice: '#e8d571',
   whiskey: '#d19a66',
   coralTree: '#b67963',
-  redDamask: '#cb6b4d'
+  redDamask: '#cb6b4d',
 };
 
 /* *** TODO temp names (while full design won't exist) *** */
@@ -81,21 +82,21 @@ export const colors = {
   warning: '#e8d571',
   error: '#e06c75',
   info: '#61afef',
-  ...functionalColors
+  ...functionalColors,
 };
 
 export const previewBackgrounds = {
   white: colors.white,
   dark: colors.greyDark,
-  accent: colors.accent
+  accent: colors.accent,
 };
 
 export const shadows = {
-  default: '0 24px 48px -12px rgba(0,0,0,0.05)'
+  default: '0 24px 48px -12px rgba(0,0,0,0.05)',
 };
 
 export const borderRadius = {
-  default: '0'
+  default: '0',
 };
 
 export const contentWidth = '55rem';

@@ -128,7 +128,7 @@ injectGlobal`
 const PageLayout = styled.div``;
 
 const PageHeader = styled(Header)`
-  position: sticky;
+  position: fixed;
   top: 0;
   width: 100%;
   height: ${props => rem(props.theme.sizes.headerHeight)};
@@ -144,11 +144,14 @@ const PageHeader = styled(Header)`
 
 const PageBody = styled.div`
   position: relative;
+  height: calc(100vh - 6rem);
   display: flex;
   flex: 1 1 auto;
   min-height: 0;
   align-items: flex-start;
-
+  z-index: ${props => props.theme.zIndex.content};
+  top: 6rem;
+  
   @media (max-width: calc(${props => props.theme.breakpoints.l} - 1px)) {
     &.is-active {
       overflow-x: hidden;
@@ -167,6 +170,11 @@ const PageSidebar = styled(Sidebar)`
   transform: translateX(-${props => rem(props.theme.sizes.sidebarWidth)});
   transition: transform 0.3s ease-in-out 0s;
   z-index: ${props => props.theme.zIndex.sidebar};
+
+  /* IE */
+  @media all and (-ms-high-contrast: none) {
+    left: 0;
+  }
 
   @media (min-width: ${props => props.theme.breakpoints.l}) {
     position: sticky;
@@ -190,6 +198,16 @@ const PageContent = styled.main`
   .is-active & {
     transform: translateX(${props => rem(props.theme.sizes.sidebarWidth)});
     opacity: 0.5;
+  }
+
+  /* IE */
+  @media (min-width: ${props =>
+      props.theme.breakpoints.l}) and (-ms-high-contrast: none) {
+    max-width: calc(100vw - 16.75em);
+    transform: translateX(${props => rem(props.theme.sizes.sidebarWidth)});
+    .is-active & {
+      left: ${props => rem(props.theme.sizes.sidebarWidth)};
+    }
   }
 
   @media (min-width: ${props => props.theme.breakpoints.l}) {
