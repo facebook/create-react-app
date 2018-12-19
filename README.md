@@ -1,3 +1,32 @@
+# Credijusto's custom react-scripts
+
+This is a fork of Facebook's [Create React App](https://github.com/facebook/create-react-app) but with Creijusto's own preferences, this package is meant to be used on every React project to ensure consistency, ease of setup and improved developer-experience.
+
+## Usage
+
+```sh
+yarn add -D -E @credijusto/react-scripts
+```
+
+This installs the devDependency, it supports all things Create React App offers AND:
+- Linting  with [AirBnb rules](https://github.com/airbnb/javascript)
+- Formatting with [Prettier](https://github.com/prettier/prettier) for `.html, .js, .jsx, .json, .css, .scss` extensions
+- Precommit hook
+
+If you are using [VSCode](https://code.visualstudio.com/) editor, you can install it's [EsLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and add an `.eslintrc` file on the root of the project you're working on to enable editor linting marks, the file must contain the following:
+
+```json
+{
+  "extends": "./node_modules/@credijusto/react-scripts/config/.eslintrc"
+}
+```
+
+Issues and Pull-Requests welcome.
+
+<hr>
+
+Original CRA README:
+
 # Create React App [![Build Status](https://travis-ci.org/facebook/create-react-app.svg?branch=master)](https://travis-ci.org/facebook/create-react-app) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/pulls) 
 
 Create React apps with no build configuration.
