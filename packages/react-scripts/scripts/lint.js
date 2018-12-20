@@ -4,8 +4,8 @@ const { exec } = require('child_process');
 const prettierMatch = paths.appSrc + '/**/*.{html,js,jsx,json,css,scss}';
 const prettierCommand = `prettier '${prettierMatch}' --write`;
 const eslintConfigPath = paths.ownPath + '/config/.eslintrc';
-const eslintCommand = `eslint --fix --config ${eslintConfigPath} --ext .jsx,.js src/`;
-
+const eslintIgnorePath = paths.ownPath + '/config/.eslintignore';
+const eslintCommand = `eslint --fix --config ${eslintConfigPath} --ignore-path ${eslintIgnorePath} --ext .jsx,.js src/`;
 
 exec(prettierCommand, (error, stdout, stderr) => {
   if (error) {
