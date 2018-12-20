@@ -13,6 +13,8 @@ import Navigation from './components/Navigation/';
 import NavigationButton from './components/NavigationButton/';
 import Sitemap from './components/Sitemap';
 
+import MdxWrapper from './utils/mdx';
+
 class App extends React.Component {
   static displayName = 'App';
 
@@ -72,36 +74,38 @@ class App extends React.Component {
     }, Object.assign({}, theme));
 
     return (
-      <BrowserRouter basename={styleguideBasePath}>
-        <ThemeProvider theme={localTheme}>
-          <PageLayout>
-            <PageHeader
-              key="header"
-              project={logo || name}
-              projectSmall={logoSmall || name}
-              pageTitle="Bar"
-              infoText={`v${version}`}
-              {...other}
-            >
-              <NavigationButton
-                onClick={() => this.handleClick()}
-                isActive={this.state.isNavActive}
-              />
-            </PageHeader>
-            <PageBody className={activeClass}>
-              <PageContent>
-                <Sitemap routes={routes} />
-              </PageContent>
-              <PageSidebar>
-                <Navigation
-                  routes={routes}
-                  onNavLinkClick={() => this.handleNavLinkClick()}
+      <MdxWrapper>
+        <BrowserRouter basename={styleguideBasePath}>
+          <ThemeProvider theme={localTheme}>
+            <PageLayout>
+              <PageHeader
+                key="header"
+                project={logo || name}
+                projectSmall={logoSmall || name}
+                pageTitle="Bar"
+                infoText={`v${version}`}
+                {...other}
+              >
+                <NavigationButton
+                  onClick={() => this.handleClick()}
+                  isActive={this.state.isNavActive}
                 />
-              </PageSidebar>
-            </PageBody>
-          </PageLayout>
-        </ThemeProvider>
-      </BrowserRouter>
+              </PageHeader>
+              <PageBody className={activeClass}>
+                <PageContent>
+                  <Sitemap routes={routes} />
+                </PageContent>
+                <PageSidebar>
+                  <Navigation
+                    routes={routes}
+                    onNavLinkClick={() => this.handleNavLinkClick()}
+                  />
+                </PageSidebar>
+              </PageBody>
+            </PageLayout>
+          </ThemeProvider>
+        </BrowserRouter>
+      </MdxWrapper>
     );
   }
 }
