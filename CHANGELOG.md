@@ -1,3 +1,23 @@
+## 2.6.0 (December 20, 2018)
+
+#### :rocket: New Feature
+* [lighter-react-scripts] add automatic src/scripts folder files transpile ([#49](https://github.com/lightingbeetle/lighter/pull/49), [#58](https://github.com/lightingbeetle/lighter/pull/58))
+* [lighter-react-scripts] add mdx loader to webpack config ([#59](https://github.com/lightingbeetle/lighter/pull/59), [#61](https://github.com/lightingbeetle/lighter/pull/61))
+* [lighter-styleguide] add prism support for diff language ([#52](https://github.com/lightingbeetle/lighter/pull/52))
+* [lighter-styleguide] add prism support for scss/sass ([#57](https://github.com/lightingbeetle/lighter/pull/57))
+* [lighter-styleguide] add MDX support  ([#55](https://github.com/lightingbeetle/lighter/pull/55), [#60](https://github.com/lightingbeetle/lighter/pull/60), [#62](https://github.com/lightingbeetle/lighter/pull/62), [#56](https://github.com/lightingbeetle/lighter/pull/56))
+
+#### :bug: Bug Fix
+* [lighter-styleguide] print shape prop values in docs ([#50](https://github.com/lightingbeetle/lighter/pull/50))
+* [lighter-styleguide] stretch main height ([#51](https://github.com/lightingbeetle/lighter/pull/51))
+* [lighter-styleguide] add support for uknown language to code-block component ([#53](https://github.com/lightingbeetle/lighter/pull/53))
+* [lighter-styleguide] fix styleguide not working in IE ([#54](https://github.com/lightingbeetle/lighter/pull/54))
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.6.0`
+* `lighter-styleguide@1.4.0`
+
 ## 2.5.0 (November 27, 2018)
 
 #### :bug: Bug Fix
