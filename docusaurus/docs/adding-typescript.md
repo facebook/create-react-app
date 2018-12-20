@@ -34,6 +34,8 @@ To learn more about TypeScript, check out [its documentation](https://www.typesc
 
 > **Note:** If you are currently using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript/), see [this blog post](https://vincenttunru.com/migrate-create-react-app-typescript-to-create-react-app/) for instructions on how to migrate to Create React App.
 
+> **Note:** If you rename `serviceWorker.js` to `serviceWorker.ts` without converting the file to typescript, the project will fail to compile.
+
 > **Note:** We recommend using [VSCode](https://code.visualstudio.com/) for a better integrated experience.
 
 > **Note:** Constant enums and namespaces are not supported.
