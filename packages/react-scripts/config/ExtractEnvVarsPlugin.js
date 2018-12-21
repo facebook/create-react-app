@@ -1,5 +1,7 @@
 'use strict';
 
+const fs = require('fs');
+
 class ExtractEnvVarsPlugin {
   constructor() {
     this.vars = [];

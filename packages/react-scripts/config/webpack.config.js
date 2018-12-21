@@ -304,22 +304,26 @@ module.exports = function(webpackEnv) {
 
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
-        isEnvProduction && {
-          test: /\.(js|mjs|jsx)$/,
-          enforce: 'pre',
-          use: [
-            {
-              options: {
-                formatter: require.resolve('react-dev-utils/eslintFormatter'),
-                eslintPath: require.resolve('eslint'),
-                ignore: false,
-                useEslintrc: true,
-              },
-              loader: require.resolve('eslint-loader'),
-            },
-          ],
-          include: paths.appSrc,
-        },
+        isEnvProduction
+          ? {
+              test: /\.(js|mjs|jsx)$/,
+              enforce: 'pre',
+              use: [
+                {
+                  options: {
+                    formatter: require.resolve(
+                      'react-dev-utils/eslintFormatter'
+                    ),
+                    eslintPath: require.resolve('eslint'),
+                    ignore: false,
+                    useEslintrc: true,
+                  },
+                  loader: require.resolve('eslint-loader'),
+                },
+              ],
+              include: paths.appSrc,
+            }
+          : {},
         {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall

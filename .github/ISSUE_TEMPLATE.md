@@ -8,10 +8,10 @@
 
 <!--
   If you answered "Yes":
-  
+
     Please note that your issue will be fixed much faster if you spend about
     half an hour preparing it, including the exact reproduction steps and a demo.
-    
+
     If you're in a hurry or don't feel confident, it's fine to report bugs with
     less details, but this makes it less likely they'll get fixed soon.
 
@@ -37,14 +37,14 @@
   Then you need to decide which package manager you prefer to use.
   We support both npm (https://npmjs.com) and yarn (http://yarnpkg.com/).
   However, **they can't be used together in one project** so you need to pick one.
-  
+
   If you decided to use npm, run this in your project directory:
 
     npm install -g npm@latest
     npm install
 
   This should fix your project.
-  
+
   If you decided to use yarn, update it first (https://yarnpkg.com/en/docs/install).
   Then run in your project directory:
 
@@ -68,19 +68,18 @@
   There are a few common documented problems, such as watcher not detecting changes, or build failing.
   They are described in the Troubleshooting section of the User Guide:
 
-  https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#troubleshooting
+  https://facebook.github.io/create-react-app/docs/troubleshooting
 
   Please scan these few sections for common problems.
   Additionally, you can search the User Guide itself for something you're having issues with:
-  
-  https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md
-  
+
+  https://facebook.github.io/create-react-app/
+
   If you didn't find the solution, please share which words you searched for.
   This helps us improve documentation for future readers who might encounter the same problem.
 -->
 
 (Write your answer here if relevant.)
-
 
 ### Environment
 
@@ -107,10 +106,9 @@
 
 (Write your steps here:)
 
-1. 
-2. 
-3. 
-
+1.
+2.
+3.
 
 ### Expected Behavior
 
@@ -122,7 +120,6 @@
 
 (Write what you thought would happen.)
 
-
 ### Actual Behavior
 
 <!--
@@ -132,7 +129,6 @@
 -->
 
 (Write what happened. Please add screenshots!)
-
 
 ### Reproducible Demo
 
@@ -156,11 +152,11 @@
 
 <!--
   What happens if you skip this step?
-  
+
   We will try to help you, but in many cases it is impossible because crucial
   information is missing. In that case we'll tag an issue as having a low priority,
   and eventually close it if there is no clear direction.
-  
+
   We still appreciate the report though, as eventually somebody else might
   create a reproducible example for it.
 
