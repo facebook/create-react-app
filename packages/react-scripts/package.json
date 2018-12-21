@@ -27,7 +27,7 @@
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
-    "@babel/core": "7.1.0",
+    "@babel/core": "7.1.6",
     "@svgr/webpack": "2.4.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
@@ -62,7 +62,7 @@
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
-    "postcss-preset-env": "6.0.6",
+    "postcss-preset-env": "6.3.1",
     "postcss-safe-parser": "4.0.1",
     "raw-loader": "^0.5.1",
     "react-app-polyfill": "^0.1.3",

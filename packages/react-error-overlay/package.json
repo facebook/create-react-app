@@ -3,6 +3,7 @@
   "version": "5.1.0",
   "description": "An overlay for displaying stack frames.",
   "main": "lib/index.js",
+  "sideEffects": false,
   "scripts": {
     "start": "cross-env NODE_ENV=development node build.js --watch",
     "test": "cross-env NODE_ENV=test jest",
