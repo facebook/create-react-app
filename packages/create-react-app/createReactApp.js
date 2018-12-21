@@ -61,6 +61,7 @@ const errorLogFilePatterns = [
 ];
 
 let projectName;
+const args = process.argv.slice(2);
 
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
@@ -68,6 +69,34 @@ const program = new commander.Command(packageJson.name)
   .usage(`${chalk.green('<project-directory>')} [options]`)
   .action(name => {
     projectName = name;
+
+    // Computing number of arguments given excluding options
+    let argsLength = 0;
+    
+    args.map(item => {
+      
+      if (item === '--scripts-version') {
+        argsLength--;
+      }
+
+      if (!item.startsWith('-')){
+        argsLength++;
+      }
+	});
+
+    if (argsLength > 1){
+      
+      console.log(
+        chalk.yellow(
+          `\n You have provided more that one argument for <project-directory>.`
+        )
+	);
+
+      console.log(
+        `\n Run ${chalk.cyan(`create-react-app --help`)} to see all options.`
+      );
+      process.exit(1);
+    } 
   })
   .option('--verbose', 'print additional logs')
   .option('--info', 'print environment debug info')
