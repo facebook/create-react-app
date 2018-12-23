@@ -1,5 +1,7 @@
 ## 2.1.2 (December 23, 2018)
 
+v2.1.2 is a maintenance release including various bug fixes.
+
 #### :rocket: New Feature
 
 - `babel-preset-react-app`
