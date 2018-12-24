@@ -23,7 +23,7 @@ $ # or
 $ yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
 
-Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`). Change the first two lines of the `src/index.tsx` to
+Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`). Change the first two lines of the `src/index.tsx` file to
 
 ```typescript
 import * as React from 'react';
