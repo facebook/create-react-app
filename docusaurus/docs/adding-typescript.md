@@ -23,7 +23,14 @@ $ # or
 $ yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
 
-Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
+Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`). Change the first two lines of the `src/index.tsx` to
+
+```typescript
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+```
+
+and **restart your development server**!
 
 Type errors will show up in the same console as the build one.
 
