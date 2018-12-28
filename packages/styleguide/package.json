@@ -29,7 +29,7 @@
     "prismjs": "~1.15.0",
     "react": "~16.4.1",
     "react-docgen": "~3.0.0-beta12",
-    "react-docgen-annotation-resolver": "~1.0.0",
+    "react-docgen-annotation-resolver": "~1.1.0",
     "react-dom": "~16.4.1",
     "react-element-to-jsx-string": "~14.0.1",
     "react-frame-component": "~4.0.0",
@@ -59,6 +59,7 @@
   },
   "devDependencies": {
     "babel-cli": "~6.26.0",
+    "babel-plugin-react-docgen": "~2.0.0",
     "babel-preset-env": "~1.7.0",
     "husky": "~0.14.3",
     "lint-staged": "~7.2.0",
