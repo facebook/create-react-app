@@ -35,7 +35,6 @@ const fs = require('fs');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const {
   choosePort,
@@ -110,9 +109,6 @@ checkBrowsers(paths.appPath, isInteractive)
     devServer.listen(port, HOST, err => {
       if (err) {
         return console.log(err);
-      }
-      if (isInteractive) {
-        clearConsole();
       }
       console.log(chalk.cyan('Starting the development server...\n'));
       openBrowser(urls.localUrlForBrowser);
