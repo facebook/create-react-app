@@ -14,7 +14,6 @@ const chalk = require('chalk');
 const detect = require('detect-port-alt');
 const isRoot = require('is-root');
 const inquirer = require('inquirer');
-const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
 
@@ -132,9 +131,6 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
   compiler.hooks.invalid.tap('invalid', () => {
-    if (isInteractive) {
-      clearConsole();
-    }
     console.log('Compiling...');
   });
 
@@ -143,9 +139,6 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
   compiler.hooks.done.tap('done', stats => {
-    if (isInteractive) {
-      clearConsole();
-    }
 
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
@@ -357,7 +350,6 @@ function choosePort(host, defaultPort) {
             ? `Admin permissions are required to run a server on a port below 1024.`
             : `Something is already running on port ${defaultPort}.`;
         if (isInteractive) {
-          clearConsole();
           const existingProcess = getProcessForPort(defaultPort);
           const question = {
             type: 'confirm',
