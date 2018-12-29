@@ -232,7 +232,7 @@ function createApp(name, verbose, version, useNpm, template) {
           chalk.yellow(
             `You are using npm ${
               npmInfo.npmVersion
-            } so the project will be boostrapped with an old unsupported version of tools.\n\n` +
+            } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
               `Please update to npm 3 or higher for a better, fully supported experience.\n`
           )
         );
