@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { expect } from 'chai';
 import initDOM from './initDOM';
 
 describe('Integration', () => {
@@ -15,23 +14,23 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-file-env-original-1').textContent
-      ).to.equal('from-original-env-1');
+      ).toBe('from-original-env-1');
       expect(
         doc.getElementById('feature-file-env-original-2').textContent
-      ).to.equal('override-from-original-local-env-2');
+      ).toBe('override-from-original-local-env-2');
 
       if (process.env.NODE_ENV === 'production') {
-        expect(doc.getElementById('feature-file-env').textContent).to.equal(
+        expect(doc.getElementById('feature-file-env').textContent).toBe(
           'production'
         );
-        expect(doc.getElementById('feature-file-env-x').textContent).to.equal(
+        expect(doc.getElementById('feature-file-env-x').textContent).toBe(
           'x-from-production-env'
         );
       } else {
-        expect(doc.getElementById('feature-file-env').textContent).to.equal(
+        expect(doc.getElementById('feature-file-env').textContent).toBe(
           'development'
         );
-        expect(doc.getElementById('feature-file-env-x').textContent).to.equal(
+        expect(doc.getElementById('feature-file-env-x').textContent).toBe(
           'x-from-development-env'
         );
       }
@@ -41,9 +40,7 @@ describe('Integration', () => {
     it('NODE_PATH', async () => {
       const doc = await initDOM('node-path');
 
-      expect(
-        doc.getElementById('feature-node-path').childElementCount
-      ).to.equal(4);
+      expect(doc.getElementById('feature-node-path').childElementCount).toBe(4);
       doc.defaultView.close();
     });
 
@@ -54,12 +51,12 @@ describe('Integration', () => {
         process.env.NODE_ENV === 'development'
           ? ''
           : 'http://www.example.org/spa';
-      expect(doc.getElementById('feature-public-url').textContent).to.equal(
+      expect(doc.getElementById('feature-public-url').textContent).toBe(
         `${prefix}.`
       );
       expect(
         doc.querySelector('head link[rel="shortcut icon"]').getAttribute('href')
-      ).to.equal(`${prefix}/favicon.ico`);
+      ).toBe(`${prefix}/favicon.ico`);
       doc.defaultView.close();
     });
 
@@ -68,25 +65,25 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-shell-env-variables').textContent
-      ).to.equal('fromtheshell.');
+      ).toBe('fromtheshell.');
       doc.defaultView.close();
     });
 
     it('expand .env variables', async () => {
       const doc = await initDOM('expand-env-variables');
 
-      expect(doc.getElementById('feature-expand-env-1').textContent).to.equal(
+      expect(doc.getElementById('feature-expand-env-1').textContent).toBe(
         'basic'
       );
-      expect(doc.getElementById('feature-expand-env-2').textContent).to.equal(
+      expect(doc.getElementById('feature-expand-env-2').textContent).toBe(
         'basic'
       );
-      expect(doc.getElementById('feature-expand-env-3').textContent).to.equal(
+      expect(doc.getElementById('feature-expand-env-3').textContent).toBe(
         'basic'
       );
       expect(
         doc.getElementById('feature-expand-env-existing').textContent
-      ).to.equal('fromtheshell');
+      ).toBe('fromtheshell');
       doc.defaultView.close();
     });
   });

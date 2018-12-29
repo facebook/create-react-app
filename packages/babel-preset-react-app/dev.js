@@ -9,5 +9,5 @@
 const create = require('./create');
 
 module.exports = function(api, opts) {
-  return create(api, opts, 'development');
+  return create(api, Object.assign({ helpers: false }, opts), 'development');
 };

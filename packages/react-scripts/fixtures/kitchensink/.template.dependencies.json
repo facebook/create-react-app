@@ -1,12 +1,7 @@
 {
   "dependencies": {
-    "@babel/plugin-transform-modules-commonjs": "7.0.0-beta.46",
-    "@babel/polyfill": "7.0.0-beta.46",
-    "@babel/register": "7.0.0-beta.46",
-    "bootstrap": "4.1.0",
-    "chai": "3.5.0",
-    "jsdom": "9.8.3",
-    "mocha": "3.2.0",
+    "bootstrap": "4.1.1",
+    "jest": "23.6.0",
     "node-sass": "4.8.3",
     "normalize.css": "7.0.0",
     "prop-types": "15.5.6",

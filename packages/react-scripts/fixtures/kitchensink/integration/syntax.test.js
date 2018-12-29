@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { expect } from 'chai';
 import initDOM from './initDOM';
 
 describe('Integration', () => {
@@ -15,25 +14,25 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-array-destructuring').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
 
     it('array spread', async () => {
       const doc = await initDOM('array-spread');
 
-      expect(
-        doc.getElementById('feature-array-spread').childElementCount
-      ).to.equal(4);
+      expect(doc.getElementById('feature-array-spread').childElementCount).toBe(
+        4
+      );
       doc.defaultView.close();
     });
 
     it('async/await', async () => {
       const doc = await initDOM('async-await');
 
-      expect(
-        doc.getElementById('feature-async-await').childElementCount
-      ).to.equal(4);
+      expect(doc.getElementById('feature-async-await').childElementCount).toBe(
+        4
+      );
       doc.defaultView.close();
     });
 
@@ -42,7 +41,7 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-class-properties').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
 
@@ -51,7 +50,7 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-computed-properties').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
 
@@ -60,7 +59,7 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-custom-interpolation').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
 
@@ -69,7 +68,7 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-default-parameters').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
 
@@ -78,16 +77,16 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-destructuring-and-await').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
 
     it('generators', async () => {
       const doc = await initDOM('generators');
 
-      expect(
-        doc.getElementById('feature-generators').childElementCount
-      ).to.equal(4);
+      expect(doc.getElementById('feature-generators').childElementCount).toBe(
+        4
+      );
       doc.defaultView.close();
     });
 
@@ -96,7 +95,7 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-object-destructuring').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
 
@@ -105,16 +104,14 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-object-spread').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
 
     it('promises', async () => {
       const doc = await initDOM('promises');
 
-      expect(doc.getElementById('feature-promises').childElementCount).to.equal(
-        4
-      );
+      expect(doc.getElementById('feature-promises').childElementCount).toBe(4);
       doc.defaultView.close();
     });
 
@@ -123,7 +120,7 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-rest-and-default').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
 
@@ -132,7 +129,7 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-rest-parameters').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
 
@@ -141,7 +138,7 @@ describe('Integration', () => {
 
       expect(
         doc.getElementById('feature-template-interpolation').childElementCount
-      ).to.equal(4);
+      ).toBe(4);
       doc.defaultView.close();
     });
   });

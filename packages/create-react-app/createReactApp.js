@@ -49,7 +49,7 @@ const url = require('url');
 const hyperquest = require('hyperquest');
 const envinfo = require('envinfo');
 const os = require('os');
-const findMonorepo = require('react-dev-utils/workspaceUtils').findMonorepo;
+
 const packageJson = require('./package.json');
 
 // These files should be allowed to remain on a failed install,
@@ -76,6 +76,8 @@ const program = new commander.Command(packageJson.name)
     'use a non-standard version of react-scripts'
   )
   .option('--use-npm')
+  .option('--use-pnp')
+  .option('--typescript')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -133,13 +135,12 @@ if (program.info) {
         npmGlobalPackages: ['create-react-app'],
       },
       {
-        clipboard: true,
+        clipboard: false,
         duplicates: true,
         showNotFound: true,
       }
     )
-    .then(console.log)
-    .then(() => console.log(chalk.green('Copied To Clipboard!\n')));
+    .then(console.log);
 }
 
 if (typeof projectName === 'undefined') {
@@ -178,10 +179,20 @@ createApp(
   program.verbose,
   program.scriptsVersion,
   program.useNpm,
+  program.usePnp,
+  program.typescript,
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(name, verbose, version, useNpm, template) {
+function createApp(
+  name,
+  verbose,
+  version,
+  useNpm,
+  usePnp,
+  useTypescript,
+  template
+) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -204,7 +215,7 @@ function createApp(name, verbose, version, useNpm, template) {
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
 
-  const useYarn = useNpm ? false : shouldUseYarn(root);
+  const useYarn = useNpm ? false : shouldUseYarn();
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -240,11 +251,43 @@ function createApp(name, verbose, version, useNpm, template) {
       // Fall back to latest supported react-scripts for npm 3
       version = 'react-scripts@0.9.x';
     }
+  } else if (usePnp) {
+    const yarnInfo = checkYarnVersion();
+    if (!yarnInfo.hasMinYarnPnp) {
+      if (yarnInfo.yarnVersion) {
+        chalk.yellow(
+          `You are using Yarn ${
+            yarnInfo.yarnVersion
+          } together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
+            `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
+        );
+      }
+      // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
+      usePnp = false;
+    }
   }
-  run(root, appName, version, verbose, originalDirectory, template, useYarn);
+
+  if (useYarn) {
+    fs.copySync(
+      require.resolve('./yarn.lock.cached'),
+      path.join(root, 'yarn.lock')
+    );
+  }
+
+  run(
+    root,
+    appName,
+    version,
+    verbose,
+    originalDirectory,
+    template,
+    useYarn,
+    usePnp,
+    useTypescript
+  );
 }
 
-function isYarnAvailable() {
+function shouldUseYarn() {
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
     return true;
@@ -253,12 +296,7 @@ function isYarnAvailable() {
   }
 }
 
-function shouldUseYarn(appDir) {
-  const mono = findMonorepo(appDir);
-  return (mono.isYarnWs && mono.isAppIncluded) || isYarnAvailable();
-}
-
-function install(root, useYarn, dependencies, verbose, isOnline) {
+function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
   return new Promise((resolve, reject) => {
     let command;
     let args;
@@ -267,6 +305,9 @@ function install(root, useYarn, dependencies, verbose, isOnline) {
       args = ['add', '--exact'];
       if (!isOnline) {
         args.push('--offline');
+      }
+      if (usePnp) {
+        args.push('--enable-pnp');
       }
       [].push.apply(args, dependencies);
 
@@ -292,6 +333,12 @@ function install(root, useYarn, dependencies, verbose, isOnline) {
         '--loglevel',
         'error',
       ].concat(dependencies);
+
+      if (usePnp) {
+        console.log(chalk.yellow("NPM doesn't support PnP."));
+        console.log(chalk.yellow('Falling back to the regular installs.'));
+        console.log();
+      }
     }
 
     if (verbose) {
@@ -318,10 +365,22 @@ function run(
   verbose,
   originalDirectory,
   template,
-  useYarn
+  useYarn,
+  usePnp,
+  useTypescript
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
   const allDependencies = ['react', 'react-dom', packageToInstall];
+  if (useTypescript) {
+    // TODO: get user's node version instead of installing latest
+    allDependencies.push(
+      '@types/node',
+      '@types/react',
+      '@types/react-dom',
+      '@types/jest',
+      'typescript'
+    );
+  }
 
   console.log('Installing packages. This might take a couple of minutes.');
   getPackageName(packageToInstall)
@@ -341,23 +400,34 @@ function run(
       );
       console.log();
 
-      return install(root, useYarn, allDependencies, verbose, isOnline).then(
-        () => packageName
-      );
+      return install(
+        root,
+        useYarn,
+        usePnp,
+        allDependencies,
+        verbose,
+        isOnline
+      ).then(() => packageName);
     })
-    .then(packageName => {
+    .then(async packageName => {
       checkNodeVersion(packageName);
       setCaretRangeForRuntimeDeps(packageName);
 
-      const scriptsPath = path.resolve(
-        process.cwd(),
-        'node_modules',
-        packageName,
-        'scripts',
-        'init.js'
+      const pnpPath = path.resolve(process.cwd(), '.pnp.js');
+
+      const nodeArgs = fs.existsSync(pnpPath) ? ['--require', pnpPath] : [];
+
+      await executeNodeScript(
+        {
+          cwd: process.cwd(),
+          args: nodeArgs,
+        },
+        [root, appName, verbose, originalDirectory, template],
+        `
+        var init = require('${packageName}/scripts/init.js');
+        init.apply(null, JSON.parse(process.argv[1]));
+      `
       );
-      const init = require(scriptsPath);
-      init(root, appName, verbose, originalDirectory, template);
 
       if (version === 'react-scripts@0.9.x') {
         console.log(
@@ -380,7 +450,7 @@ function run(
       console.log();
 
       // On 'exit' we will delete these files from target directory.
-      const knownGeneratedFiles = ['package.json', 'node_modules'];
+      const knownGeneratedFiles = ['package.json', 'yarn.lock', 'node_modules'];
       const currentFiles = fs.readdirSync(path.join(root));
       currentFiles.forEach(file => {
         knownGeneratedFiles.forEach(fileToMatch => {
@@ -538,6 +608,27 @@ function checkNpmVersion() {
   };
 }
 
+function checkYarnVersion() {
+  let hasMinYarnPnp = false;
+  let yarnVersion = null;
+  try {
+    yarnVersion = execSync('yarnpkg --version')
+      .toString()
+      .trim();
+    let trimmedYarnVersion = /^(.+?)[-+].+$/.exec(yarnVersion);
+    if (trimmedYarnVersion) {
+      trimmedYarnVersion = trimmedYarnVersion.pop();
+    }
+    hasMinYarnPnp = semver.gte(trimmedYarnVersion || yarnVersion, '1.12.0');
+  } catch (err) {
+    // ignore
+  }
+  return {
+    hasMinYarnPnp: hasMinYarnPnp,
+    yarnVersion: yarnVersion,
+  };
+}
+
 function checkNodeVersion(packageName) {
   const packageJsonPath = path.resolve(
     process.cwd(),
@@ -545,6 +636,11 @@ function checkNodeVersion(packageName) {
     packageName,
     'package.json'
   );
+
+  if (!fs.existsSync(packageJsonPath)) {
+    return;
+  }
+
   const packageJson = require(packageJsonPath);
   if (!packageJson.engines || !packageJson.engines.node) {
     return;
@@ -651,7 +747,6 @@ function isSafeToCreateProjectIn(root, name) {
     '.idea',
     'README.md',
     'LICENSE',
-    'web.iml',
     '.hg',
     '.hgignore',
     '.hgcheck',
@@ -667,6 +762,8 @@ function isSafeToCreateProjectIn(root, name) {
   const conflicts = fs
     .readdirSync(root)
     .filter(file => !validFiles.includes(file))
+    // IntelliJ IDEA creates module files before CRA is launched
+    .filter(file => !/\.iml$/.test(file))
     // Don't treat log files from previous installation as conflicts
     .filter(
       file => !errorLogFilePatterns.some(pattern => file.indexOf(pattern) === 0)
@@ -796,6 +893,26 @@ function checkIfOnline(useYarn) {
       } else {
         resolve(err == null);
       }
+    });
+  });
+}
+
+function executeNodeScript({ cwd, args }, data, source) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(
+      process.execPath,
+      [...args, '-e', source, '--', JSON.stringify(data)],
+      { cwd, stdio: 'inherit' }
+    );
+
+    child.on('close', code => {
+      if (code !== 0) {
+        reject({
+          command: `node ${args.join(' ')}`,
+        });
+        return;
+      }
+      resolve();
     });
   });
 }
