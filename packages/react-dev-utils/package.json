@@ -13,7 +13,6 @@
   "files": [
     "browsersHelper.js",
     "checkRequiredFiles.js",
-    "clearConsole.js",
     "crossSpawn.js",
     "errorOverlayMiddleware.js",
     "eslintFormatter.js",
