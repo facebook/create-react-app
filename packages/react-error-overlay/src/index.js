@@ -6,7 +6,10 @@
  */
 
 /* @flow */
-import { listenToRuntimeErrors } from './listenToRuntimeErrors';
+import {
+  listenToRuntimeErrors,
+  crashWithFrames,
+} from './listenToRuntimeErrors';
 import { iframeStyle } from './styles';
 import { applyStyles } from './utils/dom/css';
 
@@ -47,6 +50,14 @@ export function reportBuildError(error: string) {
   update();
 }
 
+export function reportRuntimeError(
+  error: Error,
+  options?: RuntimeReportingOption = {}
+) {
+  currentRuntimeErrorOptions = options;
+  crashWithFrames(handleRuntimeError(options))(error);
+}
+
 export function dismissBuildError() {
   currentBuildError = null;
   update();
@@ -64,28 +75,35 @@ export function startReportingRuntimeErrors(options: RuntimeReportingOptions) {
     );
   }
   currentRuntimeErrorOptions = options;
-  stopListeningToRuntimeErrors = listenToRuntimeErrors(errorRecord => {
-    try {
-      if (typeof options.onError === 'function') {
-        options.onError.call(null);
-      }
-    } finally {
-      handleRuntimeError(errorRecord);
-    }
-  }, options.filename);
+  stopListeningToRuntimeErrors = listenToRuntimeErrors(
+    handleRuntimeError(options),
+    options.filename
+  );
 }
 
-function handleRuntimeError(errorRecord) {
-  if (
-    currentRuntimeErrorRecords.some(({ error }) => error === errorRecord.error)
-  ) {
-    // Deduplicate identical errors.
-    // This fixes https://github.com/facebook/create-react-app/issues/3011.
-    return;
+const handleRuntimeError = (options: RuntimeReportingOptions) => (
+  errorRecord: ErrorRecord
+) => {
+  try {
+    if (typeof options.onError === 'function') {
+      options.onError.call(null);
+    }
+  } finally {
+    if (
+      currentRuntimeErrorRecords.some(
+        ({ error }) => error === errorRecord.error
+      )
+    ) {
+      // Deduplicate identical errors.
+      // This fixes https://github.com/facebook/create-react-app/issues/3011.
+      return;
+    }
+    currentRuntimeErrorRecords = currentRuntimeErrorRecords.concat([
+      errorRecord,
+    ]);
+    update();
   }
-  currentRuntimeErrorRecords = currentRuntimeErrorRecords.concat([errorRecord]);
-  update();
-}
+};
 
 export function dismissRuntimeErrors() {
   currentRuntimeErrorRecords = [];

@@ -79,7 +79,7 @@ yarn
 
 # Start local registry
 tmp_registry_log=`mktemp`
-nohup npx verdaccio@3.2.0 -c tasks/verdaccio.yaml &>$tmp_registry_log &
+(cd && nohup npx verdaccio@3.8.2 -c "$root_path"/tasks/verdaccio.yaml &>$tmp_registry_log &)
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
@@ -145,7 +145,7 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  yarn test --no-cache --testPathPattern=src
+  yarn test --no-cache --runInBand --testPathPattern=src
 
 # Test "development" environment
 tmp_server_log=`mktemp`
@@ -159,7 +159,7 @@ E2E_URL="http://localhost:3002" \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/mocha --timeout 30000 --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
+  node_modules/.bin/jest --no-cache --runInBand --config='jest.integration.config.js'
 
 # Test "production" environment
 E2E_FILE=./build/index.html \
@@ -168,7 +168,7 @@ E2E_FILE=./build/index.html \
   BABEL_ENV=test \
   NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/mocha --timeout 30000 --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
+  node_modules/.bin/jest --no-cache --runInBand --config='jest.integration.config.js'
 
 # Cleanup
 cleanup

@@ -8,68 +8,73 @@
 'use strict';
 
 const fs = require('fs');
-const path = require('path');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
 
-module.exports = (resolve, rootDir, srcRoots) => {
+module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
+  const setupTestsMatches = paths.testsSetup.match(/src[/\\]setupTests\.(.+)/);
+  const setupTestsFileExtension =
+    (setupTestsMatches && setupTestsMatches[1]) || 'js';
   const setupTestsFile = fs.existsSync(paths.testsSetup)
-    ? '<rootDir>/src/setupTests.js'
+    ? `<rootDir>/src/setupTests.${setupTestsFileExtension}`
     : undefined;
 
-  const toRelRootDir = f => '<rootDir>/' + path.relative(rootDir || '', f);
-
-  // TODO: I don't know if it's safe or not to just use / as path separator
-  // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
-    collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
-    setupFiles: [resolve('config/polyfills.js')],
+    collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
+
+    // TODO: this breaks Yarn PnP on eject.
+    // But we can't simply emit this because it'll be an absolute path.
+    // The proper fix is to write jest.config.js on eject instead of a package.json key.
+    // Then these can always stay as require.resolve()s.
+    resolver: isEjecting
+      ? 'jest-pnp-resolver'
+      : require.resolve('jest-pnp-resolver'),
+    setupFiles: [
+      isEjecting
+        ? 'react-app-polyfill/jsdom'
+        : require.resolve('react-app-polyfill/jsdom'),
+    ],
+
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
-      '**/__tests__/**/*.{js,jsx,mjs}',
-      '**/?(*.)(spec|test).{js,jsx,mjs}',
+      '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
+      '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}',
     ],
-    // where to search for files/tests
-    roots: srcRoots.map(toRelRootDir),
-    testEnvironment: 'node',
+    testEnvironment: 'jsdom',
     testURL: 'http://localhost',
     transform: {
-      '^.+\\.(js|jsx|mjs)$': resolve('config/jest/babelTransform.js'),
+      '^.+\\.(js|jsx|ts|tsx)$': isEjecting
+        ? '<rootDir>/node_modules/babel-jest'
+        : resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^.+\\.(graphql)$': resolve('config/jest/graphqlTransform.js'),
-      '^(?!.*\\.(js|jsx|mjs|css|json|graphql)$)': resolve(
+      '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': resolve(
         'config/jest/fileTransform.js'
       ),
     },
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$',
+      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },
-    moduleFileExtensions: [
-      'web.js',
-      'js',
-      'json',
-      'web.jsx',
-      'jsx',
-      'node',
-      'mjs',
-    ],
+    moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
+      ext => !ext.includes('mjs')
+    ),
   };
   if (rootDir) {
     config.rootDir = rootDir;
   }
-
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
     'collectCoverageFrom',
     'coverageReporters',
     'coverageThreshold',
+    'globalSetup',
+    'globalTeardown',
     'resetMocks',
     'resetModules',
     'snapshotSerializers',

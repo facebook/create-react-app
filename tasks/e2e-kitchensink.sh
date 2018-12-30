@@ -79,7 +79,7 @@ yarn
 
 # Start local registry
 tmp_registry_log=`mktemp`
-nohup npx verdaccio@3.2.0 -c tasks/verdaccio.yaml &>$tmp_registry_log &
+(cd && nohup npx verdaccio@3.8.2 -c "$root_path"/tasks/verdaccio.yaml &>$tmp_registry_log &)
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
@@ -131,11 +131,12 @@ exists build/*.html
 exists build/static/js/main.*.js
 
 # Unit tests
+# https://facebook.github.io/jest/docs/en/troubleshooting.html#tests-are-extremely-slow-on-docker-and-or-continuous-integration-ci-server
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
   NODE_PATH=src \
   NODE_ENV=test \
-  yarn test --no-cache --testPathPattern=src
+  yarn test --no-cache --runInBand --testPathPattern=src
 
 # Prepare "development" environment
 tmp_server_log=`mktemp`
@@ -151,7 +152,7 @@ E2E_URL="http://localhost:3001" \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/mocha --timeout 30000 --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
+  node_modules/.bin/jest --no-cache --runInBand --config='jest.integration.config.js'
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
@@ -159,7 +160,7 @@ E2E_FILE=./build/index.html \
   NODE_ENV=production \
   BABEL_ENV=test \
   PUBLIC_URL=http://www.example.org/spa/ \
-  node_modules/.bin/mocha --timeout 30000 --compilers js:@babel/register --require @babel/polyfill integration/*.test.js
+  node_modules/.bin/jest --no-cache --runInBand --config='jest.integration.config.js'
 
 # Cleanup
 cleanup

@@ -1,0 +1,25 @@
+{
+  "name": "react-app-polyfill",
+  "version": "0.2.0",
+  "description": "Polyfills for various browsers including commonly used language features",
+  "repository": "facebook/create-react-app",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/facebook/create-react-app/issues"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "files": [
+    "ie9.js",
+    "ie11.js",
+    "jsdom.js"
+  ],
+  "dependencies": {
+    "core-js": "2.5.7",
+    "object-assign": "4.1.1",
+    "promise": "8.0.2",
+    "raf": "3.4.0",
+    "whatwg-fetch": "3.0.0"
+  }
+}

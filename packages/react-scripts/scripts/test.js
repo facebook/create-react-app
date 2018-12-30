@@ -28,10 +28,31 @@ const verifyPackageTree = require('./utils/verifyPackageTree');
 if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
   verifyPackageTree();
 }
+const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
+verifyTypeScriptSetup();
 // @remove-on-eject-end
 
 const jest = require('jest');
+const execSync = require('child_process').execSync;
 let argv = process.argv.slice(2);
+
+function isInGitRepository() {
+  try {
+    execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function isInMercurialRepository() {
+  try {
+    execSync('hg --cwd . root', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 
 // Watch unless on CI, in coverage mode, or explicitly running all tests
 if (
@@ -39,7 +60,9 @@ if (
   argv.indexOf('--coverage') === -1 &&
   argv.indexOf('--watchAll') === -1
 ) {
-  argv.push('--watch');
+  // https://github.com/facebook/create-react-app/issues/5210
+  const hasSourceControl = isInGitRepository() || isInMercurialRepository();
+  argv.push(hasSourceControl ? '--watch' : '--watchAll');
 }
 
 // @remove-on-eject-begin
@@ -53,14 +76,14 @@ argv.push(
     createJestConfig(
       relativePath => path.resolve(__dirname, '..', relativePath),
       path.resolve(paths.appSrc, '..'),
-      paths.srcPaths
+      false
     )
   )
 );
 
 // This is a very dirty workaround for https://github.com/facebook/jest/issues/5913.
 // We're trying to resolve the environment ourselves because Jest does it incorrectly.
-// TODO: remove this (and the `resolve` dependency) as soon as it's fixed in Jest.
+// TODO: remove this as soon as it's fixed in Jest.
 const resolve = require('resolve');
 function resolveJestDefaultEnvironment(name) {
   const jestDir = path.dirname(
@@ -83,7 +106,7 @@ function resolveJestDefaultEnvironment(name) {
   });
 }
 let cleanArgv = [];
-let env = 'node';
+let env = 'jsdom';
 let next;
 do {
   next = argv.shift();
