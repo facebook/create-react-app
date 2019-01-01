@@ -52,6 +52,7 @@ module.exports = {
     'default-case': ['warn', { commentPattern: '^no default$' }],
     'dot-location': ['warn', 'property'],
     eqeqeq: ['warn', 'smart'],
+    'max-len': ['warn', 80],
     'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
