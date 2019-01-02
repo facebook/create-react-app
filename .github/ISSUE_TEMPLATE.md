@@ -6,7 +6,6 @@
 
 (write your answer here)
 
-
 <!--
   If you answered "Yes":
 
@@ -63,7 +62,6 @@
 
 (Write your answer here.)
 
-
 ### Which terms did you search for in User Guide?
 
 <!--
@@ -83,7 +81,6 @@
 
 (Write your answer here if relevant.)
 
-
 ### Environment
 
 <!--
@@ -100,7 +97,6 @@
 
 (paste the output of the command here)
 
-
 ### Steps to Reproduce
 
 <!--
@@ -110,10 +106,7 @@
 
 (Write your steps here:)
 
-1. 
-2. 
-3. 
-
+1. 2. 3.
 
 ### Expected Behavior
 
@@ -125,7 +118,6 @@
 
 (Write what you thought would happen.)
 
-
 ### Actual Behavior
 
 <!--
@@ -135,7 +127,6 @@
 -->
 
 (Write what happened. Please add screenshots!)
-
 
 ### Reproducible Demo
 
@@ -156,7 +147,6 @@
 -->
 
 (Paste the link to an example project and exact instructions to reproduce the issue.)
-
 
 <!--
   What happens if you skip this step?
