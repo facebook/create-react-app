@@ -18,3 +18,9 @@ deploy:
   on:
     repo: fs-webdev/create-react-app
     tags: true
+# This tells travis to not build when the branch is master. This is important to have on our master
+# branch as well because anytime we merge upstream changes from facebook, travis builds their whole matrix of 24 different builds.
+# We do NOT need or want that to occur. Please leave this branches.except here, even on the master branch
+branches:
+  except:
+    - master
