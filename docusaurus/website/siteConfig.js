@@ -26,7 +26,7 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: 'getting-started', label: 'Getting Started' },
+    { doc: 'getting-started', label: 'Docs' },
     { href: 'https://reactjs.org/community/support.html', label: 'Help' },
     {
       href: 'https://www.github.com/facebook/create-react-app',
