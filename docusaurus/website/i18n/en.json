@@ -104,6 +104,9 @@
         "title": "Pre-Rendering into Static HTML Files",
         "sidebar_label": "Pre-Rendering Static HTML"
       },
+      "production-build": {
+        "title": "Creating a Production Build"
+      },
       "proxying-api-requests-in-development": {
         "title": "Proxying API Requests in Development",
         "sidebar_label": "Proxying in Development"
@@ -142,7 +145,7 @@
       }
     },
     "links": {
-      "Getting Started": "Getting Started",
+      "Docs": "Docs",
       "Help": "Help",
       "GitHub": "GitHub"
     },
