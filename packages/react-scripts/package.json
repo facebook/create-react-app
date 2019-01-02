@@ -3,13 +3,13 @@
   "version": "2.1.1",
   "frontierVersion": "1.0.1",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "joeycozza/create-react-app",
+  "repository": "fs-webdev/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/joeycozza/create-react-app/issues"
+    "url": "https://github.com/fs-webdev/create-react-app/issues"
   },
   "files": [
     "bin",
