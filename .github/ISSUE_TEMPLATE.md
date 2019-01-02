@@ -8,10 +8,10 @@
 
 <!--
   If you answered "Yes":
-  
+
     Please note that your issue will be fixed much faster if you spend about
     half an hour preparing it, including the exact reproduction steps and a demo.
-    
+
     If you're in a hurry or don't feel confident, it's fine to report bugs with
     less details, but this makes it less likely they'll get fixed soon.
 
@@ -24,34 +24,43 @@
     You can find webpack docs at https://webpack.js.org/.
 -->
 
-
-### Can you also reproduce the problem with npm 4.x?
+### Did you try recovering your dependencies?
 
 <!--
-  Many errors, especially related to "missing modules", are due to npm bugs.
-  Which version of npm are you running? You can find out by checking:
+  Your module tree might be corrupted, and that might be causing the issues.
+  Let's try to recover it. First, delete these files and folders in your project:
 
-    npm -v
+    * node_modules
+    * package-lock.json
+    * yarn.lock
 
-  If it is 5.x, please be aware that it has more than 50 known bugs, and
-  is not guaranteed to work with Create React App.
+  Then you need to decide which package manager you prefer to use.
+  We support both npm (https://npmjs.com) and yarn (http://yarnpkg.com/).
+  However, **they can't be used together in one project** so you need to pick one.
 
-  If it's not starting with 4, try to install npm 4.x:
+  If you decided to use npm, run this in your project directory:
 
-    npm install -g npm@4
-    cd your_project_directory
-    rm -rf node_modules
-    npm cache clear
+    npm install -g npm@latest
     npm install
 
-  Then try to reproduce the issue again.
-  Can you still reproduce it?
+  This should fix your project.
 
-  Note: Please try this even if you are using Yarn so that we know whether it's a Yarn-only bug.
+  If you decided to use yarn, update it first (https://yarnpkg.com/en/docs/install).
+  Then run in your project directory:
+
+    yarn
+
+  This should fix your project.
+
+  Importantly, **if you decided to use yarn, you should never run `npm install` in the project**.
+  For example, yarn users should run `yarn add <library>` instead of `npm install <library>`.
+  Otherwise your project will break again.
+
+  Have you done all these steps and still see the issue?
+  Please paste the output of `npm --version` and/or `yarn --version` to confirm.
 -->
 
 (Write your answer here.)
-
 
 ### Which terms did you search for in User Guide?
 
@@ -59,36 +68,34 @@
   There are a few common documented problems, such as watcher not detecting changes, or build failing.
   They are described in the Troubleshooting section of the User Guide:
 
-  https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#troubleshooting
+  https://facebook.github.io/create-react-app/docs/troubleshooting
 
   Please scan these few sections for common problems.
   Additionally, you can search the User Guide itself for something you're having issues with:
-  
-  https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md
-  
+
+  https://facebook.github.io/create-react-app/
+
   If you didn't find the solution, please share which words you searched for.
   This helps us improve documentation for future readers who might encounter the same problem.
 -->
 
 (Write your answer here if relevant.)
 
-
 ### Environment
 
 <!--
-  Please fill in all the relevant fields by running these commands in terminal.
+  To help identify if a problem is specific to a platform, browser, or module version, information about your environment is required.
+  This enables the maintainers quickly reproduce the issue and give feedback.
+
+  Run the following command in your React app's folder in terminal.
+  Note: The result is copied to your clipboard directly.
+
+  `npx create-react-app --info`
+
+  Paste the output of the command in the section below.
 -->
 
-1. `node -v`: 
-2. `npm -v`:
-3. `yarn --version` (if you use Yarn):
-4. `npm ls react-scripts` (if you haven’t ejected): 
-
-Then, specify:
-
-1. Operating system:
-2. Browser and version (if relevant):
-
+(paste the output of the command here)
 
 ### Steps to Reproduce
 
@@ -99,10 +106,9 @@ Then, specify:
 
 (Write your steps here:)
 
-1. 
-2. 
-3. 
-
+1.
+2.
+3.
 
 ### Expected Behavior
 
@@ -114,7 +120,6 @@ Then, specify:
 
 (Write what you thought would happen.)
 
-
 ### Actual Behavior
 
 <!--
@@ -124,7 +129,6 @@ Then, specify:
 -->
 
 (Write what happened. Please add screenshots!)
-
 
 ### Reproducible Demo
 
@@ -148,11 +152,11 @@ Then, specify:
 
 <!--
   What happens if you skip this step?
-  
+
   We will try to help you, but in many cases it is impossible because crucial
   information is missing. In that case we'll tag an issue as having a low priority,
   and eventually close it if there is no clear direction.
-  
+
   We still appreciate the report though, as eventually somebody else might
   create a reproducible example for it.
 

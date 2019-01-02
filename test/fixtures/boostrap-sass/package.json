@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "bootstrap": "4.x",
+    "node-sass": "4.x",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
