@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
-import { string, node, object, bool, arrayOf } from 'prop-types';
+import {
+  string,
+  node,
+  object,
+  bool,
+  func,
+  arrayOf,
+  oneOfType,
+} from 'prop-types';
 import cx from 'classnames';
 import Select from 'react-select';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 import chroma from 'chroma-js';
 
 import PreviewTitleBar from './PreviewTitleBar';
@@ -29,20 +37,35 @@ class Preview extends Component {
   static displayName = 'Preview';
 
   static propTypes = {
+    /** (deprecated) Title text for `Preview.` Instead of `title` prop, prefer regular html heading above `Preview`. */
     title: string,
-    code: node,
+    /** Pass custom code (JSX) which will be shown instead of visually previewed code. */
+    code: oneOfType([node, func]),
+    /** Pass [react-element-to-jsx-string](https://github.com/algolia/react-element-to-jsx-string) options to code preview. */
     codeJSXOptions: object,
-    bgTheme: string,
+    /** Default background color as color name. Must be one from passed `bgThemeColors`. To disable background color chooser, pass `false`. */
+    bgTheme: oneOfType([string, bool]),
+    /** Available background colors. Colors are inherithed from `theme.previewBackgrounds`. */
+    bgThemeColors: object,
+    /** Exclude colors from available background colors. */
     bgThemeExcludedColors: arrayOf(string),
+    /** Disables code preview. */
     hasCodePreview: bool,
+    /** Pass HTML as string to preview HTML code. */
     html: string,
+    /** (unstable) Display preview in inframe. */
     isIframe: bool,
+    /** (unstable) Iframe custom <head /> */
     iframeHead: node,
+    /** (unstable) Iframe custom JavaScripts. */
     iframeScripts: string,
   };
 
   static defaultProps = {
     bgTheme: 'white',
+    bgThemeColors: {
+      white: '#fff',
+    },
     bgThemeExcludedColors: [],
     hasCodePreview: true,
   };
@@ -55,7 +78,7 @@ class Preview extends Component {
       this.setState({
         previewBackground: {
           label: props.bgTheme,
-          value: props.theme.previewBackgrounds[props.bgTheme],
+          value: props.bgThemeColors[props.bgTheme],
         },
       });
     }
@@ -70,10 +93,10 @@ class Preview extends Component {
 
   state = {
     isCodeShown: false,
-    previewBackground: this.props.theme.previewBackgrounds
+    previewBackground: this.props.bgThemeColors
       ? {
           label: this.props.bgTheme,
-          value: this.props.theme.previewBackgrounds[this.props.bgTheme],
+          value: this.props.bgThemeColors[this.props.bgTheme],
         }
       : {},
   };
@@ -98,13 +121,13 @@ class Preview extends Component {
       code,
       codeJSXOptions,
       bgTheme,
+      bgThemeColors,
       bgThemeExcludedColors,
       isIframe,
       iframeHead,
       iframeScripts,
       hasCodePreview,
       html,
-      theme,
       ...other
     } = this.props;
 
@@ -131,9 +154,9 @@ class Preview extends Component {
 
     const actions = [];
 
-    if (bgTheme && theme.previewBackgrounds) {
+    if (bgTheme && bgThemeColors) {
       const bgColorsOptions = getBackgroundsAsArray(
-        theme.previewBackgrounds,
+        bgThemeColors,
         bgThemeExcludedColors
       );
 
@@ -158,7 +181,7 @@ class Preview extends Component {
     if (hasCodePreview) {
       actions.push(
         <Button onClick={this.handleToggleCode}>
-          <Icon name="code" fill={theme.colors.accent} />
+          <Icon name="code" fill={bgThemeColors.accent || '#000'} />
           {this.state.isCodeShown ? 'HIDE CODE' : 'SHOW CODE'}
         </Button>
       );
@@ -218,7 +241,7 @@ class Preview extends Component {
   }
 }
 
-export default withTheme(Preview);
+export default Preview;
 
 const StyledPreviewLive = styled.div`
   transition: all 200ms ease-in-out;
