@@ -10,6 +10,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
+const jsConfig = require('../../config/config');
 
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
@@ -57,6 +58,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
+    modulePaths: jsConfig.baseUrl ? ['<rootDir>/' + jsConfig.baseUrl] : [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
