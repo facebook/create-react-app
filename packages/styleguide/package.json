@@ -28,7 +28,7 @@
     "prism-theme-one-dark": "~1.0.0",
     "prismjs": "~1.15.0",
     "react": "~16.4.1",
-    "react-docgen": "~3.0.0-beta12",
+    "react-docgen": "~3.0.0-rc.2",
     "react-docgen-annotation-resolver": "~1.1.0",
     "react-dom": "~16.4.1",
     "react-element-to-jsx-string": "~14.0.1",
@@ -37,7 +37,7 @@
     "react-responsive": "~4.1.0",
     "react-router-dom": "~4.3.1",
     "react-select": "~2.0.0",
-    "styled-components": "~3.3.3",
+    "styled-components": "~4.1.2",
     "svg4everybody": "~2.1.9",
     "unescape-html": "~1.1.0",
     "weakmap-polyfill": "~2.0.0"

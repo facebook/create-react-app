@@ -20,13 +20,13 @@ export default class PreviewCode extends Component {
   static propTypes = {
     children: string,
     language: string,
-    inline: bool
+    inline: bool,
   };
 
   static defaultProps = {
     children: '',
     inline: true,
-    language: 'html'
+    language: 'html',
   };
 
   state = {
@@ -35,13 +35,13 @@ export default class PreviewCode extends Component {
       typeof Prism.languages[this.props.language] !== 'undefined'
         ? Prism.languages[this.props.language]
         : Prism.languages.html
-    )
+    ),
   };
 
   componentWillReceiveProps({ children, language }) {
     if (children !== this.props.children || language !== this.props.language) {
       this.setState({
-        __html: Prism.highlight(children, Prism.languages[language])
+        __html: Prism.highlight(children, Prism.languages[language]),
       });
     }
   }
@@ -83,10 +83,11 @@ export default class PreviewCode extends Component {
   }
 }
 
-const Highlight = styled.code.attrs({
-  className: props =>
-    `code ${props.inline && 'code--inline'} language-${props.language}`
-})`
+const Highlight = styled.code.attrs(props => ({
+  className: `code ${props.inline && 'code--inline'} language-${
+    props.language
+  }`,
+}))`
   &[class*='language-'] {
     font-feature-settings: 'calt' 1;
     text-rendering: optimizeLegibility;
