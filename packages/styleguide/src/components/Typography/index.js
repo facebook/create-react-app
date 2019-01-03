@@ -17,25 +17,25 @@ export const H1 = styled.h1`
   margin-bottom: ${props => props.theme.spaces.large};
 `;
 
-export const H2 = styled.h1`
+export const H2 = styled.h2`
   ${baseCSS};
   font-size: ${rem(36)};
   line-height: 1.3333;
 `;
 
-export const H3 = styled.h1`
+export const H3 = styled.h3`
   ${baseCSS};
   font-size: ${rem(24)};
   line-height: 1.3333;
 `;
 
-export const H4 = styled.h1`
+export const H4 = styled.h4`
   ${baseCSS};
   font-size: ${props => rem(props.theme.fontSizes.base)};
   line-height: ${props => props.theme.lineHeights.base};
 `;
 
-export const H5 = styled.h1`
+export const H5 = styled.h5`
   ${baseCSS};
   color: ${props => props.theme.colors.greyDark};
   font-size: ${props => rem(props.theme.fontSizes.base)};
