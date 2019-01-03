@@ -2,7 +2,7 @@ import React from 'react';
 import {} from 'prop-types';
 import { BrowserRouter } from 'react-router-dom';
 
-import styled, { ThemeProvider, injectGlobal } from 'styled-components';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 import * as theme from './style/theme';
 import { rem } from './style/utils';
@@ -23,7 +23,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNavActive: false
+      isNavActive: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleNavLinkClick = this.handleNavLinkClick.bind(this);
@@ -48,7 +48,7 @@ class App extends React.Component {
       logoSmall,
       name,
       theme: projectTheme = {},
-      styleguideBasePath = '/styleguide/'
+      styleguideBasePath = '/styleguide/',
     } = config;
 
     const activeClass = this.state.isNavActive ? 'is-active' : '';
@@ -64,7 +64,7 @@ class App extends React.Component {
       if (typeof theme[prop] === 'object') {
         acc[prop] = {
           ...(theme[prop] || {}),
-          ...projectTheme[prop]
+          ...projectTheme[prop],
         };
       } else {
         acc[prop] = projectTheme[prop];
@@ -111,7 +111,7 @@ class App extends React.Component {
 }
 
 /* eslint-disable */
-injectGlobal`
+createGlobalStyle`
   body, html {
   }
 

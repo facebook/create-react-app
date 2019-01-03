@@ -1,7 +1,7 @@
-import { injectGlobal } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 /* eslint-disable */
-injectGlobal`
+createGlobalStyle`
   .preview-grid {
     .grid {
       position: relative;
