@@ -122,7 +122,6 @@ npm link "$temp_module_path/node_modules/test-integrity"
 
 # Test the build
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
-  NODE_PATH=src \
   PUBLIC_URL=http://www.example.org/spa/ \
   yarn build
 
@@ -134,7 +133,6 @@ exists build/static/js/main.*.js
 # https://facebook.github.io/jest/docs/en/troubleshooting.html#tests-are-extremely-slow-on-docker-and-or-continuous-integration-ci-server
 REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
   CI=true \
-  NODE_PATH=src \
   NODE_ENV=test \
   yarn test --no-cache --runInBand --testPathPattern=src
 
@@ -142,21 +140,19 @@ REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
 tmp_server_log=`mktemp`
 PORT=3001 \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
-  NODE_PATH=src \
   nohup yarn start &>$tmp_server_log &
 grep -q 'You can now view' <(tail -f $tmp_server_log)
 
 # Test "development" environment
 E2E_URL="http://localhost:3001" \
   REACT_APP_SHELL_ENV_MESSAGE=fromtheshell \
-  CI=true NODE_PATH=src \
+  CI=true \
   NODE_ENV=development \
   BABEL_ENV=test \
   node_modules/.bin/jest --no-cache --runInBand --config='jest.integration.config.js'
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \
-  NODE_PATH=src \
   NODE_ENV=production \
   BABEL_ENV=test \
   PUBLIC_URL=http://www.example.org/spa/ \
