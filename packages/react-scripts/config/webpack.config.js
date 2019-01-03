@@ -629,6 +629,8 @@ module.exports = function(webpackEnv) {
             isolatedModules: true,
             noEmit: true,
             jsx: 'preserve',
+            // Typescript expects the baseUrl to be relative from the root directory (e.g. src)
+            baseUrl: process.env.NODE_PATH.replace(paths.appPath + '/', ''),
           },
           reportFiles: [
             '**',
