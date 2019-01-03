@@ -1,5 +1,6 @@
 import { md } from './../../utils/';
-import { Preview } from './../';
+import { Preview, ComponentDocs, CodeJSX } from './../';
+import PreviewForDocs from './Preview';
 
 # Preview
 
@@ -7,48 +8,102 @@ import { Preview } from './../';
 
 ### Default
 
-<Preview>
-    {({ bgTheme }) => `Default preview with ${bgTheme} background color`}
-</Preview>
+<Preview code={<Preview>Default preview</Preview>}>Default preview</Preview>
 
 ### Different default background color
 
-<Preview bgTheme="dark">
-    {({ bgTheme }) => `Default preview with ${bgTheme} background color`}
+<Preview
+  bgTheme="dark"
+  code={<Preview bgTheme="dark">Preview with `dark` background color</Preview>}
+>
+  Preview with <CodeJSX>dark</CodeJSX> background color
 </Preview>
 
 ### Disable colors in background color chooser
 
-<Preview bgThemeExcludedColors={['accent']}>
-    Accent background color is not available
+<Preview
+  bgThemeExcludedColors={['accent']}
+  code={
+    <Preview bgThemeExcludedColors={['accent']}>
+      `accent` background color is not available
+    </Preview>
+  }
+>
+  <CodeJSX>accent</CodeJSX> background color is not available
 </Preview>
 
 ### Disable background color chooser
 
-<Preview bgTheme="">Disabled background color chooser</Preview>
+<Preview
+  bgTheme={false}
+  code={`<Preview bgTheme={false}>
+  Disabled background color chooser.
+</Preview>`}
+>
+  Disabled background color chooser
+</Preview>
+
+### Adapt to current background color
+
+<Preview
+  code={`<Preview>
+  {({ bgTheme, bgThemeValue }) => (/*...*/)}
+</Preview>`}
+>
+  {({ bgTheme, bgThemeValue }) => (
+    <React.Fragment>
+      Current background is <CodeJSX>{`${bgTheme} (${bgThemeValue})`}</CodeJSX>
+    </React.Fragment>
+  )}
+</Preview>
 
 ### Disable code preview
 
 <Preview hasCodePreview={false}>
-    <div>this is component preview</div>
+  Pass <CodeJSX>hasCodePreview=&#123;false&#125;</CodeJSX> prop to{' '}
+  <CodeJSX>Preview</CodeJSX>
 </Preview>
 
 ### Custom code in show code
 
-<Preview code={<div>this is custom code preview of component</div>}>
-    <div>this is component preview</div>
+<Preview
+  code={
+    <Preview code={<div>This is custom code preview of component</div>}>
+      Different code output will be shown in code preview
+    </Preview>
+  }
+>
+  Different code output will be shown in code preview
 </Preview>
 
 ### Code JSX options
 
-Library [react-element-to-jsx-string](https://github.com/algolia/react-element-to-jsx-string) is used to generate JSX in code example. To overide options of this library, use `codeJSXOptions`. This can be usefull to filter some props code preview. 
+Library
+[react-element-to-jsx-string](https://github.com/algolia/react-element-to-jsx-string)
+is used to generate JSX in code example. To overide options of this library, use
+`codeJSXOptions`. This can be usefull to filter some props code preview.
 
-<Preview codeJSXOptions={{ filterProps: ['key'] }}>
-    <div key={"key won't show at code example"}>
-      This component has key, but code example hides it
-    </div>
+<Preview
+  codeJSXOptions={{ filterProps: ['key'] }}
+  code={
+    <Preview codeJSXOptions={{ filterProps: ['key'] }}>
+      <div key={"key won't show at code example"}>
+        This component has key, but code example hides it
+      </div>
+    </Preview>
+  }
+>
+  <div key={"key won't show at code example"}>
+    This component has key, but code example hides it
+  </div>
 </Preview>
 
 ### Preview HTML string
 
-<Preview html="<div class='html'>preview of html string</div>" />
+<Preview code={<Preview html="<div class='html'>This is HTML string</div>" />}>
+  This is HTML string
+</Preview>
+
+## Props
+
+<ComponentDocs title="<Preview />" component={PreviewForDocs} excludes={['isIframe', 'iframeHead', 'iframeScripts']}/>
