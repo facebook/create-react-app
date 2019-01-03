@@ -30,6 +30,7 @@ const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
+const config = require('./config');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -258,10 +259,7 @@ module.exports = function(webpackEnv) {
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebook/create-react-app/issues/253
-      modules: ['node_modules'].concat(
-        // It is guaranteed to exist because we tweak it in `env.js`
-        process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
-      ),
+      modules: ['node_modules'].concat(config.baseUrl ? [config.baseUrl] : []),
       // These are the reasonable defaults supported by the Node ecosystem.
       // We also include JSX as a common component filename extension to support
       // some tools, although we do not recommend using it, see:
@@ -629,8 +627,7 @@ module.exports = function(webpackEnv) {
             isolatedModules: true,
             noEmit: true,
             jsx: 'preserve',
-            // Typescript expects the baseUrl to be relative from the root directory (e.g. src)
-            baseUrl: process.env.NODE_PATH.replace(paths.appPath + '/', ''),
+            baseUrl: config.baseUrl,
           },
           reportFiles: [
             '**',
