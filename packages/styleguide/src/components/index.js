@@ -3,7 +3,7 @@ export { Bar, BarItem } from './Bar';
 export { default as Button } from './Button';
 export { default as Card } from './Card';
 export { default as Code, CodeBlock, CodeJSX, CodeBlockJSX } from './Code';
-export { default as ColorPalette, ColorPaletteItem } from './ColorPalette';
+export { default as ColorPalette } from './ColorPalette';
 export { default as ComponentDocs } from './ComponentDocs';
 export { default as ComponentInfo } from './ComponentInfo';
 export { default as DocsTable } from './DocsTable';
