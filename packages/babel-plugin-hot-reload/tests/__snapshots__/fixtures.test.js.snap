@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hot-reload assignment: assignment 1`] = `
+"
+let LazyCC;
+LazyCC = 5;
+
+let DoubleLazyCC = LazyCC;
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+let LazyCC;
+LazyCC = window.__assign(module, \\"LazyCC\\", 5);
+
+let DoubleLazyCC = window.__assign(module, \\"DoubleLazyCC\\", LazyCC);
+"
+`;
+
+exports[`hot-reload default export class: default export class 1`] = `
+"
+import React from 'react';
+import Hello from './components/Hello';
+
+export default class App extends React.Component {
+  render() {
+    return <Hello />;
+  }
+}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import React from 'react';
+import Hello from './components/Hello';
+module.hot.accept(\\"./components/Hello\\", window.__invalidate);
+export default class App extends React.Component {
+  render() {
+    return <Hello />;
+  }
+
+}
+"
+`;
+
+exports[`hot-reload default export: default export 1`] = `
+"
+import React from 'react';
+import Hello from './components/Hello';
+import Layout from './components/Layout';
+import './App.css';
+
+export default function App({ children }) {
+  return (
+    <Layout>
+      <Hello />
+    </Layout>
+  );
+}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import React from 'react';
+import Hello from './components/Hello';
+module.hot.accept(\\"./components/Hello\\", window.__invalidate);
+import Layout from './components/Layout';
+module.hot.accept(\\"./components/Layout\\", window.__invalidate);
+import './App.css';
+
+var App = window.__assign(module, \\"App\\", function App({
+  children
+}) {
+  return <Layout>
+      <Hello />
+    </Layout>;
+});
+
+export default App;
+"
+`;
+
+exports[`hot-reload lazy component: lazy component 1`] = `
+"
+import { lazy } from 'react';
+const LazyCC = lazy(() => import('./CounterClass'));
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import { lazy } from 'react';
+
+const LazyCC = window.__assign(module, \\"LazyCC\\", lazy(() => import('./CounterClass')));
+"
+`;

@@ -180,6 +180,9 @@ module.exports = function(api, opts, env) {
       isEnvTest &&
         // Transform dynamic import to require
         require('babel-plugin-dynamic-import-node'),
+      isEnvDevelopment &&
+        // Transform for functional hot reloading
+        require('babel-plugin-hot-reload'),
     ].filter(Boolean),
     overrides: [
       isFlowEnabled && {

@@ -1,0 +1,2 @@
+// no-snap
+let LazyCC;

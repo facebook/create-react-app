@@ -1,6 +1,6 @@
 import React from 'react';
-import Hello from './Hello';
-import Layout from './Layout';
+import Hello from './components/Hello';
+import Layout from './components/Layout';
 import './App.css';
 
 export default function App({ children }) {
