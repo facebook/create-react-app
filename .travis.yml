@@ -9,6 +9,9 @@ install:
   - "cd ../../"
 before_deploy:
   - "cd packages && tar -zcf react-scripts-$TRAVIS_TAG.tgz react-scripts"
+  - "echo \"we should have tarred the script\""
+  - "ls"
+  - "cd ../"
 deploy:
   provider: releases
   skip_cleanup: true
