@@ -414,14 +414,12 @@ module.exports = function(webpackEnv) {
                     { helpers: true },
                   ],
                 ],
-                plugins: isEnvProduction
-                  ? undefined
-                  : [
-                      [
-                        require.resolve('babel-plugin-bundled-import-meta'),
-                        { importStyle: 'iife' },
-                      ],
-                    ],
+                plugins: [
+                  [
+                    require.resolve('babel-plugin-bundled-import-meta'),
+                    { importStyle: 'iife' },
+                  ],
+                ],
                 cacheDirectory: true,
                 cacheCompression: isEnvProduction,
                 // @remove-on-eject-begin
