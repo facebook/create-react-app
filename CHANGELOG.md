@@ -1,3 +1,142 @@
+## 2.1.2 (December 23, 2018)
+
+v2.1.2 is a maintenance release including various bug fixes.
+
+#### :rocket: New Feature
+
+- `babel-preset-react-app`
+  - [#5487](https://github.com/facebook/create-react-app/pull/5487) Add `allowESModules` option to `babel-preset-react-app` ([@Pajn](https://github.com/Pajn))
+
+#### :bug: Bug Fix
+
+- `create-react-app`
+  - [#5905](https://github.com/facebook/create-react-app/pull/5905) Disable copy to clipboard in `create-react-app --info` ([@heyimalex](https://github.com/heyimalex))
+  - [#5685](https://github.com/facebook/create-react-app/pull/5685) Update envinfo to `5.11.1` ([@tabrindle](https://github.com/tabrindle))
+- `babel-preset-react-app`
+  - [#5783](https://github.com/facebook/create-react-app/pull/5783) Fix TypeScript decorator support ([@ianschmitz](https://github.com/ianschmitz))
+- `babel-plugin-named-asset-import`
+  - [#5573](https://github.com/facebook/create-react-app/pull/5573) Fix named-asset-import plugin to work with export-as syntax ([@NShahri](https://github.com/NShahri))
+- `react-app-polyfill`
+  - [#5789](https://github.com/facebook/create-react-app/pull/5789) Don't polyfill fetch for Node ([@gshilin](https://github.com/gshilin))
+- `react-scripts`
+  - [#5721](https://github.com/facebook/create-react-app/pull/5721) Version bump `postcss-preset-env` to latest ([@BPScott](https://github.com/BPScott))
+  - [#5701](https://github.com/facebook/create-react-app/pull/5701) Fix `tsconfig.json` lib suggested value ([@ianschmitz](https://github.com/ianschmitz))
+
+#### :nail_care: Enhancement
+
+- `react-scripts`
+  - [#5698](https://github.com/facebook/create-react-app/pull/5698) Add support for `setupTests.ts` ([@ianschmitz](https://github.com/ianschmitz))
+
+#### :memo: Documentation
+
+- Other
+  - [#6009](https://github.com/facebook/create-react-app/pull/6009) Correct markdown to avoid comment. ([@souzasmatheus](https://github.com/souzasmatheus))
+  - [#6015](https://github.com/facebook/create-react-app/pull/6015) Add example command to create typed project. ([@mbelsky](https://github.com/mbelsky))
+  - [#6000](https://github.com/facebook/create-react-app/pull/6000) Make links to docs consistent in README. ([@iansu](https://github.com/iansu))
+  - [#5900](https://github.com/facebook/create-react-app/pull/5900) Add production build section to docs. ([@ianschmitz](https://github.com/ianschmitz))
+  - [#5985](https://github.com/facebook/create-react-app/pull/5985) Use https for linked images to fix mixed content warnings. ([@iansu](https://github.com/iansu))
+  - [#5919](https://github.com/facebook/create-react-app/pull/5919) Docs: update localStorage mock in “Running Tests”. ([@phacks](https://github.com/phacks))
+  - [#5917](https://github.com/facebook/create-react-app/pull/5917) Add SASS_PATH instructions to Sass stylesheet docs. ([@jayantbh](https://github.com/jayantbh))
+  - [#5823](https://github.com/facebook/create-react-app/pull/5823) Add default values to `file_ext` note. ([@alaycock](https://github.com/alaycock))
+  - [#5907](https://github.com/facebook/create-react-app/pull/5907) Update README.md with updated link about PWAs. ([@wuweiweiwu](https://github.com/wuweiweiwu))
+  - [#5858](https://github.com/facebook/create-react-app/pull/5858) Some Grammar fixes. ([@nikhilknoldus](https://github.com/nikhilknoldus))
+  - [#5883](https://github.com/facebook/create-react-app/pull/5883) Fix link to page about running tests. ([@wsmoak](https://github.com/wsmoak))
+  - [#5849](https://github.com/facebook/create-react-app/pull/5849) React native repository updated in `README.md`. ([@pavinthan](https://github.com/pavinthan))
+  - [#5806](https://github.com/facebook/create-react-app/pull/5806) Rename 'getting started' link to 'docs'. ([@kulek1](https://github.com/kulek1))
+  - [#5788](https://github.com/facebook/create-react-app/pull/5788) docs: Simplify installing Storybook with `npx` ([@sagirk](https://github.com/sagirk))
+  - [#5779](https://github.com/facebook/create-react-app/pull/5779) docs: Change story book command to `sb init` ([@andys8](https://github.com/andys8))
+  - [#5759](https://github.com/facebook/create-react-app/pull/5759) Add PR welcoming badge ([@open-source-explorer](https://github.com/open-source-explorer))
+  - [#5730](https://github.com/facebook/create-react-app/pull/5730) Suggest Encore when not building a SPA with Symfony ([@dunglas](https://github.com/dunglas))
+  - [#5710](https://github.com/facebook/create-react-app/pull/5710) Updated the link to firebase hosting ([@githubsaturn](https://github.com/githubsaturn))
+  - [#5704](https://github.com/facebook/create-react-app/pull/5704) Fixed link to manifest.json file ([@m4jing](https://github.com/m4jing))
+  - [#5670](https://github.com/facebook/create-react-app/pull/5670) Fix public folder documentation link ([@makovkastar](https://github.com/makovkastar))
+- `eslint-config-react-app`
+  - [#5990](https://github.com/facebook/create-react-app/pull/5990) Updated docs for `.eslintrc` ([@ManoelLobo](https://github.com/ManoelLobo))
+- `babel-preset-react-app`, `create-react-app`, `eslint-config-react-app`, `react-dev-utils`, `react-scripts`
+  - [#5912](https://github.com/facebook/create-react-app/pull/5912) Update links to docs in all package README files ([@iansu](https://github.com/iansu))
+- `react-scripts`
+  - [#5974](https://github.com/facebook/create-react-app/pull/5974) Improve advice in `verifyPackageTree.js` ([@sjalgeo](https://github.com/sjalgeo))
+  - [#5954](https://github.com/facebook/create-react-app/pull/5954) Add pre-eject message about new features in v2 ([@iansu](https://github.com/iansu))
+  - [#5808](https://github.com/facebook/create-react-app/pull/5808) Add placeholders to template README for bit.ly links ([@iansu](https://github.com/iansu))
+- `react-app-polyfill`
+  - [#5814](https://github.com/facebook/create-react-app/pull/5814) Note that extra polyfills must be included manually ([@ajwann](https://github.com/ajwann))
+- `babel-preset-react-app`, `eslint-config-react-app`, `react-error-overlay`, `react-scripts`
+  - [#5727](https://github.com/facebook/create-react-app/pull/5727) Fix typo ([@noelyoo](https://github.com/noelyoo))
+
+#### :house: Internal
+
+- `react-scripts`
+  - [#5978](https://github.com/facebook/create-react-app/pull/5978) Add `webp` support for TypeScript. ([@dugagjin](https://github.com/dugagjin))
+  - [#5959](https://github.com/facebook/create-react-app/pull/5959) Suggest a different default for speed reasons. ([@Timer](https://github.com/Timer))
+  - [#5839](https://github.com/facebook/create-react-app/pull/5839) Run prettier on HTML files. ([@sibiraj-s](https://github.com/sibiraj-s))
+  - [#5722](https://github.com/facebook/create-react-app/pull/5722) Merge webpack configuration. ([@Timer](https://github.com/Timer))
+  - [#5694](https://github.com/facebook/create-react-app/pull/5694) Add permissive TS lib defaults. ([@Timer](https://github.com/Timer))
+- Other
+  - [#5988](https://github.com/facebook/create-react-app/pull/5988) Added extension to `.eslintrc` ([@ManoelLobo](https://github.com/ManoelLobo))
+  - [#5546](https://github.com/facebook/create-react-app/pull/5546) Add the latest stable node version. ([@noelyoo](https://github.com/noelyoo))
+- `react-dev-utils`
+  - [#5927](https://github.com/facebook/create-react-app/pull/5927) Correct some comments. ([@mjackson](https://github.com/mjackson))
+  - [#5879](https://github.com/facebook/create-react-app/pull/5879) fix: make typescriptformatter support 0.5 of fork checker. ([@SimenB](https://github.com/SimenB))
+- `react-error-overlay`
+  - [#5451](https://github.com/facebook/create-react-app/pull/5451) fix: add `sideEffects: false` to react-error-overlay. ([@SimenB](https://github.com/SimenB))
+- `babel-preset-react-app`
+  - [#5487](https://github.com/facebook/create-react-app/pull/5487) Add allowESModules option to babel-preset-react-app. ([@Pajn](https://github.com/Pajn))
+- `create-react-app`
+  - [#4605](https://github.com/facebook/create-react-app/pull/4605) ignore intellij module files when generating an app. ([@denofevil](https://github.com/denofevil))
+
+#### Committers: 36
+
+- \<Explorer /\> ([open-source-explorer](https://github.com/open-source-explorer))
+- Adam Laycock ([alaycock](https://github.com/alaycock))
+- Adam Wanninger ([ajwann](https://github.com/ajwann))
+- Alex Guerra ([heyimalex](https://github.com/heyimalex))
+- Andy ([andys8](https://github.com/andys8))
+- Ben Scott ([BPScott](https://github.com/BPScott))
+- Dennis Ushakov ([denofevil](https://github.com/denofevil))
+- Dugagjin Lashi ([dugagjin](https://github.com/dugagjin))
+- Gregory Shilin ([gshilin](https://github.com/gshilin))
+- Ian Schmitz ([ianschmitz](https://github.com/ianschmitz))
+- Ian Sutherland ([iansu](https://github.com/iansu))
+- Jayant Bhawal ([jayantbh](https://github.com/jayantbh))
+- Jing Ma ([m4jing](https://github.com/m4jing))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Kasra Bigdeli ([githubsaturn](https://github.com/githubsaturn))
+- Kévin Dunglas ([dunglas](https://github.com/dunglas))
+- Manoel ([ManoelLobo](https://github.com/ManoelLobo))
+- Matheus Souza ([souzasmatheus](https://github.com/souzasmatheus))
+- Max Belsky ([mbelsky](https://github.com/mbelsky))
+- Michael Jackson ([mjackson](https://github.com/mjackson))
+- Nicolas Goutay ([phacks](https://github.com/phacks))
+- Nikhil ([nikhilknoldus](https://github.com/nikhilknoldus))
+- Nima Shahri ([NShahri](https://github.com/NShahri))
+- Noel Yoo ([noelyoo](https://github.com/noelyoo))
+- Oleksandr Melnykov ([makovkastar](https://github.com/makovkastar))
+- Pavinthan ([pavinthan](https://github.com/pavinthan))
+- Rasmus Eneman ([Pajn](https://github.com/Pajn))
+- Sagir Khan ([sagirk](https://github.com/sagirk))
+- Sibiraj ([sibiraj-s](https://github.com/sibiraj-s))
+- Simen Bekkhus ([SimenB](https://github.com/SimenB))
+- Stephen Algeo ([sjalgeo](https://github.com/sjalgeo))
+- Trevor Brindle ([tabrindle](https://github.com/tabrindle))
+- Wei-Wei Wu ([wuweiweiwu](https://github.com/wuweiweiwu))
+- Wendy Smoak ([wsmoak](https://github.com/wsmoak))
+- [kulek1](https://github.com/kulek1)
+- swyx ([sw-yx](https://github.com/sw-yx))
+
+### Migrating from 2.1.1 to 2.1.2
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@2.1.2
+```
+
+or
+
+```
+yarn add --exact react-scripts@2.1.2
+```
+
 ## 2.1.1 (October 31, 2018)
 
 Happy Halloween 🎃 👻! This spooky release brings a treat: decorator support in TypeScript files!

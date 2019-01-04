@@ -15,7 +15,8 @@ const siteConfig = {
   // For github.io type URLs, you would set the url and baseUrl like:
   url: 'https://facebook.github.io',
   baseUrl: '/create-react-app/',
-  editUrl: 'https://github.com/facebook/create-react-app/edit/master/docusaurus/docs/',
+  editUrl:
+    'https://github.com/facebook/create-react-app/edit/master/docusaurus/docs/',
 
   // Used for publishing and more
   projectName: 'create-react-app',
@@ -26,7 +27,7 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: 'getting-started', label: 'Getting Started' },
+    { doc: 'getting-started', label: 'Docs' },
     { href: 'https://reactjs.org/community/support.html', label: 'Help' },
     {
       href: 'https://www.github.com/facebook/create-react-app',
@@ -86,7 +87,7 @@ const siteConfig = {
   algolia: {
     apiKey: '3be60f4f8ffc24c75da84857d6323791',
     indexName: 'create-react-app',
-  }
+  },
 };
 
 module.exports = siteConfig;
