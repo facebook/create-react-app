@@ -11,6 +11,7 @@
   ],
   "rules": {
     "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-single"],
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": true,
       "optionalDependencies": false,
