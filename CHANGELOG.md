@@ -1,5 +1,7 @@
 ## 2.1.3 (January 4, 2019)
 
+v2.1.3 is a maintenance release to fix a [vulnerability in webpack-dev-server](https://www.npmjs.com/advisories/725).
+
 #### :memo: Documentation
 
 - Other
