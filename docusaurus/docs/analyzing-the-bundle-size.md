@@ -47,7 +47,7 @@ npm run analyze
 
 > Note: this feature is natively available with react-scripts@2.0.3 and higher.
 
-[Webpack stats data](https://webpack.js.org/api/stats/) is a JSON document containing statistics on modules which were generated during build time. This file is useful for many tools like [Webpack Visualizer](https://chrisbateman.github.io/webpack-visualizer/) or the [Webpack bundle analyzer web app](https://github.com/webpack/analyse).
+[Webpack stats data](https://webpack.js.org/api/stats/) is a JSON document containing statistics on modules which were generated during build time. This file is useful for many tools like [Webpack Visualizer](https://chrisbateman.github.io/webpack-visualizer/) or the [Webpack bundle analyzer web app](http://webpack.github.io/analyse/).
 
 To output this stats file simply pass the `--stats` flag during build time.
 
@@ -67,7 +67,7 @@ The generated stats can be found in `build/bundle-stats.json`
 
 ## Analyzing Multi-Chunk Bundle Sizes
 
-`source-map-explorer` [currently does not support analyzing bundle sizes with multiple chunks](danvk/source-map-explorer/issues/250) like projects that utilize [code splitting](code-splitting.md). To analyze multiple chunks at once we need to use [`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer) with the [generated stats file](analyzing-the-bundle-size.md#outputting-webpack-stats-data) instead.
+`source-map-explorer` [currently does not support analyzing bundle sizes with multiple chunks](https://github.com/danvk/source-map-explorer/issues/25) like projects that utilize [code splitting](code-splitting.md). To analyze multiple chunks at once we need to use [`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer) with the [generated stats file](analyzing-the-bundle-size.md#outputting-webpack-stats-data) instead.
 
 To get started with `webpack-bundle-analyzer`, follow these steps:
 
