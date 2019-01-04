@@ -398,6 +398,11 @@ module.exports = function(webpackEnv) {
             {
               test: /\.(js|mjs)$/,
               exclude: /@babel(?:\/|\\{1,2})runtime/,
+              use: [
+                {
+                  loader: require.resolve('webpack-wci18n'),
+                },
+              ],
               loader: require.resolve('babel-loader'),
               options: {
                 babelrc: false,
@@ -407,6 +412,12 @@ module.exports = function(webpackEnv) {
                   [
                     require.resolve('babel-preset-react-app/dependencies'),
                     { helpers: true },
+                  ],
+                ],
+                plugins: isEnvDevelopment && [
+                  [
+                    require.resolve('babel-plugin-bundled-import-meta'),
+                    { importStyle: 'iife' },
                   ],
                 ],
                 cacheDirectory: true,
