@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - 10
 before_install:
-  - echo -e "machine github.com\n  login $CI_USER_TOKEN" >> ~/.netrc
+  - echo -e "machine github.com\n  login $CI_USER_TOKEN" > ~/.netrc
 install:
   - "npm i"
   - "cd packages/react-scripts && npm i"
@@ -13,7 +13,7 @@ deploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: N59INfaqnLplvWQdUEAd3BFJKsV8MN/5b513U/WpLGvKGRLdWlT3lJK5hchFnS85J40aXWlmin5cvG1eURLFxOKKGox5YV1y4I/4PnIqqscnU7HHcWgltqsVLVY3XVflp+tcKicSc+dqDT1wJigOEDGj9Kb5bGV61wbsKFB8R6QzoEd74jIgPjaf+eFXh6jharRJtn37J/qOKYwsDNbE5CZVCJu1Q9MZo5cXBXVtHvBzm1GboL0Efqc/ZvsWsZYptkqxJTTURPJQJ44cfoqmFHwX2gji0oSCjwO/t54lT7PL1LD88P9kMTTGtfmG1jH0mh6SyYlHWfP5eU1U/yrfFaRm+v70zFpB6uQXoQ2oVioN/nMcOnze4ZgAf3wnpaUs0jUBZLg+jjOKn6Za4C87WQ66nkq1ImSs9WP7DSzmlusqihh8OPTwpaqL5SsxUImPVAW9+f6VeN7o2IzJWor+Mdkvwgt4hCfFCZB2AdBpt5suieJUTxUhzAi+TgHm5ksBPME5nxomlL2mbihO935y+FCAhsCBcIUpIu6STqOpyvCCBkCXR/y5xxNDm2ZY3aM+pQ9XDArERuhT8uTXmZI+190NnqkafG6F0iCrQwVMISUOlA6i7iErMUWkj8EMqkfZJtARtNlrmM+mV5Ih4SPTRmF3lAjTbqc7amPKPqezvAc=
+    secure: ndsLlqyGuhr1aCeLJcQ+5Dph8qFbhd8wno1z+hVz5PsCN8GYZr1tukGZ4xXGs76o2XCpxDrEIxceywrjEHfkMJtDU04WbB0w5oF6bHalgGEqIuARC2QlFdzwzeeG5WWYO1jnTWL4VbvHPQzt1CxGgqW9gX1sEdgqE89AW72KoPD3BQQm6W4NmwwCsDDgi3xnTpDys055ryvPZZOJ1FZ010wFa9TOgQ183ApFcpqPWVxJuZemU5i7RRfkAgKDM5nrgLRYkDg2Xo8txPmVp9aHgPOwYgtTmEORnDDi9HkvU/4tBUh7t5p319p9ayAlt3eVJfgJ31qkrNJGFNu03pAYSGA7OPMJ76llFJygcYS7qaqIAiijRKLrI8bBm187N+cbKl8KUsc8GNBdKPBwNdQAS6+/Zn5QqSvgOTVGGKl1rRx20SYoPVQQvLchHUy+slh5xzrSmRLmZOyd7yi+SiB9sx49X/aJWNIBUAdrFo3aa9wSEwplEZ6geidzSUPQWPwF1UBKGCvYFyTnewHXSrBHx4erlmjhvx17UG8CCK9cn12Gkp1OsxFXd4Y0bIB/Jj1rICyQMDNcvOHMfDy/M4J0kPc3DuI7nLCRF21Ak8flUMGYkBZExvrqmtB+5NtQCy6LQ/IUVf+lP1TEcfultynhH+9mI0sWg2ikNN/zH1Cfxug=
   file: packages/react-scripts-$TRAVIS_TAG.tgz
   on:
     repo: fs-webdev/create-react-app
