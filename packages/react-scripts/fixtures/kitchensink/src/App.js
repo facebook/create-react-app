@@ -149,8 +149,8 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
-      case 'node-path':
-        import('./features/env/NodePath').then(f => this.setFeature(f.default));
+      case 'base-url':
+        import('./features/env/BaseUrl').then(f => this.setFeature(f.default));
         break;
       case 'no-ext-inclusion':
         import('./features/webpack/NoExtInclusion').then(f =>

@@ -37,13 +37,6 @@ describe('Integration', () => {
       doc.defaultView.close();
     });
 
-    it('NODE_PATH', async () => {
-      const doc = await initDOM('node-path');
-
-      expect(doc.getElementById('feature-node-path').childElementCount).toBe(4);
-      doc.defaultView.close();
-    });
-
     it('PUBLIC_URL', async () => {
       const doc = await initDOM('public-url');
 
