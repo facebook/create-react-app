@@ -9,8 +9,11 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const chalk = require('chalk');
 const paths = require('./paths');
+
+const appDirectory = fs.realpathSync(process.cwd());
 
 /**
  * Get the baseUrl of a compilerOptions object.
@@ -34,20 +37,46 @@ function getBaseUrl(options = {}) {
     return null;
   }
 
-  return 'src';
+  return path.resolve(appDirectory, 'src');
 }
 
 /**
- * Get the paths of a compilerOptions object.
+ * Get the alias of a compilerOptions object.
  *
  * @param {Object} options
  */
-function getPaths(options = {}) {
-  const paths = options.paths;
+function getAlias(options = {}) {
+  const paths = options.paths || {};
 
-  if (!paths) {
-    return [];
+  const alias = paths['@'];
+
+  const others = Object.keys(paths).filter(function(value) {
+    return value !== '@';
+  });
+
+  if (others.length) {
+    console.error(
+      chalk.red.bold(
+        'You tried to set one or more paths with an alias other than "@", this is currently not supported in create-react-app and will be ignored.'
+      )
+    );
   }
+
+  if (!alias) {
+    return {};
+  }
+
+  if (alias.toString() !== 'src') {
+    console.error(
+      chalk.red.bold(
+        "You tried to set a path with alias '@' to anything other than ['src']. This is not supported in create-react-app and will be ignored."
+      )
+    );
+  }
+
+  return {
+    '@': path.resolve(appDirectory, 'src'),
+  };
 }
 
 function getConfig() {
@@ -72,7 +101,7 @@ function getConfig() {
   const options = config.compilerOptions || {};
 
   return {
-    paths: getPaths(options),
+    alias: getAlias(options),
     baseUrl: getBaseUrl(options),
     useTypeScript,
   };
