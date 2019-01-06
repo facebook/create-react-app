@@ -55,6 +55,8 @@ function getBaseUrl(options = {}) {
 function getAlias(options = {}) {
   const paths = options.paths || {};
 
+  const alias = paths['@'];
+
   const others = Object.keys(paths).filter(function(value) {
     return value !== '@';
   });
