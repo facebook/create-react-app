@@ -150,7 +150,9 @@ class App extends Component {
         );
         break;
       case 'base-url':
-        import('./features/env/BaseUrl').then(f => this.setFeature(f.default));
+        import('./features/config/BaseUrl').then(f =>
+          this.setFeature(f.default)
+        );
         break;
       case 'no-ext-inclusion':
         import('./features/webpack/NoExtInclusion').then(f =>
