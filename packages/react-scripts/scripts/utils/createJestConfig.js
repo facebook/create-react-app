@@ -58,7 +58,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
-    modulePaths: jsConfig.baseUrl ? ['<rootDir>/' + jsConfig.baseUrl] : [],
+    modulePaths: jsConfig.baseUrl ? [jsConfig.baseUrl] : [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
