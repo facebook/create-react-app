@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/lightingbeetle/lighter/issues"
   },
-  "homepage": "https://github.com/lightingbeetle/lighter#readme",
+  "homepage": "/",
   "dependencies": {
     "@mdx-js/loader": "~0.16.6",
     "@mdx-js/mdx": "~0.16.6",
