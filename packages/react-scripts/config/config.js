@@ -32,9 +32,9 @@ function getBaseUrl(options = {}) {
     return null;
   }
 
-  const baseUrlResolved = path.resolve(appDirectory, baseUrl);
+  const baseUrlResolved = path.resolve(paths.appDirectory, baseUrl);
 
-  if (!isValidPath) {
+  if (!isValidPath(baseUrlResolved)) {
     console.error(
       chalk.red.bold(
         "You tried to set baseUrl to anything other than 'src' or 'node_modules'.This is not supported in create-react-app and will be ignored."
