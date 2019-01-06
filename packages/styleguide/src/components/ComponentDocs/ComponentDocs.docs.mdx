@@ -1,0 +1,36 @@
+import { Preview, ComponentDocs, CodeJSX, Badge } from './../';
+
+# Preview
+
+Preview component is dedicated to displaing other components with code preview
+and colored backgrounds.
+
+## Variants
+
+### Default
+
+<Preview>
+  <ComponentDocs component={ComponentDocs} />
+</Preview>
+
+### Custom title
+
+<Preview>
+  <ComponentDocs
+    title="<Custom title of component />"
+    component={ComponentDocs}
+  />
+</Preview>
+
+### Exclude props from table
+
+<Preview>
+  <ComponentDocs
+    component={ComponentDocs}
+    excludes={['title']}
+  />
+</Preview>
+
+## Props
+
+<ComponentDocs component={ComponentDocs} />

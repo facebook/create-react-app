@@ -6,6 +6,7 @@ import Page from './components/Page';
 import Hello from './pages/Hello.mdx';
 import KitchenSink from './pages/KitchenSink.mdx';
 import PreviewDocs from './components/Preview/Preview.docs.mdx';
+import ComponentDocsDocs from './components/ComponentDocs/ComponentDocs.docs.mdx';
 
 styleguide({
   config: {
@@ -28,6 +29,11 @@ styleguide({
       title: 'Components',
       path: '/components',
       nodes: [
+        {
+          title: 'ComponentDocs',
+          path: '/component-docs',
+          render: <Page render={ComponentDocsDocs} />
+        },
         {
           title: 'Preview',
           path: '/preview',
