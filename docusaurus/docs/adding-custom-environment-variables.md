@@ -6,9 +6,7 @@ sidebar_label: Environment Variables
 
 > Note: this feature is available with `react-scripts@0.2.3` and higher.
 
-Your project can consume variables declared in your environment as if they were declared locally in your JS files. By
-default you will have `NODE_ENV` defined for you, and any other environment variables starting with
-`REACT_APP_`.
+Your project can consume variables declared in your environment as if they were declared locally in your JS files. By default you will have `NODE_ENV` defined for you, and any other environment variables starting with `REACT_APP_`.
 
 > WARNING: Do not store any secrets (such as private API keys) in your React app!
 >
@@ -18,16 +16,13 @@ default you will have `NODE_ENV` defined for you, and any other environment vari
 
 > Note: You must create custom environment variables beginning with `REACT_APP_`. Any other variables except `NODE_ENV` will be ignored to avoid accidentally [exposing a private key on the machine that could have the same name](https://github.com/facebook/create-react-app/issues/865#issuecomment-252199527). Changing any environment variables will require you to restart the development server if it is running.
 
-These environment variables will be defined for you on `process.env`. For example, having an environment
-variable named `REACT_APP_NOT_SECRET_CODE` will be exposed in your JS as `process.env.REACT_APP_NOT_SECRET_CODE`.
+These environment variables will be defined for you on `process.env`. For example, having an environment variable named `REACT_APP_NOT_SECRET_CODE` will be exposed in your JS as `process.env.REACT_APP_NOT_SECRET_CODE`.
 
 There is also a special built-in environment variable called `NODE_ENV`. You can read it from `process.env.NODE_ENV`. When you run `npm start`, it is always equal to `'development'`, when you run `npm test` it is always equal to `'test'`, and when you run `npm run build` to make a production bundle, it is always equal to `'production'`. **You cannot override `NODE_ENV` manually.** This prevents developers from accidentally deploying a slow development build to production.
 
-These environment variables can be useful for displaying information conditionally based on where the project is
-deployed or consuming sensitive data that lives outside of version control.
+These environment variables can be useful for displaying information conditionally based on where the project is deployed or consuming sensitive data that lives outside of version control.
 
-First, you need to have environment variables defined. For example, let’s say you wanted to consume a secret defined
-in the environment inside a `<form>`:
+First, you need to have environment variables defined. For example, let’s say you wanted to consume an environment variable inside a `<form>`:
 
 ```jsx
 render() {
@@ -53,9 +48,7 @@ When you load the app in the browser and inspect the `<input>`, you will see its
 </div>
 ```
 
-The above form is looking for a variable called `REACT_APP_NOT_SECRET_CODE` from the environment. In order to consume this
-value, we need to have it defined in the environment. This can be done using two ways: either in your shell or in
-a `.env` file. Both of these ways are described in the next few sections.
+The above form is looking for a variable called `REACT_APP_NOT_SECRET_CODE` from the environment. In order to consume this value, we need to have it defined in the environment. This can be done using two ways: either in your shell or in a `.env` file. Both of these ways are described in the next few sections.
 
 Having access to the `NODE_ENV` is also useful for performing actions conditionally:
 
@@ -84,8 +77,7 @@ Note that the caveats from the above section apply:
 
 ## Adding Temporary Environment Variables In Your Shell
 
-Defining environment variables can vary between OSes. It’s also important to know that this manner is temporary for the
-life of the shell session.
+Defining environment variables can vary between OSes. It’s also important to know that this manner is temporary for the life of the shell session.
 
 ### Windows (cmd.exe)
 
