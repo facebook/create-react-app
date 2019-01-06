@@ -48,21 +48,14 @@ dotenvFiles.forEach(dotenvFile => {
   }
 });
 
-// We support resolving modules according to `NODE_PATH`.
+// We used to support resolving modules according to `NODE_PATH`.
+// This now has been deprecated in favor of jsconfig/tsconfig.json
 // This lets you use absolute paths in imports inside large monorepos:
-// https://github.com/facebook/create-react-app/issues/253.
-// It works similar to `NODE_PATH` in Node itself:
-// https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders
-// Note that unlike in Node, only *relative* paths from `NODE_PATH` are honored.
-// Otherwise, we risk importing Node.js core modules into an app instead of Webpack shims.
-// https://github.com/facebook/create-react-app/issues/1023#issuecomment-265344421
-// We also resolve them to make sure all tools using them work consistently.
-const appDirectory = fs.realpathSync(process.cwd());
-process.env.NODE_PATH = (process.env.NODE_PATH || '')
-  .split(path.delimiter)
-  .filter(folder => folder && !path.isAbsolute(folder))
-  .map(folder => path.resolve(appDirectory, folder))
-  .join(path.delimiter);
+if (process.env.NODE_PATH) {
+  console.log(
+    'Setting NODE_PATH to resolves modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using Typescript) to achieve the same behaviour.'
+  );
+}
 
 // Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
 // injected into the application via DefinePlugin in Webpack configuration.
