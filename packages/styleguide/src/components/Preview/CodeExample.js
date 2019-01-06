@@ -13,8 +13,9 @@ import Button from '../Button';
 
 const getJSXAsStringFromMarkup = (markup, options) => {
   const reactElementToJSXStringOptions = {
+    showDefaultProps: false,
     showFunctions: true,
-    functionValue: () => '',
+    functionValue: fn => fn.name,
     ...options
   };
 
@@ -45,17 +46,17 @@ export default class CodeExample extends React.Component {
 
   static propTypes = {
     codeJSXOptions: object,
-    codeTypes: arrayOf(oneOf(['jsx', 'html'])),
+    codeTypes: arrayOf(oneOf(['jsx', 'html']))
   };
 
   static defaultProps = {
-    codeTypes: ['jsx', 'html'],
+    codeTypes: ['jsx', 'html']
   };
 
   state = {
     codePreviewType: this.props.codeTypes && this.props.codeTypes[0],
     copyButtonText: 'Copy to clipboard',
-    copyButtonClass: '',
+    copyButtonClass: ''
   };
 
   constructor(props) {
@@ -66,7 +67,7 @@ export default class CodeExample extends React.Component {
 
   handleCodePreviewTypeToggle(e, type) {
     this.setState({
-      codePreviewType: type,
+      codePreviewType: type
     });
   }
 
@@ -91,19 +92,19 @@ export default class CodeExample extends React.Component {
 
     const {
       copyButtonText: originalText,
-      copyButtonClass: originalClass,
+      copyButtonClass: originalClass
     } = this.state;
 
     this.setState(
       {
         copyButtonText: newText,
-        copyButtonClass: newClass,
+        copyButtonClass: newClass
       },
       () => {
         setTimeout(() => {
           this.setState({
             copyButtonText: originalText,
-            copyButtonClass: originalClass,
+            copyButtonClass: originalClass
           });
         }, 1200);
       }
@@ -121,7 +122,7 @@ export default class CodeExample extends React.Component {
             ? unescape(children)
             : renderToStaticMarkup(children),
           {
-            ocd: true,
+            ocd: true
           }
         );
         break;
@@ -186,7 +187,9 @@ const StyledCopyButton = styled(Button)`
   }
 `;
 
-const StyledWrapper = styled.div`position: relative;`;
+const StyledWrapper = styled.div`
+  position: relative;
+`;
 
 const StyledCodeTypeToggle = styled(Button)`
   margin-bottom: 0;
