@@ -91,6 +91,12 @@ function getConfig() {
   const useTypeScript = fs.existsSync(paths.appTsConfig);
   const hasJsConfig = fs.existsSync(paths.appJsConfig);
 
+  if (useTypeScript && hasJsConfig) {
+    throw new Error(
+      'You have both a tsconfig.json and a jsconfig.json. If you are using Typescript please remove your jsconfig.json file.'
+    );
+  }
+
   let config;
 
   // If there's a tsconfig.json we assume it's a
