@@ -314,7 +314,6 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-begin
                 baseConfig: {
                   extends: [require.resolve('eslint-config-react-app')],
-                  settings: { react: { version: 'detect' } },
                 },
                 ignore: false,
                 useEslintrc: false,

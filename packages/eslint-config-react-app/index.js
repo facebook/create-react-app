@@ -46,6 +46,12 @@ module.exports = {
     },
   },
 
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+
   rules: {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',
