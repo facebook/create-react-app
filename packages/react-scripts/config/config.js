@@ -82,7 +82,7 @@ function getAlias(options = {}) {
   }
 
   return {
-    '@': path.resolve(appDirectory, 'src'),
+    '@': path.resolve(paths.appDirectory, 'src'),
   };
 }
 
