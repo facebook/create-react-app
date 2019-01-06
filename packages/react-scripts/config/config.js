@@ -13,7 +13,12 @@ const path = require('path');
 const chalk = require('chalk');
 const paths = require('./paths');
 
-const appDirectory = fs.realpathSync(process.cwd());
+function isValidPath(path) {
+  return (
+    paths.relative(paths.appSrc, path) === '.' ||
+    paths.relative(paths.appNodeModules, path) === '.'
+  );
+}
 
 /**
  * Get the baseUrl of a compilerOptions object.
@@ -27,17 +32,19 @@ function getBaseUrl(options = {}) {
     return null;
   }
 
-  if (baseUrl !== 'src' && baseUrl !== './src') {
+  const baseUrlResolved = path.resolve(appDirectory, baseUrl);
+
+  if (!isValidPath) {
     console.error(
       chalk.red.bold(
-        "You tried to set baseUrl to anything other than 'src'. This is not supported in create-react-app and will be ignored."
+        "You tried to set baseUrl to anything other than 'src' or 'node_modules'.This is not supported in create-react-app and will be ignored."
       )
     );
 
     return null;
   }
 
-  return path.resolve(appDirectory, 'src');
+  return path.resolve(paths.appDirectory, 'src');
 }
 
 /**
@@ -47,8 +54,6 @@ function getBaseUrl(options = {}) {
  */
 function getAlias(options = {}) {
   const paths = options.paths || {};
-
-  const alias = paths['@'];
 
   const others = Object.keys(paths).filter(function(value) {
     return value !== '@';
