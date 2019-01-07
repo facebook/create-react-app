@@ -13,38 +13,40 @@ const path = require('path');
 const chalk = require('chalk');
 const paths = require('./paths');
 
-function isValidPath(path) {
-  return (
-    paths.relative(paths.appSrc, path) === '.' ||
-    paths.relative(paths.appNodeModules, path) === '.'
-  );
-}
-
 /**
  * Get the baseUrl of a compilerOptions object.
  *
  * @param {Object} options
  */
-function getBaseUrl(options = {}) {
+function getAdditionalModulePath(options = {}) {
   const baseUrl = options.baseUrl;
 
-  if (!baseUrl) {
+  // We need to explicitly check for null and undefined (and not a falsy value) because
+  // TypeScript treats an empty string as `.`.
+  if (baseUrl == null) {
     return null;
   }
 
-  const baseUrlResolved = path.resolve(paths.appDirectory, baseUrl);
+  const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
 
-  if (!isValidPath(baseUrlResolved)) {
-    console.error(
-      chalk.red.bold(
-        "You tried to set baseUrl to anything other than 'src' or 'node_modules'.This is not supported in create-react-app and will be ignored."
-      )
-    );
-
+  // We don't need to do anything if `baseUrl` is set to `node_modules`. This is
+  // the default behavior.
+  if (path.relative(paths.appNodeModules, baseUrlResolved) === '') {
     return null;
   }
 
-  return path.resolve(paths.appDirectory, 'src');
+  // Allow the user set the `baseUrl` to `appSrc`.
+  if (path.relative(paths.appSrc, baseUrlResolved) === '') {
+    return paths.appSrc;
+  }
+
+  // Otherwise, throw an error.
+  throw new Error(
+    chalk.red.bold(
+      "Your project's `baseUrl` can only be set to `src` or `node_modules`." +
+        ' Create React App does not support other values at this time.'
+    )
+  );
 }
 
 /**
@@ -52,38 +54,52 @@ function getBaseUrl(options = {}) {
  *
  * @param {Object} options
  */
-function getAlias(options = {}) {
-  const paths = options.paths || {};
+function getAliases(options = {}) {
+  // This is an object with the alias as key
+  // and an array of paths as value.
+  // e.g. '@': ['src']
+  const aliases = options.paths || {};
 
-  const alias = paths['@'];
+  return Object.keys(aliases).reduce(function(prev, alias) {
+    // Value contains the paths of the alias.
+    const value = aliases[alias];
 
-  const others = Object.keys(paths).filter(function(value) {
-    return value !== '@';
-  });
+    // The value should be an array but we have to verify
+    // that because it's user input.
+    if (!Array.isArray(value) || value.length > 1) {
+      throw new Error(
+        chalk.red.bold(
+          "Your project's `alias` can only be set to an array containing `src`." +
+            ' Create React App does not support other values at this time.'
+        )
+      );
+    }
 
-  if (others.length) {
-    console.error(
-      chalk.red.bold(
-        'You tried to set one or more paths with an alias other than "@", this is currently not supported in create-react-app and will be ignored.'
-      )
-    );
-  }
+    const aliasPath = value[0];
+    const resolvedAliasPath = path.resolve(paths.appPath, aliasPath);
 
-  if (!alias) {
-    return {};
-  }
+    if (path.relative(paths.appSrc, resolvedAliasPath) !== '') {
+      throw new Error(
+        chalk.red.bold(
+          "Your project's `alias` can only be set to ['src']." +
+            ' Create React App does not support other values at this time.'
+        )
+      );
+    }
 
-  if (alias.toString() !== 'src') {
-    console.error(
-      chalk.red.bold(
-        "You tried to set a path with alias '@' to anything other than ['src']. This is not supported in create-react-app and will be ignored."
-      )
-    );
-  }
+    prev[alias] = resolvedAliasPath;
+    return prev;
+  }, {});
+}
 
-  return {
-    '@': path.resolve(paths.appDirectory, 'src'),
-  };
+function getJestAliases(aliases) {
+  return Object.keys(aliases).reduce(function(prev, alias) {
+    const aliasPath = aliases[alias];
+    const relativeAliasPath = path.relative(paths.appPath, aliasPath);
+    const match = alias + '(.*)$';
+    const target = '<rootDir>/' + relativeAliasPath + '/$1';
+    prev[match] = target;
+  }, {});
 }
 
 function getConfig() {
@@ -113,9 +129,14 @@ function getConfig() {
   config = config || {};
   const options = config.compilerOptions || {};
 
+  const aliases = getAliases(options);
+  const jestAliases = getJestAliases(aliases);
+  const additionalModulePath = getAdditionalModulePath(options);
+
   return {
-    alias: getAlias(options),
-    baseUrl: getBaseUrl(options),
+    aliases,
+    jestAliases,
+    additionalModulePath,
     useTypeScript,
   };
 }
