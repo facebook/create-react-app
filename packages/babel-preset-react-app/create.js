@@ -8,47 +8,49 @@
 
 const path = require('path');
 
-const validateBoolOption = (name, value, defaultValue) => {
-  if (typeof value === 'undefined') {
-    value = defaultValue;
+const assert = (assertion, message) => {
+  if (!assertion) {
+    throw new Error(message);
   }
-
-  if (typeof value !== 'boolean') {
-    throw new Error(`Preset react-app: '${name}' option must be a boolean.`);
-  }
-
-  return value;
 };
 
-module.exports = function(api, opts, env) {
-  if (!opts) {
-    opts = {};
-  }
+const assertBool = (value, name) => {
+  assert(
+    typeof value === 'boolean',
+    `Preset react-app: '${name}' option must be a boolean.`
+  );
+};
 
+const modules = ['amd', 'umd', 'systemjs', 'commonjs', 'cjs', 'auto', false];
+
+module.exports = function(api, opts, env) {
   var isEnvDevelopment = env === 'development';
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
 
-  var useESModules = validateBoolOption(
-    'useESModules',
-    opts.useESModules,
-    isEnvDevelopment || isEnvProduction
+  const defaults = {
+    modules: false,
+    useESModules: isEnvDevelopment || isEnvProduction,
+    absoluteRuntime: true,
+    typescript: true,
+    helpers: true,
+    flow: true,
+  };
+
+  opts = Object.assign({}, defaults, opts || {});
+
+  assert(
+    modules.includes(opts.modules),
+    `Preset react-app: 'modules' option must be one of: ${modules.join(', ')}.`
   );
-  var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
-  var isTypeScriptEnabled = validateBoolOption(
-    'typescript',
-    opts.typescript,
-    true
-  );
-  var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
-  var useAbsoluteRuntime = validateBoolOption(
-    'absoluteRuntime',
-    opts.absoluteRuntime,
-    true
-  );
+  assertBool(opts.useESModules, 'useESModules');
+  assertBool(opts.absoluteRuntime, 'absoluteRuntime');
+  assertBool(opts.typescript, 'typescript');
+  assertBool(opts.helpers, 'helpers');
+  assertBool(opts.flow, 'flow');
 
   var absoluteRuntimePath = undefined;
-  if (useAbsoluteRuntime) {
+  if (opts.absoluteRuntime) {
     absoluteRuntimePath = path.dirname(
       require.resolve('@babel/runtime/package.json')
     );
@@ -90,8 +92,8 @@ module.exports = function(api, opts, env) {
           // If users import all core-js they're probably not concerned with
           // bundle size. We shouldn't rely on magic to try and shrink it.
           useBuiltIns: false,
-          // Do not transform modules to CJS
-          modules: false,
+          // Do not transform modules to CJS by default
+          modules: opts.modules,
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
@@ -107,7 +109,7 @@ module.exports = function(api, opts, env) {
           useBuiltIns: true,
         },
       ],
-      isTypeScriptEnabled && [require('@babel/preset-typescript').default],
+      opts.typescript && [require('@babel/preset-typescript').default],
     ].filter(Boolean),
     plugins: [
       // Strip flow types before any other transform, emulating the behavior
@@ -116,7 +118,7 @@ module.exports = function(api, opts, env) {
       // We will conditionally enable this plugin below in overrides as it clashes with
       // @babel/plugin-proposal-decorators when using TypeScript.
       // https://github.com/facebook/create-react-app/issues/5741
-      isFlowEnabled && [
+      opts.flow && [
         require('@babel/plugin-transform-flow-strip-types').default,
         false,
       ],
@@ -128,7 +130,7 @@ module.exports = function(api, opts, env) {
       // don't work without it: https://github.com/babel/babel/issues/7215
       require('@babel/plugin-transform-destructuring').default,
       // Turn on legacy decorators for TypeScript files
-      isTypeScriptEnabled && [
+      opts.typescript && [
         require('@babel/plugin-proposal-decorators').default,
         false,
       ],
@@ -156,12 +158,12 @@ module.exports = function(api, opts, env) {
         require('@babel/plugin-transform-runtime').default,
         {
           corejs: false,
-          helpers: areHelpersEnabled,
+          helpers: opts.helpers,
           regenerator: true,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.
-          useESModules,
+          useESModules: opts.useESModules,
           // Undocumented option that lets us encapsulate our runtime, ensuring
           // the correct version is used
           // https://github.com/babel/babel/blob/090c364a90fe73d36a30707fc612ce037bdbbb24/packages/babel-plugin-transform-runtime/src/index.js#L35-L42
@@ -182,11 +184,11 @@ module.exports = function(api, opts, env) {
         require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),
     overrides: [
-      isFlowEnabled && {
+      opts.flow && {
         exclude: /\.tsx?$/,
         plugins: [require('@babel/plugin-transform-flow-strip-types').default],
       },
-      isTypeScriptEnabled && {
+      opts.typescript && {
         test: /\.tsx?$/,
         plugins: [
           [
