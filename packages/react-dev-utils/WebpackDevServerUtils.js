@@ -100,7 +100,15 @@ function printInstructions(appName, urls, useYarn) {
   console.log();
 }
 
-function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, devSocket) {
+function createCompiler(
+  webpack,
+  config,
+  appName,
+  urls,
+  useYarn,
+  useTypeScript,
+  devSocket
+) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   let compiler;
@@ -136,15 +144,21 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
       });
     });
 
-    compiler.hooks.forkTsCheckerReceive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
-      const allMsgs = [...diagnostics, ...lints];
-      const format = message =>`${message.file}\n${typescriptFormatter(message, true)}`;
+    compiler.hooks.forkTsCheckerReceive.tap(
+      'afterTypeScriptCheck',
+      (diagnostics, lints) => {
+        const allMsgs = [...diagnostics, ...lints];
+        const format = message =>
+          `${message.file}\n${typescriptFormatter(message, true)}`;
 
-      tsMessagesResolver({
-        errors: allMsgs.filter(msg => msg.severity === 'error').map(format),
-        warnings: allMsgs.filter(msg => msg.severity === 'warning').map(format),
-      });
-    });
+        tsMessagesResolver({
+          errors: allMsgs.filter(msg => msg.severity === 'error').map(format),
+          warnings: allMsgs
+            .filter(msg => msg.severity === 'warning')
+            .map(format),
+        });
+      }
+    );
   }
 
   // "done" event fires when Webpack has finished recompiling the bundle.
@@ -159,11 +173,17 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
     // them in a readable focused way.
     // We only construct the warnings and errors for speed:
     // https://github.com/facebook/create-react-app/issues/4492#issuecomment-421959548
-    const statsData = stats.toJson({ all: false, warnings: true, errors: true });
+    const statsData = stats.toJson({
+      all: false,
+      warnings: true,
+      errors: true,
+    });
 
     if (useTypeScript && statsData.errors.length === 0) {
-      process.stdout.write(
-        chalk.yellow('Files successfully emitted, waiting for typecheck results...')
+      console.log(
+        chalk.yellow(
+          'Files successfully emitted, waiting for typecheck results...'
+        )
       );
 
       const messages = await tsMessagesPromise;
@@ -180,8 +200,9 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
         devSocket.warnings(messages.warnings);
       }
 
-      process.stdout.clearLine();
-      process.stdout.cursorTo(0);
+      if (isInteractive) {
+        clearConsole();
+      }
     }
 
     const messages = formatWebpackMessages(statsData);
@@ -227,11 +248,13 @@ function createCompiler(webpack, config, appName, urls, useYarn, useTypeScript, 
 
   // You can safely remove this after ejecting.
   // We only use this block for testing of Create React App itself:
-  const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
+  const isSmokeTest = process.argv.some(
+    arg => arg.indexOf('--smoke-test') > -1
+  );
   if (isSmokeTest) {
     compiler.hooks.failed.tap('smokeTest', async () => {
       await tsMessagesPromise;
-      process.exit(1)
+      process.exit(1);
     });
     compiler.hooks.done.tap('smokeTest', async stats => {
       await tsMessagesPromise;
