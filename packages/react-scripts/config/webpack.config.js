@@ -30,8 +30,7 @@ const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
-const config = require('./config');
-console.log(JSON.stringify(config));
+const modules = require('./modules');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -261,7 +260,7 @@ module.exports = function(webpackEnv) {
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebook/create-react-app/issues/253
       modules: ['node_modules'].concat(
-        config.additionalModulePath ? [config.additionalModulePath] : []
+        modules.additionalModulePath ? [modules.additionalModulePath] : []
       ),
       // These are the reasonable defaults supported by the Node ecosystem.
       // We also include JSX as a common component filename extension to support
@@ -276,7 +275,7 @@ module.exports = function(webpackEnv) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
-        ...config.aliases,
+        ...modules.aliases,
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding

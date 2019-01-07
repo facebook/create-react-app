@@ -102,7 +102,7 @@ function getJestAliases(aliases) {
   }, {});
 }
 
-function getConfig() {
+function getModules() {
   // Check if TypeScript is setup
   const useTypeScript = fs.existsSync(paths.appTsConfig);
   const hasJsConfig = fs.existsSync(paths.appJsConfig);
@@ -141,4 +141,4 @@ function getConfig() {
   };
 }
 
-module.exports = getConfig();
+module.exports = getModules();
