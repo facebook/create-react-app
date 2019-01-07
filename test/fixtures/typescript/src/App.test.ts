@@ -23,3 +23,13 @@ it('supports loading modules with baseUrl', () => {
     { id: 4, name: '4' },
   ]);
 });
+
+it('supports loading modules with alias', () => {
+  const app = new App();
+  expect(app.usersWithAlias).toEqual([
+    { id: 1, name: '1' },
+    { id: 2, name: '2' },
+    { id: 3, name: '3' },
+    { id: 4, name: '4' },
+  ]);
+});

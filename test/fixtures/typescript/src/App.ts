@@ -1,4 +1,5 @@
 import absoluteLoad from 'absoluteLoad';
+import absoluteLoadWithAlias from '@/absoluteLoad';
 
 interface MyType {
   foo: number;
@@ -14,7 +15,8 @@ class App {
   n = App.foo.baz!.n;
   @propertyDecorator
   decorated = 5;
-  users = absoluteLoad;
+  users = absoluteLoad();
+  usersWithAlias = absoluteLoadWithAlias();
 }
 
 function annotation(target: any) {
