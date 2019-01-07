@@ -96,7 +96,7 @@ function getJestAliases(aliases) {
   return Object.keys(aliases).reduce(function(prev, alias) {
     const aliasPath = aliases[alias];
     const relativeAliasPath = path.relative(paths.appPath, aliasPath);
-    const match = alias + '(.*)$';
+    const match = alias + '/(.*)$';
     const target = '<rootDir>/' + relativeAliasPath + '/$1';
     prev[match] = target;
     return prev;
