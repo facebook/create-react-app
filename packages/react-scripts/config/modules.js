@@ -69,7 +69,7 @@ function getAliases(options = {}) {
     if (!Array.isArray(value) || value.length > 1) {
       throw new Error(
         chalk.red.bold(
-          "Your project's `alias` can only be set to an array containing `src`." +
+          "Your project's `alias` can only be set to an array containing `src` or a subfolder of `src`." +
             ' Create React App does not support other values at this time.'
         )
       );
@@ -78,10 +78,15 @@ function getAliases(options = {}) {
     const aliasPath = value[0];
     const resolvedAliasPath = path.resolve(paths.appPath, aliasPath);
 
-    if (path.relative(paths.appSrc, resolvedAliasPath) !== '') {
+    const relativePath = path.relative(paths.appSrc, resolvedAliasPath);
+    const isSrc = relativePath === '';
+    const isSubfolderOfSrc =
+      !relativePath.startsWith('../') && !relativePath.startsWith('..\\');
+
+    if (!isSrc && !isSubfolderOfSrc) {
       throw new Error(
         chalk.red.bold(
-          "Your project's `alias` can only be set to ['src']." +
+          "Your project's `alias` can only be set to ['src'] or a subfolder of `src`." +
             ' Create React App does not support other values at this time.'
         )
       );
