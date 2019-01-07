@@ -630,7 +630,6 @@ module.exports = function(webpackEnv) {
             isolatedModules: true,
             noEmit: true,
             jsx: 'preserve',
-            baseUrl: modules.baseUrl,
           },
           reportFiles: [
             '**',
