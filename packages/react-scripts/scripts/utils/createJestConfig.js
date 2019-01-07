@@ -59,7 +59,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^.+\\.module\\.(css|sass|scss)$',
     ],
     modulePaths: modules.additionalModulePath
-      ? [jsConfig.additionalModulePath]
+      ? [modules.additionalModulePath]
       : [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
