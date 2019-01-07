@@ -9,7 +9,7 @@ test('shows error overlay in browser', async () => {
   const browser = await puppeteer.launch({ headless: true });
   try {
     const page = await browser.newPage();
-    await page.goto(`http://localhost:${port}/`);
+    await page.goto(`http://localhost:${port}/`, { timeout: 60000 });
     await page.waitForSelector('iframe', { timeout: 5000 });
     const errorMsg = await page.evaluate(() => {
       const overlay = document.querySelector('iframe').contentWindow;
