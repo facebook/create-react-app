@@ -99,6 +99,7 @@ function getJestAliases(aliases) {
     const match = alias + '(.*)$';
     const target = '<rootDir>/' + relativeAliasPath + '/$1';
     prev[match] = target;
+    return prev;
   }, {});
 }
 
@@ -134,9 +135,9 @@ function getModules() {
   const additionalModulePath = getAdditionalModulePath(options);
 
   return {
-    aliases,
-    jestAliases,
-    additionalModulePath,
+    aliases: aliases,
+    jestAliases: jestAliases,
+    additionalModulePath: additionalModulePath,
     useTypeScript,
   };
 }
