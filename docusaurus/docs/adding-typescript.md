@@ -27,7 +27,7 @@ npm install --save typescript @types/node @types/react @types/react-dom @types/j
 yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
 
-Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
+Next, rename any file to be a TypeScript file (e.g. `src/index.ts` to `src/index.tsx`) and **restart your development server**!
 
 Type errors will show up in the same console as the build one.
 
