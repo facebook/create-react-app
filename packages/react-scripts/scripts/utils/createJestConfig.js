@@ -8,7 +8,7 @@
 'use strict';
 
 const fs = require('fs');
-const chalk = require('chalk');
+const chalk = require('react-dev-utils/chalk');
 const paths = require('../../config/paths');
 
 module.exports = (resolve, rootDir, isEjecting) => {

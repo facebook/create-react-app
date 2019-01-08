@@ -12,6 +12,7 @@
   },
   "files": [
     "browsersHelper.js",
+    "chalk.js",
     "checkRequiredFiles.js",
     "clearConsole.js",
     "crossSpawn.js",
