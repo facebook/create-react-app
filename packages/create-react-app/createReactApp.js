@@ -267,12 +267,13 @@ function createApp(
     }
   }
 
-  if (useYarn) {
-    fs.copySync(
-      require.resolve('./yarn.lock.cached'),
-      path.join(root, 'yarn.lock')
-    );
-  }
+  // Prevent the cached yarn.lock from being copied over as it fails out build
+  // if (useYarn) {
+  //   fs.copySync(
+  //     require.resolve('./yarn.lock.cached'),
+  //     path.join(root, 'yarn.lock')
+  //   );
+  // }
 
   run(
     root,

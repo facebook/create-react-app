@@ -26,9 +26,10 @@ set -x
 cd ..
 root_path=$PWD
 
-if [ -z $CI ]; then
-  yarn compile:lockfile
-fi
+# We do not modify the create-react-app package so compiling a cached lockfile makes no sense
+# if [ -z $CI ]; then
+#   yarn compile:lockfile
+# fi
 
 if [ -n "$(git status --porcelain)" ]; then
   echo "Your git status is not clean. Aborting.";

@@ -1,14 +1,11 @@
 {
-  "name": "react-scripts",
-  "version": "2.1.3",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebook/create-react-app",
+  "name": "backpack-react-scripts",
+  "version": "6.0.0",
+  "description": "Backpack configuration and scripts for Create React App.",
+  "repository": "Skyscanner/backpack-react-scripts",
   "license": "MIT",
   "engines": {
     "node": ">=6"
-  },
-  "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -27,24 +24,17 @@
     "@babel/core": "7.2.2",
     "@svgr/webpack": "2.4.1",
     "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.5",
     "babel-plugin-named-asset-import": "^0.3.0",
     "babel-preset-react-app": "^7.0.0",
     "bfj": "6.1.1",
+    "bpk-mixins": "^17.11.31",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "2.4.2",
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
-    "eslint": "5.12.0",
-    "eslint-config-react-app": "^3.0.6",
-    "eslint-loader": "2.1.1",
-    "eslint-plugin-flowtype": "2.50.1",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-jsx-a11y": "6.1.2",
-    "eslint-plugin-react": "7.11.1",
     "file-loader": "2.0.0",
     "fork-ts-checker-webpack-plugin-alt": "0.4.14",
     "fs-extra": "7.0.1",
@@ -53,9 +43,11 @@
     "jest": "23.6.0",
     "jest-pnp-resolver": "1.0.2",
     "jest-resolve": "23.6.0",
+    "lodash": "^4.17.11",
     "mini-css-extract-plugin": "0.4.3",
+    "node-sass": "4.11.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
-    "pnp-webpack-plugin": "1.2.1",
+    "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.5.0",
@@ -73,8 +65,13 @@
     "workbox-webpack-plugin": "3.6.3"
   },
   "devDependencies": {
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "bpk-component-button": "^2.1.36",
+    "bpk-component-code": "^1.1.40",
+    "bpk-component-text": "^1.0.96",
+    "bpk-mixins": "^17.11.31",
+    "bpk-stylesheets": "^3.2.143",
+    "react": "16.4.2",
+    "react-dom": "16.4.2"
   },
   "optionalDependencies": {
     "fsevents": "1.2.4"

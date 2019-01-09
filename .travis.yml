@@ -25,7 +25,7 @@ env:
     - TEST_SUITE=simple
     - TEST_SUITE=installs
     - TEST_SUITE=kitchensink
-    - TEST_SUITE=kitchensink-eject
+    # - TEST_SUITE=kitchensink-eject
     - TEST_SUITE=behavior
 matrix:
   include:

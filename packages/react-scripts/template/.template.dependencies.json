@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "bpk-component-button": "*",
+    "bpk-component-code": "*",
+    "bpk-component-text": "*",
+    "bpk-mixins": "*",
+    "bpk-stylesheets": "*"
+  }
+}
