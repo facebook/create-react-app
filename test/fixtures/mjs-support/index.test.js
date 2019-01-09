@@ -8,7 +8,7 @@ test('can use mjs library in development', async () => {
   const browser = await puppeteer.launch({ headless: true });
   try {
     const page = await browser.newPage();
-    await page.goto(`http://localhost:${port}/`, { timeout: 60000 });
+    await page.goto(`http://localhost:${port}/`);
     await page.waitForSelector('.Pokemon-Name-Data', { timeout: 0 });
     const output = await page.evaluate(() => {
       return Array.from(
@@ -28,7 +28,7 @@ test('can use mjs library in production', async () => {
   const browser = await puppeteer.launch({ headless: true });
   try {
     const page = await browser.newPage();
-    await page.goto(`http://localhost:${port}/`, { timeout: 60000 });
+    await page.goto(`http://localhost:${port}/`);
     await page.waitForSelector('.Pokemon-Name-Data', { timeout: 0 });
     const output = await page.evaluate(() => {
       return Array.from(
