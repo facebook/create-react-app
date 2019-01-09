@@ -131,7 +131,7 @@ module.exports = function(webpackEnv) {
       ? shouldUseSourceMap
         ? 'source-map'
         : false
-      : isEnvDevelopment && 'cheap-module-source-map',
+      : isEnvDevelopment && 'eval-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
@@ -249,7 +249,7 @@ module.exports = function(webpackEnv) {
         chunks: 'all',
         name: false,
       },
-      // Keep the runtime chunk seperated to enable long term caching
+      // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
       runtimeChunk: true,
     },
@@ -314,7 +314,6 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-begin
                 baseConfig: {
                   extends: [require.resolve('eslint-config-react-app')],
-                  settings: { react: { version: '999.999.999' } },
                 },
                 ignore: false,
                 useEslintrc: false,
