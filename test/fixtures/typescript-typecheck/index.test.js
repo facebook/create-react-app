@@ -11,12 +11,11 @@ test('shows error overlay in browser', async () => {
     const page = await browser.newPage();
     await page.goto(`http://localhost:${port}/`);
     await page.waitForSelector('iframe', { timeout: 5000 });
-    const errorMsg = await page.evaluate(() => {
+    const overlayMsg = await page.evaluate(() => {
       const overlay = document.querySelector('iframe').contentWindow;
-      const error = overlay.document.querySelector('code');
-      return error.innerHTML;
+      return overlay.document.body.innerHTML;
     });
-    expect(errorMsg).toContain(expectedErrorMsg);
+    expect(overlayMsg).toContain(expectedErrorMsg);
   } finally {
     browser.close();
     done();
