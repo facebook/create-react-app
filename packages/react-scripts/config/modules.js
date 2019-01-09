@@ -76,8 +76,15 @@ function getAliases(options = {}) {
     }
 
     const aliasPath = value[0];
-    const resolvedAliasPath = path.resolve(paths.appPath, aliasPath);
 
+    // Alias paths are relative to the baseurl.
+    // If there is no baseUrl set, it will default to the root of the app.
+    const baseUrl = options.baseUrl
+      ? path.resolve(paths.appPath, options.baseUrl)
+      : paths.appPath;
+    const resolvedAliasPath = path.resolve(baseUrl, aliasPath);
+
+    // We then check if the resolved alias path is src or a sub folder of src.
     const relativePath = path.relative(paths.appSrc, resolvedAliasPath);
     const isSrc = relativePath === '';
     const isSubfolderOfSrc =
@@ -97,13 +104,37 @@ function getAliases(options = {}) {
   }, {});
 }
 
+function getWebpackAliases(aliases) {
+  return Object.keys(aliases).reduce(function(prev, alias) {
+    let aliasPath = aliases[alias];
+    const endsWithWilcard = alias.endsWith('*');
+    // Remove trailing wildcards (/*)
+    alias = alias.replace(/\/?\*$/, '');
+    aliasPath = aliasPath.replace(/\/\*$/, '');
+    // Webpack aliases work a little bit different than jsconfig/tsconfig.json paths
+    // By default webpack aliases act as a wildcard and for an exact match you have
+    // to suffix it with a dollar sign.
+    // tsconfig/jsconfig.json work the other way around and are an exact match unless
+    // suffixed by a wildcard.
+    const webpackAlias = endsWithWilcard ? alias : alias + '$';
+    prev[webpackAlias] = aliasPath;
+    return prev;
+  }, {});
+}
+
 function getJestAliases(aliases) {
   return Object.keys(aliases).reduce(function(prev, alias) {
-    const aliasPath = aliases[alias];
+    const endsWithWilcard = alias.endsWith('*');
+    let aliasPath = aliases[alias];
+
+    alias = alias.replace(/\/?\*$/, '');
+    const match = endsWithWilcard ? alias + '(.*)$' : alias;
+
+    aliasPath = aliasPath.replace(/\*$/, '');
     const relativeAliasPath = path.relative(paths.appPath, aliasPath);
-    const match = alias + '/(.*)$';
-    const target = '<rootDir>/' + relativeAliasPath + '/$1';
-    prev[match] = target;
+    const target = '<rootDir>/' + relativeAliasPath;
+
+    prev[match] = target + (endsWithWilcard ? '/$1' : '');
     return prev;
   }, {});
 }
@@ -137,11 +168,13 @@ function getModules() {
 
   const aliases = getAliases(options);
   const jestAliases = getJestAliases(aliases);
+  const webpackAliases = getWebpackAliases(aliases);
   const additionalModulePath = getAdditionalModulePath(options);
 
   return {
     aliases: aliases,
     jestAliases: jestAliases,
+    webpackAliases: webpackAliases,
     additionalModulePath: additionalModulePath,
     useTypeScript,
   };
