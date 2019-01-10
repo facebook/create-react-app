@@ -1,7 +1,7 @@
 {
   "name": "react-scripts",
   "version": "2.1.2",
-  "frontierVersion": "1.0.5",
+  "frontierVersion": "1.0.6",
   "description": "Configuration and scripts for Create React App.",
   "repository": "fs-webdev/create-react-app",
   "license": "MIT",

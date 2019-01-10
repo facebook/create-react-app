@@ -8,6 +8,8 @@ install:
   - "cd packages/react-scripts && npm i"
   - "cd ../../"
 before_deploy:
+# I don't think we need to put node_modules in the tarball
+  - "rm -r packages/react-scripts/node_modules"
   - "cd packages && tar -zcf react-scripts-$TRAVIS_TAG.tgz react-scripts"
   - "echo \"we should have tarred the script\""
   - "ls"
