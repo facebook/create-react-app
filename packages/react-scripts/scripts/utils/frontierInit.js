@@ -55,7 +55,23 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
     'react-router-dom@4.3.1',
     'fs-webdev/exo',
   ];
+  const defaultDevModules = ['react-styleguidist'];
+
   installModulesSync(defaultModules, useYarn);
+  installModulesSync(defaultDevModules, useYarn, true);
+  addStyleguidistScriptsToPackageJson(appPath);
+}
+
+function addStyleguidistScriptsToPackageJson(appPath) {
+  const appPackage = require(path.join(appPath, 'package.json'));
+
+  appPackage.scripts.styleguide = 'styleguidist server';
+  appPackage.scripts['styleguide:build'] = 'styleguidist build';
+
+  fs.writeFileSync(
+    path.join(appPath, 'package.json'),
+    JSON.stringify(appPackage, null, 2) + os.EOL
+  );
 }
 
 function configurePolymer(appPath, useYarn) {

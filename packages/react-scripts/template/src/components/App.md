@@ -1,0 +1,5 @@
+App Example
+
+```js
+<App />
+```
