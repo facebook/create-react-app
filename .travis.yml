@@ -7,25 +7,26 @@ install:
   - "npm i"
   - "cd packages/react-scripts && npm i"
   - "cd ../../"
-before_deploy:
-# I don't think we need to put node_modules in the tarball
-  - "rm -r packages/react-scripts/node_modules"
-  - "cd packages && tar -zcf react-scripts-$TRAVIS_TAG.tgz react-scripts"
-  - "echo \"we should have tarred the script\""
-  - "ls"
-  - "cd ../"
-deploy:
-  provider: releases
-  skip_cleanup: true
-  api_key:
-    secure: WWH+nxfSYTONXXEYhD4gi9h5mirVEt56bDIgcxeFVYRA1n9wsD2+fj25tMYigBMfg0le9Ws3BUNtEHvTV5jODjcwPK9t/Yag5eh4FZ+7oOhOPVcyDyyzVQ6QQkUFah+j8xnTqu6AxWOeJEXXA4xnO2IrIZR+hU8/8XyiLv/TtcxyCNmizoJ4o35wKhHq0SPx8QeXRnyhGU0GuRrqoR84ANgl2CwXxZhGx3vz+kESg5g8zATSJIBTP4gsdkc98kpZnoK1q2LBPby++nYQ/RcgaJUdNT5JSd73gtvu4LTuXcze8tEdzGH8nn7Qr7jtQdTFWT0JSQsPvNueHSGvnXPM1A5DZgWccpV04dp7pyNMnmJvFHArTrKeYHmrAwJNeFkRA+A1F8EnghAh3gFNBL2vVOgEx87MGVtCB9+FuhknBATyrlau26MMXnUI/FSwWiPg1gxo6EMSBCdrbRC/YrCs1BjOvkAeeKgVChh16XgZQgeD68FzqHskSF9aCapIcQ84HpjjYKzqh3NDbR/NUc2dp2WIYKlj5OaqpyzDey0yEWrZQwf1cucDSe9kxN2WwDKgj1yVHwwBjnPw8Jac1FejqjqpJdZ4KGpsC8mM/abx8g3TcNM0NGC/XauZSwCf4k3Qnoc4WUfUrOMRpJakSMF2fcGu0F8papMlibKKj0e5swE=
-  file: packages/react-scripts-$TRAVIS_TAG.tgz
-  on:
-    repo: fs-webdev/create-react-app
-    tags: true
 # This tells travis to not build when the branch is master. This is important to have on our master
 # branch as well because anytime we merge upstream changes from facebook, travis builds their whole matrix of 24 different builds.
 # We do NOT need or want that to occur. Please leave this branches.except here, even on the master branch
 branches:
   except:
     - master
+
+jobs:
+  include:
+    - stage: npm release
+      if: tag IS present
+      node_js: "10"
+      before_deploy:
+        - cd packages/react-scripts
+      script: npm ci
+      deploy:
+        provider: npm
+        email: "dl-fh-eng-frontier-core@ldschurch.org"
+        api_key: "$NPM_TOKEN"
+        skip_cleanup: true
+        on:
+          tags: true
+          branch: frontierMaster
