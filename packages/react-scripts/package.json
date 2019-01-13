@@ -1,7 +1,7 @@
 {
-  "name": "react-scripts",
-  "version": "2.1.2",
-  "frontierVersion": "1.0.6",
+  "name": "@familysearch/react-scripts",
+  "version": "1.1.1",
+  "craVersion": "2.1.2",
   "description": "Configuration and scripts for Create React App.",
   "repository": "fs-webdev/create-react-app",
   "license": "MIT",
@@ -90,5 +90,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://code.lds.org/artifactory/api/npm/npm-fhd/"
+  }
 }
