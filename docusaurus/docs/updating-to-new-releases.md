@@ -9,9 +9,9 @@ Create React App is divided into two packages:
 - `react-scripts` is a development dependency in the generated projects (including this one).
 
 When you run `npx create-react-app my-app` it automatically installs the latest version of Create React App.  
-> If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` to ensure that `npx` always grabs the latest version.
+> If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, please visit [Getting Started](https://facebook.github.io/create-react-app/docs/getting-started) to learn about current installtion steps. 
 
-When you run `create-react-app`, it always creates the project with the latest version of `react-scripts` so you’ll get all the new features and improvements in newly created apps automatically.
+Create-React-App creates the project with the latest version of `react-scripts` so you’ll get all the new features and improvements in newly created apps automatically.
 
 To update an existing project to a new version of `react-scripts`, [open the changelog](https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md), find the version you’re currently on (check `package.json` in this folder if you’re not sure), and apply the migration instructions for the newer versions.
 
