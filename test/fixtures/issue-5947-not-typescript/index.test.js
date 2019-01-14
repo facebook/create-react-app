@@ -21,6 +21,7 @@ test('Ignores node_modules when detecting TypeScript', async () => {
   // Step 1.
   // See if src/node_modules/package/index.ts is treated
   // as a JS project
+  fs.mkdirSync(path.join(...tsPackagePath.slice(0, 2)));
   fs.mkdirSync(path.join(...tsPackagePath.slice(0, 3)));
   fs.mkdirSync(path.join(...tsPackagePath.slice(0, 4)));
   fs.writeFileSync(path.join(...tsPackagePath));
