@@ -22,7 +22,7 @@ function writeJson(fileName, object) {
 }
 
 function verifyNoTypeScript() {
-  const typescriptFiles = globby('**/*.(ts|tsx)', { cwd: paths.appSrc });
+  const typescriptFiles = globby(['**/*.(ts|tsx)', '!**/node_modules'], { cwd: paths.appSrc });
   if (typescriptFiles.length > 0) {
     console.warn(
       chalk.yellow(
