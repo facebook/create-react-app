@@ -313,7 +313,7 @@ Then run:
 npm run deploy
 ```
 
-### Step 4: For a project's page, ensure your project’s settings use `gh-pages`
+### Step 4: For a project page, ensure your project’s settings use `gh-pages`
 
 Finally, make sure **GitHub Pages** option in your GitHub project settings is set to use the `gh-pages` branch:
 
