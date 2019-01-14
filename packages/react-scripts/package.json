@@ -1,6 +1,6 @@
 {
-  "name": "@familysearch/react-scripts",
-  "version": "1.1.1",
+  "name": "value",
+  "version": "1.2.0",
   "upstreamVersion": "2.1.2",
   "description": "Configuration and scripts for Create React App.",
   "repository": "fs-webdev/create-react-app",
@@ -9,9 +9,8 @@
     "node": ">=6"
   },
   "scripts": {
-    "postversion": "echo hi"
+    "postversion": "node getTaggedForkStyle.js"
   },
-  "name": "value",
   "bugs": {
     "url": "https://github.com/fs-webdev/create-react-app/issues"
   },
