@@ -1,6 +1,6 @@
 {
   "name": "value",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "upstreamVersion": "2.1.2",
   "description": "Configuration and scripts for Create React App.",
   "repository": "fs-webdev/create-react-app",
@@ -9,7 +9,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "postversion": "node getTaggedForkStyle.js"
+    "postversion": "node gitTaggedForkStyle.js"
   },
   "bugs": {
     "url": "https://github.com/fs-webdev/create-react-app/issues"
