@@ -18,6 +18,8 @@ That means that your `npm run lint:js` and `npm run lint:scss` scripts will no l
 
 ESLint
 
+**Note:** If your codebase uses `eslint-config-skyscanner-with-prettier` then you don't need to do anything.
+
 ```
 npx install-peerdeps --dev eslint-config-skyscanner@^3
 ```
