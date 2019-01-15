@@ -13,7 +13,9 @@ This installs the devDependency, it supports all things Create React App offers 
 - Formatting with [Prettier](https://github.com/prettier/prettier) for `.html, .js, .jsx, .json, .css, .scss` extensions
 - Precommit hook
 
-If you are using [VSCode](https://code.visualstudio.com/) editor, you can install it's [EsLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and add an `.eslintrc` file on the root of the project you're working on to enable editor linting marks, the file must contain the following:
+### ESLint
+
+If you are using [VSCode](https://code.visualstudio.com/) editor, you can install it's [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and add an `.eslintrc` file on the root of the project you're working on to enable editor linting marks, the file must contain the following:
 
 ```json
 {
