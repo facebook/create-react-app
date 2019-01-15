@@ -43,6 +43,7 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
+const asyncTsFork = useTypeScript && process.env.CI && process.env.CI !== 'false';
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -617,7 +618,7 @@ module.exports = function(webpackEnv) {
           typescript: resolve.sync('typescript', {
             basedir: paths.appNodeModules,
           }),
-          async: false,
+          async: asyncTsFork,
           checkSyntacticErrors: true,
           tsconfig: paths.appTsConfig,
           compilerOptions: {
@@ -637,7 +638,7 @@ module.exports = function(webpackEnv) {
             '!**/src/setupTests.*',
           ],
           watch: paths.appSrc,
-          silent: true,
+          silent: !asyncTsFork,
           formatter: typescriptFormatter,
         }),
     ].filter(Boolean),
