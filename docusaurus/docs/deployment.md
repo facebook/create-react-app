@@ -106,7 +106,8 @@ To override this, specify the `homepage` in your `package.json`, for example:
 This will let Create React App correctly infer the root path to use in the generated HTML file.
 
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
-More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
+More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
+
 <br>
 For example:
 
@@ -154,6 +155,17 @@ Now you can run `npm run build:staging` to build with the staging environment co
 You can specify other environments in the same way.
 
 Variables in `.env.production` will be used as fallback because `NODE_ENV` will always be set to `production` for a build.
+
+## [AWS Amplify](http://console.amplify.aws)
+
+The AWS Amplify Console provides continuous deployment and hosting for modern web apps (single page apps and static site generators) with serverless backends. The Amplify Console offers globally available CDNs, easy custom domain setup, feature branch deployments, and password protection.
+
+1. Login to the Amplify Console [here](https://console.aws.amazon.com/amplify/home)
+1. Connect your create-react-app repo and pick a branch. If you're looking for a CRA+Amplify starter, try the [create-react-app-auth-amplify starter](https://github.com/swaminator/create-react-app-auth-amplify) that demonstrates setting up auth in 10 minutes with create-react-app.
+1. The Amplify Console automatically detects the build settings. Choose Next.
+1. Choose *Save and deploy*
+
+If the build succeeds, the app is deployed and hosted on a global CDN with an amplifyapp.com domain. You can now continuously deploy changes to your frontend or backend and Amplify will automatically deploy those changes. Continuous deployment allows developers to deploy updates to their frontend and backend on every code commit to their Git repository. 
 
 ## [Azure](https://azure.microsoft.com/)
 
@@ -240,7 +252,8 @@ For more information see [Firebase Hosting](https://firebase.google.com/docs/hos
 
 ### Step 1: Add `homepage` to `package.json`
 
-**The step below is important!**<br>
+**The step below is important!**<br>
+
 **If you skip it, your app will not deploy correctly.**
 
 Open your `package.json` and add a `homepage` field for your project:
