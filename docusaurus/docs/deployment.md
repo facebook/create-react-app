@@ -167,7 +167,7 @@ The AWS Amplify Console provides continuous deployment and hosting for modern we
 
 If the build succeeds, the app is deployed and hosted on a global CDN with an amplifyapp.com domain. You can now continuously deploy changes to your frontend or backend. Continuous deployment allows developers to deploy updates to their frontend and backend on every code commit to their Git repository. 
 
-![Amplify Console](src/images/amplifyconsole-cra.gif)
+<img src="https://raw.githubusercontent.com/swaminator/create-react-app-auth-amplify/master/src/images/amplifyconsole-cra.gif" width="500" alt="amplify-console">
 
 ## [Azure](https://azure.microsoft.com/)
 
