@@ -271,7 +271,17 @@ function createApp(
     }
   }
 
-  if (useYarn && yarnUsesDefaultRegistry) {
+  if (useYarn) {
+    const yarnUsesDefaultRegistry =
+      execSync('yarnpkg config get registry')
+        .toString()
+        .trim() === 'https://registry.yarnpkg.com';
+    if (yarnUsesDefaultRegistry) {
+      fs.copySync(
+        require.resolve('./yarn.lock.cached'),
+        path.join(root, 'yarn.lock')
+      );
+    }
     fs.copySync(
       require.resolve('./yarn.lock.cached'),
       path.join(root, 'yarn.lock')
