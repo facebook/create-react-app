@@ -113,4 +113,12 @@ describe('React hook transforms', () => {
     const output = transform(test);
     expect(output).toMatchSnapshot();
   });
+
+  it('should support transform hook imports with no default', () => {
+    const test = `
+      import {useState} from "react";
+    `;
+    const output = transform(test);
+    expect(output).toMatchSnapshot();
+  });
 });

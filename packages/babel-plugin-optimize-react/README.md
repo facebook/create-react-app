@@ -1,4 +1,4 @@
-# babel-plugin-optimize-react-hooks
+# babel-plugin-optimize-react
 
 This Babel 7 plugin optimizes React hooks by transforming common patterns into more effecient output when using with tools such as [Create React App](https://github.com/facebook/create-react-app). For example, with this plugin the following output is optimized as shown:
 

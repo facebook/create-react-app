@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-optimize-react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Babel plugin for optimizing common React patterns",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",

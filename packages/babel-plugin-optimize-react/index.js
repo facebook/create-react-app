@@ -22,6 +22,7 @@ module.exports = function(babel) {
     const hooks = [];
     if (t.isStringLiteral(node.source) && node.source.value === 'react') {
       const specifiers = path.get('specifiers');
+      let hasDefaultSpecifier = false;
 
       for (let specifier of specifiers) {
         if (t.isImportSpecifier(specifier)) {
@@ -37,7 +38,15 @@ module.exports = function(babel) {
               specifier.remove();
             }
           }
+        } else if (t.isImportDefaultSpecifier(specifier)) {
+          hasDefaultSpecifier = true;
         }
+      }
+      // If there is no default specifier for React, add one
+      if (!hasDefaultSpecifier && specifiers.length > 0) {
+        const defaultSpecifierNode = t.importDefaultSpecifier(t.identifier("React"));
+      
+        path.pushContainer('specifiers', defaultSpecifierNode);
       }
     }
     return hooks;
