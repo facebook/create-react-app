@@ -106,7 +106,8 @@ To override this, specify the `homepage` in your `package.json`, for example:
 This will let Create React App correctly infer the root path to use in the generated HTML file.
 
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
-More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
+More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
+
 <br>
 For example:
 
@@ -240,7 +241,8 @@ For more information see [Firebase Hosting](https://firebase.google.com/docs/hos
 
 ### Step 1: Add `homepage` to `package.json`
 
-**The step below is important!**<br>
+**The step below is important!**<br>
+
 **If you skip it, your app will not deploy correctly.**
 
 Open your `package.json` and add a `homepage` field for your project:
@@ -291,11 +293,10 @@ Add the following scripts in your `package.json`:
 
 The `predeploy` script will run automatically before `deploy` is run.
 
-If you are deploying to a GitHub user page instead of a project page you'll need to make two
-additional modifications:
+If you are deploying to a GitHub user page instead of a project page you'll need to make one
+additional modification:
 
-1. First, change your repository's source branch to be any branch other than **master**.
-1. Additionally, tweak your `package.json` scripts to push deployments to **master**:
+1. Tweak your `package.json` scripts to push deployments to **master**:
 
 ```diff
   "scripts": {
@@ -312,7 +313,7 @@ Then run:
 npm run deploy
 ```
 
-### Step 4: Ensure your project’s settings use `gh-pages`
+### Step 4: For a project page, ensure your project’s settings use `gh-pages`
 
 Finally, make sure **GitHub Pages** option in your GitHub project settings is set to use the `gh-pages` branch:
 
