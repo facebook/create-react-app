@@ -18,7 +18,7 @@ describe('React hook transforms', () => {
     expect(output).toMatchSnapshot();
   });
 
-  it('should support transform hook imports with aliasing', () => {
+  it('should support hook imports with aliasing', () => {
     const test = `
       import React, {useState as foo} from "react";
     `;
@@ -114,9 +114,35 @@ describe('React hook transforms', () => {
     expect(output).toMatchSnapshot();
   });
 
-  it('should support transform hook imports with no default', () => {
+  it('should support hook imports with no default', () => {
     const test = `
       import {useState} from "react";
+    `;
+    const output = transform(test);
+    expect(output).toMatchSnapshot();
+  });
+
+  it('should support hook CJS require with no default', () => {
+    const test = `
+      const {useState} = require("react");
+    `;
+    const output = transform(test);
+    expect(output).toMatchSnapshot();
+  });
+
+  it('should support mixed hook imports', () => {
+    const test = `
+      import React from "react";
+      import {memo, useState} from "react";
+    `;
+    const output = transform(test);
+    expect(output).toMatchSnapshot();
+  });
+
+  it('should support mixed hook imports with no default', () => {
+    const test = `
+      import {useState} from "react";
+      import {memo} from "react";
     `;
     const output = transform(test);
     expect(output).toMatchSnapshot();

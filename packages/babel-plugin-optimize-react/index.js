@@ -17,12 +17,14 @@ module.exports = function(babel) {
   const { types: t } = babel;
 
   // Collects named imports of React hooks from the "react" package
-  function collectReactHooksAndRemoveTheirNamedImports(path) {
+  function collectReactHooksAndRemoveTheirNamedImports(path, state) {
     const node = path.node;
     const hooks = [];
     if (t.isStringLiteral(node.source) && node.source.value === 'react') {
       const specifiers = path.get('specifiers');
-      let hasDefaultSpecifier = false;
+      if (state.hasDefaultSpecifier === undefined) {
+        state.hasDefaultSpecifier = false;
+      }
 
       for (let specifier of specifiers) {
         if (t.isImportSpecifier(specifier)) {
@@ -39,14 +41,17 @@ module.exports = function(babel) {
             }
           }
         } else if (t.isImportDefaultSpecifier(specifier)) {
-          hasDefaultSpecifier = true;
+          state.hasDefaultSpecifier = true;
         }
       }
       // If there is no default specifier for React, add one
-      if (!hasDefaultSpecifier && specifiers.length > 0) {
-        const defaultSpecifierNode = t.importDefaultSpecifier(t.identifier("React"));
-      
+      if (state.hasDefaultSpecifier === false && specifiers.length > 0) {
+        const defaultSpecifierNode = t.importDefaultSpecifier(
+          t.identifier('React')
+        );
+
         path.pushContainer('specifiers', defaultSpecifierNode);
+        state.hasDefaultSpecifier = true;
       }
     }
     return hooks;
@@ -180,7 +185,10 @@ module.exports = function(babel) {
     ]);
     const bindingPath = binding.path;
 
-    if (t.isImportDefaultSpecifier(bindingPath) || t.isVariableDeclarator(bindingPath)) {
+    if (
+      t.isImportDefaultSpecifier(bindingPath) ||
+      t.isVariableDeclarator(bindingPath)
+    ) {
       bindingPath.parentPath.insertAfter(createElementDeclaration);
       // Make sure we declare our new now so scope tracking continues to work
       const reactElementDeclarationPath = bindingPath.parentPath.getNextSibling();
@@ -192,12 +200,15 @@ module.exports = function(babel) {
   return {
     name: 'babel-plugin-optimize-react',
     visitor: {
-      ImportDeclaration(path) {
+      ImportDeclaration(path, state) {
         // Collect all hooks that are named imports from the React package. i.e.:
         //   import React, {useState} from "react";
         // As we collection them, we also remove the imports from the declaration.
 
-        const importedHooks = collectReactHooksAndRemoveTheirNamedImports(path);
+        const importedHooks = collectReactHooksAndRemoveTheirNamedImports(
+          path,
+          state
+        );
         if (importedHooks.length > 0) {
           // Create a destructured variable declaration. i.e.:
           //   const {useEffect, useState} = React;
