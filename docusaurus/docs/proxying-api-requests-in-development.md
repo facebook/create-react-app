@@ -9,11 +9,9 @@ sidebar_label: Proxying in Development
 People often serve the front-end React app from the same host and port as their backend implementation.<br>
 For example, a production setup might look like this after the app is deployed:
 
-```
-/             - static server returns index.html with React app
-/todos        - static server returns index.html with React app
-/api/todos    - server handles any /api/* requests using the backend implementation
-```
+    /             - static server returns index.html with React app
+    /todos        - static server returns index.html with React app
+    /api/todos    - server handles any /api/* requests using the backend implementation
 
 Such setup is **not** required. However, if you **do** have a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
 
