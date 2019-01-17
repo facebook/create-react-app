@@ -9,7 +9,7 @@ function transform(code) {
   }).code;
 }
 
-describe('Babel plugin optimize React hooks', () => {
+describe('React hook transforms', () => {
   it('should support transform hook imports', () => {
     const test = `
       import React, {useState} from "react";
