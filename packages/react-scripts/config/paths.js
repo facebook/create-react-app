@@ -42,7 +42,7 @@ const getPublicUrl = appPackageJson =>
 function getServedPath(appPackageJson) {
   const publicUrl = getPublicUrl(appPackageJson);
   const servedUrl =
-    envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : './');
+    envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : (process.platform === "win32" ? './' : '/'));
   return ensureSlash(servedUrl, true);
 }
 
