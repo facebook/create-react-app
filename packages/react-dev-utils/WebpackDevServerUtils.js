@@ -18,6 +18,7 @@ const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
 const typescriptFormatter = require('./typescriptFormatter');
+const forkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const isInteractive = process.stdout.isTTY;
 
@@ -134,19 +135,30 @@ function createCompiler(
   });
 
   let isFirstCompile = true;
+  let isTsCheckInProgress = false;
   let tsMessagesPromise;
   let tsMessagesResolver;
 
   if (useTypeScript) {
     compiler.hooks.beforeCompile.tap('beforeCompile', () => {
+      isTsCheckInProgress = true;
       tsMessagesPromise = new Promise(resolve => {
-        tsMessagesResolver = msgs => resolve(msgs);
+        tsMessagesResolver = msgs => {
+          isTsCheckInProgress = false;
+          resolve(msgs);
+        };
       });
     });
 
-    compiler.hooks.forkTsCheckerReceive.tap(
-      'afterTypeScriptCheck',
-      (diagnostics, lints) => {
+    compiler.hooks.compilation.tap('compilation', async compilation => {
+      const messages = await tsMessagesPromise;
+      compilation.errors.push(...messages.errors);
+      compilation.warnings.push(...messages.warnings);
+    });
+
+    forkTsCheckerWebpackPlugin
+      .getCompilerHooks(compiler)
+      .receive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
         const allMsgs = [...diagnostics, ...lints];
         const format = message =>
           `${message.file}\n${typescriptFormatter(message, true)}`;
@@ -157,8 +169,7 @@ function createCompiler(
             .filter(msg => msg.severity === 'warning')
             .map(format),
         });
-      }
-    );
+      });
   }
 
   // "done" event fires when Webpack has finished recompiling the bundle.
@@ -179,7 +190,7 @@ function createCompiler(
       errors: true,
     });
 
-    if (useTypeScript && statsData.errors.length === 0) {
+    if (useTypeScript && statsData.errors.length === 0 && isTsCheckInProgress) {
       console.log(
         chalk.yellow(
           'Files successfully emitted, waiting for typecheck results...'
@@ -189,10 +200,6 @@ function createCompiler(
       const messages = await tsMessagesPromise;
       statsData.errors.push(...messages.errors);
       statsData.warnings.push(...messages.warnings);
-      // Push errors and warnings into compilation result
-      // to show them after page refresh triggered by user.
-      stats.compilation.errors.push(...messages.errors);
-      stats.compilation.warnings.push(...messages.warnings);
 
       if (messages.errors.length > 0) {
         devSocket.errors(messages.errors);

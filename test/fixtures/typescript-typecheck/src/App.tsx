@@ -7,7 +7,7 @@ class App extends React.Component {
 }
 
 function format(value: string) {
-  return value.toUpperCase();
+  return value;
 }
 
 export default App;
