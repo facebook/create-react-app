@@ -21,6 +21,17 @@ export function MyComponent() {
 }"
 `;
 
+exports[`React createElement transforms should transform React.createElement calls #4 1`] = `
+"import * as React from \\"react\\";
+const __reactCreateElement__ = React.createElement;
+
+const node = __reactCreateElement__(\\"div\\", null, __reactCreateElement__(\\"span\\", null, \\"Hello world!\\"));
+
+export function MyComponent() {
+  return node;
+}"
+`;
+
 exports[`React createElement transforms should transform React.createElement calls 1`] = `
 "import React from \\"react\\";
 const __reactCreateElement__ = React.createElement;

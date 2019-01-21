@@ -147,4 +147,14 @@ describe('React hook transforms', () => {
     const output = transform(test);
     expect(output).toMatchSnapshot();
   });
+
+  it('should support mixed hook imports with no default #2', () => {
+    const test = `
+      import {memo, useRef, useState} from "react";
+
+      export const Portal = memo(() => null);
+    `;
+    const output = transform(test);
+    expect(output).toMatchSnapshot();
+  });
 });

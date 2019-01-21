@@ -13,17 +13,47 @@ const reactHooks = new Set([
   'useState',
 ]);
 
+const reactNamedImports = new Set([
+  'Children',
+  'cloneElement',
+  'Component',
+  'ConcurrentMode',
+  'createContext',
+  'createElement',
+  'createFactory',
+  'forwardRef',
+  'Fragment',
+  'isValidElement',
+  'lazy',
+  'memo',
+  'Profiler',
+  'PureComponent',
+  'StrictMode',
+  'Suspense',
+  'useCallback',
+  'useContext',
+  'useDebugValue',
+  'useEffect',
+  'useImperativeHandle',
+  'useLayoutEffect',
+  'useMemo',
+  'useReducer',
+  'useRef',
+  'useState',
+  'version',
+]);
+
 module.exports = function(babel) {
   const { types: t } = babel;
 
-  // Collects named imports of React hooks from the "react" package
-  function collectReactHooksAndRemoveTheirNamedImports(path, state) {
+  // Collects named imports from the "react" package
+  function collectAllReactImportalsAndRemoveTheirNamedImports(path, state) {
     const node = path.node;
     const hooks = [];
     if (t.isStringLiteral(node.source) && node.source.value === 'react') {
       const specifiers = path.get('specifiers');
-      if (state.hasDefaultSpecifier === undefined) {
-        state.hasDefaultSpecifier = false;
+      if (state.hasDefaultOrNamespaceSpecifier === undefined) {
+        state.hasDefaultOrNamespaceSpecifier = false;
       }
 
       for (let specifier of specifiers) {
@@ -32,7 +62,7 @@ module.exports = function(babel) {
           const localNode = specifier.node.local;
 
           if (t.isIdentifier(importedNode) && t.isIdentifier(localNode)) {
-            if (reactHooks.has(importedNode.name)) {
+            if (reactNamedImports.has(importedNode.name)) {
               hooks.push({
                 imported: importedNode.name,
                 local: localNode.name,
@@ -41,17 +71,33 @@ module.exports = function(babel) {
             }
           }
         } else if (t.isImportDefaultSpecifier(specifier)) {
-          state.hasDefaultSpecifier = true;
+          const local = specifier.get('local');
+
+          if (t.isIdentifier(local) && local.node.name === 'React') {
+            state.hasDefaultOrNamespaceSpecifier = true;
+          }
+        } else if (t.isImportNamespaceSpecifier(specifier)) {
+          const local = specifier.get('local');
+
+          if (t.isIdentifier(local) && local.node.name === 'React') {
+            state.hasDefaultOrNamespaceSpecifier = true;
+          }
         }
       }
       // If there is no default specifier for React, add one
-      if (state.hasDefaultSpecifier === false && specifiers.length > 0) {
+      if (
+        state.hasDefaultOrNamespaceSpecifier === false &&
+        specifiers.length > 0
+      ) {
         const defaultSpecifierNode = t.importDefaultSpecifier(
           t.identifier('React')
         );
 
-        path.pushContainer('specifiers', defaultSpecifierNode);
-        state.hasDefaultSpecifier = true;
+        // We unshift so it goes to the beginning
+        path.unshiftContainer('specifiers', defaultSpecifierNode);
+        state.hasDefaultOrNamespaceSpecifier = true;
+        // Make sure we register the binding, so tracking continues to work
+        path.scope.registerDeclaration(path);
       }
     }
     return hooks;
@@ -65,7 +111,10 @@ module.exports = function(babel) {
       if (binding !== undefined) {
         const bindingPath = binding.path;
 
-        if (t.isImportDefaultSpecifier(bindingPath)) {
+        if (
+          t.isImportDefaultSpecifier(bindingPath) ||
+          t.isImportNamespaceSpecifier(bindingPath)
+        ) {
           const parentPath = bindingPath.parentPath;
 
           if (
@@ -187,6 +236,7 @@ module.exports = function(babel) {
 
     if (
       t.isImportDefaultSpecifier(bindingPath) ||
+      t.isImportNamespaceSpecifier(bindingPath) ||
       t.isVariableDeclarator(bindingPath)
     ) {
       bindingPath.parentPath.insertAfter(createElementDeclaration);
@@ -205,18 +255,18 @@ module.exports = function(babel) {
         //   import React, {useState} from "react";
         // As we collection them, we also remove the imports from the declaration.
 
-        const importedHooks = collectReactHooksAndRemoveTheirNamedImports(
+        const reactNamedImports = collectAllReactImportalsAndRemoveTheirNamedImports(
           path,
           state
         );
-        if (importedHooks.length > 0) {
+        if (reactNamedImports.length > 0) {
           // Create a destructured variable declaration. i.e.:
-          //   const {useEffect, useState} = React;
+          //   const {memo, useEffect, useState} = React;
           // Then insert it below the import declaration node.
 
           const declarations = t.variableDeclarator(
             t.objectPattern(
-              importedHooks.map(({ imported, local }) =>
+              reactNamedImports.map(({ imported, local }) =>
                 t.objectProperty(
                   t.identifier(imported),
                   t.identifier(local),

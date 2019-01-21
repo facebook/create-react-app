@@ -109,10 +109,21 @@ const {
 
 exports[`React hook transforms should support mixed hook imports 1`] = `
 "import React from \\"react\\";
-import { memo } from \\"react\\";
+import \\"react\\";
 const {
+  memo,
   useState
 } = React;"
+`;
+
+exports[`React hook transforms should support mixed hook imports with no default #2 1`] = `
+"import React from \\"react\\";
+const {
+  memo,
+  useRef,
+  useState
+} = React;
+export const Portal = memo(() => null);"
 `;
 
 exports[`React hook transforms should support mixed hook imports with no default 1`] = `
@@ -120,7 +131,10 @@ exports[`React hook transforms should support mixed hook imports with no default
 const {
   useState
 } = React;
-import { memo } from \\"react\\";"
+import \\"react\\";
+const {
+  memo
+} = React;"
 `;
 
 exports[`React hook transforms should support transform hook imports 1`] = `

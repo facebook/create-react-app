@@ -47,4 +47,18 @@ describe('React createElement transforms', () => {
     const output = transform(test);
     expect(output).toMatchSnapshot();
   });
+
+  it('should transform React.createElement calls #4', () => {
+    const test = `
+      import * as React from "react";
+  
+      const node = React.createElement("div", null, React.createElement("span", null, "Hello world!"));
+  
+      export function MyComponent() {
+        return node;
+      }
+    `;
+    const output = transform(test);
+    expect(output).toMatchSnapshot();
+  });
 });
