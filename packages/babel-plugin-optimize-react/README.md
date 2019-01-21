@@ -14,15 +14,15 @@ var __ref__0 = useState(Math.random());
 var value = __ref__0[0];
 ```
 
-## Named imports to hooks get transformed
+## Named imports for React get transformed
 
 ```js
 // Original
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 
 // With this plugin
 import React from 'react';
-const {useState} = React;
+const {memo, useState} = React;
 ```
 
 ## Array destructuring transform for React's built-in hooks
