@@ -111,6 +111,7 @@ CMD
 
 docker run \
   --env CI=true \
+  --env NPM_CONFIG_PREFIX=/home/node/.npm \
   --env NPM_CONFIG_QUIET=true \
   --tty \
   --user node \
