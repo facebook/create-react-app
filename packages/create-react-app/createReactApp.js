@@ -582,10 +582,15 @@ function getPackageName(installPackage) {
     );
   } else if (installPackage.match(/^file:/)) {
     const installPackagePath = installPackage.match(/^file:(.*)?$/)[1];
+    console.log('installPackagePath: ', installPackagePath);
     const installPackageJson = require(path.join(
       installPackagePath,
       'package.json'
     ));
+    console.log(
+      'InstallPackageJson: ',
+      JSON.stringify(installPackageJson, null, 2)
+    );
     return Promise.resolve(installPackageJson.name);
   }
   return Promise.resolve(installPackage);

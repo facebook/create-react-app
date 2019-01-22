@@ -1,13 +1,13 @@
-.App {
+.app {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
+.appLogo {
+  animation: appLogoSpin infinite 20s linear;
   height: 40vmin;
 }
 
-.App-header {
+.appHeader {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -18,11 +18,11 @@
   color: white;
 }
 
-.App-link {
+.appLink {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+@keyframes appLogoSpin {
   from {
     transform: rotate(0deg);
   }

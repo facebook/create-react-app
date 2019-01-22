@@ -23,11 +23,11 @@ async function promptForConfig() {
       message: 'What additional features does your app require',
       choices: [
         {
+          name: 'Using a shared Polymer Component within your React App?',
           value: 'polymer',
-          name: 'Using a shared Polymer Component?',
         },
         {
-          name: 'Redux',
+          name: `Redux (Chances are high you don't need this yet)`,
           value: 'redux',
         },
       ],
@@ -55,7 +55,8 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
     'react-router-dom@4.3.1',
     'fs-webdev/exo',
   ];
-  const defaultDevModules = ['react-styleguidist'];
+
+  const defaultDevModules = ['react-styleguidist@9.0.0-beta4', 'webpack'];
 
   installModulesSync(defaultModules, useYarn);
   installModulesSync(defaultDevModules, useYarn, true);
@@ -63,9 +64,11 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
 }
 
 function addStyleguidistScriptsToPackageJson(appPath) {
-  const appPackage = require(path.join(appPath, 'package.json'));
+  const appPackage = JSON.parse(
+    fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8')
+  );
 
-  appPackage.scripts.styleguide = 'styleguidist server';
+  appPackage.scripts.styleguide = 'styleguidist server --open';
   appPackage.scripts['styleguide:build'] = 'styleguidist build';
 
   fs.writeFileSync(
@@ -108,12 +111,13 @@ function configurePolymer(appPath, useYarn) {
 
 function injectPolymerCode(appPath) {
   const indexPath = path.join(appPath, 'public/index.html');
+  let indexHtml = fs.readFileSync(indexPath, 'UTF8');
+
   const polymerCode = `
     <script src="%PUBLIC_URL%/vendor/webcomponents-bundle.js"></script>
     <script src="%PUBLIC_URL%/vendor/custom-elements-es5-adapter.js"></script>
  `;
 
-  let indexHtml = fs.readFileSync(indexPath, 'UTF8');
   indexHtml = indexHtml.replace(
     '<!--FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->',
     polymerCode
