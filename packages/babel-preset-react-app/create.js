@@ -91,7 +91,8 @@ module.exports = function(api, opts, env) {
           // bundle size. We shouldn't rely on magic to try and shrink it.
           useBuiltIns: false,
           // Do not transform modules to CJS
-          modules: false,
+          // unless useESModules is false
+          modules: useESModules ? false : 'cjs',
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
