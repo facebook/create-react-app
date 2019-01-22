@@ -18,7 +18,8 @@
       "peerDependencies": false
     }],
     "import/no-unresolved": 0,
-    "react/jsx-filename-extension": 0
+    "react/jsx-filename-extension": 0,
+    "indent": ["error", 2]
   },
   "plugins": [
     "jsx-a11y"
