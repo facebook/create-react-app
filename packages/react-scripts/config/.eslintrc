@@ -10,6 +10,7 @@
     "plugin:jsx-a11y/recommended"
   ],
   "rules": {
+    "semi": ["error", "always"],
     "quotes": ["error", "single"],
     "jsx-quotes": ["error", "prefer-single"],
     "import/no-extraneous-dependencies": ["error", {
