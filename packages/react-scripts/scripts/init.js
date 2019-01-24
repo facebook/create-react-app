@@ -92,7 +92,7 @@ module.exports = function(
   appPackage.dependencies = appPackage.dependencies || {};
 
   const useTypeScript = appPackage.dependencies['typescript'] != null;
-  const wheelerMode = appPackage.dependencies['emotion'] != null;
+  const wheelerMode = appPackage.dependencies['@emotion/styled'] != null;
 
   // Setup the script rules
   appPackage.scripts = {
