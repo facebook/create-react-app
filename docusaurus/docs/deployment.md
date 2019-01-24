@@ -276,7 +276,7 @@ Now, whenever you run `npm run build`, you will see a cheat sheet with instructi
 To publish it at [https://myusername.github.io/my-app](https://myusername.github.io/my-app), run:
 
 ```sh
-npm install --save gh-pages
+npm install gh-pages --save-dev
 ```
 
 Alternatively you may use `yarn`:
