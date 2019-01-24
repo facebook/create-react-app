@@ -92,7 +92,6 @@ module.exports = function(
   appPackage.dependencies = appPackage.dependencies || {};
 
   const useTypeScript = appPackage.dependencies['typescript'] != null;
-  const wheelerMode = appPackage.dependencies['@emotion/styled'] != null;
 
   // Setup the script rules
   appPackage.scripts = {
@@ -123,10 +122,14 @@ module.exports = function(
     );
   }
 
+
   // Copy the files for the user
-  const templatePath = template
-    ? path.resolve(originalDirectory, template)
-    : path.join(ownPath, useTypeScript ? 'template-typescript' : wheelerMode ? 'template-wheeler' : 'template');
+  const templatePath = template 
+    ? template === 'minimal' 
+      ? path.join(ownPath, 'template-minimal') 
+      : path.resolve(originalDirectory, template)
+    : path.join(ownPath, useTypeScript ? 'template-typescript' : 'template');
+  
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {

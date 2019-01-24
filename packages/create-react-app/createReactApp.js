@@ -75,10 +75,10 @@ const program = new commander.Command(packageJson.name)
     '--scripts-version <alternative-package>',
     'use a non-standard version of react-scripts'
   )
-  .option('--wheeler-mode')
   .option('--use-npm')
   .option('--use-pnp')
   .option('--typescript')
+  .option('-m, --minimal')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -182,7 +182,7 @@ createApp(
   program.useNpm,
   program.usePnp,
   program.typescript,
-  program.wheelerMode,
+  program.minimal,
   hiddenProgram.internalTestingTemplate
 );
 
@@ -193,7 +193,7 @@ function createApp(
   useNpm,
   usePnp,
   useTypescript,
-  wheelerMode,
+  minimal,
   template
 ) {
   const root = path.resolve(name);
@@ -287,7 +287,7 @@ function createApp(
     useYarn,
     usePnp,
     useTypescript,
-    wheelerMode
+    minimal
   );
 }
 
@@ -372,10 +372,10 @@ function run(
   useYarn,
   usePnp,
   useTypescript,
-  wheelerMode
+  minimal
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = !wheelerMode ? ['react', 'react-dom', packageToInstall] : ['react@next', 'react-dom@next', '@emotion/styled', packageToInstall];
+  const allDependencies = !minimal ? ['react', 'react-dom', packageToInstall] : ['react@next', 'react-dom@next', packageToInstall];
   if (useTypescript) {
     // TODO: get user's node version instead of installing latest
     allDependencies.push(
@@ -385,6 +385,10 @@ function run(
       '@types/jest',
       'typescript'
     );
+  }
+
+  if (minimal) {
+    template = 'minimal';
   }
 
   console.log('Installing packages. This might take a couple of minutes.');
