@@ -375,7 +375,7 @@ function run(
   minimal
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = !minimal ? ['react', 'react-dom', packageToInstall] : ['react@next', 'react-dom@next', packageToInstall];
+  const allDependencies = ['react', 'react-dom', packageToInstall];
   if (useTypescript) {
     // TODO: get user's node version instead of installing latest
     allDependencies.push(
