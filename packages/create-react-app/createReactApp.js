@@ -75,6 +75,7 @@ const program = new commander.Command(packageJson.name)
     '--scripts-version <alternative-package>',
     'use a non-standard version of react-scripts'
   )
+  .option('--wheeler-mode')
   .option('--use-npm')
   .option('--use-pnp')
   .option('--typescript')
@@ -181,6 +182,7 @@ createApp(
   program.useNpm,
   program.usePnp,
   program.typescript,
+  program.wheelerMode,
   hiddenProgram.internalTestingTemplate
 );
 
@@ -191,6 +193,7 @@ function createApp(
   useNpm,
   usePnp,
   useTypescript,
+  wheelerMode,
   template
 ) {
   const root = path.resolve(name);
@@ -283,7 +286,8 @@ function createApp(
     template,
     useYarn,
     usePnp,
-    useTypescript
+    useTypescript,
+    wheelerMode
   );
 }
 
@@ -367,10 +371,11 @@ function run(
   template,
   useYarn,
   usePnp,
-  useTypescript
+  useTypescript,
+  wheelerMode
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = ['react', 'react-dom', packageToInstall];
+  const allDependencies = !wheelerMode ? ['react', 'react-dom', packageToInstall] : ['react@next', 'react-dom@next', '@emotion/styled', packageToInstall];
   if (useTypescript) {
     // TODO: get user's node version instead of installing latest
     allDependencies.push(
