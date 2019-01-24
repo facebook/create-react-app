@@ -6,7 +6,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/es/storage' // default: localStorage if web, AsyncStorage if react-native
 import initState from './init'
 
-export default function configureStore () {
+export default function configureStore() {
   let store
 
   const logger = createLogger({})
@@ -18,15 +18,13 @@ export default function configureStore () {
   }
 
   const composeEnhancers =
-    typeof window === 'object' &&
-      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
       ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
         // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-      }) : compose
+      })
+      : compose
 
-  const enhancer = composeEnhancers(
-    applyMiddleware(...middlewares)
-  )
+  const enhancer = composeEnhancers(applyMiddleware(...middlewares))
 
   const persistorConfig = {
     key: 'root',
@@ -40,9 +38,7 @@ export default function configureStore () {
 
   try {
     persistStore(store)
-  } catch (e) {
-
-  }
+  } catch (e) {}
 
   return store
 }

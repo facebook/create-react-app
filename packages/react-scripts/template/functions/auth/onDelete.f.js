@@ -32,9 +32,9 @@ exports = module.exports = functions.auth.user().onDelete((userMetadata, context
     return null
   })
 
-  const deleteUser = admin.database().ref(`/users/${uid}`).remove()
-  const deleteTokens = admin.database().ref(`/notification_tokens/${uid}`).remove()
-  const deleteChats = admin.database().ref(`/users_chats/${uid}`).remove()
+  const deleteUser = admin.database().ref(`/users/${uid}`).set(null)
+  const deleteTokens = admin.database().ref(`/notification_tokens/${uid}`).set(null)
+  const deleteChats = admin.database().ref(`/users_chats/${uid}`).set(null)
 
   const usersCount = admin.database()
     .ref(`/users_count`)

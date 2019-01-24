@@ -1,30 +1,12 @@
+import App from 'rmw-shell'
 import React from 'react'
-import Loadable from 'react-loadable'
-import LoadingComponent from 'rmw-shell/lib/components/LoadingComponent'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import A2HSProvider from 'a2hs'
+import config from './config'
+import configureStore from './store'
+import locales from './config/locales'
+import { addLocalizationData } from 'rmw-shell/lib/config/locales'
 
-const Loading = () => <LoadingComponent />
+addLocalizationData(locales)
 
-export const MainAsync = Loadable({
-  loader: () => import('../src/containers/Main'),
-  loading: Loading
-})
+const Main = () => <App appConfig={{ configureStore, ...config }} />
 
-export const LPAsync = Loadable({
-  loader: () => import('../src/pages/LandingPage'),
-  loading: Loading
-})
-
-export default function App() {
-  return (
-    <A2HSProvider>
-      <Router>
-        <Switch>
-          <Route path="/" exact component={LPAsync} />
-          <Route component={MainAsync} />
-        </Switch>
-      </Router>
-    </A2HSProvider>
-  )
-}
+export default Main
