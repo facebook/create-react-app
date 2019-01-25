@@ -157,7 +157,12 @@ function build(previousFileSizes) {
         });
       } else {
         messages = formatWebpackMessages(
-          stats.toJson({ all: false, warnings: true, errors: true })
+          stats.toJson({
+            all: false,
+            children: true,
+            warnings: true,
+            errors: true,
+          })
         );
       }
       if (messages.errors.length) {

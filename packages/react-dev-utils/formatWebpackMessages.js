@@ -109,11 +109,24 @@ function formatMessage(message, isError) {
   return message.trim();
 }
 
+function recursivelyFindMessages(json, property) {
+  let messages = json[property];
+  if (json.children) {
+    json.children.forEach(function(child) {
+      const childMessages = recursivelyFindMessages(child, property);
+      messages = messages.concat(childMessages);
+    });
+  }
+  return messages;
+}
+
 function formatWebpackMessages(json) {
-  const formattedErrors = json.errors.map(function(message) {
+  const errors = recursivelyFindMessages(json, 'errors');
+  const formattedErrors = errors.map(function(message) {
     return formatMessage(message, true);
   });
-  const formattedWarnings = json.warnings.map(function(message) {
+  const warnings = recursivelyFindMessages(json, 'warnings');
+  const formattedWarnings = warnings.map(function(message) {
     return formatMessage(message, false);
   });
   const result = { errors: formattedErrors, warnings: formattedWarnings };

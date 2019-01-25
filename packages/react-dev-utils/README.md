@@ -220,7 +220,7 @@ measureFileSizesBeforeBuild(buildFolder).then(previousFileSizes => {
 });
 ```
 
-#### `formatWebpackMessages({errors: Array<string>, warnings: Array<string>}): {errors: Array<string>, warnings: Array<string>}`
+#### `formatWebpackMessages({errors: Array<string>, warnings: Array<string>, children}): {errors: Array<string>, warnings: Array<string>}`
 
 Extracts and prettifies warning and error messages from webpack [stats](https://github.com/webpack/docs/wiki/node.js-api#stats) object.
 
@@ -236,7 +236,12 @@ compiler.hooks.invalid.tap('invalid', function() {
 });
 
 compiler.hooks.done.tap('done', function(stats) {
-  var rawMessages = stats.toJson({}, true);
+  var rawMessages = stats.toJson({
+    all: false,
+    children: true,
+    warnings: true,
+    errors: true,
+  });
   var messages = formatWebpackMessages(rawMessages);
   if (!messages.errors.length && !messages.warnings.length) {
     console.log('Compiled successfully!');

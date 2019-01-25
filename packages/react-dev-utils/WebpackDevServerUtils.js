@@ -153,7 +153,7 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
     // We only construct the warnings and errors for speed:
     // https://github.com/facebook/create-react-app/issues/4492#issuecomment-421959548
     const messages = formatWebpackMessages(
-      stats.toJson({ all: false, warnings: true, errors: true })
+      stats.toJson({ all: false, children: true, warnings: true, errors: true })
     );
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
