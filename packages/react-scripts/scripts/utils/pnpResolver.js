@@ -1,3 +1,7 @@
+// This code is copied from https://github.com/arcanis/jest-pnp-resolver because they haven't released
+// a version that works with jest 24 yet. Once they release it, this file should be deleted and the
+// `jest-pnp-resolver` dependency updated.
+
 let pnp;
 
 try {
