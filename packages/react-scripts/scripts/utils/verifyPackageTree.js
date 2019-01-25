@@ -8,7 +8,7 @@
 
 'use strict';
 
-const chalk = require('chalk');
+const chalk = require('react-dev-utils/chalk');
 const fs = require('fs');
 const path = require('path');
 
@@ -97,7 +97,7 @@ function verifyPackageTree() {
             )}) \n\n` +
             `Manually installing incompatible versions is known to cause hard-to-debug issues.\n\n` +
             chalk.red(
-              `If prefer to ignore this check, add ${chalk.bold(
+              `If you would prefer to ignore this check, add ${chalk.bold(
                 'SKIP_PREFLIGHT_CHECK=true'
               )} to an ${chalk.bold('.env')} file in your project.\n` +
                 `That will permanently disable this message but you might encounter other issues.\n\n`

@@ -3,18 +3,18 @@ id: adding-bootstrap
 title: Adding Bootstrap
 ---
 
-You don’t have to use [reactstrap](https://reactstrap.github.io/) together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
+While you don’t have to use any specific library to integrate Bootstrap with React apps, it's often easier than trying to wrap the Bootstrap jQuery plugins. [React Bootstrap](https://react-bootstrap.netlify.com/) is the most popular option, that strives for complete parity with bootstrap. [reactstrap](https://reactstrap.github.io/) is also a good choice for projects looking for smaller builds at the expense of some features.
 
-Install reactstrap and Bootstrap from npm. reactstrap does not include Bootstrap CSS so this needs to be installed as well:
+Each project's respective documentation site has detailed instructions for installing and using them. Both depend on the Bootstrap css file so install that as well:
 
 ```sh
-npm install --save reactstrap bootstrap@4
+npm install --save bootstrap
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add bootstrap@4 reactstrap
+yarn add bootstrap
 ```
 
 Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your `src/index.js` file:
@@ -24,14 +24,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
 ```
-
-Import required reactstrap components within `src/App.js` file or your custom component files:
-
-```js
-import { Button } from 'reactstrap';
-```
-
-Now you are ready to use the imported reactstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/zx6658/d9f128cd57ca69e583ea2b5fea074238/raw/a56701c142d0c622eb6c20a457fbc01d708cb485/App.js) redone using reactstrap.
 
 ## Using a Custom Theme
 
