@@ -1,3 +1,12 @@
+// @remove-file-on-eject
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+'use strict';
+
 // This code is copied from https://github.com/arcanis/jest-pnp-resolver because they haven't
 // released a version that works with jest 24 yet. Once they release it, this file should be
 // deleted and the `jest-pnp-resolver` dependency updated.
