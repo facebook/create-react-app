@@ -135,25 +135,14 @@ function createCompiler(
   });
 
   let isFirstCompile = true;
-  let isTsCheckInProgress = false;
   let tsMessagesPromise;
   let tsMessagesResolver;
 
   if (useTypeScript) {
     compiler.hooks.beforeCompile.tap('beforeCompile', () => {
-      isTsCheckInProgress = true;
       tsMessagesPromise = new Promise(resolve => {
-        tsMessagesResolver = msgs => {
-          isTsCheckInProgress = false;
-          resolve(msgs);
-        };
+        tsMessagesResolver = msgs => resolve(msgs);
       });
-    });
-
-    compiler.hooks.compilation.tap('compilation', async compilation => {
-      const messages = await tsMessagesPromise;
-      compilation.errors.push(...messages.errors);
-      compilation.warnings.push(...messages.warnings);
     });
 
     forkTsCheckerWebpackPlugin
@@ -190,16 +179,24 @@ function createCompiler(
       errors: true,
     });
 
-    if (useTypeScript && statsData.errors.length === 0 && isTsCheckInProgress) {
-      console.log(
-        chalk.yellow(
-          'Files successfully emitted, waiting for typecheck results...'
-        )
-      );
+    if (useTypeScript && statsData.errors.length === 0) {
+      const delayedMsg = setTimeout(() => {
+        console.log(
+          chalk.yellow(
+            'Files successfully emitted, waiting for typecheck results...'
+          )
+        );
+      }, 100);
 
       const messages = await tsMessagesPromise;
+      clearTimeout(delayedMsg);
       statsData.errors.push(...messages.errors);
       statsData.warnings.push(...messages.warnings);
+
+      // Push errors and warnings into compilation result
+      // to show them after page refresh triggered by user.
+      stats.compilation.errors.push(...messages.errors);
+      stats.compilation.warnings.push(...messages.warnings);
 
       if (messages.errors.length > 0) {
         devSocket.errors(messages.errors);
