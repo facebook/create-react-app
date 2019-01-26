@@ -22,20 +22,20 @@ const forkTsCheckerWebpackPlugin = require('./ForkTsCheckerWebpackPlugin');
 
 const isInteractive = process.stdout.isTTY;
 
-function prepareUrls(protocol, host, port) {
+function prepareUrls(protocol, host, port, pathname = '/') {
   const formatUrl = hostname =>
     url.format({
       protocol,
       hostname,
       port,
-      pathname: '/',
+      pathname,
     });
   const prettyPrintUrl = hostname =>
     url.format({
       protocol,
       hostname,
       port: chalk.bold(port),
-      pathname: '/',
+      pathname,
     });
 
   const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
