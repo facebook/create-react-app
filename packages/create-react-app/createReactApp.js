@@ -61,6 +61,7 @@ const errorLogFilePatterns = [
 ];
 
 let projectName;
+let multipleProjectNameArgs = false;
 const args = process.argv.slice(2);
 
 const program = new commander.Command(packageJson.name)
@@ -85,17 +86,7 @@ const program = new commander.Command(packageJson.name)
 	});
 
     if (argsLength > 1){
-      
-      console.log(
-        chalk.yellow(
-          `\n You have provided more that one argument for <project-directory>.`
-        )
-	);
-
-      console.log(
-        `\n Run ${chalk.cyan(`create-react-app --help`)} to see all options.`
-      );
-      process.exit(1);
+      multipleProjectNameArgs = true;
     } 
   })
   .option('--verbose', 'print additional logs')
@@ -172,8 +163,17 @@ if (program.info) {
     .then(console.log);
 }
 
-if (typeof projectName === 'undefined') {
-  console.error('Please specify the project directory:');
+if (typeof projectName === 'undefined' || multipleProjectNameArgs) {
+
+  if (multipleProjectNameArgs) {
+    console.log(
+        chalk.yellow(
+          `\n You have provided more that one argument for <project-directory>.`
+        )
+	);
+  } else {
+     console.error('Please specify the project directory:');
+  }
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
   );
