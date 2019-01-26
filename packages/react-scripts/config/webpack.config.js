@@ -350,7 +350,6 @@ module.exports = function(webpackEnv) {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides'
                 ),
-                sourceType: 'unambiguous',
                 // @remove-on-eject-begin
                 babelrc: false,
                 configFile: false,
