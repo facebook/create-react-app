@@ -58,7 +58,8 @@ function isInMercurialRepository() {
 if (
   !process.env.CI &&
   argv.indexOf('--coverage') === -1 &&
-  argv.indexOf('--watchAll') === -1
+  argv.indexOf('--watchAll') === -1 &&
+  argv.indexOf('--watch=false') === -1
 ) {
   // https://github.com/facebook/create-react-app/issues/5210
   const hasSourceControl = isInGitRepository() || isInMercurialRepository();
