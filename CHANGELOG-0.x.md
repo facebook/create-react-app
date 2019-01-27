@@ -148,7 +148,7 @@ npm install -g create-react-app@1.3.0
 
   If you are using Yarn, and you have created at least one app previously, Create React App now works offline.
 
-  <img src="http://i.imgur.com/1FLa9Tg.gif" width="500" alt="Yarn offline installation demo">
+  <!-- <img src="http://i.imgur.com/1FLa9Tg.gif" width="500" alt="Yarn offline installation demo"> -->
 
 #### :bug: Bug Fix
 

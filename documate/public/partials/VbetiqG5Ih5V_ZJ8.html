@@ -1,0 +1,27 @@
+<h1 id="folder-structure" data-title="Folder Structure">
+    <a style="background-color: transparent !important;" href="#folder-structure" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Folder Structure
+  </h1><p>After creation, your project should look like this:</p>
+<pre><code>my-app/
+  README.md
+  node_modules/
+  package.json
+  public/
+    index.html
+    favicon.ico
+  src/
+    App.css
+    App.js
+    App.test.js
+    index.css
+    index.js
+    logo.svg</code></pre><p>For the project to build, <strong>these files must exist with exact filenames</strong>:</p>
+<ul>
+<li><code>public/index.html</code> is the page template;</li>
+<li><code>src/index.js</code> is the JavaScript entry point.</li>
+</ul>
+<p>You can delete or rename the other files.</p>
+<p>You may create subdirectories inside <code>src</code>. For faster rebuilds, only files inside <code>src</code> are processed by Webpack. You need to <strong>put any JS and CSS files inside <code>src</code></strong>, otherwise Webpack won’t see them.</p>
+<p>Only files inside <code>public</code> can be used from <code>public/index.html</code>. Read instructions below for using assets from JavaScript and HTML.</p>
+<p>You can, however, create more top-level directories. They will not be included in the production build so you can use them for things like documentation.</p>
+<p>If you have Git installed and your project is not part of a larger repository, then a new repository will be initialized resulting in an additional top-level <code>.git</code> directory.</p>

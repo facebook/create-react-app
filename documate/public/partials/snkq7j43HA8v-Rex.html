@@ -1,0 +1,16 @@
+<h1 id="updating-to-new-releases" data-title="Updating to New Releases">
+    <a style="background-color: transparent !important;" href="#updating-to-new-releases" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Updating to New Releases
+  </h1><p>Create React App is divided into two packages:</p>
+<ul>
+<li><code>create-react-app</code> is a global command-line utility that you use to create new projects.</li>
+<li><code>react-scripts</code> is a development dependency in the generated projects (including this one).</li>
+</ul>
+<p>When you run <code>npx create-react-app my-app</code> it automatically installs the latest version of Create React App.  </p>
+<blockquote>
+<p>If you&#39;ve previously installed <code>create-react-app</code> globally via <code>npm install -g create-react-app</code>, please visit <a href="getting-started.md">Getting Started</a> to learn about current installation steps. </p>
+</blockquote>
+<p>Create React App creates the project with the latest version of <code>react-scripts</code> so you’ll get all the new features and improvements in newly created apps automatically.</p>
+<p>To update an existing project to a new version of <code>react-scripts</code>, <a href="https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md">open the changelog</a>, find the version you’re currently on (check <code>package.json</code> in this folder if you’re not sure), and apply the migration instructions for the newer versions.</p>
+<p>In most cases bumping the <code>react-scripts</code> version in <code>package.json</code> and running <code>npm install</code> (or <code>yarn install</code>) in this folder should be enough, but it’s good to consult the <a href="https://github.com/facebook/create-react-app/blob/master/CHANGELOG.md">changelog</a> for potential breaking changes.</p>
+<p>We commit to keeping the breaking changes minimal so you can upgrade <code>react-scripts</code> painlessly.</p>

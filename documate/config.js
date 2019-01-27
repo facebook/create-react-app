@@ -5,7 +5,7 @@
 module.exports = {
 
   // Website's HTML title tag value
-  title: "Documate",
+  title: "Create React App",
 
   // Path to site logo, this will be placed in topbar
   logo: "./logo.png",
@@ -14,7 +14,7 @@ module.exports = {
   navs: require("./navs"),
 
   // GitHub repository
-  repoUrl: "http://github.com/bukharim96/documate",
+  repoUrl: "https://www.github.com/facebook/create-react-app",
 
   // Main theme colors
   themeColors: {

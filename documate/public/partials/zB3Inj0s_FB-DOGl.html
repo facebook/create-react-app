@@ -1,0 +1,32 @@
+<h1 id="title-and-meta-tags" data-title="Title and Meta Tags">
+    <a style="background-color: transparent !important;" href="#title-and-meta-tags" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Title and Meta Tags
+  </h1><h2 id="changing-the-title-tag" data-title="Changing the title tag">
+    <a style="background-color: transparent !important;" href="#changing-the-title-tag" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Changing the title tag
+  </h2><p>You can find the source HTML file in the <code>public</code> folder of the generated project. You may edit the <code>&lt;title&gt;</code> tag in it to change the title from “React App” to anything else.</p>
+<p>Note that normally you wouldn’t edit files in the <code>public</code> folder very often. For example, <a href="adding-a-stylesheet.md">adding a stylesheet</a> is done without touching the HTML.</p>
+<p>If you need to dynamically update the page title based on the content, you can use the browser <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/title"><code>document.title</code></a> API. For more complex scenarios when you want to change the title from React components, you can use <a href="https://github.com/nfl/react-helmet">React Helmet</a>, a third party library.</p>
+<p>If you use a custom server for your app in production and want to modify the title before it gets sent to the browser, you can follow advice in <a href="#generating-dynamic-meta-tags-on-the-server">this section</a>. Alternatively, you can pre-build each page as a static HTML file which then loads the JavaScript bundle, which is covered <a href="pre-rendering-into-static-html-files.md">here</a>.</p>
+<h2 id="generating-dynamic-code-lt-meta-gt-code-tags-on-the-server" data-title="Generating Dynamic <code>&lt;meta&gt;</code> Tags on the Server">
+    <a style="background-color: transparent !important;" href="#generating-dynamic-code-lt-meta-gt-code-tags-on-the-server" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Generating Dynamic <code>&lt;meta&gt;</code> Tags on the Server
+  </h2><p>Since Create React App doesn’t support server rendering, you might be wondering how to make <code>&lt;meta&gt;</code> tags dynamic and reflect the current URL. To solve this, we recommend to add placeholders into the HTML, like this:</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta property=&quot;og:title&quot; content=&quot;__OG_TITLE__&quot;&gt;
+    &lt;meta property=&quot;og:description&quot; content=&quot;__OG_DESCRIPTION__&quot;&gt;</code></pre>
+<p>Then, on the server, regardless of the backend you use, you can read <code>index.html</code> into memory and replace <code>__OG_TITLE__</code>, <code>__OG_DESCRIPTION__</code>, and any other placeholders with values depending on the current URL. Just make sure to sanitize and escape the interpolated values so that they are safe to embed into HTML!</p>
+<p>If you use a Node server, you can even share the route matching logic between the client and the server. However duplicating it also works fine in simple cases.</p>
+<h2 id="injecting-data-from-the-server-into-the-page" data-title="Injecting Data from the Server into the Page">
+    <a style="background-color: transparent !important;" href="#injecting-data-from-the-server-into-the-page" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Injecting Data from the Server into the Page
+  </h2><p>Similarly to the previous section, you can leave some placeholders in the HTML that inject global variables, for example:</p>
+<pre><code class="language-js">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;script&gt;
+      window.SERVER_DATA = __SERVER_DATA__;
+    &lt;/script&gt;</code></pre>
+<p>Then, on the server, you can replace <code>__SERVER_DATA__</code> with a JSON of real data right before sending the response. The client code can then read <code>window.SERVER_DATA</code> to use it. <strong>Make sure to <a href="https://medium.com/node-security/the-most-common-xss-vulnerability-in-react-js-applications-2bdffbcc1fa0">sanitize the JSON before sending it to the client</a> as it makes your app vulnerable to XSS attacks.</strong></p>

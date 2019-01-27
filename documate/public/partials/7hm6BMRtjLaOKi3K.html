@@ -1,0 +1,29 @@
+<h1 id="post-processing-css" data-title="Post-Processing CSS">
+    <a style="background-color: transparent !important;" href="#post-processing-css" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Post-Processing CSS
+  </h1><p>This project setup minifies your CSS and adds vendor prefixes to it automatically through <a href="https://github.com/postcss/autoprefixer">Autoprefixer</a> so you don’t need to worry about it.</p>
+<p>Support for new CSS features like the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/all"><code>all</code> property</a>, <a href="https://www.w3.org/TR/css-break-3/#breaking-controls"><code>break</code> properties</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables">custom properties</a>, and <a href="https://www.w3.org/TR/mediaqueries-4/#range-context">media query ranges</a> are automatically polyfilled to add support for older browsers.</p>
+<p>You can customize your target support browsers by adjusting the <code>browserslist</code> key in <code>package.json</code> according to the <a href="https://github.com/browserslist/browserslist#readme">Browserslist specification</a>.</p>
+<p>For example, this:</p>
+<pre><code class="language-css">.App {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}</code></pre>
+<p>becomes this:</p>
+<pre><code class="language-css">.App {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}</code></pre>
+<p>If you need to disable autoprefixing for some reason, <a href="https://github.com/postcss/autoprefixer#disabling">follow this section</a>.</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout">CSS Grid Layout</a> prefixing is disabled by default, but it will <strong>not</strong> strip manual prefixing.
+If you&#39;d like to opt-in to CSS Grid prefixing, <a href="https://github.com/postcss/autoprefixer#does-autoprefixer-polyfill-grid-layout-for-ie">first familiarize yourself about its limitations</a>.<br>
+To enable CSS Grid prefixing, add <code>/* autoprefixer grid: autoplace */</code> to the top of your CSS file.</p>

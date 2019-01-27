@@ -1,0 +1,38 @@
+<h1 id="adding-a-sass-stylesheet" data-title="Adding a Sass Stylesheet">
+    <a style="background-color: transparent !important;" href="#adding-a-sass-stylesheet" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Adding a Sass Stylesheet
+  </h1><blockquote>
+<p>Note: this feature is available with <code>react-scripts@2.0.0</code> and higher.</p>
+</blockquote>
+<p>Generally, we recommend that you don’t reuse the same CSS classes across different components. For example, instead of using a <code>.Button</code> CSS class in <code>&lt;AcceptButton&gt;</code> and <code>&lt;RejectButton&gt;</code> components, we recommend creating a <code>&lt;Button&gt;</code> component with its own <code>.Button</code> styles, that both <code>&lt;AcceptButton&gt;</code> and <code>&lt;RejectButton&gt;</code> can render (but <a href="https://facebook.github.io/react/docs/composition-vs-inheritance.html">not inherit</a>).</p>
+<p>Following this rule often makes CSS preprocessors less useful, as features like mixins and nesting are replaced by component composition. You can, however, integrate a CSS preprocessor if you find it valuable.</p>
+<p>To use Sass, first install <code>node-sass</code>:</p>
+<pre><code class="language-bash">$ npm install node-sass --save
+$ # or
+$ yarn add node-sass</code></pre>
+<p>Now you can rename <code>src/App.css</code> to <code>src/App.scss</code> and update <code>src/App.js</code> to import <code>src/App.scss</code>.
+This file and any other file will be automatically compiled if imported with the extension <code>.scss</code> or <code>.sass</code>.</p>
+<p>To share variables between Sass files, you can use Sass imports. For example, <code>src/App.scss</code> and other component style files could include <code>@import &quot;./shared.scss&quot;;</code> with variable definitions.</p>
+<p>This will allow you to do imports like</p>
+<pre><code class="language-scss">@import &#39;styles/_colors.scss&#39;; // assuming a styles directory under src/
+@import &#39;~nprogress/nprogress&#39;; // importing a css file from the nprogress node module</code></pre>
+<blockquote>
+<p><strong>Note:</strong> You must prefix imports from <code>node_modules</code> with <code>~</code> as displayed above.</p>
+</blockquote>
+<p><code>node-sass</code> also supports the <code>SASS_PATH</code> variable.</p>
+<p>To use imports relative to a path you specify, and from <code>node_modules</code> without adding the <code>~</code> prefix, you can add a <a href="https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/adding-custom-environment-variables.md#adding-development-environment-variables-in-env"><code>.env</code> file</a> at the project root with the variable <code>SASS_PATH=node_modules:src</code>. To specify more directories you can add them to <code>SASS_PATH</code> separated by a <code>:</code> like <code>path1:path2:path3</code>.</p>
+<p>If you set <code>SASS_PATH=node_modules:src</code>, this will allow you to do imports like</p>
+<pre><code class="language-scss">@import &#39;styles/colors&#39;; // assuming a styles directory under src/, where _colors.scss partial file exists.
+@import &#39;nprogress/nprogress&#39;; // importing a css file from the nprogress node module</code></pre>
+<blockquote>
+<p><strong>Tip:</strong> You can opt into using this feature with <a href="adding-a-css-modules-stylesheet.md">CSS modules</a> too!</p>
+</blockquote>
+<blockquote>
+<p><strong>Note:</strong> If you&#39;re using Flow, override the <a href="https://flow.org/en/docs/config/options/#toc-module-file-ext-string">module.file_ext</a> setting in your <code>.flowconfig</code> so it&#39;ll recognize <code>.sass</code> or <code>.scss</code> files. You will also need to include the <code>module.file_ext</code> default settings for <code>.js</code>, <code>.jsx</code>, <code>.mjs</code> and <code>.json</code> files.</p>
+<pre><code>[options]
+module.file_ext=.js
+module.file_ext=.jsx
+module.file_ext=.mjs
+module.file_ext=.json
+module.file_ext=.sass
+module.file_ext=.scss</code></pre></blockquote>

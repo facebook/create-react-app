@@ -1,0 +1,21 @@
+<p>#Using HTTPS in Development</p>
+<blockquote>
+<p>Note</p>
+<p>This feature is available with <code>react-scripts@0.4.0</code> and higher.</p>
+</blockquote>
+<p>You may require the dev server to serve pages over HTTPS. One particular case where this could be useful is when using <a href="proxying-api-requests-in-development.md">the &quot;proxy&quot; feature</a> to proxy requests to an API server when that API server is itself serving HTTPS.</p>
+<p>To do this, set the <code>HTTPS</code> environment variable to <code>true</code>, then start the dev server as usual with <code>npm start</code>:</p>
+<h3 id="windows-cmd-exe-" data-title="Windows (cmd.exe)">
+    <a style="background-color: transparent !important;" href="#windows-cmd-exe-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Windows (cmd.exe)
+  </h3><pre><code class="language-cmd">set HTTPS=true&amp;&amp;npm start</code></pre>
+<p>(Note: the lack of whitespace is intentional.)</p>
+<h3 id="windows-powershell-" data-title="Windows (Powershell)">
+    <a style="background-color: transparent !important;" href="#windows-powershell-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Windows (Powershell)
+  </h3><pre><code class="language-Powershell">($env:HTTPS = &quot;true&quot;) -and (npm start)</code></pre>
+<h3 id="linux-macos-bash-" data-title="Linux, macOS (Bash)">
+    <a style="background-color: transparent !important;" href="#linux-macos-bash-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Linux, macOS (Bash)
+  </h3><pre><code class="language-bash">HTTPS=true npm start</code></pre>
+<p>Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.</p>
