@@ -4,13 +4,13 @@ Create React App doesn't prescribe a specific routing solution, but [React Route
 
 To add it, run:
 
-```sh
+```shell
 npm install --save react-router-dom
 ```
 
 Alternatively you may use `yarn`:
 
-```sh
+```shell
 yarn add react-router-dom
 ```
 

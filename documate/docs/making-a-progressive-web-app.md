@@ -9,7 +9,7 @@ registered, so it will not take control of your production web app.
 In order to opt-in to the offline-first behavior, developers should look for the
 following in their [`src/index.js`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/index.js) file:
 
-```js
+```jsx
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA

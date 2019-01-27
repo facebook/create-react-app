@@ -41,7 +41,7 @@
     Writing Tests
   </h2><p>To create tests, add <code>it()</code> (or <code>test()</code>) blocks with the name of the test and its code. You may optionally wrap them in <code>describe()</code> blocks for logical grouping but this is neither required nor recommended.</p>
 <p>Jest provides a built-in <code>expect()</code> global function for making assertions. A basic test could look like this:</p>
-<pre><code class="language-js">import sum from &#39;./sum&#39;;
+<pre><code class="language-jsx">import sum from &#39;./sum&#39;;
 
 it(&#39;sums numbers&#39;, () =&gt; {
   expect(sum(1, 2)).toEqual(3);
@@ -54,7 +54,7 @@ You can also use <a href="https://facebook.github.io/jest/docs/en/expect.html#to
     Testing Components
   </h2><p>There is a broad spectrum of component testing techniques. They range from a “smoke test” verifying that a component renders without throwing, to shallow rendering and testing some of the output, to full rendering and testing component lifecycle and state changes.</p>
 <p>Different projects choose different testing tradeoffs based on how often components change, and how much logic they contain. If you haven’t decided on a testing strategy yet, we recommend that you start with creating simple smoke tests for your components:</p>
-<pre><code class="language-js">import React from &#39;react&#39;;
+<pre><code class="language-jsx">import React from &#39;react&#39;;
 import ReactDOM from &#39;react-dom&#39;;
 import App from &#39;./App&#39;;
 
@@ -68,26 +68,28 @@ it(&#39;renders without crashing&#39;, () =&gt; {
     <a style="background-color: transparent !important;" href="#option-1-shallow-rendering" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Option 1: Shallow Rendering
   </h3><p>If you’d like to test components in isolation from the child components they render, we recommend using <a href="http://airbnb.io/enzyme/docs/api/shallow.html"><code>shallow()</code> rendering API</a> from <a href="http://airbnb.io/enzyme/">Enzyme</a>. To install it, run:</p>
-<pre><code class="language-sh">npm install --save enzyme enzyme-adapter-react-16 react-test-renderer</code></pre>
+<pre><code class="language-shell">npm install --save enzyme enzyme-adapter-react-16 react-test-renderer</code></pre>
 <p>Alternatively you may use <code>yarn</code>:</p>
-<pre><code class="language-sh">yarn add enzyme enzyme-adapter-react-16 react-test-renderer</code></pre>
+<pre><code class="language-shell">yarn add enzyme enzyme-adapter-react-16 react-test-renderer</code></pre>
 <p>As of Enzyme 3, you will need to install Enzyme along with an Adapter corresponding to the version of React you are using. (The examples above use the adapter for React 16.)</p>
 <p>The adapter will also need to be configured in your <a href="#initializing-test-environment">global setup file</a>:</p>
 <h3 id="-code-src-setuptests-js-code-" data-title="<code>src/setupTests.js</code>">
     <a style="background-color: transparent !important;" href="#-code-src-setuptests-js-code-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     <code>src/setupTests.js</code>
-  </h3><pre><code class="language-js">import { configure } from &#39;enzyme&#39;;
+  </h3><pre><code class="language-jsx">import { configure } from &#39;enzyme&#39;;
 import Adapter from &#39;enzyme-adapter-react-16&#39;;
 
 configure({ adapter: new Adapter() });</code></pre>
 <blockquote>
-<p>Note: When using TypeScript with Babel, all your files need to have at least one export, otherwise you will get the error <code>Cannot compile namespaces when the &#39;--isolatedModules&#39; flag is provided.</code>. To fix this, you can add <code>export default undefined</code> to <code>src/setupTests.ts</code>.</p>
+<p>Note</p>
+<p>When using TypeScript with Babel, all your files need to have at least one export, otherwise you will get the error <code>Cannot compile namespaces when the &#39;--isolatedModules&#39; flag is provided.</code>. To fix this, you can add <code>export default undefined</code> to <code>src/setupTests.ts</code>.</p>
 </blockquote>
 <blockquote>
-<p>Note: Keep in mind that if you decide to &quot;eject&quot; before creating <code>src/setupTests.js</code>, the resulting <code>package.json</code> file won&#39;t contain any reference to it. <a href="#initializing-test-environment">Read here</a> to learn how to add this after ejecting.</p>
+<p>Note</p>
+<p>Keep in mind that if you decide to &quot;eject&quot; before creating <code>src/setupTests.js</code>, the resulting <code>package.json</code> file won&#39;t contain any reference to it. <a href="#initializing-test-environment">Read here</a> to learn how to add this after ejecting.</p>
 </blockquote>
 <p>Now you can write a smoke test with it:</p>
-<pre><code class="language-js">import React from &#39;react&#39;;
+<pre><code class="language-jsx">import React from &#39;react&#39;;
 import { shallow } from &#39;enzyme&#39;;
 import App from &#39;./App&#39;;
 
@@ -97,7 +99,7 @@ it(&#39;renders without crashing&#39;, () =&gt; {
 <p>Unlike the previous smoke test using <code>ReactDOM.render()</code>, this test only renders <code>&lt;App&gt;</code> and doesn’t go deeper. For example, even if <code>&lt;App&gt;</code> itself renders a <code>&lt;Button&gt;</code> that throws, this test will pass. Shallow rendering is great for isolated unit tests, but you may still want to create some full rendering tests to ensure the components integrate correctly. Enzyme supports <a href="http://airbnb.io/enzyme/docs/api/mount.html">full rendering with <code>mount()</code></a>, and you can also use it for testing state changes and component lifecycle.</p>
 <p>You can read the <a href="http://airbnb.io/enzyme/">Enzyme documentation</a> for more testing techniques. Enzyme documentation uses Chai and Sinon for assertions but you don’t have to use them because Jest provides built-in <code>expect()</code> and <code>jest.fn()</code> for spies.</p>
 <p>Here is an example from Enzyme documentation that asserts specific output, rewritten to use Jest matchers:</p>
-<pre><code class="language-js">import React from &#39;react&#39;;
+<pre><code class="language-jsx">import React from &#39;react&#39;;
 import { shallow } from &#39;enzyme&#39;;
 import App from &#39;./App&#39;;
 
@@ -110,29 +112,29 @@ it(&#39;renders welcome message&#39;, () =&gt; {
 <p>All Jest matchers are <a href="http://facebook.github.io/jest/docs/en/expect.html">extensively documented here</a>.<br>
 Nevertheless you can use a third-party assertion library like <a href="http://chaijs.com/">Chai</a> if you want to, as described below.</p>
 <p>Additionally, you might find <a href="https://github.com/blainekasten/enzyme-matchers">jest-enzyme</a> helpful to simplify your tests with readable matchers. The above <code>contains</code> code can be written more simply with jest-enzyme.</p>
-<pre><code class="language-js">expect(wrapper).toContainReact(welcome);</code></pre>
+<pre><code class="language-jsx">expect(wrapper).toContainReact(welcome);</code></pre>
 <p>To enable this, install <code>jest-enzyme</code>:</p>
-<pre><code class="language-sh">npm install --save jest-enzyme</code></pre>
+<pre><code class="language-shell">npm install --save jest-enzyme</code></pre>
 <p>Alternatively you may use <code>yarn</code>:</p>
-<pre><code class="language-sh">yarn add jest-enzyme</code></pre>
+<pre><code class="language-shell">yarn add jest-enzyme</code></pre>
 <p>Import it in <a href="#initializing-test-environment"><code>src/setupTests.js</code></a> to make its matchers available in every test:</p>
-<pre><code class="language-js">import &#39;jest-enzyme&#39;;</code></pre>
+<pre><code class="language-jsx">import &#39;jest-enzyme&#39;;</code></pre>
 <h3 id="option-2-react-testing-library" data-title="Option 2: React Testing Library">
     <a style="background-color: transparent !important;" href="#option-2-react-testing-library" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Option 2: React Testing Library
   </h3><p>As an alternative or companion to <code>enzyme</code>, you may consider using <code>react-testing-library</code>. <a href="https://github.com/kentcdodds/react-testing-library"><code>react-testing-library</code></a> is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it&#39;s recommended to use with <a href="https://github.com/gnapse/jest-dom"><code>jest-dom</code></a> for improved assertions.</p>
 <p>To install <code>react-testing-library</code> and <code>jest-dom</code>, you can run:</p>
-<pre><code class="language-sh">npm install --save react-testing-library jest-dom</code></pre>
+<pre><code class="language-shell">npm install --save react-testing-library jest-dom</code></pre>
 <p>Alternatively you may use <code>yarn</code>:</p>
-<pre><code class="language-sh">yarn add react-testing-library jest-dom</code></pre>
+<pre><code class="language-shell">yarn add react-testing-library jest-dom</code></pre>
 <p>Similar to <code>enzyme</code> you can create a <code>src/setupTests.js</code> file to avoid boilerplate in your test files:</p>
-<pre><code class="language-js">// react-testing-library renders your components to document.body,
+<pre><code class="language-jsx">// react-testing-library renders your components to document.body,
 // this will ensure they&#39;re removed after each test.
 import &#39;react-testing-library/cleanup-after-each&#39;;
 // this adds jest-dom&#39;s custom assertions
 import &#39;jest-dom/extend-expect&#39;;</code></pre>
 <p>Here&#39;s an example of using <code>react-testing-library</code> and <code>jest-dom</code> for testing that the <code>&lt;App /&gt;</code> component renders &quot;Welcome to React&quot;.</p>
-<pre><code class="language-js">import React from &#39;react&#39;;
+<pre><code class="language-jsx">import React from &#39;react&#39;;
 import { render } from &#39;react-testing-library&#39;;
 import App from &#39;./App&#39;;
 
@@ -146,21 +148,22 @@ it(&#39;renders welcome message&#39;, () =&gt; {
     Using Third Party Assertion Libraries
   </h2><p>We recommend that you use <code>expect()</code> for assertions and <code>jest.fn()</code> for spies. If you are having issues with them please <a href="https://github.com/facebook/jest/issues/new">file those against Jest</a>, and we’ll fix them. We intend to keep making them better for React, supporting, for example, <a href="https://github.com/facebook/jest/pull/1566">pretty-printing React elements as JSX</a>.</p>
 <p>However, if you are used to other libraries, such as <a href="http://chaijs.com/">Chai</a> and <a href="http://sinonjs.org/">Sinon</a>, or if you have existing code using them that you’d like to port over, you can import them normally like this:</p>
-<pre><code class="language-js">import sinon from &#39;sinon&#39;;
+<pre><code class="language-jsx">import sinon from &#39;sinon&#39;;
 import { expect } from &#39;chai&#39;;</code></pre>
 <p>and then use them in your tests like you normally do.</p>
 <h2 id="initializing-test-environment" data-title="Initializing Test Environment">
     <a style="background-color: transparent !important;" href="#initializing-test-environment" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Initializing Test Environment
   </h2><blockquote>
-<p>Note: this feature is available with <code>react-scripts@0.4.0</code> and higher.</p>
+<p>Note</p>
+<p>This feature is available with <code>react-scripts@0.4.0</code> and higher.</p>
 </blockquote>
 <p>If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a <code>src/setupTests.js</code> to your project. It will be automatically executed before running your tests.</p>
 <p>For example:</p>
 <h3 id="-code-src-setuptests-js-code-" data-title="<code>src/setupTests.js</code>">
     <a style="background-color: transparent !important;" href="#-code-src-setuptests-js-code-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     <code>src/setupTests.js</code>
-  </h3><pre><code class="language-js">const localStorageMock = {
+  </h3><pre><code class="language-jsx">const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
@@ -168,10 +171,11 @@ import { expect } from &#39;chai&#39;;</code></pre>
 };
 global.localStorage = localStorageMock;</code></pre>
 <blockquote>
-<p>Note: Keep in mind that if you decide to &quot;eject&quot; before creating <code>src/setupTests.js</code>, the resulting <code>package.json</code> file won&#39;t contain any reference to it, so you should manually create the property <code>setupTestFrameworkScriptFile</code> in the configuration for Jest, something like the following:</p>
+<p>Note</p>
+<p>Keep in mind that if you decide to &quot;eject&quot; before creating <code>src/setupTests.js</code>, the resulting <code>package.json</code> file won&#39;t contain any reference to it, so you should manually create the property <code>setupTestFrameworkScriptFile</code> in the configuration for Jest, something like the following:</p>
 </blockquote>
 <blockquote>
-<pre><code class="language-js">&quot;jest&quot;: {
+<pre><code class="language-jsx">&quot;jest&quot;: {
   // ...
   &quot;setupTestFrameworkScriptFile&quot;: &quot;&lt;rootDir&gt;/src/setupTests.js&quot;
  }</code></pre>
@@ -237,7 +241,7 @@ Run <code>npm test -- --coverage</code> (note extra <code>--</code> in the middl
 <li>Following the <a href="https://docs.travis-ci.com/user/getting-started/">Travis Getting started</a> guide for syncing your GitHub repository with Travis. You may need to initialize some settings manually in your <a href="https://travis-ci.org/profile">profile</a> page.</li>
 <li>Add a <code>.travis.yml</code> file to your git repository.</li>
 </ol>
-<pre><code>language: node_js
+<pre><code class="language-yaml">language: node_js
 node_js:
   - 8
 cache:
@@ -245,7 +249,8 @@ cache:
     - node_modules
 script:
   - npm run build
-  - npm test</code></pre><ol>
+  - npm test</code></pre>
+<ol>
 <li>Trigger your first build with a git push.</li>
 <li><a href="https://docs.travis-ci.com/user/customizing-the-build/">Customize your Travis CI Build</a> if needed.</li>
 </ol>
@@ -259,14 +264,17 @@ script:
   </h2><h4 id="windows-cmd-exe-" data-title="Windows (cmd.exe)">
     <a style="background-color: transparent !important;" href="#windows-cmd-exe-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Windows (cmd.exe)
-  </h4><pre><code class="language-cmd">set CI=true&amp;&amp;npm test</code></pre>
-<pre><code class="language-cmd">set CI=true&amp;&amp;npm run build</code></pre>
-<p>(Note: the lack of whitespace is intentional.)</p>
+  </h4><pre><code class="language-shell">set CI=true&amp;&amp;npm test</code></pre>
+<pre><code class="language-shell">set CI=true&amp;&amp;npm run build</code></pre>
+<blockquote>
+<p>Note</p>
+<p>The lack of whitespace is intentional.</p>
+</blockquote>
 <h4 id="windows-powershell-" data-title="Windows (Powershell)">
     <a style="background-color: transparent !important;" href="#windows-powershell-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Windows (Powershell)
-  </h4><pre><code class="language-Powershell">($env:CI = &quot;true&quot;) -and (npm test)</code></pre>
-<pre><code class="language-Powershell">($env:CI = &quot;true&quot;) -and (npm run build)</code></pre>
+  </h4><pre><code class="language-shell">($env:CI = &quot;true&quot;) -and (npm test)</code></pre>
+<pre><code class="language-shell">($env:CI = &quot;true&quot;) -and (npm run build)</code></pre>
 <h4 id="linux-macos-bash-" data-title="Linux, macOS (Bash)">
     <a style="background-color: transparent !important;" href="#linux-macos-bash-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Linux, macOS (Bash)

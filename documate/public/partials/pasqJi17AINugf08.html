@@ -10,7 +10,8 @@
     <a style="background-color: transparent !important;" href="#displaying-lint-output-in-the-editor" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Displaying Lint Output in the Editor
   </h2><blockquote>
-<p>Note: this feature is available with <code>react-scripts@0.2.0</code> and higher.<br>
+<p>Note</p>
+<p>This feature is available with <code>react-scripts@0.2.0</code> and higher.<br>
 It works out of the box for newly created projects with <code>react-scripts@2.0.3</code> and higher.<br>
 It also only works with npm 3 or higher.</p>
 </blockquote>
@@ -49,7 +50,8 @@ It also only works with npm 3 or higher.</p>
   ]
 }</code></pre>
 <blockquote>
-<p>Note: the URL may be different if you&#39;ve made adjustments via the <a href="advanced-configuration.md">HOST or PORT environment variables</a>.</p>
+<p>Note</p>
+<p>The URL may be different if you&#39;ve made adjustments via the <a href="advanced-configuration.md">HOST or PORT environment variables</a>.</p>
 </blockquote>
 <p>Start your app by running <code>npm start</code>, and start debugging in VS Code by pressing <code>F5</code> or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.</p>
 <p>Having problems with VS Code Debugging? Please see their <a href="https://github.com/Microsoft/vscode-chrome-debug/blob/master/README.md#troubleshooting">troubleshooting guide</a>.</p>
@@ -59,7 +61,8 @@ It also only works with npm 3 or higher.</p>
   </h3><p>You would need to have <a href="https://www.jetbrains.com/webstorm/">WebStorm</a> and <a href="https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji">JetBrains IDE Support</a> Chrome extension installed.</p>
 <p>In the WebStorm menu <code>Run</code> select <code>Edit Configurations...</code>. Then click <code>+</code> and select <code>JavaScript Debug</code>. Paste <code>http://localhost:3000</code> into the URL field and save the configuration.</p>
 <blockquote>
-<p>Note: the URL may be different if you&#39;ve made adjustments via the <a href="advanced-configuration.md">HOST or PORT environment variables</a>.</p>
+<p>Note</p>
+<p>The URL may be different if you&#39;ve made adjustments via the <a href="advanced-configuration.md">HOST or PORT environment variables</a>.</p>
 </blockquote>
 <p>Start your app by running <code>npm start</code>, then press <code>^D</code> on macOS or <code>F9</code> on Windows and Linux or click the green debug icon to start debugging in WebStorm.</p>
 <p>The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine.</p>
@@ -68,9 +71,9 @@ It also only works with npm 3 or higher.</p>
     Formatting Code Automatically
   </h2><p>Prettier is an opinionated code formatter with support for JavaScript, CSS and JSON. With Prettier you can format the code you write automatically to ensure a code style within your project. See the <a href="https://github.com/prettier/prettier">Prettier&#39;s GitHub page</a> for more information, and look at this <a href="https://prettier.github.io/prettier/">page to see it in action</a>.</p>
 <p>To format our code whenever we make a commit in git, we need to install the following dependencies:</p>
-<pre><code class="language-sh">npm install --save husky lint-staged prettier</code></pre>
+<pre><code class="language-shell">npm install --save husky lint-staged prettier</code></pre>
 <p>Alternatively you may use <code>yarn</code>:</p>
-<pre><code class="language-sh">yarn add husky lint-staged prettier</code></pre>
+<pre><code class="language-shell">yarn add husky lint-staged prettier</code></pre>
 <ul>
 <li><code>husky</code> makes it easy to use githooks as if they are npm scripts.</li>
 <li><code>lint-staged</code> allows us to run scripts on staged files in git. See this <a href="https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8">blog post about lint-staged to learn more about it</a>.</li>

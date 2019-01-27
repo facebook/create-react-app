@@ -21,7 +21,7 @@ Storybook is a development environment for React UI components. It allows you to
 
 Run the following command inside your app’s directory:
 
-```sh
+```shell
 npx -p @storybook/cli sb init
 ```
 
@@ -40,13 +40,13 @@ Styleguidist combines a style guide, where all your components are presented on 
 
 First, install Styleguidist:
 
-```sh
+```shell
 npm install --save react-styleguidist
 ```
 
 Alternatively you may use `yarn`:
 
-```sh
+```shell
 yarn add react-styleguidist
 ```
 
@@ -61,7 +61,7 @@ Then, add these scripts to your `package.json`:
 
 Then, run the following command inside your app’s directory:
 
-```sh
+```shell
 npm run styleguide
 ```
 

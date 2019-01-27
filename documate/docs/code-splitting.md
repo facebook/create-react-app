@@ -8,7 +8,7 @@ Here is an example:
 
 ## `moduleA.js`
 
-```js
+```jsx
 const moduleA = 'Hello';
 
 export { moduleA };
@@ -16,7 +16,7 @@ export { moduleA };
 
 ## `App.js`
 
-```js
+```jsx
 import React, { Component } from 'react';
 
 class App extends Component {

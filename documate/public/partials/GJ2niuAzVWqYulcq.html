@@ -50,10 +50,10 @@ Please refer to <a href="deployment.md#resolving-heroku-deployment-errors">this 
   </h2><p>If you use a <a href="https://momentjs.com/">Moment.js</a>, you might notice that only the English locale is available by default. This is because the locale files are large, and you probably only need a subset of <a href="https://momentjs.com/#multiple-locale-support">all the locales provided by Moment.js</a>.</p>
 <p>To add a specific Moment.js locale to your bundle, you need to import it explicitly.<br>
 For example:</p>
-<pre><code class="language-js">import moment from &#39;moment&#39;;
+<pre><code class="language-jsx">import moment from &#39;moment&#39;;
 import &#39;moment/locale/fr&#39;;</code></pre>
 <p>If you are importing multiple locales this way, you can later switch between them by calling <code>moment.locale()</code> with the locale name:</p>
-<pre><code class="language-js">import moment from &#39;moment&#39;;
+<pre><code class="language-jsx">import moment from &#39;moment&#39;;
 import &#39;moment/locale/fr&#39;;
 import &#39;moment/locale/es&#39;;
 

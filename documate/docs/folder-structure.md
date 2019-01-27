@@ -2,7 +2,7 @@
 
 After creation, your project should look like this:
 
-```
+```shell
 my-app/
   README.md
   node_modules/

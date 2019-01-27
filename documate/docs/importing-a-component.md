@@ -7,7 +7,7 @@ For example:
 
 ## `Button.js`
 
-```js
+```jsx
 import React, { Component } from 'react';
 
 class Button extends Component {
@@ -21,7 +21,7 @@ export default Button; // Don’t forget to use export default!
 
 ## `DangerButton.js`
 
-```js
+```jsx
 import React, { Component } from 'react';
 import Button from './Button'; // Import a component from another file
 

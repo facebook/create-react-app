@@ -1,6 +1,8 @@
 # Adding Custom Environment Variables
 
-> Note: this feature is available with `react-scripts@0.2.3` and higher.
+> Note
+>
+> This feature is available with `react-scripts@0.2.3` and higher.
 
 Your project can consume variables declared in your environment as if they were declared locally in your JS files. By
 default you will have `NODE_ENV` defined for you, and any other environment variables starting with
@@ -8,7 +10,9 @@ default you will have `NODE_ENV` defined for you, and any other environment vari
 
 **The environment variables are embedded during the build time**. Since Create React App produces a static HTML/CSS/JS bundle, it can’t possibly read them at runtime. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, just like [described here](title-and-meta-tags.md#injecting-data-from-the-server-into-the-page). Alternatively you can rebuild the app on the server anytime you change them.
 
-> Note: You must create custom environment variables beginning with `REACT_APP_`. Any other variables except `NODE_ENV` will be ignored to avoid accidentally [exposing a private key on the machine that could have the same name](https://github.com/facebook/create-react-app/issues/865#issuecomment-252199527). Changing any environment variables will require you to restart the development server if it is running.
+> Note
+>
+> You must create custom environment variables beginning with `REACT_APP_`. Any other variables except `NODE_ENV` will be ignored to avoid accidentally [exposing a private key on the machine that could have the same name](https://github.com/facebook/create-react-app/issues/865#issuecomment-252199527). Changing any environment variables will require you to restart the development server if it is running.
 
 These environment variables will be defined for you on `process.env`. For example, having an environment
 variable named `REACT_APP_SECRET_CODE` will be exposed in your JS as `process.env.REACT_APP_SECRET_CODE`.
@@ -53,7 +57,7 @@ a `.env` file. Both of these ways are described in the next few sections.
 
 Having access to the `NODE_ENV` is also useful for performing actions conditionally:
 
-```js
+```jsx
 if (process.env.NODE_ENV !== 'production') {
   analytics.disable();
 }
@@ -63,7 +67,9 @@ When you compile the app with `npm run build`, the minification step will strip 
 
 ## Referencing Environment Variables in the HTML
 
-> Note: this feature is available with `react-scripts@0.9.0` and higher.
+> Note
+>
+> This feature is available with `react-scripts@0.9.0` and higher.
 
 You can also access the environment variables starting with `REACT_APP_` in the `public/index.html`. For example:
 
@@ -103,7 +109,9 @@ REACT_APP_SECRET_CODE=abcdef npm start
 
 ## Adding Development Environment Variables In `.env`
 
-> Note: this feature is available with `react-scripts@0.5.0` and higher.
+> Note
+>
+> This feature is available with `react-scripts@0.5.0` and higher.
 
 To define permanent environment variables, create a file called `.env` in the root of your project:
 
@@ -111,13 +119,17 @@ To define permanent environment variables, create a file called `.env` in the ro
 REACT_APP_SECRET_CODE=abcdef
 ```
 
-> Note: You must create custom environment variables beginning with `REACT_APP_`. Any other variables except `NODE_ENV` will be ignored to avoid [accidentally exposing a private key on the machine that could have the same name](https://github.com/facebook/create-react-app/issues/865#issuecomment-252199527). Changing any environment variables will require you to restart the development server if it is running.
+> Note
+>
+> You must create custom environment variables beginning with `REACT_APP_`. Any other variables except `NODE_ENV` will be ignored to avoid [accidentally exposing a private key on the machine that could have the same name](https://github.com/facebook/create-react-app/issues/865#issuecomment-252199527). Changing any environment variables will require you to restart the development server if it is running.
 
 `.env` files **should be** checked into source control (with the exclusion of `.env*.local`).
 
 ### What other `.env` files can be used?
 
-> Note: this feature is **available with `react-scripts@1.0.0` and higher**.
+> Note
+>
+> This feature is **available with `react-scripts@1.0.0` and higher**.
 
 - `.env`: Default.
 - `.env.local`: Local overrides. **This file is loaded for all environments except test.**
@@ -133,18 +145,22 @@ Files on the left have more priority than files on the right:
 These variables will act as the defaults if the machine does not explicitly set them.<br>
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
 
-> Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
+> Note
+>
+> If you are defining environment variables for development, your CI and/or hosting platform will most likely need
 > these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
 
 ### Expanding Environment Variables In `.env`
 
-> Note: this feature is available with `react-scripts@1.1.0` and higher.
+> Note
+>
+> This feature is available with `react-scripts@1.1.0` and higher.
 
 Expand variables already on your machine for use in your `.env` file (using [dotenv-expand](https://github.com/motdotla/dotenv-expand)).
 
 For example, to get the environment variable `npm_package_version`:
 
-```
+```shell
 REACT_APP_VERSION=$npm_package_version
 # also works:
 # REACT_APP_VERSION=${npm_package_version}
@@ -152,7 +168,7 @@ REACT_APP_VERSION=$npm_package_version
 
 Or expand variables local to the current `.env` file:
 
-```
+```shell
 DOMAIN=www.example.com
 REACT_APP_FOO=$DOMAIN/foo
 REACT_APP_BAR=$DOMAIN/bar

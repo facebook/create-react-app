@@ -1,6 +1,8 @@
 # Adding a Sass Stylesheet
 
-> Note: this feature is available with `react-scripts@2.0.0` and higher.
+> Note
+>
+> This feature is available with `react-scripts@2.0.0` and higher.
 
 Generally, we recommend that you don’t reuse the same CSS classes across different components. For example, instead of using a `.Button` CSS class in `<AcceptButton>` and `<RejectButton>` components, we recommend creating a `<Button>` component with its own `.Button` styles, that both `<AcceptButton>` and `<RejectButton>` can render (but [not inherit](https://facebook.github.io/react/docs/composition-vs-inheritance.html)).
 
@@ -26,7 +28,9 @@ This will allow you to do imports like
 @import '~nprogress/nprogress'; // importing a css file from the nprogress node module
 ```
 
-> **Note:** You must prefix imports from `node_modules` with `~` as displayed above.
+> Note
+>
+> You must prefix imports from `node_modules` with `~` as displayed above.
 
 `node-sass` also supports the `SASS_PATH` variable.
 
@@ -38,11 +42,15 @@ If you set `SASS_PATH=node_modules:src`, this will allow you to do imports like
 @import 'nprogress/nprogress'; // importing a css file from the nprogress node module
 ```
 
-> **Tip:** You can opt into using this feature with [CSS modules](adding-a-css-modules-stylesheet.md) too!
-
-> **Note:** If you're using Flow, override the [module.file_ext](https://flow.org/en/docs/config/options/#toc-module-file-ext-string) setting in your `.flowconfig` so it'll recognize `.sass` or `.scss` files. You will also need to include the `module.file_ext` default settings for `.js`, `.jsx`, `.mjs` and `.json` files.
+> Tip
 >
-> ```
+> You can opt into using this feature with [CSS modules](adding-a-css-modules-stylesheet.md) too!
+
+> Note
+>
+> If you're using Flow, override the [module.file_ext](https://flow.org/en/docs/config/options/#toc-module-file-ext-string) setting in your `.flowconfig` so it'll recognize `.sass` or `.scss` files. You will also need to include the `module.file_ext` default settings for `.js`, `.jsx`, `.mjs` and `.json` files.
+>
+> ```shell
 > [options]
 > module.file_ext=.js
 > module.file_ext=.jsx

@@ -8,7 +8,9 @@ To configure the syntax highlighting in your favorite text editor, head to the [
 
 ## Displaying Lint Output in the Editor
 
-> Note: this feature is available with `react-scripts@0.2.0` and higher.<br>
+> Note
+>
+> This feature is available with `react-scripts@0.2.0` and higher.<br>
 > It works out of the box for newly created projects with `react-scripts@2.0.3` and higher.<br>
 > It also only works with npm 3 or higher.
 
@@ -60,7 +62,9 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
 }
 ```
 
-> Note: the URL may be different if you've made adjustments via the [HOST or PORT environment variables](advanced-configuration.md).
+> Note
+>
+> The URL may be different if you've made adjustments via the [HOST or PORT environment variables](advanced-configuration.md).
 
 Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
 
@@ -72,7 +76,9 @@ You would need to have [WebStorm](https://www.jetbrains.com/webstorm/) and [JetB
 
 In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and select `JavaScript Debug`. Paste `http://localhost:3000` into the URL field and save the configuration.
 
-> Note: the URL may be different if you've made adjustments via the [HOST or PORT environment variables](advanced-configuration.md).
+> Note
+>
+> The URL may be different if you've made adjustments via the [HOST or PORT environment variables](advanced-configuration.md).
 
 Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
 
@@ -84,13 +90,13 @@ Prettier is an opinionated code formatter with support for JavaScript, CSS and J
 
 To format our code whenever we make a commit in git, we need to install the following dependencies:
 
-```sh
+```shell
 npm install --save husky lint-staged prettier
 ```
 
 Alternatively you may use `yarn`:
 
-```sh
+```shell
 yarn add husky lint-staged prettier
 ```
 

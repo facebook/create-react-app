@@ -2,7 +2,9 @@
 
 There are various ways to setup a debugger for your Jest tests. We cover debugging in Chrome and [Visual Studio Code](https://code.visualstudio.com/).
 
-> Note: debugging tests requires Node 8 or higher.
+> Note
+>
+> Debugging tests requires Node 8 or higher.
 
 ## Debugging Tests in Chrome
 
@@ -24,13 +26,15 @@ This will start running your Jest tests, but pause before executing to allow a d
 
 Open the following in Chrome
 
-```
+```shell
 about:inspect
 ```
 
 After opening that link, the Chrome Developer Tools will be displayed. Select `inspect` on your process and a breakpoint will be set at the first line of the react script (this is done simply to give you time to open the developer tools and to prevent Jest from executing before you have time to do so). Click the button that looks like a "play" button in the upper right hand side of the screen to continue execution. When Jest executes the test that contains the debugger statement, execution will pause and you can examine the current scope and call stack.
 
-> Note: the --runInBand cli option makes sure Jest runs test in the same process rather than spawning processes for individual tests. Normally Jest parallelizes test runs across processes but it is hard to debug many processes at the same time.
+> Note
+>
+> The `--runInBand `cli option makes sure Jest runs test in the same process rather than spawning processes for individual tests. Normally Jest parallelizes test runs across processes but it is hard to debug many processes at the same time.
 
 ## Debugging Tests in Visual Studio Code
 
@@ -38,7 +42,7 @@ Debugging Jest tests is supported out of the box for [Visual Studio Code](https:
 
 Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) configuration file:
 
-```
+```json
 {
   "version": "0.2.0",
   "configurations": [

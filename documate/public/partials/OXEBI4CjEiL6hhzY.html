@@ -3,7 +3,8 @@
     Debugging Tests
   </h1><p>There are various ways to setup a debugger for your Jest tests. We cover debugging in Chrome and <a href="https://code.visualstudio.com/">Visual Studio Code</a>.</p>
 <blockquote>
-<p>Note: debugging tests requires Node 8 or higher.</p>
+<p>Note</p>
+<p>Debugging tests requires Node 8 or higher.</p>
 </blockquote>
 <h2 id="debugging-tests-in-chrome" data-title="Debugging Tests in Chrome">
     <a style="background-color: transparent !important;" href="#debugging-tests-in-chrome" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
@@ -16,16 +17,18 @@
 <pre><code class="language-bash">$ npm run test:debug</code></pre>
 <p>This will start running your Jest tests, but pause before executing to allow a debugger to attach to the process.</p>
 <p>Open the following in Chrome</p>
-<pre><code>about:inspect</code></pre><p>After opening that link, the Chrome Developer Tools will be displayed. Select <code>inspect</code> on your process and a breakpoint will be set at the first line of the react script (this is done simply to give you time to open the developer tools and to prevent Jest from executing before you have time to do so). Click the button that looks like a &quot;play&quot; button in the upper right hand side of the screen to continue execution. When Jest executes the test that contains the debugger statement, execution will pause and you can examine the current scope and call stack.</p>
+<pre><code class="language-shell">about:inspect</code></pre>
+<p>After opening that link, the Chrome Developer Tools will be displayed. Select <code>inspect</code> on your process and a breakpoint will be set at the first line of the react script (this is done simply to give you time to open the developer tools and to prevent Jest from executing before you have time to do so). Click the button that looks like a &quot;play&quot; button in the upper right hand side of the screen to continue execution. When Jest executes the test that contains the debugger statement, execution will pause and you can examine the current scope and call stack.</p>
 <blockquote>
-<p>Note: the --runInBand cli option makes sure Jest runs test in the same process rather than spawning processes for individual tests. Normally Jest parallelizes test runs across processes but it is hard to debug many processes at the same time.</p>
+<p>Note</p>
+<p>The <code>--runInBand</code>cli option makes sure Jest runs test in the same process rather than spawning processes for individual tests. Normally Jest parallelizes test runs across processes but it is hard to debug many processes at the same time.</p>
 </blockquote>
 <h2 id="debugging-tests-in-visual-studio-code" data-title="Debugging Tests in Visual Studio Code">
     <a style="background-color: transparent !important;" href="#debugging-tests-in-visual-studio-code" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Debugging Tests in Visual Studio Code
   </h2><p>Debugging Jest tests is supported out of the box for <a href="https://code.visualstudio.com">Visual Studio Code</a>.</p>
 <p>Use the following <a href="https://code.visualstudio.com/docs/editor/debugging#_launch-configurations"><code>launch.json</code></a> configuration file:</p>
-<pre><code>{
+<pre><code class="language-json">{
   &quot;version&quot;: &quot;0.2.0&quot;,
   &quot;configurations&quot;: [
     {

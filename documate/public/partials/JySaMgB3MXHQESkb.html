@@ -5,9 +5,9 @@
 JavaScript bundles using the source maps. This helps you understand where code
 bloat is coming from.</p>
 <p>To add Source map explorer to a Create React App project, follow these steps:</p>
-<pre><code class="language-sh">npm install --save source-map-explorer</code></pre>
+<pre><code class="language-shell">npm install --save source-map-explorer</code></pre>
 <p>Alternatively you may use <code>yarn</code>:</p>
-<pre><code class="language-sh">yarn add source-map-explorer</code></pre>
+<pre><code class="language-shell">yarn add source-map-explorer</code></pre>
 <p>Then in <code>package.json</code>, add the following line to <code>scripts</code>:</p>
 <pre><code class="language-diff">   &quot;scripts&quot;: {
 +    &quot;analyze&quot;: &quot;source-map-explorer build/static/js/main.*&quot;,
@@ -16,5 +16,5 @@ bloat is coming from.</p>
      &quot;test&quot;: &quot;react-scripts test&quot;,</code></pre>
 <p>Then to analyze the bundle run the production build then run the analyze
 script.</p>
-<pre><code>npm run build
+<pre><code class="language-shell">npm run build
 npm run analyze</code></pre>

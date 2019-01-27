@@ -4,19 +4,19 @@ Relay is a framework for building data-driven React applications powered by Grap
 
 To add it, run:
 
-```sh
+```shell
 npm install --save babel-plugin-relay@dev
 ```
 
 Alternatively you may use `yarn`:
 
-```sh
+```shell
 yarn upgrade babel-plugin-relay@dev
 ```
 
 Then, wherever you use the `graphql` template tag, import the macro:
 
-```js
+```jsx
 import graphql from 'babel-plugin-relay/macro';
 // instead of:
 //   import { graphql } from "babel-plugin-relay"

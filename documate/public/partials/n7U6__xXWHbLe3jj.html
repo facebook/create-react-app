@@ -5,7 +5,7 @@
 <p>You can <strong><code>import</code> a file right in a JavaScript module</strong>. This tells Webpack to include that file in the bundle. Unlike CSS imports, importing a file gives you a string value. This value is the final path you can reference in your code, e.g. as the <code>src</code> attribute of an image or the <code>href</code> of a link to a PDF.</p>
 <p>To reduce the number of requests to the server, importing images that are less than 10,000 bytes returns a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs">data URI</a> instead of a path. This applies to the following file extensions: bmp, gif, jpg, jpeg, and png. SVG files are excluded due to <a href="https://github.com/facebook/create-react-app/issues/1153">#1153</a>.</p>
 <p>Here is an example:</p>
-<pre><code class="language-js">import React from &#39;react&#39;;
+<pre><code class="language-jsx">import React from &#39;react&#39;;
 import logo from &#39;./logo.png&#39;; // Tell Webpack this JS file uses this image
 
 console.log(logo); // /logo.84287d09.png
@@ -29,10 +29,11 @@ An alternative way of handling static assets is described in the next section.</
     <a style="background-color: transparent !important;" href="#adding-svgs" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Adding SVGs
   </h2><blockquote>
-<p>Note: this feature is available with <code>react-scripts@2.0.0</code> and higher.</p>
+<p>Note</p>
+<p>This feature is available with <code>react-scripts@2.0.0</code> and higher.</p>
 </blockquote>
 <p>One way to add SVG files was described in the section above. You can also import SVGs directly as React components. You can use either of the two approaches. In your code it would look like this:</p>
-<pre><code class="language-js">import { ReactComponent as Logo } from &#39;./logo.svg&#39;;
+<pre><code class="language-jsx">import { ReactComponent as Logo } from &#39;./logo.svg&#39;;
 const App = () =&gt; (
   &lt;div&gt;
     {/* Logo is an actual React component */}

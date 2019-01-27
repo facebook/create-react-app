@@ -4,18 +4,21 @@
 >
 > This feature is available with `react-scripts@0.2.3` and higher.
 
-People often serve the front-end React app from the same host and port as their backend implementation.<br>
+People often serve the front-end React app from the same host and port as their backend implementation.
+
 For example, a production setup might look like this after the app is deployed:
 
-    /             - static server returns index.html with React app
-    /todos        - static server returns index.html with React app
-    /api/todos    - server handles any /api/* requests using the backend implementation
+```shell
+/             - static server returns index.html with React app
+/todos        - static server returns index.html with React app
+/api/todos    - server handles any /api/* requests using the backend implementation
+```
 
 Such setup is **not** required. However, if you **do** have a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
 
 To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field to your `package.json`, for example:
 
-```js
+```jsx
   "proxy": "http://localhost:4000",
 ```
 
@@ -23,7 +26,7 @@ This way, when you `fetch('/api/todos')` in development, the development server 
 
 Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
 
-```
+```shell
 Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 ```
 
@@ -46,7 +49,7 @@ This shouldn’t affect you when developing on `localhost`, but if you develop r
 
 To work around it, you can specify your public development host in a file called `.env.development` in the root of your project:
 
-```
+```shell
 HOST=mypublicdevhost.com
 ```
 
@@ -54,7 +57,7 @@ If you restart the development server now and load the app from the specified ho
 
 If you are still having issues or if you’re using a more exotic environment like a cloud editor, you can bypass the host check completely by adding a line to `.env.development.local`. **Note that this is dangerous and exposes your machine to remote code execution from malicious websites:**
 
-```
+```shell
 # NOTE: THIS IS DANGEROUS!
 # It exposes your machine to attacks from the websites you visit.
 DANGEROUSLY_DISABLE_HOST_CHECK=true
@@ -64,7 +67,9 @@ We don’t recommend this approach.
 
 ## Configuring the Proxy Manually
 
-> Note: this feature is available with `react-scripts@2.0.0` and higher.
+> Note
+>
+> This feature is available with `react-scripts@2.0.0` and higher.
 
 If the `proxy` option is **not** flexible enough for you, you can get direct access to the Express app instance and hook up your own proxy middleware.
 
@@ -80,7 +85,7 @@ $ yarn add http-proxy-middleware
 
 Next, create `src/setupProxy.js` and place the following contents in it:
 
-```js
+```jsx
 const proxy = require('http-proxy-middleware');
 
 module.exports = function(app) {
@@ -90,7 +95,7 @@ module.exports = function(app) {
 
 You can now register proxies as you wish! Here's an example using the above `http-proxy-middleware`:
 
-```js
+```jsx
 const proxy = require('http-proxy-middleware');
 
 module.exports = function(app) {
@@ -98,8 +103,14 @@ module.exports = function(app) {
 };
 ```
 
-> **Note:** You do not need to import this file anywhere. It is automatically registered when you start the development server.
+> Note
+>
+> You do not need to import this file anywhere. It is automatically registered when you start the development server.
 
-> **Note:** This file only supports Node's JavaScript syntax. Be sure to only use supported language features (i.e. no support for Flow, ES Modules, etc).
+> Note
+>
+> This file only supports Node's JavaScript syntax. Be sure to only use supported language features (i.e. no support for Flow, ES Modules, etc).
 
-> **Note:** Passing the path to the proxy function allows you to use globbing and/or pattern matching on the path, which is more flexible than the express route matching.
+> Note
+>
+> Passing the path to the proxy function allows you to use globbing and/or pattern matching on the path, which is more flexible than the express route matching.

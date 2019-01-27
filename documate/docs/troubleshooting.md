@@ -26,7 +26,7 @@ We recommend deleting `node_modules` in your project and running `npm install` (
 
 It is reported that installing Watchman 4.7.0 or newer fixes the issue. If you use [Homebrew](http://brew.sh/), you can run these commands to update it:
 
-```
+```shell
 watchman shutdown-server
 brew update
 brew reinstall watchman
@@ -42,6 +42,8 @@ There are also reports that _uninstalling_ Watchman fixes the issue. So if nothi
 
 It is reported that `npm run build` can fail on machines with limited memory and no swap space, which is common in cloud environments. Even with small projects this command can increase RAM usage in your system by hundreds of megabytes, so if you have less than 1 GB of available memory your build is likely to fail with the following message:
 
+> Note
+>
 > The build failed because the process exited too early. This probably means the system ran out of memory or someone called `kill -9` on the process.
 
 If you are completely sure that you didn't terminate the process, consider [adding some swap space](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04) to the machine you’re building on, or build the project locally.
@@ -58,14 +60,14 @@ If you use a [Moment.js](https://momentjs.com/), you might notice that only the 
 To add a specific Moment.js locale to your bundle, you need to import it explicitly.<br>
 For example:
 
-```js
+```jsx
 import moment from 'moment';
 import 'moment/locale/fr';
 ```
 
 If you are importing multiple locales this way, you can later switch between them by calling `moment.locale()` with the locale name:
 
-```js
+```jsx
 import moment from 'moment';
 import 'moment/locale/fr';
 import 'moment/locale/es';

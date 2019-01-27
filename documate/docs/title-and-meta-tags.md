@@ -30,7 +30,7 @@ If you use a Node server, you can even share the route matching logic between th
 
 Similarly to the previous section, you can leave some placeholders in the HTML that inject global variables, for example:
 
-```js
+```jsx
 <!doctype html>
 <html lang="en">
   <head>

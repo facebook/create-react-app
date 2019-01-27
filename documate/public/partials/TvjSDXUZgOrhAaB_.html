@@ -3,11 +3,11 @@
     Adding Relay
   </h1><p>Relay is a framework for building data-driven React applications powered by GraphQL. The current release candidate of Relay works with Create React App projects out of the box using Babel Macros. Simply set up your project as laid out in the <a href="https://facebook.github.io/relay/">Relay documentation</a>, then make sure you have a version of the babel plugin providing the macro.</p>
 <p>To add it, run:</p>
-<pre><code class="language-sh">npm install --save babel-plugin-relay@dev</code></pre>
+<pre><code class="language-shell">npm install --save babel-plugin-relay@dev</code></pre>
 <p>Alternatively you may use <code>yarn</code>:</p>
-<pre><code class="language-sh">yarn upgrade babel-plugin-relay@dev</code></pre>
+<pre><code class="language-shell">yarn upgrade babel-plugin-relay@dev</code></pre>
 <p>Then, wherever you use the <code>graphql</code> template tag, import the macro:</p>
-<pre><code class="language-js">import graphql from &#39;babel-plugin-relay/macro&#39;;
+<pre><code class="language-jsx">import graphql from &#39;babel-plugin-relay/macro&#39;;
 // instead of:
 //   import { graphql } from &quot;babel-plugin-relay&quot;
 

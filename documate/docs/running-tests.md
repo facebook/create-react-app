@@ -48,7 +48,7 @@ To create tests, add `it()` (or `test()`) blocks with the name of the test and i
 
 Jest provides a built-in `expect()` global function for making assertions. A basic test could look like this:
 
-```js
+```jsx
 import sum from './sum';
 
 it('sums numbers', () => {
@@ -66,7 +66,7 @@ There is a broad spectrum of component testing techniques. They range from a “
 
 Different projects choose different testing tradeoffs based on how often components change, and how much logic they contain. If you haven’t decided on a testing strategy yet, we recommend that you start with creating simple smoke tests for your components:
 
-```js
+```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -85,13 +85,13 @@ When you encounter bugs caused by changing components, you will gain a deeper in
 
 If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). To install it, run:
 
-```sh
+```shell
 npm install --save enzyme enzyme-adapter-react-16 react-test-renderer
 ```
 
 Alternatively you may use `yarn`:
 
-```sh
+```shell
 yarn add enzyme enzyme-adapter-react-16 react-test-renderer
 ```
 
@@ -101,20 +101,24 @@ The adapter will also need to be configured in your [global setup file](#initial
 
 ### `src/setupTests.js`
 
-```js
+```jsx
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 ```
 
-> Note: When using TypeScript with Babel, all your files need to have at least one export, otherwise you will get the error `Cannot compile namespaces when the '--isolatedModules' flag is provided.`. To fix this, you can add `export default undefined` to `src/setupTests.ts`.
+> Note
+>
+> When using TypeScript with Babel, all your files need to have at least one export, otherwise you will get the error `Cannot compile namespaces when the '--isolatedModules' flag is provided.`. To fix this, you can add `export default undefined` to `src/setupTests.ts`.
 
-> Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it. [Read here](#initializing-test-environment) to learn how to add this after ejecting.
+> Note
+>
+> Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it. [Read here](#initializing-test-environment) to learn how to add this after ejecting.
 
 Now you can write a smoke test with it:
 
-```js
+```jsx
 import React from 'react';
 import { shallow } from 'enzyme';
 import App from './App';
@@ -130,7 +134,7 @@ You can read the [Enzyme documentation](http://airbnb.io/enzyme/) for more testi
 
 Here is an example from Enzyme documentation that asserts specific output, rewritten to use Jest matchers:
 
-```js
+```jsx
 import React from 'react';
 import { shallow } from 'enzyme';
 import App from './App';
@@ -148,25 +152,25 @@ Nevertheless you can use a third-party assertion library like [Chai](http://chai
 
 Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzyme-matchers) helpful to simplify your tests with readable matchers. The above `contains` code can be written more simply with jest-enzyme.
 
-```js
+```jsx
 expect(wrapper).toContainReact(welcome);
 ```
 
 To enable this, install `jest-enzyme`:
 
-```sh
+```shell
 npm install --save jest-enzyme
 ```
 
 Alternatively you may use `yarn`:
 
-```sh
+```shell
 yarn add jest-enzyme
 ```
 
 Import it in [`src/setupTests.js`](#initializing-test-environment) to make its matchers available in every test:
 
-```js
+```jsx
 import 'jest-enzyme';
 ```
 
@@ -176,19 +180,19 @@ As an alternative or companion to `enzyme`, you may consider using `react-testin
 
 To install `react-testing-library` and `jest-dom`, you can run:
 
-```sh
+```shell
 npm install --save react-testing-library jest-dom
 ```
 
 Alternatively you may use `yarn`:
 
-```sh
+```shell
 yarn add react-testing-library jest-dom
 ```
 
 Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerplate in your test files:
 
-```js
+```jsx
 // react-testing-library renders your components to document.body,
 // this will ensure they're removed after each test.
 import 'react-testing-library/cleanup-after-each';
@@ -198,7 +202,7 @@ import 'jest-dom/extend-expect';
 
 Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Welcome to React".
 
-```js
+```jsx
 import React from 'react';
 import { render } from 'react-testing-library';
 import App from './App';
@@ -217,7 +221,7 @@ We recommend that you use `expect()` for assertions and `jest.fn()` for spies. I
 
 However, if you are used to other libraries, such as [Chai](http://chaijs.com/) and [Sinon](http://sinonjs.org/), or if you have existing code using them that you’d like to port over, you can import them normally like this:
 
-```js
+```jsx
 import sinon from 'sinon';
 import { expect } from 'chai';
 ```
@@ -226,7 +230,9 @@ and then use them in your tests like you normally do.
 
 ## Initializing Test Environment
 
-> Note: this feature is available with `react-scripts@0.4.0` and higher.
+> Note
+>
+> This feature is available with `react-scripts@0.4.0` and higher.
 
 If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
 
@@ -234,7 +240,7 @@ For example:
 
 ### `src/setupTests.js`
 
-```js
+```jsx
 const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
@@ -244,9 +250,11 @@ const localStorageMock = {
 global.localStorage = localStorageMock;
 ```
 
-> Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupTestFrameworkScriptFile` in the configuration for Jest, something like the following:
+> Note
+>
+> Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupTestFrameworkScriptFile` in the configuration for Jest, something like the following:
 
-> ```js
+> ```jsx
 > "jest": {
 >   // ...
 >   "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js"
@@ -318,7 +326,7 @@ Popular CI servers already set the environment variable `CI` by default but you 
 1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis. You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
 1. Add a `.travis.yml` file to your git repository.
 
-```
+```yaml
 language: node_js
 node_js:
   - 8
@@ -341,23 +349,25 @@ Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b
 
 #### Windows (cmd.exe)
 
-```cmd
+```shell
 set CI=true&&npm test
 ```
 
-```cmd
+```shell
 set CI=true&&npm run build
 ```
 
-(Note: the lack of whitespace is intentional.)
+> Note
+>
+> The lack of whitespace is intentional.
 
 #### Windows (Powershell)
 
-```Powershell
+```shell
 ($env:CI = "true") -and (npm test)
 ```
 
-```Powershell
+```shell
 ($env:CI = "true") -and (npm run build)
 ```
 

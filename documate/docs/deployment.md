@@ -6,20 +6,20 @@
 
 For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
 
-```sh
+```shell
 npm install -g serve
 serve -s build
 ```
 
 The last command shown above will serve your static site on the port **5000**. Like many of [serve](https://github.com/zeit/serve)’s internal settings, the port can be adjusted using the `-l` or `--listen` flags:
 
-```sh
+```shell
 serve -s build -l 4000
 ```
 
 Run this command to get a full list of the options available:
 
-```sh
+```shell
 serve -h
 ```
 
@@ -66,11 +66,11 @@ This is because when there is a fresh page load for a `/todos/42`, the server lo
 
 If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to create a `.htaccess` file in the `public` folder that looks like this:
 
-```
-    Options -MultiViews
-    RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.html [QSA,L]
+```shell
+Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]
 ```
 
 It will get copied to the `build` folder when you run `npm run build`.
@@ -90,8 +90,8 @@ options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.j
 
 When users install your app to the homescreen of their device the default configuration will make a shortcut to `/index.html`. This may not work for client-side routers which expect the app to be served from `/`. Edit the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to match the required URL scheme, for example:
 
-```js
-  "start_url": ".",
+```jsx
+"start_url": ".",
 ```
 
 ## Building for Relative Paths
@@ -99,8 +99,8 @@ When users install your app to the homescreen of their device the default config
 By default, Create React App produces a build assuming your app is hosted at the server root.<br>
 To override this, specify the `homepage` in your `package.json`, for example:
 
-```js
-  "homepage": "http://mywebsite.com/relativepath",
+```jsx
+"homepage": "http://mywebsite.com/relativepath",
 ```
 
 This will let Create React App correctly infer the root path to use in the generated HTML file.
@@ -111,19 +111,21 @@ More information [here](https://reacttraining.com/react-router/web/api/BrowserRo
 <br>
 For example:
 
-```js
+```jsx
 <BrowserRouter basename="/calendar"/>
 <Link to="/today"/> // renders <a href="/calendar/today">
 ```
 
 ### Serving the Same Build from Different Paths
 
-> Note: this feature is available with `react-scripts@0.9.0` and higher.
+> Note
+>
+> This feature is available with `react-scripts@0.9.0` and higher.
 
 If you are not using the HTML5 `pushState` history API or not using client-side routing at all, it is unnecessary to specify the URL from which your app will be served. Instead, you can put this in your `package.json`:
 
-```js
-  "homepage": ".",
+```jsx
+"homepage": ".",
 ```
 
 This will make sure that all the asset paths are relative to `index.html`. You will then be able to move your app from `http://mywebsite.com` to `http://mywebsite.com/relativepath` or even `http://mywebsite.com/relative/path` without having to rebuild it.
@@ -137,7 +139,7 @@ For example, to create a build environment for a staging environment:
 1. Create a file called `.env.staging`
 1. Set environment variables as you would any other `.env` file (e.g. `REACT_APP_API_URL=http://api-staging.example.com`)
 1. Install [env-cmd](https://www.npmjs.com/package/env-cmd)
-   ```sh
+   ```shell
    $ npm install env-cmd --save
    $ # or
    $ yarn add env-cmd
@@ -168,44 +170,44 @@ Install the Firebase CLI if you haven’t already by running `npm install -g fir
 
 Then run the `firebase init` command from your project’s root. You need to choose the **Hosting: Configure and deploy Firebase Hosting sites** and choose the Firebase project you created in the previous step. You will need to agree with `database.rules.json` being created, choose `build` as the public directory, and also agree to **Configure as a single-page app** by replying with `y`.
 
-```sh
-    === Project Setup
+```shell
+=== Project Setup
 
-    First, let's associate this project directory with a Firebase project.
-    You can create multiple project aliases by running firebase use --add,
-    but for now we'll just set up a default project.
+First, let's associate this project directory with a Firebase project.
+You can create multiple project aliases by running firebase use --add,
+but for now we'll just set up a default project.
 
-    ? What Firebase project do you want to associate as default? Example app (example-app-fd690)
+? What Firebase project do you want to associate as default? Example app (example-app-fd690)
 
-    === Database Setup
+=== Database Setup
 
-    Firebase Realtime Database Rules allow you to define how your data should be
-    structured and when your data can be read from and written to.
+Firebase Realtime Database Rules allow you to define how your data should be
+structured and when your data can be read from and written to.
 
-    ? What file should be used for Database Rules? database.rules.json
-    ✔  Database Rules for example-app-fd690 have been downloaded to database.rules.json.
-    Future modifications to database.rules.json will update Database Rules when you run
-    firebase deploy.
+? What file should be used for Database Rules? database.rules.json
+✔  Database Rules for example-app-fd690 have been downloaded to database.rules.json.
+Future modifications to database.rules.json will update Database Rules when you run
+firebase deploy.
 
-    === Hosting Setup
+=== Hosting Setup
 
-    Your public directory is the folder (relative to your project directory) that
-    will contain Hosting assets to uploaded with firebase deploy. If you
-    have a build process for your assets, use your build's output directory.
+Your public directory is the folder (relative to your project directory) that
+will contain Hosting assets to uploaded with firebase deploy. If you
+have a build process for your assets, use your build's output directory.
 
-    ? What do you want to use as your public directory? build
-    ? Configure as a single-page app (rewrite all urls to /index.html)? Yes
-    ✔  Wrote build/index.html
+? What do you want to use as your public directory? build
+? Configure as a single-page app (rewrite all urls to /index.html)? Yes
+✔  Wrote build/index.html
 
-    i  Writing configuration info to firebase.json...
-    i  Writing project information to .firebaserc...
+i  Writing configuration info to firebase.json...
+i  Writing project information to .firebaserc...
 
-    ✔  Firebase initialization complete!
+✔  Firebase initialization complete!
 ```
 
 IMPORTANT: you need to set proper HTTP caching headers for `service-worker.js` file in `firebase.json` file or you will not be able to see changes after first deployment ([issue #2440](https://github.com/facebook/create-react-app/issues/2440)). It should be added inside `"hosting"` key like next:
 
-```
+```json
 {
   "hosting": {
     ...
@@ -217,27 +219,29 @@ IMPORTANT: you need to set proper HTTP caching headers for `service-worker.js` f
 
 Now, after you create a production build with `npm run build`, you can deploy it by running `firebase deploy`.
 
-```sh
-    === Deploying to 'example-app-fd690'...
+```shell
+=== Deploying to 'example-app-fd690'...
 
-    i  deploying database, hosting
-    ✔  database: rules ready to deploy.
-    i  hosting: preparing build directory for upload...
-    Uploading: [==============================          ] 75%✔  hosting: build folder uploaded successfully
-    ✔  hosting: 8 files uploaded successfully
-    i  starting release process (may take several minutes)...
+i  deploying database, hosting
+✔  database: rules ready to deploy.
+i  hosting: preparing build directory for upload...
+Uploading: [==============================          ] 75%✔  hosting: build folder uploaded successfully
+✔  hosting: 8 files uploaded successfully
+i  starting release process (may take several minutes)...
 
-    ✔  Deploy complete!
+✔  Deploy complete!
 
-    Project Console: https://console.firebase.google.com/project/example-app-fd690/overview
-    Hosting URL: https://example-app-fd690.firebaseapp.com
+Project Console: https://console.firebase.google.com/project/example-app-fd690/overview
+Hosting URL: https://example-app-fd690.firebaseapp.com
 ```
 
 For more information see [Firebase Hosting](https://firebase.google.com/docs/hosting).
 
 ## GitHub Pages
 
-> Note: this feature is available with `react-scripts@0.2.0` and higher.
+> Note
+>
+> This feature is available with `react-scripts@0.2.0` and higher.
 
 ### Step 1: Add `homepage` to `package.json`
 
@@ -248,19 +252,19 @@ For more information see [Firebase Hosting](https://firebase.google.com/docs/hos
 Open your `package.json` and add a `homepage` field for your project:
 
 ```json
-  "homepage": "https://myusername.github.io/my-app",
+"homepage": "https://myusername.github.io/my-app",
 ```
 
 or for a GitHub user page:
 
 ```json
-  "homepage": "https://myusername.github.io",
+"homepage": "https://myusername.github.io",
 ```
 
 or for a custom domain page:
 
 ```json
-  "homepage": "https://mywebsite.com",
+"homepage": "https://mywebsite.com",
 ```
 
 Create React App uses the `homepage` field to determine the root URL in the built HTML file.
@@ -271,13 +275,13 @@ Now, whenever you run `npm run build`, you will see a cheat sheet with instructi
 
 To publish it at [https://myusername.github.io/my-app](https://myusername.github.io/my-app), run:
 
-```sh
+```shell
 npm install --save gh-pages
 ```
 
 Alternatively you may use `yarn`:
 
-```sh
+```shell
 yarn add gh-pages
 ```
 
@@ -309,7 +313,7 @@ additional modification:
 
 Then run:
 
-```sh
+```shell
 npm run deploy
 ```
 
@@ -367,7 +371,7 @@ Sometimes `npm run build` works locally but fails during deploy via Heroku. Foll
 
 If you get something like this:
 
-```
+```shell
 remote: Failed to create a production build. Reason:
 remote: Module not found: Error: Cannot resolve 'file' or 'directory'
 MyDirectory in /tmp/build_1234/src
@@ -381,7 +385,7 @@ This is important because Linux (the operating system used by Heroku) is case se
 
 If you exclude or ignore necessary files from the package you will see a error similar this one:
 
-```
+```shell
 remote: Could not find a required file.
 remote:   Name: `index.html`
 remote:   Searched in: /tmp/build_a2875fc163b209225122d68916f1d4df/public
@@ -396,7 +400,7 @@ In this case, ensure that the file is there with the proper lettercase and that�
 
 **To do a manual deploy to Netlify’s CDN:**
 
-```sh
+```shell
 npm install netlify-cli -g
 netlify deploy
 ```
@@ -415,7 +419,7 @@ With this setup Netlify will build and deploy when you push to git or open a pul
 
 To support `pushState`, make sure to create a `public/_redirects` file with the following rewrite rules:
 
-```
+```shell
 /*  /index.html  200
 ```
 
@@ -433,7 +437,7 @@ Now offers a zero-configuration single-command deployment. You can use `now` to 
 
 4. Run `now --name your-project-name` from within the build directory. You will see a **now.sh** URL in your output like this:
 
-   ```
+   ```shell
    > Ready! https://your-project-name-tpspyhtdtk.now.sh (copied to clipboard)
    ```
 
@@ -451,8 +455,8 @@ Install the Surge CLI if you haven’t already by running `npm install -g surge`
 
 When asked about the project path, make sure to specify the `build` folder, for example:
 
-```sh
-       project path: /path/to/project/build
+```shell
+project path: /path/to/project/build
 ```
 
 Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
