@@ -5,7 +5,8 @@
 module.exports = {
   TOPNAV: {
     Home: "./index.html",
-    Docs: "./docs/"
+    Docs: "./docs/",
+    Help: "https://reactjs.org/community/support.html"
   },
   DOCS: {
     Welcome: {
