@@ -1,0 +1,79 @@
+<h1 id="proxying-api-requests-in-development" data-title="Proxying API Requests in Development">
+    <a style="background-color: transparent !important;" href="#proxying-api-requests-in-development" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Proxying API Requests in Development
+  </h1><blockquote>
+<p>Note</p>
+<p>This feature is available with <code>react-scripts@0.2.3</code> and higher.</p>
+</blockquote>
+<p>People often serve the front-end React app from the same host and port as their backend implementation.</p>
+<p>For example, a production setup might look like this after the app is deployed:</p>
+<pre><code class="language-shell">/             - static server returns index.html with React app
+/todos        - static server returns index.html with React app
+/api/todos    - server handles any /api/* requests using the backend implementation</code></pre>
+<p>Such setup is <strong>not</strong> required. However, if you <strong>do</strong> have a setup like this, it is convenient to write requests like <code>fetch(&#39;/api/todos&#39;)</code> without worrying about redirecting them to another host or port during development.</p>
+<p>To tell the development server to proxy any unknown requests to your API server in development, add a <code>proxy</code> field to your <code>package.json</code>, for example:</p>
+<pre><code class="language-jsx">  &quot;proxy&quot;: &quot;http://localhost:4000&quot;,</code></pre>
+<p>This way, when you <code>fetch(&#39;/api/todos&#39;)</code> in development, the development server will recognize that it’s not a static asset, and will proxy your request to <code>http://localhost:4000/api/todos</code> as a fallback. The development server will <strong>only</strong> attempt to send requests without <code>text/html</code> in its <code>Accept</code> header to the proxy.</p>
+<p>Conveniently, this avoids <a href="http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations">CORS issues</a> and error messages like this in development:</p>
+<pre><code class="language-shell">Fetch API cannot load http://localhost:4000/api/todos. No &#39;Access-Control-Allow-Origin&#39; header is present on the requested resource. Origin &#39;http://localhost:3000&#39; is therefore not allowed access. If an opaque response serves your needs, set the request&#39;s mode to &#39;no-cors&#39; to fetch the resource with CORS disabled.</code></pre>
+<p>Keep in mind that <code>proxy</code> only has effect in development (with <code>npm start</code>), and it is up to you to ensure that URLs like <code>/api/todos</code> point to the right thing in production. You don’t have to use the <code>/api</code> prefix. Any unrecognized request without a <code>text/html</code> accept header will be redirected to the specified <code>proxy</code>.</p>
+<p>The <code>proxy</code> option supports HTTP, HTTPS and WebSocket connections.<br>
+If the <code>proxy</code> option is <strong>not</strong> flexible enough for you, alternatively you can:</p>
+<ul>
+<li><a href="#configuring-the-proxy-manually">Configure the proxy yourself</a></li>
+<li>Enable CORS on your server (<a href="http://enable-cors.org/server_expressjs.html">here’s how to do it for Express</a>).</li>
+<li>Use <a href="/docs/adding-custom-environment-variables">environment variables</a> to inject the right server host and port into your app.</li>
+</ul>
+<h2 id="-quot-invalid-host-header-quot-errors-after-configuring-proxy" data-title="&quot;Invalid Host Header&quot; Errors After Configuring Proxy">
+    <a style="background-color: transparent !important;" href="#-quot-invalid-host-header-quot-errors-after-configuring-proxy" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    &quot;Invalid Host Header&quot; Errors After Configuring Proxy
+  </h2><p>When you enable the <code>proxy</code> option, you opt into a more strict set of host checks. This is necessary because leaving the backend open to remote hosts makes your computer vulnerable to DNS rebinding attacks. The issue is explained in <a href="https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a">this article</a> and <a href="https://github.com/webpack/webpack-dev-server/issues/887">this issue</a>.</p>
+<p>This shouldn’t affect you when developing on <code>localhost</code>, but if you develop remotely like <a href="https://github.com/facebook/create-react-app/issues/2271">described here</a>, you will see this error in the browser after enabling the <code>proxy</code> option:</p>
+<blockquote>
+<p>Invalid Host header</p>
+</blockquote>
+<p>To work around it, you can specify your public development host in a file called <code>.env.development</code> in the root of your project:</p>
+<pre><code class="language-shell">HOST=mypublicdevhost.com</code></pre>
+<p>If you restart the development server now and load the app from the specified host, it should work.</p>
+<p>If you are still having issues or if you’re using a more exotic environment like a cloud editor, you can bypass the host check completely by adding a line to <code>.env.development.local</code>. <strong>Note that this is dangerous and exposes your machine to remote code execution from malicious websites:</strong></p>
+<pre><code class="language-shell"># NOTE: THIS IS DANGEROUS!
+# It exposes your machine to attacks from the websites you visit.
+DANGEROUSLY_DISABLE_HOST_CHECK=true</code></pre>
+<p>We don’t recommend this approach.</p>
+<h2 id="configuring-the-proxy-manually" data-title="Configuring the Proxy Manually">
+    <a style="background-color: transparent !important;" href="#configuring-the-proxy-manually" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Configuring the Proxy Manually
+  </h2><blockquote>
+<p>Note</p>
+<p>This feature is available with <code>react-scripts@2.0.0</code> and higher.</p>
+</blockquote>
+<p>If the <code>proxy</code> option is <strong>not</strong> flexible enough for you, you can get direct access to the Express app instance and hook up your own proxy middleware.</p>
+<p>You can use this feature in conjunction with the <code>proxy</code> property in <code>package.json</code>, but it is recommended you consolidate all of your logic into <code>src/setupProxy.js</code>.</p>
+<p>First, install <code>http-proxy-middleware</code> using npm or Yarn:</p>
+<pre><code class="language-bash">$ npm install http-proxy-middleware --save
+$ # or
+$ yarn add http-proxy-middleware</code></pre>
+<p>Next, create <code>src/setupProxy.js</code> and place the following contents in it:</p>
+<pre><code class="language-jsx">const proxy = require(&#39;http-proxy-middleware&#39;);
+
+module.exports = function(app) {
+  // ...
+};</code></pre>
+<p>You can now register proxies as you wish! Here&#39;s an example using the above <code>http-proxy-middleware</code>:</p>
+<pre><code class="language-jsx">const proxy = require(&#39;http-proxy-middleware&#39;);
+
+module.exports = function(app) {
+  app.use(proxy(&#39;/api&#39;, { target: &#39;http://localhost:5000/&#39; }));
+};</code></pre>
+<blockquote>
+<p>Note</p>
+<p>You do not need to import this file anywhere. It is automatically registered when you start the development server.</p>
+</blockquote>
+<blockquote>
+<p>Note</p>
+<p>This file only supports Node&#39;s JavaScript syntax. Be sure to only use supported language features (i.e. no support for Flow, ES Modules, etc).</p>
+</blockquote>
+<blockquote>
+<p>Note</p>
+<p>Passing the path to the proxy function allows you to use globbing and/or pattern matching on the path, which is more flexible than the express route matching.</p>
+</blockquote>

@@ -1,0 +1,45 @@
+<h1 id="adding-a-css-modules-stylesheet" data-title="Adding a CSS Modules Stylesheet">
+    <a style="background-color: transparent !important;" href="#adding-a-css-modules-stylesheet" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Adding a CSS Modules Stylesheet
+  </h1><blockquote>
+<p>Note</p>
+<p>This feature is available with <code>react-scripts@2.0.0</code> and higher.</p>
+</blockquote>
+<p>This project supports <a href="https://github.com/css-modules/css-modules">CSS Modules</a> alongside regular stylesheets using the <code>[name].module.css</code> file naming convention. CSS Modules allows the scoping of CSS by automatically creating a unique classname of the format <code>[filename]\_[classname]\_\_[hash]</code>.</p>
+<blockquote>
+<p>Tip</p>
+<p>Should you want to preprocess a stylesheet with Sass then make sure to <a href="/docs/adding-a-sass-stylesheet">follow the installation instructions</a> and then change the stylesheet file extension as follows: <code>[name].module.scss</code> or <code>[name].module.sass</code>.</p>
+</blockquote>
+<p>CSS Modules let you use the same CSS class name in different files without worrying about naming clashes. Learn more about CSS Modules <a href="https://css-tricks.com/css-modules-part-1-need/">here</a>.</p>
+<h2 id="-code-button-module-css-code-" data-title="<code>Button.module.css</code>">
+    <a style="background-color: transparent !important;" href="#-code-button-module-css-code-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    <code>Button.module.css</code>
+  </h2><pre><code class="language-css">.error {
+  background-color: red;
+}</code></pre>
+<h2 id="-code-another-stylesheet-css-code-" data-title="<code>another-stylesheet.css</code>">
+    <a style="background-color: transparent !important;" href="#-code-another-stylesheet-css-code-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    <code>another-stylesheet.css</code>
+  </h2><pre><code class="language-css">.error {
+  color: red;
+}</code></pre>
+<h2 id="-code-button-js-code-" data-title="<code>Button.js</code>">
+    <a style="background-color: transparent !important;" href="#-code-button-js-code-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    <code>Button.js</code>
+  </h2><pre><code class="language-jsx">import React, { Component } from &#39;react&#39;;
+import styles from &#39;./Button.module.css&#39;; // Import css modules stylesheet as styles
+import &#39;./another-stylesheet.css&#39;; // Import regular stylesheet
+
+class Button extends Component {
+  render() {
+    // reference as a js object
+    return &lt;button className={styles.error}&gt;Error Button&lt;/button&gt;;
+  }
+}</code></pre>
+<h2 id="result" data-title="Result">
+    <a style="background-color: transparent !important;" href="#result" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Result
+  </h2><p>No clashes from other <code>.error</code> class names</p>
+<pre><code class="language-html">&lt;!-- This button has red background but not red text --&gt;
+&lt;button class=&quot;Button_error_ax7yz&quot;&gt;Error Button&lt;/button&gt;</code></pre>
+<p><strong>This is an optional feature.</strong> Regular <code>&lt;link&gt;</code> stylesheets and CSS files are fully supported. CSS Modules are turned on for files ending with the <code>.module.css</code> extension.</p>

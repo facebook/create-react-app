@@ -1,0 +1,40 @@
+<h1 id="importing-a-component" data-title="Importing a Component">
+    <a style="background-color: transparent !important;" href="#importing-a-component" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Importing a Component
+  </h1><p>This project setup supports ES6 modules thanks to Webpack.<br>
+While you can still use <code>require()</code> and <code>module.exports</code>, we encourage you to use <a href="http://exploringjs.com/es6/ch_modules.html"><code>import</code> and <code>export</code></a> instead.</p>
+<p>For example:</p>
+<h2 id="-code-button-js-code-" data-title="<code>Button.js</code>">
+    <a style="background-color: transparent !important;" href="#-code-button-js-code-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    <code>Button.js</code>
+  </h2><pre><code class="language-jsx">import React, { Component } from &#39;react&#39;;
+
+class Button extends Component {
+  render() {
+    // ...
+  }
+}
+
+export default Button; // Don’t forget to use export default!</code></pre>
+<h2 id="-code-dangerbutton-js-code-" data-title="<code>DangerButton.js</code>">
+    <a style="background-color: transparent !important;" href="#-code-dangerbutton-js-code-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    <code>DangerButton.js</code>
+  </h2><pre><code class="language-jsx">import React, { Component } from &#39;react&#39;;
+import Button from &#39;./Button&#39;; // Import a component from another file
+
+class DangerButton extends Component {
+  render() {
+    return &lt;Button color=&quot;red&quot; /&gt;;
+  }
+}
+
+export default DangerButton;</code></pre>
+<p>Be aware of the <a href="http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281">difference between default and named exports</a>. It is a common source of mistakes.</p>
+<p>We suggest that you stick to using default imports and exports when a module only exports a single thing (for example, a component). That’s what you get when you use <code>export default Button</code> and <code>import Button from &#39;./Button&#39;</code>.</p>
+<p>Named exports are useful for utility modules that export several functions. A module may have at most one default export and as many named exports as you like.</p>
+<p>Learn more about ES6 modules:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281">When to use the curly braces?</a></li>
+<li><a href="http://exploringjs.com/es6/ch_modules.html">Exploring ES6: Modules</a></li>
+<li><a href="https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules">Understanding ES6: Modules</a></li>
+</ul>

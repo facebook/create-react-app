@@ -1,0 +1,55 @@
+<h1 id="using-the-public-folder" data-title="Using the Public Folder">
+    <a style="background-color: transparent !important;" href="#using-the-public-folder" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Using the Public Folder
+  </h1><blockquote>
+<p>Note</p>
+<p>This feature is available with <code>react-scripts@0.5.0</code> and higher.</p>
+</blockquote>
+<h2 id="changing-the-html" data-title="Changing the HTML">
+    <a style="background-color: transparent !important;" href="#changing-the-html" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Changing the HTML
+  </h2><p>The <code>public</code> folder contains the HTML file so you can tweak it, for example, to <a href="/docs/title-and-meta-tags">set the page title</a>.
+The <code>&lt;script&gt;</code> tag with the compiled code will be added to it automatically during the build process.</p>
+<h2 id="adding-assets-outside-of-the-module-system" data-title="Adding Assets Outside of the Module System">
+    <a style="background-color: transparent !important;" href="#adding-assets-outside-of-the-module-system" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Adding Assets Outside of the Module System
+  </h2><p>You can also add other assets to the <code>public</code> folder.</p>
+<p>Note that we normally encourage you to <code>import</code> assets in JavaScript files instead.
+For example, see the sections on <a href="/docs/adding-a-stylesheet">adding a stylesheet</a> and <a href="/docs/adding-images-fonts-and-files">adding images and fonts</a>.
+This mechanism provides a number of benefits:</p>
+<ul>
+<li>Scripts and stylesheets get minified and bundled together to avoid extra network requests.</li>
+<li>Missing files cause compilation errors instead of 404 errors for your users.</li>
+<li>Result filenames include content hashes so you don’t need to worry about browsers caching their old versions.</li>
+</ul>
+<p>However there is an <strong>escape hatch</strong> that you can use to add an asset outside of the module system.</p>
+<p>If you put a file into the <code>public</code> folder, it will <strong>not</strong> be processed by Webpack. Instead it will be copied into the build folder untouched. To reference assets in the <code>public</code> folder, you need to use a special variable called <code>PUBLIC_URL</code>.</p>
+<p>Inside <code>index.html</code>, you can use it like this:</p>
+<pre><code class="language-html">&lt;link rel=&quot;shortcut icon&quot; href=&quot;%PUBLIC_URL%/favicon.ico&quot;&gt;</code></pre>
+<p>Only files inside the <code>public</code> folder will be accessible by <code>%PUBLIC_URL%</code> prefix. If you need to use a file from <code>src</code> or <code>node_modules</code>, you’ll have to copy it there to explicitly specify your intention to make this file a part of the build.</p>
+<p>When you run <code>npm run build</code>, Create React App will substitute <code>%PUBLIC_URL%</code> with a correct absolute path so your project works even if you use client-side routing or host it at a non-root URL.</p>
+<p>In JavaScript code, you can use <code>process.env.PUBLIC_URL</code> for similar purposes:</p>
+<pre><code class="language-jsx">render() {
+  // Note: this is an escape hatch and should be used sparingly!
+  // Normally we recommend using `import` for getting asset URLs
+  // as described in “Adding Images and Fonts” above this section.
+  return &lt;img src={process.env.PUBLIC_URL + &#39;/img/logo.png&#39;} /&gt;;
+}</code></pre>
+<p>Keep in mind the downsides of this approach:</p>
+<ul>
+<li>None of the files in <code>public</code> folder get post-processed or minified.</li>
+<li>Missing files will not be called at compilation time, and will cause 404 errors for your users.</li>
+<li>Result filenames won’t include content hashes so you’ll need to add query arguments or rename them every time they change.</li>
+</ul>
+<h2 id="when-to-use-the-code-public-code-folder" data-title="When to Use the <code>public</code> Folder">
+    <a style="background-color: transparent !important;" href="#when-to-use-the-code-public-code-folder" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    When to Use the <code>public</code> Folder
+  </h2><p>Normally we recommend importing <a href="/docs/adding-a-stylesheet">stylesheets</a>, <a href="/docs/adding-images-fonts-and-files">images, and fonts</a> from JavaScript.
+The <code>public</code> folder is useful as a workaround for a number of less common cases:</p>
+<ul>
+<li>You need a file with a specific name in the build output, such as <a href="https://developer.mozilla.org/en-US/docs/Web/Manifest"><code>manifest.webmanifest</code></a>.</li>
+<li>You have thousands of images and need to dynamically reference their paths.</li>
+<li>You want to include a small script like <a href="http://github.hubspot.com/pace/docs/welcome/"><code>pace.js</code></a> outside of the bundled code.</li>
+<li>Some library may be incompatible with Webpack and you have no other option but to include it as a <code>&lt;script&gt;</code> tag.</li>
+</ul>
+<p>Note that if you add a <code>&lt;script&gt;</code> that declares global variables, you also need to read the next section on using them.</p>

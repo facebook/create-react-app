@@ -1,0 +1,45 @@
+<h1 id="code-splitting" data-title="Code Splitting">
+    <a style="background-color: transparent !important;" href="#code-splitting" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Code Splitting
+  </h1><p>Instead of downloading the entire app before users can use it, code splitting allows you to split your code into small chunks which you can then load on demand.</p>
+<p>This project setup supports code splitting via <a href="http://2ality.com/2017/01/import-operator.html#loading-code-on-demand">dynamic <code>import()</code></a>. Its <a href="https://github.com/tc39/proposal-dynamic-import">proposal</a> is in stage 3. The <code>import()</code> function-like form takes the module name as an argument and returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code>Promise</code></a> which always resolves to the namespace object of the module.</p>
+<p>Here is an example:</p>
+<h2 id="-code-modulea-js-code-" data-title="<code>moduleA.js</code>">
+    <a style="background-color: transparent !important;" href="#-code-modulea-js-code-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    <code>moduleA.js</code>
+  </h2><pre><code class="language-jsx">const moduleA = &#39;Hello&#39;;
+
+export { moduleA };</code></pre>
+<h2 id="-code-app-js-code-" data-title="<code>App.js</code>">
+    <a style="background-color: transparent !important;" href="#-code-app-js-code-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    <code>App.js</code>
+  </h2><pre><code class="language-jsx">import React, { Component } from &#39;react&#39;;
+
+class App extends Component {
+  handleClick = () =&gt; {
+    import(&#39;./moduleA&#39;)
+      .then(({ moduleA }) =&gt; {
+        // Use moduleA
+      })
+      .catch(err =&gt; {
+        // Handle failure
+      });
+  };
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;button onClick={this.handleClick}&gt;Load&lt;/button&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default App;</code></pre>
+<p>This will make <code>moduleA.js</code> and all its unique dependencies as a separate chunk that only loads after the user clicks the &#39;Load&#39; button. For more information on the chunks that are created, see the <a href="/docs/production-build">production build</a> section.</p>
+<p>You can also use it with <code>async</code> / <code>await</code> syntax if you prefer it.</p>
+<h2 id="with-react-router" data-title="With React Router">
+    <a style="background-color: transparent !important;" href="#with-react-router" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    With React Router
+  </h2><p>If you are using React Router check out <a href="http://serverless-stack.com/chapters/code-splitting-in-create-react-app.html">this tutorial</a> on how to use code splitting with it. You can find the companion GitHub repository <a href="https://github.com/AnomalyInnovations/serverless-stack-demo-client/tree/code-splitting-in-create-react-app">here</a>.</p>
+<p>Also check out the <a href="https://reactjs.org/docs/code-splitting.html">Code Splitting</a> section in React documentation.</p>

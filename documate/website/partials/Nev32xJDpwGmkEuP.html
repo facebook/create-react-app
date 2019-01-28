@@ -1,0 +1,139 @@
+<style>
+  .hero-label {
+    color: #878b94;
+  }
+  .hero {
+    background-color: #282c34;
+    color: #ffffff;
+    padding: 90px 0;
+    height: 45vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .title {
+    font-weight: bold;
+    color: #61dafb;
+    font-size: 42px;
+    margin-bottom: 30px;
+  }
+  .sub-title {
+    max-width: 700px;
+    color: #ffffff;
+    font-size: 25px !important;
+    text-align: center;
+    padding: 0 15px;
+    font-weight: 300;
+  }
+  .features, #swimlane-1, #swimlane-2 {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  .features h2 {
+    font-weight: 300;
+  }
+  #swimlane-1 {
+    background-color: #f7f7f7;
+  }
+  #swimlane-1, #swimlane-2 {
+    padding: 40px 0;
+  }
+  #swimlane-1 h2, #swimlane-2 h2, .features h2 {
+    font-size: 2em;
+    font-size: 20px;
+    border: none;
+    margin-bottom: 35px;
+    padding: 0;
+    color: #6d6d6d;
+  }
+  @media only screen and (max-width: 860px) {
+    .features, #swimlane-1, #swimlane-2 {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .sub-title {
+      font-size: 20px;
+    }
+  }
+</style>
+<section class="hero">
+  <h1 class="title">Create React App</h1>
+  <p class="sub-title">
+    Set up a modern web app by running one command.
+  </p>
+  <div class="btn-links-container">
+    <a class="btn-link" href="/docs/getting-started">Get Started</a>
+    <!-- <a class="btn-link-arrow" href="/docs/getting-started/">
+      Get Started
+      <svg
+        height="12"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 4.53657 8.69699"
+      >
+        <path
+          d="M.18254,8.697a.18149.18149,0,0,1-.12886-.31034L4.09723,4.34126.05369.29954a.18149.18149,0,0,1,.2559-.2559L4.4838,4.21785a.18149.18149,0,0,1,0,.2559L.30958,8.648A.18149.18149,0,0,1,.18254,8.697Z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </a> -->
+  </div>
+</section>
+<section class="features container">
+  <div class="row">
+    <div class="col-md-4 col-sm-12">
+      <h2>Less to Learn</h2>
+      <p>
+        You don't need to learn and configure many build tools. Instant reloads help you focus on development. When it's time to deploy, your bundles are optimized automatically.
+      </p>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <h2>Only One Dependency</h2>
+      <p>
+        Your app only needs one build dependency. We test Create React App to make sure that all of its underlying pieces work together seamlessly – no complicated version mismatches.
+      </p>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <h2>No Lock-In</h2>
+      <p>
+        Under the hood, we use Webpack, Babel, ESLint, and other amazing projects to power your app. If you ever want an advanced configuration, you can ”eject” from Create React App and edit their config files directly.
+      </p>
+    </div>
+  </div>
+</section>
+<section id="swimlane-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <h2>Get started in seconds</h2>
+        <p>
+          Whether you’re using React or another library, Create React App lets you <b>focus on code, not build tools</b>.
+          
+          To create a project called my-app, run this command:
+
+          <pre>npx create-react-app my-app</pre>
+        </p>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <img style="width: 100%;" src="https://camo.githubusercontent.com/29765c4a32f03bd01d44edef1cd674225e3c906b/68747470733a2f2f63646e2e7261776769742e636f6d2f66616365626f6f6b2f6372656174652d72656163742d6170702f323762343261632f73637265656e636173742e737667">
+      </div>
+    </div>
+  </div>
+</section>
+<section id="swimlane-2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <img style="width: 100%;" src="https://raw.githubusercontent.com/bukharim96/create-react-app/master/documate/img/update.png">
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <h2>Easy to maintain</h2>
+        <p>
+          Updating your build tooling is typically a daunting and time-consuming task. When new versions of Create React App are released, you can upgrade using a single command:
+
+          <pre>npm install react-scripts@latest</pre>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

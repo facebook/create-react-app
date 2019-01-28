@@ -1,0 +1,40 @@
+<h1 id="adding-typescript" data-title="Adding TypeScript">
+    <a style="background-color: transparent !important;" href="#adding-typescript" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Adding TypeScript
+  </h1><blockquote>
+<p>Note</p>
+<p>This feature is available with <code>react-scripts@2.1.0</code> and higher.</p>
+</blockquote>
+<p><a href="https://www.typescriptlang.org/">TypeScript</a> is a typed superset of JavaScript that compiles to plain JavaScript.</p>
+<p>To start a new Create React App project with <a href="https://www.typescriptlang.org/">TypeScript</a>, you can run:</p>
+<pre><code class="language-bash">npx create-react-app my-app --typescript
+
+# or
+
+yarn create react-app my-app --typescript</code></pre>
+<p>To add <a href="https://www.typescriptlang.org/">TypeScript</a> to a Create React App project, first install it:</p>
+<pre><code class="language-bash">npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+
+# or
+
+yarn add typescript @types/node @types/react @types/react-dom @types/jest</code></pre>
+<p>Next, rename any file to be a TypeScript file (e.g. <code>src/index.js</code> to <code>src/index.tsx</code>) and <strong>restart your development server</strong>!</p>
+<p>Type errors will show up in the same console as the build one.</p>
+<p>To learn more about TypeScript, check out <a href="https://www.typescriptlang.org/">its documentation</a>.</p>
+<blockquote>
+<p>Note</p>
+<p>You are not required to make a <a href="https://www.typescriptlang.org/docs/handbook/tsconfig-json.html"><code>tsconfig.json</code> file</a>, one will be made for you.
+You are allowed to edit the generated TypeScript configuration.</p>
+</blockquote>
+<blockquote>
+<p>Note</p>
+<p>If you are currently using <a href="https://github.com/wmonk/create-react-app-typescript/">create-react-app-typescript</a>, see <a href="https://vincenttunru.com/migrate-create-react-app-typescript-to-create-react-app/">this blog post</a> for instructions on how to migrate to Create React App.</p>
+</blockquote>
+<blockquote>
+<p>Note</p>
+<p>We recommend using <a href="https://code.visualstudio.com/">VSCode</a> for a better integrated experience.</p>
+</blockquote>
+<blockquote>
+<p>Note</p>
+<p>Constant enums and namespaces are not supported.</p>
+</blockquote>

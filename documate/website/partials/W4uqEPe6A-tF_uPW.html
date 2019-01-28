@@ -1,0 +1,101 @@
+<h1 id="making-a-progressive-web-app" data-title="Making a Progressive Web App">
+    <a style="background-color: transparent !important;" href="#making-a-progressive-web-app" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Making a Progressive Web App
+  </h1><p>The production build has all the tools necessary to generate a first-class
+<a href="https://developers.google.com/web/progressive-web-apps/">Progressive Web App</a>,
+but <strong>the offline/cache-first behavior is opt-in only</strong>. By default,
+the build process will generate a service worker file, but it will not be
+registered, so it will not take control of your production web app.</p>
+<p>In order to opt-in to the offline-first behavior, developers should look for the
+following in their <a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/index.js"><code>src/index.js</code></a> file:</p>
+<pre><code class="language-jsx">// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();</code></pre>
+<p>As the comment states, switching <code>serviceWorker.unregister()</code> to
+<code>serviceWorker.register()</code> will opt you in to using the service worker.</p>
+<h2 id="why-opt-in-" data-title="Why Opt-in?">
+    <a style="background-color: transparent !important;" href="#why-opt-in-" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Why Opt-in?
+  </h2><p>Offline-first Progressive Web Apps are faster and more reliable than traditional web pages, and provide an engaging mobile experience:</p>
+<ul>
+<li>All static site assets are cached so that your page loads fast on subsequent visits, regardless of network connectivity (such as 2G or 3G). Updates are downloaded in the background.</li>
+<li>Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.</li>
+<li>On mobile devices, your app can be added directly to the user&#39;s home screen, app icon and all. This eliminates the need for the app store.</li>
+</ul>
+<p>However, they <a href="https://github.com/facebook/create-react-app/issues/2398">can make debugging deployments more challenging</a> so, starting with Create React App 2, service workers are opt-in.</p>
+<p>The <a href="https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin"><code>workbox-webpack-plugin</code></a>
+is integrated into production configuration,
+and it will take care of generating a service worker file that will automatically
+precache all of your local assets and keep them up to date as you deploy updates.
+The service worker will use a <a href="https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network">cache-first strategy</a>
+for handling all requests for local assets, including
+<a href="https://developers.google.com/web/fundamentals/primers/service-workers/high-performance-loading#first_what_are_navigation_requests">navigation requests</a>
+for your HTML, ensuring that your web app is consistently fast, even on a slow
+or unreliable network.</p>
+<h2 id="offline-first-considerations" data-title="Offline-First Considerations">
+    <a style="background-color: transparent !important;" href="#offline-first-considerations" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Offline-First Considerations
+  </h2><p>If you do decide to opt-in to service worker registration, please take the
+following into account:</p>
+<ol>
+<li><p>After the initial caching is done, the <a href="https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle">service worker lifecycle</a>
+controls when updated content ends up being shown to users. In order to guard against
+<a href="https://github.com/facebook/create-react-app/issues/3613#issuecomment-353467430">race conditions with lazy-loaded content</a>,
+the default behavior is to conservatively keep the updated service worker in the &quot;<a href="https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#waiting">waiting</a>&quot;
+state. This means that users will end up seeing older content until they close (reloading is not
+enough) their existing, open tabs. See <a href="https://jeffy.info/2018/10/10/sw-in-c-r-a.html">this blog post</a>
+for more details about this behavior.</p>
+</li>
+<li><p>Users aren&#39;t always familiar with offline-first web apps. It can be useful to
+<a href="https://developers.google.com/web/fundamentals/instant-and-offline/offline-ux#inform_the_user_when_the_app_is_ready_for_offline_consumption">let the user know</a>
+when the service worker has finished populating your caches (showing a &quot;This web
+app works offline!&quot; message) and also let them know when the service worker has
+fetched the latest updates that will be available the next time they load the
+page (showing a &quot;New content is available once existing tabs are closed.&quot; message). Showing
+these messages is currently left as an exercise to the developer, but as a
+starting point, you can make use of the logic included in <a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/serviceWorker.js"><code>src/serviceWorker.js</code></a>, which
+demonstrates which service worker lifecycle events to listen for to detect each
+scenario, and which as a default, just logs appropriate messages to the
+JavaScript console.</p>
+</li>
+<li><p>Service workers <a href="https://developers.google.com/web/fundamentals/getting-started/primers/service-workers#you_need_https">require HTTPS</a>,
+although to facilitate local testing, that policy
+<a href="http://stackoverflow.com/questions/34160509/options-for-testing-service-workers-via-http/34161385#34161385">does not apply to <code>localhost</code></a>.
+If your production web server does not support HTTPS, then the service worker
+registration will fail, but the rest of your web app will remain functional.</p>
+</li>
+<li><p>The service worker is only enabled in the <a href="/docs/deployment">production environment</a>,
+e.g. the output of <code>npm run build</code>. It&#39;s recommended that you do not enable an
+offline-first service worker in a development environment, as it can lead to
+frustration when previously cached assets are used and do not include the latest
+changes you&#39;ve made locally.</p>
+</li>
+<li><p>If you <em>need</em> to test your offline-first service worker locally, build
+the application (using <code>npm run build</code>) and run a simple http server from your
+build directory. After running the build script, <code>create-react-app</code> will give
+instructions for one way to test your production build locally and the <a href="/docs/deployment">deployment instructions</a> have
+instructions for using other methods. <em>Be sure to always use an
+incognito window to avoid complications with your browser cache.</em></p>
+</li>
+<li><p>By default, the generated service worker file will not intercept or cache any
+cross-origin traffic, like HTTP <a href="/docs/integrating-with-an-api-backend">API requests</a>,
+images, or embeds loaded from a different domain.</p>
+</li>
+</ol>
+<h2 id="progressive-web-app-metadata" data-title="Progressive Web App Metadata">
+    <a style="background-color: transparent !important;" href="#progressive-web-app-metadata" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Progressive Web App Metadata
+  </h2><p>The default configuration includes a web app manifest located at
+<a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/public/manifest.json"><code>public/manifest.json</code></a>, that you can customize with
+details specific to your web application.</p>
+<p>When a user adds a web app to their homescreen using Chrome or Firefox on
+Android, the metadata in <a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/public/manifest.json"><code>manifest.json</code></a> determines what
+icons, names, and branding colors to use when the web app is displayed.
+<a href="https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/">The Web App Manifest guide</a>
+provides more context about what each field means, and how your customizations
+will affect your users&#39; experience.</p>
+<p>Progressive web apps that have been added to the homescreen will load faster and
+work offline when there&#39;s an active service worker. That being said, the
+metadata from the web app manifest will still be used regardless of whether or
+not you opt-in to service worker registration.</p>

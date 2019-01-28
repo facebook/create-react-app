@@ -1,0 +1,80 @@
+<h1 id="advanced-configuration" data-title="Advanced Configuration">
+    <a style="background-color: transparent !important;" href="#advanced-configuration" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Advanced Configuration
+  </h1><p>You can adjust various development and production settings by setting environment variables in your shell or with <a href="/docs/adding-custom-environment-variables#adding-development-environment-variables-in-env">.env</a>.</p>
+<table class="table table-striped">
+    <thead><tr>
+<th align="left">Variable</th>
+<th align="center">Development</th>
+<th align="center">Production</th>
+<th align="left">Usage</th>
+</tr>
+</thead>
+    <tbody><tr>
+<td align="left">BROWSER</td>
+<td align="center">✅ Used</td>
+<td align="center">🚫 Ignored</td>
+<td align="left">By default, Create React App will open the default system browser, favoring Chrome on macOS. Specify a <a href="https://github.com/sindresorhus/opn#app">browser</a> to override this behavior, or set it to <code>none</code> to disable it completely. If you need to customize the way the browser is launched, you can specify a node script instead. Any arguments passed to <code>npm start</code> will also be passed to this script, and the url where your app is served will be the last argument. Your script&#39;s file name must have the <code>.js</code> extension.</td>
+</tr>
+<tr>
+<td align="left">HOST</td>
+<td align="center">✅ Used</td>
+<td align="center">🚫 Ignored</td>
+<td align="left">By default, the development web server binds to <code>localhost</code>. You may use this variable to specify a different host.</td>
+</tr>
+<tr>
+<td align="left">PORT</td>
+<td align="center">✅ Used</td>
+<td align="center">🚫 Ignored</td>
+<td align="left">By default, the development web server will attempt to listen on port 3000 or prompt you to attempt the next available port. You may use this variable to specify a different port.</td>
+</tr>
+<tr>
+<td align="left">HTTPS</td>
+<td align="center">✅ Used</td>
+<td align="center">🚫 Ignored</td>
+<td align="left">When set to <code>true</code>, Create React App will run the development server in <code>https</code> mode.</td>
+</tr>
+<tr>
+<td align="left">PUBLIC_URL</td>
+<td align="center">🚫 Ignored</td>
+<td align="center">✅ Used</td>
+<td align="left">Create React App assumes your application is hosted at the serving web server&#39;s root or a subpath as specified in <a href="/docs/deployment#building-for-relative-paths"><code>package.json</code> (<code>homepage</code>)</a>. Normally, Create React App ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included.md). This may be particularly useful when using a CDN to host your application.</td>
+</tr>
+<tr>
+<td align="left">CI</td>
+<td align="center">✅ Used</td>
+<td align="center">✅ Used</td>
+<td align="left">When set to <code>true</code>, Create React App treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.</td>
+</tr>
+<tr>
+<td align="left">REACT_EDITOR</td>
+<td align="center">✅ Used</td>
+<td align="center">🚫 Ignored</td>
+<td align="left">When an app crashes in development, you will see an error overlay with clickable stack trace. When you click on it, Create React App will try to determine the editor you are using based on currently running processes, and open the relevant source file. You can <a href="https://github.com/facebook/create-react-app/issues/2636">send a pull request to detect your editor of choice</a>. Setting this environment variable overrides the automatic detection. If you do it, make sure your systems <a href="https://en.wikipedia.org/wiki/PATH_(variable)">PATH</a> environment variable points to your editor’s bin folder. You can also set it to <code>none</code> to disable it completely.</td>
+</tr>
+<tr>
+<td align="left">CHOKIDAR_USEPOLLING</td>
+<td align="center">✅ Used</td>
+<td align="center">🚫 Ignored</td>
+<td align="left">When set to <code>true</code>, the watcher runs in polling mode, as necessary inside a VM. Use this option if <code>npm start</code> isn&#39;t detecting changes.</td>
+</tr>
+<tr>
+<td align="left">GENERATE_SOURCEMAP</td>
+<td align="center">🚫 Ignored</td>
+<td align="center">✅ Used</td>
+<td align="left">When set to <code>false</code>, source maps are not generated for a production build. This solves OOM issues on some smaller machines.</td>
+</tr>
+<tr>
+<td align="left">NODE_PATH</td>
+<td align="center">✅ Used</td>
+<td align="center">✅ Used</td>
+<td align="left">Same as <a href="https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders"><code>NODE_PATH</code> in Node.js</a>, but only relative folders are allowed. Can be handy for emulating a monorepo setup by setting <code>NODE_PATH=src</code>.</td>
+</tr>
+<tr>
+<td align="left">INLINE_RUNTIME_CHUNK</td>
+<td align="center">🚫 Ignored</td>
+<td align="center">✅ Used</td>
+<td align="left">By default, Create React App will embed the runtime script into <code>index.html</code> during the production build. When set to <code>false</code>, the script will not be embedded and will be imported as usual. This is normally required when dealing with CSP.</td>
+</tr>
+</tbody>
+  </table>

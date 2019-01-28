@@ -1,0 +1,101 @@
+<h1 id="setting-up-your-editor" data-title="Setting Up Your Editor">
+    <a style="background-color: transparent !important;" href="#setting-up-your-editor" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Setting Up Your Editor
+  </h1><p>Create React App comes with a bunch of tools that improve the editing experience - if configured correctly. Here&#39;s a few tips to maximize your productivity:</p>
+<h2 id="syntax-highlighting" data-title="Syntax highlighting">
+    <a style="background-color: transparent !important;" href="#syntax-highlighting" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Syntax highlighting
+  </h2><p>To configure the syntax highlighting in your favorite text editor, head to the <a href="https://babeljs.io/docs/editors">relevant Babel documentation page</a> and follow the instructions. Some of the most popular editors are covered.</p>
+<h2 id="displaying-lint-output-in-the-editor" data-title="Displaying Lint Output in the Editor">
+    <a style="background-color: transparent !important;" href="#displaying-lint-output-in-the-editor" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Displaying Lint Output in the Editor
+  </h2><blockquote>
+<p>Note</p>
+<p>This feature is available with <code>react-scripts@0.2.0</code> and higher.<br>
+It works out of the box for newly created projects with <code>react-scripts@2.0.3</code> and higher.<br>
+It also only works with npm 3 or higher.</p>
+</blockquote>
+<p>Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.</p>
+<p>They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.</p>
+<p>You would need to install an ESLint plugin for your editor first. Then, add a file called <code>.eslintrc.json</code> to the project root:</p>
+<pre><code class="language-json">{
+  &quot;extends&quot;: &quot;react-app&quot;
+}</code></pre>
+<p>Now your editor should report the linting warnings.</p>
+<p>Note that even if you edit your <code>.eslintrc.json</code> file further, these changes will <strong>only affect the editor integration</strong>. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.</p>
+<p>If you want to enforce a coding style for your project, consider using <a href="https://github.com/jlongster/prettier">Prettier</a> instead of ESLint style rules.</p>
+<h2 id="debugging-in-the-editor" data-title="Debugging in the Editor">
+    <a style="background-color: transparent !important;" href="#debugging-in-the-editor" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Debugging in the Editor
+  </h2><p><strong>This feature is currently only supported by <a href="https://code.visualstudio.com">Visual Studio Code</a> and <a href="https://www.jetbrains.com/webstorm/">WebStorm</a>.</strong></p>
+<p>Visual Studio Code and WebStorm support debugging out of the box with Create React App. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.</p>
+<h3 id="visual-studio-code" data-title="Visual Studio Code">
+    <a style="background-color: transparent !important;" href="#visual-studio-code" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Visual Studio Code
+  </h3><p>You would need to have the latest version of <a href="https://code.visualstudio.com">VS Code</a> and VS Code <a href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome">Chrome Debugger Extension</a> installed.</p>
+<p>Then add the block below to your <code>launch.json</code> file and put it inside the <code>.vscode</code> folder in your app’s root directory.</p>
+<pre><code class="language-json">{
+  &quot;version&quot;: &quot;0.2.0&quot;,
+  &quot;configurations&quot;: [
+    {
+      &quot;name&quot;: &quot;Chrome&quot;,
+      &quot;type&quot;: &quot;chrome&quot;,
+      &quot;request&quot;: &quot;launch&quot;,
+      &quot;url&quot;: &quot;http://localhost:3000&quot;,
+      &quot;webRoot&quot;: &quot;${workspaceFolder}/src&quot;,
+      &quot;sourceMapPathOverrides&quot;: {
+        &quot;webpack:///src/*&quot;: &quot;${webRoot}/*&quot;
+      }
+    }
+  ]
+}</code></pre>
+<blockquote>
+<p>Note</p>
+<p>The URL may be different if you&#39;ve made adjustments via the <a href="/docs/advanced-configuration">HOST or PORT environment variables</a>.</p>
+</blockquote>
+<p>Start your app by running <code>npm start</code>, and start debugging in VS Code by pressing <code>F5</code> or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.</p>
+<p>Having problems with VS Code Debugging? Please see their <a href="https://github.com/Microsoft/vscode-chrome-debug/blob/master/README.md#troubleshooting">troubleshooting guide</a>.</p>
+<h3 id="webstorm" data-title="WebStorm">
+    <a style="background-color: transparent !important;" href="#webstorm" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    WebStorm
+  </h3><p>You would need to have <a href="https://www.jetbrains.com/webstorm/">WebStorm</a> and <a href="https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji">JetBrains IDE Support</a> Chrome extension installed.</p>
+<p>In the WebStorm menu <code>Run</code> select <code>Edit Configurations...</code>. Then click <code>+</code> and select <code>JavaScript Debug</code>. Paste <code>http://localhost:3000</code> into the URL field and save the configuration.</p>
+<blockquote>
+<p>Note</p>
+<p>The URL may be different if you&#39;ve made adjustments via the <a href="/docs/advanced-configuration">HOST or PORT environment variables</a>.</p>
+</blockquote>
+<p>Start your app by running <code>npm start</code>, then press <code>^D</code> on macOS or <code>F9</code> on Windows and Linux or click the green debug icon to start debugging in WebStorm.</p>
+<p>The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine.</p>
+<h2 id="formatting-code-automatically" data-title="Formatting Code Automatically">
+    <a style="background-color: transparent !important;" href="#formatting-code-automatically" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+    Formatting Code Automatically
+  </h2><p>Prettier is an opinionated code formatter with support for JavaScript, CSS and JSON. With Prettier you can format the code you write automatically to ensure a code style within your project. See the <a href="https://github.com/prettier/prettier">Prettier&#39;s GitHub page</a> for more information, and look at this <a href="https://prettier.github.io/prettier/">page to see it in action</a>.</p>
+<p>To format our code whenever we make a commit in git, we need to install the following dependencies:</p>
+<pre><code class="language-shell">npm install --save husky lint-staged prettier</code></pre>
+<p>Alternatively you may use <code>yarn</code>:</p>
+<pre><code class="language-shell">yarn add husky lint-staged prettier</code></pre>
+<ul>
+<li><code>husky</code> makes it easy to use githooks as if they are npm scripts.</li>
+<li><code>lint-staged</code> allows us to run scripts on staged files in git. See this <a href="https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8">blog post about lint-staged to learn more about it</a>.</li>
+<li><code>prettier</code> is the JavaScript formatter we will run before commits.</li>
+</ul>
+<p>Now we can make sure every file is formatted correctly by adding a few lines to the <code>package.json</code> in the project root.</p>
+<p>Add the following field to the <code>package.json</code> section:</p>
+<pre><code class="language-diff">+  &quot;husky&quot;: {
++    &quot;hooks&quot;: {
++      &quot;pre-commit&quot;: &quot;lint-staged&quot;
++    }
++  }</code></pre>
+<p>Next we add a &#39;lint-staged&#39; field to the <code>package.json</code>, for example:</p>
+<pre><code class="language-diff">  &quot;dependencies&quot;: {
+    // ...
+  },
++ &quot;lint-staged&quot;: {
++   &quot;src/**/*.{js,jsx,ts,tsx,json,css,scss,md}&quot;: [
++     &quot;prettier --single-quote --write&quot;,
++     &quot;git add&quot;
++   ]
++ },
+  &quot;scripts&quot;: {</code></pre>
+<p>Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run <code>./node_modules/.bin/prettier --single-quote --write &quot;src/**/*.{js,jsx,ts,tsx,json,css,scss,md}&quot;</code> to format your entire project for the first time.</p>
+<p>Next you might want to integrate Prettier in your favorite editor. Read the section on <a href="https://prettier.io/docs/en/editors.html">Editor Integration</a> on the Prettier GitHub page.</p>
