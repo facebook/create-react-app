@@ -31,7 +31,7 @@ module.exports = {
 <div class="row">
   <div class="col-md-3">
     <a style="margin-bottom: 15px;display: block;" href="https://code.facebook.com/projects/">
-    <img src="https://raw.githubusercontent.com/bukharim96/create-react-app/master/documate/img/oss_logo.png">
+    <img style="width: 100%;" src="https://raw.githubusercontent.com/bukharim96/create-react-app/master/documate/img/oss_logo.png">
     </a>
     <span>Copyright &copy; ${new Date().getFullYear()} Facebook Inc.</span>
   </div>
