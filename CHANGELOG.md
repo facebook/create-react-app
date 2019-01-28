@@ -1,3 +1,12 @@
+## 2.6.0 (January 28, 2019)
+
+#### :bug: Bug Fix
+* [lighter-styleguide] fix `package-lock.json` issues ([#74](https://github.com/lightingbeetle/lighter/pull/74))
+
+#### :tada: version updates
+
+* `lighter-styleguide@1.4.1`
+
 ## 2.6.0 (December 20, 2018)
 
 #### :rocket: New Feature
