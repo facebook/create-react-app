@@ -216,10 +216,6 @@ function createApp(
   );
 
   const useYarn = useNpm ? false : shouldUseYarn();
-  const yarnUsesDefaultRegistry =
-    execSync('yarn config get registry').toString() ===
-    'https://registry.yarnpkg.com';
-
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
