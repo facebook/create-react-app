@@ -27,5 +27,49 @@ module.exports = {
   codeBlockTheme: "default",
 
   // This will apear in the footer throughout the site
-  footerContent: `<div style="color: #fff; text-align: center;">&copy; Copyright ${new Date().getFullYear()}</div>`
+  footerContent: `
+<div class="row">
+  <div class="col-md-3">
+    <a style="margin-bottom: 15px;display: block;" href="https://raw.githubusercontent.com/bukharim96/create-react-app/master/documate/img/oss_logo.png">
+    </a>
+    <span>Copyright &copy; ${new Date().getFullYear()} Facebook Inc.</span>
+  </div>
+  <div class="col-md-3">
+    <h3>Docs</h3>
+    <ul>
+      <li>
+        <a href="/docs/getting-started">Getting Started</a>
+      </li>
+      <li>
+        <a href="https://reactjs.org/">Learn React</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-3">
+    <h3>Community</h3>
+    <ul>
+      <li>
+        <a href="https://stackoverflow.com/questions/tagged/create-react-app">Stack Overflow</a>
+      </li>
+      <li>
+        <a href="https://spectrum.chat/react">Spectrum</a>
+      </li>
+      <li>
+        <a href="https://twitter.com/reactjs">Twitter</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-3">
+    <h3>More</h3>
+    <ul>
+      <li>
+        <a href="https://www.github.com/facebook/create-react-app">GitHub</a>
+      </li>
+      <li>
+        <a class="github-button" href="https://github.com/facebook/create-react-app" data-icon="octicon-star" data-show-count="true" aria-label="Star facebook/create-react-app on GitHub">Star</a>
+      </li>
+    </ul>
+  </div>
+</div>
+`
 };
