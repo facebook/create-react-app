@@ -8,7 +8,7 @@
 <p>Your project can consume variables declared in your environment as if they were declared locally in your JS files. By
 default you will have <code>NODE_ENV</code> defined for you, and any other environment variables starting with
 <code>REACT_APP_</code>.</p>
-<p><strong>The environment variables are embedded during the build time</strong>. Since Create React App produces a static HTML/CSS/JS bundle, it can’t possibly read them at runtime. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, just like <a href="title-and-meta-tags.md#injecting-data-from-the-server-into-the-page">described here</a>. Alternatively you can rebuild the app on the server anytime you change them.</p>
+<p><strong>The environment variables are embedded during the build time</strong>. Since Create React App produces a static HTML/CSS/JS bundle, it can’t possibly read them at runtime. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, just like <a href="/docs/title-and-meta-tags#injecting-data-from-the-server-into-the-page">described here</a>. Alternatively you can rebuild the app on the server anytime you change them.</p>
 <blockquote>
 <p>Note</p>
 <p>You must create custom environment variables beginning with <code>REACT_APP_</code>. Any other variables except <code>NODE_ENV</code> will be ignored to avoid accidentally <a href="https://github.com/facebook/create-react-app/issues/865#issuecomment-252199527">exposing a private key on the machine that could have the same name</a>. Changing any environment variables will require you to restart the development server if it is running.</p>
@@ -58,7 +58,7 @@ a <code>.env</code> file. Both of these ways are described in the next few secti
 <p>Note that the caveats from the above section apply:</p>
 <ul>
 <li>Apart from a few built-in variables (<code>NODE_ENV</code> and <code>PUBLIC_URL</code>), variable names must start with <code>REACT_APP_</code> to work.</li>
-<li>The environment variables are injected at build time. If you need to inject them at runtime, <a href="title-and-meta-tags.md#generating-dynamic-meta-tags-on-the-server">follow this approach instead</a>.</li>
+<li>The environment variables are injected at build time. If you need to inject them at runtime, <a href="/docs/title-and-meta-tags#generating-dynamic-meta-tags-on-the-server">follow this approach instead</a>.</li>
 </ul>
 <h2 id="adding-temporary-environment-variables-in-your-shell" data-title="Adding Temporary Environment Variables In Your Shell">
     <a style="background-color: transparent !important;" href="#adding-temporary-environment-variables-in-your-shell" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>

@@ -14,9 +14,9 @@ When running a production build of freshly created Create React App application,
 
 `runtime~main.[hash].js`
 
-- This is a small chunk of [webpack runtime](https://webpack.js.org/configuration/optimization/#optimization-runtimechunk) logic which is used to load and run your application. The contents of this will be embedded in your `build/index.html` file by default to save an additional network request. You can opt out of this by specifying `INLINE_RUNTIME_CHUNK=false` as documented in our [advanced configuration](advanced-configuration.md), which will load this chunk instead of embedding it in your `index.html`.
+- This is a small chunk of [webpack runtime](https://webpack.js.org/configuration/optimization/#optimization-runtimechunk) logic which is used to load and run your application. The contents of this will be embedded in your `build/index.html` file by default to save an additional network request. You can opt out of this by specifying `INLINE_RUNTIME_CHUNK=false` as documented in our [advanced configuration](/docs/advanced-configuration), which will load this chunk instead of embedding it in your `index.html`.
 
-If you're using [code splitting](code-splitting.md) to split up your application, this will create additional chunks in the `build/static` folder as well.
+If you're using [code splitting](/docs/code-splitting) to split up your application, this will create additional chunks in the `build/static` folder as well.
 
 ## Static File Caching
 

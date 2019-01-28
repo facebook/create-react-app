@@ -22,13 +22,13 @@ This file and any other file will be automatically compiled if imported with the
 <p>You must prefix imports from <code>node_modules</code> with <code>~</code> as displayed above.</p>
 </blockquote>
 <p><code>node-sass</code> also supports the <code>SASS_PATH</code> variable.</p>
-<p>To use imports relative to a path you specify, and from <code>node_modules</code> without adding the <code>~</code> prefix, you can add a <a href="https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/adding-custom-environment-variables.md#adding-development-environment-variables-in-env"><code>.env</code> file</a> at the project root with the variable <code>SASS_PATH=node_modules:src</code>. To specify more directories you can add them to <code>SASS_PATH</code> separated by a <code>:</code> like <code>path1:path2:path3</code>.</p>
+<p>To use imports relative to a path you specify, and from <code>node_modules</code> without adding the <code>~</code> prefix, you can add a <a href="https://github.com/facebook/create-react-app/blob/master/documate/docs/adding-custom-environment-variables.md#adding-development-environment-variables-in-env"><code>.env</code> file</a> at the project root with the variable <code>SASS_PATH=node_modules:src</code>. To specify more directories you can add them to <code>SASS_PATH</code> separated by a <code>:</code> like <code>path1:path2:path3</code>.</p>
 <p>If you set <code>SASS_PATH=node_modules:src</code>, this will allow you to do imports like</p>
 <pre><code class="language-scss">@import &#39;styles/colors&#39;; // assuming a styles directory under src/, where _colors.scss partial file exists.
 @import &#39;nprogress/nprogress&#39;; // importing a css file from the nprogress node module</code></pre>
 <blockquote>
 <p>Tip</p>
-<p>You can opt into using this feature with <a href="adding-a-css-modules-stylesheet.md">CSS modules</a> too!</p>
+<p>You can opt into using this feature with <a href="/docs/adding-a-css-modules-stylesheet">CSS modules</a> too!</p>
 </blockquote>
 <blockquote>
 <p>Note</p>

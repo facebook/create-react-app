@@ -1,7 +1,7 @@
 <h1 id="deployment" data-title="Deployment">
     <a style="background-color: transparent !important;" href="#deployment" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Deployment
-  </h1><p><code>npm run build</code> creates a <code>build</code> directory with a production build of your app. Set up your favorite HTTP server so that a visitor to your site is served <code>index.html</code>, and requests to static paths like <code>/static/js/main.&lt;hash&gt;.js</code> are served with the contents of the <code>/static/js/main.&lt;hash&gt;.js</code> file. For more information see the <a href="production-build.md">production build</a> section.</p>
+  </h1><p><code>npm run build</code> creates a <code>build</code> directory with a production build of your app. Set up your favorite HTTP server so that a visitor to your site is served <code>index.html</code>, and requests to static paths like <code>/static/js/main.&lt;hash&gt;.js</code> are served with the contents of the <code>/static/js/main.&lt;hash&gt;.js</code> file. For more information see the <a href="/docs/production-build">production build</a> section.</p>
 <h2 id="static-server" data-title="Static Server">
     <a style="background-color: transparent !important;" href="#static-server" aria-hidden="true" class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
     Static Server
@@ -50,11 +50,11 @@ RewriteRule ^ index.html [QSA,L]</code></pre>
 <p>It will get copied to the <code>build</code> folder when you run <code>npm run build</code>.</p>
 <p>If you’re using <a href="http://tomcat.apache.org/">Apache Tomcat</a>, you need to follow <a href="https://stackoverflow.com/a/41249464/4878474">this Stack Overflow answer</a>.</p>
 <p>Now requests to <code>/todos/42</code> will be handled correctly both in development and in production.</p>
-<p>On a production build, and when you&#39;ve <a href="making-a-progressive-web-app.md#why-opt-in">opted-in</a>,
+<p>On a production build, and when you&#39;ve <a href="/docs/making-a-progressive-web-app#why-opt-in">opted-in</a>,
 a <a href="https://developers.google.com/web/fundamentals/primers/service-workers/">service worker</a> will automatically handle all navigation requests, like for
 <code>/todos/42</code>, by serving the cached copy of your <code>index.html</code>. This
 service worker navigation routing can be configured or disabled by
-<a href="available-scripts.md#npm-run-eject"><code>eject</code>ing</a> and then modifying the
+<a href="/docs/available-scripts#npm-run-eject"><code>eject</code>ing</a> and then modifying the
 <a href="https://github.com/GoogleChrome/sw-precache#navigatefallback-string"><code>navigateFallback</code></a>
 and <a href="https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp"><code>navigateFallbackWhitelist</code></a>
 options of the <code>SWPreachePlugin</code> <a href="../config/webpack.config.prod.js">configuration</a>.</p>
