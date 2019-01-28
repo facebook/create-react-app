@@ -1,7 +1,6 @@
 [build]
-  base    = "docusaurus/website"
-  publish = "docusaurus/website/build"
-  command = "yarn build"
+  base    = "documate"
+  publish = "documate/website"
   
 
 # A redirect rule with all the supported properties
