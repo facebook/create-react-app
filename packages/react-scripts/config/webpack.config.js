@@ -646,6 +646,7 @@ module.exports = function(webpackEnv) {
     node: {
       module: 'empty',
       dgram: 'empty',
+      dns: 'empty',
       fs: 'empty',
       net: 'empty',
       tls: 'empty',
