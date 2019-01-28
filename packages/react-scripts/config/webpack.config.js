@@ -205,7 +205,7 @@ module.exports = function(webpackEnv) {
               // https://github.com/facebook/create-react-app/issues/5250
               // Pending futher investigation:
               // https://github.com/terser-js/terser/issues/120
-              inline: 2,
+              inline: false,
             },
             mangle: {
               safari10: true,
