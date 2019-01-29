@@ -37,7 +37,7 @@ platform:
 install:
   - ps: Install-Product node $env:nodejs_version $env:platform
   - ps: |
-      (New-Object Net.WebClient).DownloadFile("https://nightly.yarnpkg.com/latest.msi", "$env:temp\yarn.msi")
+      (New-Object Net.WebClient).DownloadFile("https://yarnpkg.com/latest.msi", "$env:temp\yarn.msi")
       cmd /c start /wait msiexec.exe /i $env:temp\yarn.msi /quiet /qn /norestart
 
 build: off
