@@ -23,11 +23,11 @@ async function promptForConfig() {
       message: 'What additional features does your app require',
       choices: [
         {
+          name: 'Using a shared Polymer Component within your React App?',
           value: 'polymer',
-          name: 'Using a shared Polymer Component?',
         },
         {
-          name: 'Redux',
+          name: `Redux (Chances are high you don't need this yet)`,
           value: 'redux',
         },
       ],
@@ -55,11 +55,36 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
     'react-router-dom@4.3.1',
     'fs-webdev/exo',
   ];
+
+  const defaultDevModules = ['react-styleguidist@9.0.0-beta4', 'webpack'];
+
   installModulesSync(defaultModules, useYarn);
+  installModulesSync(defaultDevModules, useYarn, true);
+  addStyleguidistScriptsToPackageJson(appPath);
+}
+
+function addStyleguidistScriptsToPackageJson(appPath) {
+  //we read the package.json using fs instead of require() because require() uses the
+  //cached result from earlier, even though the package.json has been updated previously.
+  const appPackage = JSON.parse(
+    fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8')
+  );
+
+  appPackage.scripts.styleguide = 'styleguidist server --open';
+  appPackage.scripts['styleguide:build'] = 'styleguidist build';
+
+  fs.writeFileSync(
+    path.join(appPath, 'package.json'),
+    JSON.stringify(appPackage, null, 2) + os.EOL
+  );
 }
 
 function configurePolymer(appPath, useYarn) {
-  const appPackage = require(path.join(appPath, 'package.json'));
+  //we read the package.json using fs instead of require() because require() uses the
+  //cached result from earlier, even though the package.json has been updated previously.
+  const appPackage = JSON.parse(
+    fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8')
+  );
   appPackage.vendorCopy = [
     {
       from:
@@ -92,12 +117,13 @@ function configurePolymer(appPath, useYarn) {
 
 function injectPolymerCode(appPath) {
   const indexPath = path.join(appPath, 'public/index.html');
+  let indexHtml = fs.readFileSync(indexPath, 'UTF8');
+
   const polymerCode = `
     <script src="%PUBLIC_URL%/vendor/webcomponents-bundle.js"></script>
     <script src="%PUBLIC_URL%/vendor/custom-elements-es5-adapter.js"></script>
  `;
 
-  let indexHtml = fs.readFileSync(indexPath, 'UTF8');
   indexHtml = indexHtml.replace(
     '<!--FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->',
     polymerCode

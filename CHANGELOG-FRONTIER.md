@@ -1,3 +1,13 @@
+## 1.4.0
+
+#### :rocket: New Feature
+
+- Incorporated Styleguidist by default into the app template
+
+#### :bug: Bug Fix
+
+- Fixed a bug in the frontierInit.js file dealing with package.json not having the correct dependencies after an npm install
+
 ## 1.1.0
 
 #### :rocket: New Feature
