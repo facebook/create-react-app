@@ -98,12 +98,20 @@ ${apply_changes}
 node --version
 npm --version
 set +x
-${test_command} && echo -e "\n\e[1;32m✔ Job passed\e[0m" || echo -e "\n\e[1;31m✘ Job failed\e[0m"
+${test_command}
+result_code=\$?
+if [ \$result_code == 0 ]; then
+  echo -e "\n\e[1;32m✔ Job passed\e[0m"
+else
+  echo -e "\n\e[1;31m✘ Job failed\e[0m"
+fi
 $([[ ${interactive} == 'true' ]] && echo 'bash')
+exit \$result_code
 CMD
 
 docker run \
   --env CI=true \
+  --env NPM_CONFIG_PREFIX=/home/node/.npm \
   --env NPM_CONFIG_QUIET=true \
   --tty \
   --user node \

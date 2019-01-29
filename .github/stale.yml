@@ -9,8 +9,14 @@ daysUntilClose: 5
 
 # Issues or Pull Requests with these labels will never be considered stale. Set to `[]` to disable
 exemptLabels:
-  - "issue: proposal"
+  - "contributions: claimed"
+  - "contributions: up for grabs!"
+  - "good first issue"
   - "issue: announcement"
+  - "issue: bug"
+  - "issue: proposal"
+  - "tag: bug fix"
+  - "tag: needs investigation"
 
 # Set to true to ignore issues in a project (defaults to false)
 exemptProjects: true
@@ -28,23 +34,22 @@ issues:
   # Comment to post when marking Issues as stale.
   markComment: >
     This issue has been automatically marked as stale because it has not had any
-    recent activity. It will be closed in 7 days if no further activity occurs.
+    recent activity. It will be closed in 5 days if no further activity occurs.
 
   # Comment to post when closing a stale Issue.
   closeComment: >
     This issue has been automatically closed because it has not had any recent
-    activity. The conversation will be locked in 7 days unless the issue is
-    reopened.
+    activity. If you have a question or comment, please open a new issue.
 
 pulls:
   # Comment to post when marking Pull Request as stale.
   markComment: >
     This pull request has been automatically marked as stale because it has not
-    had any recent activity. It will be closed in 7 days if no further activity
+    had any recent activity. It will be closed in 5 days if no further activity
     occurs.
 
   # Comment to post when closing a stale Pull Request.
   closeComment: >
     This pull request has been automatically closed because it has not had any
-    recent activity. The conversation will be locked in 7 days unless the pull
-    request is reopened. Thank you for your contribution.
+    recent activity. If you have a question or comment, please open a new
+    issue. Thank you for your contribution!

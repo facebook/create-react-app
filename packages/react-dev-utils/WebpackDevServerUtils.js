@@ -269,8 +269,6 @@ function onProxyError(proxy) {
 
 function prepareProxy(proxy, appPublicFolder) {
   // `proxy` lets you specify alternate servers for specific requests.
-  // It can either be a string or an object conforming to the Webpack dev server proxy configuration
-  // https://webpack.github.io/docs/webpack-dev-server.html
   if (!proxy) {
     return undefined;
   }
@@ -287,7 +285,7 @@ function prepareProxy(proxy, appPublicFolder) {
     process.exit(1);
   }
 
-  // Otherwise, if proxy is specified, we will let it handle any request except for files in the public folder.
+  // If proxy is specified, let it handle any request except for files in the public folder.
   function mayProxy(pathname) {
     const maybePublicPath = path.resolve(appPublicFolder, pathname.slice(1));
     return !fs.existsSync(maybePublicPath);
@@ -321,7 +319,7 @@ function prepareProxy(proxy, appPublicFolder) {
       // For `GET` requests, if request `accept`s text/html, we pick /index.html.
       // Modern browsers include text/html into `accept` header when navigating.
       // However API calls like `fetch()` won’t generally accept text/html.
-      // If this heuristic doesn’t work well for you, use a custom `proxy` object.
+      // If this heuristic doesn’t work well for you, use `src/setupProxy.js`.
       context: function(pathname, req) {
         return (
           req.method !== 'GET' ||
@@ -331,7 +329,7 @@ function prepareProxy(proxy, appPublicFolder) {
         );
       },
       onProxyReq: proxyReq => {
-        // Browers may send Origin headers even with same-origin
+        // Browsers may send Origin headers even with same-origin
         // requests. To prevent CORS issues, we have to change
         // the Origin to match the target URL.
         if (proxyReq.getHeader('origin')) {
