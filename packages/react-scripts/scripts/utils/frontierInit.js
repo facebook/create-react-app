@@ -64,6 +64,8 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
 }
 
 function addStyleguidistScriptsToPackageJson(appPath) {
+  //we read the package.json using fs instead of require() because require() uses the
+  //cached result from earlier, even though the package.json has been updated previously.
   const appPackage = JSON.parse(
     fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8')
   );
@@ -78,7 +80,11 @@ function addStyleguidistScriptsToPackageJson(appPath) {
 }
 
 function configurePolymer(appPath, useYarn) {
-  const appPackage = require(path.join(appPath, 'package.json'));
+  //we read the package.json using fs instead of require() because require() uses the
+  //cached result from earlier, even though the package.json has been updated previously.
+  const appPackage = JSON.parse(
+    fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8')
+  );
   appPackage.vendorCopy = [
     {
       from:
