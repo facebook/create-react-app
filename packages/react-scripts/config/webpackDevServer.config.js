@@ -68,10 +68,6 @@ module.exports = function(proxy, allowedHost) {
     hot: true,
     // It is important to tell WebpackDevServer to use the same "root" path
     // as we specified in the config. In development, we always serve from /.
-
-    // ❌ /whatever/static/js/bundle.js doesn't work
-    // ✅ /static/js/bundle.js still does
-    // 🤔 Changing this to /whatever prevents %PUBLIC_URL% from being replaced!?
     publicPath: paths.servedPath.slice(0, -1),
     // WebpackDevServer is noisy by default so we emit custom message instead
     // by listening to the compiler events with `compiler.hooks[...].tap` calls above.
