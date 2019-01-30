@@ -8,7 +8,7 @@ install:
   - "cd packages/react-scripts"
   - "npm i"
   - "cd ../../"
-before_deply: "cd packages/react-scripts"
+before_deploy: "cd packages/react-scripts"
 deploy:
   provider: npm
   skip_cleanup: true
