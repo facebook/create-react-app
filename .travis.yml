@@ -5,27 +5,19 @@ before_install:
   - echo -e "machine github.com\n  login $CI_USER_TOKEN" > ~/.netrc
 install:
   - "npm i"
-  - "cd packages/react-scripts && npm i"
+  - "cd packages/react-scripts"
+  - "npm i"
   - "cd ../../"
+deploy:
+  provider: npm
+  skip_cleanup: true
+  email: "dl-fh-eng-frontier-core@ldschurch.org"
+  api_key: "$NPM_TOKEN"
+  on:
+    branch: frontierMaster
 # This tells travis to not build when the branch is master. This is important to have on our master
 # branch as well because anytime we merge upstream changes from facebook, travis builds their whole matrix of 24 different builds.
 # We do NOT need or want that to occur. Please leave this branches.except here, even on the master branch
 branches:
   except:
     - master
-
-jobs:
-  include:
-    - stage: npm release
-      if: tag IS present
-      node_js: "10"
-      before_deploy:
-        - cd packages/react-scripts
-      script: npm ci
-      deploy:
-        provider: npm
-        email: "dl-fh-eng-frontier-core@ldschurch.org"
-        api_key: "$NPM_TOKEN"
-        skip_cleanup: true
-        on:
-          branch: frontierMaster
