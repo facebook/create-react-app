@@ -1,3 +1,7 @@
+## 1.4.1
+
+- Fixed the scoped name for react-scripts to @fs/react-scripts
+
 ## 1.4.0
 
 #### :rocket: New Feature

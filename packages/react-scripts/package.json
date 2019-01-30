@@ -1,5 +1,5 @@
 {
-  "name": "react-scripts",
+  "name": "@fs/react-scripts",
   "version": "1.4.0",
   "upstreamVersion": "2.1.2",
   "description": "Configuration and scripts for Create React App.",
