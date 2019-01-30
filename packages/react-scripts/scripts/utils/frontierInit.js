@@ -56,7 +56,7 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
     'fs-webdev/exo',
   ];
 
-  const defaultDevModules = ['react-styleguidist@9.0.0-beta4', 'webpack'];
+  const defaultDevModules = ['react-styleguidist@9.0.0-beta4', 'webpack@4.19.1'];
 
   installModulesSync(defaultModules, useYarn);
   installModulesSync(defaultDevModules, useYarn, true);
