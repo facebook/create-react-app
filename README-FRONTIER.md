@@ -35,6 +35,6 @@ When we are ready to pull in changes from Facebook, here are the steps
 
 1. Make a PR from facebook's master into our fork's master. This url SHOULD be what you want... please verify before blindly doing anything
    - https://github.com/fs-webdev/create-react-app/compare/master...facebook:master
-   - We probably want to just do a Merge Commit, NOT a squash merge, that way we maintain essentially
-     the same commit structure as facebook for the master branch.
-2.
+   - DO NOT SQUASH THE COMMITS when merging the PR. We need to be able to checkout a specific commit later in our steps
+2. Find facebook's latest release https://github.com/facebook/create-react-app/releases
+3. Find the commit hash corresponding to the release that you want incorporated into our fork.
