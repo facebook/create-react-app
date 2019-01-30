@@ -31,6 +31,16 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const appEntries = require(`${process.env.PWD}/pod-entries.json`).srcEntries;
+const assetAliases = Object.assign(
+  {},
+  ...appEntries.map(entry => ({
+    [entry.split('pods/')[1].concat('-assets')]: path.resolve(
+      entry.concat('/assets')
+    )
+  }))
+)
+
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -148,7 +158,7 @@ module.exports = function(webpackEnv) {
       isEnvDevelopment &&
         require.resolve('react-dev-utils/webpackHotDevClient'),
       // Finally, this is your app's code:
-      paths.appIndexJs,
+      ...paths.indexEntries,
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
@@ -274,6 +284,7 @@ module.exports = function(webpackEnv) {
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+        ...assetAliases,
         'react-native': 'react-native-web',
       },
       plugins: [

@@ -19,6 +19,19 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 const envPublicUrl = process.env.PUBLIC_URL;
 
+// #region ivory multi-entry
+let appEntries = {
+  indexEntries: [],
+  srcEntries: []
+}
+
+try {
+  appEntries = require(resolveApp('pod-entries.json'))
+} catch (err) {
+  // Ignore 'cannot find module pods.json on install'
+}
+// #endregion
+
 function ensureSlash(inputPath, needsSlash) {
   const hasSlash = inputPath.endsWith('/');
   if (hasSlash && !needsSlash) {
@@ -73,6 +86,11 @@ const resolveModule = (resolveFn, filePath) => {
   return resolveFn(`${filePath}.js`);
 };
 
+// #region ivory multi-entry
+const appIndexJs = resolveModule(resolveApp, 'src/index')
+const appSrc = resolveApp('src')
+// #endregion
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -90,6 +108,15 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+
+  // #region ivory multi-entry
+  indexEntries: [appIndexJs].concat(
+    appEntries.indexEntries.map(entry => resolveApp(entry))
+  ),
+  srcEntries: [appSrc].concat(
+    appEntries.srcEntries.map(entry => resolveApp(entry))
+  )
+  // #endregion
 };
 
 // @remove-on-eject-begin
@@ -117,6 +144,15 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
   appTypeDeclarations: resolveApp('src/react-app-env.d.ts'),
   ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
+
+  // #region ivory multi-entry
+  indexEntries: [appIndexJs].concat(
+    appEntries.indexEntries.map(entry => resolveApp(entry))
+  ),
+  srcEntries: [appSrc].concat(
+    appEntries.srcEntries.map(entry => resolveApp(entry))
+  )
+  // #endregion
 };
 
 const ownPackageJson = require('../package.json');

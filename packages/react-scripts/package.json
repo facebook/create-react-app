@@ -1,5 +1,5 @@
 {
-  "name": "react-scripts",
+  "name": "@ivoryio/react-scripts",
   "version": "2.1.3",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebook/create-react-app",
