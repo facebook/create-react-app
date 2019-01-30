@@ -31,6 +31,7 @@ If you have cloned this repo and made changes locally and want to test them befo
 
 ## Merging Upstream changes from Facebook
 
+
 When we are ready to pull in changes from Facebook, here are the steps
 
 1. Make a PR from facebook's master into our fork's master. This url SHOULD be what you want... please verify before blindly doing anything
@@ -42,3 +43,4 @@ When we are ready to pull in changes from Facebook, here are the steps
 5. Run `git merge ${HASH_OF_RELEASE_YOU_WANT}`
 6. Fix any merge conflicts
 7. Probably a good idea to cut a release at that point.
+
