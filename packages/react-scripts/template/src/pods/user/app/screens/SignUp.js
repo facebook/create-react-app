@@ -180,8 +180,8 @@ const Error = styled(Label)`
 `;
 
 SignUp.propTypes = {
-  authState: PropTypes.string.isRequired,
-  onStateChange: PropTypes.func.isRequired,
+  authState: PropTypes.string,
+  onStateChange: PropTypes.func,
 };
 
 export default SignUp;

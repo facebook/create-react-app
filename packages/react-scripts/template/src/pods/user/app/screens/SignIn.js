@@ -153,8 +153,8 @@ const Error = styled(Label)`
 `;
 
 SignIn.propTypes = {
-  authState: PropTypes.string.isRequired,
-  onStateChange: PropTypes.func.isRequired,
+  authState: PropTypes.string,
+  onStateChange: PropTypes.func,
 };
 
 export default SignIn;
