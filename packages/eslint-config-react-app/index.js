@@ -48,7 +48,7 @@ module.exports = {
 
   settings: {
     react: {
-      version: 'detect',
+      version: require('react').version,
     },
   },
 
