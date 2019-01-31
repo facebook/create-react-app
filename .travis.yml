@@ -12,7 +12,7 @@ before_deploy: "cd packages/react-scripts"
 deploy:
   provider: npm
   skip_cleanup: true
-  email: "dl-fh-eng-frontier-core@ldschurch.org"
+  email: "dl-fh-eng-frontier@groups.ldschurch.org"
   api_key: "$NPM_TOKEN"
   on:
     branch: frontierMaster
