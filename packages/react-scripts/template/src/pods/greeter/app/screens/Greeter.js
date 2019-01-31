@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { map } from 'rxjs/operators';
 import { observe } from 'frint-react';
+import styled from 'styled-components';
 
 import icons from 'greeter-assets/icons';
 
@@ -14,7 +15,7 @@ const Greeter = ({ regionData, ...rest }) => {
       <Header>
         <Logo src={icons.logo} alt="logo" />
         <Message>
-          Welcome, {firstName} {family_name}!
+          Welcome, {firstName} {lastName}!
         </Message>
         <Anchor
           href="https://www.ivory.io"
