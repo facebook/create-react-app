@@ -37,9 +37,9 @@ const assetAliases = Object.assign(
   ...appEntries.map(entry => ({
     [entry.split('pods/')[1].concat('-assets')]: path.resolve(
       entry.concat('/assets')
-    )
+    ),
   }))
-)
+);
 
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -377,8 +377,8 @@ module.exports = function(webpackEnv) {
                   [
                     'babel-plugin-named-asset-import',
                     'babel-preset-react-app',
-                    'react-dev-utils',
-                    'react-scripts',
+                    'ivory-react-dev-utils',
+                    'ivory-react-scripts',
                   ]
                 ),
                 // @remove-on-eject-end
@@ -428,7 +428,7 @@ module.exports = function(webpackEnv) {
                   [
                     'babel-plugin-named-asset-import',
                     'babel-preset-react-app',
-                    'react-dev-utils',
+                    'ivory-react-dev-utils',
                     'react-scripts',
                   ]
                 ),
