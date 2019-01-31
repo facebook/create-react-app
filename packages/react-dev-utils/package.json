@@ -1,8 +1,8 @@
 {
   "name": "@mihairo/react-dev-utils",
-  "version": "7.0.1",
-  "description": "Webpack utilities used by Create React App",
-  "repository": "facebook/create-react-app",
+  "version": "0.0.1",
+  "description": "Create React App Webpack utilities for Ivory",
+  "repository": "ivoryio/create-react-app",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"
