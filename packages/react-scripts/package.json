@@ -1,8 +1,8 @@
 {
   "name": "@mihairo/react-scripts",
-  "version": "2.1.3",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebook/create-react-app",
+  "version": "0.0.1",
+  "description": "Create React App scripts for Ivory.",
+  "repository": "ivoryio/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
@@ -60,7 +60,7 @@
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^0.2.0",
-    "react-dev-utils": "^7.0.1",
+    "react-dev-utils": "@mihairo/react-dev-utils@0.0.1",
     "resolve": "1.9.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
@@ -77,11 +77,5 @@
   },
   "optionalDependencies": {
     "fsevents": "1.2.4"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  }
 }
