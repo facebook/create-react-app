@@ -60,7 +60,7 @@
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^0.2.0",
-    "react-dev-utils": "@mihairo/react-dev-utils@0.0.1",
+    "ivory-react-dev-utils": "0.0.3",
     "resolve": "1.9.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
