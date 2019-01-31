@@ -1,6 +1,6 @@
 {
   "name": "@mihairo/react-scripts",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Create React App scripts for Ivory.",
   "repository": "ivoryio/create-react-app",
   "license": "MIT",
@@ -29,7 +29,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
-    "babel-loader": "8.0.5",
+    "babel-loader": "8.0.4",
     "babel-plugin-named-asset-import": "^0.3.0",
     "babel-preset-react-app": "^7.0.0",
     "bfj": "6.1.1",
