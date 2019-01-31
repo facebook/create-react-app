@@ -1,0 +1,21 @@
+import Amplify, { Auth } from 'aws-amplify';
+
+export default Amplify.configure({
+  Auth: {
+    identityPoolId: '', // REQUIRED - Amazon Cognito Identity Pool ID
+    region: '', // REQUIRED - Amazon Cognito Region
+    userPoolId: '', // OPTIONAL - Amazon Cognito User Pool ID
+    userPoolWebClientId: '', // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
+  },
+  API: {
+    endpoints: [
+      {
+        name: '', // REQUIRED - Endpoint name e.g. 'products'
+        endpoint: '', // REQUIRED - API URL e.g. https://your-api-url.your-region.amazonaws.com/products
+        custom_header: async () => ({
+          Authorization: (await Auth.currentSession()).idToken.jwtToken,
+        }),
+      },
+    ],
+  },
+});

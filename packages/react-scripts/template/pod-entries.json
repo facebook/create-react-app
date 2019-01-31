@@ -1,4 +1,10 @@
 {
-  "indexEntries": [],
-  "srcEntries": []
+  "indexEntries": [
+    "src/pods/greeter/index.js",
+    "src/pods/user/index.js"
+  ],
+  "srcEntries": [
+    "src/pods/greeter",
+    "src/pods/user"
+  ]
 }
