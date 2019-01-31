@@ -1,6 +1,6 @@
 {
-  "name": "@mihairo/react-dev-utils",
-  "version": "0.0.1",
+  "name": "ivory-react-dev-utils",
+  "version": "0.0.3",
   "description": "Create React App Webpack utilities for Ivory",
   "repository": "ivoryio/create-react-app",
   "license": "MIT",
