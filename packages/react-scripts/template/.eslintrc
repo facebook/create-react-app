@@ -1,0 +1,7 @@
+{
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
