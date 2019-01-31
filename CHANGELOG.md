@@ -1,3 +1,53 @@
+## 2.1.3 (January 4, 2019)
+
+v2.1.3 is a maintenance release to fix a [vulnerability in webpack-dev-server](https://www.npmjs.com/advisories/725).
+
+#### :memo: Documentation
+
+- Other
+  - [#6067](https://github.com/facebook/create-react-app/pull/6067) Correct an error for documentation. ([@hardo](https://github.com/hardo))
+  - [#6110](https://github.com/facebook/create-react-app/pull/6110) Replace deprecated VSCode launch.json variable. ([@raiskila](https://github.com/raiskila))
+  - [#5631](https://github.com/facebook/create-react-app/pull/5631) Generalize the adding bootstrap documentation. ([@jquense](https://github.com/jquense))
+  - [#6084](https://github.com/facebook/create-react-app/pull/6084) Remove outdated docs for setting up eslint in editor. ([@LukasWerfel](https://github.com/LukasWerfel))
+  - [#6061](https://github.com/facebook/create-react-app/pull/6061) Fix control comment of CSS Grid prefixing. ([@denexapp](https://github.com/denexapp))
+- `react-scripts`
+  - [#6036](https://github.com/facebook/create-react-app/pull/6036) Fix comment typo. ([@shawtung](https://github.com/shawtung))
+
+#### :house: Internal
+
+- `create-react-app`, `react-error-overlay`
+  - [#6104](https://github.com/facebook/create-react-app/pull/6104) Typo fixes. ([@prashant-andani](https://github.com/prashant-andani))
+
+#### :hammer: Underlying Tools
+
+- `react-scripts`
+  - [#6064](https://github.com/facebook/create-react-app/pull/6064) Update webpack-dev-server 3.1.9 -> 3.1.14. ([@Friss](https://github.com/Friss))
+
+#### Committers: 8
+
+- Denis Mukhametov ([denexapp](https://github.com/denexapp))
+- Hardo ([hardo](https://github.com/hardo))
+- Janne Raiskila ([raiskila](https://github.com/raiskila))
+- Jason Quense ([jquense](https://github.com/jquense))
+- Lukas Werfel ([LukasWerfel](https://github.com/LukasWerfel))
+- Prashant Andani ([prashant-andani](https://github.com/prashant-andani))
+- Zachary Friss ([Friss](https://github.com/Friss))
+- [shawtung](https://github.com/shawtung)
+
+### Migrating from 2.1.2 to 2.1.3
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@2.1.3
+```
+
+or
+
+```
+yarn add --exact react-scripts@2.1.3
+```
+
 ## 2.1.2 (December 23, 2018)
 
 v2.1.2 is a maintenance release including various bug fixes.

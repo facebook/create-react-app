@@ -49,7 +49,7 @@ No clashes from other `.error` class names
 
 ```html
 <!-- This button has red background but not red text -->
-<button class="Button_error_ax7yz"></div>
+<button class="Button_error_ax7yz">Error Button</button>
 ```
 
 **This is an optional feature.** Regular `<link>` stylesheets and CSS files are fully supported. CSS Modules are turned on for files ending with the `.module.css` extension.
