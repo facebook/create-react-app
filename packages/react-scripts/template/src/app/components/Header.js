@@ -31,4 +31,11 @@ const Column = styled.div`
   align-self: center;
 `;
 
+const Title = styled.h3`
+  margin-block-start: 0;
+  margin-block-end: 0;
+  color: #51afe7;
+  font-size: 25px;
+`;
+
 export default Header;

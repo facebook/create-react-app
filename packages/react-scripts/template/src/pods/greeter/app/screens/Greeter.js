@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { map } from 'rxjs/operators';
 import { observe } from 'frint-react';
 import styled from 'styled-components';
@@ -44,7 +44,7 @@ const Header = styled.header`
   color: white;
 `;
 
-const Logo = styled.Logo`
+const Logo = styled.img`
   animation: logo-scale infinite 7s ease-in-out;
   height: 40vmin;
   pointer-events: none;
