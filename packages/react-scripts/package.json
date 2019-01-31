@@ -1,6 +1,6 @@
 {
-  "name": "react-scripts",
-  "version": "3.4.1",
+  "name": "@amplitude/react-scripts",
+  "version": "3.4.1-amplitude",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
