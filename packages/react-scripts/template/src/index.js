@@ -2,7 +2,7 @@ import { render } from 'frint-react';
 import Amplify from 'aws-amplify';
 
 import awsConfig from './config/aws.config';
-import serviceWorker from './config/serviceWorker';
+import * as serviceWorker from './config/serviceWorker';
 
 import 'assets/index.css';
 import Root from './app';
