@@ -1,7 +1,7 @@
 const paths = require('../config/paths');
 const { exec } = require('child_process');
 
-const prettierMatch = paths.appSrc + '/**/*.{html,js,jsx,json,css,scss}';
+const prettierMatch = paths.appSrc + '/**/*.{html,js,jsx,json,css,scss,mdx}';
 const prettierCommand = `prettier '${prettierMatch}' --write`;
 const eslintConfigPath = paths.ownPath + '/config/.eslintrc';
 const eslintIgnorePath = paths.ownPath + '/config/.eslintignore';

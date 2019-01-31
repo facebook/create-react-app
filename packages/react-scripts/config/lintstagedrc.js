@@ -10,7 +10,7 @@ module.exports = {
       `eslint --fix --config ${eslintConfigPath} --ignore-path ${eslintIgnorePath}`,
       'git add'
     ],
-    './**/*.{html,json,css,scss}': [
+    './**/*.{html,json,css,scss,mdx}': [
       'prettier --write',
       'git add'
     ],
