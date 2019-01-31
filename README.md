@@ -10,7 +10,7 @@ yarn add -D -E @credijusto/react-scripts
 
 This installs the devDependency, it supports all things Create React App offers AND:
 - Linting  with [AirBnb rules](https://github.com/airbnb/javascript)
-- Formatting with [Prettier](https://github.com/prettier/prettier) for `.html, .js, .jsx, .json, .css, .scss` extensions
+- Formatting with [Prettier](https://github.com/prettier/prettier) for `.html, .js, .jsx, .json, .css, .scss, .mdx` extensions
 - Precommit hook
 
 ### ESLint
