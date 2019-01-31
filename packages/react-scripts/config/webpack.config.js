@@ -33,7 +33,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt')
 const typescriptFormatter = require('ivory-react-dev-utils/typescriptFormatter');
 const appEntries = require(`${process.env.PWD}/pod-entries.json`).srcEntries;
 const assetAliases = Object.assign(
-  {},
+  { assets: path.resolve('src/assets') },
   ...appEntries.map(entry => ({
     [entry.split('pods/')[1].concat('-assets')]: path.resolve(
       entry.concat('/assets')
