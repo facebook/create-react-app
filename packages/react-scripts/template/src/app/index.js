@@ -10,7 +10,7 @@ class Root extends PureComponent {
         <header className="App-header">
           <img src={icons.logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Edit <code>Root app</code> and save to reload.
           </p>
           <a
             className="App-link"
@@ -18,7 +18,7 @@ class Root extends PureComponent {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            About Ivory
           </a>
         </header>
       </div>
