@@ -54,12 +54,13 @@ function isInMercurialRepository() {
   }
 }
 
-// Watch unless on CI, in coverage mode, or explicitly running all tests
+// Watch unless on CI, in coverage mode, explicitly adding `--no-watch`,
+// or explicitly running all tests
 if (
   !process.env.CI &&
   argv.indexOf('--coverage') === -1 &&
-  argv.indexOf('--watchAll') === -1 &&
-  argv.indexOf('--watch=false') === -1
+  argv.indexOf('--no-watch') === -1 &&
+  argv.indexOf('--watchAll') === -1
 ) {
   // https://github.com/facebook/create-react-app/issues/5210
   const hasSourceControl = isInGitRepository() || isInMercurialRepository();
