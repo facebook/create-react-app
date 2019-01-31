@@ -6,7 +6,7 @@ import fsm from './services/StateMachine';
 import { Header } from './components';
 import { Auth, Home } from './screens';
 
-class RootComponent extends PureComponent {
+class RootEntry extends PureComponent {
   state = {
     currentState: fsm.state,
   };
@@ -62,4 +62,4 @@ const Body = styled.div`
   margin-block-start: 30px;
 `;
 
-export default RootComponent;
+export default RootEntry;

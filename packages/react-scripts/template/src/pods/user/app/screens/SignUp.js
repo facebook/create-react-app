@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { Auth } from 'aws-amplify';
 import styled from 'styled-components';
 

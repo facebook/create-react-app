@@ -1,7 +1,7 @@
 import React from 'react';
 import { createApp } from 'frint';
 
-import RootEntry from './RootComponent';
+import RootEntry from './RootEntry';
 
 export default createApp({
   name: 'Root',

@@ -1,5 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Auth } from 'aws-amplify';
+import styled from 'styled-components';
 
 import { Card, Input, Label } from '../components';
 import { emailRegex, passwordRegex } from '../services';
