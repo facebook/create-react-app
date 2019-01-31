@@ -17,11 +17,11 @@ process.on('unhandledRejection', err => {
 const fs = require('fs-extra');
 const path = require('path');
 const execSync = require('child_process').execSync;
-const chalk = require('react-dev-utils/chalk');
+const chalk = require('ivory-react-dev-utils/chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
-const inquirer = require('react-dev-utils/inquirer');
-const spawnSync = require('react-dev-utils/crossSpawn').sync;
+const inquirer = require('ivory-react-dev-utils/inquirer');
+const spawnSync = require('ivory-react-dev-utils/crossSpawn').sync;
 const os = require('os');
 
 const green = chalk.green;

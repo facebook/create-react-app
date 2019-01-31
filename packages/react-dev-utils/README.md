@@ -26,7 +26,7 @@ It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/htm
 ```js
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+var InterpolateHtmlPlugin = require('ivory-react-dev-utils/InterpolateHtmlPlugin');
 
 // Webpack config
 var publicUrl = '/my-custom-url';
@@ -64,7 +64,7 @@ It works in tandem with [HtmlWebpackPlugin](https://github.com/ampedandwired/htm
 ```js
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
+var InlineChunkHtmlPlugin = require('ivory-react-dev-utils/InlineChunkHtmlPlugin');
 
 // Webpack config
 var publicUrl = '/my-custom-url';
@@ -95,7 +95,7 @@ This Webpack plugin ensures that relative imports from app's source directories 
 
 ```js
 var path = require('path');
-var ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+var ModuleScopePlugin = require('ivory-react-dev-utils/ModuleScopePlugin');
 
 module.exports = {
   // ...
@@ -119,7 +119,7 @@ See [#186](https://github.com/facebook/create-react-app/issues/186) for details.
 
 ```js
 var path = require('path');
-var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+var WatchMissingNodeModulesPlugin = require('ivory-react-dev-utils/WatchMissingNodeModulesPlugin');
 
 // Webpack config
 module.exports = {
@@ -144,7 +144,7 @@ If a file is not found, prints a warning message and returns `false`.
 
 ```js
 var path = require('path');
-var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+var checkRequiredFiles = require('ivory-react-dev-utils/checkRequiredFiles');
 
 if (
   !checkRequiredFiles([
@@ -161,7 +161,7 @@ if (
 Clears the console, hopefully in a cross-platform way.
 
 ```js
-var clearConsole = require('react-dev-utils/clearConsole');
+var clearConsole = require('ivory-react-dev-utils/clearConsole');
 
 clearConsole();
 console.log('Just cleared the screen!');
@@ -173,7 +173,7 @@ This is our custom ESLint formatter that integrates well with Create React App c
 You can use the default one instead if you prefer so.
 
 ```js
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
+const eslintFormatter = require('ivory-react-dev-utils/eslintFormatter');
 
 // In your webpack config:
 // ...
@@ -211,7 +211,7 @@ Prints the JS and CSS asset sizes after the build, and includes a size compariso
 var {
   measureFileSizesBeforeBuild,
   printFileSizesAfterBuild,
-} = require('react-dev-utils/FileSizeReporter');
+} = require('ivory-react-dev-utils/FileSizeReporter');
 
 measureFileSizesBeforeBuild(buildFolder).then(previousFileSizes => {
   return cleanAndRebuild().then(webpackStats => {
@@ -227,7 +227,7 @@ Extracts and prettifies warning and error messages from webpack [stats](https://
 ```js
 var webpack = require('webpack');
 var config = require('../config/webpack.config.dev');
-var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+var formatWebpackMessages = require('ivory-react-dev-utils/formatWebpackMessages');
 
 var compiler = webpack(config);
 
@@ -259,7 +259,7 @@ Prettify some known build errors.
 Pass an Error object to log a prettified error message in the console.
 
 ```
-  const printBuildError = require('react-dev-utils/printBuildError')
+  const printBuildError = require('ivory-react-dev-utils/printBuildError')
   try {
     build()
   } catch(e) {
@@ -278,7 +278,7 @@ in /Users/developer/create-react-app
 ```
 
 ```js
-var getProcessForPort = require('react-dev-utils/getProcessForPort');
+var getProcessForPort = require('ivory-react-dev-utils/getProcessForPort');
 
 getProcessForPort(3000);
 ```
@@ -299,7 +299,7 @@ Otherwise, falls back to [opn](https://github.com/sindresorhus/opn) behavior.
 
 ```js
 var path = require('path');
-var openBrowser = require('react-dev-utils/openBrowser');
+var openBrowser = require('ivory-react-dev-utils/openBrowser');
 
 if (openBrowser('http://localhost:3000')) {
   console.log('The browser tab has been opened!');
@@ -352,7 +352,7 @@ module.exports = {
     // stock client:
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
-    'react-dev-utils/webpackHotDevClient',
+    'ivory-react-dev-utils/webpackHotDevClient',
     'src/index',
   ],
   // ...
@@ -367,7 +367,7 @@ For `MyFolder/MyComponent.module.css` and class `MyClass` the output will be `My
 For `MyFolder/index.module.css` and class `MyClass` the output will be `MyFolder_MyClass__[hash]`
 
 ```js
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const getCSSModuleLocalIdent = require('ivory-react-dev-utils/getCSSModuleLocalIdent');
 
 // In your webpack config:
 // ...
@@ -400,7 +400,7 @@ module: {
 Returns a cache identifier (string) consisting of the specified environment and related package versions, e.g.,
 
 ```js
-var getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
+var getCacheIdentifier = require('ivory-react-dev-utils/getCacheIdentifier');
 
-getCacheIdentifier('prod', ['react-dev-utils', 'chalk']); // # => 'prod:react-dev-utils@5.0.0:chalk@2.4.1'
+getCacheIdentifier('prod', ['ivory-react-dev-utils', 'chalk']); // # => 'prod:react-dev-utils@5.0.0:chalk@2.4.1'
 ```

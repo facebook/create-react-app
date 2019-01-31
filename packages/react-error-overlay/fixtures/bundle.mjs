@@ -857,7 +857,7 @@ module.exports = warning;
 /* unknown exports provided */
 /* all exports used */
 /*!*****************************************************************!*\
-  !*** ./packages/react-dev-utils/~/inherits/inherits_browser.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/inherits/inherits_browser.js ***!
   \*****************************************************************/
 /***/ (function(module, exports) {
 
@@ -1074,7 +1074,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************!*\
-  !*** ./packages/react-dev-utils/~/debug/src/browser.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/debug/src/browser.js ***!
   \*********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1522,7 +1522,7 @@ module.exports = ExecutionEnvironment;
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/event/emitter.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/event/emitter.js ***!
   \***********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1935,7 +1935,7 @@ module.exports = ReactComponentTreeHook;
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/utils/url.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/utils/url.js ***!
   \*******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2379,7 +2379,7 @@ module.exports = ReactCurrentOwner;
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************!*\
-  !*** ./packages/react-dev-utils/~/json3/lib/json3.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/json3/lib/json3.js ***!
   \*******************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3572,7 +3572,7 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/utils/event.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/utils/event.js ***!
   \*********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4591,7 +4591,7 @@ module.exports = reactProdInvariant;
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/lib/ajax-based.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/lib/ajax-based.js ***!
   \**********************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4652,7 +4652,7 @@ module.exports = AjaxBasedTransport;
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/utils/random.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/utils/random.js ***!
   \**********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5098,7 +5098,7 @@ module.exports = React;
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/sender/xhr-local.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/sender/xhr-local.js ***!
   \************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5127,7 +5127,7 @@ module.exports = XHRLocalObject;
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/utils/browser.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/utils/browser.js ***!
   \***********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5167,7 +5167,7 @@ module.exports = {
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/utils/iframe.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/utils/iframe.js ***!
   \**********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5366,7 +5366,7 @@ if (global.document) {
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/lib/util.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/lib/util.js ***!
   \***********************************************************/
 /***/ (function(module, exports) {
 
@@ -6383,7 +6383,7 @@ module.exports = SyntheticUIEvent;
 /* unknown exports provided */
 /* all exports used */
 /*!********************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/receiver/xhr.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/receiver/xhr.js ***!
   \********************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6465,7 +6465,7 @@ module.exports = XhrReceiver;
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/sender/xhr-cors.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/sender/xhr-cors.js ***!
   \***********************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7653,7 +7653,7 @@ module.exports = setInnerHTML;
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/event/event.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/event/event.js ***!
   \*********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7687,7 +7687,7 @@ module.exports = Event;
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/lib/iframe-wrap.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/lib/iframe-wrap.js ***!
   \***********************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7733,7 +7733,7 @@ module.exports = function(transport) {
 /* unknown exports provided */
 /* all exports used */
 /*!******************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/sender/xdr.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/sender/xdr.js ***!
   \******************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7849,7 +7849,7 @@ module.exports = XDRObject;
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/utils/object.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/utils/object.js ***!
   \**********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7885,7 +7885,7 @@ module.exports = {
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************!*\
-  !*** ./packages/react-dev-utils/~/url-parse/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/url-parse/index.js ***!
   \*******************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10569,7 +10569,7 @@ module.exports = function(module) {
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************!*\
-  !*** ./packages/react-dev-utils/ansiHTML.js ***!
+  !*** ./packages/ivory-react-dev-utils/ansiHTML.js ***!
   \**********************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10682,7 +10682,7 @@ module.exports = ansiHTML;
 /* unknown exports provided */
 /* all exports used */
 /*!********************************************************!*\
-  !*** ./packages/react-dev-utils/~/ansi-regex/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/ansi-regex/index.js ***!
   \********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10698,7 +10698,7 @@ module.exports = function () {
 /* unknown exports provided */
 /* all exports used */
 /*!********************************************************!*\
-  !*** ./packages/react-dev-utils/~/esutils/lib/code.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/esutils/lib/code.js ***!
   \********************************************************/
 /***/ (function(module, exports) {
 
@@ -10844,7 +10844,7 @@ module.exports = function () {
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/html-entities/lib/html5-entities.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/html-entities/lib/html5-entities.js ***!
   \************************************************************************/
 /***/ (function(module, exports) {
 
@@ -11045,7 +11045,7 @@ module.exports = Html5Entities;
 /* unknown exports provided */
 /* all exports used */
 /*!***************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/event/eventtarget.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/event/eventtarget.js ***!
   \***************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11119,7 +11119,7 @@ module.exports = EventTarget;
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/info-ajax.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/info-ajax.js ***!
   \*******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11180,7 +11180,7 @@ module.exports = InfoAjax;
 /* unknown exports provided */
 /* all exports used */
 /*!******************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/info-iframe-receiver.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/info-iframe-receiver.js ***!
   \******************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11225,7 +11225,7 @@ module.exports = InfoReceiverIframe;
 /* unknown exports provided */
 /* all exports used */
 /*!******************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/location.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/location.js ***!
   \******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11248,7 +11248,7 @@ module.exports = global.location || {
 /* unknown exports provided */
 /* all exports used */
 /*!****************************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/browser/abstract-xhr.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/browser/abstract-xhr.js ***!
   \****************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11454,7 +11454,7 @@ module.exports = AbstractXHRObject;
 /* unknown exports provided */
 /* all exports used */
 /*!***************************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/browser/eventsource.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/browser/eventsource.js ***!
   \***************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11467,7 +11467,7 @@ module.exports = AbstractXHRObject;
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/eventsource.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/eventsource.js ***!
   \*******************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11506,7 +11506,7 @@ module.exports = EventSourceTransport;
 /* unknown exports provided */
 /* all exports used */
 /*!****************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/htmlfile.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/htmlfile.js ***!
   \****************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11543,7 +11543,7 @@ module.exports = HtmlFileTransport;
 /* unknown exports provided */
 /* all exports used */
 /*!**************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/iframe.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/iframe.js ***!
   \**************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11696,7 +11696,7 @@ module.exports = IframeTransport;
 /* unknown exports provided */
 /* all exports used */
 /*!***************************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/lib/sender-receiver.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/lib/sender-receiver.js ***!
   \***************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11753,7 +11753,7 @@ module.exports = SenderReceiver;
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/xdr-streaming.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/xdr-streaming.js ***!
   \*********************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11797,7 +11797,7 @@ module.exports = XdrStreamingTransport;
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/xhr-polling.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/xhr-polling.js ***!
   \*******************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11842,7 +11842,7 @@ module.exports = XhrPollingTransport;
 /* unknown exports provided */
 /* all exports used */
 /*!*****************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/version.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/version.js ***!
   \*****************************************************************/
 /***/ (function(module, exports) {
 
@@ -11854,7 +11854,7 @@ module.exports = '1.1.2';
 /* unknown exports provided */
 /* all exports used */
 /*!****************************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/lib/array-set.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/lib/array-set.js ***!
   \****************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11969,7 +11969,7 @@ exports.ArraySet = ArraySet;
 /* unknown exports provided */
 /* all exports used */
 /*!*****************************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/lib/base64-vlq.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/lib/base64-vlq.js ***!
   \*****************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12120,7 +12120,7 @@ exports.decode = function base64VLQ_decode(aStr, aIndex, aOutParam) {
 /* unknown exports provided */
 /* all exports used */
 /*!***************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/lib/source-map-generator.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/lib/source-map-generator.js ***!
   \***************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12535,7 +12535,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
 /* unknown exports provided */
 /* all exports used */
 /*!********************************************************!*\
-  !*** ./packages/react-dev-utils/~/strip-ansi/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/strip-ansi/index.js ***!
   \********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15945,7 +15945,7 @@ function updateLink(linkElement, obj) {
 /* unknown exports provided */
 /* all exports used */
 /*!**************************************************!*\
-  !*** ./packages/react-dev-utils/crashOverlay.js ***!
+  !*** ./packages/ivory-react-dev-utils/crashOverlay.js ***!
   \**************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16893,7 +16893,7 @@ if (true) {
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************!*\
-  !*** ./packages/react-dev-utils/webpackHotDevClient.js ***!
+  !*** ./packages/ivory-react-dev-utils/webpackHotDevClient.js ***!
   \*********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16930,7 +16930,7 @@ var red = '#E36049';
 
 function createOverlayIframe(onIframeLoad) {
   var iframe = document.createElement('iframe');
-  iframe.id = 'react-dev-utils-webpack-hot-dev-client-overlay';
+  iframe.id = 'ivory-react-dev-utils-webpack-hot-dev-client-overlay';
   iframe.src = 'about:blank';
   iframe.style.position = 'fixed';
   iframe.style.left = 0;
@@ -16947,7 +16947,7 @@ function createOverlayIframe(onIframeLoad) {
 
 function addOverlayDivTo(iframe) {
   var div = iframe.contentDocument.createElement('div');
-  div.id = 'react-dev-utils-webpack-hot-dev-client-overlay-div';
+  div.id = 'ivory-react-dev-utils-webpack-hot-dev-client-overlay-div';
   div.style.position = 'fixed';
   div.style.boxSizing = 'border-box';
   div.style.left = 0;
@@ -17297,7 +17297,7 @@ _reactDom2.default.render(_react2.default.createElement(_App2.default, {
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************!*\
-  !*** ./packages/react-dev-utils/formatWebpackMessages.js ***!
+  !*** ./packages/ivory-react-dev-utils/formatWebpackMessages.js ***!
   \***********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17444,7 +17444,7 @@ module.exports = formatWebpackMessages;
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************!*\
-  !*** ./packages/react-dev-utils/~/anser/lib/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/anser/lib/index.js ***!
   \*******************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18040,7 +18040,7 @@ module.exports = function () {
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************!*\
-  !*** ./packages/react-dev-utils/~/ansi-styles/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/ansi-styles/index.js ***!
   \*********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18118,7 +18118,7 @@ Object.defineProperty(module, 'exports', {
 /* unknown exports provided */
 /* all exports used */
 /*!******************************************************************!*\
-  !*** ./packages/react-dev-utils/~/babel-code-frame/lib/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/babel-code-frame/lib/index.js ***!
   \******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18270,7 +18270,7 @@ module.exports = exports["default"];
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/babel-runtime/regenerator/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/babel-runtime/regenerator/index.js ***!
   \***********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18282,7 +18282,7 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ 150);
 /* unknown exports provided */
 /* all exports used */
 /*!***************************************************!*\
-  !*** ./packages/react-dev-utils/~/chalk/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/chalk/index.js ***!
   \***************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18411,7 +18411,7 @@ module.exports.supportsColor = supportsColor;
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************!*\
-  !*** ./packages/react-dev-utils/~/debug/src/debug.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/debug/src/debug.js ***!
   \*******************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18624,7 +18624,7 @@ function coerce(val) {
 /* unknown exports provided */
 /* all exports used */
 /*!*****************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/error-stack-parser/error-stack-parser.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/error-stack-parser/error-stack-parser.js ***!
   \*****************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18829,7 +18829,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /* unknown exports provided */
 /* all exports used */
 /*!******************************************************************!*\
-  !*** ./packages/react-dev-utils/~/escape-string-regexp/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/escape-string-regexp/index.js ***!
   \******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18852,7 +18852,7 @@ module.exports = function (str) {
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************!*\
-  !*** ./packages/react-dev-utils/~/esutils/lib/ast.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/esutils/lib/ast.js ***!
   \*******************************************************/
 /***/ (function(module, exports) {
 
@@ -19007,7 +19007,7 @@ module.exports = function (str) {
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************!*\
-  !*** ./packages/react-dev-utils/~/esutils/lib/keyword.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/esutils/lib/keyword.js ***!
   \***********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19183,7 +19183,7 @@ module.exports = function (str) {
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************!*\
-  !*** ./packages/react-dev-utils/~/esutils/lib/utils.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/esutils/lib/utils.js ***!
   \*********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19227,7 +19227,7 @@ module.exports = function (str) {
 /* unknown exports provided */
 /* all exports used */
 /*!******************************************************!*\
-  !*** ./packages/react-dev-utils/~/has-ansi/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/has-ansi/index.js ***!
   \******************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19243,7 +19243,7 @@ module.exports = re.test.bind(re);
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************!*\
-  !*** ./packages/react-dev-utils/~/html-entities/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/html-entities/index.js ***!
   \***********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19260,7 +19260,7 @@ module.exports = {
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/html-entities/lib/html4-entities.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/html-entities/lib/html4-entities.js ***!
   \************************************************************************/
 /***/ (function(module, exports) {
 
@@ -19418,7 +19418,7 @@ module.exports = Html4Entities;
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/html-entities/lib/xml-entities.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/html-entities/lib/xml-entities.js ***!
   \**********************************************************************/
 /***/ (function(module, exports) {
 
@@ -19584,7 +19584,7 @@ module.exports = XmlEntities;
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************!*\
-  !*** ./packages/react-dev-utils/~/js-tokens/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/js-tokens/index.js ***!
   \*******************************************************/
 /***/ (function(module, exports) {
 
@@ -19614,7 +19614,7 @@ module.exports.matchToToken = function(match) {
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************!*\
-  !*** ./packages/react-dev-utils/~/ms/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/ms/index.js ***!
   \************************************************/
 /***/ (function(module, exports) {
 
@@ -19774,7 +19774,7 @@ function plural(ms, n, name) {
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************************!*\
-  !*** ./packages/react-dev-utils/~/querystringify/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/querystringify/index.js ***!
   \************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19847,7 +19847,7 @@ exports.parse = querystring;
 /* unknown exports provided */
 /* all exports used */
 /*!**************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/regenerator-runtime/runtime-module.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/regenerator-runtime/runtime-module.js ***!
   \**************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19890,7 +19890,7 @@ if (hadRuntime) {
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************!*\
-  !*** ./packages/react-dev-utils/~/regenerator-runtime/runtime.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/regenerator-runtime/runtime.js ***!
   \*******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20625,7 +20625,7 @@ if (hadRuntime) {
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************!*\
-  !*** ./packages/react-dev-utils/~/requires-port/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/requires-port/index.js ***!
   \***********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20675,7 +20675,7 @@ module.exports = function required(port, protocol) {
 /* unknown exports provided */
 /* all exports used */
 /*!***************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/entry.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/entry.js ***!
   \***************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20698,7 +20698,7 @@ if ('_sockjs_onload' in global) {
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/event/close.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/event/close.js ***!
   \*********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20727,7 +20727,7 @@ module.exports = CloseEvent;
 /* unknown exports provided */
 /* all exports used */
 /*!*****************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/event/trans-message.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/event/trans-message.js ***!
   \*****************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20754,7 +20754,7 @@ module.exports = TransportMessageEvent;
 /* unknown exports provided */
 /* all exports used */
 /*!****************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/facade.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/facade.js ***!
   \****************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20793,7 +20793,7 @@ module.exports = FacadeJS;
 /* unknown exports provided */
 /* all exports used */
 /*!**************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/iframe-bootstrap.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/iframe-bootstrap.js ***!
   \**************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20907,7 +20907,7 @@ module.exports = function(SockJS, availableTransports) {
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/info-iframe.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/info-iframe.js ***!
   \*********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20989,7 +20989,7 @@ module.exports = InfoIframe;
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/info-receiver.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/info-receiver.js ***!
   \***********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21090,7 +21090,7 @@ module.exports = InfoReceiver;
 /* unknown exports provided */
 /* all exports used */
 /*!**************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/main.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/main.js ***!
   \**************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21484,7 +21484,7 @@ module.exports = function(availableTransports) {
 /* unknown exports provided */
 /* all exports used */
 /*!***************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/shims.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/shims.js ***!
   \***************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21948,7 +21948,7 @@ defineProperties(StringPrototype, {
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport-list.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport-list.js ***!
   \************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21978,7 +21978,7 @@ module.exports = [
 /* unknown exports provided */
 /* all exports used */
 /*!*************************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/browser/websocket.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/browser/websocket.js ***!
   \*************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22001,7 +22001,7 @@ if (Driver) {
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/jsonp-polling.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/jsonp-polling.js ***!
   \*********************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22048,7 +22048,7 @@ module.exports = JsonPTransport;
 /* unknown exports provided */
 /* all exports used */
 /*!***************************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/lib/buffered-sender.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/lib/buffered-sender.js ***!
   \***************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22147,7 +22147,7 @@ module.exports = BufferedSender;
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/lib/polling.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/lib/polling.js ***!
   \*******************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22216,7 +22216,7 @@ module.exports = Polling;
 /* unknown exports provided */
 /* all exports used */
 /*!****************************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/receiver/eventsource.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/receiver/eventsource.js ***!
   \****************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22291,7 +22291,7 @@ module.exports = EventSourceReceiver;
 /* unknown exports provided */
 /* all exports used */
 /*!*************************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/receiver/htmlfile.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/receiver/htmlfile.js ***!
   \*************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22391,7 +22391,7 @@ module.exports = HtmlfileReceiver;
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/receiver/jsonp.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/receiver/jsonp.js ***!
   \**********************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22587,7 +22587,7 @@ module.exports = JsonpReceiver;
 /* unknown exports provided */
 /* all exports used */
 /*!********************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/sender/jsonp.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/sender/jsonp.js ***!
   \********************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22699,7 +22699,7 @@ module.exports = function(url, payload, callback) {
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/sender/xhr-fake.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/sender/xhr-fake.js ***!
   \***********************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22735,7 +22735,7 @@ module.exports = XHRFake;
 /* unknown exports provided */
 /* all exports used */
 /*!*****************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/websocket.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/websocket.js ***!
   \*****************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22846,7 +22846,7 @@ module.exports = WebSocketTransport;
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/xdr-polling.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/xdr-polling.js ***!
   \*******************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22881,7 +22881,7 @@ module.exports = XdrPollingTransport;
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/transport/xhr-streaming.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/transport/xhr-streaming.js ***!
   \*********************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22935,7 +22935,7 @@ module.exports = XhrStreamingTransport;
 /* unknown exports provided */
 /* all exports used */
 /*!******************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/utils/browser-crypto.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/utils/browser-crypto.js ***!
   \******************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22965,7 +22965,7 @@ if (global.crypto && global.crypto.getRandomValues) {
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/utils/escape.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/utils/escape.js ***!
   \**********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23027,7 +23027,7 @@ module.exports = {
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/utils/log.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/utils/log.js ***!
   \*******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23058,7 +23058,7 @@ module.exports = logObject;
 /* unknown exports provided */
 /* all exports used */
 /*!*************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/sockjs-client/lib/utils/transport.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/sockjs-client/lib/utils/transport.js ***!
   \*************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23120,7 +23120,7 @@ module.exports = function(availableTransports) {
 /* unknown exports provided */
 /* all exports used */
 /*!*************************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/lib/base64.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/lib/base64.js ***!
   \*************************************************************/
 /***/ (function(module, exports) {
 
@@ -23198,7 +23198,7 @@ exports.decode = function (charCode) {
 /* unknown exports provided */
 /* all exports used */
 /*!********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/lib/binary-search.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/lib/binary-search.js ***!
   \********************************************************************/
 /***/ (function(module, exports) {
 
@@ -23320,7 +23320,7 @@ exports.search = function search(aNeedle, aHaystack, aCompare, aBias) {
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/lib/mapping-list.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/lib/mapping-list.js ***!
   \*******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23410,7 +23410,7 @@ exports.MappingList = MappingList;
 /* unknown exports provided */
 /* all exports used */
 /*!*****************************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/lib/quick-sort.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/lib/quick-sort.js ***!
   \*****************************************************************/
 /***/ (function(module, exports) {
 
@@ -23535,7 +23535,7 @@ exports.quickSort = function (ary, comparator) {
 /* unknown exports provided */
 /* all exports used */
 /*!**************************************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/lib/source-map-consumer.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/lib/source-map-consumer.js ***!
   \**************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24628,7 +24628,7 @@ exports.IndexedSourceMapConsumer = IndexedSourceMapConsumer;
 /* unknown exports provided */
 /* all exports used */
 /*!******************************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/lib/source-node.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/lib/source-node.js ***!
   \******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25046,7 +25046,7 @@ exports.SourceNode = SourceNode;
 /* unknown exports provided */
 /* all exports used */
 /*!*************************************************************!*\
-  !*** ./packages/react-dev-utils/~/source-map/source-map.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/source-map/source-map.js ***!
   \*************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25065,7 +25065,7 @@ exports.SourceNode = __webpack_require__(/*! ./lib/source-node */ 184).SourceNod
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************!*\
-  !*** ./packages/react-dev-utils/~/stack-frame-resolver/lib/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/stack-frame-resolver/lib/index.js ***!
   \**********************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25586,7 +25586,7 @@ exports.ResolvedStackFrame = ResolvedStackFrame;
 /* unknown exports provided */
 /* all exports used */
 /*!*************************************************************!*\
-  !*** ./packages/react-dev-utils/~/stackframe/stackframe.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/stackframe/stackframe.js ***!
   \*************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25710,7 +25710,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************************!*\
-  !*** ./packages/react-dev-utils/~/supports-color/index.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/supports-color/index.js ***!
   \************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25773,7 +25773,7 @@ module.exports = (function () {
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************!*\
-  !*** ./packages/react-dev-utils/~/url-parse/lolcation.js ***!
+  !*** ./packages/ivory-react-dev-utils/~/url-parse/lolcation.js ***!
   \***********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -41209,13 +41209,13 @@ module.exports = __webpack_amd_options__;
 /* unknown exports provided */
 /* all exports used */
 /*!******************************************************************************************************************************************************************************************************!*\
-  !*** multi ./packages/react-dev-utils/webpackHotDevClient.js ./packages/react-scripts/config/polyfills.js ./packages/react-dev-utils/crashOverlay.js ./packages/react-scripts/template/src/index.js ***!
+  !*** multi ./packages/ivory-react-dev-utils/webpackHotDevClient.js ./packages/react-scripts/config/polyfills.js ./packages/ivory-react-dev-utils/crashOverlay.js ./packages/react-scripts/template/src/index.js ***!
   \******************************************************************************************************************************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/joe/Documents/Development/OSS/create-react-app/packages/react-dev-utils/webpackHotDevClient.js */128);
+__webpack_require__(/*! /Users/joe/Documents/Development/OSS/create-react-app/packages/ivory-react-dev-utils/webpackHotDevClient.js */128);
 __webpack_require__(/*! /Users/joe/Documents/Development/OSS/create-react-app/packages/react-scripts/config/polyfills.js */129);
-__webpack_require__(/*! /Users/joe/Documents/Development/OSS/create-react-app/packages/react-dev-utils/crashOverlay.js */127);
+__webpack_require__(/*! /Users/joe/Documents/Development/OSS/create-react-app/packages/ivory-react-dev-utils/crashOverlay.js */127);
 module.exports = __webpack_require__(/*! /Users/joe/Documents/Development/OSS/create-react-app/packages/react-scripts/template/src/index.js */130);
 
 
