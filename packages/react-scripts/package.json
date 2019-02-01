@@ -1,7 +1,7 @@
 {
-  "name": "@mihairo/ivory-react-scripts",
+  "name": "@ivoryio/ivory-react-scripts",
   "version": "0.1.0",
-  "description": "Create React App scripts for Ivory.",
+  "description": "Create React App scripts for Ivory",
   "repository": "ivoryio/create-react-app",
   "license": "MIT",
   "engines": {
