@@ -67,7 +67,7 @@ if (
   argv.push(hasSourceControl ? '--watch' : '--watchAll');
 }
 
-// jest doesn't have this option so we'll remove it
+// Jest doesn't have this option so we'll remove it
 if (argv.indexOf('--no-watch') !== -1) {
   argv.splice(argv.indexOf('--no-watch'), 1);
 }
