@@ -18,7 +18,7 @@ npm start
 
 _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
 
-Then open [http://localhost:3000/](http://localhost:3000/) to see your app. 
+Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
 
@@ -108,9 +108,11 @@ The page will automatically reload if you make changes to the code. You will see
 
 ### `npm test` or `yarn test`
 
-Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
+Runs the test watcher in an interactive mode<sup>\*</sup>. By default, runs tests related to files changed since the last commit.
 
 [Read more about testing](https://facebook.github.io/create-react-app/docs/running-tests).
+
+> \*You can disable this behavior by passing the flag `--no-watch` if needed though, interactive mode is suggested.
 
 ### `npm run build` or `yarn build`
 

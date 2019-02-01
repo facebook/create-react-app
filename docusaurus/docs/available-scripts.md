@@ -14,7 +14,9 @@ The page will reload if you make edits. You will also see any lint errors in the
 
 ## `npm test`
 
-Launches the test runner in the interactive watch mode. See the section about [running tests](running-tests.md) for more information.
+Launches the test runner in the interactive watch mode<sup>\*</sup>. See the section about [running tests](running-tests.md) for more information.
+
+> \*You can disable this behavior by passing the flag `--no-watch` if needed though, interactive mode is suggested.
 
 ## `npm run build`
 
