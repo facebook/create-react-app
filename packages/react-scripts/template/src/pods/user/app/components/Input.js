@@ -16,7 +16,7 @@ const InputComponent = ({
   const _errorMessage = () => {
     switch (error) {
       case 'InvalidEmailFormat':
-        return 'Please input a valid email format (e.g. peter.parker@ivory.com)';
+        return 'Please input a valid email format (e.g. hello@ivory.com)';
       case 'InvalidPasswordFormat':
         return 'Please input a valid password format (Minimum 8 characters, an uppercase, a digit and a special character)';
       case 'InvalidLength':

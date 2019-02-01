@@ -42,8 +42,10 @@ class SignIn extends PureComponent {
   _renderAnchor = username => (
     <Fragment>
       <Label
-        marginTop={12}
+        marginTop="15px"
         cursor="pointer"
+        color="#fff"
+        fontSize="15px"
         onClick={this._handleStateChange('signUp')}
       >
         Don't have an account yet?
@@ -68,7 +70,9 @@ class SignIn extends PureComponent {
 
   _formHasErrors = () => {
     const { errors } = this.state;
-    const hasErrors = Object.values(errors).some(value => value === true);
+    const hasErrors = Object.values(errors).some(
+      value => typeof value === 'string'
+    );
 
     return hasErrors;
   };
@@ -99,8 +103,14 @@ class SignIn extends PureComponent {
     this.setState(
       {
         errors: {
-          username: !username.length || !emailRegex.test(username),
-          password: !password.length || !passwordRegex.test(password),
+          username:
+            !username.length || !emailRegex.test(username)
+              ? 'InvalidEmailFormat'
+              : false,
+          password:
+            !password.length || !passwordRegex.test(password)
+              ? 'InvalidPasswordFormat'
+              : false,
         },
       },
       () => (!this._formHasErrors() ? this._signIn() : null)

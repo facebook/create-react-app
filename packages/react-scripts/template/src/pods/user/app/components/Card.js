@@ -74,7 +74,7 @@ const Row = styled.div`
 const Title = styled.div`
   font-size: 24px;
   text-align: center;
-  border-radius: 6px;
+  border-radius: 5px;
 `;
 
 const Form = styled.form`
@@ -93,7 +93,7 @@ const ButtonSubmit = styled(Button)`
   margin-block-start: 10px;
   border-radius: 6px;
   min-width: 120px;
-  height: 42px;
+  height: 40px;
   background-color: charcoal;
 `;
 

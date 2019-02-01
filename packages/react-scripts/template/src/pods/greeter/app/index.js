@@ -1,7 +1,6 @@
 import { createApp } from 'frint';
 import { RegionService } from 'frint-react';
 
-import 'greeter-assets/animations.css';
 import Greeter from './screens/Greeter';
 
 export default createApp({

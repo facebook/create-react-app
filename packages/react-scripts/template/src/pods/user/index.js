@@ -1,8 +1,11 @@
-import Auth from './app';
+import apps from './app';
 
-(window.app = window.app || []).push([
-  Auth,
-  {
-    regions: ['auth'],
-  },
-]);
+apps.map(App =>
+  (window.app = window.app || []).push([
+    App,
+    {
+      regions: [App.frintAppName.toLowerCase()],
+      weight: 5,
+    },
+  ])
+);

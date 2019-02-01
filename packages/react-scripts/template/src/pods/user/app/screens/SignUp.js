@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Auth } from 'aws-amplify';
 import styled from 'styled-components';
@@ -6,23 +6,17 @@ import styled from 'styled-components';
 import { Card, Input, Label } from '../components';
 import { emailRegex, passwordRegex } from '../services';
 
-class SignUp extends PureComponent {
+class SignIn extends PureComponent {
   constructor(props) {
     super(props);
     this.INITIAL_STATE = {
-      email: '',
+      username: '',
       password: '',
-      name: '',
-      family_name: '',
-      city: '',
-      country: '',
-      isLoading: false,
       error: null,
+      isLoading: false,
       errors: {
-        email: null,
+        username: null,
         password: null,
-        name: null,
-        family_name: null,
       },
     };
     this.state = this.INITIAL_STATE;
@@ -40,132 +34,121 @@ class SignUp extends PureComponent {
       },
     });
 
-  _handleStateChange = (newState, params) => () => {
+  _handleStateChange = (newState, params = null) => () => {
     const { onStateChange } = this.props;
     onStateChange(newState, params);
   };
 
-  _signUp = () => {
-    const { email, password, name, family_name, city, country } = this.state;
+  _renderAnchor = username => (
+    <Fragment>
+      <Label
+        marginTop="15px"
+        cursor="pointer"
+        color="#fff"
+        fontSize="15px"
+        onClick={this._handleStateChange('signUp')}
+      >
+        Don't have an account yet?
+      </Label>
+    </Fragment>
+  );
+
+  _signIn = () => {
+    const { username, password } = this.state;
     this._setIsLoading();
-    Auth.signUp({
-      username: email,
-      password,
-      attributes: {
-        name,
-        family_name,
-        'custom:city': city,
-        'custom:country': country,
-      },
-    })
-      .then(user => this._handleStateChange('signIn', { email })())
-      .catch(err => alert(`* Error caught in sign up. ${err.message || err}`))
-      .finally(() => this._setStopLoading());
+    Auth.signIn(username, password)
+      .catch(err => {
+        if (err.code) {
+          const { code } = err;
+          this.setState(this.INITIAL_STATE, this._handleExceptions(code));
+        } else {
+          this.setState({ error: err });
+        }
+      })
+      .finally(() => this._setStopLoading);
   };
 
   _formHasErrors = () => {
     const { errors } = this.state;
-    const hasErrors = Object.values(errors).some(value => value === true);
+    const hasErrors = Object.values(errors).some(
+      value => typeof value === 'string'
+    );
 
     return hasErrors;
   };
 
+  _handleExceptions = exception => {
+    const { username } = this.state;
+    switch (exception) {
+      case 'UserNotConfirmedException':
+        return this._handleStateChange('confirmSignUp', {
+          backState: 'signIn',
+          username,
+          errorCode: 'UserNotConfirmedException',
+        })();
+      case 'UserNotFoundException':
+        return this._handleStateChange('signUp', {
+          backState: 'signIn',
+          username,
+          errorCode: 'UserNotFoundException',
+        })();
+      default:
+        alert('Unhandled exception', exception);
+        break;
+    }
+  };
+
   _submit = () => {
-    const { email, password, name, family_name } = this.state;
+    const { username, password } = this.state;
     this.setState(
       {
         errors: {
-          email: !email.length || !emailRegex.test(email),
-          password: !password.length || !passwordRegex.test(password),
-          name: !name.length,
-          family_name: !family_name.length,
+          username:
+            !username.length || !emailRegex.test(username)
+              ? 'InvalidEmailFormat'
+              : false,
+          password:
+            !password.length || !passwordRegex.test(password)
+              ? 'InvalidPasswordFormat'
+              : false,
         },
       },
-      () => (!this._formHasErrors() ? this._signUp() : null)
+      () => (!this._formHasErrors() ? this._signIn() : null)
     );
   };
 
-  _renderAnchor = () => (
-    <Label
-      marginTop={12}
-      cursor="pointer"
-      onClick={this._handleStateChange('signIn')}
-    >
-      Already have an account?
-    </Label>
-  );
-
   render() {
     const { authState } = this.props;
-    const {
-      email,
-      password,
-      name,
-      family_name,
-      city,
-      country,
-      error,
-      errors,
-    } = this.state;
-    if (authState !== 'signUp') {
+    const { username, password, error, errors, isLoading } = this.state;
+    if (!['signIn', 'signedOut', 'signedUp'].includes(authState)) {
       return null;
     }
     return (
       <Card
-        title="Sign up"
-        btnSubmitLabel="Sign up"
-        Anchor={this._renderAnchor()}
+        title="Sign In"
+        btnSubmitLabel="Sign In"
+        isLoading={isLoading}
+        Anchor={this._renderAnchor(username)}
         onSubmit={this._submit}
       >
         {error && <Error>* {error}</Error>}
         <Input
           required
           type="email"
-          placeholder="email"
-          value={email}
-          autoComplete="current-email"
-          error={errors.email}
-          onChange={this._onTextInputChange('email')}
+          placeholder="username"
+          autoComplete="current-username"
+          value={username}
+          error={errors.username}
+          onChange={this._onTextInputChange('username')}
         />
         <Input
           required
           type="password"
           placeholder="password"
-          value={password}
           autoComplete="current-password"
+          value={password}
           error={errors.password}
           onChange={this._onTextInputChange('password')}
-        />
-
-        <Input
-          required
-          placeholder="First name"
-          value={name}
-          autoComplete="first-name"
-          error={errors.name}
-          onChange={this._onTextInputChange('name')}
-        />
-        <Input
-          required
-          placeholder="Last name"
-          value={family_name}
-          autoComplete="last-name"
-          error={errors.family_name}
-          onChange={this._onTextInputChange('family_name')}
-        />
-        <Input
-          placeholder="City"
-          value={city}
-          autoComplete="current-city"
-          error={errors.city}
-          onChange={this._onTextInputChange('city')}
-        />
-        <Input
-          placeholder="Country"
-          value={country}
-          autoComplete="country"
-          error={errors.country}
-          onChange={this._onTextInputChange('country')}
         />
       </Card>
     );
@@ -179,9 +162,9 @@ const Error = styled(Label)`
   color: red;
 `;
 
-SignUp.propTypes = {
+SignIn.propTypes = {
   authState: PropTypes.string,
   onStateChange: PropTypes.func,
 };
 
-export default SignUp;
+export default SignIn;

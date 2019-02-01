@@ -2,13 +2,14 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
 import fsm from './services/StateMachine';
-
+import 'assets/animations.css';
 import { Header } from './components';
 import { Auth, Home } from './screens';
 
 class RootEntry extends PureComponent {
   state = {
     currentState: fsm.state,
+    user: fsm.user,
   };
 
   componentDidMount() {
@@ -22,26 +23,26 @@ class RootEntry extends PureComponent {
   handleStateUpdated = state => {
     this.setState({
       currentState: state.currentState,
-      authUser: state.authUser,
+      user: state.user,
     });
   };
 
   _displayScreenBasedOnState = () => {
     const currentState = fsm.state;
-    const authUser = fsm.authUser;
+    const user = fsm.user;
     switch (currentState) {
       case 'unauthed':
         return <Auth />;
       default:
-        return <Home authUser={authUser} />;
+        return <Home user={user} />;
     }
   };
 
   render() {
-    const { currentState } = this.state;
+    const { currentState, user } = this.state;
     return (
       <Container>
-        <Header currentState={currentState} />
+        <Header currentState={currentState} user={user} />
         <Body>{this._displayScreenBasedOnState()}</Body>
       </Container>
     );
@@ -51,7 +52,8 @@ class RootEntry extends PureComponent {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100vh;
+  background-color: #282c34;
 `;
 
 const Body = styled.div`
