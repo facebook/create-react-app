@@ -69,7 +69,7 @@ if (
 
 // Jest doesn't have this option so we'll remove it
 if (argv.indexOf('--no-watch') !== -1) {
-  argv.splice(argv.indexOf('--no-watch'), 1);
+  argv = argv.filter(arg => arg !== '--no-watch');
 }
 
 // @remove-on-eject-begin
