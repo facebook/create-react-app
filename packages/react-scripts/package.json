@@ -1,6 +1,6 @@
 {
   "name": "@ivoryio/ivory-react-scripts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Create React App scripts for Ivory",
   "repository": "ivoryio/create-react-app",
   "license": "MIT",
@@ -53,7 +53,7 @@
     "fs-extra": "7.0.1",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "identity-obj-proxy": "3.0.0",
-    "ivory-react-dev-utils": "0.0.3",
+    "ivory-react-dev-utils": "^0.1.1",
     "javascript-state-machine": "^3.1.0",
     "jest": "23.6.0",
     "jest-pnp-resolver": "1.0.2",
