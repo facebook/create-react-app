@@ -60,8 +60,11 @@
     "rimraf": "^2.6.2",
     "settle-promise": "1.0.0",
     "source-map": "0.5.6",
-    "terser-webpack-plugin": "1.1.0",
+    "terser-webpack-plugin": "1.2.1",
     "webpack": "^4.8.1"
+  },
+  "resolutions": {
+    "terser": "3.14.1"
   },
   "jest": {
     "setupFiles": [

@@ -65,7 +65,7 @@
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
-    "terser-webpack-plugin": "1.1.0",
+    "terser-webpack-plugin": "1.2.1",
     "url-loader": "1.1.1",
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.14",
@@ -78,6 +78,9 @@
   },
   "optionalDependencies": {
     "fsevents": "1.2.4"
+  },
+  "resolutions": {
+    "terser": "3.14.1"
   },
   "browserslist": [
     ">0.2%",
