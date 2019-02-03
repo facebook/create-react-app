@@ -61,8 +61,6 @@ const errorLogFilePatterns = [
 ];
 
 let projectName;
-let multipleProjectNameArgs = false;
-const args = process.argv.slice(2);
 
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
@@ -70,24 +68,6 @@ const program = new commander.Command(packageJson.name)
   .usage(`${chalk.green('<project-directory>')} [options]`)
   .action(name => {
     projectName = name;
-
-    // Computing number of arguments given excluding options
-    let argsLength = 0;
-    
-    args.map(item => {
-      
-      if (item === '--scripts-version') {
-        argsLength--;
-      }
-
-      if (!item.startsWith('-')){
-        argsLength++;
-      }
-	});
-
-    if (argsLength > 1){
-      multipleProjectNameArgs = true;
-    } 
   })
   .option('--verbose', 'print additional logs')
   .option('--info', 'print environment debug info')
@@ -163,20 +143,24 @@ if (program.info) {
     .then(console.log);
 }
 
-if (typeof projectName === 'undefined' || multipleProjectNameArgs) {
-
-  if (multipleProjectNameArgs) {
-    console.log(
-        chalk.yellow(
-          `\n You have provided more that one argument for <project-directory>.`
-        )
-	);
+const hasMultipleProjectNameArgs =
+  process.argv[3] && !process.argv[3].startsWith('-');
+if (typeof projectName === 'undefined' || hasMultipleProjectNameArgs) {
+  console.log();
+  if (hasMultipleProjectNameArgs) {
+    console.error(
+      `You have provided more than one argument for ${chalk.green(
+        '<project-directory>'
+      )}.`
+    );
+    console.log();
+    console.log('Please specify only one project directory, without spaces.');
   } else {
-     console.error('Please specify the project directory:');
+    console.error('Please specify the project directory:');
+    console.log(
+      `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
+    );
   }
-  console.log(
-    `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
-  );
   console.log();
   console.log('For example:');
   console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-app')}`);
