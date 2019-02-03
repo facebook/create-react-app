@@ -49,6 +49,7 @@ const url = require('url');
 const hyperquest = require('hyperquest');
 const envinfo = require('envinfo');
 const os = require('os');
+const minimist = require('minimist');
 
 const packageJson = require('./package.json');
 
@@ -144,7 +145,7 @@ if (program.info) {
 }
 
 const hasMultipleProjectNameArgs =
-  process.argv[3] && !process.argv[3].startsWith('-');
+  minimist(process.argv.slice(2))._.length > 1;
 if (typeof projectName === 'undefined' || hasMultipleProjectNameArgs) {
   console.log();
   if (hasMultipleProjectNameArgs) {
