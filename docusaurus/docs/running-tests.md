@@ -374,7 +374,9 @@ CI=true npm test
 CI=true npm run build
 ```
 
-The test command will force Jest to run tests once instead of launching the watcher. If you prefer, you can also pass the flag `--no-watch` to disable the watcher too.
+The test command will force Jest to run in CI-mode, and tests will only run once instead of launching the watcher.
+
+For non-CI environments, you can simply pass the `--no-watch` flag to disable test-watching.
 
 The build command will check for linter warnings and fail if any are found.
 
