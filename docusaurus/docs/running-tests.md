@@ -35,7 +35,7 @@ The watcher includes an interactive command-line interface with the ability to r
 
 ![Jest watch mode](https://jestjs.io/img/blog/15-watch.gif)
 
-> \*You can disable this behavior by passing the flag `--no-watch` if needed though, interactive mode is suggested.
+> \*Although we recommend running your tests in watch mode during development, you can disable this behavior by passing in the `--no-watch` flag. In most CI environments, this is handled for you (see [On CI servers](#on-ci-servers)).
 
 ## Version Control Integration
 
