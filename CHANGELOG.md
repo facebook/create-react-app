@@ -1,3 +1,13 @@
+## 2.6.0 (February 4, 2019)
+
+#### :bug: Bug Fix
+* [lighter-styleguide] fix rendering components when using npm package ([#77](https://github.com/lightingbeetle/lighter/pull/76))
+* [lighter-styleguide] fix ComponentsDocs `path` not displaying props table ([#77](https://github.com/lightingbeetle/lighter/pull/76))
+
+#### :tada: version updates
+
+* `lighter-styleguide@1.4.2`
+
 ## 2.6.0 (January 28, 2019)
 
 #### :bug: Bug Fix
