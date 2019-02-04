@@ -108,11 +108,9 @@ The page will automatically reload if you make changes to the code. You will see
 
 ### `npm test` or `yarn test`
 
-Runs the test watcher in an interactive mode<sup>\*</sup>. By default, runs tests related to files changed since the last commit.
+Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
 
 [Read more about testing](https://facebook.github.io/create-react-app/docs/running-tests).
-
-> \*You can disable this behavior by passing the flag `--no-watch` if needed though, interactive mode is suggested.
 
 ### `npm run build` or `yarn build`
 
