@@ -73,7 +73,8 @@ class ComponentDocs extends Component {
       excludeProps(
         this.props.excludes,
         getTableData(
-          getComponentInfoFromComponent(this.props.component) || this.state.info
+          getComponentInfoFromComponent(this.props.component).length ||
+            this.state.info
         )
       )
     );
