@@ -54,7 +54,8 @@ Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debu
       "args": [
         "test",
         "--runInBand",
-        "--no-cache"
+        "--no-cache",
+        "--no-watch"
       ],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
