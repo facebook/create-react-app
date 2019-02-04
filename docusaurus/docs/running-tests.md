@@ -29,11 +29,13 @@ We recommend to put the test files (or `__tests__` folders) next to the code the
 
 ## Command Line Interface
 
-When you run `npm test`, Jest will launch in the watch mode. Every time you save a file, it will re-run the tests, just like `npm start` recompiles the code.
+When you run `npm test`, Jest will launch in watch mode<sup>\*</sup>. Every time you save a file, it will re-run the tests, just like `npm start` recompiles the code.
 
 The watcher includes an interactive command-line interface with the ability to run all tests, or focus on a search pattern. It is designed this way so that you can keep it open and enjoy fast re-runs. You can learn the commands from the “Watch Usage” note that the watcher prints after every run:
 
 ![Jest watch mode](https://jestjs.io/img/blog/15-watch.gif)
+
+> \*Although we recommend running your tests in watch mode during development, you can disable this behavior by passing in the `--no-watch` flag. In most CI environments, this is handled for you (see [On CI servers](#on-ci-servers)).
 
 ## Version Control Integration
 
@@ -372,9 +374,9 @@ CI=true npm test
 CI=true npm run build
 ```
 
-The test command will force Jest to run tests once instead of launching the watcher.
+The test command will force Jest to run in CI-mode, and tests will only run once instead of launching the watcher.
 
-> If you find yourself doing this often in development, please [file an issue](https://github.com/facebook/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
+For non-CI environments, you can simply pass the `--no-watch` flag to disable test-watching.
 
 The build command will check for linter warnings and fail if any are found.
 
