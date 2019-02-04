@@ -2,6 +2,7 @@ import React from 'react';
 import { func, node, oneOfType } from 'prop-types';
 import cx from 'classnames';
 import styled from 'styled-components';
+import { components } from './../../utils/mdx';
 
 const propTypes = {
   render: oneOfType([node, func])
@@ -16,7 +17,11 @@ const Page = ({ className, render, ...other }) => {
 
   return (
     <StyledPage className={classes} {...other}>
-      {typeof render === 'function' ? <Render /> : render}
+      {typeof render === 'function' ? (
+        <Render components={components} />
+      ) : (
+        render
+      )}
     </StyledPage>
   );
 };

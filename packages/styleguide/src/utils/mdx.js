@@ -24,7 +24,7 @@ const createHeaderId = props => {
     .replace(/[^\w\d]+/g, '-')}`;
 };
 
-const components = {
+export const components = {
   h1: props => <H1 id={`${createHeaderId(props)}`} {...props} />,
   h2: props => <H2 id={`${createHeaderId(props)}`} {...props} />,
   h3: props => <H3 id={`${createHeaderId(props)}`} {...props} />,
