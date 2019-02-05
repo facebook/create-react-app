@@ -16,6 +16,6 @@
     "index.js"
   ],
   "devDependencies": {
-    "jest": "24.0.0"
+    "jest": "24.1.0"
   }
 }

@@ -49,7 +49,7 @@
     "eslint-plugin-react": "7.12.4",
     "flow-bin": "^0.63.1",
     "html-entities": "1.2.1",
-    "jest": "24.0.0",
+    "jest": "24.1.0",
     "jest-fetch-mock": "2.1.0",
     "object-assign": "4.1.1",
     "promise": "8.0.2",

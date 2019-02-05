@@ -30,7 +30,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     // Then these can always stay as require.resolve()s.
     resolver: isEjecting
       ? 'jest-pnp-resolver'
-      : require.resolve('./pnpResolver.js'),
+      : require.resolve('jest-pnp-resolver'),
     setupFiles: [
       isEjecting
         ? 'react-app-polyfill/jsdom'
