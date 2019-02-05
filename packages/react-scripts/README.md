@@ -21,6 +21,18 @@ If you are using [VSCode](https://code.visualstudio.com/) editor, you can instal
 }
 ```
 
+## Development
+
+We follow a simple process:
+
+1. Create your branch with a descriptive name.
+2. Make your changes, try them in your local projects, and push your commits.
+3. Do a Pull Request to @credijusto/react-scripts (not the original Facebook's repo)
+4. Once approved, use `npm version x.x.x` to update the scripts version. We follow the [semver rules](https://semver.org/).
+5. Commit the version update, publish using `npm publish` and push these changes to Github.
+6. Merge your branch into master.
+7. Create a git tag in the master "Merge pull request..." commit with the version and a `-cj` ending. E.g.: `v1.1.5-cj`
+
 Issues and Pull-Requests welcome.
 
 <hr>

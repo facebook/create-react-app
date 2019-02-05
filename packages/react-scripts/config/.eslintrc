@@ -20,7 +20,8 @@
     }],
     "import/no-unresolved": 0,
     "react/jsx-filename-extension": 0,
-    "indent": ["error", 2]
+    "indent": ["error", 2],
+    "object-curly-spacing": ["error", "always"]
   },
   "plugins": [
     "jsx-a11y"
