@@ -2,10 +2,10 @@ import Amplify, { Auth } from 'aws-amplify';
 
 export default Amplify.configure({
   Auth: {
-    identityPoolId: '', // REQUIRED - Amazon Cognito Identity Pool ID
-    region: '', // REQUIRED - Amazon Cognito Region
-    userPoolId: '', // OPTIONAL - Amazon Cognito User Pool ID
-    userPoolWebClientId: '', // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
+    identityPoolId: '[AWS_COGNITO_IDENTITY_POOL_ID]', // REQUIRED - Amazon Cognito Identity Pool ID
+    region: '[AWS_COGNITO_REGION]', // REQUIRED - Amazon Cognito Region
+    userPoolId: '[AWS_COGNITO_USER_POOL_ID]', // OPTIONAL - Amazon Cognito User Pool ID
+    userPoolWebClientId: '[AWS_COGNITO_WEB_CLIENT_ID]', // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
   },
   API: {
     endpoints: [
