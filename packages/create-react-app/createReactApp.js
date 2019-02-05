@@ -49,7 +49,6 @@ const url = require('url');
 const hyperquest = require('hyperquest');
 const envinfo = require('envinfo');
 const os = require('os');
-const minimist = require('minimist');
 
 const packageJson = require('./package.json');
 
@@ -62,6 +61,15 @@ const errorLogFilePatterns = [
 ];
 
 let projectName;
+
+const validateArgs = args => {
+  let hasSwitch = args.find(arg => arg.includes('-'))
+  if (hasSwitch) {
+    let index = args.indexOf(hasSwitch)
+    args.splice(index, 2)
+  }
+  return args
+}
 
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
@@ -145,7 +153,7 @@ if (program.info) {
 }
 
 const hasMultipleProjectNameArgs =
-  minimist(process.argv.slice(2))._.length > 1;
+  validateArgs(process.argv.slice(2)).length > 1;
 if (typeof projectName === 'undefined' || hasMultipleProjectNameArgs) {
   console.log();
   if (hasMultipleProjectNameArgs) {
