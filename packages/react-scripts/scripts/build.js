@@ -156,12 +156,15 @@ function build(previousFileSizes) {
 
         // Add additional information for postcss errors
         if (err.hasOwnProperty('postcssNode')) {
-          const source = err['postcssNode'].source;
-          errMessage += '\n' + path.basename(source.input.file) +
+          errMessage +=
+            '\n' +
+            path.basename(err['postcssNode'].source.input.file) +
             '\nCompileError: Begins at selector ' +
-            err['postcssNode'].selector +' (' +
-            err['postcssNode'].source.start.line + ':' +
-            source.start.column +
+            err['postcssNode'].selector +
+            ' (' +
+            err['postcssNode'].source.start.line +
+            ':' +
+            err['postcssNode'].source.start.column +
             ')';
         }
 
