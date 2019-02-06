@@ -27,7 +27,7 @@ set HTTPS=true&&npm start
 ### Linux, macOS (Bash)
 
 ```bash
-HTTPS=true npm start
+export HTTPS=true&&npm start
 ```
 
 Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
