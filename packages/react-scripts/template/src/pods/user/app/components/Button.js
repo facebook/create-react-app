@@ -6,6 +6,7 @@ const ButtonComponent = ({
   onClick,
   marginTop = 0,
   marginRight = 0,
+  dataTest,
   padding,
   borderRadius,
   backgroundColor,
@@ -19,6 +20,7 @@ const ButtonComponent = ({
 }) => (
   <Button
     onClick={onClick}
+    data-test={dataTest}
     marginTop={marginTop}
     marginRight={marginRight}
     padding={padding}

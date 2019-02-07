@@ -47,6 +47,7 @@ class SignIn extends PureComponent {
         color="#fff"
         fontSize="15px"
         onClick={this._handleStateChange('signUp')}
+        data-test='anchor-to-signup'
       >
         Don't have an account yet?
       </Label>
@@ -126,7 +127,9 @@ class SignIn extends PureComponent {
     return (
       <Card
         title="Sign In"
+        titleDataTest='signin-title'
         btnSubmitLabel="Sign In"
+        btnDataTest='signin-button'
         isLoading={isLoading}
         Anchor={this._renderAnchor(username)}
         onSubmit={this._submit}
@@ -140,6 +143,7 @@ class SignIn extends PureComponent {
           value={username}
           error={errors.username}
           onChange={this._onTextInputChange('username')}
+          dataTest='username-input-signin'
         />
         <Input
           required
@@ -149,6 +153,7 @@ class SignIn extends PureComponent {
           value={password}
           error={errors.password}
           onChange={this._onTextInputChange('password')}
+          dataTest='password-input-signin'
         />
       </Card>
     );

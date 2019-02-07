@@ -12,6 +12,7 @@ const InputComponent = ({
   disabled,
   required,
   error,
+  dataTest
 }) => {
   const _errorMessage = () => {
     switch (error) {
@@ -37,6 +38,7 @@ const InputComponent = ({
         disabled={disabled}
         onChange={onChange}
         error={error}
+        data-test={dataTest}
       />
       {error && <Error>{_errorMessage()}</Error>}
     </Fragment>

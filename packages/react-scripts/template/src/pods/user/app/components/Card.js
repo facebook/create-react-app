@@ -7,11 +7,13 @@ const Card = ({
   title = '',
   back,
   btnSubmitLabel = 'Submit',
+  btnDataTest = 'button',
+  titleDataTest = 'title',
   isLoading = false,
   children,
   onSubmit,
   handleStateChange,
-  Anchor,
+  Anchor
 }) => {
   const _preventSubmitOnEnter = ev => {
     ev.preventDefault();
@@ -26,10 +28,13 @@ const Card = ({
               onClick={handleStateChange(back)}
             />
           )}
-          <Title>{title}</Title>
+          <Title data-test={titleDataTest}>
+            {title}
+          </Title>
         </Row>
         <Form onSubmit={_preventSubmitOnEnter}>{children}</Form>
         <ButtonSubmit
+          dataTest={btnDataTest}
           isLoading={isLoading}
           disabled={isLoading}
           onClick={onSubmit}

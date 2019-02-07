@@ -1,0 +1,11 @@
+{
+    "baseUrl": "http://localhost:3000",
+    "defaultCommandTimeout": 10000,
+    "requestTimeout": 10000,
+    "fixturesFolder": "test/E2E/cypress/fixtures",
+    "integrationFolder": "test/E2E/cypress/integration",
+    "pluginsFile": "test/E2E/cypress/plugins/index.js",
+    "screenshotsFolder": "test/E2E/cypress/screenshots",
+    "supportFile": "test/E2E/cypress/support/index.js",
+    "reporter": "mochawesome"
+}

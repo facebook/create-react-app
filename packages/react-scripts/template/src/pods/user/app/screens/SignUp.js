@@ -100,6 +100,7 @@ class SignUp extends PureComponent {
       fontSize="15px"
       cursor="pointer"
       onClick={this._handleStateChange('signIn')}
+      data-test='anchor-to-signin'
     >
       Already have an account?
     </Label>
@@ -123,7 +124,9 @@ class SignUp extends PureComponent {
     return (
       <Card
         title="Sign up"
+        titleDataTest='signup-title'
         btnSubmitLabel="Sign up"
+        btnDataTest='signup-button'
         Anchor={this._renderAnchor()}
         onSubmit={this._submit}
       >
@@ -136,6 +139,7 @@ class SignUp extends PureComponent {
           autoComplete="current-email"
           error={errors.email}
           onChange={this._onTextInputChange('email')}
+          dataTest='email-input-signup'
         />
         <Input
           required
@@ -145,6 +149,7 @@ class SignUp extends PureComponent {
           autoComplete="current-password"
           error={errors.password}
           onChange={this._onTextInputChange('password')}
+          dataTest='password-input-signup'
         />
 
         <Input
@@ -154,6 +159,7 @@ class SignUp extends PureComponent {
           autoComplete="first-name"
           error={errors.name}
           onChange={this._onTextInputChange('name')}
+          dataTest='firstname-input-signup'
         />
         <Input
           required
@@ -162,6 +168,7 @@ class SignUp extends PureComponent {
           autoComplete="last-name"
           error={errors.family_name}
           onChange={this._onTextInputChange('family_name')}
+          dataTest='lastname-input-signup'
         />
         <Input
           placeholder="City"
@@ -169,6 +176,7 @@ class SignUp extends PureComponent {
           autoComplete="current-city"
           error={errors.city}
           onChange={this._onTextInputChange('city')}
+          dataTest='city-input-signup'
         />
         <Input
           placeholder="Country"
@@ -176,6 +184,7 @@ class SignUp extends PureComponent {
           autoComplete="country"
           error={errors.country}
           onChange={this._onTextInputChange('country')}
+          dataTest='country-input-signup'
         />
       </Card>
     );

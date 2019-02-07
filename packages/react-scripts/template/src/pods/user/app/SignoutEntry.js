@@ -24,14 +24,16 @@ class SignoutEntry extends PureComponent {
     const { isModalShown } = this.state;
     return (
       <Fragment>
-        <SignoutButton src={icons.signout} onClick={this._showModal} />
+        <SignoutButton data-test='signout-button' src={icons.signout} onClick={this._showModal} />
         {isModalShown ? (
           <Modal
             headerLabel="Sign out"
             confirmBtnLabel="Sign out"
+            confirmBtnDataTest="confirm-button-signout"
             confirmActionFn={this.signOut}
             actionBtnType="destructive"
             hideModal={this.hideModal}
+            data-test="signout-modal"
           >
             <ConfirmMessage>
               You are about to sign out. <br />
