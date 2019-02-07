@@ -1,0 +1,9 @@
+@import './preflight.css';
+@import './components.css';
+@import './utilities.css';
+
+@import '@swrve/tailwind-config';
+
+.header {
+  @apply .bg-dodgerBlue-100 .text-center py-16;
+}
