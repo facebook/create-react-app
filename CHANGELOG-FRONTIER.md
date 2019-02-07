@@ -1,3 +1,9 @@
+## 1.4.3
+
+#### :bug: Bug Fix
+
+- Explicitly stating the version of webpack to use cause create-react-app expects a certain version
+
 ## 1.4.1
 
 - Fixed the scoped name for react-scripts to @fs/react-scripts
