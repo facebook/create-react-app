@@ -11,7 +11,7 @@ module.exports = {
       'git add'
     ],
     './**/*.{html,json,css,scss,mdx}': [
-      'prettier --write',
+      'prettier --write --end-of-line lf',
       'git add'
     ],
   },

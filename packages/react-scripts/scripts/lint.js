@@ -4,7 +4,7 @@ const { exec } = require('child_process');
 const isCI = process.env.CI === 'true'
 
 const prettierMatch = paths.appSrc + '/**/*.{html,json,css,scss,mdx}';
-const prettierCommand = `prettier '${prettierMatch}' ${isCI ? '--check' : '--write'}`;
+const prettierCommand = `prettier '${prettierMatch}' ${isCI ? '--check' : '--write'} --end-of-line lf`;
 
 const eslintConfigPath = paths.ownPath + '/config/.eslintrc';
 const eslintIgnorePath = paths.ownPath + '/config/.eslintignore';

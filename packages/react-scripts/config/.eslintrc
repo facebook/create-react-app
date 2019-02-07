@@ -6,12 +6,9 @@
   },
   "extends": [
     "airbnb",
-    "prettier",
     "plugin:jsx-a11y/recommended"
   ],
   "rules": {
-    "semi": ["error", "always"],
-    "quotes": ["error", "single"],
     "jsx-quotes": ["error", "prefer-single"],
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": true,
@@ -19,9 +16,7 @@
       "peerDependencies": false
     }],
     "import/no-unresolved": 0,
-    "react/jsx-filename-extension": 0,
-    "indent": ["error", 2],
-    "object-curly-spacing": ["error", "always"]
+    "react/jsx-filename-extension": 0
   },
   "plugins": [
     "jsx-a11y"
