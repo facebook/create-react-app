@@ -8,7 +8,7 @@ import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-json';
 import 'prismjs/components/prism-diff';
-import 'prismjs/components/prism-sass';
+import 'prismjs/components/prism-scss';
 import 'prism-theme-one-dark/prism-onedark.css';
 import 'firacode/distr/fira_code.css';
 
@@ -20,13 +20,13 @@ export default class PreviewCode extends Component {
   static propTypes = {
     children: string,
     language: string,
-    inline: bool,
+    inline: bool
   };
 
   static defaultProps = {
     children: '',
     inline: true,
-    language: 'html',
+    language: 'html'
   };
 
   state = {
@@ -35,13 +35,13 @@ export default class PreviewCode extends Component {
       typeof Prism.languages[this.props.language] !== 'undefined'
         ? Prism.languages[this.props.language]
         : Prism.languages.html
-    ),
+    )
   };
 
   componentWillReceiveProps({ children, language }) {
     if (children !== this.props.children || language !== this.props.language) {
       this.setState({
-        __html: Prism.highlight(children, Prism.languages[language]),
+        __html: Prism.highlight(children, Prism.languages[language])
       });
     }
   }
@@ -84,9 +84,7 @@ export default class PreviewCode extends Component {
 }
 
 const Highlight = styled.code.attrs(props => ({
-  className: `code ${props.inline && 'code--inline'} language-${
-    props.language
-  }`,
+  className: `code ${props.inline && 'code--inline'} language-${props.language}`
 }))`
   &[class*='language-'] {
     font-feature-settings: 'calt' 1;
