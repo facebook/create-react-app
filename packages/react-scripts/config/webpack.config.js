@@ -100,13 +100,21 @@ module.exports = function(webpackEnv) {
           // https://github.com/facebook/create-react-app/issues/2677
           ident: 'postcss',
           plugins: () => [
+            require('postcss-easy-import'),
+            require('postcss-url'),
+            require('tailwindcss')(require('@swrve/tailwind-config')),
+            require('cssnano')({
+              preset: 'default',
+              discardComments: { removeAll: true },
+              reduceIdents: false
+            }),
             require('postcss-flexbugs-fixes'),
             require('postcss-preset-env')({
               autoprefixer: {
-                flexbox: 'no-2009',
+                flexbox: 'no-2009'
               },
-              stage: 3,
-            }),
+              stage: 3
+            })
           ],
           sourceMap: isEnvProduction && shouldUseSourceMap,
         },
