@@ -1,6 +1,6 @@
 {
   "name": "@swrve/react-scripts",
-  "version": "2.1.3-0",
+  "version": "2.1.3-1",
   "description": "Configuration and scripts for Create React App.",
   "repository": "@swrve/create-react-app",
   "license": "MIT",
@@ -26,6 +26,7 @@
   "dependencies": {
     "@babel/core": "7.2.2",
     "@svgr/webpack": "4.1.0",
+    "@swrve/react-dev-utils": "7.0.1",
     "@swrve/tailwind-config": "^0.11.9",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
