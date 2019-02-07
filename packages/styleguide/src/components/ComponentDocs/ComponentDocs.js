@@ -16,7 +16,7 @@ import {
 } from './utils';
 
 function getComponentInfoFromComponent(component = {}) {
-  return component.__docgenInfo ? [component.__docgenInfo] : [];
+  return component.__docgenInfo && [component.__docgenInfo];
 }
 
 class ComponentDocs extends Component {
@@ -73,8 +73,7 @@ class ComponentDocs extends Component {
       excludeProps(
         this.props.excludes,
         getTableData(
-          getComponentInfoFromComponent(this.props.component).length ||
-            this.state.info
+          getComponentInfoFromComponent(this.props.component) || this.state.info
         )
       )
     );
