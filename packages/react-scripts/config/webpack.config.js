@@ -35,7 +35,7 @@ const appEntries = require(`${process.env.PWD}/pod-entries.json`).srcEntries;
 const assetAliases = Object.assign(
   { assets: path.resolve('src/assets') },
   ...appEntries.map(entry => ({
-    [entry.split('pods/')[1].split('/web')[0]]: path.resolve(
+    [entry.split('pods/')[1].split('/web')[0].concat('-assets')]: path.resolve(
       entry.concat('/assets')
     ),
   }))
