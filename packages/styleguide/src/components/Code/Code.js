@@ -15,18 +15,21 @@ import 'firacode/distr/fira_code.css';
 import { rem } from '../../style/utils';
 
 export default class PreviewCode extends Component {
-  static displayName = 'PreviewCode';
+  static displayName = 'Code';
 
   static propTypes = {
+    /** Code to highlight. */
     children: string,
-    language: string,
+    /** Suppored languages. */
+    language: ['markup', 'js', 'jsx', 'css', 'scss', 'bash', 'json', 'diff'],
+    /** Inline code preview with text. */
     inline: bool
   };
 
   static defaultProps = {
     children: '',
     inline: true,
-    language: 'html'
+    language: 'markup'
   };
 
   state = {
