@@ -427,23 +427,25 @@ When you build the project, Create React App will place the `public` folder cont
 
 ## [Now](https://zeit.co/now)
 
-Now offers a zero-configuration single-command deployment. You can use `now` to deploy your app for free.
+[Now](https://zeit.co/docs) offers a simple, single-command deployment. You can use `now` to deploy your app for free.
 
-1. Install the `now` command-line tool either via the recommended [desktop tool](https://zeit.co/download) or via node with `npm install -g now`.
+The first step is to install Now. You can do this by installing [the Now Desktop app](https://zeit.co/download), which also installs Now CLI and keeps it up-to-date, or by [installing Now CLI](https://zeit.co/download#now-cli) directly with npm:
 
-2. Build your app by running `npm run build`.
+```shell
+npm i -g now
+```
 
-3. Move into the build directory by running `cd build`.
+To deploy your built project directly with Now CLI in your terminal, without any configuration:
 
-4. Run `now --name your-project-name` from within the build directory. You will see a **now.sh** URL in your output like this:
+1. Build your app by running `npm run build`.
 
-   ```
-   > Ready! https://your-project-name-tpspyhtdtk.now.sh (copied to clipboard)
-   ```
+2. Move into the build directory by running `cd build`.
 
-   Paste that URL into your browser when the build is complete, and you will see your deployed app.
+3. Run `now --name your-project-name` from within the build directory. You will be given a **now.sh** URL as a response as your build is deployed, similar to the following: https://my-cra-project-4rx7b16z3.now.sh/
 
-Details are available in [this article.](https://zeit.co/blog/unlimited-static)
+  Click or paste the deployment URL into your browser when the build is complete and you will see your deployed app.
+
+For more information on deploying React applications with Now, including automatically building your application fresh in the cloud, setting up routes to rewrite all paths to the index.html file, and setting up caching headers for speed, see [the ZEIT Guide for Deploying a React app with Create React App](https://zeit.co/guides/deploying-react-with-now-cra/).
 
 ## [S3](https://aws.amazon.com/s3) and [CloudFront](https://aws.amazon.com/cloudfront/)
 
