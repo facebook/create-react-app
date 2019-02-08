@@ -1,10 +1,10 @@
 {
   "indexEntries": [
-    "src/pods/greeter/index.js",
-    "src/pods/user/index.js"
+    "src/pods/greeter/web/index.js",
+    "src/pods/user/web/index.js"
   ],
   "srcEntries": [
-    "src/pods/greeter",
-    "src/pods/user"
+    "src/pods/greeter/web",
+    "src/pods/user/web"
   ]
 }

@@ -35,11 +35,13 @@ const appEntries = require(`${process.env.PWD}/pod-entries.json`).srcEntries;
 const assetAliases = Object.assign(
   { assets: path.resolve('src/assets') },
   ...appEntries.map(entry => ({
-    [entry.split('pods/')[1].concat('-assets')]: path.resolve(
+    [entry.split('pods/')[1].split('/web')[0]]: path.resolve(
       entry.concat('/assets')
     ),
   }))
 );
+
+//     "src/pods/greeter/web",
 
 // @remove-on-eject-begin
 const getCacheIdentifier = require('ivory-react-dev-utils/getCacheIdentifier');
