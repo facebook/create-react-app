@@ -1,0 +1,77 @@
+import { Preview, ComponentDocs, Code, Badge } from './../';
+
+# Preview
+
+Preview component is dedicated to displaing other components with code preview
+and colored backgrounds.
+
+## Variants
+
+### Default
+
+By default `<Code />` is designed to be inline with text content.
+
+<Preview>
+  <Code>{'This is <span>html</span> string'}</Code>
+</Preview>
+
+### Block
+
+Block should be used to display multiline code example.
+
+<Preview>
+  <Code inline={false}>{`<div>
+  <div>HTML</div>
+</div>`}</Code>
+</Preview>
+
+### Languages
+
+Supported languages are:
+
+- Markup (HTML, SVG, etc.)
+- JS, JSX
+- CSS, SCSS
+- JSON
+- Bash
+- Diff
+
+<Preview
+  code={[
+    <Code>{'<div>HTML</div>'}</Code>,
+    <Code language="js">{"console.log('log');"}</Code>,
+    <Code language="jsx">{'<Component prop={prop} />'}</Code>,
+    <Code language="css">{'.class { display: block; }'}</Code>,
+    <Code language="scss">{'%class { display: block; }'}</Code>,
+    <Code language="bash">{'echo test;'}</Code>,
+    <Code language="json">{'{ "key": "value" }'}</Code>,
+    <Code language="diff">{'+ added line'}</Code>
+  ]}
+>
+  <Code>{'<div>HTML</div>'}</Code>
+  <Code language="js">{"console.log('log');"}</Code>
+  <br />
+  <Code language="jsx">{'<Component prop={prop} />'}</Code>
+  <br />
+  <Code language="css">{'.class { display: block; }'}</Code>
+  <br />
+  <Code language="scss">{'%class { display: block; }'}</Code>
+  <br />
+  <Code language="bash">{'echo test;'}</Code>
+  <br />
+  <Code language="json">{'{ "key": "value" }'}</Code>
+  <br />
+  <Code language="diff">{'+ added line'}</Code>
+  <br />
+</Preview>
+
+## Props
+
+<ComponentDocs component={Code} />
+
+## Aliases
+
+<Code inline={false} language="jsx">{`<CodeBlock /> === <Code inline={false} />
+<CodeJSX /> === <Code language="jsx" />
+<CodeBlockJSX /> === <Code inline={false} language="jsx" />
+`}</Code>

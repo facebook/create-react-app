@@ -7,6 +7,7 @@ import Hello from './pages/Hello.mdx';
 import KitchenSink from './pages/KitchenSink.mdx';
 import PreviewDocs from './components/Preview/Preview.docs.mdx';
 import ComponentDocsDocs from './components/ComponentDocs/ComponentDocs.docs.mdx';
+import CodeDocs from './components/Code/Code.docs.mdx';
 
 styleguide({
   config: {
@@ -29,6 +30,11 @@ styleguide({
       title: 'Components',
       path: '/components',
       nodes: [
+        {
+          title: 'Code',
+          path: '/code',
+          render: <Page render={CodeDocs} />
+        },
         {
           title: 'ComponentDocs',
           path: '/component-docs',
