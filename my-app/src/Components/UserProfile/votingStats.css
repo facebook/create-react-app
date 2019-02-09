@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+$magenta: #6b0a3a;
+$green: #60a568;
+$greenLight: lighten($green, 10%);
+
+
+body {
+  color: black;
+  background-color: $magenta;
+  padding: 20px 30px;
+  font-family: sans-serif;
+}
+
+#user-profile {
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  max-height: 600px;
+  margin: 0 auto;
+  border-radius: 5px;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 2px 2px 5px #000;
+  border: 1px solid #000;
+  
+  hr {
+    margin: 20px auto;
+    width: 50px;
+    border: 1px solid $magenta;
+    background-color: transparent;
+  }
+  
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+  }
+  
+  h2 {
+    font-size: 30px;
+  }
+  
+  h3 {
+    font-size: 18px;
+  }
+  
+  h4 {
+    font-size: 16px;
+    
+  }
+  
+  p {
+    font-size: 14px;
+  }
+  
+  .top, .bottom {
+    padding: 100px;
+    
+  }
+  
+  .bottom {
+    
+    background-color: rgba(white, 0.3);
+    text-align: left;
+  }
+  
+  .avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-flex;
+    margin-bottom: 15px;
+    border: 1px solid #000;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.progress-bar {
+  position: relative;
+  height: 10px;
+  width: 350px;
+  border-radius: 50px;
+  border: 1px solid #333;
+}
+
+.filler {
+  background: #1DA598;
+  height: 100%;
+  border-radius: inherit;
+  transition: width .2s ease-in;
+}
+
+button {
+  margin-right: 10px;
+  padding: 7px 12px;
+  font-size: 14px;
+  background: #d14836;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  outline: 0;
+}

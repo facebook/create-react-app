@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Switch, Route } from 'react-router-dom';
 import Card from './Components/Card';
 import Home from './Components/Home';
-
+import UserProfile from './Components/UserProfile';
 class App extends Component {
   render() {
     return (
@@ -14,7 +14,8 @@ class App extends Component {
         <header className="App-header">
         <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/ChosenCard" component={Card} />
+        <Route exact path="/ChosenCard/getMatchup" component={Card} />
+        <Route path = "/userProfile" component = {UserProfile} />
       </Switch>
         </header>
       </div>
