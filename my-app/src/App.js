@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Switch, Route } from 'react-router-dom';
 import Card from './Components/Card';
 import Home from './Components/Home';
-
+import UserProfile from './Components/UserProfile';
 class App extends Component {
   render() {
     return (
