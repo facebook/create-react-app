@@ -12,3 +12,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.PlayerInfo{
+  background-color: white;
+  color:black;
+  border-radius: 25px;
+  text-align: center;
+  height:70%;
+  width:40%
+}
