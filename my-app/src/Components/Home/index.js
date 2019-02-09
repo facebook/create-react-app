@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
 
-export default class Example extends React.Component {
+export default class Home extends React.Component {
   constructor(props) {
     super(props);
 
@@ -24,14 +24,15 @@ export default class Example extends React.Component {
         <Nav pills>
           <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle nav caret>
-              Dropdown
+              Shooter Options
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem header>Header</DropdownItem>
-              <DropdownItem disabled>Action</DropdownItem>
-              <DropdownItem>Another Action</DropdownItem>
+              <DropdownItem header>Player Option</DropdownItem>
               <DropdownItem divider />
-              <DropdownItem>Another Action</DropdownItem>
+              <DropdownItem href = "/">Point Guard</DropdownItem>
+              <DropdownItem>Shooting Guard</DropdownItem>
+              <DropdownItem>Power Forward</DropdownItem>
+              <DropdownItem>Center</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </Nav>
