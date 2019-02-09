@@ -8,6 +8,7 @@ import KitchenSink from './pages/KitchenSink.mdx';
 import PreviewDocs from './components/Preview/Preview.docs.mdx';
 import ComponentDocsDocs from './components/ComponentDocs/ComponentDocs.docs.mdx';
 import CodeDocs from './components/Code/Code.docs.mdx';
+import ColorPaletteDocs from './components/ColorPalette/ColorPalette.docs.mdx';
 
 styleguide({
   config: {
@@ -34,6 +35,11 @@ styleguide({
           title: 'Code',
           path: '/code',
           render: <Page render={CodeDocs} />
+        },
+        {
+          title: 'ColorPalette',
+          path: '/color-palette',
+          render: <Page render={ColorPaletteDocs} />
         },
         {
           title: 'ComponentDocs',
