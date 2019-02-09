@@ -10,7 +10,41 @@ export default class ColorPalette extends React.Component {
   static displayName = 'ColorPalette';
 
   static propTypes = {
+    /** 
+     * Color object could have these two shapes:
+     * just one color
+     * ```js
+{
+  type: 'SassColor',
+  value: {
+    hex: '#ff5722'
+  }
+}
+     * ```
+     * or multiple shades with shade number as key
+     * ```js
+{
+  type: 'SassMap',
+  value: {
+    '300': {
+      type: 'SassColor',
+      value: {
+        hex: '#ff6b6b'
+      }
+    },
+    '500': {
+      type: 'SassColor',
+      value: {
+        hex: '#fa5252'
+      }
+    }
+  }
+}
+     * ```
+     * 
+     */
     color: object,
+    /** Name of the color */
     name: string
   };
 

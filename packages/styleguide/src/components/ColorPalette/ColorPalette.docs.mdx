@@ -1,0 +1,51 @@
+import ColorPallete from './';
+import { Preview, ComponentDocs } from './../';
+
+# ColorPallete
+
+Convey meaning through color. ColorPalette is intended to display one color hue with their shades.
+
+## Variants
+
+### Default
+
+<Preview>
+  <ColorPallete
+    name="primary"
+    color={{
+      type: 'SassColor',
+      value: {
+        hex: '#ff5722'
+      }
+    }}
+  />
+</Preview>
+
+### Multiple shades
+
+<Preview>
+  <ColorPallete
+    name="error"
+    color={{
+  type: 'SassMap',
+  value: {
+    '300': {
+      type: 'SassColor',
+      value: {
+        hex: '#ff6b6b'
+      }
+    },
+    '500': {
+      type: 'SassColor',
+      value: {
+        hex: '#fa5252'
+      }
+    }
+  }
+}}
+  />
+</Preview>
+
+## Props
+
+<ComponentDocs title="<ColorPallete />" component={ColorPallete} />
