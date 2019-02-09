@@ -14,7 +14,7 @@ class App extends Component {
         <header className="App-header">
         <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/ChosenCard" component={Card} />
+        <Route exact path="/ChosenCard/getMatchup" component={Card} />
       </Switch>
         </header>
       </div>

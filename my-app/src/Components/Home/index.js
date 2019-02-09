@@ -10,7 +10,7 @@ export default class Home extends React.Component {
     this.state = {
       dropdownOpen: false
     };
-    this.QueryString='getMatchup?position=';
+    this.QueryString='getMatchup?pos=';
   }
 
   toggle() {
