@@ -51,5 +51,10 @@
     "yarn.lock": [
       "git rm --cached"
     ]
+  },
+  "dependencies": {
+    "react": "^16.8.1",
+    "react-router-dom": "^4.3.1",
+    "reactstrap": "^7.1.0"
   }
 }
