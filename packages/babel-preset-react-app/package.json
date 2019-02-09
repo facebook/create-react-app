@@ -34,7 +34,7 @@
     "@babel/runtime": "7.2.0",
     "babel-loader": "8.0.5",
     "babel-plugin-dynamic-import-node": "2.2.0",
-    "babel-plugin-macros": "2.4.4",
+    "babel-plugin-macros": "2.4.5",
     "babel-plugin-transform-react-remove-prop-types": "0.4.21"
   }
 }
