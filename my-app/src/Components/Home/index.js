@@ -10,6 +10,7 @@ export default class Home extends React.Component {
     this.state = {
       dropdownOpen: false
     };
+    this.QueryString='getMatchup?position=';
   }
 
   toggle() {
@@ -29,10 +30,10 @@ export default class Home extends React.Component {
             <DropdownMenu>
               <DropdownItem header>Player Option</DropdownItem>
               <DropdownItem divider />
-              <DropdownItem href = "/">Point Guard</DropdownItem>
-              <DropdownItem>Shooting Guard</DropdownItem>
-              <DropdownItem>Power Forward</DropdownItem>
-              <DropdownItem>Center</DropdownItem>
+              <DropdownItem href ={ `/ChosenCard/${this.QueryString}pg`}>Point Guard</DropdownItem>
+              <DropdownItem href ={ `/ChosenCard/${this.QueryString}sg`}>Shooting Guard</DropdownItem>
+              <DropdownItem href ={ `/ChosenCard/${this.QueryString}pf`}>Power Forward</DropdownItem>
+              <DropdownItem href ={ `/ChosenCard/${this.QueryString}c`}>Center</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </Nav>
