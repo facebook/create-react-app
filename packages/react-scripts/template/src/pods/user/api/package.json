@@ -1,0 +1,8 @@
+{
+    "name": "user-microservice",
+    "version": "1.0.0",
+    "author": "Thinslices",
+    "license": "ISC",
+    "description": "Provides user management functionalities: registration, authentication, profile management"
+  }
+  
