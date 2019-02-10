@@ -9,6 +9,7 @@ import PreviewDocs from './components/Preview/Preview.docs.mdx';
 import ComponentDocsDocs from './components/ComponentDocs/ComponentDocs.docs.mdx';
 import CodeDocs from './components/Code/Code.docs.mdx';
 import ColorPaletteDocs from './components/ColorPalette/ColorPalette.docs.mdx';
+import BadgeDocs from './components/Badge/Badge.docs.mdx';
 
 styleguide({
   config: {
@@ -31,6 +32,11 @@ styleguide({
       title: 'Components',
       path: '/components',
       nodes: [
+        {
+          title: 'Badge',
+          path: '/badge',
+          render: <Page render={BadgeDocs} />
+        },
         {
           title: 'Code',
           path: '/code',
