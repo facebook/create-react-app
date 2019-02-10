@@ -15,7 +15,9 @@ let defaultTypeToColorMap = {
 };
 
 const propTypes = {
+  /** Value is key from `typeToColorMap` prop. */
   value: string,
+  /** Default map of available states. */
   typeToColorMap: object
 };
 
