@@ -77,6 +77,7 @@ const program = new commander.Command(packageJson.name)
   )
   .option('--use-npm')
   .option('--use-pnp')
+  .option('--typescript')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -134,20 +135,32 @@ if (program.info) {
         npmGlobalPackages: ['create-react-app'],
       },
       {
-        clipboard: true,
+        clipboard: false,
         duplicates: true,
         showNotFound: true,
       }
     )
-    .then(console.log)
-    .then(() => console.log(chalk.green('Copied To Clipboard!\n')));
+    .then(console.log);
 }
 
-if (typeof projectName === 'undefined') {
-  console.error('Please specify the project directory:');
-  console.log(
-    `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
-  );
+const hasMultipleProjectNameArgs =
+  process.argv[3] && !process.argv[3].startsWith('-');
+if (typeof projectName === 'undefined' || hasMultipleProjectNameArgs) {
+  console.log();
+  if (hasMultipleProjectNameArgs) {
+    console.error(
+      `You have provided more than one argument for ${chalk.green(
+        '<project-directory>'
+      )}.`
+    );
+    console.log();
+    console.log('Please specify only one project directory, without spaces.');
+  } else {
+    console.error('Please specify the project directory:');
+    console.log(
+      `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
+    );
+  }
   console.log();
   console.log('For example:');
   console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-app')}`);
@@ -180,10 +193,19 @@ createApp(
   program.scriptsVersion,
   program.useNpm,
   program.usePnp,
+  program.typescript,
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(name, verbose, version, useNpm, usePnp, template) {
+function createApp(
+  name,
+  verbose,
+  version,
+  useNpm,
+  usePnp,
+  useTypescript,
+  template
+) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -234,7 +256,7 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
           chalk.yellow(
             `You are using npm ${
               npmInfo.npmVersion
-            } so the project will be boostrapped with an old unsupported version of tools.\n\n` +
+            } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
               `Please update to npm 3 or higher for a better, fully supported experience.\n`
           )
         );
@@ -242,7 +264,29 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
       // Fall back to latest supported react-scripts for npm 3
       version = 'react-scripts@0.9.x';
     }
+  } else if (usePnp) {
+    const yarnInfo = checkYarnVersion();
+    if (!yarnInfo.hasMinYarnPnp) {
+      if (yarnInfo.yarnVersion) {
+        chalk.yellow(
+          `You are using Yarn ${
+            yarnInfo.yarnVersion
+          } together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
+            `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
+        );
+      }
+      // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
+      usePnp = false;
+    }
   }
+
+  if (useYarn) {
+    fs.copySync(
+      require.resolve('./yarn.lock.cached'),
+      path.join(root, 'yarn.lock')
+    );
+  }
+
   run(
     root,
     appName,
@@ -251,7 +295,8 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
     originalDirectory,
     template,
     useYarn,
-    usePnp
+    usePnp,
+    useTypescript
   );
 }
 
@@ -334,10 +379,21 @@ function run(
   originalDirectory,
   template,
   useYarn,
-  usePnp
+  usePnp,
+  useTypescript
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
   const allDependencies = ['react', 'react-dom', packageToInstall];
+  if (useTypescript) {
+    // TODO: get user's node version instead of installing latest
+    allDependencies.push(
+      '@types/node',
+      '@types/react',
+      '@types/react-dom',
+      '@types/jest',
+      'typescript'
+    );
+  }
 
   console.log('Installing packages. This might take a couple of minutes.');
   getPackageName(packageToInstall)
@@ -407,7 +463,7 @@ function run(
       console.log();
 
       // On 'exit' we will delete these files from target directory.
-      const knownGeneratedFiles = ['package.json', 'node_modules'];
+      const knownGeneratedFiles = ['package.json', 'yarn.lock', 'node_modules'];
       const currentFiles = fs.readdirSync(path.join(root));
       currentFiles.forEach(file => {
         knownGeneratedFiles.forEach(fileToMatch => {
@@ -565,6 +621,27 @@ function checkNpmVersion() {
   };
 }
 
+function checkYarnVersion() {
+  let hasMinYarnPnp = false;
+  let yarnVersion = null;
+  try {
+    yarnVersion = execSync('yarnpkg --version')
+      .toString()
+      .trim();
+    let trimmedYarnVersion = /^(.+?)[-+].+$/.exec(yarnVersion);
+    if (trimmedYarnVersion) {
+      trimmedYarnVersion = trimmedYarnVersion.pop();
+    }
+    hasMinYarnPnp = semver.gte(trimmedYarnVersion || yarnVersion, '1.12.0');
+  } catch (err) {
+    // ignore
+  }
+  return {
+    hasMinYarnPnp: hasMinYarnPnp,
+    yarnVersion: yarnVersion,
+  };
+}
+
 function checkNodeVersion(packageName) {
   const packageJsonPath = path.resolve(
     process.cwd(),
@@ -683,7 +760,6 @@ function isSafeToCreateProjectIn(root, name) {
     '.idea',
     'README.md',
     'LICENSE',
-    'web.iml',
     '.hg',
     '.hgignore',
     '.hgcheck',
@@ -699,6 +775,8 @@ function isSafeToCreateProjectIn(root, name) {
   const conflicts = fs
     .readdirSync(root)
     .filter(file => !validFiles.includes(file))
+    // IntelliJ IDEA creates module files before CRA is launched
+    .filter(file => !/\.iml$/.test(file))
     // Don't treat log files from previous installation as conflicts
     .filter(
       file => !errorLogFilePatterns.some(pattern => file.indexOf(pattern) === 0)
