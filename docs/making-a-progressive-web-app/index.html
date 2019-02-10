@@ -34,7 +34,7 @@ registered, so it will not take control of your production web app.</p>
 following in their <a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/index.js"><code>src/index.js</code></a> file:</p>
 <pre><code class="hljs css language-js"><span class="hljs-comment">// If you want your app to work offline and load faster, you can change</span>
 <span class="hljs-comment">// unregister() to register() below. Note this comes with some pitfalls.</span>
-<span class="hljs-comment">// Learn more about service workers: http://bit.ly/CRA-PWA</span>
+<span class="hljs-comment">// Learn more about service workers: https://bit.ly/CRA-PWA</span>
 serviceWorker.unregister();
 </code></pre>
 <p>As the comment states, switching <code>serviceWorker.unregister()</code> to
@@ -80,7 +80,7 @@ scenario, and which as a default, just logs appropriate messages to the
 JavaScript console.</p></li>
 <li><p>Service workers <a href="https://developers.google.com/web/fundamentals/getting-started/primers/service-workers#you_need_https">require HTTPS</a>,
 although to facilitate local testing, that policy
-<a href="http://stackoverflow.com/questions/34160509/options-for-testing-service-workers-via-http/34161385#34161385">does not apply to <code>localhost</code></a>.
+<a href="https://stackoverflow.com/questions/34160509/options-for-testing-service-workers-via-http/34161385#34161385">does not apply to <code>localhost</code></a>.
 If your production web server does not support HTTPS, then the service worker
 registration will fail, but the rest of your web app will remain functional.</p></li>
 <li><p>The service worker is only enabled in the <a href="/create-react-app/docs/deployment">production environment</a>,

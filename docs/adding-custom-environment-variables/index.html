@@ -28,43 +28,38 @@
         </script></nav></div><div class="container mainContainer docMainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/facebook/create-react-app/edit/master/docusaurus/docs/adding-custom-environment-variables.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Adding Custom Environment Variables</h1></header><article><div><span><blockquote>
 <p>Note: this feature is available with <code>react-scripts@0.2.3</code> and higher.</p>
 </blockquote>
-<p>Your project can consume variables declared in your environment as if they were declared locally in your JS files. By
-default you will have <code>NODE_ENV</code> defined for you, and any other environment variables starting with
-<code>REACT_APP_</code>.</p>
+<p>Your project can consume variables declared in your environment as if they were declared locally in your JS files. By default you will have <code>NODE_ENV</code> defined for you, and any other environment variables starting with <code>REACT_APP_</code>.</p>
+<blockquote>
+<p>WARNING: Do not store any secrets (such as private API keys) in your React app!</p>
+<p>Environment variables are embedded into the build, meaning anyone can view them by inspecting your app's files.</p>
+</blockquote>
 <p><strong>The environment variables are embedded during the build time</strong>. Since Create React App produces a static HTML/CSS/JS bundle, it can’t possibly read them at runtime. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, just like <a href="/create-react-app/docs/title-and-meta-tags#injecting-data-from-the-server-into-the-page">described here</a>. Alternatively you can rebuild the app on the server anytime you change them.</p>
 <blockquote>
 <p>Note: You must create custom environment variables beginning with <code>REACT_APP_</code>. Any other variables except <code>NODE_ENV</code> will be ignored to avoid accidentally <a href="https://github.com/facebook/create-react-app/issues/865#issuecomment-252199527">exposing a private key on the machine that could have the same name</a>. Changing any environment variables will require you to restart the development server if it is running.</p>
 </blockquote>
-<p>These environment variables will be defined for you on <code>process.env</code>. For example, having an environment
-variable named <code>REACT_APP_SECRET_CODE</code> will be exposed in your JS as <code>process.env.REACT_APP_SECRET_CODE</code>.</p>
+<p>These environment variables will be defined for you on <code>process.env</code>. For example, having an environment variable named <code>REACT_APP_NOT_SECRET_CODE</code> will be exposed in your JS as <code>process.env.REACT_APP_NOT_SECRET_CODE</code>.</p>
 <p>There is also a special built-in environment variable called <code>NODE_ENV</code>. You can read it from <code>process.env.NODE_ENV</code>. When you run <code>npm start</code>, it is always equal to <code>'development'</code>, when you run <code>npm test</code> it is always equal to <code>'test'</code>, and when you run <code>npm run build</code> to make a production bundle, it is always equal to <code>'production'</code>. <strong>You cannot override <code>NODE_ENV</code> manually.</strong> This prevents developers from accidentally deploying a slow development build to production.</p>
-<p>These environment variables can be useful for displaying information conditionally based on where the project is
-deployed or consuming sensitive data that lives outside of version control.</p>
-<p>First, you need to have environment variables defined. For example, let’s say you wanted to consume a secret defined
-in the environment inside a <code>&lt;form&gt;</code>:</p>
+<p>These environment variables can be useful for displaying information conditionally based on where the project is deployed or consuming sensitive data that lives outside of version control.</p>
+<p>First, you need to have environment variables defined. For example, let’s say you wanted to consume an environment variable inside a <code>&lt;form&gt;</code>:</p>
 <pre><code class="hljs css language-jsx">render() {
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">small</span>&gt;</span>You are running this application in <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>{process.env.NODE_ENV}<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span> mode.<span class="hljs-tag">&lt;/<span class="hljs-name">small</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"hidden"</span> <span class="hljs-attr">defaultValue</span>=<span class="hljs-string">{process.env.REACT_APP_SECRET_CODE}</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"hidden"</span> <span class="hljs-attr">defaultValue</span>=<span class="hljs-string">{process.env.REACT_APP_NOT_SECRET_CODE}</span> /&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
   );
 }
 </span></code></pre>
-<p>During the build, <code>process.env.REACT_APP_SECRET_CODE</code> will be replaced with the current value of the <code>REACT_APP_SECRET_CODE</code> environment variable. Remember that the <code>NODE_ENV</code> variable will be set for you automatically.</p>
+<p>During the build, <code>process.env.REACT_APP_NOT_SECRET_CODE</code> will be replaced with the current value of the <code>REACT_APP_NOT_SECRET_CODE</code> environment variable. Remember that the <code>NODE_ENV</code> variable will be set for you automatically.</p>
 <p>When you load the app in the browser and inspect the <code>&lt;input&gt;</code>, you will see its value set to <code>abcdef</code>, and the bold text will show the environment provided when using <code>npm start</code>:</p>
 <pre><code class="hljs css language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">small</span>&gt;</span>You are running this application in <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>development<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span> mode.<span class="hljs-tag">&lt;/<span class="hljs-name">small</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"hidden"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"abcdef"</span> /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"hidden"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"abcdef"</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 </code></pre>
-<p>The above form is looking for a variable called <code>REACT_APP_SECRET_CODE</code> from the environment. In order to consume this
-value, we need to have it defined in the environment. This can be done using two ways: either in your shell or in
-a <code>.env</code> file. Both of these ways are described in the next few sections.</p>
+<p>The above form is looking for a variable called <code>REACT_APP_NOT_SECRET_CODE</code> from the environment. In order to consume this value, we need to have it defined in the environment. This can be done using two ways: either in your shell or in a <code>.env</code> file. Both of these ways are described in the next few sections.</p>
 <p>Having access to the <code>NODE_ENV</code> is also useful for performing actions conditionally:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">if</span> (process.env.NODE_ENV !== <span class="hljs-string">'production'</span>) {
   analytics.disable();
@@ -84,24 +79,23 @@ a <code>.env</code> file. Both of these ways are described in the next few secti
 <li>The environment variables are injected at build time. If you need to inject them at runtime, <a href="/create-react-app/docs/title-and-meta-tags#generating-dynamic-meta-tags-on-the-server">follow this approach instead</a>.</li>
 </ul>
 <h2><a class="anchor" aria-hidden="true" id="adding-temporary-environment-variables-in-your-shell"></a><a href="#adding-temporary-environment-variables-in-your-shell" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding Temporary Environment Variables In Your Shell</h2>
-<p>Defining environment variables can vary between OSes. It’s also important to know that this manner is temporary for the
-life of the shell session.</p>
+<p>Defining environment variables can vary between OSes. It’s also important to know that this manner is temporary for the life of the shell session.</p>
 <h3><a class="anchor" aria-hidden="true" id="windows-cmdexe"></a><a href="#windows-cmdexe" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Windows (cmd.exe)</h3>
-<pre><code class="hljs css language-cmd"><span class="hljs-built_in">set</span> "REACT_APP_SECRET_CODE=abcdef" &amp;&amp; npm <span class="hljs-built_in">start</span>
+<pre><code class="hljs css language-cmd"><span class="hljs-built_in">set</span> "REACT_APP_NOT_SECRET_CODE=abcdef" &amp;&amp; npm <span class="hljs-built_in">start</span>
 </code></pre>
 <p>(Note: Quotes around the variable assignment are required to avoid a trailing whitespace.)</p>
 <h3><a class="anchor" aria-hidden="true" id="windows-powershell"></a><a href="#windows-powershell" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Windows (Powershell)</h3>
-<pre><code class="hljs css language-Powershell">(<span class="hljs-variable">$env:REACT_APP_SECRET_CODE</span> = <span class="hljs-string">"abcdef"</span>) -and (npm start)
+<pre><code class="hljs css language-Powershell">(<span class="hljs-variable">$env:REACT_APP_NOT_SECRET_CODE</span> = <span class="hljs-string">"abcdef"</span>) -and (npm start)
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="linux-macos-bash"></a><a href="#linux-macos-bash" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Linux, macOS (Bash)</h3>
-<pre><code class="hljs css language-bash">REACT_APP_SECRET_CODE=abcdef npm start
+<pre><code class="hljs css language-bash">REACT_APP_NOT_SECRET_CODE=abcdef npm start
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="adding-development-environment-variables-in-env"></a><a href="#adding-development-environment-variables-in-env" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding Development Environment Variables In <code>.env</code></h2>
 <blockquote>
 <p>Note: this feature is available with <code>react-scripts@0.5.0</code> and higher.</p>
 </blockquote>
 <p>To define permanent environment variables, create a file called <code>.env</code> in the root of your project:</p>
-<pre><code class="hljs"><span class="hljs-attr">REACT_APP_SECRET_CODE</span>=abcdef
+<pre><code class="hljs"><span class="hljs-attr">REACT_APP_NOT_SECRET_CODE</span>=abcdef
 </code></pre>
 <blockquote>
 <p>Note: You must create custom environment variables beginning with <code>REACT_APP_</code>. Any other variables except <code>NODE_ENV</code> will be ignored to avoid <a href="https://github.com/facebook/create-react-app/issues/865#issuecomment-252199527">accidentally exposing a private key on the machine that could have the same name</a>. Changing any environment variables will require you to restart the development server if it is running.</p>
