@@ -106,15 +106,15 @@ module.exports = function(webpackEnv) {
             require('cssnano')({
               preset: 'default',
               discardComments: { removeAll: true },
-              reduceIdents: false
+              reduceIdents: false,
             }),
             require('postcss-flexbugs-fixes'),
             require('postcss-preset-env')({
               autoprefixer: {
-                flexbox: 'no-2009'
+                flexbox: 'no-2009',
               },
-              stage: 3
-            })
+              stage: 3,
+            }),
           ],
           sourceMap: isEnvProduction && shouldUseSourceMap,
         },
@@ -514,6 +514,8 @@ module.exports = function(webpackEnv) {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
+                publicPath: '../media',
+                outputPath: '/static/media',
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },

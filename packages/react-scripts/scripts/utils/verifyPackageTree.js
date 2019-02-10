@@ -8,7 +8,7 @@
 
 'use strict';
 
-const chalk = require('react-dev-utils/chalk');
+const chalk = require('@swrve/react-dev-utils/chalk');
 const fs = require('fs');
 const path = require('path');
 
