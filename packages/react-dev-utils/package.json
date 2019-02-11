@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "7.0.2",
+  "version": "7.0.3",
   "description": "Webpack utilities used by Create React App",
   "repository": "facebook/create-react-app",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebook/create-react-app",
   "license": "MIT",
@@ -61,7 +61,7 @@
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^0.2.1",
-    "react-dev-utils": "^7.0.2",
+    "react-dev-utils": "^7.0.3",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
