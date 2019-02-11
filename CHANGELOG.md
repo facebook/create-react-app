@@ -1,3 +1,21 @@
+## 2.1.5 (February 11, 2019)
+
+v2.1.5 is a maintenance release that reverts the TypeScript speed improvements ([#5903](https://github.com/facebook/create-react-app/pull/5903)) to fix a dependency issue in `react-dev-utils`.
+
+### Migrating from 2.1.4 to 2.1.5
+
+Inside any created project that has not been ejected, run:
+
+```bash
+npm install --save --save-exact react-scripts@2.1.5
+```
+
+or
+
+```
+yarn add --exact react-scripts@2.1.5
+```
+
 ## 2.1.4 (February 10, 2019)
 
 v2.1.4 is a maintenance release that brings a number of awesome improvements. A few notable ones include:
@@ -5,7 +23,6 @@ v2.1.4 is a maintenance release that brings a number of awesome improvements. A 
 - :rocket: Reduced TypeScript rebuild times while running the development server. TypeScript is now blazing fast! Special thanks to [@deftomat](https://github.com/deftomat) and [@johnnyreilly](https://github.com/johnnyreilly) and the other contributors for their hard work on this. ([#5903](https://github.com/facebook/create-react-app/pull/5903))
 - Jest [type ahead support](https://github.com/jest-community/jest-watch-typeahead) which provides a much nicer experience when filtering your tests using the Jest CLI ([#5213](https://github.com/facebook/create-react-app/pull/5213))
 - And many more improvements!
-
 
 #### :bug: Bug Fix
 
