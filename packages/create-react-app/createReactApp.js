@@ -143,24 +143,11 @@ if (program.info) {
     .then(console.log);
 }
 
-const hasMultipleProjectNameArgs =
-  process.argv[3] && !process.argv[3].startsWith('-');
-if (typeof projectName === 'undefined' || hasMultipleProjectNameArgs) {
-  console.log();
-  if (hasMultipleProjectNameArgs) {
-    console.error(
-      `You have provided more than one argument for ${chalk.green(
-        '<project-directory>'
-      )}.`
-    );
-    console.log();
-    console.log('Please specify only one project directory, without spaces.');
-  } else {
-    console.error('Please specify the project directory:');
-    console.log(
-      `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
-    );
-  }
+if (typeof projectName === 'undefined') {
+  console.error('Please specify the project directory:');
+  console.log(
+    `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
+  );
   console.log();
   console.log('For example:');
   console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-app')}`);
