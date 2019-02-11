@@ -33,7 +33,7 @@ class SignoutEntry extends PureComponent {
             confirmActionFn={this.signOut}
             actionBtnType="destructive"
             hideModal={this.hideModal}
-            data-test="signout-modal"
+            dataTest="signout-modal"
           >
             <ConfirmMessage>
               You are about to sign out. <br />
