@@ -46,6 +46,7 @@ class Modal extends PureComponent {
   render() {
     const {
       children,
+      dataTest,
       headerLabel,
       hideModal,
       confirmBtnLabel,
@@ -53,7 +54,7 @@ class Modal extends PureComponent {
       confirmBtnDataTest
     } = this.props;
     return ReactDOM.createPortal(
-      <Body>
+      <Body data-test={dataTest}>
         <Card id="modal-body">
           <Row>
             <Header>{headerLabel}</Header>
