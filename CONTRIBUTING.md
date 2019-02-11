@@ -107,6 +107,16 @@ and then run `yarn start` or `yarn build`.
 
 More detailed information are in the dedicated [README](/packages/react-scripts/fixtures/kitchensink/README.md).
 
+### CI testing with private packages
+
+**create-react-app** relies on main registry to fetch all dependencies, but, if you are in the need to usage of custom private packages that need to be fetch while running E2E test you might need a different configuration.
+
+#### Customizing E2E registry configuration
+
+We use [verdaccio](https://github.com/verdaccio/verdaccio) to emulate packages publishing in a registry using a default configuration. You might modify the current behaviour just editing the file `task/verdaccio.yaml`.
+
+For more information about the configuration check out the [Verdaccio documentation](https://verdaccio.org/docs/en/configuration).
+
 ## Tips for contributors using Windows
 
 The scripts in tasks folder and other scripts in `package.json` will not work in Windows out of the box. However, using [Bash on windows](https://msdn.microsoft.com/en-us/commandline/wsl/about) makes it easier to use those scripts without any workarounds. The steps to do so are detailed below:
