@@ -10,6 +10,7 @@ import ComponentDocsDocs from './components/ComponentDocs/ComponentDocs.docs.mdx
 import CodeDocs from './components/Code/Code.docs.mdx';
 import ColorPaletteDocs from './components/ColorPalette/ColorPalette.docs.mdx';
 import BadgeDocs from './components/Badge/Badge.docs.mdx';
+import TableDocs from './components/Table/Table.docs.mdx';
 
 styleguide({
   config: {
@@ -56,6 +57,11 @@ styleguide({
           title: 'Preview',
           path: '/preview',
           render: <Page render={PreviewDocs} />
+        },
+        {
+          title: 'Table',
+          path: '/table',
+          render: <Page render={TableDocs} />
         }
       ]
     }

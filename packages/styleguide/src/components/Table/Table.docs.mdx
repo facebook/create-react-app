@@ -1,0 +1,101 @@
+import Table, { DocsTable } from './';
+import { Preview, ComponentDocs, Code } from './../';
+
+# Table
+
+Use the table component to make information easier to compare and scan for users.
+
+## Variants
+
+### Default
+
+<Preview>
+  <Table
+    columns={[
+      { key: 'first', label: 'First' },
+      { key: 'second', label: 'Second' }
+    ]}
+    data={[
+      {
+        first: 'First item in first column',
+        second: 'Second item in first column'
+      },
+      {
+        first: 'First item in second column',
+        second: 'Second item in second column'
+      }
+    ]}
+  />
+</Preview>
+
+### DocsTable
+
+Table with predefined columns to describe components props or every typical config.
+
+<Preview>
+  <DocsTable
+    data={[
+      {
+        prop: 'prop1',
+        type: 'string',
+        default: 'default',
+        description: 'This is prop description',
+      },
+      {
+        prop: 'prop2',
+        type: 'func',
+        default: '(attr) => {}',
+        description: 'This is prop description',
+      },
+    ]}
+  />
+</Preview>
+
+## Props
+
+<ComponentDocs title="<Table />" component={Table} />
+
+## Aliases
+
+### DocsTable
+
+<Code inline={false} language="jsx">{`<DocsTable /> === 
+  <Table 
+    columns={[
+      {
+        key: 'prop',
+        label: 'Prop'
+      },
+      {
+        key: 'type',
+        label: 'Type',
+        render: (data, column) => (
+          <td key={column.key}>
+            <MdxWrapper>{data}</MdxWrapper>
+          </td>
+        )
+      },
+      {
+        key: 'default',
+        label: 'Default',
+        render: (data, column) => (
+          <td key={column.key}>
+            <Code language="js" inline={false}>
+              {data}
+            </Code>
+          </td>
+        )
+      },
+      {
+        key: 'description',
+        label: 'Description',
+        render: (data, column) => (
+          <td key={column.key}>
+            <MdxWrapper>{data}</MdxWrapper>
+          </td>
+        )
+      }
+    ]}
+    hasOutsideBorder={true}
+  />
+`}</Code>

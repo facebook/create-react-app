@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { string, array, oneOf, element, func, oneOfType } from 'prop-types';
 import styled from 'styled-components';
 
-import DocsTable from './../DocsTable';
+import { DocsTable } from './../Table';
 import Card from './../Card';
 import { H3 } from './../Typography';
 import { Bar, BarItem } from '../Bar';
