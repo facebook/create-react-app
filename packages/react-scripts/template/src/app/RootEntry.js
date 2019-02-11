@@ -39,10 +39,10 @@ class RootEntry extends PureComponent {
   };
 
   render() {
-    const { currentState, user } = this.state;
+    const { user } = this.state;
     return (
       <Container>
-        <Header currentState={currentState} user={user} />
+        <Header user={user} />
         <Body>{this._displayScreenBasedOnState()}</Body>
       </Container>
     );
