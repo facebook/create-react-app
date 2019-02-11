@@ -1,6 +1,6 @@
 {
   "name": "@ivoryio/ivory-react-scripts",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "Create React App scripts for Ivory",
   "repository": "ivoryio/create-react-app",
   "license": "MIT",
@@ -88,11 +88,5 @@
   },
   "optionalDependencies": {
     "fsevents": "1.2.4"
-  },
-  "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ]
   }
 }
