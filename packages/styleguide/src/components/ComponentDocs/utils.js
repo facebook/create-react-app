@@ -120,6 +120,7 @@ function getType(type) {
 }
 
 function getPropsData(props = {}) {
+  console.log('props:', props);
   return Object.keys(props).reduce(
     (allProps, prop) => [
       ...allProps,
