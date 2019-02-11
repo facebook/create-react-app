@@ -82,7 +82,9 @@
   "devDependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "mocha": "^5.2.0",
+    "mochawesome": "^3.1.1"
   },
   "optionalDependencies": {
     "fsevents": "1.2.4"

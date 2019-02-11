@@ -7,5 +7,7 @@
     "pluginsFile": "test/E2E/cypress/plugins/index.js",
     "screenshotsFolder": "test/E2E/cypress/screenshots",
     "supportFile": "test/E2E/cypress/support/index.js",
-    "reporter": "mochawesome"
+    "reporter": "mochawesome",
+    "video": true,
+    "videosFolder": "test/E2E/videos"
 }
