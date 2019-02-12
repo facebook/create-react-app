@@ -54,19 +54,21 @@ class SignIn extends PureComponent {
     </Fragment>
   );
 
-  _signIn = () => {
+  _signIn = async () => {
     const { username, password } = this.state;
+    try {
     this._setIsLoading();
-    Auth.signIn(username, password)
-      .catch(err => {
-        if (err.code) {
-          const { code } = err;
-          this.setState(this.INITIAL_STATE, this._handleExceptions(code));
-        } else {
-          this.setState({ error: err });
-        }
-      })
-      .finally(() => this._setStopLoading);
+    await Auth.signIn(username, password)
+    } catch (err) {
+      if (err.code) {
+        const { code } = err;
+        this.setState(this.INITIAL_STATE, this._handleExceptions(code));
+      } else {
+        this.setState({ error: err });
+      }
+    } finally {
+      this._setStopLoading()
+    }
   };
 
   _formHasErrors = () => {

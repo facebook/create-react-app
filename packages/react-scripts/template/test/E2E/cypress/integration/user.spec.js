@@ -1,4 +1,6 @@
 describe('Ivory Registration Flow', () => {
+  const random = Math.random().toString(36).substring(7)
+
   beforeEach(() => {
     cy.fixture('user').as('admin')
   })
@@ -32,29 +34,31 @@ describe('Ivory Registration Flow', () => {
     cy.get('[data-test="anchor-to-signin"]').click()
   })
 
-  it('should sign up successfully new user with valid data', function () {
+  it('should sign up successfully new user with valid data and redirect him to sign in screen', function signUp () {
     const {
       signUpData: { email, password, firstName, lastName, city, country }
     } = this.admin
+    const randomEmail = random + email
 
     cy.get('[data-test="anchor-to-signup"]').click()
-    cy.get('[data-test="email-input-signup"]').type(email)
+    cy.get('[data-test="email-input-signup"]').type(randomEmail)
     cy.get('[data-test="password-input-signup"]').type(password)
     cy.get('[data-test="firstname-input-signup"]').type(firstName)
     cy.get('[data-test="lastname-input-signup"]').type(lastName)
     cy.get('[data-test="city-input-signup"]').type(city)
     cy.get('[data-test="country-input-signup"]').type(country)
     cy.get('[data-test="signup-button"]').click()
+    cy.get('[data-test="signin-title"]')
   })
 
   it('should be able to log into the app after signing up successfully', function signIn () {
     const {
-      signIn: { username, password }
+      signIn: { email, password }
     } = this.admin
+    const randomEmail = random + email
 
     cy.wait(2000)
-    cy.get('[data-test="signin-title"]')
-    cy.get('[data-test="username-input-signin"]').type(username)
+    cy.get('[data-test="username-input-signin"]').type(randomEmail)
     cy.get('[data-test="password-input-signin"]').type(password)
     cy.get('[data-test="signin-button"]').click()
   })

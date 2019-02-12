@@ -45,10 +45,11 @@ class SignUp extends PureComponent {
     onStateChange(newState, params);
   };
 
-  _signUp = () => {
+  _signUp = async () => {
     const { email, password, name, family_name, city, country } = this.state;
+    try {
     this._setIsLoading();
-    Auth.signUp({
+    const user = await Auth.signUp({
       username: email,
       password,
       attributes: {
@@ -58,9 +59,12 @@ class SignUp extends PureComponent {
         'custom:country': country,
       },
     })
-      .then(user => this._handleStateChange('signIn', { email })())
-      .catch(err => alert(`* Error caught in sign up. ${err.message || err}`))
-      .finally(() => this._setStopLoading());
+    this._handleStateChange('signIn', { email: user.email })()
+    } catch (err) {
+      alert(`* Error caught in sign up. ${err.message || err}`)
+    } finally {
+      this._setStopLoading()
+    }
   };
 
   _formHasErrors = () => {
