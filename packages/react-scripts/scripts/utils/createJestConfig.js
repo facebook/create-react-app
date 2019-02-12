@@ -59,6 +59,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
+      '^assets(.*)$': '<rootDir>/src/assets/$1',
+      '^(.*)-assets(.*)$': '<rootDir>/src/pods/$1/web/assets/$2',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },
     moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
