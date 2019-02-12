@@ -67,6 +67,17 @@
     "setupFiles": [
       "./src/__tests__/setupJest.js"
     ],
+    "moduleDirectories": [
+      "node_modules",
+      "src",
+      "pods/$1/web"
+    ],
+    "moduleNameMapper": {
+      "^(\\w*)-?\\w*$": [
+        "<rootDir>/src/$1",
+        "<rootDir>/src/pods/$1/web"
+      ]
+    },
     "collectCoverage": true,
     "coverageReporters": [
       "json"
