@@ -1,6 +1,6 @@
 {
   "signUpData": {
-  "email": "ivory_guest@mailinator.com",
+  "email": "@mailinator.com",
   "password": "!.Abcd1234",
   "firstName": "Ivory",
   "lastName": "Guest",
@@ -8,7 +8,7 @@
   "country": "Country"
   },
   "signIn": {
-    "username": "ivory_guest@mailinator.com",
+    "email": "@mailinator.com",
     "password": "!.Abcd1234"
   }
 }

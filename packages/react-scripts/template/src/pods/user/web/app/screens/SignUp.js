@@ -45,22 +45,26 @@ class SignUp extends PureComponent {
     onStateChange(newState, params);
   };
 
-  _signUp = () => {
+  _signUp = async () => {
     const { email, password, name, family_name, city, country } = this.state;
-    this._setIsLoading();
-    Auth.signUp({
-      username: email,
-      password,
-      attributes: {
-        name,
-        family_name,
-        'custom:city': city,
-        'custom:country': country,
-      },
-    })
-      .then(user => this._handleStateChange('signIn', { email })())
-      .catch(err => alert(`* Error caught in sign up. ${err.message || err}`))
-      .finally(() => this._setStopLoading());
+    try {
+      this._setIsLoading();
+      const user = await Auth.signUp({
+        username: email,
+        password,
+        attributes: {
+          name,
+          family_name,
+          'custom:city': city,
+          'custom:country': country,
+        },
+      });
+      this._handleStateChange('signIn', { email: user.email })();
+    } catch (err) {
+      alert(`* Error caught in sign up. ${err.message || err}`);
+    } finally {
+      this._setStopLoading();
+    }
   };
 
   _formHasErrors = () => {
@@ -100,7 +104,7 @@ class SignUp extends PureComponent {
       fontSize="15px"
       cursor="pointer"
       onClick={this._handleStateChange('signIn')}
-      data-test='anchor-to-signin'
+      data-test="anchor-to-signin"
     >
       Already have an account?
     </Label>
@@ -124,9 +128,9 @@ class SignUp extends PureComponent {
     return (
       <Card
         title="Sign up"
-        titleDataTest='signup-title'
+        titleDataTest="signup-title"
         btnSubmitLabel="Sign up"
-        btnDataTest='signup-button'
+        btnDataTest="signup-button"
         Anchor={this._renderAnchor()}
         onSubmit={this._submit}
       >
@@ -139,7 +143,7 @@ class SignUp extends PureComponent {
           autoComplete="current-email"
           error={errors.email}
           onChange={this._onTextInputChange('email')}
-          dataTest='email-input-signup'
+          dataTest="email-input-signup"
         />
         <Input
           required
@@ -149,7 +153,7 @@ class SignUp extends PureComponent {
           autoComplete="current-password"
           error={errors.password}
           onChange={this._onTextInputChange('password')}
-          dataTest='password-input-signup'
+          dataTest="password-input-signup"
         />
 
         <Input
@@ -159,7 +163,7 @@ class SignUp extends PureComponent {
           autoComplete="first-name"
           error={errors.name}
           onChange={this._onTextInputChange('name')}
-          dataTest='firstname-input-signup'
+          dataTest="firstname-input-signup"
         />
         <Input
           required
@@ -168,7 +172,7 @@ class SignUp extends PureComponent {
           autoComplete="last-name"
           error={errors.family_name}
           onChange={this._onTextInputChange('family_name')}
-          dataTest='lastname-input-signup'
+          dataTest="lastname-input-signup"
         />
         <Input
           placeholder="City"
@@ -176,7 +180,7 @@ class SignUp extends PureComponent {
           autoComplete="current-city"
           error={errors.city}
           onChange={this._onTextInputChange('city')}
-          dataTest='city-input-signup'
+          dataTest="city-input-signup"
         />
         <Input
           placeholder="Country"
@@ -184,7 +188,7 @@ class SignUp extends PureComponent {
           autoComplete="country"
           error={errors.country}
           onChange={this._onTextInputChange('country')}
-          dataTest='country-input-signup'
+          dataTest="country-input-signup"
         />
       </Card>
     );

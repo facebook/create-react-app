@@ -47,26 +47,28 @@ class SignIn extends PureComponent {
         color="#fff"
         fontSize="15px"
         onClick={this._handleStateChange('signUp')}
-        data-test='anchor-to-signup'
+        data-test="anchor-to-signup"
       >
         Don't have an account yet?
       </Label>
     </Fragment>
   );
 
-  _signIn = () => {
+  _signIn = async () => {
     const { username, password } = this.state;
-    this._setIsLoading();
-    Auth.signIn(username, password)
-      .catch(err => {
-        if (err.code) {
-          const { code } = err;
-          this.setState(this.INITIAL_STATE, this._handleExceptions(code));
-        } else {
-          this.setState({ error: err });
-        }
-      })
-      .finally(() => this._setStopLoading);
+    try {
+      this._setIsLoading();
+      await Auth.signIn(username, password);
+    } catch (err) {
+      if (err.code) {
+        const { code } = err;
+        this.setState(this.INITIAL_STATE, this._handleExceptions(code));
+      } else {
+        this.setState({ error: err });
+      }
+    } finally {
+      this._setStopLoading();
+    }
   };
 
   _formHasErrors = () => {
@@ -127,9 +129,9 @@ class SignIn extends PureComponent {
     return (
       <Card
         title="Sign In"
-        titleDataTest='signin-title'
+        titleDataTest="signin-title"
         btnSubmitLabel="Sign In"
-        btnDataTest='signin-button'
+        btnDataTest="signin-button"
         isLoading={isLoading}
         Anchor={this._renderAnchor(username)}
         onSubmit={this._submit}
@@ -143,7 +145,7 @@ class SignIn extends PureComponent {
           value={username}
           error={errors.username}
           onChange={this._onTextInputChange('username')}
-          dataTest='username-input-signin'
+          dataTest="username-input-signin"
         />
         <Input
           required
@@ -153,7 +155,7 @@ class SignIn extends PureComponent {
           value={password}
           error={errors.password}
           onChange={this._onTextInputChange('password')}
-          dataTest='password-input-signin'
+          dataTest="password-input-signin"
         />
       </Card>
     );
