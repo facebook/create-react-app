@@ -10,12 +10,12 @@
 
 const siteConfig = {
   title: 'Create React App', // Title for your website.
-  tagline: 'Create React apps with no build configuration.',
+  tagline: 'Set up a modern web app by running one command.',
   url: 'https://facebook.github.io', // Your website URL
-  baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
-  //   url: 'https://facebook.github.io',
-  //   baseUrl: '/test-site/',
+  url: 'https://facebook.github.io',
+  baseUrl: '/create-react-app/',
+  editUrl: 'https://github.com/facebook/create-react-app/edit/master/docusaurus/docs/',
 
   // Used for publishing and more
   projectName: 'create-react-app',
@@ -26,13 +26,17 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: 'getting-started', label: 'Getting started' },
+    { doc: 'getting-started', label: 'Docs' },
     { href: 'https://reactjs.org/community/support.html', label: 'Help' },
+    {
+      href: 'https://www.github.com/facebook/create-react-app',
+      label: 'GitHub',
+    },
   ],
 
   /* path to images for header/footer */
-  headerIcon: 'img/docusaurus.svg',
-  footerIcon: 'img/docusaurus.svg',
+  headerIcon: 'img/logo.svg',
+  footerIcon: 'img/logo.svg',
   favicon: 'img/favicon/favicon.ico',
 
   /* Colors for website */
@@ -56,7 +60,7 @@ const siteConfig = {
   */
 
   // This copyright info is used in /core/Footer.js and blog RSS/Atom feeds.
-  copyright: `Copyright © ${new Date().getFullYear()} Facebook`,
+  copyright: `Copyright © ${new Date().getFullYear()} Facebook Inc.`,
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
@@ -77,7 +81,17 @@ const siteConfig = {
 
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
-  //   repoUrl: 'https://github.com/facebook/test-site',
+  repoUrl: 'https://github.com/facebook/create-react-app',
+
+  algolia: {
+    apiKey: '3be60f4f8ffc24c75da84857d6323791',
+    indexName: 'create-react-app',
+  },
+
+  scrollToTop: true,
+  enableUpdateTime: true,
+  enableUpdateBy: true,
+  docsSideNavCollapsible: true,
 };
 
 module.exports = siteConfig;

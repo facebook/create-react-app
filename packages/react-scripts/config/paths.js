@@ -46,6 +46,33 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
+const moduleFileExtensions = [
+  'web.mjs',
+  'mjs',
+  'web.js',
+  'js',
+  'web.ts',
+  'ts',
+  'web.tsx',
+  'tsx',
+  'json',
+  'web.jsx',
+  'jsx',
+];
+
+// Resolve file paths in the same order as webpack
+const resolveModule = (resolveFn, filePath) => {
+  const extension = moduleFileExtensions.find(extension =>
+    fs.existsSync(resolveFn(`${filePath}.${extension}`))
+  );
+
+  if (extension) {
+    return resolveFn(`${filePath}.${extension}`);
+  }
+
+  return resolveFn(`${filePath}.js`);
+};
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -53,12 +80,13 @@ module.exports = {
   appBuild: resolveApp('target/classes/static'),
   appPublic: resolveApp('src/main/resources/static'),
   appHtml: resolveApp('src/main/resources/index.html'),
-  appIndexJs: resolveApp('src/main/js/index.js'),
+  appIndexJs: resolveModule(resolveApp, 'src/main/js/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src/main/js'),
-  testSrc: resolveApp('src/test/js'),
+  appTsConfig: resolveApp('tsconfig.json'),
+  //testSrc: resolveApp('src/test/js'),
   yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('src/test/js/setupTests.js'),
+  testsSetup: resolveModule(resolveApp, 'src/test/js/setupTests'),
   proxySetup: resolveApp('src/main/js/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
@@ -75,19 +103,25 @@ module.exports = {
   appBuild: resolveApp('target/classes/static'),
   appPublic: resolveApp('src/main/resources/static'),
   appHtml: resolveApp('src/main/resources/index.html'),
-  appIndexJs: resolveApp('src/main/js/index.js'),
+  appIndexJs: resolveModule(resolveApp, 'src/main/js/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src/main/js'),
-  testSrc: resolveApp('src/test/js'),
+  appTsConfig: resolveApp('tsconfig.json'),
+  //testSrc: resolveApp('src/test/js'),
   yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('src/test/js/setupTests.js'),
+  testsSetup: resolveModule(resolveApp, 'src/test/js/setupTests'),
   proxySetup: resolveApp('src/main/js/setupProxy.js'),
+  appNodeModules: resolveApp('node_modules'),
+  publicUrl: getPublicUrl(resolveApp('package.json')),
+  servedPath: getServedPath(resolveApp('package.json')),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
+  appTypeDeclarations: resolveApp('src/react-app-env.d.ts'),
+  ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
 };
 
 const ownPackageJson = require('../package.json');
@@ -107,11 +141,12 @@ if (
     appBuild: resolveOwn('../../build'),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
-    appIndexJs: resolveOwn('template/src/index.js'),
+    appIndexJs: resolveModule(resolveOwn, 'template/src/index'),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
+    appTsConfig: resolveOwn('template/tsconfig.json'),
     yarnLockFile: resolveOwn('template/yarn.lock'),
-    testsSetup: resolveOwn('template/src/setupTests.js'),
+    testsSetup: resolveModule(resolveOwn, 'template/src/setupTests'),
     proxySetup: resolveOwn('template/src/setupProxy.js'),
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
@@ -119,6 +154,10 @@ if (
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
+    appTypeDeclarations: resolveOwn('template/src/react-app-env.d.ts'),
+    ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
   };
 }
 // @remove-on-eject-end
+
+module.exports.moduleFileExtensions = moduleFileExtensions;

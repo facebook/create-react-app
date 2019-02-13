@@ -46,6 +46,12 @@ module.exports = {
     },
   },
 
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+
   rules: {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',
@@ -167,13 +173,13 @@ module.exports = {
         object: 'require',
         property: 'ensure',
         message:
-          'Please use import() instead. More info: https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting',
+          'Please use import() instead. More info: https://facebook.github.io/create-react-app/docs/code-splitting',
       },
       {
         object: 'System',
         property: 'import',
         message:
-          'Please use import() instead. More info: https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting',
+          'Please use import() instead. More info: https://facebook.github.io/create-react-app/docs/code-splitting',
       },
     ],
     'getter-return': 'warn',
@@ -205,6 +211,7 @@ module.exports = {
     // 'react/no-deprecated': 'warn',
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
+    'react/no-typos': 'error',
     'react/react-in-jsx-scope': 'error',
     'react/require-render-return': 'error',
     'react/style-prop-object': 'warn',
