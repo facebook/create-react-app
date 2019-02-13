@@ -104,7 +104,7 @@ class SignUp extends PureComponent {
       fontSize="15px"
       cursor="pointer"
       onClick={this._handleStateChange('signIn')}
-      data-test="anchor-to-signin"
+      data-testid="anchor-to-signin"
     >
       Already have an account?
     </Label>

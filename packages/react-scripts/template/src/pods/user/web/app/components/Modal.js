@@ -54,7 +54,7 @@ class Modal extends PureComponent {
       confirmBtnDataTest
     } = this.props;
     return ReactDOM.createPortal(
-      <Body data-test={dataTest}>
+      <Body data-testid={dataTest}>
         <Card id="modal-body">
           <Row>
             <Header>{headerLabel}</Header>
@@ -65,7 +65,7 @@ class Modal extends PureComponent {
             <Row paddingBottom="10px">
               <CancelButton label="Cancel" onClick={hideModal} />
               <ConfirmButton
-                data-test={confirmBtnDataTest}
+                data-testid={confirmBtnDataTest}
                 label={confirmBtnLabel}
                 onClick={confirmActionFn}
                 confirmButtonColour={this._pickConfirmButtonLabel()}

@@ -47,7 +47,7 @@ class SignIn extends PureComponent {
         color="#fff"
         fontSize="15px"
         onClick={this._handleStateChange('signUp')}
-        data-test="anchor-to-signup"
+        data-testid="anchor-to-signup"
       >
         Don't have an account yet?
       </Label>

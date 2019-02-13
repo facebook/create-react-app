@@ -20,7 +20,7 @@ const ButtonComponent = ({
 }) => (
   <Button
     onClick={onClick}
-    data-test={dataTest}
+    data-testid={dataTest}
     marginTop={marginTop}
     marginRight={marginRight}
     padding={padding}

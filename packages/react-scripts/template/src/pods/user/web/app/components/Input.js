@@ -38,7 +38,7 @@ const InputComponent = ({
         disabled={disabled}
         onChange={onChange}
         error={error}
-        data-test={dataTest}
+        data-testid={dataTest}
       />
       {error && <Error>{_errorMessage()}</Error>}
     </Fragment>

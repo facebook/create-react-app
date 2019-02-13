@@ -28,7 +28,7 @@ const Card = ({
               onClick={handleStateChange(back)}
             />
           )}
-          <Title data-test={titleDataTest}>
+          <Title data-testid={titleDataTest}>
             {title}
           </Title>
         </Row>

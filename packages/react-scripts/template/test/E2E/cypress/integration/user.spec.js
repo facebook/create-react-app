@@ -9,31 +9,31 @@ describe('Ivory Registration Flow', () => {
 
   it('should display sign in screen when app is loaded', function signIn() {
     cy.visit('/');
-    cy.get('[data-test="signin-title"]');
-    cy.get('[data-test="username-input-signin"]').should('have.value', '');
-    cy.get('[data-test="password-input-signin"]').should('have.value', '');
-    cy.get('[data-test="signin-button"]');
-    cy.get('[data-test="anchor-to-signup"]');
+    cy.get('[data-testid="signin-title"]');
+    cy.get('[data-testid="username-input-signin"]').should('have.value', '');
+    cy.get('[data-testid="password-input-signin"]').should('have.value', '');
+    cy.get('[data-testid="signin-button"]');
+    cy.get('[data-testid="anchor-to-signup"]');
   });
 
   it('should navigate from sign in to sign up', function() {
-    cy.get('[data-test="anchor-to-signup"]').click();
+    cy.get('[data-testid="anchor-to-signup"]').click();
   });
 
   it('should display sign up screen', function() {
-    cy.get('[data-test="signup-title"]');
-    cy.get('[data-test="email-input-signup"]');
-    cy.get('[data-test="password-input-signup"]');
-    cy.get('[data-test="firstname-input-signup"]');
-    cy.get('[data-test="lastname-input-signup"]');
-    cy.get('[data-test="city-input-signup"]');
-    cy.get('[data-test="country-input-signup"]');
-    cy.get('[data-test="signup-button"]');
-    cy.get('[data-test="anchor-to-signin"]');
+    cy.get('[data-testid="signup-title"]');
+    cy.get('[data-testid="email-input-signup"]');
+    cy.get('[data-testid="password-input-signup"]');
+    cy.get('[data-testid="firstname-input-signup"]');
+    cy.get('[data-testid="lastname-input-signup"]');
+    cy.get('[data-testid="city-input-signup"]');
+    cy.get('[data-testid="country-input-signup"]');
+    cy.get('[data-testid="signup-button"]');
+    cy.get('[data-testid="anchor-to-signin"]');
   });
 
   it('should navigate from sign up to sign in', function() {
-    cy.get('[data-test="anchor-to-signin"]').click();
+    cy.get('[data-testid="anchor-to-signin"]').click();
   });
 
   it('should sign up successfully new user with valid data and redirect him to sign in screen', function signUp() {
@@ -42,15 +42,15 @@ describe('Ivory Registration Flow', () => {
     } = this.admin;
     const randomEmail = random + email;
 
-    cy.get('[data-test="anchor-to-signup"]').click();
-    cy.get('[data-test="email-input-signup"]').type(randomEmail);
-    cy.get('[data-test="password-input-signup"]').type(password);
-    cy.get('[data-test="firstname-input-signup"]').type(firstName);
-    cy.get('[data-test="lastname-input-signup"]').type(lastName);
-    cy.get('[data-test="city-input-signup"]').type(city);
-    cy.get('[data-test="country-input-signup"]').type(country);
-    cy.get('[data-test="signup-button"]').click();
-    cy.get('[data-test="signin-title"]');
+    cy.get('[data-testid="anchor-to-signup"]').click();
+    cy.get('[data-testid="email-input-signup"]').type(randomEmail);
+    cy.get('[data-testid="password-input-signup"]').type(password);
+    cy.get('[data-testid="firstname-input-signup"]').type(firstName);
+    cy.get('[data-testid="lastname-input-signup"]').type(lastName);
+    cy.get('[data-testid="city-input-signup"]').type(city);
+    cy.get('[data-testid="country-input-signup"]').type(country);
+    cy.get('[data-testid="signup-button"]').click();
+    cy.get('[data-testid="signin-title"]');
   });
 
   it('should be able to log into the app after signing up successfully', function signIn() {
@@ -60,9 +60,9 @@ describe('Ivory Registration Flow', () => {
     const randomEmail = random + email;
 
     cy.wait(2000);
-    cy.get('[data-test="username-input-signin"]').type(randomEmail);
-    cy.get('[data-test="password-input-signin"]').type(password);
-    cy.get('[data-test="signin-button"]').click();
+    cy.get('[data-testid="username-input-signin"]').type(randomEmail);
+    cy.get('[data-testid="password-input-signin"]').type(password);
+    cy.get('[data-testid="signin-button"]').click();
   });
 
   it('should display Welcome, ${firstName} ${lastName}', function() {
@@ -75,9 +75,9 @@ describe('Ivory Registration Flow', () => {
   });
 
   it('should log out successfully', function() {
-    cy.get('[data-test="signout-button"]').click();
-    cy.get('[data-test="signout-modal"]');
-    cy.get('[data-test="confirm-button-signout"]').click();
-    cy.get('[data-test="signin-title"]');
+    cy.get('[data-testid="signout-button"]').click();
+    cy.get('[data-testid="signout-modal"]');
+    cy.get('[data-testid="confirm-button-signout"]').click();
+    cy.get('[data-testid="signin-title"]');
   });
 });
