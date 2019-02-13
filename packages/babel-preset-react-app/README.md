@@ -3,8 +3,8 @@
 This package includes the Babel preset used by [Create React App](https://github.com/facebook/create-react-app).<br>
 Please refer to its documentation:
 
-- [Getting Started](https://github.com/facebook/create-react-app/blob/master/README.md#getting-started) – How to create a new app.
-- [User Guide](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+- [Getting Started](https://facebook.github.io/create-react-app/docs/getting-started) – How to create a new app.
+- [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
 
 ## Usage in Create React App Projects
 
@@ -12,7 +12,7 @@ The easiest way to use this configuration is with [Create React App](https://git
 
 ## Usage Outside of Create React App
 
-If you want to use this Babel preset in a project not built with Create React App, you can install it with following steps.
+If you want to use this Babel preset in a project not built with Create React App, you can install it with the following steps.
 
 First, [install Babel](https://babeljs.io/docs/setup/).
 
@@ -32,19 +32,22 @@ Then create a file named `.babelrc` with following contents in the root folder o
 
 This preset uses the `useBuiltIns` option with [transform-object-rest-spread](http://babeljs.io/docs/plugins/transform-object-rest-spread/) and [transform-react-jsx](http://babeljs.io/docs/plugins/transform-react-jsx/), which assumes that `Object.assign` is available or polyfilled.
 
-## Usage with TypeScript
+## Usage with Flow
 
-To use this package with [`@babel/preset-typescript`](https://www.npmjs.com/package/@babel/preset-typescript), you need to disable `@babel/preset-flow` first.
-
-You can achieve this by doing:
+Flow is enabled by default. Make sure you have a `.flowconfig` file at the root directory. You can also use the `flow` option on `.babelrc`:
 
 ```
 {
-  "presets": [
-    ["react-app", {
-        "flow": false
-    }],
-    "@babel/typescript"
-  ]
+  "presets": [["react-app", { "flow": true, "typescript": false }]]
+}
+```
+
+## Usage with TypeScript
+
+TypeScript is enabled by default. Make sure you have a `tsconfig.json` file at the root directory. You can also use the `typescript` option on `.babelrc`:
+
+```
+{
+  "presets": [["react-app", { "flow": false, "typescript": true }]]
 }
 ```
