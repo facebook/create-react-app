@@ -94,7 +94,7 @@ Once it is done, you can modify any file locally and run `yarn start`, `yarn tes
 
 If you want to try out the end-to-end flow with the global CLI, you can do this too:
 
-```
+```sh
 yarn create-react-app my-app
 cd my-app
 ```

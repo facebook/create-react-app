@@ -6,13 +6,13 @@ v2.1.5 is a maintenance release that reverts the TypeScript speed improvements (
 
 Inside any created project that has not been ejected, run:
 
-```bash
+```sh
 npm install --save --save-exact react-scripts@2.1.5
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@2.1.5
 ```
 
@@ -120,13 +120,13 @@ v2.1.4 is a maintenance release that brings a number of awesome improvements. A 
 
 Inside any created project that has not been ejected, run:
 
-```bash
+```sh
 npm install --save --save-exact react-scripts@2.1.4
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@2.1.4
 ```
 
@@ -170,13 +170,13 @@ v2.1.3 is a maintenance release to fix a [vulnerability in webpack-dev-server](h
 
 Inside any created project that has not been ejected, run:
 
-```bash
+```sh
 npm install --save --save-exact react-scripts@2.1.3
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@2.1.3
 ```
 
@@ -309,13 +309,13 @@ v2.1.2 is a maintenance release including various bug fixes.
 
 Inside any created project that has not been ejected, run:
 
-```bash
+```sh
 npm install --save --save-exact react-scripts@2.1.2
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@2.1.2
 ```
 
@@ -365,13 +365,13 @@ Happy Halloween 🎃 👻! This spooky release brings a treat: decorator support
 
 Inside any created project that has not been ejected, run:
 
-```bash
+```sh
 npm install --save --save-exact react-scripts@2.1.1
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@2.1.1
 ```
 
@@ -381,7 +381,7 @@ Create React App 2.1 adds support for TypeScript! Read [the documentation](https
 
 New applications can be created using TypeScript by running:
 
-```bash
+```sh
 $ npx create-react-app my-app --typescript
 ```
 
@@ -468,13 +468,13 @@ $ npx create-react-app my-app --typescript
 
 Inside any created project that has not been ejected, run:
 
-```bash
+```sh
 npm install --save --save-exact react-scripts@2.1.0
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@2.1.0
 ```
 
@@ -567,13 +567,13 @@ yarn add --exact react-scripts@2.1.0
 
 Inside any created project that has not been ejected, run:
 
-```bash
+```sh
 npm install --save --save-exact react-scripts@2.0.5
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@2.0.5
 ```
 
@@ -633,13 +633,13 @@ yarn add --exact react-scripts@2.0.5
 
 Inside any created project that has not been ejected, run:
 
-```bash
+```sh
 npm install --save --save-exact react-scripts@2.0.4
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@2.0.4
 ```
 
@@ -656,13 +656,13 @@ It provides a high-level overview of new features and improvements. Now let's se
 
 Inside any created project that has not been ejected, run:
 
-```bash
+```sh
 npm install --save --save-exact react-scripts@2.0.3
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@2.0.3
 ```
 
@@ -682,13 +682,13 @@ We have dropped default support for Internet Explorer 9, 10, and 11. If you stil
 
 First, install `react-app-polyfill`:
 
-```bash
+```sh
 npm install react-app-polyfill
 ```
 
 or
 
-```
+```sh
 yarn add react-app-polyfill
 ```
 
@@ -774,13 +774,13 @@ If your `proxy` is an object, that means you are using the advanced proxy config
 
 First, install `http-proxy-middleware` using npm or Yarn:
 
-```bash
+```sh
 npm install http-proxy-middleware
 ```
 
 or
 
-```
+```sh
 yarn add http-proxy-middleware
 ```
 

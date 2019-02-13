@@ -16,6 +16,7 @@ This website was created with [Docusaurus](https://docusaurus.io/).
 # Install dependencies
 $ yarn
 ```
+
 2. Run your dev server:
 
 ```sh
