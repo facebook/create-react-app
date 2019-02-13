@@ -80,13 +80,19 @@
     "workbox-webpack-plugin": "3.6.3"
   },
   "devDependencies": {
+    "cz-conventional-changelog": "2.1.0",
+    "mocha": "^5.2.0",
+    "mochawesome": "^3.1.1",
     "prop-types": "^15.6.2",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "mocha": "^5.2.0",
-    "mochawesome": "^3.1.1"
+    "react-dom": "^16.3.2"
   },
   "optionalDependencies": {
     "fsevents": "1.2.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
