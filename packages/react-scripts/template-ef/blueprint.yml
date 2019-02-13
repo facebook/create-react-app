@@ -10,7 +10,6 @@ deploy:
   int:
     {{APP_NAME}}: &APP_DEFAULTS
       type: "Heroku v1_0"
-      stack_name: heroku-18
       location: development-fh5-useast1-heroku
       binding_sets:
         {{BINDING_PATH}}:

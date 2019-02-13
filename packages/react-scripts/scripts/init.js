@@ -264,6 +264,7 @@ module.exports = async function(
   }
   console.log();
   console.log('Happy hacking!');
+  frontierInit.logEndingMessages(answers);
 };
 
 function isReactInstalled(appPackage) {

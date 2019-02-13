@@ -1,10 +1,11 @@
-var express = require("express");
-var path = require("path");
-var app = express();
+const path = require('path');
+const express = require('express');
+const app = express();
 
-// React App
-app.use(express.static(__dirname + "/build"));
+// Statically serve up the production built React App
+app.use(express.static(`${__dirname}/build`));
 
 const port = process.env.PORT || 3000;
-app.listen(port);
-console.log("Listening on port " + port)
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});

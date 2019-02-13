@@ -1,10 +1,8 @@
 #!/bin/bash
 
 #  Get artifactory token from SAS
-ICS_AF_TOKEN=ec-sas-client frontier-hub-ics-public-artifactory-db password
-NPMRC_TOKEN="//code.lds.org/artifactory/api/npm/npm-fhd/:_authToken=${ICS_AF_TOKEN}"
-NPMRC_ICS_REGISTRY="@fs:registry=https://code.lds.org/artifactory/api/npm/npm-fhd/"
+ICS_AF_TOKEN=$(ec-sas-client frontier-hub-ics-public-artifactory-db -b fchPassword)
 
 #  Write .npmrc
-echo $NPMRC_TOKEN > .npmrc
-echo $NPMRC_ICS_REGISTRY >> .npmrc
+echo "//code.lds.org/artifactory/api/npm/npm-fhd/:_authToken=${ICS_AF_TOKEN}" > .npmrc
+echo "@fs:registry=https://code.lds.org/artifactory/api/npm/npm-fhd/" >> .npmrc
