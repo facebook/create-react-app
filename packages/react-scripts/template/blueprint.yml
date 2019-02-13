@@ -1,0 +1,44 @@
+version: 1.0
+name: frontier-{{APP_NAME}}
+
+build:
+  - type: "Npm-Heroku v1_0"
+    heroku_stack: heroku-18
+    name: npm-build
+
+deploy:
+  int:
+    {{APP_NAME}}: &APP_DEFAULTS
+      type: "Heroku v1_0"
+      stack_name: heroku-18
+      location: development-fh5-useast1-heroku
+      binding_sets:
+        {{BINDING_PATH}}:
+          - type: "Service v1_0"
+            sites:
+              - integ
+            bindings: &BINDING_DEFAULTS
+              heroku:
+                type: "Alias v1_0"
+                aliases:
+                  - www
+                non_ssl_action:
+                  type: redirect_to_https
+                append_slash: true
+  prod:
+    {{APP_NAME}}:
+      <<: *APP_DEFAULTS
+      type: "Heroku v1_0"
+      stack_name: cedar-14
+      location: production-fh1-useast1-heroku
+      binding_sets:
+        {{BINDING_PATH}}:
+          - type: "Service v1_0"
+            sites:
+              - prod
+            bindings:
+              <<: *BINDING_DEFAULTS
+deliver:
+  deploy_order:
+    - int
+    - prod
