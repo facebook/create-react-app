@@ -30,6 +30,10 @@ async function promptForConfig() {
           name: `Redux (Chances are high you don't need this yet)`,
           value: 'redux',
         },
+        {
+          name: `Configure app for Electric Flow`,
+          value: 'redux',
+        },
       ],
     },
   ];
@@ -47,6 +51,9 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
   }
   if (additionalFeatures.includes('redux')) {
     configureRedux(appPath, useYarn, ownPath);
+  }
+  if (additionalFeatures.includes('electic-flow')) {
+    configureEF(appPath);
   }
   injectPolymerCode(appPath);
 
@@ -141,6 +148,14 @@ function configureRedux(appPath, useYarn, ownPath) {
   installModulesSync(reduxModules, useYarn);
 
   const templatePath = path.join(ownPath, 'template-redux');
+  fs.copySync(templatePath, appPath, { overwrite: true });
+}
+
+function configureEF(appPath, useYarn, ownPath) {
+  // TODO - modify package.json to make sure name is correct for blueprint
+  // TODO - use blueprint.yml as a template 
+
+  const templatePath = path.join(ownPath, 'template-ef');
   fs.copySync(templatePath, appPath, { overwrite: true });
 }
 
