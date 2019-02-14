@@ -14,9 +14,10 @@ exemptLabels:
   - "good first issue"
   - "issue: announcement"
   - "issue: bug"
+  - "issue: needs investigation"
   - "issue: proposal"
   - "tag: bug fix"
-  - "tag: needs investigation"
+  - "tag: breaking change"
 
 # Set to true to ignore issues in a project (defaults to false)
 exemptProjects: true
