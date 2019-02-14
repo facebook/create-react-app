@@ -7,7 +7,7 @@ sidebar_label: Loading .graphql Files
 To load `.gql` and `.graphql` files, first install the [`graphl.macro`](https://www.npmjs.com/package/graphql.macro) package by running
 
 ```sh
-npm install --save graphl.macro
+npm install --save graphql.macro
 ```
 
 Alternatively you may use `yarn`:
