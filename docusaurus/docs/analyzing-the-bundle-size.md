@@ -20,18 +20,19 @@ Alternatively you may use `yarn`:
 yarn add source-map-explorer
 ```
 
-Then in `package.json`, add the following line to `scripts`:
+Then in `package.json`, add the following lines to `scripts`:
 
 ```diff
    "scripts": {
 +    "analyze": "source-map-explorer build/static/js/main.*",
++    "analyze-deps": "source-map-explorer 'build/static/js/!(*main*)'",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test",
 ```
 
-Then to analyze the bundle run the production build then run the analyze
-script.
+Then to analyze the bundle run the production build then run the analyze or analyze-deps
+scripts.
 
 ```
 npm run build
