@@ -27,8 +27,8 @@ async function promptForConfig() {
           value: 'polymer',
         },
         {
-          name: `Redux (Chances are high you don't need this yet)`,
-          value: 'redux',
+          name: `Configure app for Electric Flow`,
+          value: 'electric-flow',
         },
       ],
     },
@@ -48,6 +48,9 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
   if (additionalFeatures.includes('redux')) {
     configureRedux(appPath, useYarn, ownPath);
   }
+  if (additionalFeatures.includes('electric-flow')) {
+    configureEF(appPath, useYarn, ownPath);
+  }
   injectPolymerCode(appPath);
 
   const defaultModules = [
@@ -56,7 +59,10 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
     'fs-webdev/exo',
   ];
 
-  const defaultDevModules = ['react-styleguidist@9.0.0-beta4', 'webpack@4.19.1'];
+  const defaultDevModules = [
+    'react-styleguidist@9.0.0-beta4',
+    'webpack@4.19.1',
+  ];
 
   installModulesSync(defaultModules, useYarn);
   installModulesSync(defaultDevModules, useYarn, true);
@@ -141,6 +147,14 @@ function configureRedux(appPath, useYarn, ownPath) {
   installModulesSync(reduxModules, useYarn);
 
   const templatePath = path.join(ownPath, 'template-redux');
+  fs.copySync(templatePath, appPath, { overwrite: true });
+}
+
+function configureEF(appPath, useYarn, ownPath) {
+  // TODO - modify package.json to make sure name is correct for blueprint
+  // TODO - use blueprint.yml as a template
+
+  const templatePath = path.join(ownPath, 'template-ef');
   fs.copySync(templatePath, appPath, { overwrite: true });
 }
 
