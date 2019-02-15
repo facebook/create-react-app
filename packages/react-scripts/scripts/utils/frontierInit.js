@@ -12,16 +12,7 @@ module.exports = {
   promptForConfig,
   packageJsonWritten,
   cleanupFrontierCode,
-  logEndingMessages,
 };
-
-function logEndingMessages(answers) {
-  if (answers.includes('electric-flow')) {
-    console.log(
-      'You will need to edit your blueprint.yml file before the Electric Flow build will work'
-    );
-  }
-}
 
 async function promptForConfig() {
   console.log(fsCli.fsLogo('Frontier React Scripts'));
