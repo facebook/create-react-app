@@ -7,7 +7,7 @@ title: Using the Public Folder
 
 ## Changing the HTML
 
-The `public` folder contains the HTML file so you can tweak it, for example, to [set the page title](changing-the-page-title.md).
+The `public` folder contains the HTML file so you can tweak it, for example, to [set the page title](title-and-meta-tags.md).
 The `<script>` tag with the compiled code will be added to it automatically during the build process.
 
 ## Adding Assets Outside of the Module System
@@ -60,7 +60,7 @@ The `public` folder is useful as a workaround for a number of less common cases:
 
 - You need a file with a specific name in the build output, such as [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 - You have thousands of images and need to dynamically reference their paths.
-- You want to include a small script like [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
+- You want to include a small script like [`pace.js`](https://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
 - Some library may be incompatible with Webpack and you have no other option but to include it as a `<script>` tag.
 
 Note that if you add a `<script>` that declares global variables, you also need to read the next section on using them.

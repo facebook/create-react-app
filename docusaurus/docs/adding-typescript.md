@@ -7,12 +7,24 @@ title: Adding TypeScript
 
 [TypeScript](https://www.typescriptlang.org/) is a typed superset of JavaScript that compiles to plain JavaScript.
 
+To start a new Create React App project with [TypeScript](https://www.typescriptlang.org/), you can run:
+
+```bash
+npx create-react-app my-app --typescript
+
+# or
+
+yarn create react-app my-app --typescript
+```
+
 To add [TypeScript](https://www.typescriptlang.org/) to a Create React App project, first install it:
 
 ```bash
-$ npm install --save typescript @types/node @types/react @types/react-dom @types/jest
-$ # or
-$ yarn add typescript @types/node @types/react @types/react-dom @types/jest
+npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+
+# or
+
+yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
 
 Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!

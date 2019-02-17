@@ -14,7 +14,7 @@ Add the following to the `scripts` section in your project's `package.json`
 
 ```json
 "scripts": {
-    "test:debug": "react-scripts --inspect-brk test --runInBand"
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache"
   }
 ```
 
@@ -54,7 +54,8 @@ Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debu
       "args": [
         "test",
         "--runInBand",
-        "--no-cache"
+        "--no-cache",
+        "--no-watch"
       ],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
