@@ -122,6 +122,18 @@ module.exports = function(api, opts, env) {
           // Use loose mode for performance:
           // https://github.com/facebook/create-react-app/issues/5602
           loose: true,
+          selectiveLoose: [
+            'useState',
+            'useEffect',
+            'useContext',
+            'useReducer',
+            'useCallback',
+            'useMemo',
+            'useRef',
+            'useImperativeHandle',
+            'useLayoutEffect',
+            'useDebugValue',
+          ],
         },
       ],
       // Turn on legacy decorators for TypeScript files
