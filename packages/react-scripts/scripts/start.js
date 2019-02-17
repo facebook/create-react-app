@@ -103,15 +103,15 @@ checkBrowsers(paths.appPath, isInteractive)
         devServer.sockWrite(devServer.sockets, 'errors', errors),
     };
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(
-      webpack,
-      config,
+    const compiler = createCompiler({
       appName,
+      config,
+      devSocket,
       urls,
       useYarn,
       useTypeScript,
-      devSocket
-    );
+      webpack,
+    });
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);

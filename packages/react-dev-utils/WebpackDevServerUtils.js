@@ -101,15 +101,15 @@ function printInstructions(appName, urls, useYarn) {
   console.log();
 }
 
-function createCompiler(
-  webpack,
-  config,
+function createCompiler({
   appName,
+  config,
+  devSocket,
   urls,
   useYarn,
   useTypeScript,
-  devSocket
-) {
+  webpack,
+}) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   let compiler;
