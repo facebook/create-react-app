@@ -8,7 +8,7 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8.10"
   },
   "files": [
     "browsersHelper.js",
@@ -20,6 +20,7 @@
     "eslintFormatter.js",
     "evalSourceMapMiddleware.js",
     "FileSizeReporter.js",
+    "ForkTsCheckerWebpackPlugin.js",
     "formatWebpackMessages.js",
     "getCacheIdentifier.js",
     "getCSSModuleLocalIdent.js",
@@ -54,6 +55,7 @@
     "escape-string-regexp": "1.0.5",
     "filesize": "3.6.1",
     "find-up": "3.0.0",
+    "fork-ts-checker-webpack-plugin": "1.0.0-alpha.6",
     "global-modules": "2.0.0",
     "globby": "8.0.2",
     "gzip-size": "5.0.0",
