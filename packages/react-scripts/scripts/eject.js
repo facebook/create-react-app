@@ -215,9 +215,22 @@ inquirer
 
     // Add Babel config
     console.log(`  Adding ${cyan('Babel')} preset`);
-    appPackage.babel = {
-      presets: ['react-app'],
-    };
+    // Resolves https://github.com/facebook/create-react-app/issues/6038
+    if (process.platform === 'win32') {
+      const winVersion = os.release().split('.')[0];
+      if (winVersion < 7) {
+        console.log(
+          `  Detected Windows7: Adding ${cyan('Babel')}.config.js file`
+        );
+        fs.copyFileSync(paths.babelConfigPath, 'babel.config.js', {
+          dereference: true,
+        });
+      }
+    } else {
+      appPackage.babel = {
+        presets: ['react-app'],
+      };
+    }
 
     // Add ESlint config
     console.log(`  Adding ${cyan('ESLint')} configuration`);
