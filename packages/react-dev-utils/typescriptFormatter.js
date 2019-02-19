@@ -45,12 +45,15 @@ function formatter(message, useColors) {
   }
 
   const severity = hasGetters ? message.getSeverity() : message.severity;
+  const types = { diagnostic: 'TypeScript', lint: 'TSLint' };
 
   return [
-    messageColor.bold(`Type ${severity.toLowerCase()}: `) +
+    messageColor.bold(`${types[message.type]} ${severity.toLowerCase()}: `) +
       (hasGetters ? message.getContent() : message.content) +
       '  ' +
-      messageColor.underline(`TS${message.code}`),
+      messageColor.underline(
+        (message.type === 'lint' ? 'Rule: ' : 'TS') + message.code
+      ),
     '',
     frame,
   ].join(os.EOL);
