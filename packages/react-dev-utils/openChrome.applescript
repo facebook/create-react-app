@@ -25,7 +25,6 @@ on run argv
     if found then
       set targetWindow's active tab index to targetTabIndex
       tell targetTab to reload
-      tell targetWindow to activate
       set index of targetWindow to 1
       return
     end if
