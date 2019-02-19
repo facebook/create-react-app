@@ -8,9 +8,6 @@
   "engines": {
     "node": ">=6"
   },
-  "scripts": {
-    "postversion": "node gitTagForkedStyle.js"
-  },
   "bugs": {
     "url": "https://github.com/fs-webdev/create-react-app/issues"
   },
