@@ -314,6 +314,8 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-begin
                 baseConfig: {
                   extends: [
+                    //in order to keep backwards compatability for people currently using eslint-config-frontier
+                    //with their old polymer projects, we have to point to the recommended file instead of index.js
                     require
                       .resolve('eslint-config-frontier')
                       .replace('index.js', 'recommended.js'),
