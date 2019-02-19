@@ -131,7 +131,7 @@ module.exports = function(api, opts, env) {
         {
           // Use loose mode for performance:
           // https://github.com/facebook/create-react-app/issues/5602
-          loose: true,
+          loose: false,
           selectiveLoose: [
             'useState',
             'useEffect',
