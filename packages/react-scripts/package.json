@@ -1,15 +1,12 @@
 {
   "name": "@fs/react-scripts",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "upstreamVersion": "2.1.3",
   "description": "Configuration and scripts for Create React App.",
   "repository": "fs-webdev/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=6"
-  },
-  "scripts": {
-    "postversion": "node gitTagForkedStyle.js"
   },
   "bugs": {
     "url": "https://github.com/fs-webdev/create-react-app/issues"

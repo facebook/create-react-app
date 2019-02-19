@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import logo from './logo.svg';
 import styles from './App.module.css';
 
-class App extends Component {
-  render() {
+function App() {
     return (
       <div className={styles.app}>
         <header className={styles.appHeader}>
@@ -22,7 +21,6 @@ class App extends Component {
         </header>
       </div>
     );
-  }
 }
 
 export default App;

@@ -26,11 +26,11 @@ If you have cloned this repo and made changes locally and want to test them befo
 - When the develop branch is in a good state and ready for release follow these steps
   1. Bump the version in `packages/react-scripts/package.json`
   2. Make a PR from develop into frontierMaster
-     - Squash commits and merge.
+     - Nice url to go straight to making a PR with the correct branches set
+       - https://github.com/fs-webdev/create-react-app/compare/frontierMaster...fs-webdev:develop?expand=1
   3. At this point, Travis will pickup the change in frontierMaster and attempt to publish to artifactory
 
 ## Merging Upstream changes from Facebook
-
 
 When we are ready to pull in changes from Facebook, here are the steps
 
@@ -43,4 +43,3 @@ When we are ready to pull in changes from Facebook, here are the steps
 5. Run `git merge ${HASH_OF_RELEASE_YOU_WANT}`
 6. Fix any merge conflicts
 7. Probably a good idea to cut a release at that point.
-

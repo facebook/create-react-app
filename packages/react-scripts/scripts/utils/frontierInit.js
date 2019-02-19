@@ -27,8 +27,8 @@ async function promptForConfig() {
           value: 'polymer',
         },
         {
-          name: `Redux (Chances are high you don't need this yet)`,
-          value: 'redux',
+          name: `Configure app for Electric Flow`,
+          value: 'electric-flow',
         },
       ],
     },
@@ -45,8 +45,8 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
   if (additionalFeatures.includes('polymer')) {
     configurePolymer(appPath, useYarn);
   }
-  if (additionalFeatures.includes('redux')) {
-    configureRedux(appPath, useYarn, ownPath);
+  if (additionalFeatures.includes('electric-flow')) {
+    configureEF(appPath, useYarn, ownPath);
   }
   injectPolymerCode(appPath);
 
@@ -56,23 +56,36 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
     'fs-webdev/exo',
   ];
 
-  const defaultDevModules = ['react-styleguidist@9.0.0-beta4', 'webpack@4.19.1'];
+  const defaultDevModules = [
+    'eslint@5.6.0',
+    'fs-webdev/eslint-config-frontier#settingUpRecommendedReactConfig',
+    'react-styleguidist@9.0.0-beta4',
+    'webpack@4.19.1',
+  ];
 
   installModulesSync(defaultModules, useYarn);
   installModulesSync(defaultDevModules, useYarn, true);
-  addStyleguidistScriptsToPackageJson(appPath);
-}
 
-function addStyleguidistScriptsToPackageJson(appPath) {
-  //we read the package.json using fs instead of require() because require() uses the
-  //cached result from earlier, even though the package.json has been updated previously.
-  const appPackage = JSON.parse(
+  alterPackageJsonFile(appPath, appPackage => {
+    const packageJson = { ...appPackage };
+    const additionalScripts = {
+      styleguide: 'styleguidist server --open',
+      'styleguide:build': 'styleguidist build',
+      lint: 'eslint src/',
+      'lint:fix': 'eslint src/ --fix',
+    };
+    packageJson.scripts = { ...packageJson.scripts, ...additionalScripts };
+    packageJson.eslintConfig = {
+      extends: ['frontier/recommended'],
+    };
+    return packageJson;
+  });
+}
+function alterPackageJsonFile(appPath, extendFunction) {
+  let appPackage = JSON.parse(
     fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8')
   );
-
-  appPackage.scripts.styleguide = 'styleguidist server --open';
-  appPackage.scripts['styleguide:build'] = 'styleguidist build';
-
+  appPackage = extendFunction(appPackage);
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2) + os.EOL
@@ -80,33 +93,23 @@ function addStyleguidistScriptsToPackageJson(appPath) {
 }
 
 function configurePolymer(appPath, useYarn) {
-  //we read the package.json using fs instead of require() because require() uses the
-  //cached result from earlier, even though the package.json has been updated previously.
-  const appPackage = JSON.parse(
-    fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8')
-  );
-  appPackage.vendorCopy = [
-    {
-      from:
-        'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
-      to: 'public/vendor/custom-elements-es5-adapter.js',
-    },
-    {
-      from:
-        'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js',
-      to: 'public/vendor/webcomponents-bundle.js',
-    },
-  ];
-
-  const { postinstall } = appPackage.scripts;
-  appPackage.scripts.postinstall = postinstall
-    ? `${postinstall} && `
-    : '' + 'vendor-copy';
-
-  fs.writeFileSync(
-    path.join(appPath, 'package.json'),
-    JSON.stringify(appPackage, null, 2) + os.EOL
-  );
+  alterPackageJsonFile(appPath, appPackage => {
+    const packageJson = { ...appPackage };
+    packageJson.vendorCopy = [
+      {
+        from:
+          'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
+        to: 'public/vendor/custom-elements-es5-adapter.js',
+      },
+      {
+        from:
+          'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js',
+        to: 'public/vendor/webcomponents-bundle.js',
+      },
+    ];
+    packageJson.scripts.postinstall = 'vendor-copy';
+    return packageJson;
+  });
 
   const polymerModules = [
     'vendor-copy@2.0.0',
@@ -131,16 +134,11 @@ function injectPolymerCode(appPath) {
   fs.writeFileSync(indexPath, indexHtml);
 }
 
-function configureRedux(appPath, useYarn, ownPath) {
-  const reduxModules = [
-    'redux@4.0.0',
-    'react-redux@5.0.7',
-    'redux-logger@3.0.6',
-    'redux-thunk@2.3.0',
-  ];
-  installModulesSync(reduxModules, useYarn);
+function configureEF(appPath, useYarn, ownPath) {
+  // TODO - modify package.json to make sure name is correct for blueprint
+  // TODO - use blueprint.yml as a template
 
-  const templatePath = path.join(ownPath, 'template-redux');
+  const templatePath = path.join(ownPath, 'template-ef');
   fs.copySync(templatePath, appPath, { overwrite: true });
 }
 
