@@ -1,3 +1,9 @@
+## 1.4.4
+
+#### :rocket: New Feature
+
+- eslint-config-frontier is setup and being used in the template for new react apps
+
 ## 1.4.3
 
 #### :bug: Bug Fix
