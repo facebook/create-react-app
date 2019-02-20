@@ -1,6 +1,6 @@
 {
   "name": "@credijusto/react-scripts",
-  "version": "1.2.0-beta",
+  "version": "1.2.0-beta.2",
   "description": "Custom Credijusto's configuration and scripts for Create React App.",
   "repository": "credijusto/create-react-app",
   "license": "MIT",
