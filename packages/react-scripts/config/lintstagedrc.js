@@ -1,8 +1,8 @@
 const paths = require('../config/paths');
 
-const eslintConfigPath = paths.ownPath + '/config/.eslintrc';
-const eslintIgnorePath = paths.ownPath + '/config/.eslintignore';
-const stylelintConfigPath = paths.ownPath + '/config/.stylelintrc';
+const eslintConfigPath = `${paths.ownPath}/config/.eslintrc`;
+const eslintIgnorePath = `${paths.ownPath}/config/.eslintignore`;
+const stylelintConfigPath = `${paths.ownPath}/config/.stylelintrc`;
 
 module.exports = {
   concurrent: false,
