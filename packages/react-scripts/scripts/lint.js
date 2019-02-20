@@ -18,12 +18,12 @@ const eslintCommand = `eslint ${
 const stylelintMatchSass = paths.appSrc + '/**/*.scss';
 const stylelintMatchCss = paths.appSrc + '/**/*.css';
 const stylelintConfigPath = paths.ownPath + '/config/.stylelintrc';
-const stylelintCommandSass = `stylelint ${stylelintMatchSass} --config ${stylelintConfigPath} ${
+const stylelintCommandSass = `stylelint "${stylelintMatchSass}" ${
   isCI ? '' : '--fix'
-}`;
-const stylelintCommandCss = `stylelint ${stylelintMatchCss} --config ${stylelintConfigPath} ${
+} --config ${stylelintConfigPath}`;
+const stylelintCommandCss = `stylelint "${stylelintMatchCss}" ${
   isCI ? '' : '--fix'
-}`;
+} --config ${stylelintConfigPath}`;
 
 exec(prettierCommand, (error, stdout, stderr) => {
   if (error) {
