@@ -58,7 +58,7 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
 
   const defaultDevModules = [
     'eslint@5.6.0',
-    'fs-webdev/eslint-config-frontier#settingUpRecommendedReactConfig',
+    '@fs/eslint-config-frontier-react',
     'react-styleguidist@9.0.0-beta4',
     'webpack@4.19.1',
   ];
@@ -82,9 +82,7 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
   });
 }
 function alterPackageJsonFile(appPath, extendFunction) {
-  let appPackage = JSON.parse(
-    fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8')
-  );
+  let appPackage = JSON.parse(fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8'));
   appPackage = extendFunction(appPackage);
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
@@ -97,13 +95,11 @@ function configurePolymer(appPath, useYarn) {
     const packageJson = { ...appPackage };
     packageJson.vendorCopy = [
       {
-        from:
-          'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
+        from: 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
         to: 'public/vendor/custom-elements-es5-adapter.js',
       },
       {
-        from:
-          'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js',
+        from: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js',
         to: 'public/vendor/webcomponents-bundle.js',
       },
     ];
@@ -111,10 +107,7 @@ function configurePolymer(appPath, useYarn) {
     return packageJson;
   });
 
-  const polymerModules = [
-    'vendor-copy@2.0.0',
-    '@webcomponents/webcomponentsjs@2.1.3',
-  ];
+  const polymerModules = ['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3'];
   installModulesSync(polymerModules, useYarn, true);
 }
 
@@ -127,10 +120,7 @@ function injectPolymerCode(appPath) {
     <script src="%PUBLIC_URL%/vendor/custom-elements-es5-adapter.js"></script>
  `;
 
-  indexHtml = indexHtml.replace(
-    '<!--FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->',
-    polymerCode
-  );
+  indexHtml = indexHtml.replace('<!--FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->', polymerCode);
   fs.writeFileSync(indexPath, indexHtml);
 }
 
