@@ -13,11 +13,11 @@ module.exports = {
     ],
     './**/*.{html,json,mdx}': ['prettier --write --end-of-line lf', 'git add'],
     './**/*.scss': [
-      `stylelint --config ${stylelintConfigPath} --fix`,
+      `stylelint --fix --config ${stylelintConfigPath}`,
       'git add',
     ],
     './**/*.css': [
-      `stylelint --config ${stylelintConfigPath} --fix`,
+      `stylelint --fix --config ${stylelintConfigPath}`,
       'git add',
     ],
   },

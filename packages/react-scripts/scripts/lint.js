@@ -33,7 +33,6 @@ exec(prettierCommand, (error, stdout, stderr) => {
     process.exit(1);
   }
   console.log(stdout);
-  console.log(stderr);
 });
 
 exec(stylelintCommandSass, (error, stdout, stderr) => {
@@ -43,8 +42,7 @@ exec(stylelintCommandSass, (error, stdout, stderr) => {
     console.log('Error: ' + error);
     process.exit(1);
   }
-  console.log(stdout);
-  console.log(stderr);
+  console.log('All .scss files were formatted correclty ' + stdout);
 });
 
 exec(stylelintCommandCss, (error, stdout, stderr) => {
@@ -54,8 +52,7 @@ exec(stylelintCommandCss, (error, stdout, stderr) => {
     console.log('Error: ' + error);
     process.exit(1);
   }
-  console.log(stdout);
-  console.log(stderr);
+  console.log('All .css files were formatted correclty ' + stdout);
 });
 
 exec(eslintCommand, (error, stdout, stderr) => {
@@ -65,7 +62,6 @@ exec(eslintCommand, (error, stdout, stderr) => {
     console.log('Error: ' + error);
     process.exit(1);
   }
-  console.log(stdout);
-  console.log(stderr);
+  console.log('All .js and .jsx files were formatted correclty ' + stdout);
   process.exit(0);
 });
