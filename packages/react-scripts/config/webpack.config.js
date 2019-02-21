@@ -45,6 +45,7 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
+const isHF = fs.existsSync(path.join(paths.appNodeModules, 'hf/webpack.config.js'));
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -239,12 +240,12 @@ module.exports = function(webpackEnv) {
       // https://twitter.com/wSokra/status/969633336732905474
       // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
       splitChunks: {
-        chunks: 'async',
+        chunks: isHF ? 'async' : 'all',
         name: false,
       },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: false,
+      runtimeChunk: !isHF,
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
@@ -514,20 +515,21 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
-      new CopyWebpackPlugin([
-        {
-          from: path.join(paths.appNodeModules, `hf/dist/${isEnvProduction ? 'prod' : 'dev'}`),
-          to: 'static/hf/[name].[ext]',
-          toType: 'template',
-        },
-      ]),
+      isHF &&
+        new CopyWebpackPlugin([
+          {
+            from: path.join(paths.appNodeModules, `hf/dist/${isEnvProduction ? 'prod' : 'dev'}`),
+            to: 'static/hf/[name].[ext]',
+            toType: 'template',
+          },
+        ]),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
           {},
           {
             inject: true,
-            filename: '_index.html',
+            filename: isHF ? '_index.html' : 'index.html',
             template: paths.appHtml,
           },
           isEnvProduction

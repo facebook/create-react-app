@@ -14,9 +14,12 @@ const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMi
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const paths = require('./paths');
 const fs = require('fs');
+const path = require('path');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
+
+const isHF = fs.existsSync(path.join(paths.appNodeModules, 'hf/webpack.config.js'));
 
 module.exports = function(proxy, allowedHost) {
   return {
@@ -107,6 +110,6 @@ module.exports = function(proxy, allowedHost) {
       // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
       app.use(noopServiceWorkerMiddleware());
     },
-    writeToDisk: true,
+    writeToDisk: isHF,
   };
 };
