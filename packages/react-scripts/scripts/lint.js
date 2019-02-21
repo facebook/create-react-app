@@ -4,7 +4,7 @@ const { exec } = require('child_process');
 
 const isCI = process.env.CI === 'true';
 
-const prettierMatch = paths.appSrc + '/**/*.{json,mdx}';
+const prettierMatch = paths.appSrc + '/**/*.{html,json,mdx}';
 const prettierCommand = `prettier '${prettierMatch}' ${
   isCI ? '--check' : '--write'
 } --end-of-line lf`;
