@@ -45,6 +45,8 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
+
+// FS - check if hf is installed in root node_modules
 const isHF = fs.existsSync(path.join(paths.appNodeModules, 'hf/webpack.config.js'));
 
 // style files regexes
@@ -240,11 +242,14 @@ module.exports = function(webpackEnv) {
       // https://twitter.com/wSokra/status/969633336732905474
       // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
       splitChunks: {
+        // FS - split chunks was causing issues for webpacked hf build, async fixes it so that it doesn't
+        // try to use the same chunks for async/non-async assets
         chunks: isHF ? 'async' : 'all',
         name: false,
       },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
+      // FS - Turn off for hf since it causes issues with imports in hf js files.
       runtimeChunk: !isHF,
     },
     resolve: {
@@ -515,6 +520,8 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
+      // FS - copy over hf's webpack built files to /static/hf directory to be
+      // used by snow.
       isHF &&
         new CopyWebpackPlugin([
           {

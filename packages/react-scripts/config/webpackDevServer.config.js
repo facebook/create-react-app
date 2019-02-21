@@ -110,6 +110,8 @@ module.exports = function(proxy, allowedHost) {
       // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
       app.use(noopServiceWorkerMiddleware());
     },
+    // FS - write to disk so that snow can serve assets
+    // looking them up with the manifestMap provided by hf
     writeToDisk: isHF,
   };
 };
