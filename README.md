@@ -32,6 +32,14 @@ They are preconfigured and hidden so that you can focus on the code.
 
 Just create a project, and you’re good to go.
 
+## New version 2.0 features:
+**Now you can import scss file directly in JS or JSX** (but you have to install node-sass for that).
+
+So, To install node-sass: 
+```sh
+npm i -S node-sass
+```
+
 ## Creating an App
 
 **You’ll need to have Node 8.10.0 or later on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
