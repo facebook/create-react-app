@@ -50,11 +50,7 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
   }
   injectPolymerCode(appPath);
 
-  const defaultModules = [
-    'http-proxy-middleware@0.19.0',
-    'react-router-dom@4.3.1',
-    'fs-webdev/exo',
-  ];
+  const defaultModules = ['http-proxy-middleware@0.19.0', 'fs-webdev/exo'];
 
   const defaultDevModules = [
     'eslint@5.6.0',
@@ -73,6 +69,7 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
       'styleguide:build': 'styleguidist build',
       lint: 'eslint src/',
       'lint:fix': 'eslint src/ --fix',
+      test: `eslint src/ && ${packageJson.scripts.test}`,
     };
     packageJson.scripts = { ...packageJson.scripts, ...additionalScripts };
     packageJson.eslintConfig = {
