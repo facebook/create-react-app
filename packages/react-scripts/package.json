@@ -65,6 +65,7 @@
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
     "postcss-url": "^8.0.0",
+    "prettier": "^1.16.4",
     "react-app-polyfill": "^0.2.1",
     "react-dev-utils": "^7.0.3",
     "resolve": "1.10.0",
