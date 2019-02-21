@@ -61,7 +61,6 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 // Process CLI arguments
 const argv = process.argv.slice(2);
-const writeStatsJson = argv.indexOf('--stats') !== -1;
 
 // Generate configuration
 const config = configFactory('production');
