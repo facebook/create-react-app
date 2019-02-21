@@ -11,7 +11,7 @@ module.exports = {
       `eslint --fix --config ${eslintConfigPath} --ignore-path ${eslintIgnorePath}`,
       'git add',
     ],
-    './**/*.{html,json,mdx}': ['prettier --write --end-of-line lf', 'git add'],
+    './**/*.{html,json,mdx}': [`prettier --ignore-path ${eslintIgnorePath} --write --end-of-line lf`, 'git add'],
     './**/*.scss': [
       `stylelint --fix --config ${stylelintConfigPath}`,
       'git add',

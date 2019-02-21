@@ -4,13 +4,14 @@ const { exec } = require('child_process');
 
 const isCI = process.env.CI === 'true';
 
+const eslintConfigPath = paths.ownPath + '/config/.eslintrc';
+const eslintIgnorePath = paths.ownPath + '/config/.eslintignore';
+
 const prettierMatch = paths.appSrc + '/**/*.{html,json,mdx}';
-const prettierCommand = `prettier '${prettierMatch}' ${
+const prettierCommand = `prettier '${prettierMatch}' --ignore-path ${eslintIgnorePath} ${
   isCI ? '--check' : '--write'
 } --end-of-line lf`;
 
-const eslintConfigPath = paths.ownPath + '/config/.eslintrc';
-const eslintIgnorePath = paths.ownPath + '/config/.eslintignore';
 const eslintCommand = `eslint ${
   isCI ? '' : '--fix'
 } --config ${eslintConfigPath} --ignore-path ${eslintIgnorePath} --ext .jsx,.js src/`;
