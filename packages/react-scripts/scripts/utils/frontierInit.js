@@ -162,7 +162,7 @@ function configureHF(appPath, useYarn, ownPath) {
     return packageJson;
   });
 
-  setupEnvars(appPath);
+  createLocalEnvFile(appPath);
   let modules = [
     'github:fs-webdev/hf#cra',
     'github:fs-webdev/snow#cra',
@@ -197,7 +197,7 @@ function buildInstallCommandAndArgs(useYarn, saveDev = false) {
   return { command, args };
 }
 
-function setupEnvars(appPath) {
+function createLocalEnvFile(appPath) {
   osUtils.runExternalCommandSync('npx', ['@fs/fr-cli', 'env', 'local']);
   const envPath = path.join(appPath, '.env');
   let envFile = fs.readFileSync(envPath, 'UTF8');
