@@ -11,7 +11,6 @@ module.exports = {
   installFrontierDependencies,
   promptForConfig,
   packageJsonWritten,
-  cleanupFrontierCode,
 };
 
 async function promptForConfig() {
@@ -44,19 +43,18 @@ async function promptForConfig() {
 
 function packageJsonWritten() {}
 
-function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
+function installFrontierDependencies(appPath, answers, ownPath) {
   const { additionalFeatures } = answers;
 
   if (additionalFeatures.includes('polymer')) {
-    configurePolymer(appPath, useYarn);
+    configurePolymer(appPath);
   }
   if (additionalFeatures.includes('electric-flow')) {
-    configureEF(appPath, useYarn, ownPath);
+    configureEF(appPath, ownPath);
   }
   if (additionalFeatures.includes('header-footer')) {
-    configureHF(appPath, useYarn, ownPath);
+    configureHF(appPath, ownPath);
   }
-  injectPolymerCode(appPath);
 
   const defaultModules = ['http-proxy-middleware@0.19.0', 'fs-webdev/exo'];
 
@@ -67,8 +65,8 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
     'webpack@4.19.1',
   ];
 
-  installModulesSync(defaultModules, useYarn);
-  installModulesSync(defaultDevModules, useYarn, true);
+  installModulesSync(defaultModules);
+  installModulesSync(defaultDevModules, true);
 
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
@@ -81,7 +79,7 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
     };
     packageJson.scripts = { ...packageJson.scripts, ...additionalScripts };
     packageJson.eslintConfig = {
-      extends: ['frontier/recommended'],
+      extends: ['@fs/eslint-config-frontier-react'],
     };
     return packageJson;
   });
@@ -95,7 +93,7 @@ function alterPackageJsonFile(appPath, extendFunction) {
   );
 }
 
-function configurePolymer(appPath, useYarn) {
+function configurePolymer(appPath) {
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
     packageJson.vendorCopy = [
@@ -112,8 +110,9 @@ function configurePolymer(appPath, useYarn) {
     return packageJson;
   });
 
+  injectPolymerCode(appPath);
   const polymerModules = ['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3'];
-  installModulesSync(polymerModules, useYarn, true);
+  installModulesSync(polymerModules, true);
 }
 
 function injectPolymerCode(appPath) {
@@ -129,7 +128,7 @@ function injectPolymerCode(appPath) {
   fs.writeFileSync(indexPath, indexHtml);
 }
 
-function configureEF(appPath, useYarn, ownPath) {
+function configureEF(appPath, ownPath) {
   // TODO - modify package.json to make sure name is correct for blueprint
   // TODO - use blueprint.yml as a template
 
@@ -139,68 +138,54 @@ function configureEF(appPath, useYarn, ownPath) {
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
     const additionalScripts = {
-      "heroku-prebuild": "./heroku-prebuild.sh"
+      'heroku-prebuild': './heroku-prebuild.sh',
     };
     packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
     return packageJson;
   });
 }
 
-function configureHF(appPath, useYarn, ownPath) {
-
+function configureHF(appPath, ownPath) {
   const templatePath = path.join(ownPath, 'template-hf');
   fs.copySync(templatePath, appPath, { overwrite: true });
 
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
     const additionalScripts = {
-      "build:prod": "PUBLIC_URL=https://edge.fscdn.org/assets/ react-scripts build",
-      "heroku-postbuild": "npm run build:prod"
+      'build:prod': 'PUBLIC_URL=https://edge.fscdn.org/assets/ react-scripts build',
+      'heroku-postbuild': 'npm run build:prod',
     };
     packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
-    packageJson.main = "./server.js";
+    packageJson.main = './server.js';
 
     return packageJson;
   });
 
+  createLocalEnvFile();
   let modules = [
     'github:fs-webdev/hf#cra',
     'github:fs-webdev/snow#cra',
     'github:fs-webdev/startup',
-  ]
-  installModulesSync(modules, useYarn);
+  ];
+  installModulesSync(modules);
 }
 
-function cleanupFrontierCode(appPath) {}
-
-function installModulesSync(modules, useYarn, saveDev = false) {
-  const { command, args } = buildInstallCommandAndArgs(useYarn, saveDev);
-  osUtils.runExternalCommandSync(command, args.concat(modules));
+function installModulesSync(modules, saveDev = false) {
+  const command = 'npm';
+  const args = ['install', `--save${saveDev ? '-dev' : ''}`].concat(modules);
+  osUtils.runExternalCommandSync(command, args);
 }
 
-function buildInstallCommandAndArgs(useYarn, saveDev = false) {
-  let command;
-  let args;
-  if (useYarn) {
-    command = 'yarnpkg';
-    args = ['add'];
-    if (saveDev) {
-      args.push('--dev');
-    }
-  } else {
-    command = 'npm';
-    args = ['install', '--save'];
-    if (saveDev) {
-      args[1] = '--save-dev';
-    }
-  }
-  return { command, args };
+function createLocalEnvFile() {
+  osUtils.runExternalCommandSync('npx', ['@fs/fr-cli', 'env', 'local']);
 }
 
-function sortScripts(scripts){
+function sortScripts(scripts) {
   const sortedScripts = {};
-  Object.keys(scripts).sort().forEach(function(key) {
-    sortedScripts[key] = scripts[key];
-  });
+  Object.keys(scripts)
+    .sort()
+    .forEach(function(key) {
+      sortedScripts[key] = scripts[key];
+    });
   return sortedScripts;
 }
