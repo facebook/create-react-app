@@ -11,8 +11,10 @@ module.exports = {
   installFrontierDependencies,
   promptForConfig,
   packageJsonWritten,
-  cleanupFrontierCode,
 };
+
+const depsToInstall = [];
+const devDepsToInstall = [];
 
 async function promptForConfig() {
   console.log(fsCli.fsLogo('Frontier React Scripts'));
@@ -20,15 +22,20 @@ async function promptForConfig() {
     {
       type: 'checkbox',
       name: 'additionalFeatures',
-      message: 'What additional features does your app require',
+      message: 'What additional features does your app require (these are checkboxes)',
+      default: ['electric-flow', 'header-footer'],
       choices: [
-        {
-          name: 'Using a shared Polymer Component within your React App?',
-          value: 'polymer',
-        },
         {
           name: `Configure app for Electric Flow`,
           value: 'electric-flow',
+        },
+        {
+          name: `Include hf (header/footer)`,
+          value: 'header-footer',
+        },
+        {
+          name: 'Using a shared Polymer Component within your React App?',
+          value: 'polymer',
         },
       ],
     },
@@ -39,32 +46,31 @@ async function promptForConfig() {
 
 function packageJsonWritten() {}
 
-function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
+function installFrontierDependencies(appPath, answers, ownPath) {
   const { additionalFeatures } = answers;
 
   if (additionalFeatures.includes('polymer')) {
-    configurePolymer(appPath, useYarn);
+    configurePolymer(appPath);
   }
-  if (additionalFeatures.includes('electric-flow')) {
-    configureEF(appPath, useYarn, ownPath);
+  if (
+    additionalFeatures.includes('electric-flow') ||
+    additionalFeatures.includes('header-footer')
+  ) {
+    configureEF(appPath, ownPath);
   }
-  injectPolymerCode(appPath);
+  if (additionalFeatures.includes('header-footer')) {
+    configureHF(appPath, ownPath);
+  }
 
-  const defaultModules = [
-    'http-proxy-middleware@0.19.0',
-    'react-router-dom@4.3.1',
-    'fs-webdev/exo',
-  ];
-
-  const defaultDevModules = [
-    'eslint@5.6.0',
-    '@fs/eslint-config-frontier-react',
-    'react-styleguidist@9.0.0-beta4',
-    'webpack@4.19.1',
-  ];
-
-  installModulesSync(defaultModules, useYarn);
-  installModulesSync(defaultDevModules, useYarn, true);
+  depsToInstall.push(...['http-proxy-middleware@0.19.0', 'fs-webdev/exo']);
+  devDepsToInstall.push(
+    ...[
+      'eslint@5.6.0',
+      '@fs/eslint-config-frontier-react',
+      'react-styleguidist@9.0.0-beta4',
+      'webpack@4.19.1',
+    ]
+  );
 
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
@@ -73,13 +79,16 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
       'styleguide:build': 'styleguidist build',
       lint: 'eslint src/',
       'lint:fix': 'eslint src/ --fix',
+      test: `eslint src/ && ${packageJson.scripts.test}`,
     };
     packageJson.scripts = { ...packageJson.scripts, ...additionalScripts };
     packageJson.eslintConfig = {
-      extends: ['frontier/recommended'],
+      extends: ['@fs/eslint-config-frontier-react'],
     };
     return packageJson;
   });
+  installModulesSync(depsToInstall);
+  installModulesSync(devDepsToInstall, true);
 }
 function alterPackageJsonFile(appPath, extendFunction) {
   let appPackage = JSON.parse(fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8'));
@@ -90,7 +99,7 @@ function alterPackageJsonFile(appPath, extendFunction) {
   );
 }
 
-function configurePolymer(appPath, useYarn) {
+function configurePolymer(appPath) {
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
     packageJson.vendorCopy = [
@@ -107,8 +116,8 @@ function configurePolymer(appPath, useYarn) {
     return packageJson;
   });
 
-  const polymerModules = ['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3'];
-  installModulesSync(polymerModules, useYarn, true);
+  injectPolymerCode(appPath);
+  devDepsToInstall.push(...['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3']);
 }
 
 function injectPolymerCode(appPath) {
@@ -124,36 +133,63 @@ function injectPolymerCode(appPath) {
   fs.writeFileSync(indexPath, indexHtml);
 }
 
-function configureEF(appPath, useYarn, ownPath) {
+function configureEF(appPath, ownPath) {
   // TODO - modify package.json to make sure name is correct for blueprint
   // TODO - use blueprint.yml as a template
 
   const templatePath = path.join(ownPath, 'template-ef');
   fs.copySync(templatePath, appPath, { overwrite: true });
+
+  alterPackageJsonFile(appPath, appPackage => {
+    const packageJson = { ...appPackage };
+    const additionalScripts = {
+      'heroku-prebuild': './heroku-prebuild.sh',
+    };
+    packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
+    return packageJson;
+  });
+
+  depsToInstall.push(...['express']);
 }
 
-function cleanupFrontierCode(appPath) {}
+function configureHF(appPath, ownPath) {
+  const templatePath = path.join(ownPath, 'template-hf');
+  fs.copySync(templatePath, appPath, { overwrite: true });
 
-function installModulesSync(modules, useYarn, saveDev = false) {
-  const { command, args } = buildInstallCommandAndArgs(useYarn, saveDev);
-  osUtils.runExternalCommandSync(command, args.concat(modules));
+  alterPackageJsonFile(appPath, appPackage => {
+    const packageJson = { ...appPackage };
+    const additionalScripts = {
+      'build:prod': 'PUBLIC_URL=https://edge.fscdn.org/assets/ react-scripts build',
+      'heroku-postbuild': 'npm run build:prod',
+    };
+    packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
+    packageJson.main = './server.js';
+
+    return packageJson;
+  });
+
+  createLocalEnvFile();
+  depsToInstall.push(
+    ...['github:fs-webdev/hf#cra', 'github:fs-webdev/snow#cra', 'github:fs-webdev/startup']
+  );
 }
 
-function buildInstallCommandAndArgs(useYarn, saveDev = false) {
-  let command;
-  let args;
-  if (useYarn) {
-    command = 'yarnpkg';
-    args = ['add'];
-    if (saveDev) {
-      args.push('--dev');
-    }
-  } else {
-    command = 'npm';
-    args = ['install', '--save'];
-    if (saveDev) {
-      args[1] = '--save-dev';
-    }
-  }
-  return { command, args };
+function installModulesSync(modules, saveDev = false) {
+  const command = 'npm';
+  const args = ['install', `--save${saveDev ? '-dev' : ''}`].concat(modules);
+  osUtils.runExternalCommandSync(command, args);
+}
+
+function createLocalEnvFile() {
+  osUtils.runExternalCommandSync('npx', ['@fs/fr-cli', 'env', 'local']);
+}
+
+function sortScripts(scripts) {
+  const sortedScripts = {};
+  Object.keys(scripts)
+    .sort()
+    .forEach(function(key) {
+      sortedScripts[key] = scripts[key];
+    });
+  return sortedScripts;
 }
