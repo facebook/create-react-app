@@ -24,7 +24,7 @@ process.on('unhandledRejection', err => {
 require('../config/env');
 // @remove-on-eject-begin
 // Do the preflight check (only happens before eject).
-const verifyPackageTree = require('./utils/verifyPackageTree');
+const verifyPackageTree = require('./utils/verifyPackageTreeFrontier');
 if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
   verifyPackageTree();
 }
@@ -55,11 +55,7 @@ function isInMercurialRepository() {
 }
 
 // Watch unless on CI, in coverage mode, or explicitly running all tests
-if (
-  !process.env.CI &&
-  argv.indexOf('--coverage') === -1 &&
-  argv.indexOf('--watchAll') === -1
-) {
+if (!process.env.CI && argv.indexOf('--coverage') === -1 && argv.indexOf('--watchAll') === -1) {
   // https://github.com/facebook/create-react-app/issues/5210
   const hasSourceControl = isInGitRepository() || isInMercurialRepository();
   argv.push(hasSourceControl ? '--watch' : '--watchAll');
