@@ -198,11 +198,8 @@ function buildInstallCommandAndArgs(useYarn, saveDev = false) {
 }
 
 function setupEnvars(appPath) {
-  console.log('about to run setupEnvars');
   osUtils.runExternalCommandSync('npx', ['@fs/fr-cli', 'env', 'local']);
   const envPath = path.join(appPath, '.env');
-  console.log('envPath: ', envPath);
-  console.log('about to run readFileSync');
   let envFile = fs.readFileSync(envPath, 'UTF8');
 
   envFile += `\nSKIP_PREFLIGHT_CHECK=true`;
