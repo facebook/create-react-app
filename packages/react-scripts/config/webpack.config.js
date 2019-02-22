@@ -31,6 +31,8 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -43,6 +45,9 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
+
+// FS - check if hf is installed in root node_modules
+const isHF = fs.existsSync(path.join(paths.appNodeModules, 'hf/webpack.config.js'));
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -237,12 +242,15 @@ module.exports = function(webpackEnv) {
       // https://twitter.com/wSokra/status/969633336732905474
       // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
       splitChunks: {
-        chunks: 'all',
+        // FS - split chunks was causing issues for webpacked hf build, async fixes it so that it doesn't
+        // try to use the same chunks for async/non-async assets
+        chunks: isHF ? 'async' : 'all',
         name: false,
       },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: true,
+      // FS - Turn off for hf since it causes issues with imports in hf js files.
+      runtimeChunk: !isHF,
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
@@ -512,12 +520,23 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
+      // FS - copy over hf's webpack built files to /static/hf directory to be
+      // used by snow.
+      isHF &&
+        new CopyWebpackPlugin([
+          {
+            from: path.join(paths.appNodeModules, `hf/dist/${isEnvProduction ? 'prod' : 'dev'}`),
+            to: 'static/hf/[name].[ext]',
+            toType: 'template',
+          },
+        ]),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
           {},
           {
             inject: true,
+            filename: isHF ? '_index.html' : 'index.html',
             template: paths.appHtml,
           },
           isEnvProduction
