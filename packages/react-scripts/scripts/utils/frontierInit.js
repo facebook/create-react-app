@@ -56,7 +56,6 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
   if (additionalFeatures.includes('header-footer')) {
     configureHF(appPath, useYarn, ownPath);
   }
-  injectPolymerCode(appPath);
 
   const defaultModules = ['http-proxy-middleware@0.19.0', 'fs-webdev/exo'];
 
@@ -81,7 +80,7 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
     };
     packageJson.scripts = { ...packageJson.scripts, ...additionalScripts };
     packageJson.eslintConfig = {
-      extends: ['frontier/recommended'],
+      extends: ['@fs/eslint-config-frontier-react'],
     };
     return packageJson;
   });
@@ -112,6 +111,7 @@ function configurePolymer(appPath, useYarn) {
     return packageJson;
   });
 
+  injectPolymerCode(appPath);
   const polymerModules = ['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3'];
   installModulesSync(polymerModules, useYarn, true);
 }
@@ -139,7 +139,7 @@ function configureEF(appPath, useYarn, ownPath) {
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
     const additionalScripts = {
-      "heroku-prebuild": "./heroku-prebuild.sh"
+      'heroku-prebuild': './heroku-prebuild.sh',
     };
     packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
     return packageJson;
@@ -147,27 +147,27 @@ function configureEF(appPath, useYarn, ownPath) {
 }
 
 function configureHF(appPath, useYarn, ownPath) {
-
   const templatePath = path.join(ownPath, 'template-hf');
   fs.copySync(templatePath, appPath, { overwrite: true });
 
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
     const additionalScripts = {
-      "build:prod": "PUBLIC_URL=https://edge.fscdn.org/assets/ react-scripts build",
-      "heroku-postbuild": "npm run build:prod"
+      'build:prod': 'PUBLIC_URL=https://edge.fscdn.org/assets/ react-scripts build',
+      'heroku-postbuild': 'npm run build:prod',
     };
     packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
-    packageJson.main = "./server.js";
+    packageJson.main = './server.js';
 
     return packageJson;
   });
 
+  setupEnvars(appPath);
   let modules = [
     'github:fs-webdev/hf#cra',
     'github:fs-webdev/snow#cra',
     'github:fs-webdev/startup',
-  ]
+  ];
   installModulesSync(modules, useYarn);
 }
 
@@ -197,10 +197,24 @@ function buildInstallCommandAndArgs(useYarn, saveDev = false) {
   return { command, args };
 }
 
-function sortScripts(scripts){
+function setupEnvars(appPath) {
+  console.log('about to run setupEnvars');
+  osUtils.runExternalCommandSync('npx', ['@fs/fr-cli', 'env', 'local']);
+  const envPath = path.join(appPath, '.env');
+  console.log('envPath: ', envPath);
+  console.log('about to run readFileSync');
+  let envFile = fs.readFileSync(envPath, 'UTF8');
+
+  envFile += `\nSKIP_PREFLIGHT_CHECK=true`;
+  fs.writeFileSync(envPath, envFile);
+}
+
+function sortScripts(scripts) {
   const sortedScripts = {};
-  Object.keys(scripts).sort().forEach(function(key) {
-    sortedScripts[key] = scripts[key];
-  });
+  Object.keys(scripts)
+    .sort()
+    .forEach(function(key) {
+      sortedScripts[key] = scripts[key];
+    });
   return sortedScripts;
 }
