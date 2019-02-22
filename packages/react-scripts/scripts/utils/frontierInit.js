@@ -13,6 +13,9 @@ module.exports = {
   packageJsonWritten,
 };
 
+const deps = [];
+const devDeps = [];
+
 async function promptForConfig() {
   console.log(fsCli.fsLogo('Frontier React Scripts'));
   const questions = [
@@ -56,17 +59,15 @@ function installFrontierDependencies(appPath, answers, ownPath) {
     configureHF(appPath, ownPath);
   }
 
-  const defaultModules = ['http-proxy-middleware@0.19.0', 'fs-webdev/exo'];
-
-  const defaultDevModules = [
-    'eslint@5.6.0',
-    '@fs/eslint-config-frontier-react',
-    'react-styleguidist@9.0.0-beta4',
-    'webpack@4.19.1',
-  ];
-
-  installModulesSync(defaultModules);
-  installModulesSync(defaultDevModules, true);
+  deps.push(...['http-proxy-middleware@0.19.0', 'fs-webdev/exo']);
+  devDeps.push(
+    ...[
+      'eslint@5.6.0',
+      '@fs/eslint-config-frontier-react',
+      'react-styleguidist@9.0.0-beta4',
+      'webpack@4.19.1',
+    ]
+  );
 
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
@@ -83,6 +84,8 @@ function installFrontierDependencies(appPath, answers, ownPath) {
     };
     return packageJson;
   });
+  installModulesSync(deps);
+  installModulesSync(devDeps, true);
 }
 function alterPackageJsonFile(appPath, extendFunction) {
   let appPackage = JSON.parse(fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8'));
@@ -111,8 +114,7 @@ function configurePolymer(appPath) {
   });
 
   injectPolymerCode(appPath);
-  const polymerModules = ['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3'];
-  installModulesSync(polymerModules, true);
+  devDeps.push(...['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3']);
 }
 
 function injectPolymerCode(appPath) {
@@ -162,12 +164,9 @@ function configureHF(appPath, ownPath) {
   });
 
   createLocalEnvFile();
-  let modules = [
-    'github:fs-webdev/hf#cra',
-    'github:fs-webdev/snow#cra',
-    'github:fs-webdev/startup',
-  ];
-  installModulesSync(modules);
+  deps.push(
+    ...['github:fs-webdev/hf#cra', 'github:fs-webdev/snow#cra', 'github:fs-webdev/startup']
+  );
 }
 
 function installModulesSync(modules, saveDev = false) {

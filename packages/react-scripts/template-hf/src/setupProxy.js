@@ -14,11 +14,10 @@ module.exports = app => {
   snowConfig.app = app;
   snow(initiatedDirectory, hf, snowConfig);
 
-  app.get('/', (req, res, next) => {
+  app.get('/', (req, res) => {
     res.render('index', {
       indexPath: '../dist/_index.html',
       // _layoutFile: './async_layout'
     });
   });
-
 };
