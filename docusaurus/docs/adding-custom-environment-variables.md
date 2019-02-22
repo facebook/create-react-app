@@ -95,7 +95,7 @@ set "REACT_APP_NOT_SECRET_CODE=abcdef" && npm start
 
 ### Linux, macOS (Bash)
 
-```bash
+```sh
 REACT_APP_NOT_SECRET_CODE=abcdef npm start
 ```
 

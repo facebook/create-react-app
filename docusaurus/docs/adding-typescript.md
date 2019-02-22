@@ -9,7 +9,7 @@ title: Adding TypeScript
 
 To start a new Create React App project with [TypeScript](https://www.typescriptlang.org/), you can run:
 
-```bash
+```sh
 npx create-react-app my-app --typescript
 
 # or
@@ -19,7 +19,7 @@ yarn create react-app my-app --typescript
 
 To add [TypeScript](https://www.typescriptlang.org/) to a Create React App project, first install it:
 
-```bash
+```sh
 npm install --save typescript @types/node @types/react @types/react-dom @types/jest
 
 # or
