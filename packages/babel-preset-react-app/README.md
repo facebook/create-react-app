@@ -34,7 +34,7 @@ This preset uses the `useBuiltIns` option with [transform-object-rest-spread](ht
 
 ## Usage with Flow
 
-Flow is enabled by default. Make sure you have a `.flowconfig` file at the root directory. You can also use the `flow` option on `.babelrc`:
+Make sure you have a `.flowconfig` file at the root directory. You can also use the `flow` option on `.babelrc`:
 
 ```json
 {
@@ -44,7 +44,7 @@ Flow is enabled by default. Make sure you have a `.flowconfig` file at the root 
 
 ## Usage with TypeScript
 
-TypeScript is enabled by default. Make sure you have a `tsconfig.json` file at the root directory. You can also use the `typescript` option on `.babelrc`:
+Make sure you have a `tsconfig.json` file at the root directory. You can also use the `typescript` option on `.babelrc`:
 
 ```json
 {
