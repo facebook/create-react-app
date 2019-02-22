@@ -3,6 +3,8 @@ node_js:
   - 10
 before_install:
   - echo -e "machine github.com\n  login $CI_USER_TOKEN" > ~/.netrc
+  - echo "//code.lds.org/artifactory/api/npm/npm-fhd/:_authToken=${NPM_PUBLISH_TOKEN}" >> ~/.npmrc
+  - echo "@fs:registry=https://code.lds.org/artifactory/api/npm/npm-fhd/" >> ~/.npmrc
 install:
   - "npm i"
   - "cd packages/react-scripts"
@@ -13,7 +15,7 @@ deploy:
   provider: npm
   skip_cleanup: true
   email: "dl-fh-eng-frontier@groups.ldschurch.org"
-  api_key: "$NPM_TOKEN"
+  api_key: "$NPM_PUBLISH_TOKEN"
   on:
     branch: frontierMaster
 # This tells travis to not build when the branch is master. This is important to have on our master
