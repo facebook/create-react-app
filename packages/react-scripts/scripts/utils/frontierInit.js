@@ -52,7 +52,10 @@ function installFrontierDependencies(appPath, answers, ownPath) {
   if (additionalFeatures.includes('polymer')) {
     configurePolymer(appPath);
   }
-  if (additionalFeatures.includes('electric-flow')) {
+  if (
+    additionalFeatures.includes('electric-flow') ||
+    additionalFeatures.includes('header-footer')
+  ) {
     configureEF(appPath, ownPath);
   }
   if (additionalFeatures.includes('header-footer')) {
@@ -145,6 +148,9 @@ function configureEF(appPath, ownPath) {
     packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
     return packageJson;
   });
+
+  let modules = ['express'];
+  installModulesSync(modules, useYarn);
 }
 
 function configureHF(appPath, ownPath) {
