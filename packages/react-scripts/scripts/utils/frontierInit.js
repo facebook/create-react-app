@@ -161,7 +161,7 @@ function configureHF(appPath, ownPath) {
     return packageJson;
   });
 
-  createLocalEnvFile(appPath);
+  createLocalEnvFile();
   let modules = [
     'github:fs-webdev/hf#cra',
     'github:fs-webdev/snow#cra',
@@ -171,19 +171,13 @@ function configureHF(appPath, ownPath) {
 }
 
 function installModulesSync(modules, saveDev = false) {
-  osUtils.runExternalCommandSync(
-    'npm',
-    ['install', `--save${saveDev ? '-dev' : ''}`].concat(modules)
-  );
+  const command = 'npm';
+  const args = ['install', `--save${saveDev ? '-dev' : ''}`].concat(modules);
+  osUtils.runExternalCommandSync(command, args);
 }
 
-function createLocalEnvFile(appPath) {
+function createLocalEnvFile() {
   osUtils.runExternalCommandSync('npx', ['@fs/fr-cli', 'env', 'local']);
-  const envPath = path.join(appPath, '.env');
-  let envFile = fs.readFileSync(envPath, 'UTF8');
-
-  envFile += `\nSKIP_PREFLIGHT_CHECK=true`;
-  fs.writeFileSync(envPath, envFile);
 }
 
 function sortScripts(scripts) {
