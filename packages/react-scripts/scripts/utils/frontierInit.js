@@ -13,8 +13,8 @@ module.exports = {
   packageJsonWritten,
 };
 
-const deps = [];
-const devDeps = [];
+const depsToInstall = [];
+const devDepsToInstall = [];
 
 async function promptForConfig() {
   console.log(fsCli.fsLogo('Frontier React Scripts'));
@@ -62,8 +62,8 @@ function installFrontierDependencies(appPath, answers, ownPath) {
     configureHF(appPath, ownPath);
   }
 
-  deps.push(...['http-proxy-middleware@0.19.0', 'fs-webdev/exo']);
-  devDeps.push(
+  depsToInstall.push(...['http-proxy-middleware@0.19.0', 'fs-webdev/exo']);
+  devDepsToInstall.push(
     ...[
       'eslint@5.6.0',
       '@fs/eslint-config-frontier-react',
@@ -87,8 +87,8 @@ function installFrontierDependencies(appPath, answers, ownPath) {
     };
     return packageJson;
   });
-  installModulesSync(deps);
-  installModulesSync(devDeps, true);
+  installModulesSync(depsToInstall);
+  installModulesSync(devDepsToInstall, true);
 }
 function alterPackageJsonFile(appPath, extendFunction) {
   let appPackage = JSON.parse(fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8'));
@@ -117,7 +117,7 @@ function configurePolymer(appPath) {
   });
 
   injectPolymerCode(appPath);
-  devDeps.push(...['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3']);
+  devDepsToInstall.push(...['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3']);
 }
 
 function injectPolymerCode(appPath) {
@@ -149,8 +149,7 @@ function configureEF(appPath, ownPath) {
     return packageJson;
   });
 
-  let modules = ['express'];
-  installModulesSync(modules, useYarn);
+  depsToInstall.push(...['express']);
 }
 
 function configureHF(appPath, ownPath) {
@@ -170,7 +169,7 @@ function configureHF(appPath, ownPath) {
   });
 
   createLocalEnvFile();
-  deps.push(
+  depsToInstall.push(
     ...['github:fs-webdev/hf#cra', 'github:fs-webdev/snow#cra', 'github:fs-webdev/startup']
   );
 }
