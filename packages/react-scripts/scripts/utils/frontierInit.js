@@ -11,7 +11,6 @@ module.exports = {
   installFrontierDependencies,
   promptForConfig,
   packageJsonWritten,
-  cleanupFrontierCode,
 };
 
 async function promptForConfig() {
@@ -44,17 +43,17 @@ async function promptForConfig() {
 
 function packageJsonWritten() {}
 
-function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
+function installFrontierDependencies(appPath, answers, ownPath) {
   const { additionalFeatures } = answers;
 
   if (additionalFeatures.includes('polymer')) {
-    configurePolymer(appPath, useYarn);
+    configurePolymer(appPath);
   }
   if (additionalFeatures.includes('electric-flow')) {
-    configureEF(appPath, useYarn, ownPath);
+    configureEF(appPath, ownPath);
   }
   if (additionalFeatures.includes('header-footer')) {
-    configureHF(appPath, useYarn, ownPath);
+    configureHF(appPath, ownPath);
   }
 
   const defaultModules = ['http-proxy-middleware@0.19.0', 'fs-webdev/exo'];
@@ -66,8 +65,8 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
     'webpack@4.19.1',
   ];
 
-  installModulesSync(defaultModules, useYarn);
-  installModulesSync(defaultDevModules, useYarn, true);
+  installModulesSync(defaultModules);
+  installModulesSync(defaultDevModules, true);
 
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
@@ -94,7 +93,7 @@ function alterPackageJsonFile(appPath, extendFunction) {
   );
 }
 
-function configurePolymer(appPath, useYarn) {
+function configurePolymer(appPath) {
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
     packageJson.vendorCopy = [
@@ -113,7 +112,7 @@ function configurePolymer(appPath, useYarn) {
 
   injectPolymerCode(appPath);
   const polymerModules = ['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3'];
-  installModulesSync(polymerModules, useYarn, true);
+  installModulesSync(polymerModules, true);
 }
 
 function injectPolymerCode(appPath) {
@@ -129,7 +128,7 @@ function injectPolymerCode(appPath) {
   fs.writeFileSync(indexPath, indexHtml);
 }
 
-function configureEF(appPath, useYarn, ownPath) {
+function configureEF(appPath, ownPath) {
   // TODO - modify package.json to make sure name is correct for blueprint
   // TODO - use blueprint.yml as a template
 
@@ -146,7 +145,7 @@ function configureEF(appPath, useYarn, ownPath) {
   });
 }
 
-function configureHF(appPath, useYarn, ownPath) {
+function configureHF(appPath, ownPath) {
   const templatePath = path.join(ownPath, 'template-hf');
   fs.copySync(templatePath, appPath, { overwrite: true });
 
@@ -168,33 +167,14 @@ function configureHF(appPath, useYarn, ownPath) {
     'github:fs-webdev/snow#cra',
     'github:fs-webdev/startup',
   ];
-  installModulesSync(modules, useYarn);
+  installModulesSync(modules);
 }
 
-function cleanupFrontierCode(appPath) {}
-
-function installModulesSync(modules, useYarn, saveDev = false) {
-  const { command, args } = buildInstallCommandAndArgs(useYarn, saveDev);
-  osUtils.runExternalCommandSync(command, args.concat(modules));
-}
-
-function buildInstallCommandAndArgs(useYarn, saveDev = false) {
-  let command;
-  let args;
-  if (useYarn) {
-    command = 'yarnpkg';
-    args = ['add'];
-    if (saveDev) {
-      args.push('--dev');
-    }
-  } else {
-    command = 'npm';
-    args = ['install', '--save'];
-    if (saveDev) {
-      args[1] = '--save-dev';
-    }
-  }
-  return { command, args };
+function installModulesSync(modules, saveDev = false) {
+  osUtils.runExternalCommandSync(
+    'npm',
+    ['install', `--save${saveDev ? '-dev' : ''}`].concat(modules)
+  );
 }
 
 function createLocalEnvFile(appPath) {

@@ -76,17 +76,9 @@ function tryGitInit(appPath) {
   }
 }
 
-module.exports = async function(
-  appPath,
-  appName,
-  verbose,
-  originalDirectory,
-  template
-) {
+module.exports = async function(appPath, appName, verbose, originalDirectory, template) {
   const answers = await frontierInit.promptForConfig(appPath);
-  const ownPath = path.dirname(
-    require.resolve(path.join(__dirname, '..', 'package.json'))
-  );
+  const ownPath = path.dirname(require.resolve(path.join(__dirname, '..', 'package.json')));
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
@@ -120,10 +112,7 @@ module.exports = async function(
 
   const readmeExists = fs.existsSync(path.join(appPath, 'README.md'));
   if (readmeExists) {
-    fs.renameSync(
-      path.join(appPath, 'README.md'),
-      path.join(appPath, 'README.old.md')
-    );
+    fs.renameSync(path.join(appPath, 'README.md'), path.join(appPath, 'README.old.md'));
   }
 
   // Copy the files for the user
@@ -133,20 +122,14 @@ module.exports = async function(
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {
-    console.error(
-      `Could not locate supplied template: ${chalk.green(templatePath)}`
-    );
+    console.error(`Could not locate supplied template: ${chalk.green(templatePath)}`);
     return;
   }
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862
   try {
-    fs.moveSync(
-      path.join(appPath, 'gitignore'),
-      path.join(appPath, '.gitignore'),
-      []
-    );
+    fs.moveSync(path.join(appPath, 'gitignore'), path.join(appPath, '.gitignore'), []);
   } catch (err) {
     // Append if there's already a `.gitignore` file there
     if (err.code === 'EEXIST') {
@@ -171,10 +154,7 @@ module.exports = async function(
   args.push('react', 'react-dom');
 
   // Install additional template dependencies, if present
-  const templateDependenciesPath = path.join(
-    appPath,
-    '.template.dependencies.json'
-  );
+  const templateDependenciesPath = path.join(appPath, '.template.dependencies.json');
   if (fs.existsSync(templateDependenciesPath)) {
     const templateDependencies = require(templateDependenciesPath).dependencies;
     args = args.concat(
@@ -199,7 +179,7 @@ module.exports = async function(
     }
   }
 
-  frontierInit.installFrontierDependencies(appPath, answers, useYarn, ownPath);
+  frontierInit.installFrontierDependencies(appPath, answers, ownPath);
 
   if (useTypeScript) {
     verifyTypeScriptSetup();
@@ -223,8 +203,6 @@ module.exports = async function(
   // Change displayed command to yarn instead of yarnpkg
   const displayedCommand = useYarn ? 'yarn' : 'npm';
 
-  frontierInit.cleanupFrontierCode(appPath);
-
   console.log();
   console.log(`Success! Created ${appName} at ${appPath}`);
   console.log('Inside that directory, you can run several commands:');
@@ -232,23 +210,15 @@ module.exports = async function(
   console.log(chalk.cyan(`  ${displayedCommand} start`));
   console.log('    Starts the development server.');
   console.log();
-  console.log(
-    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)
-  );
+  console.log(chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`));
   console.log('    Bundles the app into static files for production.');
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
   console.log();
-  console.log(
-    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}eject`)
-  );
-  console.log(
-    '    Removes this tool and copies build dependencies, configuration files'
-  );
-  console.log(
-    '    and scripts into the app directory. If you do this, you can’t go back!'
-  );
+  console.log(chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}eject`));
+  console.log('    Removes this tool and copies build dependencies, configuration files');
+  console.log('    and scripts into the app directory. If you do this, you can’t go back!');
   console.log();
   console.log('We suggest that you begin by typing:');
   console.log();
@@ -256,11 +226,7 @@ module.exports = async function(
   console.log(`  ${chalk.cyan(`${displayedCommand} start`)}`);
   if (readmeExists) {
     console.log();
-    console.log(
-      chalk.yellow(
-        'You had a `README.md` file, we renamed it to `README.old.md`'
-      )
-    );
+    console.log(chalk.yellow('You had a `README.md` file, we renamed it to `README.old.md`'));
   }
   console.log();
   console.log('Happy hacking!');
@@ -270,7 +236,6 @@ function isReactInstalled(appPackage) {
   const dependencies = appPackage.dependencies || {};
 
   return (
-    typeof dependencies.react !== 'undefined' &&
-    typeof dependencies['react-dom'] !== 'undefined'
+    typeof dependencies.react !== 'undefined' && typeof dependencies['react-dom'] !== 'undefined'
   );
 }
