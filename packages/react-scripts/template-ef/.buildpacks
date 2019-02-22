@@ -1,1 +1,2 @@
 https://github.com/heroku/heroku-buildpack-nodejs.git
+https://github.com/fs-webdev/heroku-buildpack-upload-static-assets-to-s3.git

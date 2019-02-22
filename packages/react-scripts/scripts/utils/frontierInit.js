@@ -20,15 +20,20 @@ async function promptForConfig() {
     {
       type: 'checkbox',
       name: 'additionalFeatures',
-      message: 'What additional features does your app require',
+      message: 'What additional features does your app require (these are checkboxes)',
+      default: ['electric-flow', 'header-footer'],
       choices: [
-        {
-          name: 'Using a shared Polymer Component within your React App?',
-          value: 'polymer',
-        },
         {
           name: `Configure app for Electric Flow`,
           value: 'electric-flow',
+        },
+        {
+          name: `Include hf (header/footer)`,
+          value: 'header-footer',
+        },
+        {
+          name: 'Using a shared Polymer Component within your React App?',
+          value: 'polymer',
         },
       ],
     },
@@ -47,6 +52,9 @@ function installFrontierDependencies(appPath, answers, useYarn, ownPath) {
   }
   if (additionalFeatures.includes('electric-flow')) {
     configureEF(appPath, useYarn, ownPath);
+  }
+  if (additionalFeatures.includes('header-footer')) {
+    configureHF(appPath, useYarn, ownPath);
   }
   injectPolymerCode(appPath);
 
@@ -127,6 +135,40 @@ function configureEF(appPath, useYarn, ownPath) {
 
   const templatePath = path.join(ownPath, 'template-ef');
   fs.copySync(templatePath, appPath, { overwrite: true });
+
+  alterPackageJsonFile(appPath, appPackage => {
+    const packageJson = { ...appPackage };
+    const additionalScripts = {
+      "heroku-prebuild": "./heroku-prebuild.sh"
+    };
+    packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
+    return packageJson;
+  });
+}
+
+function configureHF(appPath, useYarn, ownPath) {
+
+  const templatePath = path.join(ownPath, 'template-hf');
+  fs.copySync(templatePath, appPath, { overwrite: true });
+
+  alterPackageJsonFile(appPath, appPackage => {
+    const packageJson = { ...appPackage };
+    const additionalScripts = {
+      "build:prod": "PUBLIC_URL=https://edge.fscdn.org/assets/ react-scripts build",
+      "heroku-postbuild": "npm run build:prod"
+    };
+    packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
+    packageJson.main = "./server.js";
+
+    return packageJson;
+  });
+
+  let modules = [
+    'github:fs-webdev/hf#cra',
+    'github:fs-webdev/snow#cra',
+    'github:fs-webdev/startup',
+  ]
+  installModulesSync(modules, useYarn);
 }
 
 function cleanupFrontierCode(appPath) {}
@@ -153,4 +195,12 @@ function buildInstallCommandAndArgs(useYarn, saveDev = false) {
     }
   }
   return { command, args };
+}
+
+function sortScripts(scripts){
+  const sortedScripts = {};
+  Object.keys(scripts).sort().forEach(function(key) {
+    sortedScripts[key] = scripts[key];
+  });
+  return sortedScripts;
 }
