@@ -3,8 +3,8 @@
 This package includes the Babel preset used by [Create React App](https://github.com/facebook/create-react-app).<br>
 Please refer to its documentation:
 
-- [Getting Started](https://github.com/facebook/create-react-app/blob/master/README.md#getting-started) – How to create a new app.
-- [User Guide](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+- [Getting Started](https://facebook.github.io/create-react-app/docs/getting-started) – How to create a new app.
+- [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
 
 ## Usage in Create React App Projects
 
@@ -12,7 +12,7 @@ The easiest way to use this configuration is with [Create React App](https://git
 
 ## Usage Outside of Create React App
 
-If you want to use this Babel preset in a project not built with Create React App, you can install it with following steps.
+If you want to use this Babel preset in a project not built with Create React App, you can install it with the following steps.
 
 First, [install Babel](https://babeljs.io/docs/setup/).
 
@@ -24,7 +24,7 @@ npm install babel-preset-react-app --save-dev
 
 Then create a file named `.babelrc` with following contents in the root folder of your project:
 
-```js
+```json
 {
   "presets": ["react-app"]
 }
@@ -34,9 +34,9 @@ This preset uses the `useBuiltIns` option with [transform-object-rest-spread](ht
 
 ## Usage with Flow
 
-Flow is enabled by default. Make sure you have a `.flowconfig` file at the root directory. You can also use the `flow` option on `.babelrc`:
+Make sure you have a `.flowconfig` file at the root directory. You can also use the `flow` option on `.babelrc`:
 
-```
+```json
 {
   "presets": [["react-app", { "flow": true, "typescript": false }]]
 }
@@ -44,9 +44,9 @@ Flow is enabled by default. Make sure you have a `.flowconfig` file at the root 
 
 ## Usage with TypeScript
 
-TypeScript is enabled by default. Make sure you have a `tsconfig.json` file at the root directory. You can also use the `typescript` option on `.babelrc`:
+Make sure you have a `tsconfig.json` file at the root directory. You can also use the `typescript` option on `.babelrc`:
 
-```
+```json
 {
   "presets": [["react-app", { "flow": false, "typescript": true }]]
 }

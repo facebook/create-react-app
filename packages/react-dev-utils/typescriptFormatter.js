@@ -15,16 +15,27 @@ const fs = require('fs');
 function makeFormatter(appPath) {
   const pathToExclude = appPath + '/';
   return function formatter(message, useColors) {
+    const hasGetters = typeof message.getFile === 'function';
     const colors = new chalk.constructor({ enabled: useColors });
     const messageColor = message.isWarningSeverity()
       ? colors.yellow
       : colors.red;
     const fileAndNumberColor = colors.bold.cyan;
 
-    const source =
-      message.getFile() &&
-      fs.existsSync(message.getFile()) &&
-      fs.readFileSync(message.getFile(), 'utf-8');
+    let source;
+
+    if (hasGetters) {
+      source =
+        message.getFile() &&
+        fs.existsSync(message.getFile()) &&
+        fs.readFileSync(message.getFile(), 'utf-8');
+    } else {
+      source =
+        message.file &&
+        fs.existsSync(message.file) &&
+        fs.readFileSync(message.file, 'utf-8');
+    }
+
     let frame = '';
 
     if (source) {
@@ -38,8 +49,13 @@ function makeFormatter(appPath) {
         .join(os.EOL);
     }
 
+    const severity = hasGetters ? message.getSeverity() : message.severity;
+    const types = { diagnostic: 'TypeScript', lint: 'TSLint' };
+
     return [
-      messageColor.bold(`Type ${message.getSeverity().toLowerCase()} in `) +
+      messageColor.bold(
+        `${types[message.type]} ${severity.toLowerCase()} in `
+      ) +
         fileAndNumberColor(
           `${message
             .getFile()
@@ -49,7 +65,11 @@ function makeFormatter(appPath) {
             )}(${message.getLine()},${message.getCharacter()})`
         ) +
         messageColor(':'),
-      message.getContent() + '  ' + messageColor.underline(`TS${message.code}`),
+      (hasGetters ? message.getContent() : message.content) +
+        '  ' +
+        messageColor.underline(
+          (message.type === 'lint' ? 'Rule: ' : 'TS') + message.code
+        ),
       '',
       frame,
     ].join(os.EOL);

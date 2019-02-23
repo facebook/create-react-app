@@ -17,7 +17,7 @@ process.on('unhandledRejection', err => {
 const fs = require('fs-extra');
 const path = require('path');
 const execSync = require('child_process').execSync;
-const chalk = require('chalk');
+const chalk = require('react-dev-utils/chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
@@ -37,6 +37,14 @@ function getGitStatus() {
     return '';
   }
 }
+
+console.log(
+  chalk.cyan.bold(
+    'NOTE: Create React App 2 supports TypeScript, Sass, CSS Modules and more without ejecting: ' +
+      'https://reactjs.org/blog/2018/10/01/create-react-app-v2.html'
+  )
+);
+console.log();
 
 inquirer
   .prompt({
