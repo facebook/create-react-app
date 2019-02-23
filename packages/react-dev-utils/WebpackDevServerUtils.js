@@ -103,6 +103,7 @@ function printInstructions(appName, urls, useYarn) {
 
 function createCompiler({
   appName,
+  appPath,
   config,
   devSocket,
   urls,
@@ -209,7 +210,8 @@ function createCompiler({
       }
     }
 
-    const messages = formatWebpackMessages(statsData);
+    const filePathToExclude = appPath.replace(/\\/g, '/');
+    const messages = formatWebpackMessages(statsData, filePathToExclude);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));

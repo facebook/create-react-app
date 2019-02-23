@@ -12,51 +12,68 @@ const codeFrame = require('@babel/code-frame').codeFrameColumns;
 const chalk = require('chalk');
 const fs = require('fs');
 
-function formatter(message, useColors) {
-  const hasGetters = typeof message.getFile === 'function';
-  const colors = new chalk.constructor({ enabled: useColors });
-  const messageColor = message.isWarningSeverity() ? colors.yellow : colors.red;
+function makeFormatter(appPath) {
+  const pathToExclude = appPath + '/';
+  return function formatter(message, useColors) {
+    const hasGetters = typeof message.getFile === 'function';
+    const colors = new chalk.constructor({ enabled: useColors });
+    const messageColor = message.isWarningSeverity()
+      ? colors.yellow
+      : colors.red;
+    const fileAndNumberColor = colors.bold.cyan;
 
-  let source;
+    let source;
 
-  if (hasGetters) {
-    source =
-      message.getFile() &&
-      fs.existsSync(message.getFile()) &&
-      fs.readFileSync(message.getFile(), 'utf-8');
-  } else {
-    source =
-      message.file &&
-      fs.existsSync(message.file) &&
-      fs.readFileSync(message.file, 'utf-8');
-  }
+    if (hasGetters) {
+      source =
+        message.getFile() &&
+        fs.existsSync(message.getFile()) &&
+        fs.readFileSync(message.getFile(), 'utf-8');
+    } else {
+      source =
+        message.file &&
+        fs.existsSync(message.file) &&
+        fs.readFileSync(message.file, 'utf-8');
+    }
 
-  let frame = '';
+    let frame = '';
 
-  if (source) {
-    frame = codeFrame(
-      source,
-      { start: { line: message.line, column: message.character } },
-      { highlightCode: useColors }
-    )
-      .split('\n')
-      .map(str => '  ' + str)
-      .join(os.EOL);
-  }
+    if (source) {
+      frame = codeFrame(
+        source,
+        { start: { line: message.line, column: message.character } },
+        { highlightCode: useColors }
+      )
+        .split('\n')
+        .map(str => '  ' + str)
+        .join(os.EOL);
+    }
 
-  const severity = hasGetters ? message.getSeverity() : message.severity;
-  const types = { diagnostic: 'TypeScript', lint: 'TSLint' };
+    const severity = hasGetters ? message.getSeverity() : message.severity;
+    const types = { diagnostic: 'TypeScript', lint: 'TSLint' };
 
-  return [
-    messageColor.bold(`${types[message.type]} ${severity.toLowerCase()}: `) +
+    return [
+      messageColor.bold(
+        `${types[message.type]} ${severity.toLowerCase()} in `
+      ) +
+        fileAndNumberColor(
+          `${message
+            .getFile()
+            .replace(
+              pathToExclude,
+              ''
+            )}(${message.getLine()},${message.getCharacter()})`
+        ) +
+        messageColor(':'),
       (hasGetters ? message.getContent() : message.content) +
-      '  ' +
-      messageColor.underline(
-        (message.type === 'lint' ? 'Rule: ' : 'TS') + message.code
-      ),
-    '',
-    frame,
-  ].join(os.EOL);
+        '  ' +
+        messageColor.underline(
+          (message.type === 'lint' ? 'Rule: ' : 'TS') + message.code
+        ),
+      '',
+      frame,
+    ].join(os.EOL);
+  };
 }
 
-module.exports = formatter;
+module.exports = makeFormatter;

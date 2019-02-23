@@ -220,7 +220,7 @@ measureFileSizesBeforeBuild(buildFolder).then(previousFileSizes => {
 });
 ```
 
-#### `formatWebpackMessages({errors: Array<string>, warnings: Array<string>}): {errors: Array<string>, warnings: Array<string>}`
+#### `formatWebpackMessages({errors: Array<string>, warnings: Array<string>}): {errors: Array<string>, warnings: Array<string>}, filePathToExclude: string)`
 
 Extracts and prettifies warning and error messages from webpack [stats](https://github.com/webpack/docs/wiki/node.js-api#stats) object.
 
@@ -332,7 +332,8 @@ Creates a Webpack compiler instance for WebpackDevServer with built-in helpful m
 The `args` object accepts a number of properties:
 
 - **appName** `string`: The name that will be printed to the terminal.
-- **config** `Object`:  The webpack configuration options to be provided to the webpack constructor.
+- **appPath** `string`: The path to the application. Used to make error / warning paths pithier.
+- **config** `Object`: The webpack configuration options to be provided to the webpack constructor.
 - **devSocket** `Object`: Required if `useTypeScript` is `true`. This object should include `errors` and `warnings` which are functions accepting an array of errors or warnings emitted by the type checking. This is useful when running `fork-ts-checker-webpack-plugin` with `async: true` to report errors that are emitted after the webpack build is complete.
 - **urls** `Object`: To provide the `urls` argument, use `prepareUrls()` described below.
 - **useYarn** `boolean`: If `true`, yarn instructions will be emitted in the terminal instead of npm.
