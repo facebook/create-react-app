@@ -1,0 +1,7 @@
+diff a/packages/react-scripts/scripts/utils/verifyTypeScriptSetup.js b/packages/react-scripts/scripts/utils/verifyTypeScriptSetup.js	(rejected hunks)
+@@ -25 +25,4 @@ function verifyNoTypeScript() {
+-  const typescriptFiles = globby(['**/*.(ts|tsx)', '!**/node_modules', '!**/*.d.ts'], { cwd: paths.appSrc });
++  const typescriptFiles = globby(
++    ['**/*.(ts|tsx)', '!**/node_modules', '!**/*.d.ts'],
++    { cwd: paths.appSrc }
++  );

@@ -1,0 +1,5 @@
+diff a/docusaurus/website/siteConfig.js b/docusaurus/website/siteConfig.js	(rejected hunks)
+@@ -18 +18,2 @@ const siteConfig = {
+-  editUrl: 'https://github.com/facebook/create-react-app/edit/master/docusaurus/docs/',
++  editUrl:
++    'https://github.com/facebook/create-react-app/edit/master/docusaurus/docs/',

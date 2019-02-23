@@ -1,0 +1,4 @@
+diff a/packages/react-app-polyfill/README.md b/packages/react-app-polyfill/README.md	(rejected hunks)
+@@ -16 +16 @@ Each polyfill ensures the following language features are present:
+-*If you need more features, you must include them manually.*
++_If you need more features, you must include them manually._

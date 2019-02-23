@@ -1,0 +1,35 @@
+diff a/packages/react-dev-utils/typescriptFormatter.js b/packages/react-dev-utils/typescriptFormatter.js	(rejected hunks)
+@@ -20 +20,3 @@ function makeFormatter(appPath) {
+-    const messageColor = message.isWarningSeverity() ? colors.yellow : colors.red;
++    const messageColor = message.isWarningSeverity()
++      ? colors.yellow
++      : colors.red;
+@@ -39,10 +41,10 @@ function makeFormatter(appPath) {
+-      if (source) {
+-        frame = codeFrame(
+-          source,
+-          { start: { line: message.line, column: message.character } },
+-          { highlightCode: useColors }
+-        )
+-          .split('\n')
+-          .map(str => '  ' + str)
+-          .join(os.EOL);
+-      }
++    if (source) {
++      frame = codeFrame(
++        source,
++        { start: { line: message.line, column: message.character } },
++        { highlightCode: useColors }
++      )
++        .split('\n')
++        .map(str => '  ' + str)
++        .join(os.EOL);
++    }
+@@ -54 +56,3 @@ function makeFormatter(appPath) {
+-      messageColor.bold(`${types[message.type]} ${severity.toLowerCase()} in `) +
++      messageColor.bold(
++        `${types[message.type]} ${severity.toLowerCase()} in `
++      ) +
+@@ -64 +68 @@ function makeFormatter(appPath) {
+-        (hasGetters ? message.getContent() : message.content) +
++      (hasGetters ? message.getContent() : message.content) +

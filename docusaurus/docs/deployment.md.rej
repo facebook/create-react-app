@@ -1,0 +1,4 @@
+diff a/docusaurus/docs/deployment.md b/docusaurus/docs/deployment.md	(rejected hunks)
+@@ -446 +446 @@ To deploy your built project directly with Now CLI in your terminal, without any
+-  Click or paste the deployment URL into your browser when the build is complete and you will see your deployed app.
++Click or paste the deployment URL into your browser when the build is complete and you will see your deployed app.

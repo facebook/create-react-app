@@ -1,0 +1,9 @@
+diff a/docusaurus/docs/debugging-tests.md b/docusaurus/docs/debugging-tests.md	(rejected hunks)
+@@ -54,6 +54 @@ Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debu
+-      "args": [
+-        "test",
+-        "--runInBand",
+-        "--no-cache",
+-        "--no-watch"
+-      ],
++      "args": ["test", "--runInBand", "--no-cache", "--no-watch"],

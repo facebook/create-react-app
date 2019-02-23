@@ -1,0 +1,6 @@
+diff a/packages/react-dev-utils/README.md b/packages/react-dev-utils/README.md	(rejected hunks)
+@@ -335,2 +335,2 @@ The `args` object accepts a number of properties:
+-- **appPath** `string`:  The path to the application. Used to make error / warning paths pithier.
+-- **config** `Object`:  The webpack configuration options to be provided to the webpack constructor.
++- **appPath** `string`: The path to the application. Used to make error / warning paths pithier.
++- **config** `Object`: The webpack configuration options to be provided to the webpack constructor.

@@ -1,0 +1,7 @@
+diff a/docusaurus/docs/updating-to-new-releases.md b/docusaurus/docs/updating-to-new-releases.md	(rejected hunks)
+@@ -11,2 +11,3 @@ Create React App is divided into two packages:
+-When you run `npx create-react-app my-app` it automatically installs the latest version of Create React App.  
+-> If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, please visit [Getting Started](getting-started.md) to learn about current installation steps. 
++When you run `npx create-react-app my-app` it automatically installs the latest version of Create React App.
++
++> If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, please visit [Getting Started](getting-started.md) to learn about current installation steps.
