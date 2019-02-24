@@ -70,7 +70,7 @@ function printBaseMessage(buildFolder, hostingLocation) {
 }
 
 function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
-  console.log(`To publish it at ${chalk.green(publicUrl)}, run:`);
+  console.log(`To publish it at ${chalk.green(publicUrl)} , run:`);
   console.log();
 
   // If script deploy has been added to package.json, skip the instructions
