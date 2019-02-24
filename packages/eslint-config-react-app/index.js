@@ -52,6 +52,70 @@ module.exports = {
     },
   },
 
+  overrides: {
+    files: ['**/*.ts', '**/*.tsx'],
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+      ecmaVersion: 2018,
+      sourceType: 'module',
+      ecmaFeatures: {
+        jsx: true,
+      },
+
+      // typescript-eslint specific options
+      // TODO: Get these paths from somewhere so the parser has type info
+      // project: './tsconfig.json',
+      // tsconfigRootDir: '../../',
+      // TODO: Do we want to warn if version is unsupported? This could be a source of pain as new versions of TS come out and users upgrade
+      warnOnUnsupportedTypeScriptVersion: true,
+    },
+    plugins: ['@typescript-eslint'],
+    rules: {
+      // These ESLint rules are known to cause issues with typescript-eslint
+      // See https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.json
+      camelcase: 'off',
+      indent: 'off',
+      'no-array-constructor': 'off',
+      'no-unused-vars': 'off',
+
+      // TODO: Strip out unused rules
+
+      // '@typescript-eslint/adjacent-overload-signatures': 'warn',
+      // '@typescript-eslint/array-type': 'warn',
+      // '@typescript-eslint/ban-types': 'warn',
+      // '@typescript-eslint/camelcase': 'error',
+      // '@typescript-eslint/class-name-casing': 'error',
+      // '@typescript-eslint/explicit-function-return-type': 'warn',
+      // '@typescript-eslint/explicit-member-accessibility': 'error',
+      // '@typescript-eslint/indent': 'error',
+      // '@typescript-eslint/interface-name-prefix': 'error',
+      // '@typescript-eslint/member-delimiter-style': 'error',
+      '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
+      '@typescript-eslint/no-array-constructor': 'warn',
+      // '@typescript-eslint/no-empty-interface': 'error',
+      // '@typescript-eslint/no-explicit-any': 'warn',
+      // '@typescript-eslint/no-inferrable-types': 'error',
+      // '@typescript-eslint/no-misused-new': 'error',
+      '@typescript-eslint/no-namespace': 'error',
+      // '@typescript-eslint/no-non-null-assertion': 'error',
+      // '@typescript-eslint/no-object-literal-type-assertion': 'error',
+      // '@typescript-eslint/no-parameter-properties': 'error',
+      // '@typescript-eslint/no-triple-slash-reference': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          args: 'none',
+          ignoreRestSiblings: true,
+        },
+      ],
+      // '@typescript-eslint/no-use-before-define': 'warn',
+      // '@typescript-eslint/no-var-requires': 'error',
+      // '@typescript-eslint/prefer-interface': 'error',
+      // '@typescript-eslint/prefer-namespace-keyword': 'error',
+      // '@typescript-eslint/type-annotation-spacing': 'error',
+    },
+  },
+
   rules: {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',

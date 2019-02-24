@@ -11,6 +11,8 @@
     "index.js"
   ],
   "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "1.x",
+    "@typescript-eslint/parser": "1.x",
     "babel-eslint": "9.x",
     "eslint": "5.x",
     "eslint-plugin-flowtype": "2.x",
