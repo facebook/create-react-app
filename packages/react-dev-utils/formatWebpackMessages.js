@@ -67,7 +67,7 @@ function formatMessage(message, filePathToExclude) {
   // Clean up file name
   lines[0] = lines[0]
     .replace(/^(.*) \d+:\d+-\d+$/, '$1')
-    .replace(filePathToExclude, '');
+    .replace(filePathToExclude, '/');
 
   // Cleans up verbose "module not found" messages for files and packages.
   if (lines[1] && lines[1].indexOf('Module not found: ') === 0) {

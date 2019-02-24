@@ -230,14 +230,14 @@ function createCompiler({
         messages.errors.length = 1;
       }
       console.log(chalk.red('Failed to compile.\n'));
-      console.log(messages.errors.join('\n\n'));
+      console.log(messages.errors.join('\n\n').replace('//', ''));
       return;
     }
 
     // Show warnings if no errors were found.
     if (messages.warnings.length) {
       console.log(chalk.yellow('Compiled with warnings.\n'));
-      console.log(messages.warnings.join('\n\n'));
+      console.log(messages.warnings.join('\n\n').replace('//', ''));
 
       // Teach some ESLint tricks.
       console.log(
