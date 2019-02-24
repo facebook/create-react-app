@@ -146,12 +146,13 @@ function createCompiler({
       });
     });
 
+    const formatter = typescriptFormatter(appPath.replace(/\\/g, '/'));
     forkTsCheckerWebpackPlugin
       .getCompilerHooks(compiler)
       .receive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
         const allMsgs = [...diagnostics, ...lints];
         const format = message =>
-          `${message.file}\n${typescriptFormatter(message, true)}`;
+          `${message.file}\n${formatter(message, true)}`;
 
         tsMessagesResolver({
           errors: allMsgs.filter(msg => msg.severity === 'error').map(format),
