@@ -3,8 +3,8 @@ node_js:
   - 10
 before_install:
   - echo -e "machine github.com\n  login $CI_USER_TOKEN" > ~/.netrc
-  - echo "//code.lds.org/artifactory/api/npm/npm-fhd/:_authToken=${NPM_PUBLISH_TOKEN}" >> ~/.npmrc
-  - echo "@fs:registry=https://code.lds.org/artifactory/api/npm/npm-fhd/" >> ~/.npmrc
+  - echo "//code.lds.org/artifactory/api/npm/npm-fhd/:_authToken=${NPM_PUBLISH_TOKEN}" >> .npmrc
+  - echo "@fs:registry=https://code.lds.org/artifactory/api/npm/npm-fhd/" >> .npmrc
 install:
   - "npm i"
   - "cd packages/react-scripts"
