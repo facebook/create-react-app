@@ -72,12 +72,15 @@ const program = new commander.Command(packageJson.name)
   .option('--verbose', 'print additional logs')
   .option('--info', 'print environment debug info')
   .option(
+    '--template <template-name>',
+    'specify a base template for your project'
+  )
+  .option(
     '--scripts-version <alternative-package>',
     'use a non-standard version of react-scripts'
   )
   .option('--use-npm')
   .option('--use-pnp')
-  .option('--typescript')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -165,33 +168,16 @@ function printValidationResults(results) {
   }
 }
 
-const hiddenProgram = new commander.Command()
-  .option(
-    '--internal-testing-template <path-to-template>',
-    '(internal usage only, DO NOT RELY ON THIS) ' +
-      'use a non-standard application template'
-  )
-  .parse(process.argv);
-
 createApp(
   projectName,
   program.verbose,
   program.scriptsVersion,
   program.useNpm,
   program.usePnp,
-  program.typescript,
-  hiddenProgram.internalTestingTemplate
+  program.templateName
 );
 
-function createApp(
-  name,
-  verbose,
-  version,
-  useNpm,
-  usePnp,
-  useTypescript,
-  template
-) {
+function createApp(name, verbose, version, useNpm, usePnp, template) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -292,8 +278,7 @@ function createApp(
     originalDirectory,
     template,
     useYarn,
-    usePnp,
-    useTypescript
+    usePnp
   );
 }
 
@@ -306,7 +291,7 @@ function shouldUseYarn() {
   }
 }
 
-function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
+function install(root, useYarn, usePnp, packages, verbose, isOnline) {
   return new Promise((resolve, reject) => {
     let command;
     let args;
@@ -319,7 +304,7 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       if (usePnp) {
         args.push('--enable-pnp');
       }
-      [].push.apply(args, dependencies);
+      [].push.apply(args, packages);
 
       // Explicitly set cwd() to work around issues like
       // https://github.com/facebook/create-react-app/issues/3326.
@@ -342,7 +327,7 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
         '--save-exact',
         '--loglevel',
         'error',
-      ].concat(dependencies);
+      ].concat(packages);
 
       if (usePnp) {
         console.log(chalk.yellow("NPM doesn't support PnP."));
@@ -376,37 +361,27 @@ function run(
   originalDirectory,
   template,
   useYarn,
-  usePnp,
-  useTypescript
+  usePnp
 ) {
-  const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = ['react', 'react-dom', packageToInstall];
-  if (useTypescript) {
-    // TODO: get user's node version instead of installing latest
-    allDependencies.push(
-      '@types/node',
-      '@types/react',
-      '@types/react-dom',
-      '@types/jest',
-      'typescript'
-    );
-  }
+  const scriptsToInstall = getInstallPackage(version, originalDirectory);
+  const templateToInstall = processTemplateName(template);
+  const packagesToInstall = [templateToInstall, scriptsToInstall];
 
   console.log('Installing packages. This might take a couple of minutes.');
-  getPackageName(packageToInstall)
-    .then(packageName =>
+  Promise.all(packagesToInstall.map(getPackageName))
+    .then(packageNames =>
       checkIfOnline(useYarn).then(isOnline => ({
         isOnline: isOnline,
-        packageName: packageName,
+        template: packageNames[0],
+        scripts: packageNames[1],
       }))
     )
     .then(info => {
       const isOnline = info.isOnline;
-      const packageName = info.packageName;
+      const template = info.template;
+      const scripts = info.scripts;
       console.log(
-        `Installing ${chalk.cyan('react')}, ${chalk.cyan(
-          'react-dom'
-        )}, and ${chalk.cyan(packageName)}...`
+        `Installing ${chalk.cyan(template)} with ${chalk.cyan(scripts)}...`
       );
       console.log();
 
@@ -414,10 +389,13 @@ function run(
         root,
         useYarn,
         usePnp,
-        allDependencies,
+        packagesToInstall,
         verbose,
         isOnline
-      ).then(() => packageName);
+      ).then(() => ({
+        template,
+        scripts,
+      }));
     })
     .then(async packageName => {
       checkNodeVersion(packageName);
@@ -485,6 +463,17 @@ function run(
       console.log('Done.');
       process.exit(1);
     });
+}
+
+function processTemplateName(template) {
+  const templatePrefix = 'create-react-app-template';
+  if (!template) {
+    return templatePrefix;
+  } else if (template.startsWith(templatePrefix)) {
+    return template;
+  } else {
+    return 'create-react-app-template-' + template;
+  }
 }
 
 function getInstallPackage(version, originalDirectory) {

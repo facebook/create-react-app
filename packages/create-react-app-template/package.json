@@ -1,0 +1,25 @@
+{
+  "name": "create-react-app-template",
+  "version": "1.0.0",
+  "description": "Base template for Create React App.",
+  "repository": "facebook/create-react-app",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6"
+  },
+  "bugs": {
+    "url": "https://github.com/facebook/create-react-app/issues"
+  },
+  "files": [
+    "public",
+    "src",
+    "gitignore",
+    "README.md",
+    "utils"
+  ],
+  "peerDependencies": {
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-scripts": "^2.1.5"
+  }
+}
