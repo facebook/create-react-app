@@ -1,6 +1,6 @@
 {
   "name": "@fs/react-scripts",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "upstreamVersion": "2.1.3",
   "description": "Configuration and scripts for Create React App.",
   "repository": "fs-webdev/create-react-app",
@@ -16,8 +16,7 @@
     "config",
     "lib",
     "scripts",
-    "template",
-    "template-typescript",
+    "template*",
     "utils"
   ],
   "bin": {
