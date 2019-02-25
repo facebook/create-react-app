@@ -16,8 +16,7 @@
     "config",
     "lib",
     "scripts",
-    "template",
-    "template-typescript",
+    "template*",
     "utils"
   ],
   "bin": {
