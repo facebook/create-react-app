@@ -14,7 +14,7 @@ class App extends Component {
           </p>
           <a
             className={styles.appLink}
-            href="https://reactjs.org"
+            href="https://www.familysearch.org/frontier/docs/#/"
             target="_blank"
             rel="noopener noreferrer"
           >
