@@ -15,7 +15,11 @@ npm install -g serve
 serve -s build
 ```
 
-The last command shown above will serve your static site on the port **5000**. Like many of [serve](https://github.com/zeit/serve)’s internal settings, the port can be adjusted using the `-p` or `--port` flags.
+The last command shown above will serve your static site on the port **5000**. Like many of [serve](https://github.com/zeit/serve)’s internal settings, the port can be adjusted using the `-l` or `--listen` flags:
+
+```sh
+serve -s build -l 4000
+```
 
 Run this command to get a full list of the options available:
 
@@ -27,7 +31,7 @@ serve -h
 
 You don’t necessarily need a static server in order to run a Create React App project in production. It works just as fine integrated into an existing dynamic one.
 
-Here’s a programmatic example using [Node](https://nodejs.org/) and [Express](http://expressjs.com/):
+Here’s a programmatic example using [Node](https://nodejs.org/) and [Express](https://expressjs.com/):
 
 ```javascript
 const express = require('express');
@@ -75,7 +79,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
 
 It will get copied to the `build` folder when you run `npm run build`.
 
-If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
+If you’re using [Apache Tomcat](https://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
@@ -106,7 +110,8 @@ To override this, specify the `homepage` in your `package.json`, for example:
 This will let Create React App correctly infer the root path to use in the generated HTML file.
 
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
-More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
+More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
+
 <br>
 For example:
 
@@ -204,7 +209,7 @@ Then run the `firebase init` command from your project’s root. You need to cho
 
 IMPORTANT: you need to set proper HTTP caching headers for `service-worker.js` file in `firebase.json` file or you will not be able to see changes after first deployment ([issue #2440](https://github.com/facebook/create-react-app/issues/2440)). It should be added inside `"hosting"` key like next:
 
-```
+```json
 {
   "hosting": {
     ...
@@ -240,7 +245,8 @@ For more information see [Firebase Hosting](https://firebase.google.com/docs/hos
 
 ### Step 1: Add `homepage` to `package.json`
 
-**The step below is important!**<br>
+**The step below is important!**<br>
+
 **If you skip it, your app will not deploy correctly.**
 
 Open your `package.json` and add a `homepage` field for your project:
@@ -291,11 +297,10 @@ Add the following scripts in your `package.json`:
 
 The `predeploy` script will run automatically before `deploy` is run.
 
-If you are deploying to a GitHub user page instead of a project page you'll need to make two
-additional modifications:
+If you are deploying to a GitHub user page instead of a project page you'll need to make one
+additional modification:
 
-1. First, change your repository's source branch to be any branch other than **master**.
-1. Additionally, tweak your `package.json` scripts to push deployments to **master**:
+1. Tweak your `package.json` scripts to push deployments to **master**:
 
 ```diff
   "scripts": {
@@ -312,11 +317,11 @@ Then run:
 npm run deploy
 ```
 
-### Step 4: Ensure your project’s settings use `gh-pages`
+### Step 4: For a project page, ensure your project’s settings use `gh-pages`
 
 Finally, make sure **GitHub Pages** option in your GitHub project settings is set to use the `gh-pages` branch:
 
-<img src="http://i.imgur.com/HUjEr9l.png" width="500" alt="gh-pages branch setting">
+<img src="https://i.imgur.com/HUjEr9l.png" width="500" alt="gh-pages branch setting">
 
 ### Step 5: Optionally, configure the domain
 
@@ -422,23 +427,25 @@ When you build the project, Create React App will place the `public` folder cont
 
 ## [Now](https://zeit.co/now)
 
-Now offers a zero-configuration single-command deployment. You can use `now` to deploy your app for free.
+[Now](https://zeit.co/docs) offers a simple, single-command deployment. You can use `now` to deploy your app for free.
 
-1. Install the `now` command-line tool either via the recommended [desktop tool](https://zeit.co/download) or via node with `npm install -g now`.
+The first step is to install Now. You can do this by installing [the Now Desktop app](https://zeit.co/download), which also installs Now CLI and keeps it up-to-date, or by [installing Now CLI](https://zeit.co/download#now-cli) directly with npm:
 
-2. Build your app by running `npm run build`.
+```shell
+npm i -g now
+```
 
-3. Move into the build directory by running `cd build`.
+To deploy your built project directly with Now CLI in your terminal, without any configuration:
 
-4. Run `now --name your-project-name` from within the build directory. You will see a **now.sh** URL in your output like this:
+1. Build your app by running `npm run build`.
 
-   ```
-   > Ready! https://your-project-name-tpspyhtdtk.now.sh (copied to clipboard)
-   ```
+2. Move into the build directory by running `cd build`.
 
-   Paste that URL into your browser when the build is complete, and you will see your deployed app.
+3. Run `now --name your-project-name` from within the build directory. You will be given a **now.sh** URL as a response as your build is deployed, similar to the following: https://my-cra-project-4rx7b16z3.now.sh/
 
-Details are available in [this article.](https://zeit.co/blog/unlimited-static)
+  Click or paste the deployment URL into your browser when the build is complete and you will see your deployed app.
+
+For more information on deploying React applications with Now, including automatically building your application fresh in the cloud, setting up routes to rewrite all paths to the index.html file, and setting up caching headers for speed, see [the ZEIT Guide for Deploying a React app with Create React App](https://zeit.co/guides/deploying-react-with-now-cra/).
 
 ## [S3](https://aws.amazon.com/s3) and [CloudFront](https://aws.amazon.com/cloudfront/)
 
