@@ -135,6 +135,7 @@ checkBrowsers(paths.appPath, isInteractive)
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {
       process.on(sig, function() {
+        console.log(chalk.cyan('Gracefully shutting down. Please wait...\n'));
         devServer.close();
         process.exit();
       });
