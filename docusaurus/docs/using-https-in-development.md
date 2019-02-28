@@ -30,4 +30,16 @@ set HTTPS=true&&npm start
 HTTPS=true npm start
 ```
 
-Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
+Note that the server by default will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
+
+## Providing valid certificates
+
+> Note: this feature is available with `react-scripts@x.x.x` and higher.
+
+If you want to use valid certificates for local development, you can use a tool like [mkcert](https://github.com/FiloSottile/mkcert) to create a valid local certificate.
+
+You can then set the certificate path as an environment variables when starting the dev server:
+
+```sh
+HTTPS=true HTTPS_KEY=/path/to/key.pem HTTPS_CERT=/path/to/cert.pem npm start
+```

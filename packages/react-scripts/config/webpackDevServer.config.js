@@ -18,6 +18,22 @@ const fs = require('fs');
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
 
+// Enable HTTPS if the HTTPS environment variable is set to 'true'.
+let https = false;
+if (process.env.HTTPS === 'true') {
+  https = true;
+
+  // Pass a custom certificate file when the environment variables are set
+  const keyFile = process.env.HTTPS_KEY;
+  const certFile = process.env.HTTPS_CERT;
+  if (keyFile && certFile) {
+    https = {
+      key: fs.readFileSync(keyFile),
+      cert: fs.readFileSync(certFile),
+    };
+  }
+}
+
 module.exports = function(proxy, allowedHost) {
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
@@ -79,8 +95,7 @@ module.exports = function(proxy, allowedHost) {
     watchOptions: {
       ignored: ignoredFiles(paths.appSrc),
     },
-    // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === 'https',
+    https,
     host,
     overlay: false,
     historyApiFallback: {
