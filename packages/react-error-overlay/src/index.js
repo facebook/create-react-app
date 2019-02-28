@@ -122,6 +122,14 @@ export function stopReportingRuntimeErrors() {
   }
 }
 
+function getNonce() {
+  if (typeof __webpack_nonce__ === 'undefined') {
+    return null;
+  }
+
+  return __webpack_nonce__; // eslint-disable-line no-undef
+}
+
 function update() {
   // Loading iframe can be either sync or async depending on the browser.
   if (isLoadingIframe) {
@@ -148,6 +156,10 @@ function update() {
       );
       script.type = 'text/javascript';
       script.innerHTML = iframeScript;
+      const nonce = getNonce();
+      if (nonce) {
+        script.setAttribute('nonce', nonce);
+      }
       iframeDocument.body.appendChild(script);
     }
   };
