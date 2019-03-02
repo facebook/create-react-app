@@ -231,7 +231,7 @@ and then use them in your tests like you normally do.
 
 > Note: this feature is available with `react-scripts@0.4.0` and higher.
 
-If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
+If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. Create React App will automatically add `src/setupTests.js` to the [`setupFilesAfterEnv`](https://jestjs.io/docs/en/configuration.html#setupfilesafterenv-array) Jest config. It will be automatically executed before running your tests.
 
 For example:
 
@@ -247,13 +247,22 @@ const localStorageMock = {
 global.localStorage = localStorageMock;
 ```
 
-> Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it, so you should manually create the property `setupTestFrameworkScriptFile` in the configuration for Jest, something like the following:
+You can also override the [`setupFilesAfterEnv`](https://jestjs.io/docs/en/configuration.html#setupfilesafterenv-array) array directly in your `package.json` Jest configuration. You will need to include `<rootDir>/src/setupTests.js` explicitly if you want to continue using it. For example:
+
+### `package.json`
 
 > ```js
-> "jest": {
+> {
 >   // ...
->   "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js"
->  }
+>   "jest": {
+>     // ...
+>     "setupFilesAfterEnv": [
+>       "<rootDir>/src/setupTests.js",
+>       "<rootDir>/src/setupTests-2.js",
+>       // ...
+>     ]
+>    }
+> }
 > ```
 
 ## Focusing and Excluding Tests
