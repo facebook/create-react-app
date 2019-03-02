@@ -8,19 +8,11 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const chalk = require('react-dev-utils/chalk');
 const paths = require('../../config/paths');
 
 module.exports = (resolve, rootDir, isEjecting) => {
-  // Use this instead of `paths.testsSetup` to avoid putting
-  // an absolute filename into configuration after ejecting.
-  const setupTestsMatches = paths.testsSetup.match(/src[/\\]setupTests\.(.+)/);
-  const setupTestsFileExtension =
-    (setupTestsMatches && setupTestsMatches[1]) || 'js';
-  const setupTestsFile = fs.existsSync(paths.testsSetup)
-    ? `<rootDir>/src/setupTests.${setupTestsFileExtension}`
-    : undefined;
-
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
 
@@ -36,8 +28,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
         ? 'react-app-polyfill/jsdom'
         : require.resolve('react-app-polyfill/jsdom'),
     ],
-
-    setupTestFrameworkScriptFile: setupTestsFile,
+    setupFilesAfterEnv: fs.existsSync(paths.testsSetup)
+      ? [`<rootDir>/${path.relative(paths.appPath, paths.testsSetup)}`]
+      : [],
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
       '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}',
@@ -69,70 +62,62 @@ module.exports = (resolve, rootDir, isEjecting) => {
       require.resolve('jest-watch-typeahead/testname'),
     ],
   };
+
   if (rootDir) {
     config.rootDir = rootDir;
   }
-  const overrides = Object.assign({}, require(paths.appPackageJson).jest);
-  const supportedKeys = [
-    'collectCoverageFrom',
-    'coverageReporters',
-    'coverageThreshold',
-    'globalSetup',
-    'globalTeardown',
-    'resetMocks',
-    'resetModules',
-    'snapshotSerializers',
-    'watchPathIgnorePatterns',
-  ];
-  if (overrides) {
-    supportedKeys.forEach(key => {
-      if (overrides.hasOwnProperty(key)) {
-        config[key] = overrides[key];
-        delete overrides[key];
-      }
-    });
-    const unsupportedKeys = Object.keys(overrides);
-    if (unsupportedKeys.length) {
-      const isOverridingSetupFile =
-        unsupportedKeys.indexOf('setupTestFrameworkScriptFile') > -1;
 
-      if (isOverridingSetupFile) {
-        console.error(
-          chalk.red(
-            'We detected ' +
-              chalk.bold('setupTestFrameworkScriptFile') +
-              ' in your package.json.\n\n' +
-              'Remove it from Jest configuration, and put the initialization code in ' +
-              chalk.bold('src/setupTests.js') +
-              '.\nThis file will be loaded automatically.\n'
-          )
-        );
-      } else {
-        console.error(
-          chalk.red(
-            '\nOut of the box, Create React App only supports overriding ' +
-              'these Jest options:\n\n' +
-              supportedKeys
-                .map(key => chalk.bold('  \u2022 ' + key))
-                .join('\n') +
-              '.\n\n' +
-              'These options in your package.json Jest configuration ' +
-              'are not currently supported by Create React App:\n\n' +
-              unsupportedKeys
-                .map(key => chalk.bold('  \u2022 ' + key))
-                .join('\n') +
-              '\n\nIf you wish to override other Jest options, you need to ' +
-              'eject from the default setup. You can do so by running ' +
-              chalk.bold('npm run eject') +
-              ' but remember that this is a one-way operation. ' +
-              'You may also file an issue with Create React App to discuss ' +
-              'supporting more options out of the box.\n'
-          )
-        );
-      }
+  const appJestConfig = require(paths.appPackageJson).jest;
+
+  if (appJestConfig) {
+    const officiallySupportedJestConfigOverrides = [
+      'collectCoverageFrom',
+      'coverageReporters',
+      'coverageThreshold',
+      'globalSetup',
+      'globalTeardown',
+      'resetMocks',
+      'resetModules',
+      'setupFilesAfterEnv',
+      'snapshotSerializers',
+      'watchPathIgnorePatterns',
+    ];
+
+    const unsupportedAppJestConfigKeys = Object.keys(appJestConfig)
+      .filter(key => !officiallySupportedJestConfigOverrides.includes(key));
+
+    if (unsupportedAppJestConfigKeys.length) {
+      console.error(
+        chalk.red(
+          '\nOut of the box, Create React App only supports overriding ' +
+            'these Jest options:\n\n' +
+            officiallySupportedJestConfigOverrides
+              .map(key => chalk.bold('  \u2022 ' + key))
+              .join('\n') +
+            '.\n\n' +
+            'These options in your package.json Jest configuration ' +
+            'are not currently supported by Create React App:\n\n' +
+            unsupportedAppJestConfigKeys
+              .map(key => chalk.bold('  \u2022 ' + key))
+              .join('\n') +
+            '\n\nIf you wish to override other Jest options, you need to ' +
+            'eject from the default setup. You can do so by running ' +
+            chalk.bold('npm run eject') +
+            ' but remember that this is a one-way operation. ' +
+            'You may also file an issue with Create React App to discuss ' +
+            'supporting more options out of the box.\n'
+        )
+      );
 
       process.exit(1);
     }
+
+    officiallySupportedJestConfigOverrides
+      .filter(supportedKey => appJestConfig.hasOwnProperty(supportedKey))
+      .forEach(key => {
+        config[key] = appJestConfig[key];
+      });
   }
+
   return config;
 };

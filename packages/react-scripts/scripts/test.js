@@ -82,7 +82,7 @@ argv.push(
   JSON.stringify(
     createJestConfig(
       relativePath => path.resolve(__dirname, '..', relativePath),
-      path.resolve(paths.appSrc, '..'),
+      paths.appPath,
       false
     )
   )
