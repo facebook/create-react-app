@@ -111,6 +111,16 @@ module.exports = function(webpackEnv) {
           sourceMap: isEnvProduction && shouldUseSourceMap,
         },
       },
+      {
+        // This is loader to remove unused css from css files based on the js and
+        // jsx files and reduces build size. for more information please visit
+        // https://github.com/FullHuman/purgecss
+        // https://github.com/americanexpress/purgecss-loader
+        loader: '@americanexpress/purgecss-loader',
+        options: {
+          paths: [path.join(__dirname, 'src/**/*.{js,jsx}')],
+        },
+      },
     ].filter(Boolean);
     if (preProcessor) {
       loaders.push({
