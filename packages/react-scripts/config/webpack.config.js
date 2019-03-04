@@ -76,7 +76,7 @@ module.exports = function(webpackEnv) {
   const env = getClientEnvironment(publicUrl);
 
   // common function to get style loaders
-  const getStyleLoaders = (cssOptions, preProcessor) => {
+  const getStyleLoaders = (cssOptions, preProcessor, preProcessorOptions) => {
     const loaders = [
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
@@ -115,9 +115,12 @@ module.exports = function(webpackEnv) {
     if (preProcessor) {
       loaders.push({
         loader: require.resolve(preProcessor),
-        options: {
-          sourceMap: isEnvProduction && shouldUseSourceMap,
-        },
+        options: Object.assign(
+          {
+            sourceMap: isEnvProduction && shouldUseSourceMap,
+          },
+          preProcessorOptions
+        ),
       });
     }
     return loaders;
