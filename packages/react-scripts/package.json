@@ -1,6 +1,6 @@
 {
   "name": "@fs/react-scripts",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "upstreamVersion": "2.1.3",
   "description": "Configuration and scripts for Create React App.",
   "repository": "fs-webdev/create-react-app",
@@ -28,7 +28,7 @@
     "@fs/eslint-config-frontier-react": "^1.0.1",
     "@svgr/webpack": "2.4.1",
     "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "9.0.0",
+    "babel-eslint": "10.0.0",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.4",
     "babel-plugin-bundled-import-meta": "^0.2.0",
