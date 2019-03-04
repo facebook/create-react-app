@@ -1,0 +1,37 @@
+import Note from './';
+import { Preview, ComponentDocs, Code } from './../';
+
+# Note
+
+Note should be used to display additional or somehow important information with visual indication of type of information.
+
+## Variants
+
+### Default
+
+<Preview>
+  <Note title="Note title">Note content</Note>
+</Preview>
+
+### Note types
+
+<Preview>
+  <Note title="Info" type="info">Note content</Note>
+  <Note title="Success" type="success">Note content</Note>
+  <Note title="Warning" type="warning">Note content</Note>
+  <Note title="Error" type="error">Note content</Note>
+</Preview>
+
+## Props
+
+<ComponentDocs title="<Note />" component={Note} />
+
+## Aliases
+
+<Code inline={false} language="jsx">{`<NoteInfo /> === <Note type="info" />
+<NoteSuccess /> === <Note type="success" />
+<NoteWarning /> === <Note type="warning" />
+<NoteError /> === <Note type="error" />
+<Dos /> === <Note type="success" title="Do's" />
+<Donts /> === <Note type="error" title="Dont's" />
+`}</Code>
