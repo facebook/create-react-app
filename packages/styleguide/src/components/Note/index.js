@@ -11,6 +11,9 @@ NoteError.displayName = 'NoteError';
 export const NoteInfo = props => <Note type="info" {...props} />;
 NoteInfo.displayName = 'NoteInfo';
 
+export const NoteSuccess = props => <Note type="success" {...props} />;
+NoteInfo.displayName = 'NoteSuccess';
+
 export const Dos = props => <Note type="success" title="Do's" {...props} />;
 Dos.displayName = 'Dos';
 

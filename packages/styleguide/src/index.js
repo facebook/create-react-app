@@ -11,6 +11,7 @@ import CodeDocs from './components/Code/Code.docs.mdx';
 import ColorPaletteDocs from './components/ColorPalette/ColorPalette.docs.mdx';
 import ComponentInfoDocs from './components/ComponentInfo/ComponentInfo.docs.mdx';
 import BadgeDocs from './components/Badge/Badge.docs.mdx';
+import NoteDocs from './components/Note/Note.docs.mdx';
 import TableDocs from './components/Table/Table.docs.mdx';
 
 styleguide({
@@ -58,6 +59,11 @@ styleguide({
           title: 'ComponentInfo',
           path: '/component-info',
           render: <Page render={ComponentInfoDocs} />
+        },
+        {
+          title: 'Note',
+          path: '/note',
+          render: <Page render={NoteDocs} />
         },
         {
           title: 'Preview',
