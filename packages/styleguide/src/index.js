@@ -9,6 +9,7 @@ import PreviewDocs from './components/Preview/Preview.docs.mdx';
 import ComponentDocsDocs from './components/ComponentDocs/ComponentDocs.docs.mdx';
 import CodeDocs from './components/Code/Code.docs.mdx';
 import ColorPaletteDocs from './components/ColorPalette/ColorPalette.docs.mdx';
+import ComponentInfoDocs from './components/ComponentInfo/ComponentInfo.docs.mdx';
 import BadgeDocs from './components/Badge/Badge.docs.mdx';
 import TableDocs from './components/Table/Table.docs.mdx';
 
@@ -52,6 +53,11 @@ styleguide({
           title: 'ComponentDocs',
           path: '/component-docs',
           render: <Page render={ComponentDocsDocs} />
+        },
+        {
+          title: 'ComponentInfo',
+          path: '/component-info',
+          render: <Page render={ComponentInfoDocs} />
         },
         {
           title: 'Preview',

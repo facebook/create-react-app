@@ -8,12 +8,16 @@ import Info from './Info';
 import { propTypes as BadgePropTypes } from './../Badge/InfoBadge';
 
 const propTypes = {
+  /** Array of types of info which will be displayed in row. */
   infoTypes: arrayOf(
     shape({
+      /** Type label */
       label: string.isRequired,
+      /** Array of values which will be displayed as InfoBadges */
       values: array
     })
-  ),
+  ).isRequired,
+  /** Default map of available colors to types. Color must be defined in theme. */
   typeToColorMap: BadgePropTypes.typeToColorMap
 };
 

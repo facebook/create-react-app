@@ -1,0 +1,69 @@
+import ComponentInfo from './';
+import { Preview, ComponentDocs } from './../';
+
+# ComponentInfo
+
+ComponentInfo is desinged to display information or status of component.
+
+## Variants
+
+### Default
+
+<Preview>
+  <ComponentInfo
+    infoTypes={[{ label: 'My type', values: ['First value', 'Second value'] }]}
+  />
+</Preview>
+
+### Predefined values
+
+Common values has predefinned colors
+
+<Preview>
+  <ComponentInfo
+    infoTypes={[
+      {
+        label: 'All predefined values',
+        values: [
+          'ready',
+          'wip',
+          'deprecated',
+          'draft',
+          'custom',
+          'universal',
+          'react',
+          'html'
+        ]
+      }
+    ]}
+  />
+</Preview>
+
+### Custom color of value
+
+Color must be picked from theme.
+
+<Preview>
+  <ComponentInfo
+    infoTypes={[{ label: 'Custom color', values: ['Viking'] }]}
+    typeToColorMap={{ Viking: 'viking' }}
+  />
+</Preview>
+
+### Multiple info types
+
+<Preview>
+  <ComponentInfo
+    infoTypes={[
+      { label: 'My type', values: ['First value', 'Second value'] },
+      {
+        label: 'Another type the dust',
+        values: ['Another one gone', "I'm gonna get you"]
+      }
+    ]}
+  />
+</Preview>
+
+## Props
+
+<ComponentDocs title="<ComponentInfo />" component={console.log(ComponentInfo.__docgenInfo) || ComponentInfo} />
