@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "7.0.1",
+  "version": "7.0.3",
   "description": "Webpack utilities used by Create React App",
   "repository": "facebook/create-react-app",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8.10"
   },
   "files": [
     "browsersHelper.js",
@@ -20,6 +20,7 @@
     "eslintFormatter.js",
     "evalSourceMapMiddleware.js",
     "FileSizeReporter.js",
+    "ForkTsCheckerWebpackPlugin.js",
     "formatWebpackMessages.js",
     "getCacheIdentifier.js",
     "getCSSModuleLocalIdent.js",
@@ -47,13 +48,14 @@
   "dependencies": {
     "@babel/code-frame": "7.0.0",
     "address": "1.0.3",
-    "browserslist": "4.3.7",
+    "browserslist": "4.4.1",
     "chalk": "2.4.2",
     "cross-spawn": "6.0.5",
     "detect-port-alt": "1.1.6",
     "escape-string-regexp": "1.0.5",
     "filesize": "3.6.1",
     "find-up": "3.0.0",
+    "fork-ts-checker-webpack-plugin": "1.0.0-alpha.6",
     "global-modules": "2.0.0",
     "globby": "8.0.2",
     "gzip-size": "5.0.0",
@@ -63,7 +65,7 @@
     "loader-utils": "1.2.3",
     "opn": "5.4.0",
     "pkg-up": "2.0.0",
-    "react-error-overlay": "^5.1.2",
+    "react-error-overlay": "^5.1.3",
     "recursive-readdir": "2.2.2",
     "shell-quote": "1.6.1",
     "sockjs-client": "1.3.0",

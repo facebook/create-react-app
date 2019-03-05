@@ -19,13 +19,13 @@ Each polyfill ensures the following language features are present:
 
 First, install the package using Yarn or npm:
 
-```bash
+```sh
 npm install react-app-polyfill
 ```
 
 or
 
-```bash
+```sh
 yarn add react-app-polyfill
 ```
 
