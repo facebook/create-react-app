@@ -158,12 +158,7 @@ function build(previousFileSizes) {
         if (err.hasOwnProperty('postcssNode')) {
           errMessage +=
             '\nCompileError: Begins at CSS selector ' +
-            err['postcssNode'].selector +
-            ' (' +
-            err['postcssNode'].source.start.line +
-            ':' +
-            err['postcssNode'].source.start.column +
-            ')';
+            err['postcssNode'].selector;
         }
 
         messages = formatWebpackMessages({
