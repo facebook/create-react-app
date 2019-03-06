@@ -345,8 +345,6 @@ module.exports = function(webpackEnv) {
               loader: require.resolve('url-loader'),
               options: {
                 limit: 10000,
-                publicPath: '../media',
-                outputPath: '/static/media',
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
@@ -524,8 +522,6 @@ module.exports = function(webpackEnv) {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
-                publicPath: '../media',
-                outputPath: '/static/media',
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
