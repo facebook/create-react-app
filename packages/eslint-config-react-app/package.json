@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-react-app",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "ESLint configuration used by Create React App",
   "repository": "facebook/create-react-app",
   "license": "MIT",
@@ -19,6 +19,6 @@
     "eslint-plugin-react": "7.x"
   },
   "dependencies": {
-    "confusing-browser-globals": "^1.0.5"
+    "confusing-browser-globals": "^1.0.6"
   }
 }
