@@ -312,7 +312,11 @@ module.exports = function(webpackEnv) {
                 eslintPath: require.resolve('eslint'),
                 // @remove-on-eject-begin
                 baseConfig: {
-                  extends: [require.resolve('@fs/eslint-config-frontier-react')],
+                  extends: [
+                    require
+                      .resolve('@fs/eslint-config-frontier-react')
+                      .replace('index.js', 'lenient.js'),
+                  ],
                   settings: { react: { version: '999.999.999' } },
                 },
                 ignore: false,
