@@ -77,6 +77,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'collectCoverageFrom',
     'coverageReporters',
     'coverageThreshold',
+    'extraGlobals',
     'globalSetup',
     'globalTeardown',
     'resetMocks',
