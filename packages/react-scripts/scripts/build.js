@@ -63,9 +63,17 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // Process CLI arguments
 const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
+const buildModern = argv.indexOf('--legacy') === -1;
 
 // Generate configuration
-const config = configFactory('production');
+const modernConfig = configFactory('production', {
+  shouldBuildModernAndLegacy: buildModern,
+  isModernOutput: true,
+});
+const leagcyConfig = configFactory('production', {
+  shouldBuildModernAndLegacy: buildModern,
+  isModernOutput: false,
+});
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
@@ -116,7 +124,7 @@ checkBrowsers(paths.appPath, isInteractive)
 
       const appPackage = require(paths.appPackageJson);
       const publicUrl = paths.publicUrl;
-      const publicPath = config.output.publicPath;
+      const publicPath = leagcyConfig.output.publicPath;
       const buildFolder = path.relative(process.cwd(), paths.appBuild);
       printHostingInstructions(
         appPackage,
@@ -142,8 +150,9 @@ checkBrowsers(paths.appPath, isInteractive)
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
+  const configs = [buildModern && modernConfig, leagcyConfig].filter(Boolean);
 
-  let compiler = webpack(config);
+  let compiler = webpack(configs);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       let messages;

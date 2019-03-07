@@ -20,6 +20,9 @@ const validateBoolOption = (name, value, defaultValue) => {
   return value;
 };
 
+const legacyTargets = { ie: 9 };
+const modernTargets = { esmodules: true };
+
 module.exports = function(api, opts, env) {
   if (!opts) {
     opts = {};
@@ -46,6 +49,11 @@ module.exports = function(api, opts, env) {
     opts.absoluteRuntime,
     true
   );
+  // TODO: this needs to change.
+  // At this point we only create one babel config for all builds.
+  // We should be able to provide a babelconfig for every build.
+  // Does this mean we should move this to webpack or specify some BABEL_ENV?
+  var isModern = validateBoolOption('modern', opts.modern, false);
 
   var absoluteRuntimePath = undefined;
   if (useAbsoluteRuntime) {
@@ -81,15 +89,13 @@ module.exports = function(api, opts, env) {
         {
           // We want Create React App to be IE 9 compatible until React itself
           // no longer works with IE 9
-          targets: {
-            ie: 9,
-          },
+          targets: isModern ? modernTargets : legacyTargets,
           // Users cannot override this behavior because this Babel
           // configuration is highly tuned for ES5 support
           ignoreBrowserslistConfig: true,
           // If users import all core-js they're probably not concerned with
           // bundle size. We shouldn't rely on magic to try and shrink it.
-          useBuiltIns: false,
+          useBuiltIns: isModern ? 'entry' : false,
           // Do not transform modules to CJS
           modules: false,
           // Exclude transforms that make all code slower
@@ -157,7 +163,7 @@ module.exports = function(api, opts, env) {
         {
           corejs: false,
           helpers: areHelpersEnabled,
-          regenerator: true,
+          regenerator: !isModern,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.
