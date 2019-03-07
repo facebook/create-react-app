@@ -29,7 +29,7 @@ const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
-const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -617,10 +617,17 @@ module.exports = function(webpackEnv) {
           typescript: resolve.sync('typescript', {
             basedir: paths.appNodeModules,
           }),
-          async: isEnvDevelopment,
-          useTypescriptIncrementalApi: true,
+          async: false,
           checkSyntacticErrors: true,
           tsconfig: paths.appTsConfig,
+          compilerOptions: {
+            module: 'esnext',
+            moduleResolution: 'node',
+            resolveJsonModule: true,
+            isolatedModules: true,
+            noEmit: true,
+            jsx: 'preserve',
+          },
           reportFiles: [
             '**',
             '!**/*.json',
@@ -631,8 +638,7 @@ module.exports = function(webpackEnv) {
           ],
           watch: paths.appSrc,
           silent: true,
-          // The formatter is invoked directly in WebpackDevServerUtils during development
-          formatter: isEnvProduction ? typescriptFormatter : undefined,
+          formatter: typescriptFormatter,
         }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
