@@ -1,3 +1,21 @@
+## 2.1.7 (March 7, 2019)
+
+v2.1.7 is a maintenance release that temporarily reverts the TypeScript speed improvements ([#6406](https://github.com/facebook/create-react-app/pull/6406)) to fix a dependency issue in `react-dev-utils`.
+
+### Migrating from 2.1.6 to 2.1.7
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@2.1.7
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@2.1.7
+```
+
 ## 2.1.6 (March 6, 2019)
 
 v2.1.6 is a maintenance release that brings a few new improvements, most notably:
