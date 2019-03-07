@@ -62,7 +62,7 @@ function installFrontierDependencies(appPath, answers, ownPath) {
     configureHF(appPath, ownPath);
   }
 
-  depsToInstall.push(...['http-proxy-middleware@0.19.0', 'fs-webdev/exo']);
+  depsToInstall.push(...['http-proxy-middleware@0.19.0', 'fs-webdev/exo', '@reach/router']);
   devDepsToInstall.push(
     ...[
       'eslint@5.6.0',
