@@ -1,3 +1,21 @@
+## 2.1.8 (March 7, 2019)
+
+v2.1.8 is a maintenance release that reapplies the TypeScript speed improvements ([#6406](https://github.com/facebook/create-react-app/pull/6406)) in a new major version of `react-dev-utils`.
+
+### Migrating from 2.1.7 to 2.1.8
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@2.1.8
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@2.1.8
+```
+
 ## 2.1.7 (March 7, 2019)
 
 v2.1.7 is a maintenance release that temporarily reverts the TypeScript speed improvements ([#6406](https://github.com/facebook/create-react-app/pull/6406)) to fix a dependency issue in `react-dev-utils`.
