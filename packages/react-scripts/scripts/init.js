@@ -223,6 +223,7 @@ function installDependency() {
       (err, stdout, stderr) => {
         if (err) {
           // node couldn't execute the command
+          console.log(err);
           return;
         }
         resolve(true);
@@ -238,6 +239,7 @@ function installDevDependency() {
       (err, stdout, stderr) => {
         if (err) {
           // node couldn't execute the command
+          console.log(err);
           return;
         }
         resolve(true);
@@ -254,6 +256,7 @@ function cloneDeploymentTemplate(appPath) {
     exec(`git clone ${repository}`, (err, stdout, stderr) => {
       if (err) {
         // node couldn't execute the command
+        console.log(err);
         return;
       }
       console.log(`${stdout}`);
@@ -275,9 +278,9 @@ async function renameFiles(packageName, appPath) {
   const defaultDeployment = {
     registryName: packageName,
     projectRepoName: packageName,
-    helmProductionName: `prod-th-${packageName}`,
-    nameOverride: `prod-th-${packageName}`,
-    webHttp: `prod-th-${packageName}-http`,
+    helmProductionName: `prod-${packageName}`,
+    nameOverride: `prod-${packageName}`,
+    webHttp: `prod-${packageName}-http`,
   };
   const [
     gitlabCiYml,
@@ -287,9 +290,9 @@ async function renameFiles(packageName, appPath) {
     nginxFile,
   ] = await Promise.all([
     fs.readFile(path.join(appPath, '.gitlab-ci.yml')),
-    fs.readFile(path.join(appPath, 'deployment', 'values-production-th.yaml')),
-    fs.readFile(path.join(appPath, 'deployment', 'values-staging-th.yaml')),
-    fs.readFile(path.join(appPath, 'deployment', 'values-development-th.yaml')),
+    fs.readFile(path.join(appPath, 'deployment', 'values-production.yaml')),
+    fs.readFile(path.join(appPath, 'deployment', 'values-staging.yaml')),
+    fs.readFile(path.join(appPath, 'deployment', 'values-development.yaml')),
     fs.readFile(
       path.join(appPath, 'deployment', 'nginx', 'conf.d', 'site.conf')
     ),
