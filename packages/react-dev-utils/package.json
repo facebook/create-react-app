@@ -26,6 +26,7 @@
     "getCSSModuleLocalIdent.js",
     "getProcessForPort.js",
     "globby.js",
+    "htmlEsmodulesPlugin.js",
     "ignoredFiles.js",
     "immer.js",
     "InlineChunkHtmlPlugin.js",
