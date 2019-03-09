@@ -79,9 +79,8 @@ module.exports = function(api, opts, env) {
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
-          // If users import all core-js they're probably not concerned with
-          // bundle size. We shouldn't rely on magic to try and shrink it.
-          useBuiltIns: false,
+          // Allow importing @babel/polyfill in entrypoint and use browserlist to select polyfills
+          useBuiltIns: 'entry',
           // Do not transform modules to CJS
           modules: false,
           // Exclude transforms that make all code slower
