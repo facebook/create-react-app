@@ -102,11 +102,9 @@ checkBrowsers(paths.appPath, isInteractive)
       errors: errors =>
         devServer.sockWrite(devServer.sockets, 'errors', errors),
     };
-    const appPath = paths.appPath.replace(/\\/g, '/');
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler({
       appName,
-      appPath,
       config,
       devSocket,
       urls,

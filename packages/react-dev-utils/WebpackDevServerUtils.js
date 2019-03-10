@@ -103,7 +103,6 @@ function printInstructions(appName, urls, useYarn) {
 
 function createCompiler({
   appName,
-  appPath,
   config,
   devSocket,
   urls,
@@ -146,13 +145,12 @@ function createCompiler({
       });
     });
 
-    const formatter = typescriptFormatter(appPath.replace(/\\/g, '/'));
     forkTsCheckerWebpackPlugin
       .getCompilerHooks(compiler)
       .receive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
         const allMsgs = [...diagnostics, ...lints];
         const format = message =>
-          `${message.file}\n${formatter(message, true)}`;
+          `${message.file}\n${typescriptFormatter(message, true)}`;
 
         tsMessagesResolver({
           errors: allMsgs.filter(msg => msg.severity === 'error').map(format),
@@ -211,8 +209,7 @@ function createCompiler({
       }
     }
 
-    const filePathToExclude = appPath.replace(/\\/g, '/');
-    const messages = formatWebpackMessages(statsData, filePathToExclude);
+    const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
@@ -230,14 +227,14 @@ function createCompiler({
         messages.errors.length = 1;
       }
       console.log(chalk.red('Failed to compile.\n'));
-      console.log(messages.errors.join('\n\n').replace('//', ''));
+      console.log(messages.errors.join('\n\n'));
       return;
     }
 
     // Show warnings if no errors were found.
     if (messages.warnings.length) {
       console.log(chalk.yellow('Compiled with warnings.\n'));
-      console.log(messages.warnings.join('\n\n').replace('//', ''));
+      console.log(messages.warnings.join('\n\n'));
 
       // Teach some ESLint tricks.
       console.log(

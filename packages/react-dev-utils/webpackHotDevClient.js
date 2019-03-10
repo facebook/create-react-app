@@ -121,13 +121,10 @@ function handleWarnings(warnings) {
 
   function printWarnings() {
     // Print warnings to the console.
-    var formatted = formatWebpackMessages(
-      {
-        warnings: warnings,
-        errors: [],
-      },
-      process.cwd()
-    );
+    var formatted = formatWebpackMessages({
+      warnings: warnings,
+      errors: [],
+    });
 
     if (typeof console !== 'undefined' && typeof console.warn === 'function') {
       for (var i = 0; i < formatted.warnings.length; i++) {
@@ -163,13 +160,10 @@ function handleErrors(errors) {
   hasCompileErrors = true;
 
   // "Massage" webpack messages.
-  var formatted = formatWebpackMessages(
-    {
-      errors: errors,
-      warnings: [],
-    },
-    process.cwd()
-  );
+  var formatted = formatWebpackMessages({
+    errors: errors,
+    warnings: [],
+  });
 
   // Only show the first error.
   ErrorOverlay.reportBuildError(formatted.errors[0]);

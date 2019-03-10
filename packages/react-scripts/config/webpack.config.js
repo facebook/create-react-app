@@ -632,9 +632,7 @@ module.exports = function(webpackEnv) {
           watch: paths.appSrc,
           silent: true,
           // The formatter is invoked directly in WebpackDevServerUtils during development
-          formatter: isEnvProduction
-            ? typescriptFormatter(paths.appPath.replace(/\\/g, '/'))
-            : undefined,
+          formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.

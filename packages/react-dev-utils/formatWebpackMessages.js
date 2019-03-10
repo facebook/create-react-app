@@ -16,7 +16,7 @@ function isLikelyASyntaxError(message) {
 
 // Cleans up webpack error messages.
 // eslint-disable-next-line no-unused-vars
-function formatMessage(message, filePathToExclude) {
+function formatMessage(message) {
   let lines = message.split('\n');
 
   // Strip Webpack-added headers off errors/warnings
@@ -65,9 +65,7 @@ function formatMessage(message, filePathToExclude) {
     lines.splice(1, 1);
   }
   // Clean up file name
-  lines[0] = lines[0]
-    .replace(/^(.*) \d+:\d+-\d+$/, '$1')
-    .replace(filePathToExclude, '/');
+  lines[0] = lines[0].replace(/^(.*) \d+:\d+-\d+$/, '$1');
 
   // Cleans up verbose "module not found" messages for files and packages.
   if (lines[1] && lines[1].indexOf('Module not found: ') === 0) {
@@ -111,13 +109,13 @@ function formatMessage(message, filePathToExclude) {
   return message.trim();
 }
 
-function formatWebpackMessages(json, filePathToExclude) {
-  const formattedErrors = json.errors.map(message =>
-    formatMessage(message, filePathToExclude)
-  );
-  const formattedWarnings = json.warnings.map(message =>
-    formatMessage(message, filePathToExclude)
-  );
+function formatWebpackMessages(json) {
+  const formattedErrors = json.errors.map(function(message) {
+    return formatMessage(message, true);
+  });
+  const formattedWarnings = json.warnings.map(function(message) {
+    return formatMessage(message, false);
+  });
   const result = { errors: formattedErrors, warnings: formattedWarnings };
   if (result.errors.some(isLikelyASyntaxError)) {
     // If there are any syntax errors, show just them.
