@@ -66,7 +66,7 @@ module.exports = class ReactScripts {
       return await execaSafe('yarnpkg', ['start', '--smoke-test'], options);
     }
     const startProcess = execa('yarnpkg', ['start'], options);
-    await waitForLocalhost(port);
+    await waitForLocalhost({ port });
     return {
       port,
       done() {
@@ -91,7 +91,7 @@ module.exports = class ReactScripts {
         cwd: this.root,
       }
     );
-    await waitForLocalhost(port);
+    await waitForLocalhost({ port });
     return {
       port,
       done() {
