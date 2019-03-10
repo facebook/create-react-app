@@ -35,7 +35,7 @@ You can install [`@babel/polyfill`](https://babeljs.io/docs/en/babel-polyfill) a
 
 By default, the generated project includes a [`browerslist`](https://github.com/browserslist/browserslist) configuration in your `package.json` file to target a broad range of browsers based on global usage (`> 0.2%`) for production builds, and modern browsers for development. This gives a good development experience, especially when using language features such as async/await, but still provides high compatibility with many browsers in production.
 
-The `browserslist` configuration controls the outputted javascript so that the emitted code will be compatible with the browsers specified. The `production` list will be used when creating a production build by running the `build` script, and the `development` list will be used when running the `start` script. You can use [https://browserl.ist](https://browserl.ist/?q=%3E+0.2%25%2C+not+dead%2C+not+op_mini+all) to see the browers supported by your configured `browserslist`.
+The `browserslist` configuration controls the outputted JavaScript so that the emitted code will be compatible with the browsers specified. The `production` list will be used when creating a production build by running the `build` script, and the `development` list will be used when running the `start` script. You can use [https://browserl.ist](https://browserl.ist/?q=%3E+0.2%25%2C+not+dead%2C+not+op_mini+all) to see the browsers supported by your configured `browserslist`.
 
 Here is an example `browserslist` that is specified in `package.json`:
 
