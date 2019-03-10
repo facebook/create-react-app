@@ -35,7 +35,24 @@ You can install [`@babel/polyfill`](https://babeljs.io/docs/en/babel-polyfill) a
 
 By default, the generated project includes a set of [`browerslist`](https://github.com/browserslist/browserslist) configuration in your `package.json` file to target a broad range of browsers based on global usage (`> 0.2%`) during production builds, and modern browers during development. This gives a good development experience, especially when using langauge features such as async/await, but still provides high compatibility with many browsers in production.
 
-The `browserslist` configuration controls the outputted javascript when running the `build` and `start` scripts so that the emitted code will be compatible with the browsers specified. The `production` list will be used when creating a production build by running the `build` script, and the `development` list will be used when running the `start` script. You can use [https://browserl.ist](https://browserl.ist/?q=%3E+0.2%25%2C+not+dead%2C+not+op_mini+all) to see the browers supported by your configured `browserslist`.
+The `browserslist` configuration controls the outputted javascript so that the emitted code will be compatible with the browsers specified. The `production` list will be used when creating a production build by running the `build` script, and the `development` list will be used when running the `start` script. You can use [https://browserl.ist](https://browserl.ist/?q=%3E+0.2%25%2C+not+dead%2C+not+op_mini+all) to see the browers supported by your configured `browserslist`.
+
+Here is an example `browserslist` that is specified in `package.json`:
+
+```json
+"browserslist": {
+  "production": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "development": [
+    "last 1 chrome version",
+    "last 1 firefox version",
+    "last 1 safari version"
+  ]
+}
+```
 
 > Note that this does not include polyfills automatically for you. You will still need to polyfill language features (see above) as needed based on the browsers your are supporting.
 
