@@ -79,19 +79,15 @@ Object.keys(packagePathsByName).forEach(name => {
       json.devDependencies[otherName] = 'file:' + packagePathsByName[otherName];
     }
     if (json.peerDependencies && json.peerDependencies[otherName]) {
-      json.peerDependencies[otherName] =
-        'file:' + packagePathsByName[otherName];
+      json.peerDependencies[otherName] = 'file:' + packagePathsByName[otherName];
     }
     if (json.optionalDependencies && json.optionalDependencies[otherName]) {
-      json.optionalDependencies[otherName] =
-        'file:' + packagePathsByName[otherName];
+      json.optionalDependencies[otherName] = 'file:' + packagePathsByName[otherName];
     }
   });
 
   fs.writeFileSync(packageJson, JSON.stringify(json, null, 2), 'utf8');
-  console.log(
-    'Replaced local dependencies in packages/' + name + '/package.json'
-  );
+  console.log('Replaced local dependencies in packages/' + name + '/package.json');
 });
 console.log('Replaced all local dependencies for testing.');
 console.log('Do not edit any package.json while this task is running.');
@@ -112,13 +108,10 @@ const args = process.argv.slice(2);
 
 // Now run the CRA command
 const craScriptPath = path.join(packagesDir, 'create-react-app', 'index.js');
-cp.execSync(
-  `node ${craScriptPath} --scripts-version="${scriptsPath}" ${args.join(' ')}`,
-  {
-    cwd: rootDir,
-    stdio: 'inherit',
-  }
-);
+cp.execSync(`node ${craScriptPath} ${args.join(' ')} --scripts-version="${scriptsPath}"`, {
+  cwd: rootDir,
+  stdio: 'inherit',
+});
 
 // Cleanup
 handleExit();

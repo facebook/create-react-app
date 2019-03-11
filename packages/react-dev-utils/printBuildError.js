@@ -14,11 +14,7 @@ module.exports = function printBuildError(err) {
   const stack = err != null && err.stack;
 
   // Add more helpful message for Terser error
-  if (
-    stack &&
-    typeof message === 'string' &&
-    message.indexOf('from Terser') !== -1
-  ) {
+  if (stack && typeof message === 'string' && message.indexOf('from Terser') !== -1) {
     try {
       const matched = /(.+)\[(.+):(.+),(.+)\]\[.+\]/.exec(stack);
       if (!matched) {
@@ -29,15 +25,13 @@ module.exports = function printBuildError(err) {
       const column = matched[4];
       console.log(
         'Failed to minify the code from this file: \n\n',
-        chalk.yellow(
-          `\t${problemPath}:${line}${column !== '0' ? ':' + column : ''}`
-        ),
+        chalk.yellow(`\t${problemPath}:${line}${column !== '0' ? ':' + column : ''}`),
         '\n'
       );
     } catch (ignored) {
       console.log('Failed to minify the bundle.', err);
     }
-    console.log('Read more here: http://bit.ly/CRA-build-minify');
+    console.log('Read more here: https://bit.ly/CRA-build-minify');
   } else {
     console.log((message || err) + '\n');
   }

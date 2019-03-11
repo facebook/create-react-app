@@ -25,10 +25,7 @@ function formatter(message, useColors) {
       fs.existsSync(message.getFile()) &&
       fs.readFileSync(message.getFile(), 'utf-8');
   } else {
-    source =
-      message.file &&
-      fs.existsSync(message.file) &&
-      fs.readFileSync(message.file, 'utf-8');
+    source = message.file && fs.existsSync(message.file) && fs.readFileSync(message.file, 'utf-8');
   }
 
   let frame = '';
@@ -45,12 +42,13 @@ function formatter(message, useColors) {
   }
 
   const severity = hasGetters ? message.getSeverity() : message.severity;
+  const types = { diagnostic: 'TypeScript', lint: 'TSLint' };
 
   return [
-    messageColor.bold(`Type ${severity.toLowerCase()}: `) +
+    messageColor.bold(`${types[message.type]} ${severity.toLowerCase()}: `) +
       (hasGetters ? message.getContent() : message.content) +
       '  ' +
-      messageColor.underline(`TS${message.code}`),
+      messageColor.underline((message.type === 'lint' ? 'Rule: ' : 'TS') + message.code),
     '',
     frame,
   ].join(os.EOL);

@@ -9,8 +9,15 @@ daysUntilClose: 5
 
 # Issues or Pull Requests with these labels will never be considered stale. Set to `[]` to disable
 exemptLabels:
-  - "issue: proposal"
+  - "contributions: claimed"
+  - "contributions: up for grabs!"
+  - "good first issue"
   - "issue: announcement"
+  - "issue: bug"
+  - "issue: needs investigation"
+  - "issue: proposal"
+  - "tag: bug fix"
+  - "tag: breaking change"
 
 # Set to true to ignore issues in a project (defaults to false)
 exemptProjects: true

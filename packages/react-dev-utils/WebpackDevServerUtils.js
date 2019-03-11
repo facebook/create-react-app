@@ -17,22 +17,10 @@ const inquirer = require('inquirer');
 const clearConsole = require('./clearConsole');
 const formatWebpackMessages = require('./formatWebpackMessages');
 const getProcessForPort = require('./getProcessForPort');
+const typescriptFormatter = require('./typescriptFormatter');
+const forkTsCheckerWebpackPlugin = require('./ForkTsCheckerWebpackPlugin');
 
 const isInteractive = process.stdout.isTTY;
-let handleCompile;
-
-// You can safely remove this after ejecting.
-// We only use this block for testing of Create React App itself:
-const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
-if (isSmokeTest) {
-  handleCompile = (err, stats) => {
-    if (err || stats.hasErrors() || stats.hasWarnings()) {
-      process.exit(1);
-    } else {
-      process.exit(0);
-    }
-  };
-}
 
 function prepareUrls(protocol, host, port) {
   const formatUrl = hostname =>
@@ -60,11 +48,7 @@ function prepareUrls(protocol, host, port) {
       if (lanUrlForConfig) {
         // Check if the address is a private ip
         // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
-        if (
-          /^10[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(
-            lanUrlForConfig
-          )
-        ) {
+        if (/^10[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(lanUrlForConfig)) {
           // Address is private, format it for later use
           lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig);
         } else {
@@ -94,12 +78,8 @@ function printInstructions(appName, urls, useYarn) {
   console.log();
 
   if (urls.lanUrlForTerminal) {
-    console.log(
-      `  ${chalk.bold('Local:')}            ${urls.localUrlForTerminal}`
-    );
-    console.log(
-      `  ${chalk.bold('On Your Network:')}  ${urls.lanUrlForTerminal}`
-    );
+    console.log(`  ${chalk.bold('Local:')}            ${urls.localUrlForTerminal}`);
+    console.log(`  ${chalk.bold('On Your Network:')}  ${urls.lanUrlForTerminal}`);
   } else {
     console.log(`  ${urls.localUrlForTerminal}`);
   }
@@ -107,18 +87,17 @@ function printInstructions(appName, urls, useYarn) {
   console.log();
   console.log('Note that the development build is not optimized.');
   console.log(
-    `To create a production build, use ` +
-      `${chalk.cyan(`${useYarn ? 'yarn' : 'npm run'} build`)}.`
+    `To create a production build, use ` + `${chalk.cyan(`${useYarn ? 'yarn' : 'npm run'} build`)}.`
   );
   console.log();
 }
 
-function createCompiler(webpack, config, appName, urls, useYarn) {
+function createCompiler({ appName, config, devSocket, urls, useYarn, useTypeScript, webpack }) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   let compiler;
   try {
-    compiler = webpack(config, handleCompile);
+    compiler = webpack(config);
   } catch (err) {
     console.log(chalk.red('Failed to compile.'));
     console.log();
@@ -139,10 +118,32 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
   });
 
   let isFirstCompile = true;
+  let tsMessagesPromise;
+  let tsMessagesResolver;
+
+  if (useTypeScript) {
+    compiler.hooks.beforeCompile.tap('beforeCompile', () => {
+      tsMessagesPromise = new Promise(resolve => {
+        tsMessagesResolver = msgs => resolve(msgs);
+      });
+    });
+
+    forkTsCheckerWebpackPlugin
+      .getCompilerHooks(compiler)
+      .receive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
+        const allMsgs = [...diagnostics, ...lints];
+        const format = message => `${message.file}\n${typescriptFormatter(message, true)}`;
+
+        tsMessagesResolver({
+          errors: allMsgs.filter(msg => msg.severity === 'error').map(format),
+          warnings: allMsgs.filter(msg => msg.severity === 'warning').map(format),
+        });
+      });
+  }
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tap('done', stats => {
+  compiler.hooks.done.tap('done', async stats => {
     if (isInteractive) {
       clearConsole();
     }
@@ -152,9 +153,39 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
     // them in a readable focused way.
     // We only construct the warnings and errors for speed:
     // https://github.com/facebook/create-react-app/issues/4492#issuecomment-421959548
-    const messages = formatWebpackMessages(
-      stats.toJson({ all: false, warnings: true, errors: true })
-    );
+    const statsData = stats.toJson({
+      all: false,
+      warnings: true,
+      errors: true,
+    });
+
+    if (useTypeScript && statsData.errors.length === 0) {
+      const delayedMsg = setTimeout(() => {
+        console.log(chalk.yellow('Files successfully emitted, waiting for typecheck results...'));
+      }, 100);
+
+      const messages = await tsMessagesPromise;
+      clearTimeout(delayedMsg);
+      statsData.errors.push(...messages.errors);
+      statsData.warnings.push(...messages.warnings);
+
+      // Push errors and warnings into compilation result
+      // to show them after page refresh triggered by user.
+      stats.compilation.errors.push(...messages.errors);
+      stats.compilation.warnings.push(...messages.warnings);
+
+      if (messages.errors.length > 0) {
+        devSocket.errors(messages.errors);
+      } else if (messages.warnings.length > 0) {
+        devSocket.warnings(messages.warnings);
+      }
+
+      if (isInteractive) {
+        clearConsole();
+      }
+    }
+
+    const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
@@ -188,12 +219,29 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
           ' to learn more about each warning.'
       );
       console.log(
-        'To ignore, add ' +
-          chalk.cyan('// eslint-disable-next-line') +
-          ' to the line before.\n'
+        'To ignore, add ' + chalk.cyan('// eslint-disable-next-line') + ' to the line before.\n'
       );
     }
   });
+
+  // You can safely remove this after ejecting.
+  // We only use this block for testing of Create React App itself:
+  const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
+  if (isSmokeTest) {
+    compiler.hooks.failed.tap('smokeTest', async () => {
+      await tsMessagesPromise;
+      process.exit(1);
+    });
+    compiler.hooks.done.tap('smokeTest', async stats => {
+      await tsMessagesPromise;
+      if (stats.hasErrors() || stats.hasWarnings()) {
+        process.exit(1);
+      } else {
+        process.exit(0);
+      }
+    });
+  }
+
   return compiler;
 }
 
@@ -273,15 +321,9 @@ function prepareProxy(proxy, appPublicFolder) {
     return undefined;
   }
   if (typeof proxy !== 'string') {
-    console.log(
-      chalk.red('When specified, "proxy" in package.json must be a string.')
-    );
-    console.log(
-      chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".')
-    );
-    console.log(
-      chalk.red('Either remove "proxy" from package.json, or make it a string.')
-    );
+    console.log(chalk.red('When specified, "proxy" in package.json must be a string.'));
+    console.log(chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".'));
+    console.log(chalk.red('Either remove "proxy" from package.json, or make it a string.'));
     process.exit(1);
   }
 
@@ -364,8 +406,7 @@ function choosePort(host, defaultPort) {
             name: 'shouldChangePort',
             message:
               chalk.yellow(
-                message +
-                  `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
+                message + `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
               ) + '\n\nWould you like to run the app on another port instead?',
             default: true,
           };

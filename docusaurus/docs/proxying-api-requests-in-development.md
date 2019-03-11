@@ -17,13 +17,13 @@ Such setup is **not** required. However, if you **do** have a setup like this, i
 
 To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field to your `package.json`, for example:
 
-```js
+```json
   "proxy": "http://localhost:4000",
 ```
 
 This way, when you `fetch('/api/todos')` in development, the development server will recognize that it’s not a static asset, and will proxy your request to `http://localhost:4000/api/todos` as a fallback. The development server will **only** attempt to send requests without `text/html` in its `Accept` header to the proxy.
 
-Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
+Conveniently, this avoids [CORS issues](https://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
 
 ```
 Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
@@ -35,7 +35,7 @@ The `proxy` option supports HTTP, HTTPS and WebSocket connections.<br>
 If the `proxy` option is **not** flexible enough for you, alternatively you can:
 
 - [Configure the proxy yourself](#configuring-the-proxy-manually)
-- Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
+- Enable CORS on your server ([here’s how to do it for Express](https://enable-cors.org/server_expressjs.html)).
 - Use [environment variables](adding-custom-environment-variables.md) to inject the right server host and port into your app.
 
 ## "Invalid Host Header" Errors After Configuring Proxy
@@ -74,7 +74,7 @@ You can use this feature in conjunction with the `proxy` property in `package.js
 
 First, install `http-proxy-middleware` using npm or Yarn:
 
-```bash
+```sh
 $ npm install http-proxy-middleware --save
 $ # or
 $ yarn add http-proxy-middleware

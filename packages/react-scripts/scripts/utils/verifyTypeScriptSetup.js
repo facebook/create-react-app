@@ -8,7 +8,7 @@
 
 'use strict';
 
-const chalk = require('chalk');
+const chalk = require('react-dev-utils/chalk');
 const fs = require('fs');
 const resolve = require('resolve');
 const path = require('path');
@@ -22,7 +22,9 @@ function writeJson(fileName, object) {
 }
 
 function verifyNoTypeScript() {
-  const typescriptFiles = globby('**/*.(ts|tsx)', { cwd: paths.appSrc });
+  const typescriptFiles = globby(['**/*.(ts|tsx)', '!**/node_modules', '!**/*.d.ts'], {
+    cwd: paths.appSrc,
+  });
   if (typescriptFiles.length > 0) {
     console.warn(
       chalk.yellow(
@@ -69,9 +71,7 @@ function verifyTypeScriptSetup() {
         'Please install',
         chalk.cyan.bold('typescript'),
         'by running',
-        chalk.cyan.bold(
-          isYarn ? 'yarn add typescript' : 'npm install typescript'
-        ) + '.'
+        chalk.cyan.bold(isYarn ? 'yarn add typescript' : 'npm install typescript') + '.'
       )
     );
     console.error(
@@ -141,10 +141,7 @@ function verifyTypeScriptSetup() {
   let parsedTsConfig;
   let parsedCompilerOptions;
   try {
-    const { config: readTsConfig, error } = ts.readConfigFile(
-      paths.appTsConfig,
-      ts.sys.readFile
-    );
+    const { config: readTsConfig, error } = ts.readConfigFile(paths.appTsConfig, ts.sys.readFile);
 
     if (error) {
       throw new Error(ts.formatDiagnostic(error, formatDiagnosticHost));
@@ -157,17 +154,11 @@ function verifyTypeScriptSetup() {
     // adding in "include" and "exclude", but the compilerOptions remain untouched
     let result;
     parsedTsConfig = immer(readTsConfig, config => {
-      result = ts.parseJsonConfigFileContent(
-        config,
-        ts.sys,
-        path.dirname(paths.appTsConfig)
-      );
+      result = ts.parseJsonConfigFileContent(config, ts.sys, path.dirname(paths.appTsConfig));
     });
 
     if (result.errors && result.errors.length) {
-      throw new Error(
-        ts.formatDiagnostic(result.errors[0], formatDiagnosticHost)
-      );
+      throw new Error(ts.formatDiagnostic(result.errors[0], formatDiagnosticHost));
     }
 
     parsedCompilerOptions = result.options;
@@ -198,18 +189,17 @@ function verifyTypeScriptSetup() {
       if (parsedCompilerOptions[option] === undefined) {
         appTsConfig.compilerOptions[option] = suggested;
         messages.push(
-          `${coloredOption} to be ${chalk.bold(
-            'suggested'
-          )} value: ${chalk.cyan.bold(suggested)} (this can be changed)`
+          `${coloredOption} to be ${chalk.bold('suggested')} value: ${chalk.cyan.bold(
+            suggested
+          )} (this can be changed)`
         );
       }
     } else if (parsedCompilerOptions[option] !== valueToCheck) {
       appTsConfig.compilerOptions[option] = value;
       messages.push(
-        `${coloredOption} ${chalk.bold(
-          valueToCheck == null ? 'must not' : 'must'
-        )} be ${valueToCheck == null ? 'set' : chalk.cyan.bold(value)}` +
-          (reason != null ? ` (${reason})` : '')
+        `${coloredOption} ${chalk.bold(valueToCheck == null ? 'must not' : 'must')} be ${
+          valueToCheck == null ? 'set' : chalk.cyan.bold(value)
+        }` + (reason != null ? ` (${reason})` : '')
       );
     }
   }
@@ -217,19 +207,13 @@ function verifyTypeScriptSetup() {
   // tsconfig will have the merged "include" and "exclude" by this point
   if (parsedTsConfig.include == null) {
     appTsConfig.include = ['src'];
-    messages.push(
-      `${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`
-    );
+    messages.push(`${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`);
   }
 
   if (messages.length > 0) {
     if (firstTimeSetup) {
       console.log(
-        chalk.bold(
-          'Your',
-          chalk.cyan('tsconfig.json'),
-          'has been populated with default values.'
-        )
+        chalk.bold('Your', chalk.cyan('tsconfig.json'), 'has been populated with default values.')
       );
       console.log();
     } else {
@@ -250,10 +234,7 @@ function verifyTypeScriptSetup() {
 
   // Reference `react-scripts` types
   if (!fs.existsSync(paths.appTypeDeclarations)) {
-    fs.writeFileSync(
-      paths.appTypeDeclarations,
-      `/// <reference types="react-scripts" />${os.EOL}`
-    );
+    fs.writeFileSync(paths.appTypeDeclarations, `/// <reference types="react-scripts" />${os.EOL}`);
   }
 }
 

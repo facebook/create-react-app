@@ -12,13 +12,7 @@ const url = require('url');
 const globalModules = require('global-modules');
 const fs = require('fs');
 
-function printHostingInstructions(
-  appPackage,
-  publicUrl,
-  publicPath,
-  buildFolder,
-  useYarn
-) {
+function printHostingInstructions(appPackage, publicUrl, publicPath, buildFolder, useYarn) {
   if (publicUrl && publicUrl.includes('.github.io/')) {
     // "homepage": "http://user.github.io/project"
     const publicPathname = url.parse(publicPath).pathname;
@@ -39,7 +33,7 @@ function printHostingInstructions(
   console.log();
   console.log('Find out more about deployment here:');
   console.log();
-  console.log(`  ${chalk.yellow('http://bit.ly/CRA-deploy')}`);
+  console.log(`  ${chalk.yellow('https://bit.ly/CRA-deploy')}`);
   console.log();
 }
 
@@ -50,9 +44,9 @@ function printBaseMessage(buildFolder, hostingLocation) {
     )}.`
   );
   console.log(
-    `You can control this with the ${chalk.green(
-      'homepage'
-    )} field in your ${chalk.cyan('package.json')}.`
+    `You can control this with the ${chalk.green('homepage')} field in your ${chalk.cyan(
+      'package.json'
+    )}.`
   );
 
   if (!hostingLocation) {
@@ -70,7 +64,7 @@ function printBaseMessage(buildFolder, hostingLocation) {
 }
 
 function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
-  console.log(`To publish it at ${chalk.green(publicUrl)}, run:`);
+  console.log(`To publish it at ${chalk.green(publicUrl)} , run:`);
   console.log();
 
   // If script deploy has been added to package.json, skip the instructions
@@ -82,9 +76,7 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
     }
     console.log();
 
-    console.log(
-      `Add the following script in your ${chalk.cyan('package.json')}.`
-    );
+    console.log(`Add the following script in your ${chalk.cyan('package.json')}.`);
     console.log();
 
     console.log(`    ${chalk.dim('// ...')}`);
@@ -95,11 +87,7 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
         `"${useYarn ? 'yarn' : 'npm run'} build",`
       )}`
     );
-    console.log(
-      `      ${chalk.yellow('"deploy"')}: ${chalk.yellow(
-        '"gh-pages -d build"'
-      )}`
-    );
+    console.log(`      ${chalk.yellow('"deploy"')}: ${chalk.yellow('"gh-pages -d build"')}`);
     console.log('    }');
     console.log();
 
