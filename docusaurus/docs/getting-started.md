@@ -9,6 +9,7 @@ applications. It offers a modern build setup with no configuration.
 ## Quick Start
 
 ```sh
+npm install -g create-react-app
 npx create-react-app my-app
 cd my-app
 npm start
