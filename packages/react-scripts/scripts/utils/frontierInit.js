@@ -74,7 +74,7 @@ function installFrontierDependencies(appPath, answers, ownPath) {
     ...[
       'eslint@5.6.0',
       '@fs/eslint-config-frontier-react',
-      'react-styleguidist@9.0.0-beta4',
+      'react-styleguidist@9.0.4',
       'webpack@4.19.1',
     ]
   );
