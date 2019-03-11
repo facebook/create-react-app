@@ -67,7 +67,9 @@ function installFrontierDependencies(appPath, answers, ownPath) {
   // we always call this handle function. If usePolymer is false, it will remove the comments that we manually placed in the index file
   handlePolymerCodeAndComments(appPath, usePolymer, useHF);
 
-  depsToInstall.push(...['http-proxy-middleware@0.19.0', 'fs-webdev/exo', '@reach/router']);
+  depsToInstall.push(
+    ...['http-proxy-middleware@0.19.0', 'fs-webdev/exo', '@reach/router', '@fs/axios-defaults']
+  );
   devDepsToInstall.push(
     ...[
       'eslint@5.6.0',
