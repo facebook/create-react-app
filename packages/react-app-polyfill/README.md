@@ -19,13 +19,13 @@ _If you need more features, you must include them manually._
 
 First, install the package using Yarn or npm:
 
-```bash
+```sh
 npm install react-app-polyfill
 ```
 
 or
 
-```bash
+```sh
 yarn add react-app-polyfill
 ```
 

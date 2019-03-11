@@ -12,7 +12,7 @@ Following this rule often makes CSS preprocessors less useful, as features like 
 
 To use Sass, first install `node-sass`:
 
-```bash
+```sh
 $ npm install node-sass --save
 $ # or
 $ yarn add node-sass

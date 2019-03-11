@@ -8,7 +8,7 @@
 
 'use strict';
 
-const chalk = require('chalk');
+const chalk = require('react-dev-utils/chalk');
 const fs = require('fs');
 const path = require('path');
 
@@ -70,9 +70,7 @@ function verifyPackageTree() {
       if (!fs.existsSync(maybeDepPackageJson)) {
         return;
       }
-      const depPackageJson = JSON.parse(
-        fs.readFileSync(maybeDepPackageJson, 'utf8')
-      );
+      const depPackageJson = JSON.parse(fs.readFileSync(maybeDepPackageJson, 'utf8'));
       const expectedVersion = expectedVersionsByDep[dep];
       if (depPackageJson.version !== expectedVersion) {
         console.error(
@@ -85,9 +83,7 @@ function verifyPackageTree() {
             `The ${chalk.bold(
               ownPackageJson.name
             )} package provided by Create React App requires a dependency:\n\n` +
-            chalk.green(
-              `  "${chalk.bold(dep)}": "${chalk.bold(expectedVersion)}"\n\n`
-            ) +
+            chalk.green(`  "${chalk.bold(dep)}": "${chalk.bold(expectedVersion)}"\n\n`) +
             `Don't try to install it manually: your package manager does it automatically.\n` +
             `However, a different version of ${chalk.bold(
               dep
@@ -105,31 +101,23 @@ function verifyPackageTree() {
             `To ${chalk.green(
               'fix'
             )} the dependency tree, try following the steps below in the exact order:\n\n` +
-            `  ${chalk.cyan('1.')} Delete ${chalk.bold(
-              'package-lock.json'
-            )} (${chalk.underline('not')} ${chalk.bold(
-              'package.json'
-            )}!) and/or ${chalk.bold('yarn.lock')} in your project folder.\n` +
-            `  ${chalk.cyan('2.')} Delete ${chalk.bold(
-              'node_modules'
+            `  ${chalk.cyan('1.')} Delete ${chalk.bold('package-lock.json')} (${chalk.underline(
+              'not'
+            )} ${chalk.bold('package.json')}!) and/or ${chalk.bold(
+              'yarn.lock'
             )} in your project folder.\n` +
-            `  ${chalk.cyan('3.')} Remove "${chalk.bold(
-              dep
-            )}" from ${chalk.bold('dependencies')} and/or ${chalk.bold(
-              'devDependencies'
-            )} in the ${chalk.bold(
+            `  ${chalk.cyan('2.')} Delete ${chalk.bold('node_modules')} in your project folder.\n` +
+            `  ${chalk.cyan('3.')} Remove "${chalk.bold(dep)}" from ${chalk.bold(
+              'dependencies'
+            )} and/or ${chalk.bold('devDependencies')} in the ${chalk.bold(
               'package.json'
             )} file in your project folder.\n` +
-            `  ${chalk.cyan('4.')} Run ${chalk.bold(
-              'npm install'
-            )} or ${chalk.bold(
+            `  ${chalk.cyan('4.')} Run ${chalk.bold('npm install')} or ${chalk.bold(
               'yarn'
             )}, depending on the package manager you use.\n\n` +
             `In most cases, this should be enough to fix the problem.\n` +
             `If this has not helped, there are a few other things you can try:\n\n` +
-            `  ${chalk.cyan('5.')} If you used ${chalk.bold(
-              'npm'
-            )}, install ${chalk.bold(
+            `  ${chalk.cyan('5.')} If you used ${chalk.bold('npm')}, install ${chalk.bold(
               'yarn'
             )} (http://yarnpkg.com/) and repeat the above steps with it instead.\n` +
             `     This may help because npm has known issues with package hoisting which may get resolved in future versions.\n\n` +

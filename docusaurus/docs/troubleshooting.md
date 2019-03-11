@@ -28,7 +28,7 @@ We recommend deleting `node_modules` in your project and running `npm install` (
 - [facebook/watchman#358](https://github.com/facebook/watchman/issues/358)
 - [ember-cli/ember-cli#6259](https://github.com/ember-cli/ember-cli/issues/6259)
 
-It is reported that installing Watchman 4.7.0 or newer fixes the issue. If you use [Homebrew](http://brew.sh/), you can run these commands to update it:
+It is reported that installing Watchman 4.7.0 or newer fixes the issue. If you use [Homebrew](https://brew.sh/), you can run these commands to update it:
 
 ```
 watchman shutdown-server
