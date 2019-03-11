@@ -623,7 +623,6 @@ module.exports = function(webpackEnv) {
           tsconfig: paths.appTsConfig,
           reportFiles: [
             '**',
-            '!**/*.json',
             '!**/__tests__/**',
             '!**/?(*.)(spec|test).*',
             '!**/src/setupProxy.*',
