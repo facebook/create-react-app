@@ -87,6 +87,7 @@ function installFrontierDependencies(appPath, answers, ownPath) {
       test: `eslint src/ && ${packageJson.scripts.test}`,
     };
     packageJson.scripts = { ...packageJson.scripts, ...additionalScripts };
+    delete packageJson.scripts.eject;
     packageJson.eslintConfig = {
       extends: ['@fs/eslint-config-frontier-react'],
     };
@@ -151,7 +152,6 @@ function configureHF(appPath, ownPath) {
       start: 'react-scripts start',
     };
     packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
-    delete packageJson.scripts.eject;
     packageJson.main = './server.js';
 
     return packageJson;
