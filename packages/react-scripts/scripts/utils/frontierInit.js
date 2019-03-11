@@ -68,7 +68,7 @@ function installFrontierDependencies(appPath, answers, ownPath) {
   handlePolymerCodeAndComments(appPath, usePolymer, useHF);
 
   depsToInstall.push(
-    ...['http-proxy-middleware@0.19.0', 'fs-webdev/exo', '@reach/router', '@fs/axios-defaults']
+    ...['http-proxy-middleware@0.19.0', 'fs-webdev/exo', '@reach/router', '@fs/axios']
   );
   devDepsToInstall.push(
     ...[
