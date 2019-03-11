@@ -13,6 +13,10 @@ module.exports = {
   packageJsonWritten,
 };
 
+const polymerFromCDNCode = `
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/custom-elements-es5-adapter.js"></script>
+ `;
 const depsToInstall = [];
 const devDepsToInstall = [];
 
@@ -48,21 +52,24 @@ function packageJsonWritten() {}
 
 function installFrontierDependencies(appPath, answers, ownPath) {
   const { additionalFeatures } = answers;
+  const usePolymer = additionalFeatures.includes('polymer');
+  const useEF = additionalFeatures.includes('electric-flow');
+  const useHF = additionalFeatures.includes('header-footer');
 
-  if (additionalFeatures.includes('polymer')) {
-    configurePolymer(appPath);
-  }
-  if (
-    additionalFeatures.includes('electric-flow') ||
-    additionalFeatures.includes('header-footer')
-  ) {
+  //it doesn't make sense to use header-footer without setting up electric-flow but theoretically
+  //it might be useful to setup electric-flow without header-footer
+  if (useEF || useHF) {
     configureEF(appPath, ownPath);
   }
-  if (additionalFeatures.includes('header-footer')) {
+  if (useHF) {
     configureHF(appPath, ownPath);
   }
+  // we always call this handle function. If usePolymer is false, it will remove the comments that we manually placed in the index file
+  handlePolymerCodeAndComments(appPath, usePolymer, useHF);
 
-  depsToInstall.push(...['http-proxy-middleware@0.19.0', 'fs-webdev/exo', '@reach/router']);
+  depsToInstall.push(
+    ...['http-proxy-middleware@0.19.0', 'fs-webdev/exo', '@reach/router', '@fs/axios']
+  );
   devDepsToInstall.push(
     ...[
       'eslint@5.6.0',
@@ -82,6 +89,7 @@ function installFrontierDependencies(appPath, answers, ownPath) {
       test: `eslint src/ && ${packageJson.scripts.test}`,
     };
     packageJson.scripts = { ...packageJson.scripts, ...additionalScripts };
+    delete packageJson.scripts.eject;
     packageJson.eslintConfig = {
       extends: ['@fs/eslint-config-frontier-react'],
     };
@@ -90,6 +98,20 @@ function installFrontierDependencies(appPath, answers, ownPath) {
   installModulesSync(depsToInstall);
   installModulesSync(devDepsToInstall, true);
 }
+
+function handlePolymerCodeAndComments(appPath, usePolymer, useHF) {
+  let filePath = 'public/index.html';
+  if (useHF) {
+    filePath = 'views/index.ejs';
+  }
+
+  if (usePolymer) {
+    replaceComment(appPath, filePath, polymerFromCDNCode);
+  } else {
+    replaceComment(appPath, filePath, '');
+  }
+}
+
 function alterPackageJsonFile(appPath, extendFunction) {
   let appPackage = JSON.parse(fs.readFileSync(path.join(appPath, 'package.json'), 'UTF8'));
   appPackage = extendFunction(appPackage);
@@ -99,38 +121,15 @@ function alterPackageJsonFile(appPath, extendFunction) {
   );
 }
 
-function configurePolymer(appPath) {
-  alterPackageJsonFile(appPath, appPackage => {
-    const packageJson = { ...appPackage };
-    packageJson.vendorCopy = [
-      {
-        from: 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
-        to: 'public/vendor/custom-elements-es5-adapter.js',
-      },
-      {
-        from: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js',
-        to: 'public/vendor/webcomponents-bundle.js',
-      },
-    ];
-    packageJson.scripts.postinstall = 'vendor-copy';
-    return packageJson;
-  });
+function replaceComment(appPath, fileToInjectIntoPath, stringToInject) {
+  const indexPath = path.join(appPath, fileToInjectIntoPath);
+  let indexCode = fs.readFileSync(indexPath, 'UTF8');
 
-  injectPolymerCode(appPath);
-  devDepsToInstall.push(...['vendor-copy@2.0.0', '@webcomponents/webcomponentsjs@2.1.3']);
-}
-
-function injectPolymerCode(appPath) {
-  const indexPath = path.join(appPath, 'public/index.html');
-  let indexHtml = fs.readFileSync(indexPath, 'UTF8');
-
-  const polymerCode = `
-    <script src="%PUBLIC_URL%/vendor/webcomponents-bundle.js"></script>
-    <script src="%PUBLIC_URL%/vendor/custom-elements-es5-adapter.js"></script>
- `;
-
-  indexHtml = indexHtml.replace('<!--FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->', polymerCode);
-  fs.writeFileSync(indexPath, indexHtml);
+  indexCode = indexCode.replace(
+    '<!--FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->',
+    stringToInject
+  );
+  fs.writeFileSync(indexPath, indexCode);
 }
 
 function configureEF(appPath, ownPath) {
@@ -139,15 +138,6 @@ function configureEF(appPath, ownPath) {
 
   const templatePath = path.join(ownPath, 'template-ef');
   fs.copySync(templatePath, appPath, { overwrite: true });
-
-  alterPackageJsonFile(appPath, appPackage => {
-    const packageJson = { ...appPackage };
-    const additionalScripts = {
-      'heroku-prebuild': './heroku-prebuild.sh',
-    };
-    packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
-    return packageJson;
-  });
 
   depsToInstall.push(...['express']);
 }
@@ -161,6 +151,7 @@ function configureHF(appPath, ownPath) {
     const additionalScripts = {
       'build:prod': 'PUBLIC_URL=https://edge.fscdn.org/assets/ react-scripts build',
       'heroku-postbuild': 'npm run build:prod',
+      start: 'react-scripts start',
     };
     packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
     packageJson.main = './server.js';
