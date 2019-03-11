@@ -2,8 +2,8 @@ const setProxies = require('exo/proxy');
 const hf = require('hf');
 const snow = require('snow');
 const waitForWebpack = require('snow/lib/utils/waitForWebpack.js');
-
 const snowConfig = require('../snow.config.js');
+
 const initiatedDirectory = process.env.INIT_CWD;
 
 module.exports = app => {
