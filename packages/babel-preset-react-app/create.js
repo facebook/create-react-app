@@ -34,24 +34,12 @@ module.exports = function(api, opts, env) {
     opts.useESModules,
     isEnvDevelopment || isEnvProduction
   );
-  var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
-  var isTypeScriptEnabled = validateBoolOption(
-    'typescript',
-    opts.typescript,
-    true
-  );
   var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
-  var useAbsoluteRuntime = validateBoolOption(
-    'absoluteRuntime',
-    opts.absoluteRuntime,
-    true
-  );
+  var useAbsoluteRuntime = validateBoolOption('absoluteRuntime', opts.absoluteRuntime, true);
 
   var absoluteRuntimePath = undefined;
   if (useAbsoluteRuntime) {
-    absoluteRuntimePath = path.dirname(
-      require.resolve('@babel/runtime/package.json')
-    );
+    absoluteRuntimePath = path.dirname(require.resolve('@babel/runtime/package.json'));
   }
 
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
@@ -79,11 +67,8 @@ module.exports = function(api, opts, env) {
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
-          // We want Create React App to be IE 9 compatible until React itself
-          // no longer works with IE 9
-          targets: {
-            ie: 9,
-          },
+          // FamilySearch compatibility target, not necessarily React's target:
+          targets: '> 0.5% and not dead and not ie <= 10',
           // Users cannot override this behavior because this Babel
           // configuration is highly tuned for ES5 support
           ignoreBrowserslistConfig: true,
@@ -97,29 +82,14 @@ module.exports = function(api, opts, env) {
         },
       ],
       [
-        require('@babel/preset-react').default,
+        require('@emotion/babel-preset-css-prop').default,
         {
-          // Adds component stack to warning messages
-          // Adds __self attribute to JSX which React will use for some warnings
-          development: isEnvDevelopment || isEnvTest,
-          // Will use the native built-in instead of trying to polyfill
-          // behavior for any plugins that require one.
-          useBuiltIns: true,
+          autoLabel: !isEnvProduction,
+          sourceMap: !isEnvProduction,
         },
       ],
-      isTypeScriptEnabled && [require('@babel/preset-typescript').default],
     ].filter(Boolean),
     plugins: [
-      // Strip flow types before any other transform, emulating the behavior
-      // order as-if the browser supported all of the succeeding features
-      // https://github.com/facebook/create-react-app/pull/5182
-      // We will conditionally enable this plugin below in overrides as it clashes with
-      // @babel/plugin-proposal-decorators when using TypeScript.
-      // https://github.com/facebook/create-react-app/issues/5741
-      isFlowEnabled && [
-        require('@babel/plugin-transform-flow-strip-types').default,
-        false,
-      ],
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
@@ -127,11 +97,6 @@ module.exports = function(api, opts, env) {
       // in practice some other transforms (such as object-rest-spread)
       // don't work without it: https://github.com/babel/babel/issues/7215
       require('@babel/plugin-transform-destructuring').default,
-      // Turn on legacy decorators for TypeScript files
-      isTypeScriptEnabled && [
-        require('@babel/plugin-proposal-decorators').default,
-        false,
-      ],
       // class { handleClick = () => { } }
       // Enable loose mode to use assignment instead of defineProperty
       // See discussion in https://github.com/facebook/create-react-app/issues/4263
@@ -177,24 +142,11 @@ module.exports = function(api, opts, env) {
       ],
       // Adds syntax support for import()
       require('@babel/plugin-syntax-dynamic-import').default,
-      isEnvTest &&
-        // Transform dynamic import to require
-        require('babel-plugin-dynamic-import-node'),
-    ].filter(Boolean),
-    overrides: [
-      isFlowEnabled && {
-        exclude: /\.tsx?$/,
-        plugins: [require('@babel/plugin-transform-flow-strip-types').default],
-      },
-      isTypeScriptEnabled && {
-        test: /\.tsx?$/,
-        plugins: [
-          [
-            require('@babel/plugin-proposal-decorators').default,
-            { legacy: true },
-          ],
-        ],
-      },
+      // Transform dynamic import to require
+      isEnvTest && require('babel-plugin-dynamic-import-node'),
+      require('@babel/plugin-transform-react-display-name'),
+      isEnvDevelopment && require('@babel/plugin-transform-react-jsx-source'),
+      isEnvDevelopment && require('@babel/plugin-transform-react-jsx-self'),
     ].filter(Boolean),
   };
 };

@@ -1,11 +1,11 @@
 {
-  "name": "babel-preset-react-app",
-  "version": "7.0.2",
-  "description": "Babel preset used by Create React App",
-  "repository": "facebook/create-react-app",
+  "name": "@fs/babel-preset-react-app",
+  "version": "???",
+  "description": "Babel preset used by FamilySearch's Create React App",
+  "repository": "fs-webdev/create-react-app",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/fs-webdev/create-react-app/issues"
   },
   "files": [
     "create.js",
@@ -27,11 +27,14 @@
     "@babel/plugin-transform-flow-strip-types": "7.2.3",
     "@babel/plugin-transform-react-constant-elements": "7.2.0",
     "@babel/plugin-transform-react-display-name": "7.2.0",
+    "@babel/plugin-transform-react-jsx-self": "7.2.0",
+    "@babel/plugin-transform-react-jsx-source": "7.2.0",
     "@babel/plugin-transform-runtime": "7.2.0",
     "@babel/preset-env": "7.3.1",
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.1.0",
     "@babel/runtime": "7.3.1",
+    "@emotion/babel-preset-css-prop": "^10.0.9",
     "babel-loader": "8.0.5",
     "babel-plugin-dynamic-import-node": "2.2.0",
     "babel-plugin-macros": "2.5.0",
