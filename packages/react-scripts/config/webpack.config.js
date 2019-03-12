@@ -41,6 +41,9 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
+// For keeping classNames while minifying the sources for production build
+const terserKeepClassNames = process.env.KEEP_CLASS_NAMES === 'true';
+
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
@@ -185,6 +188,7 @@ module.exports = function(webpackEnv) {
         // This is only used in production mode
         new TerserPlugin({
           terserOptions: {
+            keep_fnames: terserKeepClassNames,
             parse: {
               // we want terser to parse ecma 8 code. However, we don't want it
               // to apply any minfication steps that turns valid ecma 5 code
