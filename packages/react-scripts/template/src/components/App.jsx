@@ -1,10 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
-import styles from './App.module.css';
+import {css} from '@emotion/core';
+// import styles from './App.module.css';
 
 function App() {
   return (
-    <div className={styles.app}>
+    <div css={css`text-align: center`} >
       <header className={styles.appHeader}>
         <img src={logo} className={styles.appLogo} alt="logo" />
         <p>
