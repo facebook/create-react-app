@@ -1,6 +1,6 @@
 {
   "name": "@fs/babel-preset-react-app",
-  "version": "???",
+  "version": "1.0.0",
   "description": "Babel preset used by FamilySearch's Create React App",
   "repository": "fs-webdev/create-react-app",
   "license": "MIT",

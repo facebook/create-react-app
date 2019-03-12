@@ -351,11 +351,11 @@ module.exports = function(webpackEnv) {
               include: paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {
-                customize: require.resolve('babel-preset-react-app/webpack-overrides'),
+                customize: require.resolve('@fs/babel-preset-react-app/webpack-overrides'),
                 // @remove-on-eject-begin
                 babelrc: false,
                 configFile: false,
-                presets: [require.resolve('babel-preset-react-app')],
+                presets: [require.resolve('@fs/babel-preset-react-app')],
                 // Make sure we have a unique cache identifier, erring on the
                 // side of caution.
                 // We remove this when the user ejects because the default
@@ -407,7 +407,10 @@ module.exports = function(webpackEnv) {
                     configFile: false,
                     compact: false,
                     presets: [
-                      [require.resolve('babel-preset-react-app/dependencies'), { helpers: true }],
+                      [
+                        require.resolve('@fs/babel-preset-react-app/dependencies'),
+                        { helpers: true },
+                      ],
                     ],
                     plugins: [
                       [
