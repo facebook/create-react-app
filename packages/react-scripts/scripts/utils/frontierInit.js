@@ -165,6 +165,7 @@ function configureHF(appPath, ownPath) {
     };
     packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
     packageJson.main = './server.js';
+    packageJson.engines = { node: '10' };
 
     return packageJson;
   });
