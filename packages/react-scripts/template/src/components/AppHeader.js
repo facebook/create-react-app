@@ -1,5 +1,5 @@
-import React from 'react';
-import { css } from '@emotion/core';
+import React from 'react'
+import { css } from '@emotion/core'
 
 const styles = css`
   background-color: #282c34;
@@ -10,8 +10,8 @@ const styles = css`
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-`;
+`
 
-const AppHeader = ({ children }) => <header css={styles}>{children}</header>;
+const AppHeader = ({ children }) => <header css={styles}>{children}</header>
 
-export default AppHeader;
+export default AppHeader
