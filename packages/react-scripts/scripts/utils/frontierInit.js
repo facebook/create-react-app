@@ -75,6 +75,7 @@ function installFrontierDependencies(appPath, answers, ownPath) {
       '@reach/router',
       '@fs/axios',
       '@emotion/core',
+      '@fs/user',
     ]
   );
   devDepsToInstall.push(
@@ -83,6 +84,8 @@ function installFrontierDependencies(appPath, answers, ownPath) {
       '@fs/eslint-config-frontier-react',
       'react-styleguidist@9.0.4',
       'webpack@4.28.3',
+      '@fs/testing-library',
+      'jest-dom',
     ]
   );
 
