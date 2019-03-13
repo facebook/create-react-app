@@ -13,7 +13,7 @@ const App = () => (
     <AppHeader>
       <Logo />
       <p>
-        Edit <code>src/components/App.jsx</code> and save to reload.
+        Edit <code>src/components/App.js</code> and save to reload.
       </p>
       <a
         css={css`

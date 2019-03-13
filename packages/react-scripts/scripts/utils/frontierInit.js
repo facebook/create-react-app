@@ -5,7 +5,6 @@ const os = require('os');
 const path = require('path');
 const fsCli = require('fs-cli-goodies');
 const inquirer = require('inquirer');
-const execSync = require('child_process').execSync;
 const osUtils = require('./osUtils');
 
 module.exports = {
@@ -70,22 +69,22 @@ function installFrontierDependencies(appPath, answers, ownPath) {
 
   depsToInstall.push(
     ...[
-      'http-proxy-middleware@0.19.0',
-      'fs-webdev/exo',
-      '@reach/router',
       '@fs/axios',
-      '@emotion/core',
       '@fs/user',
+      'fs-webdev/exo',
+      'http-proxy-middleware@0.19.1',
+      '@reach/router@1.2.1',
+      '@emotion/core@10.0.9',
     ]
   );
   devDepsToInstall.push(
     ...[
-      'eslint@5.12.0',
       '@fs/eslint-config-frontier-react',
+      '@fs/testing-library',
+      'eslint@5.12.0',
       'react-styleguidist@9.0.4',
       'webpack@4.28.3',
-      '@fs/testing-library',
-      'jest-dom',
+      'jest-dom@3.1.3',
     ]
   );
 
@@ -107,9 +106,6 @@ function installFrontierDependencies(appPath, answers, ownPath) {
   });
   installModulesSync(depsToInstall);
   installModulesSync(devDepsToInstall, true);
-  // we delete the package-lock.json after all is said and done. the package-lock already exists from cra, so even adding the
-  // --no-package-lock flag to our own calls when we install deps wouldn't fix the issue
-  execSync('rm -f package-lock.json', { stdio: 'ignore' });
 }
 
 function handlePolymerCodeAndComments(appPath, usePolymer, useHF) {
@@ -152,7 +148,7 @@ function configureEF(appPath, ownPath) {
   const templatePath = path.join(ownPath, 'template-ef');
   fs.copySync(templatePath, appPath, { overwrite: true });
 
-  depsToInstall.push(...['express']);
+  depsToInstall.push(...['express@4.16.4']);
 }
 
 function configureHF(appPath, ownPath) {
