@@ -1,20 +1,20 @@
-const setProxies = require('exo/proxy');
-const snow = require('snow');
-const setWebpackManifest = require('snow/lib/utils/webpackManifest.js');
-const snowConfig = require('./snow.config.js');
-const hf = require('hf');
+const setProxies = require('exo/proxy')
+const snow = require('snow')
+const setWebpackManifest = require('snow/lib/utils/webpackManifest.js')
+const snowConfig = require('./snow.config.js')
+const hf = require('hf')
 
 /**
  * Expose the app
  */
-const app = (module.exports = snow(__dirname, hf, snowConfig));
+const app = (module.exports = snow(__dirname, hf, snowConfig))
 
-setWebpackManifest(app, 'build');
+setWebpackManifest(app, 'build')
 
 if (app.get('env') === 'development') {
   app.stack.front(function() {
-    setProxies(app);
-  });
+    setProxies(app)
+  })
 }
 
 app.stack.postRoute(function() {
@@ -22,6 +22,6 @@ app.stack.postRoute(function() {
     res.render('index', {
       indexPath: '../build/_index.html',
       // _layoutFile: './async_layout'
-    });
-  });
-});
+    })
+  })
+})
