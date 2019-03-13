@@ -79,15 +79,22 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'coverageThreshold',
     'globalSetup',
     'globalTeardown',
+    'moduleNameMapper',
     'resetMocks',
     'resetModules',
     'snapshotSerializers',
     'watchPathIgnorePatterns',
   ];
+  const mergedKeys = ['moduleNameMapper'];
   if (overrides) {
     supportedKeys.forEach(key => {
       if (overrides.hasOwnProperty(key)) {
-        config[key] = overrides[key];
+        if (mergedKeys.includes(key)) {
+          // Allow overrides[key] to override internal configuration
+          config[key] = Object.assign(config[key], overrides[key]);
+        } else {
+          config[key] = overrides[key];
+        }
         delete overrides[key];
       }
     });
