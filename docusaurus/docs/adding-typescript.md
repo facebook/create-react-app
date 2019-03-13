@@ -33,6 +33,9 @@ Type errors will show up in the same console as the build one.
 
 To learn more about TypeScript, check out [its documentation](https://www.typescriptlang.org/).
 
+> **Note:** If your project is not created with TypeScript enabled, npx may be using a cached version of `create-react-app`.
+> Remove previously installed versions with `npm uninstall -g create-react-app` (see [#6119](https://github.com/facebook/create-react-app/issues/6119#issuecomment-451614035)).
+
 > **Note:** You are not required to make a [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), one will be made for you.
 > You are allowed to edit the generated TypeScript configuration.
 
