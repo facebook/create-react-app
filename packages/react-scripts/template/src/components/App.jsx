@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import styles from './App.module.css';
+import { css } from '@emotion/core';
 
-function App() {
-  return (
-    <div className={styles.app}>
-      <header className={styles.appHeader}>
-        <img src={logo} className={styles.appLogo} alt="logo" />
-        <p>
-          Edit <code>src/components/App.jsx</code> and save to reload.
-        </p>
-        <a
-          className={styles.appLink}
-          href="https://www.familysearch.org/frontier/docs/#/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Frontier
-        </a>
-      </header>
-    </div>
-  );
-}
+import Logo from './Logo';
+import AppHeader from './AppHeader';
+
+const App = () => (
+  <div
+    css={css`
+      text-align: center;
+    `}
+  >
+    <AppHeader>
+      <Logo />
+      <p>
+        Edit <code>src/components/App.jsx</code> and save to reload.
+      </p>
+      <a
+        css={css`
+          color: #61dafb;
+        `}
+        href="https://www.familysearch.org/frontier/docs/#/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Learn Frontier
+      </a>
+    </AppHeader>
+  </div>
+);
 
 export default App;
