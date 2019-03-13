@@ -25,7 +25,6 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.2.2",
-    "@emotion/core": "^10.0.9",
     "@fs/eslint-config-frontier-react": "^1.1.0",
     "@svgr/webpack": "4.1.0",
     "babel-core": "7.0.0-bridge.0",
@@ -34,7 +33,7 @@
     "babel-loader": "8.0.5",
     "babel-plugin-bundled-import-meta": "^0.2.0",
     "babel-plugin-named-asset-import": "^0.3.1",
-    "@fs/babel-preset-react-app": "^1.0.0",
+    "@fs/babel-preset-frontier": "^1.0.0",
     "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "copy-webpack-plugin": "^4.6.0",

@@ -351,11 +351,11 @@ module.exports = function(webpackEnv) {
               include: paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {
-                customize: require.resolve('@fs/babel-preset-react-app/webpack-overrides'),
+                customize: require.resolve('@fs/babel-preset-frontier/webpack-overrides'),
                 // @remove-on-eject-begin
                 babelrc: false,
                 configFile: false,
-                presets: [require.resolve('@fs/babel-preset-react-app')],
+                presets: [require.resolve('@fs/babel-preset-frontier')],
                 // Make sure we have a unique cache identifier, erring on the
                 // side of caution.
                 // We remove this when the user ejects because the default
@@ -365,7 +365,7 @@ module.exports = function(webpackEnv) {
                   isEnvProduction ? 'production' : isEnvDevelopment && 'development',
                   [
                     'babel-plugin-named-asset-import',
-                    'babel-preset-react-app',
+                    'babel-preset-frontier',
                     'react-dev-utils',
                     'react-scripts',
                   ]
@@ -408,7 +408,7 @@ module.exports = function(webpackEnv) {
                     compact: false,
                     presets: [
                       [
-                        require.resolve('@fs/babel-preset-react-app/dependencies'),
+                        require.resolve('@fs/babel-preset-frontier/dependencies'),
                         { helpers: true },
                       ],
                     ],
@@ -425,7 +425,7 @@ module.exports = function(webpackEnv) {
                       isEnvProduction ? 'production' : isEnvDevelopment && 'development',
                       [
                         'babel-plugin-named-asset-import',
-                        'babel-preset-react-app',
+                        'babel-preset-frontier',
                         'react-dev-utils',
                         'react-scripts',
                       ]
