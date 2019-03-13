@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, bool } from 'prop-types';
+import { string, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
 import { stripUnit, em } from 'polished';
 
@@ -21,7 +21,16 @@ export default class PreviewCode extends Component {
     /** Code to highlight. */
     children: string,
     /** Suppored languages. */
-    language: ['markup', 'js', 'jsx', 'css', 'scss', 'bash', 'json', 'diff'],
+    language: oneOf([
+      'markup',
+      'js',
+      'jsx',
+      'css',
+      'scss',
+      'bash',
+      'json',
+      'diff'
+    ]),
     /** Inline code preview with text. */
     inline: bool
   };
