@@ -25,7 +25,7 @@ Jest will look for test files with any of the following popular naming conventio
 
 The `.test.js` / `.spec.js` files (or the `__tests__` folders) can be located at any depth under the `src` top level folder.
 
-We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Colocation also helps find tests more quickly in larger projects.
+We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Collocation also helps find tests more quickly in larger projects.
 
 ## Command Line Interface
 
@@ -321,7 +321,7 @@ Popular CI servers already set the environment variable `CI` by default but you 
 1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis. You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
 1. Add a `.travis.yml` file to your git repository.
 
-```
+```yaml
 language: node_js
 node_js:
   - 8
@@ -366,11 +366,11 @@ set CI=true&&npm run build
 
 #### Linux, macOS (Bash)
 
-```bash
+```sh
 CI=true npm test
 ```
 
-```bash
+```sh
 CI=true npm run build
 ```
 

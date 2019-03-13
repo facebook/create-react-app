@@ -209,7 +209,7 @@ Then run the `firebase init` command from your project’s root. You need to cho
 
 IMPORTANT: you need to set proper HTTP caching headers for `service-worker.js` file in `firebase.json` file or you will not be able to see changes after first deployment ([issue #2440](https://github.com/facebook/create-react-app/issues/2440)). It should be added inside `"hosting"` key like next:
 
-```
+```json
 {
   "hosting": {
     ...
