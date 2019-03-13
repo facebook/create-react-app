@@ -35,13 +35,23 @@ module.exports = function(api, opts, env) {
     isEnvDevelopment || isEnvProduction
   );
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
-  var isTypeScriptEnabled = validateBoolOption('typescript', opts.typescript, true);
+  var isTypeScriptEnabled = validateBoolOption(
+    'typescript',
+    opts.typescript,
+    true
+  );
   var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
-  var useAbsoluteRuntime = validateBoolOption('absoluteRuntime', opts.absoluteRuntime, true);
+  var useAbsoluteRuntime = validateBoolOption(
+    'absoluteRuntime',
+    opts.absoluteRuntime,
+    true
+  );
 
   var absoluteRuntimePath = undefined;
   if (useAbsoluteRuntime) {
-    absoluteRuntimePath = path.dirname(require.resolve('@babel/runtime/package.json'));
+    absoluteRuntimePath = path.dirname(
+      require.resolve('@babel/runtime/package.json')
+    );
   }
 
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
@@ -106,7 +116,10 @@ module.exports = function(api, opts, env) {
       // We will conditionally enable this plugin below in overrides as it clashes with
       // @babel/plugin-proposal-decorators when using TypeScript.
       // https://github.com/facebook/create-react-app/issues/5741
-      isFlowEnabled && [require('@babel/plugin-transform-flow-strip-types').default, false],
+      isFlowEnabled && [
+        require('@babel/plugin-transform-flow-strip-types').default,
+        false,
+      ],
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
@@ -115,7 +128,10 @@ module.exports = function(api, opts, env) {
       // don't work without it: https://github.com/babel/babel/issues/7215
       require('@babel/plugin-transform-destructuring').default,
       // Turn on legacy decorators for TypeScript files
-      isTypeScriptEnabled && [require('@babel/plugin-proposal-decorators').default, false],
+      isTypeScriptEnabled && [
+        require('@babel/plugin-proposal-decorators').default,
+        false,
+      ],
       // class { handleClick = () => { } }
       // Enable loose mode to use assignment instead of defineProperty
       // See discussion in https://github.com/facebook/create-react-app/issues/4263
@@ -172,7 +188,12 @@ module.exports = function(api, opts, env) {
       },
       isTypeScriptEnabled && {
         test: /\.tsx?$/,
-        plugins: [[require('@babel/plugin-proposal-decorators').default, { legacy: true }]],
+        plugins: [
+          [
+            require('@babel/plugin-proposal-decorators').default,
+            { legacy: true },
+          ],
+        ],
       },
     ].filter(Boolean),
   };
