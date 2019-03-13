@@ -1,3 +1,3 @@
 module.exports = {
-  webpackConfig: require('react-scripts/config/webpack.config'),
-};
+  webpackConfig: require('@fs/react-scripts/config/webpack.config'),
+}

@@ -1,6 +1,6 @@
-import React from 'react';
-import { css } from '@emotion/core';
-import logo from './Logo.svg';
+import React from 'react'
+import { css } from '@emotion/core'
+import logo from './Logo.svg'
 
 const styles = css`
   animation: spin infinite 20s linear;
@@ -14,8 +14,8 @@ const styles = css`
       transform: rotate(360deg);
     }
   }
-`;
+`
 
-const Logo = () => <img src={logo} css={styles} alt="logo" />;
+const Logo = () => <img src={logo} css={styles} alt="logo" />
 
-export default Logo;
+export default Logo

@@ -40,7 +40,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "XXXpre-commit": "lint-staged"
     }
   },
   "lint-staged": {

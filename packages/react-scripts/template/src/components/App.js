@@ -1,8 +1,8 @@
-import React from 'react';
-import { css } from '@emotion/core';
+import React from 'react'
+import { css } from '@emotion/core'
 
-import Logo from './Logo';
-import AppHeader from './AppHeader';
+import Logo from './Logo'
+import AppHeader from './AppHeader'
 
 const App = () => (
   <div
@@ -27,6 +27,6 @@ const App = () => (
       </a>
     </AppHeader>
   </div>
-);
+)
 
-export default App;
+export default App
