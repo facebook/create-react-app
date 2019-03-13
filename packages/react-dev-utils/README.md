@@ -158,7 +158,7 @@ if (
 
 #### `clearConsole(): void`
 
-Clears the console, hopefully in a cross-platform way.
+Clears the console, hopefully in a cross-platform way. Can be disabled with setting `DISABLE_CONSOLE_CLEARING=true` in your environment
 
 ```js
 var clearConsole = require('react-dev-utils/clearConsole');
