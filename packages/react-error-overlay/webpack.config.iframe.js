@@ -39,7 +39,9 @@ module.exports = {
                 babelrc: false,
                 configFile: false,
                 compact: false,
-                presets: [['babel-preset-react-app/dependencies', { helpers: true }]],
+                presets: [
+                  ['babel-preset-react-app/dependencies', { helpers: true }],
+                ],
               },
             },
           },
