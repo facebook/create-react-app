@@ -10,7 +10,6 @@ const osUtils = require('./osUtils');
 module.exports = {
   installFrontierDependencies,
   promptForConfig,
-  packageJsonWritten,
 };
 
 const polymerFromCDNCode = `
@@ -48,9 +47,7 @@ async function promptForConfig() {
   return answers;
 }
 
-function packageJsonWritten() {}
-
-function installFrontierDependencies(appPath, answers, ownPath) {
+function installFrontierDependencies(appPath, appName, answers, ownPath) {
   const { additionalFeatures } = answers;
   const usePolymer = additionalFeatures.includes('polymer');
   const useEF = additionalFeatures.includes('electric-flow');
@@ -107,18 +104,21 @@ function installFrontierDependencies(appPath, answers, ownPath) {
   });
   installModulesSync(depsToInstall);
   installModulesSync(devDepsToInstall, true);
+
+  replaceStringInFile(appPath, './README.md', /\{GITHUB_ORG\}\/\{GITHUB_REPO\}/g, `fs-webdev/${appName}`)
 }
 
 function handlePolymerCodeAndComments(appPath, usePolymer, useHF) {
+  const polymerComment = '<!-- FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->'
   let filePath = 'public/index.html';
   if (useHF) {
     filePath = 'views/index.ejs';
   }
 
   if (usePolymer) {
-    replaceComment(appPath, filePath, polymerFromCDNCode);
+    replaceStringInFile(appPath, filePath, polymerComment, polymerFromCDNCode);
   } else {
-    replaceComment(appPath, filePath, '');
+    replaceStringInFile(appPath, filePath, polymerComment, '');
   }
 }
 
@@ -131,14 +131,11 @@ function alterPackageJsonFile(appPath, extendFunction) {
   );
 }
 
-function replaceComment(appPath, fileToInjectIntoPath, stringToInject) {
+function replaceStringInFile(appPath, fileToInjectIntoPath, stringToReplace, stringToInject) {
   const indexPath = path.join(appPath, fileToInjectIntoPath);
   let indexCode = fs.readFileSync(indexPath, 'UTF8');
 
-  indexCode = indexCode.replace(
-    '<!--FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->',
-    stringToInject
-  );
+  indexCode = indexCode.replace(stringToReplace, stringToInject);
   fs.writeFileSync(indexPath, indexCode);
 }
 
