@@ -48,8 +48,17 @@ deploy:
               - prod
             bindings:
               <<: *BINDING_DEFAULTS
+
 deliver:
   deploy_order:
-    - int
-    - beta
-    - prod
+    - name: integration
+      type: coupled
+      systems: int
+
+    - name: beta
+      type: coupled
+      systems: beta
+
+    - name: production
+      type: coupled
+      systems: prod

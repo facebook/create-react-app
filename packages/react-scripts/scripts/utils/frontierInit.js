@@ -67,6 +67,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
   depsToInstall.push(
     ...[
       '@fs/axios',
+      '@fs/locale',
       '@fs/user',
       'fs-webdev/exo',
       'http-proxy-middleware@0.19.1',
