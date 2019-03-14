@@ -1,0 +1,5 @@
+Home Example
+
+```js
+<Home />
+```

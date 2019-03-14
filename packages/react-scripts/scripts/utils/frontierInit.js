@@ -10,7 +10,6 @@ const osUtils = require('./osUtils');
 module.exports = {
   installFrontierDependencies,
   promptForConfig,
-  packageJsonWritten,
 };
 
 const polymerFromCDNCode = `
@@ -27,16 +26,7 @@ async function promptForConfig() {
       type: 'checkbox',
       name: 'additionalFeatures',
       message: 'What additional features does your app require (these are checkboxes)',
-      default: ['electric-flow', 'header-footer'],
       choices: [
-        {
-          name: `Configure app for Electric Flow`,
-          value: 'electric-flow',
-        },
-        {
-          name: `Include hf (header/footer)`,
-          value: 'header-footer',
-        },
         {
           name: 'Using a shared Polymer Component within your React App?',
           value: 'polymer',
@@ -48,32 +38,25 @@ async function promptForConfig() {
   return answers;
 }
 
-function packageJsonWritten() {}
-
-function installFrontierDependencies(appPath, answers, ownPath) {
+function installFrontierDependencies(appPath, appName, answers, ownPath) {
   const { additionalFeatures } = answers;
   const usePolymer = additionalFeatures.includes('polymer');
-  const useEF = additionalFeatures.includes('electric-flow');
-  const useHF = additionalFeatures.includes('header-footer');
+  const useHF = true;
 
-  //it doesn't make sense to use header-footer without setting up electric-flow but theoretically
-  //it might be useful to setup electric-flow without header-footer
-  if (useEF || useHF) {
-    configureEF(appPath, ownPath);
-  }
-  if (useHF) {
-    configureHF(appPath, ownPath);
-  }
+  configureEF(appPath, ownPath);
+  configureHF(appPath, ownPath);
   // we always call this handle function. If usePolymer is false, it will remove the comments that we manually placed in the index file
   handlePolymerCodeAndComments(appPath, usePolymer, useHF);
 
   depsToInstall.push(
     ...[
       '@fs/axios',
+      '@fs/locale',
       '@fs/user',
+      '@fs/router',
+      '@fs/error-boundary',
       'fs-webdev/exo',
       'http-proxy-middleware@0.19.1',
-      '@reach/router@1.2.1',
       '@emotion/core@10.0.9',
     ]
   );
@@ -106,18 +89,21 @@ function installFrontierDependencies(appPath, answers, ownPath) {
   });
   installModulesSync(depsToInstall);
   installModulesSync(devDepsToInstall, true);
+
+  replaceStringInFile(appPath, './README.md', /\{GITHUB_ORG\}\/\{GITHUB_REPO\}/g, `fs-webdev/${appName}`)
 }
 
 function handlePolymerCodeAndComments(appPath, usePolymer, useHF) {
+  const polymerComment = '<!-- FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->'
   let filePath = 'public/index.html';
   if (useHF) {
     filePath = 'views/index.ejs';
   }
 
   if (usePolymer) {
-    replaceComment(appPath, filePath, polymerFromCDNCode);
+    replaceStringInFile(appPath, filePath, polymerComment, polymerFromCDNCode);
   } else {
-    replaceComment(appPath, filePath, '');
+    replaceStringInFile(appPath, filePath, polymerComment, '');
   }
 }
 
@@ -130,14 +116,11 @@ function alterPackageJsonFile(appPath, extendFunction) {
   );
 }
 
-function replaceComment(appPath, fileToInjectIntoPath, stringToInject) {
+function replaceStringInFile(appPath, fileToInjectIntoPath, stringToReplace, stringToInject) {
   const indexPath = path.join(appPath, fileToInjectIntoPath);
   let indexCode = fs.readFileSync(indexPath, 'UTF8');
 
-  indexCode = indexCode.replace(
-    '<!--FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->',
-    stringToInject
-  );
+  indexCode = indexCode.replace(stringToReplace, stringToInject);
   fs.writeFileSync(indexPath, indexCode);
 }
 
