@@ -67,6 +67,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
   depsToInstall.push(
     ...[
       '@fs/axios',
+      '@fs/locale',
       '@fs/user',
       '@fs/router',
       '@fs/error-boundary',

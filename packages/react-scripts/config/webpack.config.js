@@ -344,6 +344,15 @@ module.exports = function(webpackEnv) {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
+            // load locale files
+            {
+              test: /locales/,
+              loader: '@alienfast/i18next-loader',
+              options: {
+                debug: true,
+                basenameAsNamespace: true,
+              }
+            },
             // Process application JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {

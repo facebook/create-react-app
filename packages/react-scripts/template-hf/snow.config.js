@@ -1,10 +1,10 @@
-var urlLookup = {
-  'cas-public-api.cas.ident.service': process.env.BASE_URL + '/cas-public-api',
-  'cis-public-api.cis.ident.service': process.env.BASE_URL + '/cis-public-api',
+const urlLookup = {
+  'cas-public-api.cas.ident.service': `${process.env.SG_BASE_URL}/service/ident/cas/cas-public-api`,
+  'cis-public-api.cis.ident.service': `${process.env.SG_BASE_URL}/service/ident/cis/cis-public-api`,
 }
 
-var serviceLocatorOptions = {
-  fallbackFunction: function(serviceName) {
+const serviceLocatorOptions = {
+  fallbackFunction(serviceName) {
     if (urlLookup[serviceName]) {
       return urlLookup[serviceName]
     }
@@ -15,9 +15,9 @@ var serviceLocatorOptions = {
 module.exports = {
   experiments: [
     {
-      name: 'coolExperimentEx',
-      description: 'The coolest experiment. Author/Owner: Tyler Graf and the Tree Team',
-      default: true,
+      name: 'coolEx',
+      description: 'The coolest experiment. Author/Owner: {Your Name}',
+      default: false,
     },
   ],
   proxyUser: true,
