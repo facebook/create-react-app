@@ -108,7 +108,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
 }
 
 function handlePolymerCodeAndComments(appPath, usePolymer, useHF) {
-  const polymerComment = '<!--FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->'
+  const polymerComment = '<!-- FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->'
   let filePath = 'public/index.html';
   if (useHF) {
     filePath = 'views/index.ejs';
