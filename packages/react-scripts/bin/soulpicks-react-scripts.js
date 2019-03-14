@@ -28,7 +28,10 @@ switch (script) {
   case 'build':
   case 'eject':
   case 'start':
-  case 'test': {
+  case 'test':
+  case 'build:server':
+  case 'start:server':
+  case 'test:server': {
     const result = spawn.sync(
       'node',
       nodeArgs
