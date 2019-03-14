@@ -324,6 +324,7 @@ function prepareProxy(proxy, appPublicFolder) {
       // If this heuristic doesn’t work well for you, use a custom `proxy` object.
       context: function(pathname, req) {
         return (
+          // Resolves an issue with WebSocket (#5280).
           (!pathname.startsWith("/sockjs-node/") &&
             req.upgrade &&
             req.headers.upgrade &&
