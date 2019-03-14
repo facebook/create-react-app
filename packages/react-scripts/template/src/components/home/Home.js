@@ -4,7 +4,7 @@ import { css } from '@emotion/core'
 import Logo from './Logo'
 import HomeHeader from './HomeHeader'
 
-const App = () => (
+const Home = () => (
   <div
     css={css`
       text-align: center;
@@ -29,4 +29,4 @@ const App = () => (
   </div>
 )
 
-export default App
+export default Home

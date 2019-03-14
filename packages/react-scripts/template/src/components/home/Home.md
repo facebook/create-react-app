@@ -1,5 +1,5 @@
-App Example
+Home Example
 
 ```js
-<App />
+<Home />
 ```

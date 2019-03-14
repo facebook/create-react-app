@@ -12,6 +12,6 @@ const styles = css`
   color: white;
 `
 
-const AppHeader = ({ children }) => <header css={styles}>{children}</header>
+const HomeHeader = ({ children }) => <header css={styles}>{children}</header>
 
-export default AppHeader
+export default HomeHeader

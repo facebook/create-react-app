@@ -26,16 +26,7 @@ async function promptForConfig() {
       type: 'checkbox',
       name: 'additionalFeatures',
       message: 'What additional features does your app require (these are checkboxes)',
-      default: ['electric-flow', 'header-footer'],
       choices: [
-        {
-          name: `Configure app for Electric Flow`,
-          value: 'electric-flow',
-        },
-        {
-          name: `Include hf (header/footer)`,
-          value: 'header-footer',
-        },
         {
           name: 'Using a shared Polymer Component within your React App?',
           value: 'polymer',
@@ -50,17 +41,10 @@ async function promptForConfig() {
 function installFrontierDependencies(appPath, appName, answers, ownPath) {
   const { additionalFeatures } = answers;
   const usePolymer = additionalFeatures.includes('polymer');
-  const useEF = additionalFeatures.includes('electric-flow');
-  const useHF = additionalFeatures.includes('header-footer');
+  const useHF = true;
 
-  //it doesn't make sense to use header-footer without setting up electric-flow but theoretically
-  //it might be useful to setup electric-flow without header-footer
-  if (useEF || useHF) {
-    configureEF(appPath, ownPath);
-  }
-  if (useHF) {
-    configureHF(appPath, ownPath);
-  }
+  configureEF(appPath, ownPath);
+  configureHF(appPath, ownPath);
   // we always call this handle function. If usePolymer is false, it will remove the comments that we manually placed in the index file
   handlePolymerCodeAndComments(appPath, usePolymer, useHF);
 
