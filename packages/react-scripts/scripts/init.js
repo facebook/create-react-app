@@ -108,8 +108,6 @@ module.exports = async function(appPath, appName, verbose, originalDirectory, te
     JSON.stringify(appPackage, null, 2) + os.EOL
   );
 
-  frontierInit.packageJsonWritten();
-
   const readmeExists = fs.existsSync(path.join(appPath, 'README.md'));
   if (readmeExists) {
     fs.renameSync(path.join(appPath, 'README.md'), path.join(appPath, 'README.old.md'));
@@ -179,7 +177,7 @@ module.exports = async function(appPath, appName, verbose, originalDirectory, te
     }
   }
 
-  frontierInit.installFrontierDependencies(appPath, answers, ownPath);
+  frontierInit.installFrontierDependencies(appPath, appName, answers, ownPath);
 
   if (useTypeScript) {
     verifyTypeScriptSetup();
