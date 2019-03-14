@@ -1,6 +1,6 @@
 {
   "name": "soulpicks-react-scripts",
-  "version": "2.1.9",
+  "version": "2.3.0",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": "Soulpicks/create-react-app",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "utils"
   ],
   "bin": {
-    "soulpicks-react-scripts": "./bin/react-scripts.js"
+    "soulpicks-react-scripts": "./bin/soulpicks-react-scripts.js"
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
