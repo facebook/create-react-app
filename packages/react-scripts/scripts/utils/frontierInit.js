@@ -69,9 +69,10 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@fs/axios',
       '@fs/locale',
       '@fs/user',
+      '@fs/router',
+      '@fs/error-boundary',
       'fs-webdev/exo',
       'http-proxy-middleware@0.19.1',
-      '@reach/router@1.2.1',
       '@emotion/core@10.0.9',
     ]
   );
