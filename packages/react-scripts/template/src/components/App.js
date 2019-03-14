@@ -1,32 +1,22 @@
 import React from 'react'
-import { css } from '@emotion/core'
+import { Router, Link, NotFound, RequiresAuth } from '@fs/router'
+import Home from './home/Home'
+import UserInfo from './user/UserInfo'
 
-import Logo from './Logo'
-import AppHeader from './AppHeader'
+function App() {
+  return (
+    <>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="user">User Info</Link>
+      </nav>
 
-const App = () => (
-  <div
-    css={css`
-      text-align: center;
-    `}
-  >
-    <AppHeader>
-      <Logo />
-      <p>
-        Edit <code>src/components/App.js</code> and save to reload.
-      </p>
-      <a
-        css={css`
-          color: #61dafb;
-        `}
-        href="https://www.familysearch.org/frontier/docs/#/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn Frontier
-      </a>
-    </AppHeader>
-  </div>
-)
-
+      <Router>
+        <Home path="/" />
+        <RequiresAuth path="/user" component={UserInfo} />
+        <NotFound default />
+      </Router>
+    </>
+  )
+}
 export default App
