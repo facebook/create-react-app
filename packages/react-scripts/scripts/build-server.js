@@ -31,7 +31,6 @@ const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
 verifyTypeScriptSetup();
 // @remove-on-eject-end
 
-const path = require('path');
 const chalk = require('react-dev-utils/chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
@@ -57,41 +56,43 @@ const config = configFactory('production');
 // Remove all content but keep the directory so that
 // if you're in it, you don't end up in Trash
 fs.emptyDirSync(paths.serverBuild);
-  
+
 // Start the webpack build
-build(previousFileSizes).then(({ stats, previousFileSizes, warnings }) => {
-    if (warnings.length) {
-      console.log(chalk.yellow('Compiled with warnings.\n'));
-      console.log(warnings.join('\n\n'));
-      console.log(
-        '\nSearch for the ' +
-          chalk.underline(chalk.yellow('keywords')) +
-          ' to learn more about each warning.'
-      );
-      console.log(
-        'To ignore, add ' +
-          chalk.cyan('// eslint-disable-next-line') +
-          ' to the line before.\n'
-      );
-    } else {
-      console.log(chalk.green('Compiled successfully.\n'));
+build()
+  .then(
+    warnings => {
+      if (warnings.length) {
+        console.log(chalk.yellow('Compiled with warnings.\n'));
+        console.log(warnings.join('\n\n'));
+        console.log(
+          '\nSearch for the ' +
+            chalk.underline(chalk.yellow('keywords')) +
+            ' to learn more about each warning.'
+        );
+        console.log(
+          'To ignore, add ' +
+            chalk.cyan('// eslint-disable-next-line') +
+            ' to the line before.\n'
+        );
+      } else {
+        console.log(chalk.green('Compiled successfully.\n'));
+      }
+    },
+    err => {
+      console.log(chalk.red('Failed to compile.\n'));
+      printBuildError(err);
+      process.exit(1);
     }
-  },
-  err => {
-    console.log(chalk.red('Failed to compile.\n'));
-    printBuildError(err);
+  )
+  .catch(err => {
+    if (err && err.message) {
+      console.log(err.message);
+    }
     process.exit(1);
-  }
-)
-.catch(err => {
-  if (err && err.message) {
-    console.log(err.message);
-  }
-  process.exit(1);
-});
+  });
 
 // Create the server production build and print the deployment instructions.
-function build(previousFileSizes) {
+function build() {
   console.log('Creating an optimized server production build...');
 
   const compiler = webpack(config);
@@ -134,26 +135,14 @@ function build(previousFileSizes) {
         return reject(new Error(messages.warnings.join('\n\n')));
       }
 
-      const resolveArgs = {
-        stats,
-        previousFileSizes,
-        warnings: messages.warnings,
-      };
       if (writeStatsJson) {
         return bfj
           .write(paths.appBuild + '/bundle-stats.json', stats.toJson())
-          .then(() => resolve(resolveArgs))
+          .then(() => resolve(messages.warnings))
           .catch(error => reject(new Error(error)));
       }
 
-      return resolve(resolveArgs);
+      return resolve(messages.warnings);
     });
-  });
-}
-
-function copyPublicFolder() {
-  fs.copySync(paths.appPublic, paths.appBuild, {
-    dereference: true,
-    filter: file => file !== paths.appHtml,
   });
 }
