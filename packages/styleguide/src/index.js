@@ -1,5 +1,6 @@
 import React from 'react';
 import styleguide from './styleguide';
+import pkg from '../package.json';
 
 import Page from './components/Page';
 
@@ -17,7 +18,7 @@ import TypographyDocs from './components/Typography/Typography.docs.mdx';
 
 styleguide({
   config: {
-    version: 'lighter-styleguide',
+    version: pkg.version,
     name: 'Lighter',
     styleguideBasePath: '/'
   },
