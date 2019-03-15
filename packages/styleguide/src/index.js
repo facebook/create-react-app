@@ -20,7 +20,9 @@ styleguide({
   config: {
     version: pkg.version,
     name: 'Lighter',
-    styleguideBasePath: '/'
+    styleguideBasePath: '/',
+    logo: <img src="/logo/logo.svg" alt="Lighter" />,
+    logoSmall: <img src="/logo/logo-small.svg" alt="Lighter" />
   },
   routes: [
     {
