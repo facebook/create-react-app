@@ -82,7 +82,7 @@ if (process.env.HOST) {
 // This lets you use absolute paths in imports inside large monorepos:
 if (process.env.NODE_PATH) {
   console.log(
-    'Setting NODE_PATH to resolves modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using Typescript) to achieve the same behaviour.'
+    'Setting NODE_PATH to resolve modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using TypeScript).'
   );
 }
 
