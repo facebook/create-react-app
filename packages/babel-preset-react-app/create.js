@@ -89,15 +89,13 @@ module.exports = function(api, opts, env) {
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
-          // We want Create React App to be IE 9 compatible until React itself
-          // no longer works with IE 9
+          // When building normal we take the build we're in being modern or legacy
+          // If not we respect the users browserslist.
           targets: shouldBuildModern
             ? isModern
               ? modernTargets
               : legacyTargets
             : undefined,
-          // If users import all core-js they're probably not concerned with
-          // bundle size. We shouldn't rely on magic to try and shrink it.
           useBuiltIns: 'entry',
           // Do not transform modules to CJS
           modules: false,
