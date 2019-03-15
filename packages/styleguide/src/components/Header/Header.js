@@ -36,26 +36,20 @@ const Header = ({
   );
 
   return (
-    <StyledBar className={classes} space="" {...other}>
-      <BarItem>{children}</BarItem>
-      <BarItem isFilling>
-        <Bar space="">
-          <MediaQuery minDeviceWidth={theme.breakpoints.m}>
-            {matches =>
-              typeof project === 'string' ? (
-                <StyledProjectText isFilling>
-                  {getLogo(matches)}
-                </StyledProjectText>
-              ) : (
-                <StyledProjectLogo isFilling>
-                  {getLogo(matches)}
-                </StyledProjectLogo>
-              )
-            }
-          </MediaQuery>
-          <StyledProjectInfo>{infoText}</StyledProjectInfo>
-        </Bar>
+    <StyledBar className={classes} {...other}>
+      <BarItem shrink>{children}</BarItem>
+      <BarItem isFilling shrink>
+        <MediaQuery minDeviceWidth={theme.breakpoints.m}>
+          {matches =>
+            typeof project === 'string' ? (
+              <StyledProjectText>{getLogo(matches)}</StyledProjectText>
+            ) : (
+              <StyledProjectLogo>{getLogo(matches)}</StyledProjectLogo>
+            )
+          }
+        </MediaQuery>
       </BarItem>
+      <StyledProjectInfo>{infoText}</StyledProjectInfo>
     </StyledBar>
   );
 };
@@ -73,7 +67,7 @@ const StyledBar = styled(Bar)`
   font-family: ${props => props.theme.fontFamily};
 `;
 
-const StyledProjectText = styled(BarItem)`
+const StyledProjectText = styled('div')`
   font-size: ${rem(24)};
   font-weight: 700;
 
@@ -82,7 +76,7 @@ const StyledProjectText = styled(BarItem)`
   }
 `;
 
-const StyledProjectLogo = styled(BarItem)`
+const StyledProjectLogo = styled('div')`
   img {
     height: ${rem(35)};
     margin-bottom: ${props => rem(props.theme.spaces.tiny)};
