@@ -13,6 +13,7 @@ import ComponentInfoDocs from './components/ComponentInfo/ComponentInfo.docs.mdx
 import BadgeDocs from './components/Badge/Badge.docs.mdx';
 import NoteDocs from './components/Note/Note.docs.mdx';
 import TableDocs from './components/Table/Table.docs.mdx';
+import PageDocs from './components/Page/Page.docs.mdx';
 
 styleguide({
   config: {
@@ -64,6 +65,11 @@ styleguide({
           title: 'Note',
           path: '/note',
           render: <Page render={NoteDocs} />
+        },
+        {
+          title: 'Page',
+          path: '/page',
+          render: <Page render={PageDocs} />
         },
         {
           title: 'Preview',
