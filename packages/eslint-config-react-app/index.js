@@ -28,7 +28,7 @@ module.exports = {
 
   parser: 'babel-eslint',
 
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'react-hooks'],
 
   env: {
     browser: true,
@@ -161,6 +161,7 @@ module.exports = {
     ],
     'no-with': 'warn',
     'no-whitespace-before-property': 'warn',
+    'react-hooks/exhaustive-deps': 'warn',
     'require-yield': 'warn',
     'rest-spread-spacing': ['warn', 'never'],
     strict: ['warn', 'never'],
@@ -240,6 +241,9 @@ module.exports = {
     'jsx-a11y/role-has-required-aria-props': 'warn',
     'jsx-a11y/role-supports-aria-props': 'warn',
     'jsx-a11y/scope': 'warn',
+
+    // https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
+    'react-hooks/rules-of-hooks': 'error',
 
     // https://github.com/gajus/eslint-plugin-flowtype
     'flowtype/define-flow-type': 'warn',
