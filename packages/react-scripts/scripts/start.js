@@ -77,6 +77,15 @@ if (process.env.HOST) {
   console.log();
 }
 
+// We used to support resolving modules according to `NODE_PATH`.
+// This now has been deprecated in favor of jsconfig/tsconfig.json
+// This lets you use absolute paths in imports inside large monorepos:
+if (process.env.NODE_PATH) {
+  console.log(
+    'Setting NODE_PATH to resolves modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using Typescript) to achieve the same behaviour.'
+  );
+}
+
 // We require that you explictly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
