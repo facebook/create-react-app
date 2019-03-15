@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { components } from './../../utils/mdx';
 
 const propTypes = {
-  render: oneOfType([node, func])
+  /** Page content */
+  render: oneOfType([node, func]).isRequired
 };
 
 const CLASS_ROOT = '';
