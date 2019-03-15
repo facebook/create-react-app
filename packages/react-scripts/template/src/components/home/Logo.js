@@ -1,5 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/core'
+import { i18n } from '@fs/locale'
 import logo from './Logo.svg'
 
 const styles = css`
@@ -16,6 +17,6 @@ const styles = css`
   }
 `
 
-const Logo = () => <img src={logo} css={styles} alt="logo" />
+const Logo = () => <img src={logo} css={styles} alt={i18n.t('logo', 'Spinning Frontier Logo')} />
 
 export default Logo

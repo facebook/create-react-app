@@ -43,7 +43,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
   const usePolymer = additionalFeatures.includes('polymer');
   const useHF = true;
 
-  configureEF(appPath, ownPath);
+  configureEF(appPath, ownPath, appName);
   configureHF(appPath, ownPath);
   // we always call this handle function. If usePolymer is false, it will remove the comments that we manually placed in the index file
   handlePolymerCodeAndComments(appPath, usePolymer, useHF);
@@ -58,6 +58,9 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       'fs-webdev/exo',
       'http-proxy-middleware@0.19.1',
       '@emotion/core@10.0.9',
+      '@emotion/styled@10.0.9',
+      'i18next@15.0.7',
+      'react-i18next@10.5.1',
     ]
   );
   devDepsToInstall.push(
@@ -65,6 +68,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@fs/eslint-config-frontier-react',
       '@fs/zion-testing-library',
       'eslint@5.12.0',
+      'i18next-scanner@2.10.0',
       'react-styleguidist@9.0.4',
       'webpack@4.28.3',
       'jest-dom@3.1.3',
@@ -74,6 +78,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
   alterPackageJsonFile(appPath, appPackage => {
     const packageJson = { ...appPackage };
     const additionalScripts = {
+      'locales:sync': `i18next-scanner --output src/locales 'src/**/*.js'`,
       styleguide: 'styleguidist server --open',
       'styleguide:build': 'styleguidist build',
       lint: 'eslint src/',
@@ -89,6 +94,8 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
   });
   installModulesSync(depsToInstall);
   installModulesSync(devDepsToInstall, true);
+
+  syncLocales()
 
   replaceStringInFile(appPath, './README.md', /\{GITHUB_ORG\}\/\{GITHUB_REPO\}/g, `fs-webdev/${appName}`)
 }
@@ -124,7 +131,7 @@ function replaceStringInFile(appPath, fileToInjectIntoPath, stringToReplace, str
   fs.writeFileSync(indexPath, indexCode);
 }
 
-function configureEF(appPath, ownPath) {
+function configureEF(appPath, ownPath, appName) {
   // TODO - modify package.json to make sure name is correct for blueprint
   // TODO - use blueprint.yml as a template
 
@@ -132,6 +139,7 @@ function configureEF(appPath, ownPath) {
   fs.copySync(templatePath, appPath, { overwrite: true });
 
   depsToInstall.push(...['express@4.16.4']);
+  replaceStringInFile(appPath, './blueprint.yml', /\{\{APP_NAME\}\}/g, appName)
 }
 
 function configureHF(appPath, ownPath) {
@@ -166,6 +174,10 @@ function installModulesSync(modules, saveDev = false) {
 
 function createLocalEnvFile() {
   osUtils.runExternalCommandSync('npx', ['@fs/fr-cli', 'env', 'local']);
+}
+
+function syncLocales() {
+  osUtils.runExternalCommandSync('npm', ['run', 'locales:sync']);
 }
 
 function sortScripts(scripts) {
