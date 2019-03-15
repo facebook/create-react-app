@@ -23,7 +23,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNavActive: false,
+      isNavActive: false
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleNavLinkClick = this.handleNavLinkClick.bind(this);
@@ -48,7 +48,7 @@ class App extends React.Component {
       logoSmall,
       name,
       theme: projectTheme = {},
-      styleguideBasePath = '/styleguide/',
+      styleguideBasePath = '/styleguide/'
     } = config;
 
     const activeClass = this.state.isNavActive ? 'is-active' : '';
@@ -64,7 +64,7 @@ class App extends React.Component {
       if (typeof theme[prop] === 'object') {
         acc[prop] = {
           ...(theme[prop] || {}),
-          ...projectTheme[prop],
+          ...projectTheme[prop]
         };
       } else {
         acc[prop] = projectTheme[prop];
@@ -134,7 +134,9 @@ const PageLayout = styled.div``;
 const PageHeader = styled(Header)`
   position: fixed;
   top: 0;
-  width: 100%;
+  right: 0;
+  left: 0;
+  max-width: 100%;
   height: ${props => rem(props.theme.sizes.headerHeight)};
   display: flex;
   flex: 0 0 auto;
