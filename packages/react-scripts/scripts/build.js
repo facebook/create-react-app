@@ -63,7 +63,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // Process CLI arguments
 const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
-const buildModern = argv.indexOf('--legacy') === -1;
+const buildModern = argv.indexOf('--modern') !== -1;
 
 // Generate configuration
 const modernConfig = configFactory('production', {

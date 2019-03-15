@@ -31,11 +31,10 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
-// const HtmlWebpackEsmodulesPlugin = require('react-dev-utils/html-webpack-esmodules-plugin');
+const HtmlWebpackEsmodulesPlugin = require('react-dev-utils/html-webpack-esmodules-plugin');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
-const HtmlWebpackEsmodulesPlugin = require('./webpack/html-webpack-esmodules-plugin');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -365,7 +364,7 @@ module.exports = function(
                 presets: [
                   [
                     require.resolve('babel-preset-react-app'),
-                    { modern: isModernOutput },
+                    { modern: isModernOutput, shouldBuildModernAndLegacy },
                   ],
                 ],
                 // Make sure we have a unique cache identifier, erring on the
