@@ -15,12 +15,5 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-base-url').childElementCount).toBe(4);
       doc.defaultView.close();
     });
-
-    it('Supports setting @ as alias to src', async () => {
-      const doc = await initDOM('alias');
-
-      expect(doc.getElementById('feature-alias').childElementCount).toBe(4);
-      doc.defaultView.close();
-    });
   });
 });
