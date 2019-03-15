@@ -14,6 +14,7 @@ import BadgeDocs from './components/Badge/Badge.docs.mdx';
 import NoteDocs from './components/Note/Note.docs.mdx';
 import TableDocs from './components/Table/Table.docs.mdx';
 import PageDocs from './components/Page/Page.docs.mdx';
+import TypographyDocs from './components/Typography/Typography.docs.mdx';
 
 styleguide({
   config: {
@@ -80,6 +81,11 @@ styleguide({
           title: 'Table',
           path: '/table',
           render: <Page render={TableDocs} />
+        },
+        {
+          title: 'Typography',
+          path: '/typography',
+          render: <Page render={TypographyDocs} />
         }
       ]
     }
