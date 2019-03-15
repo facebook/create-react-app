@@ -49,10 +49,7 @@ module.exports = function(api, opts, env) {
     opts.absoluteRuntime,
     true
   );
-  // TODO: this needs to change.
-  // At this point we only create one babel config for all builds.
-  // We should be able to provide a babelconfig for every build.
-  // Does this mean we should move this to webpack or specify some BABEL_ENV?
+
   var isModern = validateBoolOption('modern', opts.modern, false);
   var shouldBuildModern = validateBoolOption(
     'shouldBuildModernAndLegacy',
@@ -99,9 +96,6 @@ module.exports = function(api, opts, env) {
               ? modernTargets
               : legacyTargets
             : undefined,
-          // Users cannot override this behavior because this Babel
-          // configuration is highly tuned for ES5 support
-          ignoreBrowserslistConfig: true,
           // If users import all core-js they're probably not concerned with
           // bundle size. We shouldn't rely on magic to try and shrink it.
           useBuiltIns: 'entry',
@@ -191,7 +185,7 @@ module.exports = function(api, opts, env) {
         {
           corejs: false,
           helpers: areHelpersEnabled,
-          regenerator: !isModern,
+          regenerator: true,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.
