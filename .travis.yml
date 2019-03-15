@@ -9,7 +9,7 @@ cache:
   directories:
     - .npm
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --nightly
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s
   - export PATH="$HOME/.yarn/bin:$PATH"
 install: true
 script:

@@ -10,11 +10,9 @@ People often serve the front-end React app from the same host and port as their 
 
 For example, a production setup might look like this after the app is deployed:
 
-```
-/             - static server returns index.html with React app
-/todos        - static server returns index.html with React app
-/api/todos    - server handles any /api/* requests using the backend implementation
-```
+    /             - static server returns index.html with React app
+    /todos        - static server returns index.html with React app
+    /api/todos    - server handles any /api/* requests using the backend implementation
 
 Such setup is **not** required. However, **with** a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
 
@@ -26,7 +24,7 @@ To tell the development server to proxy any unknown requests to your API server 
 
 This way, when `fetch('/api/todos')` is used in development, the development server will recognize that it is not a static asset, and will proxy the request to `http://localhost:4000/api/todos` as a fallback. The development server will **only** attempt to send requests without `text/html` in its `Accept` header to the proxy.
 
-Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
+Conveniently, this avoids [CORS issues](https://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
 
 ```
 Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
@@ -36,7 +34,7 @@ Keep in mind that `proxy` only has effect in development (with `npm start`), and
 
 The `proxy` option supports HTTP, HTTPS and WebSocket connections.
 
-The `proxy` can also be [configured manually](/docs/configuring-the-proxy-manually). This requires more setup but allows for greater control than the `package.json` `proxy` simple option.
+The `proxy` can also be [configured manually](#configuring-the-proxy-manually). This requires more setup but allows for greater control than the `package.json` `proxy` simple option.
 
 The alternative to proxying is talking directly to a remote API. For static sites, or those served from different hosts/ports than the API they are talking to, then a proxy is not only not needed but not desirable. For those cases, the remote server usually has CORS enabled ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)) to respond to requests. The app will need a way to specify what the API endpoint is though. Use [environment variables](adding-custom-environment-variables.md) to inject the right server host and port into your app to specify those. This has the added benefit of being able to have different values and inject them at run or build time.
 
@@ -76,7 +74,7 @@ You can use this feature in conjunction with the `proxy` property in `package.js
 
 First, install `http-proxy-middleware` using npm or Yarn:
 
-```bash
+```sh
 $ npm install http-proxy-middleware --save
 $ # or
 $ yarn add http-proxy-middleware

@@ -13,17 +13,19 @@ Each polyfill ensures the following language features are present:
 1. `Symbol` (a built-in object used by `for...of` syntax and friends)
 1. `Array.from` (a built-in static method used by array spread, i.e. `[...arr]`)
 
+*If you need more features, you must include them manually.*
+
 ### Usage
 
 First, install the package using Yarn or npm:
 
-```bash
+```sh
 npm install react-app-polyfill
 ```
 
 or
 
-```bash
+```sh
 yarn add react-app-polyfill
 ```
 
