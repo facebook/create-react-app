@@ -21,7 +21,17 @@
 // This is dangerous as it hides accidentally undefined variables.
 // We blacklist the globals that we deem potentially confusing.
 // To use them, explicitly reference them, e.g. `window.name` or `window.status`.
-var restrictedGlobals = require('confusing-browser-globals');
+const restrictedGlobals = require('confusing-browser-globals');
+
+// The following is copied from `react-scripts/config/paths.js`.
+const path = require('path');
+const fs = require('fs');
+// Make sure any symlinks in the project folder are resolved:
+// https://github.com/facebook/create-react-app/issues/637
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+const projectRootPath = resolveApp('.');
+const tsConfigPath = resolveApp('tsconfig.json');
 
 module.exports = {
   root: true,
@@ -52,6 +62,45 @@ module.exports = {
     },
   },
 
+  overrides: {
+    files: ['**/*.ts', '**/*.tsx'],
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+      ecmaVersion: 2018,
+      sourceType: 'module',
+      ecmaFeatures: {
+        jsx: true,
+      },
+
+      // typescript-eslint specific options
+      project: tsConfigPath,
+      tsconfigRootDir: projectRootPath,
+      warnOnUnsupportedTypeScriptVersion: true,
+    },
+    plugins: ['@typescript-eslint'],
+    rules: {
+      // These ESLint rules are known to cause issues with typescript-eslint
+      // See https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.json
+      camelcase: 'off',
+      indent: 'off',
+      'no-array-constructor': 'off',
+      'no-unused-vars': 'off',
+
+      '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
+      '@typescript-eslint/no-array-constructor': 'warn',
+      '@typescript-eslint/no-namespace': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          args: 'none',
+          ignoreRestSiblings: true,
+        },
+      ],
+    },
+  },
+
+  // NOTE: When adding rules here, you need to make sure they are compatible with
+  // `typescript-eslint`, as some rules such as `no-array-constructor` aren't compatible.
   rules: {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',

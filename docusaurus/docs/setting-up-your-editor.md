@@ -28,6 +28,19 @@ You would need to install an ESLint plugin for your editor first. Then, add a fi
 }
 ```
 
+If you're using TypeScript and Visual Studio Code, the [ESLint Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint#overview) currently [doesn't have TypeScript support enabled by default](https://github.com/Microsoft/vscode-eslint/issues/609). To enable TypeScript support in the ESLint extension, add the following to your project's Visual Studio Code settings file, located at `.vscode/settings.json` (you can create this file if it doesn't already exist):
+
+```json
+{
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    { "language": "typescript", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true }
+  ]
+}
+```
+
 Now your editor should report the linting warnings.
 
 Note that even if you edit your `.eslintrc.json` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
