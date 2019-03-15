@@ -56,6 +56,41 @@ module.exports = {
 };
 ```
 
+#### `new HtmlWebpackEsModulesPlugin()`
+
+This Webpack plugin allows you to build two builds, the first one a legacy build and the
+second being a modern one.
+This plugin is used to use the first build as a buffer and writes it to a temporairy file,
+then when the second build completes it merges the two and adds a shim to support safari.
+
+This way of working relies on [module-nomodule differential serving](https://jakearchibald.com/2017/es-modules-in-browsers/).
+
+```js
+var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackEsModulesPlugin = require('react-dev-utils/HtmlWebpackEsModulesPlugin');
+
+// Webpack config
+var publicUrl = '/my-custom-url';
+
+module.exports = {
+  output: {
+    // ...
+  },
+  // ...
+  plugins: [
+    // Generates an `index.html` file with the <script> injected.
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: path.resolve('public/index.html'),
+    }),
+    new HtmlWebpackEsModulesPlugin(),
+    // ...
+  ],
+  // ...
+};
+```
+
 #### `new InlineChunkHtmlPlugin(htmlWebpackPlugin: HtmlWebpackPlugin, tests: Regex[])`
 
 This Webpack plugin inlines script chunks into `index.html`.<br>
