@@ -4,7 +4,6 @@ import styleguide from './styleguide';
 import Page from './components/Page';
 
 import Hello from './pages/Hello.mdx';
-import KitchenSink from './pages/KitchenSink.mdx';
 import PreviewDocs from './components/Preview/Preview.docs.mdx';
 import ComponentDocsDocs from './components/ComponentDocs/ComponentDocs.docs.mdx';
 import CodeDocs from './components/Code/Code.docs.mdx';
@@ -27,11 +26,6 @@ styleguide({
       title: 'Hello',
       path: '/',
       render: <Page render={Hello} />
-    },
-    {
-      title: 'Kitchen Sink',
-      path: '/Kitchen Sink',
-      render: <Page render={KitchenSink} />
     },
     {
       title: 'Components',
