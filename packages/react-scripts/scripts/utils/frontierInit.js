@@ -50,11 +50,11 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
 
   depsToInstall.push(
     ...[
-      '@fs/axios',
-      '@fs/locale',
-      '@fs/user',
-      '@fs/router',
-      '@fs/error-boundary',
+      '@fs/zion-axios',
+      '@fs/zion-locale',
+      '@fs/zion-user',
+      '@fs/zion-router',
+      '@fs/zion-error-boundary',
       'fs-webdev/exo',
       'http-proxy-middleware@0.19.1',
       '@emotion/core@10.0.9',
@@ -63,7 +63,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
   devDepsToInstall.push(
     ...[
       '@fs/eslint-config-frontier-react',
-      '@fs/testing-library',
+      '@fs/zion-testing-library',
       'eslint@5.12.0',
       'react-styleguidist@9.0.4',
       'webpack@4.28.3',
