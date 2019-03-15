@@ -70,9 +70,6 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackEsModulesPlugin = require('react-dev-utils/HtmlWebpackEsModulesPlugin');
 
-// Webpack config
-var publicUrl = '/my-custom-url';
-
 module.exports = {
   output: {
     // ...
