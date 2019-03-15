@@ -152,7 +152,7 @@ function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
   const configs = [buildModern && modernConfig, leagcyConfig].filter(Boolean);
 
-  let compiler = webpack(configs);
+  const compiler = webpack(configs);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       let messages;

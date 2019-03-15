@@ -136,7 +136,6 @@ if (program.info) {
         npmGlobalPackages: ['create-react-app'],
       },
       {
-        clipboard: false,
         duplicates: true,
         showNotFound: true,
       }
