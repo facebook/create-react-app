@@ -54,7 +54,7 @@ module.exports = function(api, opts, env) {
   var shouldBuildModern = validateBoolOption(
     'shouldBuildModernAndLegacy',
     opts.shouldBuildModernAndLegacy,
-    true
+    false
   );
 
   var absoluteRuntimePath = undefined;

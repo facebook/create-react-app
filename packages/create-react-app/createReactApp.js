@@ -77,7 +77,6 @@ const program = new commander.Command(packageJson.name)
   )
   .option('--use-npm')
   .option('--use-pnp')
-  .option('--modern')
   .option('--typescript')
   .allowUnknownOption()
   .on('--help', () => {
