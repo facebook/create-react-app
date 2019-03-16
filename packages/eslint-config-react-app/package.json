@@ -13,7 +13,7 @@
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "1.x",
     "@typescript-eslint/parser": "1.x",
-    "babel-eslint": "9.x",
+    "babel-eslint": "10.x",
     "eslint": "5.x",
     "eslint-plugin-flowtype": "2.x",
     "eslint-plugin-import": "2.x",
