@@ -20,6 +20,9 @@ const validateBoolOption = (name, value, defaultValue) => {
   return value;
 };
 
+const legacyTargets = { ie: 9 };
+const modernTargets = { esmodules: true };
+
 module.exports = function(api, opts) {
   if (!opts) {
     opts = {};
@@ -60,6 +63,13 @@ module.exports = function(api, opts) {
     );
   }
 
+  var isModern = validateBoolOption('modern', opts.modern, false);
+  var shouldBuildModern = validateBoolOption(
+    'shouldBuildModernAndLegacy',
+    opts.shouldBuildModernAndLegacy,
+    false
+  );
+
   return {
     // Babel assumes ES Modules, which isn't safe until CommonJS
     // dies. This changes the behavior to assume CommonJS unless
@@ -86,15 +96,15 @@ module.exports = function(api, opts) {
         {
           // We want Create React App to be IE 9 compatible until React itself
           // no longer works with IE 9
-          targets: {
-            ie: 9,
-          },
+          targets: shouldBuildModern
+            ? isModern
+              ? modernTargets
+              : legacyTargets
+            : undefined,
           // Users cannot override this behavior because this Babel
           // configuration is highly tuned for ES5 support
           ignoreBrowserslistConfig: true,
-          // If users import all core-js they're probably not concerned with
-          // bundle size. We shouldn't rely on magic to try and shrink it.
-          useBuiltIns: false,
+          useBuiltIns: 'entry',
           // Do not transform modules to CJS
           modules: false,
           // Exclude transforms that make all code slower
