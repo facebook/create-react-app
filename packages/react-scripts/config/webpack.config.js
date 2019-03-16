@@ -417,7 +417,11 @@ module.exports = function(
                 presets: [
                   [
                     require.resolve('babel-preset-react-app/dependencies'),
-                    { helpers: true },
+                    {
+                      helpers: true,
+                      modern: isModernOutput,
+                      shouldBuildModernAndLegacy,
+                    },
                   ],
                 ],
                 cacheDirectory: true,
