@@ -54,11 +54,11 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@fs/zion-locale',
       '@fs/zion-user',
       '@fs/zion-router',
+      '@fs/zion-subnav',
       '@fs/zion-error-boundary',
       'fs-webdev/exo',
       'http-proxy-middleware@0.19.1',
       '@emotion/core@10.0.9',
-      '@emotion/styled@10.0.9',
       'i18next@15.0.7',
       'react-i18next@10.5.1',
     ]

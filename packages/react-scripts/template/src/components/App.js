@@ -1,5 +1,6 @@
 import React from 'react'
 import { Router, Link, NotFound, RequiresAuth } from '@fs/router'
+import Subnav from '@fs/zion-subnav'
 import { Trans } from 'react-i18next'
 import Home from './home/Home'
 import UserInfo from './user/UserInfo'
@@ -7,10 +8,10 @@ import UserInfo from './user/UserInfo'
 function App() {
   return (
     <>
-      <nav>
+      <Subnav>
         <Link to="/"><Trans i18nkey="nav.home">Home</Trans></Link>
         <Link to="user"><Trans i18nkey="nav.userInfo">User Info</Trans></Link>
-      </nav>
+      </Subnav>
 
       <Router>
         <Home path="/" />
