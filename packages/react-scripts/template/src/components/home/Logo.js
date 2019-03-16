@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import { i18n } from '@fs/locale'
+import { i18n } from '@fs/zion-locale'
 import logo from './Logo.svg'
 
 const styles = css`

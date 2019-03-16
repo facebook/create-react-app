@@ -70,6 +70,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@fs/zion-testing-library',
       'eslint@5.12.0',
       'i18next-scanner@2.10.0',
+      '@alienfast/i18next-loader@1.0.18',
       'react-styleguidist@9.0.4',
       'webpack@4.28.3',
       'jest-dom@3.1.3',

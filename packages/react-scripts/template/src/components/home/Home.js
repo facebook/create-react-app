@@ -10,24 +10,26 @@ const Home = () => (
     css={css`
       text-align: center;
     `}
-    >
-      <HomeHeader>
-        <Logo />
-        <p>
-          <Trans i18nkey="update.instructions">Edit <code>src/components/App.js</code> and save to reload.</Trans>
-        </p>
-        <a
-          css={css`
+  >
+    <HomeHeader>
+      <Logo />
+      <p>
+        <Trans i18nKey="update.instructions">
+          Edit <code>src/components/App.js</code> and save to reload.
+        </Trans>
+      </p>
+      <a
+        css={css`
           color: #61dafb;
         `}
-          href="https://www.familysearch.org/frontier/docs/#/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Trans i18nkey="learn.frontier">Learn Frontier</Trans>
-        </a>
-      </HomeHeader>
-    </div>
-  )
+        href="https://www.familysearch.org/frontier/docs/#/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Trans i18nKey="learn.frontier">Learn Frontier</Trans>
+      </a>
+    </HomeHeader>
+  </div>
+)
 
 export default Home
