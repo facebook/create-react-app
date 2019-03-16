@@ -97,7 +97,7 @@ module.exports = function(api, opts, env) {
               : legacyTargets
             : undefined,
           ignoreBrowserslistConfig: shouldBuildModern,
-          useBuiltIns: 'entry',
+          useBuiltIns: isModern ? 'usage' : 'entry',
           // Do not transform modules to CJS
           modules: false,
           // Exclude transforms that make all code slower
