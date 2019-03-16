@@ -139,6 +139,15 @@ function configureEF(appPath, ownPath, appName) {
   const templatePath = path.join(ownPath, 'template-ef');
   fs.copySync(templatePath, appPath, { overwrite: true });
 
+  alterPackageJsonFile(appPath, appPackage => {	
+    const packageJson = { ...appPackage };	
+    const additionalScripts = {	
+      'heroku-prebuild': './heroku-prebuild.sh',	
+    };	
+    packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });	
+    return packageJson;	
+  });
+  
   depsToInstall.push(...['express@4.16.4']);
   replaceStringInFile(appPath, './blueprint.yml', /\{\{APP_NAME\}\}/g, appName)
 }
