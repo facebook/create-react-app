@@ -1,8 +1,66 @@
+## 2.7.0 (March 16, 2019)
+
+#### :boom: Breaking Change
+
+* [lighter-styleguide] do not export unnecessary components from styleguide ([#95](https://github.com/lightingbeetle/lighter/pull/95))
+
+#### :rocket: New Feature
+
+* [lighter-styleguide] add `babel-plugin-react-docgen` plugin and parse information from this plugin with `<ComponentDocs component={Component} />` which replace `path` prop which is now deprecated ([#64](https://github.com/lightingbeetle/lighter/pull/64))
+* [lighter-styleguide] add `<Preview />` `bgThemeColors` colors prop ([#66](https://github.com/lightingbeetle/lighter/pull/66))
+* [lighter-styleguide] `<Code />` will highlight `scss` language instead of `sass` ([#80](https://github.com/lightingbeetle/lighter/pull/80))
+* [lighter-react-scripts] add `babel-plugin-react-docgen` to webpack config ([#85](https://github.com/lightingbeetle/lighter/pull/85))
+
+#### :nail_care: Enhancement
+
+* [lighter-styleguide] update styleguide deps ([#65](https://github.com/lightingbeetle/lighter/pull/65), [#68](https://github.com/lightingbeetle/lighter/pull/68), [#86](https://github.com/lightingbeetle/lighter/pull/86))
+* [lighter-styleguide] make ComponentsDocs title computed from displayName prop if possible ([#70](https://github.com/lightingbeetle/lighter/pull/70))
+* [lighter-styleguide] update `Preview` `codeJSXOptions` prop defaults ([#71](https://github.com/lightingbeetle/lighter/pull/71))
+* [lighter-styleguide] add Lighter logo ([#94](https://github.com/lightingbeetle/lighter/pull/94))
+
+#### :bug: Bug Fix
+
+* [lighter-styleguide] fix heading levels in Typography ([#67](https://github.com/lightingbeetle/lighter/pull/67))
+* [lighter-styleguide] fix error when ComponentDocs uses `path` prop ([#70](https://github.com/lightingbeetle/lighter/pull/70))
+* [lighter-styleguide] fix error when ComponentDocs uses `path` prop ([#70](https://github.com/lightingbeetle/lighter/pull/70))
+fix rendering components when using npm package
+* [lighter-styleguide] fix `<ComponentsDocs />` `component` prop not working after `path` fix ([#79](https://github.com/lightingbeetle/lighter/pull/79))
+* [lighter-styleguide] fix `<Code />` prop-type definition ([#89](https://github.com/lightingbeetle/lighter/pull/89))
+* [lighter-styleguide] version in header is correct and visible  ([#93](https://github.com/lightingbeetle/lighter/pull/93))
+
+#### :memo: Docs
+
+* [lighter-styleguide] update Preview docs
+ ([#66](https://github.com/lightingbeetle/lighter/pull/66), [#69](https://github.com/lightingbeetle/lighter/pull/69))
+* [lighter-styleguide] add ComponentsDocs docs ([#70](https://github.com/lightingbeetle/lighter/pull/70))
+* [lighter-styleguide] add Code docs ([#81](https://github.com/lightingbeetle/lighter/pull/81))
+* [lighter-styleguide] add ColorPalette docs ([#82](https://github.com/lightingbeetle/lighter/pull/82))
+* [lighter-styleguide] add Badge docs ([#83](https://github.com/lightingbeetle/lighter/pull/83))
+* [lighter-styleguide] add Table docs ([#84](https://github.com/lightingbeetle/lighter/pull/84))
+* [lighter-styleguide] add ComponentInfo docs ([#87](https://github.com/lightingbeetle/lighter/pull/87))
+* [lighter-styleguide] add Note docs ([#88](https://github.com/lightingbeetle/lighter/pull/88))
+* [lighter-styleguide] add Page docs ([#90](https://github.com/lightingbeetle/lighter/pull/90))
+* [lighter-styleguide] add Typography docs ([#91](https://github.com/lightingbeetle/lighter/pull/91))
+* [lighter-styleguide] add Hello page ([#92](https://github.com/lightingbeetle/lighter/pull/92))
+* [lighter-styleguide] add Maintaining CRA fork docs  ([#96](https://github.com/lightingbeetle/lighter/pull/96))
+* [lighter-styleguide] add Contributing guidelines docs ([#97](https://github.com/lightingbeetle/lighter/pull/97))
+
+#### :house: Internal
+
+* [lighter-styleguide] deploy lighter-styleguide on netlify
+ ([#72](https://github.com/lightingbeetle/lighter/pull/72), [#73](https://github.com/lightingbeetle/lighter/pull/73))
+
+#### :tada: version updates
+
+* `lighter-react-scripts@2.7.0`
+* `lighter-styleguide@2.0.0`
+
 ## 2.6.0 (February 4, 2019)
 
 #### :bug: Bug Fix
-* [lighter-styleguide] fix rendering components when using npm package ([#77](https://github.com/lightingbeetle/lighter/pull/76))
-* [lighter-styleguide] fix ComponentsDocs `path` not displaying props table ([#77](https://github.com/lightingbeetle/lighter/pull/76))
+
+* [lighter-styleguide] fix rendering components when using npm package ([#76](https://github.com/lightingbeetle/lighter/pull/76))
+* [lighter-styleguide] fix ComponentsDocs `path` not displaying props table ([#77](https://github.com/lightingbeetle/lighter/pull/77))
 
 #### :tada: version updates
 
@@ -11,6 +69,7 @@
 ## 2.6.0 (January 28, 2019)
 
 #### :bug: Bug Fix
+
 * [lighter-styleguide] fix `package-lock.json` issues ([#74](https://github.com/lightingbeetle/lighter/pull/74))
 
 #### :tada: version updates
@@ -20,6 +79,7 @@
 ## 2.6.0 (December 20, 2018)
 
 #### :rocket: New Feature
+
 * [lighter-react-scripts] add automatic src/scripts folder files transpile ([#49](https://github.com/lightingbeetle/lighter/pull/49), [#58](https://github.com/lightingbeetle/lighter/pull/58))
 * [lighter-react-scripts] add mdx loader to webpack config ([#59](https://github.com/lightingbeetle/lighter/pull/59), [#61](https://github.com/lightingbeetle/lighter/pull/61))
 * [lighter-styleguide] add prism support for diff language ([#52](https://github.com/lightingbeetle/lighter/pull/52))
@@ -27,6 +87,7 @@
 * [lighter-styleguide] add MDX support  ([#55](https://github.com/lightingbeetle/lighter/pull/55), [#60](https://github.com/lightingbeetle/lighter/pull/60), [#62](https://github.com/lightingbeetle/lighter/pull/62), [#56](https://github.com/lightingbeetle/lighter/pull/56))
 
 #### :bug: Bug Fix
+
 * [lighter-styleguide] print shape prop values in docs ([#50](https://github.com/lightingbeetle/lighter/pull/50))
 * [lighter-styleguide] stretch main height ([#51](https://github.com/lightingbeetle/lighter/pull/51))
 * [lighter-styleguide] add support for uknown language to code-block component ([#53](https://github.com/lightingbeetle/lighter/pull/53))
