@@ -16,6 +16,8 @@ import TableDocs from './components/Table/Table.docs.mdx';
 import PageDocs from './components/Page/Page.docs.mdx';
 import TypographyDocs from './components/Typography/Typography.docs.mdx';
 
+import MaintainingCRAFork from './pages/Maintining-CRA-fork.mdx';
+
 styleguide({
   config: {
     version: pkg.version,
@@ -83,6 +85,17 @@ styleguide({
           title: 'Typography',
           path: '/typography',
           render: <Page render={TypographyDocs} />
+        }
+      ]
+    },
+    {
+      title: 'Docs',
+      path: '/docs',
+      nodes: [
+        {
+          title: 'Maintaining CRA fork',
+          path: '/maintaining-CRA-fork',
+          render: <Page render={MaintainingCRAFork} />
         }
       ]
     }

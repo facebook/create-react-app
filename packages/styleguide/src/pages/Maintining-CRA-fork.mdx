@@ -1,0 +1,15 @@
+# Maintaining CRA fork guide
+
+Lighter is fork of [Create React App](https://github.com/facebook/create-react-app) (CRA). To benefit from CRA updates and patches, please follow this guide to synchronize repositories.
+
+## Guide
+
+1. `git checkout upstream` `upstream` branch hosts CRA `master` branch
+2. `git fetch upstream` will download upstream changes from CRA
+3. `git merge upstream/master` will merge CRA `master` to `upstream`
+4. `git checkout -b 'feat/cra-update'` 
+6. `git rebase upstream` rebase `upstream` on `feat/cra-update`
+7. Resolve conflicts and continue rebase `git rebase --continue` 
+8. `git push --set-upstream origin feat/cra-update` push rebased code to remote
+9. Open Pull request on Github to `master`
+10. merge
