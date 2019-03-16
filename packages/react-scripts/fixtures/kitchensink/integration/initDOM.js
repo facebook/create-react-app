@@ -57,7 +57,7 @@ export default feature =>
   new Promise(async resolve => {
     const markup = await getMarkup();
     const host = process.env.E2E_URL || 'http://www.example.org/spa:3000';
-    const doc = jsdom.JSDOM(markup, {
+    const doc = new jsdom.JSDOM(markup, {
       created: (_, win) =>
         win.addEventListener('ReactFeatureDidMount', () => resolve(doc), true),
       deferClose: true,
