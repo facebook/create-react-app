@@ -1,5 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/core'
+import { Trans } from 'react-i18next'
 
 import Logo from './Logo'
 import HomeHeader from './HomeHeader'
@@ -13,7 +14,9 @@ const Home = () => (
     <HomeHeader>
       <Logo />
       <p>
-        Edit <code>src/components/App.js</code> and save to reload.
+        <Trans i18nKey="update.instructions">
+          Edit <code>src/components/App.js</code> and save to reload.
+        </Trans>
       </p>
       <a
         css={css`
@@ -23,7 +26,7 @@ const Home = () => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        Learn Frontier
+        <Trans i18nKey="learn.frontier">Learn Frontier</Trans>
       </a>
     </HomeHeader>
   </div>

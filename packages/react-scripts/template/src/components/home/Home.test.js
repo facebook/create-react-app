@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@fs/testing-library'
+import { render } from '@fs/zion-testing-library'
 import Home from './Home'
 
 test('renders with Learn Frontier on the page', () => {

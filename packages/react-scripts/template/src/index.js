@@ -1,16 +1,22 @@
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
-import { UserProvider } from '@fs/user'
-import RootErrorBoundary from '@fs/error-boundary'
+import { UserProvider } from '@fs/zion-user'
+import RootErrorBoundary from '@fs/zion-error-boundary'
+import { I18nProvider, addTranslations } from '@fs/zion-locale'
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'
+import translations from './locales'
+
+addTranslations(translations)
 
 const FrontierRoot = () => (
   <RootErrorBoundary>
-    <Suspense>
-      <UserProvider>
-        <App />
-      </UserProvider>
+    <Suspense fallback="Loading ...">
+      <I18nProvider>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </I18nProvider>
     </Suspense>
   </RootErrorBoundary>
 )
