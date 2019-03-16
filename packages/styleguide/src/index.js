@@ -16,6 +16,7 @@ import TableDocs from './components/Table/Table.docs.mdx';
 import PageDocs from './components/Page/Page.docs.mdx';
 import TypographyDocs from './components/Typography/Typography.docs.mdx';
 
+import ContributingGuidelines from './pages/ContributingGuidelines.mdx';
 import MaintainingCRAFork from './pages/Maintining-CRA-fork.mdx';
 
 styleguide({
@@ -89,9 +90,14 @@ styleguide({
       ]
     },
     {
-      title: 'Docs',
-      path: '/docs',
+      title: 'Guides',
+      path: '/guides',
       nodes: [
+        {
+          title: 'Contributing guidelines',
+          path: '/contributing-guidelines',
+          render: <Page render={ContributingGuidelines} />
+        },
         {
           title: 'Maintaining CRA fork',
           path: '/maintaining-CRA-fork',
