@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const http = require('http');
-const jsdom = require('jsdom');
+const { JSDOM, ResourceLoader, VirtualConsole } = require('jsdom');
 const path = require('path');
 
 let getMarkup;
@@ -23,17 +23,16 @@ if (process.env.E2E_FILE) {
 
   const pathPrefix = process.env.PUBLIC_URL.replace(/^https?:\/\/[^/]+\/?/, '');
 
-  resourceLoader = (resource, callback) =>
-    callback(
-      null,
-      fs.readFileSync(
-        path.join(
-          path.dirname(file),
-          resource.url.pathname.replace(pathPrefix, '')
-        ),
-        'utf8'
-      )
-    );
+  resouceLoader = new class FileResourceLoader extends ResourceLoader {
+    fetch(url, options) {
+      return Promise.resolve(
+        fs.readFileSync(
+          path.join(path.dirname(file), url.pathname.replace(pathPrefix, '')),
+          'utf8'
+        )
+      );
+    }
+  }();
 } else if (process.env.E2E_URL) {
   getMarkup = () =>
     new Promise(resolve => {
@@ -43,8 +42,6 @@ if (process.env.E2E_FILE) {
         res.on('end', () => resolve(rawData));
       });
     });
-
-  resourceLoader = (resource, callback) => resource.defaultFetch(callback);
 } else {
   it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {
     expect(
@@ -54,18 +51,38 @@ if (process.env.E2E_FILE) {
 }
 
 export default feature =>
-  new Promise(async resolve => {
-    const markup = await getMarkup();
-    const host = process.env.E2E_URL || 'http://www.example.org/spa:3000';
-    const doc = new jsdom.JSDOM(markup, {
-      created: (_, win) =>
-        win.addEventListener('ReactFeatureDidMount', () => resolve(doc), true),
-      deferClose: true,
-      pretendToBeVisual: true,
-      resourceLoader,
-      url: `${host}#${feature}`,
-      virtualConsole: new jsdom.VirtualConsole().sendTo(console),
-    });
+  new Promise(async (resolve, reject) => {
+    try {
+      // const markup = await getMarkup();
+      const host = process.env.E2E_URL || 'http://www.example.org/spa:3000';
 
-    doc.close();
+      const url = `${host}#${feature}`;
+
+      const { window } = await JSDOM.fromURL(url, {
+        pretendToBeVisual: true,
+        resources: 'usable',
+        runScripts: 'dangerously',
+      });
+
+      const { document } = window;
+
+      // console.log(document);
+      // console.log(window);
+
+      // const { document } = new JSDOM(markup, {
+      //   pretendToBeVisual: true,
+      //   resourceLoader,
+      //   resources: 'usable',
+      //   runScripts: 'dangerously',
+      //   url,
+      // }).window;
+
+      document.addEventListener(
+        'ReactFeatureDidMount',
+        () => resolve(document),
+        true
+      );
+    } catch (e) {
+      reject(e);
+    }
   });
