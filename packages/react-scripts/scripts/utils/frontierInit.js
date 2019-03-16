@@ -61,6 +61,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@emotion/core@10.0.9',
       'i18next@15.0.7',
       'react-i18next@10.5.1',
+      'prop-types@15.7.2',
     ]
   );
   devDepsToInstall.push(
