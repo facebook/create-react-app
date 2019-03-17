@@ -10,8 +10,8 @@
 
 const fs = require('fs');
 const path = require('path');
-const chalk = require('chalk');
 const paths = require('./paths');
+const chalk = require('react-dev-utils/chalk');
 
 /**
  * Get the baseUrl of a compilerOptions object.
