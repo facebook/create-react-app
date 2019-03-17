@@ -1,3 +1,13 @@
+## 2.7.0 (March 17, 2019)
+
+#### :bug: Bug Fix
+
+* [lighter-styleguide] fix react-router-dom deprecated imports in lighter-app ([#100](https://github.com/lightingbeetle/lighter/pull/100))
+
+#### :tada: version updates
+
+* `lighter-styleguide@2.0.1`
+
 ## 2.7.0 (March 16, 2019)
 
 #### :boom: Breaking Change
