@@ -31,6 +31,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -632,6 +633,10 @@ module.exports = function(webpackEnv) {
           silent: true,
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
+        }),
+        new ProgressBarPlugin({
+          format: 'build [:bar] :percent :msg (:elapsed seconds)',
+          clear: false
         }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
