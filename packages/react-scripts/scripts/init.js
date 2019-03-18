@@ -75,10 +75,13 @@ function tryGitInit(appPath) {
   }
 }
 
-module.exports = function(appPath, appName, verbose, originalDirectory) {
-  const templateName = Object.keys(appPackage.dependencies).find(name =>
-    name.replace(/^@.+\//, '').startsWith('create-react-app-template')
-  );
+module.exports = function(
+  appPath,
+  appName,
+  verbose,
+  originalDirectory,
+  templateName
+) {
   const templatePath = require.resolve(templateName);
   const templatePackage = require(path.join(templatePath, 'package.json'));
   const appPackage = require(path.join(appPath, 'package.json'));
@@ -198,10 +201,10 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     );
   }
 
+  // Remove template package
   console.log(`Removing unnecessary template files using ${command}...`);
   console.log();
 
-  // Remove template package
   proc = spawn.sync(command, ['remove', templateName], { stdio: 'inherit' });
   if (proc.status !== 0) {
     console.error(`\`${command} ${args.join(' ')}\` failed`);

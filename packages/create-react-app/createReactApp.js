@@ -73,7 +73,7 @@ const program = new commander.Command(packageJson.name)
   .option('--info', 'print environment debug info')
   .option(
     '--template <template-name>',
-    'specify a base template for your project'
+    'specify the initial template for your project'
   )
   .option(
     '--scripts-version <alternative-package>',
@@ -81,6 +81,7 @@ const program = new commander.Command(packageJson.name)
   )
   .option('--use-npm')
   .option('--use-pnp')
+  .option('--typescript') // Deprecated
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -174,10 +175,19 @@ createApp(
   program.scriptsVersion,
   program.useNpm,
   program.usePnp,
-  program.templateName
+  program.templateName,
+  program.typescript
 );
 
-function createApp(name, verbose, version, useNpm, usePnp, template) {
+function createApp(
+  name,
+  verbose,
+  version,
+  useNpm,
+  usePnp,
+  templateName,
+  useTypeScript
+) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -270,13 +280,30 @@ function createApp(name, verbose, version, useNpm, usePnp, template) {
     }
   }
 
+  if (useTypeScript) {
+    console.log(
+      chalk.yellow(
+        'The --typescript option has been deprecated and will be removed in a future release.'
+      )
+    );
+    console.log(
+      chalk.yellow(
+        `In future, please use ${chalk.cyan('--template typescript')}.`
+      )
+    );
+    console.log();
+    if (!templateName) {
+      templateName = 'typescript';
+    }
+  }
+
   run(
     root,
     appName,
     version,
     verbose,
     originalDirectory,
-    template,
+    templateName,
     useYarn,
     usePnp
   );
