@@ -72,6 +72,9 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       'i18next-scanner@2.10.0',
       '@alienfast/i18next-loader@1.0.18',
       'react-styleguidist@9.0.4',
+      '@fs/styleguidist-overrides@1.3.0',
+      '@fs/configurations@1.3.4',
+      'dotenv@7.0.0',
       'webpack@4.28.3',
       'jest-dom@3.1.3',
     ]
