@@ -5,7 +5,8 @@ import logo from './Logo.svg'
 
 const styles = css`
   animation: spin infinite 20s linear;
-  height: 40vmin;
+  height: 30vmin;
+  margin: 10px;
 
   @keyframes spin {
     from {
