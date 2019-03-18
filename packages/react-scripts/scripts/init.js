@@ -75,17 +75,15 @@ function tryGitInit(appPath) {
   }
 }
 
-module.exports = function(
-  appPath,
-  appName,
-  verbose,
-  originalDirectory,
-  templateName
-) {
-  const templatePath = require.resolve(templateName);
-  const templatePackage = require(path.join(templatePath, 'package.json'));
+module.exports = function(appPath, appName, verbose, originalDirectory) {
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
+
+  const templateName = Object.keys(appPackage.dependencies).find(name =>
+    name.replace(/^@.+\//, '').startsWith('create-react-app-template')
+  );
+  const templatePath = path.join(appPath, 'node_modules', templateName);
+  const templatePackage = require(path.join(templatePath, 'package.json'));
 
   // Copy over some of the dependencies
   appPackage.dependencies = appPackage.dependencies || {};
@@ -151,6 +149,7 @@ module.exports = function(
 
   let command;
   let args;
+  let proc;
 
   if (useYarn) {
     command = 'yarnpkg';
@@ -164,16 +163,19 @@ module.exports = function(
   const packagesToInstall = Object.keys(templateDependencies)
     .filter(key => !key.includes('react-scripts'))
     .map(key => `${key}@${templateDependencies[key]}`);
-  args.push(packagesToInstall);
+  args = args.concat(packagesToInstall);
 
+  console.log();
   console.log(`Installing template dependencies using ${command}...`);
   console.log();
 
-  // Install template dependencies
-  let proc = spawn.sync(command, args, { stdio: 'inherit' });
-  if (proc.status !== 0) {
-    console.error(`\`${command} ${args.join(' ')}\` failed`);
-    return;
+  if (packagesToInstall) {
+    // Install template dependencies
+    proc = spawn.sync(command, args, { stdio: 'inherit' });
+    if (proc.status !== 0) {
+      console.error(`\`${command} ${args.join(' ')}\` failed`);
+      return;
+    }
   }
 
   const installedScriptsName = Object.keys(appPackage.dependencies).find(key =>
@@ -185,15 +187,17 @@ module.exports = function(
   );
   const templateScriptsVersion = templateDependencies[templateScriptsName];
   if (
-    installedScriptsName !== templateScriptsName ||
-    installedScriptsVersion !== templateScriptsVersion
+    !!templateScriptsName &&
+    (installedScriptsName !== templateScriptsName ||
+      installedScriptsVersion !== templateScriptsVersion)
   ) {
     console.log();
     console.log(
       chalk.yellow(
-        `The template requested ${templateScriptsName}@${templateScriptsVersion}, however ${installedScriptsName}@${installedScriptsVersion} has been installed.`
+        `The template requested \`${templateScriptsName}@${templateScriptsVersion}\`, however \`${installedScriptsName}@${installedScriptsVersion}\` has been installed.`
       )
     );
+    console.log();
     console.log(
       chalk.yellow(
         `This may cause unexpected behaviour. Please check with the template's author for more information.`
@@ -202,6 +206,7 @@ module.exports = function(
   }
 
   // Remove template package
+  console.log();
   console.log(`Removing unnecessary template files using ${command}...`);
   console.log();
 

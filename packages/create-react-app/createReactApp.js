@@ -81,7 +81,7 @@ const program = new commander.Command(packageJson.name)
   )
   .option('--use-npm')
   .option('--use-pnp')
-  .option('--typescript') // Deprecated
+  .option('--typescript') // Deprecated in favor of `--template`
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -175,7 +175,7 @@ createApp(
   program.scriptsVersion,
   program.useNpm,
   program.usePnp,
-  program.templateName,
+  program.template,
   program.typescript
 );
 
@@ -391,16 +391,24 @@ function run(
   usePnp
 ) {
   const scriptsToInstall = getInstallPackage(version, originalDirectory);
-  const templateToInstall = processTemplateName(template);
-  const packagesToInstall = [templateToInstall, scriptsToInstall];
+  const templateToInstall = getTemplateInstallPackage(
+    template,
+    originalDirectory
+  );
+  const packagesToInstall = [
+    'react',
+    'react-dom',
+    templateToInstall,
+    scriptsToInstall,
+  ];
 
   console.log('Installing packages. This might take a couple of minutes.');
   Promise.all(packagesToInstall.map(getPackageName))
     .then(packageNames =>
       checkIfOnline(useYarn).then(isOnline => ({
         isOnline: isOnline,
-        template: packageNames[0],
-        scripts: packageNames[1],
+        template: packageNames[2],
+        scripts: packageNames[3],
       }))
     )
     .then(info => {
@@ -424,9 +432,9 @@ function run(
         scripts,
       }));
     })
-    .then(async packageName => {
-      checkNodeVersion(packageName);
-      setCaretRangeForRuntimeDeps(packageName);
+    .then(async packageNames => {
+      checkNodeVersion(packageNames.scripts);
+      setCaretRangeForRuntimeDeps(packageNames.scripts);
 
       const pnpPath = path.resolve(process.cwd(), '.pnp.js');
 
@@ -437,9 +445,9 @@ function run(
           cwd: process.cwd(),
           args: nodeArgs,
         },
-        [root, appName, verbose, originalDirectory, template],
+        [root, appName, verbose, originalDirectory],
         `
-        var init = require('${packageName}/scripts/init.js');
+        var init = require('${packageNames.scripts}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));
       `
       );
@@ -492,15 +500,27 @@ function run(
     });
 }
 
-function processTemplateName(template) {
-  const templatePrefix = 'create-react-app-template';
-  if (!template) {
-    return templatePrefix;
-  } else if (template.startsWith(templatePrefix)) {
-    return template;
-  } else {
-    return 'create-react-app-template-' + template;
+function getTemplateInstallPackage(templateName, originalDirectory) {
+  let templateToInstall = 'create-react-app-template';
+  if (templateName) {
+    if (templateName.startsWith('file:')) {
+      // Handle local templates.
+      templateToInstall = `file:${path.resolve(
+        originalDirectory,
+        templateName.match(/^file:(.*)?$/)[1]
+      )}`;
+    } else if (
+      templateName.includes('://') ||
+      templateName.match(/^.+\.(tgz|tar\.gz)$/)
+    ) {
+      // Handle remote and packaged templates.
+      templateToInstall = templateName;
+    } else if (!templateName.startsWith(templateToInstall)) {
+      // Add prefix `create-react-app-template` to non-prefixed templateNames.
+      templateToInstall += `-${templateName}`;
+    }
   }
+  return templateToInstall;
 }
 
 function getInstallPackage(version, originalDirectory) {
