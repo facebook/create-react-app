@@ -47,6 +47,14 @@ app.get('/', function(req, res) {
 app.listen(9000);
 ```
 
+Here is another programmatic example using [Node](https://nodejs.org/) and [Saco](https://github.com/bertolo1988/saco) which is a slightly more polished version of express.static:
+
+```
+const path = require("path");
+const Saco = require("saco");
+new Saco.Server({ rootPath: path.join(__dirname, "/dist") }).start();
+```
+
 The choice of your server software isn’t important either. Since Create React App is completely platform-agnostic, there’s no need to explicitly use Node.
 
 The `build` folder with static assets is the only output produced by Create React App.
