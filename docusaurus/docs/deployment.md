@@ -161,7 +161,7 @@ Variables in `.env.production` will be used as fallback because `NODE_ENV` will 
 The AWS Amplify Console provides continuous deployment and hosting for modern web apps (single page apps and static site generators) with serverless backends. The Amplify Console offers globally available CDNs, easy custom domain setup, feature branch deployments, and password protection.
 
 1. Login to the Amplify Console [here](https://console.aws.amazon.com/amplify/home).
-1. Connect your create-react-app repo and pick a branch. If you're looking for a CRA+Amplify starter, try the [create-react-app-auth-amplify starter](https://github.com/swaminator/create-react-app-auth-amplify) that demonstrates setting up auth in 10 minutes with create-react-app.
+1. Connect your Create React App repo and pick a branch. If you're looking for a Create React App+Amplify starter, try the [create-react-app-auth-amplify starter](https://github.com/swaminator/create-react-app-auth-amplify) that demonstrates setting up auth in 10 minutes with Create React App.
 1. The Amplify Console automatically detects the build settings. Choose Next.
 1. Choose *Save and deploy* and sit back.
 
