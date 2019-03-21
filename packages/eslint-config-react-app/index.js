@@ -30,8 +30,6 @@ const fs = require('fs');
 // https://github.com/facebook/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
-const projectRootPath = resolveApp('.');
-const tsConfigPath = resolveApp('tsconfig.json');
 
 module.exports = {
   root: true,
@@ -73,8 +71,6 @@ module.exports = {
       },
 
       // typescript-eslint specific options
-      project: tsConfigPath,
-      tsconfigRootDir: projectRootPath,
       warnOnUnsupportedTypeScriptVersion: true,
     },
     plugins: ['@typescript-eslint'],
