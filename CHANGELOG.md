@@ -1,3 +1,13 @@
+## 2.7.0 (March 21, 2019)
+
+#### :bug: Bug Fix
+
+* [lighter-styleguide] update sg deps (fix react-router-dom 4.4.0 was unpublished from NPM) ([#103](https://github.com/lightingbeetle/lighter/pull/103))
+
+#### :tada: version updates
+
+* `lighter-styleguide@2.0.2`
+
 ## 2.7.0 (March 17, 2019)
 
 #### :bug: Bug Fix
