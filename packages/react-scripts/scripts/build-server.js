@@ -34,7 +34,6 @@ verifyTypeScriptSetup();
 const chalk = require('react-dev-utils/chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
-const bfj = require('bfj');
 const configFactory = require('../config/webpack.server.config');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
@@ -48,7 +47,6 @@ if (!checkRequiredFiles([paths.serverIndexJs])) {
 
 // Process CLI arguments
 const argv = process.argv.slice(2);
-const writeStatsJson = argv.indexOf('--stats') !== -1;
 
 // Generate configuration
 const config = configFactory('production');
@@ -133,13 +131,6 @@ function build() {
           )
         );
         return reject(new Error(messages.warnings.join('\n\n')));
-      }
-
-      if (writeStatsJson) {
-        return bfj
-          .write(paths.appBuild + '/bundle-stats.json', stats.toJson())
-          .then(() => resolve(messages.warnings))
-          .catch(error => reject(new Error(error)));
       }
 
       return resolve(messages.warnings);
