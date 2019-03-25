@@ -26,13 +26,14 @@
   "dependencies": {
     "@babel/core": "7.3.4",
     "@svgr/webpack": "4.1.0",
+    "@typescript-eslint/eslint-plugin": "1.4.1",
+    "@typescript-eslint/parser": "1.4.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.1",
-    "babel-jest": "23.6.0",
+    "babel-jest": "24.5.0",
     "babel-loader": "8.0.5",
     "babel-plugin-named-asset-import": "^0.3.1",
     "babel-preset-react-app": "^7.0.2",
-    "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
@@ -44,13 +45,13 @@
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-jsx-a11y": "6.2.1",
     "eslint-plugin-react": "7.12.4",
+    "eslint-plugin-react-hooks": "^1.5.0",
     "file-loader": "3.0.1",
     "fs-extra": "7.0.1",
     "html-webpack-plugin": "4.0.0-beta.5",
     "identity-obj-proxy": "3.0.0",
-    "jest": "23.6.0",
-    "jest-pnp-resolver": "1.0.2",
-    "jest-resolve": "23.6.0",
+    "jest": "24.5.0",
+    "jest-resolve": "24.5.0",
     "jest-watch-typeahead": "^0.2.1",
     "mini-css-extract-plugin": "0.5.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
@@ -79,10 +80,16 @@
   "optionalDependencies": {
     "fsevents": "1.2.7"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
