@@ -16,6 +16,7 @@ import chroma from 'chroma-js';
 import PreviewTitleBar from './PreviewTitleBar';
 import CodeExample from './CodeExample';
 import Frame from './Frame';
+import Interact from './Interact';
 
 import Card from './../Card';
 import Icon from './../Icon';
@@ -59,6 +60,10 @@ class Preview extends Component {
     iframeHead: node,
     /** (unstable) Iframe custom JavaScripts. */
     iframeScripts: string,
+    /** Preview with interactivity */
+    isInteractive: bool,
+    /** Props for interactive component */
+    interactiveProps: object,
   };
 
   static defaultProps = {
@@ -68,6 +73,10 @@ class Preview extends Component {
     },
     bgThemeExcludedColors: [],
     hasCodePreview: true,
+    // to discuss if it should be turned on or off
+    // for debugging is better on
+    isInteractive: true,
+    interactiveProps: {},
   };
 
   componentWillReceiveProps(props) {
@@ -88,11 +97,13 @@ class Preview extends Component {
     super(props);
 
     this.handleToggleCode = this.handleToggleCode.bind(this);
+    this.handleToggleInteract = this.handleToggleInteract.bind(this);
     this.handlePreviewBackground = this.handlePreviewBackground.bind(this);
   }
 
   state = {
     isCodeShown: false,
+    isInteractive: false,
     previewBackground: this.props.bgThemeColors
       ? {
           label: this.props.bgTheme,
@@ -104,6 +115,12 @@ class Preview extends Component {
   handleToggleCode() {
     this.setState({
       isCodeShown: !this.state.isCodeShown,
+    });
+  }
+
+  handleToggleInteract() {
+    this.setState({
+      showInteract: !this.state.showInteract,
     });
   }
 
@@ -127,6 +144,8 @@ class Preview extends Component {
       iframeHead,
       iframeScripts,
       hasCodePreview,
+      isInteractive,
+      interactiveProps,
       html,
       ...other
     } = this.props;
@@ -178,11 +197,20 @@ class Preview extends Component {
       }
     }
 
-    if (hasCodePreview) {
+    if (!this.state.showInteract && hasCodePreview) {
       actions.push(
         <Button onClick={this.handleToggleCode}>
           <Icon name="code" fill={bgThemeColors.accent || '#000'} />
           {this.state.isCodeShown ? 'HIDE CODE' : 'SHOW CODE'}
+        </Button>
+      );
+    }
+
+    if (isInteractive) {
+      actions.push(
+        <Button onClick={this.handleToggleInteract}>
+          <Icon name="code" fill={bgThemeColors.accent || '#000'} />
+          {this.state.showInteract ? 'HIDE INTERACTIVE' : 'SHOW INTERACTIVE'}
         </Button>
       );
     }
@@ -225,17 +253,23 @@ class Preview extends Component {
         {...other}
         key="previewCard"
       >
-        <StyledPreviewLive>{content}</StyledPreviewLive>
-        {this.state.isCodeShown &&
-          hasCodePreview &&
-          toCode && (
-            <CodeExample
-              {...(html ? { codeTypes: ['html'] } : {})}
-              codeJSXOptions={codeJSXOptions}
-            >
-              {toCode}
-            </CodeExample>
-          )}
+        {this.state.showInteract ? (
+          React.Children.map(this.props.children, child => (
+            <Interact render={child} {...interactiveProps} />
+          ))
+        ) : (
+          <React.Fragment>
+            <StyledPreviewLive>{content}</StyledPreviewLive>
+            {this.state.isCodeShown && hasCodePreview && toCode && (
+              <CodeExample
+                {...(html ? { codeTypes: ['html'] } : {})}
+                codeJSXOptions={codeJSXOptions}
+              >
+                {toCode}
+              </CodeExample>
+            )}
+          </React.Fragment>
+        )}
       </Card>,
     ];
   }
