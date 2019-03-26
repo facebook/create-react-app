@@ -45,9 +45,6 @@ if (!checkRequiredFiles([paths.serverIndexJs])) {
   process.exit(1);
 }
 
-// Process CLI arguments
-const argv = process.argv.slice(2);
-
 // Generate configuration
 const config = configFactory('production');
 

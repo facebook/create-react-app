@@ -127,6 +127,8 @@ module.exports = function(webpackEnv) {
       'emotion',
       '@emotion/core',
     ],
+    cache: true,
+    target: 'node',
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
