@@ -21,6 +21,7 @@ original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
+  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
