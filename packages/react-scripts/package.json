@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
+  "name": "@just-boris/react-scripts",
   "version": "2.1.8",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebook/create-react-app",
+  "repository": "just-boris/create-preact-app",
   "license": "MIT",
   "engines": {
     "node": ">=8.10"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/just-boris/create-preact-app/issues"
   },
   "files": [
     "bin",
@@ -26,6 +26,7 @@
   "dependencies": {
     "@babel/core": "7.3.4",
     "@svgr/webpack": "4.1.0",
+    "@babel/plugin-transform-react-jsx": "7.3.0",
     "@typescript-eslint/eslint-plugin": "1.4.1",
     "@typescript-eslint/parser": "1.4.1",
     "babel-core": "7.0.0-bridge.0",
@@ -73,8 +74,8 @@
     "workbox-webpack-plugin": "3.6.3"
   },
   "devDependencies": {
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "preact": "^8.4.2",
+    "preact-compat": "^3.18.4"
   },
   "optionalDependencies": {
     "fsevents": "1.2.7"

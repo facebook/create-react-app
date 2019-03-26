@@ -233,12 +233,18 @@ inquirer
     console.log(`  Adding ${cyan('Babel')} preset`);
     appPackage.babel = {
       presets: ['react-app'],
+      plugins: [['@babel/plugin-transform-react-jsx', { pragma: 'h' }]],
     };
 
     // Add ESlint config
     console.log(`  Adding ${cyan('ESLint')} configuration`);
     appPackage.eslintConfig = {
       extends: 'react-app',
+      settings: {
+        react: {
+          pragma: 'h',
+        },
+      },
     };
 
     fs.writeFileSync(

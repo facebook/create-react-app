@@ -380,7 +380,7 @@ function run(
   useTypescript
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = ['react', 'react-dom', packageToInstall];
+  const allDependencies = ['preact', 'preact-compat', packageToInstall];
   if (useTypescript) {
     // TODO: get user's node version instead of installing latest
     allDependencies.push(

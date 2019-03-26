@@ -51,6 +51,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^.+\\.module\\.(css|sass|scss)$',
     ],
     moduleNameMapper: {
+      react: 'preact-compat',
+      'react-dom': 'preact-compat',
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },

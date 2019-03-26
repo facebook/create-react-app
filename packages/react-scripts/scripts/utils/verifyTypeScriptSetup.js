@@ -18,7 +18,10 @@ const immer = require('react-dev-utils/immer').produce;
 const globby = require('react-dev-utils/globby').sync;
 
 function writeJson(fileName, object) {
-  fs.writeFileSync(fileName, JSON.stringify(object, null, 2).replace(/\n/g, os.EOL) + os.EOL);
+  fs.writeFileSync(
+    fileName,
+    JSON.stringify(object, null, 2).replace(/\n/g, os.EOL) + os.EOL
+  );
 }
 
 function verifyNoTypeScript() {
@@ -124,6 +127,7 @@ function verifyTypeScriptSetup() {
       value: 'preserve',
       reason: 'JSX is compiled by Babel',
     },
+    jsxFactory: 'h',
     // We do not support absolute imports, though this may come as a future
     // enhancement
     baseUrl: {

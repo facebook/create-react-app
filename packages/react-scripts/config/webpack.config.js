@@ -272,6 +272,8 @@ module.exports = function(webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
+        react: 'preact-compat',
+        'react-dom': 'preact-compat',
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
@@ -314,6 +316,11 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-begin
                 baseConfig: {
                   extends: [require.resolve('eslint-config-react-app')],
+                  settings: {
+                    react: {
+                      pragma: 'h',
+                    },
+                  },
                 },
                 ignore: false,
                 useEslintrc: false,
@@ -354,6 +361,12 @@ module.exports = function(webpackEnv) {
                 babelrc: false,
                 configFile: false,
                 presets: [require.resolve('babel-preset-react-app')],
+                plugins: [
+                  [
+                    require.resolve('@babel/plugin-transform-react-jsx'),
+                    { pragma: 'h' },
+                  ],
+                ],
                 // Make sure we have a unique cache identifier, erring on the
                 // side of caution.
                 // We remove this when the user ejects because the default
