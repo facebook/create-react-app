@@ -1,3 +1,13 @@
+## 2.7.0 (March 26, 2019)
+
+#### :rocket: New Feature
+
+* [lighter-styleguide] add interactivity into Preview component ([#102](https://github.com/lightingbeetle/lighter/pull/102))
+
+#### :tada: version updates
+
+* `lighter-styleguide@2.1.0`
+
 ## 2.7.0 (March 21, 2019)
 
 #### :bug: Bug Fix
