@@ -90,7 +90,7 @@ build()
 function build() {
   console.log('Creating an optimized server production build...');
 
-  console.log(config.plugins);
+  console.log(config.plugins[0]);
 
   const compiler = webpack(config);
   return new Promise((resolve, reject) => {
