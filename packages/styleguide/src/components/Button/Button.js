@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { string } from 'prop-types';
 
 import { rem } from './../../style/utils';
 
@@ -17,7 +18,7 @@ const StyledButton = styled.button`
   background: transparent;
   font-family: ${props => props.theme.fontFamily};
   font-weight: ${props => props.theme.fontWeights.bold};
-  font-size: ${props => props.theme.fontSizes.small};
+  font-size: ${props => props.theme.fontSizes[props.fontSize]};
   color: ${props => props.theme.colors.black};
 
   .icon {
@@ -25,6 +26,14 @@ const StyledButton = styled.button`
     margin-top: -2px;
   }
 `;
+
+StyledButton.propTypes = {
+  fontSize: string,
+};
+
+StyledButton.defaultProps = {
+  fontSize: 'small',
+};
 
 const Button = ({ children, variant, ...other }) => {
   return <StyledButton {...other}>{children}</StyledButton>;

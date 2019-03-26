@@ -14,11 +14,11 @@ const propTypes = {
       /** Type label */
       label: string.isRequired,
       /** Array of values which will be displayed as InfoBadges */
-      values: array
+      values: array,
     })
   ).isRequired,
   /** Default map of available colors to types. Color must be defined in theme. */
-  typeToColorMap: BadgePropTypes.typeToColorMap
+  typeToColorMap: BadgePropTypes.typeToColorMap,
 };
 
 const ComponentInfo = ({ infoTypes, typeToColorMap, ...other }) => {
@@ -33,7 +33,7 @@ const ComponentInfo = ({ infoTypes, typeToColorMap, ...other }) => {
             typeToColorMap={typeToColorMap}
             {...other}
           />
-        </BarItem>
+        </BarItem>,
       ];
     }
 
@@ -58,6 +58,6 @@ const StyledComponentInfo = styled.div`
 `;
 
 ComponentInfo.propTypes = propTypes;
-ComponentInfo.defaultName = 'ComponentInfo';
+ComponentInfo.displayName = 'ComponentInfo';
 
 export default ComponentInfo;
