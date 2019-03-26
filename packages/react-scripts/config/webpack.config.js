@@ -373,6 +373,8 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-end
                 plugins: [
                   [
+                    // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
+                    require.resolve('@loadable/babel-plugin'),
                     require.resolve('babel-plugin-named-asset-import'),
                     {
                       loaderMap: {
