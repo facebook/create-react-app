@@ -3,7 +3,9 @@ id: advanced-configuration
 title: Advanced Configuration
 ---
 
-You can adjust various development and production settings by setting environment variables in your shell or with [.env](adding-custom-environment-variables.md#adding-development-environment-variables-in-env).
+You can adjust various development and production settings by setting environment variables in your shell or with [.env](adding-custom-environment-variables.md#adding-development-environment-variables-in-env). 
+
+> Note: You do not need to declare `REACT_APP_` before the below variables as you would with custom environment variables.
 
 | Variable             | Development | Production | Usage                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | :------------------- | :---------: | :--------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
