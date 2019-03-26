@@ -24,6 +24,8 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const LoadablePlugin = require('@loadable/webpack-plugin');
+
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -189,6 +191,8 @@ module.exports = function(webpackEnv) {
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
         new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+        // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
+        new LoadablePlugin(),
       ],
     },
     resolveLoader: {
@@ -276,6 +280,8 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-end
                 plugins: [
                   [
+                    // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
+                    require.resolve('@loadable/babel-plugin'),
                     require.resolve('babel-plugin-named-asset-import'),
                     {
                       loaderMap: {
