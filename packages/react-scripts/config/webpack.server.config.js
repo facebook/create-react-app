@@ -287,7 +287,7 @@ module.exports = function(webpackEnv) {
                       },
                     },
                     // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
-                    '@loadable/babel-plugin',
+                    require.resolve('@loadable/babel-plugin'),
                   ],
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
