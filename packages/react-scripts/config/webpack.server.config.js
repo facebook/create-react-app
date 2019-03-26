@@ -279,7 +279,7 @@ module.exports = function(webpackEnv) {
                 plugins: [
                   [
                     // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
-                    require.resolve('@loadable/babel-plugin'),
+                    '@loadable/babel-plugin',
                     require.resolve('babel-plugin-named-asset-import'),
                     {
                       loaderMap: {
