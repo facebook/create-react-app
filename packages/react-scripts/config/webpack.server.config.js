@@ -424,7 +424,7 @@ module.exports = function(webpackEnv) {
     },
     plugins: [
       // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
-      // new LoadablePlugin(),
+      new LoadablePlugin(),
       // This gives some necessary context to module not found errors, such as
       // the requesting resource.
       new ModuleNotFoundPlugin(paths.appPath),
