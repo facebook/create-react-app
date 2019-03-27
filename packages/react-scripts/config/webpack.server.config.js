@@ -43,7 +43,6 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 const fileRegex = /\.(js|mjs|jsx|ts|tsx|html|json)$/;
-const externalAssetsRegex = /\.(png|jpg|svg)$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -244,7 +243,7 @@ module.exports = function(webpackEnv) {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
               loader: require.resolve('url-loader'),
               options: {
-                limit: 10000,
+                limit: 1,
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
@@ -289,9 +288,9 @@ module.exports = function(webpackEnv) {
                         },
                       },
                     },
-                    // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
-                    require.resolve('@loadable/babel-plugin'),
                   ],
+                  // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
+                  require.resolve('@loadable/babel-plugin'),
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -402,11 +401,6 @@ module.exports = function(webpackEnv) {
                 },
                 'sass-loader'
               ),
-            },
-            // https://medium.com/@kathleeng.lopez/rendering-local-images-with-react-and-webpack-5f9d1fdb9b54
-            {
-              test: externalAssetsRegex,
-              loader: require.resolve('url-loader'),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
