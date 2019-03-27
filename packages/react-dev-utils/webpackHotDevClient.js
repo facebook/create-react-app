@@ -57,12 +57,37 @@ if (module.hot && typeof module.hot.dispose === 'function') {
   });
 }
 
+function getCurrentScriptSource() {
+  // `document.currentScript` is the most accurate way to find the current script,
+  // but is not supported in all browsers.
+  if (document.currentScript) {
+    return document.currentScript.getAttribute('src');
+  }
+
+  // Fall back to getting all scripts in the document.
+  const scriptElements = document.scripts || [];
+  const currentScript = scriptElements[scriptElements.length - 1];
+  if (currentScript) {
+    return currentScript.getAttribute('src');
+  }
+
+  // Fall back to window.location.
+  return window.location.href;
+}
+
+function getCurrentScriptURL() {
+  return new URL(getCurrentScriptSource(), window.location.href);
+}
+
+var scriptUrl = getCurrentScriptURL();
+
 // Connect to WebpackDevServer via a socket.
 var connection = new SockJS(
   url.format({
-    protocol: window.location.protocol,
-    hostname: window.location.hostname,
-    port: window.location.port,
+    protocol: scriptUrl.protocol,
+    hostname: scriptUrl.hostname,
+    port: scriptUrl.port,
+    auth: scriptUrl.auth,
     // Hardcoded in WebpackDevServer
     pathname: '/sockjs-node',
   })
