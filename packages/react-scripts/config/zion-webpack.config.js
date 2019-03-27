@@ -3,7 +3,7 @@ require('dotenv').config()
 const initiatedDirectory = process.env.INIT_CWD
 const nodeExternals = require('webpack-node-externals')
 const merge = require('webpack-merge')
-const setupProxy = require('@fs/exo/proxy')
+const setupProxy = require('../proxy/setupProxy')
 const baseWebpack = require('./webpack.config.js')
 
 const craWebpack = baseWebpack('development')
