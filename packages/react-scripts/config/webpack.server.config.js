@@ -279,6 +279,8 @@ module.exports = function(webpackEnv) {
                 ),
                 // @remove-on-eject-end
                 plugins: [
+                  // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
+                  require.resolve('@loadable/babel-plugin'),
                   [
                     require.resolve('babel-plugin-named-asset-import'),
                     {
@@ -289,8 +291,6 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
-                  // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
-                  require.resolve('@loadable/babel-plugin'),
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
