@@ -128,6 +128,7 @@ module.exports = function(webpackEnv) {
       'mobx-react',
       'emotion',
       '@emotion/core',
+      '@loadable/component',
     ],
     cache: true,
     target: 'node',
