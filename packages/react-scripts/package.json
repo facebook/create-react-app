@@ -28,6 +28,7 @@
     "@babel/core": "7.2.2",
     "@fs/babel-preset-frontier": "^1.0.0",
     "@fs/eslint-config-frontier-react": "^1.3.0",
+    "@fs/exo": "^0.3.3",
     "@svgr/webpack": "4.1.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.0",

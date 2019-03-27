@@ -1,4 +1,4 @@
-const setProxies = require('exo/proxy')
+const setProxies = require('@fs/exo/proxy')
 const snow = require('snow')
 const setWebpackManifest = require('snow/lib/utils/webpackManifest.js')
 const hf = require('hf')
