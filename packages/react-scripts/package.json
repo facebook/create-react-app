@@ -1,6 +1,6 @@
 {
   "name": "soulpicks-react-scripts",
-  "version": "2.9.10",
+  "version": "2.10.0",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": "Soulpicks/create-react-app",
   "license": "MIT",
@@ -70,6 +70,7 @@
     "terser-webpack-plugin": "1.2.3",
     "url-loader": "1.1.2",
     "webpack": "4.29.6",
+    "webpack-bundle-analyzer": "^3.1.0",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
     "webpack-node-externals": "^1.7.2",
