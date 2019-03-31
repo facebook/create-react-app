@@ -286,10 +286,10 @@ module.exports = function(webpackEnv) {
                   require.resolve('@loadable/babel-plugin'),
                   shouldApplyEmotionPlugin &&
                     [
-                        'emotion',
-                        {
+                      'emotion',
+                      {
                         labelFormat: isEnvDevelopment ? '[local]-[filename]' : '[local]',
-                        }
+                      }
                     ],
                   [
                     require.resolve('babel-plugin-named-asset-import'),
