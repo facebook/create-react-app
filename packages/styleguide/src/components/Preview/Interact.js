@@ -13,7 +13,8 @@ import useId from './../../utils/useId';
  * Cleanup docgen prop value of string which has this form:
  * "'string'" and converts it to "string"
  */
-const cleanValue = s => (typeof s === 'string' ? s.replace(/(^'|'$)/g, '') : s);
+const cleanValue = s =>
+  typeof s === 'string' ? s.replace(/(^['"]|['"]$)/g, '') : s;
 
 /**
  * Generates help tooltip for property input
@@ -352,9 +353,9 @@ class Interact extends React.Component {
     } = this.getComponentInfo(component, id, prefix);
 
     const children = (component.props && component.props.children) || [];
-    const isHtmlElement = typeof component.type === 'string';
+
     let childrenStates = {};
-    if (!this.props.skipChildren && !isHtmlElement && children) {
+    if (!this.props.skipChildren && children) {
       const childrenArray = React.Children.toArray(children);
 
       childrenStates = childrenArray.reduce(
@@ -384,9 +385,9 @@ class Interact extends React.Component {
     const componentState = { [componentName]: prefix ? false : true };
 
     const children = (component.props && component.props.children) || [];
-    const isHtmlElement = typeof component.type === 'string';
+
     let childrenStates = {};
-    if (!this.props.skipChildren && !isHtmlElement && children) {
+    if (!this.props.skipChildren && children) {
       const childrenArray = React.Children.toArray(children);
 
       childrenStates = childrenArray.reduce(
@@ -417,10 +418,10 @@ class Interact extends React.Component {
       state: componentState,
     } = this.getComponentDocgenProps(component, id, prefix);
 
-    const isHtmlElement = typeof component.type === 'string';
     const children = (component.props && component.props.children) || [];
+
     let childrenStates = {};
-    if (!this.props.skipChildren && !isHtmlElement && children) {
+    if (!this.props.skipChildren && children) {
       const childrenArray = React.Children.toArray(children);
 
       childrenStates = childrenArray.reduce(
@@ -590,30 +591,34 @@ class Interact extends React.Component {
 
     const isHtmlElement = typeof component.type === 'string';
 
+    const stateProps = Object.keys(liveProps).reduce((acc, curr) => {
+      const defaultValue =
+        docgenProps[curr].defaultValue &&
+        cleanValue(docgenProps[curr].defaultValue.value);
+      // default values should not be visible in code example
+      return {
+        ...acc,
+        [curr]:
+          defaultValue === liveProps[curr] || liveProps[curr] === ''
+            ? undefined
+            : liveProps[curr],
+      };
+    }, {});
+
     return {
       ...componentBase,
       props: {
         ...props,
-        ...(!this.props.skipChildren && !isHtmlElement
+        ...(!this.props.skipChildren
           ? {
               children: React.Children.map(children, (child, index) =>
                 this.renderInteractive(child, index, componentName)
               ),
             }
           : {}),
-        ...Object.keys(liveProps).reduce((acc, curr) => {
-          const defaultValue =
-            docgenProps[curr].defaultValue &&
-            cleanValue(docgenProps[curr].defaultValue.value);
-          // default values should not be visible in code example
-          return {
-            ...acc,
-            [curr]:
-              defaultValue === liveProps[curr] || liveProps[curr] === ''
-                ? undefined
-                : liveProps[curr],
-          };
-        }, {}),
+        // html element children should not be overwritten
+        // children would not be interactive
+        ...(!isHtmlElement ? stateProps : {}),
       },
     };
   }
@@ -648,7 +653,7 @@ class Interact extends React.Component {
                   </Button>
                 </BarItem>
               </Bar>
-              {!this.state.showCode && this.renderInteractive(this.component)}
+              {this.renderInteractive(this.component)}
               {this.state.showCode && (
                 <CodeExample
                   codeJSXOptions={{
@@ -692,7 +697,7 @@ class Interact extends React.Component {
                           return null;
                         }
                         return (
-                          <StyledWrapper>
+                          <StyledWrapper key={name}>
                             {this.renderInput(id, name)}
                           </StyledWrapper>
                         );
