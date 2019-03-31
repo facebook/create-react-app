@@ -1,3 +1,15 @@
+## 2.7.0 (March 31, 2019)
+
+#### :bug: Bug Fix
+
+* [lighter-styleguide] fix issues with interactivity of HTML elements ([#106](https://github.com/lightingbeetle/lighter/pull/106))
+* [lighter-styleguide] fix how interact handles string prop formats ([#106](https://github.com/lightingbeetle/lighter/pull/106))
+* [lighter-styleguide] fix interact show code placement ([#106](https://github.com/lightingbeetle/lighter/pull/106))
+
+#### :tada: version updates
+
+* `lighter-styleguide@2.1.1`
+
 ## 2.7.0 (March 26, 2019)
 
 #### :rocket: New Feature
