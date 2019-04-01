@@ -29,7 +29,6 @@ const LoadablePlugin = require('@loadable/webpack-plugin');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
-const nodeExternals = require('webpack-node-externals');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -123,7 +122,6 @@ module.exports = function(webpackEnv) {
   return {
     name: 'server',
     externals: [
-      nodeExternals(),
       'react-helmet',
       'babel-polyfill',
       'react',
