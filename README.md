@@ -163,7 +163,7 @@ Create React App is a great fit for:
 - **Starting new single-page React applications.**
 - **Creating examples** with React for your libraries and components.
 
-Here are few common cases where you might want to try something else:
+Here are a few common cases where you might want to try something else:
 
 - If you want to **try React** without hundreds of transitive build tool dependencies, consider [using a single HTML file or an online sandbox instead](https://reactjs.org/docs/try-react.html).
 
