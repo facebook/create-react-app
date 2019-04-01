@@ -62,42 +62,52 @@ module.exports = {
     },
   },
 
-  overrides: {
-    files: ['**/*.ts', '**/*.tsx'],
-    parser: '@typescript-eslint/parser',
-    parserOptions: {
-      ecmaVersion: 2018,
-      sourceType: 'module',
-      ecmaFeatures: {
-        jsx: true,
-      },
-
-      // typescript-eslint specific options
-      project: tsConfigPath,
-      tsconfigRootDir: projectRootPath,
-      warnOnUnsupportedTypeScriptVersion: true,
-    },
-    plugins: ['@typescript-eslint'],
-    rules: {
-      // These ESLint rules are known to cause issues with typescript-eslint
-      // See https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.json
-      camelcase: 'off',
-      indent: 'off',
-      'no-array-constructor': 'off',
-      'no-unused-vars': 'off',
-
-      '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
-      '@typescript-eslint/no-array-constructor': 'warn',
-      '@typescript-eslint/no-namespace': 'error',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        {
-          args: 'none',
-          ignoreRestSiblings: true,
+  overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
         },
-      ],
+
+        // typescript-eslint specific options
+        project: tsConfigPath,
+        tsconfigRootDir: projectRootPath,
+        warnOnUnsupportedTypeScriptVersion: true,
+      },
+      plugins: ['@typescript-eslint'],
+      rules: {
+        // These ESLint rules are known to cause issues with typescript-eslint
+        // See https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.json
+        camelcase: 'off',
+        indent: 'off',
+        'no-array-constructor': 'off',
+        'no-unused-vars': 'off',
+
+        '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
+        '@typescript-eslint/no-array-constructor': 'warn',
+        '@typescript-eslint/no-namespace': 'error',
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
+          {
+            args: 'none',
+            ignoreRestSiblings: true,
+          },
+        ],
+      },
     },
-  },
+    {
+      files: ['**/*.worker.(js|mjs|ts)'],
+      rules: {
+        'no-restricted-globals': ['error'].concat(
+          restrictedGlobals.filter(g => g !== 'self')
+        ),
+      },
+    },
+  ],
 
   // NOTE: When adding rules here, you need to make sure they are compatible with
   // `typescript-eslint`, as some rules such as `no-array-constructor` aren't compatible.
