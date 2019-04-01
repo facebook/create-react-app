@@ -95,9 +95,9 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test',
+    start: 'react-app-rewired start --scripts-version pwa-react-scripts',
+    build: 'react-app-rewired build --scripts-version pwa-react-scripts',
+    test: 'react-app-rewired test --scripts-version pwa-react-scripts',
     eject: 'react-scripts eject',
   };
 
@@ -108,6 +108,11 @@ module.exports = function(
 
   // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;
+
+  appPackage.devDependencies = {
+    'customize-cra': '^0.2.12',
+    'react-app-rewired': '^2.1.1',
+  };
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),

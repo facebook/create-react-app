@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "2.1.8",
+  "name": "pwa-react-scripts",
+  "version": "2.1.9",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebook/create-react-app",
+  "repository": "ingf/create-react-app",
   "license": "MIT",
   "engines": {
     "node": ">=8.10"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/ingf/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -20,7 +20,7 @@
     "utils"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "pwa-react-scripts": "./bin/react-scripts.js"
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
