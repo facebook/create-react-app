@@ -24,7 +24,7 @@ Then in `package.json`, add the following line to `scripts`:
 
 ```diff
    "scripts": {
-+    "analyze": "source-map-explorer build/static/js/main.*",
++    "analyze": "source-map-explorer 'build/static/js/*.js'",
      "start": "react-scripts start",
      "build": "react-scripts build",
      "test": "react-scripts test",
@@ -33,7 +33,7 @@ Then in `package.json`, add the following line to `scripts`:
 Then to analyze the bundle run the production build then run the analyze
 script.
 
-```
+```sh
 npm run build
 npm run analyze
 ```

@@ -269,6 +269,9 @@ verify_module_scope
 # Eject...
 echo yes | npm run eject
 
+# Test ejected files were staged
+test -n "$(git diff --staged --name-only)"
+
 # Test the build
 yarn build
 # Check for expected output
