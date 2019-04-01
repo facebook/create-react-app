@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 
 const paths = require('../paths');
