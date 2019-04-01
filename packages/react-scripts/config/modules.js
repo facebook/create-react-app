@@ -51,7 +51,7 @@ function getAdditionalModulePath(options = {}) {
 
 function getModules() {
   // Check if TypeScript is setup
-  const useTypeScript = fs.existsSync(paths.appTsConfig);
+  const hasTsConfig = fs.existsSync(paths.appTsConfig);
   const hasJsConfig = fs.existsSync(paths.appJsConfig);
 
   if (useTypeScript && hasJsConfig) {
