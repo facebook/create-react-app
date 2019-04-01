@@ -21,6 +21,7 @@ original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
+  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   rm -rf "$temp_app_path"
   npm set registry "$original_npm_registry_url"
