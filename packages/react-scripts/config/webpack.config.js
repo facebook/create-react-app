@@ -45,6 +45,9 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
+// Check if emotion babel plugin should be applied
+const shouldApplyEmotionPlugin = require('./utils/shouldApplyEmotionBabelPlugin');
+
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -368,13 +371,17 @@ module.exports = function(webpackEnv) {
                     'babel-plugin-named-asset-import',
                     'babel-preset-react-app',
                     'react-dev-utils',
-                    'react-scripts',
+                    '@soulpicks/react-scripts',
                   ]
                 ),
                 // @remove-on-eject-end
                 plugins: [
                   // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
                   require.resolve('@loadable/babel-plugin'),
+                  shouldApplyEmotionPlugin && [
+                    'emotion',
+                    require('./utils/getEmotionBabelPluginConfig'),
+                  ],
                   [
                     require.resolve('babel-plugin-named-asset-import'),
                     {
@@ -385,7 +392,7 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
-                ],
+                ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
                 // directory for faster rebuilds.
@@ -421,7 +428,7 @@ module.exports = function(webpackEnv) {
                     'babel-plugin-named-asset-import',
                     'babel-preset-react-app',
                     'react-dev-utils',
-                    'react-scripts',
+                    '@soulpicks/react-scripts',
                   ]
                 ),
                 // @remove-on-eject-end
