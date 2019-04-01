@@ -54,7 +54,7 @@ function getModules() {
   const hasTsConfig = fs.existsSync(paths.appTsConfig);
   const hasJsConfig = fs.existsSync(paths.appJsConfig);
 
-  if (useTypeScript && hasJsConfig) {
+  if (hasTsConfig && hasJsConfig) {
     throw new Error(
       'You have both a tsconfig.json and a jsconfig.json. If you are using Typescript please remove your jsconfig.json file.'
     );
@@ -65,7 +65,7 @@ function getModules() {
   // If there's a tsconfig.json we assume it's a
   // Typescript project and set up the config
   // based on tsconfig.json
-  if (useTypeScript) {
+  if (hasTsConfig) {
     config = require(paths.appTsConfig);
     // Otherwise we'll check if there is jsconfig.json
     // for non TS projects.
@@ -80,7 +80,7 @@ function getModules() {
 
   return {
     additionalModulePath: additionalModulePath,
-    useTypeScript,
+    hasTsConfig,
   };
 }
 
