@@ -1,11 +1,11 @@
 {
   "name": "react-scripts",
-  "version": "2.1.1",
+  "version": "2.1.8",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebook/create-react-app",
   "license": "MIT",
   "engines": {
-    "node": ">=6"
+    "node": ">=8.10"
   },
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"
@@ -24,65 +24,71 @@
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
-    "@babel/core": "7.1.6",
-    "@svgr/webpack": "2.4.1",
+    "@babel/core": "7.3.4",
+    "@svgr/webpack": "4.1.0",
+    "@typescript-eslint/eslint-plugin": "1.4.1",
+    "@typescript-eslint/parser": "1.4.1",
     "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "9.0.0",
-    "babel-jest": "23.6.0",
-    "babel-loader": "8.0.4",
-    "babel-plugin-named-asset-import": "^0.2.3",
-    "babel-preset-react-app": "^6.1.0",
-    "bfj": "6.1.1",
-    "case-sensitive-paths-webpack-plugin": "2.1.2",
-    "chalk": "2.4.1",
-    "css-loader": "1.0.0",
-    "dotenv": "6.0.0",
+    "babel-eslint": "10.0.1",
+    "babel-jest": "24.5.0",
+    "babel-loader": "8.0.5",
+    "babel-plugin-named-asset-import": "^0.3.1",
+    "babel-preset-react-app": "^7.0.2",
+    "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "css-loader": "2.1.1",
+    "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
-    "eslint": "5.6.0",
-    "eslint-config-react-app": "^3.0.5",
-    "eslint-loader": "2.1.1",
+    "eslint": "5.15.1",
+    "eslint-config-react-app": "^3.0.8",
+    "eslint-loader": "2.1.2",
     "eslint-plugin-flowtype": "2.50.1",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-jsx-a11y": "6.1.2",
-    "eslint-plugin-react": "7.11.1",
-    "file-loader": "2.0.0",
-    "fork-ts-checker-webpack-plugin-alt": "0.4.14",
-    "fs-extra": "7.0.0",
-    "html-webpack-plugin": "4.0.0-alpha.2",
+    "eslint-plugin-import": "2.16.0",
+    "eslint-plugin-jsx-a11y": "6.2.1",
+    "eslint-plugin-react": "7.12.4",
+    "eslint-plugin-react-hooks": "^1.5.0",
+    "file-loader": "3.0.1",
+    "fs-extra": "7.0.1",
+    "html-webpack-plugin": "4.0.0-beta.5",
     "identity-obj-proxy": "3.0.0",
-    "jest": "23.6.0",
-    "jest-pnp-resolver": "1.0.1",
-    "jest-resolve": "23.6.0",
-    "mini-css-extract-plugin": "0.4.3",
+    "jest": "24.5.0",
+    "jest-resolve": "24.5.0",
+    "jest-watch-typeahead": "^0.2.1",
+    "mini-css-extract-plugin": "0.5.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
-    "pnp-webpack-plugin": "1.1.0",
+    "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
-    "postcss-preset-env": "6.3.1",
+    "postcss-preset-env": "6.6.0",
     "postcss-safe-parser": "4.0.1",
-    "react-app-polyfill": "^0.1.3",
-    "react-dev-utils": "^6.1.1",
-    "resolve": "1.8.1",
+    "react-app-polyfill": "^0.2.2",
+    "react-dev-utils": "^8.0.0",
+    "resolve": "1.10.0",
     "sass-loader": "7.1.0",
-    "style-loader": "0.23.0",
-    "terser-webpack-plugin": "1.1.0",
-    "url-loader": "1.1.1",
-    "webpack": "4.19.1",
-    "webpack-dev-server": "3.1.9",
+    "style-loader": "0.23.1",
+    "terser-webpack-plugin": "1.2.3",
+    "url-loader": "1.1.2",
+    "webpack": "4.29.6",
+    "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "3.6.3"
   },
   "devDependencies": {
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   },
   "optionalDependencies": {
-    "fsevents": "1.2.4"
+    "fsevents": "1.2.7"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
