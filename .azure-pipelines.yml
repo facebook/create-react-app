@@ -6,11 +6,14 @@ trigger:
 - master
 
 variables:
+  # The following is needed because various tests and scripts look for the CI environment variable
   CI: true
+  # The following sets TEMP to the same drive as the cloned source (on Windows); needed because some scripts "cd" into a temporary directory (this fails on Windows if the current directory is on a different drive)
   VSTS_OVERWRITE_TEMP: True
+  # The following helps improve build performance on Windows by ensuring the Yarn and NPM caches are on the same drive as the cloned source and temp
   YARN_CACHE_FOLDER: $(Build.SourcesDirectory)/../yarn-cache
   NPM_CONFIG_CACHE: $(Build.SourcesDirectory)/../npm-cache
-  
+
 # ******************************************************************************
 # Simple test suite
 # ******************************************************************************
@@ -125,6 +128,6 @@ jobs:
     - task: NodeTool@0
       inputs:
         versionSpec: 6.x
-      displayName: 'Install Node.js'
+      displayName: 'Install Node.js 6.x'
     - bash: tasks/e2e-old-node.sh
       displayName: 'Run tests'
