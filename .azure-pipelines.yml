@@ -1,0 +1,129 @@
+#
+# Azure Pipelines configuration for building and testing create-react-app on Linux, Windows, and macOS.
+#
+
+trigger:
+- master
+
+variables:
+  CI: true
+  VSTS_OVERWRITE_TEMP: True
+  YARN_CACHE_FOLDER: $(Build.SourcesDirectory)/../yarn-cache
+  
+# ******************************************************************************
+# Simple test suite
+# ******************************************************************************
+jobs:
+- job: Simple
+  strategy:
+    matrix:
+      LinuxNode8:    { VM_IMAGE: 'ubuntu-16.04',   NODE_VERSION: 8.x }
+      LinuxNode10:   { VM_IMAGE: 'ubuntu-16.04',   NODE_VERSION: 10.x }
+      MacNode8:      { VM_IMAGE: 'macOS-10.13',    NODE_VERSION: 8.x }
+      MacNode10:     { VM_IMAGE: 'macOS-10.13',    NODE_VERSION: 10.x }
+      WindowsNode8:  { VM_IMAGE: 'vs2017-win2016', NODE_VERSION: 8.x }
+      WindowsNode10: { VM_IMAGE: 'vs2017-win2016', NODE_VERSION: 10.x }
+  pool: 
+    vmImage: $(VM_IMAGE)
+  steps:
+    - template: .azure-pipelines-steps.yml
+    - bash: tasks/e2e-simple.sh
+      displayName: 'Run tests'
+
+# ******************************************************************************
+# Installs test suite
+# ******************************************************************************
+- job: Installs
+  strategy:
+    matrix:
+      LinuxNode8:    { VM_IMAGE: 'ubuntu-16.04',   NODE_VERSION: 8.x }
+      LinuxNode10:   { VM_IMAGE: 'ubuntu-16.04',   NODE_VERSION: 10.x }
+      MacNode8:      { VM_IMAGE: 'macOS-10.13',    NODE_VERSION: 8.x }
+      MacNode10:     { VM_IMAGE: 'macOS-10.13',    NODE_VERSION: 10.x }
+      WindowsNode8:  { VM_IMAGE: 'vs2017-win2016', NODE_VERSION: 8.x }
+      WindowsNode10: { VM_IMAGE: 'vs2017-win2016', NODE_VERSION: 10.x }
+  pool: 
+    vmImage: $(VM_IMAGE)
+  steps:
+    - template: .azure-pipelines-steps.yml    
+    - bash: tasks/e2e-installs.sh
+      displayName: 'Run tests'
+
+# ******************************************************************************
+# Kitchensink test suite
+# ******************************************************************************
+- job: Kitchensink
+  strategy:
+    matrix:
+      LinuxNode8:    { VM_IMAGE: 'ubuntu-16.04',   NODE_VERSION: 8.x }
+      LinuxNode10:   { VM_IMAGE: 'ubuntu-16.04',   NODE_VERSION: 10.x }
+      MacNode8:      { VM_IMAGE: 'macOS-10.13',    NODE_VERSION: 8.x }
+      MacNode10:     { VM_IMAGE: 'macOS-10.13',    NODE_VERSION: 10.x }
+      WindowsNode8:  { VM_IMAGE: 'vs2017-win2016', NODE_VERSION: 8.x }
+      WindowsNode10: { VM_IMAGE: 'vs2017-win2016', NODE_VERSION: 10.x }
+  pool: 
+    vmImage: $(VM_IMAGE)
+  steps:
+    - template: .azure-pipelines-steps.yml
+    - bash: tasks/e2e-kitchensink.sh
+      displayName: 'Run tests'
+
+# ******************************************************************************
+# Kitchensink Eject test suite
+# ******************************************************************************
+- job: KitchensinkEject
+  strategy:
+    matrix:
+      LinuxNode8:    { VM_IMAGE: 'ubuntu-16.04',   NODE_VERSION: 8.x }
+      LinuxNode10:   { VM_IMAGE: 'ubuntu-16.04',   NODE_VERSION: 10.x }
+      MacNode8:      { VM_IMAGE: 'macOS-10.13',    NODE_VERSION: 8.x }
+      MacNode10:     { VM_IMAGE: 'macOS-10.13',    NODE_VERSION: 10.x }
+      WindowsNode8:  { VM_IMAGE: 'vs2017-win2016', NODE_VERSION: 8.x }
+      WindowsNode10: { VM_IMAGE: 'vs2017-win2016', NODE_VERSION: 10.x }
+  pool: 
+    vmImage: $(VM_IMAGE)
+  steps:
+    - template: .azure-pipelines-steps.yml
+    - bash: tasks/e2e-kitchensink-eject.sh
+      displayName: 'Run tests'
+
+# ******************************************************************************
+# Behavior test suite
+# ******************************************************************************
+- job: Behavior
+  strategy:
+    matrix:
+      LinuxNode8:    { VM_IMAGE: 'ubuntu-16.04',   NODE_VERSION: 8.x }
+      LinuxNode10:   { VM_IMAGE: 'ubuntu-16.04',   NODE_VERSION: 10.x }
+      MacNode8:      { VM_IMAGE: 'macOS-10.13',    NODE_VERSION: 8.x }
+      MacNode10:     { VM_IMAGE: 'macOS-10.13',    NODE_VERSION: 10.x }
+      WindowsNode8:  { VM_IMAGE: 'vs2017-win2016', NODE_VERSION: 8.x }
+      WindowsNode10: { VM_IMAGE: 'vs2017-win2016', NODE_VERSION: 10.x }
+  pool: 
+    vmImage: $(VM_IMAGE)
+  steps:
+    - template: .azure-pipelines-steps.yml
+    - bash: tasks/e2e-behavior.sh
+      displayName: 'Run tests'
+
+# ******************************************************************************
+# Old Node test suite
+# ******************************************************************************
+- job: OldNode
+  strategy:
+    matrix:
+      LinuxNode6:
+        VM_IMAGE: 'ubuntu-16.04'
+      MacNode6:
+        VM_IMAGE: 'macOS-10.13'
+      WindowsNode6:
+        VM_IMAGE: 'vs2017-win2016'
+  pool: 
+    vmImage: $(VM_IMAGE)
+  steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: 6.x
+      displayName: 'Install Node.js'
+    - bash: tasks/e2e-old-node.sh
+      displayName: 'Run tests'
