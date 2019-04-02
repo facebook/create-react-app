@@ -9,7 +9,27 @@ const fs = require('fs');
 const { JSDOM, ResourceLoader } = require('jsdom');
 const path = require('path');
 
-// export let resourceLoader;
+export let fetchFile;
+
+if (process.env.E2E_FILE) {
+  const file = path.isAbsolute(process.env.E2E_FILE)
+    ? process.env.E2E_FILE
+    : path.join(process.cwd(), process.env.E2E_FILE);
+
+  const pathPrefix = process.env.PUBLIC_URL.replace(/^https?:\/\/[^/]+\/?/, '');
+
+  const fetchFile = url =>
+    fs.readFileSync(
+      path.join(path.dirname(file), url.pathname.replace(pathPrefix, '')),
+      'utf8'
+    );
+
+  fileResourceLoader = new class FileResourceLoader extends ResourceLoader {
+    fetch(url, options) {
+      return Promise.resolve(fetchFile(url));
+    }
+  }();
+}
 
 if (!process.env.E2E_FILE && !process.env.E2E_URL) {
   it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {
@@ -28,32 +48,9 @@ export default feature =>
       let window;
 
       if (process.env.E2E_FILE) {
-        const file = path.isAbsolute(process.env.E2E_FILE)
-          ? process.env.E2E_FILE
-          : path.join(process.cwd(), process.env.E2E_FILE);
-
-        const pathPrefix = process.env.PUBLIC_URL.replace(
-          /^https?:\/\/[^/]+\/?/,
-          ''
-        );
-
-        const resourceLoader = new class FileResourceLoader extends ResourceLoader {
-          fetch(url, options) {
-            return Promise.resolve(
-              fs.readFileSync(
-                path.join(
-                  path.dirname(file),
-                  url.pathname.replace(pathPrefix, '')
-                ),
-                'utf8'
-              )
-            );
-          }
-        }();
-
         window = (await JSDOM.fromFile(file, {
           pretendToBeVisual: true,
-          resources: resourceLoader,
+          resources: fileResourceLoader,
           runScripts: 'dangerously',
           url,
         })).window;

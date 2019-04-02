@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import initDOM, { resourceLoader } from './initDOM';
+import initDOM, { fetchFile } from './initDOM';
 import url from 'url';
 
 const matchCSS = (doc, regexes) => {
@@ -17,11 +17,11 @@ const matchCSS = (doc, regexes) => {
         href = elem.href;
       }
     }
-    resourceLoader({ url: url.parse(href) }, (_, textContent) => {
-      for (const regex of regexes) {
-        expect(textContent).toMatch(regex);
-      }
-    });
+
+    const textContent = fetchFile(url.parse(href));
+    for (const regex of regexes) {
+      expect(textContent).toMatch(regex);
+    }
   } else {
     for (let i = 0; i < regexes.length; ++i) {
       expect(
