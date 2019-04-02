@@ -10,24 +10,6 @@ steps:
     displayName: 'Initialize Git config settings'
 
   - checkout: self
-  
-  - bash: |
-      export y=$(yarn cache dir)
-      echo "Yarn cache: ${y}"
-      mkdir -p $y
-      cd ${y}/..
-      curl https://createreactapp.blob.core.windows.net/cache/yarn-cache-tar-gz | tar -xz
-      echo $(yarn cache list | wc --lines)
-      ls -la ${y}/npm-opn-5.5.0-fc7164fab56d235904c51c3b27da6758ca3b9bfc/node_modules/opn
-
-      #echo "$(printenv)"
-
-      #echo "Current NPM cache: $(npm config list)"
-      #export n="$(Build.SourcesDirectory)/../npm-cache"
-      #mkdir -p $n      
-      #npm config set cache $n
-      #echo "New NPM cache: $(npm config list)"
-    displayName: 'Seed yarn cache'
 
   - task: NodeTool@0
     inputs:

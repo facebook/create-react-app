@@ -9,6 +9,7 @@ variables:
   CI: true
   VSTS_OVERWRITE_TEMP: True
   YARN_CACHE_FOLDER: $(Build.SourcesDirectory)/../yarn-cache
+  NPM_CONFIG_CACHE: $(Build.SourcesDirectory)/../npm-cache
   
 # ******************************************************************************
 # Simple test suite
