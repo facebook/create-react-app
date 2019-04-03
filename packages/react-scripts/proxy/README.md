@@ -7,7 +7,7 @@
 ### Usage
 
 - In your app (if not installed by create-react-app for you already):  
-  `npm install --save-dev fs-webdev/exo`
+  `npm install --save-dev @fs/react-scripts`
 
 #### Create-React-App for app dev
 
@@ -37,40 +37,6 @@ module.exports = function(app) {
 };
 ```
 
-#### Neutrino/react-components preset use for local component dev
-
-```
-npm install --save-dev @neutrinojs/web
-npm install fs-webdev/exo
-```
-
-- in file:  
-  `.neutrinorc.js`
-
-```javascript
-// import @fs/react-scripts/proxy/setupProxy
-const setupProxy = require('@fs/react-scripts/proxy/setupProxy');
-
-module.exports = {
-  use: [
-    // proxy config is from here
-    [
-      '@neutrinojs/web',
-      {
-        devServer: {
-          // setupProxy optionally takes customProxies as 2nd arg, if needed
-          before: app => setupProxy(app),
-        },
-      },
-    ],
-    // to here
-    '@neutrinojs/airbnb',
-    '@neutrinojs/react-components',
-    '@neutrinojs/jest',
-  ],
-};
-```
-
 ### Change remote environment (int, beta only right now)
 
 in .env file or process.env:
@@ -83,7 +49,7 @@ REMOTE_ENV=int
 - Config options from http-proxy-middleware
 - [https://github.com/chimurai/http-proxy-middleware#http-proxy-options](https://github.com/chimurai/http-proxy-middleware#http-proxy-options)
 - If others will use the service you add, please add it to the default proxy config here:
-- [https://github.com/fs-webdev/exo/blob/master/proxy/proxies.js](https://github.com/fs-webdev/exo/blob/master/proxy/proxies.js)
+- [https://github.com/fs-webdev/create-react-app/tree/master/packages/react-scripts/proxy/proxies.js](https://github.com/fs-webdev/create-react-app/tree/master/packages/react-scripts/proxy/proxies.js)
 
 ### Default Proxy Schema
 

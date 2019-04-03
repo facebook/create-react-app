@@ -67,7 +67,6 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
     ...[
       '@fs/eslint-config-frontier-react',
       '@fs/zion-testing-library',
-      '@fs/exo',
       'eslint@5.12.0',
       'i18next-scanner@2.10.0',
       '@alienfast/i18next-loader@1.0.18',
