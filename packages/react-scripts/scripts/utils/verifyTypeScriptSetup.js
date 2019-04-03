@@ -182,7 +182,7 @@ function verifyTypeScriptSetup() {
       );
     }
     
-    console.error(e && e.message ? `${e.message}` : '');
+    console.log(e && e.message ? `${e.message}` : '');
     process.exit(1);
   }
 
