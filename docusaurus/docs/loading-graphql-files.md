@@ -4,7 +4,7 @@ title: Loading .graphql Files
 sidebar_label: Loading .graphql Files
 ---
 
-To load `.gql` and `.graphql` files, first install the [`graphql.macro`](https://www.npmjs.com/package/graphql.macro) package by running
+To load `.gql` and `.graphql` files, first install the [`graphql.macro`](https://www.npmjs.com/package/graphql.macro) package by running:
 
 ```sh
 npm install --save graphql.macro
