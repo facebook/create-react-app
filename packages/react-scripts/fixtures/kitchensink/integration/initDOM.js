@@ -67,12 +67,12 @@ export default feature =>
       document.addEventListener(
         'ReactFeatureDidMount',
         () => resolve(document),
-        true
+        { capture: true, once: true }
       );
       document.addEventListener(
         'ReactFeatureError',
         () => reject(`Error loading feature: ${feature}`),
-        true
+        { capture: true, once: true }
       );
     } catch (e) {
       reject(e);
