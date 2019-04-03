@@ -538,6 +538,19 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
+      // copy static assets from shared components
+      new CopyWebpackPlugin([
+        {
+          from: {
+            glob: path.join(
+              paths.appNodeModules,
+              `{@fs-sandbox,@fs}/**/dist/static/media/*`
+            ),
+          },
+          to: `static/media/[name].[ext]`,
+          toType: 'template',
+        },
+      ]),
       // FS - copy over hf's webpack built files to /static/hf directory to be
       // used by snow.
       isHF &&
