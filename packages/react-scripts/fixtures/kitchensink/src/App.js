@@ -14,13 +14,22 @@ class BuiltEmitter extends Component {
   };
 
   componentDidMount() {
-    const { feature } = this.props;
+    const { error, feature } = this.props;
+
+    if (error) {
+      this.handleError(error);
+      return;
+    }
 
     // Class components must call this.props.onReady when they're ready for the test.
     // We will assume functional components are ready immediately after mounting.
     if (!Component.isPrototypeOf(feature)) {
       this.handleReady();
     }
+  }
+
+  handleError(error) {
+    document.dispatchEvent(new Event('ReactFeatureError'));
   }
 
   handleReady() {
@@ -34,9 +43,10 @@ class BuiltEmitter extends Component {
     } = this;
     return (
       <div>
-        {createElement(feature, {
-          onReady: handleReady,
-        })}
+        {feature &&
+          createElement(feature, {
+            onReady: handleReady,
+          })}
       </div>
     );
   }
@@ -223,7 +233,7 @@ class App extends Component {
         );
         break;
       default:
-        throw new Error(`Missing feature "${feature}"`);
+        this.setState({ error: `Missing feature "${feature}"` });
     }
   }
 
@@ -232,9 +242,9 @@ class App extends Component {
   }
 
   render() {
-    const { feature } = this.state;
-    if (feature !== null) {
-      return <BuiltEmitter feature={feature} />;
+    const { error, feature } = this.state;
+    if (error || feature) {
+      return <BuiltEmitter error={error} feature={feature} />;
     }
     return null;
   }

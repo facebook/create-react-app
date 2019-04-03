@@ -69,6 +69,11 @@ export default feature =>
         () => resolve(document),
         true
       );
+      document.addEventListener(
+        'ReactFeatureError',
+        () => reject(`Error loading feature: ${feature}`),
+        true
+      );
     } catch (e) {
       reject(e);
     }
