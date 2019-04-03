@@ -32,7 +32,6 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}',
     ],
     testEnvironment: require.resolve('jest-environment-jsdom-fourteen'),
-    testURL: 'http://localhost',
     transform: {
       '^.+\\.(js|jsx|ts|tsx)$': isEjecting
         ? require.resolve('babel-jest')
