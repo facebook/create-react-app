@@ -1,6 +1,6 @@
 require('dotenv')
 const styles = require('@fs/styleguidist-overrides/dist/styles.js')
-const webpackConfig = require('@fs/configurations/webpack.dev.js')
+const webpackConfig = require('@fs/react-scripts/config/zion-webpack.config.js')
 
 module.exports = {
   webpackConfig,

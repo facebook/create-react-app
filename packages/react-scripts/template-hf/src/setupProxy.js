@@ -1,4 +1,4 @@
-const setProxies = require('exo/proxy')
+const setProxies = require('@fs/react-scripts/proxy/setupProxy')
 const hf = require('hf')
 const snow = require('snow')
 const waitForWebpack = require('snow/lib/utils/waitForWebpack.js')
