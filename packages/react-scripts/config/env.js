@@ -87,12 +87,18 @@ function getClientEnvironment(publicUrl) {
         PUBLIC_URL: publicUrl,
       }
     );
-  // Stringify all values so we can feed into Webpack DefinePlugin
+  // Stringify all values so we can feed into Webpack DefinePlugin. Fall back
+  // to process.env if it exists, as it will in Node environments.
   const stringified = {
-    'process.env': Object.keys(raw).reduce((env, key) => {
-      env[key] = JSON.stringify(raw[key]);
-      return env;
-    }, {}),
+    'process.env':
+      'Object.assign({},typeof process !== "undefined" && process.env,' +
+      JSON.stringify(
+        Object.keys(raw).reduce((env, key) => {
+          env[key] = JSON.stringify(raw[key]);
+          return env;
+        }, {})
+      ) +
+      ')',
   };
 
   return { raw, stringified };

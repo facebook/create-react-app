@@ -139,14 +139,14 @@ function createCompiler({
   let tsMessagesResolver;
 
   if (useTypeScript) {
-    compiler.hooks.beforeCompile.tap('beforeCompile', () => {
+    compiler.compilers[0].hooks.beforeCompile.tap('beforeCompile', () => {
       tsMessagesPromise = new Promise(resolve => {
         tsMessagesResolver = msgs => resolve(msgs);
       });
     });
 
     forkTsCheckerWebpackPlugin
-      .getCompilerHooks(compiler)
+      .getCompilerHooks(compiler.compilers[0])
       .receive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
         const allMsgs = [...diagnostics, ...lints];
         const format = message =>
@@ -173,7 +173,7 @@ function createCompiler({
     // them in a readable focused way.
     // We only construct the warnings and errors for speed:
     // https://github.com/facebook/create-react-app/issues/4492#issuecomment-421959548
-    const statsData = stats.toJson({
+    const statsData = stats.stats[0].toJson({
       all: false,
       warnings: true,
       errors: true,
@@ -195,8 +195,8 @@ function createCompiler({
 
       // Push errors and warnings into compilation result
       // to show them after page refresh triggered by user.
-      stats.compilation.errors.push(...messages.errors);
-      stats.compilation.warnings.push(...messages.warnings);
+      stats.stats[0].compilation.errors.push(...messages.errors);
+      stats.stats[0].compilation.warnings.push(...messages.warnings);
 
       if (messages.errors.length > 0) {
         devSocket.errors(messages.errors);

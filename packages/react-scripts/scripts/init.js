@@ -80,7 +80,8 @@ module.exports = function(
   appName,
   verbose,
   originalDirectory,
-  template
+  template,
+  useSsr
 ) {
   const ownPath = path.dirname(
     require.resolve(path.join(__dirname, '..', 'package.json'))
@@ -97,6 +98,7 @@ module.exports = function(
   appPackage.scripts = {
     start: 'react-scripts start',
     build: 'react-scripts build',
+    serve: 'react-scripts serve',
     test: 'react-scripts test',
     eject: 'react-scripts eject',
   };
@@ -133,6 +135,12 @@ module.exports = function(
       `Could not locate supplied template: ${chalk.green(templatePath)}`
     );
     return;
+  }
+
+  // If using SSR, add SSR-specific template files
+  let ssrTemplatePath = templatePath + '-ssr';
+  if (useSsr && fs.existsSync(ssrTemplatePath)) {
+    fs.copySync(ssrTemplatePath, appPath);
   }
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore

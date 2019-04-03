@@ -20,6 +20,7 @@
     "checkRequiredFiles.js",
     "clearConsole.js",
     "crossSpawn.js",
+    "devRendererMiddleware.js",
     "errorOverlayMiddleware.js",
     "eslintFormatter.js",
     "evalSourceMapMiddleware.js",
@@ -74,7 +75,8 @@
     "shell-quote": "1.6.1",
     "sockjs-client": "1.3.0",
     "strip-ansi": "5.2.0",
-    "text-table": "0.2.0"
+    "text-table": "0.2.0",
+    "tmp": "^0.1.0"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

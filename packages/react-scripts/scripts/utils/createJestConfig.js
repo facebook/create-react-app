@@ -55,7 +55,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },
-    moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
+    moduleFileExtensions: [...paths.nodeModuleFileExtensions, 'node'].filter(
       ext => !ext.includes('mjs')
     ),
     watchPlugins: [

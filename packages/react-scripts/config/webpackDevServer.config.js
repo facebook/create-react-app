@@ -12,14 +12,27 @@ const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware')
 const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
+const devRendererMiddleware = require('react-dev-utils/devRendererMiddleware');
 const paths = require('./paths');
 const fs = require('fs');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
 
-module.exports = function(proxy, allowedHost) {
-  return {
+// Check if a Node bundle should be output
+const useNodeEnv = !!paths.appNodeBuild;
+
+module.exports = function(proxy, allowedHost, registerSourceMap) {
+  // By default, webpack-dev-server uses the express serve-index middleware
+  // to serve a directory listing when you access the root URL. This behavior
+  // is undesirable when server-rendering, as it makes it impossible to perform
+  // server rendering of the root page with an `after()` middleware.
+  //
+  // Currently, the only way to disable the serve-index middleware is to
+  // re-implement the WDS code that builds a list of features, and pass in a
+  // full list of features that WDS should enable -- minus the
+  // `contentBaseIndex` feature.
+  return mergeDevServerFeatures({
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
     // https://github.com/webpack/webpack-dev-server/issues/887
@@ -83,11 +96,13 @@ module.exports = function(proxy, allowedHost) {
     https: protocol === 'https',
     host,
     overlay: false,
-    historyApiFallback: {
-      // Paths with dots should still use the history fallback.
-      // See https://github.com/facebook/create-react-app/issues/387.
-      disableDotRule: true,
-    },
+    historyApiFallback: useNodeEnv
+      ? undefined
+      : {
+          // Paths with dots should still use the history fallback.
+          // See https://github.com/facebook/create-react-app/issues/387.
+          disableDotRule: true,
+        },
     public: allowedHost,
     proxy,
     before(app, server) {
@@ -108,5 +123,52 @@ module.exports = function(proxy, allowedHost) {
       // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
       app.use(noopServiceWorkerMiddleware());
     },
-  };
+    // Adds `fs` and `webpackStats` objects to the response, which can be
+    // accessed within `after()` middleware. This allows us to provide a
+    // middleware that renders each requested page using the app using the
+    // app's server renderer, even in development mode.
+    serverSideRender: true,
+    // When an index.node.js is provided, instead of serving the index.html
+    // using webpack-dev-server, serve it using the devRendererMiddleware.
+    staticOptions: {
+      index: false,
+    },
+    after(app) {
+      // Render each requested page using the middleware exported by the
+      // application.
+      if (useNodeEnv) {
+        app.use(devRendererMiddleware(paths.appNodeBuild, registerSourceMap));
+      }
+    },
+    // This can be disabled to write files to the disk, which is helpful for
+    // debugging issues with server-rendering code.
+    writeToDisk: false,
+  });
 };
+
+// Currently, the only way to disable the serve-index middleware is to
+// re-implement the WDS code that builds a list of features, and pass in a
+// full list of features that WDS should enable -- minus the
+// `contentBaseIndex` feature. This should be fixed when #1752 is merged into
+// webpack-dev-server: https://github.com/webpack/webpack-dev-server/pull/1752
+function mergeDevServerFeatures(options) {
+  let features = ['setup', 'before', 'headers', 'middleware'];
+  if (options.proxy) {
+    features.push('proxy', 'middleware');
+  }
+  features.push('contentBaseFiles');
+  if (options.watchContentBase) {
+    features.push('watchContentBase');
+  }
+  features.push('magicHtml');
+  if (options.compress) {
+    features.unshift('compress');
+  }
+  if (options.after) {
+    features.push('after');
+  }
+  return {
+    ...options,
+    features,
+  };
+}
