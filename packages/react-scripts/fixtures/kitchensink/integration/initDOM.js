@@ -8,6 +8,7 @@
 const fs = require('fs');
 const { JSDOM, ResourceLoader } = require('jsdom');
 const path = require('path');
+const url = require('url');
 
 const file =
   process.env.E2E_FILE &&
@@ -24,8 +25,8 @@ export const fetchFile = url => {
 };
 
 const fileResourceLoader = new class FileResourceLoader extends ResourceLoader {
-  fetch(url, options) {
-    return Promise.resolve(fetchFile(url));
+  fetch(href, options) {
+    return Promise.resolve(fetchFile(url.parse(href)));
   }
 }();
 
