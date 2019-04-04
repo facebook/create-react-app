@@ -14,13 +14,14 @@ const file =
   (path.isAbsolute(process.env.E2E_FILE)
     ? process.env.E2E_FILE
     : path.join(process.cwd(), process.env.E2E_FILE));
-const pathPrefix = process.env.PUBLIC_URL.replace(/^https?:\/\/[^/]+\/?/, '');
 
-export const fetchFile = url =>
-  fs.readFileSync(
+export const fetchFile = url => {
+  const pathPrefix = process.env.PUBLIC_URL.replace(/^https?:\/\/[^/]+\/?/, '');
+  return fs.readFileSync(
     path.join(path.dirname(file), url.pathname.replace(pathPrefix, '')),
     'utf8'
   );
+};
 
 const fileResourceLoader = new class FileResourceLoader extends ResourceLoader {
   fetch(url, options) {
