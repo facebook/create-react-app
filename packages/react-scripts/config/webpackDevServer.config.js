@@ -13,8 +13,18 @@ const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMi
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
+const fs = require('fs');
 
-const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+let https;
+const { ca, cert, key } = JSON.parse(process.env.HTTPS);
+if (ca || cert || key)
+  https = {
+    ...(ca && { ca: fs.readFileSync(ca) }),
+    ...(cert && { cert: fs.readFileSync(cert) }),
+    ...(key && { key: fs.readFileSync(key) }),
+  };
+if (process.env.HTTPS === 'true') https = true;
+
 const host = process.env.HOST || '0.0.0.0';
 
 module.exports = function(proxy, allowedHost) {
@@ -78,8 +88,10 @@ module.exports = function(proxy, allowedHost) {
     watchOptions: {
       ignored: ignoredFiles(paths.appSrc),
     },
-    // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === 'https',
+    // Enable HTTPS via the default webpack self signed cert if the HTTPS environment
+    // variable is set to 'true' or via a key, cert, and certificate authority provided
+    // via the HTTPS environment variable (e.g. HTTPS='{\"key\": \"cert/server.key\",\"cert\": \"cert/server.crt\"}')
+    ...(https && { https }),
     host: host,
     overlay: false,
     historyApiFallback: {
