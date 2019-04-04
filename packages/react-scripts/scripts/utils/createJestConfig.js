@@ -57,8 +57,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
       ext => !ext.includes('mjs')
     ),
     watchPlugins: [
-      require.resolve('jest-watch-typeahead/filename'),
-      require.resolve('jest-watch-typeahead/testname'),
+      'jest-watch-typeahead/filename',
+      'jest-watch-typeahead/testname',
     ],
   };
   if (rootDir) {
