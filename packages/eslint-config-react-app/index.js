@@ -21,14 +21,14 @@
 // This is dangerous as it hides accidentally undefined variables.
 // We blacklist the globals that we deem potentially confusing.
 // To use them, explicitly reference them, e.g. `window.name` or `window.status`.
-var restrictedGlobals = require('confusing-browser-globals');
+const restrictedGlobals = require('confusing-browser-globals');
 
 module.exports = {
   root: true,
 
   parser: 'babel-eslint',
 
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'react-hooks'],
 
   env: {
     browser: true,
@@ -52,6 +52,43 @@ module.exports = {
     },
   },
 
+  overrides: {
+    files: ['**/*.ts', '**/*.tsx'],
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+      ecmaVersion: 2018,
+      sourceType: 'module',
+      ecmaFeatures: {
+        jsx: true,
+      },
+
+      // typescript-eslint specific options
+      warnOnUnsupportedTypeScriptVersion: true,
+    },
+    plugins: ['@typescript-eslint'],
+    rules: {
+      // These ESLint rules are known to cause issues with typescript-eslint
+      // See https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.json
+      camelcase: 'off',
+      indent: 'off',
+      'no-array-constructor': 'off',
+      'no-unused-vars': 'off',
+
+      '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
+      '@typescript-eslint/no-array-constructor': 'warn',
+      '@typescript-eslint/no-namespace': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          args: 'none',
+          ignoreRestSiblings: true,
+        },
+      ],
+    },
+  },
+
+  // NOTE: When adding rules here, you need to make sure they are compatible with
+  // `typescript-eslint`, as some rules such as `no-array-constructor` aren't compatible.
   rules: {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',
@@ -161,6 +198,7 @@ module.exports = {
     ],
     'no-with': 'warn',
     'no-whitespace-before-property': 'warn',
+    'react-hooks/exhaustive-deps': 'warn',
     'require-yield': 'warn',
     'rest-spread-spacing': ['warn', 'never'],
     strict: ['warn', 'never'],
@@ -240,6 +278,9 @@ module.exports = {
     'jsx-a11y/role-has-required-aria-props': 'warn',
     'jsx-a11y/role-supports-aria-props': 'warn',
     'jsx-a11y/scope': 'warn',
+
+    // https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
+    'react-hooks/rules-of-hooks': 'error',
 
     // https://github.com/gajus/eslint-plugin-flowtype
     'flowtype/define-flow-type': 'warn',

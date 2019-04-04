@@ -94,7 +94,7 @@ Once it is done, you can modify any file locally and run `yarn start`, `yarn tes
 
 If you want to try out the end-to-end flow with the global CLI, you can do this too:
 
-```
+```sh
 yarn create-react-app my-app
 cd my-app
 ```
@@ -106,6 +106,16 @@ and then run `yarn start` or `yarn build`.
 **TL;DR** use the command `yarn e2e:docker` to run unit and e2e tests.
 
 More detailed information are in the dedicated [README](/packages/react-scripts/fixtures/kitchensink/README.md).
+
+### CI testing with private packages
+
+**create-react-app** relies on main registry to fetch all dependencies, but, if you are in the need to usage of custom private packages that need to be fetch while running E2E test you might need a different configuration.
+
+#### Customizing E2E registry configuration
+
+We use [verdaccio](https://github.com/verdaccio/verdaccio) to emulate packages publishing in a registry using a default configuration. You might modify the current behaviour just editing the file `task/verdaccio.yaml`.
+
+For more information about the configuration check out the [Verdaccio documentation](https://verdaccio.org/docs/en/configuration).
 
 ## Tips for contributors using Windows
 
