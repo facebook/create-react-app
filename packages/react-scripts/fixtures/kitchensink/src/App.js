@@ -63,10 +63,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const feature = window.location.hash.slice(1);
-
-    // TODO: remove
-    console.log("componentDidMount:", window.location.href, feature);
+    const url = window.location.href;
+    // const feature = window.location.hash.slice(1);
+    // This works around an issue of a duplicate hash in the href
+    // Ex: http://localhost:3001/#array-destructuring#array-destructuring
+    // This seems like a jsdom bug as the URL in initDom.js appears to be correct
+    const feature = url.slice(url.lastIndexOf("#") + 1);
 
     switch (feature) {
       case 'array-destructuring':
