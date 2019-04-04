@@ -94,6 +94,11 @@ module.exports = function(
 
   const useTypeScript = appPackage.dependencies['typescript'] != null;
 
+  // For SSR apps, add a "main" field pointing to the Node entry point
+  if (useSsr) {
+    appPackage.main = 'build/node/index.js';
+  }
+
   // Setup the script rules
   appPackage.scripts = {
     start: 'react-scripts start',
