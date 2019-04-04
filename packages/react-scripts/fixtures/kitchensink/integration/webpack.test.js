@@ -46,7 +46,6 @@ describe('Integration', () => {
         /html\{/,
         /#feature-css-inclusion\{background:.+;color:.+}/,
       ]);
-      doc.defaultView.close();
     });
 
     it('css modules inclusion', async () => {
@@ -55,13 +54,11 @@ describe('Integration', () => {
         /.+style_cssModulesInclusion__.+\{background:.+;color:.+}/,
         /.+assets_cssModulesIndexInclusion__.+\{background:.+;color:.+}/,
       ]);
-      doc.defaultView.close();
     });
 
     it('scss inclusion', async () => {
       doc = await initDOM('scss-inclusion');
       matchCSS(doc, [/#feature-scss-inclusion\{background:.+;color:.+}/]);
-      doc.defaultView.close();
     });
 
     it('scss modules inclusion', async () => {
@@ -70,13 +67,11 @@ describe('Integration', () => {
         /.+scss-styles_scssModulesInclusion.+\{background:.+;color:.+}/,
         /.+assets_scssModulesIndexInclusion.+\{background:.+;color:.+}/,
       ]);
-      doc.defaultView.close();
     });
 
     it('sass inclusion', async () => {
       doc = await initDOM('sass-inclusion');
       matchCSS(doc, [/#feature-sass-inclusion\{background:.+;color:.+}/]);
-      doc.defaultView.close();
     });
 
     it('sass modules inclusion', async () => {
@@ -85,7 +80,6 @@ describe('Integration', () => {
         /.+sass-styles_sassModulesInclusion.+\{background:.+;color:.+}/,
         /.+assets_sassModulesIndexInclusion.+\{background:.+;color:.+}/,
       ]);
-      doc.defaultView.close();
     });
 
     it('image inclusion', async () => {
@@ -94,7 +88,6 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-image-inclusion').src).toMatch(
         /^data:image\/jpeg;base64.+==$/
       );
-      doc.defaultView.close();
     });
 
     it('no ext inclusion', async () => {
@@ -103,7 +96,6 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-no-ext-inclusion').href).toMatch(
         /\/static\/media\/aFileWithoutExt\.[a-f0-9]{8}\.bin$/
       );
-      doc.defaultView.close();
     });
 
     it('json inclusion', async () => {
@@ -112,7 +104,6 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-json-inclusion').textContent).toBe(
         'This is an abstract.'
       );
-      doc.defaultView.close();
     });
 
     it('linked modules', async () => {
@@ -121,7 +112,6 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-linked-modules').textContent).toBe(
         '2.0.0'
       );
-      doc.defaultView.close();
     });
 
     it('svg inclusion', async () => {
@@ -129,20 +119,17 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-svg-inclusion').src).toMatch(
         /\/static\/media\/logo\..+\.svg$/
       );
-      doc.defaultView.close();
     });
 
     it('svg component', async () => {
       doc = await initDOM('svg-component');
 
       expect(doc.getElementById('feature-svg-component').textContent).toBe('');
-      doc.defaultView.close();
     });
 
     it('svg in css', async () => {
       doc = await initDOM('svg-in-css');
       matchCSS(doc, [/\/static\/media\/logo\..+\.svg/]);
-      doc.defaultView.close();
     });
 
     it('unknown ext inclusion', async () => {
@@ -151,7 +138,6 @@ describe('Integration', () => {
       expect(doc.getElementById('feature-unknown-ext-inclusion').href).toMatch(
         /\/static\/media\/aFileWithExt\.[a-f0-9]{8}\.unknown$/
       );
-      doc.defaultView.close();
     });
   });
 });
