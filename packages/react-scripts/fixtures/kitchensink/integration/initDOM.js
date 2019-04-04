@@ -10,6 +10,7 @@ const { JSDOM, ResourceLoader } = require('jsdom');
 const path = require('path');
 
 export let fetchFile;
+let fileResourceLoader;
 
 if (process.env.E2E_FILE) {
   const file = path.isAbsolute(process.env.E2E_FILE)
