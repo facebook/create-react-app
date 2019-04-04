@@ -12,7 +12,7 @@ process.env.TARGET_ENV = env
 
 // set keys directly from fs-config for the current env
 function getFromEnv(thisEnv, key) {
-  return thisEnv === 'int' ? fsconfig.int[key] : fsconfig.default[key]
+  return fsconfig[thisEnv][key] || fsconfig.default[key]
 }
 const keys = ['FS_KEY', 'CIS_WEB']
 keys.forEach(key => {
