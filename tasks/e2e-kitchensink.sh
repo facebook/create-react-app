@@ -153,7 +153,7 @@ E2E_URL="http://localhost:3001" \
   CI=true NODE_PATH=src \
   NODE_ENV=development \
   BABEL_ENV=test \
-  node_modules/.bin/jest --no-cache --runInBand --config='jest.integration.config.js'
+  node_modules/.bin/jest --no-cache --runInBand --detectOpenHandles --config='jest.integration.config.js'
 # Test "production" environment
 E2E_FILE=./build/index.html \
   CI=true \

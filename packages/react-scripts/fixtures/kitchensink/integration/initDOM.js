@@ -71,7 +71,12 @@ export default feature =>
       );
       document.addEventListener(
         'ReactFeatureError',
-        () => reject(`Error loading feature: ${feature}`),
+        () => {
+          // Cleanup jsdom instance since we don't need it anymore
+          window.close();
+
+          reject(`Error loading feature: ${feature}`);
+        },
         { capture: true, once: true }
       );
     } catch (e) {
