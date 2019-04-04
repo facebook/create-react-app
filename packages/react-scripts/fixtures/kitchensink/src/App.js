@@ -64,6 +64,10 @@ class App extends Component {
 
   componentDidMount() {
     const feature = window.location.hash.slice(1);
+
+    // TODO: remove
+    console.log("componentDidMount:", window.location, feature);
+
     switch (feature) {
       case 'array-destructuring':
         import('./features/syntax/ArrayDestructuring').then(f =>

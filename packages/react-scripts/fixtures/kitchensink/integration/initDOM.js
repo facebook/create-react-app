@@ -45,9 +45,6 @@ export default feature =>
       const host = process.env.E2E_URL || 'http://www.example.org/spa:3000';
       const url = `${host}#${feature}`;
 
-      // TODO: remove
-      console.log("Running test: ", host, url);
-
       let window;
 
       if (process.env.E2E_FILE) {
