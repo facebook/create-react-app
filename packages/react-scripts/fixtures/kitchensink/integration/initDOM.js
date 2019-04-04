@@ -10,9 +10,10 @@ const { JSDOM, ResourceLoader } = require('jsdom');
 const path = require('path');
 
 const file =
-  process.env.E2E_FILE && path.isAbsolute(process.env.E2E_FILE)
+  process.env.E2E_FILE &&
+  (path.isAbsolute(process.env.E2E_FILE)
     ? process.env.E2E_FILE
-    : path.join(process.cwd(), process.env.E2E_FILE);
+    : path.join(process.cwd(), process.env.E2E_FILE));
 const pathPrefix = process.env.PUBLIC_URL.replace(/^https?:\/\/[^/]+\/?/, '');
 
 export const fetchFile = url =>
