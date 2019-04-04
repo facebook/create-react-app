@@ -51,14 +51,12 @@ module.exports = function devRendererMiddleware(
     };
 
     try {
-      let {
-        children: [web, node],
-      } = webpackStats.toJson({
+      let stats = webpackStats.toJson({
         all: false,
         assets: true,
         entrypoints: true,
       });
-
+      let node = stats.children[1];
       let nodeEntrypoints = node.entrypoints.main.assets
         .filter(asset => /\.js$/.test(asset))
         .map(asset => path.join(nodeBuildPath, asset));
