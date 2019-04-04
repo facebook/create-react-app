@@ -29,7 +29,7 @@
     "@typescript-eslint/eslint-plugin": "1.4.1",
     "@typescript-eslint/parser": "1.4.1",
     "babel-eslint": "10.0.1",
-    "babel-jest": "^24.7.1",
+    "babel-jest": "24.7.1",
     "babel-loader": "8.0.5",
     "babel-plugin-named-asset-import": "^0.3.1",
     "babel-preset-react-app": "^7.0.2",
