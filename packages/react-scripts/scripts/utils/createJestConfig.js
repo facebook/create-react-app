@@ -24,7 +24,11 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
 
-    setupFiles: [require.resolve('react-app-polyfill/jsdom')],
+    setupFiles: [
+      isEjecting
+        ? 'react-app-polyfill/jsdom'
+        : require.resolve('react-app-polyfill/jsdom'),
+    ],
 
     setupFilesAfterEnv: setupTestsFile ? [setupTestsFile] : [],
     testMatch: [
@@ -34,7 +38,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     testEnvironment: require.resolve('jest-environment-jsdom-fourteen'),
     transform: {
       '^.+\\.(js|jsx|ts|tsx)$': isEjecting
-        ? require.resolve('babel-jest')
+        ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': resolve(
@@ -47,7 +51,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
-      '^.+\\.module\\.(css|sass|scss)$': require.resolve('identity-obj-proxy'),
+      '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },
     moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
       ext => !ext.includes('mjs')
