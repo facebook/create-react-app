@@ -66,7 +66,7 @@ class App extends Component {
     const feature = window.location.hash.slice(1);
 
     // TODO: remove
-    console.log("componentDidMount:", window.location, feature);
+    console.log("componentDidMount:", window.location.href, feature);
 
     switch (feature) {
       case 'array-destructuring':
