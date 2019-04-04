@@ -23,6 +23,7 @@ original_yarn_registry_url=`yarn config get registry`
 function cleanup {
   echo 'Cleaning up.'
   unset BROWSERSLIST
+  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # TODO: fix "Device or resource busy" and remove ``|| $CI`
