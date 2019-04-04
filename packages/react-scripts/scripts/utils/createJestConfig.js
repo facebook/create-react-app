@@ -35,8 +35,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
       '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}',
     ],
-    testEnvironment: 'jsdom',
-    testURL: 'http://localhost',
+    testEnvironment: 'jest-environment-jsdom-fourteen',
     transform: {
       '^.+\\.(js|jsx|ts|tsx)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
@@ -58,8 +57,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
       ext => !ext.includes('mjs')
     ),
     watchPlugins: [
-      require.resolve('jest-watch-typeahead/filename'),
-      require.resolve('jest-watch-typeahead/testname'),
+      'jest-watch-typeahead/filename',
+      'jest-watch-typeahead/testname',
     ],
   };
   if (rootDir) {
