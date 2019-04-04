@@ -34,7 +34,7 @@
     "@babel/core": "7.3.4",
     "anser": "1.4.8",
     "babel-eslint": "10.0.1",
-    "babel-jest": "^24.7.1",
+    "babel-jest": "24.7.1",
     "babel-loader": "8.0.5",
     "babel-preset-react-app": "^7.0.2",
     "chalk": "^2.4.2",
