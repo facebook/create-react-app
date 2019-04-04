@@ -10,7 +10,8 @@ import PropTypes from 'prop-types';
 
 class BuiltEmitter extends Component {
   static propTypes = {
-    feature: PropTypes.func.isRequired,
+    error: PropTypes.string,
+    feature: PropTypes.func,
   };
 
   componentDidMount() {
