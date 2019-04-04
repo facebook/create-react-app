@@ -27,7 +27,7 @@ const clearConsole = require('react-dev-utils/clearConsole');
 const openBrowser = require('react-dev-utils/openBrowser');
 const {
   choosePort,
-  prepareProxy,
+  // prepareProxy,
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 const paths = require('../config/paths');
@@ -74,10 +74,10 @@ checkBrowsers(paths.appPath, isInteractive)
     }
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const urls = prepareUrls(protocol, HOST, port);
-    const proxySetting = require(paths.appPackageJson).proxy;
 
     // TODO: use proxy if it exists.
-    const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
+    // const proxySetting = require(paths.appPackageJson).proxy;
+    // const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
 
     const server = express();
 

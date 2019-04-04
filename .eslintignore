@@ -2,5 +2,6 @@ node_modules/
 build
 my-app*
 packages/react-scripts/template
+packages/react-scripts/template-ssr
 packages/react-scripts/fixtures
 fixtures/
