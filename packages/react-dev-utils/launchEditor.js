@@ -131,6 +131,7 @@ function getArgumentsForLineNumber(
       return [fileName + ':' + lineNumber + ':' + colNumber];
     case 'wstorm':
     case 'charm':
+    case 'netbeans':
       return [fileName + ':' + lineNumber];
     case 'notepad++':
       return ['-n' + lineNumber, '-c' + colNumber, fileName];
