@@ -86,7 +86,6 @@ module.exports = {
         indent: 'off',
         'no-array-constructor': 'off',
         'no-unused-vars': 'off',
-
         '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
         '@typescript-eslint/no-array-constructor': 'warn',
         '@typescript-eslint/no-namespace': 'error',
@@ -100,11 +99,12 @@ module.exports = {
       },
     },
     {
-      files: ['**/*.worker.(js|mjs|ts)'],
+      files: ['**/*.worker.js', '**/*.worker.mjs', '**/*.worker.ts'],
       rules: {
         'no-restricted-globals': ['error'].concat(
           restrictedGlobals.filter(g => g !== 'self')
         ),
+        'no-useless-constructor': 'off',
       },
     },
   ],
