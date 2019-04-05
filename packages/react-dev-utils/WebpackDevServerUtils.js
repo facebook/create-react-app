@@ -256,7 +256,7 @@ function createCompiler({
     arg => arg.indexOf('--smoke-test') > -1
   );
   if (isSmokeTest) {
-    compiler.hooks.failed.tap('smokeTest', async () => {
+    compiler.compilers[0].hooks.failed.tap('smokeTest', async () => {
       await tsMessagesPromise;
       process.exit(1);
     });
