@@ -70,7 +70,7 @@ regular `.js` or `.ts` files.
 
 Workers can be written in TypeScript, however you are required to declare the
 file as a worker in order for the compiler to understand that it is a worker.
-This can be done by including
+This can be done by including:
 
 ```ts
 /// <reference lib="webworker" />
@@ -78,6 +78,24 @@ This can be done by including
 
 at the beginning of all of your `.worker.ts` files.
 
-You will also need to follow the [Integrating With Typescript](https://github.com/webpack-contrib/worker-loader#integrating-with-typescript)
-instructions in the `worker-loader` documentation to get TypeScript to see your
-worker import as the correct module and typing.
+Because the interface imported is different from what is in your worker files,
+you'll also need to tell TypeScript what you're expecting this interface to look
+like. To achieve this, you will need to have a module declaration in each of
+your worker files like so:
+
+```ts
+// my.worker.ts
+// <worker code>
+
+// Necessary to tell typescript that this worker file is a module even though
+// it may not have any explicit imports or exports
+export {};
+
+// Override the module declaration to tell Typescript that when imported, this
+// is what the imported types will look like.
+declare module './my.worker' {
+  export default class TestWorker extends Worker {
+    constructor();
+  }
+}
+```
