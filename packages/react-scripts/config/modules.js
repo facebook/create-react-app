@@ -56,14 +56,14 @@ function getModules() {
 
   if (hasTsConfig && hasJsConfig) {
     throw new Error(
-      'You have both a tsconfig.json and a jsconfig.json. If you are using Typescript please remove your jsconfig.json file.'
+      'You have both a tsconfig.json and a jsconfig.json. If you are using TypeScript please remove your jsconfig.json file.'
     );
   }
 
   let config;
 
   // If there's a tsconfig.json we assume it's a
-  // Typescript project and set up the config
+  // TypeScript project and set up the config
   // based on tsconfig.json
   if (hasTsConfig) {
     config = require(paths.appTsConfig);
