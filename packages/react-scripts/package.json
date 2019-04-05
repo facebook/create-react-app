@@ -59,6 +59,7 @@
     "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
+    "postcss-normalize": "7.0.1",   
     "postcss-preset-env": "6.6.0",
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^0.2.2",
