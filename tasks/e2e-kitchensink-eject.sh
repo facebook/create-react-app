@@ -128,6 +128,10 @@ npm link "$temp_module_path/node_modules/test-integrity"
 # Eject...
 echo yes | npm run eject
 
+# Temporary workaround for https://github.com/facebook/create-react-app/issues/6099
+rm yarn.lock
+yarn add @babel/plugin-transform-react-jsx-source @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx @babel/plugin-transform-react-jsx-self
+
 # Link to test module
 npm link "$temp_module_path/node_modules/test-integrity"
 
