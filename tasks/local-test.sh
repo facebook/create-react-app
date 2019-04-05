@@ -114,6 +114,7 @@ docker run \
   --env NPM_CONFIG_PREFIX=/home/node/.npm \
   --env NPM_CONFIG_QUIET=true \
   --tty \
+  --rm \
   --user node \
   --volume ${PWD}/..:/var/create-react-app \
   --workdir /home/node \
