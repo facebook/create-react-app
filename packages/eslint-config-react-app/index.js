@@ -104,6 +104,7 @@ module.exports = {
         'no-restricted-globals': ['error'].concat(
           restrictedGlobals.filter(g => g !== 'self')
         ),
+        // Necessary to allow stubbed class declartions in workers
         'no-useless-constructor': 'off',
       },
     },
