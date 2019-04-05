@@ -94,7 +94,7 @@ function getClientEnvironment(publicUrl) {
       'Object.assign({},typeof process !== "undefined" && process.env,' +
       JSON.stringify(
         Object.keys(raw).reduce((env, key) => {
-          env[key] = JSON.stringify(raw[key]);
+          env[key] = raw[key];
           return env;
         }, {})
       ) +
