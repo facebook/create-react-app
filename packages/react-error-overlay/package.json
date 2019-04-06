@@ -31,7 +31,7 @@
   ],
   "devDependencies": {
     "@babel/code-frame": "7.0.0",
-    "@babel/core": "7.3.4",
+    "@babel/core": "7.4.3",
     "anser": "1.4.8",
     "babel-eslint": "10.0.1",
     "babel-jest": "24.7.1",
@@ -49,7 +49,7 @@
     "flow-bin": "^0.63.1",
     "html-entities": "1.2.1",
     "jest": "24.7.1",
-    "jest-fetch-mock": "2.1.1",
+    "jest-fetch-mock": "2.1.2",
     "object-assign": "4.1.1",
     "promise": "8.0.2",
     "raw-loader": "^1.0.0",

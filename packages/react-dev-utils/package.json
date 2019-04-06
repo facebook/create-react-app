@@ -48,7 +48,7 @@
   "dependencies": {
     "@babel/code-frame": "7.0.0",
     "address": "1.0.3",
-    "browserslist": "4.4.2",
+    "browserslist": "4.5.4",
     "chalk": "2.4.2",
     "cross-spawn": "6.0.5",
     "detect-port-alt": "1.1.6",
@@ -69,7 +69,7 @@
     "recursive-readdir": "2.2.2",
     "shell-quote": "1.6.1",
     "sockjs-client": "1.3.0",
-    "strip-ansi": "5.1.0",
+    "strip-ansi": "5.2.0",
     "text-table": "0.2.0"
   },
   "devDependencies": {
