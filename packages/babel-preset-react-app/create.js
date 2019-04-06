@@ -83,7 +83,7 @@ module.exports = function(api, opts, env) {
           useBuiltIns: 'entry',
           // Set the corejs version we are using to avoid warnings in console
           // This will need to change once we upgrade to corejs@3
-          corejs: 3,
+          corejs: 2,
           // Do not transform modules to CJS
           modules: false,
           // Exclude transforms that make all code slower
