@@ -34,21 +34,22 @@
 
 'use strict';
 
-const validateProjectName = require('validate-npm-package-name');
 const chalk = require('chalk');
 const commander = require('commander');
-const fs = require('fs-extra');
-const path = require('path');
-const execSync = require('child_process').execSync;
-const spawn = require('cross-spawn');
-const semver = require('semver');
 const dns = require('dns');
+const envinfo = require('envinfo');
+const execSync = require('child_process').execSync;
+const fs = require('fs-extra');
+const hyperquest = require('hyperquest');
+const inquirer = require('inquirer');
+const os = require('os');
+const path = require('path');
+const semver = require('semver');
+const spawn = require('cross-spawn');
 const tmp = require('tmp');
 const unpack = require('tar-pack').unpack;
 const url = require('url');
-const hyperquest = require('hyperquest');
-const envinfo = require('envinfo');
-const os = require('os');
+const validateProjectName = require('validate-npm-package-name');
 
 const packageJson = require('./package.json');
 
@@ -381,112 +382,120 @@ function run(
   usePnp,
   useTypescript
 ) {
-  const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = ['react', 'react-dom', packageToInstall];
-  if (useTypescript) {
-    // TODO: get user's node version instead of installing latest
-    allDependencies.push(
-      '@types/node',
-      '@types/react',
-      '@types/react-dom',
-      '@types/jest',
-      'typescript'
-    );
-  }
-
-  console.log('Installing packages. This might take a couple of minutes.');
-  getPackageName(packageToInstall)
-    .then(packageName =>
-      checkIfOnline(useYarn).then(isOnline => ({
-        isOnline: isOnline,
-        packageName: packageName,
-      }))
-    )
-    .then(info => {
-      const isOnline = info.isOnline;
-      const packageName = info.packageName;
-      console.log(
-        `Installing ${chalk.cyan('react')}, ${chalk.cyan(
-          'react-dom'
-        )}, and ${chalk.cyan(packageName)}...`
+  getInstallPackage(version, originalDirectory).then(packageToInstall => {
+    const allDependencies = ['react', 'react-dom', packageToInstall];
+    if (useTypescript) {
+      allDependencies.push(
+        // TODO: get user's node version instead of installing latest
+        '@types/node',
+        '@types/react',
+        '@types/react-dom',
+        // TODO: get version of Jest being used instead of installing latest
+        '@types/jest',
+        'typescript'
       );
-      console.log();
+    }
 
-      return install(
-        root,
-        useYarn,
-        usePnp,
-        allDependencies,
-        verbose,
-        isOnline
-      ).then(() => packageName);
-    })
-    .then(async packageName => {
-      checkNodeVersion(packageName);
-      setCaretRangeForRuntimeDeps(packageName);
+    console.log('Installing packages. This might take a couple of minutes.');
+    getPackageName(packageToInstall)
+      .then(packageName =>
+        checkIfOnline(useYarn).then(isOnline => ({
+          isOnline: isOnline,
+          packageName: packageName,
+        }))
+      )
+      .then(info => {
+        const isOnline = info.isOnline;
+        const packageName = info.packageName;
+        console.log(
+          `Installing ${chalk.cyan('react')}, ${chalk.cyan(
+            'react-dom'
+          )}, and ${chalk.cyan(packageName)}...`
+        );
+        console.log();
 
-      const pnpPath = path.resolve(process.cwd(), '.pnp.js');
+        return install(
+          root,
+          useYarn,
+          usePnp,
+          allDependencies,
+          verbose,
+          isOnline
+        ).then(() => packageName);
+      })
+      .then(async packageName => {
+        checkNodeVersion(packageName);
+        setCaretRangeForRuntimeDeps(packageName);
 
-      const nodeArgs = fs.existsSync(pnpPath) ? ['--require', pnpPath] : [];
+        const pnpPath = path.resolve(process.cwd(), '.pnp.js');
 
-      await executeNodeScript(
-        {
-          cwd: process.cwd(),
-          args: nodeArgs,
-        },
-        [root, appName, verbose, originalDirectory, template],
-        `
+        const nodeArgs = fs.existsSync(pnpPath) ? ['--require', pnpPath] : [];
+
+        await executeNodeScript(
+          {
+            cwd: process.cwd(),
+            args: nodeArgs,
+          },
+          [root, appName, verbose, originalDirectory, template],
+          `
         var init = require('${packageName}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));
       `
-      );
-
-      if (version === 'react-scripts@0.9.x') {
-        console.log(
-          chalk.yellow(
-            `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
-              `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
-          )
         );
-      }
-    })
-    .catch(reason => {
-      console.log();
-      console.log('Aborting installation.');
-      if (reason.command) {
-        console.log(`  ${chalk.cyan(reason.command)} has failed.`);
-      } else {
-        console.log(chalk.red('Unexpected error. Please report it as a bug:'));
-        console.log(reason);
-      }
-      console.log();
 
-      // On 'exit' we will delete these files from target directory.
-      const knownGeneratedFiles = ['package.json', 'yarn.lock', 'node_modules'];
-      const currentFiles = fs.readdirSync(path.join(root));
-      currentFiles.forEach(file => {
-        knownGeneratedFiles.forEach(fileToMatch => {
-          // This removes all knownGeneratedFiles.
-          if (file === fileToMatch) {
-            console.log(`Deleting generated file... ${chalk.cyan(file)}`);
-            fs.removeSync(path.join(root, file));
-          }
+        if (version === 'react-scripts@0.9.x') {
+          console.log(
+            chalk.yellow(
+              `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
+                `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
+            )
+          );
+        }
+      })
+      .catch(reason => {
+        console.log();
+        console.log('Aborting installation.');
+        if (reason.command) {
+          console.log(`  ${chalk.cyan(reason.command)} has failed.`);
+        } else {
+          console.log(
+            chalk.red('Unexpected error. Please report it as a bug:')
+          );
+          console.log(reason);
+        }
+        console.log();
+
+        // On 'exit' we will delete these files from target directory.
+        const knownGeneratedFiles = [
+          'package.json',
+          'yarn.lock',
+          'node_modules',
+        ];
+        const currentFiles = fs.readdirSync(path.join(root));
+        currentFiles.forEach(file => {
+          knownGeneratedFiles.forEach(fileToMatch => {
+            // This removes all knownGeneratedFiles.
+            if (file === fileToMatch) {
+              console.log(`Deleting generated file... ${chalk.cyan(file)}`);
+              fs.removeSync(path.join(root, file));
+            }
+          });
         });
+        const remainingFiles = fs.readdirSync(path.join(root));
+        if (!remainingFiles.length) {
+          // Delete target folder if empty
+          console.log(
+            `Deleting ${chalk.cyan(`${appName}/`)} from ${chalk.cyan(
+              path.resolve(root, '..')
+            )}`
+          );
+          process.chdir(path.resolve(root, '..'));
+          fs.removeSync(path.join(root));
+        }
+        console.log('Done.');
+        process.exit(1);
       });
-      const remainingFiles = fs.readdirSync(path.join(root));
-      if (!remainingFiles.length) {
-        // Delete target folder if empty
-        console.log(
-          `Deleting ${chalk.cyan(`${appName}/`)} from ${chalk.cyan(
-            path.resolve(root, '..')
-          )}`
-        );
-        process.chdir(path.resolve(root, '..'));
-        fs.removeSync(path.join(root));
-      }
-      console.log('Done.');
-      process.exit(1);
-    });
+  });
 }
 
 function getInstallPackage(version, originalDirectory) {
@@ -507,7 +516,27 @@ function getInstallPackage(version, originalDirectory) {
       packageToInstall = version;
     }
   }
-  return packageToInstall;
+
+  if (packageToInstall.startsWith('react-scripts-ts')) {
+    return inquirer
+      .prompt({
+        type: 'confirm',
+        name: 'useScriptsTs',
+        message: chalk.yellow(
+          'The react-scripts-ts package is deprecated. TypeScript is now supported natively in Create React App. You can use the --typescript option instead when generating your app to include TypeScript support. Would you like to continue using react-scripts-ts?'
+        ),
+        default: false,
+      })
+      .then(answer => {
+        if (!answer.useScriptsTs) {
+          process.exit(0);
+        }
+
+        return packageToInstall;
+      });
+  }
+
+  return Promise.resolve(packageToInstall);
 }
 
 function getTemporaryDirectory() {
