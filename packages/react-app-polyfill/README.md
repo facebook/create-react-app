@@ -60,7 +60,7 @@ import 'react-app-polyfill/stable';
 // ...
 ```
 
-If you are supporting Internet Explorer 9/11 you should include both the `ie9`/`ie11` and `stable` modules:
+If you are supporting Internet Explorer 9 or Internet Explorer 11 you should include both the `ie9` or `ie11` and `stable` modules:
 
 For IE9:
 
