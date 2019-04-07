@@ -21,7 +21,7 @@ yarn add react-app-polyfill
 
 You can import the entry point for the minimal version you intend to support to ensure that the minimum langauge features are present that are required to use Create React App. For example, if you import the IE9 entry point, this will include IE10 and IE11 support.
 
-These modules ensures the following language features are present:
+These modules ensure the following language features are present:
 
 1. `Promise` (for `async` / `await` support)
 1. `window.fetch` (a Promise-based way to make web requests in the browser)
