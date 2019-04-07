@@ -13,13 +13,15 @@
   "files": [
     "ie9.js",
     "ie11.js",
-    "jsdom.js"
+    "jsdom.js",
+    "stable.js"
   ],
   "dependencies": {
-    "core-js": "2.6.5",
+    "core-js": "3.0.1",
     "object-assign": "4.1.1",
     "promise": "8.0.2",
     "raf": "3.4.1",
+    "regenerator-runtime": "0.13.2",
     "whatwg-fetch": "3.0.0"
   }
 }
