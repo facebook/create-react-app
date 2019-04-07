@@ -517,23 +517,32 @@ function getInstallPackage(version, originalDirectory) {
     }
   }
 
-  if (packageToInstall.startsWith('react-scripts-ts')) {
-    return inquirer
-      .prompt({
-        type: 'confirm',
-        name: 'useScriptsTs',
-        message: chalk.yellow(
-          'The react-scripts-ts package is deprecated. TypeScript is now supported natively in Create React App. You can use the --typescript option instead when generating your app to include TypeScript support. Would you like to continue using react-scripts-ts?'
-        ),
-        default: false,
-      })
-      .then(answer => {
-        if (!answer.useScriptsTs) {
-          process.exit(0);
-        }
+  const scriptsToWarn = [
+    {
+      name: 'react-scripts-ts',
+      message: chalk.yellow(
+        'The react-scripts-ts package is deprecated. TypeScript is now supported natively in Create React App. You can use the --typescript option instead when generating your app to include TypeScript support. Would you like to continue using react-scripts-ts?'
+      ),
+    },
+  ];
 
-        return packageToInstall;
-      });
+  for (const script of scriptsToWarn) {
+    if (packageToInstall.startsWith(script.name)) {
+      return inquirer
+        .prompt({
+          type: 'confirm',
+          name: 'useScript',
+          message: script.message,
+          default: false,
+        })
+        .then(answer => {
+          if (!answer.useScript) {
+            process.exit(0);
+          }
+
+          return packageToInstall;
+        });
+    }
   }
 
   return Promise.resolve(packageToInstall);
