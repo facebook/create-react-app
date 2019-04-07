@@ -228,7 +228,7 @@ function createApp(
         `You are using Node ${
           process.version
         } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 10 or higher for a better, fully supported experience.\n`
+          `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
