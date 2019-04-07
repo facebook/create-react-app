@@ -222,13 +222,13 @@ function createApp(
     process.exit(1);
   }
 
-  if (!semver.satisfies(process.version, '>=6.0.0')) {
+  if (!semver.satisfies(process.version, '>=8.10.0')) {
     console.log(
       chalk.yellow(
         `You are using Node ${
           process.version
         } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 6 or higher for a better, fully supported experience.\n`
+          `Please update to Node 10 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
@@ -244,7 +244,7 @@ function createApp(
             `You are using npm ${
               npmInfo.npmVersion
             } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-              `Please update to npm 3 or higher for a better, fully supported experience.\n`
+              `Please update to npm 5 or higher for a better, fully supported experience.\n`
           )
         );
       }
@@ -447,7 +447,7 @@ function run(
           console.log(
             chalk.yellow(
               `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
-                `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
+                `Please update to Node >=8.10 and npm >=5 to get supported tools in new projects.\n`
             )
           );
         }
@@ -648,7 +648,7 @@ function checkNpmVersion() {
     npmVersion = execSync('npm --version')
       .toString()
       .trim();
-    hasMinNpm = semver.gte(npmVersion, '3.0.0');
+    hasMinNpm = semver.gte(npmVersion, '5.0.0');
   } catch (err) {
     // ignore
   }
