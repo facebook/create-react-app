@@ -7,7 +7,7 @@
 
 /* @flow */
 import React, { Component } from 'react';
-import { black } from '../styles';
+import { black, white } from '../styles';
 
 import type { Node as ReactNode } from 'react';
 
@@ -28,6 +28,7 @@ const overlayStyle = {
   whiteSpace: 'pre-wrap',
   wordBreak: 'break-word',
   lineHeight: 1.5,
+  backgroundColor: white,
   color: black,
 };
 

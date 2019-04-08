@@ -30,7 +30,6 @@ const overlayStyle = {
   height: '100%',
   'box-sizing': 'border-box',
   'text-align': 'center',
-  'background-color': white,
 };
 
 const primaryErrorStyle = {
@@ -51,4 +50,5 @@ export {
   red,
   redTransparent,
   yellowTransparent,
+  white,
 };
