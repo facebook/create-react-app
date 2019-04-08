@@ -7,11 +7,12 @@
 
 /* @flow */
 import React, { Component } from 'react';
-import { black, white } from '../styles';
+import { isDarkScheme } from '../utils/dom/css';
+import { black, white, darkGray } from '../styles';
 
 import type { Node as ReactNode } from 'react';
 
-const overlayStyle = {
+const baseOverlayStyle = {
   position: 'relative',
   display: 'inline-flex',
   flexDirection: 'column',
@@ -28,8 +29,18 @@ const overlayStyle = {
   whiteSpace: 'pre-wrap',
   wordBreak: 'break-word',
   lineHeight: 1.5,
+};
+
+const lightOverlayScheme = {
+  ...baseOverlayStyle,
   backgroundColor: white,
   color: black,
+};
+
+const darkOverlayScheme = {
+  ...baseOverlayStyle,
+  backgroundColor: darkGray,
+  color: white,
 };
 
 type Props = {|
@@ -74,7 +85,10 @@ class ErrorOverlay extends Component<Props, State> {
 
   render() {
     return (
-      <div style={overlayStyle} ref={this.getIframeWindow}>
+      <div
+        style={isDarkScheme() ? darkOverlayScheme : lightOverlayScheme}
+        ref={this.getIframeWindow}
+      >
         {this.props.children}
       </div>
     );
