@@ -16,6 +16,7 @@
     "config",
     "lib",
     "scripts",
+    "proxy",
     "template*",
     "utils"
   ],
