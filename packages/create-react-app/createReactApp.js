@@ -419,7 +419,21 @@ function run(
         allDependencies,
         verbose,
         isOnline
-      ).then(() => packageName);
+      ).then(() => {
+        // Verify package name for git installs.
+        // Solves an issue where a custom react-scripts package may contain a
+        // name that doesn't match the repository's name.
+        try {
+          const packageJson = require(path.join(process.cwd(), 'package.json'));
+          const packageNames = Object.keys(packageJson.dependencies);
+          const packageIndex = Object.values(
+            packageJson.dependencies
+          ).findIndex(version => version.includes(packageName + '.git'));
+          return packageIndex >= 0 ? packageNames[packageIndex] : packageName;
+        } catch (e) {
+          return packageName;
+        }
+      });
     })
     .then(async packageName => {
       checkNodeVersion(packageName);
