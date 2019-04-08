@@ -1,6 +1,6 @@
 {
   "name": "@fs/react-scripts",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "upstreamVersion": "2.1.8",
   "description": "Configuration and scripts for Create React App.",
   "repository": "fs-webdev/create-react-app",
@@ -16,6 +16,7 @@
     "config",
     "lib",
     "scripts",
+    "proxy",
     "template*",
     "utils"
   ],
