@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Subnav>
-        <Link to="/">
+        <Link to="./">
           <Trans i18nKey="nav.home">Home</Trans>
         </Link>
         <Link to="user">
