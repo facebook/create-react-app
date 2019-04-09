@@ -8,7 +8,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import { isDarkScheme } from '../utils/dom/css';
-import { black, white, darkGray } from '../styles';
+import { black, white } from '../styles';
 
 import type { Node as ReactNode } from 'react';
 
@@ -33,13 +33,11 @@ const baseOverlayStyle = {
 
 const lightOverlayScheme = {
   ...baseOverlayStyle,
-  backgroundColor: white,
   color: black,
 };
 
 const darkOverlayScheme = {
   ...baseOverlayStyle,
-  backgroundColor: darkGray,
   color: white,
 };
 

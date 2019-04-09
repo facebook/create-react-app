@@ -10,8 +10,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CompileErrorContainer from './containers/CompileErrorContainer';
 import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
-import { overlayStyle } from './styles';
-import { applyStyles } from './utils/dom/css';
+import { overlayStyle, white, carbon } from './styles';
+import { applyStyles, isDarkScheme } from './utils/dom/css';
 
 let iframeRoot = null;
 
@@ -53,10 +53,11 @@ window.updateContent = function updateContent(errorOverlayProps) {
   return true;
 };
 
+const colorScheme = { 'background-color': isDarkScheme() ? carbon : white };
 document.body.style.margin = '0';
 // Keep popup within body boundaries for iOS Safari
 document.body.style['max-width'] = '100vw';
 iframeRoot = document.createElement('div');
-applyStyles(iframeRoot, overlayStyle);
+applyStyles(iframeRoot, { ...overlayStyle, ...colorScheme });
 document.body.appendChild(iframeRoot);
 window.parent.__REACT_ERROR_OVERLAY_GLOBAL_HOOK__.iframeReady();

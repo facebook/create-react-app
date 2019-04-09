@@ -7,6 +7,7 @@
 
 /* @flow */
 const black = '#293238',
+  carbon = '#323639',
   darkGray = '#878e91',
   red = '#ce1126',
   redTransparent = 'rgba(206, 17, 38, 0.05)',
@@ -46,6 +47,7 @@ export {
   primaryErrorStyle,
   secondaryErrorStyle,
   black,
+  carbon,
   darkGray,
   red,
   redTransparent,
