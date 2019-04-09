@@ -14,7 +14,7 @@ npx create-react-app my-app --typescript
 
 # or
 
-yarn create react-app my-app --typescript
+yarn create-react-app my-app --typescript
 ```
 
 To add [TypeScript](https://www.typescriptlang.org/) to a Create React App project, first install it:
