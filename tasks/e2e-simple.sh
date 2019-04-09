@@ -16,18 +16,17 @@ cd "$(dirname "$0")"
 # http://unix.stackexchange.com/a/84980
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 
-# Load Verdaccio-related functions
-source verdaccio.sh
+# Load functions for working with local NPM registry (Verdaccio)
+source local-registry.sh
 
 function cleanup {
   echo 'Cleaning up.'
-  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf "$temp_app_path"
-  # Restore the original NPM and Yarn registry URLs
-  restoreRegistryUrls
+  # Restore the original NPM and Yarn registry URLs and stop Verdaccio
+  stopLocalRegistry
 }
 
 # Error messages are redirected to stderr
@@ -86,7 +85,7 @@ fi
 yarn
 
 # Start the local NPM registry
-startVerdaccio "$root_path"/tasks/verdaccio.yaml
+startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/

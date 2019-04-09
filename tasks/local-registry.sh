@@ -3,12 +3,14 @@
 custom_registry_url=http://localhost:4873
 original_npm_registry_url=`npm get registry`
 original_yarn_registry_url=`yarn config get registry`
+default_verdaccio_package=verdaccio@3.8.2
 
-function startVerdaccio {
+function startLocalRegistry {
   # Start local registry
   tmp_registry_log=`mktemp`
-  (cd && nohup npx https://createreactapp.blob.core.windows.net/lib/verdaccio-4.0.0-alpha.8.tgz -c $1 &>$tmp_registry_log &)
-  # Wait for `verdaccio` to boot
+  echo "Registry output file: $tmp_registry_log"
+  (cd && nohup npx ${VERDACCIO_PACKAGE:-$default_verdaccio_package} -c $1 &>$tmp_registry_log &)
+  # Wait for Verdaccio to boot
   grep -q 'http address' <(tail -f $tmp_registry_log)
 
   # Set registry to local registry
@@ -19,9 +21,16 @@ function startVerdaccio {
   (cd && npx npm-auth-to-token@1.0.0 -u user -p password -e user@example.com -r "$custom_registry_url")
 }
 
-function restoreRegistryUrls {
-  cat $tmp_registry_log
-  
+function stopLocalRegistry {
+  # Show the Verdaccio output in the build results (if running in Azure Pipelines)
+  if [ -r $tmp_registry_log ] && [ -n "$TF_BUILD" ]; then
+    cat $tmp_registry_log
+  fi
+
+  # Restore the original NPM and Yarn registry URLs and stop Verdaccio
   npm set registry "$original_npm_registry_url"
   yarn config set registry "$original_yarn_registry_url"
+
+  # Kill Verdaccio process
+  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
 }
