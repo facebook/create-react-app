@@ -20,6 +20,7 @@ type Props = {|
   errorRecords: ErrorRecord[],
   close: () => void,
   editorHandler: (errorLoc: ErrorLocation) => void,
+  isDarkScheme: boolean,
 |};
 
 type State = {|

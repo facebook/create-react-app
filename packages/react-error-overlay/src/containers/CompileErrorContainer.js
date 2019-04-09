@@ -22,6 +22,7 @@ const codeAnchorStyle = {
 type Props = {|
   error: string,
   editorHandler: (errorLoc: ErrorLocation) => void,
+  isDarkScheme: boolean,
 |};
 
 class CompileErrorContainer extends PureComponent<Props, void> {
@@ -30,7 +31,7 @@ class CompileErrorContainer extends PureComponent<Props, void> {
     const errLoc: ?ErrorLocation = parseCompileError(error);
     const canOpenInEditor = errLoc !== null && editorHandler !== null;
     return (
-      <ErrorOverlay>
+      <ErrorOverlay isDarkScheme={this.props.isDarkScheme}>
         <Header headerText="Failed to compile" />
         <div
           onClick={

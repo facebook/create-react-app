@@ -44,11 +44,11 @@ function applyStyles(element: HTMLElement, styles: Object) {
   }
 }
 
-function isDarkScheme() {
+function getIsDarkScheme() {
   if (window.matchMedia) {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
   return false;
 }
 
-export { getHead, injectCss, removeCss, applyStyles, isDarkScheme };
+export { getHead, injectCss, removeCss, applyStyles, getIsDarkScheme };
