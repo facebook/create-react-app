@@ -1,6 +1,6 @@
 {
   "name": "@soulpicks/react-scripts",
-  "version": "2.21.0",
+  "version": "2.23.0",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": "Soulpicks/create-react-app",
   "license": "MIT",
@@ -65,7 +65,9 @@
     "react-app-polyfill": "^0.2.2",
     "react-dev-utils": "^8.0.0",
     "resolve": "1.10.0",
+    "responsive-loader": "^1.2.0",
     "sass-loader": "7.1.0",
+    "sharp": "^0.22.0",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.3",
     "url-loader": "1.1.2",
