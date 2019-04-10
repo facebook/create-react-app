@@ -3,8 +3,8 @@ node_js:
   - 10
 before_install:
   - echo -e "machine github.com\n  login $CI_USER_TOKEN" > ~/.netrc
-  - echo "//code.lds.org/artifactory/api/npm/npm-fhd/:_authToken=${NPM_PUBLISH_TOKEN}" >> .npmrc
-  - echo "@fs:registry=https://code.lds.org/artifactory/api/npm/npm-fhd/" >> .npmrc
+  - echo "//code.lds.org/artifactory/api/npm/npm-fhd/:_authToken=${NPM_PUBLISH_TOKEN}" >> ~/.npmrc
+  - echo "@fs:registry=https://code.lds.org/artifactory/api/npm/npm-fhd/" >> ~/.npmrc
     # because this is a weird monorepo and we cd into and out of directories, this is what worked for travis to publish
   - echo "//code.lds.org/artifactory/api/npm/npm-fhd/:_authToken=${NPM_PUBLISH_TOKEN}" >> packages/react-scripts/.npmrc
   - echo "@fs:registry=https://code.lds.org/artifactory/api/npm/npm-fhd/" >> packages/react-scripts/.npmrc
@@ -13,6 +13,15 @@ install:
   - "cd packages/react-scripts"
   - "npm i"
   - "cd ../../"
+script:
+  - npm test
+  # test that a new app can be created with these scripts
+  - mkdir -p ${HOME}/tmp && cd ${HOME}/tmp
+  - npx create-react-app my-test-app --use-npm --scripts-version file:${TRAVIS_BUILD_DIR}/packages/react-scripts/
+  - cd my-test-app
+  - CI=true npm test
+  - npm run build
+  - cd ${TRAVIS_BUILD_DIR}
 before_deploy: "cd packages/react-scripts"
 deploy:
   provider: npm

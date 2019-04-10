@@ -21,6 +21,11 @@ const devDepsToInstall = [];
 
 async function promptForConfig() {
   console.log(fsCli.fsLogo('Frontier React Scripts'));
+  // when in CI, don't prompt, just accept defaults
+  if (process.env.CI === 'true') {
+    console.log('CI detected, skipping prompts and returning defaults ...');
+    return Promise.resolve({additionalFeatures: []});
+  }
   const questions = [
     {
       type: 'checkbox',
@@ -56,11 +61,11 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@fs/zion-router',
       '@fs/zion-subnav',
       '@fs/zion-error-boundary',
-      'http-proxy-middleware@0.19.1',
-      '@emotion/core@10.0.9',
-      'i18next@15.0.7',
-      'react-i18next@10.5.1',
-      'prop-types@15.7.2',
+      'http-proxy-middleware@0.19',
+      '@emotion/core@10',
+      'i18next@15',
+      'react-i18next@10',
+      'prop-types@15',
     ]
   );
   devDepsToInstall.push(
@@ -68,13 +73,13 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@fs/eslint-config-frontier-react',
       '@fs/zion-testing-library',
       'eslint@5.12.0',
-      'i18next-scanner@2.10.0',
-      '@alienfast/i18next-loader@1.0.18',
-      'react-styleguidist@9.0.4',
-      '@fs/styleguidist-overrides@1.3.0',
-      'dotenv@7.0.0',
-      'webpack@4.28.3',
-      'jest-dom@3.1.3',
+      'i18next-scanner@2',
+      '@alienfast/i18next-loader@1',
+      'react-styleguidist@9',
+      '@fs/styleguidist-overrides@1.3',
+      'dotenv@7',
+      'webpack@4',
+      'jest-dom@3',
     ]
   );
 
@@ -98,7 +103,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
   installModulesSync(depsToInstall);
   installModulesSync(devDepsToInstall, true);
 
-  syncLocales()
+  syncLocales();
 
   replaceStringInFile(appPath, './README.md', /\{GITHUB_ORG\}\/\{GITHUB_REPO\}/g, `fs-webdev/${appName}`)
 }

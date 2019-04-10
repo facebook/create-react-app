@@ -5,10 +5,11 @@ That being said, if you want to use our fork "manually", then here is how you do
 
 1. Make sure you are authenticated with Artifactory
 
-- TODO: put those steps here or link to those steps
+   See https://beta.familysearch.org/frontier/docs/#/start/setup
 
-2. Run the following command  
-   `npx create-react-app {app-name} --scripts-version @fs/react-scripts`
+2. Run the following command
+
+   `npx create-react-app {app-name} --use-npm --scripts-version @fs/react-scripts`
 
 ## How to test your local copy of react-scripts
 
@@ -16,7 +17,7 @@ If you have cloned this repo and made changes locally and want to test them befo
 
 1. Clone this repo and make any changes needed in `./packages/react-scripts/`
 2. Run the following command  
-   `npx create-react-app ${yourNewAppsNameHere} --scripts-version file:${relativePathToYourClonedCreateReactAppRepo}/packages/react-scripts`
+   `npx create-react-app ${yourNewAppNameHere} --use-npm --scripts-version file:${relativePathToYourClonedCreateReactAppRepo}/packages/react-scripts`
 
 ## Development and Cutting a Release
 
