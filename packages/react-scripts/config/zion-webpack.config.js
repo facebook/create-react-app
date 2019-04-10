@@ -39,6 +39,12 @@ module.exports = merge(craWebpack, {
           options: {
             customize: require.resolve('@fs/babel-preset-frontier/webpack-overrides'),
             presets: [require.resolve('@fs/babel-preset-frontier')],
+            plugins: [
+              [
+                'react-docgen',
+                { DOC_GEN_COLLECTION_NAME: 'STORYBOOK_REACT_CLASSES' },
+              ],
+            ],
           },
         },
       },
