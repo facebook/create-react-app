@@ -22,11 +22,6 @@ function startLocalRegistry {
 }
 
 function stopLocalRegistry {
-  # Show the Verdaccio output in the build results (if running in Azure Pipelines)
-  if [ -r $tmp_registry_log ] && [ -n "$TF_BUILD" ]; then
-    cat $tmp_registry_log
-  fi
-
   # Restore the original NPM and Yarn registry URLs and stop Verdaccio
   npm set registry "$original_npm_registry_url"
   yarn config set registry "$original_yarn_registry_url"
