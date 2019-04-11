@@ -251,7 +251,7 @@ module.exports = function(webpackEnv) {
       },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      // FS - Turn off for snow since it causes issues with imports in snow js files.
+      // FS - Turn off for snow since it causes stack exceeded issues in development
       runtimeChunk: !isSnow,
     },
     resolve: {
