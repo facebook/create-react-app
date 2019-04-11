@@ -55,21 +55,16 @@ jobs:
   parameters:
     name: Behavior
     testScript: tasks/e2e-behavior.sh
+    configurations:
+      MacNode8:      { vmImage: 'macOS-10.13',    nodeVersion: 8.x }
+      MacNode10:     { vmImage: 'macOS-10.13',    nodeVersion: 10.x }
 
 # ******************************************************************************
 # Old Node test suite
 # ******************************************************************************
 - job: OldNode
-  strategy:
-    matrix:
-      LinuxNode6:
-        vmImage: ubuntu-16.04
-      MacNode8:
-        vmImage: macOS-10.13
-      WindowsNode6:
-        vmImage: vs2017-win2016
   pool: 
-    vmImage: $(vmImage)
+    vmImage: ubuntu-16.04
   steps:
     - task: NodeTool@0
       inputs:
