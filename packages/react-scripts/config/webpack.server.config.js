@@ -128,8 +128,6 @@ module.exports = function(webpackEnv) {
       'react-loadable',
       'mobx',
       'mobx-react',
-      'emotion',
-      '@emotion/core',
       '@loadable/component',
     ],
     cache: true,
