@@ -121,15 +121,7 @@ module.exports = function(webpackEnv) {
 
   return {
     name: 'server',
-    externals: [
-      'react-helmet',
-      'babel-polyfill',
-      'react',
-      'react-loadable',
-      'mobx',
-      'mobx-react',
-      '@loadable/component',
-    ],
+    externals: ['react-helmet', 'babel-polyfill', 'react'],
     cache: true,
     target: 'node',
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
