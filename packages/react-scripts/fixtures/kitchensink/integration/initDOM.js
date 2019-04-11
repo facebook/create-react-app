@@ -6,46 +6,31 @@
  */
 
 const fs = require('fs');
-const http = require('http');
-const jsdom = require('jsdom/lib/old-api.js');
+const { JSDOM, ResourceLoader } = require('jsdom');
 const path = require('path');
+const url = require('url');
 
-let getMarkup;
-export let resourceLoader;
-
-if (process.env.E2E_FILE) {
-  const file = path.isAbsolute(process.env.E2E_FILE)
+const file =
+  process.env.E2E_FILE &&
+  (path.isAbsolute(process.env.E2E_FILE)
     ? process.env.E2E_FILE
-    : path.join(process.cwd(), process.env.E2E_FILE);
+    : path.join(process.cwd(), process.env.E2E_FILE));
 
-  const markup = fs.readFileSync(file, 'utf8');
-  getMarkup = () => markup;
-
+export const fetchFile = url => {
   const pathPrefix = process.env.PUBLIC_URL.replace(/^https?:\/\/[^/]+\/?/, '');
+  return fs.readFileSync(
+    path.join(path.dirname(file), url.pathname.replace(pathPrefix, '')),
+    'utf8'
+  );
+};
 
-  resourceLoader = (resource, callback) =>
-    callback(
-      null,
-      fs.readFileSync(
-        path.join(
-          path.dirname(file),
-          resource.url.pathname.replace(pathPrefix, '')
-        ),
-        'utf8'
-      )
-    );
-} else if (process.env.E2E_URL) {
-  getMarkup = () =>
-    new Promise(resolve => {
-      http.get(process.env.E2E_URL, res => {
-        let rawData = '';
-        res.on('data', chunk => (rawData += chunk));
-        res.on('end', () => resolve(rawData));
-      });
-    });
+const fileResourceLoader = new class FileResourceLoader extends ResourceLoader {
+  fetch(href, options) {
+    return Promise.resolve(fetchFile(url.parse(href)));
+  }
+}();
 
-  resourceLoader = (resource, callback) => resource.defaultFetch(callback);
-} else {
+if (!process.env.E2E_FILE && !process.env.E2E_URL) {
   it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {
     expect(
       new Error("This isn't the error you are looking for.")
@@ -54,18 +39,46 @@ if (process.env.E2E_FILE) {
 }
 
 export default feature =>
-  new Promise(async resolve => {
-    const markup = await getMarkup();
-    const host = process.env.E2E_URL || 'http://www.example.org/spa:3000';
-    const doc = jsdom.jsdom(markup, {
-      created: (_, win) =>
-        win.addEventListener('ReactFeatureDidMount', () => resolve(doc), true),
-      deferClose: true,
-      pretendToBeVisual: true,
-      resourceLoader,
-      url: `${host}#${feature}`,
-      virtualConsole: jsdom.createVirtualConsole().sendTo(console),
-    });
+  new Promise(async (resolve, reject) => {
+    try {
+      const host = process.env.E2E_URL || 'http://www.example.org/spa:3000';
+      const url = `${host}#${feature}`;
 
-    doc.close();
+      let window;
+
+      if (process.env.E2E_FILE) {
+        window = (await JSDOM.fromFile(file, {
+          pretendToBeVisual: true,
+          resources: fileResourceLoader,
+          runScripts: 'dangerously',
+          url,
+        })).window;
+      } else {
+        window = (await JSDOM.fromURL(url, {
+          pretendToBeVisual: true,
+          resources: 'usable',
+          runScripts: 'dangerously',
+        })).window;
+      }
+
+      const { document } = window;
+
+      document.addEventListener(
+        'ReactFeatureDidMount',
+        () => resolve(document),
+        { capture: true, once: true }
+      );
+      document.addEventListener(
+        'ReactFeatureError',
+        () => {
+          // Cleanup jsdom instance since we don't need it anymore
+          window.close();
+
+          reject(`Error loading feature: ${feature}`);
+        },
+        { capture: true, once: true }
+      );
+    } catch (e) {
+      reject(e);
+    }
   });

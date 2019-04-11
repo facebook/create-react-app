@@ -37,10 +37,17 @@ This will allow you to do imports like
 To use imports relative to a path you specify, and from `node_modules` without adding the `~` prefix, you can add a [`.env` file](https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/adding-custom-environment-variables.md#adding-development-environment-variables-in-env) at the project root with the variable `SASS_PATH=node_modules:src`. To specify more directories you can add them to `SASS_PATH` separated by a `:` like `path1:path2:path3`.
 
 If you set `SASS_PATH=node_modules:src`, this will allow you to do imports like
+
 ```scss
 @import 'styles/colors'; // assuming a styles directory under src/, where _colors.scss partial file exists.
 @import 'nprogress/nprogress'; // importing a css file from the nprogress node module
 ```
+
+> **Note:** For windows operating system, use below syntax
+>
+> ```
+> SASS_PATH=./node_modules;./src
+> ```
 
 > **Tip:** You can opt into using this feature with [CSS modules](adding-a-css-modules-stylesheet.md) too!
 

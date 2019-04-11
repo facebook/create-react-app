@@ -18,8 +18,10 @@
       "adding-a-stylesheet",
       "adding-a-css-modules-stylesheet",
       "adding-a-sass-stylesheet",
+      "adding-css-reset",
       "post-processing-css",
       "adding-images-fonts-and-files",
+      "loading-graphql-files",
       "using-the-public-folder",
       "code-splitting"
     ],
