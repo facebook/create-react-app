@@ -171,7 +171,7 @@ function configureHF(appPath, ownPath) {
       start: 'react-scripts start',
     };
     packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts });
-    packageJson.main = './server.js';
+    packageJson.main = './index.js';
     packageJson.engines = { node: '10' };
 
     return packageJson;
@@ -179,7 +179,7 @@ function configureHF(appPath, ownPath) {
 
   createLocalEnvFile();
   depsToInstall.push(
-    ...['github:fs-webdev/hf#cra', 'github:fs-webdev/snow#cra', 'github:fs-webdev/startup']
+    ...['github:fs-webdev/snow#cra', 'github:fs-webdev/startup']
   );
 }
 

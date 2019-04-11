@@ -19,7 +19,7 @@ const path = require('path');
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
 
-const isHF = fs.existsSync(path.join(paths.appNodeModules, 'hf/webpack.config.js'));
+const isSnow = fs.existsSync(path.join(paths.appNodeModules, 'snow/package.json'));
 
 module.exports = function(proxy, allowedHost) {
   return {
@@ -112,6 +112,6 @@ module.exports = function(proxy, allowedHost) {
     },
     // FS - write to disk so that snow can serve assets
     // looking them up with the manifestMap provided by hf
-    writeToDisk: isHF,
+    writeToDisk: isSnow,
   };
 };
