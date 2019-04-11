@@ -7,7 +7,13 @@
 
 /* @flow */
 import React from 'react';
-import { redTransparent, yellowTransparent } from '../styles';
+import {
+  redTransparent,
+  yellowTransparent,
+  strongRedTransparent,
+  yellow,
+  lightRed,
+} from '../styles';
 
 const _preStyle = {
   position: 'relative',
@@ -20,16 +26,6 @@ const _preStyle = {
   borderRadius: '0.25rem',
 };
 
-const primaryPreStyle = {
-  ..._preStyle,
-  backgroundColor: redTransparent,
-};
-
-const secondaryPreStyle = {
-  ..._preStyle,
-  backgroundColor: yellowTransparent,
-};
-
 const codeStyle = {
   fontFamily: 'Consolas, Menlo, monospace',
 };
@@ -37,11 +33,23 @@ const codeStyle = {
 type CodeBlockPropsType = {|
   main: boolean,
   codeHTML: string,
+  isDarkScheme: boolean,
 |};
 
 function CodeBlock(props: CodeBlockPropsType) {
-  const preStyle = props.main ? primaryPreStyle : secondaryPreStyle;
-  const codeBlock = { __html: props.codeHTML };
+  const { main, codeHTML, isDarkScheme } = props;
+  const primaryPreStyle = {
+    ..._preStyle,
+    backgroundColor: isDarkScheme ? strongRedTransparent : redTransparent,
+    color: isDarkScheme ? lightRed : 'inherit',
+  };
+  const secondaryPreStyle = {
+    ..._preStyle,
+    backgroundColor: yellowTransparent,
+    color: isDarkScheme ? yellow : 'inherit',
+  };
+  const preStyle = main ? primaryPreStyle : secondaryPreStyle;
+  const codeBlock = { __html: codeHTML };
 
   return (
     <pre style={preStyle}>
