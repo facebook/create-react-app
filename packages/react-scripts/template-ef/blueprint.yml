@@ -5,6 +5,8 @@ build:
   - type: "Npm-Heroku v1_0"
     heroku_stack: heroku-18
     name: npm-build
+    full_npm_install: true
+    test_location: local
 
 deploy:
   int:
