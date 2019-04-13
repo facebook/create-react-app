@@ -9,6 +9,11 @@
 .homeContainer .button {
   background: #24292e;
   border-color: white;
+  transition: transform 150ms;
+}
+
+.homeContainer .button:hover {
+  transform: scale(1.03);
 }
 
 .homeContainer * {
