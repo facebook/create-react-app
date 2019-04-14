@@ -86,7 +86,7 @@ if (process.env.NODE_PATH) {
   );
 }
 
-// We require that you explictly set browsers and do not fall back to
+// We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
 checkBrowsers(paths.appPath, isInteractive)
