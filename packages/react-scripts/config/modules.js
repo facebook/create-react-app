@@ -18,13 +18,18 @@ const chalk = require('react-dev-utils/chalk');
  *
  * @param {Object} options
  */
-function getAdditionalModulePath(options = {}) {
+function getAdditionalModulePaths(options = {}) {
   const baseUrl = options.baseUrl;
 
   // We need to explicitly check for null and undefined (and not a falsy value) because
   // TypeScript treats an empty string as `.`.
   if (baseUrl == null) {
-    return null;
+    // If there's no baseUrl set we respect NODE_PATH
+    // Note that NODE_PATH is deprecated and will be removed
+    // in the next major release of create-react-app.
+
+    // It is guaranteed to exist because we tweak it in `env.js`
+    return process.env.NODE_PATH.split(path.delimiter).filter(Boolean);
   }
 
   const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
@@ -37,7 +42,7 @@ function getAdditionalModulePath(options = {}) {
 
   // Allow the user set the `baseUrl` to `appSrc`.
   if (path.relative(paths.appSrc, baseUrlResolved) === '') {
-    return paths.appSrc;
+    return [paths.appSrc];
   }
 
   // Otherwise, throw an error.
@@ -76,10 +81,10 @@ function getModules() {
   config = config || {};
   const options = config.compilerOptions || {};
 
-  const additionalModulePath = getAdditionalModulePath(options);
+  const additionalModulePaths = getAdditionalModulePaths(options);
 
   return {
-    additionalModulePath: additionalModulePath,
+    additionalModulePaths: additionalModulePaths,
     hasTsConfig,
   };
 }
