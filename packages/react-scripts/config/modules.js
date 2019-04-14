@@ -28,8 +28,8 @@ function getAdditionalModulePaths(options = {}) {
     // Note that NODE_PATH is deprecated and will be removed
     // in the next major release of create-react-app.
 
-    // It is guaranteed to exist because we tweak it in `env.js`
-    return process.env.NODE_PATH.split(path.delimiter).filter(Boolean);
+    const nodePath = process.env.NODE_PATH || '';
+    return nodePath.split(path.delimiter).filter(Boolean);
   }
 
   const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
