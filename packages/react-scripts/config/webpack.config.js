@@ -34,6 +34,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt')
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
+const { getSassOptions } = require('./customAppConfig');
 // @remove-on-eject-end
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -77,7 +78,7 @@ module.exports = function(webpackEnv) {
   const env = getClientEnvironment(publicUrl);
 
   // common function to get style loaders
-  const getStyleLoaders = (cssOptions, preProcessor) => {
+  const getStyleLoaders = (cssOptions, preProcessor, preProcessorOptions) => {
     const loaders = [
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
@@ -118,6 +119,7 @@ module.exports = function(webpackEnv) {
         loader: require.resolve(preProcessor),
         options: {
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+          ...preProcessorOptions,
         },
       });
     }
@@ -485,7 +487,8 @@ module.exports = function(webpackEnv) {
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
                 },
-                'sass-loader'
+                'sass-loader',
+                getSassOptions()
               ),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -506,7 +509,8 @@ module.exports = function(webpackEnv) {
                   modules: true,
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
-                'sass-loader'
+                'sass-loader',
+                getSassOptions()
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
