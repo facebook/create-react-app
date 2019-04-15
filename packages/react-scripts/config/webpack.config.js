@@ -48,6 +48,8 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // FS - check if hf is installed in root node_modules
 const isHF = fs.existsSync(path.join(paths.appNodeModules, 'hf/webpack.config.js'));
+// FS - check if snow is installed in root node_modules
+const isSnow = fs.existsSync(path.join(paths.appNodeModules, 'snow/package.json'));
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -249,8 +251,8 @@ module.exports = function(webpackEnv) {
       },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      // FS - Turn off for hf since it causes issues with imports in hf js files.
-      runtimeChunk: !isHF,
+      // FS - Turn off for snow since it causes stack exceeded issues in development
+      runtimeChunk: !isSnow,
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
@@ -567,7 +569,7 @@ module.exports = function(webpackEnv) {
           {},
           {
             inject: true,
-            filename: isHF ? '_index.html' : 'index.html',
+            filename: isSnow ? '_index.html' : 'index.html',
             template: paths.appHtml,
           },
           isEnvProduction

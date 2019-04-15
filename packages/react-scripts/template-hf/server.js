@@ -1,27 +1,44 @@
-const setProxies = require('@fs/react-scripts/proxy/setupProxy')
 const snow = require('snow')
-const setWebpackManifest = require('snow/lib/utils/webpackManifest.js')
-const hf = require('hf')
-const snowConfig = require('./snow.config.js')
+const layout = require('@fs/react-scripts/layout')
 
-/**
- * Expose the app
- */
-const app = (module.exports = snow(__dirname, hf, snowConfig))
-
-setWebpackManifest(app, 'build')
-
-if (app.get('env') === 'development') {
-  app.stack.front(() => {
-    setProxies(app)
-  })
+const urlLookup = {
+  'cas-public-api.cas.ident.service': `${process.env.SG_BASE_URL}/service/ident/cas/cas-public-api`,
+  'cis-public-api.cis.ident.service': `${process.env.SG_BASE_URL}/service/ident/cis/cis-public-api`,
 }
 
-app.stack.postRoute(() => {
-  app.get('*', (req, res) => {
-    res.render('index', {
-      indexPath: '../build/_index.html',
-      // _layoutFile: './async_layout'
+const serviceLocatorOptions = {
+  fallbackFunction(serviceName) {
+    if (urlLookup[serviceName]) {
+      return urlLookup[serviceName]
+    }
+    throw new Error(`${serviceName} was not found in binding registry or urlLookup`)
+  },
+}
+
+const snowConfig = {
+  experiments: [
+    {
+      name: 'coolEx',
+      description: 'The coolest experiment. Author/Owner: {Your Name}',
+      default: false,
+    },
+  ],
+  proxyUser: true,
+  cacheEncryption: true,
+  serviceLocatorOptions,
+}
+
+module.exports = (app, dir = 'build') => {
+  snowConfig.app = app
+  const snowApp = snow(__dirname, layout, snowConfig)
+
+  snowApp.stack.postRoute(() => {
+    snowApp.get('*', (req, res) => {
+      res.render('index', {
+        indexPath: `../${dir}/_index.html`,
+      })
     })
   })
-})
+
+  return snowApp
+}
