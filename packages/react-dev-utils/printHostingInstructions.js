@@ -36,23 +36,13 @@ function printHostingInstructions(
 
     printStaticServerInstructions(buildFolder, useYarn);
   }
-  console.log();
-  console.log('Find out more about deployment here:');
-  console.log();
-  console.log(`  ${chalk.yellow('https://bit.ly/CRA-deploy')}`);
-  console.log();
 }
 
 function printBaseMessage(buildFolder, hostingLocation) {
   console.log(
-    `The project was built assuming it is hosted at ${chalk.green(
+    `The project was built assuming that static files are hosted at ${chalk.green(
       hostingLocation || 'the server root'
     )}.`
-  );
-  console.log(
-    `You can control this with the ${chalk.green(
-      'homepage'
-    )} field in your ${chalk.cyan('package.json')}.`
   );
 
   if (!hostingLocation) {
