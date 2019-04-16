@@ -10,7 +10,7 @@ function print_help {
   echo "OPTIONS:"
   echo "  --node-version <version>  the node version to use while testing [8]"
   echo "  --git-branch <branch>     the git branch to checkout for testing [the current one]"
-  echo "  --test-suite <suite>      which test suite to use ('simple', installs', 'kitchensink', 'all') ['all']"
+  echo "  --test-suite <suite>      which test suite to use ('simple', installs', 'kitchensink', 'kitchensink-eject', 'all') ['all']"
   echo "  --interactive             gain a bash shell after the test run"
   echo "  --help                    print this message and exit"
   echo ""
@@ -49,7 +49,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
-test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-installs.sh && ./tasks/e2e-monorepos.sh"
+test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-kitchensink-eject.sh && ./tasks/e2e-installs.sh"
 case ${test_suite} in
   "all")
     ;;
@@ -59,11 +59,11 @@ case ${test_suite} in
   "kitchensink")
     test_command="./tasks/e2e-kitchensink.sh"
     ;;
+  "kitchensink-eject")
+    test_command="./tasks/e2e-kitchensink-eject.sh"
+    ;;
   "installs")
     test_command="./tasks/e2e-installs.sh"
-    ;;
-  "monorepos")
-    test_command="./tasks/e2e-monorepos.sh"
     ;;
   *)
     ;;
@@ -98,14 +98,23 @@ ${apply_changes}
 node --version
 npm --version
 set +x
-${test_command} && echo -e "\n\e[1;32m✔ Job passed\e[0m" || echo -e "\n\e[1;31m✘ Job failed\e[0m"
+${test_command}
+result_code=\$?
+if [ \$result_code == 0 ]; then
+  echo -e "\n\e[1;32m✔ Job passed\e[0m"
+else
+  echo -e "\n\e[1;31m✘ Job failed\e[0m"
+fi
 $([[ ${interactive} == 'true' ]] && echo 'bash')
+exit \$result_code
 CMD
 
 docker run \
   --env CI=true \
+  --env NPM_CONFIG_PREFIX=/home/node/.npm \
   --env NPM_CONFIG_QUIET=true \
   --tty \
+  --rm \
   --user node \
   --volume ${PWD}/..:/var/create-react-app \
   --workdir /home/node \

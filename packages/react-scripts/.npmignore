@@ -1,1 +1,13 @@
+# Created by .ignore support plugin (hsz.mobi)
+# standard ignores
+__mocks__/
+node_modules/
+public/
+src/**/*
+.babelrc
+.editorconfig
+.eslintrc.json
+.gitignore
+.npmrc
+yarn.lock
 /fixtures

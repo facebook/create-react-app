@@ -17,7 +17,7 @@ process.on('unhandledRejection', err => {
 const fs = require('fs-extra');
 const path = require('path');
 const execSync = require('child_process').execSync;
-const chalk = require('chalk');
+const chalk = require('react-dev-utils/chalk');
 const paths = require('../config/paths');
 const createJestConfig = require('./utils/createJestConfig');
 const inquirer = require('react-dev-utils/inquirer');
@@ -37,6 +37,30 @@ function getGitStatus() {
     return '';
   }
 }
+
+function tryGitAdd(appPath) {
+  try {
+    spawnSync(
+      'git',
+      ['add', path.join(appPath, 'config'), path.join(appPath, 'scripts')],
+      {
+        stdio: 'inherit',
+      }
+    );
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+console.log(
+  chalk.cyan.bold(
+    'NOTE: Create React App 2 supports TypeScript, Sass, CSS Modules and more without ejecting: ' +
+      'https://reactjs.org/blog/2018/10/01/create-react-app-v2.html'
+  )
+);
+console.log();
 
 inquirer
   .prompt({
@@ -109,7 +133,7 @@ inquirer
     const jestConfig = createJestConfig(
       filePath => path.posix.join('<rootDir>', filePath),
       null,
-      paths.srcPaths
+      true
     );
 
     console.log();
@@ -205,11 +229,50 @@ inquirer
     console.log(`  Adding ${cyan('Jest')} configuration`);
     appPackage.jest = jestConfig;
 
+    // Add Babel config
+    console.log(`  Adding ${cyan('Babel')} preset`);
+    appPackage.babel = {
+      presets: ['react-app'],
+    };
+
+    // Add ESlint config
+    console.log(`  Adding ${cyan('ESLint')} configuration`);
+    appPackage.eslintConfig = {
+      extends: 'react-app',
+    };
+
     fs.writeFileSync(
       path.join(appPath, 'package.json'),
       JSON.stringify(appPackage, null, 2) + os.EOL
     );
     console.log();
+
+    if (fs.existsSync(paths.appTypeDeclarations)) {
+      try {
+        // Read app declarations file
+        let content = fs.readFileSync(paths.appTypeDeclarations, 'utf8');
+        const ownContent =
+          fs.readFileSync(paths.ownTypeDeclarations, 'utf8').trim() + os.EOL;
+
+        // Remove react-scripts reference since they're getting a copy of the types in their project
+        content =
+          content
+            // Remove react-scripts types
+            .replace(
+              /^\s*\/\/\/\s*<reference\s+types.+?"react-scripts".*\/>.*(?:\n|$)/gm,
+              ''
+            )
+            .trim() + os.EOL;
+
+        fs.writeFileSync(
+          paths.appTypeDeclarations,
+          (ownContent + os.EOL + content).trim() + os.EOL
+        );
+      } catch (e) {
+        // It's not essential that this succeeds, the TypeScript user should
+        // be able to re-create these types with ease.
+      }
+    }
 
     // "Don't destroy what isn't ours"
     if (ownPath.indexOf(appPath) === 0) {
@@ -224,7 +287,7 @@ inquirer
       }
     }
 
-    if (paths.useYarn) {
+    if (fs.existsSync(paths.yarnLockFile)) {
       const windowsCmdFilePath = path.join(
         appPath,
         'node_modules',
@@ -262,6 +325,11 @@ inquirer
     }
     console.log(green('Ejected successfully!'));
     console.log();
+
+    if (tryGitAdd(appPath)) {
+      console.log(cyan('Staged ejected files for commit.'));
+      console.log();
+    }
 
     console.log(
       green('Please consider sharing why you ejected in this survey:')

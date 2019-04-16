@@ -21,6 +21,7 @@ original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
+  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
@@ -86,7 +87,7 @@ yarn
 
 # Start local registry
 tmp_registry_log=`mktemp`
-nohup npx verdaccio@3.2.0 -c tasks/verdaccio.yaml &>$tmp_registry_log &
+(cd && nohup npx verdaccio@3.8.2 -c "$root_path"/tasks/verdaccio.yaml &>$tmp_registry_log &)
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
@@ -115,6 +116,10 @@ fi
 cd ../..
 
 cd packages/react-dev-utils/
+yarn test
+cd ../..
+
+cd packages/babel-plugin-named-asset-import/
 yarn test
 cd ../..
 
@@ -264,6 +269,9 @@ verify_module_scope
 
 # Eject...
 echo yes | npm run eject
+
+# Test ejected files were staged
+test -n "$(git diff --staged --name-only)"
 
 # Test the build
 yarn build
