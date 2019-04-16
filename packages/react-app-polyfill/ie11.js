@@ -26,6 +26,6 @@ if (typeof window !== 'undefined') {
 Object.assign = require('object-assign');
 
 // Support for...of (a commonly used syntax feature that requires Symbols)
-require('core-js/es6/symbol');
+require('core-js/features/symbol');
 // Support iterable spread (...Set, ...Map)
-require('core-js/fn/array/from');
+require('core-js/features/array/from');
