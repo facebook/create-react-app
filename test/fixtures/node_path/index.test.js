@@ -9,8 +9,6 @@ test('builds in production', async () => {
   expect(fulfilled).toBe(true);
 });
 test('passes tests', async () => {
-  const { fulfilled } = await testSetup.scripts.test({
-    jestEnvironment: 'node',
-  });
+  const { fulfilled } = await testSetup.scripts.test();
   expect(fulfilled).toBe(true);
 });

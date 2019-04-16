@@ -65,6 +65,9 @@ case ${test_suite} in
   "installs")
     test_command="./tasks/e2e-installs.sh"
     ;;
+  "behavior")
+    test_command="./tasks/e2e-behavior.sh"
+    ;;
   *)
     ;;
 esac
