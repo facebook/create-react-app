@@ -25,23 +25,20 @@ function execaSafe(...args) {
       stderr: stripYarn(stripAnsi(stderr)),
       ...rest,
     }))
-    .catch(err => {
-      console.error(err);
-      return {
-        fulfilled: false,
-        rejected: true,
-        reason: err,
-        stdout: '',
-        stderr: stripYarn(
-          stripAnsi(
-            err.message
-              .split(os.EOL)
-              .slice(2)
-              .join(os.EOL)
-          )
-        ),
-      };
-    });
+    .catch(err => ({
+      fulfilled: false,
+      rejected: true,
+      reason: err,
+      stdout: '',
+      stderr: stripYarn(
+        stripAnsi(
+          err.message
+            .split(os.EOL)
+            .slice(2)
+            .join(os.EOL)
+        )
+      ),
+    }));
 }
 
 module.exports = class ReactScripts {
