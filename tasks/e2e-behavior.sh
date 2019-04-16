@@ -9,8 +9,6 @@
 # You can also run it locally but it's slow.
 # ******************************************************************************
 
-echo 'Hello!'
-
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
@@ -100,7 +98,7 @@ git clean -df
 
 # Run all tests
 cd test/
-CI=true ../node_modules/.bin/jest -w 2 fixtures/node_path/index.test.js
+CI=true ../node_modules/.bin/jest -w 2
 
 # Cleanup
 cleanup
