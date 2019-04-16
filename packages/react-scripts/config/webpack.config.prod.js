@@ -197,6 +197,8 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
       name: false,
+      minSize: 300000,
+      maxSize: 2000000,
     },
     // Keep the runtime chunk seperated to enable long term caching
     // https://twitter.com/wSokra/status/969679223278505985
@@ -217,7 +219,16 @@ module.exports = {
     // https://github.com/facebook/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.mjs', '.web.js', '.js', '.ts', '.json', '.web.jsx', '.jsx', '.tsx'],
+    extensions: [
+      '.mjs',
+      '.web.js',
+      '.js',
+      '.ts',
+      '.json',
+      '.web.jsx',
+      '.jsx',
+      '.tsx',
+    ],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
