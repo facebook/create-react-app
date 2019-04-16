@@ -454,9 +454,17 @@ To deploy your built project directly with Now CLI in your terminal, without any
 
 3. Run `now --name your-project-name` from within the build directory. You will be given a **now.sh** URL as a response as your build is deployed, similar to the following: https://my-cra-project-4rx7b16z3.now.sh/
 
-  Click or paste the deployment URL into your browser when the build is complete and you will see your deployed app.
+Click or paste the deployment URL into your browser when the build is complete and you will see your deployed app.
 
 For more information on deploying React applications with Now, including automatically building your application fresh in the cloud, setting up routes to rewrite all paths to the index.html file, and setting up caching headers for speed, see [the ZEIT Guide for Deploying a React app with Create React App](https://zeit.co/guides/deploying-react-with-now-cra/).
+
+## [Render](https://render.com)
+
+Render offers free [static site](https://render.com/docs/static-sites) hosting with fully managed SSL, a global CDN and continuous auto deploys from GitHub.
+
+Deploy your app in just a few minutes by following the [Create React App deployment guide](https://render.com/docs/deploy-create-react-app).
+
+Use invite code `cra` to sign up or use [this link](https://render.com/i/cra).
 
 ## [S3](https://aws.amazon.com/s3) and [CloudFront](https://aws.amazon.com/cloudfront/)
 

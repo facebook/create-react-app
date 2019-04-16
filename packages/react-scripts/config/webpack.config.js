@@ -268,7 +268,7 @@ module.exports = function(webpackEnv) {
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebook/create-react-app/issues/253
-      modules: ['node_modules'].concat(
+      modules: ['node_modules', paths.appNodeModules].concat(
         // It is guaranteed to exist because we tweak it in `env.js`
         process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
       ),
@@ -598,6 +598,16 @@ module.exports = function(webpackEnv) {
       new ManifestPlugin({
         fileName: 'asset-manifest.json',
         publicPath: publicPath,
+        generate: (seed, files) => {
+          const manifestFiles = files.reduce(function(manifest, file) {
+            manifest[file.name] = file.path;
+            return manifest;
+          }, seed);
+
+          return {
+            files: manifestFiles,
+          };
+        },
       }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how Webpack interprets its code. This is a practical
