@@ -3,8 +3,9 @@ import withStyles from 'react-jss';
 
 const styles = {
   counter: {
+    width: 150,
     display: 'flex',
-    justifyContent: 'start',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   button: {
@@ -14,9 +15,6 @@ const styles = {
     padding: '6px 9px',
     cursor: 'pointer',
     outline: 0,
-  },
-  count: {
-    marginLeft: 5,
   },
 };
 const Counter = ({ classes }) => {
@@ -30,7 +28,7 @@ const Counter = ({ classes }) => {
       <button className={classes.button} onClick={countUp}>
         Click Me!
       </button>
-      <span className={classes.count}>{count}</span>
+      <span>{count}</span>
     </div>
   );
 };
