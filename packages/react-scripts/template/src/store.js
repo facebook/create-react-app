@@ -1,5 +1,6 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import thunk from 'redux-thunk';
 
 // temp reducer to be removed
 const tempReducer = (state = {}, action) => {
@@ -18,7 +19,7 @@ export const rootReducer = {
 export const featureMiddleware = [];
 
 //Add core middleware here
-const coreMiddleware = [];
+const coreMiddleware = [thunk];
 
 // Compose all middlewares
 const middlewares = applyMiddleware(...featureMiddleware, ...coreMiddleware);
