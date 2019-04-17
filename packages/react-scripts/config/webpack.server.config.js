@@ -229,7 +229,7 @@ module.exports = function(webpackEnv) {
           oneOf: [
             // https://www.npmjs.com/package/responsive-loader
             {
-              test: [/\.jpe?g$/, /\.png$/],
+              test: [/\.jpe?g$/, /\.webp/, /\.png$/],
               loader: 'responsive-loader',
               options: {
                 adapter: require('responsive-loader/sharp'),
