@@ -3,8 +3,8 @@
   "version": "3.0.8",
   "description": "ESLint configuration used by Create React App",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/facebook/create-react-app.git",
+    "type": "git",
+    "url": "https://github.com/facebook/create-react-app.git",
     "directory": "packages/eslint-config-react-app"
   },
   "license": "MIT",

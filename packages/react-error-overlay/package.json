@@ -11,8 +11,8 @@
     "build:prod": "cross-env NODE_ENV=production node build.js"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/facebook/create-react-app.git",
+    "type": "git",
+    "url": "https://github.com/facebook/create-react-app.git",
     "directory": "packages/react-error-overlay"
   },
   "license": "MIT",
@@ -44,7 +44,7 @@
     "chalk": "^2.4.2",
     "chokidar": "^2.1.2",
     "cross-env": "5.2.0",
-    "eslint": "5.16.0",
+    "eslint": "^5.16.0",
     "eslint-config-react-app": "^3.0.8",
     "eslint-plugin-flowtype": "2.50.1",
     "eslint-plugin-import": "2.16.0",

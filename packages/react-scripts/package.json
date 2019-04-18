@@ -3,8 +3,8 @@
   "version": "2.1.8",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/facebook/create-react-app.git",
+    "type": "git",
+    "url": "https://github.com/facebook/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -41,7 +41,7 @@
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
-    "eslint": "5.16.0",
+    "eslint": "^5.16.0",
     "eslint-config-react-app": "^3.0.8",
     "eslint-loader": "2.1.2",
     "eslint-plugin-flowtype": "2.50.1",
@@ -70,6 +70,7 @@
     "react-dev-utils": "^8.0.0",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
+    "semver": "6.0.0",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.3",
     "url-loader": "1.1.2",
