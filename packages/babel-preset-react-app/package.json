@@ -2,7 +2,11 @@
   "name": "babel-preset-react-app",
   "version": "7.0.2",
   "description": "Babel preset used by Create React App",
-  "repository": "facebook/create-react-app",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/facebook/create-react-app.git",
+    "directory": "packages/babel-preset-react-app"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"

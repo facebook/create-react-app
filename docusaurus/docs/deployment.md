@@ -167,9 +167,9 @@ The AWS Amplify Console provides continuous deployment and hosting for modern we
 1. Login to the Amplify Console [here](https://console.aws.amazon.com/amplify/home).
 1. Connect your Create React App repo and pick a branch. If you're looking for a Create React App+Amplify starter, try the [create-react-app-auth-amplify starter](https://github.com/swaminator/create-react-app-auth-amplify) that demonstrates setting up auth in 10 minutes with Create React App.
 1. The Amplify Console automatically detects the build settings. Choose Next.
-1. Choose *Save and deploy*.
+1. Choose _Save and deploy_.
 
-If the build succeeds, the app is deployed and hosted on a global CDN with an amplifyapp.com domain. You can now continuously deploy changes to your frontend or backend. Continuous deployment allows developers to deploy updates to their frontend and backend on every code commit to their Git repository. 
+If the build succeeds, the app is deployed and hosted on a global CDN with an amplifyapp.com domain. You can now continuously deploy changes to your frontend or backend. Continuous deployment allows developers to deploy updates to their frontend and backend on every code commit to their Git repository.
 
 ## [Azure](https://azure.microsoft.com/)
 

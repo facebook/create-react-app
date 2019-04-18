@@ -2,7 +2,11 @@
   "name": "react-dev-utils",
   "version": "8.0.0",
   "description": "Webpack utilities used by Create React App",
-  "repository": "facebook/create-react-app",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/facebook/create-react-app.git",
+    "directory": "packages/react-dev-utils"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/facebook/create-react-app/issues"

@@ -62,7 +62,6 @@ yarn create react-app my-app
 
 _`yarn create` is available in Yarn 0.25+_
 
-
 ### Creating a TypeScript app
 
 Follow our [Adding TypeScript](adding-typescript.md) documentation to create a TypeScript app.
