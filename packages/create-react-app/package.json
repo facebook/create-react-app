@@ -6,8 +6,8 @@
   ],
   "description": "Create React apps with no build configuration.",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/facebook/create-react-app.git",
+    "type": "git",
+    "url": "https://github.com/facebook/create-react-app.git",
     "directory": "packages/create-react-app"
   },
   "license": "MIT",

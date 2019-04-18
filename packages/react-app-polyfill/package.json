@@ -3,8 +3,8 @@
   "version": "0.2.2",
   "description": "Polyfills for various browsers including commonly used language features",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/facebook/create-react-app.git",
+    "type": "git",
+    "url": "https://github.com/facebook/create-react-app.git",
     "directory": "packages/react-app-polyfill"
   },
   "license": "MIT",
