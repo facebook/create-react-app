@@ -88,7 +88,9 @@
     "reselect": "^4.0.0",
     "immutability-helper": "^3.0.0",
     "react-jss": "^10.0.0-alpha.16",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "classnames": "^2.2.6",
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {
     "react": "^16.8.6",

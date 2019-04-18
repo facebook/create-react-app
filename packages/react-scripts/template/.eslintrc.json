@@ -9,7 +9,7 @@
     "linebreak-style": "off",
     "no-underscore-dangle": "off",
     "react/jsx-wrap-multilines": "off",
-    "react/require-default-props":"off",
+    "react/require-default-props":"on",
     "react/no-unused-prop-types": "off",
     "react/jsx-filename-extension": [
       1,

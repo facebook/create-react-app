@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import withStyles from 'react-jss';
 
 const styles = {
@@ -19,10 +19,7 @@ const styles = {
 };
 const Counter = ({ classes }) => {
   const [count, setCount] = useState(0);
-  const countUp = useCallback(() => {
-    console.log('count', count);
-    setCount(count + 1);
-  }, [count]);
+  const countUp = () => setCount(count + 1);
   return (
     <div className={classes.counter}>
       <button className={classes.button} onClick={countUp}>

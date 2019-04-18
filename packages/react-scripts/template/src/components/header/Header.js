@@ -1,6 +1,7 @@
 import React from 'react';
 import withStyles from 'react-jss';
 import logo from '../../assets/logo.svg';
+import Link from '../link/Link';
 const styles = {
   appLogo: {
     animation: '$spin infinite 20s linear',
@@ -34,14 +35,12 @@ const Header = ({ classes }) => (
     <p>Welcome to Guesty's React project.</p>
     <p>Edit the ./App.js to start.</p>
     <div> Read the Guesty docs </div>
-    <a
+    <Link
       className={classes.appLink}
       href="https://rnd-docs.guesty.com/ui-infra/react/overview/"
-      target="_blank"
-      rel="noopener noreferrer"
     >
       Learn React
-    </a>
+    </Link>
   </header>
 );
 
