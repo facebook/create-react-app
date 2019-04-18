@@ -41,7 +41,7 @@
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
-    "eslint": "5.16.0",
+    "eslint": "^5.16.0",
     "eslint-config-react-app": "^3.0.8",
     "eslint-loader": "2.1.2",
     "eslint-plugin-flowtype": "2.50.1",
