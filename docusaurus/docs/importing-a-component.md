@@ -60,7 +60,7 @@ Below is an example `jsconfig.json` file for a JavaScript project. You can creat
   "compilerOptions": {
     "baseUrl": "src"
   },
-  "include": ["src/**/*"]
+  "include": ["src"]
 }
 ```
 
