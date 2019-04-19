@@ -66,7 +66,7 @@ Below is an example `jsconfig.json` file for a JavaScript project. You can creat
 
 If you're using TypeScript, you can configure the `baseUrl` setting inside the `compilerOptions` of your project's `tsconfig.json` file.
 
-Now that you've configured your project to support absolute imports, if you wanted to import a module located at `src/components/Button.js` for example, you can now import the module like so:
+Now that you've configured your project to support absolute imports, if you want to import a module located at `src/components/Button.js`, you can import the module like so:
 
 ```js
 import Button from 'components/Button';
