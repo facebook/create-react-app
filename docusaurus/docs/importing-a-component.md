@@ -51,7 +51,7 @@ Learn more about ES6 modules:
 
 ## Absolute Imports
 
-You can configure your application to support importing modules using absolute paths. This can be done by configuring a `jsconfig.json` or `tsconfig.json` file in the root of your project. If you're using TypeScript in your project, you will already have the `tsconfig.json` file present.
+You can configure your application to support importing modules using absolute paths. This can be done by configuring a `jsconfig.json` or `tsconfig.json` file in the root of your project. If you're using TypeScript in your project, you will already have a `tsconfig.json` file.
 
 Below is an example `jsconfig.json` file for a JavaScript project. You can create the file if it doesn't already exist:
 
