@@ -35,7 +35,7 @@ The watcher includes an interactive command-line interface with the ability to r
 
 ![Jest watch mode](https://jestjs.io/img/blog/15-watch.gif)
 
-> \*Although we recommend running your tests in watch mode during development, you can disable this behavior by passing in the `--no-watch` flag. In most CI environments, this is handled for you (see [On CI servers](#on-ci-servers)).
+> \*Although we recommend running your tests in watch mode during development, you can disable this behavior by passing in the `--watchAll=false` flag. In most CI environments, this is handled for you (see [On CI servers](#on-ci-servers)).
 
 ## Version Control Integration
 
@@ -376,7 +376,7 @@ CI=true npm run build
 
 The test command will force Jest to run in CI-mode, and tests will only run once instead of launching the watcher.
 
-For non-CI environments, you can simply pass the `--no-watch` flag to disable test-watching.
+For non-CI environments, you can simply pass the `--watchAll=false` flag to disable test-watching.
 
 The build command will check for linter warnings and fail if any are found.
 
