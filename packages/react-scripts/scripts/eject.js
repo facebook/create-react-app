@@ -56,7 +56,7 @@ function tryGitAdd(appPath) {
 
 console.log(
   chalk.cyan.bold(
-    'NOTE: Create React App 2 supports TypeScript, Sass, CSS Modules and more without ejecting: ' +
+    'NOTE: Create React App 2+ supports TypeScript, Sass, CSS Modules and more without ejecting: ' +
       'https://reactjs.org/blog/2018/10/01/create-react-app-v2.html'
   )
 );
