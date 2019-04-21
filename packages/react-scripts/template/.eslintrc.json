@@ -11,6 +11,8 @@
     "react/jsx-wrap-multilines": "off",
     "react/require-default-props":"off",
     "react/no-unused-prop-types": "off",
+    "react/prop-types": "off",
+    "consistent-return": "off",
     "react/jsx-filename-extension": [
       1,
       {
