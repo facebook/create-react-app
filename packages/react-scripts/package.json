@@ -1,6 +1,6 @@
 {
   "name": "@guestyci/guesty-react-scripts",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Guesty Configuration and scripts for Create React App.",
   "repository": "guestyorg/create-react-app",
   "license": "MIT",
@@ -78,9 +78,8 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "enzyme-to-json": "^3.3.5",
-    "@guestyci/fe-core-modules":"^0.1.1"
+    "@guestyci/fe-core-modules": "^0.1.1"
   },
-
   "optionalDependencies": {
     "fsevents": "1.2.7"
   },
