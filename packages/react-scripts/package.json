@@ -74,28 +74,13 @@
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.2.0",
-
     "eslint-config-airbnb": "^17.1.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "enzyme-to-json": "^3.3.5",
-    "redux":"^4.0.1",
-    "react-redux": "^7.0.2",
-    "redux-form": "^8.2.0",
-    "lodash": "^4.17.11",
-    "moment": "^2.24.0",
-    "react-router-dom": "^5.0.0",
-    "reselect": "^4.0.0",
-    "immutability-helper": "^3.0.0",
-    "react-jss": "^10.0.0-alpha.16",
-    "redux-thunk": "^2.3.0",
-    "classnames": "^2.2.6",
-    "prop-types": "^15.7.2"
+    "@guestyci/fe-core-modules":"^0.1.1"
   },
-  "devDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
-  },
+
   "optionalDependencies": {
     "fsevents": "1.2.7"
   },

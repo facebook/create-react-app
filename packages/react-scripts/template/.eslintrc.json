@@ -13,6 +13,7 @@
     "react/no-unused-prop-types": "off",
     "react/prop-types": "off",
     "consistent-return": "off",
+    "import/no-extraneous-dependencies": "off",
     "react/jsx-filename-extension": [
       1,
       {
@@ -21,8 +22,7 @@
           ".jsx"
         ]
       }
-    ],
-    "import/no-extraneous-dependencies": "off"
+    ]
   },
   "plugins": [
     "jest"
