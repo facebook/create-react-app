@@ -1,7 +1,7 @@
 # react-app-polyfill
 
 This package includes polyfills for various browsers.
-It includes minimum requirements and commonly used language features used by [Create React Index](https://github.com/facebook/create-react-app) projects.
+It includes minimum requirements and commonly used language features used by [Create React App](https://github.com/facebook/create-react-app) projects.
 
 ### Usage
 
@@ -19,7 +19,7 @@ yarn add react-app-polyfill
 
 ## Supporting Internet Explorer
 
-You can import the entry point for the minimal version you intend to support to ensure that the minimum langauge features are present that are required to use Create React Index. For example, if you import the IE9 entry point, this will include IE10 and IE11 support.
+You can import the entry point for the minimal version you intend to support to ensure that the minimum langauge features are present that are required to use Create React App. For example, if you import the IE9 entry point, this will include IE10 and IE11 support.
 
 These modules ensure the following language features are present:
 
@@ -34,7 +34,7 @@ _If you need more features, see the [Polyfilling other language features](#polyf
 #### Internet Explorer 9
 
 ```js
-// This must be the first line in src/index.js
+// This must be the first line in src/App.js
 import 'react-app-polyfill/ie9';
 
 // ...
@@ -43,7 +43,7 @@ import 'react-app-polyfill/ie9';
 #### Internet Explorer 11
 
 ```js
-// This must be the first line in src/index.js
+// This must be the first line in src/App.js
 import 'react-app-polyfill/ie11';
 
 // ...
@@ -51,10 +51,10 @@ import 'react-app-polyfill/ie11';
 
 ## Polyfilling other language features
 
-You can also polyfill stable language features not available in your target browsers. If you're using this in Create React Index, it will automatically use the `browserslist` you've defined to only include polyfills needed by your target browsers when importing the `stable` polyfill. **Make sure to follow the Internet Explorer steps above if you need to support Internet Explorer in your application**.
+You can also polyfill stable language features not available in your target browsers. If you're using this in Create React App, it will automatically use the `browserslist` you've defined to only include polyfills needed by your target browsers when importing the `stable` polyfill. **Make sure to follow the Internet Explorer steps above if you need to support Internet Explorer in your application**.
 
 ```js
-// This must be the first line in src/index.js
+// This must be the first line in src/App.js
 import 'react-app-polyfill/stable';
 
 // ...
@@ -65,7 +65,7 @@ If you are supporting Internet Explorer 9 or Internet Explorer 11 you should inc
 For IE9:
 
 ```js
-// These must be the first lines in src/index.js
+// These must be the first lines in src/App.js
 import 'react-app-polyfill/ie9';
 import 'react-app-polyfill/stable';
 
@@ -75,7 +75,7 @@ import 'react-app-polyfill/stable';
 For IE11:
 
 ```js
-// These must be the first lines in src/index.js
+// These must be the first lines in src/App.js
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 

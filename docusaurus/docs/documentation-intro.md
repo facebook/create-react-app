@@ -4,7 +4,7 @@ title: About the Documentation
 sidebar_label: About Docs
 ---
 
-Welcome to the Create React Index documentation!
+Welcome to the Create React App documentation!
 
 ## Navigation
 
@@ -14,7 +14,7 @@ You can find different topics in the table of contents. On desktop, you should s
 
 The documentation for React itself is located on a separate website: **[reactjs.org](https://reactjs.org/)**.
 
-This website is only about Create React Index.
+This website is only about Create React App.
 
 ## Something Missing?
 

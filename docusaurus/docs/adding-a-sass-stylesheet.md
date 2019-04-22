@@ -18,10 +18,10 @@ $ # or
 $ yarn add node-sass
 ```
 
-Now you can rename `src/Index.css` to `src/Index.scss` and update `src/Indexex.js` to import `src/Index.scss`.
+Now you can rename `src/App.css` to `src/App.scss` and update `src/Indexex.js` to import `src/App.scss`.
 This file and any other file will be automatically compiled if imported with the extension `.scss` or `.sass`.
 
-To share variables between Sass files, you can use Sass imports. For example, `src/Index.scss` and other component style files could include `@import "./shared.scss";` with variable definitions.
+To share variables between Sass files, you can use Sass imports. For example, `src/App.scss` and other component style files could include `@import "./shared.scss";` with variable definitions.
 
 This will allow you to do imports like
 

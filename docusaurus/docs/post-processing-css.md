@@ -12,7 +12,7 @@ You can customize your target support browsers by adjusting the `browserslist` k
 For example, this:
 
 ```css
-.Index {
+.App {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -22,7 +22,7 @@ For example, this:
 becomes this:
 
 ```css
-.Index {
+.App {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

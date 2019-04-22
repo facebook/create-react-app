@@ -14,9 +14,9 @@ test('Ignores node_modules when detecting TypeScript', async () => {
     'src',
     'node_modules',
     'package',
-    'index.ts',
+    'App.js.ts',
   ];
-  const tsSrcPath = path.join(testSetup.testDirectory, 'src', 'index.ts');
+  const tsSrcPath = path.join(testSetup.testDirectory, 'src', 'App.js.ts');
 
   // Step 1.
   // See if src/node_modules/package/index.ts is treated

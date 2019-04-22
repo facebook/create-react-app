@@ -16,7 +16,7 @@ const styles = {
   },
 };
 
-function Index({ classes }) {
+function App({ classes }) {
   return (
     <div className={classes.app}>
       <Header />
@@ -25,4 +25,4 @@ function Index({ classes }) {
   );
 }
 
-export default withStyles(styles)(Index);
+export default withStyles(styles)(App);

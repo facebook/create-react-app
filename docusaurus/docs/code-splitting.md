@@ -22,7 +22,7 @@ export { moduleA };
 ```js
 import React, { Component } from 'react';
 
-class Index extends Component {
+class App extends Component {
   handleClick = () => {
     import('./moduleA')
       .then(({ moduleA }) => {
@@ -42,7 +42,7 @@ class Index extends Component {
   }
 }
 
-export default Index;
+export default App;
 ```
 
 This will make `moduleA.js` and all its unique dependencies as a separate chunk that only loads after the user clicks the 'Load' button. For more information on the chunks that are created, see the [production build](production-build.md) section.

@@ -1,20 +1,20 @@
 # eslint-config-react-app
 
-This package includes the shareable ESLint configuration used by [Create React Index](https://github.com/facebook/create-react-app).<br>
+This package includes the shareable ESLint configuration used by [Create React App](https://github.com/facebook/create-react-app).<br>
 Please refer to its documentation:
 
 - [Getting Started](https://facebook.github.io/create-react-app/docs/getting-started) – How to create a new app.
-- [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React Index.
+- [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
 
-## Usage in Create React Index Projects
+## Usage in Create React App Projects
 
-The easiest way to use this configuration is with [Create React Index](https://github.com/facebook/create-react-app), which includes it by default.
+The easiest way to use this configuration is with [Create React App](https://github.com/facebook/create-react-app), which includes it by default.
 
-**You don’t need to install it separately in Create React Index projects.**
+**You don’t need to install it separately in Create React App projects.**
 
-## Usage Outside of Create React Index
+## Usage Outside of Create React App
 
-If you want to use this ESLint configuration in a project not built with Create React Index, you can install it with the following steps.
+If you want to use this ESLint configuration in a project not built with Create React App, you can install it with the following steps.
 
 First, install this package, ESLint and the necessary plugins.
 
@@ -64,4 +64,4 @@ If you want to enable even more accessibility rules, you can create an `.eslintr
 }
 ```
 
-However, if you are using [Create React Index](https://github.com/facebook/create-react-app) and have not ejected, any additional rules will only be displayed in the [IDE integrations](https://facebook.github.io/create-react-app/docs/setting-up-your-editor#displaying-lint-output-in-the-editor), but not in the browser or the terminal.
+However, if you are using [Create React App](https://github.com/facebook/create-react-app) and have not ejected, any additional rules will only be displayed in the [IDE integrations](https://facebook.github.io/create-react-app/docs/setting-up-your-editor#displaying-lint-output-in-the-editor), but not in the browser or the terminal.

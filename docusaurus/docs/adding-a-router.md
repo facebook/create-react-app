@@ -3,7 +3,7 @@ id: adding-a-router
 title: Adding a Router
 ---
 
-Create React Index doesn't prescribe a specific routing solution, but [React Router](https://reacttraining.com/react-router/web/) is the most popular one.
+Create React App doesn't prescribe a specific routing solution, but [React Router](https://reacttraining.com/react-router/web/) is the most popular one.
 
 To add it, run:
 

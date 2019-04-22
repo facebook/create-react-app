@@ -44,7 +44,7 @@ Failed to compile.
 ./src/AppCss.css
 Syntax error: Unexpected } (3:2)
 
-  1 | .Index {
+  1 | .App {
   2 |   color: red;
 > 3 | }}
     |  ^

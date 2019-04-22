@@ -1,16 +1,16 @@
 ---
 id: making-a-progressive-web-app
-title: Making a Progressive Web Index
+title: Making a Progressive Web App
 ---
 
 The production build has all the tools necessary to generate a first-class
-[Progressive Web Index](https://developers.google.com/web/progressive-web-apps/),
+[Progressive Web App](https://developers.google.com/web/progressive-web-apps/),
 but **the offline/cache-first behavior is opt-in only**. By default,
 the build process will generate a service worker file, but it will not be
 registered, so it will not take control of your production web app.
 
 In order to opt-in to the offline-first behavior, developers should look for the
-following in their [`src/index.js`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/index.js) file:
+following in their [`src/App.js`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/index.js) file:
 
 ```js
 // If you want your app to work offline and load faster, you can change
@@ -30,7 +30,7 @@ Offline-first Progressive Web Apps are faster and more reliable than traditional
 - Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.
 - On mobile devices, your app can be added directly to the user's home screen, app icon and all. This eliminates the need for the app store.
 
-However, they [can make debugging deployments more challenging](https://github.com/facebook/create-react-app/issues/2398) so, starting with Create React Index 2, service workers are opt-in.
+However, they [can make debugging deployments more challenging](https://github.com/facebook/create-react-app/issues/2398) so, starting with Create React App 2, service workers are opt-in.
 
 The [`workbox-webpack-plugin`](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)
 is integrated into production configuration,
@@ -90,7 +90,7 @@ following into account:
    cross-origin traffic, like HTTP [API requests](integrating-with-an-api-backend.md),
    images, or embeds loaded from a different domain.
 
-## Progressive Web Index Metadata
+## Progressive Web App Metadata
 
 The default configuration includes a web app manifest located at
 [`public/manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/public/manifest.json), that you can customize with
@@ -99,7 +99,7 @@ details specific to your web application.
 When a user adds a web app to their homescreen using Chrome or Firefox on
 Android, the metadata in [`manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/public/manifest.json) determines what
 icons, names, and branding colors to use when the web app is displayed.
-[The Web Index Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
+[The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations
 will affect your users' experience.
 

@@ -1,11 +1,11 @@
-# Create React Index [![Build Status](https://travis-ci.org/facebook/create-react-app.svg?branch=master)](https://travis-ci.org/facebook/create-react-app) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/pulls)
+# Create React App [![Build Status](https://travis-ci.org/facebook/create-react-app.svg?branch=master)](https://travis-ci.org/facebook/create-react-app) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/pulls)
 
 Create React apps with no build configuration.
 
-- [Creating an Index](#creating-an-app) – How to create a new app.
-- [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React Index.
+- [Creating an App](#creating-an-app) – How to create a new app.
+- [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
 
-Create React Index works on macOS, Windows, and Linux.<br>
+Create React App works on macOS, Windows, and Linux.<br>
 If something doesn’t work, please [file an issue](https://github.com/facebook/create-react-app/issues/new).
 
 ## Quick Overview
@@ -32,7 +32,7 @@ They are preconfigured and hidden so that you can focus on the code.
 
 Just create a project, and you’re good to go.
 
-## Creating an Index
+## Creating an App
 
 **You’ll need to have Node 8.10.0 or later on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
@@ -76,11 +76,11 @@ my-app
 │   ├── index.html
 │   └── manifest.json
 └── src
-    ├── Index.css
+    ├── App.css
     ├── Indexex.js
-    ├── Index.test.js
+    ├── App.test.js
     ├── index.css
-    ├── index.js
+    ├── App.js
     ├── logo.svg
     └── serviceWorker.js
 ```
@@ -124,7 +124,7 @@ Your app is ready to be deployed.
 
 ## User Guide
 
-You can find detailed instructions on using Create React Index and many tips in [its documentation](https://facebook.github.io/create-react-app/).
+You can find detailed instructions on using Create React App and many tips in [its documentation](https://facebook.github.io/create-react-app/).
 
 ## How to Update to New Versions?
 
@@ -148,7 +148,7 @@ Your environment will have everything you need to build a modern single-page Rea
 - A fast interactive unit test runner with built-in support for coverage reporting.
 - A live development server that warns about common mistakes.
 - A build script to bundle JS, CSS, and images for production, with hashes and sourcemaps.
-- An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web Index](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app) criteria. (_Note: Using the service worker is opt-in as of `react-scripts@2.0.0` and higher_)
+- An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app) criteria. (_Note: Using the service worker is opt-in as of `react-scripts@2.0.0` and higher_)
 - Hassle-free updates for the above tools with a single dependency.
 
 Check out [this guide](https://github.com/nitishdayal/cra_closer_look) for an overview of how these tools fit together.
@@ -157,7 +157,7 @@ The tradeoff is that **these tools are preconfigured to work in a specific way**
 
 ## Popular Alternatives
 
-Create React Index is a great fit for:
+Create React App is a great fit for:
 
 - **Learning React** in a comfortable and feature-rich development environment.
 - **Starting new single-page React applications.**
@@ -171,9 +171,9 @@ Here are a few common cases where you might want to try something else:
 
 - If you need to **publish a React component**, [nwb](https://github.com/insin/nwb) can [also do this](https://github.com/insin/nwb#react-components-and-libraries), as well as [Neutrino's react-components preset](https://neutrino.js.org/packages/react-components/).
 
-- If you want to do **server rendering** with React and Node.js, check out [Next.js](https://github.com/zeit/next.js/) or [Razzle](https://github.com/jaredpalmer/razzle). Create React Index is agnostic of the backend, and just produces static HTML/JS/CSS bundles.
+- If you want to do **server rendering** with React and Node.js, check out [Next.js](https://github.com/zeit/next.js/) or [Razzle](https://github.com/jaredpalmer/razzle). Create React App is agnostic of the backend, and just produces static HTML/JS/CSS bundles.
 
-- If your website is **mostly static** (for example, a portfolio or a blog), consider using [Gatsby](https://www.gatsbyjs.org/) instead. Unlike Create React Index, it pre-renders the website into HTML at the build time.
+- If your website is **mostly static** (for example, a portfolio or a blog), consider using [Gatsby](https://www.gatsbyjs.org/) instead. Unlike Create React App, it pre-renders the website into HTML at the build time.
 
 - Finally, if you need **more customization**, check out [Neutrino](https://neutrino.js.org/) and its [React preset](https://neutrino.js.org/packages/react/).
 
@@ -200,4 +200,4 @@ We are grateful to the authors of existing related projects for their ideas and 
 
 ## License
 
-Create React Index is open source software [licensed as MIT](https://github.com/facebook/create-react-app/blob/master/LICENSE).
+Create React App is open source software [licensed as MIT](https://github.com/facebook/create-react-app/blob/master/LICENSE).

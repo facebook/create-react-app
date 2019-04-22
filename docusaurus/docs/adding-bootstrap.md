@@ -17,7 +17,7 @@ Alternatively you may use `yarn`:
 yarn add bootstrap
 ```
 
-Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your `src/index.js` file:
+Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your `src/App.js` file:
 
 ```js
 import 'bootstrap/dist/css/bootstrap.css';
@@ -44,7 +44,7 @@ $body-bg: #000;
 
 > **Note:** You must prefix imports from `node_modules` with `~` as displayed above.
 
-Finally, import the newly created `.scss` file instead of the default Bootstrap `.css` in the beginning of your `src/index.js` file, for example:
+Finally, import the newly created `.scss` file instead of the default Bootstrap `.css` in the beginning of your `src/App.js` file, for example:
 
 ```javascript
 import './custom.scss';

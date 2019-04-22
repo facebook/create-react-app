@@ -26,7 +26,7 @@ npm install --save confusing-browser-globals
 
 ## Usage
 
-If you use Create React Index, you don't need to configure anything, as this rule is already included in the default `eslint-config-react-app` preset.
+If you use Create React App, you don't need to configure anything, as this rule is already included in the default `eslint-config-react-app` preset.
 
 If you maintain your own ESLint configuration, you can do this:
 

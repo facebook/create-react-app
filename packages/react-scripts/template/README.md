@@ -1,8 +1,8 @@
-This project was bootstrapped with [Create React Index](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Overview
 
-Welcome to Guesty's Create React Index  
+Welcome to Guesty's Create React App  
 Before we go any further, make sure to read our [ui infra docs](https://rnd-docs.guesty.com/ui-infra/react/overview/).
 
 ## How to start
