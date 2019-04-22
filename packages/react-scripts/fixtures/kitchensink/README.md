@@ -1,4 +1,4 @@
-# Contributing to Create React App's E2E tests
+# Contributing to Create React Index's E2E tests
 
 This is an end to end kitchensink test suite, but has multiple usages in it.
 
@@ -30,7 +30,7 @@ In it's most basic for this serve as a collection of unit tests on a single func
 
 Unit tests are written in a `src/features/**/*.test.js` file located in the same folder as the feature they test, and usually consist of a simple `ReactDOM.render` call.
 
-These tests are run by **jest** and the environment is `test`, so that it resembles how a **Create React App** application is tested.
+These tests are run by **jest** and the environment is `test`, so that it resembles how a **Create React Index** application is tested.
 
 ### Using it as Integration Tests
 
@@ -41,7 +41,7 @@ Test are written in `integration/{env|syntax|webpack}.test.js`, depending on the
 
 For every test case added there is just a little chore to do:
 
-- a `case` statement must be added in `src/App.js`, which simply perform a dynamic `import()` of the feature
+- a `case` statement must be added in `src/index.jsjs`, which simply perform a dynamic `import()` of the feature
 
 - add a test case in the appropriate integration test file, which calls and awaits `initDOM` with the previous `SwitchCase` string
 

@@ -50,7 +50,7 @@ One way to add SVG files was described in the section above. You can also import
 
 ```js
 import { ReactComponent as Logo } from './logo.svg';
-const App = () => (
+const Index = () => (
   <div>
     {/* Logo is an actual React component */}
     <Logo />
@@ -58,4 +58,4 @@ const App = () => (
 );
 ```
 
-This is handy if you don't want to load SVG as a separate file. Don't forget the curly braces in the import! The `ReactComponent` import name is special and tells Create React App that you want a React component that renders an SVG, rather than its filename.
+This is handy if you don't want to load SVG as a separate file. Don't forget the curly braces in the import! The `ReactComponent` import name is special and tells Create React Index that you want a React component that renders an SVG, rather than its filename.

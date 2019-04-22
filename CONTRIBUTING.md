@@ -1,6 +1,6 @@
-# Contributing to Create React App
+# Contributing to Create React Index
 
-Loving Create React App and want to get involved? Thanks! There are plenty of ways you can help.
+Loving Create React Index and want to get involved? Thanks! There are plenty of ways you can help.
 
 Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved.
 
@@ -19,15 +19,15 @@ Instead of letting the user specify the entry filename, we always assume it to b
 
 ### Heuristics
 
-Normally, `npm start` runs on port `3000`, and this is not explicitly configurable. However, some environments like cloud IDEs want the programs to run on a specific port to serve their output. We want to play well with different environments, so Create React App reads `PORT` environment variable and prefers it when it is specified. The trick is that we know cloud IDEs already specify it automatically, so there is no need for the user to do anything. Create React App relies on heuristics to do the right thing depending on environment.
+Normally, `npm start` runs on port `3000`, and this is not explicitly configurable. However, some environments like cloud IDEs want the programs to run on a specific port to serve their output. We want to play well with different environments, so Create React Index reads `PORT` environment variable and prefers it when it is specified. The trick is that we know cloud IDEs already specify it automatically, so there is no need for the user to do anything. Create React Index relies on heuristics to do the right thing depending on environment.
 
 Another example of this is how `npm test` normally launches the watcher, but if the `CI` environment variable is set, it will run tests once. We know that popular CI environments set this variable, so the user doesn’t need to do anything. It just works.
 
 ### Interactivity
 
-We prefer to add interactivity to the command line interface rather than add configuration flags. For example, `npm start` will attempt to run with port `3000` by default, but it may be busy. Many other tools just fail in this case and ask that you pass a different port, but Create React App will display a prompt asking if you’d like to run the app on the next available port.
+We prefer to add interactivity to the command line interface rather than add configuration flags. For example, `npm start` will attempt to run with port `3000` by default, but it may be busy. Many other tools just fail in this case and ask that you pass a different port, but Create React Index will display a prompt asking if you’d like to run the app on the next available port.
 
-Another example of interactivity is `npm test` watcher interface. Instead of asking people to pass command line flags for switching between test runner modes or search patterns, we print a hint with keys that you can press during the test session to instruct watcher what to do. Jest supports both flags and interactive CLI but Create React App prefers long-running sessions to keep user immersed in the flow over short-running sessions with different flags.
+Another example of interactivity is `npm test` watcher interface. Instead of asking people to pass command line flags for switching between test runner modes or search patterns, we print a hint with keys that you can press during the test session to instruct watcher what to do. Jest supports both flags and interactive CLI but Create React Index prefers long-running sessions to keep user immersed in the flow over short-running sessions with different flags.
 
 ### Breaking the Rules
 
@@ -37,11 +37,11 @@ No rules are perfect. Sometimes we may introduce flags or configuration if we be
 
 Good pull requests, such as patches, improvements, and new features, are a fantastic help. They should remain focused in scope and avoid containing unrelated commits.
 
-Please **ask first** if somebody else is already working on this or the core developers think your feature is in-scope for Create React App. Generally always have a related issue with discussions for whatever you are including.
+Please **ask first** if somebody else is already working on this or the core developers think your feature is in-scope for Create React Index. Generally always have a related issue with discussions for whatever you are including.
 
 Please also provide a **test plan**, i.e. specify how you verified that your addition works.
 
-## Folder Structure of Create React App
+## Folder Structure of Create React Index
 
 `create-react-app` is a monorepo, meaning it is divided into independent sub-packages.<br>
 These packages can be found in the [`packages/`](https://github.com/facebook/create-react-app/tree/master/packages) directory.

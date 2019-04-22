@@ -14,8 +14,12 @@
     "react/prop-types": "off",
     "consistent-return": "off",
     "import/no-extraneous-dependencies": "off",
-    "react/destructuring-assignment": "off",
+    "react/destructuring-assignment": "warn",
     "operator-linebreak": "off",
+    "global-require": "off",
+    "no-nested-ternary": "warn",
+    "function-paren-newline": "warn",
+    "no-param-reassign": "warn",
     "react/jsx-filename-extension": [
       1,
       {

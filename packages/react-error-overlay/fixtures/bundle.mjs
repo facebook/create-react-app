@@ -26126,7 +26126,7 @@ var App = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'App', __source: {
+        { className: 'index.js', __source: {
             fileName: _jsxFileName,
             lineNumber: 12
           },

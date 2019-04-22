@@ -946,7 +946,7 @@ yarn add --exact react-scripts@1.0.9
   - [#2596](https://github.com/facebook/create-react-app/pull/2596) Fix an issue with minifying emojis. ([@viankakrisna](https://github.com/viankakrisna))
   - [#2501](https://github.com/facebook/create-react-app/pull/2501) Fix incorrect check if `CI` variable is set to true. ([@varnav](https://github.com/varnav))
   - [#2432](https://github.com/facebook/create-react-app/pull/2432) In new projects, don't register service worker for projects using `PUBLIC_URL` for CDN. ([@jeffposnick](https://github.com/jeffposnick))
-  - [#2470](https://github.com/facebook/create-react-app/pull/2470) In new projects, prioritize `index.css` over `App.css`. ([@bryankang](https://github.com/bryankang))
+  - [#2470](https://github.com/facebook/create-react-app/pull/2470) In new projects, prioritize `index.css` over `Index.css`. ([@bryankang](https://github.com/bryankang))
 
 - `react-dev-utils`
 
@@ -1110,7 +1110,7 @@ You may optionally then move `react-scripts` from `devDependencies` to `dependen
 
 If you left the service worker integration enabled and didn’t change how it works, you can replace `src/registerServiceWorker.js` with [this updated version](https://raw.githubusercontent.com/facebook/create-react-app/895c475d3fc218c65dcac9a3ef3f2c0ea746a1ed/packages/react-scripts/template/src/registerServiceWorker.js).
 
-If you haven't changed the default CSS organization, you may want to apply [this fix](https://github.com/facebook/create-react-app/pull/2470/files) that makes `index.css` take precedence over `App.css` in your project.
+If you haven't changed the default CSS organization, you may want to apply [this fix](https://github.com/facebook/create-react-app/pull/2470/files) that makes `index.css` take precedence over `Index.css` in your project.
 
 ## 1.0.7 (May 27, 2017)
 
@@ -1446,7 +1446,7 @@ yarn add --dev --exact react-scripts@1.0.1
 We’ve been working on this release for the past few months, and there are many big impovements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
 
 So instead of just enumerating them here, we decided to write a blog post about all the new features.<br>
-Check it out: **[What’s New in Create React App](https://facebook.github.io/react/blog/2017/05/18/whats-new-in-create-react-app.html)**.
+Check it out: **[What’s New in Create React Index](https://facebook.github.io/react/blog/2017/05/18/whats-new-in-create-react-app.html)**.
 
 Have you read it? Now let's see how to update your app to the latest version.
 
@@ -1572,7 +1572,7 @@ If you still have the problem please file an issue.
 
 Unhandled Promise rejections will now crash tests. You can fix them by explicitly catching the errors you don’t care about.
 
-#### How to turn my app into a [Progressive Web App](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
+#### How to turn my app into a [Progressive Web Index](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
 
 After the regular update procedure above, add these line to `<head>` in `public/index.html`:
 
@@ -1597,8 +1597,8 @@ Then create a file called `public/manifest.json` that looks like this:
 
 ```js
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "React Index",
+  "name": "Create React Index Sample",
   "icons": [
     {
       "src": "favicon.ico",

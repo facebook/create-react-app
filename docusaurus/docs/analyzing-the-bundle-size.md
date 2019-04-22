@@ -8,7 +8,7 @@ sidebar_label: Analyzing Bundle Size
 JavaScript bundles using the source maps. This helps you understand where code
 bloat is coming from.
 
-To add Source map explorer to a Create React App project, follow these steps:
+To add Source map explorer to a Create React Index project, follow these steps:
 
 ```sh
 npm install --save source-map-explorer

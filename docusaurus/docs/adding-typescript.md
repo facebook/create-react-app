@@ -7,7 +7,7 @@ title: Adding TypeScript
 
 [TypeScript](https://www.typescriptlang.org/) is a typed superset of JavaScript that compiles to plain JavaScript.
 
-To start a new Create React App project with [TypeScript](https://www.typescriptlang.org/), you can run:
+To start a new Create React Index project with [TypeScript](https://www.typescriptlang.org/), you can run:
 
 ```sh
 npx create-react-app my-app --typescript
@@ -17,7 +17,7 @@ npx create-react-app my-app --typescript
 yarn create react-app my-app --typescript
 ```
 
-To add [TypeScript](https://www.typescriptlang.org/) to a Create React App project, first install it:
+To add [TypeScript](https://www.typescriptlang.org/) to a Create React Index project, first install it:
 
 ```sh
 npm install --save typescript @types/node @types/react @types/react-dom @types/jest
@@ -39,7 +39,7 @@ To learn more about TypeScript, check out [its documentation](https://www.typesc
 > **Note:** You are not required to make a [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), one will be made for you.
 > You are allowed to edit the generated TypeScript configuration.
 
-> **Note:** If you are currently using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript/), see [this blog post](https://vincenttunru.com/migrate-create-react-app-typescript-to-create-react-app/) for instructions on how to migrate to Create React App.
+> **Note:** If you are currently using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript/), see [this blog post](https://vincenttunru.com/migrate-create-react-app-typescript-to-create-react-app/) for instructions on how to migrate to Create React Index.
 
 > **Note:** We recommend using [VSCode](https://code.visualstudio.com/) for a better integrated experience.
 

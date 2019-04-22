@@ -29,7 +29,7 @@ serve -h
 
 ## Other Solutions
 
-You don’t necessarily need a static server in order to run a Create React App project in production. It works just as fine integrated into an existing dynamic one.
+You don’t necessarily need a static server in order to run a Create React Index project in production. It works just as fine integrated into an existing dynamic one.
 
 Here’s a programmatic example using [Node](https://nodejs.org/) and [Express](https://expressjs.com/):
 
@@ -47,9 +47,9 @@ app.get('/', function(req, res) {
 app.listen(9000);
 ```
 
-The choice of your server software isn’t important either. Since Create React App is completely platform-agnostic, there’s no need to explicitly use Node.
+The choice of your server software isn’t important either. Since Create React Index is completely platform-agnostic, there’s no need to explicitly use Node.
 
-The `build` folder with static assets is the only output produced by Create React App.
+The `build` folder with static assets is the only output produced by Create React Index.
 
 However this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
 
@@ -100,14 +100,14 @@ When users install your app to the homescreen of their device the default config
 
 ## Building for Relative Paths
 
-By default, Create React App produces a build assuming your app is hosted at the server root.<br>
+By default, Create React Index produces a build assuming your app is hosted at the server root.<br>
 To override this, specify the `homepage` in your `package.json`, for example:
 
 ```js
   "homepage": "http://mywebsite.com/relativepath",
 ```
 
-This will let Create React App correctly infer the root path to use in the generated HTML file.
+This will let Create React Index correctly infer the root path to use in the generated HTML file.
 
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
 More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
@@ -165,7 +165,7 @@ Variables in `.env.production` will be used as fallback because `NODE_ENV` will 
 The AWS Amplify Console provides continuous deployment and hosting for modern web apps (single page apps and static site generators) with serverless backends. The Amplify Console offers globally available CDNs, easy custom domain setup, feature branch deployments, and password protection.
 
 1. Login to the Amplify Console [here](https://console.aws.amazon.com/amplify/home).
-1. Connect your Create React App repo and pick a branch. If you're looking for a Create React App+Amplify starter, try the [create-react-app-auth-amplify starter](https://github.com/swaminator/create-react-app-auth-amplify) that demonstrates setting up auth in 10 minutes with Create React App.
+1. Connect your Create React Index repo and pick a branch. If you're looking for a Create React Index+Amplify starter, try the [create-react-app-auth-amplify starter](https://github.com/swaminator/create-react-app-auth-amplify) that demonstrates setting up auth in 10 minutes with Create React Index.
 1. The Amplify Console automatically detects the build settings. Choose Next.
 1. Choose _Save and deploy_.
 
@@ -175,7 +175,7 @@ If the build succeeds, the app is deployed and hosted on a global CDN with an am
 
 See [this](https://medium.com/@to_pe/deploying-create-react-app-on-microsoft-azure-c0f6686a4321) blog post on how to deploy your React app to Microsoft Azure.
 
-See [this](https://medium.com/@strid/host-create-react-app-on-azure-986bc40d5bf2#.pycfnafbg) blog post or [this](https://github.com/ulrikaugustsson/azure-appservice-static) repo for a way to use automatic deployment to Azure App Service.
+See [this](https://medium.com/@strid/host-create-react-app-on-azure-986bc40d5bf2#.pycfnafbg) blog post or [this](https://github.com/ulrikaugustsson/azure-appservice-static) repo for a way to use automatic deployment to Azure Index Service.
 
 ## [Firebase](https://firebase.google.com/)
 
@@ -278,7 +278,7 @@ or for a custom domain page:
   "homepage": "https://mywebsite.com",
 ```
 
-Create React App uses the `homepage` field to determine the root URL in the built HTML file.
+Create React Index uses the `homepage` field to determine the root URL in the built HTML file.
 
 ### Step 2: Install `gh-pages` and add `deploy` to `scripts` in `package.json`
 
@@ -371,7 +371,7 @@ If, when deploying, you get `Cannot read property 'email' of null`, try the foll
 
 ## [Heroku](https://www.heroku.com/)
 
-Use the [Heroku Buildpack for Create React App](https://github.com/mars/create-react-app-buildpack).<br>
+Use the [Heroku Buildpack for Create React Index](https://github.com/mars/create-react-app-buildpack).<br>
 You can find instructions in [Deploying React with Zero Configuration](https://blog.heroku.com/deploying-react-with-zero-configuration).
 
 ### Resolving Heroku Deployment Errors
@@ -434,7 +434,7 @@ To support `pushState`, make sure to create a `public/_redirects` file with the 
 /*  /index.html  200
 ```
 
-When you build the project, Create React App will place the `public` folder contents into the build output.
+When you build the project, Create React Index will place the `public` folder contents into the build output.
 
 ## [Now](https://zeit.co/now)
 
@@ -456,13 +456,13 @@ To deploy your built project directly with Now CLI in your terminal, without any
 
 Click or paste the deployment URL into your browser when the build is complete and you will see your deployed app.
 
-For more information on deploying React applications with Now, including automatically building your application fresh in the cloud, setting up routes to rewrite all paths to the index.html file, and setting up caching headers for speed, see [the ZEIT Guide for Deploying a React app with Create React App](https://zeit.co/guides/deploying-react-with-now-cra/).
+For more information on deploying React applications with Now, including automatically building your application fresh in the cloud, setting up routes to rewrite all paths to the index.html file, and setting up caching headers for speed, see [the ZEIT Guide for Deploying a React app with Create React Index](https://zeit.co/guides/deploying-react-with-now-cra/).
 
 ## [Render](https://render.com)
 
 Render offers free [static site](https://render.com/docs/static-sites) hosting with fully managed SSL, a global CDN and continuous auto deploys from GitHub.
 
-Deploy your app in just a few minutes by following the [Create React App deployment guide](https://render.com/docs/deploy-create-react-app).
+Deploy your app in just a few minutes by following the [Create React Index deployment guide](https://render.com/docs/deploy-create-react-app).
 
 Use invite code `cra` to sign up or use [this link](https://render.com/i/cra).
 
@@ -484,4 +484,4 @@ Note that in order to support routers that use HTML5 `pushState` API, you may wa
 
 ## Publishing Components To npm
 
-Create React App doesn't provide any built-in functionality to publish a component to npm. If you're ready to extract a component from your project so other people can use it, we recommend moving it to a separate directory outside of your project and then using a tool like [nwb](https://github.com/insin/nwb#react-components-and-libraries) to prepare it for publishing.
+Create React Index doesn't provide any built-in functionality to publish a component to npm. If you're ready to extract a component from your project so other people can use it, we recommend moving it to a separate directory outside of your project and then using a tool like [nwb](https://github.com/insin/nwb#react-components-and-libraries) to prepare it for publishing.

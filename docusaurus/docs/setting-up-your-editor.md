@@ -4,7 +4,7 @@ title: Setting Up Your Editor
 sidebar_label: Editor Setup
 ---
 
-Create React App comes with a bunch of tools that improve the editing experience - if configured correctly. Here's a few tips to maximize your productivity:
+Create React Index comes with a bunch of tools that improve the editing experience - if configured correctly. Here's a few tips to maximize your productivity:
 
 ## Syntax highlighting
 
@@ -43,7 +43,7 @@ If you're using TypeScript and Visual Studio Code, the [ESLint Visual Studio Cod
 
 Now your editor should report the linting warnings.
 
-Note that even if you edit your `.eslintrc.json` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
+Note that even if you edit your `.eslintrc.json` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React Index intentionally provides a minimal set of rules that find common mistakes.
 
 If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
 
@@ -51,7 +51,7 @@ If you want to enforce a coding style for your project, consider using [Prettier
 
 **This feature is currently only supported by [Visual Studio Code](https://code.visualstudio.com) and [WebStorm](https://www.jetbrains.com/webstorm/).**
 
-Visual Studio Code and WebStorm support debugging out of the box with Create React App. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.
+Visual Studio Code and WebStorm support debugging out of the box with Create React Index. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.
 
 ### Visual Studio Code
 

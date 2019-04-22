@@ -154,7 +154,7 @@ npm install -g create-react-app@1.3.0
 
   - [#1423](https://github.com/facebook/create-react-app/pull/1423) **Fall back to Yarn offline cache when creating a new project.** ([@voxsim](https://github.com/voxsim))
 
-  If you are using Yarn, and you have created at least one app previously, Create React App now works offline.
+  If you are using Yarn, and you have created at least one app previously, Create React Index now works offline.
 
   <img src="http://i.imgur.com/1FLa9Tg.gif" width="500" alt="Yarn offline installation demo">
 
@@ -722,7 +722,7 @@ npm install -g create-react-app@1.0.1
 
   - [#1194](https://github.com/facebook/create-react-app/pull/1194) Only honor relative `NODE_PATH`. ([@gaearon](https://github.com/gaearon))
 
-    Historically we have allowed specifying `NODE_PATH` environment variable as a way to allow “absolute imports”. For example, running `NODE_PATH=src npm start` in Bash or `set NODE_PATH=src&&npm start` in Windows Cmd would let you import anything inside `src` without specifying a relative path. However, we found a few nasty edge cases when Node.js core modules end up being in `NODE_PATH` and erroneously become bundled. As a result the build would crash on some systems when some libraries are imported. To fix this, we now only honor relative paths from `NODE_PATH` in Create React App. This means the existing use case for absolute imports is still supported (`src` in the example above is relative), but absolute paths in `NODE_PATH` (such as paths to Node.js core modules) will be ignored.
+    Historically we have allowed specifying `NODE_PATH` environment variable as a way to allow “absolute imports”. For example, running `NODE_PATH=src npm start` in Bash or `set NODE_PATH=src&&npm start` in Windows Cmd would let you import anything inside `src` without specifying a relative path. However, we found a few nasty edge cases when Node.js core modules end up being in `NODE_PATH` and erroneously become bundled. As a result the build would crash on some systems when some libraries are imported. To fix this, we now only honor relative paths from `NODE_PATH` in Create React Index. This means the existing use case for absolute imports is still supported (`src` in the example above is relative), but absolute paths in `NODE_PATH` (such as paths to Node.js core modules) will be ignored.
 
   - [#1188](https://github.com/facebook/create-react-app/pull/1188) Update Webpack to fix source map issues. ([@gaearon](https://github.com/gaearon))
 
@@ -851,7 +851,7 @@ Thanks to [@fson](https://github.com/fson) for cutting this release.
 
     Object rest spread and JSX now use the native `Object.assign()` method instead of Babel's helper function. If you are using `babel-preset-react-app` directly in your project _and_ targeting browsers that don't have `Object.assign()` available, from now on you need a polyfill for it (e.g. [`object-assign`](https://www.npmjs.com/package/object-assign)).
 
-    **Note:** `react-scripts` already adds this polyfill, so no changes are necessary in Create React App projects.
+    **Note:** `react-scripts` already adds this polyfill, so no changes are necessary in Create React Index projects.
 
 #### :bug: Bug Fix
 

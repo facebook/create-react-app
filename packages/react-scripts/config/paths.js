@@ -6,7 +6,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 // @remove-on-eject-end
-'use strict';
 
 const path = require('path');
 const fs = require('fs');
@@ -25,9 +24,8 @@ function ensureSlash(inputPath, needsSlash) {
     return inputPath.substr(0, inputPath.length - 1);
   } else if (!hasSlash && needsSlash) {
     return `${inputPath}/`;
-  } else {
-    return inputPath;
   }
+  return inputPath;
 }
 
 const getPublicUrl = appPackageJson =>
@@ -90,8 +88,8 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  libApp: resolveApp('src/App/index.js'),
-  libStore: resolveApp('src/store.js'),
+  libApp: resolveModule(resolveApp, 'src/App/index.js'),
+  libStore: resolveModule(resolveApp, 'src/store.js'),
 };
 
 // @remove-on-eject-begin
@@ -119,11 +117,12 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
   appTypeDeclarations: resolveApp('src/react-app-env.d.ts'),
   ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
-  libApp: resolveApp('src/App/index.js'),
-  libStore: resolveApp('src/store.js'),
+  libApp: resolveModule(resolveApp, 'src/App/index.js'),
+  libStore: resolveModule(resolveApp, 'src/store.js'),
 };
 
 const ownPackageJson = require('../package.json');
+
 const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
 const reactScriptsLinked =
   fs.existsSync(reactScriptsPath) &&
@@ -155,8 +154,8 @@ if (
     ownNodeModules: resolveOwn('node_modules'),
     appTypeDeclarations: resolveOwn('template/src/react-app-env.d.ts'),
     ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
-    libApp: resolveApp('src/App/index.js'),
-    libStore: resolveApp('src/store.js'),
+    libApp: resolveModule(resolveApp, 'src/App/index.js'),
+    libStore: resolveModule(resolveApp, 'src/store.js'),
   };
 }
 // @remove-on-eject-end

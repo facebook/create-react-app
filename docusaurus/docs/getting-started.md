@@ -3,7 +3,7 @@ id: getting-started
 title: Getting Started
 ---
 
-Create React App is an officially supported way to create single-page React
+Create React Index is an officially supported way to create single-page React
 applications. It offers a modern build setup with no configuration.
 
 ## Quick Start
@@ -32,7 +32,7 @@ You **don’t** need to install or configure tools like Webpack or Babel. They a
 
 Just create a project, and you’re good to go.
 
-## Creating an App
+## Creating an Index
 
 **You’ll need to have Node >= 8.10 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
@@ -81,9 +81,9 @@ my-app
 │   ├── index.html
 │   └── manifest.json
 └── src
-    ├── App.css
-    ├── App.js
-    ├── App.test.js
+    ├── Index.css
+    ├── Indexex.js
+    ├── Index.test.js
     ├── index.css
     ├── index.js
     ├── logo.svg

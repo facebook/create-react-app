@@ -497,7 +497,7 @@ yarn add --exact react-scripts@2.1.1
 
 ## 2.1.0 (October 29, 2018)
 
-Create React App 2.1 adds support for TypeScript! Read [the documentation](https://facebook.github.io/create-react-app/docs/adding-typescript) to get started.
+Create React Index 2.1 adds support for TypeScript! Read [the documentation](https://facebook.github.io/create-react-app/docs/adding-typescript) to get started.
 
 New applications can be created using TypeScript by running:
 
@@ -765,10 +765,10 @@ yarn add --exact react-scripts@2.0.4
 
 ## 2.0.3 (October 1, 2018)
 
-Create React App 2.0 brings a year’s worth of improvements in a single dependency update.
+Create React Index 2.0 brings a year’s worth of improvements in a single dependency update.
 We summarized all of the changes in a blog post!<br>
 
-Check it out: **[Create React App 2.0: Babel 7, Sass, and More](https://reactjs.org/blog/2018/10/01/create-react-app-v2.html)**.
+Check it out: **[Create React Index 2.0: Babel 7, Sass, and More](https://reactjs.org/blog/2018/10/01/create-react-app-v2.html)**.
 
 It provides a high-level overview of new features and improvements. Now let's see how to update your app to the latest version in detail.
 
@@ -786,7 +786,7 @@ or
 yarn add --exact react-scripts@2.0.3
 ```
 
-If you previously ejected but now want to upgrade, one common solution is to find the commits where you ejected (and any subsequent commits changing the configuration), revert them, upgrade, and later optionally eject again. It’s also possible that the feature you ejected for (maybe Sass or CSS Modules?) is now supported out of the box. You can find a list of notable new features in the **[Create React App 2.0 blog post](https://reactjs.org/blog/2018/10/01/create-react-app-v2.html)**.
+If you previously ejected but now want to upgrade, one common solution is to find the commits where you ejected (and any subsequent commits changing the configuration), revert them, upgrade, and later optionally eject again. It’s also possible that the feature you ejected for (maybe Sass or CSS Modules?) is now supported out of the box. You can find a list of notable new features in the **[Create React Index 2.0 blog post](https://reactjs.org/blog/2018/10/01/create-react-app-v2.html)**.
 
 ## Breaking Changes
 
