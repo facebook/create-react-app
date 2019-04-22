@@ -4,7 +4,7 @@ import logo from '../../assets/logo.svg';
 import Link from '../link/Link';
 const styles = {
   appLogo: {
-    animation: '$spin infinite 20s linear',
+    animation: 'spin infinite 20s linear',
     pointerEvents: 'none',
     height: 100,
     width: 100,

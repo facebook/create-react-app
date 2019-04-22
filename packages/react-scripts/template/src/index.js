@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { jss } from 'react-jss';
+import nested from 'jss-nested';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './app/App';
 import store from './store';
 import * as serviceWorker from './serviceWorker';
-
+jss.use(nested());
 ReactDOM.render(
   <Provider store={store}>
     <Router>
