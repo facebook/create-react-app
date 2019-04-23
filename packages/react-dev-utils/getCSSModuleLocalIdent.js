@@ -23,7 +23,7 @@ module.exports = function getLocalIdent(
     : '[name]';
   // Create a hash based on a the file location and class name. Will be unique across a project, and close to globally unique.
   const hash = loaderUtils.getHashDigest(
-    context.resourcePath + localName,
+    context.resourcePath.replace(context.rootContext, '') + localName,
     'md5',
     'base64',
     5
