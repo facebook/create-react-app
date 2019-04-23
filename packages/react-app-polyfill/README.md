@@ -19,7 +19,7 @@ yarn add react-app-polyfill
 
 ## Supporting Internet Explorer
 
-You can import the entry point for the minimal version you intend to support to ensure that the minimum langauge features are present that are required to use Create React App. For example, if you import the IE9 entry point, this will include IE10 and IE11 support.
+You can import the entry point for the minimal version you intend to support to ensure that the minimum language features are present that are required to use Create React App. For example, if you import the IE9 entry point, this will include IE10 and IE11 support.
 
 These modules ensure the following language features are present:
 
