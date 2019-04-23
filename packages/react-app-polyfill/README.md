@@ -34,7 +34,7 @@ _If you need more features, see the [Polyfilling other language features](#polyf
 #### Internet Explorer 9
 
 ```js
-// This must be the first line in src/App.js
+// This must be the first line in src/index.js
 import 'react-app-polyfill/ie9';
 
 // ...
@@ -43,7 +43,7 @@ import 'react-app-polyfill/ie9';
 #### Internet Explorer 11
 
 ```js
-// This must be the first line in src/App.js
+// This must be the first line in src/index.js
 import 'react-app-polyfill/ie11';
 
 // ...
@@ -65,7 +65,7 @@ If you are supporting Internet Explorer 9 or Internet Explorer 11 you should inc
 For IE9:
 
 ```js
-// These must be the first lines in src/App.js
+// These must be the first lines in src/index.js
 import 'react-app-polyfill/ie9';
 import 'react-app-polyfill/stable';
 
@@ -75,7 +75,7 @@ import 'react-app-polyfill/stable';
 For IE11:
 
 ```js
-// These must be the first lines in src/App.js
+// These must be the first lines in src/index.js
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 

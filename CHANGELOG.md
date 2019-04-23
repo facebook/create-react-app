@@ -1,3 +1,5 @@
-##Unpublished
+##2.0.4
 
-- Added changelog and removed lib from path
+- Upgraded to CRA 3
+
+* Added changelog and removed lib from path

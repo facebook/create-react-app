@@ -5,7 +5,7 @@ Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
 
-./src/Indexex.js
+./src/App.js
 Attempted import error: 'bar' is not exported from './AppUnknownExport' (imported as 'bar2').
 
 
@@ -19,7 +19,7 @@ Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
 
-./src/index.jsjs
+./src/App.js
 Syntax error: Unterminated JSX contents (8:13)
 
    6 |       <div>
@@ -61,7 +61,7 @@ Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
 
-./src/Indexex.js
+./src/App.js
   Line 4:  'b' is not defined  no-undef
 
 Search for the keywords to learn more about each error.
@@ -78,7 +78,7 @@ Object {
   "stdout": "Creating an optimized production build...
 Compiled with warnings.
 
-./src/index.jsjs
+./src/App.js
   Line 3:  'foo' is defined but never used  no-unused-vars
 
 Search for the keywords to learn more about each warning.
@@ -93,7 +93,7 @@ Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
 
-./src/Indexex.js
+./src/App.js
 Cannot find file './ThisFileSouldNotExist' in './src'.
 
 
@@ -107,7 +107,7 @@ Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
 
-./src/Indexex.js
+./src/App.js
 Cannot find module: 'unknown-package'. Make sure this package is installed.
 
 You can install this package by running: yarn add unknown-package.
@@ -123,7 +123,7 @@ Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
 
-./src/index.jsjs
+./src/App.js
 Attempted import error: './ExportNoDefault' does not contain a default export (imported as 'myImport').
 
 
@@ -137,7 +137,7 @@ Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
 
-./src/Indexex.js
+./src/App.js
 You attempted to import ../OutOfScopeImport which falls outside of the project src/ directory. Relative imports outside of src/ are not supported.
 You can either move it inside src/, or add a symlink to it from project's node_modules/.
 
@@ -152,7 +152,7 @@ Object {
   "stderr": "Creating an optimized production build...
 Failed to compile.
 
-./src/Indexex.js
+./src/App.js
 Attempted import error: 'bar' is not exported from './AppUnknownExport'.
 
 

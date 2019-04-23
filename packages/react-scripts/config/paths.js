@@ -6,6 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 // @remove-on-eject-end
+'use strict';
 
 const path = require('path');
 const fs = require('fs');
@@ -24,8 +25,9 @@ function ensureSlash(inputPath, needsSlash) {
     return inputPath.substr(0, inputPath.length - 1);
   } else if (!hasSlash && needsSlash) {
     return `${inputPath}/`;
+  } else {
+    return inputPath;
   }
-  return inputPath;
 }
 
 const getPublicUrl = appPackageJson =>
@@ -82,6 +84,7 @@ module.exports = {
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
+  appJsConfig: resolveApp('jsconfig.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),
   proxySetup: resolveApp('src/setupProxy.js'),
@@ -104,6 +107,7 @@ module.exports = {
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
+  appJsConfig: resolveApp('jsconfig.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),
   proxySetup: resolveApp('src/setupProxy.js'),
@@ -118,7 +122,6 @@ module.exports = {
 };
 
 const ownPackageJson = require('../package.json');
-
 const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
 const reactScriptsLinked =
   fs.existsSync(reactScriptsPath) &&
@@ -139,6 +142,7 @@ if (
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
     appTsConfig: resolveOwn('template/tsconfig.json'),
+    appJsConfig: resolveOwn('template/jsconfig.json'),
     yarnLockFile: resolveOwn('template/yarn.lock'),
     testsSetup: resolveModule(resolveOwn, 'template/src/setupTests'),
     proxySetup: resolveOwn('template/src/setupProxy.js'),

@@ -13,3 +13,13 @@ it('supports decorators', () => {
   const app = new App();
   expect(app.decorated).toBe(42);
 });
+
+it('supports loading modules with baseUrl', () => {
+  const app = new App();
+  expect(app.users).toEqual([
+    { id: 1, name: '1' },
+    { id: 2, name: '2' },
+    { id: 3, name: '3' },
+    { id: 4, name: '4' },
+  ]);
+});

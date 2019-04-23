@@ -149,7 +149,7 @@ var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 if (
   !checkRequiredFiles([
     path.resolve('public/index.html'),
-    path.resolve('src/App.js'),
+    path.resolve('src/index.js'),
   ])
 ) {
   process.exit(1);
