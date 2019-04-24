@@ -26,6 +26,7 @@ jobs:
     displayName: 'Initialize Git config'
 
   - checkout: self
+    path: create-react-app
 
   - task: NodeTool@0
     inputs:

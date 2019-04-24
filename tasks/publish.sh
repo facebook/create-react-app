@@ -31,6 +31,7 @@ if [ -z $CI ]; then
 fi
 
 if [ -n "$(git status --porcelain)" ]; then
+  echo "$(git diff)"
   echo "Your git status is not clean. Aborting.";
   exit 1;
 fi
@@ -48,4 +49,4 @@ if [ -z $CI ]; then
 fi
 
 # Go!
-NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish --npm-client=npm "$@"
+NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish --npm-client=npm "$@" --loglevel verbose
