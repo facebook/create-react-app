@@ -84,17 +84,11 @@ module.exports = function(api, opts) {
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
-          // We want Create React App to be IE 9 compatible until React itself
-          // no longer works with IE 9
-          targets: {
-            ie: 9,
-          },
-          // Users cannot override this behavior because this Babel
-          // configuration is highly tuned for ES5 support
-          ignoreBrowserslistConfig: true,
-          // If users import all core-js they're probably not concerned with
-          // bundle size. We shouldn't rely on magic to try and shrink it.
-          useBuiltIns: false,
+          // Allow importing core-js in entrypoint and use browserlist to select polyfills
+          useBuiltIns: 'entry',
+          // Set the corejs version we are using to avoid warnings in console
+          // This will need to change once we upgrade to corejs@3
+          corejs: 3,
           // Do not transform modules to CJS
           modules: false,
           // Exclude transforms that make all code slower
