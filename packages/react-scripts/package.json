@@ -28,7 +28,7 @@
     "@alienfast/i18next-loader": "^1.0.18",
     "@babel/core": "7.2.2",
     "@fs/babel-preset-frontier": "^1.0.0",
-    "@fs/eslint-config-frontier-react": "^1.3.0",
+    "@fs/eslint-config-frontier-react": "^1.3.6",
     "@svgr/webpack": "4.1.0",
     "auth-middleware": "github:fs-webdev/auth-middleware",
     "babel-core": "7.0.0-bridge.0",
