@@ -21,6 +21,7 @@ original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
+  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   rm -rf "$temp_app_path"
   npm set registry "$original_npm_registry_url"
@@ -182,6 +183,10 @@ CI=true yarn test
 
 # Eject...
 echo yes | npm run eject
+
+# Temporary workaround for https://github.com/facebook/create-react-app/issues/6099
+rm yarn.lock
+yarn add @babel/plugin-transform-react-jsx-source @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx @babel/plugin-transform-react-jsx-self
 
 # Ensure env file still exists
 exists src/react-app-env.d.ts

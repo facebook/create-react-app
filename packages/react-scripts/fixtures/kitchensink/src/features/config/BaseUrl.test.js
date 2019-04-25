@@ -7,9 +7,9 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NodePath from './NodePath';
+import NodePath from './BaseUrl';
 
-describe('NODE_PATH', () => {
+describe('BASE_URL', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     return new Promise(resolve => {

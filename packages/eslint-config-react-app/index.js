@@ -23,16 +23,6 @@
 // To use them, explicitly reference them, e.g. `window.name` or `window.status`.
 const restrictedGlobals = require('confusing-browser-globals');
 
-// The following is copied from `react-scripts/config/paths.js`.
-const path = require('path');
-const fs = require('fs');
-// Make sure any symlinks in the project folder are resolved:
-// https://github.com/facebook/create-react-app/issues/637
-const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
-const projectRootPath = resolveApp('.');
-const tsConfigPath = resolveApp('tsconfig.json');
-
 module.exports = {
   root: true,
 
@@ -73,22 +63,17 @@ module.exports = {
       },
 
       // typescript-eslint specific options
-      project: tsConfigPath,
-      tsconfigRootDir: projectRootPath,
       warnOnUnsupportedTypeScriptVersion: true,
     },
     plugins: ['@typescript-eslint'],
+    // If adding a typescript-eslint version of an existing ESLint rule,
+    // make sure to disable the ESLint rule here.
     rules: {
-      // These ESLint rules are known to cause issues with typescript-eslint
-      // See https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.json
-      camelcase: 'off',
-      indent: 'off',
-      'no-array-constructor': 'off',
-      'no-unused-vars': 'off',
-
       '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
+      'no-array-constructor': 'off',
       '@typescript-eslint/no-array-constructor': 'warn',
       '@typescript-eslint/no-namespace': 'error',
+      'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
@@ -96,6 +81,8 @@ module.exports = {
           ignoreRestSiblings: true,
         },
       ],
+      'no-useless-constructor': 'off',
+      '@typescript-eslint/no-useless-constructor': 'warn',
     },
   },
 
