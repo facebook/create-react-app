@@ -13,7 +13,8 @@
 }
 
 .homeContainer .button:hover {
-  transform: scale(1.03);
+  background: #ffffff;
+  color: #282c34;
 }
 
 .homeContainer * {
