@@ -160,6 +160,17 @@ You can specify other environments in the same way.
 
 Variables in `.env.production` will be used as fallback because `NODE_ENV` will always be set to `production` for a build.
 
+## [AWS Amplify](http://console.amplify.aws)
+
+The AWS Amplify Console provides continuous deployment and hosting for modern web apps (single page apps and static site generators) with serverless backends. The Amplify Console offers globally available CDNs, easy custom domain setup, feature branch deployments, and password protection.
+
+1. Login to the Amplify Console [here](https://console.aws.amazon.com/amplify/home).
+1. Connect your Create React App repo and pick a branch. If you're looking for a Create React App+Amplify starter, try the [create-react-app-auth-amplify starter](https://github.com/swaminator/create-react-app-auth-amplify) that demonstrates setting up auth in 10 minutes with Create React App.
+1. The Amplify Console automatically detects the build settings. Choose Next.
+1. Choose _Save and deploy_.
+
+If the build succeeds, the app is deployed and hosted on a global CDN with an amplifyapp.com domain. You can now continuously deploy changes to your frontend or backend. Continuous deployment allows developers to deploy updates to their frontend and backend on every code commit to their Git repository.
+
 ## [Azure](https://azure.microsoft.com/)
 
 See [this](https://medium.com/@to_pe/deploying-create-react-app-on-microsoft-azure-c0f6686a4321) blog post on how to deploy your React app to Microsoft Azure.
@@ -446,6 +457,14 @@ To deploy your built project directly with Now CLI in your terminal, without any
 Click or paste the deployment URL into your browser when the build is complete and you will see your deployed app.
 
 For more information on deploying React applications with Now, including automatically building your application fresh in the cloud, setting up routes to rewrite all paths to the index.html file, and setting up caching headers for speed, see [the ZEIT Guide for Deploying a React app with Create React App](https://zeit.co/guides/deploying-react-with-now-cra/).
+
+## [Render](https://render.com)
+
+Render offers free [static site](https://render.com/docs/static-sites) hosting with fully managed SSL, a global CDN and continuous auto deploys from GitHub.
+
+Deploy your app in just a few minutes by following the [Create React App deployment guide](https://render.com/docs/deploy-create-react-app).
+
+Use invite code `cra` to sign up or use [this link](https://render.com/i/cra).
 
 ## [S3](https://aws.amazon.com/s3) and [CloudFront](https://aws.amazon.com/cloudfront/)
 
