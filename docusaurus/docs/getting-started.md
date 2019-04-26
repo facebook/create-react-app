@@ -96,6 +96,21 @@ No configuration or complicated folder structures, just the files you need to bu
 cd my-app
 ```
 
+## Command Line Options
+
+`create-react-app` comes with some very useful CLI Options.
+
+| flag | description |
+| --- | --- |
+| --version -V | display the version |
+| --help | show help and available commands/options |
+| --verbose | print additional logs |
+| --info | print environment debug info |
+| --scripts-version <alternative-package> | use a non-standard version of react-scripts|
+| --use-npm | use npm to install |
+| --use-pnp | use yarn pnp |
+| --typescript | generate a typescript based app |
+
 ## Scripts
 
 Inside the newly created project, you can run some built-in commands:
