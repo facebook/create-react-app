@@ -4,10 +4,10 @@ This is an end to end kitchensink test suite, but has multiple usages in it.
 
 ## Running the test suite
 
-Tests are automatically run by the CI tools.  
+Tests are automatically run by the CI tools.
 In order to run them locally, without having to manually install and configure everything, the `yarn e2e:docker` CLI command can be used.
 
-This is a simple script that runs a **Docker** container, where the node version, git branch to clone, test suite, and whether to run it with `yarn` or `npm` can be chosen.  
+This is a simple script that runs a **Docker** container, where the node version, git branch to clone, test suite, and whether to run it with `yarn` or `npm` can be chosen.
 Simply run `yarn e2e:docker --help` to get additional info.
 
 If you need guidance installing **Docker**, you should follow their [official docs](https://docs.docker.com/engine/installation/).
@@ -34,7 +34,7 @@ These tests are run by **jest** and the environment is `test`, so that it resemb
 
 ### Using it as Integration Tests
 
-This suite tests how the single features as before behave while development and in production.  
+This suite tests how the single features as before behave while development and in production.
 A local HTTP server is started, then every single feature is loaded, one by one, to be tested.
 
 Test are written in `integration/{env|syntax|webpack}.test.js`, depending on their scope.
