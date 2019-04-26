@@ -99,8 +99,7 @@ yarn
 startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 # Publish the monorepo
-git clean -df
-./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+publishToLocalRegistry
 
 echo "Create React App Version: "
 npx create-react-app --version
