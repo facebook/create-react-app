@@ -66,17 +66,14 @@ module.exports = {
       warnOnUnsupportedTypeScriptVersion: true,
     },
     plugins: ['@typescript-eslint'],
+    // If adding a typescript-eslint version of an existing ESLint rule,
+    // make sure to disable the ESLint rule here.
     rules: {
-      // These ESLint rules are known to cause issues with typescript-eslint
-      // See https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.json
-      camelcase: 'off',
-      indent: 'off',
-      'no-array-constructor': 'off',
-      'no-unused-vars': 'off',
-
       '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
+      'no-array-constructor': 'off',
       '@typescript-eslint/no-array-constructor': 'warn',
       '@typescript-eslint/no-namespace': 'error',
+      'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
@@ -84,6 +81,8 @@ module.exports = {
           ignoreRestSiblings: true,
         },
       ],
+      'no-useless-constructor': 'off',
+      '@typescript-eslint/no-useless-constructor': 'warn',
     },
   },
 
