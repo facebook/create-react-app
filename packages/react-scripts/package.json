@@ -1,6 +1,6 @@
 {
   "name": "@fs/react-scripts",
-  "version": "1.7.6",
+  "version": "2.0.0",
   "upstreamVersion": "3.0.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
@@ -36,12 +36,10 @@
     "@svgr/webpack": "4.1.0",
     "auth-middleware": "github:fs-webdev/auth-middleware",
     "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "10.0.0",
-    "babel-jest": "23.6.0",
-    "@typescript-eslint/eslint-plugin": "1.6.0",
-    "@typescript-eslint/parser": "1.6.0",
     "babel-eslint": "10.0.1",
     "babel-jest": "24.7.1",
+    "@typescript-eslint/eslint-plugin": "1.6.0",
+    "@typescript-eslint/parser": "1.6.0",
     "babel-loader": "8.0.5",
     "babel-plugin-bundled-import-meta": "^0.2.0",
     "babel-plugin-named-asset-import": "^0.3.2",
@@ -67,7 +65,6 @@
     "fork-ts-checker-webpack-plugin-alt": "0.4.14",
     "fs-cli-goodies": "github:fs-webdev/fs-cli-goodies",
     "fs-config": "github:fs-webdev/fs-config",
-    "file-loader": "3.0.1",
     "fs-extra": "7.0.1",
     "html-webpack-plugin": "4.0.0-beta.5",
     "http-proxy-middleware": "^0.19.1",
@@ -122,7 +119,7 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
   "publishConfig": {
     "registry": "https://code.lds.org/artifactory/api/npm/npm-fhd/"
   }
