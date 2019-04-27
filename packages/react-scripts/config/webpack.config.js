@@ -173,7 +173,8 @@ module.exports = function(webpackEnv) {
         ? 'static/js/[name].[contenthash:8].js'
         : isEnvDevelopment && 'static/js/bundle.js',
       // TODO: remove this when upgrading to webpack 5
-      futureEmitAssets: true,
+      // FS - writeToDisk and futureEmitAssets are not compatible, so defaulting back to false: https://github.com/webpack/webpack/pull/8642#issuecomment-455342804
+      futureEmitAssets: false,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'
