@@ -69,6 +69,10 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
 const REACT_APP = /^REACT_APP_/i;
 
 function getClientEnvironment(publicUrl) {
+  const NODE_ENV = process.env.NODE_ENV || 'development';
+  // Add the Metro Bundler DEV variable for better parity with react-native libraries
+  // https://github.com/facebook/metro/blob/1f9a557e892716dffe9ffa250e0c62c2a65a0bdb/packages/metro/src/lib/getPreludeCode.js#L22
+  const __DEV__ = NODE_ENV !== 'production';
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
     .reduce(
@@ -79,7 +83,7 @@ function getClientEnvironment(publicUrl) {
       {
         // Useful for determining whether we’re running in production mode.
         // Most importantly, it switches React into the correct mode.
-        NODE_ENV: process.env.NODE_ENV || 'development',
+        NODE_ENV,
         // Useful for resolving the correct path to static assets in `public`.
         // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
         // This should only be used as an escape hatch. Normally you would put
@@ -89,6 +93,7 @@ function getClientEnvironment(publicUrl) {
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
   const stringified = {
+    __DEV__,
     'process.env': Object.keys(raw).reduce((env, key) => {
       env[key] = JSON.stringify(raw[key]);
       return env;
