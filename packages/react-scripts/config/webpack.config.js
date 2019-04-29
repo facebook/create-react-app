@@ -647,7 +647,7 @@ module.exports = function(webpackEnv) {
             '!**/src/setupTests.*',
           ],
           watch: paths.appSrc,
-          silent: true,
+          silent: !isEnvDevelopment,
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
