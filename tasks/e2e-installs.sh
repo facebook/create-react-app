@@ -21,6 +21,7 @@ original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
+  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   rm -rf "$temp_app_path"
   npm set registry "$original_npm_registry_url"
@@ -120,7 +121,7 @@ npx create-react-app --version
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --scripts-version=@latest test-app-dist-tag
+npx create-react-app test-app-dist-tag --scripts-version=@latest
 cd test-app-dist-tag
 
 # Check corresponding scripts version is installed and no TypeScript is present.
@@ -135,7 +136,7 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --scripts-version=1.0.17 test-app-version-number
+npx create-react-app test-app-version-number --scripts-version=1.0.17
 cd test-app-version-number
 
 # Check corresponding scripts version is installed.
@@ -148,7 +149,7 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --use-npm --scripts-version=1.0.17 test-use-npm-flag
+npx create-react-app test-use-npm-flag --use-npm --scripts-version=1.0.17
 cd test-use-npm-flag
 
 # Check corresponding scripts version is installed.
@@ -183,6 +184,10 @@ CI=true yarn test
 # Eject...
 echo yes | npm run eject
 
+# Temporary workaround for https://github.com/facebook/create-react-app/issues/6099
+rm yarn.lock
+yarn add @babel/plugin-transform-react-jsx-source @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx @babel/plugin-transform-react-jsx-self
+
 # Ensure env file still exists
 exists src/react-app-env.d.ts
 
@@ -196,7 +201,7 @@ CI=true yarn test
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-1.0.17.tgz test-app-tarball-url
+npx create-react-app test-app-tarball-url --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-1.0.17.tgz
 cd test-app-tarball-url
 
 # Check corresponding scripts version is installed.
@@ -209,7 +214,7 @@ checkDependencies
 # ******************************************************************************
 
 cd "$temp_app_path"
-npx create-react-app --scripts-version=react-scripts-fork test-app-fork
+npx create-react-app test-app-fork --scripts-version=react-scripts-fork
 cd test-app-fork
 
 # Check corresponding scripts version is installed.
@@ -221,7 +226,7 @@ exists node_modules/react-scripts-fork
 
 cd "$temp_app_path"
 # we will install a non-existing package to simulate a failed installataion.
-npx create-react-app --scripts-version=`date +%s` test-app-should-not-exist || true
+npx create-react-app test-app-should-not-exist --scripts-version=`date +%s` || true
 # confirm that the project files were deleted
 test ! -e test-app-should-not-exist/package.json
 test ! -d test-app-should-not-exist/node_modules
@@ -234,7 +239,7 @@ cd "$temp_app_path"
 mkdir test-app-should-remain
 echo '## Hello' > ./test-app-should-remain/README.md
 # we will install a non-existing package to simulate a failed installataion.
-npx create-react-app --scripts-version=`date +%s` test-app-should-remain || true
+npx create-react-app test-app-should-remain --scripts-version=`date +%s` || true
 # confirm the file exist
 test -e test-app-should-remain/README.md
 # confirm only README.md and error log are the only files in the directory
@@ -248,7 +253,7 @@ fi
 
 cd $temp_app_path
 curl "https://registry.npmjs.org/@enoah_netzach/react-scripts/-/react-scripts-0.9.0.tgz" -o enoah-scripts-0.9.0.tgz
-npx create-react-app --scripts-version=$temp_app_path/enoah-scripts-0.9.0.tgz test-app-scoped-fork-tgz
+npx create-react-app test-app-scoped-fork-tgz --scripts-version=$temp_app_path/enoah-scripts-0.9.0.tgz
 cd test-app-scoped-fork-tgz
 
 # Check corresponding scripts version is installed.

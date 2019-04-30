@@ -94,6 +94,10 @@
         "title": "Integrating with an API Backend",
         "sidebar_label": "Integrating with an API"
       },
+      "loading-graphql-files": {
+        "title": "Loading .graphql Files",
+        "sidebar_label": "Loading .graphql Files"
+      },
       "making-a-progressive-web-app": {
         "title": "Making a Progressive Web App"
       },
@@ -103,6 +107,9 @@
       "pre-rendering-into-static-html-files": {
         "title": "Pre-Rendering into Static HTML Files",
         "sidebar_label": "Pre-Rendering Static HTML"
+      },
+      "production-build": {
+        "title": "Creating a Production Build"
       },
       "proxying-api-requests-in-development": {
         "title": "Proxying API Requests in Development",
@@ -142,7 +149,7 @@
       }
     },
     "links": {
-      "Getting Started": "Getting Started",
+      "Docs": "Docs",
       "Help": "Help",
       "GitHub": "GitHub"
     },

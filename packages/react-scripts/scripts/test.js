@@ -54,10 +54,9 @@ function isInMercurialRepository() {
   }
 }
 
-// Watch unless on CI, in coverage mode, or explicitly running all tests
+// Watch unless on CI or explicitly running all tests
 if (
   !process.env.CI &&
-  argv.indexOf('--coverage') === -1 &&
   argv.indexOf('--watchAll') === -1
 ) {
   // https://github.com/facebook/create-react-app/issues/5210
