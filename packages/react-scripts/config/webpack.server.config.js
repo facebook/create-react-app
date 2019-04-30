@@ -493,5 +493,9 @@ module.exports = function(webpackEnv) {
       tls: 'empty',
       child_process: 'empty',
     },
+    optimization: {
+      // We no not want to minimize our code.
+      minimize: false,
+    },
   };
 };
