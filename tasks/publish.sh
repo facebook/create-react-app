@@ -31,7 +31,6 @@ if [ -z $CI ]; then
 fi
 
 if [ -n "$(git status --porcelain)" ]; then
-  echo "$(git diff)"
   echo "Your git status is not clean. Aborting.";
   exit 1;
 fi

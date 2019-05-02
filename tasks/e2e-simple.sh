@@ -138,8 +138,8 @@ CI=true yarn test
 # Test local start command
 yarn start --smoke-test
 
-git clean -df
-./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+# Publish the monorepo
+publishToLocalRegistry
 
 # ******************************************************************************
 # Install react-scripts prerelease via create-react-app prerelease.

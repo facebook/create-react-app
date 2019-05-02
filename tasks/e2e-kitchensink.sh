@@ -81,8 +81,7 @@ yarn
 startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 # Publish the monorepo
-git clean -df
-./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+publishToLocalRegistry
 
 # ******************************************************************************
 # Now that we have published them, create a clean app folder and install them.
