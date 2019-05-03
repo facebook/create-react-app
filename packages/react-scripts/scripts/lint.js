@@ -3,6 +3,7 @@ const paths = require('../config/paths');
 const { exec } = require('child_process');
 
 const isCI = process.env.CI === 'true';
+const flagsDependingOnCI = isCI ? '' : '--fix';
 
 const eslintConfigPath = paths.ownPath + '/config/.eslintrc';
 const eslintIgnorePath = paths.ownPath + '/config/.eslintignore';
@@ -12,28 +13,34 @@ const prettierCommand = `prettier '${prettierMatch}' --ignore-path ${eslintIgnor
   isCI ? '--check' : '--write'
 } --end-of-line lf`;
 
-const eslintCommand = `eslint ${
-  isCI ? '' : '--fix'
-} --config ${eslintConfigPath} --ignore-path ${eslintIgnorePath} --ext .jsx,.js src/`;
+const eslintCommand = `eslint ${flagsDependingOnCI} --config ${eslintConfigPath} --ignore-path ${eslintIgnorePath} --ext .jsx,.js src/`;
 
+const stylelintMatchPcss = paths.appSrc + '/**/*.pcss';
 const stylelintMatchSass = paths.appSrc + '/**/*.scss';
 const stylelintMatchCss = paths.appSrc + '/**/*.css';
 const stylelintConfigPath = paths.ownPath + '/config/.stylelintrc';
-const stylelintCommandSass = `stylelint "${stylelintMatchSass}" ${
-  isCI ? '' : '--fix'
-} --config ${stylelintConfigPath}`;
-const stylelintCommandCss = `stylelint "${stylelintMatchCss}" ${
-  isCI ? '' : '--fix'
-} --config ${stylelintConfigPath}`;
+const stylelintCommandPcss = `stylelint "${stylelintMatchPcss}" ${flagsDependingOnCI} --config ${stylelintConfigPath}`;
+const stylelintCommandSass = `stylelint "${stylelintMatchSass}" ${flagsDependingOnCI} --config ${stylelintConfigPath}`;
+const stylelintCommandCss = `stylelint "${stylelintMatchCss}" ${flagsDependingOnCI} --config ${stylelintConfigPath}`;
 
 exec(prettierCommand, (error, stdout, stderr) => {
   if (error) {
     console.log(stdout);
     console.log(stderr);
     console.log('Error: ' + error);
-    process.exit(1);
+    if (!error.toString().includes('No matching files')) process.exit(1);
   }
   console.log(stdout);
+});
+
+exec(stylelintCommandPcss, (error, stdout, stderr) => {
+  if (error) {
+    console.log(stdout);
+    console.log(stderr);
+    console.log('Error: ' + error);
+    process.exit(1);
+  }
+  console.log('All .pcss files were formatted correclty ' + stdout);
 });
 
 exec(stylelintCommandSass, (error, stdout, stderr) => {
