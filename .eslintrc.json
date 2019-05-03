@@ -12,6 +12,7 @@
   "rules": {
     "no-console": "off",
     "strict": ["error", "global"],
-    "curly": "warn"
+    "curly": "warn",
+    "react-hooks/rules-of-hooks": "error"
   }
 }

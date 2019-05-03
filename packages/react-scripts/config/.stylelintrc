@@ -1,10 +1,15 @@
 {
   "extends": "stylelint-config-standard",
   "plugins": [
-    "stylelint-scss"
+    "stylelint-scss",
+    "stylelint-declaration-block-no-ignored-properties",
+    "stylelint-order",
+    "stylelint-config-rational-order/plugin"
   ],
   "rules": {
     "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": true
+    "scss/at-rule-no-unknown": true,
+    "plugin/declaration-block-no-ignored-properties": true,
+    "plugin/rational-order": true
   }
 }
