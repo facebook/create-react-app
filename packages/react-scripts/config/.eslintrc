@@ -16,9 +16,11 @@
       "peerDependencies": false
     }],
     "import/no-unresolved": 0,
-    "react/jsx-filename-extension": 0
+    "react/jsx-filename-extension": 0,
+    "react-hooks/rules-of-hooks": "error"
   },
   "plugins": [
-    "jsx-a11y"
+    "jsx-a11y",
+    "react-hooks"
   ]
 }
