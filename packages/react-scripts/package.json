@@ -1,6 +1,6 @@
 {
   "name": "@credijusto/react-scripts",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Custom Credijusto's configuration and scripts for Create React App.",
   "repository": "credijusto/create-react-app",
   "license": "MIT",
@@ -42,6 +42,7 @@
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
     "eslint": "5.16.0",
+    "eslint-config-airbnb": "17.1.0",
     "eslint-config-react-app": "4.0.0",
     "eslint-loader": "2.1.2",
     "eslint-plugin-flowtype": "2.50.1",
