@@ -181,6 +181,8 @@ module.exports = function(api, opts, env) {
           absoluteRuntime: absoluteRuntimePath,
         },
       ],
+      // allow export * as someIdentifier from 'someModule';
+      require('@babel/plugin-proposal-export-namespace-from').default,
       isEnvProduction && [
         // Remove PropTypes from production build
         require('babel-plugin-transform-react-remove-prop-types').default,
