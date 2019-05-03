@@ -20,7 +20,7 @@ const validateBoolOption = (name, value, defaultValue) => {
   return value;
 };
 
-module.exports = function(api, opts, env) {
+module.exports = function (api, opts, env) {
   if (!opts) {
     opts = {};
   }
@@ -57,10 +57,10 @@ module.exports = function(api, opts, env) {
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
-        '`BABEL_ENV` environment variables. Valid values are "development", ' +
-        '"test", and "production". Instead, received: ' +
-        JSON.stringify(env) +
-        '.'
+      '`BABEL_ENV` environment variables. Valid values are "development", ' +
+      '"test", and "production". Instead, received: ' +
+      JSON.stringify(env) +
+      '.'
     );
   }
 
@@ -181,6 +181,8 @@ module.exports = function(api, opts, env) {
           absoluteRuntime: absoluteRuntimePath,
         },
       ],
+      // allow export * as someIdentifier from "someModule";
+      require('@babel/plugin-proposal-export-namespace-from').default,
       isEnvProduction && [
         // Remove PropTypes from production build
         require('babel-plugin-transform-react-remove-prop-types').default,
@@ -191,8 +193,8 @@ module.exports = function(api, opts, env) {
       // Adds syntax support for import()
       require('@babel/plugin-syntax-dynamic-import').default,
       isEnvTest &&
-        // Transform dynamic import to require
-        require('babel-plugin-dynamic-import-node'),
+      // Transform dynamic import to require
+      require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),
     overrides: [
       isFlowEnabled && {
