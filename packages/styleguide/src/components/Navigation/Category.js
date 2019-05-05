@@ -7,7 +7,7 @@ import './../../assets/icons/plus.svg';
 import './../../assets/icons/minus.svg';
 
 const propTypes = {
-  isActive: bool
+  isActive: bool,
 };
 
 const CLASS_ROOT = 'sg-nav__cat';
@@ -17,7 +17,7 @@ const Category = ({ className, isActive, children, ...other }) => {
   const classes = cx(
     CLASS_ROOT,
     {
-      [activeClass]: isActive
+      [activeClass]: isActive,
     },
     className
   );
@@ -41,7 +41,8 @@ const StyledCategory = styled(Category)`
   & {
     display: block;
     position: relative;
-    padding: ${props => props.theme.nav.listTopBottomIndent} 0;
+    padding: ${props => props.theme.nav.listTopBottomIndent} 1rem
+      ${props => props.theme.nav.listTopBottomIndent} 0;
     cursor: pointer;
   }
   &.${activeClass} {
