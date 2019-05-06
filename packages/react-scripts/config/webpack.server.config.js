@@ -240,7 +240,12 @@ module.exports = function(webpackEnv) {
             {
               test: [/\.png$/],
               use: [
-                'file-loader',
+                {
+                  loader: require.resolve('file-loader'),
+                  options: {
+                    name: 'static/media/[name].[hash:8].[ext]',
+                  },
+                },
                 {
                   loader: 'image-webpack-loader',
                   options: {
