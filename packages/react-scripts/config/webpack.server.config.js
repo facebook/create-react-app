@@ -239,7 +239,6 @@ module.exports = function(webpackEnv) {
             // https://www.npmjs.com/package/image-webpack-loader
             {
               test: [/\.png$/],
-              loader: 'image-webpack-loader',
               use: [
                 'file-loader',
                 {
