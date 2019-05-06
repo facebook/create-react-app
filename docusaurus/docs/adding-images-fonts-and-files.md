@@ -44,7 +44,7 @@ An alternative way of handling static assets is described in the next section.
 
 ## Adding SVGs
 
-> Note: this feature is available with `react-scripts@2.0.0` and higher.
+> Note: this feature is available with `react-scripts@2.0.0` and higher, and `react@16.3.0` and higher.
 
 One way to add SVG files was described in the section above. You can also import SVGs directly as React components. You can use either of the two approaches. In your code it would look like this:
 
