@@ -1,6 +1,6 @@
 {
   "name": "@soulpicks/react-scripts",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -56,6 +56,7 @@
     "fs-extra": "7.0.1",
     "html-webpack-plugin": "4.0.0-beta.5",
     "identity-obj-proxy": "3.0.0",
+    "image-webpack-loader": "^4.6.0",
     "is-wsl": "^1.1.0",
     "jest": "24.7.1",
     "jest-environment-jsdom-fourteen": "0.1.0",
@@ -74,8 +75,8 @@
     "resolve": "1.10.0",
     "responsive-loader": "^1.2.0",
     "sass-loader": "7.1.0",
-    "sharp": "^0.22.0",
     "semver": "6.0.0",
+    "sharp": "^0.22.0",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.3",
     "ts-pnp": "1.1.2",
