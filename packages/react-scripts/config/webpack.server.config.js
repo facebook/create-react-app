@@ -240,20 +240,26 @@ module.exports = function(webpackEnv) {
             {
               test: [/\.png$/],
               loader: 'image-webpack-loader',
-              options: {
-                // optipng.enabled: false will disable optipng
-                optipng: {
-                  enabled: false,
+              use: [
+                'file-loader',
+                {
+                  loader: 'image-webpack-loader',
+                  options: {
+                    // optipng.enabled: false will disable optipng
+                    optipng: {
+                      enabled: false,
+                    },
+                    pngquant: {
+                      quality: '65-90',
+                      speed: 4,
+                    },
+                    // the webp option will enable WEBP
+                    webp: {
+                      quality: 75,
+                    },
+                  },
                 },
-                pngquant: {
-                  quality: '65-90',
-                  speed: 4,
-                },
-                // the webp option will enable WEBP
-                webp: {
-                  quality: 75,
-                },
-              },
+              ],
             },
             // "url" loader works like "file" loader except that it embeds assets
             // smaller than specified limit in bytes as data URLs to avoid requests.
