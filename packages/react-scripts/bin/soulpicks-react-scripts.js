@@ -60,9 +60,6 @@ switch (script) {
   }
   default:
     console.log('Unknown script "' + script + '".');
-    console.log('Perhaps you need to update react-scripts?');
-    console.log(
-      'See: https://facebook.github.io/create-react-app/docs/updating-to-new-releases'
-    );
+    console.log('Perhaps you need to update soulpicks-react-scripts?');
     break;
 }
