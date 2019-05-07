@@ -359,7 +359,7 @@ module.exports = function(webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              exclude: [/node_modules\/(?!@fs)/, new RegExp(`${process.cwd()}/(?!src)`)],
+              include: paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve('@fs/babel-preset-frontier/webpack-overrides'),
