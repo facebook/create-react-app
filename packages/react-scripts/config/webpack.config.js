@@ -370,7 +370,22 @@ module.exports = function(webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              exclude: [/node_modules\/(?!@fs)/, new RegExp(`${process.cwd()}/(?!src)`)],
+              exclude: resource => {
+
+                // compiling npm linked react-scripts files was causing this error https://github.com/webpack/webpack/issues/4039
+                // so we explicitly exclude the resource if it is npmLinkedReactScripts
+                const npmLinkedReactScripts = /create-react-app\/packages\/react-scripts/.test(resource)
+
+                // in order to exclude a file from compilation, it needs to have a node_modules that ISN'T an @fs module, 
+                // AND be in the appPath but not the ${AppPath}/src
+                // Doing things this was with an exclude allows us to transpile npm linked modules no matter what their name is 
+                // (ie zion, whatever tree calls their monorepo, etc)
+                const nodeModulesWithNoFS = /node_modules\/(?!@fs)/.test(resource)
+                const appPathNoSrc = new RegExp(`${process.cwd()}/(?!src)`).test(resource)
+
+                return npmLinkedReactScripts || (nodeModulesWithNoFS && appPathNoSrc)
+
+              },
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve('@fs/babel-preset-frontier/webpack-overrides'),
