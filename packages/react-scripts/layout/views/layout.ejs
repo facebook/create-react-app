@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FamilySearch.org</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="msapplication-config" content="none" />
+
+    <% if (!feature('removeTreeMobileReminderFt')){ %>
+      <meta name="apple-itunes-app" content="app-id=885982973">
+    <% } %>
+
+    <meta name="description" content="Discover your family history. Explore the world’s largest collection of free family trees, genealogy records and resources.">
+    <meta name="google-site-verification" content="VJlFQrAXTCBy0PqVi23EsGD-mpA5KaBhIt8LkrcRbP0" />
+    <link href="https://edge.fscdn.org/assets/docs/fs_logo_favicon_sq.png" rel="icon" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="https://edge.fscdn.org/assets/components/hf/assets/img/tree-touch-icon-11024a277f1fda5735de5a9f0f4f75ca.png" />
+
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="//edge.fscdn.org" crossorigin />
+
+    <script>
+      window.SERVER_DATA = {};
+      <%- typeof cacheKey !== 'undefined' ? `SERVER_DATA.cacheKey = '${cacheKey}';` : ''; %>
+      SERVER_DATA.appPath = "<%- appPath('') %>";
+      <% include partials/experiments %>
+    </script>
+  </head>
+  <body>
+    <%- body %>
+  </body>
+</html>

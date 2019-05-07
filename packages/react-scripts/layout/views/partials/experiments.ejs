@@ -1,0 +1,18 @@
+<%
+var defaultExperiments = null;
+if (typeof experimentsList === "string") {
+  try {
+    defaultExperiments = JSON.parse(experimentsList);
+    if (defaultExperiments.dirtyFeatures) {
+      delete defaultExperiments.dirtyFeatures;
+    }
+    defaultExperiments = JSON.stringify(defaultExperiments);
+  } catch (ex) {
+    console.log("Error while parsing experimentsList: ", ex);
+    console.log("experimentsList is: ", experimentsList);
+  }
+}
+%>
+      SERVER_DATA.appName = '<%- appName %>';
+
+      SERVER_DATA.initialDefaultEx = <%- defaultExperiments %>;

@@ -22,10 +22,10 @@ function verifyPackageTreeFrontier() {
     // See https://github.com/facebook/create-react-app/issues/1795 for reasons why.
     // I have not included Babel here because plugins typically don't import Babel (so it's not affected).
     'babel-eslint',
-    'babel-jest',
+    // 'babel-jest',
     'babel-loader',
-    'eslint',
-    'jest',
+    // 'eslint',
+    // 'jest',
     'webpack',
     'webpack-dev-server',
   ];
@@ -71,9 +71,15 @@ function verifyPackageTreeFrontier() {
       if (!fs.existsSync(maybeDepPackageJson)) {
         return;
       }
+      // console.log('\n\n\n')
+      // console.log('maybeNodeModules: ', maybeNodeModules)
+      // console.log('maybeDep: ', maybeDep)
       const depPackageJson = JSON.parse(fs.readFileSync(maybeDepPackageJson, 'utf8'));
       const expectedVersion = expectedVersionsByDep[dep];
-      if (semver.diff(depPackageJson.version, expectedVersion) === 'major') {
+      // console.log('JSON.stringify(depPackageJson, null, 2): ', JSON.stringify(depPackageJson, null, 2))
+      // console.log('depPackageJson.version: ', depPackageJson.version)
+      // console.log('expectedVersion: ', expectedVersion)
+      if (!semver.satisfies(depPackageJson.version, expectedVersion)) {
         console.error(
           `The ${chalk.bold(
             ownPackageJson.name

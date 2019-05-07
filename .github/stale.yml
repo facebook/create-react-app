@@ -16,8 +16,13 @@ exemptLabels:
   - "issue: bug"
   - "issue: needs investigation"
   - "issue: proposal"
-  - "tag: bug fix"
   - "tag: breaking change"
+  - "tag: bug fix"
+  - "tag: documentation"
+  - "tag: enhancement"
+  - "tag: internal"
+  - "tag: new feature"
+  - "tag: underlying tools"
 
 # Set to true to ignore issues in a project (defaults to false)
 exemptProjects: true

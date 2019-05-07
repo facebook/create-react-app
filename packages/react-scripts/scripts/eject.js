@@ -38,9 +38,25 @@ function getGitStatus() {
   }
 }
 
+function tryGitAdd(appPath) {
+  try {
+    spawnSync(
+      'git',
+      ['add', path.join(appPath, 'config'), path.join(appPath, 'scripts')],
+      {
+        stdio: 'inherit',
+      }
+    );
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 console.log(
   chalk.cyan.bold(
-    'NOTE: Create React App 2 supports TypeScript, Sass, CSS Modules and more without ejecting: ' +
+    'NOTE: Create React App 2+ supports TypeScript, Sass, CSS Modules and more without ejecting: ' +
       'https://reactjs.org/blog/2018/10/01/create-react-app-v2.html'
   )
 );
@@ -62,14 +78,18 @@ inquirer
     const gitStatus = getGitStatus();
     if (gitStatus) {
       console.error(
-        chalk.red('This git repository has untracked files or uncommitted changes:') +
+        chalk.red(
+          'This git repository has untracked files or uncommitted changes:'
+        ) +
           '\n\n' +
           gitStatus
             .split('\n')
             .map(line => line.match(/ .*/g)[0].trim())
             .join('\n') +
           '\n\n' +
-          chalk.red('Remove untracked files, stash or commit any changes, and try again.')
+          chalk.red(
+            'Remove untracked files, stash or commit any changes, and try again.'
+          )
       );
       process.exit(1);
     }
@@ -133,9 +153,15 @@ inquirer
       content =
         content
           // Remove dead code from .js files on eject
-          .replace(/\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/gm, '')
+          .replace(
+            /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/gm,
+            ''
+          )
           // Remove dead code from .applescript files on eject
-          .replace(/-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/gm, '')
+          .replace(
+            /-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/gm,
+            ''
+          )
           .trim() + '\n';
       console.log(`  Adding ${cyan(file.replace(ownPath, ''))} to the project`);
       fs.writeFileSync(file.replace(ownPath, appPath), content);
@@ -185,9 +211,14 @@ inquirer
         if (!regex.test(appPackage.scripts[key])) {
           return;
         }
-        appPackage.scripts[key] = appPackage.scripts[key].replace(regex, 'node scripts/$1.js');
+        appPackage.scripts[key] = appPackage.scripts[key].replace(
+          regex,
+          'node scripts/$1.js'
+        );
         console.log(
-          `  Replacing ${cyan(`"${binKey} ${key}"`)} with ${cyan(`"node scripts/${key}.js"`)}`
+          `  Replacing ${cyan(`"${binKey} ${key}"`)} with ${cyan(
+            `"node scripts/${key}.js"`
+          )}`
         );
       });
     });
@@ -220,13 +251,17 @@ inquirer
       try {
         // Read app declarations file
         let content = fs.readFileSync(paths.appTypeDeclarations, 'utf8');
-        const ownContent = fs.readFileSync(paths.ownTypeDeclarations, 'utf8').trim() + os.EOL;
+        const ownContent =
+          fs.readFileSync(paths.ownTypeDeclarations, 'utf8').trim() + os.EOL;
 
         // Remove react-scripts reference since they're getting a copy of the types in their project
         content =
           content
             // Remove react-scripts types
-            .replace(/^\s*\/\/\/\s*<reference\s+types.+?"react-scripts".*\/>.*(?:\n|$)/gm, '')
+            .replace(
+              /^\s*\/\/\/\s*<reference\s+types.+?"react-scripts".*\/>.*(?:\n|$)/gm,
+              ''
+            )
             .trim() + os.EOL;
 
         fs.writeFileSync(
@@ -253,7 +288,12 @@ inquirer
     }
 
     if (fs.existsSync(paths.yarnLockFile)) {
-      const windowsCmdFilePath = path.join(appPath, 'node_modules', '.bin', 'react-scripts.cmd');
+      const windowsCmdFilePath = path.join(
+        appPath,
+        'node_modules',
+        '.bin',
+        'react-scripts.cmd'
+      );
       let windowsCmdFileContent;
       if (process.platform === 'win32') {
         // https://github.com/facebook/create-react-app/pull/3806#issuecomment-357781035
@@ -286,7 +326,14 @@ inquirer
     console.log(green('Ejected successfully!'));
     console.log();
 
-    console.log(green('Please consider sharing why you ejected in this survey:'));
+    if (tryGitAdd(appPath)) {
+      console.log(cyan('Staged ejected files for commit.'));
+      console.log();
+    }
+
+    console.log(
+      green('Please consider sharing why you ejected in this survey:')
+    );
     console.log(green('  http://goo.gl/forms/Bi6CZjk1EqsdelXk1'));
     console.log();
   });

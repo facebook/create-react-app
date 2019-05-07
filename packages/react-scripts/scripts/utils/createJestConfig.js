@@ -10,12 +10,14 @@
 const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
 const paths = require('../../config/paths');
+const modules = require('../../config/modules');
 
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsMatches = paths.testsSetup.match(/src[/\\]setupTests\.(.+)/);
-  const setupTestsFileExtension = (setupTestsMatches && setupTestsMatches[1]) || 'js';
+  const setupTestsFileExtension =
+    (setupTestsMatches && setupTestsMatches[1]) || 'js';
   const setupTestsFile = fs.existsSync(paths.testsSetup)
     ? `<rootDir>/src/setupTests.${setupTestsFileExtension}`
     : undefined;
@@ -23,35 +25,34 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
 
-    // TODO: this breaks Yarn PnP on eject.
-    // But we can't simply emit this because it'll be an absolute path.
-    // The proper fix is to write jest.config.js on eject instead of a package.json key.
-    // Then these can always stay as require.resolve()s.
-    resolver: isEjecting ? 'jest-pnp-resolver' : require.resolve('jest-pnp-resolver'),
     setupFiles: [
-      isEjecting ? 'react-app-polyfill/jsdom' : require.resolve('react-app-polyfill/jsdom'),
+      isEjecting
+        ? 'react-app-polyfill/jsdom'
+        : require.resolve('react-app-polyfill/jsdom'),
     ],
 
-    setupTestFrameworkScriptFile: setupTestsFile,
+    setupFilesAfterEnv: setupTestsFile ? [setupTestsFile] : [],
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
-      '<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}',
+      '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
       '<rootDir>/packages/**/__tests__/**/*.{js,jsx,ts,tsx}',
-      '<rootDir>/packages/**/?(*.)(spec|test).{js,jsx,ts,tsx}',
+      '<rootDir>/packages/**/*.{spec,test}.{js,jsx,ts,tsx}',
     ],
-    testEnvironment: 'jsdom',
-    testURL: 'http://localhost',
+    testEnvironment: 'jest-environment-jsdom-fourteen',
     transform: {
       '^.+\\.(js|jsx|ts|tsx)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': resolve('config/jest/fileTransform.js'),
+      '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': resolve(
+        'config/jest/fileTransform.js'
+      ),
     },
     transformIgnorePatterns: [
-      '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
+      "node_modules/(\\?!@fs)",
       '^.+\\.module\\.(css|sass|scss)$',
     ],
+    modulePaths: modules.additionalModulePaths || [],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
@@ -60,8 +61,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
       ext => !ext.includes('mjs')
     ),
     watchPlugins: [
-      require.resolve('jest-watch-typeahead/filename'),
-      require.resolve('jest-watch-typeahead/testname'),
+      'jest-watch-typeahead/filename',
+      'jest-watch-typeahead/testname',
     ],
   };
   if (rootDir) {
@@ -72,6 +73,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'collectCoverageFrom',
     'coverageReporters',
     'coverageThreshold',
+    'extraGlobals',
     'globalSetup',
     'globalTeardown',
     'resetMocks',
@@ -89,13 +91,14 @@ module.exports = (resolve, rootDir, isEjecting) => {
     });
     const unsupportedKeys = Object.keys(overrides);
     if (unsupportedKeys.length) {
-      const isOverridingSetupFile = unsupportedKeys.indexOf('setupTestFrameworkScriptFile') > -1;
+      const isOverridingSetupFile =
+        unsupportedKeys.indexOf('setupFilesAfterEnv') > -1;
 
       if (isOverridingSetupFile) {
         console.error(
           chalk.red(
             'We detected ' +
-              chalk.bold('setupTestFrameworkScriptFile') +
+              chalk.bold('setupFilesAfterEnv') +
               ' in your package.json.\n\n' +
               'Remove it from Jest configuration, and put the initialization code in ' +
               chalk.bold('src/setupTests.js') +
@@ -107,11 +110,15 @@ module.exports = (resolve, rootDir, isEjecting) => {
           chalk.red(
             '\nOut of the box, Create React App only supports overriding ' +
               'these Jest options:\n\n' +
-              supportedKeys.map(key => chalk.bold('  \u2022 ' + key)).join('\n') +
+              supportedKeys
+                .map(key => chalk.bold('  \u2022 ' + key))
+                .join('\n') +
               '.\n\n' +
               'These options in your package.json Jest configuration ' +
               'are not currently supported by Create React App:\n\n' +
-              unsupportedKeys.map(key => chalk.bold('  \u2022 ' + key)).join('\n') +
+              unsupportedKeys
+                .map(key => chalk.bold('  \u2022 ' + key))
+                .join('\n') +
               '\n\nIf you wish to override other Jest options, you need to ' +
               'eject from the default setup. You can do so by running ' +
               chalk.bold('npm run eject') +

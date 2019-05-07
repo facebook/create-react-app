@@ -65,6 +65,9 @@ case ${test_suite} in
   "installs")
     test_command="./tasks/e2e-installs.sh"
     ;;
+  "behavior")
+    test_command="./tasks/e2e-behavior.sh"
+    ;;
   *)
     ;;
 esac
@@ -114,6 +117,7 @@ docker run \
   --env NPM_CONFIG_PREFIX=/home/node/.npm \
   --env NPM_CONFIG_QUIET=true \
   --tty \
+  --rm \
   --user node \
   --volume ${PWD}/..:/var/create-react-app \
   --workdir /home/node \

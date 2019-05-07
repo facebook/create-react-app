@@ -9,6 +9,7 @@
 'use strict';
 
 const fs = require('fs');
+const isWsl = require('is-wsl');
 const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
@@ -27,6 +28,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
+const modules = require('./modules');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
@@ -36,6 +38,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
+const postcssNormalize = require('postcss-normalize');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -48,6 +51,8 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // FS - check if hf is installed in root node_modules
 const isHF = fs.existsSync(path.join(paths.appNodeModules, 'hf/webpack.config.js'));
+// FS - check if snow is installed in root node_modules
+const isSnow = fs.existsSync(path.join(paths.appNodeModules, 'snow/package.json'));
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -108,6 +113,10 @@ module.exports = function(webpackEnv) {
               },
               stage: 3,
             }),
+            // Adds PostCSS Normalize as the reset css with default options,
+            // so that it honors browserslist config in package.json
+            // which in turn let's users customize the target behavior as per their needs.
+            postcssNormalize(),
           ],
           sourceMap: isEnvProduction && shouldUseSourceMap,
         },
@@ -163,6 +172,9 @@ module.exports = function(webpackEnv) {
       filename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].js'
         : isEnvDevelopment && 'static/js/bundle.js',
+      // TODO: remove this when upgrading to webpack 5
+      // FS - writeToDisk and futureEmitAssets are not compatible, so defaulting back to false: https://github.com/webpack/webpack/pull/8642#issuecomment-455342804
+      futureEmitAssets: false,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'
@@ -216,7 +228,9 @@ module.exports = function(webpackEnv) {
           },
           // Use multi-process parallel running to improve the build speed
           // Default number of concurrent runs: os.cpus().length - 1
-          parallel: true,
+          // Disabled on WSL (Windows Subsystem for Linux) due to an issue with Terser
+          // https://github.com/webpack-contrib/terser-webpack-plugin/issues/21
+          parallel: !isWsl,
           // Enable file caching
           cache: true,
           sourceMap: shouldUseSourceMap,
@@ -249,18 +263,15 @@ module.exports = function(webpackEnv) {
       },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      // FS - Turn off for hf since it causes issues with imports in hf js files.
-      runtimeChunk: !isHF,
+      // FS - Turn off for snow since it causes stack exceeded issues in development
+      runtimeChunk: !isSnow,
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebook/create-react-app/issues/253
-      modules: ['node_modules'].concat(
-        // It is guaranteed to exist because we tweak it in `env.js`
-        process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
-      ),
+      modules: ['node_modules', paths.appNodeModules].concat(modules.additionalModulePaths || []),
       // These are the reasonable defaults supported by the Node ecosystem.
       // We also include JSX as a common component filename extension to support
       // some tools, although we do not recommend using it, see:
@@ -305,7 +316,7 @@ module.exports = function(webpackEnv) {
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
         {
-          test: /\.(js|mjs|jsx)$/,
+          test: /\.(js|mjs|jsx|ts|tsx)$/,
           enforce: 'pre',
           use: [
             {
@@ -359,7 +370,22 @@ module.exports = function(webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
+              exclude: resource => {
+
+                // compiling npm linked react-scripts files was causing this error https://github.com/webpack/webpack/issues/4039
+                // so we explicitly exclude the resource if it is npmLinkedReactScripts
+                const npmLinkedReactScripts = /create-react-app\/packages\/react-scripts/.test(resource)
+
+                // in order to exclude a file from compilation, it needs to have a node_modules that ISN'T an @fs module, 
+                // AND be in the appPath but not the ${AppPath}/src
+                // Doing things this was with an exclude allows us to transpile npm linked modules no matter what their name is 
+                // (ie zion, whatever tree calls their monorepo, etc)
+                const nodeModulesWithNoFS = /node_modules\/(?!@fs)/.test(resource)
+                const appPathNoSrc = new RegExp(`${process.cwd()}/(?!src)`).test(resource)
+
+                return npmLinkedReactScripts || (nodeModulesWithNoFS && appPathNoSrc)
+
+              },
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve('@fs/babel-preset-frontier/webpack-overrides'),
@@ -567,7 +593,7 @@ module.exports = function(webpackEnv) {
           {},
           {
             inject: true,
-            filename: isHF ? '_index.html' : 'index.html',
+            filename: isSnow ? '_index.html' : 'index.html',
             template: paths.appHtml,
           },
           isEnvProduction
@@ -633,6 +659,16 @@ module.exports = function(webpackEnv) {
       new ManifestPlugin({
         fileName: 'asset-manifest.json',
         publicPath: publicPath,
+        generate: (seed, files) => {
+          const manifestFiles = files.reduce(function(manifest, file) {
+            manifest[file.name] = file.path;
+            return manifest;
+          }, seed);
+
+          return {
+            files: manifestFiles,
+          };
+        },
       }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how Webpack interprets its code. This is a practical
@@ -668,7 +704,6 @@ module.exports = function(webpackEnv) {
           tsconfig: paths.appTsConfig,
           reportFiles: [
             '**',
-            '!**/*.json',
             '!**/__tests__/**',
             '!**/?(*.)(spec|test).*',
             '!**/src/setupProxy.*',
@@ -687,6 +722,7 @@ module.exports = function(webpackEnv) {
       dgram: 'empty',
       dns: 'mock',
       fs: 'empty',
+      http2: 'empty',
       net: 'empty',
       tls: 'empty',
       child_process: 'empty',

@@ -10,7 +10,7 @@ import translations from './locales'
 
 addTranslations(translations)
 
-const base = window.FS ? new URL(window.FS.appPath).pathname : ''
+const base = window.SERVER_DATA ? new URL(window.SERVER_DATA.appPath).pathname : ''
 
 const FrontierRoot = () => (
   <RootErrorBoundary>
