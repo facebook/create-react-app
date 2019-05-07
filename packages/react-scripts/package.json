@@ -18,6 +18,7 @@
   "files": [
     "bin",
     "config",
+    "layout",
     "lib",
     "scripts",
     "proxy",
