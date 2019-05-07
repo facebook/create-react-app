@@ -79,7 +79,8 @@ function verifyPackageTreeFrontier() {
       // console.log('JSON.stringify(depPackageJson, null, 2): ', JSON.stringify(depPackageJson, null, 2))
       // console.log('depPackageJson.version: ', depPackageJson.version)
       // console.log('expectedVersion: ', expectedVersion)
-      if (!semver.satisfies(depPackageJson.version, expectedVersion)) {
+      // console.log('semver.coerce(expectedVersion): ', semver.coerce(expectedVersion))
+      if (semver.diff(depPackageJson.version, semver.coerce(expectedVersion)) === 'major') {
         console.error(
           `The ${chalk.bold(
             ownPackageJson.name
