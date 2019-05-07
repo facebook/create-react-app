@@ -60,7 +60,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@fs/zion-user',
       '@fs/zion-router',
       '@fs/zion-subnav',
-      '@fs/zion-error-boundary',
+      '@fs/zion-root',
       '@fs/zion-style-normalize',
       'http-proxy-middleware@0.19',
       '@emotion/core@10',
