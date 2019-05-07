@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
-import { UserProvider } from '@fs/zion-user'
-import RootErrorBoundary from '@fs/zion-error-boundary'
-import { I18nProvider, addTranslations } from '@fs/zion-locale'
+import Root from '@fs/zion-root'
+import { addTranslations } from '@fs/zion-locale'
 import { Router, NotFound } from '@fs/zion-router'
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'
@@ -13,18 +12,14 @@ addTranslations(translations)
 const base = window.SERVER_DATA ? new URL(window.SERVER_DATA.appPath).pathname : ''
 
 const FrontierRoot = () => (
-  <RootErrorBoundary>
+  <Root>
     <Suspense fallback="Loading ...">
-      <I18nProvider>
-        <UserProvider>
-          <Router>
-            <App path={`${base}/*`} />
-            <NotFound default />
-          </Router>
-        </UserProvider>
-      </I18nProvider>
+      <Router>
+        <App path={`${base}/*`} />
+        <NotFound default />
+      </Router>
     </Suspense>
-  </RootErrorBoundary>
+  </Root>
 )
 
 ReactDOM.render(<FrontierRoot />, document.getElementById('root'))
