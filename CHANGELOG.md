@@ -1,3 +1,80 @@
+## 3.0.1 (2019-05-08)
+
+v3.0.1 is a maintenance release that adjusts some ESLint rules for TypeScript along with other minor bug fixes and documentation updates.
+
+#### :boom: Breaking Change
+
+- `babel-preset-react-app`
+  - [#6887](https://github.com/facebook/create-react-app/pull/6887) Update dependencies of Babel preset with recent changes ([@skoging](https://github.com/skoging))
+
+#### :bug: Bug Fix
+
+- `react-error-overlay`, `react-scripts`
+  - [#7007](https://github.com/facebook/create-react-app/pull/7007) Unpin `babel-jest` ([@ianschmitz](https://github.com/ianschmitz))
+  - [#7002](https://github.com/facebook/create-react-app/pull/7002) Temporary fix for `babel-jest` preflight error ([@ianschmitz](https://github.com/ianschmitz))
+- `eslint-config-react-app`
+  - [#6987](https://github.com/facebook/create-react-app/pull/6987) Disable `no-dupe-class-members` rule for TypeScript ([@ianschmitz](https://github.com/ianschmitz))
+  - [#6862](https://github.com/facebook/create-react-app/pull/6862) Fix `no-useless-constructor` rule in TypeScript ([@ianschmitz](https://github.com/ianschmitz))
+- `eslint-config-react-app`, `react-scripts`
+  - [#6937](https://github.com/facebook/create-react-app/pull/6937) Disable `default-case` lint rule for TypeScript ([@ianschmitz](https://github.com/ianschmitz))
+- `react-dev-utils`
+  - [#6876](https://github.com/facebook/create-react-app/pull/6876) Change cssmodule classname hash to use relative paths ([@vg-stan](https://github.com/vg-stan))
+
+#### :nail_care: Enhancement
+
+- `react-dev-utils`, `react-scripts`
+  - [#6856](https://github.com/facebook/create-react-app/pull/6856) Adds the configuration for PnP/Typescript ([@arcanis](https://github.com/arcanis))
+- `babel-preset-react-app`
+  - [#6887](https://github.com/facebook/create-react-app/pull/6887) Update dependencies of Babel preset with recent changes ([@skoging](https://github.com/skoging))
+- `react-scripts`
+  - [#6706](https://github.com/facebook/create-react-app/pull/6706) Generate SVG component name in Jest fileTransform ([@dallonf](https://github.com/dallonf))
+  - [#6300](https://github.com/facebook/create-react-app/pull/6300) Remove body padding reset from templates ([@Hurtak](https://github.com/Hurtak))
+
+#### :memo: Documentation
+
+- Other
+  - [#6979](https://github.com/facebook/create-react-app/pull/6979) Add note to restart the dev server after changing .env file ([@MostafaNawara](https://github.com/MostafaNawara))
+  - [#6945](https://github.com/facebook/create-react-app/pull/6945) Add clarifying note to TypeScript docs warning about global install of CRA ([@methodbox](https://github.com/methodbox))
+  - [#6898](https://github.com/facebook/create-react-app/pull/6898) Update GraphQL docs ([@nagman](https://github.com/nagman))
+  - [#6810](https://github.com/facebook/create-react-app/pull/6810) Call to action button now reacts to being hovered ([@joerez](https://github.com/joerez))
+  - [#6881](https://github.com/facebook/create-react-app/pull/6881) Fix typo in deployment docs ([@david-cho-lerat-HL2](https://github.com/david-cho-lerat-HL2))
+- `react-app-polyfill`
+  - [#6879](https://github.com/facebook/create-react-app/pull/6879) Update README.md ([@david-cho-lerat-HL2](https://github.com/david-cho-lerat-HL2))
+
+#### :house: Internal
+
+- `react-scripts`
+  - [#6854](https://github.com/facebook/create-react-app/pull/6854) Remove `Object.assign` from `MiniCssExtractPlugin` options ([@swashcap](https://github.com/swashcap))
+
+#### Committers: 12
+
+- Chris Shaffer ([@methodbox](https://github.com/methodbox))
+- Cory Reed ([@swashcap](https://github.com/swashcap))
+- Dallon Feldner ([@dallonf](https://github.com/dallonf))
+- David Cho-Lerat ([@david-cho-lerat-HL2](https://github.com/david-cho-lerat-HL2))
+- Ian Schmitz ([@ianschmitz](https://github.com/ianschmitz))
+- Joe Rezendes ([@joerez](https://github.com/joerez))
+- Maël Nison ([@arcanis](https://github.com/arcanis))
+- Mostafa Nawara ([@MostafaNawara](https://github.com/MostafaNawara))
+- Petr Huřťák ([@Hurtak](https://github.com/Hurtak))
+- Tore Hammervoll ([@skoging](https://github.com/skoging))
+- [@nagman](https://github.com/nagman)
+- [@vg-stan](https://github.com/vg-stan)
+
+### Migrating from 3.0.0 to 3.0.1
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.0.1
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.0.1
+```
+
 ## 3.0.0 (April 22, 2019)
 
 Create React App 3.0 brings some exciting new features including support for [Hooks](https://reactjs.org/docs/hooks-intro.html)!
