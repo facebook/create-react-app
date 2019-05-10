@@ -26,21 +26,23 @@ async function promptForConfig() {
     console.log('CI detected, skipping prompts and returning defaults ...')
     return Promise.resolve({ additionalFeatures: [] })
   }
-  const questions = [
-    {
-      type: 'checkbox',
-      name: 'additionalFeatures',
-      message: 'What additional features does your app require (these are checkboxes)',
-      choices: [
-        {
-          name: 'Using a shared Polymer Component within your React App?',
-          value: 'polymer',
-        },
-      ],
-    },
-  ]
-  const answers = await inquirer.prompt(questions)
-  return answers
+  // Commenting this out for now, because we are likely going to be prompting for team owners and/or additional things soon
+  // const questions = [
+  //   {
+  //     type: 'checkbox',
+  //     name: 'additionalFeatures',
+  //     message: 'What additional features does your app require (these are checkboxes)',
+  //     choices: [
+  //       {
+  //         name: 'Using a shared Polymer Component within your React App?',
+  //         value: 'polymer',
+  //       },
+  //     ],
+  //   },
+  // ]
+  // const answers = await inquirer.prompt(questions)
+  // return answers
+  return Promise.resolve({ additionalFeatures: [] })
 }
 
 function installFrontierDependencies(appPath, appName, answers, ownPath) {
@@ -111,12 +113,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
 
   syncLocales()
 
-  replaceStringInFile(
-    appPath,
-    './README.md',
-    /\{GITHUB_ORG\}\/\{GITHUB_REPO\}/g,
-    `fs-webdev/${appName}`
-  )
+  replaceStringInFile(appPath, './README.md', /\{GITHUB_REPO\}/g, appName)
 }
 
 function handlePolymerCodeAndComments(appPath, usePolymer, useHF) {
