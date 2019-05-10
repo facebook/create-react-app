@@ -20,7 +20,6 @@ function App() {
       <Router>
         <Home path="/" />
         <RequiresAuth path="user" component={UserInfo} />
-        <NotFound default />
       </Router>
     </>
   )

@@ -62,7 +62,6 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@fs/zion-subnav',
       '@fs/zion-root',
       '@fs/zion-style-normalize',
-      'http-proxy-middleware@0.19',
       '@emotion/core@10',
       'i18next@15',
       'react-i18next@10',
@@ -85,8 +84,8 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       'i18next-scanner@2',
       '@alienfast/i18next-loader@1',
       'dotenv@7',
-      'webpack@4',
       'jest-dom@3',
+      'http-proxy-middleware@0.19',
     ]
   )
 
