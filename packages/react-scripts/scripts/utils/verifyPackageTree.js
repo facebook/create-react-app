@@ -51,7 +51,8 @@ function verifyPackageTree() {
   // Verify we don't have other versions up the tree
   let currentDir = __dirname;
   // eslint-disable-next-line no-constant-condition
-  while (true) {
+  let checkedDeps = [];
+  while (checkedDeps.length < depsToCheck.length) {
     const previousDir = currentDir;
     currentDir = path.resolve(currentDir, '..');
     if (currentDir === previousDir) {
@@ -63,6 +64,9 @@ function verifyPackageTree() {
       continue;
     }
     depsToCheck.forEach(dep => {
+      if (checkedDeps.includes(dep)) {
+        return;
+      }
       const maybeDep = path.resolve(maybeNodeModules, dep);
       if (!fs.existsSync(maybeDep)) {
         return;
@@ -155,6 +159,8 @@ function verifyPackageTree() {
             )
         );
         process.exit(1);
+      } else {
+        checkedDeps.push(dep);
       }
     });
   }
