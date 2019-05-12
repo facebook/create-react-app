@@ -33,20 +33,20 @@ const codeStyle = {
 type CodeBlockPropsType = {|
   main: boolean,
   codeHTML: string,
-  isDarkScheme: boolean,
+  theme: any,
 |};
 
 function CodeBlock(props: CodeBlockPropsType) {
-  const { main, codeHTML, isDarkScheme } = props;
+  const { main, codeHTML, theme } = props;
   const primaryPreStyle = {
     ..._preStyle,
-    backgroundColor: isDarkScheme ? strongRedTransparent : redTransparent,
-    color: isDarkScheme ? lightRed : 'inherit',
+    backgroundColor: theme.primaryPreBackground,
+    color: theme.primaryPreColor,
   };
   const secondaryPreStyle = {
     ..._preStyle,
-    backgroundColor: yellowTransparent,
-    color: isDarkScheme ? yellow : 'inherit',
+    backgroundColor: theme.secondaryPreBackground,
+    color: theme.secondaryPreColor,
   };
   const preStyle = main ? primaryPreStyle : secondaryPreStyle;
   const codeBlock = { __html: codeHTML };

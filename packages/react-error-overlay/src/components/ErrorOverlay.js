@@ -7,11 +7,10 @@
 
 /* @flow */
 import React, { Component } from 'react';
-import { black, white } from '../styles';
 
 import type { Node as ReactNode } from 'react';
 
-const overlayStyle = {
+const overlayStyle = theme => ({
   position: 'relative',
   display: 'inline-flex',
   flexDirection: 'column',
@@ -28,12 +27,13 @@ const overlayStyle = {
   whiteSpace: 'pre-wrap',
   wordBreak: 'break-word',
   lineHeight: 1.5,
-};
+  color: theme.color,
+});
 
 type Props = {|
   children: ReactNode,
   shortcutHandler?: (eventKey: string) => void,
-  isDarkScheme: boolean,
+  theme: any,
 |};
 
 type State = {|
@@ -72,12 +72,9 @@ class ErrorOverlay extends Component<Props, State> {
   }
 
   render() {
-    const { isDarkScheme } = this.props;
+    const { theme } = this.props;
     return (
-      <div
-        style={{ ...overlayStyle, color: isDarkScheme ? white : black }}
-        ref={this.getIframeWindow}
-      >
+      <div style={overlayStyle(theme)} ref={this.getIframeWindow}>
         {this.props.children}
       </div>
     );

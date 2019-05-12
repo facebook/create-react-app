@@ -6,6 +6,8 @@
  */
 
 /* @flow */
+import { lightTheme, darkTheme } from '../../styles';
+
 let injectedCount = 0;
 const injectedCache = {};
 
@@ -44,11 +46,11 @@ function applyStyles(element: HTMLElement, styles: Object) {
   }
 }
 
-function getIsDarkScheme() {
-  if (window.matchMedia) {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  }
-  return false;
+function getTheme() {
+  return window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? darkTheme
+    : lightTheme;
 }
 
-export { getHead, injectCss, removeCss, applyStyles, getIsDarkScheme };
+export { getHead, injectCss, removeCss, applyStyles, getTheme };

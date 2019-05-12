@@ -7,12 +7,11 @@
 
 /* @flow */
 import React from 'react';
-import { red } from '../styles';
 
-const headerStyle = {
+const headerStyle = theme => ({
   fontSize: '2em',
   fontFamily: 'sans-serif',
-  color: red,
+  color: theme.headerColor,
   whiteSpace: 'pre-wrap',
   // Top bottom margin spaces header
   // Right margin revents overlap with close button
@@ -20,14 +19,15 @@ const headerStyle = {
   flex: '0 0 auto',
   maxHeight: '50%',
   overflow: 'auto',
-};
+});
 
 type HeaderPropType = {|
   headerText: string,
+  theme: any,
 |};
 
 function Header(props: HeaderPropType) {
-  return <div style={headerStyle}>{props.headerText}</div>;
+  return <div style={headerStyle(props.theme)}>{props.headerText}</div>;
 }
 
 export default Header;

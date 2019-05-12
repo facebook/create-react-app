@@ -22,17 +22,17 @@ const codeAnchorStyle = {
 type Props = {|
   error: string,
   editorHandler: (errorLoc: ErrorLocation) => void,
-  isDarkScheme: boolean,
+  theme: any,
 |};
 
 class CompileErrorContainer extends PureComponent<Props, void> {
   render() {
-    const { error, editorHandler, isDarkScheme } = this.props;
+    const { error, editorHandler, theme } = this.props;
     const errLoc: ?ErrorLocation = parseCompileError(error);
     const canOpenInEditor = errLoc !== null && editorHandler !== null;
     return (
-      <ErrorOverlay isDarkScheme={isDarkScheme}>
-        <Header headerText="Failed to compile" />
+      <ErrorOverlay theme={theme}>
+        <Header theme={theme} headerText="Failed to compile" />
         <div
           onClick={
             canOpenInEditor && errLoc ? () => editorHandler(errLoc) : null
@@ -42,7 +42,7 @@ class CompileErrorContainer extends PureComponent<Props, void> {
           <CodeBlock
             main={true}
             codeHTML={generateAnsiHTML(error)}
-            isDarkScheme={isDarkScheme}
+            theme={theme}
           />
         </div>
         <Footer line1="This error occurred during the build time and cannot be dismissed." />

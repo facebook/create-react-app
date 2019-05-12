@@ -11,10 +11,10 @@ import ReactDOM from 'react-dom';
 import CompileErrorContainer from './containers/CompileErrorContainer';
 import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
 import { overlayStyle } from './styles';
-import { applyStyles, getIsDarkScheme } from './utils/dom/css';
+import { applyStyles, getTheme } from './utils/dom/css';
 
 let iframeRoot = null;
-const isDarkScheme = getIsDarkScheme();
+const theme = getTheme();
 
 function render({
   currentBuildError,
@@ -27,7 +27,7 @@ function render({
       <CompileErrorContainer
         error={currentBuildError}
         editorHandler={editorHandler}
-        isDarkScheme={isDarkScheme}
+        theme={theme}
       />
     );
   }
@@ -37,7 +37,7 @@ function render({
         errorRecords={currentRuntimeErrorRecords}
         close={dismissRuntimeErrors}
         editorHandler={editorHandler}
-        isDarkScheme={isDarkScheme}
+        theme={theme}
       />
     );
   }
@@ -60,6 +60,6 @@ document.body.style.margin = '0';
 // Keep popup within body boundaries for iOS Safari
 document.body.style['max-width'] = '100vw';
 iframeRoot = document.createElement('div');
-applyStyles(iframeRoot, overlayStyle);
+applyStyles(iframeRoot, overlayStyle(theme));
 document.body.appendChild(iframeRoot);
 window.parent.__REACT_ERROR_OVERLAY_GLOBAL_HOOK__.iframeReady();
