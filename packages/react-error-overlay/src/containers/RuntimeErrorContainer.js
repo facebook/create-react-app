@@ -20,7 +20,7 @@ type Props = {|
   errorRecords: ErrorRecord[],
   close: () => void,
   editorHandler: (errorLoc: ErrorLocation) => void,
-  isDarkScheme: boolean,
+  theme: any,
 |};
 
 type State = {|
@@ -61,11 +61,11 @@ class RuntimeErrorContainer extends PureComponent<Props, State> {
   };
 
   render() {
-    const { errorRecords, close } = this.props;
+    const { errorRecords, close, theme } = this.props;
     const totalErrors = errorRecords.length;
     return (
-      <ErrorOverlay shortcutHandler={this.shortcutHandler}>
-        <CloseButton close={close} />
+      <ErrorOverlay theme={theme} shortcutHandler={this.shortcutHandler}>
+        <CloseButton theme={theme} close={close} />
         {totalErrors > 1 && (
           <NavigationBar
             currentError={this.state.currentIndex + 1}
@@ -77,8 +77,10 @@ class RuntimeErrorContainer extends PureComponent<Props, State> {
         <RuntimeError
           errorRecord={errorRecords[this.state.currentIndex]}
           editorHandler={this.props.editorHandler}
+          theme={theme}
         />
         <Footer
+          theme={theme}
           line1="This screen is visible only in development. It will not appear if the app crashes in production."
           line2="Open your browser’s developer console to further inspect this error."
         />

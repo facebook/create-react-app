@@ -7,13 +7,6 @@
 
 /* @flow */
 import React from 'react';
-import {
-  redTransparent,
-  yellowTransparent,
-  strongRedTransparent,
-  yellow,
-  lightRed,
-} from '../styles';
 
 const _preStyle = {
   position: 'relative',

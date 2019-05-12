@@ -11,10 +11,17 @@ import CodeBlock from '../components/CodeBlock';
 import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
 import type { ScriptLine } from '../utils/stack-frame';
-import { primaryErrorStyle, secondaryErrorStyle } from '../styles';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
 
 import { codeFrameColumns } from '@babel/code-frame';
+
+const primaryErrorStyle = theme => ({
+  'background-color': theme.primaryErrorBackground,
+});
+
+const secondaryErrorStyle = theme => ({
+  'background-color': theme.secondaryErrorBackground,
+});
 
 type StackFrameCodeBlockPropsType = {|
   lines: ScriptLine[],
@@ -22,6 +29,7 @@ type StackFrameCodeBlockPropsType = {|
   columnNum: ?number,
   contextSize: number,
   main: boolean,
+  theme: any,
 |};
 
 // Exact type workaround for spread operator.
@@ -29,7 +37,7 @@ type StackFrameCodeBlockPropsType = {|
 type Exact<T> = $Shape<T>;
 
 function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
-  const { lines, lineNum, columnNum, contextSize, main } = props;
+  const { lines, lineNum, columnNum, contextSize, main, theme } = props;
   const sourceCode = [];
   let whiteSpace = Infinity;
   lines.forEach(function(e) {
@@ -96,7 +104,7 @@ function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
     }
   }
 
-  return <CodeBlock main={main} codeHTML={code.innerHTML} />;
+  return <CodeBlock main={main} codeHTML={code.innerHTML} theme={theme} />;
 }
 
 export default StackFrameCodeBlock;

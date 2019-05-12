@@ -14,6 +14,12 @@ const lightTheme = {
   primaryPreColor: 'inherit',
   secondaryPreBackground: 'rgba(251, 245, 180, 0.3)',
   secondaryPreColor: 'inherit',
+  footer: '#878e91',
+  anchorColor: '#878e91',
+  toggleColor: '#878e91',
+  closeColor: '#293238',
+  primaryErrorBackground: '#fccfcf',
+  secondaryErrorBackground: '#fbf5b4',
 };
 
 const darkTheme = {
@@ -24,10 +30,15 @@ const darkTheme = {
   primaryPreColor: '#fccfcf',
   secondaryPreBackground: 'rgba(251, 245, 180, 0.3)',
   secondaryPreColor: '#fbf5b4',
+  footer: '#878e91',
+  anchorColor: '#878e91',
+  toggleColor: '#878e91',
+  closeColor: '#293238',
+  primaryErrorBackground: '#fccfcf',
+  secondaryErrorBackground: '#fbf5b4',
 };
 
 const black = '#293238',
-  carbon = '#353535',
   darkGray = '#878e91',
   red = '#ce1126',
   redTransparent = 'rgba(206, 17, 38, 0.05)',
@@ -55,21 +66,10 @@ const overlayStyle = theme => ({
   'background-color': theme.background,
 });
 
-const primaryErrorStyle = {
-  'background-color': lightRed,
-};
-
-const secondaryErrorStyle = {
-  'background-color': yellow,
-};
-
 export {
   iframeStyle,
   overlayStyle,
-  primaryErrorStyle,
-  secondaryErrorStyle,
   black,
-  carbon,
   darkGray,
   lightRed,
   strongRedTransparent,

@@ -27,11 +27,18 @@ type Props = {|
   errorName: string,
   contextSize: number,
   editorHandler: (errorLoc: ErrorLocation) => void,
+  theme: any,
 |};
 
 class StackTrace extends Component<Props> {
   renderFrames() {
-    const { stackFrames, errorName, contextSize, editorHandler } = this.props;
+    const {
+      stackFrames,
+      errorName,
+      contextSize,
+      editorHandler,
+      theme,
+    } = this.props;
     const renderedFrames = [];
     let hasReachedAppCode = false,
       currentBundle = [],
@@ -56,6 +63,7 @@ class StackTrace extends Component<Props> {
           critical={index === 0}
           showCode={!shouldCollapse}
           editorHandler={editorHandler}
+          theme={theme}
         />
       );
       const lastElement = index === stackFrames.length - 1;

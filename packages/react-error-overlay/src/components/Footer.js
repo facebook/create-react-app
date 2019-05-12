@@ -7,23 +7,23 @@
 
 /* @flow */
 import React from 'react';
-import { darkGray } from '../styles';
 
-const footerStyle = {
+const footerStyle = theme => ({
   fontFamily: 'sans-serif',
-  color: darkGray,
+  color: theme.footer,
   marginTop: '0.5rem',
   flex: '0 0 auto',
-};
+});
 
 type FooterPropsType = {|
   line1: string,
   line2?: string,
+  theme: any,
 |};
 
 function Footer(props: FooterPropsType) {
   return (
-    <div style={footerStyle}>
+    <div style={footerStyle(props.theme)}>
       {props.line1}
       <br />
       {props.line2}

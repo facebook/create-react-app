@@ -45,7 +45,10 @@ class CompileErrorContainer extends PureComponent<Props, void> {
             theme={theme}
           />
         </div>
-        <Footer line1="This error occurred during the build time and cannot be dismissed." />
+        <Footer
+          theme={theme}
+          line1="This error occurred during the build time and cannot be dismissed."
+        />
       </ErrorOverlay>
     );
   }

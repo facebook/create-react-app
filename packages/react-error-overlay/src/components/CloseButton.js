@@ -7,10 +7,9 @@
 
 /* @flow */
 import React from 'react';
-import { black } from '../styles';
 
-const closeButtonStyle = {
-  color: black,
+const closeButtonStyle = theme => ({
+  color: theme.closeColor,
   lineHeight: '1rem',
   fontSize: '1.5rem',
   padding: '1rem',
@@ -18,15 +17,15 @@ const closeButtonStyle = {
   position: 'absolute',
   right: 0,
   top: 0,
-};
+});
 
 type CloseCallback = () => void;
-function CloseButton({ close }: {| close: CloseCallback |}) {
+function CloseButton({ close, theme }: {| close: CloseCallback, theme: any |}) {
   return (
     <span
       title="Click or press Escape to dismiss."
       onClick={close}
-      style={closeButtonStyle}
+      style={closeButtonStyle(theme)}
     >
       ×
     </span>

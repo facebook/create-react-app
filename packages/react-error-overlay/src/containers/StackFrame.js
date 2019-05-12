@@ -9,29 +9,28 @@
 import React, { Component } from 'react';
 import CodeBlock from './StackFrameCodeBlock';
 import { getPrettyURL } from '../utils/getPrettyURL';
-import { darkGray } from '../styles';
 
 import type { StackFrame as StackFrameType } from '../utils/stack-frame';
 import type { ErrorLocation } from '../utils/parseCompileError';
 
-const linkStyle = {
+const linkStyle = theme => ({
   fontSize: '0.9em',
   marginBottom: '0.9em',
-};
+});
 
-const anchorStyle = {
+const anchorStyle = theme => ({
   textDecoration: 'none',
-  color: darkGray,
+  color: theme.anchorColor,
   cursor: 'pointer',
-};
+});
 
-const codeAnchorStyle = {
+const codeAnchorStyle = theme => ({
   cursor: 'pointer',
-};
+});
 
-const toggleStyle = {
+const toggleStyle = theme => ({
   marginBottom: '1.5em',
-  color: darkGray,
+  color: theme.toggleColor,
   cursor: 'pointer',
   border: 'none',
   display: 'block',
@@ -42,7 +41,7 @@ const toggleStyle = {
   fontSize: '1em',
   padding: '0px',
   lineHeight: '1.5',
-};
+});
 
 type Props = {|
   frame: StackFrameType,
@@ -50,6 +49,7 @@ type Props = {|
   critical: boolean,
   showCode: boolean,
   editorHandler: (errorLoc: ErrorLocation) => void,
+  theme: any,
 |};
 
 type State = {|
@@ -100,7 +100,7 @@ class StackFrame extends Component<Props, State> {
   };
 
   render() {
-    const { frame, contextSize, critical, showCode } = this.props;
+    const { frame, contextSize, critical, showCode, theme } = this.props;
     const {
       fileName,
       lineNumber,
@@ -160,9 +160,9 @@ class StackFrame extends Component<Props, State> {
     return (
       <div>
         <div>{functionName}</div>
-        <div style={linkStyle}>
+        <div style={linkStyle(theme)}>
           <span
-            style={canOpenInEditor ? anchorStyle : null}
+            style={canOpenInEditor ? anchorStyle(theme) : null}
             onClick={canOpenInEditor ? this.editorHandler : null}
             onKeyDown={canOpenInEditor ? this.onKeyDown : null}
             tabIndex={canOpenInEditor ? '0' : null}
@@ -174,11 +174,11 @@ class StackFrame extends Component<Props, State> {
           <span>
             <span
               onClick={canOpenInEditor ? this.editorHandler : null}
-              style={canOpenInEditor ? codeAnchorStyle : null}
+              style={canOpenInEditor ? codeAnchorStyle(theme) : null}
             >
-              <CodeBlock {...codeBlockProps} />
+              <CodeBlock {...codeBlockProps} theme={theme} />
             </span>
-            <button style={toggleStyle} onClick={this.toggleCompiled}>
+            <button style={toggleStyle(theme)} onClick={this.toggleCompiled}>
               {'View ' + (compiled ? 'source' : 'compiled')}
             </button>
           </span>
