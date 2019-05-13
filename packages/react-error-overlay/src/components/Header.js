@@ -7,8 +7,9 @@
 
 /* @flow */
 import React from 'react';
+import type { Theme } from '../styles';
 
-const headerStyle = theme => ({
+const headerStyle = (theme: Theme) => ({
   fontSize: '2em',
   fontFamily: 'sans-serif',
   color: theme.headerColor,
@@ -23,7 +24,7 @@ const headerStyle = theme => ({
 
 type HeaderPropType = {|
   headerText: string,
-  theme: any,
+  theme: Theme,
 |};
 
 function Header(props: HeaderPropType) {

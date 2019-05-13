@@ -9,6 +9,7 @@
 import React, { Component } from 'react';
 
 import type { Element as ReactElement } from 'react';
+import type { Theme } from '../styles';
 
 const _collapsibleStyle = {
   cursor: 'pointer',
@@ -22,14 +23,14 @@ const _collapsibleStyle = {
   lineHeight: '1.5',
 };
 
-const collapsibleCollapsedStyle = theme => ({
+const collapsibleCollapsedStyle = (theme: Theme) => ({
   ..._collapsibleStyle,
   color: theme.color,
   background: theme.background,
   marginBottom: '1.5em',
 });
 
-const collapsibleExpandedStyle = theme => ({
+const collapsibleExpandedStyle = (theme: Theme) => ({
   ..._collapsibleStyle,
   color: theme.color,
   background: theme.background,
@@ -38,7 +39,7 @@ const collapsibleExpandedStyle = theme => ({
 
 type Props = {|
   children: ReactElement<any>[],
-  theme: any,
+  theme: Theme,
 |};
 
 type State = {|

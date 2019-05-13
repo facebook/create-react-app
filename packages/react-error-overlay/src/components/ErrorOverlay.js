@@ -9,8 +9,9 @@
 import React, { Component } from 'react';
 
 import type { Node as ReactNode } from 'react';
+import type { Theme } from '../styles';
 
-const overlayStyle = theme => ({
+const overlayStyle = (theme: Theme) => ({
   position: 'relative',
   display: 'inline-flex',
   flexDirection: 'column',
@@ -33,7 +34,7 @@ const overlayStyle = theme => ({
 type Props = {|
   children: ReactNode,
   shortcutHandler?: (eventKey: string) => void,
-  theme: any,
+  theme: Theme,
 |};
 
 type State = {|

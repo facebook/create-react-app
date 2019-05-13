@@ -6,7 +6,43 @@
  */
 
 /* @flow */
-const lightTheme = {
+export type Theme = {|
+  // Colors for components styles
+  background: string,
+  color: string,
+  headerColor: string,
+  primaryPreBackground: string,
+  primaryPreColor: string,
+  secondaryPreBackground: string,
+  secondaryPreColor: string,
+  footer: string,
+  anchorColor: string,
+  toggleColor: string,
+  closeColor: string,
+  primaryErrorBackground: string,
+  secondaryErrorBackground: string,
+  navBackground: string,
+  navArrow: string,
+  // ANSI colors
+  // Light color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
+  // base00: string; // Default Background
+  base01: string, // Lighter Background (Used for status bars)
+  // base02: string, // Selection Background
+  base03: string, // Comments, Invisibles, Line Highlighting
+  // base04: string, // Dark Foreground (Used for status bars)
+  base05: string, // Default Foreground, Caret, Delimiters, Operators
+  // base06: string, // Light Foreground (Not often used)
+  // base07: string, // Light Background (Not often used)
+  base08: string, // Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+  // base09: string, // Integers, Boolean, Constants, XML Attributes, Markup Link Url
+  // base0A: string, // Classes, Markup Bold, Search Text Background
+  base0B: string, // Strings, Inherited Class, Markup Code, Diff Inserted
+  base0C: string, // Support, Regular Expressions, Escape Characters, Markup Quotes
+  // base0D: string, // Functions, Methods, Attribute IDs, Headings
+  base0E: string, // Keywords, Storage, Selector, Markup Italic, Diff Changed
+  // base0F: string, // Deprecated, Opening/Closing Embedded Language Tags e.g. <?php ?>
+|};
+const lightTheme: Theme = {
   // Colors for components styles
   background: 'white',
   color: 'black',
@@ -43,7 +79,7 @@ const lightTheme = {
   // const base0F = '333333'; // Deprecated, Opening/Closing Embedded Language Tags e.g. <?php ?>
 };
 
-const darkTheme = {
+const darkTheme: Theme = {
   // Colors for components styles
   background: '#353535',
   color: 'white',
@@ -90,7 +126,7 @@ const iframeStyle = {
   'z-index': 2147483647,
 };
 
-const overlayStyle = theme => ({
+const overlayStyle = (theme: Theme) => ({
   width: '100%',
   height: '100%',
   'box-sizing': 'border-box',

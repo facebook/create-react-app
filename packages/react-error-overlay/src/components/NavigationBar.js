@@ -7,6 +7,7 @@
 
 /* @flow */
 import React from 'react';
+import type { Theme } from '../styles';
 
 const navigationBarStyle = {
   marginBottom: '0.5rem',
@@ -23,7 +24,7 @@ const _navButtonStyle = {
   cursor: 'pointer',
 };
 
-const leftButtonStyle = theme => ({
+const leftButtonStyle = (theme: Theme) => ({
   ..._navButtonStyle,
   backgroundColor: theme.navBackground,
   color: theme.navArrow,
@@ -32,7 +33,7 @@ const leftButtonStyle = theme => ({
   marginRight: '1px',
 });
 
-const rightButtonStyle = theme => ({
+const rightButtonStyle = (theme: Theme) => ({
   ..._navButtonStyle,
   backgroundColor: theme.navBackground,
   color: theme.navArrow,
@@ -47,7 +48,7 @@ type NavigationBarPropsType = {|
   totalErrors: number,
   previous: Callback,
   next: Callback,
-  theme: any,
+  theme: Theme,
 |};
 
 function NavigationBar(props: NavigationBarPropsType) {

@@ -12,14 +12,15 @@ import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
 import type { ScriptLine } from '../utils/stack-frame';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
+import type { Theme } from '../styles';
 
 import { codeFrameColumns } from '@babel/code-frame';
 
-const primaryErrorStyle = theme => ({
+const primaryErrorStyle = (theme: Theme) => ({
   'background-color': theme.primaryErrorBackground,
 });
 
-const secondaryErrorStyle = theme => ({
+const secondaryErrorStyle = (theme: Theme) => ({
   'background-color': theme.secondaryErrorBackground,
 });
 
@@ -29,7 +30,7 @@ type StackFrameCodeBlockPropsType = {|
   columnNum: ?number,
   contextSize: number,
   main: boolean,
-  theme: any,
+  theme: Theme,
 |};
 
 // Exact type workaround for spread operator.

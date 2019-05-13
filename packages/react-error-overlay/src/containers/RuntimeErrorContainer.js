@@ -15,12 +15,13 @@ import Footer from '../components/Footer';
 
 import type { ErrorRecord } from './RuntimeError';
 import type { ErrorLocation } from '../utils/parseCompileError';
+import type { Theme } from '../styles';
 
 type Props = {|
   errorRecords: ErrorRecord[],
   close: () => void,
   editorHandler: (errorLoc: ErrorLocation) => void,
-  theme: any,
+  theme: Theme,
 |};
 
 type State = {|

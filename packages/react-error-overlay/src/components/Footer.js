@@ -7,8 +7,9 @@
 
 /* @flow */
 import React from 'react';
+import type { Theme } from '../styles';
 
-const footerStyle = theme => ({
+const footerStyle = (theme: Theme) => ({
   fontFamily: 'sans-serif',
   color: theme.footer,
   marginTop: '0.5rem',
@@ -18,7 +19,7 @@ const footerStyle = theme => ({
 type FooterPropsType = {|
   line1: string,
   line2?: string,
-  theme: any,
+  theme: Theme,
 |};
 
 function Footer(props: FooterPropsType) {

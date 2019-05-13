@@ -14,6 +14,7 @@ import { isBultinErrorName } from '../utils/isBultinErrorName';
 
 import type { StackFrame as StackFrameType } from '../utils/stack-frame';
 import type { ErrorLocation } from '../utils/parseCompileError';
+import type { Theme } from '../styles';
 
 const traceStyle = {
   fontSize: '1em',
@@ -27,7 +28,7 @@ type Props = {|
   errorName: string,
   contextSize: number,
   editorHandler: (errorLoc: ErrorLocation) => void,
-  theme: any,
+  theme: Theme,
 |};
 
 class StackTrace extends Component<Props> {

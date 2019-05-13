@@ -7,6 +7,7 @@
 
 /* @flow */
 import React from 'react';
+import type { Theme } from '../styles';
 
 const _preStyle = {
   position: 'relative',
@@ -26,7 +27,7 @@ const codeStyle = {
 type CodeBlockPropsType = {|
   main: boolean,
   codeHTML: string,
-  theme: any,
+  theme: Theme,
 |};
 
 function CodeBlock(props: CodeBlockPropsType) {

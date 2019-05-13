@@ -14,6 +14,7 @@ import CodeBlock from '../components/CodeBlock';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
 import parseCompileError from '../utils/parseCompileError';
 import type { ErrorLocation } from '../utils/parseCompileError';
+import type { Theme } from '../styles';
 
 const codeAnchorStyle = {
   cursor: 'pointer',
@@ -22,7 +23,7 @@ const codeAnchorStyle = {
 type Props = {|
   error: string,
   editorHandler: (errorLoc: ErrorLocation) => void,
-  theme: any,
+  theme: Theme,
 |};
 
 class CompileErrorContainer extends PureComponent<Props, void> {

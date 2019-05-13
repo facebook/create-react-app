@@ -12,23 +12,24 @@ import { getPrettyURL } from '../utils/getPrettyURL';
 
 import type { StackFrame as StackFrameType } from '../utils/stack-frame';
 import type { ErrorLocation } from '../utils/parseCompileError';
+import type { Theme } from '../styles';
 
-const linkStyle = theme => ({
+const linkStyle = (theme: Theme) => ({
   fontSize: '0.9em',
   marginBottom: '0.9em',
 });
 
-const anchorStyle = theme => ({
+const anchorStyle = (theme: Theme) => ({
   textDecoration: 'none',
   color: theme.anchorColor,
   cursor: 'pointer',
 });
 
-const codeAnchorStyle = theme => ({
+const codeAnchorStyle = (theme: Theme) => ({
   cursor: 'pointer',
 });
 
-const toggleStyle = theme => ({
+const toggleStyle = (theme: Theme) => ({
   marginBottom: '1.5em',
   color: theme.toggleColor,
   cursor: 'pointer',
@@ -49,7 +50,7 @@ type Props = {|
   critical: boolean,
   showCode: boolean,
   editorHandler: (errorLoc: ErrorLocation) => void,
-  theme: any,
+  theme: Theme,
 |};
 
 type State = {|

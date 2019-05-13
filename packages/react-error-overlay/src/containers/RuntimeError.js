@@ -12,6 +12,7 @@ import StackTrace from './StackTrace';
 
 import type { StackFrame } from '../utils/stack-frame';
 import type { ErrorLocation } from '../utils/parseCompileError';
+import type { Theme } from '../styles';
 
 const wrapperStyle = {
   display: 'flex',
@@ -28,7 +29,7 @@ export type ErrorRecord = {|
 type Props = {|
   errorRecord: ErrorRecord,
   editorHandler: (errorLoc: ErrorLocation) => void,
-  theme: any,
+  theme: Theme,
 |};
 
 function RuntimeError({ errorRecord, editorHandler, theme }: Props) {
