@@ -20,6 +20,8 @@ const lightTheme = {
   closeColor: '#293238',
   primaryErrorBackground: '#fccfcf',
   secondaryErrorBackground: '#fbf5b4',
+  navBackground: 'rgba(206, 17, 38, 0.05)',
+  navArrow: '#ce1126',
 };
 
 const darkTheme = {
@@ -33,9 +35,11 @@ const darkTheme = {
   footer: '#878e91',
   anchorColor: '#878e91',
   toggleColor: '#878e91',
-  closeColor: '#293238',
+  closeColor: '#ffffff',
   primaryErrorBackground: '#fccfcf',
   secondaryErrorBackground: '#fbf5b4',
+  navBackground: 'rgba(206, 17, 38, 0.05)',
+  navArrow: '#ce1126',
 };
 
 const black = '#293238',

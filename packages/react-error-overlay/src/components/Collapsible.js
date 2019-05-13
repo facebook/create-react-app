@@ -7,36 +7,38 @@
 
 /* @flow */
 import React, { Component } from 'react';
-import { black } from '../styles';
 
 import type { Element as ReactElement } from 'react';
 
 const _collapsibleStyle = {
-  color: black,
   cursor: 'pointer',
   border: 'none',
   display: 'block',
   width: '100%',
   textAlign: 'left',
-  background: '#fff',
   fontFamily: 'Consolas, Menlo, monospace',
   fontSize: '1em',
   padding: '0px',
   lineHeight: '1.5',
 };
 
-const collapsibleCollapsedStyle = {
+const collapsibleCollapsedStyle = theme => ({
   ..._collapsibleStyle,
+  color: theme.color,
+  background: theme.background,
   marginBottom: '1.5em',
-};
+});
 
-const collapsibleExpandedStyle = {
+const collapsibleExpandedStyle = theme => ({
   ..._collapsibleStyle,
+  color: theme.color,
+  background: theme.background,
   marginBottom: '0.6em',
-};
+});
 
 type Props = {|
   children: ReactElement<any>[],
+  theme: any,
 |};
 
 type State = {|
@@ -57,12 +59,15 @@ class Collapsible extends Component<Props, State> {
   render() {
     const count = this.props.children.length;
     const collapsed = this.state.collapsed;
+    const { theme } = this.props;
     return (
       <div>
         <button
           onClick={this.toggleCollapsed}
           style={
-            collapsed ? collapsibleCollapsedStyle : collapsibleExpandedStyle
+            collapsed
+              ? collapsibleCollapsedStyle(theme)
+              : collapsibleExpandedStyle(theme)
           }
         >
           {(collapsed ? '▶' : '▼') +
@@ -73,7 +78,7 @@ class Collapsible extends Component<Props, State> {
           {this.props.children}
           <button
             onClick={this.toggleCollapsed}
-            style={collapsibleExpandedStyle}
+            style={collapsibleExpandedStyle(theme)}
           >
             {`▲ ${count} stack frames were expanded.`}
           </button>

@@ -78,7 +78,7 @@ class StackTrace extends Component<Props> {
         } else if (currentBundle.length > 1) {
           bundleCount++;
           renderedFrames.push(
-            <Collapsible key={'bundle-' + bundleCount}>
+            <Collapsible key={'bundle-' + bundleCount} theme={theme}>
               {currentBundle}
             </Collapsible>
           );

@@ -72,6 +72,7 @@ class RuntimeErrorContainer extends PureComponent<Props, State> {
             totalErrors={totalErrors}
             previous={this.previous}
             next={this.next}
+            theme={theme}
           />
         )}
         <RuntimeError
