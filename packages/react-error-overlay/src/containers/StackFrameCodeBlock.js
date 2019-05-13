@@ -78,7 +78,7 @@ function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
       linesBelow: contextSize,
     }
   );
-  const htmlHighlight = generateAnsiHTML(ansiHighlight);
+  const htmlHighlight = generateAnsiHTML(ansiHighlight, theme);
   const code = document.createElement('code');
   code.innerHTML = htmlHighlight;
   absolutifyCaret(code);

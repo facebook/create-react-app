@@ -41,7 +41,7 @@ class CompileErrorContainer extends PureComponent<Props, void> {
         >
           <CodeBlock
             main={true}
-            codeHTML={generateAnsiHTML(error)}
+            codeHTML={generateAnsiHTML(error, theme)}
             theme={theme}
           />
         </div>
