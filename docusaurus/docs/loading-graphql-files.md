@@ -4,16 +4,16 @@ title: Loading .graphql Files
 sidebar_label: Loading .graphql Files
 ---
 
-To load `.gql` and `.graphql` files, first install the [`graphql.macro`](https://www.npmjs.com/package/graphql.macro) package by running:
+To load `.gql` and `.graphql` files, first install the [`graphql`](https://www.npmjs.com/package/graphql) and [`graphql.macro`](https://www.npmjs.com/package/graphql.macro) packages by running:
 
 ```sh
-npm install --save graphql.macro
+npm install --save graphql graphql.macro
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add graphql.macro
+yarn add graphql graphql.macro
 ```
 
 Then, whenever you want to load `.gql` or `.graphql` files, import the `loader` from the macro package:
@@ -27,13 +27,11 @@ const query = loader('./foo.graphql');
 And your results get automatically inlined! This means that if the file above, `foo.graphql`, contains the following:
 
 ```graphql
-gql`
-  query {
-    hello {
-      world
-    }
+query {
+  hello {
+    world
   }
-`;
+}
 ```
 
 The previous example turns into:

@@ -1,8 +1,12 @@
 {
   "name": "react-scripts",
-  "version": "2.1.8",
+  "version": "3.0.1",
   "description": "Configuration and scripts for Create React App.",
-  "repository": "facebook/create-react-app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/create-react-app.git",
+    "directory": "packages/react-scripts"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=8.10"
@@ -29,16 +33,17 @@
     "@typescript-eslint/eslint-plugin": "1.6.0",
     "@typescript-eslint/parser": "1.6.0",
     "babel-eslint": "10.0.1",
-    "babel-jest": "24.7.1",
+    "babel-jest": "^24.8.0",
     "babel-loader": "8.0.5",
-    "babel-plugin-named-asset-import": "^0.3.1",
-    "babel-preset-react-app": "^7.0.2",
+    "babel-plugin-named-asset-import": "^0.3.2",
+    "babel-preset-react-app": "^9.0.0",
+    "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
-    "eslint": "5.16.0",
-    "eslint-config-react-app": "^3.0.8",
+    "eslint": "^5.16.0",
+    "eslint-config-react-app": "^4.0.1",
     "eslint-loader": "2.1.2",
     "eslint-plugin-flowtype": "2.50.1",
     "eslint-plugin-import": "2.16.0",
@@ -59,15 +64,17 @@
     "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
-    "postcss-normalize": "7.0.1",   
+    "postcss-normalize": "7.0.1",
     "postcss-preset-env": "6.6.0",
     "postcss-safe-parser": "4.0.1",
-    "react-app-polyfill": "^0.2.2",
-    "react-dev-utils": "^8.0.0",
+    "react-app-polyfill": "^1.0.1",
+    "react-dev-utils": "^9.0.1",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
+    "semver": "6.0.0",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.3",
+    "ts-pnp": "1.1.2",
     "url-loader": "1.1.2",
     "webpack": "4.29.6",
     "webpack-dev-server": "3.2.1",
@@ -79,7 +86,7 @@
     "react-dom": "^16.8.4"
   },
   "optionalDependencies": {
-    "fsevents": "1.2.7"
+    "fsevents": "2.0.6"
   },
   "browserslist": {
     "production": [

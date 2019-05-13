@@ -6,7 +6,7 @@ sidebar_label: Supported Browsers and Features
 
 ## Supported Browsers
 
-By default, the generated project supports all modern browsers. Support for Internet Explorer 9, 10, and 11 requires polyfills. For a minimum set of polyfills to support older browsers, use [react-app-polyfill](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md). To polyfill other language features, see the [Adding Polyfills](#adding-polyfills) section below
+By default, the generated project supports all modern browsers. Support for Internet Explorer 9, 10, and 11 requires polyfills. For a set of polyfills to support older browsers, use [react-app-polyfill](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md).
 
 ## Supported Language Features
 
@@ -26,10 +26,6 @@ While we recommend using experimental proposals with some caution, Facebook heav
 Note that **this project includes no [polyfills](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md)** by default.
 
 If you use any other ES6+ features that need **runtime support** (such as `Array.from()` or `Symbol`), make sure you are [including the appropriate polyfills manually](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md), or that the browsers you are targeting already support them.
-
-## Adding Polyfills
-
-You can install [`@babel/polyfill`](https://babeljs.io/docs/en/babel-polyfill) as a dependency in your application, and import it at the very top of your app's entry point (`src/index.js` or `src/index.tsx`) to emulate a full ES2015+ environment. Your `browerslist` configuration will be used to only include the polyfills necessary by your target browsers.
 
 ## Configuring Supported Browsers
 

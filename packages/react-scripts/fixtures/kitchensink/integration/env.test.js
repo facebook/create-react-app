@@ -43,12 +43,6 @@ describe('Integration', () => {
       }
     });
 
-    it('NODE_PATH', async () => {
-      doc = await initDOM('node-path');
-
-      expect(doc.getElementById('feature-node-path').childElementCount).toBe(4);
-    });
-
     it('PUBLIC_URL', async () => {
       doc = await initDOM('public-url');
 
