@@ -49,7 +49,7 @@ const lightTheme: Theme = {
   headerColor: '#ce1126',
   primaryPreBackground: 'rgba(206, 17, 38, 0.05)',
   primaryPreColor: 'inherit',
-  secondaryPreBackground: 'rgba(198, 134, 38, 0.3)',
+  secondaryPreBackground: 'rgba(251, 245, 180, 0.3)',
   secondaryPreColor: 'inherit',
   footer: '#878e91',
   anchorColor: '#878e91',
