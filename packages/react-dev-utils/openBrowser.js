@@ -96,7 +96,7 @@ function startBrowserProcess(browser, url) {
   // Fallback to opn
   // (It will always open new tab)
   try {
-    var options = { app: browser };
+    var options = { app: browser, wait: false };
     opn(url, options).catch(() => {}); // Prevent `unhandledRejection` error.
     return true;
   } catch (err) {
@@ -105,7 +105,7 @@ function startBrowserProcess(browser, url) {
 }
 
 /**
- * Reads the BROWSER evironment variable and decides what to do with it. Returns
+ * Reads the BROWSER environment variable and decides what to do with it. Returns
  * true if it opened a browser or ran a node.js script, otherwise false.
  */
 function openBrowser(url) {

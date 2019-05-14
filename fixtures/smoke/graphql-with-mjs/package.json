@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "apollo-boost": "0.1.16",
-    "graphql": "14.0.2",
-    "react-apollo": "2.2.1",
-    "react": "latest",
-    "react-dom": "latest"
-  }
-}

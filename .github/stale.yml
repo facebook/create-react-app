@@ -1,0 +1,61 @@
+# Configuration for probot-stale - https://github.com/probot/stale
+
+# Number of days of inactivity before an Issue or Pull Request becomes stale
+daysUntilStale: 30
+
+# Number of days of inactivity before a stale Issue or Pull Request is closed.
+# Set to false to disable. If disabled, issues still need to be closed manually, but will remain marked as stale.
+daysUntilClose: 5
+
+# Issues or Pull Requests with these labels will never be considered stale. Set to `[]` to disable
+exemptLabels:
+  - "contributions: claimed"
+  - "contributions: up for grabs!"
+  - "good first issue"
+  - "issue: announcement"
+  - "issue: bug"
+  - "issue: needs investigation"
+  - "issue: proposal"
+  - "tag: breaking change"
+  - "tag: bug fix"
+  - "tag: documentation"
+  - "tag: enhancement"
+  - "tag: internal"
+  - "tag: new feature"
+  - "tag: underlying tools"
+
+# Set to true to ignore issues in a project (defaults to false)
+exemptProjects: true
+
+# Set to true to ignore issues in a milestone (defaults to false)
+exemptMilestones: true
+
+# Label to use when marking as stale
+staleLabel: stale
+
+# Limit the number of actions per hour, from 1-30. Default is 30
+limitPerRun: 30
+
+issues:
+  # Comment to post when marking Issues as stale.
+  markComment: >
+    This issue has been automatically marked as stale because it has not had any
+    recent activity. It will be closed in 5 days if no further activity occurs.
+
+  # Comment to post when closing a stale Issue.
+  closeComment: >
+    This issue has been automatically closed because it has not had any recent
+    activity. If you have a question or comment, please open a new issue.
+
+pulls:
+  # Comment to post when marking Pull Request as stale.
+  markComment: >
+    This pull request has been automatically marked as stale because it has not
+    had any recent activity. It will be closed in 5 days if no further activity
+    occurs.
+
+  # Comment to post when closing a stale Pull Request.
+  closeComment: >
+    This pull request has been automatically closed because it has not had any
+    recent activity. If you have a question or comment, please open a new
+    issue. Thank you for your contribution!

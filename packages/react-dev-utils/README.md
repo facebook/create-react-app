@@ -3,8 +3,8 @@
 This package includes some utilities used by [Create React App](https://github.com/facebook/create-react-app).<br>
 Please refer to its documentation:
 
-- [Getting Started](https://github.com/facebook/create-react-app/blob/master/README.md#getting-started) – How to create a new app.
-- [User Guide](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+- [Getting Started](https://facebook.github.io/create-react-app/docs/getting-started) – How to create a new app.
+- [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
 
 ## Usage in Create React App Projects
 
@@ -12,7 +12,7 @@ These utilities come by default with [Create React App](https://github.com/faceb
 
 ## Usage Outside of Create React App
 
-If you don’t use Create React App, or if you [ejected](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-run-eject), you may keep using these utilities. Their development will be aligned with Create React App, so major versions of these utilities may come out relatively often. Feel free to fork or copy and paste them into your projects if you’d like to have more control over them, or feel free to use the old versions. Not all of them are React-specific, but we might make some of them more React-specific in the future.
+If you don’t use Create React App, or if you [ejected](https://facebook.github.io/create-react-app/docs/available-scripts#npm-run-eject), you may keep using these utilities. Their development will be aligned with Create React App, so major versions of these utilities may come out relatively often. Feel free to fork or copy and paste them into your projects if you’d like to have more control over them, or feel free to use the old versions. Not all of them are React-specific, but we might make some of them more React-specific in the future.
 
 ### Entry Points
 
@@ -325,9 +325,19 @@ printHostingInstructions(appPackage, publicUrl, publicPath, 'build', true);
 
 Returns a Promise resolving to either `defaultPort` or next available port if the user confirms it is okay to do. If the port is taken and the user has refused to use another port, or if the terminal is not interactive and can’t present user with the choice, resolves to `null`.
 
-##### `createCompiler(webpack: Function, config: Object, appName: string, urls: Object, useYarn: boolean): WebpackCompiler`
+##### `createCompiler(args: Object): WebpackCompiler`
 
-Creates a Webpack compiler instance for WebpackDevServer with built-in helpful messages. Takes the `require('webpack')` entry point as the first argument. To provide the `urls` argument, use `prepareUrls()` described below.
+Creates a Webpack compiler instance for WebpackDevServer with built-in helpful messages.
+
+The `args` object accepts a number of properties:
+
+- **appName** `string`: The name that will be printed to the terminal.
+- **config** `Object`: The webpack configuration options to be provided to the webpack constructor.
+- **devSocket** `Object`: Required if `useTypeScript` is `true`. This object should include `errors` and `warnings` which are functions accepting an array of errors or warnings emitted by the type checking. This is useful when running `fork-ts-checker-webpack-plugin` with `async: true` to report errors that are emitted after the webpack build is complete.
+- **urls** `Object`: To provide the `urls` argument, use `prepareUrls()` described below.
+- **useYarn** `boolean`: If `true`, yarn instructions will be emitted in the terminal instead of npm.
+- **useTypeScript** `boolean`: If `true`, TypeScript type checking will be enabled. Be sure to provide the `devSocket` argument above if this is set to `true`.
+- **webpack** `function`: A reference to the webpack constructor.
 
 ##### `prepareProxy(proxySetting: string, appPublicFolder: string): Object`
 
