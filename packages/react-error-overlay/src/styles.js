@@ -8,23 +8,23 @@
 /* @flow */
 export type Theme = {|
   // Colors for components styles
-  background: string,
-  color: string,
-  headerColor: string,
-  primaryPreBackground: string,
-  primaryPreColor: string,
-  secondaryPreBackground: string,
-  secondaryPreColor: string,
-  footer: string,
-  anchorColor: string,
-  toggleColor: string,
-  closeColor: string,
+  background: string, // Page background
+  color: string, // Base text
+  headerColor: string, // Header text
+  primaryPreBackground: string, // <pre/> Error background
+  primaryPreColor: string, // <pre/> Error text
+  secondaryPreBackground: string, // <pre/> Warning background
+  secondaryPreColor: string, // <pre/> Warning text
+  footer: string, // Footer text
+  anchorColor: string, // Link color
+  toggleBackground: string, // Toggle stack background
+  toggleColor: string, // Toggle stack text
+  closeColor: string, // Close button color
   primaryErrorBackground: string,
   secondaryErrorBackground: string,
-  navBackground: string,
-  navArrow: string,
+  navBackground: string, // Navigation arrow background
+  navArrow: string, // Navigation arrow color
   // ANSI colors
-  // Light color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
   // base00: string; // Default Background
   base01: string, // Lighter Background (Used for status bars)
   // base02: string, // Selection Background
@@ -49,16 +49,18 @@ const lightTheme: Theme = {
   headerColor: '#ce1126',
   primaryPreBackground: 'rgba(206, 17, 38, 0.05)',
   primaryPreColor: 'inherit',
-  secondaryPreBackground: 'rgba(251, 245, 180, 0.3)',
+  secondaryPreBackground: 'rgba(198, 134, 38, 0.3)',
   secondaryPreColor: 'inherit',
   footer: '#878e91',
   anchorColor: '#878e91',
+  toggleBackground: 'transparent',
   toggleColor: '#878e91',
   closeColor: '#293238',
   primaryErrorBackground: '#fccfcf',
   secondaryErrorBackground: '#fbf5b4',
   navBackground: 'rgba(206, 17, 38, 0.05)',
   navArrow: '#ce1126',
+  // Light color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
   // base00: 'ffffff',
   base01: 'f5f5f5',
   // base02: 'c8c8fa',
@@ -81,35 +83,37 @@ const darkTheme: Theme = {
   // Colors for components styles
   background: '#353535',
   color: 'white',
-  headerColor: '#fccfcf',
-  primaryPreBackground: 'rgba(206, 17, 38, 0.15)',
+  headerColor: '#e83b46',
+  primaryPreBackground: 'rgba(206, 17, 38, 0.1)',
   primaryPreColor: '#fccfcf',
-  secondaryPreBackground: 'rgba(251, 245, 180, 0.3)',
+  secondaryPreBackground: 'rgba(251, 245, 180, 0.1)',
   secondaryPreColor: '#fbf5b4',
   footer: '#878e91',
   anchorColor: '#878e91',
+  toggleBackground: 'transparent',
   toggleColor: '#878e91',
   closeColor: '#ffffff',
   primaryErrorBackground: '#fccfcf',
   secondaryErrorBackground: '#fbf5b4',
-  navBackground: 'rgba(206, 17, 38, 0.05)',
+  navBackground: 'rgba(206, 17, 38, 0.2)',
   navArrow: '#ce1126',
-  // base00: 'ffffff',
-  base01: 'f5f5f5',
-  // base02: 'c8c8fa',
-  base03: '6e6e6e',
-  // base04: 'e8e8e8',
-  base05: '333333',
-  // base06: 'ffffff',
+  // Dark color scheme inspired by https://github.com/atom/base16-tomorrow-dark-theme/blob/master/styles/colors.less
+  // base00: '1d1f21',
+  base01: '282a2e',
+  // base02: '373b41',
+  base03: '969896',
+  // base04: 'b4b7b4',
+  base05: 'c5c8c6',
+  // base06: 'e0e0e0',
   // base07: 'ffffff',
-  base08: '881280',
-  // base09: '0086b3',
-  // base0A: '795da3',
-  base0B: '1155cc',
-  base0C: '994500',
-  // base0D: '795da3',
-  base0E: 'c80000',
-  // base0F: '333333',
+  base08: 'cc6666',
+  // base09: 'de935f',
+  // base0A: 'f0c674',
+  base0B: 'b5bd68',
+  base0C: '8abeb7',
+  // base0D: '81a2be',
+  base0E: 'b294bb',
+  // base0F: 'a3685a',
 };
 
 const iframeStyle = {

@@ -38,7 +38,7 @@ const toggleStyle = (theme: Theme) => ({
   display: 'block',
   width: '100%',
   textAlign: 'left',
-  background: '#fff',
+  background: theme.toggleBackground,
   fontFamily: 'Consolas, Menlo, monospace',
   fontSize: '1em',
   padding: '0px',
