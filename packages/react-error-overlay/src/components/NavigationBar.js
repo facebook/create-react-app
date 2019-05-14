@@ -6,7 +6,8 @@
  */
 
 /* @flow */
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../iframeScript';
 import type { Theme } from '../styles';
 
 const navigationBarStyle = {
@@ -48,11 +49,11 @@ type NavigationBarPropsType = {|
   totalErrors: number,
   previous: Callback,
   next: Callback,
-  theme: Theme,
 |};
 
 function NavigationBar(props: NavigationBarPropsType) {
-  const { currentError, totalErrors, previous, next, theme } = props;
+  const theme = useContext(ThemeContext);
+  const { currentError, totalErrors, previous, next } = props;
   return (
     <div style={navigationBarStyle}>
       <span style={buttonContainerStyle}>

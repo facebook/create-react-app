@@ -6,8 +6,8 @@
  */
 
 /* @flow */
-import React from 'react';
-import type { Theme } from '../styles';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../iframeScript';
 
 const _preStyle = {
   position: 'relative',
@@ -27,11 +27,10 @@ const codeStyle = {
 type CodeBlockPropsType = {|
   main: boolean,
   codeHTML: string,
-  theme: Theme,
 |};
 
-function CodeBlock(props: CodeBlockPropsType) {
-  const { main, codeHTML, theme } = props;
+function CodeBlock({ main, codeHTML }: CodeBlockPropsType) {
+  const theme = useContext(ThemeContext);
   const primaryPreStyle = {
     ..._preStyle,
     backgroundColor: theme.primaryPreBackground,

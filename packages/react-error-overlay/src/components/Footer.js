@@ -6,7 +6,8 @@
  */
 
 /* @flow */
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../iframeScript';
 import type { Theme } from '../styles';
 
 const footerStyle = (theme: Theme) => ({
@@ -19,12 +20,12 @@ const footerStyle = (theme: Theme) => ({
 type FooterPropsType = {|
   line1: string,
   line2?: string,
-  theme: Theme,
 |};
 
 function Footer(props: FooterPropsType) {
+  const theme = useContext(ThemeContext);
   return (
-    <div style={footerStyle(props.theme)}>
+    <div style={footerStyle(theme)}>
       {props.line1}
       <br />
       {props.line2}

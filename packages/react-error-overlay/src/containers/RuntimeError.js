@@ -12,7 +12,6 @@ import StackTrace from './StackTrace';
 
 import type { StackFrame } from '../utils/stack-frame';
 import type { ErrorLocation } from '../utils/parseCompileError';
-import type { Theme } from '../styles';
 
 const wrapperStyle = {
   display: 'flex',
@@ -29,10 +28,9 @@ export type ErrorRecord = {|
 type Props = {|
   errorRecord: ErrorRecord,
   editorHandler: (errorLoc: ErrorLocation) => void,
-  theme: Theme,
 |};
 
-function RuntimeError({ errorRecord, editorHandler, theme }: Props) {
+function RuntimeError({ errorRecord, editorHandler }: Props) {
   const { error, unhandledRejection, contextSize, stackFrames } = errorRecord;
   const errorName = unhandledRejection
     ? 'Unhandled Rejection (' + error.name + ')'
@@ -56,13 +54,12 @@ function RuntimeError({ errorRecord, editorHandler, theme }: Props) {
 
   return (
     <div style={wrapperStyle}>
-      <Header theme={theme} headerText={headerText} />
+      <Header headerText={headerText} />
       <StackTrace
         stackFrames={stackFrames}
         errorName={errorName}
         contextSize={contextSize}
         editorHandler={editorHandler}
-        theme={theme}
       />
     </div>
   );

@@ -59,24 +59,22 @@ const lightTheme: Theme = {
   secondaryErrorBackground: '#fbf5b4',
   navBackground: 'rgba(206, 17, 38, 0.05)',
   navArrow: '#ce1126',
-  // ANSI colors
-  // Color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
-  // const base00 = 'ffffff'; // Default Background
-  base01: 'f5f5f5', // Lighter Background (Used for status bars)
-  // const base02 = 'c8c8fa'; // Selection Background
-  base03: '6e6e6e', // Comments, Invisibles, Line Highlighting
-  // const base04 = 'e8e8e8'; // Dark Foreground (Used for status bars)
-  base05: '333333', // Default Foreground, Caret, Delimiters, Operators
-  // const base06 = 'ffffff'; // Light Foreground (Not often used)
-  // const base07 = 'ffffff'; // Light Background (Not often used)
-  base08: '881280', // Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
-  // const base09 = '0086b3'; // Integers, Boolean, Constants, XML Attributes, Markup Link Url
-  // const base0A = '795da3'; // Classes, Markup Bold, Search Text Background
-  base0B: '1155cc', // Strings, Inherited Class, Markup Code, Diff Inserted
-  base0C: '994500', // Support, Regular Expressions, Escape Characters, Markup Quotes
-  // const base0D = '795da3'; // Functions, Methods, Attribute IDs, Headings
-  base0E: 'c80000', // Keywords, Storage, Selector, Markup Italic, Diff Changed
-  // const base0F = '333333'; // Deprecated, Opening/Closing Embedded Language Tags e.g. <?php ?>
+  // base00: 'ffffff',
+  base01: 'f5f5f5',
+  // base02: 'c8c8fa',
+  base03: '6e6e6e',
+  // base04: 'e8e8e8',
+  base05: '333333',
+  // base06: 'ffffff',
+  // base07: 'ffffff',
+  base08: '881280',
+  // base09: '0086b3',
+  // base0A: '795da3',
+  base0B: '1155cc',
+  base0C: '994500',
+  // base0D: '795da3',
+  base0E: 'c80000',
+  // base0F: '333333',
 };
 
 const darkTheme: Theme = {
@@ -96,24 +94,22 @@ const darkTheme: Theme = {
   secondaryErrorBackground: '#fbf5b4',
   navBackground: 'rgba(206, 17, 38, 0.05)',
   navArrow: '#ce1126',
-  // ANSI colors
-  // Color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
-  // const base00 = 'ffffff'; // Default Background
-  base01: 'f5f5f5', // Lighter Background (Used for status bars)
-  // const base02 = 'c8c8fa'; // Selection Background
-  base03: '6e6e6e', // Comments, Invisibles, Line Highlighting
-  // const base04 = 'e8e8e8'; // Dark Foreground (Used for status bars)
-  base05: '333333', // Default Foreground, Caret, Delimiters, Operators
-  // const base06 = 'ffffff'; // Light Foreground (Not often used)
-  // const base07 = 'ffffff'; // Light Background (Not often used)
-  base08: '881280', // Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
-  // const base09 = '0086b3'; // Integers, Boolean, Constants, XML Attributes, Markup Link Url
-  // const base0A = '795da3'; // Classes, Markup Bold, Search Text Background
-  base0B: '1155cc', // Strings, Inherited Class, Markup Code, Diff Inserted
-  base0C: '994500', // Support, Regular Expressions, Escape Characters, Markup Quotes
-  // const base0D = '795da3'; // Functions, Methods, Attribute IDs, Headings
-  base0E: 'c80000', // Keywords, Storage, Selector, Markup Italic, Diff Changed
-  // const base0F = '333333'; // Deprecated, Opening/Closing Embedded Language Tags e.g. <?php ?>
+  // base00: 'ffffff',
+  base01: 'f5f5f5',
+  // base02: 'c8c8fa',
+  base03: '6e6e6e',
+  // base04: 'e8e8e8',
+  base05: '333333',
+  // base06: 'ffffff',
+  // base07: 'ffffff',
+  base08: '881280',
+  // base09: '0086b3',
+  // base0A: '795da3',
+  base0B: '1155cc',
+  base0C: '994500',
+  // base0D: '795da3',
+  base0E: 'c80000',
+  // base0F: '333333',
 };
 
 const iframeStyle = {

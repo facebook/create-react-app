@@ -6,7 +6,8 @@
  */
 
 /* @flow */
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../iframeScript';
 import type { Theme } from '../styles';
 
 const headerStyle = (theme: Theme) => ({
@@ -24,11 +25,11 @@ const headerStyle = (theme: Theme) => ({
 
 type HeaderPropType = {|
   headerText: string,
-  theme: Theme,
 |};
 
 function Header(props: HeaderPropType) {
-  return <div style={headerStyle(props.theme)}>{props.headerText}</div>;
+  const theme = useContext(ThemeContext);
+  return <div style={headerStyle(theme)}>{props.headerText}</div>;
 }
 
 export default Header;

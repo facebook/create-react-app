@@ -6,7 +6,8 @@
  */
 
 /* @flow */
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../iframeScript';
 import CodeBlock from '../components/CodeBlock';
 import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
@@ -30,7 +31,6 @@ type StackFrameCodeBlockPropsType = {|
   columnNum: ?number,
   contextSize: number,
   main: boolean,
-  theme: Theme,
 |};
 
 // Exact type workaround for spread operator.
@@ -38,7 +38,8 @@ type StackFrameCodeBlockPropsType = {|
 type Exact<T> = $Shape<T>;
 
 function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
-  const { lines, lineNum, columnNum, contextSize, main, theme } = props;
+  const theme = useContext(ThemeContext);
+  const { lines, lineNum, columnNum, contextSize, main } = props;
   const sourceCode = [];
   let whiteSpace = Infinity;
   lines.forEach(function(e) {
@@ -105,7 +106,7 @@ function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
     }
   }
 
-  return <CodeBlock main={main} codeHTML={code.innerHTML} theme={theme} />;
+  return <CodeBlock main={main} codeHTML={code.innerHTML} />;
 }
 
 export default StackFrameCodeBlock;

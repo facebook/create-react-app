@@ -15,13 +15,11 @@ import Footer from '../components/Footer';
 
 import type { ErrorRecord } from './RuntimeError';
 import type { ErrorLocation } from '../utils/parseCompileError';
-import type { Theme } from '../styles';
 
 type Props = {|
   errorRecords: ErrorRecord[],
   close: () => void,
   editorHandler: (errorLoc: ErrorLocation) => void,
-  theme: Theme,
 |};
 
 type State = {|
@@ -62,27 +60,24 @@ class RuntimeErrorContainer extends PureComponent<Props, State> {
   };
 
   render() {
-    const { errorRecords, close, theme } = this.props;
+    const { errorRecords, close } = this.props;
     const totalErrors = errorRecords.length;
     return (
-      <ErrorOverlay theme={theme} shortcutHandler={this.shortcutHandler}>
-        <CloseButton theme={theme} close={close} />
+      <ErrorOverlay shortcutHandler={this.shortcutHandler}>
+        <CloseButton close={close} />
         {totalErrors > 1 && (
           <NavigationBar
             currentError={this.state.currentIndex + 1}
             totalErrors={totalErrors}
             previous={this.previous}
             next={this.next}
-            theme={theme}
           />
         )}
         <RuntimeError
           errorRecord={errorRecords[this.state.currentIndex]}
           editorHandler={this.props.editorHandler}
-          theme={theme}
         />
         <Footer
-          theme={theme}
           line1="This screen is visible only in development. It will not appear if the app crashes in production."
           line2="Open your browser’s developer console to further inspect this error."
         />
