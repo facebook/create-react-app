@@ -17,9 +17,9 @@ var gzipSize = require('gzip-size').sync;
 
 function canReadAsset(asset) {
   return (
-    /\.(js|css)$/.test(asset.name) &&
-    !/service-worker\.js/.test(asset.name) &&
-    !/precache-manifest\.[0-9a-f]+\.js/.test(asset.name)
+    /\.(js|css)$/.test(asset) &&
+    !/service-worker\.js/.test(asset) &&
+    !/precache-manifest\.[0-9a-f]+\.js/.test(asset)
   );
 }
 
@@ -37,7 +37,7 @@ function printFileSizesAfterBuild(
     .map(stats =>
       stats
         .toJson({ all: false, assets: true })
-        .assets.filter(canReadAsset)
+        .assets.filter(asset => canReadAsset(asset.name))
         .map(asset => {
           var fileContents = fs.readFileSync(path.join(root, asset.name));
           var size = gzipSize(fileContents);

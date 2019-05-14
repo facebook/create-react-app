@@ -22,6 +22,7 @@ original_yarn_registry_url=`yarn config get registry`
 
 function cleanup {
   echo 'Cleaning up.'
+  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   npm set registry "$original_npm_registry_url"
@@ -95,11 +96,9 @@ git clean -df
 # Now that we have published them, run all tests as if they were released.
 # ******************************************************************************
 
-# Smoke tests
-CI=true ./node_modules/.bin/jest --config fixtures/smoke/jest.config.js
-
-# Output tests
-CI=true ./node_modules/.bin/jest --config fixtures/output/jest.config.js
+# Run all tests
+cd test/
+CI=true ../node_modules/.bin/jest -w 2
 
 # Cleanup
 cleanup
