@@ -82,7 +82,7 @@ const run = (command, args) => {
   }
 };
 
-module.exports = function (
+module.exports = function(
   appPath,
   appName,
   verbose,
@@ -183,8 +183,19 @@ module.exports = function (
   );
 
   let command;
+  let uArgs;
   let baseArgs;
   let baseDevArgs;
+
+  if (useYarn) {
+    command = 'yarnpkg';
+    uArgs = ['remove', 'rmw-react-scripts'];
+  } else {
+    command = 'npm';
+    uArgs = ['uninstall', '-S', 'rmw-react-scripts'];
+  }
+
+  run(command, uArgs);
 
   if (useYarn) {
     command = 'yarnpkg';
@@ -203,7 +214,8 @@ module.exports = function (
   );
   if (fs.existsSync(templateDependenciesPath)) {
     const templateDependencies = require(templateDependenciesPath).dependencies;
-    const templateDevDependencies = require(templateDependenciesPath).devDependencies;
+    const templateDevDependencies = require(templateDependenciesPath)
+      .devDependencies;
     const args = baseArgs.concat(
       Object.keys(templateDependencies).map(key => {
         return `${key}@${templateDependencies[key]}`;
