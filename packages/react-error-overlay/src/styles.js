@@ -20,8 +20,6 @@ export type Theme = {|
   toggleBackground: string, // Toggle stack background
   toggleColor: string, // Toggle stack text
   closeColor: string, // Close button color
-  primaryErrorBackground: string,
-  secondaryErrorBackground: string,
   navBackground: string, // Navigation arrow background
   navArrow: string, // Navigation arrow color
   // ANSI colors
@@ -56,8 +54,6 @@ const lightTheme: Theme = {
   toggleBackground: 'transparent',
   toggleColor: '#878e91',
   closeColor: '#293238',
-  primaryErrorBackground: '#fccfcf',
-  secondaryErrorBackground: '#fbf5b4',
   navBackground: 'rgba(206, 17, 38, 0.05)',
   navArrow: '#ce1126',
   // Light color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
@@ -93,8 +89,6 @@ const darkTheme: Theme = {
   toggleBackground: 'transparent',
   toggleColor: '#878e91',
   closeColor: '#ffffff',
-  primaryErrorBackground: '#fccfcf',
-  secondaryErrorBackground: '#fbf5b4',
   navBackground: 'rgba(206, 17, 38, 0.2)',
   navArrow: '#ce1126',
   // Dark color scheme inspired by https://github.com/atom/base16-tomorrow-dark-theme/blob/master/styles/colors.less

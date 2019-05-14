@@ -9,21 +9,11 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../iframeScript';
 import CodeBlock from '../components/CodeBlock';
-import { applyStyles } from '../utils/dom/css';
 import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
 import type { ScriptLine } from '../utils/stack-frame';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
-import type { Theme } from '../styles';
 
 import { codeFrameColumns } from '@babel/code-frame';
-
-const primaryErrorStyle = (theme: Theme) => ({
-  'background-color': theme.primaryErrorBackground,
-});
-
-const secondaryErrorStyle = (theme: Theme) => ({
-  'background-color': theme.secondaryErrorBackground,
-});
 
 type StackFrameCodeBlockPropsType = {|
   lines: ScriptLine[],
@@ -99,8 +89,6 @@ function StackFrameCodeBlock(props: Exact<StackFrameCodeBlockPropsType>) {
       if (text.indexOf(' ' + lineNum + ' |') === -1) {
         continue;
       }
-      // $FlowFixMe
-      applyStyles(node, main ? primaryErrorStyle : secondaryErrorStyle);
       // eslint-disable-next-line
       break oLoop;
     }
