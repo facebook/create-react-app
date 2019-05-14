@@ -44,7 +44,7 @@
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.9.5
 ```
 
@@ -130,13 +130,13 @@ npm install --save-dev --save-exact react-scripts@0.9.5
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.9.4
 ```
 
 You may also optionally update the global command-line utility for scoped package support:
 
-```
+```sh
 npm install -g create-react-app@1.3.0
 ```
 
@@ -187,13 +187,13 @@ npm install -g create-react-app@1.3.0
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.9.3
 ```
 
 You may also optionally update the global command-line utility for offline Yarn cache support:
 
-```
+```sh
 npm install -g create-react-app@1.2.1
 ```
 
@@ -322,13 +322,13 @@ npm install -g create-react-app@1.2.1
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.9.2
 ```
 
 You may also optionally update the global command-line utility for more efficient installs (thanks [@n3tr](https://github.com/n3tr)):
 
-```
+```sh
 npm install -g create-react-app@1.1.0
 ```
 
@@ -494,7 +494,7 @@ Thanks to [@Timer](https://github.com/timer) for cutting this release.
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.9.0
 ```
 
@@ -519,13 +519,13 @@ Thanks to [@fson](https://github.com/fson) for cutting this release.
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.8.5
 ```
 
 You may also optionally update the global command-line utility:
 
-```
+```sh
 npm install -g create-react-app@1.0.3
 ```
 
@@ -621,13 +621,13 @@ npm install -g create-react-app@1.0.3
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.8.4
 ```
 
 You may also optionally update the global command-line utility:
 
-```
+```sh
 npm install -g create-react-app@1.0.2
 ```
 
@@ -662,13 +662,13 @@ npm install -g create-react-app@1.0.2
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.8.3
 ```
 
 You can optionally update the global CLI too:
 
-```
+```sh
 npm install -g create-react-app@1.0.1
 ```
 
@@ -751,7 +751,7 @@ npm install -g create-react-app@1.0.1
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.8.2
 ```
 
@@ -767,7 +767,7 @@ Thanks to [@fson](https://github.com/fson) for cutting this release.
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.8.1
 ```
 
@@ -917,13 +917,13 @@ Thanks to [@fson](https://github.com/fson) for cutting this release.
 
 You may optionally update the global command (it’s not required, but it adds Yarn support for new projects):
 
-```
+```sh
 npm install -g create-react-app@1.0.0
 ```
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.8.0
 ```
 
@@ -969,13 +969,13 @@ Thanks to [@fson](https://github.com/fson) for cutting this release.
 
 You may optionally update the global command (it’s not required):
 
-```
+```sh
 npm install -g create-react-app@0.6.0
 ```
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.7.0
 ```
 
@@ -984,7 +984,7 @@ npm install --save-dev --save-exact react-scripts@0.7.0
 #### Updating Snapshots
 
 Jest 16 includes [improvements to snapshot testing and changes to the snapshot format](https://facebook.github.io/jest/blog/2016/10/03/jest-16.html#snapshot-updates). If your project uses snapshot testing, you'll need to update the snapshot files. To update the snapshots, run:
-```
+```sh
 npm test -- -u
 ```
 
@@ -1002,7 +1002,7 @@ npm test -- -u
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.6.1
 ```
 
@@ -1020,7 +1020,7 @@ npm install --save-dev --save-exact react-scripts@0.6.1
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.6.0
 ```
 
@@ -1040,7 +1040,7 @@ npm install --save-dev --save-exact react-scripts@0.6.0
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.5.1
 ```
 
@@ -1077,7 +1077,7 @@ npm install --save-dev --save-exact react-scripts@0.5.1
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.5.0
 ```
 
@@ -1095,7 +1095,7 @@ You can no longer reference any files from `./src` in `index.html`. Instead, `pu
 
 For example, instead of:
 
-```js
+```html
 <link rel="shortcut icon" href="./src/favicon.ico">
 ```
 
@@ -1120,7 +1120,7 @@ It contained no changes to the code.
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.4.3
 ```
 
@@ -1153,13 +1153,13 @@ npm install --save-dev --save-exact react-scripts@0.4.3
 
 You may optionally update the global command (it’s not required):
 
-```
+```sh
 npm install -g create-react-app@0.4.2
 ```
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.4.2
 ```
 
@@ -1174,7 +1174,7 @@ npm install --save-dev --save-exact react-scripts@0.4.2
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.4.1
 ```
 
@@ -1191,7 +1191,7 @@ npm install --save-dev --save-exact react-scripts@0.4.1
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.4.0
 ```
 
@@ -1215,7 +1215,7 @@ If you referenced some other files from `index.html`, please file an issue to di
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.3.1
 ```
 
@@ -1239,13 +1239,13 @@ npm install --save-dev --save-exact react-scripts@0.3.1
 
 You may optionally update the global command (it’s not required):
 
-```
+```sh
 npm install -g create-react-app@0.3.0
 ```
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.3.0
 ```
 
@@ -1357,13 +1357,13 @@ Newly created projects will use `0.2.1` automatically. You **don’t** need to u
 
 You may optionally update the global command (it’s not required):
 
-```
+```sh
 npm install -g create-react-app@0.2.0
 ```
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@0.2.0
 ```
 

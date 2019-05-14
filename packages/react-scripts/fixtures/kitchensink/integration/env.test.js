@@ -9,8 +9,15 @@ import initDOM from './initDOM';
 
 describe('Integration', () => {
   describe('Environment variables', () => {
+    let doc;
+
+    afterEach(() => {
+      doc && doc.defaultView.close();
+      doc = undefined;
+    });
+
     it('file env variables', async () => {
-      const doc = await initDOM('file-env-variables');
+      doc = await initDOM('file-env-variables');
 
       expect(
         doc.getElementById('feature-file-env-original-1').textContent
@@ -34,18 +41,10 @@ describe('Integration', () => {
           'x-from-development-env'
         );
       }
-      doc.defaultView.close();
-    });
-
-    it('NODE_PATH', async () => {
-      const doc = await initDOM('node-path');
-
-      expect(doc.getElementById('feature-node-path').childElementCount).toBe(4);
-      doc.defaultView.close();
     });
 
     it('PUBLIC_URL', async () => {
-      const doc = await initDOM('public-url');
+      doc = await initDOM('public-url');
 
       const prefix =
         process.env.NODE_ENV === 'development'
@@ -57,20 +56,18 @@ describe('Integration', () => {
       expect(
         doc.querySelector('head link[rel="shortcut icon"]').getAttribute('href')
       ).toBe(`${prefix}/favicon.ico`);
-      doc.defaultView.close();
     });
 
     it('shell env variables', async () => {
-      const doc = await initDOM('shell-env-variables');
+      doc = await initDOM('shell-env-variables');
 
       expect(
         doc.getElementById('feature-shell-env-variables').textContent
       ).toBe('fromtheshell.');
-      doc.defaultView.close();
     });
 
     it('expand .env variables', async () => {
-      const doc = await initDOM('expand-env-variables');
+      doc = await initDOM('expand-env-variables');
 
       expect(doc.getElementById('feature-expand-env-1').textContent).toBe(
         'basic'
@@ -84,7 +81,6 @@ describe('Integration', () => {
       expect(
         doc.getElementById('feature-expand-env-existing').textContent
       ).toBe('fromtheshell');
-      doc.defaultView.close();
     });
   });
 });
