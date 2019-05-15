@@ -7,8 +7,42 @@
     "stylelint-config-rational-order/plugin"
   ],
   "rules": {
-    "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": true,
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "function",
+          "include",
+          "add-mixin",
+          "keyframes",
+          "define-mixin",
+          "mixin",
+          "return",
+          "extend",
+          "else",
+          "if",
+          "for"
+        ]
+      }
+    ],
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "function",
+          "include",
+          "add-mixin",
+          "keyframes",
+          "define-mixin",
+          "mixin",
+          "return",
+          "extend",
+          "else",
+          "if",
+          "for"
+        ]
+      }
+    ],
     "plugin/declaration-block-no-ignored-properties": true,
     "plugin/rational-order": true
   }
