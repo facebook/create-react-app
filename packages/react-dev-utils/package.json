@@ -67,7 +67,7 @@
     "inquirer": "6.2.2",
     "is-root": "2.0.0",
     "loader-utils": "1.2.3",
-    "opn": "5.4.0",
+    "open": "^6.3.0",
     "pkg-up": "2.0.0",
     "react-error-overlay": "^5.1.6",
     "recursive-readdir": "2.2.2",
