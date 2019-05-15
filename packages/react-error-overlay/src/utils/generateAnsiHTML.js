@@ -65,7 +65,7 @@ function generateAnsiHTML(txt: string, theme: Theme): string {
       const part = contentParts[_index].replace('\r', '');
       const color = colors(theme)[anserMap[fg]];
       if (color != null) {
-        result += '<span style="color: #' + color + ';">' + part + '</span>';
+        result += '<span style="color: ' + color + ';">' + part + '</span>';
       } else {
         if (fg != null) {
           console.log('Missing color mapping: ', fg);
