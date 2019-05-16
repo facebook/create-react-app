@@ -1,4 +1,5 @@
 import { create } from '@storybook/theming'
+import packageJson from '../package.json'
 
 export default create({
   base: 'light',
@@ -31,7 +32,7 @@ export default create({
   // inputTextColor: 'black',
   // inputBorderRadius: 4,
 
-  brandTitle: 'New React App',
+  brandTitle: packageJson.name,
   brandImage: null,
   // brandImage: 'https://edge.fscdn.org/assets/components/hf/assets/img/logos/tree-logotype-2x-750ccbd315132e50d07ad40c8e639a34.png',
 })
