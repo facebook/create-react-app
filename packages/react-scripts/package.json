@@ -7,9 +7,6 @@
   "engines": {
     "node": ">=8.10"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "bugs": {
     "url": "https://github.com/credijusto/create-react-app/issues"
   },
@@ -96,6 +93,9 @@
   },
   "optionalDependencies": {
     "fsevents": "2.0.6"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.cloud.credijusto.dev/repository/npm-hosted/"
   },
   "husky": {
     "hooks": {
