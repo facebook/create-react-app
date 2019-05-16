@@ -27,6 +27,12 @@ Run this command to get a full list of the options available:
 serve -h
 ```
 
+ > Note: there is currently a bug in the `serve` package. It sometimes returns 404 instead of routing correctly to `index.html`. If you encounter this problem, you can solve it by downgrading to version `10.1.1`:
+> ```sh
+> npm install -g serve@10.1.1
+> ```
+> You can track the issue on Github [here](https://github.com/zeit/serve/issues/525).
+
 ## Other Solutions
 
 You don’t necessarily need a static server in order to run a Create React App project in production. It works just as fine integrated into an existing dynamic one.
