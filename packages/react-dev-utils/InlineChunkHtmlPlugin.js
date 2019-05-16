@@ -8,9 +8,10 @@
 'use strict';
 
 class InlineChunkHtmlPlugin {
-  constructor(htmlWebpackPlugin, tests) {
+  constructor(htmlWebpackPlugin, tests, removeChunk = false) {
     this.htmlWebpackPlugin = htmlWebpackPlugin;
     this.tests = tests;
+    this.removeChunk = removeChunk;
   }
 
   getInlinedTag(publicPath, assets, tag) {
@@ -44,15 +45,17 @@ class InlineChunkHtmlPlugin {
         assets.bodyTags = assets.bodyTags.map(tagFunction);
       });
 
-      // Still emit the runtime chunk for users who do not use our generated
+      // Let the user choose whether to emit the runtime chunk for users who do not use our generated
       // index.html file.
-      // hooks.afterEmit.tap('InlineChunkHtmlPlugin', () => {
-      //   Object.keys(compilation.assets).forEach(assetName => {
-      //     if (this.tests.some(test => assetName.match(test))) {
-      //       delete compilation.assets[assetName];
-      //     }
-      //   });
-      // });
+      if (this.removeChunk) {
+        hooks.afterEmit.tap('InlineChunkHtmlPlugin', () => {
+          Object.keys(compilation.assets).forEach(assetName => {
+            if (this.tests.some(test => assetName.match(test))) {
+              delete compilation.assets[assetName];
+            }
+          });
+        });
+      }
     });
   }
 }
