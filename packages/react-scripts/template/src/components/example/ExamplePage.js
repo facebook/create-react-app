@@ -7,8 +7,8 @@ import axios from '@fs/zion-axios'
 import FrontierDocsCard from './FrontierDocsCard'
 import ZionCard from './ZionCard'
 import LearnReactCard from './LearnReactCard'
-import NotLoggedInCard from './NotLoggedInCard'
-import LoggedInCard from './LoggedInCard'
+import NotSignedInCard from './NotSignedInCard'
+import SignedInCard from './SignedInCard'
 
 const Grid = ({ children }) => (
   <ZionGrid>
@@ -74,7 +74,7 @@ const ExamplePage = () => {
         </Cell>
         <Cell sm="12" md="6" lg="4">
           {user.userLoading && <div>User Loading ....</div>}
-          {user.signedIn ? <LoggedInCard user={user} portrait={portrait} /> : <NotLoggedInCard />}
+          {user.signedIn ? <SignedInCard user={user} portrait={portrait} /> : <NotSignedInCard />}
         </Cell>
       </Row>
     </Grid>

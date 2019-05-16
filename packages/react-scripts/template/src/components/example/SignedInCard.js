@@ -16,7 +16,7 @@ const cardContentStyle = css`
   flex-grow: 1;
 `
 
-const LoggedInCard = ({ user, portrait }) => {
+const SignedInCard = ({ user, portrait }) => {
   const dialogOpener = useOpener()
   const { personId, contactName, displayName, gender, cisId } = user
   return (
@@ -47,4 +47,4 @@ const LoggedInCard = ({ user, portrait }) => {
   )
 }
 
-export default LoggedInCard
+export default SignedInCard

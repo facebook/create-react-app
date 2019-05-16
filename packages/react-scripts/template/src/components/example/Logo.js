@@ -2,7 +2,7 @@ import React from 'react'
 import { css } from '@emotion/core'
 import logo from './Logo.svg'
 
-const styles = color => css`
+const logoCss = color => css`
   animation: spin infinite 20s linear;
   height: 36vmin;
   max-height: 280px;
@@ -23,9 +23,6 @@ const styles = color => css`
     }
   }
 `
-
-// const Logo = () => <img src={logo} css={styles} alt={i18n.t('logo', 'Spinning Frontier Logo')} />
-
 const Logo = ({ color = 'black' }) => {
   const [svgContent, setSvgContent] = React.useState()
 
@@ -37,7 +34,7 @@ const Logo = ({ color = 'black' }) => {
 
   return (
     <div
-      css={styles(color)}
+      css={logoCss(color)}
       astyle={{ fill: 'blue' }}
       /* eslint-disable-next-line react/no-danger */
       dangerouslySetInnerHTML={{ __html: svgContent }}

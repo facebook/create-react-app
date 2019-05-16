@@ -13,7 +13,7 @@ const cardContentStyle = css`
   flex-grow: 1;
 `
 
-const NotLoggedInCard = () => (
+const NotSignedInCard = () => (
   <Card css={cardStyle}>
     <CardContent css={cardContentStyle}>
       <p>You must sign in to see this content</p>
