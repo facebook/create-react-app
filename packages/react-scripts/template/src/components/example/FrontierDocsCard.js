@@ -34,7 +34,7 @@ const FrontierDocsCard = ({ logoColor, handleLogoClick }) => (
         variant="text"
         size="small"
         color="primary"
-        href="https://familysearch.org/frontier/docs"
+        href="https://www.familysearch.org/frontier/docs"
       >
         Frontier Docs
       </Button>
