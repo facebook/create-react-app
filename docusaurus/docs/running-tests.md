@@ -340,6 +340,32 @@ script:
 
 Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React App project.
 
+### AWS CodeBuild
+
+1. Add a buildspec.yml file to your git repository.
+
+```yaml
+version: 0.2
+env:
+  variables:
+    CI: "true"
+phases:
+  install:
+    commands:
+      - echo Entered the install phase...
+      - npm install
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
+  build:
+    commands:
+      - npm build
+      - npm test
+```
+
+1. Trigger your first build with a git push.
+1. [Customize your AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) if needed.
+
 ## On your own environment
 
 #### Windows (cmd.exe)
