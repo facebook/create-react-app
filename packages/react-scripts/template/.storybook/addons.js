@@ -1,6 +1,6 @@
-import '@storybook/addon-knobs/register'
-import './propsPanel.js'
 import '@storybook/addon-actions/register'
+import './propsPanel.js'
+import '@storybook/addon-knobs/register'
 import '@storybook/addon-a11y/register'
 import '@storybook/addon-viewport/register'
 import '@fs/storybook-addons/dist/sign-in/register'
