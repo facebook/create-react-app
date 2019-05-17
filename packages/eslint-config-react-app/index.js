@@ -79,6 +79,16 @@ module.exports = {
       'no-array-constructor': 'off',
       '@typescript-eslint/no-array-constructor': 'warn',
       '@typescript-eslint/no-namespace': 'error',
+      '@typescript-eslint/no-use-before-define': [
+        'warn',
+        {
+          functions: false,
+          classes: false,
+          variables: false,
+          typedefs: false,
+        },
+      ],
+      'no-use-before-define': 'off',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
