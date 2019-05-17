@@ -73,8 +73,11 @@ const ExamplePage = () => {
           <LearnReactCard />
         </Cell>
         <Cell sm="12" md="6" lg="4">
-          {user.userLoading && <div>User Loading ....</div>}
-          {user.signedIn ? <SignedInCard user={user} portrait={portrait} /> : <NotSignedInCard />}
+          {user.signedIn ? (
+            <SignedInCard user={user} portrait={portrait} />
+          ) : (
+            <NotSignedInCard userLoading={userLoading} />
+          )}
         </Cell>
       </Row>
     </Grid>

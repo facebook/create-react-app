@@ -13,13 +13,13 @@ const cardContentStyle = css`
   flex-grow: 1;
 `
 
-const NotSignedInCard = () => (
+const NotSignedInCard = ({ userLoading }) => (
   <Card css={cardStyle}>
     <CardContent css={cardContentStyle}>
-      <p>You must sign in to see this content</p>
+      {userLoading ? <p>User loading ...</p> : <p>You must sign in to see this content</p>}
     </CardContent>
     <CardActions>
-      <Button size="small" color="primary" href="/auth/familysearch/login">
+      <Button disabled={userLoading} size="small" color="primary" href="/auth/familysearch/login">
         Sign In
       </Button>
     </CardActions>
