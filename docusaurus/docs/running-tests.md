@@ -352,11 +352,7 @@ env:
 phases:
   install:
     commands:
-      - echo Entered the install phase...
       - npm install
-  pre_build:
-    commands:
-      - echo Nothing to do in the pre_build phase...
   build:
     commands:
       - npm build
@@ -364,7 +360,7 @@ phases:
 ```
 
 1. Trigger your first build with a git push.
-1. [Customize your AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) if needed.
+1. [Customize your buildspec](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) if needed.
 
 ## On your own environment
 
