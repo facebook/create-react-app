@@ -26,4 +26,4 @@ const NotSignedInCard = ({ userLoading }) => (
   </Card>
 )
 
-export default NotLoggedInCard
+export default NotSignedInCard

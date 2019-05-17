@@ -76,7 +76,7 @@ const ExamplePage = () => {
           {user.signedIn ? (
             <SignedInCard user={user} portrait={portrait} />
           ) : (
-            <NotSignedInCard userLoading={userLoading} />
+            <NotSignedInCard userLoading={user.userLoading} />
           )}
         </Cell>
       </Row>
