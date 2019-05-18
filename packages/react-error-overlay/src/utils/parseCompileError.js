@@ -7,7 +7,7 @@ export type ErrorLocation = {|
   colNumber?: number,
 |};
 
-const filePathRegex = /^\.(\/[^/\n ]+)+\.[^/\n ]+$/;
+const filePathRegex = /^(?:\.|[A-Z]:)?(\/[^/\n ]+)+\.[^/\n ]+$/;
 
 const lineNumberRegexes = [
   // Babel syntax errors
@@ -18,6 +18,10 @@ const lineNumberRegexes = [
   // ESLint errors
   // Based on eslintFormatter in react-dev-utils
   /^Line (\d+):.+$/,
+
+  // TypeScript errors
+  // Based on typescriptFormatter in react-dev-utils
+  /^.*\((\d+),(\d+)\):$/,
 ];
 
 // Based on error formatting of webpack
