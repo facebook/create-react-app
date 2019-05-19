@@ -44,6 +44,10 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
+// If an .eslintrc is found at the root of the app, then use it
+const hasLocalEslintrc = fs.existsSync(path.relative(paths.appSrc, '.eslintrc'))
+  || fs.existsSync(path.relative(paths.appSrc, '.eslintrc.js'));
+
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
@@ -319,10 +323,10 @@ module.exports = function(webpackEnv) {
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
                 // @remove-on-eject-begin
-                baseConfig: !process.env.RS_ESLINTRC && {
+                baseConfig: !hasLocalEslintrc && {
                   extends: [require.resolve('eslint-config-react-app')],
                 },
-                useEslintrc: !!process.env.RS_ESLINTRC,
+                useEslintrc: hasLocalEslintrc,
                 ignore: false,
                 quiet: !!process.env.RS_ESLINT_QUIET,
                 // @remove-on-eject-end
