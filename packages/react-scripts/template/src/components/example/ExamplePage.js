@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from '@emotion/core'
 import { useUser } from '@fs/zion-user'
-import { Grid as ZionGrid, Row, Cell } from '@fs/zion-grid'
+import { Grid as ZionGrid, Row, Cell } from '@fs/zion-ui'
 import axios from '@fs/zion-axios'
 
 import FrontierDocsCard from './FrontierDocsCard'

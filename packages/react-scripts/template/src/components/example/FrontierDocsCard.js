@@ -1,7 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import { Card, CardActions, CardContent, CardActionArea } from '@fs/zion-card'
-import Button from '@fs/zion-button'
+import { Button, Card, CardActions, CardContent, CardActionArea } from '@fs/zion-ui'
 import Logo from './Logo'
 
 const cardStyle = css`

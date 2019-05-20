@@ -58,12 +58,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
   depsToInstall.push(
     ...[
       '@emotion/core@10',
-      '@fs/zion-avatar',
       '@fs/zion-axios',
-      '@fs/zion-button',
-      '@fs/zion-card',
-      '@fs/zion-chip',
-      '@fs/zion-dialog',
       '@fs/zion-frontend-friends',
       '@fs/zion-grid',
       '@fs/zion-locale',
@@ -73,8 +68,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@fs/zion-subnav',
       '@fs/zion-theme',
       '@fs/zion-user',
-      '@material-ui/core@4.0.0-beta.2',
-      '@material-ui/styles@4.0.0-beta.2',
+      '@fs/zion-ui',
       'i18next@15',
       'react-i18next@10',
       'prop-types@15',
