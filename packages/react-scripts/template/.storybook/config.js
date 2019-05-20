@@ -6,10 +6,9 @@ import { addReadme } from 'storybook-readme'
 import '@storybook/addon-console'
 import { withA11y } from '@storybook/addon-a11y'
 import { withKnobs } from '@storybook/addon-knobs'
-import { ThemeProvider } from '@material-ui/styles'
 import theme from './theme'
 import StyleNormalize from '@fs/zion-style-normalize'
-import zionTheme from '@fs/zion-theme'
+import { theme as zionTheme, ThemeProvider } from '@fs/zion-ui'
 
 const baseCss = css`
   // Markdown inside of stories has no padding
