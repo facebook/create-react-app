@@ -1,5 +1,3 @@
-const custom = require('@fs/react-scripts/config/zion-webpack.config.js')
-
 module.exports = async ({ config, mode }) => {
   // There are issues with storybook and lerna monorepos. Following the issue here,
   // there was a suggestion to remove the default babel-loader from the default storybook config.
@@ -10,18 +8,20 @@ module.exports = async ({ config, mode }) => {
       !(rule.use && rule.use.length && rule.use.find(({ loader }) => loader === 'babel-loader'))
   )
 
-  // https://storybook.js.org/docs/configurations/custom-webpack-config/
-  // So the react-scripts webpack has a "fallback" loader that catches almost
-  // everything. We don't want to use that, cause it interferes with the storybook loaders 
-  // that we actually want to be using
-  custom.module.rules.forEach(rule => {
-    if (rule.oneOf && !rule.oneOf[rule.oneOf.length - 1].test) {
-      rule.oneOf.pop()
-    }
-  })
+  const customBabelLoader = {
+    test: /\.(js|jsx)$/,
+    exclude: /node_modules\/(?!@fs)/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        customize: require.resolve('@fs/babel-preset-frontier/webpack-overrides'),
+        presets: [require.resolve('@fs/babel-preset-frontier')],
+        plugins: [['react-docgen', { DOC_GEN_COLLECTION_NAME: 'STORYBOOK_REACT_CLASSES' }]],
+      },
+    },
+  }
 
-  // use storybook's default rules, and then add OUR rules afterwards
-  config.module.rules = [...config.module.rules, ...custom.module.rules]
+  config.module.rules.push(customBabelLoader)
 
   return config
 }

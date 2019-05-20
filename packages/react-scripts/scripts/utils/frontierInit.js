@@ -4,7 +4,7 @@ const fs = require('fs-extra')
 const os = require('os')
 const path = require('path')
 const fsCli = require('fs-cli-goodies')
-const inquirer = require('inquirer')
+// const inquirer = require('inquirer')
 const osUtils = require('./osUtils')
 
 module.exports = {
@@ -26,21 +26,23 @@ async function promptForConfig() {
     console.log('CI detected, skipping prompts and returning defaults ...')
     return Promise.resolve({ additionalFeatures: [] })
   }
-  const questions = [
-    {
-      type: 'checkbox',
-      name: 'additionalFeatures',
-      message: 'What additional features does your app require (these are checkboxes)',
-      choices: [
-        {
-          name: 'Using a shared Polymer Component within your React App?',
-          value: 'polymer',
-        },
-      ],
-    },
-  ]
-  const answers = await inquirer.prompt(questions)
-  return answers
+  // Commenting this out for now, because we are likely going to be prompting for team owners and/or additional things soon
+  // const questions = [
+  //   {
+  //     type: 'checkbox',
+  //     name: 'additionalFeatures',
+  //     message: 'What additional features does your app require (these are checkboxes)',
+  //     choices: [
+  //       {
+  //         name: 'Using a shared Polymer Component within your React App?',
+  //         value: 'polymer',
+  //       },
+  //     ],
+  //   },
+  // ]
+  // const answers = await inquirer.prompt(questions)
+  // return answers
+  return Promise.resolve({ additionalFeatures: [] })
 }
 
 function installFrontierDependencies(appPath, appName, answers, ownPath) {
@@ -55,15 +57,16 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
 
   depsToInstall.push(
     ...[
-      '@fs/zion-axios',
-      '@fs/zion-locale',
-      '@fs/zion-user',
-      '@fs/zion-router',
-      '@fs/zion-subnav',
-      '@fs/zion-root',
-      '@fs/zion-style-normalize',
-      'http-proxy-middleware@0.19',
       '@emotion/core@10',
+      '@fs/zion-axios',
+      '@fs/zion-frontend-friends',
+      '@fs/zion-locale',
+      '@fs/zion-root',
+      '@fs/zion-router',
+      '@fs/zion-style-normalize',
+      '@fs/zion-subnav',
+      '@fs/zion-user',
+      '@fs/zion-ui',
       'i18next@15',
       'react-i18next@10',
       'prop-types@15',
@@ -72,6 +75,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
   devDepsToInstall.push(
     ...[
       '@storybook/addon-actions@5',
+      '@storybook/addon-a11y',
       '@storybook/addon-console@1',
       '@storybook/addon-info@5',
       '@storybook/addon-knobs@5',
@@ -80,13 +84,16 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       '@storybook/react@5',
       'storybook-readme@5',
       '@fs/eslint-config-frontier-react',
+      '@fs/babel-preset-frontier',
+      '@fs/storybook-addons',
       '@fs/zion-testing-library',
+      '@fs/zion-style-normalize',
       'eslint@5',
       'i18next-scanner@2',
       '@alienfast/i18next-loader@1',
       'dotenv@7',
-      'webpack@4',
       'jest-dom@3',
+      'http-proxy-middleware@0.19',
     ]
   )
 
@@ -112,12 +119,7 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
 
   syncLocales()
 
-  replaceStringInFile(
-    appPath,
-    './README.md',
-    /\{GITHUB_ORG\}\/\{GITHUB_REPO\}/g,
-    `fs-webdev/${appName}`
-  )
+  replaceStringInFile(appPath, './README.md', /\{GITHUB_REPO\}/g, appName)
 }
 
 function handlePolymerCodeAndComments(appPath, usePolymer, useHF) {
