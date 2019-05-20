@@ -1,10 +1,16 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import { Card, CardActions, CardContent } from '@fs/zion-card'
-import Button from '@fs/zion-button'
-import Chip from '@fs/zion-chip'
-import Avatar from '@fs/zion-avatar'
-import Dialog, { DialogTitle, useOpener } from '@fs/zion-dialog'
+import {
+  Button,
+  Chip,
+  Dialog,
+  DialogTitle,
+  useOpener,
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+} from '@fs/zion-ui'
 
 const cardStyle = css`
   display: flex;
