@@ -16,9 +16,7 @@ const zionGridPadding = css`
 
 const Grid = ({ children }) => (
   <ZionGrid>
-    <div css={zionGridPadding}>
-      {children}
-    </div>
+    <div css={zionGridPadding}>{children}</div>
   </ZionGrid>
 )
 

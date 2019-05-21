@@ -20,11 +20,7 @@ const mediaCardHeight = css`
 const ZionCard = () => (
   <Card css={cardStyle}>
     <CardActionArea>
-      <CardMedia
-        css={mediaCardHeight}
-        image={ZionImage}
-        title="Zion National Park"
-      />
+      <CardMedia css={mediaCardHeight} image={ZionImage} title="Zion National Park" />
     </CardActionArea>
     <CardContent css={cardContentStyle}>
       <h2>Zion</h2>

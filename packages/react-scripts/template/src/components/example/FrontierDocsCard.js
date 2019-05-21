@@ -20,9 +20,7 @@ const actionAreaCardAlignment = css`
 const FrontierDocsCard = ({ logoColor, handleLogoClick }) => (
   <Card css={cardStyle}>
     <CardActionArea onClick={handleLogoClick}>
-      <div
-        css={actionAreaCardAlignment}
-      >
+      <div css={actionAreaCardAlignment}>
         <Logo color={logoColor} />
       </div>
     </CardActionArea>
