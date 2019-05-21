@@ -14,7 +14,7 @@ addTranslations(translations)
 // or live.
 const base = window.SERVER_DATA ? new URL(window.SERVER_DATA.appPath).pathname : ''
 
-// This is abstracted from the render method to improve readability 
+// This is abstracted from the render method to improve readability
 const FrontierRoot = () => (
   // Root provides the global Frontier-react things you need
   <Root>
@@ -32,4 +32,3 @@ ReactDOM.render(<FrontierRoot />, document.getElementById('root'))
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
-    
