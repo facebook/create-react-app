@@ -33,7 +33,7 @@ const ZionCard = () => (
         variant="text"
         size="small"
         color="primary"
-        href="beta.familysearch.org/frontier/zion"
+        href="https://beta.familysearch.org/frontier/zion"
       >
         Components
       </Button>
