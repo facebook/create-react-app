@@ -13,13 +13,15 @@ const cardContentStyle = css`
   flex-grow: 1;
 `
 
+const actionAreaCardAlignment = css`
+text-align: center;
+`
+
 const FrontierDocsCard = ({ logoColor, handleLogoClick }) => (
   <Card css={cardStyle}>
     <CardActionArea onClick={handleLogoClick}>
       <div
-        css={css`
-          text-align: center;
-        `}
+        css={actionAreaCardAlignment}
       >
         <Logo color={logoColor} />
       </div>

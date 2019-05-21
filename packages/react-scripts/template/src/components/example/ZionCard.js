@@ -13,13 +13,15 @@ const cardContentStyle = css`
   flex-grow: 1;
 `
 
+const mediaCardHeight = css`
+height: 340px;
+`
+
 const ZionCard = () => (
   <Card css={cardStyle}>
     <CardActionArea>
       <CardMedia
-        css={css`
-          height: 340px;
-        `}
+        css={mediaCardHeight}
         image={ZionImage}
         title="Zion National Park"
       />

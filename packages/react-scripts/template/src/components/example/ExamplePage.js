@@ -10,13 +10,13 @@ import LearnReactCard from './LearnReactCard'
 import NotSignedInCard from './NotSignedInCard'
 import SignedInCard from './SignedInCard'
 
+const zionGridPadding = css`
+padding: 15px;
+`
+
 const Grid = ({ children }) => (
   <ZionGrid>
-    <div
-      css={css`
-        padding: 15px;
-      `}
-    >
+    <div css={zionGridPadding}>
       {children}
     </div>
   </ZionGrid>
