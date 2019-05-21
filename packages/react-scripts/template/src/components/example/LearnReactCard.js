@@ -36,7 +36,12 @@ const LearnReactCard = () => (
       >
         React Docs
       </Button>
-      <Button variant="text" size="small" color="primary">
+      <Button
+        href="https://github.com/fs-webdev/skill-building-program/tree/master/badges-active/react"
+        variant="text"
+        size="small"
+        color="primary"
+      >
         Earn your Badge
       </Button>
     </CardActions>
