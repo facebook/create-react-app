@@ -1,6 +1,6 @@
 /* eslint global-require: 0 */
 import React from 'react'
-import { css } from '@emotion/core';
+import { css } from '@emotion/core'
 import { configure, addParameters, addDecorator } from '@storybook/react'
 import { addReadme } from 'storybook-readme'
 import '@storybook/addon-console'

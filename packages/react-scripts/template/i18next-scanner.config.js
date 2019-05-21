@@ -13,4 +13,4 @@ module.exports = {
     },
     keySeparator: false, // keeps dotted key paths flat instead of nested
   },
-};
+}
