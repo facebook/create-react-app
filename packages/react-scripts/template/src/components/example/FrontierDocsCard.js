@@ -14,7 +14,7 @@ const cardContentStyle = css`
 `
 
 const actionAreaCardAlignment = css`
-text-align: center;
+  text-align: center;
 `
 
 const FrontierDocsCard = ({ logoColor, handleLogoClick }) => (

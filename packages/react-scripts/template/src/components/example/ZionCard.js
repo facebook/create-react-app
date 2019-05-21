@@ -14,7 +14,7 @@ const cardContentStyle = css`
 `
 
 const mediaCardHeight = css`
-height: 340px;
+  height: 340px;
 `
 
 const ZionCard = () => (

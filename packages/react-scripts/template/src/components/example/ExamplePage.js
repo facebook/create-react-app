@@ -11,7 +11,7 @@ import NotSignedInCard from './NotSignedInCard'
 import SignedInCard from './SignedInCard'
 
 const zionGridPadding = css`
-padding: 15px;
+  padding: 15px;
 `
 
 const Grid = ({ children }) => (

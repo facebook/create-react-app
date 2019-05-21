@@ -14,7 +14,7 @@ const cardContentStyle = css`
 `
 
 const mediaCardHeight = css`
-height: 240px;
+  height: 240px;
 `
 
 const LearnReactCard = () => (
