@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Link, RequiresAuth } from '@fs/zion-router'
+import { Link, Switch, Route, AuthRoute, NotFound } from '@fs/zion-router'
 import Subnav from '@fs/zion-subnav'
 import { Trans } from 'react-i18next'
 import ExamplePage from './example/ExamplePage'
@@ -12,15 +12,16 @@ function App() {
         <Link to="./">
           <Trans i18nKey="nav.home">Home</Trans>
         </Link>
-        <Link to="user">
+        <Link to="/user">
           <Trans i18nKey="nav.userInfo">User Info</Trans>
         </Link>
       </Subnav>
 
-      <Router>
-        <ExamplePage path="/" />
-        <RequiresAuth path="user" component={UserInfo} />
-      </Router>
+      <Switch>
+        <Route exact path="/" component={ExamplePage} />
+        <AuthRoute path="user" component={UserInfo} />
+        <Route component={NotFound} />
+      </Switch>
     </>
   )
 }
