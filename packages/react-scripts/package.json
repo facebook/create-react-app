@@ -58,6 +58,7 @@
     "identity-obj-proxy": "3.0.0",
     "image-webpack-loader": "^4.6.0",
     "is-wsl": "^1.1.0",
+    "isomorphic-style-loader": "^5.0.1",
     "jest": "24.7.1",
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.7.1",
