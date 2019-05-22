@@ -129,6 +129,10 @@ The `browserslist` config in your `package.json` is now used to control the outp
 
 We've removed the `--no-watch` flag from the `start` script in favor of Jest's own `--watchAll=false`.
 
+### New structure in `asset-manifest.json`
+
+All asset paths have been moved under the `files` key in `asset-manifest.json`.
+
 ## New Features
 
 ### using `jsconfig.json`/`tsconfig.json`
@@ -176,6 +180,7 @@ You can now include a version of Normalize.css in your project that will use you
   - [#6750](https://github.com/facebook/create-react-app/pull/6750) change NODE_ENV and PUBLIC_URL into readonly ([@xiaoxiangmoe](https://github.com/xiaoxiangmoe))
   - [#4176](https://github.com/facebook/create-react-app/pull/4176) Remove --coverage + --watch workaround for the test command ([@stipsan](https://github.com/stipsan))
   - [#6615](https://github.com/facebook/create-react-app/pull/6615) Allow .json type checking ([@ianschmitz](https://github.com/ianschmitz))
+  - [#6821](https://github.com/facebook/create-react-app/pull/6821) Add custom function to generate asset manifest ([@iansu](https://github.com/iansu))
 - `babel-preset-react-app`, `react-app-polyfill`
   - [#6769](https://github.com/facebook/create-react-app/pull/6769) Update to core-js@3 ([@ianschmitz](https://github.com/ianschmitz))
 - `babel-plugin-named-asset-import`, `confusing-browser-globals`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
