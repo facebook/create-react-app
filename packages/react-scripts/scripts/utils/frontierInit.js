@@ -162,7 +162,10 @@ function configureEF(appPath, ownPath, appName) {
     const additionalScripts = {
       'heroku-prebuild': './heroku-prebuild.sh',
     }
-    packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts })
+    packageJson.scripts = sortScripts({
+      ...packageJson.scripts,
+      ...additionalScripts,
+    })
     return packageJson
   })
 
@@ -181,7 +184,10 @@ function configureHF(appPath, ownPath) {
       'heroku-postbuild': 'npm run build:prod',
       start: 'react-scripts start',
     }
-    packageJson.scripts = sortScripts({ ...packageJson.scripts, ...additionalScripts })
+    packageJson.scripts = sortScripts({
+      ...packageJson.scripts,
+      ...additionalScripts,
+    })
     packageJson.main = './index.js'
     packageJson.engines = { node: '10' }
 
