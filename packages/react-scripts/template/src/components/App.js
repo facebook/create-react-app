@@ -19,7 +19,7 @@ function App() {
 
       <Switch>
         <Route exact path="/" component={ExamplePage} />
-        <AuthRoute path="user" component={UserInfo} />
+        <AuthRoute path="/user" component={UserInfo} />
         <Route component={NotFound} />
       </Switch>
     </>
