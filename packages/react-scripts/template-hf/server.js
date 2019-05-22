@@ -1,3 +1,4 @@
+// Snow is FS version of Express
 const snow = require('snow')
 const layout = require('@fs/react-scripts/layout')
 
@@ -6,6 +7,7 @@ const urlLookup = {
   'cis-public-api.cis.ident.service': `${process.env.SG_BASE_URL}/service/ident/cis/cis-public-api`,
 }
 
+// Docs: https://github.com/fs-webdev/frontier-binding-registry-client
 const serviceLocatorOptions = {
   fallbackFunction(serviceName) {
     if (urlLookup[serviceName]) {
@@ -15,6 +17,7 @@ const serviceLocatorOptions = {
   },
 }
 
+// Snow config options. Docs: https://github.com/fs-webdev/snow 
 const snowConfig = {
   experiments: [
     {
@@ -29,10 +32,12 @@ const snowConfig = {
 }
 
 module.exports = (app, dir = 'build') => {
+  // Create Snow app
   snowConfig.app = app
   const snowApp = snow(__dirname, layout, snowConfig)
 
   snowApp.stack.postRoute(() => {
+    // Create route for CRA SPA (Single Page App)
     snowApp.get('*', (req, res) => {
       res.render('index', {
         indexPath: `../${dir}/_index.html`,
