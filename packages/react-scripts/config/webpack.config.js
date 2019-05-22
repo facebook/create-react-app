@@ -483,9 +483,6 @@ module.exports = function(webpackEnv) {
             // "postcss" loader applies autoprefixer to our CSS.
             // "css" loader resolves paths in CSS and adds assets as dependencies.
             // "style" loader turns CSS into JS modules that inject <style> tags.
-            // In production, we use MiniCSSExtractPlugin to extract that CSS
-            // to a file, but in development "style" loader enables hot editing
-            // of CSS.
             // By default we support CSS Modules with the extension .module.css
             {
               test: cssRegex,
