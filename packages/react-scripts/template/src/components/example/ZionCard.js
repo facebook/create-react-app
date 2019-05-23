@@ -13,16 +13,14 @@ const cardContentStyle = css`
   flex-grow: 1;
 `
 
+const mediaCardHeight = css`
+  height: 340px;
+`
+
 const ZionCard = () => (
   <Card css={cardStyle}>
     <CardActionArea>
-      <CardMedia
-        css={css`
-          height: 340px;
-        `}
-        image={ZionImage}
-        title="Zion National Park"
-      />
+      <CardMedia css={mediaCardHeight} image={ZionImage} title="Zion National Park" />
     </CardActionArea>
     <CardContent css={cardContentStyle}>
       <h2>Zion</h2>
@@ -33,7 +31,7 @@ const ZionCard = () => (
         variant="text"
         size="small"
         color="primary"
-        href="beta.familysearch.org/frontier/zion"
+        href="https://beta.familysearch.org/frontier/zion"
       >
         Components
       </Button>
