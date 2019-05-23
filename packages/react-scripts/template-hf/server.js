@@ -17,7 +17,7 @@ const serviceLocatorOptions = {
   },
 }
 
-// Snow config options. Docs: https://github.com/fs-webdev/snow 
+// Snow config options. Docs: https://github.com/fs-webdev/snow
 const snowConfig = {
   experiments: [
     {
