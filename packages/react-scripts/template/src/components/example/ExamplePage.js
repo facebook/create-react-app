@@ -1,7 +1,6 @@
 import React from 'react'
-import { css } from '@emotion/core'
 import { useUser } from '@fs/zion-user'
-import { Grid as ZionGrid, Row, Cell } from '@fs/zion-ui'
+import { Grid, Row, Cell } from '@fs/zion-ui'
 import axios from '@fs/zion-axios'
 
 import FrontierDocsCard from './FrontierDocsCard'
@@ -9,16 +8,6 @@ import ZionCard from './ZionCard'
 import LearnReactCard from './LearnReactCard'
 import NotSignedInCard from './NotSignedInCard'
 import SignedInCard from './SignedInCard'
-
-const zionGridPadding = css`
-  padding: 15px;
-`
-
-const Grid = ({ children }) => (
-  <ZionGrid>
-    <div css={zionGridPadding}>{children}</div>
-  </ZionGrid>
-)
 
 const useRandomColor = () => {
   const [color, setColor] = React.useState('rgb(0,0,0)')
@@ -55,22 +44,16 @@ const ExamplePage = () => {
         <Cell>
           <h1>Welcome to your new Frontier Application</h1>
         </Cell>
-      </Row>
-
-      <Row>
-        <Cell sm="12" md="6" lg="4">
+        <Cell md="6" lg="4">
           <FrontierDocsCard logoColor={logoColor} handleLogoClick={handleFrontierDocsClick} />
         </Cell>
-        <Cell sm="12" md="6" lg="8">
+        <Cell md="6" lg="8">
           <ZionCard />
         </Cell>
-      </Row>
-
-      <Row>
-        <Cell sm="12" md="6" lg="8">
+        <Cell md="6" lg="8">
           <LearnReactCard />
         </Cell>
-        <Cell sm="12" md="6" lg="4">
+        <Cell md="6" lg="4">
           {user.signedIn ? (
             <SignedInCard user={user} portrait={portrait} />
           ) : (
