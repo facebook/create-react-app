@@ -1,5 +1,4 @@
 import React from 'react'
-import { css } from '@emotion/core'
 import { Button, Card, CardMedia, CardActions, CardContent, CardActionArea } from '@fs/zion-ui'
 import ReactImage from './reactjs.jpg'
 
