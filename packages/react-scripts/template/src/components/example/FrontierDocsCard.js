@@ -3,28 +3,18 @@ import { css } from '@emotion/core'
 import { Button, Card, CardActions, CardContent, CardActionArea } from '@fs/zion-ui'
 import Logo from './Logo'
 
-const cardStyle = css`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`
-
-const cardContentStyle = css`
-  flex-grow: 1;
-`
-
 const actionAreaCardAlignment = css`
   text-align: center;
 `
 
 const FrontierDocsCard = ({ logoColor, handleLogoClick }) => (
-  <Card css={cardStyle}>
+  <Card>
     <CardActionArea onClick={handleLogoClick}>
       <div css={actionAreaCardAlignment}>
         <Logo color={logoColor} />
       </div>
     </CardActionArea>
-    <CardContent css={cardContentStyle}>
+    <CardContent>
       <h2>Getting Started</h2>
       <p>Ready to get started? You can learn more by visiting the frontier docs.</p>
     </CardContent>

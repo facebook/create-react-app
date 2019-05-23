@@ -1,28 +1,13 @@
 import React from 'react'
-import { css } from '@emotion/core'
 import { Button, Card, CardMedia, CardActions, CardContent, CardActionArea } from '@fs/zion-ui'
 import ZionImage from './zion.jpg'
 
-const cardStyle = css`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`
-
-const cardContentStyle = css`
-  flex-grow: 1;
-`
-
-const mediaCardHeight = css`
-  height: 340px;
-`
-
 const ZionCard = () => (
-  <Card css={cardStyle}>
+  <Card>
     <CardActionArea>
-      <CardMedia css={mediaCardHeight} image={ZionImage} title="Zion National Park" />
+      <CardMedia height="340px" image={ZionImage} title="Zion National Park" />
     </CardActionArea>
-    <CardContent css={cardContentStyle}>
+    <CardContent>
       <h2>Zion</h2>
       <p>Zion is the place to go to find reusable components for your FamilySearch application.</p>
     </CardContent>
