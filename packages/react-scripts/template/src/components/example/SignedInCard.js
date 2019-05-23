@@ -1,5 +1,4 @@
 import React from 'react'
-import { css } from '@emotion/core'
 import {
   Button,
   Chip,
@@ -12,22 +11,12 @@ import {
   CardContent,
 } from '@fs/zion-ui'
 
-const cardStyle = css`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`
-
-const cardContentStyle = css`
-  flex-grow: 1;
-`
-
 const SignedInCard = ({ user, portrait }) => {
   const dialogOpener = useOpener()
   const { personId, contactName, displayName, gender, cisId } = user
   return (
-    <Card css={cardStyle}>
-      <CardContent css={cardContentStyle}>
+    <Card>
+      <CardContent>
         <h2>Hello {displayName}!</h2>
         <Chip avatar={<Avatar src={portrait} />} label={personId} />
         <Avatar src={portrait} size="large" />
