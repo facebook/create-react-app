@@ -16,7 +16,11 @@ const FrontierDocsCard = ({ logoColor, handleLogoClick }) => (
     </CardActionArea>
     <CardContent>
       <h2>Getting Started</h2>
-      <p>Ready to get started? You can learn more by visiting the frontier docs.</p>
+      <p>
+        Try clicking the wheel to add a splash of color and then check out the code in the example
+        directory to get started.
+      </p>
+      <p>Wanna to learn more? You can learn more by visiting the frontier docs.</p>
     </CardContent>
     <CardActions>
       <Button
