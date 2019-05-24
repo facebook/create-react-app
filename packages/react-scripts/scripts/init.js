@@ -22,7 +22,7 @@ const spawn = require('react-dev-utils/crossSpawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
 const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
-const frontierInit = require('./utils/frontierInit');
+const { installFrontierDependencies } = require('./utils/frontierInit');
 
 function isInGitRepository() {
   try {
@@ -77,7 +77,6 @@ function tryGitInit(appPath) {
 }
 
 module.exports = async function(appPath, appName, verbose, originalDirectory, template) {
-  const answers = await frontierInit.promptForConfig(appPath);
   const ownPath = path.dirname(require.resolve(path.join(__dirname, '..', 'package.json')));
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
@@ -177,7 +176,7 @@ module.exports = async function(appPath, appName, verbose, originalDirectory, te
     }
   }
 
-  frontierInit.installFrontierDependencies(appPath, appName, answers, ownPath);
+  installFrontierDependencies(appPath, appName, ownPath);
 
   if (useTypeScript) {
     verifyTypeScriptSetup();
@@ -213,10 +212,6 @@ module.exports = async function(appPath, appName, verbose, originalDirectory, te
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
-  console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}eject`));
-  console.log('    Removes this tool and copies build dependencies, configuration files');
-  console.log('    and scripts into the app directory. If you do this, you can’t go back!');
   console.log();
   console.log('We suggest that you begin by typing:');
   console.log();
