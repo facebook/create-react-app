@@ -29,7 +29,7 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.4.3",
-    "@svgr/webpack": "4.1.0",
+    "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.6.0",
     "@typescript-eslint/parser": "1.6.0",
     "babel-eslint": "10.0.1",
