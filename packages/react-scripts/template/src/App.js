@@ -2,8 +2,8 @@ import React from 'react'
 import { Link, Switch, Route, AuthRoute, NotFound } from '@fs/zion-router'
 import Subnav from '@fs/zion-subnav'
 import { Trans } from 'react-i18next'
-import ExamplePage from './example/ExamplePage'
-import UserInfo from './user/UserInfo'
+import ExamplePage from './components/example/ExamplePage'
+import UserInfo from './components/user/UserInfo'
 
 function App() {
   return (
