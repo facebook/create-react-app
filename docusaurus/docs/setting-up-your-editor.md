@@ -13,6 +13,7 @@ To configure the syntax highlighting in your favorite text editor, head to the [
 ## Displaying Lint Output in the Editor
 
 > Note: this feature is available with `react-scripts@0.2.0` and higher.<br>
+> It works out of the box for newly created projects with `react-scripts@2.0.3` and higher.<br>
 > It also only works with npm 3 or higher.
 
 Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
@@ -24,6 +25,19 @@ You would need to install an ESLint plugin for your editor first. Then, add a fi
 ```json
 {
   "extends": "react-app"
+}
+```
+
+If you're using TypeScript and Visual Studio Code, the [ESLint Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint#overview) currently [doesn't have TypeScript support enabled by default](https://github.com/Microsoft/vscode-eslint/issues/609). To enable TypeScript support in the ESLint extension, add the following to your project's Visual Studio Code settings file, located at `.vscode/settings.json` (you can create this file if it doesn't already exist):
+
+```json
+{
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    { "language": "typescript", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true }
+  ]
 }
 ```
 
@@ -54,7 +68,7 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceRoot}/src",
+      "webRoot": "${workspaceFolder}/src",
       "sourceMapPathOverrides": {
         "webpack:///src/*": "${webRoot}/*"
       }

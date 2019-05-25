@@ -26,7 +26,7 @@ set HTTPS=true&&npm start
 
 ### Linux, macOS (Bash)
 
-```bash
+```sh
 HTTPS=true npm start
 ```
 

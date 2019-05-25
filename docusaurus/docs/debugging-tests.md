@@ -14,13 +14,13 @@ Add the following to the `scripts` section in your project's `package.json`
 
 ```json
 "scripts": {
-    "test:debug": "react-scripts --inspect-brk test --runInBand"
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache"
   }
 ```
 
 Place `debugger;` statements in any test and run:
 
-```bash
+```sh
 $ npm run test:debug
 ```
 
@@ -42,7 +42,7 @@ Debugging Jest tests is supported out of the box for [Visual Studio Code](https:
 
 Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) configuration file:
 
-```
+```json
 {
   "version": "0.2.0",
   "configurations": [
@@ -54,7 +54,8 @@ Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debu
       "args": [
         "test",
         "--runInBand",
-        "--no-cache"
+        "--no-cache",
+        "--watchAll=false"
       ],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
