@@ -7,7 +7,7 @@ title: Running Tests
 
 > [Read the migration guide to learn how to enable it in older projects!](https://github.com/facebook/create-react-app/blob/master/CHANGELOG-0.x.md#migrating-from-023-to-030)
 
-Create React App uses [Jest](https://facebook.github.io/jest/) as its test runner. To prepare for this integration, we did a [major revamp](https://facebook.github.io/jest/blog/2016/09/01/jest-15.html) of Jest so if you heard bad things about it years ago, give it another try.
+Create React App uses [Jest](https://jestjs.io/) as its test runner. To prepare for this integration, we did a [major revamp](https://jestjs.io/blog/2016/09/01/jest-15.html) of Jest so if you heard bad things about it years ago, give it another try.
 
 Jest is a Node-based runner. This means that the tests always run in a Node environment and not in a real browser. This lets us enable fast iteration speed and prevent flakiness.
 
@@ -25,15 +25,17 @@ Jest will look for test files with any of the following popular naming conventio
 
 The `.test.js` / `.spec.js` files (or the `__tests__` folders) can be located at any depth under the `src` top level folder.
 
-We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Colocation also helps find tests more quickly in larger projects.
+We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Collocation also helps find tests more quickly in larger projects.
 
 ## Command Line Interface
 
-When you run `npm test`, Jest will launch in the watch mode. Every time you save a file, it will re-run the tests, just like `npm start` recompiles the code.
+When you run `npm test`, Jest will launch in watch mode<sup>\*</sup>. Every time you save a file, it will re-run the tests, just like `npm start` recompiles the code.
 
 The watcher includes an interactive command-line interface with the ability to run all tests, or focus on a search pattern. It is designed this way so that you can keep it open and enjoy fast re-runs. You can learn the commands from the “Watch Usage” note that the watcher prints after every run:
 
 ![Jest watch mode](https://jestjs.io/img/blog/15-watch.gif)
+
+> \*Although we recommend running your tests in watch mode during development, you can disable this behavior by passing in the `--watchAll=false` flag. In most CI environments, this is handled for you (see [On CI servers](#on-ci-servers)).
 
 ## Version Control Integration
 
@@ -58,8 +60,8 @@ it('sums numbers', () => {
 });
 ```
 
-All `expect()` matchers supported by Jest are [extensively documented here](https://facebook.github.io/jest/docs/en/expect.html#content).<br>
-You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://facebook.github.io/jest/docs/en/expect.html#tohavebeencalled) to create “spies” or mock functions.
+All `expect()` matchers supported by Jest are [extensively documented here](https://jestjs.io/docs/en/expect.html#content).<br>
+You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://jestjs.io/docs/en/expect.html#tohavebeencalled) to create “spies” or mock functions.
 
 ## Testing Components
 
@@ -84,7 +86,7 @@ When you encounter bugs caused by changing components, you will gain a deeper in
 
 ### Option 1: Shallow Rendering
 
-If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](http://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](http://airbnb.io/enzyme/). To install it, run:
+If you’d like to test components in isolation from the child components they render, we recommend using [`shallow()` rendering API](https://airbnb.io/enzyme/docs/api/shallow.html) from [Enzyme](https://airbnb.io/enzyme/). To install it, run:
 
 ```sh
 npm install --save enzyme enzyme-adapter-react-16 react-test-renderer
@@ -125,9 +127,9 @@ it('renders without crashing', () => {
 });
 ```
 
-Unlike the previous smoke test using `ReactDOM.render()`, this test only renders `<App>` and doesn’t go deeper. For example, even if `<App>` itself renders a `<Button>` that throws, this test will pass. Shallow rendering is great for isolated unit tests, but you may still want to create some full rendering tests to ensure the components integrate correctly. Enzyme supports [full rendering with `mount()`](http://airbnb.io/enzyme/docs/api/mount.html), and you can also use it for testing state changes and component lifecycle.
+Unlike the previous smoke test using `ReactDOM.render()`, this test only renders `<App>` and doesn’t go deeper. For example, even if `<App>` itself renders a `<Button>` that throws, this test will pass. Shallow rendering is great for isolated unit tests, but you may still want to create some full rendering tests to ensure the components integrate correctly. Enzyme supports [full rendering with `mount()`](https://airbnb.io/enzyme/docs/api/mount.html), and you can also use it for testing state changes and component lifecycle.
 
-You can read the [Enzyme documentation](http://airbnb.io/enzyme/) for more testing techniques. Enzyme documentation uses Chai and Sinon for assertions but you don’t have to use them because Jest provides built-in `expect()` and `jest.fn()` for spies.
+You can read the [Enzyme documentation](https://airbnb.io/enzyme/) for more testing techniques. Enzyme documentation uses Chai and Sinon for assertions but you don’t have to use them because Jest provides built-in `expect()` and `jest.fn()` for spies.
 
 Here is an example from Enzyme documentation that asserts specific output, rewritten to use Jest matchers:
 
@@ -144,8 +146,8 @@ it('renders welcome message', () => {
 });
 ```
 
-All Jest matchers are [extensively documented here](http://facebook.github.io/jest/docs/en/expect.html).<br>
-Nevertheless you can use a third-party assertion library like [Chai](http://chaijs.com/) if you want to, as described below.
+All Jest matchers are [extensively documented here](https://jestjs.io/docs/en/expect.html).<br>
+Nevertheless you can use a third-party assertion library like [Chai](https://chaijs.com/) if you want to, as described below.
 
 Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzyme-matchers) helpful to simplify your tests with readable matchers. The above `contains` code can be written more simply with jest-enzyme.
 
@@ -210,13 +212,13 @@ it('renders welcome message', () => {
 });
 ```
 
-Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from [the `react-testing-library` documentation](https://github.com/kentcdodds/react-testing-library) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
+Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from [the `react-testing-library` documentation](https://testing-library.com/react) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
 
 ## Using Third Party Assertion Libraries
 
 We recommend that you use `expect()` for assertions and `jest.fn()` for spies. If you are having issues with them please [file those against Jest](https://github.com/facebook/jest/issues/new), and we’ll fix them. We intend to keep making them better for React, supporting, for example, [pretty-printing React elements as JSX](https://github.com/facebook/jest/pull/1566).
 
-However, if you are used to other libraries, such as [Chai](http://chaijs.com/) and [Sinon](http://sinonjs.org/), or if you have existing code using them that you’d like to port over, you can import them normally like this:
+However, if you are used to other libraries, such as [Chai](https://chaijs.com/) and [Sinon](https://sinonjs.org/), or if you have existing code using them that you’d like to port over, you can import them normally like this:
 
 ```js
 import sinon from 'sinon';
@@ -274,10 +276,10 @@ The default Jest coverage configuration can be overridden by adding any of the f
 
 Supported overrides:
 
-- [`collectCoverageFrom`](https://facebook.github.io/jest/docs/en/configuration.html#collectcoveragefrom-array)
-- [`coverageReporters`](https://facebook.github.io/jest/docs/en/configuration.html#coveragereporters-array-string)
-- [`coverageThreshold`](https://facebook.github.io/jest/docs/en/configuration.html#coveragethreshold-object)
-- [`snapshotSerializers`](https://facebook.github.io/jest/docs/en/configuration.html#snapshotserializers-array-string)
+- [`collectCoverageFrom`](https://jestjs.io/docs/en/configuration.html#collectcoveragefrom-array)
+- [`coverageReporters`](https://jestjs.io/docs/en/configuration.html#coveragereporters-array-string)
+- [`coverageThreshold`](https://jestjs.io/docs/en/configuration.html#coveragethreshold-object)
+- [`snapshotSerializers`](https://jestjs.io/docs/en/configuration.html#snapshotserializers-array-string)
 
 Example package.json:
 
@@ -319,7 +321,7 @@ Popular CI servers already set the environment variable `CI` by default but you 
 1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis. You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
 1. Add a `.travis.yml` file to your git repository.
 
-```
+```yaml
 language: node_js
 node_js:
   - 8
@@ -364,17 +366,17 @@ set CI=true&&npm run build
 
 #### Linux, macOS (Bash)
 
-```bash
+```sh
 CI=true npm test
 ```
 
-```bash
+```sh
 CI=true npm run build
 ```
 
-The test command will force Jest to run tests once instead of launching the watcher.
+The test command will force Jest to run in CI-mode, and tests will only run once instead of launching the watcher.
 
-> If you find yourself doing this often in development, please [file an issue](https://github.com/facebook/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
+For non-CI environments, you can simply pass the `--watchAll=false` flag to disable test-watching.
 
 The build command will check for linter warnings and fail if any are found.
 
@@ -395,18 +397,18 @@ To help you make up your mind, here is a list of APIs that **need jsdom**:
 - Any browser globals like `window` and `document`
 - [`ReactDOM.render()`](https://facebook.github.io/react/docs/top-level-api.html#reactdom.render)
 - [`TestUtils.renderIntoDocument()`](https://facebook.github.io/react/docs/test-utils.html#renderintodocument) ([a shortcut](https://github.com/facebook/react/blob/34761cf9a252964abfaab6faf74d473ad95d1f21/src/test/ReactTestUtils.js#L83-L91) for the above)
-- [`mount()`](http://airbnb.io/enzyme/docs/api/mount.html) in [Enzyme](http://airbnb.io/enzyme/index.html)
+- [`mount()`](https://airbnb.io/enzyme/docs/api/mount.html) in [Enzyme](https://airbnb.io/enzyme/index.html)
 
 In contrast, **jsdom is not needed** for the following APIs:
 
 - [`TestUtils.createRenderer()`](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) (shallow rendering)
-- [`shallow()`](http://airbnb.io/enzyme/docs/api/shallow.html) in [Enzyme](http://airbnb.io/enzyme/index.html)
+- [`shallow()`](https://airbnb.io/enzyme/docs/api/shallow.html) in [Enzyme](https://airbnb.io/enzyme/index.html)
 
-Finally, jsdom is also not needed for [snapshot testing](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html).
+Finally, jsdom is also not needed for [snapshot testing](https://jestjs.io/blog/2016/07/27/jest-14.html).
 
 ## Snapshot Testing
 
-Snapshot testing is a feature of Jest that automatically generates text snapshots of your components and saves them on the disk so if the UI output changes, you get notified without manually writing any assertions on the component output. [Read more about snapshot testing.](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
+Snapshot testing is a feature of Jest that automatically generates text snapshots of your components and saves them on the disk so if the UI output changes, you get notified without manually writing any assertions on the component output. [Read more about snapshot testing.](https://jestjs.io/blog/2016/07/27/jest-14.html)
 
 ## Editor Integration
 

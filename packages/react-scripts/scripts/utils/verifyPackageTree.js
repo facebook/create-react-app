@@ -8,8 +8,9 @@
 
 'use strict';
 
-const chalk = require('chalk');
+const chalk = require('react-dev-utils/chalk');
 const fs = require('fs');
+const semver = require('semver');
 const path = require('path');
 
 // We assume that having wrong versions of these
@@ -74,7 +75,7 @@ function verifyPackageTree() {
         fs.readFileSync(maybeDepPackageJson, 'utf8')
       );
       const expectedVersion = expectedVersionsByDep[dep];
-      if (depPackageJson.version !== expectedVersion) {
+      if (!semver.satisfies(depPackageJson.version, expectedVersion)) {
         console.error(
           chalk.red(
             `\nThere might be a problem with the project dependency tree.\n` +
