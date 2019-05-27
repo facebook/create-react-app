@@ -14,7 +14,7 @@ const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const paths = require('./paths');
-const https = require('./https');
+const getHttpsConfig = require('./getHttpsConfig');
 
 const host = process.env.HOST || '0.0.0.0';
 
@@ -79,8 +79,7 @@ module.exports = function(proxy, allowedHost) {
     watchOptions: {
       ignored: ignoredFiles(paths.appSrc),
     },
-    // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: https(),
+    https: getHttpsConfig(),
     host,
     overlay: false,
     historyApiFallback: {

@@ -35,38 +35,36 @@ function validateKeyAndCerts({ cert, key, keyFile, crtFile }) {
   }
 }
 
+// Read file and throw an error if it doesn't exist
+function readEnvFile(file, type) {
+  if (!fs.existsSync(file)) {
+    throw new Error(
+      `You specified ${chalk.cyan(
+        type
+      )} in your env, but the file "${chalk.yellow(file)}" can't be found.`
+    );
+  }
+  return fs.readFileSync(file);
+}
+
 // Get the https config
 // Return cert files if provided in env, otherwise just true or false
-function httpsConfig() {
+function getHttpsConfig() {
   const { SSL_CRT_FILE, SSL_KEY_FILE, HTTPS } = process.env;
-  const https = HTTPS === 'true';
+  const isHttps = HTTPS === 'true';
 
-  if (https && SSL_CRT_FILE && SSL_KEY_FILE) {
+  if (isHttps && SSL_CRT_FILE && SSL_KEY_FILE) {
     const crtFile = path.resolve(paths.appPath, SSL_CRT_FILE);
     const keyFile = path.resolve(paths.appPath, SSL_KEY_FILE);
-    if (!fs.existsSync(crtFile)) {
-      throw new Error(
-        `You specified ${chalk.cyan(
-          'SSL_CRT_FILE'
-        )} in your env, but the file "${chalk.yellow(crtFile)}" doesn't exist.`
-      );
-    }
-    if (!fs.existsSync(keyFile)) {
-      throw new Error(
-        `You specified ${chalk.cyan(
-          'SSL_KEY_FILE'
-        )} in your env, but the file "${chalk.yellow(keyFile)}" doesn't exist.`
-      );
-    }
     const config = {
-      key: fs.readFileSync(keyFile),
-      cert: fs.readFileSync(crtFile),
+      cert: readEnvFile(crtFile, 'SSL_CRT_FILE'),
+      key: readEnvFile(keyFile, 'SSL_KEY_FILE'),
     };
 
     validateKeyAndCerts({ ...config, keyFile, crtFile });
     return config;
   }
-  return https;
+  return isHttps;
 }
 
-module.exports = httpsConfig;
+module.exports = getHttpsConfig;
