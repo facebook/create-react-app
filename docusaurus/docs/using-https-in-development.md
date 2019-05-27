@@ -36,4 +36,8 @@ You can also specify a custom certificate (available in `react-scripts@2.2.0` an
 
 To set a custom certificate, set the `SSL_CRT_FILE` and `SSL_KEY_FILE` environment variables to the path of the certificate and key files in the same way you do for `HTTPS` above. Note that you will also need to set `HTTPS=true`.
 
-e.g. `SSL_CRT_FILE=cert.crt` and `SSL_KEY_FILE=cert.key`
+### Custom SSL certificate using Linux, macOS (Bash)
+
+```bash
+HTTPS=true SSL_CRT_FILE=cert.crt SSL_KEY_FILE=cert.key npm start
+```
