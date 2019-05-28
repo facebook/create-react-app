@@ -124,6 +124,10 @@ const program = new commander.Command(packageJson.name)
   })
   .parse(process.argv);
 
+if (program.rawArgs.includes('-h') || program.rawArgs.includes('--help')) {
+  program.help();
+}
+
 if (program.info) {
   console.log(chalk.bold('\nEnvironment Info:'));
   return envinfo
