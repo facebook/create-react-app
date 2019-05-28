@@ -139,6 +139,7 @@ module.exports = function(webpackEnv) {
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
+      paths.appEnvJs,
       // Include an alternative client for WebpackDevServer. A client's job is to
       // connect to WebpackDevServer by a socket and get notified about changes.
       // When you save a file, the client will either apply hot updates (in case
@@ -184,6 +185,7 @@ module.exports = function(webpackEnv) {
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+      libraryTarget: 'amd',
     },
     optimization: {
       minimize: isEnvProduction,
@@ -257,9 +259,8 @@ module.exports = function(webpackEnv) {
         chunks: 'all',
         name: false,
       },
-      // Keep the runtime chunk separated to enable long term caching
-      // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: true,
+      // Disable runtime chunk separation
+      runtimeChunk: false,
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
@@ -656,6 +657,7 @@ module.exports = function(webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
+      new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
