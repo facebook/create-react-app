@@ -86,7 +86,7 @@
     "react-dom": "^16.8.4"
   },
   "optionalDependencies": {
-    "fsevents": "2.0.6"
+    "fsevents": "2.0.7"
   },
   "browserslist": {
     "production": [
