@@ -1,6 +1,6 @@
 {
   "name": "@guestyci/guesty-react-scripts",
-  "version": "2.0.1",
+  "version": "2.1.2",
   "description": "Guesty Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
