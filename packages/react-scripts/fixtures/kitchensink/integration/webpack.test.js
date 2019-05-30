@@ -94,7 +94,7 @@ describe('Integration', () => {
       doc = await initDOM('no-ext-inclusion');
 
       expect(doc.getElementById('feature-no-ext-inclusion').href).toMatch(
-        /\/static\/media\/aFileWithoutExt\.[a-f0-9]{8}\.bin$/
+        /\/_assets\/media\/aFileWithoutExt\.[a-f0-9]{8}\.bin$/
       );
     });
 
@@ -117,7 +117,7 @@ describe('Integration', () => {
     it('svg inclusion', async () => {
       doc = await initDOM('svg-inclusion');
       expect(doc.getElementById('feature-svg-inclusion').src).toMatch(
-        /\/static\/media\/logo\..+\.svg$/
+        /\/_assets\/media\/logo\..+\.svg$/
       );
     });
 
@@ -129,14 +129,14 @@ describe('Integration', () => {
 
     it('svg in css', async () => {
       doc = await initDOM('svg-in-css');
-      matchCSS(doc, [/\/static\/media\/logo\..+\.svg/]);
+      matchCSS(doc, [/\/_assets\/media\/logo\..+\.svg/]);
     });
 
     it('unknown ext inclusion', async () => {
       doc = await initDOM('unknown-ext-inclusion');
 
       expect(doc.getElementById('feature-unknown-ext-inclusion').href).toMatch(
-        /\/static\/media\/aFileWithExt\.[a-f0-9]{8}\.unknown$/
+        /\/_assets\/media\/aFileWithExt\.[a-f0-9]{8}\.unknown$/
       );
     });
   });
