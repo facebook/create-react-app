@@ -8,6 +8,7 @@ before_install:
     # because this is a weird monorepo and we cd into and out of directories, this is what worked for travis to publish
   - echo "//code.lds.org/artifactory/api/npm/npm-fhd/:_authToken=${NPM_PUBLISH_TOKEN}" >> packages/react-scripts/.npmrc
   - echo "@fs:registry=https://code.lds.org/artifactory/api/npm/npm-fhd/" >> packages/react-scripts/.npmrc
+  - npm i -g npm@6.8.0
 install:
   - "npm i"
   - "cd packages/react-scripts"
