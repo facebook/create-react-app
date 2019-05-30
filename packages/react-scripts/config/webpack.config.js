@@ -212,7 +212,6 @@ module.exports = function(webpackEnv) {
               // Pending futher investigation:
               // https://github.com/terser-js/terser/issues/120
               inline: 2,
-              drop_console: true,
             },
             mangle: {
               safari10: true,
@@ -224,24 +223,24 @@ module.exports = function(webpackEnv) {
               // https://github.com/facebook/create-react-app/issues/2488
               ascii_only: true,
             },
-            keep_fnames: true,
           },
           // Use multi-process parallel running to improve the build speed
           // Default number of concurrent runs: os.cpus().length - 1
           // Disabled on WSL (Windows Subsystem for Linux) due to an issue with Terser
           // https://github.com/webpack-contrib/terser-webpack-plugin/issues/21
-          cache: resolve('./__webpack_cache__/'),
-          parallel: true,
+          parallel: !isWsl,
+          // Enable file caching
+          cache: true,
           sourceMap: shouldUseSourceMap,
           chunkFilter: chunk => {
+            console.warn(chunk.name);
             // Exclude uglification for the `vendor` chunk
-            if (chunk.name === 'vendors~app') {
+            if (chunk.name === undefined) {
               return false;
             }
 
             return true;
           },
-          extractComments: /^\**!|@preserve|@license|@cc_on/i,
         }),
         // This is only used in production mode
         new OptimizeCSSAssetsPlugin({
@@ -265,18 +264,7 @@ module.exports = function(webpackEnv) {
       // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
       splitChunks: {
         chunks: 'all',
-        // minChunks: Infinity,
-        cacheGroups: {
-          vendors: {
-            reuseExistingChunk: true,
-            filename: '[name].bundle.js',
-          },
-          default: {
-            minChunks: 2,
-            priority: -20,
-            reuseExistingChunk: true,
-          },
-        },
+        name: false,
       },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
