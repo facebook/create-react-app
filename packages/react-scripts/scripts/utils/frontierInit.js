@@ -13,7 +13,6 @@ const depsToInstall = []
 const devDepsToInstall = []
 
 function installFrontierDependencies(appPath, appName, ownPath) {
-
   configureEF(appPath, ownPath, appName)
   configureHF(appPath, ownPath)
 
@@ -56,6 +55,9 @@ function installFrontierDependencies(appPath, appName, ownPath) {
       'dotenv@7',
       'jest-dom@3',
       'http-proxy-middleware@0.19',
+      'husky@2',
+      'lint-staged@8',
+      'suppress-exit-code@0.1',
     ]
   )
 
@@ -67,13 +69,14 @@ function installFrontierDependencies(appPath, appName, ownPath) {
       'storybook:build': 'NODE_ENV=development build-storybook -c .storybook -o build',
       lint: 'eslint src/',
       'lint:fix': 'eslint src/ --fix',
-      test: `eslint src/ && ${packageJson.scripts.test}`,
     }
     packageJson.scripts = { ...packageJson.scripts, ...additionalScripts }
     delete packageJson.scripts.eject
-    packageJson.eslintConfig = {
-      extends: ['@fs/eslint-config-frontier-react'],
+    packageJson.eslintConfig = { extends: ['@fs/eslint-config-frontier-react'] }
+    packageJson.husky = {
+      hooks: { 'pre-commit': 'lint-staged', 'pre-push': 'npm run lint && CI=true npm test' },
     }
+    packageJson['lint-staged'] = { '*.js': ['suppress-exit-code eslint --fix', 'git add'] }
     return packageJson
   })
   installModulesSync(depsToInstall)
