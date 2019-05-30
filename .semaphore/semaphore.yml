@@ -38,121 +38,33 @@ blocks:
         commands:
           # Get the latest version of our source code from GitHub:
           - checkout
-
           # Use the version of Node.js specified in .nvmrc.
           # Semaphore provides nvm preinstalled.
           - nvm use
           - node --version
-          - npm --version
+          - yarn --version
+          - cd packages/react-scripts
       jobs:
         # First parallel job:
-        - name: client npm install and cache
+        - name: yarn install and cache
           commands:
-            - cd src/client
-
             # Restore dependencies from cache. This command will not fail in
-            # case of a cache miss. In case of a cache hit, npm install will
+            # case of a cache miss. In case of a cache hit, yarn install will
             # run very fast.
             # For more info on caching, see https://docs.semaphoreci.com/article/68-caching-dependencies
-            - cache restore client-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),client-node-modules-$SEMAPHORE_GIT_BRANCH,client-node-modules-master
-            - npm install
+            - cache restore yarn-cache-$SEMAPHORE_GIT_BRANCH-$(checksum yarn.lock),yarn-cache-$SEMAPHORE_GIT_BRANCH,yarn-cache-develop,yarn-cache-master
+            - echo "yarn-offline-mirror \"./.yarn-cache\"" >> .yarnrc
+            - yarn install
 
             # Store the latest version of node modules in cache to reuse in
             # further blocks:
-            - cache store client-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
+            - cache store yarn-cache-$SEMAPHORE_GIT_BRANCH-$(checksum yarn.lock) .yarn-cache
+            - cache store node-cache-$SEMAPHORE_GIT_BRANCH-$(checksum yarn.lock) node_modules
 
-        # Second parallel job:
-        - name: server npm install and cache
-          commands:
-            - cd src/server
-            - cache restore server-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),server-node-modules-$SEMAPHORE_GIT_BRANCH,server-node-modules-master
-            - npm install
-            - cache store server-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
-
-  - name: Lint
-    task:
-      env_vars:
-        - name: NODE_ENV
-          value: test
-        - name: CI
-          value: 'true'
-      prologue:
-        commands:
-          - checkout
-          - nvm use
-          - node --version
-          - npm --version
-      jobs:
-        - name: Client Lint
-          commands:
-            - cd src/client
-            # At this point we can assume 100% cache hit rate of node modules:
-            - cache restore client-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),client-node-modules-$SEMAPHORE_GIT_BRANCH,client-node-modules-master
-
-            # Run task as defined in package.json:
-            - npm run lint
-        - name: Server Lint
-          commands:
-            - cd src/server
-            - cache restore server-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),server-node-modules-$SEMAPHORE_GIT_BRANCH,server-node-modules-master
-            - npm run lint
-
-  - name: Tests
-    task:
-      env_vars:
-        - name: NODE_ENV
-          value: test
-        - name: CI
-          value: 'true'
-      prologue:
-        commands:
-          - checkout
-          - nvm use
-          - node --version
-          - npm --version
-      jobs:
-        - name: Client Tests
-          commands:
-            - cd src/client
-            - cache restore client-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),client-node-modules-$SEMAPHORE_GIT_BRANCH,client-node-modules-master
-            - npm test
-        - name: Server Tests
-          commands:
-            - cd src/server
-            - cache restore server-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),server-node-modules-$SEMAPHORE_GIT_BRANCH,server-node-modules-master
-            - npm test
-
-  - name: E2e Tests
-    task:
-      env_vars:
-        - name: NODE_ENV
-          value: test
-        - name: CI
-          value: 'true'
-      prologue:
-        commands:
-          - checkout
-          - nvm use
-          - node --version
-          - npm --version
-          # Start a Postgres database. On Semaphore, databases run in the same
-          # environment as your code.
-          # See https://docs.semaphoreci.com/article/32-ubuntu-1804-image#databases-and-services
-          - sem-service start postgres
-          # With unrestricted sudo access, you can install any additional
-          # system package:
-          - sudo apt-get install -y libgtk2.0-0
-      jobs:
-        - name: Client Tests
-          commands:
-            - cd src/client
-            - cache restore client-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),client-node-modules-$SEMAPHORE_GIT_BRANCH,client-node-modules-master
-            - npx cypress install
-            - npm run test:e2e
-        - name: Server Tests
-          commands:
-            - cd src/server
-            - cache restore server-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),server-node-modules-$SEMAPHORE_GIT_BRANCH,server-node-modules-master
-            - cp ormconfig.ci.json ormconfig.json
-            - npm run migrate:up
-            - npm run test:e2e
+promotions:
+  - name: Master Release
+    pipeline_file: release.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - ^master$

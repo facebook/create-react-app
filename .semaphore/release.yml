@@ -1,0 +1,49 @@
+# Use the latest stable version of Semaphore 2.0 YML syntax:
+version: v1.0
+
+# Name your pipeline. In case you connect multiple pipelines with promotions,
+# the name will help you differentiate between, for example, a CI build phase
+# and delivery phases.
+name: Master Branch Release Flow
+
+# An agent defines the environment in which your code runs.
+# It is a combination of one of available machine types and operating
+# system images.
+# See https://docs.semaphoreci.com/article/20-machine-types
+# and https://docs.semaphoreci.com/article/32-ubuntu-1804-image
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+# Blocks are the heart of a pipeline and are executed sequentially.
+# Each block has a task that defines one or more jobs. Jobs define the
+# commands to execute.
+# See https://docs.semaphoreci.com/article/62-concepts
+blocks:
+  - name: Release
+    task:
+      secrets:
+        - name: gemfury-aws-credentials
+        - name: git-user
+      prologue:
+        commands:
+          # Correct premissions since they are too open by default:
+          - checkout
+          - sh .semaphore/branch-guard.sh master
+          - cd packages/react-scripts
+          - cache restore node-cache-$SEMAPHORE_GIT_BRANCH-$(checksum yarn.lock)
+          - eval $(node ./scripts/aws-get-params-to-env --with-decryption) # TODO: figure this one out dep?
+          - ssh-add - <<< "${GIT_SSH_DEPLOY_KEY}"
+          - echo "//npm.fury.io/amplifiedai/:_authToken=$NPM_WRITE_TOKEN" >> .npmrc
+          - nvm use
+          - node --version
+          - yarn --version
+      jobs:
+        - name: Tag and Release
+          commands:
+          - git config user.name $GIT_ACCESS_USER
+          - git config user.email $GIT_ACCESS_EMAIL
+          - "yarn release --message \"chore(release): %s [ci skip]\"" # flag will change to releaseCommitMessageFormat https://github.com/conventional-changelog/standard-version/commit/a7133cc0e5a1924793bdf0e4abdd0ad9c58dfc2d#diff-168726dbe96b3ce427e7fedce31bb0bcR21
+          - git push --follow-tags origin $SEMAPHORE_GIT_BRANCH
+          - npm publish

@@ -23,6 +23,9 @@
     "template-typescript",
     "utils"
   ],
+  "scripts": {
+    "release": "standard-version"
+  },
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
@@ -32,6 +35,7 @@
     "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.6.0",
     "@typescript-eslint/parser": "1.6.0",
+    "aws-sdk": "^2.465.0",
     "babel-eslint": "10.0.1",
     "babel-jest": "^24.8.0",
     "babel-loader": "8.0.5",
@@ -72,6 +76,7 @@
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
+    "standard-version": "^6.0.1",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.3",
     "ts-pnp": "1.1.2",
