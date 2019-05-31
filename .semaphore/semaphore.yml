@@ -1,0 +1,72 @@
+# Use the latest stable version of Semaphore 2.0 YML syntax:
+version: v1.0
+
+# Name your pipeline. In case you connect multiple pipelines with promotions,
+# the name will help you differentiate between, for example, a CI build phase
+# and delivery phases.
+name: Semaphore JavaScript Example Pipeline
+
+# An agent defines the environment in which your code runs.
+# It is a combination of one of available machine types and operating
+# system images.
+# See https://docs.semaphoreci.com/article/20-machine-types
+# and https://docs.semaphoreci.com/article/32-ubuntu-1804-image
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+# Blocks are the heart of a pipeline and are executed sequentially.
+# Each block has a task that defines one or more jobs. Jobs define the
+# commands to execute.
+# See https://docs.semaphoreci.com/article/62-concepts
+blocks:
+  - name: Install dependencies
+    task:
+      # Set environment variables that your project requires.
+      # See https://docs.semaphoreci.com/article/66-environment-variables-and-secrets
+      env_vars:
+        - name: NODE_ENV
+          value: test
+        - name: CI
+          value: 'true'
+      secrets:
+        - name: gemfury-read-token
+      # This block runs two jobs in parallel and they both share common
+      # setup steps. We can group them in a prologue.
+      # See https://docs.semaphoreci.com/article/50-pipeline-yaml#prologue
+      prologue:
+        commands:
+          # Get the latest version of our source code from GitHub:
+          - checkout
+          # Use the version of Node.js specified in .nvmrc.
+          # Semaphore provides nvm preinstalled.
+          - nvm use
+          - node --version
+          - yarn --version
+          - cd packages/react-scripts
+      jobs:
+        # First parallel job:
+        - name: yarn install and cache
+          commands:
+            # Restore dependencies from cache. This command will not fail in
+            # case of a cache miss. In case of a cache hit, yarn install will
+            # run very fast.
+            # For more info on caching, see https://docs.semaphoreci.com/article/68-caching-dependencies
+            - cache restore yarn-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_PIPELINE_ID,yarn-cache-$SEMAPHORE_GIT_BRANCH,yarn-cache-develop,yarn-cache-master
+            - echo "yarn-offline-mirror \"./.yarn-cache\"" >> .yarnrc
+            - echo "//npm.fury.io/amplifiedai/:_authToken=$NPM_TOKEN" >> .npmrc
+            - yarn install
+
+            # Store the latest version of node modules in cache to reuse in
+            # further blocks:
+            - cache store yarn-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_PIPELINE_ID .yarn-cache
+            - cache store node-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_PIPELINE_ID node_modules
+
+promotions:
+  - name: Master Release
+    pipeline_file: release.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - ^master$
