@@ -43,25 +43,23 @@ blocks:
           # Semaphore provides nvm preinstalled.
           - nvm use
           - node --version
-          - yarn --version
+          - npm --version
           - cd packages/react-scripts
       jobs:
         # First parallel job:
-        - name: yarn install and cache
+        - name: npm install and cache
           commands:
             # Restore dependencies from cache. This command will not fail in
             # case of a cache miss. In case of a cache hit, yarn install will
             # run very fast.
             # For more info on caching, see https://docs.semaphoreci.com/article/68-caching-dependencies
-            - cache restore yarn-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID,yarn-cache-$SEMAPHORE_GIT_BRANCH,yarn-cache-develop,yarn-cache-master
-            - echo "yarn-offline-mirror \"./.yarn-cache\"" >> .yarnrc
+            - cache restore node-cache-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-cache-$SEMAPHORE_GIT_BRANCH,node-cache-develop,node-cache-master
             - echo "//npm.fury.io/amplifiedai/:_authToken=$NPM_TOKEN" >> .npmrc
-            - yarn install
+            - npm install
 
             # Store the latest version of node modules in cache to reuse in
             # further blocks:
-            - cache store yarn-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID .yarn-cache
-            - cache store node-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID node_modules
+            - cache store node-cache-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
 
 promotions:
   - name: Master Release

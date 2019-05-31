@@ -32,8 +32,8 @@ blocks:
           - checkout
           - sh .semaphore/branch-guard.sh master
           - cd packages/react-scripts
-          - cache restore node-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID
-          - eval "$(yarn get-aws-env)"
+          - cache restore node-cache-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json)
+          - eval "$(node ./node_modules/.bin/as-aws-get-params --with-decryption)"
           - ssh-add - <<< "${GIT_SSH_DEPLOY_KEY}"
           - echo "//npm.fury.io/amplifiedai/:_authToken=$NPM_WRITE_TOKEN" >> .npmrc
           - nvm use
