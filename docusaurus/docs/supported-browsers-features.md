@@ -6,7 +6,7 @@ sidebar_label: Supported Browsers and Features
 
 ## Supported Browsers
 
-By default, the generated project supports all modern browsers. Support for Internet Explorer 9, 10, and 11 requires polyfills. For a set of polyfills to support older browsers, use [react-app-polyfill](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md).
+By default, the generated project supports all modern browsers. Support for Internet Explorer 9, 10, & 11 requires polyfills. For a set of polyfills to support older browsers, use [react-app-polyfill](https://github.com/facebook/create-react-app/blob/master/packages/react-app-polyfill/README.md).
 
 ## Supported Language Features
 
