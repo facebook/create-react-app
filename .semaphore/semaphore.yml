@@ -30,7 +30,8 @@ blocks:
           value: test
         - name: CI
           value: 'true'
-
+      secrets:
+        - name: gemfury-read-token
       # This block runs two jobs in parallel and they both share common
       # setup steps. We can group them in a prologue.
       # See https://docs.semaphoreci.com/article/50-pipeline-yaml#prologue
@@ -52,14 +53,15 @@ blocks:
             # case of a cache miss. In case of a cache hit, yarn install will
             # run very fast.
             # For more info on caching, see https://docs.semaphoreci.com/article/68-caching-dependencies
-            - cache restore yarn-cache-$SEMAPHORE_GIT_BRANCH-$(checksum yarn.lock),yarn-cache-$SEMAPHORE_GIT_BRANCH,yarn-cache-develop,yarn-cache-master
+            - cache restore yarn-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_PIPELINE_ID,yarn-cache-$SEMAPHORE_GIT_BRANCH,yarn-cache-develop,yarn-cache-master
             - echo "yarn-offline-mirror \"./.yarn-cache\"" >> .yarnrc
+            - echo "//npm.fury.io/amplifiedai/:_authToken=$NPM_TOKEN" >> .npmrc
             - yarn install
 
             # Store the latest version of node modules in cache to reuse in
             # further blocks:
-            - cache store yarn-cache-$SEMAPHORE_GIT_BRANCH-$(checksum yarn.lock) .yarn-cache
-            - cache store node-cache-$SEMAPHORE_GIT_BRANCH-$(checksum yarn.lock) node_modules
+            - cache store yarn-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_PIPELINE_ID .yarn-cache
+            - cache store node-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_PIPELINE_ID node_modules
 
 promotions:
   - name: Master Release
