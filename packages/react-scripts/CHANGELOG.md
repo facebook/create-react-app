@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/amplifiedai/create-react-app/compare/v3.0.1...v0.3.0) (2019-05-31)
+
+
+### Bug Fixes
+
+* fix eval statement for ci ([90a4755](https://github.com/amplifiedai/create-react-app/commit/90a4755))
+* update cache to use workflow id to work across pipelines in same workflow ([e190581](https://github.com/amplifiedai/create-react-app/commit/e190581))
+
+
+### Features
+
+* add read secret to npm install ci stage ([3f17f29](https://github.com/amplifiedai/create-react-app/commit/3f17f29))
+* bump @amplified/node-scripts and bind to package.json for usage ([93722d4](https://github.com/amplifiedai/create-react-app/commit/93722d4))
+* change to npm install ([9ce548c](https://github.com/amplifiedai/create-react-app/commit/9ce548c))
+* skip tagging so that there aren't version tag clashes with upstream ([4a92f9e](https://github.com/amplifiedai/create-react-app/commit/4a92f9e))
+* update path for output to _assets as per fab spec ([c50a69e](https://github.com/amplifiedai/create-react-app/commit/c50a69e))
+* update references to new sem secrets ([63f43fd](https://github.com/amplifiedai/create-react-app/commit/63f43fd))
+* update references to push to gemfury ([28abddc](https://github.com/amplifiedai/create-react-app/commit/28abddc))
+* use exact version for node-scripts ([ffcc9b1](https://github.com/amplifiedai/create-react-app/commit/ffcc9b1))
+
+
+
 ## 0.2.0 (2019-05-30)
 
 ### Features
