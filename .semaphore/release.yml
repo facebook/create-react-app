@@ -32,7 +32,7 @@ blocks:
           - checkout
           - sh .semaphore/branch-guard.sh master
           - cd packages/react-scripts
-          - cache restore node-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_PIPELINE_ID
+          - cache restore node-cache-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_WORKFLOW_ID
           - eval "$(node ./node_modules/.bin/as-aws-get-params --with-decryption)"
           - ssh-add - <<< "${GIT_SSH_DEPLOY_KEY}"
           - echo "//npm.fury.io/amplifiedai/:_authToken=$NPM_WRITE_TOKEN" >> .npmrc
