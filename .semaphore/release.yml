@@ -44,6 +44,6 @@ blocks:
           commands:
           - git config user.name $GIT_ACCESS_USER
           - git config user.email $GIT_ACCESS_EMAIL
-          - "yarn release --message \"chore(release): %s [ci skip]\"" # flag will change to releaseCommitMessageFormat https://github.com/conventional-changelog/standard-version/commit/a7133cc0e5a1924793bdf0e4abdd0ad9c58dfc2d#diff-168726dbe96b3ce427e7fedce31bb0bcR21
+          - "yarn release -t 3.0.1X --message \"chore(release): %s [ci skip]\"" # flag will change to releaseCommitMessageFormat https://github.com/conventional-changelog/standard-version/commit/a7133cc0e5a1924793bdf0e4abdd0ad9c58dfc2d#diff-168726dbe96b3ce427e7fedce31bb0bcR21
           - git push --follow-tags origin $SEMAPHORE_GIT_BRANCH
           - npm publish
