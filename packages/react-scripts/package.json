@@ -106,10 +106,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "standard-version": {
-    "skip": {
-      "tag": true
-    }
   }
 }
