@@ -55,7 +55,7 @@ blocks:
             # For more info on caching, see https://docs.semaphoreci.com/article/68-caching-dependencies
             - cache restore node-cache-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-cache-$SEMAPHORE_GIT_BRANCH,node-cache-develop,node-cache-master
             - echo "//npm.fury.io/amplifiedai/:_authToken=$NPM_TOKEN" >> .npmrc
-            - npm install
+            - npm ci
 
             # Store the latest version of node modules in cache to reuse in
             # further blocks:
