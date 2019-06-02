@@ -11,10 +11,16 @@
   "background": {
     "scripts": ["background.bundle.js"]
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.bundle.js"]
+    }
+  ],
   "icons": {
     "16": "img/icon-16.png",
     "48": "img/icon-48.png",
     "128": "img/icon-128.png"
   },
-  "permissions": []
+  "permissions": ["activeTab"]
 }

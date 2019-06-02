@@ -142,9 +142,7 @@ module.exports = function(webpackEnv) {
     entry: {
       app: paths.appIndexJs,
       background: paths.appBackgroundJs,
-      // We include the app code last so that if there is a runtime error during
-      // initialization, it doesn't blow up the WebpackDevServer client, and
-      // changing JS code would still trigger a refresh.
+      contentScript: paths.appContentScriptJs,
     },
     output: {
       // The build folder.
@@ -496,7 +494,7 @@ module.exports = function(webpackEnv) {
     plugins: [
       new ExtensionReloader({
         entries: {
-          contentScript: 'app',
+          contentScript: ['app', 'contentScript'],
           background: 'background',
         },
       }),

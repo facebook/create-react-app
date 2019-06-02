@@ -83,6 +83,7 @@ module.exports = {
   appPopupHtml: resolveApp('public/popup.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appBackgroundJs: resolveModule(resolveApp, 'src/background/index'),
+  appContentScriptJs: resolveModule(resolveApp, 'src/contentScripts/index'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
@@ -108,6 +109,7 @@ module.exports = {
   appPopupHtml: resolveApp('public/popup.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appBackgroundJs: resolveModule(resolveApp, 'src/background/index'),
+  appContentScriptJs: resolveModule(resolveApp, 'src/contentScripts/index'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
@@ -145,6 +147,10 @@ if (
     appPopupHtml: resolveOwn('template/public/popup.html'),
     appIndexJs: resolveModule(resolveOwn, 'template/src/index'),
     appBackgroundJs: resolveModule(resolveOwn, 'template/src/background/index'),
+    appContentScriptJs: resolveModule(
+      resolveOwn,
+      'template/src/contentScripts/index'
+    ),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
     appTsConfig: resolveOwn('template/tsconfig.json'),
