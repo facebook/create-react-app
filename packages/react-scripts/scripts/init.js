@@ -168,6 +168,7 @@ module.exports = function(
   args.push('react', 'react-dom');
 
   const mvpDependencies = [
+    'add',
     '@comatch/ui',
     '@fortawesome/fontawesome-free',
     '@fortawesome/fontawesome-free-regular',
@@ -187,7 +188,7 @@ module.exports = function(
     'styled-components',
   ];
 
-  const mvpDevDependencies = ['redux-devtools-extension'];
+  const mvpDevDependencies = ['add', 'redux-devtools-extension', '-D'];
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -219,7 +220,7 @@ module.exports = function(
   }
 
   // Adding Comatch MVP packages
-  if (!areAllDependenciesInstalled()) {
+  if (!areAllDependenciesInstalled(appPackage)) {
     console.log(`Installing Comatch MVP dependencies using ${command}...`);
     console.log();
 
@@ -231,11 +232,11 @@ module.exports = function(
   }
 
   // Adding Comatch MVP packages
-  if (!areAllDevDependenciesInstalled()) {
-    console.log(`Installing Comatch MVP dependencies using ${command}...`);
+  if (!areAllDevDependenciesInstalled(appPackage)) {
+    console.log(`Installing Comatch MVP dev dependencies using ${command}...`);
     console.log();
 
-    const proc = spawn.sync(command, mvpDevDependencies, '--dev', {
+    const proc = spawn.sync(command, mvpDevDependencies, {
       stdio: 'inherit',
     });
     if (proc.status !== 0) {
