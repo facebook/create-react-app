@@ -165,7 +165,9 @@ module.exports = function(
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
 
-  const dependencies = [
+  args.push('react', 'react-dom');
+
+  const mvpDependencies = [
     '@comatch/ui',
     '@fortawesome/fontawesome-free',
     '@fortawesome/fontawesome-free-regular',
@@ -179,15 +181,13 @@ module.exports = function(
     'faker',
     'lodash',
     'prop-types',
-    'react',
-    'react-dom',
     'react-redux',
     'redux',
     'redux-saga',
     'styled-components',
   ];
 
-  args.push(...dependencies);
+  const mvpDevDependencies = ['redux-devtools-extension'];
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -214,6 +214,32 @@ module.exports = function(
     const proc = spawn.sync(command, args, { stdio: 'inherit' });
     if (proc.status !== 0) {
       console.error(`\`${command} ${args.join(' ')}\` failed`);
+      return;
+    }
+  }
+
+  // Adding Comatch MVP packages
+  if (!areAllDependenciesInstalled()) {
+    console.log(`Installing Comatch MVP dependencies using ${command}...`);
+    console.log();
+
+    const proc = spawn.sync(command, mvpDependencies, { stdio: 'inherit' });
+    if (proc.status !== 0) {
+      console.error(`\`${command} ${mvpDependencies.join(' ')}\` failed`);
+      return;
+    }
+  }
+
+  // Adding Comatch MVP packages
+  if (!areAllDevDependenciesInstalled()) {
+    console.log(`Installing Comatch MVP dependencies using ${command}...`);
+    console.log();
+
+    const proc = spawn.sync(command, mvpDevDependencies, '--dev', {
+      stdio: 'inherit',
+    });
+    if (proc.status !== 0) {
+      console.error(`\`${command} ${mvpDevDependencies.join(' ')}\` failed`);
       return;
     }
   }
@@ -296,4 +322,39 @@ function isReactInstalled(appPackage) {
     typeof dependencies.react !== 'undefined' &&
     typeof dependencies['react-dom'] !== 'undefined'
   );
+}
+
+function areAllDependenciesInstalled(appPackage) {
+  const dependencies = appPackage.dependencies || {};
+
+  return (
+    typeof dependencies['@comatch/ui'] !== 'undefined' &&
+    typeof dependencies['@fortawesome/fontawesome-free'] !== 'undefined' &&
+    typeof dependencies['@fortawesome/fontawesome-free-regular'] !==
+      'undefined' &&
+    typeof dependencies['@fortawesome/fontawesome-free-solid'] !==
+      'undefined' &&
+    typeof dependencies['@fortawesome/fontawesome-svg-core'] !== 'undefined' &&
+    typeof dependencies['@fortawesome/free-brands-svg-icons'] !== 'undefined' &&
+    typeof dependencies['@fortawesome/free-regular-svg-icons'] !==
+      'undefined' &&
+    typeof dependencies['@fortawesome/free-solid-svg-icons'] !== 'undefined' &&
+    typeof dependencies['@fortawesome/react-fontawesome'] !== 'undefined' &&
+    typeof dependencies.classnames !== 'undefined' &&
+    typeof dependencies.faker !== 'undefined' &&
+    typeof dependencies.lodash !== 'undefined' &&
+    typeof dependencies['prop-types'] !== 'undefined' &&
+    typeof dependencies.react !== 'undefined' &&
+    typeof dependencies['react-dom'] !== 'undefined' &&
+    typeof dependencies['react-redux'] !== 'undefined' &&
+    typeof dependencies.redux !== 'undefined' &&
+    typeof dependencies['redux-saga'] !== 'undefined' &&
+    typeof dependencies['styled-components'] !== 'undefined'
+  );
+}
+
+function areAllDevDependenciesInstalled(appPackage) {
+  const dependencies = appPackage.devDependencies || {};
+
+  return typeof dependencies['redux-devtools-extension'] !== 'undefined';
 }
