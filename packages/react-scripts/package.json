@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
-  "version": "3.0.1",
-  "description": "Configuration and scripts for Create React App.",
+  "name": "comatch-create-react-mvp-scripts",
+  "version": "0.1.0",
+  "description": "Configuration and scripts for Comatch Create React MVP.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/COMATCH/comatch-create-react-mvp.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": ">=8.10"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/COMATCH/comatch-create-react-mvp/issues"
   },
   "files": [
     "bin",

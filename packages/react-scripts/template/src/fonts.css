@@ -1,0 +1,6 @@
+@import './static/atcoverlook.css';
+
+* {
+  box-sizing: border-box;
+  font-family: 'ATCOverlook', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}

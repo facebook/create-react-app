@@ -164,7 +164,30 @@ module.exports = function(
     command = 'npm';
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
-  args.push('react', 'react-dom');
+
+  const dependencies = [
+    '@comatch/ui',
+    '@fortawesome/fontawesome-free',
+    '@fortawesome/fontawesome-free-regular',
+    '@fortawesome/fontawesome-free-solid',
+    '@fortawesome/fontawesome-svg-core',
+    '@fortawesome/free-brands-svg-icons',
+    '@fortawesome/free-regular-svg-icons',
+    '@fortawesome/free-solid-svg-icons',
+    '@fortawesome/react-fontawesome',
+    'classnames',
+    'faker',
+    'lodash',
+    'prop-types',
+    'react',
+    'react-dom',
+    'react-redux',
+    'redux',
+    'redux-saga',
+    'styled-components',
+  ];
+
+  args.push(...dependencies);
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -254,6 +277,14 @@ module.exports = function(
       )
     );
   }
+  console.log();
+  console.log(
+    'Create a .env file at the root of your project with ``NOTE_PATH=src/``'
+  );
+  console.log(
+    '  This will provide setup for your application to use absolute imports!'
+  );
+  console.log("  There's an example file `.env.example`");
   console.log();
   console.log('Happy hacking!');
 };
