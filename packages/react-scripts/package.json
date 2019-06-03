@@ -105,9 +105,12 @@
     "workbox-webpack-plugin": "4.2.0"
   },
   "devDependencies": {
+    "@emotion/core": "^10.0.10",
     "babel-plugin-react-docgen": "^3.0.0",
+    "i18next": "^15.1.3",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "react-i18next": "^10.11.0"
   },
   "optionalDependencies": {
     "fsevents": "2.0.6"
