@@ -3,57 +3,18 @@
 const fs = require('fs-extra')
 const os = require('os')
 const path = require('path')
-const fsCli = require('fs-cli-goodies')
-// const inquirer = require('inquirer')
 const osUtils = require('./osUtils')
 
 module.exports = {
   installFrontierDependencies,
-  promptForConfig,
 }
 
-const polymerFromCDNCode = `
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/webcomponents-bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/custom-elements-es5-adapter.js"></script>
- `
 const depsToInstall = []
 const devDepsToInstall = []
 
-async function promptForConfig() {
-  console.log(fsCli.fsLogo('Frontier React Scripts'))
-  // when in CI, don't prompt, just accept defaults
-  if (process.env.CI === 'true') {
-    console.log('CI detected, skipping prompts and returning defaults ...')
-    return Promise.resolve({ additionalFeatures: [] })
-  }
-  // Commenting this out for now, because we are likely going to be prompting for team owners and/or additional things soon
-  // const questions = [
-  //   {
-  //     type: 'checkbox',
-  //     name: 'additionalFeatures',
-  //     message: 'What additional features does your app require (these are checkboxes)',
-  //     choices: [
-  //       {
-  //         name: 'Using a shared Polymer Component within your React App?',
-  //         value: 'polymer',
-  //       },
-  //     ],
-  //   },
-  // ]
-  // const answers = await inquirer.prompt(questions)
-  // return answers
-  return Promise.resolve({ additionalFeatures: [] })
-}
-
-function installFrontierDependencies(appPath, appName, answers, ownPath) {
-  const { additionalFeatures } = answers
-  const usePolymer = additionalFeatures.includes('polymer')
-  const useHF = true
-
+function installFrontierDependencies(appPath, appName, ownPath) {
   configureEF(appPath, ownPath, appName)
   configureHF(appPath, ownPath)
-  // we always call this handle function. If usePolymer is false, it will remove the comments that we manually placed in the index file
-  handlePolymerCodeAndComments(appPath, usePolymer, useHF)
 
   depsToInstall.push(
     ...[
@@ -94,6 +55,9 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       'dotenv@7',
       'jest-dom@3',
       'http-proxy-middleware@0.19',
+      'husky@2',
+      'lint-staged@8',
+      'suppress-exit-code@0.1',
     ]
   )
 
@@ -105,13 +69,14 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
       'storybook:build': 'NODE_ENV=development build-storybook -c .storybook -o build',
       lint: 'eslint src/',
       'lint:fix': 'eslint src/ --fix',
-      test: `eslint src/ && ${packageJson.scripts.test}`,
     }
     packageJson.scripts = { ...packageJson.scripts, ...additionalScripts }
     delete packageJson.scripts.eject
-    packageJson.eslintConfig = {
-      extends: ['@fs/eslint-config-frontier-react'],
+    packageJson.eslintConfig = { extends: ['@fs/eslint-config-frontier-react'] }
+    packageJson.husky = {
+      hooks: { 'pre-commit': 'lint-staged', 'pre-push': 'npm run lint && CI=true npm test' },
     }
+    packageJson['lint-staged'] = { '*.js': ['suppress-exit-code eslint --fix', 'git add'] }
     return packageJson
   })
   installModulesSync(depsToInstall)
@@ -120,20 +85,6 @@ function installFrontierDependencies(appPath, appName, answers, ownPath) {
   syncLocales()
 
   replaceStringInFile(appPath, './README.md', /\{GITHUB_REPO\}/g, appName)
-}
-
-function handlePolymerCodeAndComments(appPath, usePolymer, useHF) {
-  const polymerComment = '<!-- FRONTIER WEBCOMPONENT LOADER CODE FRONTIER -->'
-  let filePath = 'public/index.html'
-  if (useHF) {
-    filePath = 'views/index.ejs'
-  }
-
-  if (usePolymer) {
-    replaceStringInFile(appPath, filePath, polymerComment, polymerFromCDNCode)
-  } else {
-    replaceStringInFile(appPath, filePath, polymerComment, '')
-  }
 }
 
 function alterPackageJsonFile(appPath, extendFunction) {
@@ -157,18 +108,6 @@ function configureEF(appPath, ownPath, appName) {
   const templatePath = path.join(ownPath, 'template-ef')
   fs.copySync(templatePath, appPath, { overwrite: true })
 
-  alterPackageJsonFile(appPath, appPackage => {
-    const packageJson = { ...appPackage }
-    const additionalScripts = {
-      'heroku-prebuild': './heroku-prebuild.sh',
-    }
-    packageJson.scripts = sortScripts({
-      ...packageJson.scripts,
-      ...additionalScripts,
-    })
-    return packageJson
-  })
-
   depsToInstall.push(...['express@4.16.4'])
   replaceStringInFile(appPath, './blueprint.yml', /\{\{APP_NAME\}\}/g, appName)
 }
@@ -182,6 +121,7 @@ function configureHF(appPath, ownPath) {
     const additionalScripts = {
       'build:prod': 'PUBLIC_URL=https://edge.fscdn.org/assets/ react-scripts build',
       'heroku-postbuild': 'npm run build:prod',
+      'heroku-prebuild': './heroku-prebuild.sh',
       start: 'react-scripts start',
     }
     packageJson.scripts = sortScripts({

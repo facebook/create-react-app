@@ -287,6 +287,9 @@ module.exports = function(webpackEnv) {
         'react-native': 'react-native-web',
         react: require.resolve('react'),
         'react-dom': require.resolve('react-dom'),
+        i18next: require.resolve('i18next'),
+        'react-i18next': require.resolve('react-i18next'),
+        '@emotion/core': require.resolve('@emotion/core'),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
