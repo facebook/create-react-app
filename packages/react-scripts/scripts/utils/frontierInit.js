@@ -20,6 +20,7 @@ function installFrontierDependencies(appPath, appName, ownPath) {
     ...[
       '@emotion/core@10',
       '@fs/zion-axios',
+      '@fs/zion-cache',
       '@fs/zion-frontend-friends',
       '@fs/zion-icon',
       '@fs/zion-locale',
@@ -29,9 +30,11 @@ function installFrontierDependencies(appPath, appName, ownPath) {
       '@fs/zion-subnav',
       '@fs/zion-user',
       '@fs/zion-ui',
+      'formik@1',
       'i18next@15',
       'react-i18next@10',
       'prop-types@15',
+      'yup@0.27',
     ]
   )
   devDepsToInstall.push(
