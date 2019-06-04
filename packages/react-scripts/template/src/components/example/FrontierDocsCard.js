@@ -46,9 +46,9 @@ const FrontierDocsCard = ({ logoColor, animationDuration, handleLogoClick }) => 
 
 FrontierDocsCard.propTypes = {
   /** The logoColor is used to set the color of the Logo component. */
-  logoColor: PropTypes.string.isRequired,
+  logoColor: PropTypes.string,
   /** This prop is needed to set the length of time for how long the Logo should animate for. */
-  animationDuration: PropTypes.number.isRequired,
+  animationDuration: PropTypes.number,
   /** This function changes the color of the logo on each click of the Card. */
   handleLogoClick: PropTypes.func.isRequired,
 }

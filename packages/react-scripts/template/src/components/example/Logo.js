@@ -45,9 +45,9 @@ const Logo = ({ color = 'black', animationDuration = 20 }) => {
 
 Logo.propTypes = {
   /** Used to set the color of the logo. */
-  color: PropTypes.string.isRequired,
+  color: PropTypes.string,
   /** Used to set the duration of animation of the logo. */
-  animationDuration: PropTypes.number.isRequired,
+  animationDuration: PropTypes.number,
 }
 
 export default Logo
