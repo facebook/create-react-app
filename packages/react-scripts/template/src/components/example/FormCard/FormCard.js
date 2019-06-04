@@ -76,7 +76,7 @@ const FormCard = () => {
         >
           {/* formik gives you render props to access values, errors and helper functions
           to deal with your form. */}
-          {({ values, errors, handleSubmit, isValid, isDirty, resetForm }) => (
+          {({ values, errors, touched, handleSubmit, isValid, isDirty, resetForm }) => (
             <>
               <CardContent>
                 <h2>Forms in React</h2>
@@ -94,7 +94,7 @@ const FormCard = () => {
 
                   Errors and values from formik are passed into the EditData component. */}
                 {isEditing ? (
-                  <EditData errors={errors} values={values} />
+                  <EditData touched={touched} errors={errors} values={values} />
                 ) : (
                   <ListData data={cachedData} />
                 )}

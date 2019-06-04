@@ -3,7 +3,7 @@ import { Form, Field, ErrorMessage } from 'formik'
 import { Grid, Cell } from '@fs/zion-ui/grid'
 import { TextField, Checkbox, FormControlLabel } from '@fs/zion-ui'
 
-export default function Edit({ values, errors }) {
+export default function Edit({ values, errors, touched }) {
   return (
     <Form>
       <Grid>
@@ -16,7 +16,7 @@ export default function Edit({ values, errors }) {
                 {/* TextField is a zion component for text inputs and textareas. */}
                 <TextField
                   {...field}
-                  error={errors.username}
+                  error={touched.username && errors.username}
                   id="username"
                   label="Username (required)"
                 />
@@ -33,7 +33,7 @@ export default function Edit({ values, errors }) {
                 <TextField
                   {...field}
                   type="password"
-                  error={errors.password}
+                  error={touched.password && errors.password}
                   id="password"
                   label="Enter a dummy password (required)"
                 />
@@ -48,7 +48,7 @@ export default function Edit({ values, errors }) {
               <>
                 <TextField
                   {...field}
-                  error={errors.food}
+                  error={touched.food && errors.food}
                   id="food"
                   label="What&#39;s your favorite food"
                 />
@@ -61,7 +61,13 @@ export default function Edit({ values, errors }) {
           <Field name="age">
             {({ field }) => (
               <>
-                <TextField {...field} type="number" error={errors.age} id="age" label="Age" />
+                <TextField
+                  {...field}
+                  type="number"
+                  error={touched.age && errors.age}
+                  id="age"
+                  label="Age"
+                />
                 <ErrorMessage name="age" render={msg => <p>{msg}</p>} />
               </>
             )}
@@ -71,7 +77,12 @@ export default function Edit({ values, errors }) {
           <Field name="email">
             {({ field }) => (
               <>
-                <TextField {...field} error={errors.email} id="email" label="An Email" />
+                <TextField
+                  {...field}
+                  error={touched.email && errors.email}
+                  id="email"
+                  label="An Email"
+                />
                 <ErrorMessage name="email" render={msg => <p>{msg}</p>} />
               </>
             )}
