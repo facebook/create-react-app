@@ -41,6 +41,7 @@ function installFrontierDependencies(appPath, appName, ownPath) {
       '@storybook/addon-console@1',
       '@storybook/addon-info@5',
       '@storybook/addon-knobs@5',
+      '@storybook/addon-storysource@5',
       '@storybook/addon-viewport@5',
       '@storybook/addons@5',
       '@storybook/react@5',
