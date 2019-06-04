@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Card, CardActions, CardContent, CardMedia } from '@fs/zion-ui'
 import IconButton from '@fs/zion-ui/icon-button'
 import { SocialLike, ArrowChevron } from '@fs/zion-icon'
@@ -120,6 +121,15 @@ const ArtifactsCard = ({ user, likeButtonPressed }) => {
       {loading ? renderLoading() : renderArtifacts()}
     </Card>
   )
+}
+
+ArtifactsCard.propTypes = {
+  /** User is needed to obtain artifacts from their family history from memory service. */
+  user: PropTypes.shape({
+    cisId: PropTypes.string.isRequired,
+  }).isRequired,
+  /** This is a function that is used to notify the parent that the like button was pressed. */
+  likeButtonPressed: PropTypes.func.isRequired,
 }
 
 export default ArtifactsCard

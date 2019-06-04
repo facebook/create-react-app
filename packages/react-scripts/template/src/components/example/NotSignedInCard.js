@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Button, Card, CardActions, CardContent } from '@fs/zion-ui'
 
 const NotSignedInCard = ({ user: { userLoading } }) => (
@@ -13,5 +14,12 @@ const NotSignedInCard = ({ user: { userLoading } }) => (
     </CardActions>
   </Card>
 )
+
+NotSignedInCard.propTypes = {
+  user: PropTypes.shape({
+    /** True or false depending on whether or not the user is being fetched. */
+    userLoading: PropTypes.bool.isRequired,
+  })
+}
 
 export default NotSignedInCard

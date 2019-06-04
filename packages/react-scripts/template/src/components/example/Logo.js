@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { css } from '@emotion/core'
 import logo from './Logo.svg'
 
@@ -40,6 +41,13 @@ const Logo = ({ color = 'black', animationDuration = 20 }) => {
       dangerouslySetInnerHTML={{ __html: svgContent }}
     />
   )
+}
+
+Logo.propTypes = {
+  /** Used to set the color of the logo. */
+  color: PropTypes.string.isRequired,
+  /** Used to set the duration of animation of the logo. */
+  animationDuration: PropTypes.number.isRequired,
 }
 
 export default Logo

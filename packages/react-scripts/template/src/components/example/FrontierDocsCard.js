@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Button, Card, CardActions, CardContent, CardActionArea } from '@fs/zion-ui'
 import { useTranslation } from 'react-i18next'
 import Logo from './Logo'
@@ -41,6 +42,15 @@ const FrontierDocsCard = ({ logoColor, animationDuration, handleLogoClick }) => 
       </CardActions>
     </Card>
   )
+}
+
+FrontierDocsCard.propTypes = {
+  /** The logoColor is used to set the color of the Logo component. */
+  logoColor: PropTypes.string.isRequired,
+  /** This prop is needed to set the length of time for how long the Logo should animate for. */
+  animationDuration: PropTypes.number.isRequired,
+  /** This function changes the color of the logo on each click of the Card. */
+  handleLogoClick: PropTypes.func.isRequired,
 }
 
 export default FrontierDocsCard
