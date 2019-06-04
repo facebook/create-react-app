@@ -7,6 +7,7 @@ import LearnReactCard from './LearnReactCard'
 import NotSignedInCard from './NotSignedInCard'
 import ArtifactsCard from './ArtifactsCard'
 import UserCard from './UserCard'
+import FormCard from './FormCard/FormCard'
 
 // Hook to generate a random color
 const useRandomColor = () => {
@@ -92,7 +93,7 @@ const ExamplePage = () => {
       </Cell>
 
       <Cell sm="6" lg="8">
-        <div>Form demo coming soon</div>
+        <FormCard />
       </Cell>
     </Grid>
   )

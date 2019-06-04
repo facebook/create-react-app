@@ -29,9 +29,11 @@ function installFrontierDependencies(appPath, appName, ownPath) {
       '@fs/zion-subnav',
       '@fs/zion-user',
       '@fs/zion-ui',
+      'formik',
       'i18next@15',
       'react-i18next@10',
       'prop-types@15',
+      'yup',
     ]
   )
   devDepsToInstall.push(
