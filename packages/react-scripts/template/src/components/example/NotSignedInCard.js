@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card, CardActions, CardContent } from '@fs/zion-ui'
 
-const NotSignedInCard = ({ userLoading }) => (
+const NotSignedInCard = ({ user: { userLoading } }) => (
   <Card>
     <CardContent>
       {userLoading ? <p>User loading ...</p> : <p>You must sign in to see this content</p>}

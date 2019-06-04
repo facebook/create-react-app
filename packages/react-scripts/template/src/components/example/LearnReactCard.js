@@ -1,12 +1,10 @@
 import React from 'react'
-import { Button, Card, CardMedia, CardActions, CardContent, CardActionArea } from '@fs/zion-ui'
+import { Button, Card, CardMedia, CardActions, CardContent } from '@fs/zion-ui'
 import ReactImage from './reactjs.jpg'
 
 const LearnReactCard = () => (
   <Card>
-    <CardActionArea>
-      <CardMedia height="240px" image={ReactImage} />
-    </CardActionArea>
+    <CardMedia height="300px" image={ReactImage} />
     <CardContent>
       <h2>Learn React</h2>
     </CardContent>

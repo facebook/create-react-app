@@ -1,12 +1,10 @@
 import React from 'react'
-import { Button, Card, CardMedia, CardActions, CardContent, CardActionArea } from '@fs/zion-ui'
+import { Button, Card, CardMedia, CardActions, CardContent } from '@fs/zion-ui'
 import ZionImage from './zion.jpg'
 
 const ZionCard = () => (
   <Card>
-    <CardActionArea>
-      <CardMedia height="340px" image={ZionImage} title="Zion National Park" />
-    </CardActionArea>
+    <CardMedia height="340px" image={ZionImage} title="Zion National Park" />
     <CardContent>
       <h2>Zion</h2>
       <p>Zion is the place to go to find reusable components for your FamilySearch application.</p>
