@@ -18,7 +18,11 @@ const FrontierDocsCard = ({ logoColor, animationDuration, handleLogoClick }) => 
         </p>
       </CardContent>
       <CardActionArea onClick={handleLogoClick}>
-        <Logo alt="Click me" color={logoColor} animationDuration={animationDuration} />
+        <Logo
+          alt={t('getting.started.click.logo.text', 'Click me')}
+          color={logoColor}
+          animationDuration={animationDuration}
+        />
       </CardActionArea>
 
       <CardContent>
@@ -32,7 +36,7 @@ const FrontierDocsCard = ({ logoColor, animationDuration, handleLogoClick }) => 
           color="primary"
           href="https://www.familysearch.org/frontier/docs"
         >
-          Frontier Docs
+          {t('getting.started.docs.link', 'Frontier Docs')}
         </Button>
       </CardActions>
     </Card>
