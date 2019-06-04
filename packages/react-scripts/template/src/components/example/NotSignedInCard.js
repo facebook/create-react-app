@@ -18,8 +18,8 @@ const NotSignedInCard = ({ user: { userLoading } }) => (
 NotSignedInCard.propTypes = {
   user: PropTypes.shape({
     /** True or false depending on whether or not the user is being fetched. */
-    userLoading: PropTypes.bool.isRequired,
-  })
+    userLoading: PropTypes.bool,
+  }),
 }
 
 export default NotSignedInCard

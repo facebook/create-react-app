@@ -50,7 +50,7 @@ FrontierDocsCard.propTypes = {
   /** This prop is needed to set the length of time for how long the Logo should animate for. */
   animationDuration: PropTypes.number,
   /** This function changes the color of the logo on each click of the Card. */
-  handleLogoClick: PropTypes.func.isRequired,
+  handleLogoClick: PropTypes.func,
 }
 
 export default FrontierDocsCard
