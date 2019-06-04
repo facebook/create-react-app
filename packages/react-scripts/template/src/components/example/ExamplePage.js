@@ -38,10 +38,6 @@ const ExamplePage = () => {
   const [logoAnimationDuration, setLogoAnimationDuration] = React.useState(20)
 
   // Event handlers
-  function handleFrontierDocsClick() {
-    randomizeLogoColor()
-  }
-
   function likeButtonPressed() {
     setLikeButtonPressedCount(currentCount => currentCount + 1)
   }
@@ -61,7 +57,7 @@ const ExamplePage = () => {
       <Cell sm="6" lg="4">
         <FrontierDocsCard
           logoColor={logoColor}
-          handleLogoClick={handleFrontierDocsClick}
+          handleLogoClick={randomizeLogoColor}
           animationDuration={logoAnimationDuration}
         />
       </Cell>
