@@ -49,9 +49,9 @@ Learn more about ES6 modules:
 - [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
 - [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
 
-## Absolute Imports
+## Relative Imports
 
-You can configure your application to support importing modules using absolute paths. This can be done by configuring a `jsconfig.json` or `tsconfig.json` file in the root of your project. If you're using TypeScript in your project, you will already have a `tsconfig.json` file.
+You can configure your application to support importing modules using relative paths. This can be done by configuring a `jsconfig.json` or `tsconfig.json` file in the root of your project. If you're using TypeScript in your project, you will already have a `tsconfig.json` file.
 
 Below is an example `jsconfig.json` file for a JavaScript project. You can create the file if it doesn't already exist:
 
@@ -66,7 +66,7 @@ Below is an example `jsconfig.json` file for a JavaScript project. You can creat
 
 If you're using TypeScript, you can configure the `baseUrl` setting inside the `compilerOptions` of your project's `tsconfig.json` file.
 
-Now that you've configured your project to support absolute imports, if you want to import a module located at `src/components/Button.js`, you can import the module like so:
+Now that you've configured your project to support relative imports, if you want to import a module located at `src/components/Button.js`, you can import the module like so:
 
 ```js
 import Button from 'components/Button';
