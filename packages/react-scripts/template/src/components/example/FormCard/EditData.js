@@ -8,15 +8,19 @@ export default function Edit({ values, errors }) {
     <Form>
       <Grid>
         <Cell md="6" lg="4">
+          {/* Field comes from formik. In helps with controlling your input (https://reactjs.org/docs/forms.html#controlled-components)
+          So within the field render prop, are the onChange and value props that are passed to TextField. */}
           <Field name="username">
             {({ field }) => (
               <>
+                {/* TextField is a zion component for text inputs and textareas. */}
                 <TextField
                   {...field}
                   error={errors.username}
                   id="username"
                   label="Username (required)"
                 />
+                {/* ErrorMessage is a formik component to help with rendering error messages */}
                 <ErrorMessage name="username" render={msg => <p>{msg}</p>} />
               </>
             )}
@@ -85,6 +89,7 @@ export default function Edit({ values, errors }) {
           </div>
         </Cell>
       </Grid>
+      {/* This section is helpful to understand a little about what formik is doing to the values and errors in the ui. */}
       {values.debug && <pre>{JSON.stringify({ errors, values }, null, 2)}</pre>}
     </Form>
   )

@@ -5,10 +5,16 @@ import * as Yup from 'yup'
 import { useCache } from '@fs/zion-cache'
 import ListData from './ListData'
 
+// lazy importing EditData, which is depending on whether I'm in editing mode or not.
 const EditData = lazy(() => import('./EditData'))
 
+// This is a zion-cache config object. Docs: https://beta.familysearch.org/frontier/zion/?path=/story/utilities-cache--cache-class-api
 const cache = { dbName: 'formik', storeName: 'example' }
 const key = 'example'
+
+// This is the shape of the data in our form.
+// Below, we'll use this same shape for validation
+// and formik will use this shape when managing the form.
 const initialValue = {
   username: '',
   password: '',
@@ -18,12 +24,21 @@ const initialValue = {
   debug: false,
 }
 const FormCard = () => {
+  // useCache is a hook to persist a piece of
+  // data in zion-cache. You pass it the zion-cache
+  // config, the key where the data is to be stored
+  // and an optional initialValue. The api is meant
+  // to mimick useState.
   const [cachedData, setCachedData] = useCache({
     cache,
     key,
     initialValue,
   })
   const [isEditing, setIsEditing] = useState(false)
+
+  // Yup is a 3rd party library for validating
+  // objects. It has a similar api to prop-types.
+  // Docs here: https://www.npmjs.com/package/yup
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .min(4, 'Must be at least 4 characters long.')
@@ -39,8 +54,16 @@ const FormCard = () => {
       .max(65),
     food: Yup.string().max(50),
   })
+
   return (
     <Card>
+      {/* wait for cachedData to exist since formik
+        will take use that object for it's dirty and
+        validation checking
+
+        Formik is a library to help tame forms in react.
+        Docs: https://jaredpalmer.com/formik/
+        */}
       {cachedData && (
         <Formik
           validationSchema={validationSchema}
@@ -51,6 +74,8 @@ const FormCard = () => {
             setIsEditing(false)
           }}
         >
+          {/* formik gives you render props to access values, errors and helper functions
+          to deal with your form. */}
           {({ values, errors, handleSubmit, isValid, isDirty, resetForm }) => (
             <>
               <CardContent>
@@ -65,6 +90,9 @@ const FormCard = () => {
                 </p>
                 <h3>Example Form</h3>
 
+                {/* isEditing is a simple boolean state that is toggled by a button below.
+
+                  Errors and values from formik are passed into the EditData component. */}
                 {isEditing ? (
                   <EditData errors={errors} values={values} />
                 ) : (
