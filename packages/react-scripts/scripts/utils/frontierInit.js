@@ -21,6 +21,7 @@ function installFrontierDependencies(appPath, appName, ownPath) {
       '@emotion/core@10',
       '@fs/zion-axios',
       '@fs/zion-frontend-friends',
+      '@fs/zion-icon',
       '@fs/zion-locale',
       '@fs/zion-root',
       '@fs/zion-router',
