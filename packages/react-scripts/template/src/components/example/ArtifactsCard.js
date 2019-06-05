@@ -5,7 +5,7 @@ import { SocialLike, ArrowChevron } from '@fs/zion-icon'
 import axios from '@fs/zion-axios'
 
 // Custom hook for fetching artifacts from the the memory service
-const useArtifacts = ({ cisId }) => {
+const useArtifacts = cisId => {
   // Handles dispatched actions
   // Take an action type, applies state changes and returns new state
   const reducer = (state, { type, ...data }) => {
@@ -46,13 +46,13 @@ const useArtifacts = ({ cisId }) => {
   return [state]
 }
 
-const ArtifactsCard = ({ user, likeButtonPressed }) => {
+const ArtifactsCard = ({ cisId, likeButtonPressed }) => {
   // Initiate state variables
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const [liked, setLiked] = React.useState([])
 
   // Use our custom hook
-  const [{ loading, artifacts, error }] = useArtifacts(user)
+  const [{ loading, artifacts, error }] = useArtifacts(cisId)
 
   // Event handlers
   const handleNextClick = () => {
@@ -122,4 +122,9 @@ const ArtifactsCard = ({ user, likeButtonPressed }) => {
   )
 }
 
-export default ArtifactsCard
+// Because our component renders the same result given the same props, it makes sense not
+// to render it again if the props haven't changed.   To do this we can use React.memo().  For
+// more information see the links below:
+// https://reactjs.org/docs/react-api.html#reactmemo
+// https://egghead.io/lessons/react-prevent-unnecessary-component-rerenders-with-react-memo
+export default React.memo(ArtifactsCard)
