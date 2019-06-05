@@ -2,8 +2,11 @@ import React from 'react'
 import { Link, Switch, Route, AuthRoute, NotFound } from '@fs/zion-router'
 import Subnav from '@fs/zion-subnav'
 import { Trans } from 'react-i18next'
-import ExamplePage from './components/example/ExamplePage'
-import UserInfo from './components/user/UserInfo'
+
+// Dynamically load components to reduce bundle size
+// https://reactjs.org/docs/react-api.html#reactlazy
+const ExamplePage = React.lazy(() => import('./components/example/ExamplePage'))
+const UserInfo = React.lazy(() => import('./components/user/UserInfo'))
 
 function App() {
   return (

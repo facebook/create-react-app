@@ -49,5 +49,4 @@ Logo.propTypes = {
   /** Used to set the duration of animation of the logo. */
   animationDuration: PropTypes.number,
 }
-
-export default Logo
+export default React.memo(Logo)

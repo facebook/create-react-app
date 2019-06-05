@@ -174,4 +174,7 @@ UserCard.propTypes = {
   handleLogoAnimationDurationChange: PropTypes.func.isRequired,
 }
 
-export default UserCard
+// Use React.memo() to keep our component from re-rendering if the props havent changed
+// https://reactjs.org/docs/react-api.html#reactmemo
+// https://egghead.io/lessons/react-prevent-unnecessary-component-rerenders-with-react-memo
+export default React.memo(UserCard)

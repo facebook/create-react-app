@@ -2,6 +2,8 @@ import React from 'react'
 import { List, ListItem, ListItemText } from '@fs/zion-ui/list'
 
 export default function ListData({ data }) {
+  // All the components used in this component come from zion.
+  // This component is just for listing the data that comes from the form.
   return (
     <List>
       <ListItem divider>

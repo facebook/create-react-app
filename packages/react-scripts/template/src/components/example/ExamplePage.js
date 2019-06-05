@@ -27,9 +27,9 @@ const useRandomColor = () => {
 // Component that checks whether or not a user is signed in. If so, it renders
 // the Component passed via the `Component` prop and forwards all other props.
 // If not signed in, it renders a NotSignedIn component
-function RequireSignedInUser({ user, Component, ...props }) {
-  return user.signedIn ? <Component user={user} {...props} /> : <NotSignedInCard user={user} />
-}
+const RequireSignedInUser = React.memo(({ user, Component, ...props }) =>
+  user.signedIn ? <Component user={user} {...props} /> : <NotSignedInCard user={user} />
+)
 
 const ExamplePage = () => {
   // Initiate state variables and hooks
@@ -87,6 +87,7 @@ const ExamplePage = () => {
       <Cell sm="6" lg="4">
         <RequireSignedInUser
           user={user}
+          cisId={user.cisId}
           Component={ArtifactsCard}
           likeButtonPressed={likeButtonPressed}
         />
