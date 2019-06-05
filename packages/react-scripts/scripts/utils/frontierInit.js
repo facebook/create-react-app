@@ -49,6 +49,7 @@ function installFrontierDependencies(appPath, appName, ownPath) {
       '@fs/storybook-addons',
       '@fs/zion-testing-library',
       '@fs/zion-style-normalize',
+      'core-js@2',
       'eslint@5',
       'i18next-scanner@2',
       '@alienfast/i18next-loader@1',
