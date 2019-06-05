@@ -131,7 +131,7 @@ if (program.info) {
       {
         System: ['OS', 'CPU'],
         Binaries: ['Node', 'npm', 'Yarn'],
-        Browsers: ['Chrome', 'Edge', 'Internet Explorer', 'Firefox', 'Safari'],
+        Browsers: ['Chrome', 'Edge', 'Brave', 'Firefox', 'Safari'],
         npmPackages: ['react', 'react-dom', 'react-scripts'],
         npmGlobalPackages: ['create-react-app'],
       },
@@ -143,8 +143,8 @@ if (program.info) {
     .then(console.log);
 }
 
-if (typeof projectName === 'undefined') {
-  console.error('Please specify the project directory:');
+if (typeof projectName === 'undefined' || projectName === 'undefined') {
+  console.error('Please specify the project directory different of undefined:');
   console.log(
     `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
   );
