@@ -180,7 +180,7 @@ As an alternative or companion to `enzyme`, you may consider using `react-testin
 To install `react-testing-library` and `jest-dom`, you can run:
 
 ```sh
-npm install --save-dev @testing-library/react jest-dom
+npm install --save @testing-library/react jest-dom
 ```
 
 Alternatively you may use `yarn`:
