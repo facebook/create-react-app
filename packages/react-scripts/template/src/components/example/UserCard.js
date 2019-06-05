@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { css } from '@emotion/core'
 import {
   Button,
@@ -152,6 +153,25 @@ const UserCard = ({
       </CardActions>
     </Card>
   ) : null
+}
+
+UserCard.propTypes = {
+  /** Needed to display the various attributes of a user. */
+  user: PropTypes.shape({
+    cisId: PropTypes.string.isRequired,
+    displayName: PropTypes.string.isRequired,
+    contactName: PropTypes.string.isRequired,
+    personId: PropTypes.string.isRequired,
+    gender: PropTypes.string.isRequired,
+  }),
+  /** Used to display how many times the like button was clicked. */
+  likeButtonPressedCount: PropTypes.number.isRequired,
+  /** Used to set the color of the logo. */
+  logoColor: PropTypes.string.isRequired,
+  /** The duration of animation of the logo. */
+  logoAnimationDuration: PropTypes.number.isRequired,
+  /** Set the duration of animation of the logo. */
+  handleLogoAnimationDurationChange: PropTypes.func.isRequired,
 }
 
 // Use React.memo() to keep our component from re-rendering if the props havent changed
