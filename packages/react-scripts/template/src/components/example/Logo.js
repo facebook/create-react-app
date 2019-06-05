@@ -42,4 +42,4 @@ const Logo = ({ color = 'black', animationDuration = 20 }) => {
   )
 }
 
-export default Logo
+export default React.memo(Logo)
