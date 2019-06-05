@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { css } from '@emotion/core'
 import logo from './Logo.svg'
 
-const logoCss = color => css`
-  animation: spin infinite 20s linear;
+const logoCss = (color, animationDuration) => css`
+  animation: spin infinite ${animationDuration}s linear;
   height: 36vmin;
   max-height: 280px;
   margin: 10px;
@@ -23,7 +24,7 @@ const logoCss = color => css`
     }
   }
 `
-const Logo = ({ color = 'black' }) => {
+const Logo = ({ color = 'black', animationDuration = 20 }) => {
   const [svgContent, setSvgContent] = React.useState()
 
   React.useEffect(() => {
@@ -34,7 +35,7 @@ const Logo = ({ color = 'black' }) => {
 
   return (
     <div
-      css={logoCss(color)}
+      css={logoCss(color, animationDuration)}
       astyle={{ fill: 'blue' }}
       /* eslint-disable-next-line react/no-danger */
       dangerouslySetInnerHTML={{ __html: svgContent }}
@@ -42,4 +43,10 @@ const Logo = ({ color = 'black' }) => {
   )
 }
 
-export default Logo
+Logo.propTypes = {
+  /** Used to set the color of the logo. */
+  color: PropTypes.string,
+  /** Used to set the duration of animation of the logo. */
+  animationDuration: PropTypes.number,
+}
+export default React.memo(Logo)

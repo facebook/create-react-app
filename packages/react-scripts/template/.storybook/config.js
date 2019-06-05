@@ -9,6 +9,7 @@ import { withKnobs } from '@storybook/addon-knobs'
 import theme from './theme'
 import StyleNormalize from '@fs/zion-style-normalize'
 import { theme as zionTheme, ThemeProvider } from '@fs/zion-ui'
+import { I18nProvider, i18n } from '@fs/zion-locale'
 
 const baseCss = css`
   // Markdown inside of stories has no padding
@@ -24,11 +25,13 @@ addDecorator(withKnobs)
 addDecorator(withA11y)
 addDecorator(addReadme)
 addDecorator(storyFn => (
-  <ThemeProvider theme={zionTheme}>
-    <StyleNormalize>
-      <div css={baseCss}>{storyFn()}</div>
-    </StyleNormalize>
-  </ThemeProvider>
+  <I18nProvider i18nInstance={i18n}>
+    <ThemeProvider theme={zionTheme}>
+      <StyleNormalize>
+        <div css={baseCss}>{storyFn()}</div>
+      </StyleNormalize>
+    </ThemeProvider>
+  </I18nProvider>
 ))
 
 // eslint-disable-next-line no-extend-native
