@@ -9,6 +9,8 @@ template/src/__tests__/__snapshots__/
 lerna-debug.log
 npm-debug.log*
 yarn-debug.log*
+yarn.lock
+package-lock.json
 yarn-error.log*
 /.changelog
 .npm/
