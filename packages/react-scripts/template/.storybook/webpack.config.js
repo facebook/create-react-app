@@ -37,7 +37,7 @@ module.exports = async ({ config, mode }) => {
   })
 
   // https://github.com/storybooks/storybook/issues/457#issuecomment-459772340
-  config.devtool = 'inline-source-map';
+  config.devtool = 'inline-source-map'
 
   return config
 }
