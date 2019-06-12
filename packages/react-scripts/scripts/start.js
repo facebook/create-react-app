@@ -122,7 +122,7 @@ checkBrowsers(paths.appPath, isInteractive)
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler({
       appName,
-      config: [webConfig].concat(paths.appNodeIndexJs ? [nodeConfig] : []),
+      config: paths.appNodeIndexJs ? [webConfig, nodeConfig] : [webConfig],
       devSocket,
       urls,
       useYarn,

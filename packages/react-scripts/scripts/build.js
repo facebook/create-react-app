@@ -155,7 +155,7 @@ function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
   const compiler = webpack(
-    [webConfig].concat(paths.appNodeIndexJs ? [nodeConfig] : [])
+    paths.appNodeIndexJs ? [webConfig, nodeConfig] : [webConfig]
   );
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
