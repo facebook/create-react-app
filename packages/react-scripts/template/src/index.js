@@ -7,16 +7,14 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import translations from './locales'
 
-// Helps with updating translations after they are loaded.
+// For details about loading translations: https://www.familysearch.org/frontier/docs/develop/i18n
 addTranslations(translations)
 
-// This sets up the base URL whether you are running your app locally
-// or live.
+// This is where you pass data from the server to the client using the SERVER_DATA global.
+// Here we pass the mounted app path from the server to the client.
 const base = window.SERVER_DATA ? new URL(window.SERVER_DATA.appPath).pathname : ''
 
-// This is abstracted from the render method to improve readability
 const FrontierRoot = () => (
-  // Root provides the global Frontier-react things you need
   <Root>
     <Router basename={base}>
       <App />
@@ -24,7 +22,6 @@ const FrontierRoot = () => (
   </Root>
 )
 
-// Attach the FronteirRoot component to the DOM
 ReactDOM.render(<FrontierRoot />, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
