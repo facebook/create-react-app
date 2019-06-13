@@ -29,10 +29,12 @@ module.exports = function(api, opts, env) {
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
 
+  var isTargettingNode = validateBoolOption('node', opts.node, false);
+
   var useESModules = validateBoolOption(
     'useESModules',
     opts.useESModules,
-    isEnvDevelopment || isEnvProduction
+    !isTargettingNode && (isEnvDevelopment || isEnvProduction)
   );
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
   var isTypeScriptEnabled = validateBoolOption(
@@ -75,21 +77,35 @@ module.exports = function(api, opts, env) {
           },
         },
       ],
-      (isEnvProduction || isEnvDevelopment) && [
+      isTargettingNode && [
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
-          // Allow importing core-js in entrypoint and use browserlist to select polyfills
-          useBuiltIns: 'entry',
-          // Set the corejs version we are using to avoid warnings in console
-          // This will need to change once we upgrade to corejs@3
-          corejs: 3,
+          targets: {
+            node: 6,
+          },
           // Do not transform modules to CJS
-          modules: false,
+          modules: 'cjs',
           // Exclude transforms that make all code slower
           exclude: ['transform-typeof-symbol'],
         },
       ],
+      !isTargettingNode &&
+        (isEnvProduction || isEnvDevelopment) && [
+          // Latest stable ECMAScript features
+          require('@babel/preset-env').default,
+          {
+            // Allow importing core-js in entrypoint and use browserlist to select polyfills
+            useBuiltIns: 'entry',
+            // Set the corejs version we are using to avoid warnings in console
+            // This will need to change once we upgrade to corejs@3
+            corejs: 3,
+            // Do not transform modules to CJS
+            modules: false,
+            // Exclude transforms that make all code slower
+            exclude: ['transform-typeof-symbol'],
+          },
+        ],
       [
         require('@babel/preset-react').default,
         {
@@ -170,7 +186,7 @@ module.exports = function(api, opts, env) {
         {
           corejs: false,
           helpers: areHelpersEnabled,
-          regenerator: true,
+          regenerator: !isTargettingNode,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.
@@ -190,7 +206,7 @@ module.exports = function(api, opts, env) {
       ],
       // Adds syntax support for import()
       require('@babel/plugin-syntax-dynamic-import').default,
-      isEnvTest &&
+      (isTargettingNode || isEnvTest) &&
         // Transform dynamic import to require
         require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),
