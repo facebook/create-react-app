@@ -79,7 +79,7 @@ const program = new commander.Command(packageJson.name)
   .option('--use-npm')
   .option('--use-pnp')
   .option('--typescript')
-  .option('--ssr')
+  .option('--universal')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -182,7 +182,7 @@ createApp(
   program.useNpm,
   program.usePnp,
   program.typescript,
-  program.ssr,
+  program.universal,
   hiddenProgram.internalTestingTemplate
 );
 
@@ -193,7 +193,7 @@ function createApp(
   useNpm,
   usePnp,
   useTypescript,
-  useSsr,
+  useUniversal,
   template
 ) {
   const root = path.resolve(name);
@@ -300,7 +300,7 @@ function createApp(
     useYarn,
     usePnp,
     useTypescript,
-    useSsr
+    useUniversal
   );
 }
 
@@ -385,7 +385,7 @@ function run(
   useYarn,
   usePnp,
   useTypescript,
-  useSsr
+  universal
 ) {
   getInstallPackage(version, originalDirectory).then(packageToInstall => {
     const allDependencies = ['react', 'react-dom', packageToInstall];
@@ -441,7 +441,7 @@ function run(
             cwd: process.cwd(),
             args: nodeArgs,
           },
-          [root, appName, verbose, originalDirectory, template, useSsr],
+          [root, appName, verbose, originalDirectory, template, universal],
           `
         var init = require('${packageName}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));

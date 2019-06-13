@@ -81,7 +81,7 @@ module.exports = function(
   verbose,
   originalDirectory,
   template,
-  useSsr
+  universal
 ) {
   const ownPath = path.dirname(
     require.resolve(path.join(__dirname, '..', 'package.json'))
@@ -94,8 +94,8 @@ module.exports = function(
 
   const useTypeScript = appPackage.dependencies['typescript'] != null;
 
-  // For SSR apps, add a "main" field pointing to the Node entry point
-  if (useSsr) {
+  // For Universal apps, add a "main" field pointing to the Node entry point
+  if (universal) {
     appPackage.main = 'build/node/index.js';
   }
 
@@ -142,10 +142,10 @@ module.exports = function(
     return;
   }
 
-  // If using SSR, add SSR-specific template files
-  let ssrTemplatePath = templatePath + '-ssr';
-  if (useSsr && fs.existsSync(ssrTemplatePath)) {
-    fs.copySync(ssrTemplatePath, appPath);
+  // If creating a universal app, add universal-specific template files
+  let universalTemplatePath = templatePath + '-universal';
+  if (universal && fs.existsSync(universalTemplatePath)) {
+    fs.copySync(universalTemplatePath, appPath);
   }
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore

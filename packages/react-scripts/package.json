@@ -20,9 +20,9 @@
     "lib",
     "scripts",
     "template",
-    "template-ssr",
+    "template-universal",
     "template-typescript",
-    "template-typescript-ssr",
+    "template-typescript-universal",
     "utils"
   ],
   "bin": {
