@@ -159,7 +159,7 @@ module.exports = function(api, opts) {
       require('@babel/plugin-syntax-dynamic-import').default,
       (isTargettingNode || isEnvTest) &&
         // Transform dynamic import to require
-        require('babel-plugin-transform-dynamic-import').default,
+        require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),
   };
 };
