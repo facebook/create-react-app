@@ -59,7 +59,10 @@ test('formats missing package', async () => {
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
-  const { stdout, stderr } = await testSetup.scripts.build();
+  let { stdout, stderr } = await testSetup.scripts.build();
+  if (process.platform === 'win32') {
+    stderr = stderr.replace('.\\src\\App.js', './src/App.js');
+  }
   expect({ stdout, stderr }).toMatchSnapshot();
 });
 
@@ -103,7 +106,12 @@ test('formats file not found error', async () => {
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
-  const { stdout, stderr } = await testSetup.scripts.build();
+  let { stdout, stderr } = await testSetup.scripts.build();
+  if (process.platform === 'win32') {
+    stderr = stderr
+      .replace('.\\src\\App.js', './src/App.js')
+      .replace('.\\src', './src');
+  }
   expect({ stdout, stderr }).toMatchSnapshot();
 });
 
@@ -131,6 +139,9 @@ test('formats out of scope error', async () => {
     path.join(testSetup.testDirectory, 'src', 'App.js')
   );
 
-  const { stdout, stderr } = await testSetup.scripts.build();
+  let { stdout, stderr } = await testSetup.scripts.build();
+  if (process.platform === 'win32') {
+    stderr = stderr.replace('.\\src\\App.js', './src/App.js');
+  }
   expect({ stdout, stderr }).toMatchSnapshot();
 });

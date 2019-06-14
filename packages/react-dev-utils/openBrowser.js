@@ -10,9 +10,9 @@
 var chalk = require('chalk');
 var execSync = require('child_process').execSync;
 var spawn = require('cross-spawn');
-var opn = require('opn');
+var open = require('open');
 
-// https://github.com/sindresorhus/opn#app
+// https://github.com/sindresorhus/open#app
 var OSX_CHROME = 'google chrome';
 
 const Actions = Object.freeze({
@@ -24,7 +24,7 @@ const Actions = Object.freeze({
 function getBrowserEnv() {
   // Attempt to honor this environment variable.
   // It is specific to the operating system.
-  // See https://github.com/sindresorhus/opn#app for documentation.
+  // See https://github.com/sindresorhus/open#app for documentation.
   const value = process.env.BROWSER;
   let action;
   if (!value) {
@@ -93,11 +93,11 @@ function startBrowserProcess(browser, url) {
     browser = undefined;
   }
 
-  // Fallback to opn
+  // Fallback to open
   // (It will always open new tab)
   try {
     var options = { app: browser, wait: false };
-    opn(url, options).catch(() => {}); // Prevent `unhandledRejection` error.
+    open(url, options).catch(() => {}); // Prevent `unhandledRejection` error.
     return true;
   } catch (err) {
     return false;
