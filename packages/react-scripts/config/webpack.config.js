@@ -365,14 +365,13 @@ module.exports = function(webpackEnv) {
                 {
                   loader: 'image-webpack-loader',
                   options: {
-                    // optipng.enabled: false will disable optipng
-                    optipng: {
-                      enabled: false,
-                    },
                     pngquant: {
                       quality: '65-90',
                       speed: 4,
                     },
+                    webp: {
+                      quality: 80
+                    }
                   },
                 },
               ],
