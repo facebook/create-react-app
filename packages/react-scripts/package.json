@@ -1,6 +1,6 @@
 {
   "name": "@soulpicks/react-scripts",
-  "version": "3.10.1",
+  "version": "3.10.2",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": {
     "type": "git",

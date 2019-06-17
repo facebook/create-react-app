@@ -252,6 +252,9 @@ module.exports = function(webpackEnv) {
                       quality: '65-90',
                       speed: 4,
                     },
+                    webp: {
+                      quality: 80
+                    }
                   },
                 },
               ],

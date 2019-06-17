@@ -345,12 +345,40 @@ module.exports = function(webpackEnv) {
           oneOf: [
             // https://www.npmjs.com/package/responsive-loader
             {
-              test: [/\.jpe?g$/, /\.png$/, /\.webp$/],
+              test: [/\.jpe?g$/],
               loader: 'responsive-loader',
               options: {
                 adapter: require('responsive-loader/sharp'),
                 name: 'static/media/[name].[hash:8].[ext]',
               },
+            },
+            // https://www.npmjs.com/package/image-webpack-loader
+            {
+              test: [/\.png$/, /\.webp$/],
+              use: [
+                {
+                  loader: require.resolve('file-loader'),
+                  options: {
+                    name: 'static/media/[name].[hash:8].[ext]',
+                  },
+                },
+                {
+                  loader: 'image-webpack-loader',
+                  options: {
+                    // optipng.enabled: false will disable optipng
+                    optipng: {
+                      enabled: false,
+                    },
+                    pngquant: {
+                      quality: '65-90',
+                      speed: 4,
+                    },
+                    webp: {
+                      quality: 80
+                    }
+                  },
+                },
+              ],
             },
             // "url" loader works like "file" loader except that it embeds assets
             // smaller than specified limit in bytes as data URLs to avoid requests.
