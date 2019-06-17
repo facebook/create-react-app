@@ -31,21 +31,21 @@
     "@babel/core": "7.4.3",
     "@loadable/babel-plugin": "^5.10.0",
     "@loadable/webpack-plugin": "^5.7.1",
-    "@svgr/webpack": "4.1.0",
-    "@typescript-eslint/eslint-plugin": "1.6.0",
-    "@typescript-eslint/parser": "1.6.0",
+    "@svgr/webpack": "4.2.0",
+    "@typescript-eslint/eslint-plugin": "1.10.2",
+    "@typescript-eslint/parser": "1.10.2",
     "babel-eslint": "10.0.1",
-    "babel-jest": "24.7.1",
+    "babel-jest": "^24.8.0",
     "babel-loader": "8.0.5",
     "babel-plugin-named-asset-import": "^0.3.2",
-    "babel-preset-react-app": "^8.0.0",
+    "babel-preset-react-app": "^9.0.0",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
     "eslint": "^5.16.0",
-    "eslint-config-react-app": "^4.0.0",
+    "eslint-config-react-app": "^4.0.1",
     "eslint-loader": "2.1.2",
     "eslint-plugin-flowtype": "2.50.1",
     "eslint-plugin-import": "2.16.0",
@@ -70,8 +70,8 @@
     "postcss-normalize": "7.0.1",
     "postcss-preset-env": "6.6.0",
     "postcss-safe-parser": "4.0.1",
-    "react-app-polyfill": "^1.0.0",
-    "react-dev-utils": "^9.0.0",
+    "react-app-polyfill": "^1.0.1",
+    "react-dev-utils": "^9.0.1",
     "resolve": "1.10.0",
     "responsive-loader": "^1.2.0",
     "sass-loader": "7.1.0",
@@ -91,7 +91,7 @@
     "react-dom": "^16.8.4"
   },
   "optionalDependencies": {
-    "fsevents": "2.0.6"
+    "fsevents": "2.0.7"
   },
   "browserslist": {
     "production": [

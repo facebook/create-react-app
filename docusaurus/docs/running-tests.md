@@ -180,13 +180,13 @@ As an alternative or companion to `enzyme`, you may consider using `react-testin
 To install `react-testing-library` and `jest-dom`, you can run:
 
 ```sh
-npm install --save react-testing-library jest-dom
+npm install --save @testing-library/react jest-dom
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add react-testing-library jest-dom
+yarn add @testing-library/react jest-dom
 ```
 
 Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerplate in your test files:
@@ -194,7 +194,7 @@ Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerpla
 ```js
 // react-testing-library renders your components to document.body,
 // this will ensure they're removed after each test.
-import 'react-testing-library/cleanup-after-each';
+import '@testing-library/react/cleanup-after-each';
 // this adds jest-dom's custom assertions
 import 'jest-dom/extend-expect';
 ```
@@ -203,7 +203,7 @@ Here's an example of using `react-testing-library` and `jest-dom` for testing th
 
 ```js
 import React from 'react';
-import { render } from 'react-testing-library';
+import { render } from '@testing-library/react';
 import App from './App';
 
 it('renders welcome message', () => {
@@ -212,7 +212,7 @@ it('renders welcome message', () => {
 });
 ```
 
-Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from [the `react-testing-library` documentation](https://testing-library.com/react) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
+Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from the [`react-testing-library` documentation](https://testing-library.com/react) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
 
 ## Using Third Party Assertion Libraries
 
