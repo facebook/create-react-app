@@ -1,6 +1,6 @@
 {
   "name": "@soulpicks/react-scripts",
-  "version": "3.19.0",
+  "version": "3.20.0",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -72,7 +72,7 @@
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
     "resolve": "1.10.0",
-    "responsive-loader": "github:ghetolay/responsive-loader",
+    "responsive-loader": "github:ghetolay/responsive-loader#webp",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
     "sharp": "^0.22.0",
