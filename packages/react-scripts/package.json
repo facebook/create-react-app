@@ -72,7 +72,7 @@
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
     "resolve": "1.10.0",
-    "responsive-loader": "^1.2.0",
+    "responsive-loader": "github:ghetolay/responsive-loader#1f63c50",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
     "sharp": "^0.22.0",
