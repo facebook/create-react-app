@@ -31,7 +31,7 @@
     "@babel/core": "7.4.3",
     "@loadable/babel-plugin": "^5.10.0",
     "@loadable/webpack-plugin": "^5.7.1",
-    "@soulpicks/responsive-loader": "^1.2.0",
+    "@soulpicks/responsive-loader": "^1.3.0",
     "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.10.2",
     "@typescript-eslint/parser": "1.10.2",
