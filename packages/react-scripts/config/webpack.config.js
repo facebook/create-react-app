@@ -86,6 +86,15 @@ module.exports = function(webpackEnv) {
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
       isEnvDevelopment && require.resolve('style-loader'),
+      useTypeScript &&
+        isEnvDevelopment &&
+        cssOptions.modules && {
+          loader: require.resolve('dts-css-modules-loader'),
+          options: {
+            banner:
+              '// This file is generated automatically by dts-css-modules-loader',
+          },
+        },
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
         options: shouldUseRelativeAssetPaths ? { publicPath: '../../' } : {},
