@@ -222,12 +222,12 @@ module.exports = function(webpackEnv) {
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.
           oneOf: [
-            // https://www.npmjs.com/package/responsive-loader
+            // https://www.npmjs.com/package/@soulpicks/responsive-loader
             {
               test: [/\.jpe?g$/, /\.png$/, /\.webp$/],
-              loader: 'responsive-loader',
+              loader: '@soulpicks/responsive-loader',
               options: {
-                adapter: require('responsive-loader/sharp'),
+                adapter: require('@soulpicks/responsive-loader/sharp'),
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },

@@ -1,6 +1,6 @@
 {
   "name": "@soulpicks/react-scripts",
-  "version": "3.20.0",
+  "version": "3.21.0",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "@babel/core": "7.4.3",
     "@loadable/babel-plugin": "^5.10.0",
     "@loadable/webpack-plugin": "^5.7.1",
+    "@soulpicks/responsive-loader": "^1.1.0",
     "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.10.2",
     "@typescript-eslint/parser": "1.10.2",
@@ -72,7 +73,6 @@
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
     "resolve": "1.10.0",
-    "responsive-loader": "github:ghetolay/responsive-loader#webp",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
     "sharp": "^0.22.0",
