@@ -76,6 +76,7 @@ const program = new commander.Command(packageJson.name)
     '--scripts-version <alternative-package>',
     'use a non-standard version of react-scripts'
   )
+  .option('--no-bin-links')
   .option('--use-npm')
   .option('--use-pnp')
   .option('--typescript')
@@ -178,6 +179,7 @@ createApp(
   projectName,
   program.verbose,
   program.scriptsVersion,
+  program.binLinks,
   program.useNpm,
   program.usePnp,
   program.typescript,
@@ -188,6 +190,7 @@ function createApp(
   name,
   verbose,
   version,
+  binLinks,
   useNpm,
   usePnp,
   useTypescript,
@@ -294,6 +297,7 @@ function createApp(
     verbose,
     originalDirectory,
     template,
+    binLinks,
     useYarn,
     usePnp,
     useTypescript
@@ -309,13 +313,24 @@ function shouldUseYarn() {
   }
 }
 
-function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
+function install(
+  root,
+  binLinks,
+  useYarn,
+  usePnp,
+  dependencies,
+  verbose,
+  isOnline
+) {
   return new Promise((resolve, reject) => {
     let command;
     let args;
     if (useYarn) {
       command = 'yarnpkg';
       args = ['add', '--exact'];
+      if (!binLinks) {
+        args.push('--no-bin-links');
+      }
       if (!isOnline) {
         args.push('--offline');
       }
@@ -378,6 +393,7 @@ function run(
   verbose,
   originalDirectory,
   template,
+  binLinks,
   useYarn,
   usePnp,
   useTypescript
@@ -416,6 +432,7 @@ function run(
 
         return install(
           root,
+          binLinks,
           useYarn,
           usePnp,
           allDependencies,
