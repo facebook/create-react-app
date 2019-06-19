@@ -406,7 +406,7 @@ module.exports = function(webpackEnv) {
             // Unlike the application JS, we only compile the standard ES features.
             {
               test: /\.(js|mjs)$/,
-              exclude: /@babel(?:\/|\\{1,2})runtime/,
+              exclude: [/@babel(?:\/|\\{1,2})runtime/,/(node_modules|luciad)/],
               loader: require.resolve('babel-loader'),
               options: {
                 babelrc: false,
@@ -503,6 +503,11 @@ module.exports = function(webpackEnv) {
                 },
                 'sass-loader'
               ),
+            },
+			// Adds support for loading LuciadRIA license
+			{
+			  test: /\.txt$/,
+              use: 'raw-loader'
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
@@ -660,6 +665,11 @@ module.exports = function(webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
+        new CopyWebpackPlugin([
+            // We need to copy ria resources, license, and photon web worker to lib/luciad, where __LUCIAD_ROOT__ points to.
+            {from: 'lib/luciad/view/photon', to: 'lib/luciad/view/photon'},
+            {from: 'lib/luciad/resources', to: 'lib/luciad/resources'},
+        ])
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.

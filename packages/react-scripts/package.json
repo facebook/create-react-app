@@ -1,5 +1,5 @@
 {
-  "name": "react-scripts",
+  "name": "bmoran-luciad-react-scripts",
   "version": "3.0.1",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
@@ -39,6 +39,7 @@
     "babel-preset-react-app": "^9.0.0",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
+	"copy-webpack-plugin": "^4.6.0",
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
@@ -67,6 +68,7 @@
     "postcss-normalize": "7.0.1",
     "postcss-preset-env": "6.6.0",
     "postcss-safe-parser": "4.0.1",
+	"raw-loader": "^1.0.0",
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
     "resolve": "1.10.0",
