@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/amplifiedai/create-react-app/compare/3.0.1X0.4.0...0.5.0) (2019-06-19)
+
+
+### Bug Fixes
+
+* ESLint config overrides key should be an array, not object ([#7219](https://github.com/amplifiedai/create-react-app/issues/7219)) ([24489ac](https://github.com/amplifiedai/create-react-app/commit/24489ac))
+
+
+
 ## 0.4.0 (2019-06-02)
 
 
