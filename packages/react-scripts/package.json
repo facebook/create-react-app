@@ -1,6 +1,6 @@
 {
   "name": "@sparknz/spark-react-scripts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Configuration and scripts for Spark NZ Create React App.",
   "repository": {
     "type": "git",
