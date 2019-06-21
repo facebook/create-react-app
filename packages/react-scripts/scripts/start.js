@@ -30,6 +30,7 @@ if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
 const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
 verifyTypeScriptSetup();
 // @remove-on-eject-end
+const syncPromiseChainResolve = require('./utils/syncPromiseChainResolve');
 
 const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
@@ -57,7 +58,8 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Tools like Cloud9 rely on this.
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3100;
+const DEFAULT_BS_PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 
 if (process.env.HOST) {
@@ -80,18 +82,26 @@ if (process.env.HOST) {
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
+
 checkBrowsers(paths.appPath, isInteractive)
   .then(() => {
     // We attempt to use the default port but if it is busy, we offer the user to
     // run on a different port. `choosePort()` Promise resolves to the next free port.
-    return choosePort(HOST, DEFAULT_PORT);
+    return syncPromiseChainResolve([
+      choosePort(HOST, DEFAULT_PORT),
+      choosePort(HOST, DEFAULT_BS_PORT),
+    ]);
   })
-  .then(port => {
-    if (port == null) {
+  .then(([port, bsPort]) => {
+    if (port == null || bsPort == null) {
       // We have not found a port.
       return;
     }
-    const config = configFactory('development');
+    const config = configFactory('development', {
+      HOST,
+      webpackPort: port,
+      bsPort,
+    });
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
     const useTypeScript = fs.existsSync(paths.appTsConfig);
@@ -143,7 +153,6 @@ checkBrowsers(paths.appPath, isInteractive)
       }
 
       console.log(chalk.cyan('Starting the development server...\n'));
-      openBrowser(urls.localUrlForBrowser);
     });
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {
