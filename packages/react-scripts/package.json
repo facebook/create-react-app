@@ -90,7 +90,8 @@
   "devDependencies": {
     "@amplified/node-scripts": "^0.2.0",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "react-hot-loader": "^4.11.1"
   },
   "optionalDependencies": {
     "fsevents": "2.0.7"
