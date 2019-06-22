@@ -14,7 +14,7 @@ npm install --save babel-plugin-relay
 Alternatively you may use `yarn`:
 
 ```sh
-yarn upgrade babel-plugin-relay
+yarn add babel-plugin-relay
 ```
 
 Then, wherever you use the `graphql` template tag, import the macro:
