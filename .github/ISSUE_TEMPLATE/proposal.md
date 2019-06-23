@@ -1,6 +1,6 @@
 ---
 name: Proposal
-about: Suggest an idea for this project
+about: Suggest an idea for improving Create React App
 labels:
 ---
 
