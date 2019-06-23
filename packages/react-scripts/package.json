@@ -76,6 +76,7 @@
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
+    "react-hot-loader": "^4.11.1",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
@@ -92,8 +93,7 @@
   "devDependencies": {
     "@amplified/node-scripts": "^0.2.0",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-hot-loader": "^4.11.1"
+    "react-dom": "^16.8.4"
   },
   "optionalDependencies": {
     "fsevents": "2.0.7"
