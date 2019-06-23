@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/amplifiedai/create-react-app/compare/3.0.1X0.5.0...0.7.0) (2019-06-23)
+
+
+### Bug Fixes
+
+* set react-hot-loader as dependency instead of devdependency ([a5ce981](https://github.com/amplifiedai/create-react-app/commit/a5ce981))
+
+
+### Features
+
+* add browsersync to webpack dev server ([6b82e08](https://github.com/amplifiedai/create-react-app/commit/6b82e08))
+* add HMR to react-scripts dev server ([dd392bd](https://github.com/amplifiedai/create-react-app/commit/dd392bd))
+
+
+
 ## [0.6.0](https://github.com/amplifiedai/create-react-app/compare/3.0.1X0.5.0...0.6.0) (2019-06-23)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@amplified/react-scripts",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
