@@ -48,7 +48,12 @@ function getBrowserEnv() {
         value = value.substring(0, argsIndex);
       }
     }
-    if (args[0] === '') args.pop(); // No arguments
+
+    if (args[0] === '') {
+      // No arguments, remove dangling value
+      args.pop();
+    }
+
     action = Actions.BROWSER;
   }
   return { action, value, args };
