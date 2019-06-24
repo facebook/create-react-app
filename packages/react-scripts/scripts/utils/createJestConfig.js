@@ -73,6 +73,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'coverageThreshold',
     'extraGlobals',
     'globalSetup',
+    'maxWorkers',
+    'runInBand',
     'globalTeardown',
     'moduleNameMapper',
     'resetMocks',
