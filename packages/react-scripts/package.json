@@ -1,6 +1,6 @@
 {
   "name": "@soulpicks/react-scripts",
-  "version": "3.34.0",
+  "version": "3.35.0",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "babel-loader": "8.0.5",
     "babel-plugin-import-remove-resource-query": "^1.0.0",
     "babel-plugin-named-asset-import": "^0.3.2",
+    "babel-plugin-require-context-hook": "^1.0.0",
     "babel-preset-react-app": "^9.0.0",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
