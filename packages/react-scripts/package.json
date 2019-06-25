@@ -1,6 +1,6 @@
 {
   "name": "@soulpicks/react-scripts",
-  "version": "3.38.0",
+  "version": "3.39.0",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
     "@loadable/babel-plugin": "^5.10.0",
     "@loadable/webpack-plugin": "^5.7.1",
     "@mdx-js/loader": "^1.0.0-rc.4",
+    "@mdx-js/mdx": "^1.0.21",
     "@soulpicks/responsive-loader": "^2.0.0-beta.0",
     "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.10.2",
@@ -43,6 +44,8 @@
     "babel-plugin-import-remove-resource-query": "^1.0.0",
     "babel-plugin-named-asset-import": "^0.3.2",
     "babel-plugin-require-context-hook": "^1.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-react-app": "^9.0.0",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
@@ -78,6 +81,7 @@
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
+    "react-hot-loader": "^4.11.1",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
