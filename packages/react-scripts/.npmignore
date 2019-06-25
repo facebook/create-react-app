@@ -11,3 +11,4 @@ src/**/*
 .npmrc
 yarn.lock
 /fixtures
+
