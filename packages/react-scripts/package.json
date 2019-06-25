@@ -1,6 +1,6 @@
 {
   "name": "@soulpicks/react-scripts",
-  "version": "3.39.0",
+  "version": "3.40.0",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -68,7 +68,6 @@
     "is-wsl": "^1.1.0",
     "jest": "24.7.1",
     "jest-environment-jsdom-fourteen": "0.1.0",
-    "jest-mdx-loader": "^0.1.1",
     "jest-resolve": "24.7.1",
     "jest-watch-typeahead": "0.3.0",
     "mini-css-extract-plugin": "0.5.0",
