@@ -401,21 +401,10 @@ module.exports = function(webpackEnv) {
                 'sass-loader'
               ),
             },
-            // https://www.npmjs.com/package/remark-loader
+            // https://github.com/frontarm/mdx-util/tree/master/packages/mdx-loader
             {
               test: /\.md$/,
-              use: [
-               'babel-loader',
-                {
-                  loader: 'remark-loader',
-                  options: {
-                   react: true,
-                    plugins: [
-                      require('remark-kbd')
-                    ]
-                  }
-                }
-              ]
+              use: ['babel-loader', 'mdx-loader'],
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
