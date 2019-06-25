@@ -416,7 +416,21 @@ module.exports = function(webpackEnv) {
                     presets: [require.resolve('babel-preset-react-app')],
                   },
                 },
-                require.resolve('@mdx-js/loader'),
+                {
+                  // https://www.npmjs.com/package/mdx-frontmatter-loader
+                  loader: 'mdx-frontmatter-loader',
+                },
+                {
+                  loader: require.resolve('@mdx-js/loader'),
+                  options: {
+                    mdPlugins: [
+                      [
+                        require.resolve('remark-frontmatter'),
+                        { type: 'yaml', marker: '-', fence: '---' },
+                      ],
+                    ],
+                  },
+                },
               ],
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
