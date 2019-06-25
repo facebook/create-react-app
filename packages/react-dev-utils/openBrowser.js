@@ -25,9 +25,11 @@ function getBrowserEnv() {
   // Attempt to honor this environment variable.
   // It is specific to the operating system.
   // See https://github.com/sindresorhus/open#app for documentation.
-  let value = process.env.BROWSER;
+  const value = process.env.BROWSER;
+  const args = process.env.BROWSER_ARGS
+    ? process.env.BROWSER_ARGS.split(' ')
+    : [];
   let action;
-  let args = [];
   if (!value) {
     // Default.
     action = Actions.BROWSER;
@@ -36,24 +38,6 @@ function getBrowserEnv() {
   } else if (value.toLowerCase() === 'none') {
     action = Actions.NONE;
   } else {
-    // Try detecting browser arguments
-    // Because Chrome for OSX is "google chrome", splitting simply by whitespace is not possible
-    if (value.startsWith(OSX_CHROME)) {
-      value = OSX_CHROME;
-      args = value.substring(OSX_CHROME.length + 1).split(' ');
-    } else {
-      const argsIndex = value.indexOf(' ');
-      if (argsIndex > -1) {
-        args = value.substring(argsIndex + 1).split(' ');
-        value = value.substring(0, argsIndex);
-      }
-    }
-
-    if (args[0] === '') {
-      // No arguments, remove dangling value
-      args.pop();
-    }
-
     action = Actions.BROWSER;
   }
   return { action, value, args };
