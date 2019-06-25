@@ -66,6 +66,44 @@ _`yarn create` is available in Yarn 0.25+_
 
 Follow our [Adding TypeScript](adding-typescript.md) documentation to create a TypeScript app.
 
+## Selecting a package manager
+
+When you run
+
+```sh
+npx create-react-app my-app
+```
+
+It by defaults uses `yarn` to install dependencies, but if you want to opt-in for
+`npm` then just append `--use-npm` to the script above like this;
+
+```sh
+npx create-react-app my-app --use-npm
+```
+
+## Passing through a scripts package
+
+On doing `npx create-react-app my-app` CRA uses a by default `--script-version`
+param, which is [react-scripts](https://github.com/facebook/create-react-app/tree/master/packages/react-scripts) which is translated to something like this
+
+```sh
+npx create-react-app my-app --script-version PATH_TO_REACT_SCRIPTS
+```
+
+You can also initialize CRA to a particular version of `react-scripts` like;
+
+```sh
+npx create-react-app my-app --scripts-version react-scripts@#.#.#
+```
+
+> You probably never need to use the `--script-version` tag & opt-in for the
+> default version `react-scripts` when you init a new app with CRA.
+
+You can also fork your version of `react-scripts` & use it initiliaze new projects
+using CRA, however doing so will result in having no official support & you will
+have to reach out the maintainers maintaining the forked flavor of `react-scripts`
+that you are using.
+
 ## Output
 
 Running any of these commands will create a directory called `my-app` inside the current folder. Inside that directory, it will generate the initial project structure and install the transitive dependencies:
