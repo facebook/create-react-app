@@ -418,7 +418,7 @@ module.exports = function(webpackEnv) {
                 },
                 {
                   // https://www.npmjs.com/package/mdx-frontmatter-loader
-                  loader: 'mdx-frontmatter-loader',
+                  loader: require.resolve('mdx-frontmatter-loader'),
                 },
                 {
                   loader: require.resolve('@mdx-js/loader'),
