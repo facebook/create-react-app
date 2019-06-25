@@ -3,7 +3,7 @@
 const matter = require('gray-matter');
 const stringifyObject = require('stringify-object');
 const mdx = require("@mdx-js/mdx");
-const babel = require("babel-core");
+const babel = require("@babel/core");
 
 function createTransformer(callback) {
   return function(src) {
@@ -18,8 +18,10 @@ function createTransformer(callback) {
 
     // Inject React and MDXTag imports
     var injectedJSX =
-      "import React from 'react'; import MDXTag from '@mdx-js/tag/dist/mdx-tag';" +
-      rawJSX;
+      `/* @jsx mdx */
+      import React from 'react';
+      import {mdx} from '@mdx-js/react';
+      ${rawJSX}`
 
     // Transform ES6 with babel
     var babelRes = babel.transform(injectedJSX, {
@@ -29,7 +31,8 @@ function createTransformer(callback) {
       plugins: [
         'babel-plugin-import-remove-resource-query',
         'require-context-hook',
-      ]
+      ],
+      filename: 'null',
     }).code;
 
     return babelRes;
