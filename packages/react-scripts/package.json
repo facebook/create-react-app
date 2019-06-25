@@ -1,6 +1,6 @@
 {
   "name": "@soulpicks/react-scripts",
-  "version": "3.30.0",
+  "version": "3.31.0",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "@babel/core": "7.4.3",
     "@loadable/babel-plugin": "^5.10.0",
     "@loadable/webpack-plugin": "^5.7.1",
+    "@mdx-js/loader": "^1.0.0-rc.4",
     "@soulpicks/responsive-loader": "^2.0.0-beta.0",
     "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.10.2",
@@ -63,7 +64,6 @@
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.7.1",
     "jest-watch-typeahead": "0.3.0",
-    "mdx-loader": "^3.0.2",
     "mini-css-extract-plugin": "0.5.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.2.1",

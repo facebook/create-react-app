@@ -416,7 +416,7 @@ module.exports = function(webpackEnv) {
                     presets: [require.resolve('babel-preset-react-app')],
                   },
                 },
-                require.resolve('mdx-loader'),
+                require.resolve('@mdx-js/loader'),
               ],
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
