@@ -401,6 +401,22 @@ module.exports = function(webpackEnv) {
                 'sass-loader'
               ),
             },
+            // https://www.npmjs.com/package/remark-loader
+            {
+              test: /\.md$/,
+              use: [
+               'babel-loader',
+                {
+                  loader: 'remark-loader',
+                  options: {
+                   react: true,
+                    plugins: [
+                      require('remark-kbd')
+                    ]
+                  }
+                }
+              ]
+            },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
