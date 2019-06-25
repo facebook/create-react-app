@@ -289,7 +289,7 @@ module.exports = function(webpackEnv) {
                     },
                   ],
                   // https://www.smooth-code.com/open-source/loadable-components/docs/server-side-rendering/
-                  '@loadable/babel-plugin'
+                  '@loadable/babel-plugin',
                 ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -404,7 +404,20 @@ module.exports = function(webpackEnv) {
             // https://github.com/frontarm/mdx-util/tree/master/packages/mdx-loader
             {
               test: /\.md$/,
-              use: ['babel-loader', 'mdx-loader'],
+              use: [
+                {
+                  loader: require.resolve('babel-loader'),
+                  options: {
+                    customize: require.resolve(
+                      'babel-preset-react-app/webpack-overrides'
+                    ),
+                    babelrc: false,
+                    configFile: false,
+                    presets: [require.resolve('babel-preset-react-app')],
+                  },
+                },
+                require.resolve('mdx-loader'),
+              ],
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
