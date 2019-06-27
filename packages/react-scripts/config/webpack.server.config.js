@@ -434,7 +434,7 @@ module.exports = function(webpackEnv) {
               exclude: fileRegex,
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
-                omitFile: true,
+                emitFile: false,
               },
             },
             // ** STOP ** Are you adding a new loader?
