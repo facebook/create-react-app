@@ -26,6 +26,7 @@
   "dependencies": {
     "@babel/core": "7.4.3",
     "@guestyci/fe-core-modules": "stable",
+    "react-router-dom": "^5.0.1",
     "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.10.2",
     "@typescript-eslint/parser": "1.10.2",
@@ -71,6 +72,7 @@
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
+    "redux-form": "^8.2.2",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
@@ -84,6 +86,7 @@
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.2.0"
   },
+
   "optionalDependencies": {
     "fsevents": "2.0.7"
   },
