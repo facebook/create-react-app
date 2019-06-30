@@ -236,6 +236,15 @@ module.exports = function(webpackEnv) {
           // Enable file caching
           cache: true,
           sourceMap: shouldUseSourceMap,
+          chunkFilter: chunk => {
+            console.warn(chunk.name);
+            // Exclude uglification for the `vendor` chunk
+            if (chunk.name === undefined) {
+              return false;
+            }
+
+            return true;
+          },
         }),
         // This is only used in production mode
         new OptimizeCSSAssetsPlugin({
@@ -626,7 +635,7 @@ module.exports = function(webpackEnv) {
           clientsClaim: true,
           exclude: [/\.map$/, /asset-manifest\.json$/],
           importWorkboxFrom: 'cdn',
-          navigateFallback: `${publicUrl}/index.html`,
+          navigateFallback: publicUrl + '/index.html',
           navigateFallbackBlacklist: [
             // Exclude URLs starting with /_, as they're likely an API call
             new RegExp('^/_'),
