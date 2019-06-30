@@ -241,6 +241,11 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
+      case 'dynamic-import':
+        import('./features/webpack/DynamicImport').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
       default:
         this.setState({ error: `Missing feature "${feature}"` });
     }

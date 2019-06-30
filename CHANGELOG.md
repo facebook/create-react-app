@@ -1,3 +1,7 @@
+## 2.0.10
+
+- Fix to build failure
+
 ## 2.0.9
 
 - Added minor changes to align with working version

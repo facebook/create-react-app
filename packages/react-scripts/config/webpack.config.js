@@ -236,15 +236,6 @@ module.exports = function(webpackEnv) {
           // Enable file caching
           cache: true,
           sourceMap: shouldUseSourceMap,
-          chunkFilter: chunk => {
-            console.warn(chunk.name);
-            // Exclude uglification for the `vendor` chunk
-            if (chunk.name === undefined) {
-              return false;
-            }
-
-            return true;
-          },
         }),
         // This is only used in production mode
         new OptimizeCSSAssetsPlugin({
