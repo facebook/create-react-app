@@ -361,10 +361,13 @@ function prepareProxy(proxy, appPublicFolder) {
     process.exit(1);
   }
 
-  // If proxy is specified, let it handle any request except for files in the public folder.
+  // If proxy is specified, let it handle any request except for
+  // files in the public folder and WebpackDevServer socket endpoint.
   function mayProxy(pathname) {
     const maybePublicPath = path.resolve(appPublicFolder, pathname.slice(1));
-    return !fs.existsSync(maybePublicPath);
+    const isPublicFileRequest = fs.existsSync(maybePublicPath);
+    const isWdsEndpointRequest = pathname.startsWith('/sockjs-node'); // used by webpackHotDevClient
+    return !(isPublicFileRequest || isWdsEndpointRequest);
   }
 
   if (!/^http(s)?:\/\//.test(proxy)) {
