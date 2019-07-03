@@ -17,7 +17,7 @@ labels: "issue: bug"
     You can find webpack docs at https://webpack.js.org/.
 -->
 
-### Desribe the bug
+### Describe the bug
 
 (Write your answer here.)
 
