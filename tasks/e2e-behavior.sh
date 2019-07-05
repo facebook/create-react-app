@@ -20,7 +20,8 @@ temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 source local-registry.sh
 
 function cleanup {
-  echo 'Cleaning up.'  
+  echo 'Cleaning up.'
+  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
   ps -ef | grep 'react-scripts' | grep -v grep | awk '{print $2}' | xargs kill -9
   cd "$root_path"
   # Restore the original NPM and Yarn registry URLs and stop Verdaccio

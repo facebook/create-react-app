@@ -1,0 +1,35 @@
+---
+dist: trusty
+language: node_js
+node_js:
+  - 8
+  - 10
+cache:
+  yarn: true
+  directories:
+    - .npm
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s
+  - export PATH="$HOME/.yarn/bin:$PATH"
+install: true
+script:
+  - 'if [ $TEST_SUITE = "simple" ]; then tasks/e2e-simple.sh; fi'
+  - 'if [ $TEST_SUITE = "installs" ]; then tasks/e2e-installs.sh; fi'
+  - 'if [ $TEST_SUITE = "kitchensink" ]; then tasks/e2e-kitchensink.sh; fi'
+  - 'if [ $TEST_SUITE = "kitchensink-eject" ]; then tasks/e2e-kitchensink-eject.sh; fi'
+  - 'if [ $TEST_SUITE = "old-node" ]; then tasks/e2e-old-node.sh; fi'
+  - 'if [ $TEST_SUITE = "behavior" ]; then tasks/e2e-behavior.sh; fi'
+env:
+  matrix:
+    - TEST_SUITE=simple
+    - TEST_SUITE=installs
+    - TEST_SUITE=kitchensink
+    - TEST_SUITE=kitchensink-eject
+    - TEST_SUITE=behavior
+matrix:
+  include:
+    - os: osx
+      node_js: 8
+      env: TEST_SUITE=behavior
+    - node_js: 6
+      env: TEST_SUITE=old-node

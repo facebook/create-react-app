@@ -4,6 +4,7 @@ about: Create a report to help us improve
 labels: "issue: bug"
 ---
 
+
 <!--
     Please note that your issue will be fixed much faster if you spend about
     half an hour preparing it, including the exact reproduction steps and a demo.
@@ -106,9 +107,9 @@ labels: "issue: bug"
 
 (Write your steps here:)
 
-1. 
-2. 
-3. 
+1.
+2.
+3.
 
 
 ### Expected behavior
