@@ -1,4 +1,4 @@
-# Create React App [![Build Status](https://dev.azure.com/facebook/create-react-app/_apis/build/status/facebook.create-react-app?branchName=master)](https://dev.azure.com/facebook/create-react-app/_build/latest?definitionId=1&branchName=master) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/pulls)
+# Create React App [![Financial Contributors on Open Collective](https://opencollective.com/create-react-app/all/badge.svg?label=financial+contributors)](https://opencollective.com/create-react-app) [![Build Status](https://dev.azure.com/facebook/create-react-app/_apis/build/status/facebook.create-react-app?branchName=master)](https://dev.azure.com/facebook/create-react-app/_build/latest?definitionId=1&branchName=master) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/pulls)
 
 Create React apps with no build configuration.
 
@@ -197,6 +197,36 @@ We are grateful to the authors of existing related projects for their ideas and 
 - [@eanplatter](https://github.com/eanplatter)
 - [@insin](https://github.com/insin)
 - [@mxstbr](https://github.com/mxstbr)
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/facebook/create-react-app/graphs/contributors"><img src="https://opencollective.com/create-react-app/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/create-react-app/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/create-react-app"><img src="https://opencollective.com/create-react-app/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/create-react-app/contribute)]
+
+<a href="https://opencollective.com/create-react-app/organization/0/website"><img src="https://opencollective.com/create-react-app/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/create-react-app/organization/1/website"><img src="https://opencollective.com/create-react-app/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/create-react-app/organization/2/website"><img src="https://opencollective.com/create-react-app/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/create-react-app/organization/3/website"><img src="https://opencollective.com/create-react-app/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/create-react-app/organization/4/website"><img src="https://opencollective.com/create-react-app/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/create-react-app/organization/5/website"><img src="https://opencollective.com/create-react-app/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/create-react-app/organization/6/website"><img src="https://opencollective.com/create-react-app/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/create-react-app/organization/7/website"><img src="https://opencollective.com/create-react-app/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/create-react-app/organization/8/website"><img src="https://opencollective.com/create-react-app/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/create-react-app/organization/9/website"><img src="https://opencollective.com/create-react-app/organization/9/avatar.svg"></a>
 
 ## License
 
