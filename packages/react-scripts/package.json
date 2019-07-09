@@ -1,6 +1,6 @@
 {
   "name": "@credijusto/react-scripts",
-  "version": "2.0.3",
+  "version": "3.0.1",
   "description": "Custom Credijusto's configuration and scripts for Create React App.",
   "repository": "credijusto/create-react-app",
   "license": "MIT",
@@ -63,10 +63,14 @@
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
+    "postcss-import": "12.0.1",
     "postcss-loader": "3.0.0",
     "postcss-normalize": "7.0.1",
     "postcss-preset-env": "6.6.0",
     "postcss-safe-parser": "4.0.1",
+    "precss": "4.0.0",
+    "react-app-polyfill": "^1.0.1",
+    "react-dev-utils": "^9.0.1",
     "prettier": "1.15.3",
     "react-app-polyfill": "1.0.0",
     "react-dev-utils": "9.0.0",
@@ -74,33 +78,20 @@
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
     "style-loader": "0.23.1",
-    "stylelint": "9.10.1",
-    "stylelint-config-rational-order": "0.1.2",
-    "stylelint-config-standard": "18.2.0",
-    "stylelint-declaration-block-no-ignored-properties": "2.1.0",
-    "stylelint-order": "3.0.0",
-    "stylelint-scss": "3.5.3",
     "terser-webpack-plugin": "1.2.3",
+    "ts-pnp": "1.1.2",
     "url-loader": "1.1.2",
-    "webpack": "4.29.6",
+    "webpack": "4.35.0",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.2.0"
   },
   "devDependencies": {
-    "react": "16.8.4",
-    "react-dom": "16.8.4"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   },
   "optionalDependencies": {
-    "fsevents": "2.0.6"
-  },
-  "publishConfig": {
-    "registry": "https://nexus.cloud.credijusto.dev/repository/npm-hosted/"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "fsevents": "2.0.7"
   },
   "browserslist": {
     "production": [

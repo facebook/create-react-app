@@ -69,6 +69,12 @@ module.exports = {
     // If adding a typescript-eslint version of an existing ESLint rule,
     // make sure to disable the ESLint rule here.
     rules: {
+      // TypeScript's `noFallthroughCasesInSwitch` option is more robust (#6906)
+      'default-case': 'off',
+      // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/291)
+      'no-dupe-class-members': 'off',
+
+      // Add TypeScript specific rules (and turn off ESLint equivalents)
       '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
       'no-array-constructor': 'off',
       '@typescript-eslint/no-array-constructor': 'warn',

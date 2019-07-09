@@ -74,15 +74,25 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'extraGlobals',
     'globalSetup',
     'globalTeardown',
+    'moduleNameMapper',
     'resetMocks',
     'resetModules',
     'snapshotSerializers',
+    'transform',
+    'transformIgnorePatterns',
     'watchPathIgnorePatterns',
   ];
   if (overrides) {
     supportedKeys.forEach(key => {
       if (overrides.hasOwnProperty(key)) {
-        config[key] = overrides[key];
+        if (Array.isArray(config[key]) || typeof config[key] !== 'object')  {
+          // for arrays or primitive types, directly override the config key
+          config[key] = overrides[key];  
+        } else {
+          // for object types, extend gracefully
+          config[key] = Object.assign({}, config[key], overrides[key]);  
+        } 
+        
         delete overrides[key];
       }
     });
