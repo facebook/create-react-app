@@ -184,7 +184,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript, isServer =
       devtoolModuleFilenameTemplate: isEnvProduction
         ? info =>
             path
-              .relative(isServer ? paths.appServer : paths.appSrc, info.absoluteResourcePath)
+              .relative(paths.appPath, info.absoluteResourcePath)
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
@@ -299,7 +299,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript, isServer =
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
-        new ModuleScopePlugin(isServer ? paths.appSrc : paths.appServer, [paths.appPackageJson]),
+        new ModuleScopePlugin(paths.appSrc, [paths.appServer]),
       ],
     },
     resolveLoader: {
@@ -336,7 +336,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript, isServer =
               loader: require.resolve('eslint-loader'),
             },
           ],
-          include: isServer ? paths.appServer : paths.appSrc,
+          include: [paths.appServer,paths.appSrc],
         },
         {
           // "oneOf" will traverse all following loaders until one will
@@ -367,7 +367,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript, isServer =
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: isServer ? paths.appServer : paths.appSrc,
+              include: [paths.appServer, paths.appSrc],
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
@@ -695,7 +695,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript, isServer =
             '!**/src/setupProxy.*',
             '!**/src/setupTests.*',
           ],
-          watch: isServer ? paths.appServer : paths.appSrc,
+          watch: [paths.appServer, paths.appSrc],
           silent: true,
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
