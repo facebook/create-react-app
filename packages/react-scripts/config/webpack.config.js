@@ -59,7 +59,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function(webpackEnv, useTypeScript = _useTypeScript) {
+module.exports = function(webpackEnv, useTypeScript = _useTypeScript, isServer = false) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
@@ -184,7 +184,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript) {
       devtoolModuleFilenameTemplate: isEnvProduction
         ? info =>
             path
-              .relative(paths.appSrc, info.absoluteResourcePath)
+              .relative(isServer ? paths.appServer : paths.appSrc, info.absoluteResourcePath)
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
@@ -299,7 +299,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript) {
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
-        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+        new ModuleScopePlugin(isServer ? paths.appSrc : paths.appServer, [paths.appPackageJson]),
       ],
     },
     resolveLoader: {
@@ -336,7 +336,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript) {
               loader: require.resolve('eslint-loader'),
             },
           ],
-          include: paths.appSrc,
+          include: isServer ? paths.appServer : paths.appSrc,
         },
         {
           // "oneOf" will traverse all following loaders until one will
@@ -367,7 +367,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
+              include: isServer ? paths.appServer : paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
@@ -695,7 +695,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript) {
             '!**/src/setupProxy.*',
             '!**/src/setupTests.*',
           ],
-          watch: paths.appSrc,
+          watch: isServer ? paths.appServer : paths.appSrc,
           silent: true,
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
