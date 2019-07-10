@@ -552,6 +552,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript, isServer =
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
+                emitFile: !isServer,
               },
             },
             // ** STOP ** Are you adding a new loader?
