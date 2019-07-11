@@ -1,6 +1,6 @@
 {
   "name": "@soulpicks/react-scripts",
-  "version": "3.44.5",
+  "version": "3.44.7",
   "description": "Soulpicks' configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "@mdx-js/loader": "^1.0.0-rc.4",
     "@mdx-js/mdx": "^1.0.21",
     "@mdx-js/tag": "^0.20.3",
-    "@soulpicks/responsive-loader": "^2.0.0-beta.0",
+    "@soulpicks/responsive-loader": "^2.0.0",
     "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.10.2",
     "@typescript-eslint/parser": "1.10.2",

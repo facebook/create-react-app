@@ -350,6 +350,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript, isServer =
               options: {
                 adapter: require('@soulpicks/responsive-loader/sharp'),
                 name: 'static/media/[name].[hash:8].[ext]',
+                emitFile: !isServer,
               },
             },
             // "url" loader works like "file" loader except that it embeds assets
