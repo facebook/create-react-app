@@ -306,6 +306,38 @@ Example package.json:
 }
 ```
 
+### Coverage Reporting with coveralls.io
+
+A popular tool for test coverage reporting is coveralls.io. 
+
+- [`coveralls.io`](https://coveralls.io/)
+
+You will need to sign up for a free account to use coveralls.io. You will also need to sync up your github profile as well, which can be done automatically if you signup with github. Once signed up you can go to the "add repos" tab and turn on
+the repo you want a coverage report for. Next you can go to the package.json file in your app and add the coveralls command. 
+
+```json
+"scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --coverage",
+    "eject": "react-scripts eject",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
+  },
+ ```
+
+You have to also make sure to add the --coverage flag to the test command because this is what will generate the actual coverage data.
+
+
+you will also need to add the coveralls command to your .yml file for Continuous Integration. CI will be covered in the next section. 
+
+```yaml 
+after_scripts: 
+  npm run coveralls
+```
+
+This is it. Your coveralls report will be generated automatically on successful test builds and available on the coveralls dashboard. 
+
+
 ## Continuous Integration
 
 By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`.
