@@ -175,31 +175,31 @@ import 'jest-enzyme';
 
 ### Option 2: React Testing Library
 
-As an alternative or companion to `enzyme`, you may consider using `react-testing-library`. [`react-testing-library`](https://github.com/kentcdodds/react-testing-library) is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it's recommended to use with [`jest-dom`](https://github.com/gnapse/jest-dom) for improved assertions.
+As an alternative or companion to `enzyme`, you may consider using `@testing-library/react`. [`@testing-library/react`](https://github.com/testing-library/react-testing-library) is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it's recommended to use with [`@testing-library/jest-dom`](https://github.com/testing-library/jest-dom) for improved assertions.
 
-To install `react-testing-library` and `jest-dom`, you can run:
+To install `@testing-library/react` and `@testing-library/jest-dom`, you can run:
 
 ```sh
-npm install --save @testing-library/react jest-dom
+npm install --save @testing-library/react @testing-library/jest-dom
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add @testing-library/react jest-dom
+yarn add @testing-library/react @testing-library/jest-dom
 ```
 
 Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerplate in your test files:
 
 ```js
-// react-testing-library renders your components to document.body,
+// @testing-library/react renders your components to document.body,
 // this will ensure they're removed after each test.
 import '@testing-library/react/cleanup-after-each';
-// this adds jest-dom's custom assertions
-import 'jest-dom/extend-expect';
+// this adds @testing-library/jest-dom's custom assertions
+import '@testing-library/jest-dom/extend-expect';
 ```
 
-Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Welcome to React".
+Here's an example of using `@testing-library/react` and `@testing-library/jest-dom` for testing that the `<App />` component renders "Welcome to React".
 
 ```js
 import React from 'react';
@@ -212,7 +212,7 @@ it('renders welcome message', () => {
 });
 ```
 
-Learn more about the utilities provided by `react-testing-library` to facilitate testing asynchronous interactions as well as selecting form elements from the [`react-testing-library` documentation](https://testing-library.com/react) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
+Learn more about the utilities provided by `@testing-library/react` to facilitate testing asynchronous interactions as well as selecting form elements from the [`@testing-library/react` documentation](https://testing-library.com/react) and [examples](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
 
 ## Using Third Party Assertion Libraries
 
