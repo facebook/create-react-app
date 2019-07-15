@@ -1,7 +1,7 @@
 ---
 name: Proposal
 about: Suggest an idea for improving Create React App
-labels: "issue: proposal"
+labels: 'issue: proposal'
 ---
 
 ### Is your proposal related to a problem?
@@ -32,7 +32,7 @@ labels: "issue: proposal"
 ### Additional context
 
 <!--
-  Is there anything else you can add about the proposal? 
+  Is there anything else you can add about the proposal?
   You might want to link to related issues here, if you haven't already.
 -->
 
