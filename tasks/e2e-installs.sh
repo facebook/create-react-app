@@ -213,7 +213,7 @@ exists node_modules/react-scripts-fork
 # ******************************************************************************
 
 cd "$temp_app_path"
-# we will install a non-existing package to simulate a failed installataion.
+# we will install a non-existing package to simulate a failed installation.
 npx create-react-app test-app-should-not-exist --scripts-version=`date +%s` || true
 # confirm that the project files were deleted
 test ! -e test-app-should-not-exist/package.json
@@ -226,7 +226,7 @@ test ! -d test-app-should-not-exist/node_modules
 cd "$temp_app_path"
 mkdir test-app-should-remain
 echo '## Hello' > ./test-app-should-remain/README.md
-# we will install a non-existing package to simulate a failed installataion.
+# we will install a non-existing package to simulate a failed installation.
 npx create-react-app test-app-should-remain --scripts-version=`date +%s` || true
 # confirm the file exist
 test -e test-app-should-remain/README.md
