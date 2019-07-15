@@ -88,6 +88,15 @@ function startBrowserProcess(browser, url, args) {
     }
   }
 
+  // In cases where no browser is set, the open library fails with an ENOENT.
+  // This means that on Windows 10 with Windows Subsystem For Linux, if the user
+  // has not set the Windows paths in their PATH, this will fail.
+  // Thus, if no browser is provided, we return early to avoid an (inevitable) crash.
+  // This solves https://github.com/facebook/create-react-app/issues/7251
+  if (browser === undefined) {
+    return false;
+  }
+
   // Another special case: on OS X, check if BROWSER has been set to "open".
   // In this case, instead of passing `open` to `opn` (which won't work),
   // just ignore it (thus ensuring the intended behavior, i.e. opening the system browser):
