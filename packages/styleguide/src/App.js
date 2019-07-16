@@ -23,7 +23,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNavActive: false
+      isNavActive: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleNavLinkClick = this.handleNavLinkClick.bind(this);
@@ -48,7 +48,7 @@ class App extends React.Component {
       logoSmall,
       name,
       theme: projectTheme = {},
-      styleguideBasePath = '/styleguide/'
+      styleguideBasePath = '/styleguide/',
     } = config;
 
     const activeClass = this.state.isNavActive ? 'is-active' : '';
@@ -64,7 +64,7 @@ class App extends React.Component {
       if (typeof theme[prop] === 'object') {
         acc[prop] = {
           ...(theme[prop] || {}),
-          ...projectTheme[prop]
+          ...projectTheme[prop],
         };
       } else {
         acc[prop] = projectTheme[prop];
@@ -75,6 +75,7 @@ class App extends React.Component {
 
     return (
       <MdxWrapper>
+        <GlobalStyle />
         <BrowserRouter basename={styleguideBasePath}>
           <ThemeProvider theme={localTheme}>
             <PageLayout>
@@ -111,10 +112,7 @@ class App extends React.Component {
 }
 
 /* eslint-disable */
-createGlobalStyle`
-  body, html {
-  }
-
+const GlobalStyle = createGlobalStyle`
   html,
   body {
     padding: 0;
@@ -157,6 +155,7 @@ const PageBody = styled.div`
   align-items: flex-start;
   z-index: ${props => props.theme.zIndex.content};
   top: 6rem;
+  overflow: hidden;
   
   @media (max-width: calc(${props => props.theme.breakpoints.l} - 1px)) {
     &.is-active {
