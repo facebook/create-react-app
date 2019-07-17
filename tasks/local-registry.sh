@@ -27,7 +27,7 @@ function stopLocalRegistry {
   yarn config set registry "$original_yarn_registry_url"
 
   # Kill Verdaccio process
-  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
+  ps -ef | grep 'verdaccio' | grep -v grep | awk '{print $2}' | xargs -r kill -9
 }
 
 function publishToLocalRegistry {
