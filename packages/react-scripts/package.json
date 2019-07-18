@@ -75,7 +75,7 @@
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.3",
     "ts-pnp": "1.1.2",
-    "url-loader": "1.1.2",
+    "url-loader": "2.0.1",
     "webpack": "4.35.0",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
