@@ -114,7 +114,6 @@ module.exports = function(webpackEnv) {
       'react-helmet',
       'babel-polyfill',
       'react',
-      'react-dom',
       '@loadable/component',
     ],
     cache: true,

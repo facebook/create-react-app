@@ -16,5 +16,6 @@ module.exports = babelJest.createTransformer({
   plugins: [
     'babel-plugin-import-remove-resource-query',
     'require-context-hook',
+    '@loadable/babel-plugin',
   ]
 });
