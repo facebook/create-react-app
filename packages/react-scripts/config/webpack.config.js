@@ -418,9 +418,19 @@ module.exports = function(webpackEnv) {
                   ],
                   // START: EVERLONG CHANGES
                   [
+                    require.resolve(
+                      '@quickbaseoss/babel-plugin-styled-components-css-namespace'
+                    ),
+                    {
+                      cssNamespace: '.lw',
+                    },
+                  ],
+                  [
                     require.resolve('babel-plugin-styled-components'),
                     {
                       fileName: false,
+                      preprocess: false,
+                      displayName: true,
                     },
                   ],
                   // END: EVERLONG CHANGES
