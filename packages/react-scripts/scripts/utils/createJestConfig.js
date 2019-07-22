@@ -12,7 +12,7 @@ const chalk = require('react-dev-utils/chalk');
 const paths = require('../../config/paths');
 const modules = require('../../config/modules');
 
-module.exports = (resolve, rootDir, isEjecting) => {
+module.exports = (resolve, rootDir, isEjecting, location = 'src') => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsMatches = paths.testsSetup.match(/src[/\\]setupTests\.(.+)/);
@@ -24,10 +24,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
 
   const config = {
     collectCoverageFrom: [
-      'src/**/*.{js,jsx,ts,tsx}',
-      '!src/**/*.d.ts',
-      'server/**/*.{js,jsx,ts,tsx}',
-      '!server/**/*.d.ts',
+      `${location}/**/*.{js,jsx,ts,tsx}`,
+      `!${location}/**/*.d.ts`,
     ],
 
     setupFiles: [
@@ -38,12 +36,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
 
     setupFilesAfterEnv: setupTestsFile ? [setupTestsFile] : [],
     testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
-      '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
-      '<rootDir>/src/**/{spec,test}.{js,jsx,ts,tsx}',
-      '<rootDir>/server/**/__tests__/**/*.{js,jsx,ts,tsx}',
-      '<rootDir>/server/**/*.{spec,test}.{js,jsx,ts,tsx}',
-      '<rootDir>/server/**/{spec,test}.{js,jsx,ts,tsx}',
+      `<rootDir>/${location}/**/__tests__/**/*.{js,jsx,ts,tsx}`,
+      `<rootDir>/${location}/**/*.{spec,test}.{js,jsx,ts,tsx}`,
+      `<rootDir>/${location}/**/{spec,test}.{js,jsx,ts,tsx}`,
     ],
     testEnvironment: 'jest-environment-jsdom-fourteen',
     transform: {
