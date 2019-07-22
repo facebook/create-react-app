@@ -9,9 +9,6 @@
 
 const babelJest = require('babel-jest');
 
-// Check if emotion babel plugin should be applied
-const shouldApplyEmotionPlugin = require('../utils/shouldApplyEmotionBabelPlugin');
-
 module.exports = babelJest.createTransformer({
   presets: [require.resolve('babel-preset-react-app')],
   babelrc: false,
@@ -20,9 +17,5 @@ module.exports = babelJest.createTransformer({
     'babel-plugin-import-remove-resource-query',
     'require-context-hook',
     '@loadable/babel-plugin',
-    shouldApplyEmotionPlugin && [
-      'emotion',
-      require('../utils/getEmotionBabelPluginConfig'),
-    ],
   ].filter(Boolean)
 });
