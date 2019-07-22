@@ -24,15 +24,5 @@ module.exports = babelJest.createTransformer({
       'emotion',
       require('../utils/getEmotionBabelPluginConfig'),
     ],
-    [
-      require.resolve('babel-plugin-named-asset-import'),
-      {
-        loaderMap: {
-          svg: {
-            ReactComponent: '@svgr/webpack?-svgo,+ref![path]',
-          },
-        },
-      },
-    ],
   ].filter(Boolean)
 });
