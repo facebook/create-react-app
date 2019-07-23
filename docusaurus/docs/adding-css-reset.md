@@ -16,9 +16,9 @@ To start using it, add `@import-normalize;` anywhere in your CSS file(s). You on
 /* rest of app styles */
 ```
 
-You can control which parts of [normalize.css] to use via your project's [browserslist].
+You can control which parts of [normalize.css] to use via your project's [browserlist](https://github.com/browserslist/browserslist).
 
-Results when [browserslist] is `last 3 versions`:
+Results when [browserlist](https://github.com/browserslist/browserslist) is `last 3 versions`:
 
 ```css
 /**
@@ -39,7 +39,7 @@ img {
 }
 ```
 
-Results when [browserslist] is `last 2 versions`:
+Results when [browserlist](https://github.com/browserslist/browserslist) is `last 2 versions`:
 
 ```css
 /**
@@ -64,7 +64,7 @@ Browser support is dictated by what normalize.css [supports]. As of this writing
 - iOS Safari (last 2)
 - Internet Explorer 9+
 
-[browserslist]: http://browserl.ist/
+[browserlist]: https://github.com/browserslist/browserslist
 [css reset]: https://cssreset.com/what-is-a-css-reset/
 [normalize.css]: https://github.com/csstools/normalize.css
 [supports]: https://github.com/csstools/normalize.css#browser-support
