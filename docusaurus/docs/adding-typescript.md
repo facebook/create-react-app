@@ -14,7 +14,7 @@ npx create-react-app my-app --typescript
 
 # or
 
-yarn create react-app my-app --typescript
+yarn create-react-app my-app --typescript
 ```
 
 > If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` to ensure that `npx` always uses the latest version.
