@@ -33,7 +33,6 @@
     "@typescript-eslint/eslint-plugin": "1.10.2",
     "@typescript-eslint/parser": "1.10.2",
     "babel-plugin-styled-components": "1.10.6",
-    "babel-plugin-styled-components-css-namespace": "1.0.0-rc3",
     "babel-eslint": "10.0.1",
     "babel-jest": "^24.8.0",
     "babel-loader": "8.0.5",
