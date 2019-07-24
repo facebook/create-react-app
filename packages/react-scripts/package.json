@@ -1,10 +1,10 @@
 {
-  "name": "@everlong-league-web/react-scripts",
+  "name": "@everlong/league-react-scripts",
   "version": "0.1.0",
   "description": "Everlong configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "git@github.com:EverlongProject/create-react-app.git#league-web1.0",
+    "url": "git@github.com:EverlongProject/create-react-app.git#league-web1.2",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
