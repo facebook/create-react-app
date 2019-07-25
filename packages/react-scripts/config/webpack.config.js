@@ -140,7 +140,7 @@ module.exports = function(
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
-    stats: isEnvProduction ? 'verbose' : 'normal',
+    stats: 'normal',
     devtool: isEnvProduction
       ? shouldUseSourceMap
         ? 'source-map'
