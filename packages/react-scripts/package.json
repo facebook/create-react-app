@@ -4,7 +4,7 @@
   "description": "Everlong configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "git@github.com:EverlongProject/create-react-app.git#league-web1.2",
+    "url": "git@github.com:EverlongProject/create-react-app.git#league-web1.3",
     "directory": "packages/react-scripts"
   },
   "private": false,
