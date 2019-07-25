@@ -135,6 +135,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript, isServer =
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
+    stats: isEnvProduction ? 'verbose' : 'normal',
     devtool: isEnvProduction
       ? shouldUseSourceMap
         ? 'source-map'
