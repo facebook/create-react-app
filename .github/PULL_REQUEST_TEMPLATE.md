@@ -1,7 +1,3 @@
----
-labels: 'needs triage'
----
-
 <!--
 Thank you for sending the PR!
 
