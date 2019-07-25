@@ -7,6 +7,7 @@
     "url": "git@github.com:EverlongProject/create-react-app.git#league-web1.2",
     "directory": "packages/react-scripts"
   },
+  "private": false,
   "license": "MIT",
   "engines": {
     "node": ">=8.10"
