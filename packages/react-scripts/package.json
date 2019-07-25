@@ -1,10 +1,10 @@
 {
   "name": "@everlong/league-react-scripts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Everlong configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "git@github.com:EverlongProject/create-react-app.git#league-web1.3",
+    "url": "git@github.com:EverlongProject/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "private": false,
