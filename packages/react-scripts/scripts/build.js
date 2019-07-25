@@ -78,6 +78,7 @@ checkBrowsers(paths.appPath, isInteractive)
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
+    console.log(chalk.green('Ready to start the build.\n'));
     return build(previousFileSizes);
   })
   .then(
@@ -130,6 +131,8 @@ checkBrowsers(paths.appPath, isInteractive)
   .catch(err => {
     if (err && err.message) {
       console.log(err.message);
+    } else {
+      console.log(chalk.red('Caught an unknown error during build phase.\n'));
     }
     process.exit(1);
   });
