@@ -18,6 +18,9 @@ process.env.NODE_ENV = 'production';
 process.on('unhandledRejection', err => {
   throw err;
 });
+process.on('uncaughtException', err => {
+  console.error('Uncaught Exception:', err)
+});
 
 // Ensure environment variables are read.
 require('../config/env');

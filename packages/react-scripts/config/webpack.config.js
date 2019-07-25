@@ -618,7 +618,7 @@ module.exports = function(webpackEnv, useTypeScript = _useTypeScript, isServer =
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin({
 		  'process.env': {
-			  ...env.stringified.process.env,
+			  ...env.stringified['process.env'],
 			  ...customProcessEnv,
 		  },
 	  }),
