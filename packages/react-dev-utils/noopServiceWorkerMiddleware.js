@@ -9,7 +9,7 @@
 
 module.exports = function createNoopServiceWorkerMiddleware(
   url = '/service-worker.js',
-  extraScript
+  extraScript = ''
 ) {
   return function noopServiceWorkerMiddleware(req, res, next) {
     if (req.url === url) {
