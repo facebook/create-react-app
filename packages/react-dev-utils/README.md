@@ -287,9 +287,9 @@ getProcessForPort(3000);
 
 On macOS, tries to find a known running editor process and opens the file in it. It can also be explicitly configured by `REACT_EDITOR`, `VISUAL`, or `EDITOR` environment variables. For example, you can put `REACT_EDITOR=atom` in your `.env.local` file, and Create React App will respect that.
 
-#### `noopServiceWorkerMiddleware(): ExpressMiddleware`
+#### `noopServiceWorkerMiddleware(url: string, extraScript: string): ExpressMiddleware`
 
-Returns Express middleware that serves a `/service-worker.js` that resets any previously set service worker configuration. Useful for development.
+Returns Express middleware that serves a service worker file at `url` (defaults to `/service-worker.js`) that resets any previously set service worker configuration. `extraScript` will be appended to the end of the file. Useful for development.
 
 #### `openBrowser(url: string): boolean`
 
