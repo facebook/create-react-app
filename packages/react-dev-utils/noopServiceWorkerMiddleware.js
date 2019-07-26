@@ -7,7 +7,10 @@
 
 'use strict';
 
-module.exports = function createNoopServiceWorkerMiddleware(url = '/service-worker.js') {
+module.exports = function createNoopServiceWorkerMiddleware(
+  url = '/service-worker.js',
+  extraScript
+) {
   return function noopServiceWorkerMiddleware(req, res, next) {
     if (req.url === url) {
       res.setHeader('Content-Type', 'text/javascript');
@@ -29,6 +32,7 @@ self.addEventListener('activate', () => {
     }
   });
 });
+${extraScript}
 `
       );
     } else {
