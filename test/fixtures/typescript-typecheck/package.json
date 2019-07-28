@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "react": "*",
+    "react-dom": "*",
+    "typescript": "3.1.3"
+  }
+}

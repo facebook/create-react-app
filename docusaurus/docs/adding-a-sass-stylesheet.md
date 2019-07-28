@@ -12,7 +12,7 @@ Following this rule often makes CSS preprocessors less useful, as features like 
 
 To use Sass, first install `node-sass`:
 
-```bash
+```sh
 $ npm install node-sass --save
 $ # or
 $ yarn add node-sass
@@ -41,6 +41,12 @@ If you set `SASS_PATH=node_modules:src`, this will allow you to do imports like
 @import 'styles/colors'; // assuming a styles directory under src/, where _colors.scss partial file exists.
 @import 'nprogress/nprogress'; // importing a css file from the nprogress node module
 ```
+
+> **Note:** For windows operating system, use below syntax
+>
+> ```
+> SASS_PATH=./node_modules;./src
+> ```
 
 > **Tip:** You can opt into using this feature with [CSS modules](adding-a-css-modules-stylesheet.md) too!
 
