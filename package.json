@@ -19,7 +19,7 @@
     "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
-    "eslint": "5.16.0",
+    "eslint": "6.1.0",
     "execa": "1.0.0",
     "fs-extra": "^7.0.1",
     "get-port": "^4.2.0",
