@@ -12,7 +12,7 @@ const eslint = require('eslint');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssNormalize = require('postcss-normalize');
 
-const paths = require(',/paths');
+const paths = require('./paths');
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 

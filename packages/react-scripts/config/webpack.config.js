@@ -192,7 +192,6 @@ module.exports = function(webpackEnv) {
               manifest[file.name] = file.path;
               return manifest;
             }, seed);
-
             return {
               files: manifestFiles,
             };

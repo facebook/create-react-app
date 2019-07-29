@@ -173,18 +173,18 @@ import 'jest-enzyme';
 
 ### Option 2: React Testing Library
 
-As an alternative or companion to `enzyme`, you may consider using `react-testing-library`. [`react-testing-library`](https://github.com/kentcdodds/react-testing-library) is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it's recommended to use with [`jest-dom`](https://github.com/gnapse/jest-dom) for improved assertions.
+As an alternative or companion to `enzyme`, you may consider using `react-testing-library`. [`react-testing-library`](https://github.com/testing-library/react-testing-library) is a library for testing React components in a way that resembles the way the components are used by end users. It is well suited for unit, integration, and end-to-end testing of React components and applications. It works more directly with DOM nodes, and therefore it's recommended to use with [`jest-dom`](https://github.com/testing-library/jest-dom) for improved assertions.
 
 To install `react-testing-library` and `jest-dom`, you can run:
 
 ```sh
-npm install --save @testing-library/react jest-dom
+npm install --save @testing-library/react @testing-library/jest-dom
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add @testing-library/react jest-dom
+yarn add @testing-library/react @testing-library/jest-dom
 ```
 
 Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerplate in your test files:
@@ -194,7 +194,7 @@ Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerpla
 // this will ensure they're removed after each test.
 import '@testing-library/react/cleanup-after-each';
 // this adds jest-dom's custom assertions
-import 'jest-dom/extend-expect';
+import '@testing-library/jest-dom/extend-expect';
 ```
 
 Here's an example of using `react-testing-library` and `jest-dom` for testing that the `<App />` component renders "Welcome to React".
