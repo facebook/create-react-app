@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-labels: "issue: bug"
+labels: 'issue: bug, needs triage'
 ---
 
 
@@ -60,7 +60,6 @@ labels: "issue: bug"
 
 (Write your answer here.)
 
-
 ### Which terms did you search for in User Guide?
 
 <!--
@@ -80,7 +79,6 @@ labels: "issue: bug"
 
 (Write your answer here if relevant.)
 
-
 ### Environment
 
 <!--
@@ -97,7 +95,6 @@ labels: "issue: bug"
 
 (paste the output of the command here.)
 
-
 ### Steps to reproduce
 
 <!--
@@ -111,7 +108,6 @@ labels: "issue: bug"
 2.
 3.
 
-
 ### Expected behavior
 
 <!--
@@ -122,7 +118,6 @@ labels: "issue: bug"
 
 (Write what you thought would happen.)
 
-
 ### Actual behavior
 
 <!--
@@ -132,7 +127,6 @@ labels: "issue: bug"
 -->
 
 (Write what happened. Please add screenshots!)
-
 
 ### Reproducible demo
 
@@ -153,7 +147,6 @@ labels: "issue: bug"
 -->
 
 (Paste the link to an example project and exact instructions to reproduce the issue.)
-
 
 <!--
   What happens if you skip this step?

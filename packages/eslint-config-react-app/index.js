@@ -52,18 +52,33 @@ module.exports = {
     },
   },
 
-  overrides: {
-    files: ['**/*.ts', '**/*.tsx'],
-    parser: '@typescript-eslint/parser',
-    parserOptions: {
-      ecmaVersion: 2018,
-      sourceType: 'module',
-      ecmaFeatures: {
-        jsx: true,
-      },
+  overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
 
-      // typescript-eslint specific options
-      warnOnUnsupportedTypeScriptVersion: true,
+        // typescript-eslint specific options
+        warnOnUnsupportedTypeScriptVersion: true,
+  overrides: [
+    {
+      files: ['**/*.ts?(x)'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
+
+        // typescript-eslint specific options
+        warnOnUnsupportedTypeScriptVersion: true,
+      },
     },
     plugins: ['@typescript-eslint'],
     // If adding a typescript-eslint version of an existing ESLint rule,
@@ -91,6 +106,7 @@ module.exports = {
       '@typescript-eslint/no-useless-constructor': 'warn',
     },
   },
+  ],
 
   // NOTE: When adding rules here, you need to make sure they are compatible with
   // `typescript-eslint`, as some rules such as `no-array-constructor` aren't compatible.
@@ -149,7 +165,9 @@ module.exports = {
     'no-obj-calls': 'warn',
     'no-octal': 'warn',
     'no-octal-escape': 'warn',
-    'no-redeclare': 'warn',
+    // TODO: Remove this option in the next major release of CRA.
+    // https://eslint.org/docs/user-guide/migrating-to-6.0.0#-the-no-redeclare-rule-is-now-more-strict-by-default
+    'no-redeclare': ['warn', { builtinGlobals: false }],
     'no-regex-spaces': 'warn',
     'no-restricted-syntax': ['warn', 'WithStatement'],
     'no-script-url': 'warn',
@@ -235,7 +253,7 @@ module.exports = {
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/forbid-foreign-prop-types': ['warn', { allowInPropTypes: true }],
     'react/jsx-no-comment-textnodes': 'warn',
-    'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
+    'react/jsx-no-duplicate-props': 'warn',
     'react/jsx-no-target-blank': 'warn',
     'react/jsx-no-undef': 'error',
     'react/jsx-pascal-case': [
