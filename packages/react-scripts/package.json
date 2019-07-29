@@ -25,7 +25,6 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.4.3",
-    "@guestyci/fe-core-modules": "stable",
     "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.10.2",
     "@typescript-eslint/parser": "1.10.2",

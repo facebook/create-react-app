@@ -1,3 +1,7 @@
+## 3.0.2
+
+- removed fe-core-modules from cra
+
 ## 2.0.10
 
 - Fix to build failure
