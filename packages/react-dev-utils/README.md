@@ -412,5 +412,5 @@ Returns a cache identifier (string) consisting of the specified environment and 
 ```js
 var getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 
-getCacheIdentifier('prod', ['react-dev-utils', 'chalk']); // # => 'prod:react-dev-utils@5.0.0:chalk@2.4.1'
+getCacheIdentifier('production', ['react-dev-utils', 'chalk']); // # => 'prod:react-dev-utils@5.0.0:chalk@2.4.1'
 ```
