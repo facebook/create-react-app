@@ -1577,20 +1577,20 @@ Unhandled Promise rejections will now crash tests. You can fix them by explicitl
 After the regular update procedure above, add these line to `<head>` in `public/index.html`:
 
 ```html
-    <meta name="theme-color" content="#000000">
-    <!--
+<meta name="theme-color" content="#000000" />
+<!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 ```
 
 Add `<noscript>` to `<body>` in `public/index.html`:
 
 ```html
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
+<noscript>
+  You need to enable JavaScript to run this app.
+</noscript>
 ```
 
 Then create a file called `public/manifest.json` that looks like this:
