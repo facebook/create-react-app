@@ -3,6 +3,8 @@
 # dependencies
 /node_modules
 .yalc
+/.pnp
+.pnp.js
 
 # testing
 /coverage

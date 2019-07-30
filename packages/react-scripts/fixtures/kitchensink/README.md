@@ -8,7 +8,7 @@ Tests are automatically run by the CI tools.
 In order to run them locally, without having to manually install and configure everything, the `yarn e2e:docker` CLI command can be used.
 
 This is a simple script that runs a **Docker** container, where the node version, git branch to clone, test suite, and whether to run it with `yarn` or `npm` can be chosen.  
-Simply run `yarn e2e:docker -- --help` to get additional info.
+Simply run `yarn e2e:docker --help` to get additional info.
 
 If you need guidance installing **Docker**, you should follow their [official docs](https://docs.docker.com/engine/installation/).
 
@@ -45,7 +45,7 @@ For every test case added there is just a little chore to do:
 
 - add a test case in the appropriate integration test file, which calls and awaits `initDOM` with the previous `SwitchCase` string
 
-An usual flow for the test itself is something similar to:
+A usual flow for the test itself is something similar to:
 
 - add an `id` attribute in a target HTML tag in the feature itself
 
