@@ -40,6 +40,7 @@ const dns = require('dns');
 const envinfo = require('envinfo');
 const execSync = require('child_process').execSync;
 const fs = require('fs-extra');
+const isInstalledGlobally = require('is-installed-globally');
 const hyperquest = require('hyperquest');
 const inquirer = require('inquirer');
 const os = require('os');
@@ -123,6 +124,10 @@ const program = new commander.Command(packageJson.name)
     console.log();
   })
   .parse(process.argv);
+
+if (isInstalledGlobally) {
+  console.log(`global installation for create-react-app is deprecated.`);
+}
 
 if (program.info) {
   console.log(chalk.bold('\nEnvironment Info:'));
