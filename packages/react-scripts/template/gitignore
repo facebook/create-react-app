@@ -2,7 +2,12 @@
 
 # dependencies
 /node_modules
+<<<<<<< HEAD
 .yalc
+=======
+/.pnp
+.pnp.js
+>>>>>>> upstream/master
 
 # testing
 /coverage

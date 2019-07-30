@@ -29,7 +29,17 @@ module.exports = function(api, opts, env) {
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
 
+  var useESModules = validateBoolOption(
+    'useESModules',
+    opts.useESModules,
+    isEnvDevelopment || isEnvProduction
+  );
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+  var isTypeScriptEnabled = validateBoolOption(
+    'typescript',
+    opts.typescript,
+    true
+  );
   var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
   var useAbsoluteRuntime = validateBoolOption(
     'absoluteRuntime',
@@ -69,17 +79,11 @@ module.exports = function(api, opts, env) {
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
-          // We want Create React App to be IE 9 compatible until React itself
-          // no longer works with IE 9
-          targets: {
-            ie: 9,
-          },
-          // Users cannot override this behavior because this Babel
-          // configuration is highly tuned for ES5 support
-          ignoreBrowserslistConfig: true,
-          // If users import all core-js they're probably not concerned with
-          // bundle size. We shouldn't rely on magic to try and shrink it.
-          useBuiltIns: false,
+          // Allow importing core-js in entrypoint and use browserlist to select polyfills
+          useBuiltIns: 'entry',
+          // Set the corejs version we are using to avoid warnings in console
+          // This will need to change once we upgrade to corejs@3
+          corejs: 3,
           // Do not transform modules to CJS
           modules: false,
           // Exclude transforms that make all code slower
@@ -97,20 +101,50 @@ module.exports = function(api, opts, env) {
           useBuiltIns: true,
         },
       ],
+      isTypeScriptEnabled && [require('@babel/preset-typescript').default],
     ].filter(Boolean),
     plugins: [
       // Strip flow types before any other transform, emulating the behavior
       // order as-if the browser supported all of the succeeding features
       // https://github.com/facebook/create-react-app/pull/5182
-      isFlowEnabled &&
+      // We will conditionally enable this plugin below in overrides as it clashes with
+      // @babel/plugin-proposal-decorators when using TypeScript.
+      // https://github.com/facebook/create-react-app/issues/5741
+      isFlowEnabled && [
         require('@babel/plugin-transform-flow-strip-types').default,
+        false,
+      ],
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
       // Necessary to include regardless of the environment because
       // in practice some other transforms (such as object-rest-spread)
       // don't work without it: https://github.com/babel/babel/issues/7215
-      require('@babel/plugin-transform-destructuring').default,
+      [
+        require('@babel/plugin-transform-destructuring').default,
+        {
+          // Use loose mode for performance:
+          // https://github.com/facebook/create-react-app/issues/5602
+          loose: false,
+          selectiveLoose: [
+            'useState',
+            'useEffect',
+            'useContext',
+            'useReducer',
+            'useCallback',
+            'useMemo',
+            'useRef',
+            'useImperativeHandle',
+            'useLayoutEffect',
+            'useDebugValue',
+          ],
+        },
+      ],
+      // Turn on legacy decorators for TypeScript files
+      isTypeScriptEnabled && [
+        require('@babel/plugin-proposal-decorators').default,
+        false,
+      ],
       // class { handleClick = () => { } }
       // Enable loose mode to use assignment instead of defineProperty
       // See discussion in https://github.com/facebook/create-react-app/issues/4263
@@ -140,7 +174,7 @@ module.exports = function(api, opts, env) {
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.
-          useESModules: isEnvDevelopment || isEnvProduction,
+          useESModules,
           // Undocumented option that lets us encapsulate our runtime, ensuring
           // the correct version is used
           // https://github.com/babel/babel/blob/090c364a90fe73d36a30707fc612ce037bdbbb24/packages/babel-plugin-transform-runtime/src/index.js#L35-L42
@@ -158,7 +192,22 @@ module.exports = function(api, opts, env) {
       require('@babel/plugin-syntax-dynamic-import').default,
       isEnvTest &&
         // Transform dynamic import to require
-        require('babel-plugin-transform-dynamic-import').default,
+        require('babel-plugin-dynamic-import-node'),
+    ].filter(Boolean),
+    overrides: [
+      isFlowEnabled && {
+        exclude: /\.tsx?$/,
+        plugins: [require('@babel/plugin-transform-flow-strip-types').default],
+      },
+      isTypeScriptEnabled && {
+        test: /\.tsx?$/,
+        plugins: [
+          [
+            require('@babel/plugin-proposal-decorators').default,
+            { legacy: true },
+          ],
+        ],
+      },
     ].filter(Boolean),
   };
 };
