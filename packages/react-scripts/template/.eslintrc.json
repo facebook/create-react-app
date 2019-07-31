@@ -2,7 +2,8 @@
   "parser": "babel-eslint",
   "extends": [
     "airbnb",
-    "plugin:jest/recommended"
+    "plugin:jest/recommended",
+    "prettier"
   ],
   "rules": {
     "no-console": "off",

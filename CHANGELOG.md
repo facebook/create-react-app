@@ -1,3 +1,10 @@
+## 3.1.0
+
+- Fixed gitignore issues crash
+- Added fe-core-modules - again :)
+- Added gitignore 
+- Added infra for prettier
+
 ## 3.0.2
 
 - removed fe-core-modules from cra

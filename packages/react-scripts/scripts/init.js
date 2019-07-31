@@ -134,24 +134,31 @@ module.exports = function(
     return;
   }
 
-  // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
+  // GUESTY - Commented since .gitignore is added to project template.
   // See: https://github.com/npm/npm/issues/1862
-  try {
-    fs.moveSync(
-      path.join(appPath, 'gitignore'),
-      path.join(appPath, '.gitignore'),
-      []
-    );
-  } catch (err) {
-    // Append if there's already a `.gitignore` file there
-    if (err.code === 'EEXIST') {
-      const data = fs.readFileSync(path.join(appPath, 'gitignore'));
-      fs.appendFileSync(path.join(appPath, '.gitignore'), data);
-      fs.unlinkSync(path.join(appPath, 'gitignore'));
-    } else {
-      throw err;
-    }
-  }
+  // try {
+  //   console.log('fs output is', fs.moveSync(
+  //       path.join(appPath, 'gitignore'),
+  //       path.join(appPath, '.gitignore'),
+  //       []
+  //   ));
+  //   fs.moveSync(
+  //     path.join(appPath, 'gitignore'),
+  //     path.join(appPath, '.gitignore'),
+  //     []
+  //   );
+  // } catch (err) {
+  //   // Append if there's already a `.gitignore` file there
+  //   console.log('there is a .gitignore');
+  //   if (err.code === 'EEXIST') {
+  //     const data = fs.readFileSync(path.join(appPath, 'gitignore'));
+  //     fs.appendFileSync(path.join(appPath, '.gitignore'), data);
+  //     fs.unlinkSync(path.join(appPath, 'gitignore'));
+  //   } else {
+  //     console.log('code was not EEXIST', err);
+  //     throw err;
+  //   }
+  // }
 
   let command;
   let args;
