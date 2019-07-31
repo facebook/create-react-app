@@ -59,7 +59,7 @@ function build(config, name, callback) {
 
 function runBuildSteps() {
   build(iframeWebpackConfig, 'iframeScript.js', () => {
-    build(webpackConfig, 'App.js.js', () => {
+    build(webpackConfig, 'index.js', () => {
       console.log(chalk.bold.green('Compiled successfully!\n\n'));
     });
   });

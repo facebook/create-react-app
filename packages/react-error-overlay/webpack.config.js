@@ -13,7 +13,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.join(__dirname, './lib'),
-    filename: 'App.js.js',
+    filename: 'index.js',
     library: 'ReactErrorOverlay',
     libraryTarget: 'umd',
   },
