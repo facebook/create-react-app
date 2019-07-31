@@ -1,6 +1,6 @@
 {
   "name": "@guestyci/guesty-react-scripts",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "Guesty Configuration and scripts for Create React App.",
   "repository": "guestyorg/create-react-app",
   "license": "MIT",
@@ -53,7 +53,6 @@
     "eslint-plugin-react": "7.12.4",
     "eslint-plugin-react-hooks": "^1.5.0",
     "file-loader": "3.0.1",
-    "fs-extra": "7.0.1",
     "html-webpack-plugin": "4.0.0-beta.5",
     "husky": "^3.0.0",
     "identity-obj-proxy": "3.0.0",
@@ -88,6 +87,7 @@
     "workbox-webpack-plugin": "4.2.0"
   },
   "dependencies": {
+    "fs-extra": "7.0.1",
     "react-router-dom": "^5.0.1",
     "redux-form": "^8.2.2"
   },
