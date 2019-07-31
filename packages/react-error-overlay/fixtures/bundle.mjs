@@ -8054,7 +8054,7 @@ function URL(address, location, parser) {
       }
     } else if ((index = parse.exec(address))) {
       url[key] = index[1];
-      address = address.slice(0, index.App);
+      address = address.slice(0, index.index);
     }
 
     url[key] = url[key] || (
@@ -26126,7 +26126,7 @@ var App = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'App.js.js', __source: {
+        { className: 'App', __source: {
             fileName: _jsxFileName,
             lineNumber: 12
           },
