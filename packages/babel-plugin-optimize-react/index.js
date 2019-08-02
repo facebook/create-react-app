@@ -309,10 +309,10 @@ module.exports = function(babel) {
         for (let i = 0; i < node.declarations.length; i++) {
           const parentPath = declarationPath.get('declarations')[i];
           const path = parentPath.get('init');
-          const calleePath = path.get('callee');
           if (
+            t.isCallExpression(path) &&
             isUsingDestructuredArray(path) &&
-            isReferencingReactHook(calleePath)
+            isReferencingReactHook(path.get('callee'))
           ) {
             const id = parentPath.get('id');
             const elements = id.get('elements');
