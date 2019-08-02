@@ -482,7 +482,7 @@ yarn add --exact react-scripts@1.0.16
 
   - [#3150](https://github.com/facebook/create-react-app/pull/3150) Remove an useless negation in `registerServiceWorker.js`. ([@dunglas](https://github.com/dunglas))
   - [#3158](https://github.com/facebook/create-react-app/pull/3158) Remove `output.path` from dev webpack config. ([@nikolas](https://github.com/nikolas))
-  - [#3281](https://github.com/facebook/create-react-app/pull/3281) Add a workaround for Uglify incompatiblity with Safari 10.0 in the future. ([@satyavh](https://github.com/satyavh))
+  - [#3281](https://github.com/facebook/create-react-app/pull/3281) Add a workaround for Uglify incompatibility with Safari 10.0 in the future. ([@satyavh](https://github.com/satyavh))
   - [#3146](https://github.com/facebook/create-react-app/pull/3146) Fix `reason-react` support. ([@lpalmes](https://github.com/lpalmes))
   - [#3236](https://github.com/facebook/create-react-app/pull/3236) Update `style-loader` and disable inclusion of its HMR code in builds. ([@insin](https://github.com/insin))
   - [#3246](https://github.com/facebook/create-react-app/pull/3246) Update `url-loader` to 0.6.2 for mime ReDoS vulnerability. ([@d3viant0ne](https://github.com/d3viant0ne))
@@ -1443,7 +1443,7 @@ yarn add --dev --exact react-scripts@1.0.1
 
 ## 1.0.0 (May 18, 2017)
 
-We’ve been working on this release for the past few months, and there are many big impovements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
+We’ve been working on this release for the past few months, and there are many big improvements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
 
 So instead of just enumerating them here, we decided to write a blog post about all the new features.<br>
 Check it out: **[What’s New in Create React App](https://facebook.github.io/react/blog/2017/05/18/whats-new-in-create-react-app.html)**.
