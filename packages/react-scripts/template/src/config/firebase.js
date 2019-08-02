@@ -5,14 +5,16 @@ import 'firebase/database'
 import 'firebase/storage'
 import 'firebase/firestore'
 import 'firebase/messaging'
+import 'firebase/performance'
 
-const firebaseApp = firebase.initializeApp(process.env.NODE_ENV !== 'production' ? config.firebase_config_dev : config.firebase_config)
+const firebaseApp = firebase.initializeApp(
+  process.env.NODE_ENV !== 'production' ? config.firebase_config_dev : config.firebase_config
+)
 
-const settings = { timestampsInSnapshots: true }
-firebase.firestore().settings(settings)
-
-firebase.firestore().enablePersistence({ experimentalTabSynchronization: true })
-  .catch(function (err) {
+firebase
+  .firestore()
+  .enablePersistence({ synchronizeTabs: true })
+  .catch(function(err) {
     if (err.code === 'failed-precondition') {
       console.log('failed-precondition')
       // Multiple tabs open, persistence can only be enabled
@@ -26,5 +28,7 @@ firebase.firestore().enablePersistence({ experimentalTabSynchronization: true })
     }
   })
 
-export { firebaseApp }
+const perf = firebase.performance()
+
+export { firebaseApp, perf }
 export default firebaseApp

@@ -1,7 +1,48 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write;
+  
+    /// FUNCTIONS START ///
+
+    //Checks if user is signed in
+    function isSignedIn() {
+      return request.auth.uid != null;
     }
+
+    //Checks if user has admin rights
+    function isAdmin() {
+      return exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+    }
+
+    //Checks if user has a specific grant
+    function hasGrant(grant) {
+      return  get(/databases/$(database)/documents/user_grants/$(request.auth.uid)).data[grant]==true
+    }
+
+    //Checks if user is granted either as admin or with a grant
+    function isGranted(grant){
+      return isAdmin() || hasGrant(grant);
+    }
+
+
+    //Checks if user has specific UID
+    function isOwner(userUid){
+      return request.auth.uid == userUid 
+    }
+
+    /// FUNCTIONS END ///
+
+
+    /// RULES START ///
+
+
+    match /tasks {
+      allow read, write: if isSignedIn();
+      match /{document=**}{
+        allow read,write: if isSignedIn();
+
+      }
+    }
+
+    /// RULES END ///
   }
 }

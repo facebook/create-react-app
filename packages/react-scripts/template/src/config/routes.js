@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import React from 'react'
-import makeLoadable from 'rmw-shell/lib/containers/MyLoadable'
 import RestrictedRoute from 'rmw-shell/lib/containers/RestrictedRoute'
+import makeLoadable from 'rmw-shell/lib/containers/MyLoadable'
 
 const MyLoadable = (opts, preloadComponents) =>
   makeLoadable({ ...opts, firebase: () => import('./firebase') }, preloadComponents)
@@ -12,8 +12,6 @@ const AsyncCompany = MyLoadable({ loader: () => import('../pages/Companies/Compa
 const AsyncCompanies = MyLoadable({ loader: () => import('../pages/Companies/Companies') }, [AsyncCompany])
 const AsyncTask = MyLoadable({ loader: () => import('../pages/Tasks/Task') })
 const AsyncTasks = MyLoadable({ loader: () => import('../pages/Tasks/Tasks') }, [AsyncTask])
-const AsyncDocument = MyLoadable({ loader: () => import('../pages/Document') })
-const AsyncCollection = MyLoadable({ loader: () => import('../pages/Collection') })
 
 const routes = [
   <RestrictedRoute type="private" path="/" exact component={AsyncDashboard} />,
@@ -23,9 +21,8 @@ const routes = [
   <RestrictedRoute type="private" path="/companies/edit/:uid" exact component={AsyncCompany} />,
   <RestrictedRoute type="private" path="/companies/create" exact component={AsyncCompany} />,
   <RestrictedRoute type="private" path="/tasks" exact component={AsyncTasks} />,
-  <RestrictedRoute type="private" path="/tasks/edit/:uid" exact component={AsyncTask} />,
-  <RestrictedRoute type="private" path="/document" exact component={AsyncDocument} />,
-  <RestrictedRoute type="private" path="/collection" exact component={AsyncCollection} />
+  <RestrictedRoute type="private" path="/tasks/create" exact component={AsyncTask} />,
+  <RestrictedRoute type="private" path="/tasks/edit/:uid" exact component={AsyncTask} />
 ]
 
 export default routes

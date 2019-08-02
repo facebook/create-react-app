@@ -1,11 +1,9 @@
-import AccountBox from '@material-ui/icons/AccountBox'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import Brightness2 from '@material-ui/icons/Brightness2'
 import Brightness7 from '@material-ui/icons/Brightness7'
 import Business from '@material-ui/icons/Business'
 import ChatIcon from '@material-ui/icons/Chat'
 import DaschboardIcon from '@material-ui/icons/Dashboard'
-import FlashOn from '@material-ui/icons/FlashOn'
 import GroupIcon from '@material-ui/icons/Group'
 import InfoOutlined from '@material-ui/icons/InfoOutlined'
 import LanguageIcon from '@material-ui/icons/Language'
@@ -16,7 +14,6 @@ import React from 'react'
 import Security from '@material-ui/icons/Security'
 import SettingsIcon from '@material-ui/icons/SettingsApplications'
 import StyleIcon from '@material-ui/icons/Style'
-import TextsmsRounded from '@material-ui/icons/TextsmsRounded'
 import VerticalAlignBottomIcon from '@material-ui/icons/VerticalAlignBottom'
 import allLocales from './locales'
 import allThemes from './themes'
@@ -104,12 +101,6 @@ const getMenuItems = props => {
           visible: isAuthorised,
           primaryText: intl.formatMessage({ id: 'public' }),
           leftIcon: <GroupIcon />
-        },
-        {
-          value: '/predefined_chat_messages',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({ id: 'predefined_messages' }),
-          leftIcon: <TextsmsRounded />
         }
       ]
     },
@@ -124,24 +115,6 @@ const getMenuItems = props => {
       visible: isAuthorised,
       primaryText: intl.formatMessage({ id: 'tasks' }),
       leftIcon: <ListIcon />
-    },
-    {
-      visible: isAuthorised,
-      primaryTogglesNestedList: true,
-      primaryText: intl.formatMessage({ id: 'firestore' }),
-      leftIcon: <FlashOn />,
-      nestedItems: [
-        {
-          value: '/document',
-          primaryText: intl.formatMessage({ id: 'document' }),
-          leftIcon: <FlashOn />
-        },
-        {
-          value: '/collection',
-          primaryText: intl.formatMessage({ id: 'collection' }),
-          leftIcon: <FlashOn />
-        }
-      ]
     },
     {
       value: '/about',
@@ -165,7 +138,7 @@ const getMenuItems = props => {
           value: '/roles',
           visible: isGranted('read_roles'),
           primaryText: intl.formatMessage({ id: 'roles' }),
-          leftIcon: <AccountBox />
+          leftIcon: <AccountBoxIcon />
         }
       ]
     },

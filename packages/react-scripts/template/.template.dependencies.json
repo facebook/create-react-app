@@ -7,15 +7,15 @@
     "chart.js": "2.x",
     "downshift": "3.x",
     "firebase": "6.x",
-    "firebaseui": "3.x",
-    "fireform": "0.x",
+    "firebaseui": "4.x",
+    "fireform": "1.x",
     "firekit": "1.x",
     "firekit-provider": "1.x",
     "github-markdown-css": "3.x",
     "intl": "1.x",
     "intl-locales-supported": "1.x",
-    "match-sorter": "3.x",
-    "material-ui-filter": "2.x",
+    "match-sorter": "4.x",
+    "material-ui-filter": "3.x",
     "material-ui-image": "3.x",
     "material-ui-pickers": "2.x",
     "moment": "2.x",
@@ -26,6 +26,7 @@
     "react-countup": "4.x",
     "react-custom-scrollbars": "4.x",
     "react-dom": "16.x",
+    "react-dropzone": "10.x",
     "react-helmet": "5.x",
     "react-image-cropper": "1.x",
     "react-intl": "2.x",
@@ -44,11 +45,12 @@
     "redux-form-material-ui": "^5.0.0-beta.3",
     "redux-persist": "5.x",
     "redux-thunk": "2.x",
-    "rmw-shell": "5.x",
+    "rmw-shell": "6.x",
     "react-scripts": "3.x"
   },
   "devDependencies": {
     "redux-logger": "3.x",
-    "selenium-webdriver": "^4.0.0-alpha.1"
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "source-map-explorer": "2.x"
   }
 }
