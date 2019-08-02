@@ -3,8 +3,10 @@
 const plugin = require('../index.js');
 const babel = require('@babel/core');
 
-function transform(code) {
+function transform(code, options = {}) {
+  const { presets } = options;
   return babel.transform(code, {
+    presets,
     plugins: [plugin],
   }).code;
 }
@@ -155,6 +157,22 @@ describe('React hook transforms', () => {
       export const Portal = memo(() => null);
     `;
     const output = transform(test);
+    expect(output).toMatchSnapshot();
+  });
+
+  it.only('should support destructuring hooks while using transform-destructuring', () => {
+    const test = `
+      import React, {useState} from "react";
+
+      export function MyComponent() {
+        const [counter, setCounter] = useState(0);
+
+        return React.createElement("div", null, counter);
+      }
+    `;
+    const output = transform(test, {
+      presets: [['@babel/preset-env', { targets: { ie: '11' } }]],
+    });
     expect(output).toMatchSnapshot();
   });
 });
