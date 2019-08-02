@@ -290,24 +290,36 @@ module.exports = function(babel) {
         if (state.destructuredCounter === undefined) {
           state.destructuredCounter = 0;
         }
-        const calleePath = path.get('callee');
 
-        // Ensure we found a primitive React hook that is using a destructuring array pattern
-        if (
-          isUsingDestructuredArray(path) &&
-          isReferencingReactHook(calleePath)
-        ) {
-          const parentPath = path.parentPath;
+        if (isCreateReactElementCall(path)) {
+          const callee = path.get('callee');
+          const reactReferencePath = callee.get('object');
 
-          if (t.isVariableDeclarator(parentPath)) {
+          if (state.createElementReference === undefined) {
+            state.createElementReference = createConstantCreateElementReference(
+              reactReferencePath
+            );
+          }
+          callee.replaceWith(state.createElementReference);
+        }
+      },
+      VariableDeclaration(declarationPath) {
+        const { node, scope } = declarationPath;
+
+        for (let i = 0; i < node.declarations.length; i++) {
+          const parentPath = declarationPath.get('declarations')[i];
+          const path = parentPath.get('init');
+          const calleePath = path.get('callee');
+          if (
+            isUsingDestructuredArray(path) &&
+            isReferencingReactHook(calleePath)
+          ) {
             const id = parentPath.get('id');
             const elements = id.get('elements');
             const kind = parentPath.parentPath.node.kind;
             // Replace the array destructure pattern with a reference node.
 
-            const referenceNode = t.identifier(
-              '_ref_' + state.destructuredCounter++
-            );
+            const referenceNode = scope.generateUidIdentifier('_ref_');
             id.replaceWith(referenceNode);
             // Now insert references to the reference node, i.e.:
             //   const counter = __ref__[0];
@@ -330,16 +342,6 @@ module.exports = function(babel) {
               path.scope.registerDeclaration(arrayAccessPath);
             }
           }
-        } else if (isCreateReactElementCall(path)) {
-          const callee = path.get('callee');
-          const reactReferencePath = callee.get('object');
-
-          if (state.createElementReference === undefined) {
-            state.createElementReference = createConstantCreateElementReference(
-              reactReferencePath
-            );
-          }
-          callee.replaceWith(state.createElementReference);
         }
       },
     },

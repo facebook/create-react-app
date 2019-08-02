@@ -7,10 +7,10 @@ const {
   useState
 } = React;
 export function MyComponent() {
-  const _ref_0 = useState(0);
+  const _ref_ = useState(0);
 
-  const setCounter = _ref_0[1];
-  const counter = _ref_0[0];
+  const setCounter = _ref_[1];
+  const counter = _ref_[0];
   return __reactCreateElement__(\\"div\\", null, counter);
 }"
 `;
@@ -20,10 +20,10 @@ exports[`React hook transforms should support destructuring hooks from imports #
 const __reactCreateElement__ = React.createElement;
 const useState = React.useState;
 export function MyComponent() {
-  const _ref_0 = useState(0);
+  const _ref_ = useState(0);
 
-  const setCounter = _ref_0[1];
-  const counter = _ref_0[0];
+  const setCounter = _ref_[1];
+  const counter = _ref_[0];
   return __reactCreateElement__(\\"div\\", null, counter);
 }"
 `;
@@ -33,10 +33,10 @@ exports[`React hook transforms should support destructuring hooks from imports #
 const __reactCreateElement__ = React.createElement;
 const foo = React.useState;
 export function MyComponent() {
-  const _ref_0 = foo(0);
+  const _ref_ = foo(0);
 
-  const setCounter = _ref_0[1];
-  const counter = _ref_0[0];
+  const setCounter = _ref_[1];
+  const counter = _ref_[0];
   return __reactCreateElement__(\\"div\\", null, counter);
 }"
 `;
@@ -48,10 +48,10 @@ const {
   useState: foo
 } = React;
 export function MyComponent() {
-  const _ref_0 = foo(0);
+  const _ref_ = foo(0);
 
-  const setCounter = _ref_0[1];
-  const counter = _ref_0[0];
+  const setCounter = _ref_[1];
+  const counter = _ref_[0];
   return __reactCreateElement__(\\"div\\", null, counter);
 }"
 `;
@@ -63,10 +63,10 @@ const {
   useState
 } = React;
 export function MyComponent() {
-  const _ref_0 = useState(0);
+  const _ref_ = useState(0);
 
-  const setCounter = _ref_0[1];
-  const counter = _ref_0[0];
+  const setCounter = _ref_[1];
+  const counter = _ref_[0];
   return __reactCreateElement__(\\"div\\", null, counter);
 }"
 `;
@@ -79,10 +79,10 @@ const {
   useState
 } = React;
 export function MyComponent() {
-  const _ref_0 = useState(0);
+  const _ref_ = useState(0);
 
-  const setCounter = _ref_0[1];
-  const counter = _ref_0[0];
+  const setCounter = _ref_[1];
+  const counter = _ref_[0];
   return __reactCreateElement__(\\"div\\", null, counter);
 }"
 `;
@@ -99,23 +99,14 @@ var _react = _interopRequireDefault(require(\\"react\\"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError(\\"Invalid attempt to destructure non-iterable instance\\"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i[\\"return\\"] != null) _i[\\"return\\"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 var __reactCreateElement__ = _react.default.createElement;
 var useState = _react.default.useState;
 
 function MyComponent() {
-  var _useState = useState(0),
-      _useState2 = _slicedToArray(_useState, 2),
-      counter = _useState2[0],
-      setCounter = _useState2[1];
+  var _ref_ = useState(0);
 
+  var setCounter = _ref_[1];
+  var counter = _ref_[0];
   return __reactCreateElement__(\\"div\\", null, counter);
 }"
 `;

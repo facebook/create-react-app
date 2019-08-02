@@ -160,7 +160,7 @@ describe('React hook transforms', () => {
     expect(output).toMatchSnapshot();
   });
 
-  it.only('should support destructuring hooks while using transform-destructuring', () => {
+  it('should support destructuring hooks while using transform-destructuring', () => {
     const test = `
       import React, {useState} from "react";
 
