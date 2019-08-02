@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "@date-io/moment": "1.x",
-    "@material-ui/core": "3.x",
-    "@material-ui/styles": "3.x",
-    "@material-ui/icons": "3.x",
+    "@material-ui/core": "4.x",
+    "@material-ui/styles": "4.x",
+    "@material-ui/icons": "4.x",
     "a2hs": "1.x",
     "chart.js": "2.x",
     "downshift": "3.x",
