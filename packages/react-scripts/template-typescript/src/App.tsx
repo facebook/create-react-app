@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const App: React.FC = (): React.ReactNode => {
+const App: React.FC = (): React.ReactElement => {
   return (
     <div className="App">
       <header className="App-header">
