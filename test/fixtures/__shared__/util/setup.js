@@ -96,7 +96,15 @@ module.exports = class TestSetup {
 
   async teardown() {
     if (this.testDirectory != null) {
-      await fs.remove(this.testDirectory);
+      try {
+        await fs.remove(this.testDirectory);
+      } catch (ex) {
+        if (this.isLocal) {
+          throw ex;
+        } else {
+          // In CI, don't worry if the test directory was not able to be deleted
+        }
+      }
       this.testDirectory = null;
       this._scripts = null;
     }

@@ -15,9 +15,9 @@ cd "$(dirname "$0")"
 # App temporary location
 # http://unix.stackexchange.com/a/84980
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
-custom_registry_url=http://localhost:4873
-original_npm_registry_url=`npm get registry`
-original_yarn_registry_url=`yarn config get registry`
+
+# Load functions for working with local NPM registry (Verdaccio)
+source local-registry.sh
 
 function cleanup {
   echo 'Cleaning up.'
@@ -25,8 +25,8 @@ function cleanup {
   # Uncomment when snapshot testing is enabled by default:
   # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf "$temp_app_path"
-  npm set registry "$original_npm_registry_url"
-  yarn config set registry "$original_yarn_registry_url"
+  # Restore the original NPM and Yarn registry URLs and stop Verdaccio
+  stopLocalRegistry
 }
 
 # Error messages are redirected to stderr
@@ -84,18 +84,8 @@ fi
 # Bootstrap monorepo
 yarn
 
-# Start local registry
-tmp_registry_log=`mktemp`
-(cd && nohup npx verdaccio@3.8.2 -c "$root_path"/tasks/verdaccio.yaml &>$tmp_registry_log &)
-# Wait for `verdaccio` to boot
-grep -q 'http address' <(tail -f $tmp_registry_log)
-
-# Set registry to local registry
-npm set registry "$custom_registry_url"
-yarn config set registry "$custom_registry_url"
-
-# Login so we can publish packages
-(cd && npx npm-auth-to-token@1.0.0 -u user -p password -e user@example.com -r "$custom_registry_url")
+# Start the local NPM registry
+startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
@@ -148,8 +138,8 @@ CI=true yarn test
 # Test local start command
 yarn start --smoke-test
 
-git clean -df
-./tasks/publish.sh --yes --force-publish=* --skip-git --cd-version=prerelease --exact --npm-tag=latest
+# Publish the monorepo
+publishToLocalRegistry
 
 # ******************************************************************************
 # Install react-scripts prerelease via create-react-app prerelease.
@@ -268,6 +258,9 @@ verify_module_scope
 
 # Eject...
 echo yes | npm run eject
+
+# Test ejected files were staged
+test -n "$(git diff --staged --name-only)"
 
 # Test the build
 yarn build

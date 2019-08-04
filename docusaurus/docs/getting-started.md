@@ -14,9 +14,11 @@ cd my-app
 npm start
 ```
 
+> If you've previously installed `create-react-app` globally via `npm install -g create-react-app`, we recommend you uninstall the package using `npm uninstall -g create-react-app` to ensure that `npx` always uses the latest version.
+
 _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
 
-Then open [http://localhost:3000/](http://localhost:3000/) to see your app. 
+Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
 
@@ -32,7 +34,7 @@ Just create a project, and you’re good to go.
 
 ## Creating an App
 
-**You’ll need to have Node >= 6 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
+**You’ll need to have Node >= 8.10 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
 To create a new app, you may choose one of the following methods:
 
@@ -59,6 +61,18 @@ yarn create react-app my-app
 ```
 
 _`yarn create` is available in Yarn 0.25+_
+
+### Creating a TypeScript app
+
+Follow our [Adding TypeScript](adding-typescript.md) documentation to create a TypeScript app.
+
+### Selecting a package manager
+
+When you create a new app, the CLI will use [Yarn](https://yarnpkg.com/) to install dependencies (when available). If you have Yarn installed, but would prefer to use npm, you can append --use-npm to the creation command. For example:
+
+```sh
+npx create-react-app my-app --use-npm
+```
 
 ## Output
 
@@ -108,7 +122,7 @@ The page will automatically reload if you make changes to the code. You will see
 
 Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
 
-[Read more about testing](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests).
+[Read more about testing](https://facebook.github.io/create-react-app/docs/running-tests).
 
 ### `npm run build` or `yarn build`
 

@@ -1,8 +1,6 @@
 {
   "docs": {
-    "Welcome": [
-      "documentation-intro"
-    ],
+    "Welcome": ["documentation-intro"],
     "Getting Started": [
       "getting-started",
       "folder-structure",
@@ -20,8 +18,10 @@
       "adding-a-stylesheet",
       "adding-a-css-modules-stylesheet",
       "adding-a-sass-stylesheet",
+      "adding-css-reset",
       "post-processing-css",
       "adding-images-fonts-and-files",
+      "loading-graphql-files",
       "using-the-public-folder",
       "code-splitting"
     ],
@@ -35,7 +35,8 @@
       "adding-relay",
       "adding-a-router",
       "adding-custom-environment-variables",
-      "making-a-progressive-web-app"
+      "making-a-progressive-web-app",
+      "production-build"
     ],
     "Testing": ["running-tests", "debugging-tests"],
     "Back-End Integration": [
@@ -51,8 +52,6 @@
       "advanced-configuration",
       "alternatives-to-ejecting"
     ],
-    "Support": [
-      "troubleshooting"
-    ]
+    "Support": ["troubleshooting"]
   }
 }
