@@ -50,22 +50,22 @@
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "@babel/code-frame": "7.0.0",
-    "address": "1.0.3",
-    "browserslist": "4.5.4",
+    "@babel/code-frame": "7.5.5",
+    "address": "1.1.0",
+    "browserslist": "4.6.6",
     "chalk": "2.4.2",
     "cross-spawn": "6.0.5",
     "detect-port-alt": "1.1.6",
     "escape-string-regexp": "1.0.5",
     "filesize": "3.6.1",
     "find-up": "3.0.0",
-    "fork-ts-checker-webpack-plugin": "1.1.1",
+    "fork-ts-checker-webpack-plugin": "1.5.0",
     "global-modules": "2.0.0",
     "globby": "8.0.2",
-    "gzip-size": "5.0.0",
+    "gzip-size": "5.1.1",
     "immer": "1.10.0",
-    "inquirer": "6.2.2",
-    "is-root": "2.0.0",
+    "inquirer": "6.5.0",
+    "is-root": "2.1.0",
     "loader-utils": "1.2.3",
     "open": "^6.3.0",
     "pkg-up": "2.0.0",
@@ -78,7 +78,7 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "jest": "24.7.1"
+    "jest": "24.8.0"
   },
   "scripts": {
     "test": "cross-env FORCE_COLOR=true jest"
