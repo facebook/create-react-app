@@ -36,6 +36,13 @@ After opening that link, the Chrome Developer Tools will be displayed. Select `i
 
 > Note: the --runInBand cli option makes sure Jest runs test in the same process rather than spawning processes for individual tests. Normally Jest parallelizes test runs across processes but it is hard to debug many processes at the same time.
 
+## Troubleshooting 
+
+*Setting a debugger statement in my code doesn't work!*
+
+In older versions of `react-scripts` following these instructions *may not work*. In these cases one work-around is to update the version of `react-scripts`. Using v.3.0.1 worked. 
+
+
 ## Debugging Tests in Visual Studio Code
 
 Debugging Jest tests is supported out of the box for [Visual Studio Code](https://code.visualstudio.com).
