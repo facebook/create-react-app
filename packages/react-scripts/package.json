@@ -79,6 +79,7 @@
     "webpack": "4.35.0",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
+    "webpack-merge": "^4.2.1",
     "workbox-webpack-plugin": "4.2.0"
   },
   "devDependencies": {
