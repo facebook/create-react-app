@@ -724,7 +724,13 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
+  const dependencies = [
+    'react',
+    'react-dom',
+    'react-scripts',
+    'register-service-worker',
+  ].sort();
+
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
