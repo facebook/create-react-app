@@ -51,7 +51,6 @@ const imageInlineSizeLimit = parseInt(
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
-
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -144,6 +143,8 @@ module.exports = function(webpackEnv) {
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
+      // We ship a few polyfills by default:
+      require.resolve('./polyfills'),
       // Include an alternative client for WebpackDevServer. A client's job is to
       // connect to WebpackDevServer by a socket and get notified about changes.
       // When you save a file, the client will either apply hot updates (in case
@@ -463,6 +464,15 @@ module.exports = function(webpackEnv) {
                 // being evaluated would be much more helpful.
                 sourceMaps: false,
               },
+            },
+            {
+              test: /\.hbs$/,
+              loader: require.resolve('handlebars-loader'),
+              options: {
+                helperDirs: [paths.appSrc + '\\panel-templates\\_helpers'],
+                partialDirs: [paths.appSrc + '\\panel-templates\\_partials']
+                // path.join(__dirname, 'templates', '_partials')
+              }
             },
             // "postcss" loader applies autoprefixer to our CSS.
             // "css" loader resolves paths in CSS and adds assets as dependencies.
