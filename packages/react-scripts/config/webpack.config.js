@@ -191,8 +191,8 @@ module.exports = function(webpackEnv) {
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
-      // Added to prevent conflicts within app when multiple webpack runtimes
-      // (from different compilation) are used on the same webpage.
+      // Prevents conflicts when multiple Webpack runtimes (from different apps)
+      // are used on the same page.
       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
     },
     optimization: {
@@ -202,7 +202,7 @@ module.exports = function(webpackEnv) {
         new TerserPlugin({
           terserOptions: {
             parse: {
-              // we want terser to parse ecma 8 code. However, we don't want it
+              // We want terser to parse ecma 8 code. However, we don't want it
               // to apply any minification steps that turns valid ecma 5 code
               // into invalid ecma 5 code. This is why the 'compress' and 'output'
               // sections only apply transformations that are ecma 5 safe
