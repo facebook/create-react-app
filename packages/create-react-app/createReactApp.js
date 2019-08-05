@@ -383,7 +383,13 @@ function run(
   useTypescript
 ) {
   getInstallPackage(version, originalDirectory).then(packageToInstall => {
-    const allDependencies = ['react', 'react-dom', packageToInstall];
+    const allDependencies = [
+      'react',
+      'react-dom',
+      packageToInstall,
+      'register-service-worker',
+    ];
+
     if (useTypescript) {
       allDependencies.push(
         // TODO: get user's node version instead of installing latest
