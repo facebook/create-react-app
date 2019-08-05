@@ -193,7 +193,7 @@ module.exports = function(webpackEnv) {
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
       // Added to prevent conflicts within app when multiple webpack runtimes
       // (from different compilation) are used on the same webpage.
-      jsonpFunction: appPackageJson.name,
+      jsonpFunction: `webpackJsonp${appPackageJson.name}`,
     },
     optimization: {
       minimize: isEnvProduction,
