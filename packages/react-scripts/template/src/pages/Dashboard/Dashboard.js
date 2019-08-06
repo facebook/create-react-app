@@ -6,7 +6,7 @@ import { Activity } from 'rmw-shell'
 import { GitHubIcon } from 'rmw-shell/lib/components/Icons'
 import { Line, Bar, Doughnut } from 'react-chartjs-2'
 import { connect } from 'react-redux'
-import { injectIntl, intlShape } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { withFirebase } from 'firekit-provider'
 import { withTheme } from '@material-ui/core/styles'
 import Scrollbar from 'rmw-shell/lib/components/Scrollbar'
@@ -220,10 +220,6 @@ class Dashboard extends Component {
       </Activity>
     )
   }
-}
-
-Dashboard.propTypes = {
-  intl: intlShape.isRequired
 }
 
 const mapStateToProps = state => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import IconButton from '@material-ui/core/IconButton'
-import { injectIntl, intlShape } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { GitHubIcon } from 'rmw-shell/lib/components/Icons'
 import { Activity } from 'rmw-shell'
 import ReactMarkdown from 'react-markdown'
@@ -33,33 +33,20 @@ class About extends Component {
     return (
       <Activity
         appBarContent={
-          <IconButton
-
-            href='https://github.com/TarikHuber/react-most-wanted'
-            target='_blank'
-            rel='noopener'
-          >
+          <IconButton href="https://github.com/TarikHuber/react-most-wanted" target="_blank" rel="noopener">
             <GitHubIcon />
           </IconButton>
         }
-        title={intl.formatMessage({ id: 'about' })}>
-
+        title={intl.formatMessage({ id: 'about' })}
+      >
         <Scrollbar>
           <div style={{ backgroundColor: 'white', padding: 12 }}>
-            <ReactMarkdown
-              className='markdown-body'
-              source={this.state.text}
-            />
+            <ReactMarkdown className="markdown-body" source={this.state.text} />
           </div>
         </Scrollbar>
-
       </Activity>
     )
   }
-}
-
-About.propTypes = {
-  intl: intlShape.isRequired
 }
 
 export default injectIntl(About)

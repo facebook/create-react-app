@@ -6,7 +6,7 @@ import TextField from 'rmw-shell/lib/components/ReduxFormFields/TextField'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { ImageCropDialog } from 'rmw-shell/lib/containers/ImageCropDialog'
 import { connect } from 'react-redux'
-import { injectIntl, intlShape } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { setDialogIsOpen } from 'rmw-shell/lib/store/dialogs/actions'
 import { withRouter } from 'react-router-dom'
 import { withTheme } from '@material-ui/core/styles'
@@ -106,7 +106,6 @@ class Form extends Component {
 
 Form.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
   initialized: PropTypes.bool.isRequired,
   setDialogIsOpen: PropTypes.func.isRequired,
   dialogs: PropTypes.object.isRequired,
