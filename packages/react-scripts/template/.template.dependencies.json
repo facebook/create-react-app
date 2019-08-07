@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@date-io/moment": "1.x",
-    "@formatjs/intl-relativetimeformat": "2.x",
+    "@formatjs/intl-relativetimeformat": "^2.5.0",
     "@material-ui/core": "4.x",
     "@material-ui/styles": "4.x",
     "@material-ui/icons": "4.x",
@@ -16,7 +16,7 @@
     "github-markdown-css": "3.x",
     "intl": "1.x",
     "intl-locales-supported": "1.x",
-    "intl-pluralrules": "1.x",
+    "intl-pluralrules": "^1.0.3",
     "match-sorter": "4.x",
     "material-ui-filter": "3.x",
     "material-ui-image": "3.x",
@@ -32,7 +32,7 @@
     "react-dropzone": "10.x",
     "react-helmet": "5.x",
     "react-image-cropper": "1.x",
-    "react-intl": "3.x",
+    "react-intl": "^3.0.0",
     "react-list": "0.x",
     "react-loadable": "5.x",
     "react-markdown": "4.x",
