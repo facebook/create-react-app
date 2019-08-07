@@ -23,6 +23,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
     : undefined;
 
   const config = {
+    roots: ['<rootDir>/src'],
+
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
 
     setupFiles: [
