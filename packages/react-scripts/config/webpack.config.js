@@ -39,6 +39,8 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const postcssNormalize = require('postcss-normalize');
 
+const appPackageJson = require(paths.appPackageJson);
+
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
@@ -122,12 +124,20 @@ module.exports = function(webpackEnv) {
       },
     ].filter(Boolean);
     if (preProcessor) {
-      loaders.push({
-        loader: require.resolve(preProcessor),
-        options: {
-          sourceMap: isEnvProduction && shouldUseSourceMap,
+      loaders.push(
+        {
+          loader: require.resolve('resolve-url-loader'),
+          options: {
+            sourceMap: isEnvProduction && shouldUseSourceMap,
+          },
         },
-      });
+        {
+          loader: require.resolve(preProcessor),
+          options: {
+            sourceMap: true,
+          },
+        }
+      );
     }
     return loaders;
   };
@@ -189,6 +199,9 @@ module.exports = function(webpackEnv) {
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+      // Prevents conflicts when multiple Webpack runtimes (from different apps)
+      // are used on the same page.
+      jsonpFunction: `webpackJsonp${appPackageJson.name}`,
     },
     optimization: {
       minimize: isEnvProduction,
@@ -197,7 +210,7 @@ module.exports = function(webpackEnv) {
         new TerserPlugin({
           terserOptions: {
             parse: {
-              // we want terser to parse ecma 8 code. However, we don't want it
+              // We want terser to parse ecma 8 code. However, we don't want it
               // to apply any minification steps that turns valid ecma 5 code
               // into invalid ecma 5 code. This is why the 'compress' and 'output'
               // sections only apply transformations that are ecma 5 safe
@@ -651,9 +664,11 @@ module.exports = function(webpackEnv) {
           navigateFallbackBlacklist: [
             // Exclude URLs starting with /_, as they're likely an API call
             new RegExp('^/_'),
-            // Exclude URLs containing a dot, as they're likely a resource in
-            // public/ and not a SPA route
-            new RegExp('/[^/]+\\.[^/]+$'),
+            // Exclude any URLs whose last part seems to be a file extension
+            // as they're likely a resource and not a SPA route.
+            // URLs containing a "?" character won't be blacklisted as they're likely
+            // a route with query params (e.g. auth callbacks).
+            new RegExp('/[^/?]+\\.[^/]+$'),
           ],
         }),
       // TypeScript type checking
