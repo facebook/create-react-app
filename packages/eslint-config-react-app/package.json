@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-react-app",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "ESLint configuration used by Create React App",
   "repository": {
     "type": "git",
@@ -18,8 +18,8 @@
     "@typescript-eslint/eslint-plugin": "1.x",
     "@typescript-eslint/parser": "1.x",
     "babel-eslint": "10.x",
-    "eslint": "5.x",
-    "eslint-plugin-flowtype": "2.x",
+    "eslint": "6.x",
+    "eslint-plugin-flowtype": "3.x",
     "eslint-plugin-import": "2.x",
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",

@@ -106,6 +106,8 @@ function verifyTypeScriptSetup() {
     allowSyntheticDefaultImports: { suggested: true },
     strict: { suggested: true },
     forceConsistentCasingInFileNames: { suggested: true },
+    // TODO: Enable for v4.0 (#6936)
+    // noFallthroughCasesInSwitch: { suggested: true },
 
     // These values are required and cannot be changed by the user
     // Keep this in sync with the webpack config
@@ -123,9 +125,8 @@ function verifyTypeScriptSetup() {
     isolatedModules: { value: true, reason: 'implementation limitation' },
     noEmit: { value: true },
     jsx: {
-      parsedValue: ts.JsxEmit.Preserve,
-      value: 'preserve',
-      reason: 'JSX is compiled by Babel',
+      parsedValue: ts.JsxEmit.React,
+      suggested: 'react',
     },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
@@ -181,7 +182,7 @@ function verifyTypeScriptSetup() {
         )
       );
     }
-    
+
     console.log(e && e.message ? `${e.message}` : '');
     process.exit(1);
   }

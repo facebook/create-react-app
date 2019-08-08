@@ -1,0 +1,40 @@
+#
+# Azure Pipelines job for building and testing create-react-app on Linux, Windows, and macOS.
+#
+
+parameters:
+  name: ''
+  testScript: ''
+  configurations:
+    LinuxNode8:    { vmImage: 'ubuntu-16.04',   nodeVersion: 8.x  }
+    LinuxNode10:   { vmImage: 'ubuntu-16.04',   nodeVersion: 10.x }
+    WindowsNode8:  { vmImage: 'vs2017-win2016', nodeVersion: 8.x  }
+    WindowsNode10: { vmImage: 'vs2017-win2016', nodeVersion: 10.x }
+    
+jobs:
+- job: ${{ parameters.name }}
+  strategy:
+    matrix:
+      ${{ insert }}: ${{ parameters.configurations }}
+  pool:
+    vmImage: $(vmImage)
+  steps:
+  - script: |
+      git config --global core.autocrlf false
+      git config --global user.name "Create React App"
+      git config --global user.email "cra@email.com"
+    displayName: 'Initialize Git config'
+
+  - checkout: self
+    path: create-react-app
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: $(nodeVersion)
+    displayName: 'Install Node.js'
+
+  - script: yarn --frozen-lockfile
+    displayName: 'Run yarn'
+
+  - bash: ${{ parameters.testScript }}
+    displayName: 'Run tests'
