@@ -72,7 +72,7 @@
     "resolve": "1.12.0",
     "sass-loader": "7.1.0",
     "semver": "6.3.0",
-    "style-loader": "0.23.1",
+    "style-loader": "1.0.0",
     "terser-webpack-plugin": "1.4.1",
     "ts-pnp": "1.1.2",
     "url-loader": "2.1.0",
