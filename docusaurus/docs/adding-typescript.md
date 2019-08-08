@@ -31,7 +31,7 @@ Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index
 
 Type errors will show up in the same console as the build one. By default, Create React App prevents you from running the dev server if your code has type errors. If you introduce type errors to your project, you have to fix or ignore them before you continue development.
 
-You can remove this restriction by running your app with the `TSC_COMPILE_ON_ERROR` environment variable set to `true`, for example, by adding `TSC_COMPILE_ON_ERROR=true` to your `.env` file. [Read more about setting environment variables here](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables).
+You can remove this restriction by running your app with the `TSC_COMPILE_ON_ERROR` environment variable set to `true`, for example, by adding `TSC_COMPILE_ON_ERROR=true` as documented in our [advanced configuration](advanced-configuration.md).
 
 To learn more about TypeScript, check out [its documentation](https://www.typescriptlang.org/).
 
