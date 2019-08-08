@@ -73,6 +73,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'collectCoverageFrom',
     'coverageReporters',
     'coverageThreshold',
+    'coveragePathIgnorePatterns',
     'extraGlobals',
     'globalSetup',
     'globalTeardown',
