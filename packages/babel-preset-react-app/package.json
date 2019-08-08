@@ -28,6 +28,7 @@
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-transform-destructuring": "7.4.3",
     "@babel/plugin-transform-flow-strip-types": "7.4.0",
+    "@babel/plugin-transform-react-display-name": "7.2.0",
     "@babel/plugin-transform-runtime": "7.4.3",
     "@babel/preset-env": "7.4.3",
     "@babel/preset-react": "7.0.0",
