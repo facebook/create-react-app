@@ -458,7 +458,7 @@ You can deploy your application by running the following command in the root of 
 now
 ```
 
-**Alternatively**, you can also use their integration [GitHub](https://zeit.co/github) or [GitLab](https://zeit.co/gitlab).
+**Alternatively**, you can also use their integration for [GitHub](https://zeit.co/github) or [GitLab](https://zeit.co/gitlab).
 
 That’s all!
 
