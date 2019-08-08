@@ -464,7 +464,7 @@ That’s all!
 
 Your site will now deploy, and you will receive a link similar to the following: https://react.now-examples.now.sh
 
-Out of the box, you are already provided with the necessary routes for rewriting requests (except for custom static files) directly to your `index.html` file and the appropiate default caching headers. This behaviour can be overwritten [like this](https://zeit.co/docs/v2/advanced/routes/).
+Out of the box, you are preconfigured for client-side routing compatibility and appropriate default caching headers. This behaviour can be overwritten [like this](https://zeit.co/docs/v2/advanced/routes/).
 
 ## [Render](https://render.com)
 
