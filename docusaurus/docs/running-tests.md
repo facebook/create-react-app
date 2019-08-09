@@ -278,6 +278,7 @@ Supported overrides:
 - [`coverageReporters`](https://jestjs.io/docs/en/configuration.html#coveragereporters-array-string)
 - [`coverageThreshold`](https://jestjs.io/docs/en/configuration.html#coveragethreshold-object)
 - [`snapshotSerializers`](https://jestjs.io/docs/en/configuration.html#snapshotserializers-array-string)
+- [`snapshotResolver`](https://jestjs.io/docs/en/configuration#snapshotresolver-string)
 
 Example package.json:
 
@@ -299,7 +300,8 @@ Example package.json:
       }
     },
     "coverageReporters": ["text"],
-    "snapshotSerializers": ["my-serializer-module"]
+    "snapshotSerializers": ["my-serializer-module"],
+    "snapshotResolver": "my-resolver-module"
   }
 }
 ```
