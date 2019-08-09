@@ -1,10 +1,10 @@
 {
-  "name": "react-scripts",
+  "name": "digitalocean-react-scripts",
   "version": "3.2.0",
-  "description": "Configuration and scripts for Create React App.",
+  "description": "DigitalOcean Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/digitalocean/create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": ">=8.10"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/digitalocean/create-react-app/issues"
   },
   "files": [
     "bin",
@@ -37,8 +37,15 @@
     "babel-loader": "8.0.6",
     "babel-plugin-named-asset-import": "^0.3.4",
     "babel-preset-react-app": "^9.0.2",
+    "@types/classnames": "^2.2.9",
+    "@types/react-router-dom": "^4.3.4",
+    "@types/styled-components": "^4.1.18",
+    "@types/yup": "^0.26.22",
+    "apollo-boost": "^0.4.3",
+    "babel-plugin-styled-components": "^1.10.6",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "classnames": "^2.2.6",
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "5.1.0",
@@ -51,7 +58,10 @@
     "eslint-plugin-react": "7.14.3",
     "eslint-plugin-react-hooks": "^1.6.1",
     "file-loader": "3.0.1",
+    "formik": "^1.5.8",
     "fs-extra": "7.0.1",
+    "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
     "html-webpack-plugin": "4.0.0-beta.5",
     "identity-obj-proxy": "3.0.0",
     "is-wsl": "^1.1.0",
@@ -60,6 +70,7 @@
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.0",
     "mini-css-extract-plugin": "0.8.0",
+    "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.5.0",
     "postcss-flexbugs-fixes": "4.1.0",
@@ -72,6 +83,9 @@
     "resolve": "1.12.0",
     "resolve-url-loader": "3.1.0",
     "sass-loader": "7.2.0",
+    "react-apollo": "^3.0.0",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
     "semver": "6.3.0",
     "style-loader": "1.0.0",
     "terser-webpack-plugin": "1.4.1",
@@ -80,7 +94,9 @@
     "webpack": "4.41.0",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.1.1",
-    "workbox-webpack-plugin": "4.3.1"
+    "workbox-webpack-plugin": "4.3.1",
+    "walrus": "git+https://a830ed8c89246692a5f10a33b11224c405e90fb5:x-oauth-basic@github.internal.digitalocean.com/digitalocean/walrus.git#1.0.8",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "react": "^16.8.4",
