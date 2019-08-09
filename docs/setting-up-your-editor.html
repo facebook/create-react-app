@@ -66,12 +66,7 @@ It works out of the box for newly created projects with <code>react-scripts@2.0.
 It also only works with npm 3 or higher.</p>
 </blockquote>
 <p>Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.</p>
-<p>They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.</p>
-<p>You would need to install an ESLint plugin for your editor first. Then, add a file called <code>.eslintrc.json</code> to the project root:</p>
-<pre><code class="hljs css language-json">{
-  <span class="hljs-attr">"extends"</span>: <span class="hljs-string">"react-app"</span>
-}
-</code></pre>
+<p>They are not required for linting. You should see the linter output right in your terminal as well as the browser console. If you prefer the lint results to appear right in your editor, please make sure you install an ESLint plugin/extension.</p>
 <p>If you're using TypeScript and Visual Studio Code, the <a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint#overview">ESLint Visual Studio Code extension</a> currently <a href="https://github.com/Microsoft/vscode-eslint/issues/609">doesn't have TypeScript support enabled by default</a>. To enable TypeScript support in the ESLint extension, add the following to your project's Visual Studio Code settings file, located at <code>.vscode/settings.json</code> (you can create this file if it doesn't already exist):</p>
 <pre><code class="hljs css language-json">{
   <span class="hljs-attr">"eslint.validate"</span>: [
@@ -83,8 +78,39 @@ It also only works with npm 3 or higher.</p>
 }
 </code></pre>
 <p>Now your editor should report the linting warnings.</p>
-<p>Note that even if you edit your <code>.eslintrc.json</code> file further, these changes will <strong>only affect the editor integration</strong>. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.</p>
+<p>Note that even if you customise your ESLint config, these changes will <strong>only affect the editor integration</strong>. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.</p>
 <p>If you want to enforce a coding style for your project, consider using <a href="https://github.com/jlongster/prettier">Prettier</a> instead of ESLint style rules.</p>
+<h3><a class="anchor" aria-hidden="true" id="experimental-extending-the-eslint-config"></a><a href="#experimental-extending-the-eslint-config" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Experimental: Extending the ESLint config</h3>
+<p>We recognise that in some cases, further customisation is required. It is now possible to extend the base ESLint config by setting the <code>EXTEND_ESLINT</code> environment variable to <code>true</code>. See <a href="/create-react-app/docs/advanced-configuration">advanced configuration</a> for more information on available environment variables.</p>
+<p>Note that any rules set to <code>&quot;error&quot;</code> will stop the project from building.</p>
+<p>There are a few things to remember:</p>
+<ol>
+<li>You must extend the base config, as removing it could introduce hard-to-find issues.</li>
+<li>When working with TypeScript, you'll need to provide an <code>overrides</code> object for rules that should <em>only</em> target TypeScript files.</li>
+</ol>
+<p>In the below example:</p>
+<ul>
+<li>the base config has been extended by a shared ESLint config,</li>
+<li>a new rule has been set that applies to all JavaScript and TypeScript files, and</li>
+<li>a new rule has been set that only targets TypeScript files.</li>
+</ul>
+<pre><code class="hljs css language-json">{
+  <span class="hljs-attr">"eslintConfig"</span>: {
+    <span class="hljs-attr">"extends"</span>: [<span class="hljs-string">"react-app"</span>, <span class="hljs-string">"shared-config"</span>],
+    <span class="hljs-attr">"rules"</span>: {
+      <span class="hljs-attr">"additional-rule"</span>: <span class="hljs-string">"warn"</span>
+    },
+    <span class="hljs-attr">"overrides"</span>: [
+      {
+        <span class="hljs-attr">"files"</span>: [<span class="hljs-string">"**/*.ts?(x)"</span>],
+        <span class="hljs-attr">"rules"</span>: {
+          <span class="hljs-attr">"additional-typescript-only-rule"</span>: <span class="hljs-string">"warn"</span>
+        }
+      }
+    ]
+  }
+}
+</code></pre>
 <h2><a class="anchor" aria-hidden="true" id="debugging-in-the-editor"></a><a href="#debugging-in-the-editor" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Debugging in the Editor</h2>
 <p><strong>This feature is currently only supported by <a href="https://code.visualstudio.com">Visual Studio Code</a> and <a href="https://www.jetbrains.com/webstorm/">WebStorm</a>.</strong></p>
 <p>Visual Studio Code and WebStorm support debugging out of the box with Create React App. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.</p>
@@ -155,7 +181,7 @@ It also only works with npm 3 or higher.</p>
 </code></pre>
 <p>Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run <code>./node_modules/.bin/prettier --single-quote --write &quot;src/**/*.{js,jsx,ts,tsx,json,css,scss,md}&quot;</code> to format your entire project for the first time.</p>
 <p>Next you might want to integrate Prettier in your favorite editor. Read the section on <a href="https://prettier.io/docs/en/editors.html">Editor Integration</a> on the Prettier GitHub page.</p>
-</span></div></article></div><div class="docLastUpdate"><em>Last updated on 3/14/2019 by Ian Schmitz</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/create-react-app/docs/updating-to-new-releases"><span class="arrow-prev">← </span><span>Updating to New Releases</span></a><a class="docs-next button" href="/create-react-app/docs/developing-components-in-isolation"><span>Developing Components in Isolation</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#syntax-highlighting">Syntax highlighting</a></li><li><a href="#displaying-lint-output-in-the-editor">Displaying Lint Output in the Editor</a></li><li><a href="#debugging-in-the-editor">Debugging in the Editor</a><ul class="toc-headings"><li><a href="#visual-studio-code">Visual Studio Code</a></li><li><a href="#webstorm">WebStorm</a></li></ul></li><li><a href="#formatting-code-automatically">Formatting Code Automatically</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/create-react-app/" class="nav-home"><img src="/create-react-app/img/logo.svg" alt="Create React App" width="66" height="58"/></a><div><h5>Docs</h5><a href="/create-react-app/docs/getting-started">Get Started</a><a href="https://reactjs.org/" target="_blank" rel="noreferrer noopener">Learn React</a></div><div><h5>Community</h5><a href="https://stackoverflow.com/questions/tagged/create-react-app" target="_blank" rel="noreferrer noopener">Stack Overflow</a><a href="https://spectrum.chat/react" target="_blank" rel="noreferrer noopener">Spectrum</a><a href="https://twitter.com/reactjs" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="https://www.github.com/facebook/create-react-app">GitHub</a><a class="github-button" href="https://github.com/facebook/create-react-app" data-icon="octicon-star" data-count-href="/facebook/create-react-app/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><a href="https://code.facebook.com/projects/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/create-react-app/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><section class="copyright">Copyright © 2019 Facebook Inc.</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 7/16/2019 by Brody McKee</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/create-react-app/docs/updating-to-new-releases"><span class="arrow-prev">← </span><span>Updating to New Releases</span></a><a class="docs-next button" href="/create-react-app/docs/developing-components-in-isolation"><span>Developing Components in Isolation</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#syntax-highlighting">Syntax highlighting</a></li><li><a href="#displaying-lint-output-in-the-editor">Displaying Lint Output in the Editor</a><ul class="toc-headings"><li><a href="#experimental-extending-the-eslint-config">Experimental: Extending the ESLint config</a></li></ul></li><li><a href="#debugging-in-the-editor">Debugging in the Editor</a><ul class="toc-headings"><li><a href="#visual-studio-code">Visual Studio Code</a></li><li><a href="#webstorm">WebStorm</a></li></ul></li><li><a href="#formatting-code-automatically">Formatting Code Automatically</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/create-react-app/" class="nav-home"><img src="/create-react-app/img/logo.svg" alt="Create React App" width="66" height="58"/></a><div><h5>Docs</h5><a href="/create-react-app/docs/getting-started">Get Started</a><a href="https://reactjs.org/" target="_blank" rel="noreferrer noopener">Learn React</a></div><div><h5>Community</h5><a href="https://stackoverflow.com/questions/tagged/create-react-app" target="_blank" rel="noreferrer noopener">Stack Overflow</a><a href="https://spectrum.chat/react" target="_blank" rel="noreferrer noopener">Spectrum</a><a href="https://twitter.com/reactjs" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="https://www.github.com/facebook/create-react-app">GitHub</a><a class="github-button" href="https://github.com/facebook/create-react-app" data-icon="octicon-star" data-count-href="/facebook/create-react-app/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><a href="https://code.facebook.com/projects/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/create-react-app/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><section class="copyright">Copyright © 2019 Facebook Inc.</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
                 document.addEventListener('keyup', function(e) {
                   if (e.target !== document.body) {
                     return;
