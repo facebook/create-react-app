@@ -1,6 +1,6 @@
 {
   "name": "react-dev-utils",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "description": "Webpack utilities used by Create React App",
   "repository": {
     "type": "git",
@@ -69,7 +69,7 @@
     "loader-utils": "1.2.3",
     "open": "^6.3.0",
     "pkg-up": "2.0.0",
-    "react-error-overlay": "^5.1.6",
+    "react-error-overlay": "^6.0.0",
     "recursive-readdir": "2.2.2",
     "shell-quote": "1.6.1",
     "sockjs-client": "1.3.0",

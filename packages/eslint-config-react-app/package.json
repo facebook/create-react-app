@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-react-app",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "ESLint configuration used by Create React App",
   "repository": {
     "type": "git",
@@ -26,6 +26,6 @@
     "eslint-plugin-react-hooks": "1.x"
   },
   "dependencies": {
-    "confusing-browser-globals": "^1.0.7"
+    "confusing-browser-globals": "^1.0.8"
   }
 }
