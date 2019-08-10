@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-labels: 'issue: bug, needs triage'
+labels: 'issue: bug report, needs triage'
 ---
 
 <!--
