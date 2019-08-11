@@ -62,6 +62,8 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 module.exports = function(webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
+  const isEnvTest = webpackEnv === 'test';
+  const isClusterProduction = process.env.CLUSTER === 'production';
 
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -383,6 +385,11 @@ module.exports = function(webpackEnv) {
                 ),
                 // @remove-on-eject-end
                 plugins: [
+                  !isEnvTest &&
+                    !isEnvProduction &&
+                    !isClusterProduction &&
+                    require.resolve('babel-plugin-transform-react-qa-classes'),
+
                   [
                     require.resolve('babel-plugin-named-asset-import'),
                     {
@@ -393,7 +400,7 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
-                ],
+                ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
                 // directory for faster rebuilds.

@@ -1,3 +1,5 @@
+## 3.2.0
+ - Added data-qa to cra project
 ## 3.1.0
 
 - Fixed gitignore issues crash
