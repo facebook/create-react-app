@@ -91,6 +91,10 @@ module.exports = function(
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
 
+  // Add walrus
+  appPackage.dependencies.walrus =
+    'git+https://a830ed8c89246692a5f10a33b11224c405e90fb5:x-oauth-basic@github.internal.digitalocean.com/digitalocean/walrus.git#1.0.8';
+
   const useTypeScript = appPackage.dependencies['typescript'] != null;
 
   // Setup the script rules
