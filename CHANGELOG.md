@@ -1,3 +1,190 @@
+## 3.1.0 (2019-08-09)
+
+v3.1.0 is a minor release that adds ESLint 6 support as well as experimental support for extended and customizing the ESLint config along with other minor bug fixes and documentation updates.
+
+# Highlights
+
+- ESLint 6: #7415
+- Experimental ESLint config customization: #7036
+- More Jest config options: #6055
+- Option to configure or disable image inlining: #6060
+
+#### :rocket: New Feature
+
+- `eslint-config-react-app`, `react-error-overlay`, `react-scripts`
+  - [#7415](https://github.com/facebook/create-react-app/pull/7415) Add ESLint 6 support ([@mrmckeb](https://github.com/mrmckeb))
+- `eslint-config-react-app`, `react-scripts`
+  - [#7036](https://github.com/facebook/create-react-app/pull/7036) Add ESLint extend support to eslint-loader ([@mrmckeb](https://github.com/mrmckeb))
+- `react-dev-utils`
+  - [#7277](https://github.com/facebook/create-react-app/pull/7277) Handle browser arguments ([@arvigeus](https://github.com/arvigeus))
+- `react-scripts`
+  - [#6060](https://github.com/facebook/create-react-app/pull/6060) Add environment variable to control image inlining threshold ([@peterbe](https://github.com/peterbe))
+  - [#6055](https://github.com/facebook/create-react-app/pull/6055) Support for graceful extension of Jest config ([@jamesmfriedman](https://github.com/jamesmfriedman))
+
+#### :boom: Breaking Change
+
+- `react-scripts`
+  - [#7176](https://github.com/facebook/create-react-app/pull/7176) Fix RegExp from navigateFallbackBlacklist (workbox) ([@nuragic](https://github.com/nuragic))
+  - [#7378](https://github.com/facebook/create-react-app/pull/7378) Update url-loader to 2.0.1 ([@heyimalex](https://github.com/heyimalex))
+- `eslint-config-react-app`, `react-error-overlay`, `react-scripts`
+  - [#7415](https://github.com/facebook/create-react-app/pull/7415) Add ESLint 6 support ([@mrmckeb](https://github.com/mrmckeb))
+
+#### :bug: Bug Fix
+
+- `react-dev-utils`
+  - [#7444](https://github.com/facebook/create-react-app/pull/7444) Fix for #6720: HMR not working in Firefox if proxy option present ([@dmile](https://github.com/dmile))
+- `react-scripts`
+  - [#5829](https://github.com/facebook/create-react-app/pull/5829) Resolve relative paths for preprocessor styles ([@iamandrewluca](https://github.com/iamandrewluca))
+  - [#7433](https://github.com/facebook/create-react-app/pull/7433) Add explicit check for --watchAll=false ([@mrmckeb](https://github.com/mrmckeb))
+  - [#7378](https://github.com/facebook/create-react-app/pull/7378) Update url-loader to 2.0.1 ([@heyimalex](https://github.com/heyimalex))
+- `eslint-config-react-app`
+  - [#7230](https://github.com/facebook/create-react-app/pull/7230) jsx-no-duplicate-props ignore case fix ([@rommguy](https://github.com/rommguy))
+  - [#7219](https://github.com/facebook/create-react-app/pull/7219) fix: eslintrc overrides key should be an array, not object ([@ivan-aksamentov](https://github.com/ivan-aksamentov))
+  - [#7079](https://github.com/facebook/create-react-app/pull/7079) Adjust typescript-eslint to not warn about typedefs when used before defined ([@vincentjames501](https://github.com/vincentjames501))
+- `react-error-overlay`, `react-scripts`
+  - [#7257](https://github.com/facebook/create-react-app/pull/7257) Upgrade webpack to 4.35.0 to fix dynamic import issue ([@iansu](https://github.com/iansu))
+
+#### :nail_care: Enhancement
+
+- `react-scripts`
+  - [#7497](https://github.com/facebook/create-react-app/pull/7497) add readonly modifier for css module ([@xiaoxiangmoe](https://github.com/xiaoxiangmoe))
+  - [#7496](https://github.com/facebook/create-react-app/pull/7496) bump sass-loader ([@xiaoxiangmoe](https://github.com/xiaoxiangmoe))
+  - [#7176](https://github.com/facebook/create-react-app/pull/7176) Fix RegExp from navigateFallbackBlacklist (workbox) ([@nuragic](https://github.com/nuragic))
+  - [#7080](https://github.com/facebook/create-react-app/pull/7080) Support configuring coveragePathIgnorePatterns ([@kentcdodds](https://github.com/kentcdodds))
+  - [#7482](https://github.com/facebook/create-react-app/pull/7482) 100% lighthouse score for progressive web app ([@dscanlan](https://github.com/dscanlan))
+  - [#5951](https://github.com/facebook/create-react-app/pull/5951) Set jsonpFunction by default ([@sibiraj-s](https://github.com/sibiraj-s))
+  - [#7472](https://github.com/facebook/create-react-app/pull/7472) Typescript init: suggest `jsx: "react"` in tsconfig ([@kingdaro](https://github.com/kingdaro))
+  - [#7118](https://github.com/facebook/create-react-app/pull/7118) Append title element to SVG component via title prop ([@sudkumar](https://github.com/sudkumar))
+- `react-dev-utils`
+  - [#7028](https://github.com/facebook/create-react-app/pull/7028) Add vscodium to the editor list ([@leonardodino](https://github.com/leonardodino))
+  - [#7277](https://github.com/facebook/create-react-app/pull/7277) Handle browser arguments ([@arvigeus](https://github.com/arvigeus))
+- `eslint-config-react-app`, `react-error-overlay`, `react-scripts`
+  - [#7415](https://github.com/facebook/create-react-app/pull/7415) Add ESLint 6 support ([@mrmckeb](https://github.com/mrmckeb))
+- `eslint-config-react-app`
+  - [#7179](https://github.com/facebook/create-react-app/pull/7179) Disabled Typescript no-undef rule per typescript-eslint #477 ([@andyhopp](https://github.com/andyhopp))
+- `create-react-app`
+  - [#6941](https://github.com/facebook/create-react-app/pull/6941) Fix compatibility of create-react-app to Node.js v0.10+ ([@tobiasbueschel](https://github.com/tobiasbueschel))
+
+#### :memo: Documentation
+
+- Other
+  - [#7488](https://github.com/facebook/create-react-app/pull/7488) Adjusted deployment documentation for ZEIT Now ([@leo](https://github.com/leo))
+  - [#7462](https://github.com/facebook/create-react-app/pull/7462) Added dependencies to bootstrap article when using custom SCSS. ([@eclectic-coding](https://github.com/eclectic-coding))
+  - [#7340](https://github.com/facebook/create-react-app/pull/7340) Update testing-library related npm package names in README ([@balazsorban44](https://github.com/balazsorban44))
+  - [#7423](https://github.com/facebook/create-react-app/pull/7423) Add question issue template ([@iansu](https://github.com/iansu))
+  - [#7260](https://github.com/facebook/create-react-app/pull/7260) Docs: remove an outdated TypeScript-related note ([@MidnightDesign](https://github.com/MidnightDesign))
+  - [#7372](https://github.com/facebook/create-react-app/pull/7372) proposal dynamic import are stage 4 ([@gespispace](https://github.com/gespispace))
+  - [#7374](https://github.com/facebook/create-react-app/pull/7374) docs(svg): add tip for title props accessibility ([@sudkumar](https://github.com/sudkumar))
+  - [#7182](https://github.com/facebook/create-react-app/pull/7182) Update minimum Node versions in docs ([@JESii](https://github.com/JESii))
+  - [#7317](https://github.com/facebook/create-react-app/pull/7317) Fix typo ([@mvasin](https://github.com/mvasin))
+  - [#7262](https://github.com/facebook/create-react-app/pull/7262) Docs: replace the command line to install relay/macro ([@soufDev](https://github.com/soufDev))
+  - [#7170](https://github.com/facebook/create-react-app/pull/7170) Update deprecated package reference ([@bnewcomb](https://github.com/bnewcomb))
+  - [#7133](https://github.com/facebook/create-react-app/pull/7133) Make the OOM abreviation more clear ([@tlehtimaki](https://github.com/tlehtimaki))
+  - [#7086](https://github.com/facebook/create-react-app/pull/7086) Improve breaking changes info for CRA 3.0.0 ([@falldowngoboone](https://github.com/falldowngoboone))
+  - [#7059](https://github.com/facebook/create-react-app/pull/7059) Correct spelling of browserslist ([@amyrlam](https://github.com/amyrlam))
+  - [#7039](https://github.com/facebook/create-react-app/pull/7039) docs: fix env-cmd example in deployment section ([@VMois](https://github.com/VMois))
+  - [#7041](https://github.com/facebook/create-react-app/pull/7041) Updates the relay docs ([@orta](https://github.com/orta))
+- `eslint-config-react-app`
+  - [#7451](https://github.com/facebook/create-react-app/pull/7451) Update README for ESLint config ([@mrmckeb](https://github.com/mrmckeb))
+  - [#7274](https://github.com/facebook/create-react-app/pull/7274) Update peer dependencies ([@ThewBear](https://github.com/ThewBear))
+- `react-error-overlay`, `react-scripts`
+  - [#7355](https://github.com/facebook/create-react-app/pull/7355) Fix typos ([@minho42](https://github.com/minho42))
+
+#### :house: Internal
+
+- `babel-preset-react-app`
+  - [#5818](https://github.com/facebook/create-react-app/pull/5818) Remove unused dependencies in babel-preset-react-app ([@iansu](https://github.com/iansu))
+  - [#7208](https://github.com/facebook/create-react-app/pull/7208) Use correct babel transform for dynamic import in dependencies ([@jamesknelson](https://github.com/jamesknelson))
+- `react-scripts`
+  - [#7433](https://github.com/facebook/create-react-app/pull/7433) Add explicit check for --watchAll=false ([@mrmckeb](https://github.com/mrmckeb))
+  - [#6877](https://github.com/facebook/create-react-app/pull/6877) Upgrade svgr to 4.2.0 ([@iansu](https://github.com/iansu))
+- Other
+  - [#7385](https://github.com/facebook/create-react-app/pull/7385) Attempt at fixing CI issue on windows ([@heyimalex](https://github.com/heyimalex))
+  - [#7269](https://github.com/facebook/create-react-app/pull/7269) Update issue templates ([@mrmckeb](https://github.com/mrmckeb))
+  - [#7220](https://github.com/facebook/create-react-app/pull/7220) Disable Travis build ([@ianschmitz](https://github.com/ianschmitz))
+  - [#7096](https://github.com/facebook/create-react-app/pull/7096) Add Azure DevOps build pipeline ([@ianschmitz](https://github.com/ianschmitz))
+  - [#6858](https://github.com/facebook/create-react-app/pull/6858) Add test to make sure .d.ts files are ignored when checking for TypeScript ([@iansu](https://github.com/iansu))
+- `react-error-overlay`, `react-scripts`
+  - [#7355](https://github.com/facebook/create-react-app/pull/7355) Fix typos ([@minho42](https://github.com/minho42))
+
+#### :hammer: Underlying Tools
+
+- `babel-plugin-named-asset-import`, `babel-preset-react-app`, `confusing-browser-globals`, `create-react-app`, `react-app-polyfill`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
+  - [#7473](https://github.com/facebook/create-react-app/pull/7473) Bump dependencies ([@ianschmitz](https://github.com/ianschmitz))
+- `eslint-config-react-app`, `react-error-overlay`, `react-scripts`
+  - [#7415](https://github.com/facebook/create-react-app/pull/7415) Add ESLint 6 support ([@mrmckeb](https://github.com/mrmckeb))
+- `eslint-config-react-app`, `react-scripts`
+  - [#7036](https://github.com/facebook/create-react-app/pull/7036) Add ESLint extend support to eslint-loader ([@mrmckeb](https://github.com/mrmckeb))
+- `react-scripts`
+  - [#7118](https://github.com/facebook/create-react-app/pull/7118) Append title element to SVG component via title prop ([@sudkumar](https://github.com/sudkumar))
+  - [#7222](https://github.com/facebook/create-react-app/pull/7222) Update @typescript-eslint package versions ([@ianschmitz](https://github.com/ianschmitz))
+  - [#7131](https://github.com/facebook/create-react-app/pull/7131) Update fsevents dependency version ([@eps1lon](https://github.com/eps1lon))
+- `react-dev-utils`
+  - [#7058](https://github.com/facebook/create-react-app/pull/7058) fix: Replaced opn (deprecated) with open ([@jamesgeorge007](https://github.com/jamesgeorge007))
+
+#### Committers: 46
+
+- Adeel Imran ([@adeelibr](https://github.com/adeelibr))
+- Alex Guerra ([@heyimalex](https://github.com/heyimalex))
+- Amy Lam ([@amyrlam](https://github.com/amyrlam))
+- Andrea Puddu ([@nuragic](https://github.com/nuragic))
+- Andrew Luca ([@iamandrewluca](https://github.com/iamandrewluca))
+- Andy Hopper ([@andyhopp](https://github.com/andyhopp))
+- Balázs Orbán ([@balazsorban44](https://github.com/balazsorban44))
+- Ben Newcomb ([@bnewcomb](https://github.com/bnewcomb))
+- Brian Muenzenmeyer ([@bmuenzenmeyer](https://github.com/bmuenzenmeyer))
+- Brody McKee ([@mrmckeb](https://github.com/mrmckeb))
+- Chuck ([@eclectic-coding](https://github.com/eclectic-coding))
+- Darius Tall ([@kingdaro](https://github.com/kingdaro))
+- Dmitry Lepskiy ([@dmile](https://github.com/dmile))
+- Guy Romm ([@rommguy](https://github.com/rommguy))
+- Ian Schmitz ([@ianschmitz](https://github.com/ianschmitz))
+- Ian Sutherland ([@iansu](https://github.com/iansu))
+- Igor Muchychka ([@mucsi96](https://github.com/mucsi96))
+- Ivan Aksamentov ([@ivan-aksamentov](https://github.com/ivan-aksamentov))
+- Ivan Pegashev ([@gespispace](https://github.com/gespispace))
+- Jack Cross ([@crosscompile](https://github.com/crosscompile))
+- James Friedman ([@jamesmfriedman](https://github.com/jamesmfriedman))
+- James George ([@jamesgeorge007](https://github.com/jamesgeorge007))
+- James K Nelson ([@jamesknelson](https://github.com/jamesknelson))
+- Jon Seidel ([@JESii](https://github.com/JESii))
+- Kent C. Dodds ([@kentcdodds](https://github.com/kentcdodds))
+- Leo Lamprecht ([@leo](https://github.com/leo))
+- Leonardo Dino ([@leonardodino](https://github.com/leonardodino))
+- Mikhail Vasin ([@mvasin](https://github.com/mvasin))
+- Min ho Kim ([@minho42](https://github.com/minho42))
+- Nikolay Stoynov ([@arvigeus](https://github.com/arvigeus))
+- Orta ([@orta](https://github.com/orta))
+- Peter Bengtsson ([@peterbe](https://github.com/peterbe))
+- Rudolph Gottesheim ([@MidnightDesign](https://github.com/MidnightDesign))
+- Ryan Boone ([@falldowngoboone](https://github.com/falldowngoboone))
+- Ryan Marsh ([@ryanwmarsh](https://github.com/ryanwmarsh))
+- Sebastian Silbermann ([@eps1lon](https://github.com/eps1lon))
+- Sibiraj ([@sibiraj-s](https://github.com/sibiraj-s))
+- Soufiane AIT AKKACHE ([@soufDev](https://github.com/soufDev))
+- Sudhir Mitharwal ([@sudkumar](https://github.com/sudkumar))
+- Thew Dhanat ([@ThewBear](https://github.com/ThewBear))
+- Tobias Büschel ([@tobiasbueschel](https://github.com/tobiasbueschel))
+- Toni ([@tlehtimaki](https://github.com/tlehtimaki))
+- Vincent Pizzo ([@vincentjames501](https://github.com/vincentjames501))
+- Vladyslav Moisieienkov ([@VMois](https://github.com/VMois))
+- ZHAO Jinxiang ([@xiaoxiangmoe](https://github.com/xiaoxiangmoe))
+- dominic scanlan ([@dscanlan](https://github.com/dscanlan))
+
+### Migrating from 3.0.1 to 3.1.0
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.1.0
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.1.0
+```
+
 ## 3.0.1 (2019-05-08)
 
 v3.0.1 is a maintenance release that adjusts some ESLint rules for TypeScript along with other minor bug fixes and documentation updates.

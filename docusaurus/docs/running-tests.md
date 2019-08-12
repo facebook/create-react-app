@@ -111,8 +111,6 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 ```
 
-> Note: When using TypeScript with Babel, all your files need to have at least one export, otherwise you will get the error `Cannot compile namespaces when the '--isolatedModules' flag is provided.`. To fix this, you can add `export default undefined` to `src/setupTests.ts`.
-
 > Note: Keep in mind that if you decide to "eject" before creating `src/setupTests.js`, the resulting `package.json` file won't contain any reference to it. [Read here](#initializing-test-environment) to learn how to add this after ejecting.
 
 Now you can write a smoke test with it:
@@ -195,6 +193,7 @@ Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerpla
 // @testing-library/react renders your components to document.body,
 // this will ensure they're removed after each test.
 import '@testing-library/react/cleanup-after-each';
+
 // this adds @testing-library/jest-dom's custom assertions
 import '@testing-library/jest-dom/extend-expect';
 ```

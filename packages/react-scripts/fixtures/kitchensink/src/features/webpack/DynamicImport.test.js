@@ -10,10 +10,9 @@ import ReactDOM from 'react-dom';
 
 describe('dynamic import', () => {
   it('renders without crashing', async () => {
-    import('./DynamicImport').then(DynamicImport => {
-      const div = document.createElement('div');
-      ReactDOM.render(<DynamicImport />, div);
-      expect(div.textContent).toBe('Hello World!');
-    });
+    const DynamicImport = (await import('./DynamicImport')).default;
+    const div = document.createElement('div');
+    ReactDOM.render(<DynamicImport />, div);
+    expect(div.textContent).toBe('Hello World!');
   });
 });
