@@ -66,6 +66,6 @@ declare module '*.module.sass' {
 }
 
 declare module '*.scss' {
-  const content: any;
-  export default content;
+  const content: { [className: string]: string };
+  export = content;
 }
