@@ -1,6 +1,6 @@
 {
   "name": "@guestyci/guesty-react-scripts",
-  "version": "3.1.4",
+  "version": "2.5.0",
   "description": "Guesty Configuration and scripts for Create React App.",
   "repository": "guestyorg/create-react-app",
   "license": "MIT",
@@ -93,6 +93,22 @@
   },
   "optionalDependencies": {
     "fsevents": "2.0.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{jsx,js}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "browserslist": {
     "production": [
