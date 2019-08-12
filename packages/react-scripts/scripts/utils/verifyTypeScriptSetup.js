@@ -258,10 +258,10 @@ function verifyTypeScriptSetup() {
       paths.appTypeDeclarations,
       `/// <reference types="react-scripts" />
 
-      declare module "*.scss" {
-        const content: { [className: string]: string };
-        export = content;
-      }${os.EOL}`
+declare module "*.scss" {
+  const content: { [className: string]: string };
+  export = content;
+}${os.EOL}`
     );
   }
 }
