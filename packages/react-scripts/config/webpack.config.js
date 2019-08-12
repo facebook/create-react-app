@@ -340,9 +340,12 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-begin
                 baseConfig: (() => {
                   const eslintCli = new eslint.CLIEngine();
-                  const eslintConfig = eslintCli.getConfigForFile(
-                    paths.appIndexJs
-                  );
+                  let eslintConfig;
+                  try {
+                    eslintConfig = eslintCli.getConfigForFile(paths.appIndexJs);
+                  } catch (e) {
+                    // A config couldn't be found.
+                  }
 
                   // We allow overriding the config only if the env variable is set
                   if (process.env.EXTEND_ESLINT && eslintConfig) {
