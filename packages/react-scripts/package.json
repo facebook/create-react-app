@@ -1,6 +1,6 @@
 {
   "name": "digitalocean-react-scripts",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "DigitalOcean Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -88,6 +88,7 @@
     "react-router-dom": "^5.0.1",
     "semver": "6.3.0",
     "style-loader": "1.0.0",
+    "styled-components": "^4.3.2",
     "terser-webpack-plugin": "1.4.1",
     "ts-pnp": "1.1.4",
     "url-loader": "2.1.0",
