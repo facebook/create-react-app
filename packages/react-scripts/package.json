@@ -1,6 +1,6 @@
 {
   "name": "digitalocean-react-scripts",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "DigitalOcean Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -101,8 +101,7 @@
   },
   "devDependencies": {
     "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "walrus": "git+https://a830ed8c89246692a5f10a33b11224c405e90fb5:x-oauth-basic@github.internal.digitalocean.com/digitalocean/walrus.git#1.0.8"
+    "react-dom": "^16.8.4"
   },
   "optionalDependencies": {
     "fsevents": "2.0.7"
