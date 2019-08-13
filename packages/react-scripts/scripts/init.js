@@ -103,6 +103,7 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test',
     eject: 'react-scripts eject',
+    format: 'prettier --write "./**/*.{js,jsx,ts,tsx,json}"',
   };
 
   // Setup the eslint config
@@ -112,6 +113,18 @@ module.exports = function(
 
   // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;
+
+  // Setup husky
+  appPackage.husky = {
+    hooks: {
+      'pre-commit': 'lint-staged',
+    },
+  };
+
+  // Setup lint-staged
+  appPackage['lint-staged'] = {
+    '*.{js,jsx,ts,tsx,json}': ['yarn format', 'git add'],
+  };
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
@@ -244,6 +257,38 @@ module.exports = function(
     cdpath = appName;
   } else {
     cdpath = appPath;
+  }
+
+  // add devDependencies
+  let devDependenciesArgs = [];
+  if (useYarn) {
+    devDependenciesArgs = ['add', '-D'];
+  } else {
+    devDependenciesArgs = [
+      'install',
+      '-D',
+      '--save',
+      verbose && '--verbose',
+    ].filter(e => e);
+  }
+  devDependenciesArgs.push('husky', 'prettier', 'lint-staged');
+
+  // we need to cd to the new app to install husky for the pre-commit hook
+  const procCdAppPath = spawn.sync(`cd`, [appPath], {
+    stdio: 'inherit',
+  });
+  if (procCdAppPath.status !== 0) {
+    console.error(`\`cd ${appPath}\` failed`);
+    return;
+  }
+
+  // add/install devDependencies
+  const procAddDevDependencies = spawn.sync(command, devDependenciesArgs, {
+    stdio: 'inherit',
+  });
+  if (procAddDevDependencies.status !== 0) {
+    console.error(`\`${command} ${devDependenciesArgs.join(' ')}\` failed`);
+    return;
   }
 
   // Change displayed command to yarn instead of yarnpkg
