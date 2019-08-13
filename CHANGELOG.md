@@ -1,6 +1,46 @@
+## 3.1.1 (2019-08-13)
+
+v3.1.1 is a maintenance release that includes minor bug fixes and documentation updates.
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#7513](https://github.com/facebook/create-react-app/pull/7513) Fix ESLint 6 support ([@ianschmitz](https://github.com/ianschmitz))
+  - [#7508](https://github.com/facebook/create-react-app/pull/7508) Don't block static files in robots.txt ([@iansu](https://github.com/iansu))
+
+#### :nail_care: Enhancement
+
+- `eslint-config-react-app`
+  - [#7393](https://github.com/facebook/create-react-app/pull/7393) Ignore "jsx-a11y/aria-role" for React components ([@deftomat](https://github.com/deftomat))
+
+#### :memo: Documentation
+
+- [#7527](https://github.com/facebook/create-react-app/pull/7527) Update Netlify config ([@iansu](https://github.com/iansu))
+- [#7500](https://github.com/facebook/create-react-app/pull/7500) Add links to Spectrum in README and docs ([@iansu](https://github.com/iansu))
+
+#### Committers: 3
+
+- Ian Schmitz ([@ianschmitz](https://github.com/ianschmitz))
+- Ian Sutherland ([@iansu](https://github.com/iansu))
+- Tomáš Szabo ([@deftomat](https://github.com/deftomat))
+
+### Migrating from 3.1.0 to 3.1.1
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.1.1
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.1.1
+```
+
 ## 3.1.0 (2019-08-09)
 
-v3.1.0 is a minor release that adds ESLint 6 support as well as experimental support for extended and customizing the ESLint config along with other minor bug fixes and documentation updates.
+v3.1.0 is a minor release that adds ESLint 6 support as well as experimental support for extended and customizing the ESLint config along with other minor bug fixes and documentation updates. The upgrade to ESLint 6 is a breaking change _only_ if you're using `eslint-config-react-app` or `react-error-overlay` outside of Create React App.
 
 # Highlights
 
@@ -23,9 +63,6 @@ v3.1.0 is a minor release that adds ESLint 6 support as well as experimental sup
 
 #### :boom: Breaking Change
 
-- `react-scripts`
-  - [#7176](https://github.com/facebook/create-react-app/pull/7176) Fix RegExp from navigateFallbackBlacklist (workbox) ([@nuragic](https://github.com/nuragic))
-  - [#7378](https://github.com/facebook/create-react-app/pull/7378) Update url-loader to 2.0.1 ([@heyimalex](https://github.com/heyimalex))
 - `eslint-config-react-app`, `react-error-overlay`, `react-scripts`
   - [#7415](https://github.com/facebook/create-react-app/pull/7415) Add ESLint 6 support ([@mrmckeb](https://github.com/mrmckeb))
 
