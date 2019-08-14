@@ -339,16 +339,16 @@ module.exports = function(webpackEnv) {
                 resolvePluginsRelativeTo: __dirname,
                 // @remove-on-eject-begin
                 baseConfig: (() => {
-                  const eslintCli = new eslint.CLIEngine();
-                  let eslintConfig;
-                  try {
-                    eslintConfig = eslintCli.getConfigForFile(paths.appIndexJs);
-                  } catch (e) {
-                    // A config couldn't be found.
-                  }
-
                   // We allow overriding the config only if the env variable is set
-                  if (process.env.EXTEND_ESLINT && eslintConfig) {
+                  if (process.env.EXTEND_ESLINT) {
+                    const eslintCli = new eslint.CLIEngine();
+                    let eslintConfig;
+                    try {
+                      eslintConfig = eslintCli.getConfigForFile(paths.appIndexJs);
+                    } catch (e) {
+                      console.error(e);
+                      process.exit(1);
+                    }
                     return eslintConfig;
                   } else {
                     return {
