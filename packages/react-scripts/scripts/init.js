@@ -107,6 +107,11 @@ module.exports = function(
     stylelint: "stylelint 'src/**/*.{tsx,ts,js,jsx}'",
   };
 
+  if (useTypeScript) {
+    appPackage.scripts.tslint = 'tslint --project tsconfig.json';
+    appPackage.scripts['tslint:fix'] = 'tslint --project tsconfig.json --fix';
+  }
+
   // Setup the eslint config
   appPackage.eslintConfig = {
     extends: 'react-app',
@@ -279,7 +284,8 @@ module.exports = function(
     'stylelint',
     'stylelint-config-recommended',
     'stylelint-config-styled-components',
-    'stylelint-processor-styled-components'
+    'stylelint-processor-styled-components',
+    'tslint-config-prettier'
   );
 
   // we need to cd to the new app to install husky for the pre-commit hook

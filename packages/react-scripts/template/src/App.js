@@ -1,13 +1,13 @@
+import { Form, Formik } from 'formik';
 import React from 'react';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import FlexboxGrid from 'walrus/build/components/FlexboxGrid';
-import Typekit from 'walrus/build/components/Typekit';
-import SpinnerButton from 'walrus/build/components/SpinnerButton';
-import FloatLabel from 'walrus/build/components/FloatLabel';
 import styled from 'styled-components';
-import colors from 'walrus/build/scss/core/_colors.scss';
+import FlexboxGrid from 'walrus/build/components/FlexboxGrid';
+import FloatLabel from 'walrus/build/components/FloatLabel';
+import SpinnerButton from 'walrus/build/components/SpinnerButton';
 import LoadingState from 'walrus/build/components/states/Loading';
+import Typekit from 'walrus/build/components/Typekit';
+import colors from 'walrus/build/scss/core/_colors.scss';
+import * as Yup from 'yup';
 
 const ExamplePage = styled.div`
   max-width: 1200px;
