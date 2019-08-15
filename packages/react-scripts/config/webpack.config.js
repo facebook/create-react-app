@@ -348,7 +348,7 @@ module.exports = function(webpackEnv) {
                   }
 
                   // We allow overriding the config only if the env variable is set
-                  if (process.env.EXTEND_ESLINT && eslintConfig) {
+                  if (process.env.EXTEND_ESLINT === 'true' && eslintConfig) {
                     return eslintConfig;
                   } else {
                     return {
