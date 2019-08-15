@@ -5,7 +5,6 @@ import FlexboxGrid from 'walrus/build/components/FlexboxGrid';
 import FloatLabel from 'walrus/build/components/FloatLabel';
 import SpinnerButton from 'walrus/build/components/SpinnerButton';
 import LoadingState from 'walrus/build/components/states/Loading';
-import Typekit from 'walrus/build/components/Typekit';
 import colors from 'walrus/build/scss/core/_colors.scss';
 import * as Yup from 'yup';
 
@@ -35,7 +34,6 @@ const NameSchema = Yup.object().shape({
 function App() {
   return (
     <>
-      <Typekit />
       <ExamplePage>
         <FlexboxGrid>
           <FlexboxGrid.Col sm={12} lg={12}>
