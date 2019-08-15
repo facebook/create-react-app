@@ -104,6 +104,7 @@ module.exports = function(
     test: 'react-scripts test',
     eject: 'react-scripts eject',
     format: 'prettier --write "./**/*.{js,jsx,ts,tsx,json}"',
+    stylelint: "stylelint 'src/**/*.{tsx,ts,js,jsx}'",
   };
 
   // Setup the eslint config
@@ -271,7 +272,15 @@ module.exports = function(
       verbose && '--verbose',
     ].filter(e => e);
   }
-  devDependenciesArgs.push('husky', 'prettier', 'lint-staged');
+  devDependenciesArgs.push(
+    'husky',
+    'prettier',
+    'lint-staged',
+    'stylelint',
+    'stylelint-config-recommended',
+    'stylelint-config-styled-components',
+    'stylelint-processor-styled-components'
+  );
 
   // we need to cd to the new app to install husky for the pre-commit hook
   const procCdAppPath = spawn.sync(`cd`, [appPath], {
