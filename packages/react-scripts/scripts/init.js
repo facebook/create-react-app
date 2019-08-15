@@ -105,9 +105,11 @@ module.exports = function(
     eject: 'react-scripts eject',
     format: 'prettier --write "./**/*.{js,jsx,ts,tsx,json}"',
     stylelint: "stylelint 'src/**/*.{tsx,ts,js,jsx}'",
+    'test:ci': 'CI=true npm-run-all stylelint test',
   };
 
   if (useTypeScript) {
+    appPackage.scripts['test:ci'] = 'CI=true npm-run-all tslint stylelint test';
     appPackage.scripts.tslint = 'tslint --project tsconfig.json';
     appPackage.scripts['tslint:fix'] = 'tslint --project tsconfig.json --fix';
   }
@@ -285,7 +287,8 @@ module.exports = function(
     'stylelint-config-recommended',
     'stylelint-config-styled-components',
     'stylelint-processor-styled-components',
-    'tslint-config-prettier'
+    'tslint-config-prettier',
+    'npm-run-all'
   );
 
   // we need to cd to the new app to install husky for the pre-commit hook
