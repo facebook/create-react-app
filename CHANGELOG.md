@@ -1,3 +1,21 @@
+## 2.7.0 (Aug 15, 2019)
+
+#### :bug: Bug Fix
+
+* [lighter-styleguide] try to fix netlify redirects issues ([#108](https://github.com/lightingbeetle/lighter/pull/108))
+* [lighter-styleguide] Fix menu category text wrapping ([#109](https://github.com/lightingbeetle/lighter/pull/109))
+* [lighter-styleguide] fix category color ([#113](https://github.com/lightingbeetle/lighter/pull/113))
+* [lighter-styleguide] fix double scrollbar ([#114](https://github.com/lightingbeetle/lighter/pull/114))
+
+
+#### :rocket: New Feature
+
+* [lighter-styleguide] Fullscreen preview ([#111](https://github.com/lightingbeetle/lighter/pull/111))
+
+#### :tada: version updates
+
+* `lighter-styleguide@2.2.0`
+
 ## 2.7.0 (March 31, 2019)
 
 #### :bug: Bug Fix
