@@ -104,12 +104,14 @@ module.exports = function(
     test: 'react-scripts test',
     eject: 'react-scripts eject',
     format: 'prettier --write "./**/*.{js,jsx,ts,tsx,json}"',
+    'format:check': './ci/scripts/prettier-check.sh',
     stylelint: "stylelint 'src/**/*.{tsx,ts,js,jsx}'",
-    'test:ci': 'CI=true npm-run-all stylelint test',
+    'test:ci': 'CI=true npm-run-all stylelint format:check test',
   };
 
   if (useTypeScript) {
-    appPackage.scripts['test:ci'] = 'CI=true npm-run-all tslint stylelint test';
+    appPackage.scripts['test:ci'] =
+      'CI=true npm-run-all tslint stylelint format:check test';
     appPackage.scripts.tslint = 'tslint --project tsconfig.json';
     appPackage.scripts['tslint:fix'] = 'tslint --project tsconfig.json --fix';
   }
