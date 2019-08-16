@@ -23,6 +23,11 @@
 // To use them, explicitly reference them, e.g. `window.name` or `window.status`.
 const restrictedGlobals = require('confusing-browser-globals');
 
+
+// If we detect the project is using Flow, the ESLint rules are going to adapt
+// to improve the developer experience
+const isFlowProject = require('fs').existsSync('.flowconfig');
+
 module.exports = {
   root: true,
 
@@ -305,7 +310,7 @@ module.exports = {
 
     // https://github.com/gajus/eslint-plugin-flowtype
     'flowtype/define-flow-type': 'warn',
-    'flowtype/require-valid-file-annotation': 'warn',
+    'flowtype/require-valid-file-annotation': ['warn', isFlowProject ? 'always' : 'never'],
     'flowtype/use-flow-type': 'warn',
   },
 };
