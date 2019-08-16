@@ -1,6 +1,6 @@
 {
   "name": "topdanmark-react-scripts",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Topdanmark specific configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
