@@ -16,7 +16,7 @@ To add Flow to a Create React App project, follow these steps:
 
 Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors. You can optionally enable an extension for your IDE, such as [Flow Language Support](https://github.com/flowtype/flow-for-vscode) for Visual Studio Code, or leverage the Language Server Protocol standard (e.g. [vim LSP](https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Flow)) to get hints while you type.
 
-If you'd like to use [absolute imports](https://create-react-app.dev/docs/importing-a-component#absolute-imports) with Flow,
+If you'd like to use [absolute imports](/docs/importing-a-component#absolute-imports) with Flow,
 make sure to add the following line to your `.flowconfig` to make Flow aware of it:
 
 ```diff
