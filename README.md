@@ -25,10 +25,10 @@ When you’re ready to deploy to production, create a minified bundle with `npm 
 <p align='center'>
 <img src='https://cdn.rawgit.com/facebook/create-react-app/27b42ac/screencast.svg' width='600' alt='npm start'>
 </p>
-
+<br>
 ### Get Started Immediately
 
-You **don’t** need to install or configure tools like Webpack or Babel.<br>
+You **don’t** need to install or **configure** tools like Webpack or Babel.<br>
 They are preconfigured and hidden so that you can focus on the code.
 
 Just create a project, and you’re good to go.
