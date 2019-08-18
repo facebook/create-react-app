@@ -154,7 +154,7 @@ Your environment will have everything you need to build a modern single-page Rea
 - A live development server that warns about common mistakes.
 - A build script to bundle JS, CSS, and images for production, with hashes and sourcemaps.
 - An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app) criteria. (_Note: Using the service worker is opt-in as of `react-scripts@2.0.0` and higher_)
-- Ability to build a Node.js version of the app, which can be used for implementind Server Rendering.
+- Ability to build a Node.js version of the app, which can be used for implementing Server Rendering.
 - Hassle-free updates for the above tools with a single dependency.
 
 Check out [this guide](https://github.com/nitishdayal/cra_closer_look) for an overview of how these tools fit together.
