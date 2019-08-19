@@ -356,7 +356,6 @@ module.exports = function(webpackEnv) {
                     };
                   }
                 })(),
-                ignore: false,
                 useEslintrc: false,
                 // @remove-on-eject-end
               },
