@@ -84,17 +84,11 @@ module.exports = function(api, opts) {
         // Latest stable ECMAScript features
         require('@babel/preset-env').default,
         {
-          // We want Create React App to be IE 9 compatible until React itself
-          // no longer works with IE 9
-          targets: {
-            ie: 9,
-          },
-          // Users cannot override this behavior because this Babel
-          // configuration is highly tuned for ES5 support
-          ignoreBrowserslistConfig: true,
-          // If users import all core-js they're probably not concerned with
-          // bundle size. We shouldn't rely on magic to try and shrink it.
-          useBuiltIns: false,
+          // Allow importing core-js in entrypoint and use browserlist to select polyfills
+          useBuiltIns: 'entry',
+          // Set the corejs version we are using to avoid warnings in console
+          // This will need to change once we upgrade to corejs@3
+          corejs: 3,
           // Do not transform modules to CJS
           modules: false,
           // Exclude transforms that make all code slower
@@ -103,6 +97,29 @@ module.exports = function(api, opts) {
       ],
     ].filter(Boolean),
     plugins: [
+      // Necessary to include regardless of the environment because
+      // in practice some other transforms (such as object-rest-spread)
+      // don't work without it: https://github.com/babel/babel/issues/7215
+      [
+        require('@babel/plugin-transform-destructuring').default,
+        {
+          // Use loose mode for performance:
+          // https://github.com/facebook/create-react-app/issues/5602
+          loose: false,
+          selectiveLoose: [
+            'useState',
+            'useEffect',
+            'useContext',
+            'useReducer',
+            'useCallback',
+            'useMemo',
+            'useRef',
+            'useImperativeHandle',
+            'useLayoutEffect',
+            'useDebugValue',
+          ],
+        },
+      ],
       // Polyfills the runtime needed for async/await, generators, and friends
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
       [
@@ -125,7 +142,7 @@ module.exports = function(api, opts) {
       require('@babel/plugin-syntax-dynamic-import').default,
       isEnvTest &&
         // Transform dynamic import to require
-        require('babel-plugin-transform-dynamic-import').default,
+        require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),
   };
 };

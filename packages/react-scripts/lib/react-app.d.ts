@@ -4,8 +4,8 @@
 
 declare namespace NodeJS {
   interface ProcessEnv {
-    NODE_ENV: 'development' | 'production' | 'test'
-    PUBLIC_URL: string
+    readonly NODE_ENV: 'development' | 'production' | 'test';
+    readonly PUBLIC_URL: string;
   }
 }
 
@@ -42,23 +42,23 @@ declare module '*.webp' {
 declare module '*.svg' {
   import * as React from 'react';
 
-  export const ReactComponent: React.SFC<React.SVGProps<SVGSVGElement>>;
+  export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 
   const src: string;
   export default src;
 }
 
 declare module '*.module.css' {
-  const classes: { [key: string]: string };
+  const classes: { readonly [key: string]: string };
   export default classes;
 }
 
 declare module '*.module.scss' {
-  const classes: { [key: string]: string };
+  const classes: { readonly [key: string]: string };
   export default classes;
 }
 
 declare module '*.module.sass' {
-  const classes: { [key: string]: string };
+  const classes: { readonly [key: string]: string };
   export default classes;
 }

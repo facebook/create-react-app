@@ -21,13 +21,13 @@
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.1.5
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.1.5
 ```
 
@@ -47,13 +47,13 @@ yarn add --exact react-scripts@1.1.5
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.1.4
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.1.4
 ```
 
@@ -73,13 +73,13 @@ yarn add --exact react-scripts@1.1.4
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.1.3
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.1.3
 ```
 
@@ -106,13 +106,13 @@ yarn add --exact react-scripts@1.1.3
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.1.2
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.1.2
 ```
 
@@ -151,13 +151,13 @@ yarn add --exact react-scripts@1.1.2
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.1.1
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.1.1
 ```
 
@@ -337,13 +337,13 @@ yarn add --exact react-scripts@1.1.1
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.1.0
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.1.0
 ```
 
@@ -372,13 +372,13 @@ yarn add --exact react-scripts@1.1.0
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.0.17
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.0.17
 ```
 
@@ -403,13 +403,13 @@ yarn add --exact react-scripts@1.0.17
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.0.16
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.0.16
 ```
 
@@ -482,7 +482,7 @@ yarn add --exact react-scripts@1.0.16
 
   - [#3150](https://github.com/facebook/create-react-app/pull/3150) Remove an useless negation in `registerServiceWorker.js`. ([@dunglas](https://github.com/dunglas))
   - [#3158](https://github.com/facebook/create-react-app/pull/3158) Remove `output.path` from dev webpack config. ([@nikolas](https://github.com/nikolas))
-  - [#3281](https://github.com/facebook/create-react-app/pull/3281) Add a workaround for Uglify incompatiblity with Safari 10.0 in the future. ([@satyavh](https://github.com/satyavh))
+  - [#3281](https://github.com/facebook/create-react-app/pull/3281) Add a workaround for Uglify incompatibility with Safari 10.0 in the future. ([@satyavh](https://github.com/satyavh))
   - [#3146](https://github.com/facebook/create-react-app/pull/3146) Fix `reason-react` support. ([@lpalmes](https://github.com/lpalmes))
   - [#3236](https://github.com/facebook/create-react-app/pull/3236) Update `style-loader` and disable inclusion of its HMR code in builds. ([@insin](https://github.com/insin))
   - [#3246](https://github.com/facebook/create-react-app/pull/3246) Update `url-loader` to 0.6.2 for mime ReDoS vulnerability. ([@d3viant0ne](https://github.com/d3viant0ne))
@@ -519,13 +519,13 @@ yarn add --exact react-scripts@1.0.16
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.0.15
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.0.15
 ```
 
@@ -604,13 +604,13 @@ yarn add --exact react-scripts@1.0.15
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.0.14
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.0.14
 ```
 
@@ -653,13 +653,13 @@ yarn add --exact react-scripts@1.0.14
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.0.13
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.0.13
 ```
 
@@ -718,13 +718,13 @@ yarn add --exact react-scripts@1.0.13
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.0.12
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.0.12
 ```
 
@@ -841,13 +841,13 @@ yarn add --exact react-scripts@1.0.12
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.0.11
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.0.11
 ```
 
@@ -880,13 +880,13 @@ yarn add --exact react-scripts@1.0.11
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.0.10
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.0.10
 ```
 
@@ -925,13 +925,13 @@ yarn add --exact react-scripts@1.0.10
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save --save-exact react-scripts@1.0.9
 ```
 
 or
 
-```
+```sh
 yarn add --exact react-scripts@1.0.9
 ```
 
@@ -1094,13 +1094,13 @@ yarn add --exact react-scripts@1.0.9
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@1.0.8
 ```
 
 or
 
-```
+```sh
 yarn add --dev --exact react-scripts@1.0.8
 ```
 
@@ -1153,13 +1153,13 @@ If you haven't changed the default CSS organization, you may want to apply [this
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@1.0.7
 ```
 
 or
 
-```
+```sh
 yarn add --dev --exact react-scripts@1.0.7
 ```
 
@@ -1198,13 +1198,13 @@ yarn add --dev --exact react-scripts@1.0.7
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@1.0.6
 ```
 
 or
 
-```
+```sh
 yarn add --dev --exact react-scripts@1.0.6
 ```
 
@@ -1241,13 +1241,13 @@ yarn add --dev --exact react-scripts@1.0.6
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@1.0.5
 ```
 
 or
 
-```
+```sh
 yarn add --dev --exact react-scripts@1.0.5
 ```
 
@@ -1262,13 +1262,13 @@ yarn add --dev --exact react-scripts@1.0.5
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@1.0.4
 ```
 
 or
 
-```
+```sh
 yarn add --dev --exact react-scripts@1.0.4
 ```
 
@@ -1302,13 +1302,13 @@ yarn add --dev --exact react-scripts@1.0.4
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@1.0.3
 ```
 
 or
 
-```
+```sh
 yarn add --dev --exact react-scripts@1.0.3
 ```
 
@@ -1355,13 +1355,13 @@ yarn add --dev --exact react-scripts@1.0.3
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@1.0.2
 ```
 
 or
 
-```
+```sh
 yarn add --dev --exact react-scripts@1.0.2
 ```
 
@@ -1431,19 +1431,19 @@ If you previously had issues with an `Invalid Host Header` error, [follow these 
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@1.0.1
 ```
 
 or
 
-```
+```sh
 yarn add --dev --exact react-scripts@1.0.1
 ```
 
 ## 1.0.0 (May 18, 2017)
 
-We’ve been working on this release for the past few months, and there are many big impovements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
+We’ve been working on this release for the past few months, and there are many big improvements, from migrating to webpack 2 to a brand new runtime error overlay and built-in support for Progressive Web Apps.
 
 So instead of just enumerating them here, we decided to write a blog post about all the new features.<br>
 Check it out: **[What’s New in Create React App](https://facebook.github.io/react/blog/2017/05/18/whats-new-in-create-react-app.html)**.
@@ -1456,13 +1456,13 @@ First, ensure you are using the latest [Node 6 LTS or newer](https://nodejs.org/
 
 Inside any created project that has not been ejected, run:
 
-```
+```sh
 npm install --save-dev --save-exact react-scripts@1.0.0
 ```
 
 You may also optionally update the global command-line utility for bug fixes:
 
-```
+```sh
 npm install -g create-react-app
 ```
 
@@ -1473,7 +1473,7 @@ We also never explicitly forbid doing so, which caused confusion when things did
 
 When running or building your application, you may see a message like so:
 
-```
+```sh
 You attempted to import ... which falls outside of the project src/ directory.
 ```
 

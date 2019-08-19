@@ -34,21 +34,22 @@
 
 'use strict';
 
-const validateProjectName = require('validate-npm-package-name');
 const chalk = require('chalk');
 const commander = require('commander');
-const fs = require('fs-extra');
-const path = require('path');
-const execSync = require('child_process').execSync;
-const spawn = require('cross-spawn');
-const semver = require('semver');
 const dns = require('dns');
+const envinfo = require('envinfo');
+const execSync = require('child_process').execSync;
+const fs = require('fs-extra');
+const hyperquest = require('hyperquest');
+const inquirer = require('inquirer');
+const os = require('os');
+const path = require('path');
+const semver = require('semver');
+const spawn = require('cross-spawn');
 const tmp = require('tmp');
 const unpack = require('tar-pack').unpack;
 const url = require('url');
-const hyperquest = require('hyperquest');
-const envinfo = require('envinfo');
-const os = require('os');
+const validateProjectName = require('validate-npm-package-name');
 
 const packageJson = require('./package.json');
 
@@ -135,7 +136,6 @@ if (program.info) {
         npmGlobalPackages: ['create-react-app'],
       },
       {
-        clipboard: false,
         duplicates: true,
         showNotFound: true,
       }
@@ -222,13 +222,13 @@ function createApp(
     process.exit(1);
   }
 
-  if (!semver.satisfies(process.version, '>=6.0.0')) {
+  if (!semver.satisfies(process.version, '>=8.10.0')) {
     console.log(
       chalk.yellow(
         `You are using Node ${
           process.version
         } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 6 or higher for a better, fully supported experience.\n`
+          `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
       )
     );
     // Fall back to latest supported react-scripts on Node 4
@@ -244,7 +244,7 @@ function createApp(
             `You are using npm ${
               npmInfo.npmVersion
             } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-              `Please update to npm 3 or higher for a better, fully supported experience.\n`
+              `Please update to npm 5 or higher for a better, fully supported experience.\n`
           )
         );
       }
@@ -255,11 +255,13 @@ function createApp(
     const yarnInfo = checkYarnVersion();
     if (!yarnInfo.hasMinYarnPnp) {
       if (yarnInfo.yarnVersion) {
-        chalk.yellow(
-          `You are using Yarn ${
-            yarnInfo.yarnVersion
-          } together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
-            `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
+        console.log(
+          chalk.yellow(
+            `You are using Yarn ${
+              yarnInfo.yarnVersion
+            } together with the --use-pnp flag, but Plug'n'Play is only supported starting from the 1.12 release.\n\n` +
+              `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
+          )
         );
       }
       // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
@@ -268,10 +270,21 @@ function createApp(
   }
 
   if (useYarn) {
-    fs.copySync(
-      require.resolve('./yarn.lock.cached'),
-      path.join(root, 'yarn.lock')
-    );
+    let yarnUsesDefaultRegistry = true;
+    try {
+      yarnUsesDefaultRegistry =
+        execSync('yarnpkg config get registry')
+          .toString()
+          .trim() === 'https://registry.yarnpkg.com';
+    } catch (e) {
+      // ignore
+    }
+    if (yarnUsesDefaultRegistry) {
+      fs.copySync(
+        require.resolve('./yarn.lock.cached'),
+        path.join(root, 'yarn.lock')
+      );
+    }
   }
 
   run(
@@ -369,112 +382,120 @@ function run(
   usePnp,
   useTypescript
 ) {
-  const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = ['react', 'react-dom', packageToInstall];
-  if (useTypescript) {
-    // TODO: get user's node version instead of installing latest
-    allDependencies.push(
-      '@types/node',
-      '@types/react',
-      '@types/react-dom',
-      '@types/jest',
-      'typescript'
-    );
-  }
-
-  console.log('Installing packages. This might take a couple of minutes.');
-  getPackageName(packageToInstall)
-    .then(packageName =>
-      checkIfOnline(useYarn).then(isOnline => ({
-        isOnline: isOnline,
-        packageName: packageName,
-      }))
-    )
-    .then(info => {
-      const isOnline = info.isOnline;
-      const packageName = info.packageName;
-      console.log(
-        `Installing ${chalk.cyan('react')}, ${chalk.cyan(
-          'react-dom'
-        )}, and ${chalk.cyan(packageName)}...`
+  getInstallPackage(version, originalDirectory).then(packageToInstall => {
+    const allDependencies = ['react', 'react-dom', packageToInstall];
+    if (useTypescript) {
+      allDependencies.push(
+        // TODO: get user's node version instead of installing latest
+        '@types/node',
+        '@types/react',
+        '@types/react-dom',
+        // TODO: get version of Jest being used instead of installing latest
+        '@types/jest',
+        'typescript'
       );
-      console.log();
+    }
 
-      return install(
-        root,
-        useYarn,
-        usePnp,
-        allDependencies,
-        verbose,
-        isOnline
-      ).then(() => packageName);
-    })
-    .then(async packageName => {
-      checkNodeVersion(packageName);
-      setCaretRangeForRuntimeDeps(packageName);
+    console.log('Installing packages. This might take a couple of minutes.');
+    getPackageName(packageToInstall)
+      .then(packageName =>
+        checkIfOnline(useYarn).then(isOnline => ({
+          isOnline: isOnline,
+          packageName: packageName,
+        }))
+      )
+      .then(info => {
+        const isOnline = info.isOnline;
+        const packageName = info.packageName;
+        console.log(
+          `Installing ${chalk.cyan('react')}, ${chalk.cyan(
+            'react-dom'
+          )}, and ${chalk.cyan(packageName)}...`
+        );
+        console.log();
 
-      const pnpPath = path.resolve(process.cwd(), '.pnp.js');
+        return install(
+          root,
+          useYarn,
+          usePnp,
+          allDependencies,
+          verbose,
+          isOnline
+        ).then(() => packageName);
+      })
+      .then(async packageName => {
+        checkNodeVersion(packageName);
+        setCaretRangeForRuntimeDeps(packageName);
 
-      const nodeArgs = fs.existsSync(pnpPath) ? ['--require', pnpPath] : [];
+        const pnpPath = path.resolve(process.cwd(), '.pnp.js');
 
-      await executeNodeScript(
-        {
-          cwd: process.cwd(),
-          args: nodeArgs,
-        },
-        [root, appName, verbose, originalDirectory, template],
-        `
+        const nodeArgs = fs.existsSync(pnpPath) ? ['--require', pnpPath] : [];
+
+        await executeNodeScript(
+          {
+            cwd: process.cwd(),
+            args: nodeArgs,
+          },
+          [root, appName, verbose, originalDirectory, template],
+          `
         var init = require('${packageName}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));
       `
-      );
-
-      if (version === 'react-scripts@0.9.x') {
-        console.log(
-          chalk.yellow(
-            `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
-              `Please update to Node >=6 and npm >=3 to get supported tools in new projects.\n`
-          )
         );
-      }
-    })
-    .catch(reason => {
-      console.log();
-      console.log('Aborting installation.');
-      if (reason.command) {
-        console.log(`  ${chalk.cyan(reason.command)} has failed.`);
-      } else {
-        console.log(chalk.red('Unexpected error. Please report it as a bug:'));
-        console.log(reason);
-      }
-      console.log();
 
-      // On 'exit' we will delete these files from target directory.
-      const knownGeneratedFiles = ['package.json', 'yarn.lock', 'node_modules'];
-      const currentFiles = fs.readdirSync(path.join(root));
-      currentFiles.forEach(file => {
-        knownGeneratedFiles.forEach(fileToMatch => {
-          // This remove all of knownGeneratedFiles.
-          if (file === fileToMatch) {
-            console.log(`Deleting generated file... ${chalk.cyan(file)}`);
-            fs.removeSync(path.join(root, file));
-          }
+        if (version === 'react-scripts@0.9.x') {
+          console.log(
+            chalk.yellow(
+              `\nNote: the project was bootstrapped with an old unsupported version of tools.\n` +
+                `Please update to Node >=8.10 and npm >=5 to get supported tools in new projects.\n`
+            )
+          );
+        }
+      })
+      .catch(reason => {
+        console.log();
+        console.log('Aborting installation.');
+        if (reason.command) {
+          console.log(`  ${chalk.cyan(reason.command)} has failed.`);
+        } else {
+          console.log(
+            chalk.red('Unexpected error. Please report it as a bug:')
+          );
+          console.log(reason);
+        }
+        console.log();
+
+        // On 'exit' we will delete these files from target directory.
+        const knownGeneratedFiles = [
+          'package.json',
+          'yarn.lock',
+          'node_modules',
+        ];
+        const currentFiles = fs.readdirSync(path.join(root));
+        currentFiles.forEach(file => {
+          knownGeneratedFiles.forEach(fileToMatch => {
+            // This removes all knownGeneratedFiles.
+            if (file === fileToMatch) {
+              console.log(`Deleting generated file... ${chalk.cyan(file)}`);
+              fs.removeSync(path.join(root, file));
+            }
+          });
         });
+        const remainingFiles = fs.readdirSync(path.join(root));
+        if (!remainingFiles.length) {
+          // Delete target folder if empty
+          console.log(
+            `Deleting ${chalk.cyan(`${appName}/`)} from ${chalk.cyan(
+              path.resolve(root, '..')
+            )}`
+          );
+          process.chdir(path.resolve(root, '..'));
+          fs.removeSync(path.join(root));
+        }
+        console.log('Done.');
+        process.exit(1);
       });
-      const remainingFiles = fs.readdirSync(path.join(root));
-      if (!remainingFiles.length) {
-        // Delete target folder if empty
-        console.log(
-          `Deleting ${chalk.cyan(`${appName}/`)} from ${chalk.cyan(
-            path.resolve(root, '..')
-          )}`
-        );
-        process.chdir(path.resolve(root, '..'));
-        fs.removeSync(path.join(root));
-      }
-      console.log('Done.');
-      process.exit(1);
-    });
+  });
 }
 
 function getInstallPackage(version, originalDirectory) {
@@ -495,7 +516,36 @@ function getInstallPackage(version, originalDirectory) {
       packageToInstall = version;
     }
   }
-  return packageToInstall;
+
+  const scriptsToWarn = [
+    {
+      name: 'react-scripts-ts',
+      message: chalk.yellow(
+        'The react-scripts-ts package is deprecated. TypeScript is now supported natively in Create React App. You can use the --typescript option instead when generating your app to include TypeScript support. Would you like to continue using react-scripts-ts?'
+      ),
+    },
+  ];
+
+  for (const script of scriptsToWarn) {
+    if (packageToInstall.startsWith(script.name)) {
+      return inquirer
+        .prompt({
+          type: 'confirm',
+          name: 'useScript',
+          message: script.message,
+          default: false,
+        })
+        .then(answer => {
+          if (!answer.useScript) {
+            process.exit(0);
+          }
+
+          return packageToInstall;
+        });
+    }
+  }
+
+  return Promise.resolve(packageToInstall);
 }
 
 function getTemporaryDirectory() {
@@ -598,7 +648,7 @@ function checkNpmVersion() {
     npmVersion = execSync('npm --version')
       .toString()
       .trim();
-    hasMinNpm = semver.gte(npmVersion, '3.0.0');
+    hasMinNpm = semver.gte(npmVersion, '5.0.0');
   } catch (err) {
     // ignore
   }

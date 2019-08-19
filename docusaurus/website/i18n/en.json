@@ -23,6 +23,10 @@
       "adding-bootstrap": {
         "title": "Adding Bootstrap"
       },
+      "adding-css-reset": {
+        "title": "Adding a CSS Reset",
+        "sidebar_label": "Adding CSS Reset"
+      },
       "adding-custom-environment-variables": {
         "title": "Adding Custom Environment Variables",
         "sidebar_label": "Environment Variables"
@@ -93,6 +97,10 @@
       "integrating-with-an-api-backend": {
         "title": "Integrating with an API Backend",
         "sidebar_label": "Integrating with an API"
+      },
+      "loading-graphql-files": {
+        "title": "Loading .graphql Files",
+        "sidebar_label": "Loading .graphql Files"
       },
       "making-a-progressive-web-app": {
         "title": "Making a Progressive Web App"

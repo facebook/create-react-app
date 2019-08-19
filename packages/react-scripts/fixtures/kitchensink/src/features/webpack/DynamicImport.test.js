@@ -7,13 +7,12 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NodePath from './NodePath';
 
-describe('NODE_PATH', () => {
-  it('renders without crashing', () => {
+describe('dynamic import', () => {
+  it('renders without crashing', async () => {
+    const DynamicImport = (await import('./DynamicImport')).default;
     const div = document.createElement('div');
-    return new Promise(resolve => {
-      ReactDOM.render(<NodePath onReady={resolve} />, div);
-    });
+    ReactDOM.render(<DynamicImport />, div);
+    expect(div.textContent).toBe('Hello World!');
   });
 });
