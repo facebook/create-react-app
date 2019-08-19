@@ -41,7 +41,6 @@ module.exports = function () {
         template: paths.appHtml,
       }),
       new webpack.ProgressPlugin(),
-      new webpack.HotModuleReplacementPlugin(),
       // See https://github.com/facebook/create-react-app/issues/186
       new WatchMissingNodeModulesPlugin(paths.appNodeModules),
       // This is necessary to emit hot updates (currently CSS only):
