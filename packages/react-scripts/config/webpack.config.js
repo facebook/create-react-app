@@ -116,6 +116,7 @@ module.exports = function (webpackEnv) {
       optimization: {
         splitChunks: {
           name: false,
+          chunks: 'all'
         },
         // Keep the runtime chunk separated to enable long term caching
         // https://twitter.com/wSokra/status/969679223278505985
