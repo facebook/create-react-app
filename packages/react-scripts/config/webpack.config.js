@@ -99,8 +99,8 @@ module.exports = function(webpackEnv) {
       mode,
       // https://webpack.js.org/configuartion/output
       output: {
-        // TODO: remove this when upgrading to webpack 5
         publicPath,
+        // TODO: remove this when upgrading to webpack 5
         futureEmitAssets: true,
         // Point sourcemap entries to original disk location (format as URL on Windows)
         devtoolModuleFilenameTemplate: isEnvProduction
