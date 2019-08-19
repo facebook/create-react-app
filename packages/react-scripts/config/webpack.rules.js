@@ -231,7 +231,6 @@ module.exports = ({
         // By default we support CSS Modules with the extension .module.css
         {
           test: cssRegex,
-          exclude: cssModuleRegex,
           use: getStyleLoaders({
             importLoaders: 1,
             sourceMap: isEnvProduction && shouldUseSourceMap,
@@ -258,7 +257,6 @@ module.exports = ({
         // extensions .module.scss or .module.sass
         {
           test: sassRegex,
-          exclude: sassModuleRegex,
           use: getStyleLoaders(
             {
               importLoaders: 2,
