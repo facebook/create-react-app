@@ -16,7 +16,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 
 // We are in the development config. This contains development only features.
-module.exports = function() {
+module.exports = function () {
   return {
     devtool: 'cheap-module-source-map',
     // Note: instead of the default WebpackDevServer client, we use a custom one
@@ -36,15 +36,10 @@ module.exports = function() {
         path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
     },
     plugins: [
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            template: paths.appHtml,
-          }
-        )
-      ),
+      new HtmlWebpackPlugin({
+        inject: true,
+        template: paths.appHtml,
+      }),
       new webpack.ProgressPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       // See https://github.com/facebook/create-react-app/issues/240
