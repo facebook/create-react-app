@@ -29,6 +29,7 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.6.0",
+    "@apollo/react-hooks": "^3.0.1",
     "@svgr/webpack": "4.3.2",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
@@ -41,7 +42,7 @@
     "@types/react-router-dom": "^4.3.4",
     "@types/styled-components": "^4.1.18",
     "@types/yup": "^0.26.22",
-    "apollo-boost": "^0.4.3",
+    "apollo-boost": "^0.4.4",
     "babel-plugin-styled-components": "^1.10.6",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",

@@ -10,7 +10,10 @@
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="stylesheet" href="https://ui.digitalocean.com/1.0.8/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://ui.digitalocean.com/1.0.11/style.css"
+    />
     <title>DigitalOcean</title>
     <script>
       (function(d) {
@@ -59,15 +62,18 @@
     -->
     <script>
       const xhr = new XMLHttpRequest();
-      xhr.open('get', 'https://ui.digitalocean.com/1.0.8/icons.svg', true);
+      xhr.open('get', 'https://ui.digitalocean.com/1.0.11/icons.svg', true);
       xhr.onreadystatechange = () => {
         if (xhr.readyState !== 4) {
           return;
         }
         const docElt = xhr.responseXML.documentElement;
-        Array.prototype.forEach.call(docElt.querySelectorAll('title'), node => {
-          node.parentNode.removeChild(node);
-        });
+        Array.prototype.forEach.call(
+          docElt.querySelectorAll('title'),
+          (node) => {
+            node.parentNode.removeChild(node);
+          }
+        );
         const svg = document.importNode(docElt, true);
         document.head.appendChild(svg);
       };

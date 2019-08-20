@@ -93,7 +93,7 @@ module.exports = function(
 
   // Add walrus
   appPackage.dependencies.walrus =
-    'git+https://a830ed8c89246692a5f10a33b11224c405e90fb5:x-oauth-basic@github.internal.digitalocean.com/digitalocean/walrus.git#1.0.8';
+    'git+https://a830ed8c89246692a5f10a33b11224c405e90fb5:x-oauth-basic@github.internal.digitalocean.com/digitalocean/walrus.git#1.0.11';
 
   const useTypeScript = appPackage.dependencies['typescript'] != null;
 
