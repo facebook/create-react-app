@@ -2,7 +2,7 @@
 
 Guesty's fork configurations for Create-react-app
 
-For general knowledge please refer to - [User Guide](https://facebook.github.io/create-react-app/)   
+For general knowledge please refer to - [User Guide](https://create-react-app.dev/docs/getting-started)   
 On how to develop apps bootstrapped with Create React App.
 
 ## Quick Overview
