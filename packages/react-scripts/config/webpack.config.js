@@ -184,6 +184,10 @@ module.exports = function(webpackEnv) {
         : isEnvDevelopment && 'static/js/bundle.js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
+      // Given Webpack supports codesplit and production bundles are using 
+      // subresource integrity, it's important to make sure the attribute
+      // set on async-loaded chunks is set to anonymous.
+      crossOriginLoading: 'anonymous',
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'
