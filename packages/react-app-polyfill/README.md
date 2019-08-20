@@ -54,7 +54,7 @@ import 'react-app-polyfill/ie11';
 You can also polyfill stable language features not available in your target browsers. If you're using this in Create React App, it will automatically use the `browserslist` you've defined to only include polyfills needed by your target browsers when importing the `stable` polyfill. **Make sure to follow the Internet Explorer steps above if you need to support Internet Explorer in your application**.
 
 ```js
-// This must be the first line in src/App.js
+// This must be the first line in src/index.js
 import 'react-app-polyfill/stable';
 
 // ...

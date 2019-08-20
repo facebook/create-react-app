@@ -1,3 +1,5 @@
+## 4.0.0 
+- Added changes to support cli tool
 ## 3.2.0
  - Added data-qa to cra project
 ## 3.1.0
