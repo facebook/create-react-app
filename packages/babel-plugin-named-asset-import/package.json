@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-named-asset-import",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Babel plugin for named asset imports in Create React App",
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "babel-plugin-tester": "^6.0.1",
-    "jest": "24.7.1"
+    "jest": "24.8.0"
   },
   "scripts": {
     "test": "jest"

@@ -23,6 +23,10 @@
       "adding-bootstrap": {
         "title": "Adding Bootstrap"
       },
+      "adding-css-reset": {
+        "title": "Adding a CSS Reset",
+        "sidebar_label": "Adding CSS Reset"
+      },
       "adding-custom-environment-variables": {
         "title": "Adding Custom Environment Variables",
         "sidebar_label": "Environment Variables"
