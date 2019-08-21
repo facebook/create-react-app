@@ -1,32 +1,17 @@
 import React, { useState } from 'react';
-import withStyles from 'react-jss';
+import OutlineButton from '@guestyci/foundation/OutlineButton';
+import Row from '@guestyci/foundation/Row';
 
-const styles = {
-  counter: {
-    width: 150,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  button: {
-    background: 'transparent',
-    color: 'white',
-    border: '1px solid white',
-    padding: '6px 9px',
-    cursor: 'pointer',
-    outline: 0,
-  },
-};
-const Counter = ({ classes }) => {
+const Counter = () => {
   const [count, setCount] = useState(0);
   const countUp = () => setCount(count + 1);
   return (
-    <div className={classes.counter}>
-      <button className={classes.button} onClick={countUp}>
+    <Row align="center" justify="center">
+      <OutlineButton onClick={countUp}>
         Click Me!
-      </button>
+      </OutlineButton>
       <span>{count}</span>
-    </div>
+    </Row>
   );
 };
-export default withStyles(styles)(Counter);
+export default Counter;

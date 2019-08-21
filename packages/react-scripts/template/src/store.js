@@ -3,6 +3,7 @@ import { reducer as formReducer } from 'redux-form';
 import thunk from 'redux-thunk';
 
 // temp reducer to be removed
+//Once real reducers added you can delete this
 const tempReducer = (state = {}, action) => {
   switch (action.type) {
     default:
@@ -10,19 +11,24 @@ const tempReducer = (state = {}, action) => {
   }
 };
 // shape the state structure
-export const rootReducer = {
+const rootReducer = combineReducers({
   tempReducer,
   form: formReducer,
-};
+});
 
 //Add custom middleware here
-export const featureMiddleware = [];
+const featureMiddleware = [];
 
 //Add core middleware here
 const coreMiddleware = [thunk];
-
-// Compose all middlewares
-const middlewares = applyMiddleware(...featureMiddleware, ...coreMiddleware);
-// create and configure the store
-const store = createStore(combineReducers(rootReducer), {}, middlewares);
-export default store;
+/**
+ * Initialize the redux store
+ * Create the store
+ * Applying extra arguments
+ * To pass further arguments please config the function
+ * @param initialState  {Object}  initial state for store
+ * @param api {Object}  API class for api middleware
+ * @return {Store<any, AnyAction> & {dispatch: any}}
+ */
+export default (initialState = {}, api) =>
+    createStore(rootReducer, initialState, applyMiddleware(...featureMiddleware, thunk.withExtraArgument(api)));
