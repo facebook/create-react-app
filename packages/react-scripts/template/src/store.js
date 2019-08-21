@@ -19,8 +19,6 @@ const rootReducer = combineReducers({
 //Add custom middleware here
 const featureMiddleware = [];
 
-//Add core middleware here
-const coreMiddleware = [thunk];
 /**
  * Initialize the redux store
  * Create the store
