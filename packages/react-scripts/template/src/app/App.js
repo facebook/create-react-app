@@ -8,12 +8,6 @@ import Counter from './counter/Counter';
 // One development starts clear this file and set your own App.js
 // REMOVE the styling
 const styles = {
-  '@global': {
-    body: {
-      margin: 0,
-      padding: 0,
-    }
-  },
   app: {
     background: '#282c34',
     minHeight: '100vh',
@@ -30,10 +24,10 @@ const styles = {
 // REMOVE the comments once development starts
 function App({ classes }) {
   return (
-    <Section col className={classes.app}>
-      <Header />
-      <Counter />
-    </Section>
+      <Section col className={classes.app}>
+        <Header />
+        <Counter />
+      </Section>
   );
 }
 

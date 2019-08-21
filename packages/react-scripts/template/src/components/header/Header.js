@@ -1,39 +1,37 @@
 import React from 'react';
 import withStyles from 'react-jss';
 import TextField from '@guestyci/foundation/TextField';
+import Col from '@guestyci/foundation/Col';
 import logo from '../../assets/logo.svg';
-import Link from '../link/Link';
+import Link from '@guestyci/foundation/Link';
 const styles = {
-  appLogo: {
-    animation: 'spin infinite 20s linear',
-    pointerEvents: 'none',
-    height: 100,
-    width: 100,
-  },
-  appLink: {
-    color: '#61dafb',
-  },
-  '@keyframes spin': {
-    from: {
-      transform: 'rotate(0deg)',
+    appLogo: {
+        animation: 'spin infinite 20s linear',
+        pointerEvents: 'none',
+        height: 100,
+        width: 100,
     },
-    to: {
-      transform: 'rotate(360deg)',
+    '@keyframes spin': {
+        from: {
+            transform: 'rotate(0deg)',
+        },
+        to: {
+            transform: 'rotate(360deg)',
+        },
     },
-  },
 };
 
 const Header = ({ classes }) => (
-    <Col spacing={2} align="center" justify="center">
+    <Col spacing={1} align="center" justify="center">
         <img src={logo} className={classes.appLogo} alt="logo" />
-        <TextField>Welcome to Guesty's React project.</TextField>
-        <TextField>Edit the ./App.js to start.</TextField>
-        <TextField> Read the Guesty docs </TextField>
+        <TextField className="pt-3" size="lg-xl">Welcome to Guesty's React project.</TextField>
+        <TextField size="lg-xl">Edit the ./App.js to start.</TextField>
+        <TextField size="xl"> Read the Guesty docs </TextField>
         <Link
-          className={classes.appLink}
-          href="https://rnd-docs.guesty.com/ui-infra/react/overview/"
+            color="blue"
+            href="https://rnd-docs.guesty.com/ui-infra/react/overview/"
         >
-          Learn React
+            Learn React
         </Link>
     </Col>
 );
