@@ -32,6 +32,18 @@ import 'bootstrap/dist/css/bootstrap.css';
 Sometimes you might need to tweak the visual styles of Bootstrap (or equivalent package).<br>
 As of `react-scripts@2.0.0` you can import `.scss` files. This makes it possible to use a package's built-in Sass variables for global style preferences.
 
+To enable `scss` in Create React App you will need to install `node-sass`.
+
+```sh
+npm install --save node-sass
+```
+
+Alternatively you may use `yarn`::
+
+```sh
+yarn add node-sass
+```
+
 To customize Bootstrap, create a file called `src/custom.scss` (or similar) and import the Bootstrap source stylesheet. Add any overrides _before_ the imported file(s). You can reference [Bootstrap's documentation](https://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables) for the names of the available variables.
 
 ```scss

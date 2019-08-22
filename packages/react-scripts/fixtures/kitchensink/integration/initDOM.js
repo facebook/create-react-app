@@ -63,6 +63,13 @@ export default feature =>
 
       const { document } = window;
 
+      const cancelToken = setTimeout(() => {
+        // Cleanup jsdom instance since we don't need it anymore
+        window.close();
+
+        reject(`Timed out loading feature: ${feature}`);
+      }, 10000);
+
       document.addEventListener(
         'ReactFeatureDidMount',
         () => resolve(document),
@@ -71,6 +78,8 @@ export default feature =>
       document.addEventListener(
         'ReactFeatureError',
         () => {
+          clearTimeout(cancelToken);
+
           // Cleanup jsdom instance since we don't need it anymore
           window.close();
 

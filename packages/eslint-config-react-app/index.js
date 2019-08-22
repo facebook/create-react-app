@@ -288,7 +288,7 @@ module.exports = {
     'jsx-a11y/aria-activedescendant-has-tabindex': 'warn',
     'jsx-a11y/aria-props': 'warn',
     'jsx-a11y/aria-proptypes': 'warn',
-    'jsx-a11y/aria-role': 'warn',
+    'jsx-a11y/aria-role': ['warn', { ignoreNonDOM: true }],
     'jsx-a11y/aria-unsupported-elements': 'warn',
     'jsx-a11y/heading-has-content': 'warn',
     'jsx-a11y/iframe-has-title': 'warn',
