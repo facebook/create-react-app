@@ -334,6 +334,7 @@ module.exports = function(webpackEnv) {
           use: [
             {
               options: {
+                cache: true,
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
                 resolvePluginsRelativeTo: __dirname,
@@ -673,7 +674,7 @@ module.exports = function(webpackEnv) {
           }),
           async: isEnvDevelopment,
           useTypescriptIncrementalApi: true,
-          checkSyntacticErrors: true,
+          checkSyntacticErrors: false,
           resolveModuleNameModule: process.versions.pnp
             ? `${__dirname}/pnpTs.js`
             : undefined,
@@ -688,7 +689,6 @@ module.exports = function(webpackEnv) {
             '!**/src/setupProxy.*',
             '!**/src/setupTests.*',
           ],
-          watch: paths.appSrc,
           silent: true,
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
