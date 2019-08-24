@@ -75,9 +75,9 @@ You can use this feature in conjunction with the `proxy` property in `package.js
 First, install `http-proxy-middleware` using npm or Yarn:
 
 ```sh
-$ npm install http-proxy-middleware --save
+$ npm install http-proxy-middleware --save-dev
 $ # or
-$ yarn add http-proxy-middleware
+$ yarn add http-proxy-middleware --dev
 ```
 
 Next, create `src/setupProxy.js` and place the following contents in it:
