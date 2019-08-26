@@ -226,10 +226,12 @@ import { expect } from 'chai';
 and then use them in your tests like you normally do.
 
 ## Initializing Test Environment
-
 > Note: this feature is available with `react-scripts@0.4.0` and higher.
 
 If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
+
+> Warning! the below example using localStorage does not work, due to a change to jsdom ([more info](https://stackoverflow.com/a/54157998)).
+> Also check out this a utility function which allows you to mock any window property: [click here](https://gist.github.com/mayank23/7b994385eb030f1efb7075c4f1f6ac4c)
 
 For example:
 
