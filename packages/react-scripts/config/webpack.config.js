@@ -34,6 +34,10 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const eslint = require('eslint');
+
+const tsTransformAsyncToMobxFlow = require('ts-transform-async-to-mobx-flow')
+  .default;
+
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -329,7 +333,7 @@ module.exports = function(webpackEnv) {
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
         {
-          test: /\.(js|mjs|jsx|ts|tsx)$/,
+          test: /\.(js|mjs|jsx)$/,
           enforce: 'pre',
           use: [
             {
@@ -381,10 +385,29 @@ module.exports = function(webpackEnv) {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
+            {
+              test: /\.(ts|tsx)$/,
+              use: [
+                {
+                  loader: require.resolve('thread-loader'),
+                },
+                {
+                  loader: require.resolve('ts-loader'),
+                  options: {
+                    // disable type checker - we will use it in fork plugin
+                    transpileOnly: true,
+                    happyPackMode: true,
+                    getCustomTransformers: {
+                      before: [tsTransformAsyncToMobxFlow()],
+                    },
+                  },
+                },
+              ],
+            },
             // Process application JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
-              test: /\.(js|mjs|jsx|ts|tsx)$/,
+              test: /\.(js|mjs|jsx)$/,
               include: paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {

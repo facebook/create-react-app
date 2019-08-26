@@ -1,6 +1,6 @@
 {
   "name": "aurornz-react-scripts",
-  "version": "3.2.1",
+  "version": "3.2.3",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -75,6 +75,8 @@
     "semver": "6.3.0",
     "style-loader": "1.0.0",
     "terser-webpack-plugin": "1.4.1",
+    "thread-loader": "^2.1.3",
+    "ts-loader": "^6.0.4",
     "ts-pnp": "1.1.2",
     "url-loader": "2.1.0",
     "webpack": "4.39.1",
