@@ -16,7 +16,7 @@ import chroma from 'chroma-js';
 import PreviewTitleBar from './PreviewTitleBar';
 import CodeExample from './CodeExample';
 import Frame from './Frame';
-import Interact from './Interact';
+import Interact from './Interact/Interact';
 
 import Card from './../Card';
 import Icon from './../Icon';
@@ -212,7 +212,7 @@ class Preview extends Component {
       }
     }
 
-    if (!this.state.showInteract && hasCodePreview) {
+    if (hasCodePreview) {
       actions.push(
         <Button onClick={this.handleToggleCode}>
           <Icon name="code" fill={bgThemeColors.accent || '#000'} />
@@ -287,7 +287,11 @@ class Preview extends Component {
         >
           {this.state.showInteract ? (
             React.Children.map(this.props.children, child => (
-              <Interact render={child} {...interactiveProps} />
+              <Interact
+                showCode={this.state.isCodeShown}
+                render={child}
+                {...interactiveProps}
+              />
             ))
           ) : (
             <React.Fragment>
