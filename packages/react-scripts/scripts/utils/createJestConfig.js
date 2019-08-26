@@ -23,46 +23,48 @@ module.exports = (resolve, rootDir, isEjecting) => {
     : undefined;
 
   const config = {
-    roots: ['<rootDir>/src'],
-
-    collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
-
-    setupFiles: [
-      isEjecting
-        ? 'react-app-polyfill/jsdom'
-        : require.resolve('react-app-polyfill/jsdom'),
+    collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
+    globals: {
+      'ts-jest': {
+        tsConfig: 'tsconfig.test.json',
+        astTransformers: ['ts-transform-async-to-mobx-flow'],
+      },
+    },
+    moduleFileExtensions: [
+      'web.ts',
+      'ts',
+      'web.tsx',
+      'tsx',
+      'web.js',
+      'js',
+      'web.jsx',
+      'jsx',
+      'json',
+      'node',
     ],
-
-    setupFilesAfterEnv: setupTestsFile ? [setupTestsFile] : [],
+    moduleNameMapper: {
+      '^react-native$': 'react-native-web',
+      '^.+\\.(css|sass|scss)$': 'identity-obj-proxy',
+      '^applicationinsights-js$': '<rootDir>/config/jest/mockAppInsights.js',
+    },
+    modulePaths: ['<rootDir>', '<rootDir>/src'],
+    setupFiles: ['react-app-polyfill/jsdom'],
+    testEnvironment: 'jsdom',
     testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
-      '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
+      '<rootDir>/src/**/__tests__/**/*.ts?(x)',
+      '<rootDir>/src/**/*.(spec|test).ts?(x)',
+      '<rootDir>/config/**/*.(spec|test).ts?(x)',
     ],
-    testEnvironment: 'jest-environment-jsdom-fourteen',
+    testResultsProcessor: 'jest-teamcity-reporter',
+    testURL: 'http://localhost',
     transform: {
-      '^.+\\.(js|jsx|ts|tsx)$': isEjecting
-        ? '<rootDir>/node_modules/babel-jest'
-        : resolve('config/jest/babelTransform.js'),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': resolve(
-        'config/jest/fileTransform.js'
-      ),
+      '^.+\\.tsx?$': 'ts-jest',
+      '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
+      '^(?!.*\\.(js|jsx|css|json)$)': '<rootDir>/config/jest/fileTransform.js',
     },
     transformIgnorePatterns: [
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
-      '^.+\\.module\\.(css|sass|scss)$',
-    ],
-    modulePaths: modules.additionalModulePaths || [],
-    moduleNameMapper: {
-      '^react-native$': 'react-native-web',
-      '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
-    },
-    moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
-      ext => !ext.includes('mjs')
-    ),
-    watchPlugins: [
-      'jest-watch-typeahead/filename',
-      'jest-watch-typeahead/testname',
+      '^.+\\.(css|sass|scss)$',
     ],
   };
   if (rootDir) {
