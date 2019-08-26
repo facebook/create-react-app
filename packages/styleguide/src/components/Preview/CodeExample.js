@@ -11,6 +11,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import Code from '../Code/';
 import Button from '../Button';
 
+import * as theme from '../../style/theme';
+
 /**
  * Remove props that are undefined or null
  * Don't show React.Fragment in code example
@@ -35,7 +37,7 @@ const cleanUpCode = markup => {
           ? child.props.children
           : {
               ...child,
-              props: cleanUpCode(child)
+              props: cleanUpCode(child),
             };
       });
     }
@@ -47,8 +49,8 @@ const cleanUpCode = markup => {
       ...(isNotDefined
         ? {}
         : {
-            [curr]: newProp || currProp
-          })
+            [curr]: newProp || currProp,
+          }),
     };
   }, {});
 };
@@ -60,13 +62,13 @@ const getJSXAsStringFromMarkup = (markup, options) => {
     showDefaultProps: false,
     showFunctions: true,
     functionValue: fn => fn.name,
-    ...otherOptions
+    ...otherOptions,
   };
 
   if (cleanProps) {
     markup = {
       ...markup,
-      props: cleanUpCode(markup)
+      props: cleanUpCode(markup),
     };
   }
 
@@ -97,17 +99,17 @@ export default class CodeExample extends React.Component {
 
   static propTypes = {
     codeJSXOptions: object,
-    codeTypes: arrayOf(oneOf(['jsx', 'html']))
+    codeTypes: arrayOf(oneOf(['jsx', 'html'])),
   };
 
   static defaultProps = {
-    codeTypes: ['jsx', 'html']
+    codeTypes: ['jsx', 'html'],
   };
 
   state = {
     codePreviewType: this.props.codeTypes && this.props.codeTypes[0],
     copyButtonText: 'Copy to clipboard',
-    copyButtonClass: ''
+    copyButtonClass: '',
   };
 
   constructor(props) {
@@ -118,7 +120,7 @@ export default class CodeExample extends React.Component {
 
   handleCodePreviewTypeToggle(e, type) {
     this.setState({
-      codePreviewType: type
+      codePreviewType: type,
     });
   }
 
@@ -143,19 +145,19 @@ export default class CodeExample extends React.Component {
 
     const {
       copyButtonText: originalText,
-      copyButtonClass: originalClass
+      copyButtonClass: originalClass,
     } = this.state;
 
     this.setState(
       {
         copyButtonText: newText,
-        copyButtonClass: newClass
+        copyButtonClass: newClass,
       },
       () => {
         setTimeout(() => {
           this.setState({
             copyButtonText: originalText,
-            copyButtonClass: originalClass
+            copyButtonClass: originalClass,
           });
         }, 1200);
       }
@@ -171,9 +173,12 @@ export default class CodeExample extends React.Component {
         codeToShow = pretty(
           typeof children === 'string'
             ? unescape(children)
-            : renderToStaticMarkup(children),
+            : renderToStaticMarkup({
+                ...children,
+                props: { ...children.props, theme },
+              }),
           {
-            ocd: true
+            ocd: true,
           }
         );
         break;
@@ -207,7 +212,11 @@ export default class CodeExample extends React.Component {
         <Code
           inline={false}
           ref={this.codeBlockRef}
-          language={this.state.codePreviewType}
+          language={
+            this.state.codePreviewType === 'html'
+              ? 'markup'
+              : this.state.codePreviewType
+          }
         >
           {codeToShow}
         </Code>
