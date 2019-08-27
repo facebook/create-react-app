@@ -35,9 +35,6 @@ const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpack
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const eslint = require('eslint');
 
-const tsTransformAsyncToMobxFlow = require('ts-transform-async-to-mobx-flow')
-  .default;
-
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
@@ -397,9 +394,9 @@ module.exports = function(webpackEnv) {
                     // disable type checker - we will use it in fork plugin
                     transpileOnly: true,
                     happyPackMode: true,
-                    getCustomTransformers: {
-                      before: [tsTransformAsyncToMobxFlow()],
-                    },
+                    getCustomTransformers: require.resolve(
+                      './typescriptCustomTransformers'
+                    ),
                   },
                 },
               ],
