@@ -86,7 +86,8 @@
   },
   "devDependencies": {
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "ts-transform-async-to-mobx-flow": "0.0.10"
   },
   "optionalDependencies": {
     "fsevents": "2.0.7"
