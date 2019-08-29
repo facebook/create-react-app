@@ -15,7 +15,9 @@ const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const paths = require('./paths');
 const fs = require('fs');
 
-const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+const hasHTTPSConfig = fs.existsSync(paths.httpsSetup);
+const protocol =
+  process.env.HTTPS === 'true' || hasHTTPSConfig ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
 
 module.exports = function(proxy, allowedHost) {
@@ -80,7 +82,9 @@ module.exports = function(proxy, allowedHost) {
       ignored: ignoredFiles(paths.appSrc),
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === 'https',
+    // Allow for advanced HTTPS configuration such as custom certificates if src/setupHTTPS.js exists
+    // https://github.com/facebook/create-react-app/issues/2759
+    https: hasHTTPSConfig ? require(paths.httpsSetup) : protocol === 'https',
     host,
     overlay: false,
     historyApiFallback: {
