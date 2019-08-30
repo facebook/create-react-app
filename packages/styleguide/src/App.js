@@ -79,7 +79,7 @@ class App extends React.Component {
       <MdxWrapper>
         <GlobalStyle />
         <BrowserRouter basename={styleguideBasePath}>
-          {gaId && init({ gaId, debug: true }) && <RouteTracker />}
+          {gaId && init({ gaId }) && <RouteTracker />}
           <ThemeProvider theme={localTheme}>
             <PageLayout>
               <PageHeader
