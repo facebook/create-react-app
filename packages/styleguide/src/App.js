@@ -7,6 +7,7 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import * as theme from './style/theme';
 import { rem } from './style/utils';
 
+import { init, RouteTracker } from './components/GoogleAnalytics';
 import Header from './components/Header/';
 import Sidebar from './components/Sidebar/';
 import Navigation from './components/Navigation/';
@@ -49,6 +50,7 @@ class App extends React.Component {
       name,
       theme: projectTheme = {},
       styleguideBasePath = '/styleguide/',
+      gaId,
     } = config;
 
     const activeClass = this.state.isNavActive ? 'is-active' : '';
@@ -77,6 +79,7 @@ class App extends React.Component {
       <MdxWrapper>
         <GlobalStyle />
         <BrowserRouter basename={styleguideBasePath}>
+          {gaId && init({ gaId, debug: true }) && <RouteTracker />}
           <ThemeProvider theme={localTheme}>
             <PageLayout>
               <PageHeader
