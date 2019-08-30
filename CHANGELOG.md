@@ -1,5 +1,20 @@
 ## 2.7.0 (Aug 30, 2019)
 
+#### :bug: Bug Fix
+
+* [lighter-styleguide] remove GA debug flag ([#120](https://github.com/lightingbeetle/lighter/pull/120))
+
+#### :house: Internal
+
+* [lighter-styleguide] remove ComponentDocs util
+ ([#121](https://github.com/lightingbeetle/lighter/pull/121)
+ 
+#### :tada: version updates
+
+* `lighter-styleguide@2.3.1`
+
+## 2.7.0 (Aug 30, 2019)
+
 #### :rocket: New Feature
 
 * [lighter-styleguide] add support for GA tracking of pages and Preview ([#118](https://github.com/lightingbeetle/lighter/pull/118))
