@@ -1,3 +1,21 @@
+## 2.7.0 (Aug 30, 2019)
+
+#### :rocket: New Feature
+
+* [lighter-styleguide] add support for GA tracking of pages and Preview ([#118](https://github.com/lightingbeetle/lighter/pull/118))
+
+#### :nail_care: Enhancement
+
+* [lighter-styleguide] Preview interactive refactor and improvments ([#115](https://github.com/lightingbeetle/lighter/pull/115))
+
+#### :bug: Bug Fix
+
+* [lighter-styleguide] fix HTML code example not working ([#117](https://github.com/lightingbeetle/lighter/pull/117))
+
+#### :tada: version updates
+
+* `lighter-styleguide@2.3.0`
+
 ## 2.7.0 (Aug 15, 2019)
 
 #### :bug: Bug Fix
