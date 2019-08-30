@@ -2,6 +2,17 @@
 
 #### :bug: Bug Fix
 
+* [lighter-styleguide] runs GA in production mode only ([#123](https://github.com/lightingbeetle/lighter/pull/123))
+
+ 
+#### :tada: version updates
+
+* `lighter-styleguide@2.3.2`
+
+## 2.7.0 (Aug 30, 2019)
+
+#### :bug: Bug Fix
+
 * [lighter-styleguide] remove GA debug flag ([#120](https://github.com/lightingbeetle/lighter/pull/120))
 
 #### :house: Internal
