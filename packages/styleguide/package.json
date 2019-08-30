@@ -33,6 +33,7 @@
     "react-dom": "~16.8.3",
     "react-element-to-jsx-string": "~14.0.1",
     "react-frame-component": "~4.0.0",
+    "react-ga": "~2.6.0",
     "react-markings": "~1.3.0",
     "react-responsive": "~6.0.1",
     "react-router-dom": "~5.0.0",

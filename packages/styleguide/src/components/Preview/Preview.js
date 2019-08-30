@@ -12,6 +12,7 @@ import cx from 'classnames';
 import Select from 'react-select';
 import styled from 'styled-components';
 import chroma from 'chroma-js';
+import ReactGA from 'react-ga';
 
 import PreviewTitleBar from './PreviewTitleBar';
 import CodeExample from './CodeExample';
@@ -121,21 +122,42 @@ class Preview extends Component {
     this.setState({
       isCodeShown: !this.state.isCodeShown,
     });
+
+    ReactGA.event({
+      category: 'Preview',
+      action: 'toggleCode',
+    });
   }
 
   handleToggleInteract() {
     this.setState({
       showInteract: !this.state.showInteract,
     });
+
+    ReactGA.event({
+      category: 'Preview',
+      action: 'toggleInteract',
+    });
   }
 
   handlePreviewBackground = previewBackground => {
     this.setState({ previewBackground });
+
+    ReactGA.event({
+      category: 'Preview',
+      action: 'changeBackground',
+      label: previewBackground.label,
+    });
   };
 
   handleToggleFullscreen() {
     this.setState({
       isFullscreen: !this.state.isFullscreen,
+    });
+
+    ReactGA.event({
+      category: 'Preview',
+      action: 'toggleFullscreen',
     });
   }
 
