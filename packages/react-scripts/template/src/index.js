@@ -16,9 +16,9 @@ import * as serviceWorker from './serviceWorker';
 const { api } = Resource.createWithDomain();
 //Configure your redux store with your initial stare and global api
 //Store is configured with thunk as its default middleware
-configureStore({}, api);
+const store = configureStore({}, api);
 ReactDOM.render(
-  <Provider store={configureStore({}, api)}>
+  <Provider store={store}>
     <Router>
       <App />
     </Router>
