@@ -87,6 +87,9 @@
   "devDependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "svg-sprite-loader": "^4.1.6",
+    "svg-url-loader": "^3.0.1",
+    "svgo-loader": "^2.2.1",
     "ts-transform-async-to-mobx-flow": "0.0.10"
   },
   "optionalDependencies": {

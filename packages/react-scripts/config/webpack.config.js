@@ -55,6 +55,10 @@ const imageInlineSizeLimit = parseInt(
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
+const svgo = {
+  plugins: [{ removeViewBox: false }],
+};
+
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -381,6 +385,34 @@ module.exports = function(webpackEnv) {
                 limit: imageInlineSizeLimit,
                 name: 'static/media/[name].[hash:8].[ext]',
               },
+            },
+            {
+              test: /\.icon\.svg$/,
+              use: [
+                {
+                  loader: require.resolve('svg-sprite-loader'),
+                },
+                {
+                  loader: require.resolve('svgo-loader'),
+                  options: svgo,
+                },
+              ],
+            },
+            {
+              test: /\.svg$/,
+              use: [
+                {
+                  loader: require.resolve('svg-url-loader'),
+                  options: {
+                    limit: 10000,
+                    iesafe: true,
+                  },
+                },
+                {
+                  loader: require.resolve('svgo-loader'),
+                  options: svgo,
+                },
+              ],
             },
             {
               test: /\.(ts|tsx)$/,
