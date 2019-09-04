@@ -104,6 +104,9 @@ module.exports = function (webpackEnv) {
         publicPath,
         // TODO: remove this when upgrading to webpack 5
         futureEmitAssets: true,
+        // Prevents conflicts when multiple Webpack runtimes (from different apps)
+        // are used on the same page.
+        jsonpFunction: `webpackJsonp${appPackageJson.name}`,
       },
       // https://webpack.js.org/configuartion/optimization
       optimization: {
