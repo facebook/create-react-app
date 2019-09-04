@@ -68,14 +68,6 @@ module.exports = ({
         },
       },
     ].filter(Boolean);
-    if (preProcessor) {
-      loaders.push({
-        loader: require.resolve(preProcessor),
-        options: {
-          sourceMap: isEnvProduction && shouldUseSourceMap,
-        },
-      });
-    }
 
     if (preProcessor) {
       loaders.push(

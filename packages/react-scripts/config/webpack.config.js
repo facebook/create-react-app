@@ -104,15 +104,6 @@ module.exports = function (webpackEnv) {
         publicPath,
         // TODO: remove this when upgrading to webpack 5
         futureEmitAssets: true,
-        // Point sourcemap entries to original disk location (format as URL on Windows)
-        devtoolModuleFilenameTemplate: isEnvProduction
-          ? info =>
-            path
-              .relative(paths.appSrc, info.absoluteResourcePath)
-              .replace(/\\/g, '/')
-          : isEnvDevelopment &&
-          (info =>
-            path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
       },
       // https://webpack.js.org/configuartion/optimization
       optimization: {

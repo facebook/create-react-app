@@ -20,7 +20,7 @@ const safePostCssParser = require('postcss-safe-parser');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 
-module.exports = function({
+module.exports = function ({
   shouldUseSourceMap,
   isWsl,
   shouldInlineRuntimeChunk,
@@ -79,13 +79,13 @@ module.exports = function({
             parser: safePostCssParser,
             map: shouldUseSourceMap
               ? {
-                  // `inline: false` forces the sourcemap to be output into a
-                  // separate file
-                  inline: false,
-                  // `annotation: true` appends the sourceMappingURL to the end of
-                  // the css file, helping the browser find the sourcemap
-                  annotation: true,
-                }
+                // `inline: false` forces the sourcemap to be output into a
+                // separate file
+                inline: false,
+                // `annotation: true` appends the sourceMappingURL to the end of
+                // the css file, helping the browser find the sourcemap
+                annotation: true,
+              }
               : false,
           },
         }),
@@ -118,8 +118,8 @@ module.exports = function({
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       shouldInlineRuntimeChunk &&
-        // This is necessary to emit hot updates (currently CSS only)
-        new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
+      // This is necessary to emit hot updates (currently CSS only)
+      new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
