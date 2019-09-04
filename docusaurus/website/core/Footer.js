@@ -61,7 +61,7 @@ class Footer extends React.Component {
               Stack Overflow
             </a>
             <a
-              href="https://spectrum.chat/react"
+              href="https://spectrum.chat/create-react-app"
               target="_blank"
               rel="noreferrer noopener"
             >

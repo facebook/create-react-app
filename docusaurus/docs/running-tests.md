@@ -191,8 +191,6 @@ Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerpla
 
 ```js
 // react-testing-library renders your components to document.body,
-// this will ensure they're removed after each test.
-import '@testing-library/react/cleanup-after-each';
 // this adds jest-dom's custom assertions
 import '@testing-library/jest-dom/extend-expect';
 ```
