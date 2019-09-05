@@ -34,6 +34,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const eslint = require('eslint');
+const { imageLoader, assetPlugins } = require('./assets');
 
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -54,10 +55,6 @@ const imageInlineSizeLimit = parseInt(
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
-
-const svgo = {
-  plugins: [{ removeViewBox: false }],
-};
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -371,6 +368,10 @@ module.exports = function(webpackEnv) {
           include: paths.appSrc,
         },
         {
+          ...imageLoader(),
+          include: paths.appSrc,
+        },
+        {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.
@@ -378,42 +379,6 @@ module.exports = function(webpackEnv) {
             // "url" loader works like "file" loader except that it embeds assets
             // smaller than specified limit in bytes as data URLs to avoid requests.
             // A missing `test` is equivalent to a match.
-            {
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-              loader: require.resolve('url-loader'),
-              options: {
-                limit: imageInlineSizeLimit,
-                name: 'static/media/[name].[hash:8].[ext]',
-              },
-            },
-            {
-              test: /\.icon\.svg$/,
-              use: [
-                {
-                  loader: require.resolve('svg-sprite-loader'),
-                },
-                {
-                  loader: require.resolve('svgo-loader'),
-                  options: svgo,
-                },
-              ],
-            },
-            {
-              test: /\.svg$/,
-              use: [
-                {
-                  loader: require.resolve('svg-url-loader'),
-                  options: {
-                    limit: 10000,
-                    iesafe: true,
-                  },
-                },
-                {
-                  loader: require.resolve('svgo-loader'),
-                  options: svgo,
-                },
-              ],
-            },
             {
               test: /\.(ts|tsx)$/,
               use: [
@@ -745,6 +710,7 @@ module.exports = function(webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
+      ...assetPlugins(),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
