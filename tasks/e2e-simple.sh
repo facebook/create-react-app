@@ -83,7 +83,7 @@ fi
 
 # Bootstrap monorepo
 yarn
-lerna bootstrap
+yarn lerna bootstrap
 
 # Start the local NPM registry
 startLocalRegistry "$root_path"/tasks/verdaccio.yaml
