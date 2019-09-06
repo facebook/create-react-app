@@ -83,6 +83,7 @@ fi
 
 # Bootstrap monorepo
 yarn
+lerna bootstrap
 
 # Start the local NPM registry
 startLocalRegistry "$root_path"/tasks/verdaccio.yaml
@@ -97,6 +98,7 @@ startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 
 cd packages/react-error-overlay/
 yarn workspace react-error-overlay run eslint --max-warnings 0 src/
+
 yarn test
 if [ $APPVEYOR != 'True' ]; then
   # Flow started hanging on AppVeyor after we moved to Yarn Workspaces :-(
