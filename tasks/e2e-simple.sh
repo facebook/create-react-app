@@ -95,10 +95,8 @@ startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
 
-yarn workspace react-error-overlay add -D babel-eslint@10.0.3
-yarn workspace react-error-overlay run eslint --max-warnings 0 src/
-
 cd packages/react-error-overlay/
+./node_modules/.bin/eslint --max-warnings 0 src/
 yarn test
 if [ $APPVEYOR != 'True' ]; then
   # Flow started hanging on AppVeyor after we moved to Yarn Workspaces :-(

@@ -27,5 +27,9 @@
   },
   "dependencies": {
     "confusing-browser-globals": "^1.0.8"
+  },
+  "devDependencies": {
+    "babel-eslint": "10.0.3",
+    "eslint-plugin-react-hooks": "^2.0.1"
   }
 }
