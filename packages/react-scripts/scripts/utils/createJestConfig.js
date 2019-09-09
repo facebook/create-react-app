@@ -50,6 +50,9 @@ module.exports = (resolve, rootDir, isEjecting, location = 'src') => {
       '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': resolve(
         'config/jest/fileTransform.js'
       ),
+      '^(?!.*\\.(jpeg|jpg|png|webp)$)': resolve(
+        'config/jest/responsiveLoaderTransform.js'
+      ),
     },
     transformIgnorePatterns: [
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
