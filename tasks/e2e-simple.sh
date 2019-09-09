@@ -94,14 +94,11 @@ startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-error-overlay/src/
 
 cd packages/react-error-overlay/
-./node_modules/.bin/eslint --max-warnings 0 src/
 yarn test
-if [ $APPVEYOR != 'True' ]; then
-  # Flow started hanging on AppVeyor after we moved to Yarn Workspaces :-(
-  yarn flow
-fi
+yarn flow
 cd ../..
 
 cd packages/react-dev-utils/
