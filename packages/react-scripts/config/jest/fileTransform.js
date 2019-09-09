@@ -57,6 +57,6 @@ module.exports = {
       `;
     }
 
-    return `module.exports = ${assetFilename};`;
+    return `module.exports = ${assetFilenameParsed};`;
   },
 };
