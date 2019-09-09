@@ -19,30 +19,44 @@ declare module '*.gif' {
   export default src;
 }
 
-declare module '*.jpg' {
-  const src: string;
-  export default src;
+declare module '*.jpeg' {
+  export default {
+    src: string,
+    srcSet: string,
+    height: string,
+    width: string,
+  };
 }
 
-declare module '*.jpeg' {
-  const src: string;
-  export default src;
+declare module '*.jpg' {
+  export default {
+    src: string,
+    srcSet: string,
+    height: string,
+    width: string,
+  };
 }
 
 declare module '*.png' {
-  const src: string;
-  export default src;
+  export default {
+    src: string,
+    srcSet: string,
+    height: string,
+    width: string,
+  };
 }
 
 declare module '*.webp' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
 }
 
 declare module '*.svg' {
   import * as React from 'react';
 
-  export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >;
 
   const src: string;
   export default src;
