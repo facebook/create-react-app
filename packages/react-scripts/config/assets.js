@@ -25,7 +25,7 @@ function imageLoader({ useCacheLoader } = { useCacheLoader: false }) {
   }
 
   return {
-    test: /\.svg$/,
+    test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
     oneOf: [
       {
         resource: /\.icon\.svg$/,
