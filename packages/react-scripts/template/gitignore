@@ -28,3 +28,5 @@ firebase-debug.log
 
 #codecov
 codecov.yml
+
+/functions/node_modules
