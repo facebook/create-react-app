@@ -348,7 +348,7 @@ module.exports = function(webpackEnv) {
                   }
 
                   // We allow overriding the config only if the env variable is set
-                  if (process.env.EXTEND_ESLINT && eslintConfig) {
+                  if (process.env.EXTEND_ESLINT === 'true' && eslintConfig) {
                     return eslintConfig;
                   } else {
                     return {
@@ -429,7 +429,8 @@ module.exports = function(webpackEnv) {
                 // It enables caching results in ./node_modules/.cache/babel-loader/
                 // directory for faster rebuilds.
                 cacheDirectory: true,
-                cacheCompression: isEnvProduction,
+                // See #6846 for context on why cacheCompression is disabled
+                cacheCompression: false,
                 compact: isEnvProduction,
               },
             },
@@ -450,7 +451,8 @@ module.exports = function(webpackEnv) {
                   ],
                 ],
                 cacheDirectory: true,
-                cacheCompression: isEnvProduction,
+                // See #6846 for context on why cacheCompression is disabled
+                cacheCompression: false,
                 // @remove-on-eject-begin
                 cacheIdentifier: getCacheIdentifier(
                   isEnvProduction
