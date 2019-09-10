@@ -78,13 +78,7 @@ module.exports = {
         'no-undef': 'off',
 
         // Add TypeScript specific rules (and turn off ESLint equivalents)
-        '@typescript-eslint/consistent-type-assertions': [
-          'warn',
-          {
-            assertionStyle: 'as',
-            objectLiteralTypeAssertions: 'allow',
-          },
-        ],
+        '@typescript-eslint/consistent-type-assertions': 'warn',
         'no-array-constructor': 'off',
         '@typescript-eslint/no-array-constructor': 'warn',
         '@typescript-eslint/no-namespace': 'error',
