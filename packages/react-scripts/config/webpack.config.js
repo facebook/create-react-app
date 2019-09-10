@@ -567,6 +567,10 @@ module.exports = function(webpackEnv) {
                 /\.(js|mjs|jsx|ts|tsx)$/,
                 /\.html$/,
                 /\.json$/,
+                /\.bmp$/,
+                /\.gif$/,
+                /\.jpe?g$/,
+                /\.png$/,
                 /\.svg$/,
               ],
               options: {
