@@ -74,6 +74,13 @@ class Footer extends React.Component {
             >
               Twitter
             </a>
+            <a
+              href="https://www.contributor-covenant.org/version/1/4/code-of-conduct"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Contributor Covenant
+            </a>
           </div>
           <div>
             <h5>More</h5>
