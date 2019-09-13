@@ -10,7 +10,6 @@
 
 const fs = require('fs');
 const isWsl = require('is-wsl');
-const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
 const webpackMerge = require('webpack-merge');
@@ -43,7 +42,7 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function (webpackEnv) {
+module.exports = function(webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const mode = isEnvProduction
@@ -112,7 +111,7 @@ module.exports = function (webpackEnv) {
       optimization: {
         splitChunks: {
           name: false,
-          chunks: 'all'
+          chunks: 'all',
         },
         // Keep the runtime chunk separated to enable long term caching
         // https://twitter.com/wSokra/status/969679223278505985
@@ -185,7 +184,7 @@ module.exports = function (webpackEnv) {
           fileName: 'asset-manifest.json',
           publicPath: publicPath,
           generate: (seed, files) => {
-            const manifestFiles = files.reduce(function (manifest, file) {
+            const manifestFiles = files.reduce(function(manifest, file) {
               manifest[file.name] = file.path;
               return manifest;
             }, seed);
@@ -199,32 +198,32 @@ module.exports = function (webpackEnv) {
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         // TypeScript type checking
         useTypeScript &&
-        new ForkTsCheckerWebpackPlugin({
-          typescript: resolve.sync('typescript', {
-            basedir: paths.appNodeModules,
+          new ForkTsCheckerWebpackPlugin({
+            typescript: resolve.sync('typescript', {
+              basedir: paths.appNodeModules,
+            }),
+            async: isEnvDevelopment,
+            useTypescriptIncrementalApi: true,
+            checkSyntacticErrors: true,
+            resolveModuleNameModule: process.versions.pnp
+              ? `${__dirname}/pnpTs.js`
+              : undefined,
+            resolveTypeReferenceDirectiveModule: process.versions.pnp
+              ? `${__dirname}/pnpTs.js`
+              : undefined,
+            tsconfig: paths.appTsConfig,
+            reportFiles: [
+              '**',
+              '!**/__tests__/**',
+              '!**/?(*.)(spec|test).*',
+              '!**/src/setupProxy.*',
+              '!**/src/setupTests.*',
+            ],
+            watch: paths.appSrc,
+            silent: true,
+            // The formatter is invoked directly in WebpackDevServerUtils during development
+            formatter: isEnvProduction ? typescriptFormatter : undefined,
           }),
-          async: isEnvDevelopment,
-          useTypescriptIncrementalApi: true,
-          checkSyntacticErrors: true,
-          resolveModuleNameModule: process.versions.pnp
-            ? `${__dirname}/pnpTs.js`
-            : undefined,
-          resolveTypeReferenceDirectiveModule: process.versions.pnp
-            ? `${__dirname}/pnpTs.js`
-            : undefined,
-          tsconfig: paths.appTsConfig,
-          reportFiles: [
-            '**',
-            '!**/__tests__/**',
-            '!**/?(*.)(spec|test).*',
-            '!**/src/setupProxy.*',
-            '!**/src/setupTests.*',
-          ],
-          watch: paths.appSrc,
-          silent: true,
-          // The formatter is invoked directly in WebpackDevServerUtils during development
-          formatter: isEnvProduction ? typescriptFormatter : undefined,
-        }),
       ].filter(Boolean),
       // Some libraries import Node modules but don't use them in the browser.
       // Tell Webpack to provide empty mocks for them so importing them works.
