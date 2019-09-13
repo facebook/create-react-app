@@ -277,7 +277,10 @@ module.exports = function(webpackEnv) {
       },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: true,
+      // https://github.com/facebook/create-react-app/issues/5358
+      runtimeChunk: {
+        name: entrypoint => `runtime-${entrypoint.name}`,
+      },
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
