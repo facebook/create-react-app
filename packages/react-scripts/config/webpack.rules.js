@@ -100,6 +100,7 @@ module.exports = ({
       use: [
         {
           options: {
+            cache: true,
             formatter: require.resolve('react-dev-utils/eslintFormatter'),
             eslintPath: require.resolve('eslint'),
             // @remove-on-eject-begin
@@ -115,7 +116,7 @@ module.exports = ({
               // We allow overriding the config, only if it extends our config
               // (`extends` can be a string or array of strings).
               if (
-                process.env.EXTEND_ESLINT &&
+                process.env.EXTEND_ESLINT === 'true' &&
                 eslintConfig &&
                 eslintConfig.extends &&
                 eslintConfig.extends.includes('react-app')
@@ -195,7 +196,8 @@ module.exports = ({
             // It enables caching results in ./node_modules/.cache/babel-loader/
             // directory for faster rebuilds.
             cacheDirectory: true,
-            cacheCompression: isEnvProduction,
+            // See #6846 for context on why cacheCompression is disabled
+            cacheCompression: false,
             compact: isEnvProduction,
           },
         },
@@ -216,7 +218,8 @@ module.exports = ({
               ],
             ],
             cacheDirectory: true,
-            cacheCompression: isEnvProduction,
+            // See #6846 for context on why cacheCompression is disabled
+            cacheCompression: false,
             // @remove-on-eject-begin
             cacheIdentifier: getCacheIdentifier(mode, [
               'babel-plugin-named-asset-import',

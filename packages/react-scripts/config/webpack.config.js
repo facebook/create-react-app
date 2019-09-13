@@ -219,7 +219,6 @@ module.exports = function(webpackEnv) {
               '!**/src/setupProxy.*',
               '!**/src/setupTests.*',
             ],
-            watch: paths.appSrc,
             silent: true,
             // The formatter is invoked directly in WebpackDevServerUtils during development
             formatter: isEnvProduction ? typescriptFormatter : undefined,

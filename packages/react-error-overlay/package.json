@@ -35,9 +35,9 @@
   ],
   "devDependencies": {
     "@babel/code-frame": "7.5.5",
-    "@babel/core": "7.5.5",
+    "@babel/core": "7.6.0",
     "anser": "1.4.8",
-    "babel-eslint": "10.0.2",
+    "babel-eslint": "10.0.3",
     "babel-jest": "^24.8.0",
     "babel-loader": "8.0.6",
     "babel-preset-react-app": "^9.0.1",
