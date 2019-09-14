@@ -51,8 +51,8 @@
   ],
   "dependencies": {
     "@babel/code-frame": "7.5.5",
-    "address": "1.1.0",
-    "browserslist": "4.6.6",
+    "address": "1.1.2",
+    "browserslist": "4.7.0",
     "chalk": "2.4.2",
     "cross-spawn": "6.0.5",
     "detect-port-alt": "1.1.6",
@@ -71,14 +71,14 @@
     "pkg-up": "2.0.0",
     "react-error-overlay": "^6.0.1",
     "recursive-readdir": "2.2.2",
-    "shell-quote": "1.6.1",
-    "sockjs-client": "1.3.0",
+    "shell-quote": "1.7.2",
+    "sockjs-client": "1.4.0",
     "strip-ansi": "5.2.0",
     "text-table": "0.2.0"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "jest": "24.8.0"
+    "jest": "24.9.0"
   },
   "scripts": {
     "test": "cross-env FORCE_COLOR=true jest"
