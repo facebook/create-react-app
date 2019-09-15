@@ -26,6 +26,8 @@ v3.1.1 is a maintenance release that includes minor bug fixes and documentation 
 
 ### Migrating from 3.1.0 to 3.1.1
 
+Optionally remove `Disallow: /static/` from `public/robots.txt` if you want to allow your images and other static files to be indexed by search engines [#7508](https://github.com/facebook/create-react-app/pull/7508)
+
 Inside any created project that has not been ejected, run:
 
 ```sh
