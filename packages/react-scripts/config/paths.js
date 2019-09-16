@@ -103,6 +103,7 @@ module.exports = {
   patternsDir: resolveApp('src/patterns'),
   styleguideIndexJs: resolveApp('src/styleguide/index.js'),
   styleguideHtml: resolveApp('src/styleguide/styleguide.html'),
+  icons: resolveApp('src/assets/icons'),
 };
 
 // @remove-on-eject-begin
@@ -137,6 +138,7 @@ module.exports = {
   patternsDir: resolveApp('src/patterns'),
   styleguideIndexJs: resolveApp('src/styleguide/index.js'),
   styleguideHtml: resolveApp('src/styleguide/styleguide.html'),
+  icons: resolveApp('src/assets/icons'),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
@@ -177,6 +179,7 @@ if (
     patternsDir: resolveApp('src/patterns'),
     styleguideIndexJs: resolveApp('src/styleguide/index.js'),
     styleguideHtml: resolveApp('src/styleguide/styleguide.html'),
+    icons: resolveApp('src/assets/icons'),
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),

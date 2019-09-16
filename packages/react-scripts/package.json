@@ -87,7 +87,9 @@
   "devDependencies": {
     "@mdx-js/loader": "^1.4.5",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "svg-sprite-loader": "^4.1.6",
+    "svgo-loader": "^2.2.1"
   },
   "peerDependencies": {
     "node-sass": "~4.10.0"
