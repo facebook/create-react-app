@@ -135,6 +135,21 @@ module.exports = function(
     return;
   }
 
+  // modifies README.md commands based on user used package manager.
+  if (useYarn) {
+    try {
+      const data = fs.readFileSync(path.join(appPath, 'README.md'), 'utf8');
+      let formatted = data
+        .replace(/npm start/g, 'yarn start')
+        .replace(/npm test/g, 'yarn test')
+        .replace(/npm run build/g, 'yarn build')
+        .replace(/npm run eject/g, 'yarn eject');
+      fs.writeFileSync(path.join(appPath, 'README.md'), formatted, 'utf8');
+    } catch (err) {
+      // Silencing the error. As it fall backs to using default npm commands.
+    }
+  }
+
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862
   try {
