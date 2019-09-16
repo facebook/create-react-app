@@ -96,14 +96,14 @@ choosePort(HOST, DEFAULT_PORT)
       }),
     ];
 
-    try {
-      fs.accessSync(paths.styleguideIndexJs, fs.F_OK);
-      configs.push(
-        configFactory('development', {
-          hasStyleguide: true,
-        })
-      );
-    } catch (e) {} // eslint-disable-line
+    // try {
+    //   fs.accessSync(paths.styleguideIndexJs, fs.F_OK);
+    //   configs.push(
+    //     configFactory('development', {
+    //       hasStyleguide: true,
+    //     })
+    //   );
+    // } catch (e) {} // eslint-disable-line
 
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
@@ -115,11 +115,14 @@ choosePort(HOST, DEFAULT_PORT)
       errors: errors =>
         devServer.sockWrite(devServer.sockets, 'errors', errors),
     };
+
+    console.log(configs);
+
+    // process.exit(1);
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler({
       appName,
-      config, 
-      configStyleguide,
+      config: configs,
       devSocket,
       urls,
       useYarn,
@@ -142,7 +145,7 @@ choosePort(HOST, DEFAULT_PORT)
         return console.log(err);
       }
       if (isInteractive) {
-        clearConsole();
+        // clearConsole();
       }
 
       // We used to support resolving modules according to `NODE_PATH`.
