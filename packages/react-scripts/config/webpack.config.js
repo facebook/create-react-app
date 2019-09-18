@@ -202,6 +202,8 @@ module.exports = function(webpackEnv) {
       // Prevents conflicts when multiple Webpack runtimes (from different apps)
       // are used on the same page.
       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
+      library: env.LIBRARY_NAME,
+      libraryTarget: env.LIBRARY_TARGET
     },
     optimization: {
       minimize: isEnvProduction,
