@@ -1,5 +1,12 @@
 # `backpack-react-scripts` Change Log
 
+## 7.0.1 - 2019-09-18
+
+### Fixed
+
+- Update `node-sass` to `4.12.0` to support Node 12 rollout.
+- Update `fsevents` to `1.2.9` to support Node 12 rollout.
+
 ## 7.0.0 - 2019-01-11
 
 ### Breaking
