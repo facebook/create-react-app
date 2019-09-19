@@ -32,7 +32,7 @@ HTTPS=true npm start
 
 Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
 
-You can also specify a custom certificate (available in `react-scripts@2.2.0` and higher).
+You can also specify a custom certificate (available in `react-scripts@3.2.0` and higher).
 
 To set a custom certificate, set the `SSL_CRT_FILE` and `SSL_KEY_FILE` environment variables to the path of the certificate and key files in the same way you do for `HTTPS` above. Note that you will also need to set `HTTPS=true`.
 
