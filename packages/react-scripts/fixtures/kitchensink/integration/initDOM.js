@@ -24,11 +24,11 @@ export const fetchFile = url => {
   );
 };
 
-const fileResourceLoader = new class FileResourceLoader extends ResourceLoader {
+const fileResourceLoader = new (class FileResourceLoader extends ResourceLoader {
   fetch(href, options) {
     return Promise.resolve(fetchFile(url.parse(href)));
   }
-}();
+})();
 
 if (!process.env.E2E_FILE && !process.env.E2E_URL) {
   it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {
@@ -63,6 +63,13 @@ export default feature =>
 
       const { document } = window;
 
+      const cancelToken = setTimeout(() => {
+        // Cleanup jsdom instance since we don't need it anymore
+        window.close();
+
+        reject(`Timed out loading feature: ${feature}`);
+      }, 10000);
+
       document.addEventListener(
         'ReactFeatureDidMount',
         () => resolve(document),
@@ -71,6 +78,8 @@ export default feature =>
       document.addEventListener(
         'ReactFeatureError',
         () => {
+          clearTimeout(cancelToken);
+
           // Cleanup jsdom instance since we don't need it anymore
           window.close();
 

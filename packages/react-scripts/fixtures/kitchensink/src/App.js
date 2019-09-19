@@ -68,7 +68,7 @@ class App extends Component {
     // This works around an issue of a duplicate hash in the href
     // Ex: http://localhost:3001/#array-destructuring#array-destructuring
     // This seems like a jsdom bug as the URL in initDom.js appears to be correct
-    const feature = url.slice(url.lastIndexOf("#") + 1);
+    const feature = url.slice(url.lastIndexOf('#') + 1);
 
     switch (feature) {
       case 'array-destructuring':
@@ -238,6 +238,11 @@ class App extends Component {
         break;
       case 'base-url':
         import('./features/config/BaseUrl').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'dynamic-import':
+        import('./features/webpack/DynamicImport').then(f =>
           this.setFeature(f.default)
         );
         break;
