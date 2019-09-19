@@ -77,5 +77,11 @@
   },
   "optionalDependencies": {
     "fsevents": "1.2.4"
-  }
+  },
+  "browserslist": [
+    ">0.5%",
+    "not dead",
+    "ie >= 11",
+    "not op_mini all"
+  ]
 }

@@ -67,7 +67,9 @@
     "react-scripts": "2.1.1"
   },
   "browserslist": [
-    "> 0.5%",
-    "ie 11"
+    ">0.5%",
+    "not dead",
+    "ie >= 11",
+    "not op_mini all"
   ]
 }
