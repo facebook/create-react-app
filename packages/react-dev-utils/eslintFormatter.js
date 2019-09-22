@@ -23,7 +23,7 @@ function formatter(results) {
   let hasErrors = false;
   let reportContainsErrorRuleIDs = false;
 
-  results.forEach(result => {
+  results && results.forEach(result => {
     let messages = result.messages;
     if (messages.length === 0) {
       return;
