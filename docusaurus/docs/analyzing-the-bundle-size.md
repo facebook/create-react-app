@@ -17,7 +17,7 @@ npm install --save source-map-explorer
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add source-map-explorer
+yarn add --dev source-map-explorer
 ```
 
 Then in `package.json`, add the following line to `scripts`:
