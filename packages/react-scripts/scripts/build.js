@@ -68,10 +68,10 @@ try {
   hasAppHtml = true;
 } catch (e) {} //eslint-disable-line
 
-try {
-  fs.accessSync(paths.styleguideIndexJs, fs.F_OK);
-  hasStyleguide = true;
-} catch (e) {} // eslint-disable-line
+// try {
+//   fs.accessSync(paths.styleguideIndexJs, fs.F_OK);
+//   hasStyleguide = true;
+// } catch (e) {} // eslint-disable-line
 
 // Generate configuration
 const config = configFactory('production', {

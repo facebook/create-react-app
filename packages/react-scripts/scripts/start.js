@@ -116,9 +116,6 @@ choosePort(HOST, DEFAULT_PORT)
         devServer.sockWrite(devServer.sockets, 'errors', errors),
     };
 
-    console.log(configs);
-
-    // process.exit(1);
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler({
       appName,

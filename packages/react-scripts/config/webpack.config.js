@@ -246,8 +246,8 @@ module.exports = function(webpackEnv, options = {}) {
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
-        ? '[name].js'
-        : isEnvDevelopment && '[name].js',
+        ? '[name].[contenthash:8].chunk.js'
+        : isEnvDevelopment && '[name].chunk.js',
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
       publicPath: publicPath,
