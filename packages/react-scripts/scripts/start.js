@@ -45,9 +45,11 @@ const {
 } = require('@lighting-beetle/lighter-react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('@lighting-beetle/lighter-react-dev-utils/openBrowser');
 const paths = require('../config/paths');
+const getEntries = require('./utils/getEntries');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
+const appPackageJson = require(paths.appPackageJson);
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
@@ -83,27 +85,14 @@ choosePort(HOST, DEFAULT_PORT)
       // We have not found a port.
       return;
     }
-
-    let hasAppHtml;
-    try {
-      fs.accessSync(paths.appHtml, fs.F_OK);
-      hasAppHtml = true;
-    } catch (e) {} //eslint-disable-line
-
     const configs = [
       configFactory('development', {
-        hasAppHtml,
+        entries: {
+          ...getEntries('', paths.appSrc, '/*.{js,scss,css}'),
+        },
+        spaEntries: appPackageJson.spaEntries,
       }),
     ];
-
-    // try {
-    //   fs.accessSync(paths.styleguideIndexJs, fs.F_OK);
-    //   configs.push(
-    //     configFactory('development', {
-    //       hasStyleguide: true,
-    //     })
-    //   );
-    // } catch (e) {} // eslint-disable-line
 
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;

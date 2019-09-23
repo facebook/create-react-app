@@ -65,49 +65,15 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-// Lighter custom entries
-function getEntries(type, dirPath, entryFiles) {
-  return entryFiles.reduce((entries, entryFile) => {
-    // converts entryFile path to platform specific style
-    // this fixes windows/unix path inconsitence
-    // because node-glob always returns path with unix style path separators
-    entryFile = path.join(entryFile);
-
-    const localPath = entryFile.split(dirPath)[1];
-
-    let entryName = path.join(type, localPath.split('.js')[0]);
-
-    entries[entryName] = path.join(dirPath, localPath);
-
-    return entries;
-  }, {});
-}
-
-// Create dynamic entries based on contents of components directory
-const componentsEntryFiles = [].concat(
-  glob.sync(path.join(paths.componentsDir, '/*.js')),
-  glob.sync(path.join(paths.componentsDir, '/**/index.js')),
-  glob.sync(path.join(paths.componentsDir, '/**/*.static.js'))
-);
-
-// Create dynamic entries based on contents of components directory
-const libEntryFiles = [].concat(
-  glob.sync(path.join(paths.libDir, '*.{js,scss,css}'))
-);
-
-const patternsEntryFiles = [].concat(
-  glob.sync(path.join(paths.patternsDir, '/**/index.js'))
-);
-
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function(webpackEnv, options = {}) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
-  const { hasStyleguide, hasAppHtml } = options;
+  const { entries, spaEntries = [] } = options;
 
-  const entries = Object.assign(
+  const allEntries = Object.assign(
     {},
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
@@ -122,28 +88,7 @@ module.exports = function(webpackEnv, options = {}) {
     isEnvDevelopment
       ? { hotDevClient: require.resolve('react-dev-utils/webpackHotDevClient') }
       : {},
-    getEntries('lib', paths.libDir, libEntryFiles),
-    isEnvProduction
-      ? {
-          ...getEntries(
-            'components',
-            paths.componentsDir,
-            componentsEntryFiles
-          ),
-          ...getEntries('patterns', paths.patternsDir, patternsEntryFiles),
-        }
-      : {},
-    hasStyleguide
-      ? {
-          styleguide: paths.styleguideIndexJs,
-        }
-      : {
-          // Finally, this is your app's code:
-          app: paths.appIndexJs,
-          // We include the app code last so that if there is a runtime error during
-          // initialization, it doesn't blow up the WebpackDevServer client, and
-          // changing JS code would still trigger a refresh.
-        }
+    entries,
   );
 
   // Webpack uses `publicPath` to determine where the app is being served from.
@@ -233,7 +178,7 @@ module.exports = function(webpackEnv, options = {}) {
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: entries,
+    entry: allEntries,
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
@@ -661,7 +606,7 @@ module.exports = function(webpackEnv, options = {}) {
     },
     plugins: [
       new StaticSiteGeneratorPlugin({
-        entry: 'app',
+        entry: 'index',
         globals: Object.assign(
           {},
           new JSDOM(``, { url: 'http://localhost' }).window,
@@ -669,47 +614,46 @@ module.exports = function(webpackEnv, options = {}) {
         ),
       }),
       // Generates an `styleguide.html` file with the <script> injected.
-      (hasStyleguide || hasAppHtml) &&
-        new HtmlWebpackPlugin(
-          Object.assign(
-            {},
-            {
-              inject: true,
-              template: hasStyleguide ? paths.styleguideHtml : paths.appHtml,
-              excludeChunks: [
-                ...Object.keys({
-                  ...getEntries(
-                    'components',
-                    paths.componentsDir,
-                    componentsEntryFiles
-                  ),
-                  ...getEntries(
-                    'patterns',
-                    paths.patternsDir,
-                    patternsEntryFiles
-                  ),
-                  ...getEntries('lib', paths.libDir, libEntryFiles),
-                }),
-              ],
-            },
-            isEnvProduction
-              ? {
-                  minify: {
-                    removeComments: true,
-                    collapseWhitespace: true,
-                    removeRedundantAttributes: true,
-                    useShortDoctype: true,
-                    removeEmptyAttributes: true,
-                    removeStyleLinkTypeAttributes: true,
-                    keepClosingSlash: true,
-                    minifyJS: true,
-                    minifyCSS: true,
-                    minifyURLs: true,
-                  },
-                }
-              : undefined
-          )
-        ),
+      ...spaEntries.map(spaEntry => new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            inject: true,
+            template: path.join(paths.appPublic, spaEntry, '.html'),
+            // excludeChunks: [
+            //   ...Object.keys({
+            //     ...getEntries(
+            //       'components',
+            //       paths.componentsDir,
+            //       componentsEntryFiles
+            //     ),
+            //     ...getEntries(
+            //       'patterns',
+            //       paths.patternsDir,
+            //       patternsEntryFiles
+            //     ),
+            //     ...getEntries('lib', paths.libDir, libEntryFiles),
+            //   }),
+            // ],
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      )),
       new SpriteLoaderPlugin({ plainSprite: true }),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
