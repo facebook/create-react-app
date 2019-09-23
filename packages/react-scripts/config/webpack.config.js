@@ -342,6 +342,7 @@ module.exports = function(webpackEnv) {
                 eslintPath: require.resolve('eslint'),
                 resolvePluginsRelativeTo: __dirname,
                 // @remove-on-eject-begin
+                ignore: process.env.EXTEND_ESLINT === 'true',
                 baseConfig: (() => {
                   const eslintCli = new eslint.CLIEngine();
                   let eslintConfig;
