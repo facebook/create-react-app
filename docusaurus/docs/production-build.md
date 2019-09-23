@@ -15,7 +15,7 @@ When running a production build of freshly created Create React App application,
 
 - These files can either be _vendor_ code, or [code splitting chunks](code-splitting.md). _Vendor_ code includes modules that you've imported from within `node_modules`. One of the potential advantages with splitting your _vendor_ and _application_ code is to enable [long term caching techniques](#static-file-caching) to improve application loading performance. Since _vendor_ code tends to change less often than the actual _application_ code, the browser will be able to cache them separately, and won't re-download them each time the app code changes.
 
-`runtime~main.[hash].js`
+`runtime-main.[hash].js`
 
 - This is a small chunk of [webpack runtime](https://webpack.js.org/configuration/optimization/#optimization-runtimechunk) logic which is used to load and run your application. The contents of this will be embedded in your `build/index.html` file by default to save an additional network request. You can opt out of this by specifying `INLINE_RUNTIME_CHUNK=false` as documented in our [advanced configuration](advanced-configuration.md), which will load this chunk instead of embedding it in your `index.html`.
 

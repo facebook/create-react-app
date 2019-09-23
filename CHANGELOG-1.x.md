@@ -1,6 +1,6 @@
 ## 2.0.3 and Newer Versions
 
-**Please refer to [CHANGELOG.md](./CHANGELOG.md) for the newer versions.**
+**Please refer to [CHANGELOG-2.x.md](./CHANGELOG-2.x.md) for the 2.x range, and [CHANGELOG.md](CHANGELOG.md) for the newer versions.**
 
 ## 1.1.5 (August 24, 2018)
 

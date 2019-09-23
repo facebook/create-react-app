@@ -1,3 +1,87 @@
+## 3.1.2 (2019-09-19)
+
+v3.1.2 is a maintenance release that includes minor bug fixes and documentation updates.
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#7679](https://github.com/facebook/create-react-app/pull/7679) Change runtime chunk name separator from tilde to dash ([@javadoug](https://github.com/javadoug))
+  - [#7538](https://github.com/facebook/create-react-app/pull/7538) Explicitly checking that EXTEND_ESLINT is true ([@BrockWills](https://github.com/BrockWills))
+- `babel-preset-react-app`, `react-error-overlay`, `react-scripts`
+  - [#7662](https://github.com/facebook/create-react-app/pull/7662) Fix build ([@ianschmitz](https://github.com/ianschmitz))
+
+#### :nail_care: Enhancement
+
+- `react-scripts`
+  - [#7704](https://github.com/facebook/create-react-app/pull/7704) Add new logo ([@iansu](https://github.com/iansu))
+  - [#7587](https://github.com/facebook/create-react-app/pull/7587) Minor performance improvements ([@deftomat](https://github.com/deftomat))
+  - [#7633](https://github.com/facebook/create-react-app/pull/7633) Disable babel-loader's cacheCompression ([@jleclanche](https://github.com/jleclanche))
+
+#### :memo: Documentation
+
+- [#7616](https://github.com/facebook/create-react-app/pull/7616) Update deployment.md with another AWS example ([@AndrewBestbier](https://github.com/AndrewBestbier))
+- [#7663](https://github.com/facebook/create-react-app/pull/7663) Remove --single-quote from prettier examples ([@brlewis](https://github.com/brlewis))
+- [#7659](https://github.com/facebook/create-react-app/pull/7659) Update running-tests.md ([@weyert](https://github.com/weyert))
+- [#7459](https://github.com/facebook/create-react-app/pull/7459) Update troubleshooting.md ([@prevostc](https://github.com/prevostc))
+- [#7650](https://github.com/facebook/create-react-app/pull/7650) Adopt Contributor Covenant ([@iansu](https://github.com/iansu))
+- [#7620](https://github.com/facebook/create-react-app/pull/7620) cleanup-after-each is no longer necessary! ([@iHmD](https://github.com/iHmD))
+- [#7613](https://github.com/facebook/create-react-app/pull/7613) Fix seams between changelog majors ([@emilpalsson](https://github.com/emilpalsson))
+- [#7368](https://github.com/facebook/create-react-app/pull/7368) Correcting proxy sample ([@szabolcs-szilagyi](https://github.com/szabolcs-szilagyi))
+- [#7536](https://github.com/facebook/create-react-app/pull/7536) add a migration step to remove static from robots.txt ([@lookfirst](https://github.com/lookfirst))
+- [#7521](https://github.com/facebook/create-react-app/pull/7521) Show logo for mobile views in create-react-app.dev ([@GrooChu](https://github.com/GrooChu))
+
+#### :house: Internal
+
+- `react-scripts`
+  - [#7526](https://github.com/facebook/create-react-app/pull/7526) The variable dotenvFiles is never reassigned - use const instead ([@Primajin](https://github.com/Primajin))
+  - [#7585](https://github.com/facebook/create-react-app/pull/7585) remove trailing spaces ([@xiaoxiangmoe](https://github.com/xiaoxiangmoe))
+
+#### :hammer: Underlying Tools
+
+- `babel-plugin-named-asset-import`, `confusing-browser-globals`, `react-app-polyfill`, `react-dev-utils`, `react-error-overlay`, `react-scripts`
+  - [#7681](https://github.com/facebook/create-react-app/pull/7681) Bump dependencies ([@ianschmitz](https://github.com/ianschmitz))
+- `react-scripts`
+  - [#7531](https://github.com/facebook/create-react-app/pull/7531) Upgrade dotenv-expand to fix issues ([@DominicTobias](https://github.com/DominicTobias))
+- `eslint-config-react-app`, `react-scripts`
+  - [#7540](https://github.com/facebook/create-react-app/pull/7540) Bump version of @typescript-eslint/\* ([@pierreneter](https://github.com/pierreneter))
+
+#### Committers: 20
+
+- Andrew ([@AndrewBestbier](https://github.com/AndrewBestbier))
+- Brock Wills ([@BrockWills](https://github.com/BrockWills))
+- Clément Prévost ([@prevostc](https://github.com/prevostc))
+- Dominic Tobias ([@DominicTobias](https://github.com/DominicTobias))
+- Doug Ross ([@javadoug](https://github.com/javadoug))
+- Emil Pålsson ([@emilpalsson](https://github.com/emilpalsson))
+- Federico Zivolo ([@FezVrasta](https://github.com/FezVrasta))
+- Ian Schmitz ([@ianschmitz](https://github.com/ianschmitz))
+- Ian Sutherland ([@iansu](https://github.com/iansu))
+- Jannis Hell ([@Primajin](https://github.com/Primajin))
+- Jerome Leclanche ([@jleclanche](https://github.com/jleclanche))
+- Jon Stevens ([@lookfirst](https://github.com/lookfirst))
+- Sabesh Rajendran ([@GrooChu](https://github.com/GrooChu))
+- Tomáš Szabo ([@deftomat](https://github.com/deftomat))
+- Weyert de Boer ([@weyert](https://github.com/weyert))
+- ZHAO Jinxiang ([@xiaoxiangmoe](https://github.com/xiaoxiangmoe))
+- [@brlewis](https://github.com/brlewis)
+- [@iHmD](https://github.com/iHmD)
+- [@pierreneter](https://github.com/pierreneter)
+- szabi ([@szabolcs-szilagyi](https://github.com/szabolcs-szilagyi))
+
+### Migrating from 3.1.1 to 3.1.2
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.1.2
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.1.2
+```
+
 ## 3.1.1 (2019-08-13)
 
 v3.1.1 is a maintenance release that includes minor bug fixes and documentation updates.

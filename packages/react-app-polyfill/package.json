@@ -1,6 +1,6 @@
 {
   "name": "react-app-polyfill",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Polyfills for various browsers including commonly used language features",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "stable.js"
   ],
   "dependencies": {
-    "core-js": "3.1.4",
+    "core-js": "3.2.1",
     "object-assign": "4.1.1",
     "promise": "8.0.3",
     "raf": "3.4.1",

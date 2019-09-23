@@ -44,7 +44,7 @@ module.exports = {
       template: path.resolve('public/index.html'),
     }),
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
-    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
       PUBLIC_URL: publicUrl,
       // You can pass any key-value pairs, this was just an example.
