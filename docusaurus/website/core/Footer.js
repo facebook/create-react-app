@@ -61,7 +61,7 @@ class Footer extends React.Component {
               Stack Overflow
             </a>
             <a
-              href="https://spectrum.chat/react"
+              href="https://spectrum.chat/create-react-app"
               target="_blank"
               rel="noreferrer noopener"
             >
@@ -73,6 +73,13 @@ class Footer extends React.Component {
               rel="noreferrer noopener"
             >
               Twitter
+            </a>
+            <a
+              href="https://www.contributor-covenant.org/version/1/4/code-of-conduct"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Contributor Covenant
             </a>
           </div>
           <div>
