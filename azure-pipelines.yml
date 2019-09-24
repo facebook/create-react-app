@@ -1,0 +1,78 @@
+#
+# Azure Pipelines configuration for building and testing create-react-app on Linux, Windows, and macOS.
+#
+
+trigger:
+- master
+
+variables:
+  CI: true
+  # Overrides the Yarn and NPM cache directories so they are on the same drive as the source. This helps improve build performance on Windows hosted agents.
+  YARN_CACHE_FOLDER: $(Build.SourcesDirectory)/../yarn-cache
+  NPM_CONFIG_CACHE: $(Build.SourcesDirectory)/../npm-cache
+  # Sets TEMP to be on the same drive as the cloned source on Windows. This avoids test scripts that "cd" into a directory under TEMP from failing because this directory is on a different drive from the current directory.
+  VSTS_OVERWRITE_TEMP: True
+  # Override Verdaccio package to use. This is temporary and is needed to avoid socket timeouts on hosted Windows agent (on Azure). This also changes Verdaccio to return a 503 (service unavailable) instead of a 404 (not found) when the connection to the uplink timesout.
+  VERDACCIO_PACKAGE: https://github.com/willsmythe/verdaccio/releases/download/create-react-app/verdaccio-4.0.0-alpha.8.tgz
+
+# ******************************************************************************
+# Simple test suite
+# ******************************************************************************
+jobs:
+- template: azure-pipelines-test-job.yml
+  parameters:
+    name: Simple
+    testScript: tasks/e2e-simple.sh
+
+# ******************************************************************************
+# Installs test suite
+# ******************************************************************************
+- template: azure-pipelines-test-job.yml
+  parameters:
+    name: Installs
+    testScript: tasks/e2e-installs.sh
+
+# ******************************************************************************
+# Kitchensink test suite
+# ******************************************************************************
+- template: azure-pipelines-test-job.yml
+  parameters:
+    name: Kitchensink
+    testScript: tasks/e2e-kitchensink.sh
+
+# ******************************************************************************
+# Kitchensink Eject test suite
+# ******************************************************************************
+- template: azure-pipelines-test-job.yml
+  parameters:
+    name: KitchensinkEject
+    testScript: tasks/e2e-kitchensink-eject.sh
+
+# ******************************************************************************
+# Behavior test suite
+# ******************************************************************************
+- template: azure-pipelines-test-job.yml
+  parameters:
+    name: Behavior
+    testScript: tasks/e2e-behavior.sh
+    configurations:
+      LinuxNode8:    { vmImage: 'ubuntu-16.04',   nodeVersion: 8.x  }
+      LinuxNode10:   { vmImage: 'ubuntu-16.04',   nodeVersion: 10.x }
+      WindowsNode8:  { vmImage: 'vs2017-win2016', nodeVersion: 8.x  }
+      WindowsNode10: { vmImage: 'vs2017-win2016', nodeVersion: 10.x }
+      MacNode8:      { vmImage: 'macOS-10.13',    nodeVersion: 8.x  }
+      MacNode10:     { vmImage: 'macOS-10.13',    nodeVersion: 10.x }
+
+# ******************************************************************************
+# Old Node test suite
+# ******************************************************************************
+- job: OldNode
+  pool:
+    vmImage: ubuntu-16.04
+  steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: 6.x
+      displayName: 'Install Node.js 6.x'
+    - bash: tasks/e2e-old-node.sh
+      displayName: 'Run tests'
