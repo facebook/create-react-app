@@ -54,7 +54,7 @@ describe('Integration', () => {
         `${prefix}.`
       );
       expect(
-        doc.querySelector('head link[rel="shortcut icon"]').getAttribute('href')
+        doc.querySelector('head link[rel="icon"]').getAttribute('href')
       ).toBe(`${prefix}/favicon.ico`);
     });
 
