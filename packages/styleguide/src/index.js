@@ -1,10 +1,11 @@
 import React from 'react';
-import styleguide from './lib/styleguide';
+import styleguide from './styleguide';
 
 import Page from './components/Page';
 
 import KichenSink from './pages/KitchenSink';
 import PreviewDocs from './components/Preview/Preview.docs';
+import './polyfills';
 
 styleguide({
   config: {
