@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@date-io/moment": "1.x",
-    "@formatjs/intl-relativetimeformat": "2.x",
+    "@formatjs/intl-relativetimeformat": "4.x",
     "@material-ui/core": "4.x",
     "@material-ui/styles": "4.x",
     "@material-ui/icons": "4.x",
@@ -46,7 +46,7 @@
     "redux": "4.x",
     "redux-form": "8.x",
     "redux-form-material-ui": "5.0.0-beta.3",
-    "redux-persist": "5.x",
+    "redux-persist": "6.x",
     "redux-thunk": "2.x",
     "rmw-shell": "7.x",
     "react-scripts": "3.x"
