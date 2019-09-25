@@ -37,6 +37,7 @@ const webpack = require('webpack');
 const configFactory = require('../config/webpack.config');
 const paths = require('../config/paths');
 const getEntries = require('./utils/getEntries');
+const getSpaEntries = require('./utils/getSpaEntires');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
@@ -63,19 +64,6 @@ if (!checkRequiredFiles([paths.appIndexJs])) {
 const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
 
-let hasAppHtml;
-let hasStyleguide;
-
-try {
-  fs.accessSync(paths.appHtml, fs.F_OK);
-  hasAppHtml = true;
-} catch (e) {} //eslint-disable-line
-
-// try {
-//   fs.accessSync(paths.styleguideIndexJs, fs.F_OK);
-//   hasStyleguide = true;
-// } catch (e) {} // eslint-disable-line
-
 // Generate configuration
 const config = configFactory('production', {
   entries: {
@@ -84,7 +72,7 @@ const config = configFactory('production', {
     ...getEntries('components', paths.componentsDir, '/**/*.static.js'),
     ...getEntries('', paths.appSrc, '/*.{js,scss,css}'),
   },
-  spaEntries: appPackageJson.spaEntries,
+  spaEntries: getSpaEntries(),
 });
 
 // We require that you explicitly set browsers and do not fall back to

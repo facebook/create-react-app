@@ -46,6 +46,7 @@ const {
 const openBrowser = require('@lighting-beetle/lighter-react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 const getEntries = require('./utils/getEntries');
+const getSpaEntries = require('./utils/getSpaEntires');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
@@ -90,7 +91,7 @@ choosePort(HOST, DEFAULT_PORT)
         entries: {
           ...getEntries('', paths.appSrc, '/*.{js,scss,css}'),
         },
-        spaEntries: appPackageJson.spaEntries,
+        spaEntries: getSpaEntries(),
       }),
     ];
 

@@ -88,7 +88,7 @@ module.exports = function(webpackEnv, options = {}) {
     isEnvDevelopment
       ? { hotDevClient: require.resolve('react-dev-utils/webpackHotDevClient') }
       : {},
-    entries,
+    entries
   );
 
   // Webpack uses `publicPath` to determine where the app is being served from.
@@ -593,7 +593,12 @@ module.exports = function(webpackEnv, options = {}) {
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/, paths.icons],
+              exclude: [
+                /\.(js|mjs|jsx|ts|tsx)$/,
+                /\.html$/,
+                /\.json$/,
+                paths.icons,
+              ],
               options: {
                 name: 'media/[name].[ext]',
               },
@@ -605,55 +610,60 @@ module.exports = function(webpackEnv, options = {}) {
       ],
     },
     plugins: [
-      new StaticSiteGeneratorPlugin({
-        entry: 'index',
-        globals: Object.assign(
-          {},
-          new JSDOM(``, { url: 'http://localhost' }).window,
-          { __lighterIsServer__: true }
-        ),
-      }),
+      !spaEntries.map(entry => entry.name).includes('index') &&
+        new StaticSiteGeneratorPlugin({
+          entry: 'index',
+          globals: Object.assign(
+            {},
+            new JSDOM(``, { url: 'http://localhost' }).window,
+            { __lighterIsServer__: true }
+          ),
+        }),
       // Generates an `styleguide.html` file with the <script> injected.
-      ...spaEntries.map(spaEntry => new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            template: path.join(paths.appPublic, spaEntry, '.html'),
-            // excludeChunks: [
-            //   ...Object.keys({
-            //     ...getEntries(
-            //       'components',
-            //       paths.componentsDir,
-            //       componentsEntryFiles
-            //     ),
-            //     ...getEntries(
-            //       'patterns',
-            //       paths.patternsDir,
-            //       patternsEntryFiles
-            //     ),
-            //     ...getEntries('lib', paths.libDir, libEntryFiles),
-            //   }),
-            // ],
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      )),
+      ...spaEntries.map(
+        spaEntry =>
+          new HtmlWebpackPlugin(
+            Object.assign(
+              {},
+              {
+                inject: true,
+                template: spaEntry.path,
+                chunks: [spaEntry.name],
+                // excludeChunks: [
+                //   ...Object.keys({
+                //     ...getEntries(
+                //       'components',
+                //       paths.componentsDir,
+                //       componentsEntryFiles
+                //     ),
+                //     ...getEntries(
+                //       'patterns',
+                //       paths.patternsDir,
+                //       patternsEntryFiles
+                //     ),
+                //     ...getEntries('lib', paths.libDir, libEntryFiles),
+                //   }),
+                // ],
+              },
+              isEnvProduction
+                ? {
+                    minify: {
+                      removeComments: true,
+                      collapseWhitespace: true,
+                      removeRedundantAttributes: true,
+                      useShortDoctype: true,
+                      removeEmptyAttributes: true,
+                      removeStyleLinkTypeAttributes: true,
+                      keepClosingSlash: true,
+                      minifyJS: true,
+                      minifyCSS: true,
+                      minifyURLs: true,
+                    },
+                  }
+                : undefined
+            )
+          )
+      ),
       new SpriteLoaderPlugin({ plainSprite: true }),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
