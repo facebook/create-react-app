@@ -237,15 +237,15 @@ module.exports = function(webpackEnv) {
             mangle: {
               safari10: true,
             },
+            // Added for profiling in devtools
+            keep_classnames: isEnvProductionProfile,
+            keep_fnames: isEnvProductionProfile,
             output: {
               ecma: 5,
               comments: false,
               // Turned on because emoji and regex is not minified properly using default
               // https://github.com/facebook/create-react-app/issues/2488
               ascii_only: true,
-              // Added for profiling in devtools
-              keep_classnames: isEnvProductionProfile,
-              keep_fnames: isEnvProductionProfile,
             },
           },
           // Use multi-process parallel running to improve the build speed
