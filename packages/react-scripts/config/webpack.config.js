@@ -65,9 +65,10 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 module.exports = function(webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
-  // Check to that is used for enabling profiling in alias object
+  // A Environment Check that is used for enabling profiling in Production
+  // utilized in alias object
   const isEnvProductionProfile =
-    isEnvProduction && Boolean(process.env.PROFILE_APP);
+    isEnvProduction && process.env.PROFILE_APP === 'true';
 
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
