@@ -202,6 +202,9 @@ module.exports = function(webpackEnv) {
       // Prevents conflicts when multiple Webpack runtimes (from different apps)
       // are used on the same page.
       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
+      // this defaults to 'window', but by setting it to 'this' then
+      // module chunks which are built will work in web workers as well.
+      globalObject: 'this',
     },
     optimization: {
       minimize: isEnvProduction,
