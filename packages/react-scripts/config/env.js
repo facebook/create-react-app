@@ -85,6 +85,11 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
+        // We support configuring the sockjs pathname during development.
+        // This lets a developer run multiple simultaneous projects.
+        // It is used as the connection `pathname` in webpackHotDevClient.
+        // It is used as the `sockPath` option in webpack dev server.
+        WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH || '/sockjs-node',
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
