@@ -13,7 +13,6 @@ const isWsl = require('is-wsl');
 const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
-const glob = require('glob');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -632,7 +631,8 @@ module.exports = function(webpackEnv, options = {}) {
               {
                 inject: true,
                 template: spaEntry.path,
-                chunks: [spaEntry.name],
+                chunks: ['hotDevClient', spaEntry.name],
+                filename: spaEntry.name,
                 // excludeChunks: [
                 //   ...Object.keys({
                 //     ...getEntries(

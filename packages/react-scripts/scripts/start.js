@@ -86,12 +86,15 @@ choosePort(HOST, DEFAULT_PORT)
       // We have not found a port.
       return;
     }
+
+    const spaEntries = getSpaEntries();
+
     const configs = [
       configFactory('development', {
         entries: {
           ...getEntries('', paths.appSrc, '/*.{js,scss,css}'),
         },
-        spaEntries: getSpaEntries(),
+        spaEntries,
       }),
     ];
 
@@ -123,7 +126,24 @@ choosePort(HOST, DEFAULT_PORT)
     const serverConfig = createDevServerConfig(
       proxyConfig,
       urls.lanUrlForConfig
-    );
+    );            
+
+    // custom rewrite to serve /${spaEntry.name}(/)* as ${spaEntry.name}.html
+    serverConfig.historyApiFallback = {
+      disableDotRule: true,
+      rewrites: [
+        ...spaEntries.map(entry => ({
+          from: new RegExp(`^/${entry.name}/?.*$`),
+          to: `/${entry.name}/`,
+        })),
+        {
+          from: /^\/.+$/,
+          to: context => {
+            return context.parsedUrl.pathname + '.html';
+          },
+        },
+      ],
+    };
 
     const devServer = new WebpackDevServer(compiler, serverConfig);
     // Launch WebpackDevServer.
