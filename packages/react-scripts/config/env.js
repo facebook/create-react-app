@@ -89,7 +89,7 @@ function getClientEnvironment(publicUrl) {
         // This lets a developer run multiple simultaneous projects.
         // It is used as the connection `pathname` in webpackHotDevClient.
         // It is used as the `sockPath` option in webpack dev server.
-        WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH || '/sockjs-node',
+        WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH,
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

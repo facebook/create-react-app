@@ -17,7 +17,7 @@ const fs = require('fs');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
-const sockPath = process.env.WDS_SOCKET_PATH || undefined; // default: '/sockjs-node'
+const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
 
 module.exports = function(proxy, allowedHost) {
   return {
