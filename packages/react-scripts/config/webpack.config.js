@@ -70,7 +70,7 @@ module.exports = function(webpackEnv, options = {}) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
-  const { entries, spaEntries = [] } = options;
+  const { entries, spaHtmlPaths = [] } = options;
 
   const allEntries = Object.assign(
     {},
@@ -613,7 +613,7 @@ module.exports = function(webpackEnv, options = {}) {
       ],
     },
     plugins: [
-      !spaEntries.map(entry => entry.name).includes('index') &&
+      !spaHtmlPaths['index'] &&
         new StaticSiteGeneratorPlugin({
           entry: 'index',
           globals: Object.assign(
@@ -623,16 +623,16 @@ module.exports = function(webpackEnv, options = {}) {
           ),
         }),
       // Generates an `styleguide.html` file with the <script> injected.
-      ...spaEntries.map(
-        spaEntry =>
+      ...Object.keys(spaHtmlPaths).map(
+        spaEntryName =>
           new HtmlWebpackPlugin(
             Object.assign(
               {},
               {
                 inject: true,
-                template: spaEntry.path,
-                chunks: ['hotDevClient', spaEntry.name],
-                filename: `${spaEntry.name}.html`,
+                template: spaHtmlPaths[spaEntryName],
+                chunks: ['hotDevClient', spaEntryName],
+                filename: `${spaEntryName}.html`,
               },
               isEnvProduction
                 ? {

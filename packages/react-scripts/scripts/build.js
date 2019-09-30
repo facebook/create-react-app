@@ -37,7 +37,7 @@ const webpack = require('webpack');
 const configFactory = require('../config/webpack.config');
 const paths = require('../config/paths');
 const getEntries = require('./utils/getEntries');
-const getSpaEntries = require('./utils/getSpaEntires');
+const getSpaPaths = require('./utils/getSpaPaths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
@@ -64,15 +64,32 @@ if (!checkRequiredFiles([paths.appIndexJs])) {
 const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
 
+const spaPaths = getSpaPaths();
+
+const spaEntries = Object.entries(spaPaths).reduce((acc, [key, value]) => {
+  acc[key] = value.entryPath;
+  return acc;
+}, {});
+
+const spaHtmlPaths = Object.entries(spaPaths).reduce(
+  (acc, [key, value]) => {
+    acc[key] = value.htmlTemplatePath;
+    return acc;
+  },
+  {}
+);
+
 // Generate configuration
 const config = configFactory('production', {
   entries: {
     ...getEntries('components', paths.componentsDir, '/*.{js,scss,css}'),
     ...getEntries('components', paths.componentsDir, '/**/index.js'),
     ...getEntries('components', paths.componentsDir, '/**/*.static.js'),
-    ...getEntries('', paths.appSrc, '/*.{js,scss,css}'),
+    ...getEntries('lib', paths.libDir, '/*.{js,scss,css}'),
+    ...getEntries('', paths.appSrc, '/index.js'),
+    ...spaEntries,
   },
-  spaEntries: getSpaEntries(),
+  spaHtmlPaths,
 });
 
 // We require that you explicitly set browsers and do not fall back to

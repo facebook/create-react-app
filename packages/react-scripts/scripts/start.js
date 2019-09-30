@@ -46,7 +46,7 @@ const {
 const openBrowser = require('@lighting-beetle/lighter-react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 const getEntries = require('./utils/getEntries');
-const getSpaEntries = require('./utils/getSpaEntires');
+const getSpaPaths = require('./utils/getSpaPaths');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
@@ -87,14 +87,28 @@ choosePort(HOST, DEFAULT_PORT)
       return;
     }
 
-    const spaEntries = getSpaEntries();
+    const spaPaths = getSpaPaths();
+
+    const spaEntries = Object.entries(spaPaths).reduce((acc, [key, value]) => {
+      acc[key] = value.entryPath;
+      return acc;
+    }, {});
+
+    const spaHtmlPaths = Object.entries(spaPaths).reduce(
+      (acc, [key, value]) => {
+        acc[key] = value.htmlTemplatePath;
+        return acc;
+      },
+      {}
+    );
 
     const configs = [
       configFactory('development', {
         entries: {
-          ...getEntries('', paths.appSrc, '/*.{js,scss,css}'),
+          ...getEntries('', paths.appSrc, '/index.js'),
+          ...spaEntries,
         },
-        spaEntries,
+        spaHtmlPaths,
       }),
     ];
 
@@ -134,15 +148,15 @@ choosePort(HOST, DEFAULT_PORT)
     serverConfig.historyApiFallback = {
       werbose: true,
       rewrites: [
-        ...spaEntries
+        ...Object.keys(spaEntries)
           // put index last
-          .sort(entryA => (entryA === 'index' ? 1 : -1))
-          .map(entry =>
-            entry.name !== 'index'
+          .sort(entry => (entry === 'index' ? 1 : -1))
+          .map(entryName =>
+            entryName !== 'index'
               ? // rewrite everything else to index if index is SPA
                 {
-                  from: new RegExp(`^/${entry.name}/?.*$`),
-                  to: `/${entry.name}.html`,
+                  from: new RegExp(`^/${entryName}/?.*$`),
+                  to: `/${entryName}.html`,
                 }
               : // this should match first if we have SPA with different entry name
                 {
