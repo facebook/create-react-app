@@ -126,16 +126,30 @@ choosePort(HOST, DEFAULT_PORT)
     const serverConfig = createDevServerConfig(
       proxyConfig,
       urls.lanUrlForConfig
-    );            
+    );
 
     // custom rewrite to serve /${spaEntry.name}(/)* as ${spaEntry.name}.html
+    // this is probably not going to work if we have SPA on /index and in /subdirectory/to
+    // but that shoud be ege-case and this is best effort support
     serverConfig.historyApiFallback = {
-      disableDotRule: true,
+      werbose: true,
       rewrites: [
-        ...spaEntries.map(entry => ({
-          from: new RegExp(`^/${entry.name}/?.*$`),
-          to: `/${entry.name}/`,
-        })),
+        ...spaEntries
+          // put index last
+          .sort(entryA => (entryA === 'index' ? 1 : -1))
+          .map(entry =>
+            entry.name !== 'index'
+              ? // rewrite everything else to index if index is SPA
+                {
+                  from: new RegExp(`^/${entry.name}/?.*$`),
+                  to: `/${entry.name}.html`,
+                }
+              : // this should match first if we have SPA with different entry name
+                {
+                  from: /^\/(.*)$/,
+                  to: '/index.html',
+                }
+          ),
         {
           from: /^\/.+$/,
           to: context => {
