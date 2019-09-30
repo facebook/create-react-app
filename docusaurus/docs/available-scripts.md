@@ -24,8 +24,7 @@ The build is minified and the filenames include the hashes. See the [production 
 
 React DOM automatically supports profiling in development mode for v16.5+, but since profiling adds some small
 additional overhead it is opt-in for production mode. You can opt-in by using the `--profile` flag. Use `npm run build -- --profile` or `yarn build --profile` to enable profiling in production mode. You can read more about profiling
-using the React.
-DevTools here: https://reactjs.org/docs optimizing-performance.html#profiling-components-with-the-devtools-profiler
+using the [React DevTools here.](https://reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler)
 
 Your app is ready to be deployed! See the section about [deployment](deployment.md) for more information about deploying your application to popular hosting providers.
 
