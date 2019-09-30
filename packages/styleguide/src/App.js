@@ -3,14 +3,14 @@ import { BrowserRouter } from 'react-router-dom';
 
 import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 
-import * as theme from '../style/theme';
-import { rem } from '../style/utils';
+import * as theme from './style/theme';
+import { rem } from './style/utils';
 
-import Header from './Header';
-import Sidebar from './Sidebar';
-import Navigation from './Navigation';
-import NavigationButton from './NavigationButton';
-import Sitemap from './Sitemap';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Navigation from './components/Navigation';
+import NavigationButton from './components/NavigationButton';
+import Sitemap from './components/Sitemap';
 
 class App extends React.Component {
   static displayName = 'App';
