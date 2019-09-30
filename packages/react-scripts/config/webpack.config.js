@@ -632,22 +632,7 @@ module.exports = function(webpackEnv, options = {}) {
                 inject: true,
                 template: spaEntry.path,
                 chunks: ['hotDevClient', spaEntry.name],
-                filename: spaEntry.name,
-                // excludeChunks: [
-                //   ...Object.keys({
-                //     ...getEntries(
-                //       'components',
-                //       paths.componentsDir,
-                //       componentsEntryFiles
-                //     ),
-                //     ...getEntries(
-                //       'patterns',
-                //       paths.patternsDir,
-                //       patternsEntryFiles
-                //     ),
-                //     ...getEntries('lib', paths.libDir, libEntryFiles),
-                //   }),
-                // ],
+                filename: `${spaEntry.name}.html`,
               },
               isEnvProduction
                 ? {
