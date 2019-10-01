@@ -413,6 +413,8 @@ or
 yarn add --exact react-scripts@3.0.0
 ```
 
+**NOTE: You may need to delete your `node_modules` folder and reinstall your dependencies by running `yarn` (or `npm install`) if you encounter errors after upgrading.**
+
 If you previously ejected but now want to upgrade, one common solution is to find the commits where you ejected (and any subsequent commits changing the configuration), revert them, upgrade, and later optionally eject again. It’s also possible that the feature you ejected for is now supported out of the box.
 
 ## Breaking Changes
