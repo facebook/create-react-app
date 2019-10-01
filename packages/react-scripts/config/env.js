@@ -86,10 +86,13 @@ function getClientEnvironment(publicUrl) {
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
         // We support configuring the sockjs pathname during development.
-        // This lets a developer run multiple simultaneous projects.
-        // It is used as the connection `pathname` in webpackHotDevClient.
-        // It is used as the `sockPath` option in webpack dev server.
+        // These settings let a developer run multiple simultaneous projects.
+        // They are used as the connection `hostname`, `pathname` and `port`
+        // in webpackHotDevClient. They are used as the `sockHost`, `sockPath`
+        // and `sockPort` options in webpack-dev-server.
+        WDS_SOCKET_HOST: process.env.WDS_SOCKET_HOST,
         WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH,
+        WDS_SOCKET_PORT: process.env.WDS_SOCKET_PORT,
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

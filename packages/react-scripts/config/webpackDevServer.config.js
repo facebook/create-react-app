@@ -17,7 +17,9 @@ const fs = require('fs');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
+const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
+const sockPort = process.env.WDS_SOCKET_PORT;
 
 module.exports = function(proxy, allowedHost) {
   return {
@@ -74,7 +76,11 @@ module.exports = function(proxy, allowedHost) {
     // `webpackHotDevClient`.
     injectClient: false,
     // Enable custom sockjs pathname for websocket connection to hot reloading server.
+    // Enable custom sockjs hostname, pathname and port for websocket connection
+    // to hot reloading server.
+    sockHost,
     sockPath,
+    sockPort,
     // It is important to tell WebpackDevServer to use the same "root" path
     // as we specified in the config. In development, we always serve from /.
     publicPath: '/',
