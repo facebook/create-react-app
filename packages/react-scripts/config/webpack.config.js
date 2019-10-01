@@ -678,6 +678,11 @@ module.exports = function(
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
+      process.env.REACT_SCRIPTS_ENABLE_WEBPACK_PROGRESS === 'true' &&
+        new webpack.ProgressPlugin((percentage, message, ...args) => {
+          // e.g. Output each progress message directly to the console:
+          console.info(percentage, message, ...args);
+        }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
