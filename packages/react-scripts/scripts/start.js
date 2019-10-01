@@ -35,15 +35,15 @@ const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const clearConsole = require('@lighting-beetle/lighter-react-dev-utils/clearConsole');
-const checkRequiredFiles = require('@lighting-beetle/lighter-react-dev-utils/checkRequiredFiles');
+const clearConsole = require('react-dev-utils/clearConsole');
+const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const {
   choosePort,
   createCompiler,
   prepareProxy,
   prepareUrls,
-} = require('@lighting-beetle/lighter-react-dev-utils/WebpackDevServerUtils');
-const openBrowser = require('@lighting-beetle/lighter-react-dev-utils/openBrowser');
+} = require('react-dev-utils/WebpackDevServerUtils');
+const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 const getEntries = require('./utils/getEntries');
 const getSpaPaths = require('./utils/getSpaPaths');

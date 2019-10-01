@@ -7,8 +7,8 @@ const glob = require('glob');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const eslintFormatter = require('@lighting-beetle/lighter-react-dev-utils/eslintFormatter');
-const ModuleScopePlugin = require('@lighting-beetle/lighter-react-dev-utils/ModuleScopePlugin');
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
+const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
