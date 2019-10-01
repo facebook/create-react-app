@@ -7,12 +7,9 @@ import { Route } from 'react-router-dom';
 const GoogleAnalytics = ({ location, ...options }) => {
   const { pathname, search } = location;
 
-  useEffect(
-    () => {
-      logPageChange(pathname, search, options);
-    },
-    [pathname, search]
-  );
+  useEffect(() => {
+    logPageChange(pathname, search, options);
+  }, [pathname, search, options]);
 
   return null;
 };
