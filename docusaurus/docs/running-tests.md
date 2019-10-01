@@ -178,13 +178,13 @@ As an alternative or companion to `enzyme`, you may consider using `react-testin
 To install `react-testing-library` and `jest-dom`, you can run:
 
 ```sh
-npm install --save @testing-library/react @testing-library/jest-dom
+npm install --save-dev @testing-library/react @testing-library/jest-dom
 ```
 
 Alternatively you may use `yarn`:
 
 ```sh
-yarn add @testing-library/react @testing-library/jest-dom
+yarn add --dev @testing-library/react @testing-library/jest-dom
 ```
 
 Similar to `enzyme` you can create a `src/setupTests.js` file to avoid boilerplate in your test files:
