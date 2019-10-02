@@ -71,26 +71,29 @@ const spaEntries = Object.entries(spaPaths).reduce((acc, [key, value]) => {
   return acc;
 }, {});
 
-const spaHtmlPaths = Object.entries(spaPaths).reduce(
-  (acc, [key, value]) => {
-    acc[key] = value.htmlTemplatePath;
-    return acc;
-  },
-  {}
-);
+const spaHtmlPaths = Object.entries(spaPaths).reduce((acc, [key, value]) => {
+  acc[key] = value.htmlTemplatePath;
+  return acc;
+}, {});
 
 // Generate configuration
-const config = configFactory('production', {
-  entries: {
-    ...getEntries('components', paths.componentsDir, '/*.{js,scss,css}'),
-    ...getEntries('components', paths.componentsDir, '/**/index.js'),
-    ...getEntries('components', paths.componentsDir, '/**/*.static.js'),
-    ...getEntries('lib', paths.libDir, '/*.{js,scss,css}'),
-    ...getEntries('', paths.appSrc, '/index.js'),
-    ...spaEntries,
-  },
-  spaHtmlPaths,
-});
+const config = [
+  configFactory('production', {
+    entries: {
+      ...getEntries('', paths.appSrc, '/index.js'),
+      ...spaEntries,
+    },
+    spaHtmlPaths,
+  }),
+  configFactory('lib', {
+    entries: {
+      ...getEntries('components', paths.componentsDir, '/*.{js,scss,css}'),
+      ...getEntries('components', paths.componentsDir, '/**/index.js'),
+      ...getEntries('components', paths.componentsDir, '/**/*.static.js'),
+      ...getEntries('lib', paths.libDir, '/*.{js,scss,css}'),
+    },
+  }),
+];
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.

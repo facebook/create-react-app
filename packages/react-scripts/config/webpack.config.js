@@ -68,7 +68,8 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function(webpackEnv, options = {}) {
   const isEnvDevelopment = webpackEnv === 'development';
-  const isEnvProduction = webpackEnv === 'production';
+  const isEnvProduction = webpackEnv === 'production' || webpackEnv === 'lib';
+  const isEnvLib = webpackEnv === 'lib';
 
   const { entries, spaHtmlPaths = [] } = options;
 
@@ -614,6 +615,7 @@ module.exports = function(webpackEnv, options = {}) {
     },
     plugins: [
       !spaHtmlPaths['index'] &&
+        !isEnvLib &&
         new StaticSiteGeneratorPlugin({
           entry: 'index',
           globals: Object.assign(
