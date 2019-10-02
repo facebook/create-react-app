@@ -142,7 +142,14 @@ module.exports = function(webpackEnv, options = {}) {
           },
         },
       ],
-    ],
+      !isEnvLib && [require.resolve('babel-plugin-react-docgen')],
+      isEnvProduction && [
+        require('babel-plugin-transform-react-remove-prop-types').default,
+        {
+          removeImport: true,
+        },
+      ],
+    ].filter(Boolean),
     // This is a feature of `babel-loader` for webpack (not Babel itself).
     // It enables caching results in ./node_modules/.cache/babel-loader/
     // directory for faster rebuilds.
@@ -365,9 +372,9 @@ module.exports = function(webpackEnv, options = {}) {
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
         // Make sure that only one React instance is loaded.
-        // This is solving issue in .mdx files, when lighter-styleguide is 
+        // This is solving issue in .mdx files, when lighter-styleguide is
         // installed as symlink and mdx/loader are prepending React from
-        // lighter-styleguide node_modules. This creates two React instances in // bundle which break hooks. 
+        // lighter-styleguide node_modules. This creates two React instances in // bundle which break hooks.
         react: path.resolve('./node_modules/react'),
       },
       plugins: [
