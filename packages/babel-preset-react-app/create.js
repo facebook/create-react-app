@@ -6,8 +6,55 @@
  */
 'use strict';
 
-module.exports = function create(env) {
-  if (env !== 'development' && env !== 'test' && env !== 'production') {
+const path = require('path');
+
+const validateBoolOption = (name, value, defaultValue) => {
+  if (typeof value === 'undefined') {
+    value = defaultValue;
+  }
+
+  if (typeof value !== 'boolean') {
+    throw new Error(`Preset react-app: '${name}' option must be a boolean.`);
+  }
+
+  return value;
+};
+
+module.exports = function(api, opts, env) {
+  if (!opts) {
+    opts = {};
+  }
+
+  var isEnvDevelopment = env === 'development';
+  var isEnvProduction = env === 'production';
+  var isEnvTest = env === 'test';
+
+  var useESModules = validateBoolOption(
+    'useESModules',
+    opts.useESModules,
+    isEnvDevelopment || isEnvProduction
+  );
+  var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+  var isTypeScriptEnabled = validateBoolOption(
+    'typescript',
+    opts.typescript,
+    true
+  );
+  var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
+  var useAbsoluteRuntime = validateBoolOption(
+    'absoluteRuntime',
+    opts.absoluteRuntime,
+    true
+  );
+
+  var absoluteRuntimePath = undefined;
+  if (useAbsoluteRuntime) {
+    absoluteRuntimePath = path.dirname(
+      require.resolve('@babel/runtime/package.json')
+    );
+  }
+
+  if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
       'Using `babel-preset-react-app` requires that you specify `NODE_ENV` or ' +
         '`BABEL_ENV` environment variables. Valid values are "development", ' +
@@ -17,119 +64,150 @@ module.exports = function create(env) {
     );
   }
 
-  const plugins = [
-    // Necessary to include regardless of the environment because
-    // in practice some other transforms (such as object-rest-spread)
-    // don't work without it: https://github.com/babel/babel/issues/7215
-    require.resolve('babel-plugin-transform-es2015-destructuring'),
-    // class { handleClick = () => { } }
-    require.resolve('babel-plugin-transform-class-properties'),
-    // The following two plugins use Object.assign directly, instead of Babel's
-    // extends helper. Note that this assumes `Object.assign` is available.
-    // { ...todo, completed: true }
-    [
-      require.resolve('babel-plugin-transform-object-rest-spread'),
-      {
-        useBuiltIns: true,
-      },
-    ],
-    // Transforms JSX
-    [
-      require.resolve('babel-plugin-transform-react-jsx'),
-      {
-        useBuiltIns: true,
-      },
-    ],
-    // Polyfills the runtime needed for async/await and generators
-    [
-      require.resolve('babel-plugin-transform-runtime'),
-      {
-        helpers: false,
-        polyfill: false,
-        regenerator: true,
-      },
-    ],
-  ];
-
-  if (env === 'development' || env === 'test') {
-    // The following two plugins are currently necessary to make React warnings
-    // include more valuable information. They are included here because they are
-    // currently not enabled in babel-preset-react. See the below threads for more info:
-    // https://github.com/babel/babel/issues/4702
-    // https://github.com/babel/babel/pull/3540#issuecomment-228673661
-    // https://github.com/facebookincubator/create-react-app/issues/989
-    plugins.push.apply(plugins, [
-      // Adds component stack to warning messages
-      require.resolve('babel-plugin-transform-react-jsx-source'),
-      // Adds __self attribute to JSX which React will use for some warnings
-      require.resolve('babel-plugin-transform-react-jsx-self'),
-    ]);
-  }
-
-  if (env === 'test') {
-    return {
-      presets: [
+  return {
+    presets: [
+      isEnvTest && [
         // ES features necessary for user's Node version
-        [
-          require('babel-preset-env').default,
-          {
-            targets: {
-              node: 'current',
-            },
+        require('@babel/preset-env').default,
+        {
+          targets: {
+            node: 'current',
           },
-        ],
-        // JSX, Flow
-        require.resolve('babel-preset-react'),
+        },
       ],
-      plugins: plugins.concat([
-        // Compiles import() to a deferred require()
-        require.resolve('babel-plugin-dynamic-import-node'),
-      ]),
-    };
-  } else {
-    return {
-      presets: [
+      (isEnvProduction || isEnvDevelopment) && [
         // Latest stable ECMAScript features
-        [
-          require.resolve('babel-preset-env'),
-          {
-            targets: {
-              // React parses on ie 9, so we should too
-              ie: 9,
-              // We currently minify with uglify
-              // Remove after https://github.com/mishoo/UglifyJS2/issues/448
-              uglify: true,
-            },
-            // Disable polyfill transforms
-            useBuiltIns: false,
-            // Do not transform modules to CJS
-            modules: false,
-          },
-        ],
-        // JSX, Flow
-        require.resolve('babel-preset-react'),
+        require('@babel/preset-env').default,
+        {
+          // Allow importing core-js in entrypoint and use browserlist to select polyfills
+          useBuiltIns: 'entry',
+          // Set the corejs version we are using to avoid warnings in console
+          // This will need to change once we upgrade to corejs@3
+          corejs: 3,
+          // Do not transform modules to CJS
+          modules: false,
+          // Exclude transforms that make all code slower
+          exclude: ['transform-typeof-symbol'],
+        },
       ],
-      plugins: plugins.concat([
-        // function* () { yield 42; yield 43; }
-        [
-          require.resolve('babel-plugin-transform-regenerator'),
-          {
-            // Async functions are converted to generators by babel-preset-env
-            async: false,
-          },
+      [
+        require('@babel/preset-react').default,
+        {
+          // Adds component stack to warning messages
+          // Adds __self attribute to JSX which React will use for some warnings
+          development: isEnvDevelopment || isEnvTest,
+          // Will use the native built-in instead of trying to polyfill
+          // behavior for any plugins that require one.
+          useBuiltIns: true,
+        },
+      ],
+      isTypeScriptEnabled && [require('@babel/preset-typescript').default],
+    ].filter(Boolean),
+    plugins: [
+      // Strip flow types before any other transform, emulating the behavior
+      // order as-if the browser supported all of the succeeding features
+      // https://github.com/facebook/create-react-app/pull/5182
+      // We will conditionally enable this plugin below in overrides as it clashes with
+      // @babel/plugin-proposal-decorators when using TypeScript.
+      // https://github.com/facebook/create-react-app/issues/5741
+      isFlowEnabled && [
+        require('@babel/plugin-transform-flow-strip-types').default,
+        false,
+      ],
+      // Experimental macros support. Will be documented after it's had some time
+      // in the wild.
+      require('babel-plugin-macros'),
+      // Necessary to include regardless of the environment because
+      // in practice some other transforms (such as object-rest-spread)
+      // don't work without it: https://github.com/babel/babel/issues/7215
+      [
+        require('@babel/plugin-transform-destructuring').default,
+        {
+          // Use loose mode for performance:
+          // https://github.com/facebook/create-react-app/issues/5602
+          loose: false,
+          selectiveLoose: [
+            'useState',
+            'useEffect',
+            'useContext',
+            'useReducer',
+            'useCallback',
+            'useMemo',
+            'useRef',
+            'useImperativeHandle',
+            'useLayoutEffect',
+            'useDebugValue',
+          ],
+        },
+      ],
+      // Turn on legacy decorators for TypeScript files
+      isTypeScriptEnabled && [
+        require('@babel/plugin-proposal-decorators').default,
+        false,
+      ],
+      // class { handleClick = () => { } }
+      // Enable loose mode to use assignment instead of defineProperty
+      // See discussion in https://github.com/facebook/create-react-app/issues/4263
+      [
+        require('@babel/plugin-proposal-class-properties').default,
+        {
+          loose: true,
+        },
+      ],
+      // The following two plugins use Object.assign directly, instead of Babel's
+      // extends helper. Note that this assumes `Object.assign` is available.
+      // { ...todo, completed: true }
+      [
+        require('@babel/plugin-proposal-object-rest-spread').default,
+        {
+          useBuiltIns: true,
+        },
+      ],
+      // Polyfills the runtime needed for async/await, generators, and friends
+      // https://babeljs.io/docs/en/babel-plugin-transform-runtime
+      [
+        require('@babel/plugin-transform-runtime').default,
+        {
+          corejs: false,
+          helpers: areHelpersEnabled,
+          regenerator: true,
+          // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
+          // We should turn this on once the lowest version of Node LTS
+          // supports ES Modules.
+          useESModules,
+          // Undocumented option that lets us encapsulate our runtime, ensuring
+          // the correct version is used
+          // https://github.com/babel/babel/blob/090c364a90fe73d36a30707fc612ce037bdbbb24/packages/babel-plugin-transform-runtime/src/index.js#L35-L42
+          absoluteRuntime: absoluteRuntimePath,
+        },
+      ],
+      isEnvProduction && [
+        // Remove PropTypes from production build
+        require('babel-plugin-transform-react-remove-prop-types').default,
+        {
+          removeImport: true,
+        },
+      ],
+      // Adds syntax support for import()
+      require('@babel/plugin-syntax-dynamic-import').default,
+      isEnvTest &&
+        // Transform dynamic import to require
+        require('babel-plugin-dynamic-import-node'),
+    ].filter(Boolean),
+    overrides: [
+      isFlowEnabled && {
+        exclude: /\.tsx?$/,
+        plugins: [require('@babel/plugin-transform-flow-strip-types').default],
+      },
+      isTypeScriptEnabled && {
+        test: /\.tsx?$/,
+        plugins: [
+          [
+            require('@babel/plugin-proposal-decorators').default,
+            { legacy: true },
+          ],
         ],
-        // Adds syntax support for import()
-        require.resolve('babel-plugin-syntax-dynamic-import'),
-      ]),
-    };
-
-    if (env === 'production') {
-      // Optimization: hoist JSX that never changes out of render()
-      // Disabled because of issues: https://github.com/facebookincubator/create-react-app/issues/553
-      // TODO: Enable again when these issues are resolved.
-      // plugins.push.apply(plugins, [
-      //   require.resolve('babel-plugin-transform-react-constant-elements')
-      // ]);
-    }
-  }
+      },
+    ].filter(Boolean),
+  };
 };

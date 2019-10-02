@@ -1,21 +1,23 @@
 {
-  "name": "create-react-app",
-  "version": "1.5.2",
+  "name": "create-lighter-app",
+  "version": "1.0.0",
   "keywords": [
-    "react"
+    "react",
+    "lighter"
   ],
-  "description": "Create React apps with no build configuration.",
-  "repository": "facebookincubator/create-react-app",
+  "description": "Create Lighter apps.",
+  "repository": "lightingbeetle/lighter",
   "license": "MIT",
   "engines": {
-    "node": ">=4"
+    "node": ">=8"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/lightingbeetle/lighter/issues"
   },
   "files": [
     "index.js",
-    "createReactApp.js"
+    "createReactApp.js",
+    "yarn.lock.cached"
   ],
   "bin": {
     "create-react-app": "./index.js"

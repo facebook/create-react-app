@@ -11,7 +11,7 @@ const GoogleAnalytics = ({ location, ...options }) => {
     () => {
       logPageChange(pathname, search, options);
     },
-    [pathname, search]
+    [pathname, search, options]
   );
 
   return null;

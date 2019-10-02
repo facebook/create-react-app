@@ -9,7 +9,7 @@ export {
   NoteError,
   NoteInfo,
   Dos,
-  Donts
+  Donts,
 } from './Note';
 export { default as Page } from './Page';
 export { default as Preview } from './Preview';

@@ -12,7 +12,7 @@ import {
   getComponentInfo,
   getTableData,
   sortTableData,
-  excludeProps
+  excludeProps,
 } from './utils';
 
 function getComponentInfoFromComponent(component = {}) {
@@ -34,16 +34,16 @@ class ComponentDocs extends Component {
     /** (deprecated) Rendering scope of component. */
     renderingScope: oneOf(['universal', 'react', 'static']),
     /** (deprecated) To resolve component from `path` prop, `resolver` function must be passed to get component code as string. Webpack's `raw-loader` could be utilized to that and it could look like this `path => import(``!!raw-loader!./../components/${path}``)`. */
-    resolver: func
+    resolver: func,
   };
 
   static defaultProps = {
     excludes: [],
-    resolver: () => {}
+    resolver: () => {},
   };
 
   state = {
-    info: []
+    info: [],
   };
 
   async componentWillMount() {
@@ -63,7 +63,7 @@ class ComponentDocs extends Component {
       }
 
       this.setState(() => ({
-        info
+        info,
       }));
     }
   }
@@ -91,7 +91,9 @@ class ComponentDocs extends Component {
     if (data.length === 0) {
       return [
         <StyledTitle key="ComponentDocs-name">{this.props.title}</StyledTitle>,
-        <p key="EmptyObjectText">This component does not have any prop types</p>
+        <p key="EmptyObjectText">
+          This component does not have any prop types
+        </p>,
       ];
     }
     return (

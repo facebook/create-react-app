@@ -7,7 +7,7 @@ const propTypes = {
   /** Note title */
   title: string.isRequired,
   /** Type influences note visal style */
-  type: oneOf(['warning', 'success', 'error', 'info'])
+  type: oneOf(['warning', 'success', 'error', 'info']),
 };
 
 const CLASS_ROOT = 'note';

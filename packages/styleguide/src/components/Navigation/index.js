@@ -19,13 +19,13 @@ class Navigation extends React.Component {
     isMain: bool,
     routes: array,
     pathname: string,
-    onNavLinkClick: func
+    onNavLinkClick: func,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      activeLinks: []
+      activeLinks: [],
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -44,7 +44,7 @@ class Navigation extends React.Component {
     });
 
     this.setState({
-      activeLinks
+      activeLinks,
     });
   }
 
@@ -61,7 +61,7 @@ class Navigation extends React.Component {
     }
 
     this.setState({
-      activeLinks
+      activeLinks,
     });
   }
 

@@ -32,11 +32,11 @@ export const BarItem = styled.div`
 BarItem.propTypes = {
   isFilling: bool,
   shrink: bool,
-  space: string
+  space: string,
 };
 
 BarItem.defaultProps = {
-  space: 'small'
+  space: 'small',
 };
 
 export const Bar = styled.div`
@@ -54,9 +54,9 @@ export const Bar = styled.div`
 `;
 
 Bar.propTypes = {
-  space: string
+  space: string,
 };
 
 Bar.defaultProps = {
-  space: 'medium'
+  space: 'medium',
 };

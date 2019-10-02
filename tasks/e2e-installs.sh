@@ -19,6 +19,9 @@ custom_registry_url=http://localhost:4873
 original_npm_registry_url=`npm get registry`
 original_yarn_registry_url=`yarn config get registry`
 
+# Load functions for working with local NPM registry (Verdaccio)
+source local-registry.sh
+
 function cleanup {
   echo 'Cleaning up.'
   cd "$root_path"
@@ -130,6 +133,44 @@ grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
+# Test --typescript flag
+# ******************************************************************************
+
+cd "$temp_app_path"
+npx create-react-app test-app-typescript --typescript
+cd test-app-typescript
+
+# Check corresponding template is installed.
+exists node_modules/react-scripts
+exists node_modules/typescript
+exists src/index.tsx
+exists tsconfig.json
+exists src/react-app-env.d.ts
+checkTypeScriptDependencies
+
+# Check that the TypeScript template passes smoke tests, build, and normal tests
+yarn start --smoke-test
+yarn build
+CI=true yarn test
+
+# Check eject behaves and works
+
+# Eject...
+echo yes | npm run eject
+
+# Temporary workaround for https://github.com/facebook/create-react-app/issues/6099
+rm yarn.lock
+yarn add @babel/plugin-transform-react-jsx-source @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx @babel/plugin-transform-react-jsx-self
+
+# Ensure env file still exists
+exists src/react-app-env.d.ts
+
+# Check that the TypeScript template passes ejected smoke tests, build, and normal tests
+yarn start --smoke-test
+yarn build
+CI=true yarn test
+
+# ******************************************************************************
 # Test --scripts-version with a tarball url
 # ******************************************************************************
 
@@ -174,8 +215,8 @@ echo '## Hello' > ./test-app-should-remain/README.md
 npx create-react-app --scripts-version=`date +%s` test-app-should-remain || true
 # confirm the file exist
 test -e test-app-should-remain/README.md
-# confirm only README.md is the only file in the directory
-if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "1" ]; then
+# confirm only README.md and error log are the only files in the directory
+if [ "$(ls -1 ./test-app-should-remain | wc -l | tr -d '[:space:]')" != "2" ]; then
   false
 fi
 

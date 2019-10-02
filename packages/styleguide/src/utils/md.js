@@ -34,6 +34,6 @@ export default md.customize({
       <Link href={href} title={title}>
         {children}
       </Link>
-    )
-  }
+    ),
+  },
 });

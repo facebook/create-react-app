@@ -19,6 +19,9 @@ custom_registry_url=http://localhost:4873
 original_npm_registry_url=`npm get registry`
 original_yarn_registry_url=`yarn config get registry`
 
+# Load functions for working with local NPM registry (Verdaccio)
+source local-registry.sh
+
 function cleanup {
   echo 'Cleaning up.'
   cd "$root_path"
@@ -100,10 +103,13 @@ npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_reg
 
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/confusing-browser-globals/
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-error-overlay/src/
+
 cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/
 yarn test
@@ -114,6 +120,7 @@ if [ $APPVEYOR != 'True' ]; then
 fi
 
 cd ../..
+
 cd packages/react-dev-utils/
 yarn test
 cd ../..
@@ -220,6 +227,8 @@ function verify_module_scope {
   # Make sure the build fails
   yarn build; test $? -eq 1 || exit 1
   # TODO: check for error message
+
+  rm sample.json
 
   # Restore App.js
   rm src/App.js

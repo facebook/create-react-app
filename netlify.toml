@@ -1,0 +1,5 @@
+[build]
+  base    = "docusaurus/website"
+  publish = "docusaurus/website/build/create-react-app"
+  command = "yarn build"
+  

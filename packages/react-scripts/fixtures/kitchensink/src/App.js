@@ -10,11 +10,17 @@ import PropTypes from 'prop-types';
 
 class BuiltEmitter extends Component {
   static propTypes = {
-    feature: PropTypes.func.isRequired,
+    error: PropTypes.string,
+    feature: PropTypes.func,
   };
 
   componentDidMount() {
-    const { feature } = this.props;
+    const { error, feature } = this.props;
+
+    if (error) {
+      this.handleError(error);
+      return;
+    }
 
     // Class components must call this.props.onReady when they're ready for the test.
     // We will assume functional components are ready immediately after mounting.
@@ -23,17 +29,25 @@ class BuiltEmitter extends Component {
     }
   }
 
+  handleError(error) {
+    document.dispatchEvent(new Event('ReactFeatureError'));
+  }
+
   handleReady() {
     document.dispatchEvent(new Event('ReactFeatureDidMount'));
   }
 
   render() {
-    const { props: { feature }, handleReady } = this;
+    const {
+      props: { feature },
+      handleReady,
+    } = this;
     return (
       <div>
-        {createElement(feature, {
-          onReady: handleReady,
-        })}
+        {feature &&
+          createElement(feature, {
+            onReady: handleReady,
+          })}
       </div>
     );
   }
@@ -49,7 +63,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const feature = window.location.hash.slice(1);
+    const url = window.location.href;
+    // const feature = window.location.hash.slice(1);
+    // This works around an issue of a duplicate hash in the href
+    // Ex: http://localhost:3001/#array-destructuring#array-destructuring
+    // This seems like a jsdom bug as the URL in initDom.js appears to be correct
+    const feature = url.slice(url.lastIndexOf('#') + 1);
+
     switch (feature) {
       case 'array-destructuring':
         import('./features/syntax/ArrayDestructuring').then(f =>
@@ -78,6 +98,31 @@ class App extends Component {
         break;
       case 'css-inclusion':
         import('./features/webpack/CssInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'css-modules-inclusion':
+        import('./features/webpack/CssModulesInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'scss-inclusion':
+        import('./features/webpack/ScssInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'scss-modules-inclusion':
+        import('./features/webpack/ScssModulesInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'sass-inclusion':
+        import('./features/webpack/SassInclusion').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'sass-modules-inclusion':
+        import('./features/webpack/SassModulesInclusion').then(f =>
           this.setFeature(f.default)
         );
         break;
@@ -120,9 +165,6 @@ class App extends Component {
         import('./features/webpack/LinkedModules').then(f =>
           this.setFeature(f.default)
         );
-        break;
-      case 'node-path':
-        import('./features/env/NodePath').then(f => this.setFeature(f.default));
         break;
       case 'no-ext-inclusion':
         import('./features/webpack/NoExtInclusion').then(f =>
@@ -169,6 +211,16 @@ class App extends Component {
           this.setFeature(f.default)
         );
         break;
+      case 'svg-component':
+        import('./features/webpack/SvgComponent').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
+      case 'svg-in-css':
+        import('./features/webpack/SvgInCss').then(f =>
+          this.setFeature(f.default)
+        );
+        break;
       case 'template-interpolation':
         import('./features/syntax/TemplateInterpolation').then(f =>
           this.setFeature(f.default)
@@ -185,7 +237,7 @@ class App extends Component {
         );
         break;
       default:
-        throw new Error(`Missing feature "${feature}"`);
+        this.setState({ error: `Missing feature "${feature}"` });
     }
   }
 
@@ -194,9 +246,9 @@ class App extends Component {
   }
 
   render() {
-    const { feature } = this.state;
-    if (feature !== null) {
-      return <BuiltEmitter feature={feature} />;
+    const { error, feature } = this.state;
+    if (error || feature) {
+      return <BuiltEmitter error={error} feature={feature} />;
     }
     return null;
   }

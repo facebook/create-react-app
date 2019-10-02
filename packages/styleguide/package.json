@@ -2,7 +2,7 @@
   "name": "@lighting-beetle/lighter-styleguide",
   "version": "2.3.2",
   "description": "Lighter styleguide",
-  "main": "src/styleguide.js",
+  "main": "build/lib/styleguide.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lightingbeetle/lighter.git"
@@ -14,8 +14,7 @@
   },
   "homepage": "/",
   "dependencies": {
-    "@mdx-js/loader": "~0.20.1",
-    "@mdx-js/mdx": "~0.20.1",
+    "@mdx-js/react": "~1.5.0",
     "array-includes": "~3.0.3",
     "chroma-js": "~2.0.2",
     "classnames": "~2.2.5",
@@ -27,10 +26,11 @@
     "pretty": "~2.0.0",
     "prism-theme-one-dark": "~1.0.0",
     "prismjs": "~1.15.0",
-    "react": "~16.8.3",
+    "promise": "^8.0.3",
+    "react": "~16.10.1",
     "react-docgen": "~4.1.0",
     "react-docgen-annotation-resolver": "~1.1.0",
-    "react-dom": "~16.8.3",
+    "react-dom": "~16.10.1",
     "react-element-to-jsx-string": "~14.0.1",
     "react-frame-component": "~4.0.0",
     "react-ga": "~2.6.0",
@@ -45,8 +45,8 @@
   },
   "scripts": {
     "precommit": "lint-staged",
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "start": "lighter-react-scripts start",
+    "build": "lighter-react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -57,14 +57,13 @@
     ]
   },
   "devDependencies": {
+    "@lighting-beetle/lighter-react-scripts": "../react-scripts",
     "babel-plugin-react-docgen": "~2.0.0",
     "babel-preset-env": "~1.7.0",
     "husky": "~1.3.1",
     "lint-staged": "~8.1.0",
     "prettier": "~1.15.3",
-    "raw-loader": "~1.0.0",
-    "react-app-rewired": "~1.6.2",
-    "react-scripts": "2.1.1"
+    "raw-loader": "~1.0.0"
   },
   "browserslist": [
     ">0.5%",

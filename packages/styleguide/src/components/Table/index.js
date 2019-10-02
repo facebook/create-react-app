@@ -9,7 +9,7 @@ const DocsTable = ({
   columns = [
     {
       key: 'prop',
-      label: 'Prop'
+      label: 'Prop',
     },
     {
       key: 'type',
@@ -20,7 +20,7 @@ const DocsTable = ({
             {data}
           </Code>
         </td>
-      )
+      ),
     },
     {
       key: 'default',
@@ -31,13 +31,13 @@ const DocsTable = ({
             {data}
           </Code>
         </td>
-      )
+      ),
     },
     {
       key: 'description',
       label: 'Description',
-      render: (data, column) => <td key={column.key}>{data}</td>
-    }
+      render: (data, column) => <td key={column.key}>{data}</td>,
+    },
   ],
   hasOutsideBorder = true,
   ...other

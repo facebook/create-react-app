@@ -17,6 +17,16 @@ async function load() {
   ];
 }
 
+/* eslint-disable */
+// Regression test for https://github.com/facebook/create-react-app/issues/3055
+const x = async (
+  /* prettier-ignore */
+  y: void
+) => {
+  const z = await y;
+};
+/* eslint-enable */
+
 export default class extends Component {
   static propTypes = {
     onReady: PropTypes.func.isRequired,
@@ -39,7 +49,9 @@ export default class extends Component {
   render() {
     return (
       <div id="feature-async-await">
-        {this.state.users.map(user => <div key={user.id}>{user.name}</div>)}
+        {this.state.users.map(user => (
+          <div key={user.id}>{user.name}</div>
+        ))}
       </div>
     );
   }

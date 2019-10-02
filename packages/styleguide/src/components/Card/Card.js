@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {} from 'prop-types';
 
 const propTypes = {};
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDXProvider } from '@mdx-js/tag';
+import { MDXProvider } from '@mdx-js/react';
 
 import Code, { CodeBlock } from './../components/Code';
 import { H1, H2, H3, H4, H5, P, Link } from './../components/Typography';

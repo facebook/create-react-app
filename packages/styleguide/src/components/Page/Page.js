@@ -6,7 +6,7 @@ import { components } from './../../utils/mdx';
 
 const propTypes = {
   /** Page content */
-  render: oneOfType([node, func]).isRequired
+  render: oneOfType([node, func]).isRequired,
 };
 
 const CLASS_ROOT = '';

@@ -1,5 +1,5 @@
 import React from 'react';
-import styleguide from './styleguide';
+import styleguide from './lib/styleguide';
 import pkg from '../package.json';
 
 const Page = React.lazy(() => import('./components/Page'));

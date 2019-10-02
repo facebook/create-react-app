@@ -8,16 +8,18 @@
 
 'use strict';
 
-const spawn = require('@lighting-beetle/lighter-react-dev-utils/crossSpawn');
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
+process.on('unhandledRejection', err => {
+  throw err;
+});
+
+const spawn = require('react-dev-utils/crossSpawn');
 const args = process.argv.slice(2);
 
 const scriptIndex = args.findIndex(
-  x =>
-    x === 'build' ||
-    x === 'eject' ||
-    x === 'start' ||
-    x === 'lib' ||
-    x === 'test'
+  x => x === 'build' || x === 'eject' || x === 'start' || x === 'test'
 );
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
@@ -26,7 +28,6 @@ switch (script) {
   case 'build':
   case 'eject':
   case 'start':
-  case 'lib':
   case 'test': {
     const result = spawn.sync(
       'node',
@@ -56,9 +57,9 @@ switch (script) {
   }
   default:
     console.log('Unknown script "' + script + '".');
-    console.log('Perhaps you need to update react-scripts?');
+    console.log('Perhaps you need to update lighter-react-scripts?');
     console.log(
-      'See: https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases'
+      'See: https://github.com/lightingbeetle/lighter/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases'
     );
     break;
 }

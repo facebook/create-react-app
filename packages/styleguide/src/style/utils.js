@@ -10,7 +10,7 @@ export function getColorShade(color, weight = 500) {
   }
 
   return mix(
-    Math.abs(weight - 500) * 2 / 1000,
+    (Math.abs(weight - 500) * 2) / 1000,
     weight > 500 ? '#000' : '#fff',
     color
   );

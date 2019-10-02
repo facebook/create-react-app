@@ -48,7 +48,7 @@ export async function getComponentInfo(path, getCode) {
 
           return await getComponentInfo(componentPath, getCode);
         })
-      ))
+      )),
     ];
   }
 
@@ -127,8 +127,8 @@ function getPropsData(props = {}) {
         prop: `${props[prop].required ? '* ' : ''}${prop}`,
         type: getType(props[prop].type),
         default: props[prop].defaultValue && props[prop].defaultValue.value,
-        description: props[prop].description
-      }
+        description: props[prop].description,
+      },
     ],
     []
   );

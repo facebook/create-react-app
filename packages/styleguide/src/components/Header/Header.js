@@ -16,7 +16,7 @@ const propTypes = {
   project: node,
   projectSmall: node,
   infoText: node,
-  theme: object
+  theme: object,
 };
 
 const Header = ({

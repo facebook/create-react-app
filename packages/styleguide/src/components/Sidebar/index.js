@@ -1,5 +1,4 @@
 import React from 'react';
-import {} from 'prop-types';
 import cx from 'classnames';
 import styled from 'styled-components';
 

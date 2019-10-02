@@ -45,16 +45,16 @@ export default class ColorPalette extends React.Component {
      */
     color: object,
     /** Name of the color */
-    name: string
+    name: string,
   };
 
   state = {
-    currentShade: null
+    currentShade: null,
   };
 
   componentWillMount() {
     this.setState({
-      currentShade: this.getDefaultShade()
+      currentShade: this.getDefaultShade(),
     });
   }
 

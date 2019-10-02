@@ -13,20 +13,20 @@ const fs = require('fs');
 const url = require('url');
 
 // Make sure any symlinks in the project folder are resolved:
-// https://github.com/facebookincubator/create-react-app/issues/637
+// https://github.com/facebook/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 const envPublicUrl = process.env.PUBLIC_URL;
 
-function ensureSlash(path, needsSlash) {
-  const hasSlash = path.endsWith('/');
+function ensureSlash(inputPath, needsSlash) {
+  const hasSlash = inputPath.endsWith('/');
   if (hasSlash && !needsSlash) {
-    return path.substr(path, path.length - 1);
+    return inputPath.substr(0, inputPath.length - 1);
   } else if (!hasSlash && needsSlash) {
-    return `${path}/`;
+    return `${inputPath}/`;
   } else {
-    return path;
+    return inputPath;
   }
 }
 
@@ -46,9 +46,37 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
+const moduleFileExtensions = [
+  'web.mjs',
+  'mjs',
+  'web.js',
+  'js',
+  'web.ts',
+  'ts',
+  'web.tsx',
+  'tsx',
+  'json',
+  'web.jsx',
+  'jsx',
+];
+
+// Resolve file paths in the same order as webpack
+const resolveModule = (resolveFn, filePath) => {
+  const extension = moduleFileExtensions.find(extension =>
+    fs.existsSync(resolveFn(`${filePath}.${extension}`))
+  );
+
+  if (extension) {
+    return resolveFn(`${filePath}.${extension}`);
+  }
+
+  return resolveFn(`${filePath}.js`);
+};
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
+  appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
   componentsBuild: resolveApp('build/components'),
   patternsBuild: resolveApp('build/patterns'),
@@ -65,11 +93,12 @@ module.exports = {
   styleguideHtml: resolveApp('src/styleguide/styleguide.html'),
   scriptsDir: resolveApp('src/scripts'),
   yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('src/setupTests.js'),
+  testsSetup: resolveModule(resolveApp, 'src/setupTests'),
+  proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  styles: resolveApp('src/styles'),
+  libDir: resolveApp('src/lib'),
   icons: resolveApp('src/assets/icons'),
 };
 
@@ -79,6 +108,7 @@ const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
   dotenv: resolveApp('.env'),
+  appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
   componentsBuild: resolveApp('build/components'),
   patternsBuild: resolveApp('build/patterns'),
@@ -95,15 +125,18 @@ module.exports = {
   styleguideHtml: resolveApp('src/styleguide/styleguide.html'),
   scriptsDir: resolveApp('src/scripts'),
   yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('src/setupTests.js'),
+  testsSetup: resolveModule(resolveApp, 'src/setupTests'),
+  proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  styles: resolveApp('src/styles'),
+  libDir: resolveApp('src/lib'),
   icons: resolveApp('src/assets/icons'),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
+  appTypeDeclarations: resolveApp('src/react-app-env.d.ts'),
+  ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
 };
 
 const ownPackageJson = require('../package.json');
@@ -123,17 +156,30 @@ if (
     appBuild: resolveOwn('../../build'),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
-    appIndexJs: resolveOwn('template/src/index.js'),
+    appIndexJs: resolveModule(resolveOwn, 'template/src/index'),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
+    appTsConfig: resolveOwn('template/tsconfig.json'),
+    appJsConfig: resolveOwn('template/jsconfig.json'),
     yarnLockFile: resolveOwn('template/yarn.lock'),
-    testsSetup: resolveOwn('template/src/setupTests.js'),
+    testsSetup: resolveModule(resolveOwn, 'template/src/setupTests'),
+    proxySetup: resolveOwn('template/src/setupProxy.js'),
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
+    componentsDir: resolveApp('src/components'),
+    libDir: resolveApp('src/lib'),
+    patternsDir: resolveApp('src/patterns'),
+    styleguideIndexJs: resolveApp('src/styleguide/index.js'),
+    styleguideHtml: resolveApp('src/styleguide/styleguide.html'),
+    icons: resolveApp('src/assets/icons'),
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
+    appTypeDeclarations: resolveOwn('template/src/react-app-env.d.ts'),
+    ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
   };
 }
 // @remove-on-eject-end
+
+module.exports.moduleFileExtensions = moduleFileExtensions;

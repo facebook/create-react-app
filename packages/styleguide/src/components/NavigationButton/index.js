@@ -7,7 +7,7 @@ import { rem } from './../../style/utils';
 
 const propTypes = {
   isActive: bool,
-  isMobileButton: bool
+  isMobileButton: bool,
 };
 
 const NavigationButton = ({

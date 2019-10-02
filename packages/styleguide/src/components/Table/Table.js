@@ -8,7 +8,7 @@ export const propTypes = {
   columns: arrayOf(
     shape({
       key: string.isRequired,
-      label: string
+      label: string,
     })
   ),
   /** Data to print out in the table. */
@@ -16,12 +16,12 @@ export const propTypes = {
   /** Outside border */
   hasOutsideBorder: bool,
   /** Responsivness of table */
-  isResponsive: bool
+  isResponsive: bool,
 };
 
 const defaultProps = {
   hasOutsideBorder: true,
-  isResponsive: true
+  isResponsive: true,
 };
 
 const Table = ({ columns = [], data = [], isResponsive, ...other }) => {
