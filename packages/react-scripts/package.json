@@ -25,6 +25,7 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.5.5",
+    "@mdx-js/loader": "^1.4.5",
     "@svgr/webpack": "4.3.2",
     "@typescript-eslint/eslint-plugin": "1.13.0",
     "@typescript-eslint/parser": "1.13.0",
@@ -75,6 +76,8 @@
     "semver": "6.3.0",
     "static-site-generator-webpack-plugin": "3.4.2",
     "style-loader": "1.0.0",
+    "svg-sprite-loader": "^4.1.6",
+    "svgo-loader": "^2.2.1",
     "terser-webpack-plugin": "1.4.1",
     "ts-pnp": "1.1.2",
     "url-loader": "2.1.0",
@@ -84,11 +87,9 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "devDependencies": {
-    "@mdx-js/loader": "^1.4.5",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "svg-sprite-loader": "^4.1.6",
-    "svgo-loader": "^2.2.1"
+
   },
   "peerDependencies": {
     "node-sass": "~4.10.0"
