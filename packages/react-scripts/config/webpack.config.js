@@ -306,6 +306,7 @@ module.exports = function(webpackEnv) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
+        ...(modules.webpackAliases || {}),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -352,7 +353,9 @@ module.exports = function(webpackEnv) {
                     const eslintCli = new eslint.CLIEngine();
                     let eslintConfig;
                     try {
-                      eslintConfig = eslintCli.getConfigForFile(paths.appIndexJs);
+                      eslintConfig = eslintCli.getConfigForFile(
+                        paths.appIndexJs
+                      );
                     } catch (e) {
                       console.error(e);
                       process.exit(1);
