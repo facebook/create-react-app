@@ -98,11 +98,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  componentsDir: resolveApp('src/components'),
   libDir: resolveApp('src/lib'),
-  patternsDir: resolveApp('src/patterns'),
-  styleguideIndexJs: resolveApp('src/styleguide/index.js'),
-  styleguideHtml: resolveApp('src/styleguide/styleguide.html'),
   icons: resolveApp('src/assets/icons'),
 };
 
@@ -112,7 +108,6 @@ const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
   dotenv: resolveApp('.env'),
-  appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
   componentsBuild: resolveApp('build/components'),
   patternsBuild: resolveApp('build/patterns'),
@@ -134,11 +129,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  componentsDir: resolveApp('src/components'),
   libDir: resolveApp('src/lib'),
-  patternsDir: resolveApp('src/patterns'),
-  styleguideIndexJs: resolveApp('src/styleguide/index.js'),
-  styleguideHtml: resolveApp('src/styleguide/styleguide.html'),
   icons: resolveApp('src/assets/icons'),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),

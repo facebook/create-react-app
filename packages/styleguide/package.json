@@ -1,8 +1,8 @@
 {
   "name": "@lighting-beetle/lighter-styleguide",
-  "version": "1.2.4",
+  "version": "2.3.2",
   "description": "Lighter styleguide",
-  "main": "build/lib/styleguide.js",
+  "main": "src/styleguide.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lightingbeetle/lighter.git"
@@ -15,55 +15,54 @@
   "homepage": "/",
   "dependencies": {
     "@mdx-js/react": "~1.5.0",
-    "@mdx-js/mdx": "~1.5.0",
     "array-includes": "~3.0.3",
-    "chroma-js": "~1.3.7",
+    "chroma-js": "~2.0.2",
     "classnames": "~2.2.5",
     "common-tags": "~1.8.0",
-    "core-js": "~3.2.1",
-    "firacode": "~2.0.0",
+    "core-js": "~2.6.0",
+    "firacode": "~1.205.0",
     "object.entries": "~1.1.0",
-    "polished": "~3.4.1",
+    "polished": "~2.3.1",
     "pretty": "~2.0.0",
     "prism-theme-one-dark": "~1.0.0",
     "prismjs": "~1.15.0",
-    "promise": "8.0.3",
     "react": "~16.10.1",
     "react-docgen": "~4.1.0",
-    "react-docgen-annotation-resolver": "~2.0.0",
+    "react-docgen-annotation-resolver": "~1.1.0",
     "react-dom": "~16.10.1",
-    "react-element-to-jsx-string": "~14.1.0",
-    "react-frame-component": "~4.1.0",
+    "react-element-to-jsx-string": "~14.0.1",
+    "react-frame-component": "~4.0.0",
     "react-ga": "~2.6.0",
     "react-markings": "~1.3.0",
-    "react-responsive": "~8.0.1",
-    "react-router-dom": "~5.1.1",
+    "react-responsive": "~6.0.1",
+    "react-router-dom": "~5.0.0",
     "react-select": "~2.2.0",
-    "styled-components": "~4.4.0",
+    "styled-components": "~4.1.2",
     "svg4everybody": "~2.1.9",
-    "unescape-html": "~1.1.0"
+    "unescape-html": "~1.1.0",
+    "weakmap-polyfill": "~2.0.0"
   },
   "scripts": {
     "precommit": "lint-staged",
     "start": "lighter-react-scripts start",
     "build": "lighter-react-scripts build",
-    "test": "lighter-react-scripts test --env=jsdom",
-    "eject": "lighter-react-scripts eject"
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
-      "prettier --single-quote --write",
+      "prettier --single-quote --trailing-comma --write",
       "git add"
     ]
   },
   "devDependencies": {
     "@lighting-beetle/lighter-react-scripts": "../react-scripts",
-    "babel-plugin-react-docgen": "~3.1.0",
+    "babel-plugin-react-docgen": "~2.0.0",
     "babel-preset-env": "~1.7.0",
-    "husky": "~3.0.7",
-    "lint-staged": "~9.4.0",
-    "prettier": "~1.18.2",
-    "raw-loader": "~3.1.0"
+    "husky": "~1.3.1",
+    "lint-staged": "~8.1.0",
+    "prettier": "~1.15.3",
+    "raw-loader": "~1.0.0"
   },
   "browserslist": [
     ">0.5%",

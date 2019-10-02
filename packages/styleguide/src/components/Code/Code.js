@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, bool } from 'prop-types';
+import { string, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
 import { stripUnit, em } from 'polished';
 
@@ -7,30 +7,46 @@ import Prism from 'prismjs';
 import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-diff';
+import 'prismjs/components/prism-scss';
 import 'prism-theme-one-dark/prism-onedark.css';
 import 'firacode/distr/fira_code.css';
 
 import { rem } from '../../style/utils';
 
 export default class PreviewCode extends Component {
-  static displayName = 'PreviewCode';
+  static displayName = 'Code';
 
   static propTypes = {
+    /** Code to highlight. */
     children: string,
-    language: string,
+    /** Suppored languages. */
+    language: oneOf([
+      'markup',
+      'js',
+      'jsx',
+      'css',
+      'scss',
+      'bash',
+      'json',
+      'diff',
+    ]),
+    /** Inline code preview with text. */
     inline: bool,
   };
 
   static defaultProps = {
     children: '',
     inline: true,
-    language: 'html',
+    language: 'markup',
   };
 
   state = {
     __html: Prism.highlight(
       this.props.children,
-      Prism.languages[this.props.language]
+      typeof Prism.languages[this.props.language] !== 'undefined'
+        ? Prism.languages[this.props.language]
+        : Prism.languages.html
     ),
   };
 
@@ -79,10 +95,11 @@ export default class PreviewCode extends Component {
   }
 }
 
-const Highlight = styled.code.attrs({
-  className: props =>
-    `code ${props.inline && 'code--inline'} language-${props.language}`,
-})`
+const Highlight = styled.code.attrs(props => ({
+  className: `code ${props.inline && 'code--inline'} language-${
+    props.language
+  }`,
+}))`
   &[class*='language-'] {
     font-feature-settings: 'calt' 1;
     text-rendering: optimizeLegibility;
