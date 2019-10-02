@@ -1,3 +1,18 @@
+## 3.0.0-beta.2 (Oct 3, 2019)
+
+#### :rocket: New Feature
+
+* [eslint-config-lighter] add eslint react-hooks plugin ([#132](https://github.com/lightingbeetle/lighter/pull/132))
+
+#### :bug: Bug Fix
+
+* [lighter-react-scripts] move react-scripts devDependencies to dependencies ([#131](https://github.com/lightingbeetle/lighter/pull/131))
+* [eslint-config-lighter] move eslint-config-lighter dependencies to peerDependencies ([#132](https://github.com/lightingbeetle/lighter/pull/132))
+
+* `lighter-styleguide@3.0.0-beta.2`
+* `lighter-react-scripts@3.0.0-beta.2`
+* `eslint-config-lighter@2.1.0`
+
 ## 3.0.0-beta.1 (Oct 2, 2019)
 
 #### :boom: Breaking Change
