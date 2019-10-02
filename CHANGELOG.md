@@ -14,7 +14,11 @@
 * [lighter-styleguide], [lighter-react-scripts] update browserlist to avoid autoprefixer/cssnano changing 'transparent' to 'initial' ([#125](https://github.com/lightingbeetle/lighter/pull/125))
 * [lighter-styleguide] fix components with name Preview and description of preview in docs ([#127](https://github.com/lightingbeetle/lighter/pull/127))
 
+#### :tada: version updates
 
+* `lighter-styleguide@3.0.0-beta.1`
+* `lighter-react-scripts@3.0.0-beta.1`
+* `eslint-config-lighter@2.0.0`
 
 ## 2.7.0 (Aug 30, 2019)
 
@@ -22,7 +26,6 @@
 
 * [lighter-styleguide] runs GA in production mode only ([#123](https://github.com/lightingbeetle/lighter/pull/123))
 
- 
 #### :tada: version updates
 
 * `lighter-styleguide@2.3.2`
