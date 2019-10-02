@@ -364,6 +364,11 @@ module.exports = function(webpackEnv, options = {}) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
+        // Make sure that only one React instance is loaded.
+        // This is solving issue in .mdx files, when lighter-styleguide is 
+        // installed as symlink and mdx/loader are prepending React from
+        // lighter-styleguide node_modules. This creates two React instances in // bundle which break hooks. 
+        react: path.resolve('./node_modules/react'),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
