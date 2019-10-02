@@ -1,3 +1,21 @@
+## 3.0.0-beta.1 (Oct 2, 2019)
+
+#### :boom: Breaking Change
+
+* [eslint-config-lighter] improve eslint rules ([#126](https://github.com/lightingbeetle/lighter/pull/126))
+* [all] update to CRA 3.1.2 ([#129](https://github.com/lightingbeetle/lighter/pull/129))
+
+#### :rocket: New Feature
+
+* [lighter-styleguide] code splittings for separate parts of page and routes ([#128](https://github.com/lightingbeetle/lighter/pull/128))
+
+#### :bug: Bug Fix
+
+* [lighter-styleguide], [lighter-react-scripts] update browserlist to avoid autoprefixer/cssnano changing 'transparent' to 'initial' ([#125](https://github.com/lightingbeetle/lighter/pull/125))
+* [lighter-styleguide] fix components with name Preview and description of preview in docs ([#127](https://github.com/lightingbeetle/lighter/pull/127))
+
+
+
 ## 2.7.0 (Aug 30, 2019)
 
 #### :bug: Bug Fix
