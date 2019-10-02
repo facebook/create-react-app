@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, Fragment, Suspense, lazy } from 'react';
 import {} from 'prop-types';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -8,15 +8,15 @@ import * as theme from './style/theme';
 import { rem } from './style/utils';
 
 import { init, RouteTracker } from './components/GoogleAnalytics';
-import Header from './components/Header/';
-import Sidebar from './components/Sidebar/';
-import Navigation from './components/Navigation/';
-import NavigationButton from './components/NavigationButton/';
-import Sitemap from './components/Sitemap';
+const Header = lazy(() => import('./components/Header/'));
+const Sidebar = lazy(() => import('./components/Sidebar/'));
+const Navigation = lazy(() => import('./components/Navigation/'));
+const NavigationButton = lazy(() => import('./components/NavigationButton/'));
+const Sitemap = lazy(() => import('./components/Sitemap'));
 
-import MdxWrapper from './utils/mdx';
+const MdxWrapper = lazy(() => import('./utils/mdx'));
 
-class App extends React.Component {
+class App extends Component {
   static displayName = 'App';
 
   static propTypes = {};
@@ -76,40 +76,48 @@ class App extends React.Component {
     }, Object.assign({}, theme));
 
     return (
-      <MdxWrapper>
+      <Fragment>
         <GlobalStyle />
         <BrowserRouter basename={styleguideBasePath}>
           {gaId && init({ gaId }) && <RouteTracker />}
           <ThemeProvider theme={localTheme}>
             <PageLayout>
-              <PageHeader
-                key="header"
-                project={logo || name}
-                projectSmall={logoSmall || name}
-                pageTitle="Bar"
-                infoText={`v${version}`}
-                {...other}
-              >
-                <NavigationButton
-                  onClick={() => this.handleClick()}
-                  isActive={this.state.isNavActive}
-                />
-              </PageHeader>
+              <Suspense fallback={<div />}>
+                <PageHeader
+                  key="header"
+                  project={logo || name}
+                  projectSmall={logoSmall || name}
+                  pageTitle="Bar"
+                  infoText={`v${version}`}
+                  {...other}
+                >
+                  <NavigationButton
+                    onClick={() => this.handleClick()}
+                    isActive={this.state.isNavActive}
+                  />
+                </PageHeader>
+              </Suspense>
               <PageBody className={activeClass}>
                 <PageContent>
-                  <Sitemap routes={routes} />
+                  <Suspense fallback={<div />}>
+                    <MdxWrapper>
+                      <Sitemap routes={routes} />
+                    </MdxWrapper>
+                  </Suspense>
                 </PageContent>
-                <PageSidebar>
-                  <Navigation
-                    routes={routes}
-                    onNavLinkClick={() => this.handleNavLinkClick()}
-                  />
-                </PageSidebar>
+                <Suspense fallback={<div />}>
+                  <PageSidebar>
+                    <Navigation
+                      routes={routes}
+                      onNavLinkClick={() => this.handleNavLinkClick()}
+                    />
+                  </PageSidebar>
+                </Suspense>
               </PageBody>
             </PageLayout>
           </ThemeProvider>
         </BrowserRouter>
-      </MdxWrapper>
+      </Fragment>
     );
   }
 }

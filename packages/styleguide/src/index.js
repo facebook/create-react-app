@@ -2,22 +2,37 @@ import React from 'react';
 import styleguide from './styleguide';
 import pkg from '../package.json';
 
-import Page from './components/Page';
+const Page = React.lazy(() => import('./components/Page'));
 
-import Hello from './pages/Hello.mdx';
-import PreviewDocs from './components/Preview/Preview.docs.mdx';
-import ComponentDocsDocs from './components/ComponentDocs/ComponentDocs.docs.mdx';
-import CodeDocs from './components/Code/Code.docs.mdx';
-import ColorPaletteDocs from './components/ColorPalette/ColorPalette.docs.mdx';
-import ComponentInfoDocs from './components/ComponentInfo/ComponentInfo.docs.mdx';
-import BadgeDocs from './components/Badge/Badge.docs.mdx';
-import NoteDocs from './components/Note/Note.docs.mdx';
-import TableDocs from './components/Table/Table.docs.mdx';
-import PageDocs from './components/Page/Page.docs.mdx';
-import TypographyDocs from './components/Typography/Typography.docs.mdx';
+const PreviewDocs = React.lazy(() =>
+  import('./components/Preview/Preview.docs.mdx')
+);
+const ComponentDocsDocs = React.lazy(() =>
+  import('./components/ComponentDocs/ComponentDocs.docs.mdx')
+);
+const CodeDocs = React.lazy(() => import('./components/Code/Code.docs.mdx'));
+const ColorPaletteDocs = React.lazy(() =>
+  import('./components/ColorPalette/ColorPalette.docs.mdx')
+);
+const ComponentInfoDocs = React.lazy(() =>
+  import('./components/ComponentInfo/ComponentInfo.docs.mdx')
+);
+const BadgeDocs = React.lazy(() => import('./components/Badge/Badge.docs.mdx'));
+const NoteDocs = React.lazy(() => import('./components/Note/Note.docs.mdx'));
+const TableDocs = React.lazy(() => import('./components/Table/Table.docs.mdx'));
+const PageDocs = React.lazy(() => import('./components/Page/Page.docs.mdx'));
+const TypographyDocs = React.lazy(() =>
+  import('./components/Typography/Typography.docs.mdx')
+);
 
-import ContributingGuidelines from './pages/ContributingGuidelines.mdx';
-import MaintainingCRAFork from './pages/Maintining-CRA-fork.mdx';
+const ContributingGuidelines = React.lazy(() =>
+  import('./pages/ContributingGuidelines.mdx')
+);
+const MaintainingCRAFork = React.lazy(() =>
+  import('./pages/Maintining-CRA-fork.mdx')
+);
+
+const Hello = React.lazy(() => import('./pages/Hello.mdx'));
 
 styleguide({
   config: {
@@ -25,13 +40,13 @@ styleguide({
     name: 'Lighter',
     styleguideBasePath: '/',
     logo: <img src="/logo/logo.svg" alt="Lighter" />,
-    logoSmall: <img src="/logo/logo-small.svg" alt="Lighter" />
+    logoSmall: <img src="/logo/logo-small.svg" alt="Lighter" />,
   },
   routes: [
     {
       title: 'Hello',
       path: '/',
-      render: <Page render={Hello} />
+      render: <Page render={<Hello />} />,
     },
     {
       title: 'Components',
@@ -40,54 +55,54 @@ styleguide({
         {
           title: 'Badge',
           path: '/badge',
-          render: <Page render={BadgeDocs} />
+          render: <Page render={<BadgeDocs />} />,
         },
         {
           title: 'Code',
           path: '/code',
-          render: <Page render={CodeDocs} />
+          render: <Page render={<CodeDocs />} />,
         },
         {
           title: 'ColorPalette',
           path: '/color-palette',
-          render: <Page render={ColorPaletteDocs} />
+          render: <Page render={<ColorPaletteDocs />} />,
         },
         {
           title: 'ComponentDocs',
           path: '/component-docs',
-          render: <Page render={ComponentDocsDocs} />
+          render: <Page render={<ComponentDocsDocs />} />,
         },
         {
           title: 'ComponentInfo',
           path: '/component-info',
-          render: <Page render={ComponentInfoDocs} />
+          render: <Page render={<ComponentInfoDocs />} />,
         },
         {
           title: 'Note',
           path: '/note',
-          render: <Page render={NoteDocs} />
+          render: <Page render={<NoteDocs />} />,
         },
         {
           title: 'Page',
           path: '/page',
-          render: <Page render={PageDocs} />
+          render: <Page render={<PageDocs />} />,
         },
         {
           title: 'Preview',
           path: '/preview',
-          render: <Page render={PreviewDocs} />
+          render: <Page render={<PreviewDocs />} />,
         },
         {
           title: 'Table',
           path: '/table',
-          render: <Page render={TableDocs} />
+          render: <Page render={<TableDocs />} />,
         },
         {
           title: 'Typography',
           path: '/typography',
-          render: <Page render={TypographyDocs} />
-        }
-      ]
+          render: <Page render={<TypographyDocs />} />,
+        },
+      ],
     },
     {
       title: 'Guides',
@@ -96,14 +111,14 @@ styleguide({
         {
           title: 'Contributing guidelines',
           path: '/contributing-guidelines',
-          render: <Page render={ContributingGuidelines} />
+          render: <Page render={<ContributingGuidelines />} />,
         },
         {
           title: 'Maintaining CRA fork',
           path: '/maintaining-CRA-fork',
-          render: <Page render={MaintainingCRAFork} />
-        }
-      ]
-    }
-  ]
+          render: <Page render={<MaintainingCRAFork />} />,
+        },
+      ],
+    },
+  ],
 });
