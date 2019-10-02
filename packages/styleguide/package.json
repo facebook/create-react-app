@@ -2,7 +2,7 @@
   "name": "@lighting-beetle/lighter-styleguide",
   "version": "2.3.2",
   "description": "Lighter styleguide",
-  "main": "src/styleguide.js",
+  "main": "build/lib/styleguide.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lightingbeetle/lighter.git"
@@ -26,6 +26,7 @@
     "pretty": "~2.0.0",
     "prism-theme-one-dark": "~1.0.0",
     "prismjs": "~1.15.0",
+    "promise": "^8.0.3",
     "react": "~16.10.1",
     "react-docgen": "~4.1.0",
     "react-docgen-annotation-resolver": "~1.1.0",

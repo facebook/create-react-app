@@ -13,7 +13,9 @@ export const propTypes = {
   ),
   /** Data to print out in the table. */
   data: arrayOf(object),
+  /** Outside border */
   hasOutsideBorder: bool,
+  /** Responsivness of table */
   isResponsive: bool,
 };
 
@@ -43,13 +45,12 @@ const Table = ({ columns = [], data = [], isResponsive, ...other }) => {
       <tbody>
         {data.map((row, i) => (
           <tr key={i.toString()}>
-            {columns.map(
-              column =>
-                column.render ? (
-                  column.render(row[column.key], column)
-                ) : (
-                  <td key={column.key}>{row[column.key]}</td>
-                )
+            {columns.map(column =>
+              column.render ? (
+                column.render(row[column.key], column)
+              ) : (
+                <td key={column.key}>{row[column.key]}</td>
+              )
             )}
           </tr>
         ))}

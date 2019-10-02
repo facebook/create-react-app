@@ -41,8 +41,10 @@ const StyledCategory = styled(Category)`
   & {
     display: block;
     position: relative;
-    padding: ${props => props.theme.nav.listTopBottomIndent} 0;
+    padding: ${props => props.theme.nav.listTopBottomIndent} 1rem
+      ${props => props.theme.nav.listTopBottomIndent} 0;
     cursor: pointer;
+    color: ${props => props.theme.colors.black};
   }
   &.${activeClass} {
     + ul {

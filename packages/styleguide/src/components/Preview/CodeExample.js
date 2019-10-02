@@ -11,12 +11,66 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import Code from '../Code/';
 import Button from '../Button';
 
+import * as theme from '../../style/theme';
+
+/**
+ * Remove props that are undefined or null
+ * Don't show React.Fragment in code example
+ */
+const cleanUpCode = markup => {
+  const markupProps = markup.props || {};
+
+  return Object.keys(markupProps).reduce((acc, curr) => {
+    let currProp = markupProps[curr];
+
+    let newProp;
+    // clean up child code
+    if (curr === 'children' && typeof currProp !== 'string') {
+      newProp = React.Children.map(currProp, child => {
+        // hide fragments if containing just strings
+        const isFragmentString =
+          child.type === React.Fragment &&
+          child.props &&
+          typeof child.props.children === 'string';
+
+        return isFragmentString
+          ? child.props.children
+          : {
+              ...child,
+              props: cleanUpCode(child),
+            };
+      });
+    }
+
+    // hide undefined or null props
+    const isNotDefined = [undefined, null].indexOf(currProp) !== -1;
+    return {
+      ...acc,
+      ...(isNotDefined
+        ? {}
+        : {
+            [curr]: newProp || currProp,
+          }),
+    };
+  }, {});
+};
+
 const getJSXAsStringFromMarkup = (markup, options) => {
+  const { cleanProps, ...otherOptions } = options || {};
+
   const reactElementToJSXStringOptions = {
+    showDefaultProps: false,
     showFunctions: true,
-    functionValue: () => '',
-    ...options,
+    functionValue: fn => fn.name,
+    ...otherOptions,
   };
+
+  if (cleanProps) {
+    markup = {
+      ...markup,
+      props: cleanUpCode(markup),
+    };
+  }
 
   // valid element can be passed to reactElementToJSXString directly
   if (React.isValidElement(markup)) {
@@ -119,7 +173,10 @@ export default class CodeExample extends React.Component {
         codeToShow = pretty(
           typeof children === 'string'
             ? unescape(children)
-            : renderToStaticMarkup(children),
+            : renderToStaticMarkup({
+                ...children,
+                props: { ...children.props, theme },
+              }),
           {
             ocd: true,
           }
@@ -155,7 +212,11 @@ export default class CodeExample extends React.Component {
         <Code
           inline={false}
           ref={this.codeBlockRef}
-          language={this.state.codePreviewType}
+          language={
+            this.state.codePreviewType === 'html'
+              ? 'markup'
+              : this.state.codePreviewType
+          }
         >
           {codeToShow}
         </Code>

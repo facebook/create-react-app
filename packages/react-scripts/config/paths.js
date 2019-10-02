@@ -108,6 +108,7 @@ const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
   dotenv: resolveApp('.env'),
+  appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
   componentsBuild: resolveApp('build/components'),
   patternsBuild: resolveApp('build/patterns'),

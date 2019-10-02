@@ -1,6 +1,7 @@
 import React from 'react';
 import { string, array } from 'prop-types';
 import cx from 'classnames';
+
 import styled from 'styled-components';
 
 import { Bar, BarItem } from './../Bar';
@@ -17,7 +18,7 @@ const PreviewTitleBar = ({ className, title, actions = [], ...other }) => {
   const classes = cx(CLASS_ROOT, className);
 
   return (
-    <StyledBar as="header" className={classes} {...other}>
+    <StyledBar className={classes} {...other}>
       <BarItem isFilling>
         <H5>{title}</H5>
       </BarItem>

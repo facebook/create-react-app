@@ -3,6 +3,11 @@ module.exports = {
   extends: ["airbnb", "prettier"],
   plugins: ["prettier"],
   rules: {
+    "import/first": "off", 
+    "import/order": ["error", {
+      "newlines-between": "always", 
+      "groups": ["builtin", "external", "parent", "sibling", "index"]
+    }],
     "arrow-parens": ["error", "as-needed"],
     "comma-dangle": [
       2,
@@ -36,7 +41,8 @@ module.exports = {
       {
         vars: "all",
         args: "after-used",
-        ignoreRestSiblings: true
+        ignoreRestSiblings: true,
+        varsIgnorePattern: "^_+$"
       }
     ],
     "no-param-reassign": [2, { "props": false }],
@@ -66,7 +72,17 @@ module.exports = {
         forbid: ["any"]
       }
     ],
-    "react/jsx-wrap-multilines": "off"
+    "react/jsx-wrap-multilines": "off",
+    "max-statements": ["error", 30, { "ignoreTopLevelFunctions": true }],
+    "max-lines": [
+      "error", 
+      {
+        "max": 300, 
+        "skipBlankLines": true, 
+        "skipComments": true
+      }
+    ],
+    "max-depth": ["error", 4]
   },
   globals: {
     window: true
