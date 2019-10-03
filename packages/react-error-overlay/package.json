@@ -1,6 +1,6 @@
 {
   "name": "react-error-overlay",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "An overlay for displaying stack frames.",
   "main": "lib/index.js",
   "sideEffects": false,
@@ -58,7 +58,7 @@
     "promise": "8.0.3",
     "raw-loader": "^1.0.0",
     "react": "^16.8.4",
-    "react-app-polyfill": "^1.0.3",
+    "react-app-polyfill": "^1.0.4",
     "react-dom": "^16.8.4",
     "rimraf": "^2.6.3",
     "settle-promise": "1.0.0",
