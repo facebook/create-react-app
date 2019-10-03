@@ -122,9 +122,17 @@ checkBrowsers(paths.appPath, isInteractive)
       );
     },
     err => {
-      console.log(chalk.red('Failed to compile.\n'));
-      printBuildError(err);
-      process.exit(1);
+      const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
+      if (tscCompileOnError) {
+        console.log(chalk.yellow(
+          'Compiled with the following type errors (you may want to check these before deploying your app):\n'
+        ));
+        printBuildError(err);
+      } else {
+        console.log(chalk.red('Failed to compile.\n'));
+        printBuildError(err);
+        process.exit(1);
+      }
     }
   )
   .catch(err => {

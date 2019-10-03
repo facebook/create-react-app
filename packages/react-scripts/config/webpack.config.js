@@ -207,6 +207,9 @@ module.exports = function(webpackEnv) {
       // Prevents conflicts when multiple Webpack runtimes (from different apps)
       // are used on the same page.
       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
+      // this defaults to 'window', but by setting it to 'this' then
+      // module chunks which are built will work in web workers as well.
+      globalObject: 'this',
     },
     optimization: {
       minimize: isEnvProduction,
@@ -316,6 +319,7 @@ module.exports = function(webpackEnv) {
           'react-dom$': 'react-dom/profiling',
           'scheduler/tracing': 'scheduler/tracing-profiling',
         }),
+        ...(modules.webpackAliases || {}),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -357,16 +361,18 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-begin
                 ignore: process.env.EXTEND_ESLINT === 'true',
                 baseConfig: (() => {
-                  const eslintCli = new eslint.CLIEngine();
-                  let eslintConfig;
-                  try {
-                    eslintConfig = eslintCli.getConfigForFile(paths.appIndexJs);
-                  } catch (e) {
-                    // A config couldn't be found.
-                  }
-
                   // We allow overriding the config only if the env variable is set
-                  if (process.env.EXTEND_ESLINT === 'true' && eslintConfig) {
+                  if (process.env.EXTEND_ESLINT === 'true') {
+                    const eslintCli = new eslint.CLIEngine();
+                    let eslintConfig;
+                    try {
+                      eslintConfig = eslintCli.getConfigForFile(
+                        paths.appIndexJs
+                      );
+                    } catch (e) {
+                      console.error(e);
+                      process.exit(1);
+                    }
                     return eslintConfig;
                   } else {
                     return {
