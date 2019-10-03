@@ -1,3 +1,88 @@
+## 3.2.0 (2019-10-03)
+
+v3.2.0 is a minor release that adds support for production profiling and ignoring TypeScript type errors to make migrating JavaScript projects to TypeScript easier. It also includes other minor bug fixes and documentation updates.
+
+#### :rocket: New Feature
+
+- `react-scripts`
+  - [#7737](https://github.com/facebook/create-react-app/pull/7737) Support production profiling with React Developer Tools ([@JacobMGEvans](https://github.com/JacobMGEvans))
+- `react-dev-utils`, `react-scripts`
+  - [#6931](https://github.com/facebook/create-react-app/pull/6931) Adds TSC_COMPILE_ON_ERROR env var... ([@kylebebak](https://github.com/kylebebak))
+
+#### :bug: Bug Fix
+
+- `react-scripts`
+  - [#7754](https://github.com/facebook/create-react-app/pull/7754) Fix linting error when using rest props ([@alexandrtovmach](https://github.com/alexandrtovmach))
+- `react-app-polyfill`
+  - [#7205](https://github.com/facebook/create-react-app/pull/7205) Guard polyfills against window possibly being undefined ([@jxom](https://github.com/jxom))
+
+#### :nail_care: Enhancement
+
+- `react-scripts`
+  - [#7687](https://github.com/facebook/create-react-app/pull/7687) Use installing package manager in README ([@ashr81](https://github.com/ashr81))
+  - [#7755](https://github.com/facebook/create-react-app/pull/7755) Support setting baseUrl to root directory ([@rovansteen](https://github.com/rovansteen))
+  - [#7530](https://github.com/facebook/create-react-app/pull/7530) only load eslint config when EXTEND_ESLINT environment variable is specified/ do not swallow eslint config errors ([@n1ru4l](https://github.com/n1ru4l))
+  - [#7742](https://github.com/facebook/create-react-app/pull/7742) set output.globalObject to 'this' ([@kentcdodds](https://github.com/kentcdodds))
+  - [#7721](https://github.com/facebook/create-react-app/pull/7721) Add "entrypoints" key to asset manifest ([@samuelmeuli](https://github.com/samuelmeuli))
+  - [#7562](https://github.com/facebook/create-react-app/pull/7562) enable .eslintignore again ([@igtm](https://github.com/igtm))
+- `react-dev-utils`
+  - [#6980](https://github.com/facebook/create-react-app/pull/6980) Stop hiding the column number of ESLint errors ([@justingrant](https://github.com/justingrant))
+
+#### :memo: Documentation
+
+- [#7302](https://github.com/facebook/create-react-app/pull/7302) docs: note that 2 to 3 migration may require deletion of node_modules ([@kimpers](https://github.com/kimpers))
+- [#7757](https://github.com/facebook/create-react-app/pull/7757) Documentation typo fix: accessbile→accessible ([@tomer](https://github.com/tomer))
+- [#7601](https://github.com/facebook/create-react-app/pull/7601) [Documentation] Updated list of supported Jest config overrides ([@neilbryson](https://github.com/neilbryson))
+- [#7705](https://github.com/facebook/create-react-app/pull/7705) Update runtime chunk name separator in docs ([@samuelmeuli](https://github.com/samuelmeuli))
+
+#### :house: Internal
+
+- `react-scripts`
+  - [#7752](https://github.com/facebook/create-react-app/pull/7752) Fix wrong letter casing ([@lewislbr](https://github.com/lewislbr))
+- `react-dev-utils`, `react-scripts`
+  - [#7707](https://github.com/facebook/create-react-app/pull/7707) Remove 'shortcut' link type before 'icon' ([@lewislbr](https://github.com/lewislbr))
+
+#### :hammer: Underlying Tools
+
+- `react-scripts`
+  - [#7729](https://github.com/facebook/create-react-app/pull/7729) Remove switch case ([@andrelmlins](https://github.com/andrelmlins))
+
+#### Committers: 19
+
+- Alexandr Tovmach ([@alexandrtovmach](https://github.com/alexandrtovmach))
+- André Lins ([@andrelmlins](https://github.com/andrelmlins))
+- Ashrith Reddy ([@ashr81](https://github.com/ashr81))
+- Federico Zivolo ([@FezVrasta](https://github.com/FezVrasta))
+- Iguchi Tomokatsu ([@igtm](https://github.com/igtm))
+- Jacob M-G Evans ([@JacobMGEvans](https://github.com/JacobMGEvans))
+- Jake Moxey ([@jxom](https://github.com/jxom))
+- Justin Grant ([@justingrant](https://github.com/justingrant))
+- Kent C. Dodds ([@kentcdodds](https://github.com/kentcdodds))
+- Kim Persson ([@kimpers](https://github.com/kimpers))
+- Kyle Bebak ([@kylebebak](https://github.com/kylebebak))
+- Laurin Quast ([@n1ru4l](https://github.com/n1ru4l))
+- Lewis Llobera ([@lewislbr](https://github.com/lewislbr))
+- Rakan Nimer ([@rakannimer](https://github.com/rakannimer))
+- Reece Dunham ([@RDIL](https://github.com/RDIL))
+- Robert van Steen ([@rovansteen](https://github.com/rovansteen))
+- Samuel Meuli ([@samuelmeuli](https://github.com/samuelmeuli))
+- Tomer Cohen ([@tomer](https://github.com/tomer))
+- neilbryson ([@neilbryson](https://github.com/neilbryson))
+
+### Migrating from 3.1.2 to 3.2.0
+
+Inside any created project that has not been ejected, run:
+
+```sh
+npm install --save --save-exact react-scripts@3.2.0
+```
+
+or
+
+```sh
+yarn add --exact react-scripts@3.2.0
+```
+
 ## 3.1.2 (2019-09-19)
 
 v3.1.2 is a maintenance release that includes minor bug fixes and documentation updates.
