@@ -17,19 +17,15 @@ process.on('unhandledRejection', err => {
 
 const spawn = require('react-dev-utils/crossSpawn');
 const args = process.argv.slice(2);
-
-const scriptIndex = args.findIndex(
-  x => x === 'build' || x === 'eject' || x === 'start' || x === 'test'
-);
+const scripts = ['build', 'eject', 'start', 'test'];
+const scriptIndex = args.findIndex(arg => scripts.includes(arg));
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
 
-if (['build', 'eject', 'start', 'test'].includes(script)) {
+if (scripts.includes(script)) {
   const result = spawn.sync(
     'node',
-    nodeArgs
-      .concat(require.resolve('../scripts/' + script))
-      .concat(args.slice(scriptIndex + 1)),
+    nodeArgs.concat(require.resolve('../scripts/' + script)).concat(args.slice(scriptIndex + 1)),
     { stdio: 'inherit' }
   );
   if (result.signal) {
@@ -52,7 +48,5 @@ if (['build', 'eject', 'start', 'test'].includes(script)) {
 } else {
   console.log('Unknown script "' + script + '".');
   console.log('Perhaps you need to update react-scripts?');
-  console.log(
-    'See: https://facebook.github.io/create-react-app/docs/updating-to-new-releases'
-  );
+  console.log('See: https://facebook.github.io/create-react-app/docs/updating-to-new-releases');
 }
