@@ -46,7 +46,7 @@
     "cross-env": "5.2.1",
     "eslint": "^6.1.0",
     "eslint-config-react-app": "^5.0.2",
-    "eslint-plugin-flowtype": "3.13.0",
+    "eslint-plugin-flowtype": "4.3.0",
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.14.3",
