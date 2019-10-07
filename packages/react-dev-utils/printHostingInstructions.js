@@ -41,6 +41,7 @@ function printHostingInstructions(
   console.log();
   console.log(`  ${chalk.yellow('https://bit.ly/CRA-deploy')}`);
   console.log();
+  console.log(new Date().toString());
 }
 
 function printBaseMessage(buildFolder, hostingLocation) {
