@@ -74,6 +74,8 @@ When you create a new app, the CLI will use [Yarn](https://yarnpkg.com/) to inst
 npx create-react-app my-app --use-npm
 ```
 
+You may also opt to use pnpm with `--use-pnpm`.
+
 ## Output
 
 Running any of these commands will create a directory called `my-app` inside the current folder. Inside that directory, it will generate the initial project structure and install the transitive dependencies:

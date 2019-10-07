@@ -77,6 +77,7 @@ const program = new commander.Command(packageJson.name)
     'use a non-standard version of react-scripts'
   )
   .option('--use-npm')
+  .option('--use-pnpm')
   .option('--use-pnp')
   .option('--typescript')
   .allowUnknownOption()
@@ -179,6 +180,7 @@ createApp(
   program.verbose,
   program.scriptsVersion,
   program.useNpm,
+  program.usePnpm,
   program.usePnp,
   program.typescript,
   hiddenProgram.internalTestingTemplate
@@ -189,6 +191,7 @@ function createApp(
   verbose,
   version,
   useNpm,
+  usePnpm,
   usePnp,
   useTypescript,
   template
@@ -215,10 +218,10 @@ function createApp(
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
 
-  const useYarn = useNpm ? false : shouldUseYarn();
+  const useYarn = useNpm || usePnpm ? false : shouldUseYarn();
   const originalDirectory = process.cwd();
   process.chdir(root);
-  if (!useYarn && !checkThatNpmCanReadCwd()) {
+  if (!useYarn && !checkThatNpmCanReadCwd(usePnpm)) {
     process.exit(1);
   }
 
@@ -234,12 +237,14 @@ function createApp(
   }
 
   if (!useYarn) {
-    const npmInfo = checkNpmVersion();
+    const npmInfo = checkNpmVersion(usePnpm);
     if (!npmInfo.hasMinNpm) {
       if (npmInfo.npmVersion) {
         console.log(
           chalk.yellow(
-            `You are using npm ${npmInfo.npmVersion} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
+            `You are using ${usePnpm ? 'pnpm' : 'npm'} ${
+              npmInfo.npmVersion
+            } so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
               `Please update to npm 5 or higher for a better, fully supported experience.\n`
           )
         );
@@ -289,6 +294,7 @@ function createApp(
     originalDirectory,
     template,
     useYarn,
+    usePnpm,
     usePnp,
     useTypescript
   );
@@ -303,7 +309,15 @@ function shouldUseYarn() {
   }
 }
 
-function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
+function install(
+  root,
+  useYarn,
+  usePnpm,
+  usePnp,
+  dependencies,
+  verbose,
+  isOnline
+) {
   return new Promise((resolve, reject) => {
     let command;
     let args;
@@ -332,7 +346,7 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
         console.log();
       }
     } else {
-      command = 'npm';
+      command = usePnpm ? 'pnpm' : 'npm';
       args = [
         'install',
         '--save',
@@ -342,7 +356,9 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
       ].concat(dependencies);
 
       if (usePnp) {
-        console.log(chalk.yellow("NPM doesn't support PnP."));
+        console.log(
+          chalk.yellow(`${usePnpm ? 'PNPM' : 'NPM'} doesn't support PnP.`)
+        );
         console.log(chalk.yellow('Falling back to the regular installs.'));
         console.log();
       }
@@ -373,6 +389,7 @@ function run(
   originalDirectory,
   template,
   useYarn,
+  usePnpm,
   usePnp,
   useTypescript
 ) {
@@ -411,6 +428,7 @@ function run(
         return install(
           root,
           useYarn,
+          usePnpm,
           usePnp,
           allDependencies,
           verbose,
@@ -635,14 +653,14 @@ function getPackageName(installPackage) {
   return Promise.resolve(installPackage);
 }
 
-function checkNpmVersion() {
+function checkNpmVersion(usePnpm) {
   let hasMinNpm = false;
   let npmVersion = null;
   try {
-    npmVersion = execSync('npm --version')
+    npmVersion = execSync(`${usePnpm ? 'pnpm' : 'npm'} --version`)
       .toString()
       .trim();
-    hasMinNpm = semver.gte(npmVersion, '5.0.0');
+    hasMinNpm = semver.gte(npmVersion, usePnpm ? '3.8.1' : '5.0.0');
   } catch (err) {
     // ignore
   }
@@ -857,7 +875,7 @@ function getProxy() {
     }
   }
 }
-function checkThatNpmCanReadCwd() {
+function checkThatNpmCanReadCwd(pnpm) {
   const cwd = process.cwd();
   let childOutput = null;
   try {
@@ -866,7 +884,9 @@ function checkThatNpmCanReadCwd() {
     // `npm config list` is the only reliable way I could find
     // to reproduce the wrong path. Just printing process.cwd()
     // in a Node process was not enough.
-    childOutput = spawn.sync('npm', ['config', 'list']).output.join('');
+    childOutput = spawn
+      .sync(pnpm ? 'pnpm' : 'npm', ['config', 'list'])
+      .output.join('');
   } catch (err) {
     // Something went wrong spawning node.
     // Not great, but it means we can't do this check.

@@ -87,6 +87,7 @@ module.exports = function(
   );
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
+  const usePnpm = fs.existsSync(path.join(appPath, 'pnpm-lock.yaml'));
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
@@ -179,7 +180,7 @@ module.exports = function(
     command = 'yarnpkg';
     args = ['add'];
   } else {
-    command = 'npm';
+    command = usePnpm ? 'pnpm' : 'npm';
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
   args.push('react', 'react-dom');
@@ -233,7 +234,7 @@ module.exports = function(
   }
 
   // Change displayed command to yarn instead of yarnpkg
-  const displayedCommand = useYarn ? 'yarn' : 'npm';
+  const displayedCommand = useYarn ? 'yarn' : usePnpm ? 'pnpm' : 'npm';
 
   console.log();
   console.log(`Success! Created ${appName} at ${appPath}`);

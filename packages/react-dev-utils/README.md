@@ -306,11 +306,11 @@ if (openBrowser('http://localhost:3000')) {
 }
 ```
 
-#### `printHostingInstructions(appPackage: Object, publicUrl: string, publicPath: string, buildFolder: string, useYarn: boolean): void`
+#### `printHostingInstructions(appPackage: Object, publicUrl: string, publicPath: string, buildFolder: string, useYarn: boolean, usePnpm: boolean): void`
 
 Prints hosting instructions after the project is built.
 
-Pass your parsed `package.json` object as `appPackage`, your the URL where you plan to host the app as `publicUrl`, `output.publicPath` from your Webpack configuration as `publicPath`, the `buildFolder` name, and whether to `useYarn` in instructions.
+Pass your parsed `package.json` object as `appPackage`, your the URL where you plan to host the app as `publicUrl`, `output.publicPath` from your Webpack configuration as `publicPath`, the `buildFolder` name, and whether to `useYarn` or `usePnpm` in instructions.
 
 ```js
 const appPackage = require(paths.appPackageJson);
@@ -336,6 +336,7 @@ The `args` object accepts a number of properties:
 - **devSocket** `Object`: Required if `useTypeScript` is `true`. This object should include `errors` and `warnings` which are functions accepting an array of errors or warnings emitted by the type checking. This is useful when running `fork-ts-checker-webpack-plugin` with `async: true` to report errors that are emitted after the webpack build is complete.
 - **urls** `Object`: To provide the `urls` argument, use `prepareUrls()` described below.
 - **useYarn** `boolean`: If `true`, yarn instructions will be emitted in the terminal instead of npm.
+- **usePnpm** `boolean`: If `true`, pnpm instructions will be emitted in the terminal instead of npm.
 - **useTypeScript** `boolean`: If `true`, TypeScript type checking will be enabled. Be sure to provide the `devSocket` argument above if this is set to `true`.
 - **tscCompileOnError** `boolean`: If `true`, errors in TypeScript type checking will not prevent start script from running app, and will not cause build script to exit unsuccessfully. Also downgrades all TypeScript type checking error messages to warning messages.
 - **webpack** `function`: A reference to the webpack constructor.

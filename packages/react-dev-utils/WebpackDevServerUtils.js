@@ -76,7 +76,7 @@ function prepareUrls(protocol, host, port) {
   };
 }
 
-function printInstructions(appName, urls, useYarn) {
+function printInstructions(appName, urls, useYarn, usePnpm) {
   console.log();
   console.log(`You can now view ${chalk.bold(appName)} in the browser.`);
   console.log();
@@ -96,7 +96,9 @@ function printInstructions(appName, urls, useYarn) {
   console.log('Note that the development build is not optimized.');
   console.log(
     `To create a production build, use ` +
-      `${chalk.cyan(`${useYarn ? 'yarn' : 'npm run'} build`)}.`
+      `${chalk.cyan(
+        `${useYarn ? 'yarn' : `${usePnpm ? 'pnpm' : 'npm'} run`} build`
+      )}.`
   );
   console.log();
 }
@@ -107,6 +109,7 @@ function createCompiler({
   devSocket,
   urls,
   useYarn,
+  usePnpm,
   useTypeScript,
   tscCompileOnError,
   webpack,
@@ -228,7 +231,7 @@ function createCompiler({
       console.log(chalk.green('Compiled successfully!'));
     }
     if (isSuccessful && (isInteractive || isFirstCompile)) {
-      printInstructions(appName, urls, useYarn);
+      printInstructions(appName, urls, useYarn, usePnpm);
     }
     isFirstCompile = false;
 
