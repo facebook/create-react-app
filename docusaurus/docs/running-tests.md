@@ -275,7 +275,16 @@ Supported overrides:
 - [`collectCoverageFrom`](https://jestjs.io/docs/en/configuration.html#collectcoveragefrom-array)
 - [`coverageReporters`](https://jestjs.io/docs/en/configuration.html#coveragereporters-array-string)
 - [`coverageThreshold`](https://jestjs.io/docs/en/configuration.html#coveragethreshold-object)
+- [`extraGlobals`](https://jestjs.io/docs/en/configuration.html#extraglobals-array-string)
+- [`globalSetup`](https://jestjs.io/docs/en/configuration.html#globalsetup-string)
+- [`globalTeardown`](https://jestjs.io/docs/en/configuration.html#globalteardown-string)
+- [`moduleNameMapper`](https://jestjs.io/docs/en/configuration.html#modulenamemapper-object-string-string)
+- [`resetMocks`](https://jestjs.io/docs/en/configuration.html#resetmocks-boolean)
+- [`resetModules`](https://jestjs.io/docs/en/configuration.html#resetmodules-boolean)
 - [`snapshotSerializers`](https://jestjs.io/docs/en/configuration.html#snapshotserializers-array-string)
+- [`transform`](https://jestjs.io/docs/en/configuration.html#transform-object-string-pathtotransformer-pathtotransformer-object)
+- [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#transformignorepatterns-array-string)
+- [`watchPathIgnorePatterns`](https://jestjs.io/docs/en/configuration.html#watchpathignorepatterns-array-string)
 
 Example package.json:
 

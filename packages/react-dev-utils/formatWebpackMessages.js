@@ -41,9 +41,6 @@ function formatMessage(message) {
     /SyntaxError\s+\((\d+):(\d+)\)\s*(.+?)\n/g,
     `${friendlySyntaxErrorLabel} $3 ($1:$2)\n`
   );
-  // Remove columns from ESLint formatter output (we added these for more
-  // accurate syntax errors)
-  message = message.replace(/Line (\d+):\d+:/g, 'Line $1:');
   // Clean up export errors
   message = message.replace(
     /^.*export '(.+?)' was not found in '(.+?)'.*$/gm,

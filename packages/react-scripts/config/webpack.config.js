@@ -49,6 +49,11 @@ module.exports = function(webpackEnv) {
     ? 'production'
     : isEnvDevelopment && 'development';
 
+  // Variable used for enabling profiling in Production
+  // passed into alias object. Uses a flag if passed into the build command
+  const isEnvProductionProfile =
+    isEnvProduction && process.argv.includes('--profile');
+
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
   // In development, we always serve from the root. This makes config easier.

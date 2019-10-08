@@ -22,7 +22,7 @@ make sure to add the following line to your `.flowconfig` to make Flow aware of 
 
 ```diff
   [options]
-+ module.name_mapper='^\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
++ module.name_mapper='^\([^\.].*\)$' -> '<PROJECT_ROOT>/src/\1'
 ```
 
 To learn more about Flow, check out [its documentation](https://flow.org/).
