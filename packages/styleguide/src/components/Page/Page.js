@@ -2,7 +2,7 @@ import React from 'react';
 import { func, node, oneOfType } from 'prop-types';
 import cx from 'classnames';
 import styled from 'styled-components';
-import { components } from './../../utils/mdx';
+import MDXWrapper from '../MDX/';
 
 const propTypes = {
   /** Page content */
@@ -17,13 +17,11 @@ const Page = ({ className, render, ...other }) => {
   const Render = render;
 
   return (
-    <StyledPage className={classes} {...other}>
-      {typeof render === 'function' ? (
-        <Render components={components} />
-      ) : (
-        render
-      )}
-    </StyledPage>
+    <MDXWrapper>
+      <StyledPage className={classes} {...other}>
+        {typeof render === 'function' ? <Render /> : render}
+      </StyledPage>
+    </MDXWrapper>
   );
 };
 

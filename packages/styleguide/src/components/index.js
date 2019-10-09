@@ -1,8 +1,10 @@
+export { default as App } from './App';
 export { Badge, InfoBadge } from './Badge';
 export { default as Code, CodeBlock, CodeJSX, CodeBlockJSX } from './Code';
 export { default as ColorPalette } from './ColorPalette';
 export { default as ComponentDocs } from './ComponentDocs';
 export { default as ComponentInfo } from './ComponentInfo';
+export { default as MDXWrapper, MDXComponents } from './MDX';
 export {
   default as Note,
   NoteWarning,

@@ -1,8 +1,8 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 
-import Code, { CodeBlock } from './../components/Code';
-import { H1, H2, H3, H4, H5, P, Link } from './../components/Typography';
+import Code, { CodeBlock } from '../Code';
+import { H1, H2, H3, H4, H5, P, Link } from '../Typography';
 
 /**
  * Create custom header id which can be used as hash in link
@@ -24,7 +24,7 @@ const createHeaderId = props => {
     .replace(/[^\w\d]+/g, '-')}`;
 };
 
-export const components = {
+export const MDXComponents = {
   h1: props => <H1 id={`${createHeaderId(props)}`} {...props} />,
   h2: props => <H2 id={`${createHeaderId(props)}`} {...props} />,
   h3: props => <H3 id={`${createHeaderId(props)}`} {...props} />,
@@ -35,9 +35,11 @@ export const components = {
   p: props => <P {...props} />,
   a: props => <Link {...props} />,
   inlineCode: props => <Code {...props} />,
-  code: props => <CodeBlock {...props} />
+  code: props => <CodeBlock {...props} />,
 };
 
-const MdxWrapper = props => <MDXProvider components={components} {...props} />;
+const MDXWrapper = props => (
+  <MDXProvider components={MDXComponents} {...props} />
+);
 
-export default MdxWrapper;
+export default MDXWrapper;
