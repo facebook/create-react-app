@@ -28,8 +28,6 @@
     "prismjs": "~1.15.0",
     "promise": "^8.0.3",
     "react": "~16.10.1",
-    "react-docgen": "~4.1.0",
-    "react-docgen-annotation-resolver": "~1.1.0",
     "react-dom": "~16.10.1",
     "react-element-to-jsx-string": "~14.0.1",
     "react-frame-component": "~4.0.0",
