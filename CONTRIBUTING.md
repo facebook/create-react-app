@@ -135,8 +135,8 @@ By default git would use `CRLF` line endings which would cause the scripts to fa
 
 ## Cutting a Release
 
-1. Tag all merged pull requests that go into the release with the relevant milestone. Each merged PR should also be labeled with one of the [labels](https://github.com/facebook/create-react-app/labels) named `tag: ...` to indicate what kind of change it is.
-2. Close the milestone.
+1. Tag all merged pull requests that go into the release with the relevant milestone. Each merged PR should also be labeled with one of the [labels](https://github.com/facebook/create-react-app/labels) named `tag: ...` to indicate what kind of change it is. **Make sure all breaking changes are correctly labelled with `tag: breaking change`.**
+2. Close the milestone and create a new one for the next release.
 3. In most releases, only `react-scripts` needs to be released. If you don’t have any changes to the `packages/create-react-app` folder, you don’t need to bump its version or publish it (the publish script will publish only changed packages).
 4. Note that files in `packages/create-react-app` should be modified with extreme caution. Since it’s a global CLI, any version of `create-react-app` (global CLI) including very old ones should work with the latest version of `react-scripts`.
 5. Run `yarn compile:lockfile`. The command will generate an updated lockfile in `packages/create-react-app` that should be committed.
@@ -152,7 +152,14 @@ By default git would use `CRLF` line endings which would cause the scripts to fa
 9. Wait for a long time, and it will get published. Don’t worry that it’s stuck. In the end the publish script will prompt for versions before publishing the packages.
 10. After publishing, create a GitHub Release with the same text as the changelog entry. See previous Releases for inspiration.
 
-Make sure to test the released version! If you want to be extra careful, you can publish a prerelease by running `npm run publish -- prepatch --canary --preid next --dist-tag next --npm-client npm --force-publish` instead of `npm run publish`.
+Make sure to test the released version! If you want to be extra careful, you can publish a prerelease by running `npm run publish -- --canary=next --exact --cd-version <major|minor|patch> --npm-tag=next` instead of `npm run publish`.
+
+## Releasing the Docs
+
+1. Go to the `docusaurus/website` directory
+2. Run `yarn build`
+3. You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
+4. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=master USE_SSH=true yarn run publish-gh-pages`
 
 ---
 

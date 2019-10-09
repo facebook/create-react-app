@@ -66,6 +66,14 @@ _`yarn create` is available in Yarn 0.25+_
 
 Follow our [Adding TypeScript](adding-typescript.md) documentation to create a TypeScript app.
 
+### Selecting a package manager
+
+When you create a new app, the CLI will use [Yarn](https://yarnpkg.com/) to install dependencies (when available). If you have Yarn installed, but would prefer to use npm, you can append --use-npm to the creation command. For example:
+
+```sh
+npx create-react-app my-app --use-npm
+```
+
 ## Output
 
 Running any of these commands will create a directory called `my-app` inside the current folder. Inside that directory, it will generate the initial project structure and install the transitive dependencies:

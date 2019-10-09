@@ -44,7 +44,7 @@ module.exports = {
       template: path.resolve('public/index.html'),
     }),
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
-    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
       PUBLIC_URL: publicUrl,
       // You can pass any key-value pairs, this was just an example.
@@ -337,6 +337,7 @@ The `args` object accepts a number of properties:
 - **urls** `Object`: To provide the `urls` argument, use `prepareUrls()` described below.
 - **useYarn** `boolean`: If `true`, yarn instructions will be emitted in the terminal instead of npm.
 - **useTypeScript** `boolean`: If `true`, TypeScript type checking will be enabled. Be sure to provide the `devSocket` argument above if this is set to `true`.
+- **tscCompileOnError** `boolean`: If `true`, errors in TypeScript type checking will not prevent start script from running app, and will not cause build script to exit unsuccessfully. Also downgrades all TypeScript type checking error messages to warning messages.
 - **webpack** `function`: A reference to the webpack constructor.
 
 ##### `prepareProxy(proxySetting: string, appPublicFolder: string): Object`
