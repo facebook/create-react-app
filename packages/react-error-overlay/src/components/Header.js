@@ -10,7 +10,8 @@ import React from 'react';
 import { red } from '../styles';
 
 const headerStyle = {
-  fontSize: '2em',
+  fontSize: '2.3em',
+  fontWeight: 'bold',
   fontFamily: 'sans-serif',
   color: red,
   whiteSpace: 'pre-wrap',

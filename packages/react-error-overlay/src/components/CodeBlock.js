@@ -12,6 +12,7 @@ import { redTransparent, yellowTransparent } from '../styles';
 const _preStyle = {
   position: 'relative',
   display: 'block',
+  fontSize: '1.3em',
   padding: '0.5em',
   marginTop: '0.5em',
   marginBottom: '0.5em',

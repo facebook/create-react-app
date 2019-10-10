@@ -14,6 +14,7 @@ const footerStyle = {
   color: darkGray,
   marginTop: '0.5rem',
   flex: '0 0 auto',
+  fontSize: '1.3em',
 };
 
 type FooterPropsType = {|
