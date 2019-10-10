@@ -29,7 +29,7 @@ export function register(config?: Config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(
-      (process as { env: { [key: string]: string } }).env.PUBLIC_URL,
+      process.env.PUBLIC_URL,
       window.location.href
     );
     if (publicUrl.origin !== window.location.origin) {
