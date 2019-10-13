@@ -74,6 +74,82 @@ When you create a new app, the CLI will use [Yarn](https://yarnpkg.com/) to inst
 npx create-react-app my-app --use-npm
 ```
 
+### Using your own forked version of CRA using --use-script
+
+#### How to provide file paths
+
+There are multiple ways, but all of them start from here [react-scripts](https://github.com/facebook/create-react-app/tree/master/packages/react-scripts)
+
+By default when you do
+
+`npx create-react-app my-app`
+
+It look for a `--script-version` flag & if it doesn't have that flag uses [react-scripts](https://github.com/facebook/create-react-app/tree/master/packages/react-scripts) by defaults. If you want to override this behavior you have to;
+
+`npx create-react-app my-app --script-version <path-to-your-custom-react-scripts>`
+
+Now `<path-to-your-custom-react-scripts>` can be a local path or npm/github link
+
+- Local path `npx create-react-app my-app --script-version file:///absolute-path-to-where-react-scripts-is-cloned`
+- Github path `npx create-react-app my-app --script-version git+ssh://git@github.com/<user-name>/<package-name>.git`
+
+#### What can you change (Hint everything)
+
+One you have [react-scripts](https://github.com/facebook/create-react-app/tree/master/packages/react-scripts) anything & everything it offers can be modified.
+
+#### 1- template.dependencies.json
+
+In your root folder add a file called `template.dependencies.json` & add content like
+
+```json
+{
+  "dependencies": {
+    "moment": "latest"
+  }
+}
+```
+
+Save changes & hit the command;
+
+`npx create-react-app my-app --script-version <path-react-scripts>` By the time it finishes setting up your project, you will have `moment` installed in the `dependencies` in your `package.json` file.
+
+#### 2- Setting up a template
+
+If you want to ship with a different template when you init a new project, maybe the team that you are working with wants a project template setup in a certain way initially whether `JS` to `Typescript`.
+
+- Go to the appropriate folder for .js `./template`
+- Go to the appropriate folder for .ts `'./template-typescript`
+
+For this example I want to change my `.js` file template.
+
+So I'll go in `./template/src/index.jsx` & add the following content
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom`;
+
+ReactDOM.render(
+  <div>
+    <header>My Header</header>
+    <main>My main content here</main>
+  </div>,
+  document.getElementById('root'),
+);
+```
+
+Once the changes are made, simply hit save & `npx create-react-app my-app --script-version <path-react-scripts>` By the time it finishes setting up your project, you will have new template to begin with.
+
+> The example above is very simple (and probably has no practical usage) but you can see the power of changing the entire template to your own taste.
+
+Here is an excellent talk by Dan Abramov on why we need a central place of configuration, which can
+be updated & maintained [Melting pot of Javascript](https://www.youtube.com/watch?v=G39lKaONAlA)
+
+#### Gotcha's
+
+It's a one way road, once you decide to move this way, it is going to be hard to get official support on it & it is going to be your own responsibility to maintain the forked version.
+
+<hr />
+
 ## Output
 
 Running any of these commands will create a directory called `my-app` inside the current folder. Inside that directory, it will generate the initial project structure and install the transitive dependencies:
