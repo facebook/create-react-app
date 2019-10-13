@@ -1,0 +1,32 @@
+{
+    "eslintConfig": {
+        "overrides": [
+            {
+                "files": [
+                    "**/*.ts?(x)"
+                ],
+                "rules": {
+                    "@typescript-eslint/no-useless-constructor'": "error"
+                }
+            }
+        ]
+    },
+    "dependencies": {
+        "typescript": "3.1.3",
+        "@types/react": "*",
+        "@types/react-dom": "*",
+        "@types/jest": "*",
+        "react": "*",
+        "react-dom": "*",
+        "eslint-config-react-app": "latest",
+        "@typescript-eslint/eslint-plugin": "2.x",
+        "@typescript-eslint/parser": "2.x",
+        "babel-eslint": "10.x",
+        "eslint": "6.x",
+        "eslint-plugin-flowtype": "3.x",
+        "eslint-plugin-import": "2.x",
+        "eslint-plugin-jsx-a11y": "6.x",
+        "eslint-plugin-react": "7.x",
+        "eslint-plugin-react-hooks": "1.x"
+    }
+}
