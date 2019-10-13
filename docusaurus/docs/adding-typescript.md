@@ -7,6 +7,8 @@ title: Adding TypeScript
 
 [TypeScript](https://www.typescriptlang.org/) is a typed superset of JavaScript that compiles to plain JavaScript.
 
+## Installation
+
 To start a new Create React App project with [TypeScript](https://www.typescriptlang.org/), you can run:
 
 ```sh
@@ -33,16 +35,19 @@ Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index
 
 Type errors will show up in the same console as the build one. You'll have to fix these type errors before you continue development or build your project. For advanced configuration, [see here](advanced-configuration.md).
 
-To learn more about TypeScript, check out [its documentation](https://www.typescriptlang.org/).
+## Getting Started with TypeScript and React
 
-> **Note:** If your project is not created with TypeScript enabled, npx may be using a cached version of `create-react-app`.
-> Remove previously installed versions with `npm uninstall -g create-react-app` (see [#6119](https://github.com/facebook/create-react-app/issues/6119#issuecomment-451614035)).
+You are not required to make a [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), one will be made for you. You are allowed to edit the generated TypeScript configuration.
 
-> **Note:** You are not required to make a [`tsconfig.json` file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), one will be made for you.
-> You are allowed to edit the generated TypeScript configuration.
+- [TypeScript Handbook](https://www.typescriptlang.org/)
+- [TypeScript Example on React](https://www.typescriptlang.org/play/index.html?jsx=2&esModuleInterop=true&e=196#example/typescript-with-react)
+- [React + TypeScript Cheatsheets](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet#reacttypescript-cheatsheets) has a good overview on how to use React with TypeScript
 
-> **Note:** If you are currently using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript/), see [this blog post](https://vincenttunru.com/migrate-create-react-app-typescript-to-create-react-app/) for instructions on how to migrate to Create React App.
+## Troubleshooting
 
-> **Note:** We recommend using [VSCode](https://code.visualstudio.com/) for a better integrated experience.
+If your project is not created with TypeScript enabled, npx may be using a cached version of `create-react-app`. Remove previously installed versions with `npm uninstall -g create-react-app` (see [#6119](https://github.com/facebook/create-react-app/issues/6119#issuecomment-451614035)).
 
-> **Note:** Constant enums and namespaces are not supported.
+If you are currently using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript/), see [this blog post](https://vincenttunru.com/migrate-create-react-app-typescript-to-create-react-app/) for instructions on how to migrate to Create React App.
+
+
+Constant enums and namespaces are not supported, you can learn about the constraints of [using Babel with TypeScript here](https://babeljs.io/docs/en/babel-plugin-transform-typescript#caveats).
