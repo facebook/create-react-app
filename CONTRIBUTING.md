@@ -159,7 +159,7 @@ Make sure to test the released version! If you want to be extra careful, you can
 1. Go to the `docusaurus/website` directory
 2. Run `yarn build`
 3. You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
-4. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=master USE_SSH=true yarn run publish-gh-pages`
+4. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=master USE_SSH=true yarn deploy`
 
 ---
 
