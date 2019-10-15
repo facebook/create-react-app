@@ -136,7 +136,8 @@ Files on the left have more priority than files on the right:
 - `npm run build`: `.env.production.local`, `.env.production`, `.env.local`, `.env`
 - `npm test`: `.env.test.local`, `.env.test`, `.env` (note `.env.local` is missing)
 
-These variables will act as the defaults if the machine does not explicitly set them.<br>
+These variables will act as the defaults if the machine does not explicitly set them.
+
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
 
 > Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need

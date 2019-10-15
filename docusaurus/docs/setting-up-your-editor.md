@@ -12,8 +12,10 @@ To configure the syntax highlighting in your favorite text editor, head to the [
 
 ## Displaying Lint Output in the Editor
 
-> Note: this feature is available with `react-scripts@0.2.0` and higher.<br>
-> It works out of the box for newly created projects with `react-scripts@2.0.3` and higher.<br>
+> Note: this feature is available with `react-scripts@0.2.0` and higher.
+
+> It works out of the box for newly created projects with `react-scripts@2.0.3` and higher.
+
 > It also only works with npm 3 or higher.
 
 Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
