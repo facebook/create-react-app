@@ -50,6 +50,7 @@ Note that any rules set to `"error"` will stop the project from building.
 There are a few things to remember:
 
 1. We highly recommend extending the base config, as removing it could introduce hard-to-find issues.
+1. `.eslintignore` files will be respected
 1. When working with TypeScript, you'll need to provide an `overrides` object for rules that should _only_ target TypeScript files.
 
 In the below example:
