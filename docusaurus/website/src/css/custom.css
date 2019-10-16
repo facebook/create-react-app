@@ -7,3 +7,7 @@
   --ifm-color-primary-lighter: rgb(83, 224, 197);
   --ifm-color-primary-lightest: rgb(132, 233, 214);
 }
+
+.navbar__brand {
+  white-space: nowrap;
+}
