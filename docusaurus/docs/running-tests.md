@@ -276,9 +276,11 @@ The default Jest coverage configuration can be overridden by adding any of the f
 
 Supported overrides:
 
+- [`clearMocks`](https://jestjs.io/docs/en/configuration.html#clearmocks-boolean)
 - [`collectCoverageFrom`](https://jestjs.io/docs/en/configuration.html#collectcoveragefrom-array)
 - [`coverageReporters`](https://jestjs.io/docs/en/configuration.html#coveragereporters-array-string)
 - [`coverageThreshold`](https://jestjs.io/docs/en/configuration.html#coveragethreshold-object)
+- [`displayName`](https://jestjs.io/docs/en/configuration.html#displayname-string-object)
 - [`extraGlobals`](https://jestjs.io/docs/en/configuration.html#extraglobals-array-string)
 - [`globalSetup`](https://jestjs.io/docs/en/configuration.html#globalsetup-string)
 - [`globalTeardown`](https://jestjs.io/docs/en/configuration.html#globalteardown-string)
