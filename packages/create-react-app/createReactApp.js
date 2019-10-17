@@ -193,6 +193,26 @@ function createApp(
   useTypescript,
   template
 ) {
+  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=8.10.0');
+  if (unsupportedNodeVersion && useTypescript) {
+    console.log(
+      chalk.red(
+        `You are using Node ${process.version} with the TypeScript template. Node 8.10 or higher is required to use TypeScript.\n`
+      )
+    );
+
+    process.exit(1);
+  } else if (unsupportedNodeVersion) {
+    console.log(
+      chalk.yellow(
+        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
+          `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
+      )
+    );
+    // Fall back to latest supported react-scripts on Node 4
+    version = 'react-scripts@0.9.x';
+  }
+
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -220,17 +240,6 @@ function createApp(
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
     process.exit(1);
-  }
-
-  if (!semver.satisfies(process.version, '>=8.10.0')) {
-    console.log(
-      chalk.yellow(
-        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
-      )
-    );
-    // Fall back to latest supported react-scripts on Node 4
-    version = 'react-scripts@0.9.x';
   }
 
   if (!useYarn) {
