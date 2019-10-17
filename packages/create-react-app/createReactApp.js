@@ -193,17 +193,16 @@ function createApp(
   useTypescript,
   template
 ) {
-  const unSupportedNodeVersion = !semver.satisfies(process.version, '>=8.10.0');
-  if (unSupportedNodeVersion && useTypescript) {
+  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=8.10.0');
+  if (unsupportedNodeVersion && useTypescript) {
     console.log(
-      chalk.yellow(
-        `You are using Node ${process.version} with the TypeScript template. Since the old unsuporoted version of tools do not supported TypeScript, you will have to upgrade.\n\n` +
-          `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
+      chalk.red(
+        `You are using Node ${process.version} with the TypeScript template. Node 8.10 or higher is required to use TypeScript.\n`
       )
     );
 
     process.exit(1);
-  } else if (unSupportedNodeVersion) {
+  } else if (unsupportedNodeVersion) {
     console.log(
       chalk.yellow(
         `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
