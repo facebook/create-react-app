@@ -145,8 +145,6 @@ module.exports = function(api, opts, env) {
         require('@babel/plugin-proposal-decorators').default,
         false,
       ],
-      // Adds Numeric Seperators
-      [require('@babel/plugin-proposal-numeric-separator')],
       // class { handleClick = () => { } }
       // Enable loose mode to use assignment instead of defineProperty
       // See discussion in https://github.com/facebook/create-react-app/issues/4263
@@ -156,6 +154,8 @@ module.exports = function(api, opts, env) {
           loose: true,
         },
       ],
+      // Adds Numeric Seperators
+      require('@babel/plugin-proposal-numeric-separator').default,
       // The following two plugins use Object.assign directly, instead of Babel's
       // extends helper. Note that this assumes `Object.assign` is available.
       // { ...todo, completed: true }
