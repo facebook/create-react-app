@@ -4,6 +4,8 @@ import pkg from '../package.json';
 
 const Page = React.lazy(() => import('./components/Page'));
 
+const AppDocs = React.lazy(() => import('./components/App/App.docs.mdx'));
+
 const PreviewDocs = React.lazy(() =>
   import('./components/Preview/Preview.docs.mdx')
 );
@@ -52,6 +54,11 @@ styleguide({
       title: 'Components',
       path: '/components',
       nodes: [
+        {
+          title: 'App',
+          path: '/app',
+          render: <Page render={<AppDocs />} />,
+        },
         {
           title: 'Badge',
           path: '/badge',

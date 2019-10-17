@@ -1,0 +1,32 @@
+import App from './';
+import { Preview, ComponentDocs } from './../';
+
+# App
+
+This is styleguide application base component. 
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { MDXProvider } from '@mdx-js/react';
+
+import '@lighting-beetle/lighter-styleguide/build/lib/styleguide.css';
+import { App as StyleguideApp, MDXComponents } from '@lighting-beetle/lighter-styleguide';
+
+ReactDOM.render(
+  <MDXProvider components={MDXComponents}>
+    <StyleguideApp config={config} routes={routes} />
+  </MDXProvider>,
+  document.getElementById('root')
+);
+```
+
+## Variants
+
+### Default
+
+Preview is not available right now.
+
+## Props
+
+<ComponentDocs title="<App />" component={App} />

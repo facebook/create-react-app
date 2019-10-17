@@ -1,4 +1,5 @@
 import React, { Component, Fragment, Suspense } from 'react';
+import { array, arrayOf, shape, string, node, object } from 'prop-types';
 import { BrowserRouter } from 'react-router-dom';
 
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
@@ -17,7 +18,38 @@ import Sitemap from './../Sitemap';
 class App extends Component {
   static displayName = 'App';
 
-  static propTypes = {};
+  static propTypes = {
+    /** Styleguide config */
+    config: shape({
+      /** Current version of your styleguide */
+      version: string,
+      /** Project logo (desktop) */
+      logo: node,
+      /** Project logo (mobile) */
+      logoSmall: node,
+      /** Name of styleguide */
+      name: string,
+      /** Project theme which overrides or complements theme */
+      theme: object,
+      /** Base URL of this SPA */
+      styleguideBasePath: string.isRequired,
+      /** Google Analytics ID */
+      gaId: string,
+    }),
+    /** This is tree-like sitemap of styleguide */
+    routes: arrayOf(
+      shape({
+        /** Route title */
+        title: string.isRequired,
+        /** Part of URL which discribes this tree node */
+        path: string.isRequired,
+        /** If this route is leaf, Node to render, if this is leaf */
+        render: node,
+        /** If this route is node, other routes are children */
+        nodes: array,
+      })
+    ),
+  };
 
   constructor(props) {
     super(props);
@@ -40,7 +72,7 @@ class App extends Component {
   }
 
   render() {
-    const { className, config, routes, ...other } = this.props;
+    const { className, config = {}, routes, ...other } = this.props;
     const {
       version,
       logo,
