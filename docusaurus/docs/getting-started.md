@@ -87,7 +87,10 @@ my-app
 ├── public
 │   ├── favicon.ico
 │   ├── index.html
-│   └── manifest.json
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   └── robots.txt
 └── src
     ├── App.css
     ├── App.js
