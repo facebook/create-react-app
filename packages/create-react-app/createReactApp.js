@@ -217,7 +217,7 @@ function createApp(
 ) {
   const unsupportedNodeVersion = !semver.satisfies(process.version, '>=8.10.0');
   if (unsupportedNodeVersion && useTypeScript) {
-    console.log(
+    console.error(
       chalk.red(
         `You are using Node ${process.version} with the TypeScript template. Node 8.10 or higher is required to use TypeScript.\n`
       )
