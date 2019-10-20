@@ -27,17 +27,17 @@ Another example of this is how `npm test` normally launches the watcher, but if 
 
 We prefer to add interactivity to the command line interface rather than add configuration flags. For example, `npm start` will attempt to run with port `3000` by default, but it may be busy. Many other tools just fail in this case and ask that you pass a different port, but Create React App will display a prompt asking if you’d like to run the app on the next available port.
 
-Another example of interactivity is `npm test` watcher interface. Instead of asking people to pass command line flags for switching between test runner modes or search patterns, we print a hint with keys that you can press during the test session to instruct watcher what to do. Jest supports both flags and interactive CLI but Create React App prefers long-running sessions to keep user immersed in the flow over short-running sessions with different flags.
+Another example of interactivity is the `npm test` watcher interface. Instead of asking people to pass command line flags for switching between test runner modes or search patterns, we print a hint with keys that you can press during the test session to instruct the watcher what to do. Jest supports both flags and interactive CLI but Create React App prefers long-running sessions to keep the user immersed in the flow over short-running sessions with different flags.
 
 ### Breaking the Rules
 
-No rules are perfect. Sometimes we may introduce flags or configuration if we believe the value is high enough to justify the mental cost. For example, we know that apps may be hosted paths different from the root, and we need to support this use case. However, we still try to fall back to heuristics when possible. In this example, we ask that you specify `homepage` in `package.json`, and infer the correct path based on it. We also nudge the user to fill out the `homepage` after the build, so the user becomes aware that the feature exists.
+No rules are perfect. Sometimes we may introduce flags or configuration if we believe the value is high enough to justify the mental cost. For example, we know that apps may be hosted on paths other than the root, and we need to support this use case. However, we still try to fall back to heuristics when possible. In this example, we ask that you specify the `homepage` in `package.json`, and infer the correct path based on it. We also nudge the user to fill out the `homepage` after the build, so the user becomes aware that the feature exists.
 
 ## Submitting a Pull Request
 
 Good pull requests, such as patches, improvements, and new features, are a fantastic help. They should remain focused in scope and avoid containing unrelated commits.
 
-Please **ask first** if somebody else is already working on this or the core developers think your feature is in-scope for Create React App. Generally always have a related issue with discussions for whatever you are including.
+Please **ask first** if somebody else is already working on this or the core developers think your feature is in-scope for Create React App. Generally, always have a related issue with discussions for whatever you are including.
 
 Please also provide a **test plan**, i.e. specify how you verified that your addition works.
 
@@ -46,7 +46,7 @@ Please also provide a **test plan**, i.e. specify how you verified that your add
 `create-react-app` is a monorepo, meaning it is divided into independent sub-packages.<br>
 These packages can be found in the [`packages/`](https://github.com/facebook/create-react-app/tree/master/packages) directory.
 
-### Overview of directory structure
+### Overview of Directory Structure
 
 ```
 packages/
@@ -101,56 +101,56 @@ cd my-app
 
 and then run `yarn start` or `yarn build`.
 
-## Contributing to E2E (end to end) tests
+## Contributing to E2E (End to End) Tests
 
 **TL;DR** use the command `yarn e2e:docker` to run unit and e2e tests.
 
-More detailed information are in the dedicated [README](/packages/react-scripts/fixtures/kitchensink/README.md).
+More detailed information is in the dedicated [README](/packages/react-scripts/fixtures/kitchensink/README.md).
 
 ### CI testing with private packages
 
-**create-react-app** relies on main registry to fetch all dependencies, but, if you are in the need to usage of custom private packages that need to be fetch while running E2E test you might need a different configuration.
+**create-react-app** relies on the main registry to fetch all of the dependencies, but, if you need to use some custom, private packages that need to be fetched while running E2E tests, you might need a different configuration.
 
-#### Customizing E2E registry configuration
+#### Customizing E2E Registry Configuration
 
-We use [verdaccio](https://github.com/verdaccio/verdaccio) to emulate packages publishing in a registry using a default configuration. You might modify the current behaviour just editing the file `task/verdaccio.yaml`.
+We use [verdaccio](https://github.com/verdaccio/verdaccio) to emulate packages publishing in a registry using a default configuration. You can modify the current behavior by editing the file `task/verdaccio.yaml`.
 
-For more information about the configuration check out the [Verdaccio documentation](https://verdaccio.org/docs/en/configuration).
+For more information about the configuration, check out the [Verdaccio documentation](https://verdaccio.org/docs/en/configuration).
 
-## Tips for contributors using Windows
+## Tips for Contributors Using Windows
 
-The scripts in tasks folder and other scripts in `package.json` will not work in Windows out of the box. However, using [Bash on windows](https://msdn.microsoft.com/en-us/commandline/wsl/about) makes it easier to use those scripts without any workarounds. The steps to do so are detailed below:
+The scripts in the `tasks` folder and other scripts in `package.json` will not work on Windows out of the box. However, using [Bash on windows](https://msdn.microsoft.com/en-us/commandline/wsl/about) makes it easier to use those scripts without any workarounds. The steps to do so are detailed below:
 
 ### Install Bash on Ubuntu on Windows
 
 A good step by step guide can be found [here](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/)
 
-### Install Node.js and yarn
+### Install Node.js and Yarn
 
-Even if you have node and yarn installed on your windows, it would not be accessible from the bash shell. You would have to install it again. Installing via [`nvm`](https://github.com/creationix/nvm#install-script) is recommended.
+Even if you have Node and Yarn installed on your Windows, it would not be accessible from the bash shell. You would have to install it again. Installing via [`nvm`](https://github.com/creationix/nvm#install-script) is recommended.
 
-### Line endings
+### Line Endings
 
-By default git would use `CRLF` line endings which would cause the scripts to fail. You can change it for this repo only by setting `autocrlf` to false by running `git config core.autocrlf false`. You can also enable it for all your repos by using the `--global` flag if you wish to do so.
+By default, Git would use `CRLF` line endings which would cause the scripts to fail. You can change it for this repo only by setting `autocrlf` to false by running `git config core.autocrlf false`. You can also enable it for all your repos by using the `--global` flag if you wish to do so.
 
 ## Cutting a Release
 
-1. Tag all merged pull requests that go into the release with the relevant milestone. Each merged PR should also be labeled with one of the [labels](https://github.com/facebook/create-react-app/labels) named `tag: ...` to indicate what kind of change it is. **Make sure all breaking changes are correctly labelled with `tag: breaking change`.**
+1. Tag all merged pull requests that go into the release with the relevant milestone. Each merged PR should also be labeled with one of the [labels](https://github.com/facebook/create-react-app/labels) named `tag: ...` to indicate what kind of change it is. **Make sure all breaking changes are correctly labeled with `tag: breaking change`.**
 2. Close the milestone and create a new one for the next release.
 3. In most releases, only `react-scripts` needs to be released. If you don’t have any changes to the `packages/create-react-app` folder, you don’t need to bump its version or publish it (the publish script will publish only changed packages).
 4. Note that files in `packages/create-react-app` should be modified with extreme caution. Since it’s a global CLI, any version of `create-react-app` (global CLI) including very old ones should work with the latest version of `react-scripts`.
 5. Run `yarn compile:lockfile`. The command will generate an updated lockfile in `packages/create-react-app` that should be committed.
-6. Create a change log entry for the release:
+6. Create a changelog entry for the release:
 
 - You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
-- Run `yarn changelog`. The command will find all the labeled pull requests merged since the last release and group them by the label and affected packages, and create a change log entry with all the changes and links to PRs and their authors. Copy and paste it to `CHANGELOG.md`.
+- Run `yarn changelog`. The command will find all the labeled pull requests merged since the last release and group them by the label and affected packages, and create a changelog entry with all the changes and links to PRs and their authors. Copy and paste it to `CHANGELOG.md`.
 - Add a four-space indented paragraph after each non-trivial list item, explaining what changed and why. For each breaking change also write who it affects and instructions for migrating existing code.
 - Maybe add some newlines here and there. Preview the result on GitHub to get a feel for it. Changelog generator output is a bit too terse for my taste, so try to make it visually pleasing and well grouped.
 
 7. Make sure to include “Migrating from ...” instructions for the previous release. Often you can copy and paste them.
 8. Run `npm run publish`. (It has to be `npm run publish` exactly, not just `npm publish` or `yarn publish`.)
-9. Wait for a long time, and it will get published. Don’t worry that it’s stuck. In the end the publish script will prompt for versions before publishing the packages.
-10. After publishing, create a GitHub Release with the same text as the changelog entry. See previous Releases for inspiration.
+9. Wait for a long time, and it will get published. Don’t worry that it’s stuck. In the end, the publish script will prompt for versions before publishing the packages.
+10. After publishing, create a GitHub Release with the same text as the changelog entry. See previous releases for inspiration.
 
 Make sure to test the released version! If you want to be extra careful, you can publish a prerelease by running `npm run publish -- --canary=next --exact --cd-version <major|minor|patch> --npm-tag=next` instead of `npm run publish`.
 
