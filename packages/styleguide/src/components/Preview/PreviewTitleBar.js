@@ -5,7 +5,6 @@ import cx from 'classnames';
 import styled from 'styled-components';
 
 import { Bar, BarItem } from './../Bar';
-import { H5 } from './../Typography';
 
 const propTypes = {
   title: string,
@@ -19,10 +18,7 @@ const PreviewTitleBar = ({ className, title, actions = [], ...other }) => {
 
   return (
     <StyledBar className={classes} {...other}>
-      <BarItem isFilling>
-        <H5>{title}</H5>
-      </BarItem>
-
+      <BarItem isFilling />
       {actions && (
         <BarItem>
           <Bar>

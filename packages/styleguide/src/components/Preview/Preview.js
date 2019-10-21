@@ -39,8 +39,6 @@ class Preview extends Component {
   static displayName = 'Preview';
 
   static propTypes = {
-    /** (deprecated) Title text for `Preview.` Instead of `title` prop, prefer regular html heading above `Preview`. */
-    title: string,
     /** Pass custom code (JSX) which will be shown instead of visually previewed code. */
     code: oneOfType([node, func]),
     /** Pass [react-element-to-jsx-string](https://github.com/algolia/react-element-to-jsx-string) options to code preview. */
@@ -167,7 +165,6 @@ class Preview extends Component {
     const {
       children,
       className,
-      title,
       code,
       codeJSXOptions,
       bgTheme,
@@ -300,7 +297,7 @@ class Preview extends Component {
           this.wrapperRef = ref;
         }}
       >
-        <PreviewTitleBar title={title} actions={actions} key="previewTitle" />
+        <PreviewTitleBar actions={actions} key="previewTitle" />
         <StyledCard
           className={classes}
           bgColor={previewBackground.value}
