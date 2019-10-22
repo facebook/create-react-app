@@ -18,7 +18,7 @@
 
 ESLint and Prettier are no longer fixing syntax during compilation. Instead we are formatting and fixing fixable errors during Git commits. If you want instant formatting, you can configure "fix/format on save" in your favorite editor.
 
-#### react-scripts Webpack entries
+#### lighter-react-scripts Webpack entries
 
 In dev mode (`npm start`) entries are:
 
@@ -35,7 +35,7 @@ In build mode (`npm run build`) entries are:
 
 `src/styleguide/index.js` is no longer treated as entry and have to be moved to `src/styleguide.js`. `src/styleguide/styleguide.html` to `public/styleguide.html` or `src/styleguide.html`.
 
-#### react-scripts paths in SCSS
+#### lighter-react-scripts paths in SCSS
 
 Import paths in SCSS files are no longer aliased to `src/styles` and full relative paths has to be written.
 
@@ -44,6 +44,17 @@ Import paths in SCSS files are no longer aliased to `src/styles` and full relati
 - @import 'base/config';
 + @import './../../../styles/helpers/main';
 + @import './../../../styles/base/config';
+```
+
+#### lighter-react-scripts removed lib command
+
+Support for `lib` command was removed. Lib files are now builded with `build` command.
+
+```diff
+- "build": "npm-run-all build:app build:lib",
+- "build:app": "lighter-react-scripts build",
+- "build:lib": "lighter-react-scripts lib",
++ "build": "lighter-react-scripts build",
 ```
 
 #### lighter-styleguide entry file
@@ -126,7 +137,6 @@ Support for `Preview` `title` prop was removed. Use markdown heading instead.
 #### eslint-config-lighter
 
 - Add `eslint-plugin-react-hooks` `^2.x` to dev dependencies
-- Add `babel-eslint` `^10.x` to dev dependencies
 
 ### Changelog
 
