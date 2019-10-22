@@ -216,8 +216,11 @@ module.exports = function(webpackEnv) {
       output => output.filename('static/js/[name].[contenthash:8].js'),
       output => output.filename('static/js/bundle.js')
     )
+
+    // https://github.com/neutrinojs/webpack-chain/issues/205
     // TODO: remove this when upgrading to webpack 5
-    .futureEmitAssets(true)
+    // .futureEmitAssets(true)
+
     // There are also additional JS chunk files if you use code splitting.
     .when(
       isEnvProduction,
