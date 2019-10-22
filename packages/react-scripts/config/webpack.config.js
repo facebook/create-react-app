@@ -338,10 +338,11 @@ module.exports = function(webpackEnv) {
   // We placed these paths second because we want `node_modules` to "win"
   // if there are any conflicts. This matches Node resolution mechanism.
   // https://github.com/facebook/create-react-app/issues/253
-  config.resolve.modules
-    .add('node_modules')
-    .add(paths.appNodeModules)
-    .add(modules.additionalModulePaths || []);
+  config.resolve.modules.add('node_modules').add(paths.appNodeModules);
+
+  (modules.additionalModulePaths || []).map(modPath =>
+    config.resolve.modules.add(modPath)
+  );
 
   config.resolve.alias
     // Support React Native Web
