@@ -217,7 +217,7 @@ module.exports = function(webpackEnv) {
       output => output.filename('static/js/bundle.js')
     )
 
-    // https://github.com/neutrinojs/webpack-chain/issues/205
+    // FIXME: https://github.com/neutrinojs/webpack-chain/issues/205
     // TODO: remove this when upgrading to webpack 5
     // .futureEmitAssets(true)
 
@@ -384,7 +384,8 @@ module.exports = function(webpackEnv) {
     .plugin('modulescope')
     .use(ModuleScopePlugin, [paths.appSrc, [paths.appPackageJson]]);
 
-  config.module.strictExportPresence(true);
+  // FIXME: https://github.com/neutrinojs/webpack-chain/issues/206
+  // config.module.strictExportPresence(true);
 
   // Disable require.ensure as it's not a standard language feature.
   config.module.rule('requireEnsure').parser({ requireEnsure: false });
