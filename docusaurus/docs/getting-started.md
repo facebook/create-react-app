@@ -30,11 +30,11 @@ When you’re ready to deploy to production, create a minified bundle with `npm 
 
 You **don’t** need to install or configure tools like Webpack or Babel. They are preconfigured and hidden so that you can focus on the code.
 
-Just create a project, and you’re good to go.
+Create a project, and you’re good to go.
 
 ## Creating an App
 
-**You’ll need to have Node >= 8.10 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
+**You’ll need to have Node >= 8.10 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
 
 To create a new app, you may choose one of the following methods:
 
@@ -101,7 +101,7 @@ my-app
     └── serviceWorker.js
 ```
 
-No configuration or complicated folder structures, just the files you need to build your app. Once the installation is done, you can open your project folder:
+No configuration or complicated folder structures, only the files you need to build your app. Once the installation is done, you can open your project folder:
 
 ```sh
 cd my-app

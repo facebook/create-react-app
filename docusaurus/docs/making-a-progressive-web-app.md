@@ -64,7 +64,7 @@ following into account:
    these messages is currently left as an exercise to the developer, but as a
    starting point, you can make use of the logic included in [`src/serviceWorker.js`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/serviceWorker.js), which
    demonstrates which service worker lifecycle events to listen for to detect each
-   scenario, and which as a default, just logs appropriate messages to the
+   scenario, and which as a default, only logs appropriate messages to the
    JavaScript console.
 
 1. Service workers [require HTTPS](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers#you_need_https),
@@ -80,7 +80,7 @@ following into account:
    changes you've made locally.
 
 1. If you _need_ to test your offline-first service worker locally, build
-   the application (using `npm run build`) and run a simple http server from your
+   the application (using `npm run build`) and run a standard http server from your
    build directory. After running the build script, `create-react-app` will give
    instructions for one way to test your production build locally and the [deployment instructions](deployment.md) have
    instructions for using other methods. _Be sure to always use an

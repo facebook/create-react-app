@@ -10,7 +10,7 @@ Create React App intentionally doesn’t support decorator syntax at the moment 
 - It is an experimental proposal and is subject to change (in fact, it has already changed once, and will change again).
 - Most libraries currently support only the old version of the proposal — which will never be a standard.
 
-However in many cases you can rewrite decorator-based code without decorators just as fine.
+However in many cases you can rewrite decorator-based code without decorators and achieve the same result.
 
 Please refer to these two threads for reference:
 
