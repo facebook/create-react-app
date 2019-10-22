@@ -54,12 +54,6 @@ const imageInlineSizeLimit = parseInt(
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
-// style files regexes
-const cssRegex = /\.css$/;
-const cssModuleRegex = /\.module\.css$/;
-const sassRegex = /\.(scss|sass)$/;
-const sassModuleRegex = /\.module\.(scss|sass)$/;
-
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function(webpackEnv) {
@@ -555,7 +549,7 @@ module.exports = function(webpackEnv) {
     // Remove this when webpack adds a warning or an error for this.
     // See https://github.com/webpack/webpack/issues/6571
     .sideEffects(true)
-    .test(cssRegex);
+    .test(/\.css$/);
 
   injectStyleLoaders(config.module.rule('compiler').oneOf('css'), {
     importLoaders: 1,
@@ -567,7 +561,7 @@ module.exports = function(webpackEnv) {
   config.module
     .rule('compiler')
     .oneOf('cssModules')
-    .test(cssModuleRegex);
+    .test(/\.module\.css$/);
 
   injectStyleLoaders(config.module.rule('compiler').oneOf('cssModules'), {
     importLoaders: 1,
@@ -587,7 +581,7 @@ module.exports = function(webpackEnv) {
     // Remove this when webpack adds a warning or an error for this.
     // See https://github.com/webpack/webpack/issues/6571
     .sideEffects(true)
-    .test(sassRegex);
+    .test(/\.(scss|sass)$/);
 
   injectStyleLoaders(
     config.module.rule('compiler').oneOf('sass'),
@@ -603,7 +597,7 @@ module.exports = function(webpackEnv) {
   config.module
     .rule('compiler')
     .oneOf('sassModules')
-    .test(sassModuleRegex);
+    .test(/\.module\.(scss|sass)$/);
 
   injectStyleLoaders(
     config.module.rule('compiler').oneOf('sassModules'),
