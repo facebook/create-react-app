@@ -395,7 +395,8 @@ module.exports = function(webpackEnv) {
   config.module
     .rule('linter')
     .test(/\.(js|mjs|jsx|ts|tsx)$/)
-    .include(paths.appSrc)
+    .include.add(paths.appSrc)
+    .end()
     .enforce('pre')
     .use('eslint')
     .loader(require.resolve('eslint-loader'))
