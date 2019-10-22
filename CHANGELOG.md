@@ -1,4 +1,4 @@
-## 3.0.0 (Oct 21, 2019)
+## 3.0.0 (Oct 22, 2019)
 
 ### Important release notes from CRA
 
@@ -13,6 +13,10 @@
 - Absolute imports using jsconfig.json/tsconfig.json
 
 ### Migration guide
+
+#### ESLint and Prettier formatting during compilation
+
+ESLint and Prettier are no longer fixing syntax during compilation. Instead we are formatting and fixing fixable errors during Git commits. If you want instant formatting, you can configure "fix/format on save" in your favorite editor.
 
 #### react-scripts Webpack entries
 
@@ -121,8 +125,31 @@ Support for `Preview` `title` prop was removed. Use markdown heading instead.
 
 #### eslint-config-lighter
 
-- Add `eslint-plugin-react-hooks` `^2.x` to dev dependecies
+- Add `eslint-plugin-react-hooks` `^2.x` to dev dependencies
 - Add `babel-eslint` `^10.x` to dev dependencies
+
+### Changelog
+
+#### :boom: Breaking Change
+
+- [lighter-styleguide] remove support for props documentation in runtime with raw-loader ([#134](https://github.com/lightingbeetle/lighter/pull/134))
+- [lighter-styleguide] move mdx utils to MDX component and rename components to `MDXComponents` ([#135](https://github.com/lightingbeetle/lighter/pull/135))
+- [lighter-styleguide] remove support for `md` markdown compilation in runtime in favor of MDX ([#136](https://github.com/lightingbeetle/lighter/pull/136))
+- [lighter-styleguide] remove support for `ComponentDocs` `path` prop in favor of `component` prop ([#137](https://github.com/lightingbeetle/lighter/pull/137))
+- [lighter-styleguide] remove support for `Preview` `title` prop in favor of header above preview ([#139](https://github.com/lightingbeetle/lighter/pull/139))
+
+#### :bug: Bug Fix
+
+- [lighter-react-scripts] turn back on clearConsole ([#141](https://github.com/lightingbeetle/lighter/pull/141))
+
+#### :memo: Docs
+
+- [lighter-styleguide] add `App` docs ([#138](https://github.com/lightingbeetle/lighter/pull/138))
+
+#### :tada: version updates
+
+- `lighter-styleguide@3.0.0`
+- `lighter-react-scripts@3.0.0`
 
 ## 3.0.0-beta.2 (Oct 3, 2019)
 
