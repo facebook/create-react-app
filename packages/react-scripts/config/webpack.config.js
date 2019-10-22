@@ -164,22 +164,23 @@ module.exports = function(webpackEnv) {
     .maxAssetSize(false)
     .assetFilter(false);
 
+  // Some libraries import Node modules but don't use them in the browser.
+  // Tell Webpack to provide empty mocks for them so importing them works.
+  config.node.merge({
+    module: 'empty',
+    dgram: 'empty',
+    dns: 'mock',
+    fs: 'empty',
+    http2: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty',
+  });
+
   config
     .mode(webpackEnv)
     // Stop compilation early in production
     .bail(isEnvProduction)
-    // Some libraries import Node modules but don't use them in the browser.
-    // Tell Webpack to provide empty mocks for them so importing them works.
-    .node.merge({
-      module: 'empty',
-      dgram: 'empty',
-      dns: 'mock',
-      fs: 'empty',
-      http2: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      child_process: 'empty',
-    })
     .when(
       isEnvProduction && shouldUseSourceMap,
       config => config.devtool('source-map'),
