@@ -180,7 +180,7 @@ choosePort(HOST, DEFAULT_PORT)
         return console.log(err);
       }
       if (isInteractive) {
-        // clearConsole();
+        clearConsole();
       }
 
       // We used to support resolving modules according to `NODE_PATH`.
