@@ -2,9 +2,7 @@
 
 Loving Create React App and want to get involved? Thanks! There are plenty of ways you can help.
 
-<!--alex disable easy-->
-
-Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved.
+Please take a moment to review this document in order to make the contribution process straightforward and effective for everyone involved.
 
 Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue or assessing patches and features.
 
