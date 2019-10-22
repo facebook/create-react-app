@@ -439,8 +439,8 @@ module.exports = function(webpackEnv) {
   config.module
     .rule('compiler')
     .oneOf('url')
-    .use('url')
     .test([/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/])
+    .use('url')
     .loader(require.resolve('url-loader'))
     .options({
       limit: imageInlineSizeLimit,
@@ -452,10 +452,10 @@ module.exports = function(webpackEnv) {
   config.module
     .rule('compiler')
     .oneOf('babel')
-    .use('babel')
     .test(/\.(js|mjs|jsx|ts|tsx)$/)
     .include.add(paths.appSrc)
     .end()
+    .use('babel')
     .loader(require.resolve('babel-loader'))
     .options({
       customize: require.resolve('babel-preset-react-app/webpack-overrides'),
@@ -504,10 +504,10 @@ module.exports = function(webpackEnv) {
   config.module
     .rule('compiler')
     .oneOf('babelDeps')
-    .use('babel')
-    .test(/\.(js|mjs)$/)
     .exclude.add(/@babel(?:\/|\\{1,2})runtime/)
     .end()
+    .use('babel')
+    .test(/\.(js|mjs)$/)
     .loader(require.resolve('babel-loader'))
     .options({
       babelrc: false,
@@ -624,13 +624,14 @@ module.exports = function(webpackEnv) {
   config.module
     .rule('compiler')
     .oneOf('file')
-    .use('file')
-    .loader(require.resolve('file-loader'))
     // Exclude `js` files to keep "css" loader working as it injects
     // its runtime that would otherwise be processed through "file" loader.
     // Also exclude `html` and `json` extensions so they get processed
     // by webpacks internal loaders.
     .exclude.merge([/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/])
+    .end()
+    .use('file')
+    .loader(require.resolve('file-loader'))
     .options({
       name: 'static/media/[name].[hash:8].[ext]',
     });
