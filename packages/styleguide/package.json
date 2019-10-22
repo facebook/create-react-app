@@ -54,7 +54,7 @@
     ]
   },
   "devDependencies": {
-    "@lighting-beetle/lighter-react-scripts": "../react-scripts",
+    "@lighting-beetle/lighter-react-scripts": "~3.0.0",
     "babel-plugin-react-docgen": "~2.0.0",
     "babel-preset-env": "~1.7.0",
     "husky": "~1.3.1",
