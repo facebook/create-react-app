@@ -505,10 +505,10 @@ module.exports = function(webpackEnv) {
   config.module
     .rule('compiler')
     .oneOf('babelDeps')
+    .test(/\.(js|mjs)$/)
     .exclude.add(/@babel(?:\/|\\{1,2})runtime/)
     .end()
     .use('babel')
-    .test(/\.(js|mjs)$/)
     .loader(require.resolve('babel-loader'))
     .options({
       babelrc: false,
