@@ -815,5 +815,5 @@ module.exports = function(webpackEnv) {
     ]);
   });
 
-  return config;
+  return config.toConfig();
 };
