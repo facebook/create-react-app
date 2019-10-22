@@ -156,13 +156,18 @@ module.exports = function(webpackEnv) {
 
   const config = new WebpackChain();
 
+  // Turn off performance processing because we utilize
+  // our own hints via the FileSizeReporter
+  config.performance
+    .hints(false)
+    .maxEntrypointSize(false)
+    .maxAssetSize(false)
+    .assetFilter(false);
+
   config
     .mode(webpackEnv)
     // Stop compilation early in production
     .bail(isEnvProduction)
-    // Turn off performance processing because we utilize
-    // our own hints via the FileSizeReporter
-    .performance(false)
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
     .node.merge({
