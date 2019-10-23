@@ -2,7 +2,6 @@ import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import "../styles/app.scss";
 import { ApplicationState } from "../store";
-import { AppMode, CoordinateOption } from "../store/App";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
