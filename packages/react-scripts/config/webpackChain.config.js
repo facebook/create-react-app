@@ -54,6 +54,12 @@ const imageInlineSizeLimit = parseInt(
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
+// style files regexes
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.css$/;
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function(webpackEnv) {
@@ -544,7 +550,7 @@ module.exports = function(webpackEnv) {
   config.module
     .rule('compiler')
     .oneOf('cssModules')
-    .test(/\.module\.css$/);
+    .test(cssModuleRegex);
 
   injectStyleLoaders(config.module.rule('compiler').oneOf('cssModules'), {
     importLoaders: 1,
@@ -568,7 +574,7 @@ module.exports = function(webpackEnv) {
     // Remove this when webpack adds a warning or an error for this.
     // See https://github.com/webpack/webpack/issues/6571
     .sideEffects(true)
-    .test(/\.css$/);
+    .test(cssRegex);
 
   injectStyleLoaders(config.module.rule('compiler').oneOf('css'), {
     importLoaders: 1,
@@ -580,7 +586,7 @@ module.exports = function(webpackEnv) {
   config.module
     .rule('compiler')
     .oneOf('sassModules')
-    .test(/\.module\.(scss|sass)$/);
+    .test(sassModuleRegex);
 
   injectStyleLoaders(
     config.module.rule('compiler').oneOf('sassModules'),
@@ -604,7 +610,7 @@ module.exports = function(webpackEnv) {
     // Remove this when webpack adds a warning or an error for this.
     // See https://github.com/webpack/webpack/issues/6571
     .sideEffects(true)
-    .test(/\.(scss|sass)$/);
+    .test(sassRegex);
 
   injectStyleLoaders(
     config.module.rule('compiler').oneOf('sass'),
@@ -821,5 +827,13 @@ module.exports = function(webpackEnv) {
     ]);
   });
 
-  return config.toConfig();
+  const theConfig = config.toConfig();
+
+  // FIXME: I don't think these values are setup correctly in CRA
+  theConfig.performance = false;
+  // FIXME: PRs opened
+  theConfig.output.futureEmitAssets = true;
+  theConfig.module.strictExportPresence = true;
+
+  return theConfig;
 };
