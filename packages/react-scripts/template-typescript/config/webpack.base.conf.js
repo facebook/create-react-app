@@ -179,13 +179,6 @@ module.exports = {
         writeToDisk: true,
       },
     ]),
-    new webpack.DefinePlugin({
-      LOCAL_SERVER: process.env.LOCAL_SERVER,
-    }),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-    }),
     new WriteFilePlugin(),
   ],
 };
