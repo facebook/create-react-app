@@ -103,7 +103,9 @@ labels: 'issue: bug report, needs triage'
 
 (Write your steps here:)
 
-1. 2. 3.
+1.
+2.
+3.
 
 ### Expected behavior
 
