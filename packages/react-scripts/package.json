@@ -1,6 +1,6 @@
 {
   "name": "react-scripts",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
     "babel-plugin-named-asset-import": "^0.3.4",
-    "babel-preset-react-app": "^9.0.2",
+    "babel-preset-react-app": "^9.1.0",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "2.1.1",
@@ -67,7 +67,7 @@
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^1.0.4",
-    "react-dev-utils": "^9.1.0",
+    "react-dev-utils": "^9.2.0",
     "resolve": "1.12.0",
     "resolve-url-loader": "3.1.0",
     "sass-loader": "7.2.0",
