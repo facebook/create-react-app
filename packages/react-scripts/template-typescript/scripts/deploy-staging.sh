@@ -1,0 +1,1 @@
+rsync -t -vv -r wwwroot/dist/* root@120.55.40.68:~/nginx/static/meshWebTest/mesh-3d-model-viewer-staging

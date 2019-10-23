@@ -1,0 +1,10 @@
+@import "../colors";
+@import "settings";
+
+.#{$icons-namespace} {
+  &.red {
+    * {
+      fill: red;
+    }
+  }
+}

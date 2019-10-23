@@ -1,0 +1,116 @@
+@mixin desktop-and-smaller() {
+    @content;
+}
+
+
+@mixin large-desktop-and-greater() {
+    @media screen and (min-width: 1080px) {
+        @content;
+    }
+}
+
+@mixin large-desktop-and-smaller() {
+    @media screen and (max-width: 1079px) {
+        @content;
+    }
+}
+
+// "desktop" should be what "desktop-only is, however this would be a large refactor.
+@mixin desktop-only() {
+    @media screen and (min-width: 960px) and (max-width: 1079px) {
+        @content;
+    }
+}
+
+@mixin desktop() {
+    @media screen and (min-width: 960px) {
+        @content;
+    }
+}
+
+@mixin desktop-and-greater() {
+    @media screen and (min-width: 960px) {
+        @content;
+    }
+}
+
+@mixin tablet-and-smaller() {
+    @media screen and (max-width: 959px) {
+        @content;
+    }
+}
+
+@mixin tablet() {
+    @media screen and (max-width: 959px) and (min-width: 640px) {
+        @content;
+    }
+}
+
+@mixin tablet-and-greater() {
+    @media screen and (min-width: 640px) {
+        @content;
+    }
+}
+
+@mixin small-tablet-and-smaller() {
+    @media screen and (max-width: 732px) {
+        @content;
+    }
+}
+
+@mixin small-tablet-to-tablet() {
+    @media screen and (min-width: 733px) and (max-width: 959px){
+        @content;
+    }
+}
+
+@mixin mobile-to-small-tablet() {
+    @media screen and (min-width: 640px) and (max-width: 732px){
+        @content;
+    }
+}
+
+@mixin mobile-tiny() {
+    @media screen and (max-width: 360px) {
+        @content;
+    }
+}
+
+@mixin mobile-and-smaller() {
+    @media screen and (max-width: 639px) {
+        @content;
+    }
+}
+
+@mixin mobile() {
+    @media screen and (max-width: 639px) {
+        @content;
+    }
+}
+
+@mixin mobile-and-greater() {
+    @media screen and (min-width: 640px) {
+        @content;
+    }
+}
+
+@mixin touch() {
+    @media (pointer:coarse) {
+        @content;
+    }
+}
+
+@mixin not-touch() {
+    @media (pointer:fine) {
+        @content;
+    }
+}
+
+@mixin mobile-or-force($force-class) {
+    @include mobile {
+        @content;
+    }
+    &.#{$force-class} {
+        @content;
+    }
+}
