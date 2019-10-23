@@ -23,7 +23,7 @@ Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
 
 <p align='center'>
-<img src='https://cdn.rawgit.com/facebook/create-react-app/27b42ac/screencast.svg' width='600' alt='npm start'>
+<img src='https://cdn.jsdelivr.net/gh/facebook/create-react-app@27b42ac7efa018f2541153ab30d63180f5fa39e0/screencast.svg' width='600' alt='npm start'>
 </p>
 
 ### Get Started Immediately
@@ -45,7 +45,7 @@ To create a new app, you may choose one of the following methods:
 npx create-react-app my-app
 ```
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
+_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
 
 ### npm
 
@@ -104,7 +104,7 @@ The page will automatically reload if you make changes to the code.<br>
 You will see the build errors and lint warnings in the console.
 
 <p align='center'>
-<img src='https://cdn.rawgit.com/marionebl/create-react-app/9f62826/screencast-error.svg' width='600' alt='Build errors'>
+<img src='https://cdn.jsdelivr.net/gh/marionebl/create-react-app@9f6282671c54f0874afd37a72f6689727b562498/screencast-error.svg' width='600' alt='Build errors'>
 </p>
 
 ### `npm test` or `yarn test`

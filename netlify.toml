@@ -1,5 +1,5 @@
 [build]
   base    = "docusaurus/website"
-  publish = "docusaurus/website/build/create-react-app"
+  publish = "docusaurus/website/build"
   command = "yarn build"
   
