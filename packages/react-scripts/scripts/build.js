@@ -168,8 +168,18 @@ function build(previousFileSizes) {
         if (!err.message) {
           return reject(err);
         }
+
+        let errMessage = err.message;
+
+        // Add additional information for postcss errors
+        if (err.hasOwnProperty('postcssNode')) {
+          errMessage +=
+            '\nCompileError: Begins at CSS selector ' +
+            err['postcssNode'].selector;
+        }
+
         messages = formatWebpackMessages({
-          errors: [err.message],
+          errors: [errMessage],
           warnings: [],
         });
       } else {
