@@ -1,6 +1,6 @@
 import * as Store from "./store";
 import * as thunkModule from 'redux-thunk';
-import { compose, applyMiddleware, createStore, combineReducers } from "redux";
+import { compose, applyMiddleware, createStore, combineReducers, Reducer } from "redux";
 import { routerReducer } from "react-router-redux";
 import { typedToPlain } from "./common/StrongAction";
 
@@ -26,5 +26,5 @@ export default function configureStore()
 
 
 function buildRootReducer(allReducers) {
-    return combineReducers({ ...allReducers, routing: routerReducer }) as Redux.Reducer<any>;
+    return combineReducers({ ...allReducers, routing: routerReducer }) as Reducer<any>;
 }

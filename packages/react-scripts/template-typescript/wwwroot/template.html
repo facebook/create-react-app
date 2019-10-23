@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- To correctly render in CSS 3D Transforms mode -->
+    <meta
+      name="viewport"
+      content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"
+    />
+    <meta charset="utf-8" />
+    <title>MeshKit React App</title>
+  </head>
+  <body>
+    <div id="react-app"></div>
+    <style>
+      @-ms-viewport {
+        width: device-width;
+      }
+    </style>
+    <style>
+      * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-touch-callout: none;
+        -ms-content-zooming: none;
+      }
+      html,
+      body,
+      #react-app {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      #pano {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </body>
+</html>
