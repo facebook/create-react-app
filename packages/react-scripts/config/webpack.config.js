@@ -86,19 +86,18 @@ module.exports = function(webpackEnv) {
 
   // common function to get style loaders
   const injectStyleLoaders = (rule, cssOptions, preProcessor) => {
-    rule.when(isEnvDevelopment, rule => {
-      rule.use('style').loader(require.resolve('style-loader'));
-    });
-
-    rule.when(isEnvProduction, rule => {
-      rule
-        .use('cssExtract')
-        .loader(MiniCssExtractPlugin.loader)
-        .options({
-          loader: MiniCssExtractPlugin.loader,
-          options: shouldUseRelativeAssetPaths ? { publicPath: '../../' } : {},
-        });
-    });
+    rule.when(
+      isEnvDevelopment,
+      rule => {
+        rule.use('style').loader(require.resolve('style-loader'));
+      },
+      rule => {
+        rule
+          .use('cssExtract')
+          .loader(MiniCssExtractPlugin.loader)
+          .options(shouldUseRelativeAssetPaths ? { publicPath: '../../' } : {});
+      }
+    );
 
     rule
       .use('css')
