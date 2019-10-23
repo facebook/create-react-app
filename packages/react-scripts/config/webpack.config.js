@@ -110,7 +110,7 @@ module.exports = function(webpackEnv) {
     // package.json
     rule
       .use('postcss')
-      .loader(require.resolve('css-loader'))
+      .loader(require.resolve('postcss-loader'))
       .options({
         // Necessary for external CSS imports to work
         // https://github.com/facebook/create-react-app/issues/2677
@@ -821,6 +821,13 @@ module.exports = function(webpackEnv) {
       },
     ]);
   });
+
+  require('fs').writeFileSync(
+    './output-file.js',
+    `module.exports = ${config.toString({
+      verbose: true,
+    })}`
+  );
 
   return config.toConfig();
 };
