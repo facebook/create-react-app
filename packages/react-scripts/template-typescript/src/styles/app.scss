@@ -1,0 +1,19 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+
+    .globalActions {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top: 57px;
+        left: 380px;
+        transition: all ease-in-out .3s;
+
+        &.layer-collapsed {
+            left: 80px;
+        }
+    }
+}
