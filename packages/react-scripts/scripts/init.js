@@ -101,6 +101,12 @@ module.exports = function(
     bootstrap: './scripts/bootstrap.sh',
   };
 
+  // Setup engine requirements
+  appPackage.engines = {
+    node: '>= 6.0.0',
+    npm: '>= 3.0.0',
+  };
+
   // Setup the eslint config
   appPackage.eslintConfig = {
     extends: 'react-app',
