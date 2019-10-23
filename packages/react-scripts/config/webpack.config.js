@@ -824,9 +824,9 @@ module.exports = function(webpackEnv) {
 
   require('fs').writeFileSync(
     './output-file.js',
-    `module.exports = ${config.toString({
-      verbose: true,
-    })}`
+    `
+"use strict";
+module.exports = ${config.toString({ verbose: true })};`
   );
 
   return config.toConfig();
