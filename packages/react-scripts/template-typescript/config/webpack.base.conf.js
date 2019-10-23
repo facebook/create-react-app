@@ -169,6 +169,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', 'wwwroot/template.html'),
+      inject: true,
       PUBLIC_URL: process.env.PUBLIC_URL,
     }),
     new CopyWebpackPlugin([

@@ -1,10 +1,11 @@
 'use strict';
 const path = require('path');
 
-const baseConfig = require('./webpack.base.conf');
+const baseWebpackConfig = require('./webpack.base.conf');
+const merge = require('webpack-merge');
 
-module.exports = {
-  ...baseConfig,
-  // add any configuration needed for production build here, and if it is common, please update it in
-  // https://github.com/gzkiwiinc/create-react-app.git as well (under `react-scripts/template-typescript`)
-};
+const webpackConfig = merge(baseWebpackConfig, {
+  mode: 'production',
+});
+
+module.exports = webpackConfig;
