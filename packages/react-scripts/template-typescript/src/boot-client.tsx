@@ -10,8 +10,6 @@ import { BrowserRouter } from "react-router-dom";
 export const store = configureStore();
 const routes = createRoutes(store);
 
-require('cesium/Source/Widgets/widgets.css');
-
 const render = () => {
     ReactDOM.render(
         <AppContainer>
