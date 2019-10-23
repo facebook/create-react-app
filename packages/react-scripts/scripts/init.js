@@ -98,6 +98,7 @@ module.exports = function(
     dev: './scripts/dev.sh',
     'build:staging': './scripts/build-staging.sh',
     'deploy:staging': './scripts/deploy-staging.sh',
+    bootstrap: './scripts/bootstrap.sh',
   };
 
   // Setup the eslint config

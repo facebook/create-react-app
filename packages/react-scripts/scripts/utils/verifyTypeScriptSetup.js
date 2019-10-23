@@ -92,43 +92,26 @@ function verifyTypeScriptSetup() {
   }
 
   const compilerOptions = {
-    // These are suggested values and will be set when not present in the
-    // tsconfig.json
-    // 'parsedValue' matches the output value from ts.parseJsonConfigFileContent()
-    target: {
-      parsedValue: ts.ScriptTarget.ES5,
-      suggested: 'es5',
+    compilerOptions: {
+      skipLibCheck: true,
+      baseUrl: '.',
+      moduleResolution: 'node',
+      target: 'es6',
+      jsx: 'react',
+      strict: false,
+      strictNullChecks: true,
+      rootDir: 'src',
+      experimentalDecorators: true,
+      allowSyntheticDefaultImports: true,
+      sourceMap: true,
+      skipDefaultLibCheck: true,
+      lib: ['es6', 'dom'],
+      paths: {
+        // Fixes "Duplicate identifier 'Redux'" error when packages were installed via Yarn (by specifying which .d.ts file is authoritative)
+        redux: ['./node_modules/@types/redux/index'],
+      },
     },
-    lib: { suggested: ['dom', 'dom.iterable', 'esnext'] },
-    allowJs: { suggested: true },
-    skipLibCheck: { suggested: true },
-    esModuleInterop: { suggested: true },
-    allowSyntheticDefaultImports: { suggested: true },
-    strict: { suggested: true },
-    forceConsistentCasingInFileNames: { suggested: true },
-    // TODO: Enable for v4.0 (#6936)
-    // noFallthroughCasesInSwitch: { suggested: true },
-
-    // These values are required and cannot be changed by the user
-    // Keep this in sync with the webpack config
-    module: {
-      parsedValue: ts.ModuleKind.ESNext,
-      value: 'esnext',
-      reason: 'for import() and import/export',
-    },
-    moduleResolution: {
-      parsedValue: ts.ModuleResolutionKind.NodeJs,
-      value: 'node',
-      reason: 'to match webpack resolution',
-    },
-    resolveJsonModule: { value: true, reason: 'to match webpack loader' },
-    isolatedModules: { value: true, reason: 'implementation limitation' },
-    noEmit: { value: true },
-    jsx: {
-      parsedValue: ts.JsxEmit.React,
-      suggested: 'react',
-    },
-    paths: { value: undefined, reason: 'aliased imports are not supported' },
+    exclude: ['bin', 'node_modules'],
   };
 
   const formatDiagnosticHost = {

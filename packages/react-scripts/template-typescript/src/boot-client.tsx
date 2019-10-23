@@ -24,13 +24,3 @@ const render = () => {
 }
 
 render();
-
-// @todo - temp solution for BD and PM team to add configuration, need to remove when this become part of our features
-(window as any).addProjectionConfig = (projectionKey: string, projectionName: string, projectionSettings) =>
-{
-    store.dispatch(new AddAvailableCoordinateAction({
-        name: projectionName,
-        key: projectionKey,
-    }));
-    proj4.defs(projectionKey,projectionSettings);
-}
