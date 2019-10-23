@@ -142,10 +142,10 @@ module.exports = function(
       fs.writeFileSync(
         path.join(appPath, 'README.md'),
         readme
-          .replace(/npm start/g, 'yarn start')
-          .replace(/npm test/g, 'yarn test')
-          .replace(/npm run build/g, 'yarn build')
-          .replace(/npm run eject/g, 'yarn eject'),
+          .replace(/npm bootstrap/g, 'yarn bootstrap')
+          .replace(/npm run dev/g, 'yarn dev')
+          .replace(/npm run build:staging/g, 'yarn build:staging')
+          .replace(/npm run deploy:staging/g, 'yarn deploy:staging'),
         'utf8'
       );
     } catch (err) {
@@ -254,31 +254,36 @@ module.exports = function(
   console.log(`Success! Created ${appName} at ${appPath}`);
   console.log('Inside that directory, you can run several commands:');
   console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} start`));
-  console.log('    Starts the development server.');
+  console.log(
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run'} bootstrap`)
+  );
+  console.log('    Bootstrap the development server.');
+  console.log();
+  console.log(chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}dev`));
+  console.log('    Pack and serve the app in Development environment');
   console.log();
   console.log(
-    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run'} build:staging`)
   );
-  console.log('    Bundles the app into static files for production.');
+  console.log('    Build and pack the app for test:staging environment');
   console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} test`));
-  console.log('    Starts the test runner.');
   console.log();
   console.log(
-    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}eject`)
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run'} deploy:staging`)
   );
-  console.log(
-    '    Removes this tool and copies build dependencies, configuration files'
-  );
-  console.log(
-    '    and scripts into the app directory. If you do this, you can’t go back!'
-  );
+  console.log('    Deploy app to test:staging environment');
+  console.log();
   console.log();
   console.log('We suggest that you begin by typing:');
   console.log();
   console.log(chalk.cyan('  cd'), cdpath);
-  console.log(`  ${chalk.cyan(`${displayedCommand} start`)}`);
+  console.log(
+    `  ${chalk.cyan(
+      `${displayedCommand} ${useYarn ? '' : 'run'} bootstrap`
+    )} and then ${chalk.cyan(
+      `${displayedCommand} ${useYarn ? '' : 'run'} dev`
+    )}`
+  );
   if (readmeExists) {
     console.log();
     console.log(
