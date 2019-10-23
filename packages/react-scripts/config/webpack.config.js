@@ -154,9 +154,8 @@ module.exports = function(webpackEnv) {
   // our own hints via the FileSizeReporter
   config.performance
     .hints(false)
-    .maxEntrypointSize(false)
-    .maxAssetSize(false)
-    .assetFilter(false);
+    .maxEntrypointSize(Infinity)
+    .maxAssetSize(Infinity);
 
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
@@ -822,13 +821,6 @@ module.exports = function(webpackEnv) {
       },
     ]);
   });
-
-  require('fs').writeFileSync(
-    './pepega.js',
-    config.toString({
-      verbose: true,
-    })
-  );
 
   return config.toConfig();
 };
