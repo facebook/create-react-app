@@ -96,6 +96,7 @@ module.exports = function(
   // Setup the script rules
   appPackage.scripts = {
     dev: './scripts/dev.sh',
+    build: 'rm -rf ./wwwroot/dist/** && mesh build reactapp',
     'build:staging': './scripts/build-staging.sh',
     'deploy:staging': './scripts/deploy-staging.sh',
     bootstrap: './scripts/bootstrap.sh',

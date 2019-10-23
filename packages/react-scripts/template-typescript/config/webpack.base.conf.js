@@ -14,10 +14,6 @@ const tsImportPluginFactory = require('ts-import-plugin');
 
 const DEV = process.env.NODE_ENV === 'development';
 
-// The path to the CesiumJS source code
-// const cesiumSource = path.join(__dirname, '..', 'node_modules/cesium/Source');
-// const cesiumWorkers = '../Build/Cesium/Workers';
-
 module.exports = {
   context: __dirname,
   entry: DEV
@@ -40,10 +36,10 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '..', 'wwwroot/dist'),
     filename: 'app.bundle.js',
+    publicPath: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : '',
   },
   amd: {
-    // Enable webpack-friendly use of require in Cesium
-    toUrlUndefined: true,
+    // toUrlUndefined: true,
   },
   node: {
     // Resolve node module use of fs
@@ -53,9 +49,7 @@ module.exports = {
   // Enable sourcemaps for debugging webpack's output.
   devtool: DEV ? 'inline-eval-cheap-source-map' : 'source-map',
 
-  externals: {
-    cesium: 'Cesium',
-  },
+  externals: {},
   optimization: {
     splitChunks: {
       chunks: 'all',
@@ -175,19 +169,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', 'wwwroot/template.html'),
+      PUBLIC_URL: process.env.PUBLIC_URL,
     }),
-    // Copy Cesium Assets, Widgets, and Workers to a static directory
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(
-          __dirname,
-          '..',
-          `node_modules/cesium/Build/Cesium${!DEV ? '' : 'Unminified'}`
-        ),
-        to: 'cesium',
-        writeToDisk: true,
-      },
-    ]),
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '..', `src/images`),
@@ -196,15 +179,8 @@ module.exports = {
       },
     ]),
     new webpack.DefinePlugin({
-      // Define relative base path in cesium for loading assets
-      CESIUM_BASE_URL: JSON.stringify('/cesium'),
       LOCAL_SERVER: process.env.LOCAL_SERVER,
     }),
-    new HtmlWebpackIncludeAssetsPlugin({
-      append: false,
-      assets: ['cesium/Widgets/widgets.css', 'cesium/Cesium.js'],
-    }),
-
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',
