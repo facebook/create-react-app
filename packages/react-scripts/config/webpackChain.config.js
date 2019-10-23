@@ -821,12 +821,5 @@ module.exports = function(webpackEnv) {
     ]);
   });
 
-  require('fs').writeFileSync(
-    './output-file.js',
-    `
-"use strict";
-module.exports = ${config.toString({ verbose: true })};`
-  );
-
   return config.toConfig();
 };
