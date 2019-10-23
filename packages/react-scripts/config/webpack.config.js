@@ -541,6 +541,20 @@ module.exports = function(webpackEnv) {
       inputSourceMap: shouldUseSourceMap,
     });
 
+  // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
+  // using the extension .module.css
+  config.module
+    .rule('compiler')
+    .oneOf('cssModules')
+    .test(/\.module\.css$/);
+
+  injectStyleLoaders(config.module.rule('compiler').oneOf('cssModules'), {
+    importLoaders: 1,
+    sourceMap: isEnvProduction && shouldUseSourceMap,
+    modules: true,
+    getLocalIdent: getCSSModuleLocalIdent,
+  });
+
   // "postcss" loader applies autoprefixer to our CSS.
   // "css" loader resolves paths in CSS and adds assets as dependencies.
   // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -563,19 +577,23 @@ module.exports = function(webpackEnv) {
     sourceMap: isEnvProduction && shouldUseSourceMap,
   });
 
-  // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
-  // using the extension .module.css
+  // Adds support for CSS Modules, but using SASS
+  // using the extension .module.scss or .module.sass
   config.module
     .rule('compiler')
-    .oneOf('cssModules')
-    .test(/\.module\.css$/);
+    .oneOf('sassModules')
+    .test(/\.module\.(scss|sass)$/);
 
-  injectStyleLoaders(config.module.rule('compiler').oneOf('cssModules'), {
-    importLoaders: 1,
-    sourceMap: isEnvProduction && shouldUseSourceMap,
-    modules: true,
-    getLocalIdent: getCSSModuleLocalIdent,
-  });
+  injectStyleLoaders(
+    config.module.rule('compiler').oneOf('sassModules'),
+    {
+      importLoaders: 2,
+      sourceMap: isEnvProduction && shouldUseSourceMap,
+      modules: true,
+      getLocalIdent: getCSSModuleLocalIdent,
+    },
+    'sass-loader'
+  );
 
   // Opt-in support for SASS (using .scss or .sass extensions).
   // By default we support SASS Modules with the
@@ -595,24 +613,6 @@ module.exports = function(webpackEnv) {
     {
       importLoaders: 2,
       sourceMap: isEnvProduction && shouldUseSourceMap,
-    },
-    'sass-loader'
-  );
-
-  // Adds support for CSS Modules, but using SASS
-  // using the extension .module.scss or .module.sass
-  config.module
-    .rule('compiler')
-    .oneOf('sassModules')
-    .test(/\.module\.(scss|sass)$/);
-
-  injectStyleLoaders(
-    config.module.rule('compiler').oneOf('sassModules'),
-    {
-      importLoaders: 2,
-      sourceMap: isEnvProduction && shouldUseSourceMap,
-      modules: true,
-      getLocalIdent: getCSSModuleLocalIdent,
     },
     'sass-loader'
   );
@@ -822,6 +822,13 @@ module.exports = function(webpackEnv) {
       },
     ]);
   });
+
+  require('fs').writeFileSync(
+    './pepega.js',
+    config.toString({
+      verbose: true,
+    })
+  );
 
   return config.toConfig();
 };
