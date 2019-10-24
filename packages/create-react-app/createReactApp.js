@@ -645,6 +645,8 @@ function getTemplateInstallPackage(template, originalDirectory) {
     ) {
       // for tar.gz or alternative paths
       templateToInstall = template;
+    } else if (template.startsWith(templateToInstall)) {
+      templateToInstall = template;
     } else if (!template.startsWith(templateToInstall)) {
       // Add prefix `cra-template` to non-prefixed templates.
       templateToInstall += `-${template}`;
