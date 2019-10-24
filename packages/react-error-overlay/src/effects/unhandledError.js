@@ -11,6 +11,7 @@ let boundErrorHandler = null;
 type ErrorCallback = (error: Error) => void;
 
 function errorHandler(callback: ErrorCallback, e: Event): void {
+  // $FlowFixMe
   if (!e.error) {
     return;
   }
