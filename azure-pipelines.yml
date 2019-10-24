@@ -14,6 +14,7 @@ variables:
   VSTS_OVERWRITE_TEMP: True
   # Override Verdaccio package to use. This is temporary and is needed to avoid socket timeouts on hosted Windows agent (on Azure). This also changes Verdaccio to return a 503 (service unavailable) instead of a 404 (not found) when the connection to the uplink timesout.
   VERDACCIO_PACKAGE: https://github.com/willsmythe/verdaccio/releases/download/create-react-app/verdaccio-4.0.0-alpha.8.tgz
+  CRA_INTERNAL_TEST: true
 
 # ******************************************************************************
 # Simple test suite

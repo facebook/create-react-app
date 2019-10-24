@@ -62,13 +62,33 @@ yarn create react-app my-app
 
 _`yarn create` is available in Yarn 0.25+_
 
-### Creating a TypeScript app
+### Selecting a template
 
-Follow our [Adding TypeScript](adding-typescript.md) documentation to create a TypeScript app.
+You can now optionally start a new app from a template by appending `--template [template-name]` to the creation command.
+
+If you don't select a template, we'll create your project with our base template.
+
+Templates are always named in the format `cra-template-[template-name]`, however you only need to provide the `[template-name]` to the creation command.
+
+```sh
+npx create-react-app my-app --template [template-name]
+```
+
+> You can find a a list of available templates by searching for ["cra-template-\*"](https://www.npmjs.com/search?q=cra-template-*) on npm.
+
+#### Creating a TypeScript app
+
+You can start a new TypeScript app using templates. To use our provided TypeScript template, append `--template typescript` to the creation command.
+
+```sh
+npx create-react-app my-app --template typescript
+```
+
+If you already have a project and would like to add TypeScript, see our [Adding TypeScript](adding-typescript.md) documentation.
 
 ### Selecting a package manager
 
-When you create a new app, the CLI will use [Yarn](https://yarnpkg.com/) to install dependencies (when available). If you have Yarn installed, but would prefer to use npm, you can append --use-npm to the creation command. For example:
+When you create a new app, the CLI will use [Yarn](https://yarnpkg.com/) to install dependencies (when available). If you have Yarn installed, but would prefer to use npm, you can append `--use-npm` to the creation command. For example:
 
 ```sh
 npx create-react-app my-app --use-npm
