@@ -2,7 +2,7 @@
 
 This is the official TypeScript template for [Create React App](https://github.com/facebook/create-react-app).
 
-To use this template, simply add `--template typescript` when creating a new app.
+To use this template, add `--template typescript` when creating a new app.
 
 For example:
 
