@@ -17,7 +17,8 @@ function printHostingInstructions(
   publicUrl,
   publicPath,
   buildFolder,
-  useYarn
+  useYarn,
+  usePnpm
 ) {
   if (publicUrl && publicUrl.includes('.github.io/')) {
     // "homepage": "http://user.github.io/project"
@@ -25,7 +26,7 @@ function printHostingInstructions(
     const hasDeployScript = typeof appPackage.scripts.deploy !== 'undefined';
     printBaseMessage(buildFolder, publicPathname);
 
-    printDeployInstructions(publicUrl, hasDeployScript, useYarn);
+    printDeployInstructions(publicUrl, hasDeployScript, useYarn, usePnpm);
   } else if (publicPath !== '/') {
     // "homepage": "http://mywebsite.com/project"
     printBaseMessage(buildFolder, publicPath);
@@ -34,7 +35,7 @@ function printHostingInstructions(
     //   or no homepage
     printBaseMessage(buildFolder, publicUrl);
 
-    printStaticServerInstructions(buildFolder, useYarn);
+    printStaticServerInstructions(buildFolder, useYarn, usePnpm);
   }
   console.log();
   console.log('Find out more about deployment here:');
@@ -69,7 +70,7 @@ function printBaseMessage(buildFolder, hostingLocation) {
   console.log(`The ${chalk.cyan(buildFolder)} folder is ready to be deployed.`);
 }
 
-function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
+function printDeployInstructions(publicUrl, hasDeployScript, useYarn, usePnpm) {
   console.log(`To publish it at ${chalk.green(publicUrl)} , run:`);
   console.log();
 
@@ -78,7 +79,9 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
     if (useYarn) {
       console.log(`  ${chalk.cyan('yarn')} add --dev gh-pages`);
     } else {
-      console.log(`  ${chalk.cyan('npm')} install --save-dev gh-pages`);
+      console.log(
+        `  ${chalk.cyan(usePnpm ? 'pnpm' : 'npm')} install --save-dev gh-pages`
+      );
     }
     console.log();
 
@@ -92,7 +95,7 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
     console.log(`      ${chalk.dim('// ...')}`);
     console.log(
       `      ${chalk.yellow('"predeploy"')}: ${chalk.yellow(
-        `"${useYarn ? 'yarn' : 'npm run'} build",`
+        `"${useYarn ? 'yarn' : `${usePnpm ? 'pnpm' : 'npm'} run`} build",`
       )}`
     );
     console.log(
@@ -106,10 +109,14 @@ function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
     console.log('Then run:');
     console.log();
   }
-  console.log(`  ${chalk.cyan(useYarn ? 'yarn' : 'npm')} run deploy`);
+  console.log(
+    `  ${chalk.cyan(
+      useYarn ? 'yarn' : `${usePnpm ? 'pnpm' : 'npm'}`
+    )} run deploy`
+  );
 }
 
-function printStaticServerInstructions(buildFolder, useYarn) {
+function printStaticServerInstructions(buildFolder, useYarn, usePnpm) {
   console.log('You may serve it with a static server:');
   console.log();
 
@@ -117,7 +124,9 @@ function printStaticServerInstructions(buildFolder, useYarn) {
     if (useYarn) {
       console.log(`  ${chalk.cyan('yarn')} global add serve`);
     } else {
-      console.log(`  ${chalk.cyan('npm')} install -g serve`);
+      console.log(
+        `  ${chalk.cyan(`${usePnpm ? 'pnpm' : 'npm'}`)} install -g serve`
+      );
     }
   }
   console.log(`  ${chalk.cyan('serve')} -s ${buildFolder}`);

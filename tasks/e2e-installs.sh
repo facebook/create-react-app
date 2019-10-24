@@ -147,6 +147,20 @@ grep '"version": "1.0.17"' node_modules/react-scripts/package.json
 checkDependencies
 
 # ******************************************************************************
+# Test --use-pnpm flag
+# ******************************************************************************
+
+cd "$temp_app_path"
+npx create-react-app test-use-pnpm-flag --use-pnpm --scripts-version=1.0.17
+cd test-use-pnpm-flag
+
+# Check corresponding scripts version is installed.
+exists node_modules/react-scripts
+[ ! -e "yarn.lock" ] && echo "yarn.lock correctly does not exist"
+grep '"version": "1.0.17"' node_modules/react-scripts/package.json
+checkDependencies
+
+# ******************************************************************************
 # Test --typescript flag
 # ******************************************************************************
 

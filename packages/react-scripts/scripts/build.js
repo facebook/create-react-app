@@ -47,6 +47,7 @@ const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
+const usePnpm = fs.existsSync(paths.pnpmLockFile);
 
 // These sizes are pretty large. We'll warn for bundles exceeding them.
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
@@ -118,7 +119,8 @@ checkBrowsers(paths.appPath, isInteractive)
         publicUrl,
         publicPath,
         buildFolder,
-        useYarn
+        useYarn,
+        usePnpm
       );
     },
     err => {
