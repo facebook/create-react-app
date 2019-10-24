@@ -25,11 +25,11 @@ Jest will look for test files with any of the following popular naming conventio
 
 The `.test.js` / `.spec.js` files (or the `__tests__` folders) can be located at any depth under the `src` top level folder.
 
-We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Collocation also helps find tests more quickly in larger projects.
+We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test only needs to `import App from './App'` instead of a long relative path. Collocation also helps find tests more quickly in larger projects.
 
 ## Command Line Interface
 
-When you run `npm test`, Jest will launch in watch mode<sup>\*</sup>. Every time you save a file, it will re-run the tests, just like `npm start` recompiles the code.
+When you run `npm test`, Jest will launch in watch mode<sup>\*</sup>. Every time you save a file, it will re-run the tests, like how `npm start` recompiles the code.
 
 The watcher includes an interactive command-line interface with the ability to run all tests, or focus on a search pattern. It is designed this way so that you can keep it open and enjoy fast re-runs. You can learn the commands from the “Watch Usage” note that the watcher prints after every run:
 
@@ -68,7 +68,7 @@ You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://jestjs.io/d
 
 There is a broad spectrum of component testing techniques. They range from a “smoke test” verifying that a component renders without throwing, to shallow rendering and testing some of the output, to full rendering and testing component lifecycle and state changes.
 
-Different projects choose different testing tradeoffs based on how often components change, and how much logic they contain. If you haven’t decided on a testing strategy yet, we recommend that you start with creating simple smoke tests for your components:
+Different projects choose different testing tradeoffs based on how often components change, and how much logic they contain. If you haven’t decided on a testing strategy yet, we recommend that you start with creating basic smoke tests for your components:
 
 ```js
 import React from 'react';
@@ -149,7 +149,7 @@ All Jest matchers are [extensively documented here](https://jestjs.io/docs/en/ex
 
 Nevertheless you can use a third-party assertion library like [Chai](https://chaijs.com/) if you want to, as described below.
 
-Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzyme-matchers) helpful to simplify your tests with readable matchers. The above `contains` code can be written more simply with jest-enzyme.
+Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzyme-matchers) helpful to improve your tests with readable matchers. The above `contains` code can be written more concisely with jest-enzyme.
 
 ```js
 expect(wrapper).toContainReact(welcome);
@@ -229,7 +229,7 @@ and then use them in your tests like you normally do.
 
 > Note: this feature is available with `react-scripts@0.4.0` and higher.
 
-If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
+If your app uses a browser API that you need to mock in your tests or if you need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
 
 For example:
 
@@ -387,7 +387,7 @@ CI=true npm run build
 
 The test command will force Jest to run in CI-mode, and tests will only run once instead of launching the watcher.
 
-For non-CI environments, you can simply pass the `--watchAll=false` flag to disable test-watching.
+For non-CI environments, you can pass the `--watchAll=false` flag to disable test-watching.
 
 The build command will check for linter warnings and fail if any are found.
 

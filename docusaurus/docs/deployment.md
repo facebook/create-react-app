@@ -29,7 +29,7 @@ serve -h
 
 ## Other Solutions
 
-You don’t necessarily need a static server in order to run a Create React App project in production. It works just as fine integrated into an existing dynamic one.
+You don’t necessarily need a static server in order to run a Create React App project in production. It also works well when integrated into an existing server side app.
 
 Here’s a programmatic example using [Node](https://nodejs.org/) and [Express](https://expressjs.com/):
 
@@ -163,7 +163,7 @@ Variables in `.env.production` will be used as fallback because `NODE_ENV` will 
 
 ## [AWS Amplify](http://console.amplify.aws)
 
-The AWS Amplify Console provides continuous deployment and hosting for modern web apps (single page apps and static site generators) with serverless backends. The Amplify Console offers globally available CDNs, easy custom domain setup, feature branch deployments, and password protection.
+The AWS Amplify Console provides continuous deployment and hosting for modern web apps (single page apps and static site generators) with serverless backends. The Amplify Console offers globally available CDNs, custom domain setup, feature branch deployments, and password protection.
 
 1. Login to the Amplify Console [here](https://console.aws.amazon.com/amplify/home).
 1. Connect your Create React App repo and pick a branch. If you're looking for a Create React App+Amplify starter, try the [create-react-app-auth-amplify starter](https://github.com/swaminator/create-react-app-auth-amplify) that demonstrates setting up auth in 10 minutes with Create React App.
@@ -189,7 +189,7 @@ Then run the `firebase init` command from your project’s root. You need to cho
 
     First, let's associate this project directory with a Firebase project.
     You can create multiple project aliases by running firebase use --add,
-    but for now we'll just set up a default project.
+    but for now we'll set up a default project.
 
     ? What Firebase project do you want to associate as default? Example app (example-app-fd690)
 
@@ -350,7 +350,7 @@ mywebsite.com
 GitHub Pages doesn’t support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 
 - You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://reacttraining.com/react-router/web/api/Router) about different history implementations in React Router.
-- Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
+- Alternatively, you can use a trick to teach GitHub Pages to handle 404s by redirecting to your `index.html` page with a custom redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
 
 ### Troubleshooting
 
@@ -472,7 +472,7 @@ Out of the box, you are preconfigured for client-side routing compatibility and 
 
 Render offers free [static site](https://render.com/docs/static-sites) hosting with fully managed SSL, a global CDN and continuous auto deploys from GitHub.
 
-Deploy your app in just a few minutes by following the [Create React App deployment guide](https://render.com/docs/deploy-create-react-app).
+Deploy your app in only a few minutes by following the [Create React App deployment guide](https://render.com/docs/deploy-create-react-app).
 
 Use invite code `cra` to sign up or use [this link](https://render.com/i/cra).
 

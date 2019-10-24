@@ -8,7 +8,7 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import withBaseUrl from '@docusaurus/withBaseUrl';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import Layout from '@theme/Layout';
 import CodeBlock from '@theme/CodeBlock';
@@ -48,14 +48,14 @@ function Home() {
         <div className="container">
           <img
             className={classnames(styles.heroBannerLogo, 'margin-vert--md')}
-            src={withBaseUrl('img/logo.svg')}
+            src={useBaseUrl('img/logo.svg')}
           />
           <h1 className="hero__title">{siteConfig.title}</h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
           <div className={styles.getStarted}>
             <Link
               className="button button--outline button--primary button--lg"
-              to={withBaseUrl('docs/getting-started')}
+              to={useBaseUrl('docs/getting-started')}
             >
               Get Started
             </Link>
@@ -115,7 +115,7 @@ function Home() {
               <img
                 className={styles.featureImage}
                 alt={'Easy to update'}
-                src={withBaseUrl('img/update.png')}
+                src={useBaseUrl('img/update.png')}
               />
             </div>
             <div className="col col--5 col--offset-1">

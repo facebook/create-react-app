@@ -9,44 +9,27 @@
 
 import Anser from 'anser';
 import { AllHtmlEntities as Entities } from 'html-entities';
+import type { Theme } from '../styles';
 
-var entities = new Entities();
-
-// Color scheme inspired by https://chriskempson.github.io/base16/css/base16-github.css
-// var base00 = 'ffffff'; // Default Background
-var base01 = 'f5f5f5'; // Lighter Background (Used for status bars)
-// var base02 = 'c8c8fa'; // Selection Background
-var base03 = '6e6e6e'; // Comments, Invisibles, Line Highlighting
-// var base04 = 'e8e8e8'; // Dark Foreground (Used for status bars)
-var base05 = '333333'; // Default Foreground, Caret, Delimiters, Operators
-// var base06 = 'ffffff'; // Light Foreground (Not often used)
-// var base07 = 'ffffff'; // Light Background (Not often used)
-var base08 = '881280'; // Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
-// var base09 = '0086b3'; // Integers, Boolean, Constants, XML Attributes, Markup Link Url
-// var base0A = '795da3'; // Classes, Markup Bold, Search Text Background
-var base0B = '1155cc'; // Strings, Inherited Class, Markup Code, Diff Inserted
-var base0C = '994500'; // Support, Regular Expressions, Escape Characters, Markup Quotes
-// var base0D = '795da3'; // Functions, Methods, Attribute IDs, Headings
-var base0E = 'c80000'; // Keywords, Storage, Selector, Markup Italic, Diff Changed
-// var base0F = '333333'; // Deprecated, Opening/Closing Embedded Language Tags e.g. <?php ?>
+const entities = new Entities();
 
 // Map ANSI colors from what babel-code-frame uses to base16-github
 // See: https://github.com/babel/babel/blob/e86f62b304d280d0bab52c38d61842b853848ba6/packages/babel-code-frame/src/index.js#L9-L22
-var colors = {
-  reset: [base05, 'transparent'],
-  black: base05,
-  red: base08 /* marker, bg-invalid */,
-  green: base0B /* string */,
-  yellow: base08 /* capitalized, jsx_tag, punctuator */,
-  blue: base0C,
-  magenta: base0C /* regex */,
-  cyan: base0E /* keyword */,
-  gray: base03 /* comment, gutter */,
-  lightgrey: base01,
-  darkgrey: base03,
-};
+const colors = (theme: Theme) => ({
+  reset: [theme.base05, 'transparent'],
+  black: theme.base05,
+  red: theme.base08 /* marker, bg-invalid */,
+  green: theme.base0B /* string */,
+  yellow: theme.base08 /* capitalized, jsx_tag, punctuator */,
+  blue: theme.base0C,
+  magenta: theme.base0C /* regex */,
+  cyan: theme.base0E /* keyword */,
+  gray: theme.base03 /* comment, gutter */,
+  lightgrey: theme.base01,
+  darkgrey: theme.base03,
+});
 
-var anserMap = {
+const anserMap = {
   'ansi-bright-black': 'black',
   'ansi-bright-yellow': 'yellow',
   'ansi-yellow': 'yellow',
@@ -61,28 +44,28 @@ var anserMap = {
   'ansi-white': 'darkgrey',
 };
 
-function generateAnsiHTML(txt: string): string {
-  var arr = new Anser().ansiToJson(entities.encode(txt), {
+function generateAnsiHTML(txt: string, theme: Theme): string {
+  const arr = new Anser().ansiToJson(entities.encode(txt), {
     use_classes: true,
   });
 
-  var result = '';
-  var open = false;
-  for (var index = 0; index < arr.length; ++index) {
-    var c = arr[index];
-    var content = c.content,
+  let result = '';
+  let open = false;
+  for (let index = 0; index < arr.length; ++index) {
+    const c = arr[index];
+    const content = c.content,
       fg = c.fg;
 
-    var contentParts = content.split('\n');
-    for (var _index = 0; _index < contentParts.length; ++_index) {
+    const contentParts = content.split('\n');
+    for (let _index = 0; _index < contentParts.length; ++_index) {
       if (!open) {
         result += '<span data-ansi-line="true">';
         open = true;
       }
-      var part = contentParts[_index].replace('\r', '');
-      var color = colors[anserMap[fg]];
+      const part = contentParts[_index].replace('\r', '');
+      const color = colors(theme)[anserMap[fg]];
       if (color != null) {
-        result += '<span style="color: #' + color + ';">' + part + '</span>';
+        result += '<span style="color: ' + color + ';">' + part + '</span>';
       } else {
         if (fg != null) {
           console.log('Missing color mapping: ', fg);
