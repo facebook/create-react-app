@@ -14,11 +14,13 @@
     "start": "cd packages/react-scripts && node bin/react-scripts.js start",
     "screencast": "node ./tasks/screencast.js",
     "screencast:error": "svg-term --cast jyu19xGl88FQ3poMY8Hbmfw8y --out screencast-error.svg --window --at 12000 --no-cursor",
+    "alex": "alex .",
     "test": "cd packages/react-scripts && node bin/react-scripts.js test",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
     "compile:lockfile": "node tasks/compile-lockfile.js"
   },
   "devDependencies": {
+    "alex": "^8.0.0",
     "eslint": "^6.1.0",
     "execa": "1.0.0",
     "fs-extra": "^7.0.1",
@@ -45,6 +47,7 @@
   },
   "lint-staged": {
     "*.{js,md,css,html}": [
+      "alex",
       "prettier --trailing-comma es5 --single-quote --write",
       "git add"
     ],
