@@ -101,8 +101,6 @@ yarn add enzyme enzyme-adapter-react-16 react-test-renderer
 
 As of Enzyme 3, you will need to install Enzyme along with an Adapter corresponding to the version of React you are using. (The examples above use the adapter for React 16.)
 
-The adapter will also need to be configured in your [global setup file](#initializing-test-environment):
-
 ### `src/setupTests.js`
 
 ```js
