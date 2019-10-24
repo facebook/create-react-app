@@ -50,7 +50,7 @@
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.14.3",
-    "flow-bin": "^0.63.1",
+    "flow-bin": "^0.110.0",
     "html-entities": "1.2.1",
     "jest": "24.9.0",
     "jest-fetch-mock": "2.1.2",
