@@ -827,15 +827,5 @@ module.exports = function(webpackEnv) {
     ]);
   });
 
-  const theConfig = config.toConfig();
-
-  // FIXME: I don't think these values are setup correctly in CRA
-  theConfig.performance = false;
-  // FIXME: PRs opened
-  // FIXME: https://github.com/neutrinojs/webpack-chain/issues/205
-  theConfig.output.futureEmitAssets = true;
-  // FIXME: https://github.com/neutrinojs/webpack-chain/issues/206
-  theConfig.module.strictExportPresence = true;
-
-  return theConfig;
+  return config;
 };
