@@ -47,7 +47,6 @@
   },
   "lint-staged": {
     "*.{js,md,css,html}": [
-      "alex",
       "prettier --trailing-comma es5 --single-quote --write",
       "git add"
     ],
