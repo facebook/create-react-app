@@ -219,6 +219,12 @@ module.exports = function(
     args = args.concat(['react', 'react-dom']);
   }
 
+  args.push(
+    '@testing-library/react',
+    '@testing-library/jest-dom',
+    '@testing-library/user-event'
+  );
+
   // Install template dependencies, and react and react-dom if missing.
   if ((!isReactInstalled(appPackage) || templateName) && args.length > 1) {
     console.log();
