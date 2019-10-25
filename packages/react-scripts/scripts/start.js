@@ -48,6 +48,10 @@ const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
+const reactConfig = fs.existsSync(paths.reactConfig)
+  ? require(paths.reactConfig)
+  : {};
+
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
