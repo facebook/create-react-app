@@ -65,6 +65,9 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 // Generate configuration
 const chainedConfig = configFactory('production');
+if (reactConfig.webpackOverride) {
+  reactConfig.webpackOverride(chainedConfig);
+}
 const config = chainedConfig.toConfig();
 
 // We require that you explicitly set browsers and do not fall back to

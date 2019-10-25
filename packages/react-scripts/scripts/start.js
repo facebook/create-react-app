@@ -97,6 +97,9 @@ checkBrowsers(paths.appPath, isInteractive)
     }
 
     const chainedConfig = configFactory('development');
+    if (reactConfig.webpackOverride) {
+      reactConfig.webpackOverride(chainedConfig);
+    }
     const config = chainedConfig.toConfig();
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
