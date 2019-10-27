@@ -6,12 +6,13 @@
  */
 
 /* @flow */
-import React, { Component } from 'react';
-import { black } from '../styles';
+import React, { useContext, useEffect } from 'react';
+import { ThemeContext } from '../iframeScript';
 
 import type { Node as ReactNode } from 'react';
+import type { Theme } from '../styles';
 
-const overlayStyle = {
+const overlayStyle = (theme: Theme) => ({
   position: 'relative',
   display: 'inline-flex',
   flexDirection: 'column',
@@ -28,56 +29,50 @@ const overlayStyle = {
   whiteSpace: 'pre-wrap',
   wordBreak: 'break-word',
   lineHeight: 1.5,
-  color: black,
-};
+  color: theme.color,
+});
 
-type Props = {|
+type ErrorOverlayPropsType = {|
   children: ReactNode,
   shortcutHandler?: (eventKey: string) => void,
 |};
 
-type State = {|
-  collapsed: boolean,
-|};
+let iframeWindow: window = null;
 
-class ErrorOverlay extends Component<Props, State> {
-  iframeWindow: window = null;
+function ErrorOverlay(props: ErrorOverlayPropsType) {
+  const theme = useContext(ThemeContext);
 
-  getIframeWindow = (element: ?HTMLDivElement) => {
+  const getIframeWindow = (element: ?HTMLDivElement) => {
     if (element) {
       const document = element.ownerDocument;
-      this.iframeWindow = document.defaultView;
+      iframeWindow = document.defaultView;
     }
   };
+  const { shortcutHandler } = props;
 
-  onKeyDown = (e: KeyboardEvent) => {
-    const { shortcutHandler } = this.props;
-    if (shortcutHandler) {
-      shortcutHandler(e.key);
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (shortcutHandler) {
+        shortcutHandler(e.key);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    if (iframeWindow) {
+      iframeWindow.addEventListener('keydown', onKeyDown);
     }
-  };
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      if (iframeWindow) {
+        iframeWindow.removeEventListener('keydown', onKeyDown);
+      }
+    };
+  }, [shortcutHandler]);
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.onKeyDown);
-    if (this.iframeWindow) {
-      this.iframeWindow.addEventListener('keydown', this.onKeyDown);
-    }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.onKeyDown);
-    if (this.iframeWindow) {
-      this.iframeWindow.removeEventListener('keydown', this.onKeyDown);
-    }
-  }
-
-  render() {
-    return (
-      <div style={overlayStyle} ref={this.getIframeWindow}>
-        {this.props.children}
-      </div>
-    );
-  }
+  return (
+    <div style={overlayStyle(theme)} ref={getIframeWindow}>
+      {props.children}
+    </div>
+  );
 }
 
 export default ErrorOverlay;

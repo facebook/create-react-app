@@ -132,27 +132,28 @@ if (
   !reactScriptsLinked &&
   __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
 ) {
+  const templatePath = '../cra-template/template';
   module.exports = {
-    dotenv: resolveOwn('template/.env'),
+    dotenv: resolveOwn(`${templatePath}/.env`),
     appPath: resolveApp('.'),
     appBuild: resolveOwn('../../build'),
-    appPublic: resolveOwn('template/public'),
-    appHtml: resolveOwn('template/public/index.html'),
-    appIndexJs: resolveModule(resolveOwn, 'template/src/index'),
+    appPublic: resolveOwn(`${templatePath}/public`),
+    appHtml: resolveOwn(`${templatePath}/public/index.html`),
+    appIndexJs: resolveModule(resolveOwn, `${templatePath}/src/index`),
     appPackageJson: resolveOwn('package.json'),
-    appSrc: resolveOwn('template/src'),
-    appTsConfig: resolveOwn('template/tsconfig.json'),
-    appJsConfig: resolveOwn('template/jsconfig.json'),
-    yarnLockFile: resolveOwn('template/yarn.lock'),
-    testsSetup: resolveModule(resolveOwn, 'template/src/setupTests'),
-    proxySetup: resolveOwn('template/src/setupProxy.js'),
+    appSrc: resolveOwn(`${templatePath}/src`),
+    appTsConfig: resolveOwn(`${templatePath}/tsconfig.json`),
+    appJsConfig: resolveOwn(`${templatePath}/jsconfig.json`),
+    yarnLockFile: resolveOwn(`${templatePath}/yarn.lock`),
+    testsSetup: resolveModule(resolveOwn, `${templatePath}/src/setupTests`),
+    proxySetup: resolveOwn(`${templatePath}/src/setupProxy.js`),
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
-    appTypeDeclarations: resolveOwn('template/src/react-app-env.d.ts'),
+    appTypeDeclarations: resolveOwn(`${templatePath}/src/react-app-env.d.ts`),
     ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
   };
 }
