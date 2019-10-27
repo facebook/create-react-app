@@ -443,6 +443,8 @@ function run(
       )
       .then(({ isOnline, packageInfo, templateInfo }) => {
         let packageVersion = semver.coerce(packageInfo.version);
+
+        // This environment variable can be removed post-release.
         const templatesVersionMinimum = process.env.CRA_INTERNAL_TEST
           ? '3.2.0'
           : '3.3.0';
@@ -454,7 +456,7 @@ function run(
 
         // Only support templates when used alongside new react-scripts versions.
         const supportsTemplates = semver.gte(
-          semver.coerce(packageVersion),
+          packageVersion,
           templatesVersionMinimum
         );
         if (supportsTemplates) {
