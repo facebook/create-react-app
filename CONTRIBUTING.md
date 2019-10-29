@@ -109,7 +109,7 @@ and then run `yarn start` or `yarn build`.
 
 **TL;DR** use the command `yarn e2e:docker` to run unit and e2e tests.
 
-More detailed information are in the dedicated [README](/packages/react-scripts/fixtures/kitchensink/README.md).
+More detailed information are in the dedicated [README](/test/README.md).
 
 ### CI testing with private packages
 
