@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders welcome heading', () => {
   const { getByRole } = render(<App />);
-  const linkElement = getByRole('link');
-  expect(linkElement).toHaveTextContent(/learn react/i);
+  const headingElement = getByRole('heading');
+  expect(headingElement).toHaveTextContent(/welcome/i);
 });
