@@ -58,7 +58,7 @@ _`npm init <initializer>` is available in npm 6+_
 ### Yarn
 
 ```sh
-yarn create react-app my-app
+yarn create-react-app my-app
 ```
 
 _`yarn create` is available in Yarn 0.25+_
@@ -145,10 +145,10 @@ Your environment will have everything you need to build a modern single-page Rea
 
 - React, JSX, ES6, TypeScript and Flow syntax support.
 - Language extras beyond ES6 like the object spread operator.
-- Autoprefixed CSS, so you don’t need `-webkit-` or other prefixes.
+- Autoprefixed CSS, so you don’t need `-WebKit-` or other prefixes.
 - A fast interactive unit test runner with built-in support for coverage reporting.
 - A live development server that warns about common mistakes.
-- A build script to bundle JS, CSS, and images for production, with hashes and sourcemaps.
+- A build script to bundle JS, CSS, and images for production, with hashes and source maps.
 - An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app) criteria. (_Note: Using the service worker is opt-in as of `react-scripts@2.0.0` and higher_)
 - Hassle-free updates for the above tools with a single dependency.
 
@@ -182,11 +182,11 @@ All of the above tools can work with little to no configuration.
 
 If you prefer configuring the build yourself, [follow this guide](https://reactjs.org/docs/add-react-to-an-existing-app.html).
 
-## Contributing
+## Contributing :-
 
 We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
-## React Native
+## React Native :-
 
 Looking for something similar, but for React Native?<br>
 Check out [Expo CLI](https://github.com/expo/expo-cli).
@@ -199,6 +199,6 @@ We are grateful to the authors of existing related projects for their ideas and 
 - [@insin](https://github.com/insin)
 - [@mxstbr](https://github.com/mxstbr)
 
-## License
+## License :-
 
 Create React App is open source software [licensed as MIT](https://github.com/facebook/create-react-app/blob/master/LICENSE).
