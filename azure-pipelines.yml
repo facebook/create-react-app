@@ -12,6 +12,7 @@ variables:
   NPM_CONFIG_CACHE: $(Build.SourcesDirectory)/../npm-cache
   # Sets TEMP to be on the same drive as the cloned source on Windows. This avoids test scripts that "cd" into a directory under TEMP from failing because this directory is on a different drive from the current directory.
   VSTS_OVERWRITE_TEMP: True
+  CRA_INTERNAL_TEST: true
 
 # ******************************************************************************
 # Simple test suite
