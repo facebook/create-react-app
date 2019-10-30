@@ -154,6 +154,8 @@ module.exports = function(api, opts, env) {
           loose: true,
         },
       ],
+      // Adds Numeric Seperators
+      require('@babel/plugin-proposal-numeric-separator').default,
       // The following two plugins use Object.assign directly, instead of Babel's
       // extends helper. Note that this assumes `Object.assign` is available.
       // { ...todo, completed: true }
