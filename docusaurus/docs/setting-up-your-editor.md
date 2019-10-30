@@ -12,8 +12,10 @@ To configure the syntax highlighting in your favorite text editor, head to the [
 
 ## Displaying Lint Output in the Editor
 
-> Note: this feature is available with `react-scripts@0.2.0` and higher.<br>
-> It works out of the box for newly created projects with `react-scripts@2.0.3` and higher.<br>
+> Note: this feature is available with `react-scripts@0.2.0` and higher.
+
+> It works out of the box for newly created projects with `react-scripts@2.0.3` and higher.
+
 > It also only works with npm 3 or higher.
 
 Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
@@ -48,6 +50,7 @@ Note that any rules set to `"error"` will stop the project from building.
 There are a few things to remember:
 
 1. We highly recommend extending the base config, as removing it could introduce hard-to-find issues.
+1. `.eslintignore` files will be respected
 1. When working with TypeScript, you'll need to provide an `overrides` object for rules that should _only_ target TypeScript files.
 
 In the below example:
@@ -139,7 +142,7 @@ Alternatively you may use `yarn`:
 yarn add husky lint-staged prettier
 ```
 
-- `husky` makes it easy to use githooks as if they are npm scripts.
+- `husky` makes it possible to use githooks as if they are npm scripts.
 - `lint-staged` allows us to run scripts on staged files in git. See this [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
 - `prettier` is the JavaScript formatter we will run before commits.
 

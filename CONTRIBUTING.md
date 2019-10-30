@@ -2,7 +2,7 @@
 
 Loving Create React App and want to get involved? Thanks! There are plenty of ways you can help.
 
-Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved.
+Please take a moment to review this document in order to make the contribution process straightforward and effective for everyone involved.
 
 Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue or assessing patches and features.
 
@@ -15,23 +15,27 @@ Here are a few examples of them in action.
 
 ### Convention
 
+<!--alex disable easy-->
+
 Instead of letting the user specify the entry filename, we always assume it to be `src/index.js`. Rather than letting the user specify the output bundle name, we generate it, but make sure to include the content hash in it. Whenever possible, we want to leverage convention to make good choices for the user, especially in cases where it’s easy to misconfigure something.
 
 ### Heuristics
 
 Normally, `npm start` runs on port `3000`, and this is not explicitly configurable. However, some environments like cloud IDEs want the programs to run on a specific port to serve their output. We want to play well with different environments, so Create React App reads `PORT` environment variable and prefers it when it is specified. The trick is that we know cloud IDEs already specify it automatically, so there is no need for the user to do anything. Create React App relies on heuristics to do the right thing depending on environment.
 
+<!--alex disable just-->
+
 Another example of this is how `npm test` normally launches the watcher, but if the `CI` environment variable is set, it will run tests once. We know that popular CI environments set this variable, so the user doesn’t need to do anything. It just works.
 
 ### Interactivity
 
-We prefer to add interactivity to the command line interface rather than add configuration flags. For example, `npm start` will attempt to run with port `3000` by default, but it may be busy. Many other tools just fail in this case and ask that you pass a different port, but Create React App will display a prompt asking if you’d like to run the app on the next available port.
+We prefer to add interactivity to the command line interface rather than add configuration flags. For example, `npm start` will attempt to run with port `3000` by default, but it may be busy. Many other tools fail in this case and ask that you pass a different port, but Create React App will display a prompt asking if you’d like to run the app on the next available port.
 
 Another example of interactivity is `npm test` watcher interface. Instead of asking people to pass command line flags for switching between test runner modes or search patterns, we print a hint with keys that you can press during the test session to instruct watcher what to do. Jest supports both flags and interactive CLI but Create React App prefers long-running sessions to keep user immersed in the flow over short-running sessions with different flags.
 
 ### Breaking the Rules
 
-No rules are perfect. Sometimes we may introduce flags or configuration if we believe the value is high enough to justify the mental cost. For example, we know that apps may be hosted paths different from the root, and we need to support this use case. However, we still try to fall back to heuristics when possible. In this example, we ask that you specify `homepage` in `package.json`, and infer the correct path based on it. We also nudge the user to fill out the `homepage` after the build, so the user becomes aware that the feature exists.
+No rules are perfect. Sometimes we may introduce flags or configuration if we believe the value is high enough to justify the complexity. For example, we know that apps may be hosted paths different from the root, and we need to support this use case. However, we still try to fall back to heuristics when possible. In this example, we ask that you specify `homepage` in `package.json`, and infer the correct path based on it. We also nudge the user to fill out the `homepage` after the build, so the user becomes aware that the feature exists.
 
 ## Submitting a Pull Request
 
@@ -76,7 +80,7 @@ This package is enabled by default for all `create-react-app` scaffolded applica
 
 #### [react-dev-utils](https://github.com/facebook/create-react-app/tree/master/packages/react-dev-utils)
 
-This package contains utilities used for `react-scripts` and sister packages.<br>
+This package contains utilities used for `react-scripts` and sibling packages.<br>
 Its main purpose is to conceal code which the user shouldn't be burdened with upon ejecting.
 
 #### [react-scripts](https://github.com/facebook/create-react-app/tree/master/packages/react-scripts)
@@ -90,7 +94,7 @@ All functionality must be retained (and configuration given to the user) if they
 
 2. Run `yarn` in the root `create-react-app` folder.
 
-Once it is done, you can modify any file locally and run `yarn start`, `yarn test` or `yarn build` just like in a generated project.
+Once it is done, you can modify any file locally and run `yarn start`, `yarn test` or `yarn build` like you can in a generated project.
 
 If you want to try out the end-to-end flow with the global CLI, you can do this too:
 
@@ -105,7 +109,7 @@ and then run `yarn start` or `yarn build`.
 
 **TL;DR** use the command `yarn e2e:docker` to run unit and e2e tests.
 
-More detailed information are in the dedicated [README](/packages/react-scripts/fixtures/kitchensink/README.md).
+More detailed information are in the dedicated [README](/test/README.md).
 
 ### CI testing with private packages
 
@@ -113,7 +117,7 @@ More detailed information are in the dedicated [README](/packages/react-scripts/
 
 #### Customizing E2E registry configuration
 
-We use [verdaccio](https://github.com/verdaccio/verdaccio) to emulate packages publishing in a registry using a default configuration. You might modify the current behaviour just editing the file `task/verdaccio.yaml`.
+We use [verdaccio](https://github.com/verdaccio/verdaccio) to emulate packages publishing in a registry using a default configuration. You might modify the current behaviour by editing the file `task/verdaccio.yaml`.
 
 For more information about the configuration check out the [Verdaccio documentation](https://verdaccio.org/docs/en/configuration).
 
@@ -148,18 +152,18 @@ By default git would use `CRLF` line endings which would cause the scripts to fa
 - Maybe add some newlines here and there. Preview the result on GitHub to get a feel for it. Changelog generator output is a bit too terse for my taste, so try to make it visually pleasing and well grouped.
 
 7. Make sure to include “Migrating from ...” instructions for the previous release. Often you can copy and paste them.
-8. Run `npm run publish`. (It has to be `npm run publish` exactly, not just `npm publish` or `yarn publish`.)
+8. Run `npm run publish`. (It has to be `npm run publish` exactly, not `npm publish` or `yarn publish`.)
 9. Wait for a long time, and it will get published. Don’t worry that it’s stuck. In the end the publish script will prompt for versions before publishing the packages.
 10. After publishing, create a GitHub Release with the same text as the changelog entry. See previous Releases for inspiration.
 
-Make sure to test the released version! If you want to be extra careful, you can publish a prerelease by running `npm run publish -- --canary=next --exact --cd-version <major|minor|patch> --npm-tag=next` instead of `npm run publish`.
+Make sure to test the released version! If you want to be extra careful, you can publish a prerelease by running `npm run publish -- --canary --exact --preid next --dist-tag=next --force-publish=* minor` instead of `npm run publish`.
 
 ## Releasing the Docs
 
 1. Go to the `docusaurus/website` directory
 2. Run `yarn build`
 3. You'll need an [access token for the GitHub API](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Save it to this environment variable: `export GITHUB_AUTH="..."`
-4. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=master USE_SSH=true yarn run publish-gh-pages`
+4. Run `GIT_USER=<GITHUB_USERNAME> CURRENT_BRANCH=master USE_SSH=true yarn deploy`
 
 ---
 
