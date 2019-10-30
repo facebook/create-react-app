@@ -197,6 +197,8 @@ module.exports = function(api, opts, env) {
       isEnvTest &&
         // Transform dynamic import to require
         require('babel-plugin-dynamic-import-node'),
+      // Support TypeScript new optional-chaining feature
+      require('@babel/plugin-proposal-optional-chaining'),
     ].filter(Boolean),
     overrides: [
       isFlowEnabled && {
