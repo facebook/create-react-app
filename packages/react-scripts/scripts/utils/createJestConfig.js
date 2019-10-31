@@ -23,6 +23,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
     : undefined;
 
   const config = {
+    roots: ['<rootDir>/src'],
+
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
 
     setupFiles: [
@@ -56,6 +58,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
       '^@sparknz/set-react':
         '<rootDir>/node_modules/@sparknz/set-react/dist/src/components/index.js',
+      ...(modules.jestAliases || {}),
     },
     moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
       ext => !ext.includes('mjs')
@@ -70,9 +73,12 @@ module.exports = (resolve, rootDir, isEjecting) => {
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
+    'clearMocks',
     'collectCoverageFrom',
+    'coveragePathIgnorePatterns',
     'coverageReporters',
     'coverageThreshold',
+    'displayName',
     'extraGlobals',
     'globalSetup',
     'globalTeardown',
@@ -86,7 +92,11 @@ module.exports = (resolve, rootDir, isEjecting) => {
   ];
   if (overrides) {
     supportedKeys.forEach(key => {
+<<<<<<< HEAD
       if (overrides.hasOwnProperty(key)) {
+=======
+      if (Object.prototype.hasOwnProperty.call(overrides, key)) {
+>>>>>>> 6d6dfa9ba5a6042ab5690fe2a38b3ee54e644c9f
         if (Array.isArray(config[key]) || typeof config[key] !== 'object') {
           // for arrays or primitive types, directly override the config key
           config[key] = overrides[key];
