@@ -9,7 +9,7 @@
 import StackFrame from './stack-frame';
 import { getSourceMap } from './getSourceMap';
 import { getLinesAround } from './getLinesAround';
-import path from 'path';
+import path from 'path-browserify';
 
 function count(search: string, string: string): number {
   // Count starts at -1 because a do-while loop always runs at least once

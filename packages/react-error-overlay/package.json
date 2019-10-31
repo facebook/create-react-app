@@ -55,6 +55,7 @@
     "jest": "25.5.4",
     "jest-fetch-mock": "2.1.2",
     "object-assign": "4.1.1",
+    "path-browserify": "^1.0.1",
     "promise": "8.1.0",
     "raw-loader": "^3.1.0",
     "react": "^16.12.0",
