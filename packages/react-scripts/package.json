@@ -66,21 +66,6 @@
     "postcss-normalize": "8.0.1",
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
-<<<<<<< HEAD
-    "react-app-polyfill": "^1.0.1",
-    "react-dev-utils": "^9.0.1",
-    "resolve": "1.10.0",
-    "sass-loader": "7.1.0",
-    "semver": "6.0.0",
-    "style-loader": "0.23.1",
-    "terser-webpack-plugin": "1.2.3",
-    "ts-pnp": "1.1.2",
-    "url-loader": "1.1.2",
-    "webpack": "4.29.6",
-    "webpack-dev-server": "3.3.1",
-    "webpack-manifest-plugin": "2.0.4",
-    "workbox-webpack-plugin": "4.2.0"
-=======
     "react-app-polyfill": "^1.0.4",
     "react-dev-utils": "^9.1.0",
     "resolve": "1.12.0",
@@ -95,7 +80,6 @@
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "4.3.1"
->>>>>>> 6d6dfa9ba5a6042ab5690fe2a38b3ee54e644c9f
   },
   "devDependencies": {
     "react": "^16.11.0",
