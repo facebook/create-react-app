@@ -29,7 +29,7 @@
     "promise": "^8.0.3",
     "react": "~16.10.1",
     "react-dom": "~16.10.1",
-    "react-element-to-jsx-string": "~14.0.1",
+    "react-element-to-jsx-string": "~14.1.0",
     "react-frame-component": "~4.0.0",
     "react-ga": "~2.6.0",
     "react-responsive": "~6.0.1",

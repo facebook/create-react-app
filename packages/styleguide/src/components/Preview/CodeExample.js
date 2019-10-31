@@ -56,12 +56,14 @@ const cleanUpCode = markup => {
 };
 
 const getJSXAsStringFromMarkup = (markup, options) => {
-  const { cleanProps, ...otherOptions } = options || {};
+  const { cleanProps, filterProps = [], ...otherOptions } = options || {};
 
   const reactElementToJSXStringOptions = {
     showDefaultProps: false,
     showFunctions: true,
     functionValue: fn => fn.name,
+    displayName: ReactElement => ReactElement.props.mdxType,
+    filterProps: ['mdxType', 'originalType', ...filterProps],
     ...otherOptions,
   };
 
