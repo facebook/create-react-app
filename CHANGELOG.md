@@ -1,3 +1,13 @@
+## 3.0.0 (Oct 31, 2019)
+
+#### :bug: Bug Fix
+
+- [lighter-styleguide] fix CodeExample to respect MDX generated code shape ([#147](https://github.com/lightingbeetle/lighter/pull/147))
+
+#### :tada: version updates
+
+- `lighter-styleguide@3.0.1`
+
 ## 3.0.0 (Oct 22, 2019)
 
 ### Important release notes from CRA
