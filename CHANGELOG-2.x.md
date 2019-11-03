@@ -1,3 +1,7 @@
+## 3.0.0 and Newer Versions
+
+**Please refer to [CHANGELOG.md](./CHANGELOG.md) for the newer versions.**
+
 ## 2.1.8 (March 7, 2019)
 
 v2.1.8 is a maintenance release that reapplies the TypeScript speed improvements ([#6406](https://github.com/facebook/create-react-app/pull/6406)) in a new major version of `react-dev-utils`.

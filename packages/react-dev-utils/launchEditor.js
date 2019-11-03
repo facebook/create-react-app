@@ -40,6 +40,7 @@ const COMMON_EDITORS_OSX = {
   '/Applications/Visual Studio Code.app/Contents/MacOS/Electron': 'code',
   '/Applications/Visual Studio Code - Insiders.app/Contents/MacOS/Electron':
     'code-insiders',
+  '/Applications/VSCodium.app/Contents/MacOS/Electron': 'vscodium',
   '/Applications/AppCode.app/Contents/MacOS/appcode':
     '/Applications/AppCode.app/Contents/MacOS/appcode',
   '/Applications/CLion.app/Contents/MacOS/clion':
@@ -66,6 +67,7 @@ const COMMON_EDITORS_LINUX = {
   Brackets: 'brackets',
   code: 'code',
   'code-insiders': 'code-insiders',
+  vscodium: 'vscodium',
   emacs: 'emacs',
   gvim: 'gvim',
   'idea.sh': 'idea',
@@ -82,6 +84,7 @@ const COMMON_EDITORS_WIN = [
   'Brackets.exe',
   'Code.exe',
   'Code - Insiders.exe',
+  'VSCodium.exe',
   'atom.exe',
   'sublime_text.exe',
   'notepad++.exe',
@@ -150,6 +153,8 @@ function getArgumentsForLineNumber(
     case 'Code':
     case 'code-insiders':
     case 'Code - Insiders':
+    case 'vscodium':
+    case 'VSCodium':
       return addWorkspaceToArgumentsIfExists(
         ['-g', fileName + ':' + lineNumber + ':' + colNumber],
         workspace
