@@ -155,11 +155,14 @@ checkBrowsers(paths.appPath, isInteractive)
       });
     });
 
-    process.stdin.on('end', function() {
-      devServer.close();
-      process.exit();
-    });
-    process.stdin.resume();
+    if (isInteractive) {
+      // Gracefully exit when stdin ends
+      process.stdin.on('end', function() {
+        devServer.close();
+        process.exit();
+      });
+      process.stdin.resume();
+    }
   })
   .catch(err => {
     if (err && err.message) {
