@@ -64,7 +64,7 @@
     "settle-promise": "1.0.0",
     "source-map": "0.5.6",
     "terser-webpack-plugin": "2.3.0",
-    "webpack": "^4.35.0"
+    "webpack": "5.0.0-beta.9"
   },
   "jest": {
     "setupFiles": [
