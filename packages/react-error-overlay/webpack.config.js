@@ -38,10 +38,11 @@ module.exports = {
   optimization: {
     nodeEnv: false,
   },
-  node: {
-    fs: 'empty',
-    process: false,
-  },
+  // todo: Update before final webpack 5 release
+  // node: {
+  //   fs: 'empty',
+  //   process: false,
+  // },
   performance: {
     hints: false,
   },
