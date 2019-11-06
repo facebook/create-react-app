@@ -42,5 +42,8 @@
 
 .lightBackground {
   background-color: #f7f7f7;
-  color: rgb(31, 34, 39);
+}
+
+html[data-theme='dark'] .lightBackground {
+  background-color: #33363b;
 }
