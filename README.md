@@ -184,7 +184,7 @@ If you prefer configuring the build yourself, [follow this guide](https://reactj
 
 ## Contributing :-
 
-We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
+We'd love to have your helping hand on `create react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
 ## React Native :-
 
