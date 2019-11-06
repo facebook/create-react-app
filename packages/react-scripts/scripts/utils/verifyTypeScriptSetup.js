@@ -103,7 +103,6 @@ function verifyTypeScriptSetup() {
     allowJs: { suggested: true },
     skipLibCheck: { suggested: true },
     esModuleInterop: { suggested: true },
-    allowSyntheticDefaultImports: { suggested: true },
     strict: { suggested: true },
     forceConsistentCasingInFileNames: { suggested: true },
     // TODO: Enable for v4.0 (#6936)
