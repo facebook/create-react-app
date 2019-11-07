@@ -182,11 +182,11 @@ All of the above tools can work with little to no configuration.
 
 If you prefer configuring the build yourself, [follow this guide](https://reactjs.org/docs/add-react-to-an-existing-app.html).
 
-## Contributing :-
+## Contributing
 
 We'd love to have your helping hand on `create react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
-## React Native :-
+## React Native
 
 Looking for something similar, but for React Native?<br>
 Check out [Expo CLI](https://github.com/expo/expo-cli).
@@ -199,6 +199,6 @@ We are grateful to the authors of existing related projects for their ideas and 
 - [@insin](https://github.com/insin)
 - [@mxstbr](https://github.com/mxstbr)
 
-## License :-
+## License
 
 Create React App is open source software [licensed as MIT](https://github.com/facebook/create-react-app/blob/master/LICENSE).
