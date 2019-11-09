@@ -28,10 +28,10 @@
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {
-    "@babel/core": "7.6.4",
+    "@babel/core": "7.7.2",
     "@svgr/webpack": "4.3.3",
-    "@typescript-eslint/eslint-plugin": "^2.5.0",
-    "@typescript-eslint/parser": "^2.5.0",
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
@@ -86,7 +86,7 @@
     "react-dom": "^16.11.0"
   },
   "optionalDependencies": {
-    "fsevents": "2.0.7"
+    "fsevents": "2.1.1"
   },
   "peerDependenciesMeta": {
     "typescript": {
