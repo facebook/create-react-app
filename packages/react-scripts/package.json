@@ -88,6 +88,11 @@
   "optionalDependencies": {
     "fsevents": "2.0.7"
   },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
