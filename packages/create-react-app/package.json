@@ -29,7 +29,7 @@
     "chalk": "2.4.2",
     "commander": "2.20.0",
     "cross-spawn": "6.0.5",
-    "envinfo": "7.3.1",
+    "envinfo": "7.4.0",
     "fs-extra": "7.0.1",
     "hyperquest": "2.1.3",
     "inquirer": "6.5.0",
