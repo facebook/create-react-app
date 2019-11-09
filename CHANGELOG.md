@@ -1,3 +1,46 @@
+## 3.3.0 (2019-xx-xx)
+
+DRAFT
+
+### Custom Templates
+
+DRAFT
+
+### Optional Chaining and Nullish Coalescing Operators
+
+We now support the [optional chaining](https://github.com/TC39/proposal-optional-chaining) and [nullish coalescing](https://github.com/tc39/proposal-nullish-coalescing) operators!
+
+```js
+// Optional chaining
+a?.(); // undefined if `a` is null/undefined
+b?.c; // undefined if `b` is null/undefined
+
+// Nullish coalescing
+undefined ?? 'some other default'; // result: 'some other default'
+null ?? 'some other default'; // result: 'some other default'
+'' ?? 'some other default'; // result: ''
+0 ?? 300; // result: 0
+false ?? true; // result: false
+```
+
+**If your're using TypeScript, you will need to upgrade your `typescript` dependency to `3.7.0` or later if you wish to use the new operators.**
+
+**If you're using Visual Studio Code 1.40 (the latest as of this release) or earlier, you will need to configure your editor if you want it to understand the new operators.**
+
+If you're using TypeScript in your project and have already upgrade its version as described above, then you can [configure VS Code to `Use Workspace Version` of TypeScript](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-newer-typescript-versions). If your project isn't using TypeScript, you can use the [JavaScript and TypeScript Nightly extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next) until VS Code releases a newer version including TypeScript `3.7.0` or newer.
+
+### Numeric Separators
+
+We've added support for [numeric separators](https://github.com/tc39/proposal-numeric-separator) to improve readability of numeric literals.
+
+```js
+1000000000; // Is this a billion? a hundred millions? Ten millions?
+101475938.38; // what scale is this? what power of 10?
+
+1_000_000_000; // Ah, so a billion
+101_475_938.38; // And this is hundreds of millions
+```
+
 ## 3.2.0 (2019-10-03)
 
 v3.2.0 is a minor release that adds support for production profiling and ignoring TypeScript type errors to make migrating JavaScript projects to TypeScript easier. It also includes other minor bug fixes and documentation updates.
