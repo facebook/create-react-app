@@ -52,7 +52,7 @@ following into account:
    [race conditions with lazy-loaded content](https://github.com/facebook/create-react-app/issues/3613#issuecomment-353467430),
    the default behavior is to conservatively keep the updated service worker in the "[waiting](https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#waiting)"
    state. This means that users will end up seeing older content until they close (reloading is not
-   enough) their existing, open tabs. See [this blog post](https://jeffy.info/2018/10/10/sw-in-c-r-a.html)
+   enough) their existing, open tabs. See [this blog post](https://web.archive.org/web/20181208133745/https://jeffy.info/2018/10/10/sw-in-c-r-a.html)
    for more details about this behavior.
 
 1. Users aren't always familiar with offline-first web apps. It can be useful to
