@@ -651,7 +651,7 @@ module.exports = function(
           ],
         }),
       // TypeScript type checking
-      useTypeScript &&
+      useTypeScript && process.env.REACT_SCRIPTS_ENABLE_WEBPACK_PROGRESS !== 'true' &&
         new ForkTsCheckerWebpackPlugin({
           typescript: resolve.sync('typescript', {
             basedir: paths.appNodeModules,
