@@ -354,7 +354,7 @@ module.exports = function (webpackEnv) {
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
           enforce: 'pre',
-          use: isEnvDevelopment && process.env.DISABLE_ESLINT_DEV === 'true'
+          use: process.env.DISABLE_ESLINT === 'true'
           ? undefined
           : [
               {
