@@ -674,7 +674,7 @@ module.exports = function(
             '!**/src/setupTests.*',
           ],
           watch: [paths.appServer, paths.appSrc],
-          silent: process.env.REACT_SCRIPTS_DISABLE_FORK_TS_SILENT || true,
+          silent: process.env.REACT_SCRIPTS_DISABLE_FORK_TS_SILENT === 'false' ? false : true,
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
