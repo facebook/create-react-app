@@ -40,7 +40,10 @@
   margin: 0 auto;
 }
 
-.lightBackground {
+.gettingStartedSection {
   background-color: #f7f7f7;
-  color: rgb(31, 34, 39);
+}
+
+html[data-theme='dark'] .gettingStartedSection {
+  background-color: #33363b;
 }
