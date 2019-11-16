@@ -34,7 +34,7 @@
     "react-ga": "~2.6.0",
     "react-responsive": "~6.0.1",
     "react-router-dom": "~5.0.0",
-    "react-select": "~2.2.0",
+    "react-select": "^3.0.8",
     "styled-components": "~4.1.2",
     "svg4everybody": "~2.1.9",
     "unescape-html": "~1.1.0",
