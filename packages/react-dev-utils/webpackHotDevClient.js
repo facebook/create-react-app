@@ -16,7 +16,6 @@
 // that looks similar to our console output. The error overlay is inspired by:
 // https://github.com/glenjamin/webpack-hot-middleware
 
-var SockJS = require('sockjs-client');
 var stripAnsi = require('strip-ansi');
 var url = require('url');
 var launchEditorEndpoint = require('./launchEditorEndpoint');
@@ -58,9 +57,9 @@ if (module.hot && typeof module.hot.dispose === 'function') {
 }
 
 // Connect to WebpackDevServer via a socket.
-var connection = new SockJS(
+var connection = new WebSocket(
   url.format({
-    protocol: window.location.protocol,
+    protocol: 'ws',
     hostname: window.location.hostname,
     port: window.location.port,
     // Hardcoded in WebpackDevServer
