@@ -36,7 +36,7 @@
     "lint-staged": "^8.0.4",
     "meow": "^5.0.0",
     "multimatch": "^3.0.0",
-    "prettier": "1.19.0",
+    "prettier": "1.19.1",
     "puppeteer": "^1.13.0",
     "strip-ansi": "^5.1.0",
     "svg-term-cli": "^2.1.1",

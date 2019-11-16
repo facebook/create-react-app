@@ -59,7 +59,7 @@
     "escape-string-regexp": "1.0.5",
     "filesize": "3.6.1",
     "find-up": "3.0.0",
-    "fork-ts-checker-webpack-plugin": "1.5.0",
+    "fork-ts-checker-webpack-plugin": "3.1.0",
     "global-modules": "2.0.0",
     "globby": "8.0.2",
     "gzip-size": "5.1.1",

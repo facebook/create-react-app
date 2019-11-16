@@ -30,19 +30,19 @@
   "dependencies": {
     "@babel/core": "7.7.2",
     "@svgr/webpack": "4.3.3",
-    "@typescript-eslint/eslint-plugin": "^2.6.1",
-    "@typescript-eslint/parser": "^2.6.1",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0",
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
     "babel-plugin-named-asset-import": "^0.3.4",
     "babel-preset-react-app": "^9.0.2",
-    "camelcase": "^5.2.0",
+    "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "3.2.0",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
-    "eslint": "^6.1.0",
+    "eslint": "^6.6.0",
     "eslint-config-react-app": "^5.0.2",
     "eslint-loader": "3.0.2",
     "eslint-plugin-flowtype": "3.13.0",
@@ -69,12 +69,12 @@
     "react-app-polyfill": "^1.0.4",
     "react-dev-utils": "^9.1.0",
     "resolve": "1.12.0",
-    "resolve-url-loader": "3.1.0",
+    "resolve-url-loader": "3.1.1",
     "sass-loader": "8.0.0",
     "semver": "6.3.0",
     "style-loader": "1.0.0",
     "terser-webpack-plugin": "2.2.1",
-    "ts-pnp": "1.1.4",
+    "ts-pnp": "1.1.5",
     "url-loader": "2.2.0",
     "webpack": "4.41.2",
     "webpack-dev-server": "3.2.1",
@@ -86,7 +86,7 @@
     "react-dom": "^16.11.0"
   },
   "optionalDependencies": {
-    "fsevents": "2.1.1"
+    "fsevents": "2.1.2"
   },
   "peerDependenciesMeta": {
     "typescript": {
