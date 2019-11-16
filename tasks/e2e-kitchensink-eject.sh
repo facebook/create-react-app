@@ -65,7 +65,7 @@ set -x
 cd ..
 root_path=$PWD
 # Set a Windows path for GitBash on Windows
-if [ $AGENT_OS == 'Windows_NT' ]; then
+if [ "$AGENT_OS" == 'Windows_NT' ]; then
   root_path=$(cmd //c cd)
 fi
 
