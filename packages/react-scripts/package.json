@@ -69,12 +69,12 @@
     "react-app-polyfill": "^1.0.4",
     "react-dev-utils": "^9.1.0",
     "resolve": "1.12.0",
-    "resolve-url-loader": "3.1.0",
+    "resolve-url-loader": "3.1.1",
     "sass-loader": "8.0.0",
     "semver": "6.3.0",
     "style-loader": "1.0.0",
     "terser-webpack-plugin": "2.2.1",
-    "ts-pnp": "1.1.4",
+    "ts-pnp": "1.1.5",
     "url-loader": "2.2.0",
     "webpack": "4.41.2",
     "webpack-dev-server": "3.2.1",
@@ -86,7 +86,7 @@
     "react-dom": "^16.11.0"
   },
   "optionalDependencies": {
-    "fsevents": "2.1.1"
+    "fsevents": "2.1.2"
   },
   "peerDependenciesMeta": {
     "typescript": {
