@@ -650,11 +650,13 @@ function getTemplateInstallPackage(template, originalDirectory) {
     } else {
       // Add prefix 'cra-template-' to non-prefixed templates, leaving any
       // @scope/ intact.
-      const p = template.match(/^(?<scope>@[^\/]+\/)?(?<name>.+)$/);
-      const name = p.groups.name.startsWith(templateToInstall)
-        ? p.groups.name
-        : `${templateToInstall}-${p.groups.name}`;
-      const scope = p.groups.scope === undefined ? '' : p.groups.scope;
+      const packageMatch = template.match(/^(@[^/]+\/)?(.+)$/);
+      const scope = packageMatch[1] || '';
+      const templateName = packageMatch[2];
+
+      const name = templateName.startsWith(templateToInstall)
+        ? templateName
+        : `${templateToInstall}-${templateName}`;
       templateToInstall = `${scope}${name}`;
     }
   }
