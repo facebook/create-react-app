@@ -654,7 +654,8 @@ function getTemplateInstallPackage(template, originalDirectory) {
       const name = p.groups.name.startsWith(templateToInstall)
         ? p.groups.name
         : `${templateToInstall}-${p.groups.name}`;
-      templateToInstall = `${p.groups.scope}${name}`;
+      const scope = p.groups.scope === undefined ? '' : p.groups.scope;
+      templateToInstall = `${scope}${name}`;
     }
   }
 
