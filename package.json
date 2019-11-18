@@ -15,7 +15,9 @@
     "screencast": "svg-term --cast hItN7sl5yfCPTHxvFg5glhhfp --out screencast.svg --window",
     "test": "cd packages/react-scripts && node scripts/test.js --env=jsdom",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
-    "compile:lockfile": "node tasks/compile-lockfile.js"
+    "compile:lockfile": "node tasks/compile-lockfile.js",
+    "styleguide:install": "cd packages/styleguide && npm install",
+    "styleguide": "cd packages/styleguide && npm start"
   },
   "devDependencies": {
     "eslint": "^4.4.1",
