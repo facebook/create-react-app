@@ -182,14 +182,19 @@ All of the above tools can work with little to no configuration.
 
 If you prefer configuring the build yourself, [follow this guide](https://reactjs.org/docs/add-react-to-an-existing-app.html).
 
-## Contributing
-
-We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
-
 ## React Native
 
 Looking for something similar, but for React Native?<br>
 Check out [Expo CLI](https://github.com/expo/expo-cli).
+
+## Contributing
+
+We'd love to have your helping hand on `create-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
+
+## Credits
+
+This project exists thanks to all the people who [contribute](CONTRIBUTING.md).<br>
+<a href="https://github.com/facebook/create-react-app/graphs/contributors"><img src="https://opencollective.com/create-react-app/contributors.svg?width=890&button=false" /></a>
 
 ## Acknowledgements
 
