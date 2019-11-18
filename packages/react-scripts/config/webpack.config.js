@@ -401,6 +401,9 @@ module.exports = function(webpackEnv) {
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: paths.appSrc,
+              resolve: {
+                symlinks: false
+              },
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
