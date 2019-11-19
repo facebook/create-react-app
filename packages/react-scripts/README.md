@@ -23,6 +23,7 @@ npm start
   - `crossOriginLoading`: Modify the default behaviour, see [docs](https://webpack.js.org/configuration/output/#output-crossoriginloading).
   - `babelIncludePrefixes`: An array of module name prefixes to opt into babel compilation. Includes `["bpk-", "saddlebag-"]` by default.
   - `enableAutomaticChunking`: Boolean, opt in to automatic chunking of vendor, common and app code.
+  - `vendorsChunkRegex`: String, Regex for picking what goes into the `vendors` chunk. See `cacheGroups` in webpack docs. Dependent on `enableAutomaticChunking` being enabled
   - `amdExcludes`: Array of module names to exclude from AMD parsing. Incldues `["lodash"]` by default.
   - `externals`: exposing the Webpack config to modify externals, see [docs](https://webpack.js.org/configuration/externals/).
   - `ssrExternals`: Similar to above, but for `ssr.js` only.
@@ -36,7 +37,7 @@ npm start
    npm run publish -- --scope backpack-react-scripts
    ```
 
-1. You will be prompted to select a new semver version (MAJOR, MINOR, PATCH). Use the [CHANGELOG.md](./CHANGELOG.md) to decide on the nature of the changes since the last release.
+2. You will be prompted to select a new semver version (MAJOR, MINOR, PATCH). Use the [CHANGELOG.md](./CHANGELOG.md) to decide on the nature of the changes since the last release.
 
    - If you want to be extra careful, you can publish a prerelease by running this instead:
 
@@ -44,7 +45,7 @@ npm start
    npm run publish -- --scope backpack-react-scripts --canary
    ```
 
-1. Update the [CHANGELOG.md](./CHANGELOG.md) with the new version, taking care to follow the format of previous releases.
+3. Update the [CHANGELOG.md](./CHANGELOG.md) with the new version, taking care to follow the format of previous releases.
 
 ## Keeping this fork updated
 

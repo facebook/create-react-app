@@ -278,7 +278,15 @@ module.exports = function(webpackEnv) {
       //   name: false,
       // },
       splitChunks: bpkReactScriptsConfig.enableAutomaticChunking
-        ? { chunks: 'all', name: true }
+        ? {
+            chunks: 'all',
+            name: false,
+            cacheGroups: bpkReactScriptsConfig.vendorsChunkRegex ? {
+              vendors: {
+                test: new RegExp(bpkReactScriptsConfig.vendorsChunkRegex),
+              },
+            } : {},
+          }
         : {},
       // Keep the runtime chunk seperated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985

@@ -1,5 +1,9 @@
 # `backpack-react-scripts` Change Log
 
+## 7.0.3 (November 18, 2019)
+
+- Add the ability to split vendor chunks using `vendorChunkRegex`. Anything that matches the regex will be put in the vendors chunk. [See PR from banana project](https://github.skyscannertools.net/dingo/banana/blob/2c5bf3f89bc0d1fec29e7fae27dd5988e99dedec/packages/webapp/package.json#L151)
+
 ## 7.0.1 - 2019-09-18
 
 ### Fixed
