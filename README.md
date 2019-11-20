@@ -77,7 +77,7 @@ my-app
 │   ├── index.html
 │   └── manifest.json
 └── src
-    ├── App.css
+    ├── App.module.css
     ├── App.js
     ├── App.test.js
     ├── index.css
