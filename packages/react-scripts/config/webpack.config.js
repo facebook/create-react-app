@@ -458,7 +458,7 @@ module.exports = function(webpackEnv) {
               options: {
                 babelrc: false,
                 configFile: false,
-                compact: false,
+                compact: true,
                 presets: [
                   [
                     require.resolve('babel-preset-react-app/dependencies'),
