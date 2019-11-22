@@ -58,9 +58,17 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
+      if (
+        registration.waiting &&
+        config &&
+        config.onWaiting &&
+        registration.waiting.scriptURL === swUrl
+      ) {
+        config.onWaiting(registration.waiting);
+      }
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
-        if (installingWorker == null) {
+        if (installingWorker == null || installingWorker.scriptURL !== swUrl) {
           return;
         }
         installingWorker.onstatechange = () => {
@@ -101,7 +109,7 @@ function registerValidSW(swUrl, config) {
 function checkValidServiceWorker(swUrl, config) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl, {
-    headers: { 'Service-Worker': 'script' }
+    headers: { 'Service-Worker': 'script' },
   })
     .then(response => {
       // Ensure service worker exists, and that we really are getting a JS file.
