@@ -217,7 +217,7 @@ function createApp(
 ) {
   const unsupportedNodeVersion = !semver.satisfies(process.version, '>=8.10.0');
   if (unsupportedNodeVersion && useTypeScript) {
-    console.log(
+    console.error(
       chalk.red(
         `You are using Node ${process.version} with the TypeScript template. Node 8.10 or higher is required to use TypeScript.\n`
       )
@@ -647,11 +647,17 @@ function getTemplateInstallPackage(template, originalDirectory) {
     ) {
       // for tar.gz or alternative paths
       templateToInstall = template;
-    } else if (template.startsWith(templateToInstall)) {
-      templateToInstall = template;
-    } else if (!template.startsWith(templateToInstall)) {
-      // Add prefix `cra-template` to non-prefixed templates.
-      templateToInstall += `-${template}`;
+    } else {
+      // Add prefix 'cra-template-' to non-prefixed templates, leaving any
+      // @scope/ intact.
+      const packageMatch = template.match(/^(@[^/]+\/)?(.+)$/);
+      const scope = packageMatch[1] || '';
+      const templateName = packageMatch[2];
+
+      const name = templateName.startsWith(templateToInstall)
+        ? templateName
+        : `${templateToInstall}-${templateName}`;
+      templateToInstall = `${scope}${name}`;
     }
   }
 

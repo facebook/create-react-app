@@ -79,7 +79,7 @@ function Home() {
           </div>
         </div>
       )}
-      <div className={styles.lightBackground}>
+      <div className={styles.gettingStartedSection}>
         <div className="container padding-vert--xl text--left">
           <div className="row">
             <div className="col col--4 col--offset-1">
