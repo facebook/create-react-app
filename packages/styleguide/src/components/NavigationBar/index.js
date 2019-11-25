@@ -1,30 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool } from 'prop-types';
+import { bool, func } from 'prop-types';
 import cx from 'classnames';
-
-import { rem } from './../../style/utils';
 
 const propTypes = {
   isActive: bool,
-  isMobileButton: bool,
+  onButtonClick: func,
 };
 
-const NavigationButton = ({
-  className,
-  isActive,
-  isMobileButton = false,
-  ...other
-}) => {
-  const classes = cx({ 'is-active': isActive }, className);
+const NavigationBar = ({ className, isActive,onButtonClick, ...other }) => {
+  const classes = cx({ 'is-active': isActive }, 'navigation-bar', className);
 
   return (
-    <StyledMenuButtonWrapper
-      className={classes}
-      isMobileButton={isMobileButton}
-      {...other}
-    >
-      <StyledMenuButton>
+    <StyledMenuButtonWrapper className={classes} {...other}>
+      <StyledMenuButton onClick={onButtonClick}>
         <StyledButtonLine />
         <StyledButtonLine />
         <StyledButtonLine />
@@ -35,13 +24,19 @@ const NavigationButton = ({
 
 const StyledMenuButtonWrapper = styled.a`
   display: inline-block;
-  position: ${props => (props.isMobileButton ? 'absolute' : 'static')};
-  right: ${props => (props.isMobileButton ? '40px' : '0')};
-  top: ${props => (props.isMobileButton ? '24px' : '0')};
-  margin-right: ${props =>
-    props.isMobileButton ? '0' : rem(props.theme.spaces.medium)};
+  position: fixed;
+  width: 100%;
+  top: 0;
+  padding: ${props => props.theme.spaces.default};
+  z-index: ${props => props.theme.zIndex.menuButton};
+  background: ${props => props.theme.colors.white};
+  transition: transform 0.3s ease-in-out 0s, opacity 0.3s ease-in-out 0s;
+  border: 1px solid ${props => props.theme.colors.grey};
+  box-shadow: ${props => props.theme.shadows.default};
 
   &.is-active {
+    transform: translateX(${props => props.theme.sizes.sidebarWidth});
+
     > span {
       transform: rotate(180deg);
     }
@@ -66,9 +61,7 @@ const StyledMenuButtonWrapper = styled.a`
       }
     }
   }
-  @media (min-width: ${props => props.theme.breakpoints.s}) {
-    display: ${props => (props.isMobileButton ? 'none' : 'inline-block')};
-  }
+
   @media (min-width: ${props => props.theme.breakpoints.l}) {
     display: none;
   }
@@ -118,7 +111,7 @@ const StyledButtonLine = styled.span`
   }
 `;
 
-NavigationButton.displayName = 'NavigationButton';
-NavigationButton.propTypes = propTypes;
+NavigationBar.displayName = 'NavigationBar';
+NavigationBar.propTypes = propTypes;
 
-export default NavigationButton;
+export default NavigationBar;

@@ -12,7 +12,7 @@ import { init, RouteTracker } from './../GoogleAnalytics';
 import Header from './../Header';
 import Sidebar from './../Sidebar';
 import Navigation from './../Navigation';
-import NavigationButton from './../NavigationButton';
+import NavigationBar from './../NavigationBar';
 import Sitemap from './../Sitemap';
 
 class App extends Component {
@@ -41,7 +41,7 @@ class App extends Component {
       shape({
         /** Route title */
         title: string.isRequired,
-        /** Part of URL which discribes this tree node */
+        /** Part of URL which describes this tree node */
         path: string.isRequired,
         /** If this route is leaf, Node to render, if this is leaf */
         render: node,
@@ -60,7 +60,6 @@ class App extends Component {
     this.handleNavLinkClick = this.handleNavLinkClick.bind(this);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   handleClick() {
     this.setState({ isNavActive: !this.state.isNavActive });
   }
@@ -111,38 +110,36 @@ class App extends Component {
         <BrowserRouter basename={styleguideBasePath}>
           {gaId && init({ gaId }) && <RouteTracker />}
           <ThemeProvider theme={localTheme}>
-            <PageLayout>
-              <Suspense fallback={<div />}>
-                <PageHeader
-                  key="header"
-                  project={logo || name}
-                  projectSmall={logoSmall || name}
-                  pageTitle="Bar"
-                  infoText={`v${version}`}
-                  {...other}
-                >
-                  <NavigationButton
-                    onClick={() => this.handleClick()}
-                    isActive={this.state.isNavActive}
-                  />
-                </PageHeader>
-              </Suspense>
-              <PageBody className={activeClass}>
-                <PageContent>
-                  <Suspense fallback={<div />}>
-                    <Sitemap routes={routes} />
-                  </Suspense>
-                </PageContent>
+            <PageBody className={activeClass}>
+              <PageContent>
                 <Suspense fallback={<div />}>
-                  <PageSidebar>
+                  <Sitemap routes={routes} />
+                </Suspense>
+              </PageContent>
+              <Suspense fallback={<div />}>
+                <Sidebar>
+                  <PageSidebarMain>
+                    <PageSidebarHeader
+                      key="header"
+                      project={logo || name}
+                      projectSmall={logoSmall || name}
+                      pageTitle="Bar"
+                      {...other}
+                    />
                     <Navigation
                       routes={routes}
                       onNavLinkClick={() => this.handleNavLinkClick()}
                     />
-                  </PageSidebar>
-                </Suspense>
-              </PageBody>
-            </PageLayout>
+                  </PageSidebarMain>
+                  <PageSidebarFooter>{`v${version}`}</PageSidebarFooter>
+                </Sidebar>
+                <NavigationBar
+                  onButtonClick={this.handleClick}
+                  isActive={this.state.isNavActive}
+                />
+                <Overlay className={activeClass} onClick={this.handleClick} />
+              </Suspense>
+            </PageBody>
           </ThemeProvider>
         </BrowserRouter>
       </Fragment>
@@ -150,7 +147,6 @@ class App extends Component {
   }
 }
 
-/* eslint-disable */
 const GlobalStyle = createGlobalStyle`
   html,
   body {
@@ -164,37 +160,26 @@ const GlobalStyle = createGlobalStyle`
   *::after { box-sizing: border-box; }
   *::before { box-sizing: border-box; }
 `;
-/* eslint-enable */
 
-const PageLayout = styled.div``;
-
-const PageHeader = styled(Header)`
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  max-width: 100%;
-  height: ${props => rem(props.theme.sizes.headerHeight)};
-  display: flex;
-  flex: 0 0 auto;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 ${props => rem(props.theme.spaces.large)};
-  background-color: ${props => props.theme.colors.main};
-  color: ${props => props.theme.colors.black};
-  z-index: ${props => props.theme.zIndex.header};
+const Overlay = styled('div')`
+  .is-active & {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: ${props => props.theme.zIndex.overlay};
+    background-color: ${props => props.theme.colors.overlay};
+  }
 `;
 
 const PageBody = styled.div`
   position: relative;
-  height: calc(100vh - 6rem);
   display: flex;
   flex: 1 1 auto;
   min-height: 0;
   align-items: flex-start;
   z-index: ${props => props.theme.zIndex.content};
-  top: 6rem;
-  overflow: hidden;
   
   @media (max-width: calc(${props => props.theme.breakpoints.l} - 1px)) {
     &.is-active {
@@ -204,44 +189,17 @@ const PageBody = styled.div`
   }
 `;
 
-const PageSidebar = styled(Sidebar)`
-  position: fixed;
-  top: 6rem;
-  height: calc(100vh - 6rem);
-  flex: 0 0 ${props => rem(props.theme.sizes.sidebarWidth)};
-  order: -1;
-  overflow: auto;
-  transform: translateX(-${props => rem(props.theme.sizes.sidebarWidth)});
-  transition: transform 0.3s ease-in-out 0s;
-  z-index: ${props => props.theme.zIndex.sidebar};
-
-  /* IE */
-  @media all and (-ms-high-contrast: none) {
-    left: 0;
-  }
-
-  @media (min-width: ${props => props.theme.breakpoints.l}) {
-    position: sticky;
-    transform: translateX(0);
-  }
-
-  .is-active & {
-    transform: translateX(0);
-  }
-`;
-
 const PageContent = styled.main`
   position: relative;
   flex: 1 1 auto;
   align-self: stretch;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: ${props => rem(props.theme.spaces.default)} 0;
+  padding: ${props => rem(props.theme.sizes.headerHeight)} 0;
   transition: transform 0.3s ease-in-out 0s, opacity 0.3s ease-in-out 0s;
 
   .is-active & {
     transform: translateX(${props => rem(props.theme.sizes.sidebarWidth)});
-    opacity: 0.5;
   }
 
   /* IE */
@@ -256,11 +214,28 @@ const PageContent = styled.main`
 
   @media (min-width: ${props => props.theme.breakpoints.l}) {
     padding-left: 0;
+    padding: ${props => rem(props.theme.spaces.default)} 0;
     .is-active & {
       transform: translateX(0);
       opacity: 1;
     }
   }
+`;
+
+const PageSidebarMain = styled.div`
+  flex: 1;
+  overflow-x: hidden;
+`;
+
+const PageSidebarHeader = styled(Header)`
+  max-width: 100%;
+`;
+
+const PageSidebarFooter = styled('p')`
+  color: ${props => props.theme.colors.greyText};
+  font-size: ${props => props.theme.fontSizes.base};
+  margin: 0;
+  font-family: ${props => props.theme.fontFamily};
 `;
 
 export default App;

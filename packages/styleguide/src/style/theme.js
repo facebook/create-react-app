@@ -3,9 +3,9 @@
 import { rem } from './utils';
 
 export const sizes = {
-  headerHeight: '96px',
-  sidebarWidth: '248px',
-  menuWidth: '200px',
+  headerHeight: '60px',
+  sidebarWidth: '230px',
+  menuWidth: '180px',
 };
 
 export const breakpoints = {
@@ -51,7 +51,10 @@ export const nav = {
 
 export const zIndex = {
   header: 3,
-  sidebar: 4, // header + 1
+  sidebar: 101,
+  overlay: 100,
+  menuButton: 101,
+  fullScreenPreview: 1000,
 };
 
 const functionalColors = {
@@ -81,6 +84,7 @@ export const colors = {
   warning: '#e8d571',
   error: '#e06c75',
   info: '#61afef',
+  overlay: 'rgba(255, 255, 255, 0.5)',
   ...functionalColors,
 };
 

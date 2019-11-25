@@ -380,11 +380,11 @@ const StyledPreview = styled.div`
   &.is-fullscreen {
     background-color: white;
     position: fixed;
-    top: 6rem;
+    top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% - 6rem);
-    z-index: 1000;
+    height: 100vh;
+    z-index: ${props => props.theme.zIndex.fullScreenPreview};
   }
 `;
 

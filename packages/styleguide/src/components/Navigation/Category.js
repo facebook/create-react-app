@@ -45,6 +45,7 @@ const StyledCategory = styled(Category)`
       ${props => props.theme.nav.listTopBottomIndent} 0;
     cursor: pointer;
     color: ${props => props.theme.colors.black};
+    font-size: ${props => props.theme.fontSizes.default};
   }
   &.${activeClass} {
     + ul {
