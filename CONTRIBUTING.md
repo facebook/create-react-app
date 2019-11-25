@@ -1,6 +1,7 @@
 # Contributing to Create React App
 
-Loving Create React App and want to get involved? Thanks! There are plenty of ways you can help.
+
+Loving Create React App and want to get involved? Thanks! There are plenty of ways you can help .
 
 Please take a moment to review this document in order to make the contribution process straightforward and effective for everyone involved.
 
