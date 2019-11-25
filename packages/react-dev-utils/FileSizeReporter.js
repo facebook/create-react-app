@@ -136,9 +136,9 @@ function measureFileSizesBeforeBuild(buildFolder) {
       var sizes;
       if (!err && fileNames) {
         sizes = fileNames.filter(canReadAsset).reduce((memo, fileName) => {
-          var contents = fs.readFileSync(fileName);
+          var fileStat = fs.statSync(fileName);
           var key = removeFileNameHash(buildFolder, fileName);
-          memo[key] = gzipSize(contents);
+          memo[key] = fileStat.size;
           return memo;
         }, {});
       }
