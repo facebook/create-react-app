@@ -171,15 +171,6 @@ module.exports = function(api, opts, env) {
       ],
       // Adds Numeric Separators
       require('@babel/plugin-proposal-numeric-separator').default,
-      // The following two plugins use Object.assign directly, instead of Babel's
-      // extends helper. Note that this assumes `Object.assign` is available.
-      // { ...todo, completed: true }
-      isObjectRestSpreadProposalRequired && [
-        require('@babel/plugin-proposal-object-rest-spread').default,
-        {
-          useBuiltIns: true,
-        },
-      ],
       // Polyfills the runtime needed for async/await, generators, and friends
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
       [
