@@ -8,7 +8,7 @@ const propTypes = {
   onButtonClick: func,
 };
 
-const NavigationBar = ({ className, isActive,onButtonClick, ...other }) => {
+const NavigationBar = ({ className, isActive, onButtonClick, ...other }) => {
   const classes = cx({ 'is-active': isActive }, 'navigation-bar', className);
 
   return (

@@ -1,152 +1,119 @@
-import React from 'react';
-import { array, bool, func, string } from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import { array, bool, func } from 'prop-types';
 import cx from 'classnames';
 import styled from 'styled-components';
 
-import { withRouter } from 'react-router-dom';
+import { withRouter, useLocation } from 'react-router-dom';
 
 import { rem } from './../../style/utils';
-
 import Category from './Category';
 import NavLink from './NavLink';
 
 const CLASS_ROOT = 'sg-nav';
 
-class Navigation extends React.Component {
-  static displayName = 'Navigation';
+const Navigation = ({
+  className,
+  routes = [],
+  isMain,
+  onNavLinkClick,
+  ...other
+}) => {
+  const classes = cx(CLASS_ROOT, className);
+  let location = useLocation();
 
-  static propTypes = {
-    isMain: bool,
-    routes: array,
-    pathname: string,
-    onNavLinkClick: func,
+  const [activeCategories, setActiveCategories] = useState({});
+
+  /**
+   * Set category active state
+   */
+  const setCategoryActiveState = (id, value = true) => {
+    setActiveCategories({
+      ...activeCategories,
+      [id]: value,
+    });
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeLinks: [],
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
+  /**
+   * This method sets every category state (from pathname)
+   * from first parent to current category to active
+   */
+  const setActiveCategoriesFromPathname = () => {
+    let url = '';
+    const locPath = location.pathname;
+    const categories = locPath
+      // remove first '/' and last item of the path
+      .substring(1, locPath.lastIndexOf('/'))
+      .split('/')
+      .reduce((acc, curr) => {
+        url += '/' + curr;
+        return { ...acc, [url]: true };
+      }, {});
 
-  componentWillMount() {
-    const path = this.props.pathname;
+    // set all new active categories
+    setActiveCategories({ ...activeCategories, ...categories });
+  };
 
-    let pathArray = [];
-    pathArray = path.split('/');
-    pathArray = pathArray.filter(e => String(e).trim());
+  useEffect(
+    () => {
+      setActiveCategoriesFromPathname();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [location.pathname]
+  );
 
-    const activeLinks = this.copyActiveLinks(pathArray.length - 1);
+  const getNavList = (nodes = [], path = '') => (
+    <StyledNavList isMain={path === ''}>
+      {nodes.map(node => {
+        let item = null;
+        let nestedList = null;
 
-    pathArray.forEach((element, i) => {
-      activeLinks[i].push(`/${element}`);
-    });
-
-    this.setState({
-      activeLinks,
-    });
-  }
-
-  handleClick(activeLink, depthLevel) {
-    const activeLinks = this.copyActiveLinks(depthLevel);
-
-    if (activeLinks[depthLevel].indexOf(activeLink) === -1) {
-      activeLinks[depthLevel].push(activeLink);
-    } else {
-      activeLinks[depthLevel] = this.removeActive(
-        activeLinks[depthLevel],
-        activeLink
-      );
-    }
-
-    this.setState({
-      activeLinks,
-    });
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  removeActive(arr, element) {
-    return arr.filter(e => e !== element);
-  }
-
-  copyActiveLinks(depthLevel) {
-    const activeLinks = this.state.activeLinks.slice(0);
-
-    for (let i = 0; i <= depthLevel; i += 1) {
-      activeLinks[i] = activeLinks[i] || [];
-    }
-
-    return activeLinks;
-  }
-
-  isActive(element, depthLevel) {
-    const activeLinks = this.copyActiveLinks(depthLevel);
-
-    return Array.isArray(activeLinks) || activeLinks.length
-      ? activeLinks[depthLevel].includes(element)
-      : false;
-  }
-
-  render() {
-    const {
-      className,
-      routes = [],
-      isMain,
-      onNavLinkClick,
-      ...other
-    } = this.props;
-
-    const classes = cx(CLASS_ROOT, className);
-
-    const getNavList = (nodes = [], path = '', depthLevel = 0) => (
-      <StyledNavList isMain={depthLevel === 0}>
-        {nodes.map(node => {
-          let item = null;
-          let nestedList = null;
-
-          if (node.nodes) {
-            item = (
-              <Category
-                onClick={() => this.handleClick(node.path, depthLevel)}
-                isActive={this.isActive(node.path, depthLevel)}
-              >
-                {node.title}
-              </Category>
-            );
-
-            const depthLevelUpdated = depthLevel + 1;
-            nestedList = getNavList(
-              node.nodes,
-              path + node.path,
-              depthLevelUpdated
-            );
-          } else {
-            item = (
-              <NavLink href={path + node.path} onClick={onNavLinkClick}>
-                {node.title}
-              </NavLink>
-            );
-          }
-
-          return (
-            <ListItem key={path + node.path}>
-              {item}
-              {nestedList}
-            </ListItem>
+        const url = path + node.path;
+        if (node.nodes) {
+          item = (
+            <Category
+              onClick={() => {
+                setCategoryActiveState(url, !activeCategories[url]);
+              }}
+              isActive={activeCategories[url]}
+            >
+              {node.title}
+            </Category>
           );
-        })}
-      </StyledNavList>
-    );
 
-    // div has to wrapp Nav because of nice layout
-    return (
-      <StyledNav className={classes} {...other}>
-        {getNavList(routes)}
-      </StyledNav>
-    );
-  }
-}
+          nestedList = getNavList(node.nodes, url);
+        } else {
+          item = (
+            <NavLink href={url} onClick={onNavLinkClick}>
+              {node.title}
+            </NavLink>
+          );
+        }
+
+        return (
+          <ListItem key={path + node.path}>
+            {item}
+            {nestedList}
+          </ListItem>
+        );
+      })}
+    </StyledNavList>
+  );
+
+  // div has to wrapp Nav because of nice layout
+  return (
+    <StyledNav className={classes} {...other}>
+      {getNavList(routes)}
+    </StyledNav>
+  );
+};
+
+Navigation.displayName = 'Navigation';
+
+Navigation.propTypes = {
+  isMain: bool,
+  routes: array,
+  onNavLinkClick: func,
+};
 
 const StyledNav = styled.nav`
   width: ${props => rem(props.theme.sizes.menuWidth)};
@@ -174,6 +141,6 @@ const ListItem = styled.li`
 
 export default withRouter(
   ({ location, match, history, staticContext, ...other }) => (
-    <Navigation pathname={location.pathname} {...other} />
+    <Navigation {...other} />
   )
 );
