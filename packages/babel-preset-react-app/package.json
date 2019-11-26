@@ -12,6 +12,7 @@
     "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
+    "helpers/getRequiredPlugins.js",
     "create.js",
     "dependencies.js",
     "dev.js",

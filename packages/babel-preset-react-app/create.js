@@ -8,6 +8,8 @@
 
 const path = require('path');
 
+const getRequiredPlugins = require('./helpers/getRequiredPlugins');
+
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
     value = defaultValue;
@@ -64,15 +66,24 @@ module.exports = function(api, opts, env) {
     );
   }
 
+  const targets = isEnvTest ? { node: 'current' } : undefined;
+
+  // Some plugins need custom overrides which inadvertantly enables them for
+  // browsers that don't really need them. Here we check whether these plugins
+  // are actually required and skip them if they are not.
+  const {
+    'transform-destructuring': isDestructuringTransformRequired,
+    'transform-regenerator': isRegeneratorTransformRequired,
+    'proposal-object-rest-spread': isObjectRestSpreadProposalRequired,
+  } = getRequiredPlugins(targets);
+
   return {
     presets: [
       isEnvTest && [
         // ES features necessary for user's Node version
         require('@babel/preset-env').default,
         {
-          targets: {
-            node: 'current',
-          },
+          targets,
         },
       ],
       (isEnvProduction || isEnvDevelopment) && [
@@ -96,9 +107,12 @@ module.exports = function(api, opts, env) {
           // Adds component stack to warning messages
           // Adds __self attribute to JSX which React will use for some warnings
           development: isEnvDevelopment || isEnvTest,
-          // Will use the native built-in instead of trying to polyfill
+          // Use native spread when possible.
+          // Or use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
-          useBuiltIns: true,
+          [isObjectRestSpreadProposalRequired
+            ? 'useBuiltIns'
+            : 'useSpread']: true,
         },
       ],
       isTypeScriptEnabled && [require('@babel/preset-typescript').default],
@@ -117,10 +131,11 @@ module.exports = function(api, opts, env) {
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
-      // Necessary to include regardless of the environment because
-      // in practice some other transforms (such as object-rest-spread)
-      // don't work without it: https://github.com/babel/babel/issues/7215
-      [
+      // Historically there was a bug that made this plugin required.
+      // https://github.com/babel/babel/issues/7215
+      // This plugin is no longer required to make plugin-proposal-object-rest-spread work:
+      // https://github.com/babel/babel/pull/10275
+      isDestructuringTransformRequired && [
         require('@babel/plugin-transform-destructuring').default,
         {
           // Use loose mode for performance:
@@ -159,7 +174,7 @@ module.exports = function(api, opts, env) {
       // The following two plugins use Object.assign directly, instead of Babel's
       // extends helper. Note that this assumes `Object.assign` is available.
       // { ...todo, completed: true }
-      [
+      isObjectRestSpreadProposalRequired && [
         require('@babel/plugin-proposal-object-rest-spread').default,
         {
           useBuiltIns: true,
@@ -176,7 +191,7 @@ module.exports = function(api, opts, env) {
           // explicitly resolving to match the provided helper functions.
           // https://github.com/babel/babel/issues/10261
           version: require('@babel/runtime/package.json').version,
-          regenerator: true,
+          regenerator: isRegeneratorTransformRequired,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.

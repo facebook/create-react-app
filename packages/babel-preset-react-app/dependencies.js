@@ -8,6 +8,8 @@
 
 const path = require('path');
 
+const getRequiredPlugins = require('./helpers/getRequiredPlugins');
+
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
     value = defaultValue;
@@ -60,6 +62,16 @@ module.exports = function(api, opts) {
     );
   }
 
+  const targets = isEnvTest ? { node: 'current' } : undefined;
+
+  // Some plugins need custom overrides which inadvertantly enables them for
+  // browsers that don't really need them. Here we check whether these plugins
+  // are actually required and skip them if they are not.
+  const {
+    'transform-destructuring': isDestructuringTransformRequired,
+    'transform-regenerator': isRegeneratorTransformRequired,
+  } = getRequiredPlugins(targets);
+
   return {
     // Babel assumes ES Modules, which isn't safe until CommonJS
     // dies. This changes the behavior to assume CommonJS unless
@@ -71,9 +83,7 @@ module.exports = function(api, opts) {
         // ES features necessary for user's Node version
         require('@babel/preset-env').default,
         {
-          targets: {
-            node: 'current',
-          },
+          targets,
           // Do not transform modules to CJS
           modules: false,
           // Exclude transforms that make all code slower
@@ -97,10 +107,7 @@ module.exports = function(api, opts) {
       ],
     ].filter(Boolean),
     plugins: [
-      // Necessary to include regardless of the environment because
-      // in practice some other transforms (such as object-rest-spread)
-      // don't work without it: https://github.com/babel/babel/issues/7215
-      [
+      isDestructuringTransformRequired && [
         require('@babel/plugin-transform-destructuring').default,
         {
           // Use loose mode for performance:
@@ -127,7 +134,7 @@ module.exports = function(api, opts) {
         {
           corejs: false,
           helpers: areHelpersEnabled,
-          regenerator: true,
+          regenerator: isRegeneratorTransformRequired,
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.
