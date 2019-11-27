@@ -88,6 +88,9 @@
   "optionalDependencies": {
     "fsevents": "2.1.2"
   },
+  "peerDependencies": {
+    "typescript": "^3.2.1"
+  },
   "peerDependenciesMeta": {
     "typescript": {
       "optional": true
