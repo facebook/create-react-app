@@ -22,7 +22,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const Header = ({ classes }) => {
+const Header = () => {
   const classes = useStyles();
   return (
     <Col spacing={1} align="center" justify="center">
