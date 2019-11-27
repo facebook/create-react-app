@@ -48,14 +48,9 @@ We've removed this rule as it is not compatible with Prettier. If you rely on th
 ```json
 {
   "extends": "react-app",
-  "overrides": [
-    {
-      "files": ["**/*.{js,ts?(x)}"],
-      "rules": {
-        "no-unexpected-multiline": "warn"
-      }
-    }
-  ]
+  "rules": {
+    "no-unexpected-multiline": "warn"
+  }
 }
 ```
 
