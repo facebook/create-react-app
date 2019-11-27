@@ -23,6 +23,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
     : undefined;
 
   const config = {
+    roots: ['<rootDir>/src'],
+
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
 
     setupFiles: [
@@ -54,6 +56,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+      ...(modules.jestAliases || {}),
     },
     moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
       ext => !ext.includes('mjs')
@@ -68,15 +71,19 @@ module.exports = (resolve, rootDir, isEjecting) => {
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
+    'clearMocks',
     'collectCoverageFrom',
+    'coveragePathIgnorePatterns',
     'coverageReporters',
     'coverageThreshold',
+    'displayName',
     'extraGlobals',
     'globalSetup',
     'globalTeardown',
     'moduleNameMapper',
     'resetMocks',
     'resetModules',
+    'restoreMocks',
     'snapshotSerializers',
     'transform',
     'transformIgnorePatterns',
@@ -84,7 +91,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
   ];
   if (overrides) {
     supportedKeys.forEach(key => {
-      if (overrides.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(overrides, key)) {
         if (Array.isArray(config[key]) || typeof config[key] !== 'object') {
           // for arrays or primitive types, directly override the config key
           config[key] = overrides[key];
