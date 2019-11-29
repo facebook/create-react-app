@@ -4,7 +4,19 @@ v3.3.0 is a minor release that adds new features, including custom templates and
 
 ### Custom Templates
 
-DRAFT
+You can now create a new app using custom templates.
+
+We've published our existing templates as [`cra-template`](https://github.com/facebook/create-react-app/tree/master/packages/cra-template) and [`cra-template-typescript`](https://github.com/facebook/create-react-app/tree/master/packages/cra-template-typescript), but we expect to see many great templates from the community over the coming weeks.
+
+The below command shows how you can create a new app with `cra-template-typescript`.
+
+```sh
+npx create-react-app my-app --template typescript
+```
+
+Note that you can omit the prefix `cra-template-` when specifying which template you would like. For TypeScript users, we're deprecating `--typescript` in favour of `--template typescript`.
+
+If you don't set a template, we'll create your new app with `cra-template` - which is just a new name for our base template.
 
 ### Optional Chaining and Nullish Coalescing Operators
 
