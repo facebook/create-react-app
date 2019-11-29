@@ -72,4 +72,4 @@ This is where you can define dependencies (only dependencies are supported for n
 }
 ```
 
-For convenience, we always replace `npm run` with `yarn` in your custom `"scripts"`, as well as in your `README`.
+For convenience, we always replace `npm run` with `yarn` in your custom `"scripts"`, as well as in your `README` when apps are initialized with yarn.
