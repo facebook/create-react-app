@@ -138,6 +138,8 @@ function getArgumentsForLineNumber(
     case 'notepad++':
       return ['-n' + lineNumber, '-c' + colNumber, fileName];
     case 'vim':
+    case 'nvr':
+            return ['+' + lineNumber,  fileName];
     case 'mvim':
     case 'joe':
     case 'gvim':
