@@ -189,14 +189,7 @@ module.exports = {
     'no-undef': 'error',
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
     'no-unreachable': 'warn',
-    'no-unused-expressions': [
-      'error',
-      {
-        allowShortCircuit: true,
-        allowTernary: true,
-        allowTaggedTemplates: true,
-      },
-    ],
+    'no-unused-expressions': 'off',
     'no-unused-labels': 'warn',
     'no-unused-vars': [
       'warn',
