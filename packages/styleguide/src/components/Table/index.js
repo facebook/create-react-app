@@ -16,7 +16,7 @@ const DocsTable = ({
       label: 'Type',
       render: (data, column) => (
         <td key={column.key}>
-          <Code language="js" inline={false}>
+          <Code language="javascript" inline={false}>
             {data}
           </Code>
         </td>
@@ -27,7 +27,7 @@ const DocsTable = ({
       label: 'Default',
       render: (data, column) => (
         <td key={column.key}>
-          <Code language="js" inline={false}>
+          <Code language="javascript" inline={false}>
             {data}
           </Code>
         </td>

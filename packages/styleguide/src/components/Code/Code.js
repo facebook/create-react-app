@@ -1,112 +1,98 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { string, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
 import { stripUnit, em } from 'polished';
+import Highlight, { defaultProps } from 'prism-react-renderer';
 
-import Prism from 'prismjs';
-import 'prismjs/components/prism-jsx';
-import 'prismjs/components/prism-bash';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-diff';
-import 'prismjs/components/prism-scss';
 import 'prism-theme-one-dark/prism-onedark.css';
 import 'firacode/distr/fira_code.css';
 
 import { rem } from '../../style/utils';
 
-export default class PreviewCode extends Component {
-  static displayName = 'Code';
-
-  static propTypes = {
-    /** Code to highlight. */
-    children: string,
-    /** Suppored languages. */
-    language: oneOf([
-      'markup',
-      'js',
-      'jsx',
-      'css',
-      'scss',
-      'bash',
-      'json',
-      'diff',
-    ]),
-    /** Inline code preview with text. */
-    inline: bool,
-  };
-
-  static defaultProps = {
-    children: '',
-    inline: true,
-    language: 'markup',
-  };
-
-  state = {
-    __html: Prism.highlight(
-      this.props.children,
-      typeof Prism.languages[this.props.language] !== 'undefined'
-        ? Prism.languages[this.props.language]
-        : Prism.languages.html
-    ),
-  };
-
-  componentWillReceiveProps({ children, language }) {
-    if (children !== this.props.children || language !== this.props.language) {
-      this.setState({
-        __html: Prism.highlight(children, Prism.languages[language]),
-      });
-    }
+const PreviewCode = ({ children, language, inline }) => {
+  if (!children) {
+    return null;
   }
 
-  render() {
-    const { children, language, inline, ...other } = this.props;
-    const { __html } = this.state;
+  const Tag = inline ? 'span' : 'div';
 
-    if (!children) {
-      return null;
-    }
+  return (
+    <Highlight
+      {...defaultProps}
+      code={children}
+      language={language}
+      theme={undefined}
+    >
+      {({ tokens, getLineProps, getTokenProps }) => {
+        const highlight = tokens.map((line, i) => (
+          <Tag {...getLineProps({ line, key: i })}>
+            {line.map((token, key) => (
+              <span {...getTokenProps({ token, key })} />
+            ))}
+          </Tag>
+        ));
 
-    let highlight;
+        return (
+          <StyledHighlightWrapper inline={inline} as={inline ? 'span' : 'div'}>
+            {inline ? (
+              <code
+                className={`code code--inline prism-code language-${language}`}
+              >
+                {highlight}
+              </code>
+            ) : (
+              <StyledPre className={`language-${language}`}>
+                <code className={`code prism-code language-${language}`}>
+                  {highlight}
+                </code>
+              </StyledPre>
+            )}
+          </StyledHighlightWrapper>
+        );
+      }}
+    </Highlight>
+  );
+};
 
-    if (!__html) {
-      highlight = (
-        <Highlight {...other} code={undefined} language={language}>
-          {children}
-        </Highlight>
-      );
-    } else {
-      highlight = (
-        <Highlight
-          dangerouslySetInnerHTML={{ __html }}
-          {...other}
-          code={undefined}
-          language={language}
-        />
-      );
-    }
+PreviewCode.displayName = 'Code';
 
-    return inline ? (
-      highlight
-    ) : (
-      <StyledPre className={`prism-code language-${language}`}>
-        {highlight}
-      </StyledPre>
-    );
+PreviewCode.propTypes = {
+  /** Code to highlight. */
+  children: string,
+  /** Suppored languages. */
+  language: oneOf([
+    'markup',
+    'javascript',
+    'jsx',
+    'css',
+    'scss',
+    'bash',
+    'json',
+    'diff',
+  ]),
+  /** Inline code preview with text. */
+  inline: bool,
+};
+
+PreviewCode.defaultProps = {
+  children: '',
+  inline: true,
+  language: 'markup',
+};
+
+export default PreviewCode;
+
+const StyledHighlightWrapper = styled.span`
+  code {
+    display: ${({ inline }) => (inline ? 'inline' : 'block')} !important;
   }
-}
 
-const Highlight = styled.code.attrs(props => ({
-  className: `code ${props.inline && 'code--inline'} language-${
-    props.language
-  }`,
-}))`
-  &[class*='language-'] {
+  code[class*='language-'] {
     font-feature-settings: 'calt' 1;
     text-rendering: optimizeLegibility;
-
     font-family: 'Fira Code', monospace;
     font-size: ${props =>
-      em(props.theme.fontSizes.small, props.theme.fontSizes.base)}
+      em(props.theme.fontSizes.small, props.theme.fontSizes.base)};
     line-height: ${props =>
       (stripUnit(props.theme.fontSizes.base) * props.theme.lineHeights.base) /
       stripUnit(props.theme.fontSizes.small)};
@@ -114,11 +100,13 @@ const Highlight = styled.code.attrs(props => ({
     max-height: ${rem('300px')};
   }
 
-  *:not(pre) > code&[class*='language-'] {
+  &:not(pre) code[class*='language-'] {
     padding: ${em(3.5)} ${em(5)};
-    border-radius: ${props => props.theme.borderRadius.default};
-    font-size: ${props =>
-      em(props.theme.fontSizes.small, props.theme.fontSizes.base)}
+    border-radius: 0;
+  }
+
+  .token.punctuation {
+    color: #abb2bf;
   }
 `;
 
