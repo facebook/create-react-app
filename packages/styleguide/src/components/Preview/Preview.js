@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
   string,
   node,
@@ -26,100 +26,52 @@ import Button from './../Button';
 
 const CLASS_ROOT = '';
 
-function getBackgroundsAsArray(previewBackgrounds, excludedColors = []) {
-  return Object.keys(previewBackgrounds)
-    .filter(colorName => !excludedColors.includes(colorName))
-    .map(key => ({
-      value: previewBackgrounds[key],
-      label: key,
-    }));
-}
+const getBackgroundsAsArray = (previewBackgrounds, excludedColors = []) =>
+  Object.keys(previewBackgrounds).reduce(
+    (acc, name) => [
+      ...acc,
+      !excludedColors.includes(name)
+        ? {
+            value: previewBackgrounds[name],
+            label: name,
+          }
+        : {},
+    ],
+    []
+  );
 
-class Preview extends Component {
-  static displayName = 'Preview';
-
-  static propTypes = {
-    /** Pass custom code (JSX) which will be shown instead of visually previewed code. */
-    code: oneOfType([node, func]),
-    /** Pass [react-element-to-jsx-string](https://github.com/algolia/react-element-to-jsx-string) options to code preview. */
-    codeJSXOptions: object,
-    /** Default background color as color name. Must be one from passed `bgThemeColors`. To disable background color chooser, pass `false`. */
-    bgTheme: oneOfType([string, bool]),
-    /** Available background colors. Colors are inherithed from `theme.previewBackgrounds`. */
-    bgThemeColors: object,
-    /** Exclude colors from available background colors. */
-    bgThemeExcludedColors: arrayOf(string),
-    /** Disables code preview. */
-    hasCodePreview: bool,
-    /** Pass HTML as string to preview HTML code. */
-    html: string,
-    /** (unstable) Display preview in inframe. */
-    isIframe: bool,
-    /** (unstable) Iframe custom <head /> */
-    iframeHead: node,
-    /** (unstable) Iframe custom JavaScripts. */
-    iframeScripts: string,
-    /** Preview with interactivity */
-    isInteractive: bool,
-    /** Props for interactive component */
-    interactiveProps: object,
-    /** Enable fullscreen toggle */
-    enableFullscreen: bool,
-  };
-
-  static defaultProps = {
-    bgTheme: 'white',
-    bgThemeColors: {
-      white: '#fff',
-    },
-    bgThemeExcludedColors: [],
-    hasCodePreview: true,
-    // to discuss if it should be turned on or off
-    // for debugging is better on
-    isInteractive: true,
-    interactiveProps: {},
-    enableFullscreen: true,
-  };
-
-  componentWillReceiveProps(props) {
-    if (
-      this.state.previewBackground &&
-      props.bgTheme !== this.state.previewBackground.label
-    ) {
-      this.setState({
-        previewBackground: {
-          label: props.bgTheme,
-          value: props.bgThemeColors[props.bgTheme],
-        },
-      });
-    }
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.handleToggleCode = this.handleToggleCode.bind(this);
-    this.handleToggleInteract = this.handleToggleInteract.bind(this);
-    this.handlePreviewBackground = this.handlePreviewBackground.bind(this);
-    this.handleToggleFullscreen = this.handleToggleFullscreen.bind(this);
-  }
-
-  state = {
-    isCodeShown: false,
-    isInteractive: false,
-    previewBackground: this.props.bgThemeColors
+const Preview = ({
+  bgTheme,
+  bgThemeColors,
+  bgThemeExcludedColors,
+  children,
+  className,
+  code,
+  codeJSXOptions,
+  enableFullscreen,
+  hasCodePreview,
+  html,
+  iframeHead,
+  iframeScripts,
+  interactiveProps,
+  isIframe,
+  isInteractive,
+  ...other
+}) => {
+  const [isCodeShown, setIsCodeShown] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showInteract, setShowInteract] = useState(false);
+  const [previewBackground, setPreviewBackground] = useState(
+    bgThemeColors
       ? {
-          label: this.props.bgTheme,
-          value: this.props.bgThemeColors[this.props.bgTheme],
+          label: bgTheme,
+          value: bgThemeColors[bgTheme],
         }
-      : {},
-    isFullscreen: false,
-  };
+      : {}
+  );
 
-  handleToggleCode() {
-    this.setState({
-      isCodeShown: !this.state.isCodeShown,
-    });
+  function handleToggleCode() {
+    setIsCodeShown(!isCodeShown);
 
     ReactGA.event({
       category: 'Preview',
@@ -127,10 +79,8 @@ class Preview extends Component {
     });
   }
 
-  handleToggleInteract() {
-    this.setState({
-      showInteract: !this.state.showInteract,
-    });
+  function handleToggleInteract() {
+    setShowInteract(!showInteract);
 
     ReactGA.event({
       category: 'Preview',
@@ -138,20 +88,18 @@ class Preview extends Component {
     });
   }
 
-  handlePreviewBackground = previewBackground => {
-    this.setState({ previewBackground });
+  function handlePreviewBackground(previewBackground) {
+    setPreviewBackground(previewBackground);
 
     ReactGA.event({
       category: 'Preview',
       action: 'changeBackground',
       label: previewBackground.label,
     });
-  };
+  }
 
-  handleToggleFullscreen() {
-    this.setState({
-      isFullscreen: !this.state.isFullscreen,
-    });
+  function handleToggleFullscreen() {
+    setIsFullscreen(!isFullscreen);
 
     ReactGA.event({
       category: 'Preview',
@@ -159,177 +107,186 @@ class Preview extends Component {
     });
   }
 
-  return;
+  const classes = cx(CLASS_ROOT, className);
+  const wrapperClasses = cx('preview-wrapper', {
+    'is-fullscreen': isFullscreen,
+  });
 
-  render() {
-    const {
-      children,
-      className,
-      code,
-      codeJSXOptions,
-      bgTheme,
+  const colourStyles = {
+    option: (styles, { data, isActive }) => {
+      const color = chroma(data.value);
+      return {
+        ...styles,
+        backgroundColor: isActive ? 'black' : data.value,
+        color: chroma.contrast(color, 'white') > 2 ? 'white' : 'black',
+        cursor: 'pointer',
+      };
+    },
+    container: () => {},
+    control: () => {},
+    valueContainer: () => {},
+    singleValue: () => {},
+    indicatorSeparator: () => {},
+  };
+
+  const actions = [];
+
+  if (bgTheme && bgThemeColors) {
+    const bgColorsOptions = getBackgroundsAsArray(
       bgThemeColors,
-      bgThemeExcludedColors,
-      isIframe,
-      iframeHead,
-      iframeScripts,
-      hasCodePreview,
-      isInteractive,
-      interactiveProps,
-      html,
-      enableFullscreen,
-      ...other
-    } = this.props;
-
-    const { previewBackground } = this.state;
-
-    const classes = cx(CLASS_ROOT, className);
-    const wrapperClasses = cx('preview-wrapper', {
-      'is-fullscreen': this.state.isFullscreen,
-    });
-
-    const colourStyles = {
-      option: (styles, { data, isActive }) => {
-        const color = chroma(data.value);
-        return {
-          ...styles,
-          backgroundColor: isActive ? 'black' : data.value,
-          color: chroma.contrast(color, 'white') > 2 ? 'white' : 'black',
-          cursor: 'pointer',
-        };
-      },
-      container: () => {},
-      control: () => {},
-      valueContainer: () => {},
-      singleValue: () => {},
-      indicatorSeparator: () => {},
-    };
-
-    const actions = [];
-
-    if (bgTheme && bgThemeColors) {
-      const bgColorsOptions = getBackgroundsAsArray(
-        bgThemeColors,
-        bgThemeExcludedColors
-      );
-
-      if (bgColorsOptions.length) {
-        actions.push(
-          <StyledSelect
-            name="background-select"
-            className="select-wrapper"
-            classNamePrefix="select"
-            isSearchable={false}
-            isClearable={false}
-            value={previewBackground}
-            placeholder={previewBackground.value}
-            onChange={this.handlePreviewBackground}
-            options={bgColorsOptions}
-            styles={colourStyles}
-          />
-        );
-      }
-    }
-
-    if (hasCodePreview) {
-      actions.push(
-        <Button onClick={this.handleToggleCode}>
-          <Icon name="code" fill={bgThemeColors.accent || '#000'} />
-          {this.state.isCodeShown ? 'HIDE CODE' : 'SHOW CODE'}
-        </Button>
-      );
-    }
-
-    if (isInteractive) {
-      actions.push(
-        <Button onClick={this.handleToggleInteract}>
-          <Icon name="code" fill={bgThemeColors.accent || '#000'} />
-          {this.state.showInteract ? 'HIDE INTERACTIVE' : 'SHOW INTERACTIVE'}
-        </Button>
-      );
-    }
-
-    if (enableFullscreen) {
-      actions.push(
-        <Button onClick={this.handleToggleFullscreen}>
-          <Icon
-            name={this.state.isFullscreen ? 'fullscreen-exit' : 'fullscreen'}
-          />
-          {this.state.isFullscreen ? 'MINIMIZE' : 'FULLSCREEN'}
-        </Button>
-      );
-    }
-
-    const renderAsFunctionContext = {
-      bgTheme: previewBackground.label,
-      bgThemeValue: previewBackground.value,
-    };
-
-    const childrenToRender =
-      typeof children === 'function'
-        ? children(renderAsFunctionContext)
-        : children;
-
-    const toReneder = childrenToRender || (
-      // eslint-disable-next-line react/no-danger
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      bgThemeExcludedColors
     );
 
-    const toCode =
-      (code && typeof code === 'function'
-        ? code(renderAsFunctionContext)
-        : code) ||
-      childrenToRender ||
-      html;
+    if (bgColorsOptions.length) {
+      actions.push(
+        <StyledSelect
+          name="background-select"
+          className="select-wrapper"
+          classNamePrefix="select"
+          isSearchable={false}
+          isClearable={false}
+          value={previewBackground}
+          placeholder={previewBackground.value}
+          onChange={handlePreviewBackground}
+          options={bgColorsOptions}
+          styles={colourStyles}
+        />
+      );
+    }
+  }
 
-    const content = isIframe ? (
-      <Frame head={iframeHead} scripts={iframeScripts}>
-        {toReneder}
-      </Frame>
-    ) : (
-      toReneder
-    );
-
-    return (
-      <StyledPreview
-        className={wrapperClasses}
-        ref={ref => {
-          this.wrapperRef = ref;
-        }}
-      >
-        <PreviewTitleBar actions={actions} key="previewTitle" />
-        <StyledCard
-          className={classes}
-          bgColor={previewBackground.value}
-          {...other}
-          key="previewCard"
-        >
-          {this.state.showInteract ? (
-            React.Children.map(this.props.children, child => (
-              <Interact
-                showCode={this.state.isCodeShown}
-                render={child}
-                {...interactiveProps}
-              />
-            ))
-          ) : (
-            <React.Fragment>
-              <StyledPreviewLive>{content}</StyledPreviewLive>
-              {this.state.isCodeShown && hasCodePreview && toCode && (
-                <CodeExample
-                  {...(html ? { codeTypes: ['html'] } : {})}
-                  codeJSXOptions={codeJSXOptions}
-                >
-                  {toCode}
-                </CodeExample>
-              )}
-            </React.Fragment>
-          )}
-        </StyledCard>
-      </StyledPreview>
+  // TODO zjednotit
+  if (hasCodePreview) {
+    actions.push(
+      <Button onClick={handleToggleCode}>
+        <Icon name="code" fill={bgThemeColors.accent || '#000'} />
+        {isCodeShown ? 'HIDE CODE' : 'SHOW CODE'}
+      </Button>
     );
   }
-}
+
+  if (isInteractive) {
+    actions.push(
+      <Button onClick={handleToggleInteract}>
+        <Icon name="code" fill={bgThemeColors.accent || '#000'} />
+        {showInteract ? 'HIDE INTERACTIVE' : 'SHOW INTERACTIVE'}
+      </Button>
+    );
+  }
+
+  if (enableFullscreen) {
+    actions.push(
+      <Button onClick={handleToggleFullscreen}>
+        <Icon name={isFullscreen ? 'fullscreen-exit' : 'fullscreen'} />
+        {isFullscreen ? 'MINIMIZE' : 'FULLSCREEN'}
+      </Button>
+    );
+  }
+
+  const renderAsFunctionContext = {
+    bgTheme: previewBackground.label,
+    bgThemeValue: previewBackground.value,
+  };
+
+  const childrenToRender =
+    typeof children === 'function'
+      ? children(renderAsFunctionContext)
+      : children;
+
+  const toRender = childrenToRender || (
+    // eslint-disable-next-line react/no-danger
+    <div dangerouslySetInnerHTML={{ __html: html }} />
+  );
+
+  const toCode =
+    (code && typeof code === 'function'
+      ? code(renderAsFunctionContext)
+      : code) ||
+    childrenToRender ||
+    html;
+
+  const content = isIframe ? (
+    <Frame head={iframeHead} scripts={iframeScripts}>
+      {toRender}
+    </Frame>
+  ) : (
+    toRender
+  );
+
+  return (
+    <StyledPreview className={wrapperClasses}>
+      <PreviewTitleBar actions={actions} />
+      <StyledCard
+        className={classes}
+        bgColor={previewBackground.value}
+        {...other}
+      >
+        {showInteract ? (
+          React.Children.map(children, child => (
+            <Interact
+              showCode={isCodeShown}
+              render={child}
+              {...interactiveProps}
+            />
+          ))
+        ) : (
+          <>
+            <StyledPreviewLive>{content}</StyledPreviewLive>
+            {isCodeShown && hasCodePreview && toCode && (
+              <CodeExample
+                {...(html ? { codeTypes: ['html'] } : {})}
+                codeJSXOptions={codeJSXOptions}
+              >
+                {toCode}
+              </CodeExample>
+            )}
+          </>
+        )}
+      </StyledCard>
+    </StyledPreview>
+  );
+};
+
+Preview.displayName = 'Preview';
+
+Preview.propTypes = {
+  /** Default background color as color name. Must be one from passed `bgThemeColors`. To disable background color chooser, pass `false`. */
+  bgTheme: oneOfType([string, bool]),
+  /** Available background colors. Colors are inherithed from `theme.previewBackgrounds`. */
+  bgThemeColors: object,
+  /** Exclude colors from available background colors. */
+  bgThemeExcludedColors: arrayOf(string),
+  /** Pass custom code (JSX) which will be shown instead of visually previewed code. */
+  code: oneOfType([node, func]),
+  /** Pass [react-element-to-jsx-string](https://github.com/algolia/react-element-to-jsx-string) options to code preview. */
+  codeJSXOptions: object,
+  /** Enable fullscreen toggle */
+  enableFullscreen: bool,
+  /** Disables code preview. */
+  hasCodePreview: bool,
+  /** Pass HTML as string to preview HTML code. */
+  html: string,
+  /** (unstable) Iframe custom <head /> */
+  iframeHead: node,
+  /** (unstable) Iframe custom JavaScripts. */
+  iframeScripts: string,
+  /** Props for interactive component */
+  interactiveProps: object,
+  /** (unstable) Display preview in inframe. */
+  isIframe: bool,
+  /** Preview with interactivity */
+  isInteractive: bool,
+};
+
+Preview.defaultProps = {
+  bgTheme: 'white',
+  bgThemeColors: { white: '#fff' },
+  bgThemeExcludedColors: [],
+  enableFullscreen: true,
+  hasCodePreview: true,
+  interactiveProps: {},
+  isInteractive: true,
+};
 
 export default Preview;
 
