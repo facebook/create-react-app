@@ -428,7 +428,7 @@ module.exports = function(webpackEnv) {
                     'react-scripts',
                   ]
                 ),
-                // @remove-on-eject-end
+                // Do not remove the filter since the transform react qa is optional
                 plugins: [
                   !isEnvTest &&
                     !isEnvProduction &&
@@ -446,7 +446,7 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
-                ],
+                ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
                 // directory for faster rebuilds.
