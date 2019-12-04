@@ -24,11 +24,11 @@ export const fetchFile = url => {
   );
 };
 
-const fileResourceLoader = new class FileResourceLoader extends ResourceLoader {
+const fileResourceLoader = new (class FileResourceLoader extends ResourceLoader {
   fetch(href, options) {
     return Promise.resolve(fetchFile(url.parse(href)));
   }
-}();
+})();
 
 if (!process.env.E2E_FILE && !process.env.E2E_URL) {
   it.only('can run jsdom (at least one of "E2E_FILE" or "E2E_URL" environment variables must be provided)', () => {
@@ -47,21 +47,39 @@ export default feature =>
       let window;
 
       if (process.env.E2E_FILE) {
-        window = (await JSDOM.fromFile(file, {
-          pretendToBeVisual: true,
-          resources: fileResourceLoader,
-          runScripts: 'dangerously',
-          url,
-        })).window;
+        window = (
+          await JSDOM.fromFile(file, {
+            pretendToBeVisual: true,
+            resources: fileResourceLoader,
+            runScripts: 'dangerously',
+            url,
+          })
+        ).window;
       } else {
-        window = (await JSDOM.fromURL(url, {
-          pretendToBeVisual: true,
-          resources: 'usable',
-          runScripts: 'dangerously',
-        })).window;
+        window = (
+          await JSDOM.fromURL(url, {
+            pretendToBeVisual: true,
+            resources: 'usable',
+            runScripts: 'dangerously',
+          })
+        ).window;
       }
 
+      const cleanup = () => {
+        if (window) {
+          window.close();
+          window = null;
+        }
+      };
+
       const { document } = window;
+
+      const cancelToken = setTimeout(() => {
+        // Cleanup jsdom instance since we don't need it anymore
+        cleanup();
+
+        reject(`Timed out loading feature: ${feature}`);
+      }, 10000);
 
       document.addEventListener(
         'ReactFeatureDidMount',
@@ -71,8 +89,10 @@ export default feature =>
       document.addEventListener(
         'ReactFeatureError',
         () => {
+          clearTimeout(cancelToken);
+
           // Cleanup jsdom instance since we don't need it anymore
-          window.close();
+          cleanup();
 
           reject(`Error loading feature: ${feature}`);
         },

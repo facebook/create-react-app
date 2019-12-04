@@ -1,12 +1,22 @@
-## 4.0.0 
+## 5.0.0
+
+- Upgraded react-scripts to work with last version of cra
+- Added new jss to templates
+- Added localization and history to template
+
+## 4.0.0
+
 - Added changes to support cli tool
+
 ## 3.2.0
- - Added data-qa to cra project
+
+- Added data-qa to cra project
+
 ## 3.1.0
 
 - Fixed gitignore issues crash
 - Added fe-core-modules - again :)
-- Added gitignore 
+- Added gitignore
 - Added infra for prettier
 
 ## 3.0.2

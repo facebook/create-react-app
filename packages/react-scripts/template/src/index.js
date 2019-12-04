@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Resource from '@guestyci/agni';
+import { createHistory } from '@guestyci/history';
+import LocalizationProvider from '@guestyci/localize/LocalizationProvider';
 import { BrowserRouter as Router } from 'react-router-dom';
 import '@guestyci/foundation/style/styles.css';
 import App from './app/App';
@@ -16,11 +18,14 @@ import * as serviceWorker from './serviceWorker';
 const { api } = Resource.createWithDomain();
 //Configure your redux store with your initial stare and global api
 //Store is configured with thunk as its default middleware
-configureStore({}, api);
+const history = createHistory({ baseUrl: '/' });
+const store = configureStore({}, api);
 ReactDOM.render(
-  <Provider store={configureStore({}, api)}>
-    <Router>
-      <App />
+  <Provider store={store}>
+    <Router history={history}>
+      <LocalizationProvider>
+        <App />
+      </LocalizationProvider>
     </Router>
   </Provider>,
 
