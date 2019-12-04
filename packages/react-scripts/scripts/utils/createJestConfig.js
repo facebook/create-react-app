@@ -23,6 +23,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
     : undefined;
 
   const config = {
+    roots: ['<rootDir>/src'],
+
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
 
     setupFiles: [
@@ -68,15 +70,19 @@ module.exports = (resolve, rootDir, isEjecting) => {
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   const supportedKeys = [
+    'clearMocks',
     'collectCoverageFrom',
+    'coveragePathIgnorePatterns',
     'coverageReporters',
     'coverageThreshold',
+    'displayName',
     'extraGlobals',
     'globalSetup',
     'globalTeardown',
     'moduleNameMapper',
     'resetMocks',
     'resetModules',
+    'restoreMocks',
     'snapshotSerializers',
     'transform',
     'transformIgnorePatterns',
