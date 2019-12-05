@@ -7,7 +7,7 @@
       1,
       2,
       4,
-      93,
+      95,
       0
     ],
     "1": [
@@ -80,224 +80,230 @@
     "@site/../docs/code-splitting.md": [
       21
     ],
-    "@site/../docs/debugging-tests.md": [
+    "@site/../docs/custom-templates.md": [
       22
     ],
-    "@site/../docs/deployment.md": [
+    "@site/../docs/debugging-tests.md": [
       23
     ],
-    "@site/../docs/developing-components-in-isolation.md": [
+    "@site/../docs/deployment.md": [
       24
     ],
-    "@site/../docs/documentation-intro.md": [
+    "@site/../docs/developing-components-in-isolation.md": [
       25
     ],
-    "@site/../docs/fetching-data-with-ajax-requests.md": [
+    "@site/../docs/documentation-intro.md": [
       26
     ],
-    "@site/../docs/folder-structure.md": [
+    "@site/../docs/fetching-data-with-ajax-requests.md": [
       27
     ],
-    "@site/../docs/getting-started.md": [
+    "@site/../docs/folder-structure.md": [
       28
     ],
-    "@site/../docs/importing-a-component.md": [
+    "@site/../docs/getting-started.md": [
       29
     ],
-    "@site/../docs/installing-a-dependency.md": [
+    "@site/../docs/importing-a-component.md": [
       30
     ],
-    "@site/../docs/integrating-with-an-api-backend.md": [
+    "@site/../docs/installing-a-dependency.md": [
       31
     ],
-    "@site/../docs/loading-graphql-files.md": [
+    "@site/../docs/integrating-with-an-api-backend.md": [
       32
     ],
-    "@site/../docs/making-a-progressive-web-app.md": [
+    "@site/../docs/loading-graphql-files.md": [
       33
     ],
-    "@site/../docs/post-processing-css.md": [
+    "@site/../docs/making-a-progressive-web-app.md": [
       34
     ],
-    "@site/../docs/pre-rendering-into-static-html-files.md": [
+    "@site/../docs/post-processing-css.md": [
       35
     ],
-    "@site/../docs/production-build.md": [
+    "@site/../docs/pre-rendering-into-static-html-files.md": [
       36
     ],
-    "@site/../docs/proxying-api-requests-in-development.md": [
+    "@site/../docs/production-build.md": [
       37
     ],
-    "@site/../docs/running-tests.md": [
+    "@site/../docs/proxying-api-requests-in-development.md": [
       38
     ],
-    "@site/../docs/setting-up-your-editor.md": [
+    "@site/../docs/running-tests.md": [
       39
     ],
-    "@site/../docs/supported-browsers-features.md": [
+    "@site/../docs/setting-up-your-editor.md": [
       40
     ],
-    "@site/../docs/title-and-meta-tags.md": [
+    "@site/../docs/supported-browsers-features.md": [
       41
     ],
-    "@site/../docs/troubleshooting.md": [
+    "@site/../docs/title-and-meta-tags.md": [
       42
     ],
-    "@site/../docs/updating-to-new-releases.md": [
+    "@site/../docs/troubleshooting.md": [
       43
     ],
-    "@site/../docs/using-global-variables.md": [
+    "@site/../docs/updating-to-new-releases.md": [
       44
     ],
-    "@site/../docs/using-https-in-development.md": [
+    "@site/../docs/using-global-variables.md": [
       45
     ],
-    "@site/../docs/using-the-public-folder.md": [
+    "@site/../docs/using-https-in-development.md": [
       46
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-b5f.json": [
+    "@site/../docs/using-the-public-folder.md": [
       47
     ],
-    "main": [
-      91,
+    "@docusaurus-plugin-content-docs/docs-b5f.json": [
       48
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-a-css-modules-stylesheet-d81.json": [
+    "main": [
+      93,
       49
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-a-router-102.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-a-css-modules-stylesheet-d81.json": [
       50
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-a-sass-stylesheet-5a6.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-a-router-102.json": [
       51
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-a-stylesheet-f44.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-a-sass-stylesheet-5a6.json": [
       52
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-bootstrap-d1f.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-a-stylesheet-f44.json": [
       53
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-css-reset-82f.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-bootstrap-d1f.json": [
       54
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-custom-environment-variables-cea.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-css-reset-82f.json": [
       55
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-flow-7bb.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-custom-environment-variables-cea.json": [
       56
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-images-fonts-and-files-abb.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-flow-7bb.json": [
       57
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-relay-476.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-images-fonts-and-files-abb.json": [
       58
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-adding-typescript-afe.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-relay-476.json": [
       59
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-advanced-configuration-576.json": [
+    "@docusaurus-plugin-content-docs/docs-adding-typescript-afe.json": [
       60
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-alternatives-to-ejecting-331.json": [
+    "@docusaurus-plugin-content-docs/docs-advanced-configuration-576.json": [
       61
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-analyzing-the-bundle-size-7b7.json": [
+    "@docusaurus-plugin-content-docs/docs-alternatives-to-ejecting-331.json": [
       62
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-available-scripts-572.json": [
+    "@docusaurus-plugin-content-docs/docs-analyzing-the-bundle-size-7b7.json": [
       63
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-can-i-use-decorators-a6a.json": [
+    "@docusaurus-plugin-content-docs/docs-available-scripts-572.json": [
       64
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-code-splitting-03d.json": [
+    "@docusaurus-plugin-content-docs/docs-can-i-use-decorators-a6a.json": [
       65
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-debugging-tests-fa5.json": [
+    "@docusaurus-plugin-content-docs/docs-code-splitting-03d.json": [
       66
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-deployment-e02.json": [
+    "@docusaurus-plugin-content-docs/docs-custom-templates-5b0.json": [
       67
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-developing-components-in-isolation-4b3.json": [
+    "@docusaurus-plugin-content-docs/docs-debugging-tests-fa5.json": [
       68
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-documentation-intro-067.json": [
+    "@docusaurus-plugin-content-docs/docs-deployment-e02.json": [
       69
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-fetching-data-with-ajax-requests-7cc.json": [
+    "@docusaurus-plugin-content-docs/docs-developing-components-in-isolation-4b3.json": [
       70
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-folder-structure-1fd.json": [
+    "@docusaurus-plugin-content-docs/docs-documentation-intro-067.json": [
       71
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-getting-started-521.json": [
+    "@docusaurus-plugin-content-docs/docs-fetching-data-with-ajax-requests-7cc.json": [
       72
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-importing-a-component-f65.json": [
+    "@docusaurus-plugin-content-docs/docs-folder-structure-1fd.json": [
       73
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-installing-a-dependency-dc5.json": [
+    "@docusaurus-plugin-content-docs/docs-getting-started-521.json": [
       74
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-integrating-with-an-api-backend-7a4.json": [
+    "@docusaurus-plugin-content-docs/docs-importing-a-component-f65.json": [
       75
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-loading-graphql-files-ffe.json": [
+    "@docusaurus-plugin-content-docs/docs-installing-a-dependency-dc5.json": [
       76
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-making-a-progressive-web-app-1bf.json": [
+    "@docusaurus-plugin-content-docs/docs-integrating-with-an-api-backend-7a4.json": [
       77
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-post-processing-css-ff1.json": [
+    "@docusaurus-plugin-content-docs/docs-loading-graphql-files-ffe.json": [
       78
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-pre-rendering-into-static-html-files-f99.json": [
+    "@docusaurus-plugin-content-docs/docs-making-a-progressive-web-app-1bf.json": [
       79
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-production-build-4dc.json": [
+    "@docusaurus-plugin-content-docs/docs-post-processing-css-ff1.json": [
       80
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-proxying-api-requests-in-development-a3b.json": [
+    "@docusaurus-plugin-content-docs/docs-pre-rendering-into-static-html-files-f99.json": [
       81
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-running-tests-a63.json": [
+    "@docusaurus-plugin-content-docs/docs-production-build-4dc.json": [
       82
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-setting-up-your-editor-0b0.json": [
+    "@docusaurus-plugin-content-docs/docs-proxying-api-requests-in-development-a3b.json": [
       83
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-supported-browsers-features-ac5.json": [
+    "@docusaurus-plugin-content-docs/docs-running-tests-a63.json": [
       84
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-title-and-meta-tags-94e.json": [
+    "@docusaurus-plugin-content-docs/docs-setting-up-your-editor-0b0.json": [
       85
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-troubleshooting-3cd.json": [
+    "@docusaurus-plugin-content-docs/docs-supported-browsers-features-ac5.json": [
       86
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-updating-to-new-releases-ab1.json": [
+    "@docusaurus-plugin-content-docs/docs-title-and-meta-tags-94e.json": [
       87
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-using-global-variables-bf9.json": [
+    "@docusaurus-plugin-content-docs/docs-troubleshooting-3cd.json": [
       88
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-using-https-in-development-60a.json": [
+    "@docusaurus-plugin-content-docs/docs-updating-to-new-releases-ab1.json": [
       89
     ],
-    "/Users/iansu/Projects/oss/create-react-app-master/docusaurus/website/.docusaurus/docusaurus-plugin-content-docs/docs-using-the-public-folder-5d2.json": [
+    "@docusaurus-plugin-content-docs/docs-using-global-variables-bf9.json": [
       90
     ],
-    "runtime~main": [
-      48,
+    "@docusaurus-plugin-content-docs/docs-using-https-in-development-60a.json": [
       91
     ],
-    "docsearch.js": [
+    "@docusaurus-plugin-content-docs/docs-using-the-public-folder-5d2.json": [
       92
+    ],
+    "runtime~main": [
+      49,
+      93
+    ],
+    "docsearch.js": [
+      94
     ],
     "@theme/NotFound": [
       0,
-      93
+      95
     ]
   },
   "assets": {
@@ -305,15 +311,15 @@
       "css": [
         {
           "file": "0.70dd370b15fde7e2ec84.css",
-          "hash": "65f70263075ff9873b86",
+          "hash": "901d0852daa1ee04bd06",
           "publicPath": "/0.70dd370b15fde7e2ec84.css"
         }
       ],
       "js": [
         {
-          "file": "0.c944afc55a5f79c12820.js",
-          "hash": "65f70263075ff9873b86",
-          "publicPath": "/0.c944afc55a5f79c12820.js"
+          "file": "0.6d0ad35d294408818d32.js",
+          "hash": "901d0852daa1ee04bd06",
+          "publicPath": "/0.6d0ad35d294408818d32.js"
         }
       ]
     },
@@ -321,31 +327,31 @@
       "css": [
         {
           "file": "1.2c9c4d4553a0d4cb7160.css",
-          "hash": "9ec2c12896ce4f638c6e",
+          "hash": "f463c12ddc64b02aff00",
           "publicPath": "/1.2c9c4d4553a0d4cb7160.css"
         }
       ],
       "js": [
         {
-          "file": "1.66e6795224df6dbbbca1.js",
-          "hash": "9ec2c12896ce4f638c6e",
-          "publicPath": "/1.66e6795224df6dbbbca1.js"
+          "file": "1.78a950f4cf17975ec8b1.js",
+          "hash": "f463c12ddc64b02aff00",
+          "publicPath": "/1.78a950f4cf17975ec8b1.js"
         }
       ]
     },
     "2": {
       "css": [
         {
-          "file": "component---site-src-pages-index-jsc-4-f-f99.eefa51f400e5c0b5a52f.css",
-          "hash": "a71813d9fe8e91654030",
-          "publicPath": "/component---site-src-pages-index-jsc-4-f-f99.eefa51f400e5c0b5a52f.css"
+          "file": "component---site-src-pages-index-jsc-4-f-f99.773bff3557eac75c9ed9.css",
+          "hash": "5ef003abc175f7b11b4a",
+          "publicPath": "/component---site-src-pages-index-jsc-4-f-f99.773bff3557eac75c9ed9.css"
         }
       ],
       "js": [
         {
-          "file": "component---site-src-pages-index-jsc-4-f-f99.a1f1505a28862c7a3cf9.js",
-          "hash": "a71813d9fe8e91654030",
-          "publicPath": "/component---site-src-pages-index-jsc-4-f-f99.a1f1505a28862c7a3cf9.js"
+          "file": "component---site-src-pages-index-jsc-4-f-f99.af224cec5e70ba06999a.js",
+          "hash": "5ef003abc175f7b11b4a",
+          "publicPath": "/component---site-src-pages-index-jsc-4-f-f99.af224cec5e70ba06999a.js"
         }
       ]
     },
@@ -353,15 +359,15 @@
       "css": [
         {
           "file": "component---theme-doc-item-178-a40.de2648345892298aff25.css",
-          "hash": "8dc0392e979ceb5154d5",
+          "hash": "6b582b5d25db4d8cbbad",
           "publicPath": "/component---theme-doc-item-178-a40.de2648345892298aff25.css"
         }
       ],
       "js": [
         {
-          "file": "component---theme-doc-item-178-a40.74b3e0349cd6fa67466b.js",
-          "hash": "8dc0392e979ceb5154d5",
-          "publicPath": "/component---theme-doc-item-178-a40.74b3e0349cd6fa67466b.js"
+          "file": "component---theme-doc-item-178-a40.4900eeb7980916d8ac62.js",
+          "hash": "6b582b5d25db4d8cbbad",
+          "publicPath": "/component---theme-doc-item-178-a40.4900eeb7980916d8ac62.js"
         }
       ]
     },
@@ -369,823 +375,841 @@
       "css": [
         {
           "file": "component---theme-doc-page-1-be-9be.ac9351e3fa30b156a630.css",
-          "hash": "50f9f4a04569da711fba",
+          "hash": "728626983318b74dbccc",
           "publicPath": "/component---theme-doc-page-1-be-9be.ac9351e3fa30b156a630.css"
         }
       ],
       "js": [
         {
-          "file": "component---theme-doc-page-1-be-9be.7bb9be087a27803c1b60.js",
-          "hash": "50f9f4a04569da711fba",
-          "publicPath": "/component---theme-doc-page-1-be-9be.7bb9be087a27803c1b60.js"
+          "file": "component---theme-doc-page-1-be-9be.ff80c2fab8cbe3306388.js",
+          "hash": "728626983318b74dbccc",
+          "publicPath": "/component---theme-doc-page-1-be-9be.ff80c2fab8cbe3306388.js"
         }
       ]
     },
     "5": {
       "js": [
         {
-          "file": "content---docs-adding-a-css-modules-stylesheet-692-c8f.3c34655a593afe665fdf.js",
-          "hash": "235bf53b07e697543c64",
-          "publicPath": "/content---docs-adding-a-css-modules-stylesheet-692-c8f.3c34655a593afe665fdf.js"
+          "file": "content---docs-adding-a-css-modules-stylesheet-692-c8f.300f03251ce5b07ba3ca.js",
+          "hash": "04970084f6f0463f0d3d",
+          "publicPath": "/content---docs-adding-a-css-modules-stylesheet-692-c8f.300f03251ce5b07ba3ca.js"
         }
       ]
     },
     "6": {
       "js": [
         {
-          "file": "content---docs-adding-a-router-34-e-607.d24ca4c1f034e736c02c.js",
-          "hash": "0afe4660d2f114a14f60",
-          "publicPath": "/content---docs-adding-a-router-34-e-607.d24ca4c1f034e736c02c.js"
+          "file": "content---docs-adding-a-router-34-e-607.5f484b77ca033bdf1464.js",
+          "hash": "6ed5526d9dd43263bbb2",
+          "publicPath": "/content---docs-adding-a-router-34-e-607.5f484b77ca033bdf1464.js"
         }
       ]
     },
     "7": {
       "js": [
         {
-          "file": "content---docs-adding-a-sass-stylesheet-993-977.8d524520115d024cff73.js",
-          "hash": "bfdc73dc026320ec0cd2",
-          "publicPath": "/content---docs-adding-a-sass-stylesheet-993-977.8d524520115d024cff73.js"
+          "file": "content---docs-adding-a-sass-stylesheet-993-977.70ddef5d3ae641514772.js",
+          "hash": "7aaddde2c99113a9910f",
+          "publicPath": "/content---docs-adding-a-sass-stylesheet-993-977.70ddef5d3ae641514772.js"
         }
       ]
     },
     "8": {
       "js": [
         {
-          "file": "content---docs-adding-a-stylesheetf-87-dcf.915d45fb9102d855c671.js",
-          "hash": "a0c6256d6d9bad15e3c5",
-          "publicPath": "/content---docs-adding-a-stylesheetf-87-dcf.915d45fb9102d855c671.js"
+          "file": "content---docs-adding-a-stylesheetf-87-dcf.740dc436eee2a6232427.js",
+          "hash": "63587f0c520eb7aa06fb",
+          "publicPath": "/content---docs-adding-a-stylesheetf-87-dcf.740dc436eee2a6232427.js"
         }
       ]
     },
     "9": {
       "js": [
         {
-          "file": "content---docs-adding-bootstrap-903-029.30763bc08f912921c058.js",
-          "hash": "9a7e31082cf43da700b8",
-          "publicPath": "/content---docs-adding-bootstrap-903-029.30763bc08f912921c058.js"
+          "file": "content---docs-adding-bootstrap-903-029.7c5b2a7bc14f92123374.js",
+          "hash": "295281c18afb2006e2a6",
+          "publicPath": "/content---docs-adding-bootstrap-903-029.7c5b2a7bc14f92123374.js"
         }
       ]
     },
     "10": {
       "js": [
         {
-          "file": "content---docs-adding-css-resetb-9-a-f67.8351f86155f89856aa54.js",
-          "hash": "61c907809a8596523e94",
-          "publicPath": "/content---docs-adding-css-resetb-9-a-f67.8351f86155f89856aa54.js"
+          "file": "content---docs-adding-css-resetb-9-a-f67.222673b3fece4dd65ad2.js",
+          "hash": "d5d8d267aa53e7a24e23",
+          "publicPath": "/content---docs-adding-css-resetb-9-a-f67.222673b3fece4dd65ad2.js"
         }
       ]
     },
     "11": {
       "js": [
         {
-          "file": "content---docs-adding-custom-environment-variables-2-cc-a37.e4f81befc21410178349.js",
-          "hash": "10de200d91b1567fe351",
-          "publicPath": "/content---docs-adding-custom-environment-variables-2-cc-a37.e4f81befc21410178349.js"
+          "file": "content---docs-adding-custom-environment-variables-2-cc-a37.3b6745a6b1c88f305799.js",
+          "hash": "525b5a72dac87737c345",
+          "publicPath": "/content---docs-adding-custom-environment-variables-2-cc-a37.3b6745a6b1c88f305799.js"
         }
       ]
     },
     "12": {
       "js": [
         {
-          "file": "content---docs-adding-flowd-5-c-bec.7e30a5f276fabb663966.js",
-          "hash": "0a5d6eda3e48ad700610",
-          "publicPath": "/content---docs-adding-flowd-5-c-bec.7e30a5f276fabb663966.js"
+          "file": "content---docs-adding-flowd-5-c-bec.13c1588d87a8aa39b892.js",
+          "hash": "e32bdb867359af3f7862",
+          "publicPath": "/content---docs-adding-flowd-5-c-bec.13c1588d87a8aa39b892.js"
         }
       ]
     },
     "13": {
       "js": [
         {
-          "file": "content---docs-adding-images-fonts-and-fileseb-0-ffd.5665876d429ba032c4f4.js",
-          "hash": "23b24f80fa118e293af4",
-          "publicPath": "/content---docs-adding-images-fonts-and-fileseb-0-ffd.5665876d429ba032c4f4.js"
+          "file": "content---docs-adding-images-fonts-and-fileseb-0-ffd.5972ebdcb0362d9bfa66.js",
+          "hash": "ccd93c749817907fa3ac",
+          "publicPath": "/content---docs-adding-images-fonts-and-fileseb-0-ffd.5972ebdcb0362d9bfa66.js"
         }
       ]
     },
     "14": {
       "js": [
         {
-          "file": "content---docs-adding-relaye-8-b-a72.432cd710d6ddbbc929fb.js",
-          "hash": "51375e2e522a1648aa6a",
-          "publicPath": "/content---docs-adding-relaye-8-b-a72.432cd710d6ddbbc929fb.js"
+          "file": "content---docs-adding-relaye-8-b-a72.7fc405158a16d312495e.js",
+          "hash": "0a4a6ee656d2f2f1baab",
+          "publicPath": "/content---docs-adding-relaye-8-b-a72.7fc405158a16d312495e.js"
         }
       ]
     },
     "15": {
       "js": [
         {
-          "file": "content---docs-adding-typescript-761-14a.474b38b4f5f2f10e4167.js",
-          "hash": "49432e4e6cf7f02486dd",
-          "publicPath": "/content---docs-adding-typescript-761-14a.474b38b4f5f2f10e4167.js"
+          "file": "content---docs-adding-typescript-761-14a.3b9818a2c3b063ba849d.js",
+          "hash": "82398a8597993ea65263",
+          "publicPath": "/content---docs-adding-typescript-761-14a.3b9818a2c3b063ba849d.js"
         }
       ]
     },
     "16": {
       "js": [
         {
-          "file": "content---docs-advanced-configuration-0-a-8-6b9.b764397da29c027725fb.js",
-          "hash": "ec5866df7f2582e40080",
-          "publicPath": "/content---docs-advanced-configuration-0-a-8-6b9.b764397da29c027725fb.js"
+          "file": "content---docs-advanced-configuration-0-a-8-6b9.1aaf97af470903bd9339.js",
+          "hash": "2b367fa53e0c640f6df6",
+          "publicPath": "/content---docs-advanced-configuration-0-a-8-6b9.1aaf97af470903bd9339.js"
         }
       ]
     },
     "17": {
       "js": [
         {
-          "file": "content---docs-alternatives-to-ejectingfe-6-478.55c96555157792d686e2.js",
-          "hash": "730264833f6bfa7b4b1f",
-          "publicPath": "/content---docs-alternatives-to-ejectingfe-6-478.55c96555157792d686e2.js"
+          "file": "content---docs-alternatives-to-ejectingfe-6-478.7bdd1ac1cf6c62613e2b.js",
+          "hash": "bd667493e5b04717ce33",
+          "publicPath": "/content---docs-alternatives-to-ejectingfe-6-478.7bdd1ac1cf6c62613e2b.js"
         }
       ]
     },
     "18": {
       "js": [
         {
-          "file": "content---docs-analyzing-the-bundle-sizeb-33-843.51e296d824bad5fe082f.js",
-          "hash": "5acba39aff8b42954d80",
-          "publicPath": "/content---docs-analyzing-the-bundle-sizeb-33-843.51e296d824bad5fe082f.js"
+          "file": "content---docs-analyzing-the-bundle-sizeb-33-843.1049a4b1e4f77038f007.js",
+          "hash": "3b2287c11a4b18c1da61",
+          "publicPath": "/content---docs-analyzing-the-bundle-sizeb-33-843.1049a4b1e4f77038f007.js"
         }
       ]
     },
     "19": {
       "js": [
         {
-          "file": "content---docs-available-scripts-652-9b8.504dc05e7793ff984668.js",
-          "hash": "f0ca0521a178c8f449d9",
-          "publicPath": "/content---docs-available-scripts-652-9b8.504dc05e7793ff984668.js"
+          "file": "content---docs-available-scripts-652-9b8.4ce24cea8316efa5c6a5.js",
+          "hash": "5c97f2cf7801d32129aa",
+          "publicPath": "/content---docs-available-scripts-652-9b8.4ce24cea8316efa5c6a5.js"
         }
       ]
     },
     "20": {
       "js": [
         {
-          "file": "content---docs-can-i-use-decoratorse-54-cef.4638558e8a7f3ce97e1f.js",
-          "hash": "46b1fe624307ef9e425c",
-          "publicPath": "/content---docs-can-i-use-decoratorse-54-cef.4638558e8a7f3ce97e1f.js"
+          "file": "content---docs-can-i-use-decoratorse-54-cef.3fa1cc46f31436db43a7.js",
+          "hash": "e48c4c5df7399c0344df",
+          "publicPath": "/content---docs-can-i-use-decoratorse-54-cef.3fa1cc46f31436db43a7.js"
         }
       ]
     },
     "21": {
       "js": [
         {
-          "file": "content---docs-code-splittingeae-502.0e6a5a652b734daa58e4.js",
-          "hash": "becc4d7b689786e4b319",
-          "publicPath": "/content---docs-code-splittingeae-502.0e6a5a652b734daa58e4.js"
+          "file": "content---docs-code-splittingeae-502.5d56dbd18eec06b8cd58.js",
+          "hash": "9e006c9ba5575cfd8d3d",
+          "publicPath": "/content---docs-code-splittingeae-502.5d56dbd18eec06b8cd58.js"
         }
       ]
     },
     "22": {
       "js": [
         {
-          "file": "content---docs-debugging-tests-530-53a.d3608f2d6e4b2401fa1c.js",
-          "hash": "5c8fb7dd9855a1b42205",
-          "publicPath": "/content---docs-debugging-tests-530-53a.d3608f2d6e4b2401fa1c.js"
+          "file": "content---docs-custom-templatesa-18-df1.0185bcc22781ef4bfbd4.js",
+          "hash": "83e29c4505070011d081",
+          "publicPath": "/content---docs-custom-templatesa-18-df1.0185bcc22781ef4bfbd4.js"
         }
       ]
     },
     "23": {
       "js": [
         {
-          "file": "content---docs-deploymente-33-fd8.a4b06be4e454edf4c01a.js",
-          "hash": "86c082d777147bf588e8",
-          "publicPath": "/content---docs-deploymente-33-fd8.a4b06be4e454edf4c01a.js"
+          "file": "content---docs-debugging-tests-530-53a.6ee67c09365da1865d5d.js",
+          "hash": "19949806f7dad2773213",
+          "publicPath": "/content---docs-debugging-tests-530-53a.6ee67c09365da1865d5d.js"
         }
       ]
     },
     "24": {
       "js": [
         {
-          "file": "content---docs-developing-components-in-isolationd-43-423.f2923095ef1e0d052c7a.js",
-          "hash": "5cf56b4ce5806fdabcea",
-          "publicPath": "/content---docs-developing-components-in-isolationd-43-423.f2923095ef1e0d052c7a.js"
+          "file": "content---docs-deploymente-33-fd8.46245369fd161df128a8.js",
+          "hash": "256d9eb541a4d1e8ea93",
+          "publicPath": "/content---docs-deploymente-33-fd8.46245369fd161df128a8.js"
         }
       ]
     },
     "25": {
       "js": [
         {
-          "file": "content---docs-documentation-intro-8-f-1-b0b.e4052b78d68411e4141a.js",
-          "hash": "193b6ffeb9f26ca620eb",
-          "publicPath": "/content---docs-documentation-intro-8-f-1-b0b.e4052b78d68411e4141a.js"
+          "file": "content---docs-developing-components-in-isolationd-43-423.afdcac53f633b645f179.js",
+          "hash": "83fc01804503524de075",
+          "publicPath": "/content---docs-developing-components-in-isolationd-43-423.afdcac53f633b645f179.js"
         }
       ]
     },
     "26": {
       "js": [
         {
-          "file": "content---docs-fetching-data-with-ajax-requests-14-d-242.7ae6a5182711d0cba9f4.js",
-          "hash": "6a1891ea0caf409fa6e2",
-          "publicPath": "/content---docs-fetching-data-with-ajax-requests-14-d-242.7ae6a5182711d0cba9f4.js"
+          "file": "content---docs-documentation-intro-8-f-1-b0b.b8282c951cd20e477293.js",
+          "hash": "e5bba1dfb335b60090c0",
+          "publicPath": "/content---docs-documentation-intro-8-f-1-b0b.b8282c951cd20e477293.js"
         }
       ]
     },
     "27": {
       "js": [
         {
-          "file": "content---docs-folder-structuree-9-c-afa.06246a4399880bd8f285.js",
-          "hash": "f68ae99cf34ee5026950",
-          "publicPath": "/content---docs-folder-structuree-9-c-afa.06246a4399880bd8f285.js"
+          "file": "content---docs-fetching-data-with-ajax-requests-14-d-242.8daf5413e70f8c4ea413.js",
+          "hash": "f5ff95ba0d2050d89621",
+          "publicPath": "/content---docs-fetching-data-with-ajax-requests-14-d-242.8daf5413e70f8c4ea413.js"
         }
       ]
     },
     "28": {
       "js": [
         {
-          "file": "content---docs-getting-started-8-d-0-4ab.7690bb673a2ba42e433e.js",
-          "hash": "8e00686fe3c8edc9ea99",
-          "publicPath": "/content---docs-getting-started-8-d-0-4ab.7690bb673a2ba42e433e.js"
+          "file": "content---docs-folder-structuree-9-c-afa.78d881fc2a54f158b193.js",
+          "hash": "913f196324d8438f770a",
+          "publicPath": "/content---docs-folder-structuree-9-c-afa.78d881fc2a54f158b193.js"
         }
       ]
     },
     "29": {
       "js": [
         {
-          "file": "content---docs-importing-a-componentea-3-096.65cdf05b4eb292ec0a21.js",
-          "hash": "0c5a84c0a5b2f121640e",
-          "publicPath": "/content---docs-importing-a-componentea-3-096.65cdf05b4eb292ec0a21.js"
+          "file": "content---docs-getting-started-8-d-0-4ab.3568caac5acb3d1357b0.js",
+          "hash": "741efe85ed436d5c63b8",
+          "publicPath": "/content---docs-getting-started-8-d-0-4ab.3568caac5acb3d1357b0.js"
         }
       ]
     },
     "30": {
       "js": [
         {
-          "file": "content---docs-installing-a-dependency-235-a29.743a57f05953b3a03a00.js",
-          "hash": "347e2be293f050bf9ab1",
-          "publicPath": "/content---docs-installing-a-dependency-235-a29.743a57f05953b3a03a00.js"
+          "file": "content---docs-importing-a-componentea-3-096.0b08f0cd240f81b27b9f.js",
+          "hash": "fe34fe1991129295fab3",
+          "publicPath": "/content---docs-importing-a-componentea-3-096.0b08f0cd240f81b27b9f.js"
         }
       ]
     },
     "31": {
       "js": [
         {
-          "file": "content---docs-integrating-with-an-api-backendbd-4-3c4.6b02caa8626a7150a83b.js",
-          "hash": "4298e67a29d5f6c32453",
-          "publicPath": "/content---docs-integrating-with-an-api-backendbd-4-3c4.6b02caa8626a7150a83b.js"
+          "file": "content---docs-installing-a-dependency-235-a29.dab413035b4a43f1b57e.js",
+          "hash": "e6ebf5388c3545670b3b",
+          "publicPath": "/content---docs-installing-a-dependency-235-a29.dab413035b4a43f1b57e.js"
         }
       ]
     },
     "32": {
       "js": [
         {
-          "file": "content---docs-loading-graphql-filesaa-9-117.a3a3180f5b2808287fea.js",
-          "hash": "8c772e4caea512121255",
-          "publicPath": "/content---docs-loading-graphql-filesaa-9-117.a3a3180f5b2808287fea.js"
+          "file": "content---docs-integrating-with-an-api-backendbd-4-3c4.092e8152b9aa7b337f83.js",
+          "hash": "1b6b7af22927dc5fe5c1",
+          "publicPath": "/content---docs-integrating-with-an-api-backendbd-4-3c4.092e8152b9aa7b337f83.js"
         }
       ]
     },
     "33": {
       "js": [
         {
-          "file": "content---docs-making-a-progressive-web-appb-0-e-aca.bee76daca15aaa4b520f.js",
-          "hash": "fecefe3e97294721a2a6",
-          "publicPath": "/content---docs-making-a-progressive-web-appb-0-e-aca.bee76daca15aaa4b520f.js"
+          "file": "content---docs-loading-graphql-filesaa-9-117.fb53dc99ffeacb007ba9.js",
+          "hash": "3abc1b5a1fcfd348808a",
+          "publicPath": "/content---docs-loading-graphql-filesaa-9-117.fb53dc99ffeacb007ba9.js"
         }
       ]
     },
     "34": {
       "js": [
         {
-          "file": "content---docs-post-processing-csscdf-a22.7647058f99002bea3281.js",
-          "hash": "b6821d89368f1a38c519",
-          "publicPath": "/content---docs-post-processing-csscdf-a22.7647058f99002bea3281.js"
+          "file": "content---docs-making-a-progressive-web-appb-0-e-aca.b4c9b1bb910e3ed4e3eb.js",
+          "hash": "80e1e949ee278cb9fb06",
+          "publicPath": "/content---docs-making-a-progressive-web-appb-0-e-aca.b4c9b1bb910e3ed4e3eb.js"
         }
       ]
     },
     "35": {
       "js": [
         {
-          "file": "content---docs-pre-rendering-into-static-html-files-283-4ad.dfbc4d87e6927cda66ea.js",
-          "hash": "e14ce2570e0d0bc2da44",
-          "publicPath": "/content---docs-pre-rendering-into-static-html-files-283-4ad.dfbc4d87e6927cda66ea.js"
+          "file": "content---docs-post-processing-csscdf-a22.dec247a2b9262f6a5d48.js",
+          "hash": "1720b53a7b90ec7aed71",
+          "publicPath": "/content---docs-post-processing-csscdf-a22.dec247a2b9262f6a5d48.js"
         }
       ]
     },
     "36": {
       "js": [
         {
-          "file": "content---docs-production-build-7-b-4-5c2.9ff31df2c0edb1a0a179.js",
-          "hash": "1d2cd16c02d91c50d60a",
-          "publicPath": "/content---docs-production-build-7-b-4-5c2.9ff31df2c0edb1a0a179.js"
+          "file": "content---docs-pre-rendering-into-static-html-files-283-4ad.55e549d21e50916f934f.js",
+          "hash": "17d014464251a6590eb7",
+          "publicPath": "/content---docs-pre-rendering-into-static-html-files-283-4ad.55e549d21e50916f934f.js"
         }
       ]
     },
     "37": {
       "js": [
         {
-          "file": "content---docs-proxying-api-requests-in-development-5-f-5-67c.6c1476f6084b3ae57eee.js",
-          "hash": "40fab584613856ca73da",
-          "publicPath": "/content---docs-proxying-api-requests-in-development-5-f-5-67c.6c1476f6084b3ae57eee.js"
+          "file": "content---docs-production-build-7-b-4-5c2.b0d32b69a98a224842f9.js",
+          "hash": "0324de86d53cb6e58ee9",
+          "publicPath": "/content---docs-production-build-7-b-4-5c2.b0d32b69a98a224842f9.js"
         }
       ]
     },
     "38": {
       "js": [
         {
-          "file": "content---docs-running-tests-0-d-4-18f.15c15f2079359f6009cb.js",
-          "hash": "e623e0d3f6f313dafabe",
-          "publicPath": "/content---docs-running-tests-0-d-4-18f.15c15f2079359f6009cb.js"
+          "file": "content---docs-proxying-api-requests-in-development-5-f-5-67c.4d7a0541b730dd70c28b.js",
+          "hash": "71baff4ae4f5395224ba",
+          "publicPath": "/content---docs-proxying-api-requests-in-development-5-f-5-67c.4d7a0541b730dd70c28b.js"
         }
       ]
     },
     "39": {
       "js": [
         {
-          "file": "content---docs-setting-up-your-editor-81-e-516.62e3a0fa267e7425f8d3.js",
-          "hash": "d25ded5b05df33437b6d",
-          "publicPath": "/content---docs-setting-up-your-editor-81-e-516.62e3a0fa267e7425f8d3.js"
+          "file": "content---docs-running-tests-0-d-4-18f.252e67334fdf61e6ff2a.js",
+          "hash": "6e7f990abfafe596fe0a",
+          "publicPath": "/content---docs-running-tests-0-d-4-18f.252e67334fdf61e6ff2a.js"
         }
       ]
     },
     "40": {
       "js": [
         {
-          "file": "content---docs-supported-browsers-features-7-fc-c56.9ab7eb59ce2434bef6c7.js",
-          "hash": "95c66299277363bceebd",
-          "publicPath": "/content---docs-supported-browsers-features-7-fc-c56.9ab7eb59ce2434bef6c7.js"
+          "file": "content---docs-setting-up-your-editor-81-e-516.bad8ff0239b3a29d06c8.js",
+          "hash": "d48fcee92d8a981dd7fb",
+          "publicPath": "/content---docs-setting-up-your-editor-81-e-516.bad8ff0239b3a29d06c8.js"
         }
       ]
     },
     "41": {
       "js": [
         {
-          "file": "content---docs-title-and-meta-tags-579-6f8.79c08d63277fe3673ff9.js",
-          "hash": "d4e57ed7d40525e62c62",
-          "publicPath": "/content---docs-title-and-meta-tags-579-6f8.79c08d63277fe3673ff9.js"
+          "file": "content---docs-supported-browsers-features-7-fc-c56.402d6e429cf651783713.js",
+          "hash": "ecc6c1bc344c98da1188",
+          "publicPath": "/content---docs-supported-browsers-features-7-fc-c56.402d6e429cf651783713.js"
         }
       ]
     },
     "42": {
       "js": [
         {
-          "file": "content---docs-troubleshooting-992-211.7837064db4c540682783.js",
-          "hash": "d03f977816e758cc3814",
-          "publicPath": "/content---docs-troubleshooting-992-211.7837064db4c540682783.js"
+          "file": "content---docs-title-and-meta-tags-579-6f8.c71bb0cf11811d5a6d3f.js",
+          "hash": "f3c1a001cf454d9950f7",
+          "publicPath": "/content---docs-title-and-meta-tags-579-6f8.c71bb0cf11811d5a6d3f.js"
         }
       ]
     },
     "43": {
       "js": [
         {
-          "file": "content---docs-updating-to-new-releases-65-e-670.ed6a09255fdfa3577d9c.js",
-          "hash": "f5a70ae28a2ce10df4d7",
-          "publicPath": "/content---docs-updating-to-new-releases-65-e-670.ed6a09255fdfa3577d9c.js"
+          "file": "content---docs-troubleshooting-992-211.d4c22063d010f3ea5004.js",
+          "hash": "7a6887eae95cb8611bad",
+          "publicPath": "/content---docs-troubleshooting-992-211.d4c22063d010f3ea5004.js"
         }
       ]
     },
     "44": {
       "js": [
         {
-          "file": "content---docs-using-global-variables-469-9fd.72668b1998f9dec47f07.js",
-          "hash": "5c8e7e6e39e164486cce",
-          "publicPath": "/content---docs-using-global-variables-469-9fd.72668b1998f9dec47f07.js"
+          "file": "content---docs-updating-to-new-releases-65-e-670.78066f40d15bbdbad7b6.js",
+          "hash": "4fb9c70a392ef46c360d",
+          "publicPath": "/content---docs-updating-to-new-releases-65-e-670.78066f40d15bbdbad7b6.js"
         }
       ]
     },
     "45": {
       "js": [
         {
-          "file": "content---docs-using-https-in-developmenta-9-c-f34.2cd74ae21b1715bc7c15.js",
-          "hash": "d18018e3d4d9cd648418",
-          "publicPath": "/content---docs-using-https-in-developmenta-9-c-f34.2cd74ae21b1715bc7c15.js"
+          "file": "content---docs-using-global-variables-469-9fd.3619679446839d71ceee.js",
+          "hash": "8ab3f61bbadfc5312259",
+          "publicPath": "/content---docs-using-global-variables-469-9fd.3619679446839d71ceee.js"
         }
       ]
     },
     "46": {
       "js": [
         {
-          "file": "content---docs-using-the-public-folderd-01-1ab.9fe9657e4b1d1150e0c7.js",
-          "hash": "e7f25733483285f01852",
-          "publicPath": "/content---docs-using-the-public-folderd-01-1ab.9fe9657e4b1d1150e0c7.js"
+          "file": "content---docs-using-https-in-developmenta-9-c-f34.6101368f50e7147b2a92.js",
+          "hash": "aa0db2f9bca797328192",
+          "publicPath": "/content---docs-using-https-in-developmenta-9-c-f34.6101368f50e7147b2a92.js"
         }
       ]
     },
     "47": {
       "js": [
         {
-          "file": "docsMetadata---docsbfa-dc7.fe2a1be9e171abbe0f53.js",
-          "hash": "8a990e809045c974bd8f",
-          "publicPath": "/docsMetadata---docsbfa-dc7.fe2a1be9e171abbe0f53.js"
+          "file": "content---docs-using-the-public-folderd-01-1ab.e3321b5d9e29e925bbc6.js",
+          "hash": "7a4849d3be33af81fc0b",
+          "publicPath": "/content---docs-using-the-public-folderd-01-1ab.e3321b5d9e29e925bbc6.js"
         }
       ]
     },
     "48": {
+      "js": [
+        {
+          "file": "docsMetadata---docs-1-da-721.b85b873f3657c4fe555a.js",
+          "hash": "f60f14cb4cdb84f4bd95",
+          "publicPath": "/docsMetadata---docs-1-da-721.b85b873f3657c4fe555a.js"
+        }
+      ]
+    },
+    "49": {
       "css": [
         {
           "file": "main.c96838aeda9906bbe2c3.css",
-          "hash": "1d23bb1b8823cb85db92",
+          "hash": "44886d133d64c8019e9b",
           "publicPath": "/main.c96838aeda9906bbe2c3.css"
         }
       ],
       "js": [
         {
-          "file": "main.0c8af1216476eb8bdf3f.js",
-          "hash": "1d23bb1b8823cb85db92",
-          "publicPath": "/main.0c8af1216476eb8bdf3f.js"
-        }
-      ]
-    },
-    "49": {
-      "js": [
-        {
-          "file": "metadata---docs-adding-a-css-modules-stylesheetf-5-c-495.75cc5f5d00b8cbb00028.js",
-          "hash": "625cf982eb4c5bd7fbe0",
-          "publicPath": "/metadata---docs-adding-a-css-modules-stylesheetf-5-c-495.75cc5f5d00b8cbb00028.js"
+          "file": "main.cb029e805b982f2d036d.js",
+          "hash": "44886d133d64c8019e9b",
+          "publicPath": "/main.cb029e805b982f2d036d.js"
         }
       ]
     },
     "50": {
       "js": [
         {
-          "file": "metadata---docs-adding-a-router-62-f-470.a439c84c41aff8ad849a.js",
-          "hash": "5854669d4c7af410e55a",
-          "publicPath": "/metadata---docs-adding-a-router-62-f-470.a439c84c41aff8ad849a.js"
+          "file": "metadata---docs-adding-a-css-modules-stylesheet-634-576.2a90a6c69c154b1e986a.js",
+          "hash": "adc2a5f78bf7d73e503d",
+          "publicPath": "/metadata---docs-adding-a-css-modules-stylesheet-634-576.2a90a6c69c154b1e986a.js"
         }
       ]
     },
     "51": {
       "js": [
         {
-          "file": "metadata---docs-adding-a-sass-stylesheetce-3-71f.e92a7243a2f6bd4dc4dd.js",
-          "hash": "459c1aac5cf5fa0fb745",
-          "publicPath": "/metadata---docs-adding-a-sass-stylesheetce-3-71f.e92a7243a2f6bd4dc4dd.js"
+          "file": "metadata---docs-adding-a-router-73-d-177.cc46dd7eef4237b2e9ad.js",
+          "hash": "ccb3594a697e4ec01997",
+          "publicPath": "/metadata---docs-adding-a-router-73-d-177.cc46dd7eef4237b2e9ad.js"
         }
       ]
     },
     "52": {
       "js": [
         {
-          "file": "metadata---docs-adding-a-stylesheetd-87-d39.fc93ec65d5710c4219f3.js",
-          "hash": "770cc8666de56037f68e",
-          "publicPath": "/metadata---docs-adding-a-stylesheetd-87-d39.fc93ec65d5710c4219f3.js"
+          "file": "metadata---docs-adding-a-sass-stylesheetbee-f78.24fdd2b45fc5872f46a7.js",
+          "hash": "a68d4186629d1eb441d1",
+          "publicPath": "/metadata---docs-adding-a-sass-stylesheetbee-f78.24fdd2b45fc5872f46a7.js"
         }
       ]
     },
     "53": {
       "js": [
         {
-          "file": "metadata---docs-adding-bootstrap-014-046.3346e5bf912912b485a0.js",
-          "hash": "64f472e1ba7c6fbf6c0c",
-          "publicPath": "/metadata---docs-adding-bootstrap-014-046.3346e5bf912912b485a0.js"
+          "file": "metadata---docs-adding-a-stylesheet-86-a-a0e.f3f5b50dbc2a790887ff.js",
+          "hash": "08e763a625ad3a1f4df1",
+          "publicPath": "/metadata---docs-adding-a-stylesheet-86-a-a0e.f3f5b50dbc2a790887ff.js"
         }
       ]
     },
     "54": {
       "js": [
         {
-          "file": "metadata---docs-adding-css-resetb-1-d-c38.dd4ce09b8f9b43fc364e.js",
-          "hash": "1d1b7c9d9b887ed055ea",
-          "publicPath": "/metadata---docs-adding-css-resetb-1-d-c38.dd4ce09b8f9b43fc364e.js"
+          "file": "metadata---docs-adding-bootstrapc-3-e-5cc.d0d390b1c65dcd3fbaea.js",
+          "hash": "8cab9de24bc716a22ca5",
+          "publicPath": "/metadata---docs-adding-bootstrapc-3-e-5cc.d0d390b1c65dcd3fbaea.js"
         }
       ]
     },
     "55": {
       "js": [
         {
-          "file": "metadata---docs-adding-custom-environment-variables-99-a-f7c.fb74f74235f23d8d332e.js",
-          "hash": "89bb44b8995d09b10aba",
-          "publicPath": "/metadata---docs-adding-custom-environment-variables-99-a-f7c.fb74f74235f23d8d332e.js"
+          "file": "metadata---docs-adding-css-reset-48-e-68b.028f21440a52b43fca8c.js",
+          "hash": "e061a4f5465c27205061",
+          "publicPath": "/metadata---docs-adding-css-reset-48-e-68b.028f21440a52b43fca8c.js"
         }
       ]
     },
     "56": {
       "js": [
         {
-          "file": "metadata---docs-adding-flow-617-f5a.affc5ce640271645dc4b.js",
-          "hash": "639bebd8814ec6228f3a",
-          "publicPath": "/metadata---docs-adding-flow-617-f5a.affc5ce640271645dc4b.js"
+          "file": "metadata---docs-adding-custom-environment-variablesd-4-a-ad5.be0c8318f2112631fd85.js",
+          "hash": "c3cadc034930b8aec288",
+          "publicPath": "/metadata---docs-adding-custom-environment-variablesd-4-a-ad5.be0c8318f2112631fd85.js"
         }
       ]
     },
     "57": {
       "js": [
         {
-          "file": "metadata---docs-adding-images-fonts-and-filese-65-7da.0ddd79322a9619efd7c4.js",
-          "hash": "457a29fa8b512723b320",
-          "publicPath": "/metadata---docs-adding-images-fonts-and-filese-65-7da.0ddd79322a9619efd7c4.js"
+          "file": "metadata---docs-adding-flowd-11-a30.3255517fd5bf4de81190.js",
+          "hash": "9bd9ba3aae5a7ca488f8",
+          "publicPath": "/metadata---docs-adding-flowd-11-a30.3255517fd5bf4de81190.js"
         }
       ]
     },
     "58": {
       "js": [
         {
-          "file": "metadata---docs-adding-relayb-8-e-acb.053e3b021ea6fb0ead8b.js",
-          "hash": "31b8e309060f11dd3e70",
-          "publicPath": "/metadata---docs-adding-relayb-8-e-acb.053e3b021ea6fb0ead8b.js"
+          "file": "metadata---docs-adding-images-fonts-and-files-16-e-f47.369de53bfb85f64e5462.js",
+          "hash": "01629afea884a3cec65e",
+          "publicPath": "/metadata---docs-adding-images-fonts-and-files-16-e-f47.369de53bfb85f64e5462.js"
         }
       ]
     },
     "59": {
       "js": [
         {
-          "file": "metadata---docs-adding-typescript-674-f8f.ec07def2eea827c8c98f.js",
-          "hash": "841c559c3c571b8cef58",
-          "publicPath": "/metadata---docs-adding-typescript-674-f8f.ec07def2eea827c8c98f.js"
+          "file": "metadata---docs-adding-relaya-55-41b.e8f5e06a8aac5bc865fa.js",
+          "hash": "a093f962b1c65ac53ad7",
+          "publicPath": "/metadata---docs-adding-relaya-55-41b.e8f5e06a8aac5bc865fa.js"
         }
       ]
     },
     "60": {
       "js": [
         {
-          "file": "metadata---docs-advanced-configuration-63-b-f89.3d372ca19a003c8ccaf2.js",
-          "hash": "bd002835d4da21beb5a5",
-          "publicPath": "/metadata---docs-advanced-configuration-63-b-f89.3d372ca19a003c8ccaf2.js"
+          "file": "metadata---docs-adding-typescript-414-964.959cb6cb9004ff961337.js",
+          "hash": "a39638a683b1c64b9974",
+          "publicPath": "/metadata---docs-adding-typescript-414-964.959cb6cb9004ff961337.js"
         }
       ]
     },
     "61": {
       "js": [
         {
-          "file": "metadata---docs-alternatives-to-ejecting-0-e-4-8e1.bc8ef86f179cf392aca2.js",
-          "hash": "16b9bcc37c0424980273",
-          "publicPath": "/metadata---docs-alternatives-to-ejecting-0-e-4-8e1.bc8ef86f179cf392aca2.js"
+          "file": "metadata---docs-advanced-configurationdbb-607.9daacf64a245d83d536a.js",
+          "hash": "a369757838c9508c856a",
+          "publicPath": "/metadata---docs-advanced-configurationdbb-607.9daacf64a245d83d536a.js"
         }
       ]
     },
     "62": {
       "js": [
         {
-          "file": "metadata---docs-analyzing-the-bundle-sized-33-397.262cc610efb953b4355d.js",
-          "hash": "f935c4274238e0f480bc",
-          "publicPath": "/metadata---docs-analyzing-the-bundle-sized-33-397.262cc610efb953b4355d.js"
+          "file": "metadata---docs-alternatives-to-ejectingdd-0-051.c9f80134f3d93ad9c73b.js",
+          "hash": "36c3de2b8d6c5a51e63c",
+          "publicPath": "/metadata---docs-alternatives-to-ejectingdd-0-051.c9f80134f3d93ad9c73b.js"
         }
       ]
     },
     "63": {
       "js": [
         {
-          "file": "metadata---docs-available-scripts-097-5dd.92d1dad52a406b5f70b4.js",
-          "hash": "d7473652960acfb68e45",
-          "publicPath": "/metadata---docs-available-scripts-097-5dd.92d1dad52a406b5f70b4.js"
+          "file": "metadata---docs-analyzing-the-bundle-sizeacc-347.00f0216f56fa7eebf209.js",
+          "hash": "7a2c084db26b8981725b",
+          "publicPath": "/metadata---docs-analyzing-the-bundle-sizeacc-347.00f0216f56fa7eebf209.js"
         }
       ]
     },
     "64": {
       "js": [
         {
-          "file": "metadata---docs-can-i-use-decoratorsec-3-064.f68dc0e648e3bd26b3dc.js",
-          "hash": "ff762bb686d7f86ef530",
-          "publicPath": "/metadata---docs-can-i-use-decoratorsec-3-064.f68dc0e648e3bd26b3dc.js"
+          "file": "metadata---docs-available-scriptsc-17-7e7.03180f7052153c700153.js",
+          "hash": "25c237062a331a0c88a7",
+          "publicPath": "/metadata---docs-available-scriptsc-17-7e7.03180f7052153c700153.js"
         }
       ]
     },
     "65": {
       "js": [
         {
-          "file": "metadata---docs-code-splitting-0-c-1-723.97631e39014c61bf7ce6.js",
-          "hash": "f6f39392f3a29d70aad3",
-          "publicPath": "/metadata---docs-code-splitting-0-c-1-723.97631e39014c61bf7ce6.js"
+          "file": "metadata---docs-can-i-use-decorators-0-fa-fc5.f2ec503817fde8581edc.js",
+          "hash": "285a90f7402742aab0d3",
+          "publicPath": "/metadata---docs-can-i-use-decorators-0-fa-fc5.f2ec503817fde8581edc.js"
         }
       ]
     },
     "66": {
       "js": [
         {
-          "file": "metadata---docs-debugging-testsd-08-d74.b792d622bb65ced3c407.js",
-          "hash": "e4ab61a49745b4f8a0d7",
-          "publicPath": "/metadata---docs-debugging-testsd-08-d74.b792d622bb65ced3c407.js"
+          "file": "metadata---docs-code-splitting-029-270.ff37bc089c8d6922d240.js",
+          "hash": "559574ae60525479692b",
+          "publicPath": "/metadata---docs-code-splitting-029-270.ff37bc089c8d6922d240.js"
         }
       ]
     },
     "67": {
       "js": [
         {
-          "file": "metadata---docs-deployment-8-ec-2f8.8adada41f0087b4b1c3e.js",
-          "hash": "f897f7ba2d649462dc05",
-          "publicPath": "/metadata---docs-deployment-8-ec-2f8.8adada41f0087b4b1c3e.js"
+          "file": "metadata---docs-custom-templates-0-e-1-23a.c2d02355fe207eb3ea06.js",
+          "hash": "c8a77350ddc8e8bdb55f",
+          "publicPath": "/metadata---docs-custom-templates-0-e-1-23a.c2d02355fe207eb3ea06.js"
         }
       ]
     },
     "68": {
       "js": [
         {
-          "file": "metadata---docs-developing-components-in-isolation-006-a16.8a449eab43b1d6efabcb.js",
-          "hash": "5428e60ffcab38af8e99",
-          "publicPath": "/metadata---docs-developing-components-in-isolation-006-a16.8a449eab43b1d6efabcb.js"
+          "file": "metadata---docs-debugging-tests-064-ee5.de03877a2d166904d866.js",
+          "hash": "e882fa230db80d5ff78b",
+          "publicPath": "/metadata---docs-debugging-tests-064-ee5.de03877a2d166904d866.js"
         }
       ]
     },
     "69": {
       "js": [
         {
-          "file": "metadata---docs-documentation-intro-7-fb-327.d3fdc115becd5454bb33.js",
-          "hash": "06b26562002b874a1225",
-          "publicPath": "/metadata---docs-documentation-intro-7-fb-327.d3fdc115becd5454bb33.js"
+          "file": "metadata---docs-deploymentfe-3-d7f.2a33bef0ecc943996f49.js",
+          "hash": "f4f640c8d706ac00d671",
+          "publicPath": "/metadata---docs-deploymentfe-3-d7f.2a33bef0ecc943996f49.js"
         }
       ]
     },
     "70": {
       "js": [
         {
-          "file": "metadata---docs-fetching-data-with-ajax-requests-391-cce.74fdecfb77c88352646c.js",
-          "hash": "ee73f6e199720245d67a",
-          "publicPath": "/metadata---docs-fetching-data-with-ajax-requests-391-cce.74fdecfb77c88352646c.js"
+          "file": "metadata---docs-developing-components-in-isolationbdd-26e.b1e0ef71b051b39b230d.js",
+          "hash": "f6b63a1c3d1d256fae10",
+          "publicPath": "/metadata---docs-developing-components-in-isolationbdd-26e.b1e0ef71b051b39b230d.js"
         }
       ]
     },
     "71": {
       "js": [
         {
-          "file": "metadata---docs-folder-structure-0-df-89f.c9a834e777b3ff480305.js",
-          "hash": "9ff3b45f80cc33ce96a3",
-          "publicPath": "/metadata---docs-folder-structure-0-df-89f.c9a834e777b3ff480305.js"
+          "file": "metadata---docs-documentation-introf-00-92f.d00db6be45fa077081b5.js",
+          "hash": "4e78b1a45c1721852dd1",
+          "publicPath": "/metadata---docs-documentation-introf-00-92f.d00db6be45fa077081b5.js"
         }
       ]
     },
     "72": {
       "js": [
         {
-          "file": "metadata---docs-getting-started-56-b-31f.fc9d1b983b0ad48a9082.js",
-          "hash": "5c4ef9314f8a7f8ed37a",
-          "publicPath": "/metadata---docs-getting-started-56-b-31f.fc9d1b983b0ad48a9082.js"
+          "file": "metadata---docs-fetching-data-with-ajax-requestse-91-a04.41d393a1977de6455401.js",
+          "hash": "4826c0e04723cfd47d6a",
+          "publicPath": "/metadata---docs-fetching-data-with-ajax-requestse-91-a04.41d393a1977de6455401.js"
         }
       ]
     },
     "73": {
       "js": [
         {
-          "file": "metadata---docs-importing-a-component-54-e-219.da1742131189e06e6752.js",
-          "hash": "000a1d5630facbd8536a",
-          "publicPath": "/metadata---docs-importing-a-component-54-e-219.da1742131189e06e6752.js"
+          "file": "metadata---docs-folder-structure-92-f-29d.45713d3aad0843becee2.js",
+          "hash": "dc8abf3cf453236cb2ab",
+          "publicPath": "/metadata---docs-folder-structure-92-f-29d.45713d3aad0843becee2.js"
         }
       ]
     },
     "74": {
       "js": [
         {
-          "file": "metadata---docs-installing-a-dependencya-60-a41.f4872e1b6170b7167b77.js",
-          "hash": "55a34ef510026ec1c4ce",
-          "publicPath": "/metadata---docs-installing-a-dependencya-60-a41.f4872e1b6170b7167b77.js"
+          "file": "metadata---docs-getting-started-57-d-ca5.d55f6df79b2d93015bc2.js",
+          "hash": "dd9d929b363695428832",
+          "publicPath": "/metadata---docs-getting-started-57-d-ca5.d55f6df79b2d93015bc2.js"
         }
       ]
     },
     "75": {
       "js": [
         {
-          "file": "metadata---docs-integrating-with-an-api-backend-931-073.7d4a7cf6aebb0eb43613.js",
-          "hash": "238276f0aff47512d364",
-          "publicPath": "/metadata---docs-integrating-with-an-api-backend-931-073.7d4a7cf6aebb0eb43613.js"
+          "file": "metadata---docs-importing-a-componente-80-708.974e9d7e450486478201.js",
+          "hash": "e6272fc29af818b4471a",
+          "publicPath": "/metadata---docs-importing-a-componente-80-708.974e9d7e450486478201.js"
         }
       ]
     },
     "76": {
       "js": [
         {
-          "file": "metadata---docs-loading-graphql-filesba-4-22a.d12e7ef6835901ec3016.js",
-          "hash": "bef6177eccdd2be4ffd7",
-          "publicPath": "/metadata---docs-loading-graphql-filesba-4-22a.d12e7ef6835901ec3016.js"
+          "file": "metadata---docs-installing-a-dependencyf-94-06a.b5140f0dedde4ea7b17d.js",
+          "hash": "e322c7d094a42da34b56",
+          "publicPath": "/metadata---docs-installing-a-dependencyf-94-06a.b5140f0dedde4ea7b17d.js"
         }
       ]
     },
     "77": {
       "js": [
         {
-          "file": "metadata---docs-making-a-progressive-web-app-77-f-2f8.2f11c065c2efd4a7f8e8.js",
-          "hash": "3fc79c8202a38168ce4f",
-          "publicPath": "/metadata---docs-making-a-progressive-web-app-77-f-2f8.2f11c065c2efd4a7f8e8.js"
+          "file": "metadata---docs-integrating-with-an-api-backend-0-b-7-74e.c25ff3a707077640f9f0.js",
+          "hash": "f46bc83e6c3664e0a57b",
+          "publicPath": "/metadata---docs-integrating-with-an-api-backend-0-b-7-74e.c25ff3a707077640f9f0.js"
         }
       ]
     },
     "78": {
       "js": [
         {
-          "file": "metadata---docs-post-processing-cssb-1-e-70a.c015b132652954b933da.js",
-          "hash": "9397e0ba999e81cbb691",
-          "publicPath": "/metadata---docs-post-processing-cssb-1-e-70a.c015b132652954b933da.js"
+          "file": "metadata---docs-loading-graphql-filesd-85-24d.51a8468d72b2ee8d34df.js",
+          "hash": "2eaf372729382da5289e",
+          "publicPath": "/metadata---docs-loading-graphql-filesd-85-24d.51a8468d72b2ee8d34df.js"
         }
       ]
     },
     "79": {
       "js": [
         {
-          "file": "metadata---docs-pre-rendering-into-static-html-filesb-3-d-7e8.465cdfbbce63f0d27fd3.js",
-          "hash": "a20121c21464cfb29b60",
-          "publicPath": "/metadata---docs-pre-rendering-into-static-html-filesb-3-d-7e8.465cdfbbce63f0d27fd3.js"
+          "file": "metadata---docs-making-a-progressive-web-app-26-b-766.c24522d04f07bb2e1ed6.js",
+          "hash": "483ad55d8a7a44afacaa",
+          "publicPath": "/metadata---docs-making-a-progressive-web-app-26-b-766.c24522d04f07bb2e1ed6.js"
         }
       ]
     },
     "80": {
       "js": [
         {
-          "file": "metadata---docs-production-buildcf-9-e72.897e212d1499a3e70994.js",
-          "hash": "cf59bbdee81ade05d323",
-          "publicPath": "/metadata---docs-production-buildcf-9-e72.897e212d1499a3e70994.js"
+          "file": "metadata---docs-post-processing-css-5-e-9-417.0dd3b1f6b8f8b14a296b.js",
+          "hash": "11658ab15b58cb769551",
+          "publicPath": "/metadata---docs-post-processing-css-5-e-9-417.0dd3b1f6b8f8b14a296b.js"
         }
       ]
     },
     "81": {
       "js": [
         {
-          "file": "metadata---docs-proxying-api-requests-in-developmentb-4-d-b65.233b326048acd32db80c.js",
-          "hash": "9272a945884a095574c8",
-          "publicPath": "/metadata---docs-proxying-api-requests-in-developmentb-4-d-b65.233b326048acd32db80c.js"
+          "file": "metadata---docs-pre-rendering-into-static-html-filese-87-3cb.060590d655df3fa5e970.js",
+          "hash": "94ef7280b9d12fedabb7",
+          "publicPath": "/metadata---docs-pre-rendering-into-static-html-filese-87-3cb.060590d655df3fa5e970.js"
         }
       ]
     },
     "82": {
       "js": [
         {
-          "file": "metadata---docs-running-tests-11-b-b27.36440d93fb59e7f0cf0b.js",
-          "hash": "9880c214186d7fafeea0",
-          "publicPath": "/metadata---docs-running-tests-11-b-b27.36440d93fb59e7f0cf0b.js"
+          "file": "metadata---docs-production-buildbd-5-1df.ba0ab6b7b152694ae802.js",
+          "hash": "ed1d4b555c80a2e1730e",
+          "publicPath": "/metadata---docs-production-buildbd-5-1df.ba0ab6b7b152694ae802.js"
         }
       ]
     },
     "83": {
       "js": [
         {
-          "file": "metadata---docs-setting-up-your-editoref-0-6a1.8d3e3884b12503255f92.js",
-          "hash": "63a02b01f0f10ad2c6c1",
-          "publicPath": "/metadata---docs-setting-up-your-editoref-0-6a1.8d3e3884b12503255f92.js"
+          "file": "metadata---docs-proxying-api-requests-in-developmentbe-0-b24.5021f5db17304d98a984.js",
+          "hash": "ce1b504e9c563b0530f7",
+          "publicPath": "/metadata---docs-proxying-api-requests-in-developmentbe-0-b24.5021f5db17304d98a984.js"
         }
       ]
     },
     "84": {
       "js": [
         {
-          "file": "metadata---docs-supported-browsers-featuresedb-cae.e558cf09f0b24948539a.js",
-          "hash": "6e84914bfde6ff8f1b0f",
-          "publicPath": "/metadata---docs-supported-browsers-featuresedb-cae.e558cf09f0b24948539a.js"
+          "file": "metadata---docs-running-testsa-6-a-ff8.cf9265c053c5fccc3209.js",
+          "hash": "550a902e3fd415ef45e7",
+          "publicPath": "/metadata---docs-running-testsa-6-a-ff8.cf9265c053c5fccc3209.js"
         }
       ]
     },
     "85": {
       "js": [
         {
-          "file": "metadata---docs-title-and-meta-tags-61-f-0a0.9de41f36b570de3f0433.js",
-          "hash": "86389819ec570249da0b",
-          "publicPath": "/metadata---docs-title-and-meta-tags-61-f-0a0.9de41f36b570de3f0433.js"
+          "file": "metadata---docs-setting-up-your-editorbd-0-159.1fb5e5f8380c1b0492da.js",
+          "hash": "6f96dd38e6d9fb25ccbc",
+          "publicPath": "/metadata---docs-setting-up-your-editorbd-0-159.1fb5e5f8380c1b0492da.js"
         }
       ]
     },
     "86": {
       "js": [
         {
-          "file": "metadata---docs-troubleshooting-325-c5a.ee53db226ff11f4e9154.js",
-          "hash": "29fdd1a75b7a9ac9cd82",
-          "publicPath": "/metadata---docs-troubleshooting-325-c5a.ee53db226ff11f4e9154.js"
+          "file": "metadata---docs-supported-browsers-features-23-d-801.de78f9f54b18f04ebb96.js",
+          "hash": "4649651378db50950e15",
+          "publicPath": "/metadata---docs-supported-browsers-features-23-d-801.de78f9f54b18f04ebb96.js"
         }
       ]
     },
     "87": {
       "js": [
         {
-          "file": "metadata---docs-updating-to-new-releases-283-60c.d83ac274691f67f72a44.js",
-          "hash": "11759f97a2fd2d841458",
-          "publicPath": "/metadata---docs-updating-to-new-releases-283-60c.d83ac274691f67f72a44.js"
+          "file": "metadata---docs-title-and-meta-tags-7-ef-241.8c01d60401b5cee200ac.js",
+          "hash": "c781a465f309d43a744f",
+          "publicPath": "/metadata---docs-title-and-meta-tags-7-ef-241.8c01d60401b5cee200ac.js"
         }
       ]
     },
     "88": {
       "js": [
         {
-          "file": "metadata---docs-using-global-variablesdac-c12.b1c761b8dd8984345f29.js",
-          "hash": "411293ed356e259eb11c",
-          "publicPath": "/metadata---docs-using-global-variablesdac-c12.b1c761b8dd8984345f29.js"
+          "file": "metadata---docs-troubleshootingac-9-9ea.1bb06f5d59955da92a63.js",
+          "hash": "670000389477e913267c",
+          "publicPath": "/metadata---docs-troubleshootingac-9-9ea.1bb06f5d59955da92a63.js"
         }
       ]
     },
     "89": {
       "js": [
         {
-          "file": "metadata---docs-using-https-in-developmenta-2-c-787.d85f687cb6504010ce69.js",
-          "hash": "8a10be4ef6beb7aa598e",
-          "publicPath": "/metadata---docs-using-https-in-developmenta-2-c-787.d85f687cb6504010ce69.js"
+          "file": "metadata---docs-updating-to-new-releases-6-b-3-070.7b3a76d6948462c2f329.js",
+          "hash": "86d630190ead073c08f4",
+          "publicPath": "/metadata---docs-updating-to-new-releases-6-b-3-070.7b3a76d6948462c2f329.js"
         }
       ]
     },
     "90": {
       "js": [
         {
-          "file": "metadata---docs-using-the-public-folderfdb-b2e.bd985ff7bffd63a676de.js",
-          "hash": "a0dcd39787cc53ad8803",
-          "publicPath": "/metadata---docs-using-the-public-folderfdb-b2e.bd985ff7bffd63a676de.js"
+          "file": "metadata---docs-using-global-variables-553-bbb.9d2323a223638147a48a.js",
+          "hash": "a7d072d0fbbcfade64ff",
+          "publicPath": "/metadata---docs-using-global-variables-553-bbb.9d2323a223638147a48a.js"
         }
       ]
     },
     "91": {
       "js": [
         {
-          "file": "runtime~main.6703e3cea424fce1fc81.js",
-          "hash": "c41b5bedf6f046789034",
-          "publicPath": "/runtime~main.6703e3cea424fce1fc81.js"
+          "file": "metadata---docs-using-https-in-developmenta-1-a-afd.46bbbaedb2500665dca7.js",
+          "hash": "3bd4fe1a600c5b3cc57b",
+          "publicPath": "/metadata---docs-using-https-in-developmenta-1-a-afd.46bbbaedb2500665dca7.js"
         }
       ]
     },
     "92": {
       "js": [
         {
-          "file": "92.db85b0cf90e4352ce287.js",
-          "hash": "75529364e91b5e0b0842",
-          "publicPath": "/92.db85b0cf90e4352ce287.js"
+          "file": "metadata---docs-using-the-public-folder-04-a-87b.8a6d8c0aa6a99fab5753.js",
+          "hash": "624e491918856a8e624b",
+          "publicPath": "/metadata---docs-using-the-public-folder-04-a-87b.8a6d8c0aa6a99fab5753.js"
         }
       ]
     },
     "93": {
       "js": [
         {
-          "file": "93.d393c639f7c8f14e129b.js",
-          "hash": "787083c082dc3d1c59a3",
-          "publicPath": "/93.d393c639f7c8f14e129b.js"
+          "file": "runtime~main.396667f9de5b27cc8291.js",
+          "hash": "09c8e82bc768226f20b5",
+          "publicPath": "/runtime~main.396667f9de5b27cc8291.js"
+        }
+      ]
+    },
+    "94": {
+      "js": [
+        {
+          "file": "94.4da9b280930a5b203d37.js",
+          "hash": "027fd54f541ef837aa1a",
+          "publicPath": "/94.4da9b280930a5b203d37.js"
+        }
+      ]
+    },
+    "95": {
+      "js": [
+        {
+          "file": "95.d6fa9bd72ec63b2e1a51.js",
+          "hash": "21d4f3079964f338abc7",
+          "publicPath": "/95.d6fa9bd72ec63b2e1a51.js"
         }
       ]
     }
