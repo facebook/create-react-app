@@ -47,6 +47,7 @@
     ],
     "Deployment": ["deployment"],
     "Advanced Usage": [
+      "custom-templates",
       "can-i-use-decorators",
       "pre-rendering-into-static-html-files",
       "advanced-configuration",
