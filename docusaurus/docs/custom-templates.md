@@ -50,6 +50,14 @@ my-app/
       index.js (or index.tsx)
 ```
 
+### Testing a template
+
+To test a template locally, pass the file path to the directory of your template source using the `file:` prefix.
+
+```sh
+yarn create react-app my-app --template file:../path/to/your/template/cra-template-[template-name]
+```
+
 ### The `template` folder
 
 This folder is copied to the user's app directory as Create React App installs. During this process, the file `gitignore` is renamed to `.gitignore`.
