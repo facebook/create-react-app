@@ -3,6 +3,9 @@
   "version": "3.0.1",
   "description": "Lighter styleguide",
   "main": "build/lib/styleguide.js",
+  "files": [
+    "build/"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lightingbeetle/lighter.git"
