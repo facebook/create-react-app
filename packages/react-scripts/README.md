@@ -4,7 +4,7 @@ This package is a fork of [Create React App](https://github.com/facebookincubato
 `react-scripts` package). It's intended to be used in conjuction with `create-react-app` like so:
 
 ```sh
-npx create-react-app my-app --scripts-version=backpack-react-scripts
+npx create-react-app@2.1.2 my-app --scripts-version=backpack-react-scripts
 
 # start your app development like you normally would with `create-react-app`
 cd my-app
