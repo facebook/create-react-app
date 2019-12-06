@@ -1,5 +1,7 @@
 # backpack-react-scripts
 
+### **Important:** The currently supported version of **CRA** by `backpack-react-scripts` is up to `v2.1.2`. Versions above this will not work.
+
 This package is a fork of [Create React App](https://github.com/facebookincubator/create-react-app) (specifically the
 `react-scripts` package). It's intended to be used in conjuction with `create-react-app` like so:
 
