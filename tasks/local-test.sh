@@ -8,7 +8,7 @@ function print_help {
   echo "Usage: ${0} [OPTIONS]"
   echo ""
   echo "OPTIONS:"
-  echo "  --node-version <version>  the node version to use while testing [8]"
+  echo "  --node-version <version>  the node version to use while testing [12]"
   echo "  --git-branch <branch>     the git branch to checkout for testing [the current one]"
   echo "  --test-suite <suite>      which test suite to use ('simple', installs', 'kitchensink', 'kitchensink-eject', 'all') ['all']"
   echo "  --interactive             gain a bash shell after the test run"
@@ -18,7 +18,7 @@ function print_help {
 
 cd $(dirname $0)
 
-node_version=8
+node_version=12
 current_git_branch=`git rev-parse --abbrev-ref HEAD`
 git_branch=${current_git_branch}
 test_suite=all

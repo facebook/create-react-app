@@ -6,15 +6,16 @@
  */
 
 /* @flow */
-import React from 'react';
-import { darkGray } from '../styles';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../iframeScript';
+import type { Theme } from '../styles';
 
-const footerStyle = {
+const footerStyle = (theme: Theme) => ({
   fontFamily: 'sans-serif',
-  color: darkGray,
+  color: theme.footer,
   marginTop: '0.5rem',
   flex: '0 0 auto',
-};
+});
 
 type FooterPropsType = {|
   line1: string,
@@ -22,8 +23,9 @@ type FooterPropsType = {|
 |};
 
 function Footer(props: FooterPropsType) {
+  const theme = useContext(ThemeContext);
   return (
-    <div style={footerStyle}>
+    <div style={footerStyle(theme)}>
       {props.line1}
       <br />
       {props.line2}

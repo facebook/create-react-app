@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-react-app",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "ESLint configuration used by Create React App",
   "repository": {
     "type": "git",

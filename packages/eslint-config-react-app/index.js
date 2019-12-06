@@ -92,6 +92,15 @@ module.exports = {
             typedefs: false,
           },
         ],
+        'no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-expressions': [
+          'error',
+          {
+            allowShortCircuit: true,
+            allowTernary: true,
+            allowTaggedTemplates: true,
+          },
+        ],
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': [
           'warn',
@@ -179,7 +188,6 @@ module.exports = {
     'no-throw-literal': 'warn',
     'no-undef': 'error',
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
-    'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
       'error',
