@@ -35,7 +35,7 @@ null ?? 'some other default'; // result: 'some other default'
 false ?? true; // result: false
 ```
 
-**If your're using TypeScript, you will need to upgrade your `typescript` dependency to `3.7.0` or later if you wish to use the new operators.**
+**If you're using TypeScript, you will need to upgrade your `typescript` dependency to `3.7.0` or later if you wish to use the new operators.**
 
 **If you're using Visual Studio Code 1.40 (the latest as of this release) or earlier, you will need to configure your editor if you want it to understand the new operators.**
 
