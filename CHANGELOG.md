@@ -1,3 +1,34 @@
+## 3.0.1 (Dec 6, 2019)
+
+#### :rocket: New Feature
+
+- [lighter-styleguide] added new sidebar ([#156](https://github.com/lightingbeetle/lighter/pull/156))
+- [lighter-styleguide] added search in styleguide routes paths ([#158](https://github.com/lightingbeetle/lighter/pull/158))
+
+#### :nail_care: Enhancement
+
+- [lighter-styleguide] update react-select dependency ([#149](https://github.com/lightingbeetle/lighter/pull/149))
+- [lighter-react-scripts] update sass-loader dependency ([#151](https://github.com/lightingbeetle/lighter/pull/151))
+- [lighter-styleguide] refactor `<ColorPalette />` to hooks ([#154](https://github.com/lightingbeetle/lighter/pull/154))
+- [lighter-styleguide] refactor `<Code />` to hooks and replace `prismjs` with `prism-react-renderer` ([#150](https://github.com/lightingbeetle/lighter/pull/150))
+- [lighter-styleguide] refactor `<Preview />` to hooks ([#160](https://github.com/lightingbeetle/lighter/pull/160))
+
+#### :bug: Bug Fix
+
+- [lighter-styleguide] fix package json react-select dependency version ([#155](https://github.com/lightingbeetle/lighter/pull/155))
+- [lighter-styleguide] remove GA console.log ([#157](https://github.com/lightingbeetle/lighter/pull/157))
+- [lighter-styleguide] fix styleguide npm contents ([#161](https://github.com/lightingbeetle/lighter/pull/161))
+
+#### :house: Internal
+
+- [lighter] add `styleguide:install` and `styleguide` scripts ([#152](https://github.com/lightingbeetle/lighter/pull/152))
+- [lighter-styleguide] update favicon and app title of styleguide ([#153](https://github.com/lightingbeetle/lighter/pull/153))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.0.1`
+- `lighter-styleguide@3.1.0`
+
 ## 3.0.0 (Oct 31, 2019)
 
 #### :bug: Bug Fix
