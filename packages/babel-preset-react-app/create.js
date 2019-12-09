@@ -196,7 +196,7 @@ module.exports = function(api, opts, env) {
       ],
       // Adds syntax support for import()
       require('@babel/plugin-syntax-dynamic-import').default,
-      // Adds syntax support for optional chaining (.?)
+      // Adds syntax support for optional chaining (?.)
       require('@babel/plugin-proposal-optional-chaining').default,
       // Adds syntax support for default value using ?? operator
       require('@babel/plugin-proposal-nullish-coalescing-operator').default,
