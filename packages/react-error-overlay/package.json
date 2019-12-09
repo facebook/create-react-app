@@ -35,7 +35,7 @@
   ],
   "devDependencies": {
     "@babel/code-frame": "7.5.5",
-    "@babel/core": "7.7.4",
+    "@babel/core": "7.7.5",
     "anser": "1.4.9",
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
@@ -49,7 +49,7 @@
     "eslint-plugin-flowtype": "3.13.0",
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-jsx-a11y": "6.2.3",
-    "eslint-plugin-react": "7.16.0",
+    "eslint-plugin-react": "7.17.0",
     "flow-bin": "^0.110.0",
     "html-entities": "1.2.1",
     "jest": "24.9.0",
