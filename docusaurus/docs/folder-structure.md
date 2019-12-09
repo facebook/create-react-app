@@ -10,9 +10,14 @@ my-app/
   README.md
   node_modules/
   package.json
+  .gitignore
   public/
-    index.html
     favicon.ico
+    index.html
+    logo192.png
+    logo512.png
+    manifest.json
+    robots.txt
   src/
     App.css
     App.js
@@ -20,6 +25,8 @@ my-app/
     index.css
     index.js
     logo.svg
+    serviceWorker.js
+    setupTests.js
 ```
 
 For the project to build, **these files must exist with exact filenames**:
