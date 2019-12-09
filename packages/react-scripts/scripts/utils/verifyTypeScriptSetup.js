@@ -125,9 +125,8 @@ function verifyTypeScriptSetup() {
     isolatedModules: { value: true, reason: 'implementation limitation' },
     noEmit: { value: true },
     jsx: {
-      parsedValue: ts.JsxEmit.Preserve,
-      value: 'preserve',
-      reason: 'JSX is compiled by Babel',
+      parsedValue: ts.JsxEmit.React,
+      suggested: 'react',
     },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };

@@ -16,6 +16,7 @@ import { SourceMapConsumer } from 'source-map';
 class SourceMap {
   __source_map: SourceMapConsumer;
 
+  // $FlowFixMe
   constructor(sourceMap) {
     this.__source_map = sourceMap;
   }

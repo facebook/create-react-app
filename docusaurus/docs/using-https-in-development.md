@@ -31,3 +31,14 @@ HTTPS=true npm start
 ```
 
 Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
+
+To avoid having to set the environment variable each time, you can either include in the `npm start` script like so:
+
+```json
+{
+  "start": "HTTPS=true react-scripts start"
+}
+```
+
+Or you can create a `.env` file with `HTTPS=true` set.
+[Learn more about environment variables in CRA](https://create-react-app.dev/docs/adding-custom-environment-variables).
