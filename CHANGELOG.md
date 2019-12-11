@@ -1,3 +1,7 @@
+## 5.1.1
+
+- Merged with cra v3.3
+
 ## 5.0.0
 
 - Upgraded react-scripts to work with last version of cra
