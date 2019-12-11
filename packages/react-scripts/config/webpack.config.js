@@ -92,10 +92,12 @@ module.exports = function(webpackEnv) {
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
-      isEnvDevelopment && require.resolve('style-loader'),
-      isEnvProduction && {
+      {
         loader: MiniCssExtractPlugin.loader,
-        options: shouldUseRelativeAssetPaths ? { publicPath: '../../' } : {},
+        options: {
+          hmr: isEnvDevelopment,
+          publicPath: shouldUseRelativeAssetPaths ? '../../' : undefined,
+        },
       },
       {
         loader: require.resolve('css-loader'),
@@ -270,8 +272,8 @@ module.exports = function(webpackEnv) {
               : false,
           },
           cssProcessorPluginOptions: {
-              preset: ['default', { minifyFontValues: { removeQuotes: false } }]
-          }
+            preset: ['default', { minifyFontValues: { removeQuotes: false } }],
+          },
         }),
       ],
       // Automatically split vendor and commons
@@ -493,10 +495,7 @@ module.exports = function(webpackEnv) {
             },
             // "postcss" loader applies autoprefixer to our CSS.
             // "css" loader resolves paths in CSS and adds assets as dependencies.
-            // "style" loader turns CSS into JS modules that inject <style> tags.
-            // In production, we use MiniCSSExtractPlugin to extract that CSS
-            // to a file, but in development "style" loader enables hot editing
-            // of CSS.
+            // We use MiniCSSExtractPlugin to extract CSS to a file.
             // By default we support CSS Modules with the extension .module.css
             {
               test: cssRegex,
@@ -640,13 +639,16 @@ module.exports = function(webpackEnv) {
       // See https://github.com/facebook/create-react-app/issues/186
       isEnvDevelopment &&
         new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-      isEnvProduction &&
-        new MiniCssExtractPlugin({
-          // Options similar to the same options in webpackOptions.output
-          // both options are optional
-          filename: 'static/css/[name].[contenthash:8].css',
-          chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-        }),
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: isEnvProduction
+          ? 'static/css/[name].[contenthash:8].css'
+          : isEnvDevelopment && 'static/css/[name].css',
+        chunkFilename: isEnvProduction
+          ? 'static/css/[name].[contenthash:8].chunk.css'
+          : isEnvDevelopment && 'static/css/[name].chunk.css',
+      }),
       // Generate an asset manifest file with the following content:
       // - "files" key: Mapping of all asset filenames to their corresponding
       //   output file so that tools can pick it up without having to parse
