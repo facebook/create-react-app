@@ -30,12 +30,6 @@ module.exports = {
 
   plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'react-hooks'],
 
-  extends: [
-    'plugin:jest/recommended',
-    'plugin:jest-dom/recommended',
-    'plugin:testing-library/react',
-  ],
-
   env: {
     browser: true,
     commonjs: true,
@@ -117,6 +111,17 @@ module.exports = {
         'no-useless-constructor': 'off',
         '@typescript-eslint/no-useless-constructor': 'warn',
       },
+    },
+    {
+      files: [
+        '**/__tests__/**/*.{js,jsx,ts,tsx}',
+        '**/*.{spec,test}.{js,jsx,ts,tsx}',
+      ],
+      extends: [
+        'plugin:jest/recommended',
+        'plugin:jest-dom/recommended',
+        'plugin:testing-library/react',
+      ],
     },
   ],
 
