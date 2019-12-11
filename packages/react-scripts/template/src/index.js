@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Resource from '@guestyci/agni';
-import { createHistory } from '@guestyci/history';
+import createHistory from '@guestyci/history/createHistory';
 import LocalizationProvider from '@guestyci/localize/LocalizationProvider';
 import { BrowserRouter as Router } from 'react-router-dom';
 import '@guestyci/foundation/style/styles.css';
