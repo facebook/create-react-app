@@ -21,6 +21,7 @@
     "eslint": "6.x",
     "eslint-plugin-flowtype": "3.x || 4.x",
     "eslint-plugin-import": "2.x",
+    "eslint-plugin-jest": "23.x",
     "eslint-plugin-jest-dom": "1.x",
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",

@@ -30,7 +30,11 @@ module.exports = {
 
   plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'react-hooks'],
 
-  extends: ['plugin:jest-dom/recommended', 'plugin:testing-library/react'],
+  extends: [
+    'plugin:jest/recommended',
+    'plugin:jest-dom/recommended',
+    'plugin:testing-library/react',
+  ],
 
   env: {
     browser: true,
