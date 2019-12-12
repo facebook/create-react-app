@@ -79,7 +79,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
 
 It will get copied to the `build` folder when you run `npm run build`.
 
-If you’re using [Nginx](https://www.nginx.com/), you need to modify your nginx configuration that looks like this:
+If you’re using [Nginx](https://www.nginx.com/), you need to modify your nginx configuration so that it looks like this:
 
 ```
 location / {
