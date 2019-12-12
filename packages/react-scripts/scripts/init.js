@@ -149,6 +149,12 @@ module.exports = function(
     extends: 'react-app',
   };
 
+  // Setup the prettier config
+  appPackage.prettier = {
+    trailingComma: 'es5',
+    singleQuote: true,
+  };
+
   // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;
 
