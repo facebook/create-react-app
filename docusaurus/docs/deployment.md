@@ -79,6 +79,14 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
 
 It will get copied to the `build` folder when you run `npm run build`.
 
+If you’re using [Nginx](https://www.nginx.com/), you need to modify your nginx configuration that looks like this:
+
+```
+location / {
+    try_files $uri $uri/ /index.html;
+}
+```
+
 If you’re using [Apache Tomcat](https://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
 Now requests to `/todos/42` will be handled correctly both in development and in production.
