@@ -26,7 +26,7 @@
     "create-react-app": "./index.js"
   },
   "dependencies": {
-    "chalk": "2.4.2",
+    "chalk": "3.0.0",
     "commander": "2.20.0",
     "cross-spawn": "6.0.5",
     "envinfo": "7.5.0",

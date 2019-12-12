@@ -53,7 +53,7 @@
     "@babel/code-frame": "7.5.5",
     "address": "1.1.2",
     "browserslist": "4.8.2",
-    "chalk": "2.4.2",
+    "chalk": "3.0.0",
     "cross-spawn": "6.0.5",
     "detect-port-alt": "1.1.6",
     "escape-string-regexp": "1.0.5",

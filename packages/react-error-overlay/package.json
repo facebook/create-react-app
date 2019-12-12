@@ -41,7 +41,7 @@
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
     "babel-preset-react-app": "^9.1.0",
-    "chalk": "^2.4.2",
+    "chalk": "3.0.0",
     "chokidar": "^2.1.2",
     "cross-env": "5.2.1",
     "eslint": "^6.1.0",
