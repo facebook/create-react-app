@@ -649,8 +649,9 @@ function getTemplateInstallPackage(template, originalDirectory) {
       templateToInstall = template;
     } else {
       // Add prefix 'cra-template-' to non-prefixed templates, leaving any
-      // @scope/ intact.
-      const packageMatch = template.match(/^(@[^/]+\/)?(.+)$/);
+      // @scope/ intact. This also applies to `owner/repo` templates, which
+      // loads from a GitHub repository.
+      const packageMatch = template.match(/^(@?[^/]+\/)?(.+)$/);
       const scope = packageMatch[1] || '';
       const templateName = packageMatch[2];
 
