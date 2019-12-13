@@ -948,7 +948,16 @@ function isSafeToCreateProjectIn(root, name) {
     );
     console.log();
     for (const file of conflicts) {
-      console.log(`  ${file}`);
+      try {
+        const stats = fs.lstatSync(path.join(root, file));
+        if (stats.isDirectory()) {
+          console.log(`  ${chalk.blue(`${file}/`)}`);
+        } else {
+          console.log(`  ${file}`);
+        }
+      } catch {
+        console.log(`  ${file}`);
+      }
     }
     console.log();
     console.log(
