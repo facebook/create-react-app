@@ -588,7 +588,7 @@ function getInstallPackage(version, originalDirectory) {
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
   } else if (version) {
-    if (version[0] === '@' && version.indexOf('/') === -1) {
+    if (version[0] === '@' && !version.includes('/')) {
       packageToInstall += version;
     } else if (version.match(/^file:/)) {
       packageToInstall = `file:${path.resolve(
@@ -740,7 +740,7 @@ function getPackageInfo(installPackage) {
         );
         return Promise.resolve({ name: assumedProjectName });
       });
-  } else if (installPackage.indexOf('git+') === 0) {
+  } else if (installPackage.startsWith('git+')) {
     // Pull package name out of git urls e.g:
     // git+https://github.com/mycompany/react-scripts.git
     // git+ssh://github.com/mycompany/react-scripts.git#v1.2.3
@@ -848,7 +848,7 @@ function checkAppName(appName) {
 
   // TODO: there should be a single place that holds the dependencies
   const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
-  if (dependencies.indexOf(appName) >= 0) {
+  if (dependencies.includes(appName)) {
     console.error(
       chalk.red(
         `We cannot create a project called ${chalk.green(
@@ -1010,7 +1010,7 @@ function checkThatNpmCanReadCwd() {
   // "; cwd = C:\path\to\current\dir" (unquoted)
   // I couldn't find an easier way to get it.
   const prefix = '; cwd = ';
-  const line = lines.find(line => line.indexOf(prefix) === 0);
+  const line = lines.find(line => line.startsWith(prefix));
   if (typeof line !== 'string') {
     // Fail gracefully. They could remove it.
     return true;
