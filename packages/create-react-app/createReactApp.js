@@ -775,17 +775,25 @@ function checkNpmVersion() {
 }
 
 function checkYarnVersion() {
+  const minYarnPnp = '1.12.0';
   let hasMinYarnPnp = false;
   let yarnVersion = null;
   try {
     yarnVersion = execSync('yarnpkg --version')
       .toString()
       .trim();
-    let trimmedYarnVersion = /^(.+?)[-+].+$/.exec(yarnVersion);
-    if (trimmedYarnVersion) {
-      trimmedYarnVersion = trimmedYarnVersion.pop();
+    if (semver.valid(yarnVersion)) {
+      hasMinYarnPnp = semver.gte(yarnVersion, minYarnPnp);
+    } else {
+      // Handle non-semver compliant yarn version strings, which yarn currently
+      // uses for nightly builds. The regex truncates anything after the first
+      // dash. See #5362.
+      const trimmedYarnVersionMatch = /^(.+?)[-+].+$/.exec(yarnVersion);
+      if (trimmedYarnVersionMatch) {
+        const trimmedYarnVersion = trimmedYarnVersionMatch.pop();
+        hasMinYarnPnp = semver.gte(trimmedYarnVersion, minYarnPnp);
+      }
     }
-    hasMinYarnPnp = semver.gte(trimmedYarnVersion || yarnVersion, '1.12.0');
   } catch (err) {
     // ignore
   }
