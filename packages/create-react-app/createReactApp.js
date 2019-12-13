@@ -448,10 +448,7 @@ function run(
       .then(({ isOnline, packageInfo, templateInfo }) => {
         let packageVersion = semver.coerce(packageInfo.version);
 
-        // This environment variable can be removed post-release.
-        const templatesVersionMinimum = process.env.CRA_INTERNAL_TEST
-          ? '3.2.0'
-          : '3.3.0';
+        const templatesVersionMinimum = '3.3.0';
 
         // Assume compatibility if we can't test the version.
         if (!semver.valid(packageVersion)) {
