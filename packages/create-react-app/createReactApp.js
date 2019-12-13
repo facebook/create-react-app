@@ -156,6 +156,10 @@ const program = new commander.Command(packageJson.name)
 
 if (program.info) {
   console.log(chalk.bold('\nEnvironment Info:'));
+  console.log(
+    `\n  current version of ${packageJson.name}: ${packageJson.version}`
+  );
+  console.log(`  running from ${__dirname}`);
   return envinfo
     .run(
       {
