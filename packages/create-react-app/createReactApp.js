@@ -53,14 +53,6 @@ const validateProjectName = require('validate-npm-package-name');
 
 const packageJson = require('./package.json');
 
-// These files should be allowed to remain on a failed install,
-// but then silently removed during the next create.
-const errorLogFilePatterns = [
-  'npm-debug.log',
-  'yarn-error.log',
-  'yarn-debug.log',
-];
-
 let projectName;
 
 const program = new commander.Command(packageJson.name)
@@ -247,6 +239,7 @@ function createApp(
   if (!isSafeToCreateProjectIn(root, name)) {
     process.exit(1);
   }
+  console.log();
 
   console.log(`Creating a new React app in ${chalk.green(root)}.`);
   console.log();
@@ -914,23 +907,32 @@ function setCaretRangeForRuntimeDeps(packageName) {
 function isSafeToCreateProjectIn(root, name) {
   const validFiles = [
     '.DS_Store',
-    'Thumbs.db',
     '.git',
-    '.gitignore',
-    '.idea',
-    'README.md',
-    'LICENSE',
-    '.hg',
-    '.hgignore',
-    '.hgcheck',
-    '.npmignore',
-    'mkdocs.yml',
-    'docs',
-    '.travis.yml',
-    '.gitlab-ci.yml',
     '.gitattributes',
+    '.gitignore',
+    '.gitlab-ci.yml',
+    '.hg',
+    '.hgcheck',
+    '.hgignore',
+    '.idea',
+    '.npmignore',
+    '.travis.yml',
+    'docs',
+    'LICENSE',
+    'README.md',
+    'mkdocs.yml',
+    'Thumbs.db',
   ];
-  console.log();
+  // These files should be allowed to remain on a failed install, but then
+  // silently removed during the next create.
+  const errorLogFilePatterns = [
+    'npm-debug.log',
+    'yarn-error.log',
+    'yarn-debug.log',
+  ];
+  const isErrorLog = file => {
+    return errorLogFilePatterns.some(pattern => file.startsWith(pattern));
+  };
 
   const conflicts = fs
     .readdirSync(root)
@@ -938,9 +940,7 @@ function isSafeToCreateProjectIn(root, name) {
     // IntelliJ IDEA creates module files before CRA is launched
     .filter(file => !/\.iml$/.test(file))
     // Don't treat log files from previous installation as conflicts
-    .filter(
-      file => !errorLogFilePatterns.some(pattern => file.indexOf(pattern) === 0)
-    );
+    .filter(file => !isErrorLog(file));
 
   if (conflicts.length > 0) {
     console.log(
@@ -958,15 +958,11 @@ function isSafeToCreateProjectIn(root, name) {
     return false;
   }
 
-  // Remove any remnant files from a previous installation
-  const currentFiles = fs.readdirSync(path.join(root));
-  currentFiles.forEach(file => {
-    errorLogFilePatterns.forEach(errorLogFilePattern => {
-      // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
-      if (file.indexOf(errorLogFilePattern) === 0) {
-        fs.removeSync(path.join(root, file));
-      }
-    });
+  // Remove any log files from a previous installation.
+  fs.readdirSync(root).forEach(file => {
+    if (isErrorLog(file)) {
+      fs.removeSync(path.join(root, file));
+    }
   });
   return true;
 }
