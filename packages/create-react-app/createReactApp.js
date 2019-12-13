@@ -998,6 +998,8 @@ function getProxy() {
     }
   }
 }
+
+// See https://github.com/facebook/create-react-app/pull/3355
 function checkThatNpmCanReadCwd() {
   const cwd = process.cwd();
   let childOutput = null;
