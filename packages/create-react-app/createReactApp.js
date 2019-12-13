@@ -962,7 +962,7 @@ function isSafeToCreateProjectIn(root, name) {
         } else {
           console.log(`  ${file}`);
         }
-      } catch {
+      } catch (e) {
         console.log(`  ${file}`);
       }
     }
