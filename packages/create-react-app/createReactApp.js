@@ -184,14 +184,6 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-function printValidationResults(results) {
-  if (typeof results !== 'undefined') {
-    results.forEach(error => {
-      console.error(chalk.red(`  *  ${error}`));
-    });
-  }
-}
-
 createApp(
   projectName,
   program.verbose,
@@ -838,12 +830,19 @@ function checkAppName(appName) {
   const validationResult = validateProjectName(appName);
   if (!validationResult.validForNewPackages) {
     console.error(
-      `Could not create a project called ${chalk.red(
-        `"${appName}"`
-      )} because of npm naming restrictions:`
+      chalk.red(
+        `Cannot create a project named ${chalk.green(
+          `"${appName}"`
+        )} because of npm naming restrictions:\n`
+      )
     );
-    printValidationResults(validationResult.errors);
-    printValidationResults(validationResult.warnings);
+    [
+      ...(validationResult.errors || []),
+      ...(validationResult.warnings || []),
+    ].forEach(error => {
+      console.error(chalk.red(`  * ${error}`));
+    });
+    console.error(chalk.red('\nPlease choose a different project name.'));
     process.exit(1);
   }
 
@@ -852,8 +851,8 @@ function checkAppName(appName) {
   if (dependencies.includes(appName)) {
     console.error(
       chalk.red(
-        `We cannot create a project called ${chalk.green(
-          appName
+        `Cannot create a project named ${chalk.green(
+          `"${appName}"`
         )} because a dependency with the same name exists.\n` +
           `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
