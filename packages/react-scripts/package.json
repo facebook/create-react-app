@@ -39,20 +39,20 @@
     "babel-preset-react-app": "^9.1.0",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
-    "css-loader": "3.2.1",
+    "css-loader": "3.3.2",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "eslint": "^6.6.0",
     "eslint-config-react-app": "^5.1.0",
     "eslint-loader": "3.0.3",
-    "eslint-plugin-flowtype": "3.13.0",
-    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-flowtype": "4.5.2",
+    "eslint-plugin-import": "2.19.1",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.17.0",
     "eslint-plugin-react-hooks": "^1.6.1",
     "file-loader": "4.3.0",
     "fs-extra": "^8.1.0",
-    "html-webpack-plugin": "4.0.0-beta.5",
+    "html-webpack-plugin": "4.0.0-beta.11",
     "identity-obj-proxy": "3.0.0",
     "jest": "24.9.0",
     "jest-environment-jsdom-fourteen": "1.0.1",
@@ -73,7 +73,7 @@
     "sass-loader": "8.0.0",
     "semver": "6.3.0",
     "style-loader": "1.0.1",
-    "terser-webpack-plugin": "2.2.3",
+    "terser-webpack-plugin": "2.3.0",
     "ts-pnp": "1.1.5",
     "url-loader": "2.3.0",
     "webpack": "4.41.2",
@@ -82,8 +82,8 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "devDependencies": {
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "optionalDependencies": {
     "fsevents": "2.1.2"
