@@ -1,0 +1,37 @@
+/* Raleway */
+@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+
+@import url("https://fonts.googleapis.com/css?family=Amita&display=swap");
+
+html {
+  font-size: 62.5%;
+  font-family: "Raleway", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Raleway", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  color: gray;
+}
+
+code {
+  background: lightgray;
+  padding: 0 0.2rem;
+  border-radius: 0.3rem;
+}
+
+button:focus {
+  outline: 0;
+}
