@@ -110,9 +110,6 @@ function getModules() {
   // Check if TypeScript is setup
   const hasTsConfig = fs.existsSync(paths.appTsConfig);
   const hasJsConfig = fs.existsSync(paths.appJsConfig);
-  const hasTsSetup = fs.existsSync(
-    path.join(paths.appNodeModules, 'typescript')
-  );
   const isYarn = fs.existsSync(paths.yarnLockFile);
 
   if (hasTsConfig && hasJsConfig) {
@@ -134,15 +131,19 @@ function getModules() {
     // Otherwise we'll check if there is jsconfig.json
     // for non TS projects.
   } else if (hasJsConfig) {
-    if (hasTsSetup) {
+    // Trying to parse jsconfig.json
+    // using TypeScript
+    try {
       const ts = require(resolve.sync('typescript', {
         basedir: paths.appNodeModules,
       }));
 
-      config = ts.readConfigFile(paths.appTsConfig, ts.sys.readFile).config;
-    } else {
+      config = ts.readConfigFile(paths.appJsConfig, ts.sys.readFile).config;
+    } catch (err) {
+      // Trying to parse jsconfig.json
       try {
         config = require(paths.appJsConfig);
+        // If error we assume jsconfig.json has comments
       } catch (err) {
         console.error(
           chalk.bold.red(
@@ -160,7 +161,7 @@ function getModules() {
             chalk.cyan.bold('typescript'),
             'by running',
             chalk.cyan.bold(
-              isYarn ? 'yarn add typescript' : 'npm install typescript'
+              (isYarn ? 'yarn add' : 'npm install') + ' typescript'
             ) + '.'
           )
         );
