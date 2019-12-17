@@ -73,3 +73,7 @@ This is where you can define dependencies (only dependencies are supported for n
 ```
 
 For convenience, we always replace `npm run` with `yarn` in your custom `"scripts"`, as well as in your `README` when projects are initialized with yarn.
+
+
+### Testing your template
+To test the output of your template locally run `npx create-react-app my-app --template file:/\path\to\file`
