@@ -38,7 +38,7 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const postcssNormalize = require('postcss-normalize');
 
-const BUILD_ID = process.env.BUILD_ID || '';
+const BUILD_ID = process.env.REACT_APP_BUILD_ID || '';
 
 const appPackageJson = require(paths.appPackageJson);
 
