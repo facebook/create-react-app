@@ -38,7 +38,7 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const postcssNormalize = require('postcss-normalize');
 
-const commit = require('child_process').execSync('git rev-parse --verify HEAD').toString().trim();
+const BUILD_ID = process.env.BUILD_ID || '';
 
 const appPackageJson = require(paths.appPackageJson);
 
@@ -186,14 +186,14 @@ module.exports = function(webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? `static${commit}/js/[name].[contenthash:8].js`
-        : isEnvDevelopment && `static${commit}/js/bundle.js`,
+        ? `static-${BUILD_ID}/js/[name].[contenthash:8].js`
+        : isEnvDevelopment && `static-${BUILD_ID}/js/bundle.js`,
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
-        ? `static${commit}/js/[name].[contenthash:8].chunk.js`
-        : isEnvDevelopment && `static${commit}/js/[name].chunk.js`,
+        ? `static-${BUILD_ID}/js/[name].[contenthash:8].chunk.js`
+        : isEnvDevelopment && `static-${BUILD_ID}/js/[name].chunk.js`,
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
       publicPath: publicPath,
@@ -398,7 +398,7 @@ module.exports = function(webpackEnv) {
               loader: require.resolve('url-loader'),
               options: {
                 limit: imageInlineSizeLimit,
-                name: `static${commit}/media/[name].[hash:8].[ext]`,
+                name: `static-${BUILD_ID}/media/[name].[hash:8].[ext]`,
               },
             },
             // Process application JS with Babel.
@@ -572,7 +572,7 @@ module.exports = function(webpackEnv) {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
-                name: `static${commit}/media/[name].[hash:8].[ext]`,
+                name: `static-${BUILD_ID}/media/[name].[hash:8].[ext]`,
               },
             },
             // ** STOP ** Are you adding a new loader?
@@ -646,8 +646,8 @@ module.exports = function(webpackEnv) {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: `static${commit}/css/[name].[contenthash:8].css`,
-          chunkFilename: `static${commit}/css/[name].[contenthash:8].chunk.css`,
+          filename: `static-${BUILD_ID}/css/[name].[contenthash:8].css`,
+          chunkFilename: `static-${BUILD_ID}/css/[name].[contenthash:8].chunk.css`,
         }),
       // Generate an asset manifest file with the following content:
       // - "files" key: Mapping of all asset filenames to their corresponding
