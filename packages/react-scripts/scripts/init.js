@@ -150,7 +150,14 @@ module.exports = function(
   };
 
   // Setup the browsers list
-  appPackage.browserslist = defaultBrowsers;
+  const templateBrowsers = templateJson.browserslist || defaultBrowsers;
+  appPackage.browserslist = templateBrowsers;
+  
+  // Setup the homepage if defined
+  const templateHomepage = templateJson.homepage;
+  if(typeof templateHomepage !== "undefined") {
+    appPackage.homepage = templateHomepage
+  }
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
