@@ -1,7 +1,7 @@
-const pluginTester = require('babel-plugin-tester');
+const pluginTester = require('babel-plugin-tester/pure');
 const namedAssetImport = require('./index');
 
-pluginTester({
+pluginTester.default({
   plugin: namedAssetImport,
   pluginOptions: {
     loaderMap: {
