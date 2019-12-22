@@ -58,18 +58,28 @@ You can add whatever files you want in here, but you must have at least the file
 
 ### The `template.json` file
 
-This is where you can define dependencies (only dependencies are supported for now), as well as any custom scripts that your template relies on.
+This is the configuration file for your template. It allows you to define information that should become a part of the generated project's `package.json` file, such as dependencies (only dependencies are supported for now) and any custom scripts that your template relies on. It should be structured as follows:
 
 ```json
 {
-  "dependencies": {
-    "serve": "^11.2.0"
-  },
-  "scripts": {
-    "serve": "serve -s build",
-    "build-and-serve": "npm run build && npm run serve"
+  "package": {
+    "dependencies": {
+      "serve": "^11.2.0"
+    },
+    "scripts": {
+      "serve": "serve -s build",
+      "build-and-serve": "npm run build && npm run serve"
+    },
+    "browserslist": [
+      "defaults",
+      "not IE 11",
+      "not IE_Mob 11",
+      "maintained node versions",
+    ]
   }
 }
 ```
+
+Any values you add for `"dependencies"` and `"scripts"` will be merged with the values used in the initialisation process of `react-scripts`. Any other information you add to `"package"` will be added to the generated project's `package.json` file, replacing any existing values associated with those keys.
 
 For convenience, we always replace `npm run` with `yarn` in your custom `"scripts"`, as well as in your `README` when projects are initialized with yarn.
