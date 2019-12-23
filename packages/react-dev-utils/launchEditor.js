@@ -228,10 +228,12 @@ function guessEditor() {
       const output = child_process
         .execSync('ps x --no-heading -o comm --sort=comm')
         .toString();
+
+      const runningProcesses = output.split("\n");
       const processNames = Object.keys(COMMON_EDITORS_LINUX);
       for (let i = 0; i < processNames.length; i++) {
         const processName = processNames[i];
-        if (output.indexOf(processName) !== -1) {
+        if (runningProcesses.indexOf(processName) !== -1) {
           return [COMMON_EDITORS_LINUX[processName]];
         }
       }
