@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
-import { Wrapper, FlexBox, Button } from "../Global/styled";
+import styled from 'styled-components';
+import { Wrapper, FlexBox, Button } from 'bushido-strap';
 
-import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement } from "../../store/actions/counter";
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement } from '../../store/actions/counter';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export default function ReduxCounter() {
   const dispatch = useDispatch();
@@ -16,13 +16,13 @@ export default function ReduxCounter() {
     <Wrapper>
       <HomeLink to="/">Home</HomeLink>
 
-      <CountBtn onClick={() => dispatch(increment())}>++</CountBtn>
+      <Button onClick={() => dispatch(increment())}>++</Button>
 
       <CodeCount align="center" justify="space-between" width="12rem">
         Clicked <code>{count}</code> times
       </CodeCount>
 
-      <CountBtn onClick={() => dispatch(decrement())}>--</CountBtn>
+      <Button onClick={() => dispatch(decrement())}>--</Button>
     </Wrapper>
   );
 }
@@ -32,10 +32,6 @@ const CodeCount = styled(FlexBox)`
   code {
     font-size: 2.5rem;
   }
-`;
-
-const CountBtn = styled(Button)`
-  // width: 3.2rem;
 `;
 
 const HomeLink = styled(Link)`

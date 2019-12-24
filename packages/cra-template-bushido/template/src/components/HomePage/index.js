@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { Wrapper, Linkton } from "../Global/styled";
+import { Wrapper, Linkton } from 'bushido-strap';
 
 const HomePage = () => {
   return (

@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 
-// Import css files for most global settings
-import './index.css';
-// Normalizes our css among different browsers
-import 'normalize.css';
+// Import sass file from bushido-strap for global style overhaul
+import 'bushido-strap/css/styles.css';
 
 // Keep this puppy here for later!
 import * as serviceWorker from './serviceWorker';
