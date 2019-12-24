@@ -60,6 +60,7 @@ const COMMON_EDITORS_OSX = {
   '/Applications/MacVim.app/Contents/MacOS/MacVim': 'mvim',
   '/Applications/GoLand.app/Contents/MacOS/goland':
     '/Applications/GoLand.app/Contents/MacOS/goland',
+  '/Applications/TextMate.app/Contents/MacOS/TextMate': 'mate',
 };
 
 const COMMON_EDITORS_LINUX = {
