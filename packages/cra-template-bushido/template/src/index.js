@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 // Import sass file from bushido-strap for global style overhaul
-import 'bushido-strap/css/styles.css';
+import 'bushido-strap/css/main.css';
 
 // Keep this puppy here for later!
 import * as serviceWorker from './serviceWorker';
