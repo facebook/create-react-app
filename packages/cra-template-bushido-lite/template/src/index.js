@@ -9,17 +9,7 @@ import 'bushido-strap/css/main.css';
 // Keep this puppy here for later!
 import * as serviceWorker from './serviceWorker';
 
-// Set up Redux/Router
-import { applyMiddleware, createStore } from 'redux';
-import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import logger from 'redux-logger';
-import thunk from 'redux-thunk';
-
-// Import reducer/index.js as root reducer, it's where we're combining all our reducer files
-import rootReducer from './store/reducers';
-
-const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>
