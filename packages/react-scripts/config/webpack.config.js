@@ -156,9 +156,9 @@ module.exports = function(webpackEnv) {
           {
             inject: true,
             template: appPage.appHtml,
-            // filename: `${appPage.name}.html`,
-            // title: appPage.title,
-            // chunks: [appPage.name]
+            filename: `${appPage.name}.html`,
+            title: appPage.title,
+            chunks: [appPage.name],
           },
           isEnvProduction
             ? {
@@ -393,6 +393,30 @@ module.exports = function(webpackEnv) {
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
                 resolvePluginsRelativeTo: __dirname,
+                // @remove-on-eject-begin
+                ignore: process.env.EXTEND_ESLINT === 'true',
+                baseConfig: (() => {
+                  // We allow overriding the config only if the env variable is set
+                  if (process.env.EXTEND_ESLINT === 'true') {
+                    const eslintCli = new eslint.CLIEngine();
+                    let eslintConfig;
+                    try {
+                      eslintConfig = eslintCli.getConfigForFile(
+                        paths.appIndexJs
+                      );
+                    } catch (e) {
+                      console.error(e);
+                      process.exit(1);
+                    }
+                    return eslintConfig;
+                  } else {
+                    return {
+                      extends: [require.resolve('eslint-config-react-app')],
+                    };
+                  }
+                })(),
+                useEslintrc: false,
+                // @remove-on-eject-end
               },
               loader: require.resolve('eslint-loader'),
             },
