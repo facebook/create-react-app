@@ -73,14 +73,23 @@ const resolveModule = (resolveFn, filePath) => {
   return resolveFn(`${filePath}.js`);
 };
 
-const appPages = [
-  {
-    name: 'index',
-    title: 'index',
-    appHtml: resolveApp('public/index.html'),
-    appIndexJs: resolveApp('src/index.js'),
-  },
-];
+// Resolve appPages (aka entry points)
+var appPages = require(resolveApp('package.json')).appPages;
+// checks if there is at least one entry point specified
+if (appPages === undefined || appPages === null || appPages.length === 0) {
+  console.log(
+    "You must defined the entry points in your package.json using the parameter 'appPages'."
+  );
+  process.exit(1);
+} else
+  appPages = appPages.map(ep => {
+    // maps each element by resolving the right path
+    return {
+      ...ep,
+      appHtml: resolveApp(ep.appHtml),
+      appIndexJs: resolveModule(resolveApp, ep.appIndexJs),
+    };
+  });
 
 // config after eject: we're in ./config/
 module.exports = {
