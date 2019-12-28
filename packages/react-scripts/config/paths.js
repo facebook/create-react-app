@@ -73,6 +73,15 @@ const resolveModule = (resolveFn, filePath) => {
   return resolveFn(`${filePath}.js`);
 };
 
+const appPages = [
+  {
+    name: 'index',
+    title: 'index',
+    appHtml: resolveApp('public/index.html'),
+    appIndexJs: resolveApp('src/index.js'),
+  },
+];
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
