@@ -225,7 +225,7 @@ function copyPublicFolder() {
   paths.appPages.forEach(appPage => {
     fs.copySync(paths.appPublic, paths.appBuild, {
       dereference: true,
-      filter: file => file !== paths.appHtml,
+      filter: file => file !== appPage.appHtml,
     });
   });
 }
