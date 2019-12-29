@@ -143,6 +143,14 @@ const program = new commander.Command(packageJson.name)
       )}`
     );
     console.log();
+
+    if (isPackageInstalledGlobally('create-react-app')) {
+      console.log(
+        `    [Please make sure you are using npx] ${chalk.yellow(
+          'global installation for create-react-app is deprecated.'
+        )}`
+      );
+    }
   })
   .parse(process.argv);
 
@@ -328,6 +336,18 @@ function createApp(
     useYarn,
     usePnp
   );
+}
+
+function isPackageInstalledGlobally(packageName) {
+  try {
+    const pathToGlobalPackages = execSync('npm root -g');
+    const packages = execSync(`ls ${pathToGlobalPackages}`)
+      .toString()
+      .split('\n');
+    return packages.includes(packageName);
+  } catch (e) {
+    return false;
+  }
 }
 
 function shouldUseYarn() {
