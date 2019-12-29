@@ -362,7 +362,7 @@ module.exports = function(webpackEnv) {
                     let eslintConfig;
                     try {
                       eslintConfig = eslintCli.getConfigForFile(
-                        paths.appIndexJs
+                        "*.ts"
                       );
                     } catch (e) {
                       console.error(e);
