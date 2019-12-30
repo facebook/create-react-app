@@ -8,6 +8,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const chalk = require('react-dev-utils/chalk');
 const paths = require('../../config/paths');
 const modules = require('../../config/modules');
@@ -22,8 +23,17 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ? `<rootDir>/src/setupTests.${setupTestsFileExtension}`
     : undefined;
 
+  const roots = ['<rootDir>/src'];
+
+  const nodeMocksRootPath = path.join(rootDir || paths.appPath, '__mocks__');
+  const nodeMocksRootStats =
+    fs.existsSync(nodeMocksRootPath) && fs.statSync(nodeMocksRootPath);
+  if (nodeMocksRootStats && nodeMocksRootStats.isDirectory()) {
+    roots.push('<rootDir>/__mocks__');
+  }
+
   const config = {
-    roots: ['<rootDir>/src'],
+    roots,
 
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
 
