@@ -122,26 +122,45 @@ module.exports = function(
 
   // Keys to ignore in templatePackage
   const templatePackageBlacklist = [
+    'name',
+    'version',
+    'description',
+    'keywords',
+    'homepage',
+    'bugs',
+    'license',
+    'author',
+    'contributors',
+    'files',
+    'main',
+    'browser',
+    'bin',
+    'man',
+    'directories',
+    'repository',
     'devDependencies',
     'peerDependencies',
-    'name',
+    'bundledDependencies',
+    'optionalDependencies',
+    'engineStrict',
+    'os',
+    'cpu',
+    'preferGlobal',
+    'private',
+    'publishConfig',
   ];
 
   // Keys from templatePackage that will be merged with appPackage
-  const templatePackageToMerge = [
-    'dependencies',
-    'scripts',
-  ];
+  const templatePackageToMerge = ['dependencies', 'scripts'];
 
   // Keys from templatePackage that will be added to appPackage,
   // replacing any existing entries.
-  const templatePackageToReplace = Object.keys(templatePackage)
-    .filter(key => {
-      return (
-        templatePackageBlacklist.indexOf(key) === -1 &&
-        templatePackageToMerge.indexOf(key) === -1
-      );
-    });
+  const templatePackageToReplace = Object.keys(templatePackage).filter(key => {
+    return (
+      templatePackageBlacklist.indexOf(key) === -1 &&
+      templatePackageToMerge.indexOf(key) === -1
+    );
+  });
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
@@ -253,7 +272,8 @@ module.exports = function(
 
   // Install additional template dependencies, if present
   // TODO: deprecate 'dependencies' key directly on templateJson
-  const templateDependencies = templatePackage.dependencies || templateJson.dependencies;
+  const templateDependencies =
+    templatePackage.dependencies || templateJson.dependencies;
   if (templateDependencies) {
     args = args.concat(
       Object.keys(templateDependencies).map(key => {

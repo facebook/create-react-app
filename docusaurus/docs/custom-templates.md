@@ -58,28 +58,31 @@ You can add whatever files you want in here, but you must have at least the file
 
 ### The `template.json` file
 
-This is the configuration file for your template. It allows you to define information that should become a part of the generated project's `package.json` file, such as dependencies (only dependencies are supported for now) and any custom scripts that your template relies on. It should be structured as follows:
+This is the configuration file for your template. As this is a new feature, more options will be added over time. For now, only a `package` key is supported.
+
+The `package` key lets you provide any keys/values that you want added to the new project's `package.json`, such as dependencies (only dependencies are supported for now) and any custom scripts that your template relies on.
+
+Below is an example `template.json` file:
 
 ```json
 {
   "package": {
     "dependencies": {
+      "eslint-plugin-jsx-a11y": "^6.2.3",
       "serve": "^11.2.0"
     },
     "scripts": {
       "serve": "serve -s build",
       "build-and-serve": "npm run build && npm run serve"
     },
-    "browserslist": [
-      "defaults",
-      "not IE 11",
-      "not IE_Mob 11",
-      "maintained node versions",
-    ]
+    "eslintConfig": {
+      "extends": ["react-app", "plugin:jsx-a11y/recommended"],
+      "plugins": ["jsx-a11y"]
+    }
   }
 }
 ```
 
-Any values you add for `"dependencies"` and `"scripts"` will be merged with the values used in the initialisation process of `react-scripts`. Any other information you add to `"package"` will be added to the generated project's `package.json` file, replacing any existing values associated with those keys.
+Any values you add for `"dependencies"` and `"scripts"` will be merged with the Create React App defaults. Values for any other keys will be used as-is, replacing any matching Create React App defaults.
 
 For convenience, we always replace `npm run` with `yarn` in your custom `"scripts"`, as well as in your `README` when projects are initialized with yarn.
