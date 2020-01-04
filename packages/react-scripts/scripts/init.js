@@ -126,7 +126,6 @@ module.exports = function(
     'version',
     'description',
     'keywords',
-    'homepage',
     'bugs',
     'license',
     'author',
