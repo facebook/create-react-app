@@ -315,5 +315,54 @@ module.exports = {
     'flowtype/define-flow-type': 'warn',
     'flowtype/require-valid-file-annotation': 'warn',
     'flowtype/use-flow-type': 'warn',
+
+    // Lighter custom rules
+    'max-depth': ['warn', 4],
+    'max-lines': [
+      'warn',
+      {
+        max: 300,
+        skipBlankLines: true,
+        skipComments: true,
+      },
+    ],
+    'max-statements': [
+      'warn',
+      30,
+      {
+        ignoreTopLevelFunctions: true,
+      },
+    ],
+    'import/order': [
+      'warn',
+      {
+        'newlines-between': 'always',
+        groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
+      },
+    ],
+    'jsx-a11y/label-has-for': [
+      'error',
+      {
+        components: ['label'],
+        required: {
+          every: ['id'],
+        },
+      },
+    ],
+    'react/forbid-prop-types': [
+      'warn',
+      {
+        forbid: ['any'],
+      },
+    ],
+    'react/no-deprecated': 'warn',
+    'react/no-this-in-sfc': 'error',
+    'react/prop-types': [
+      'warn',
+      {
+        ignore: ['className', 'children', 'style'],
+      },
+    ],
+    'react/sort-prop-types': 'warn',
   },
 };

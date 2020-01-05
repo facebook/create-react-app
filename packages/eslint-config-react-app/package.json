@@ -1,15 +1,15 @@
 {
-  "name": "eslint-config-react-app",
-  "version": "5.1.0",
-  "description": "ESLint configuration used by Create React App",
+  "name": "@lighting-beetle/eslint-config-lighter",
+  "version": "3.0.0",
+  "description": "ESLint configuration used by Lighter",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/lighting-beetle/lighter",
     "directory": "packages/eslint-config-react-app"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/lighting-beetle/lighter/issues"
   },
   "files": [
     "index.js"
