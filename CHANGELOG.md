@@ -1,3 +1,18 @@
+## 3.0.2 (Jan 5, 2020)
+
+#### :boom: Breaking Change
+
+- [eslint-config-lighter] replace Airbnb eslint config with CRA config and add few new rules ([#164](https://github.com/lightingbeetle/lighter/pull/164))
+
+#### :house: Internal
+
+- [lighter] update CRA to 3.3.0 ([#163](https://github.com/lightingbeetle/lighter/pull/163))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.0.2`
+- `eslint-config-lighter@3.0.0`
+
 ## 3.0.1 (Dec 6, 2019)
 
 #### :rocket: New Feature
@@ -148,6 +163,7 @@ export default md`
 
 ```mdx
 <!-- docs.mdx -->
+
 # Markdown
 ```
 
