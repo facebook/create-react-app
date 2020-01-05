@@ -107,8 +107,8 @@ npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_reg
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
-./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-error-overlay/src/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
 
 cd packages/react-error-overlay/
 ./node_modules/.bin/eslint --max-warnings 0 src/

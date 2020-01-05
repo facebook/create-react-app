@@ -26,7 +26,7 @@ class InterpolateHtmlPlugin {
     compiler.hooks.compilation.tap('InterpolateHtmlPlugin', compilation => {
       this.htmlWebpackPlugin
         .getHooks(compilation)
-        .beforeEmit.tap('InterpolateHtmlPlugin', data => {
+        .afterTemplateExecution.tap('InterpolateHtmlPlugin', data => {
           // Run HTML through a series of user-specified string replacements.
           Object.keys(this.replacements).forEach(key => {
             const value = this.replacements[key];

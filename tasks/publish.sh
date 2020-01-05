@@ -44,4 +44,4 @@ if [ -z $CI ]; then
 fi
 
 # Go!
-./node_modules/.bin/lerna publish --independent "$@"
+NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish "$@"

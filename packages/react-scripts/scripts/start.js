@@ -115,6 +115,7 @@ choosePort(HOST, DEFAULT_PORT)
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
     const useTypeScript = fs.existsSync(paths.appTsConfig);
+    const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
     const urls = prepareUrls(protocol, HOST, port);
     const devSocket = {
       warnings: warnings =>
@@ -131,6 +132,7 @@ choosePort(HOST, DEFAULT_PORT)
       urls,
       useYarn,
       useTypeScript,
+      tscCompileOnError,
       webpack,
     });
     // Load proxy config

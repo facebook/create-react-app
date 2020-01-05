@@ -62,7 +62,7 @@ Object {
 Failed to compile.
 
 ./src/App.js
-  Line 4:  'b' is not defined  no-undef
+  Line 4:13:  'b' is not defined  no-undef
 
 Search for the keywords to learn more about each error.
 
@@ -79,7 +79,7 @@ Object {
 Compiled with warnings.
 
 ./src/App.js
-  Line 3:  'foo' is defined but never used  no-unused-vars
+  Line 3:10:  'foo' is defined but never used  no-unused-vars
 
 Search for the keywords to learn more about each warning.
 To ignore, add // eslint-disable-next-line to the line before.
