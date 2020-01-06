@@ -7,8 +7,13 @@ title: Using the Public Folder
 
 ## Changing the HTML
 
-The `public` folder contains the HTML file so you can tweak it, for example, to [set the page title](title-and-meta-tags.md).
+The `public` folder contains the `index.html` file so you can tweak it, for example to:
+
+* [Set the page title](title-and-meta-tags.md).
+* [Use environment variables](adding-custom-environment-variables.md).
+
 The `<script>` tag with the compiled code will be added to it automatically during the build process.
+
 
 ## Adding Assets Outside of the Module System
 
@@ -24,7 +29,11 @@ This mechanism provides a number of benefits:
 
 However there is an **escape hatch** that you can use to add an asset outside of the module system.
 
-If you put a file into the `public` folder, it will **not** be processed by Webpack. Instead it will be copied into the build folder untouched. To reference assets in the `public` folder, you need to use an environment variable called `PUBLIC_URL`.
+If you put a file other than `index.html` into the `public` folder, it will **not** be processed by Webpack. Other files will be copied into the build folder untouched.
+
+## Referencing Assets Outside of the Module System
+
+To reference assets in the `public` folder, you need to use an environment variable called `PUBLIC_URL`.
 
 Inside `index.html`, you can use it like this:
 
@@ -47,9 +56,9 @@ render() {
 }
 ```
 
-Keep in mind the downsides of this approach:
+## Downsides of this approach
 
-- None of the files in `public` folder get post-processed or minified.
+- None of the files in `public` folder get post-processed (with the exception of `index.html`, as discussed above) or minified.
 - Missing files will not be called at compilation time, and will cause 404 errors for your users.
 - Result filenames won’t include content hashes so you’ll need to add query arguments or rename them every time they change.
 
