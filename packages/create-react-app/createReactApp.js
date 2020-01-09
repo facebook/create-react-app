@@ -644,17 +644,19 @@ function getTemplateInstallPackage(template, originalDirectory) {
         templateName === templateToInstall ||
         templateName.startsWith(`${templateToInstall}-`)
       ) {
-        // cra-template
-        // @SCOPE/cra-template
-        // cra-template-NAME
-        // @SCOPE/cra-template-NAME
+        // Covers:
+        // - cra-template
+        // - @SCOPE/cra-template
+        // - cra-template-NAME
+        // - @SCOPE/cra-template-NAME
         templateToInstall = `${scope}${templateName}`;
       } else if (templateName.startsWith('@')) {
-        // @SCOPE
+        // Covers using @SCOPE only
         templateToInstall = `${templateName}/${templateToInstall}`;
       } else {
-        // NAME
-        // @SCOPE/NAME
+        // Covers templates without the `cra-template` prefix:
+        // - NAME
+        // - @SCOPE/NAME
         templateToInstall = `${scope}${templateToInstall}-${templateName}`;
       }
     }
