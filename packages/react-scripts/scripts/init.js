@@ -156,8 +156,8 @@ module.exports = function(
   // replacing any existing entries.
   const templatePackageToReplace = Object.keys(templatePackage).filter(key => {
     return (
-      templatePackageBlacklist.indexOf(key) === -1 &&
-      templatePackageToMerge.indexOf(key) === -1
+      !templatePackageBlacklist.includes(key) &&
+      !templatePackageToMerge.includes(key)
     );
   });
 
