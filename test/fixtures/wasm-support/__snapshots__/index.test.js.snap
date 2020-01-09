@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can use wasm library in development 1`] = `"Ultimate answer: 42"`;
+
+exports[`can use wasm library in production 1`] = `"Ultimate answer: 42"`;

@@ -76,6 +76,7 @@
     "terser-webpack-plugin": "2.3.0",
     "ts-pnp": "1.1.5",
     "url-loader": "2.3.0",
+    "wasm-loader": "^1.3.0",
     "webpack": "4.41.2",
     "webpack-dev-server": "3.9.0",
     "webpack-manifest-plugin": "2.2.0",
