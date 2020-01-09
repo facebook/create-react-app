@@ -63,4 +63,4 @@ The `public` folder is useful as a workaround for a number of less common cases:
 - You want to include a small script like [`pace.js`](https://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
 - Some library may be incompatible with Webpack and you have no other option but to include it as a `<script>` tag.
 
-Note that if you add a `<script>` that declares global variables, you also need to read the next section on using them.
+Note that if you add a `<script>` that declares global variables, you should read the topic [Using Global Variables](using-global-variables.md) in the next section which explains how to reference them.
