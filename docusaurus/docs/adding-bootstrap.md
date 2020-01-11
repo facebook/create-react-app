@@ -29,7 +29,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 > Note: this feature is available with `react-scripts@2.0.0` and higher.
 
-Sometimes you might need to tweak the visual styles of Bootstrap (or equivalent package).<br>
+Sometimes you might need to tweak the visual styles of Bootstrap (or equivalent package).
+
 As of `react-scripts@2.0.0` you can import `.scss` files. This makes it possible to use a package's built-in Sass variables for global style preferences.
 
 To enable `scss` in Create React App you will need to install `node-sass`.
@@ -38,7 +39,7 @@ To enable `scss` in Create React App you will need to install `node-sass`.
 npm install --save node-sass
 ```
 
-Alternatively you may use `yarn`::
+Alternatively you may use `yarn`:
 
 ```sh
 yarn add node-sass

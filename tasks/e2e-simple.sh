@@ -93,12 +93,12 @@ startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
-./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-error-overlay/src/
+./node_modules/.bin/eslint --max-warnings 0 packages/react-scripts/
 
 cd packages/react-error-overlay/
 yarn test
-if [ $AGENT_OS != 'Windows_NT' ]; then
+if [ "$AGENT_OS" != 'Windows_NT' ]; then
   # Flow started hanging on Windows build agents
   yarn flow
 fi

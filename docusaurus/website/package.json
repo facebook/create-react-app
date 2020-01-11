@@ -1,14 +1,27 @@
 {
   "scripts": {
-    "examples": "docusaurus-examples",
-    "start": "docusaurus-start",
-    "build": "docusaurus-build",
-    "publish-gh-pages": "docusaurus-publish",
-    "write-translations": "docusaurus-write-translations",
-    "version": "docusaurus-version",
-    "rename-version": "docusaurus-rename-version"
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy"
   },
-  "devDependencies": {
-    "docusaurus": "^1.7.2"
+  "dependencies": {
+    "@docusaurus/core": "^2.0.0-alpha.39",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.39",
+    "classnames": "^2.2.6",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
