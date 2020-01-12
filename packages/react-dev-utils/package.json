@@ -50,7 +50,7 @@
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "@babel/code-frame": "7.5.5",
+    "@babel/code-frame": "7.8.0",
     "address": "1.1.2",
     "browserslist": "4.8.2",
     "chalk": "3.0.0",
