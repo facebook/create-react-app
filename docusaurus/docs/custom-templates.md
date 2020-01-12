@@ -9,6 +9,8 @@ Custom Templates enable you to select a template to create your project from, wh
 
 You'll notice that Custom Templates are always named in the format `cra-template-[template-name]`, however you only need to provide the `[template-name]` to the creation command.
 
+Scoped templates are also supported, under the name `@[scope-name]/cra-template` or `@[scope-name]/cra-template-[template-name]`, which can be installed via `@[scope]` and `@[scope]/[template-name]` respectively.
+
 ### npm
 
 ```sh
