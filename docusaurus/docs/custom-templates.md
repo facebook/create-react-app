@@ -60,18 +60,31 @@ You can add whatever files you want in here, but you must have at least the file
 
 ### The `template.json` file
 
-This is where you can define dependencies (only dependencies are supported for now), as well as any custom scripts that your template relies on.
+This is the configuration file for your template. As this is a new feature, more options will be added over time. For now, only a `package` key is supported.
+
+The `package` key lets you provide any keys/values that you want added to the new project's `package.json`, such as dependencies (only dependencies are supported for now) and any custom scripts that your template relies on.
+
+Below is an example `template.json` file:
 
 ```json
 {
-  "dependencies": {
-    "serve": "^11.2.0"
-  },
-  "scripts": {
-    "serve": "serve -s build",
-    "build-and-serve": "npm run build && npm run serve"
+  "package": {
+    "dependencies": {
+      "eslint-plugin-jsx-a11y": "^6.2.3",
+      "serve": "^11.2.0"
+    },
+    "scripts": {
+      "serve": "serve -s build",
+      "build-and-serve": "npm run build && npm run serve"
+    },
+    "eslintConfig": {
+      "extends": ["react-app", "plugin:jsx-a11y/recommended"],
+      "plugins": ["jsx-a11y"]
+    }
   }
 }
 ```
+
+Any values you add for `"dependencies"` and `"scripts"` will be merged with the Create React App defaults. Values for any other keys will be used as-is, replacing any matching Create React App defaults.
 
 For convenience, we always replace `npm run` with `yarn` in your custom `"scripts"`, as well as in your `README` when projects are initialized with yarn.
