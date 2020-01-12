@@ -24,6 +24,7 @@
     "@testing-library/react": "^9.3.0",
     "@testing-library/user-event": "^7.1.2",
     "alex": "^8.0.0",
+    "cross-env": "^6.0.3",
     "eslint": "^6.1.0",
     "execa": "1.0.0",
     "fs-extra": "^7.0.1",
