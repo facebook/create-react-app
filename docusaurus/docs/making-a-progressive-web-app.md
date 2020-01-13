@@ -10,7 +10,7 @@ the build process will generate a service worker file, but it will not be
 registered, so it will not take control of your production web app.
 
 In order to opt-in to the offline-first behavior, developers should look for the
-following in their [`src/index.js`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/index.js) file:
+following in their [`src/index.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/index.js) file:
 
 ```js
 // If you want your app to work offline and load faster, you can change
@@ -62,9 +62,9 @@ following into account:
    fetched the latest updates that will be available the next time they load the
    page (showing a "New content is available once existing tabs are closed." message). Showing
    these messages is currently left as an exercise to the developer, but as a
-   starting point, you can make use of the logic included in [`src/serviceWorker.js`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/src/serviceWorker.js), which
+   starting point, you can make use of the logic included in [`src/serviceWorker.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/serviceWorker.js), which
    demonstrates which service worker lifecycle events to listen for to detect each
-   scenario, and which as a default, just logs appropriate messages to the
+   scenario, and which as a default, only logs appropriate messages to the
    JavaScript console.
 
 1. Service workers [require HTTPS](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers#you_need_https),
@@ -80,7 +80,7 @@ following into account:
    changes you've made locally.
 
 1. If you _need_ to test your offline-first service worker locally, build
-   the application (using `npm run build`) and run a simple http server from your
+   the application (using `npm run build`) and run a standard http server from your
    build directory. After running the build script, `create-react-app` will give
    instructions for one way to test your production build locally and the [deployment instructions](deployment.md) have
    instructions for using other methods. _Be sure to always use an
@@ -93,11 +93,11 @@ following into account:
 ## Progressive Web App Metadata
 
 The default configuration includes a web app manifest located at
-[`public/manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/public/manifest.json), that you can customize with
+[`public/manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/public/manifest.json), that you can customize with
 details specific to your web application.
 
 When a user adds a web app to their homescreen using Chrome or Firefox on
-Android, the metadata in [`manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/public/manifest.json) determines what
+Android, the metadata in [`manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/public/manifest.json) determines what
 icons, names, and branding colors to use when the web app is displayed.
 [The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations

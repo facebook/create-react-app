@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-labels: 'issue: bug'
+labels: 'issue: bug report, needs triage'
 ---
 
 <!--
@@ -103,9 +103,7 @@ labels: 'issue: bug'
 
 (Write your steps here:)
 
-1.
-2.
-3.
+1. 2. 3.
 
 ### Expected behavior
 

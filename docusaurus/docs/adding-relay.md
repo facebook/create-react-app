@@ -3,7 +3,7 @@ id: adding-relay
 title: Adding Relay
 ---
 
-Relay is a framework for building data-driven React applications powered by GraphQL. The current release of Relay works with Create React App projects out of the box using Babel Macros. Simply set up your project as laid out in the [Relay documentation](https://facebook.github.io/relay/), then make sure you have a version of the babel plugin providing the macro.
+Relay is a framework for building data-driven React applications powered by GraphQL. The current release of Relay works with Create React App projects out of the box using Babel Macros. Set up your project as shown in the [Relay documentation](https://facebook.github.io/relay/), then make sure you have a version of the babel plugin providing the macro.
 
 To add it, run:
 

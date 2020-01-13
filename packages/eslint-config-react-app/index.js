@@ -78,10 +78,9 @@ module.exports = {
         'no-undef': 'off',
 
         // Add TypeScript specific rules (and turn off ESLint equivalents)
-        '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
+        '@typescript-eslint/consistent-type-assertions': 'warn',
         'no-array-constructor': 'off',
         '@typescript-eslint/no-array-constructor': 'warn',
-        '@typescript-eslint/no-namespace': 'error',
         'no-use-before-define': 'off',
         '@typescript-eslint/no-use-before-define': [
           'warn',
@@ -90,6 +89,15 @@ module.exports = {
             classes: false,
             variables: false,
             typedefs: false,
+          },
+        ],
+        'no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-expressions': [
+          'error',
+          {
+            allowShortCircuit: true,
+            allowTernary: true,
+            allowTaggedTemplates: true,
           },
         ],
         'no-unused-vars': 'off',
@@ -163,7 +171,9 @@ module.exports = {
     'no-obj-calls': 'warn',
     'no-octal': 'warn',
     'no-octal-escape': 'warn',
-    'no-redeclare': 'warn',
+    // TODO: Remove this option in the next major release of CRA.
+    // https://eslint.org/docs/user-guide/migrating-to-6.0.0#-the-no-redeclare-rule-is-now-more-strict-by-default
+    'no-redeclare': ['warn', { builtinGlobals: false }],
     'no-regex-spaces': 'warn',
     'no-restricted-syntax': ['warn', 'WithStatement'],
     'no-script-url': 'warn',
@@ -177,7 +187,6 @@ module.exports = {
     'no-throw-literal': 'warn',
     'no-undef': 'error',
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
-    'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
       'error',
@@ -286,7 +295,7 @@ module.exports = {
     'jsx-a11y/aria-activedescendant-has-tabindex': 'warn',
     'jsx-a11y/aria-props': 'warn',
     'jsx-a11y/aria-proptypes': 'warn',
-    'jsx-a11y/aria-role': 'warn',
+    'jsx-a11y/aria-role': ['warn', { ignoreNonDOM: true }],
     'jsx-a11y/aria-unsupported-elements': 'warn',
     'jsx-a11y/heading-has-content': 'warn',
     'jsx-a11y/iframe-has-title': 'warn',
