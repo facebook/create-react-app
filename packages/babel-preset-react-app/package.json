@@ -22,7 +22,9 @@
     "test.js"
   ],
   "dependencies": {
+    "@babel/compat-data": "7.8.1",
     "@babel/core": "7.7.5",
+    "@babel/helper-compilation-targets": "7.8.3",
     "@babel/plugin-proposal-class-properties": "7.7.4",
     "@babel/plugin-proposal-decorators": "7.7.4",
     "@babel/plugin-proposal-nullish-coalescing-operator": "7.7.4",

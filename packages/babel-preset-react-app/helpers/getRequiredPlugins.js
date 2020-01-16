@@ -9,12 +9,12 @@
 const {
   default: getTargets,
   isBrowsersQueryValid,
-} = require('@babel/preset-env/lib/targets-parser');
-const { isPluginRequired } = require('@babel/preset-env/lib/filter-items');
-const data = require('@babel/preset-env/data/plugins.json');
+  isRequired,
+} = require('@babel/helper-compilation-targets');
+const data = require('@babel/compat-data/plugins');
 
 // Copying normalizeTargets (because it is not exported)
-// https://github.com/babel/babel/blob/7f732ad0198004a1d31543ddd848e6edc646e771/packages/babel-preset-env/src/normalize-options.js#L122-L130
+// https://github.com/babel/babel/blob/04354d155689405ba688d4b400702710f9cccc97/packages/babel-preset-env/src/normalize-options.js#L121-L129
 const normalizeTargets = targets => {
   // TODO: Allow to use only query or strings as a targets from next breaking change.
   if (isBrowsersQueryValid(targets)) {
@@ -30,10 +30,7 @@ module.exports = function getRequiredPlugins(targets) {
   const requiredPlugins = {};
   const currentTargets = getTargets(normalizeTargets(targets));
   for (const [pluginName, pluginTargets] of Object.entries(data)) {
-    requiredPlugins[pluginName] = isPluginRequired(
-      currentTargets,
-      pluginTargets
-    );
+    requiredPlugins[pluginName] = isRequired(currentTargets, pluginTargets);
   }
   return requiredPlugins;
 };
