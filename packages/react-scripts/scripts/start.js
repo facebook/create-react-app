@@ -106,7 +106,7 @@ choosePort(HOST, DEFAULT_PORT)
       configFactory('development', {
         entries: {
           ...getEntries('', paths.appSrc, '/index.js'),
-          ...getEntries('lib', paths.libDir, '/*.js'),
+          ...getEntries('lib', paths.libDir, '/*.{js,scss,css}'),
           ...spaEntries,
         },
         spaHtmlPaths,
