@@ -1,3 +1,13 @@
+## 3.1.5 (Jan 16, 2020)
+
+#### :bug: Bug Fix
+
+- [lighter-react-scripts] missnamed and missing entires `app` and `static` ([#177](https://github.com/lightingbeetle/lighter/pull/177))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.1.5`
+
 ## 3.1.4 (Jan 16, 2020)
 
 #### :bug: Bug Fix
