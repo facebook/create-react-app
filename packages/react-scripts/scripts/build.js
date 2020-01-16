@@ -81,6 +81,7 @@ const config = [
   configFactory('production', {
     entries: {
       ...getEntries('', paths.appSrc, '/index.js'),
+      ...getEntries('lib', paths.libDir, '/*.{js,scss,css}'),
       ...spaEntries,
     },
     spaHtmlPaths,
@@ -90,7 +91,6 @@ const config = [
       ...getEntries('components', paths.componentsDir, '/*.{js,scss,css}'),
       ...getEntries('components', paths.componentsDir, '/**/index.js'),
       ...getEntries('components', paths.componentsDir, '/**/*.static.js'),
-      ...getEntries('lib', paths.libDir, '/*.{js,scss,css}'),
     },
   }),
 ];
