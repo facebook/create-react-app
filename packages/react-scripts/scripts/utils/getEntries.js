@@ -6,25 +6,28 @@ const path = require('path');
 function getEntries(type, dirPath, globRegex) {
   const entryFiles = glob.sync(path.join(dirPath, globRegex));
 
-  return entryFiles
-    .reduce((entries, entryFile) => {
-      // converts entryFile path to platform specific style
-      // this fixes windows/unix path inconsitence
-      // because node-glob always returns path with unix style path separators
-      entryFile = path.join(entryFile);
+  return entryFiles.reduce((entries, entryFile) => {
+    // converts entryFile path to platform specific style
+    // this fixes windows/unix path inconsitence
+    // because node-glob always returns path with unix style path separators
+    entryFile = path.join(entryFile);
 
-      const localPath = entryFile.split(dirPath)[1];
+    const localPath = entryFile.split(dirPath)[1];
 
-      let entryName = path
-        // create entry name
-        .join(type, localPath.split('.js')[0])
-        // remove leading slash
-        .replace(/^\/|\/$/g, '');
+    let entryName = path
+      // create entry name
+      .join(type, localPath.split('.js')[0])
+      // remove leading slash
+      .replace(/^\/|\/$/g, '')
+      // replace slash for dash
+      // (slash is not allowed as a filename character)
+      // entryName is used for creating filename in webpack
+      .replace('/', '-');
 
-      entries[entryName] = path.join(dirPath, localPath);
+    entries[entryName] = path.join(dirPath, localPath);
 
-      return entries;
-    }, {});
+    return entries;
+  }, {});
 }
 
 module.exports = getEntries;
