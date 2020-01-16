@@ -1,3 +1,37 @@
+## 3.1.2 (Jan 16, 2020)
+
+#### :bug: Bug Fix
+
+- [lighter-react-scripts] remove replacing slash with dash in entry name ([#170](https://github.com/lightingbeetle/lighter/pull/170))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.1.2`
+
+## 3.1.1 (Jan 16, 2020)
+
+Same as 3.1.0.
+
+## 3.1.0 (Jan 16, 2020)
+
+#### :rocket: New Feature
+
+- [lighter-react-scripts] add entries from lib to SSR ([#169](https://github.com/lightingbeetle/lighter/pull/169))
+
+#### :nail_care: Enhancement
+
+- [lighter-styleguide] prevent selecting color name on double-click ([#168](https://github.com/lightingbeetle/lighter/pull/168))
+
+#### :bug: Bug Fix
+
+- [lighter-react-scripts] use mini-css-extract-plugin in development instead of style-loader to fix missing CSS files in SSR ([#167](https://github.com/lightingbeetle/lighter/pull/167))
+- [lighter-react-scripts] rename built component stylesheets to style.css (this reverts breaking change in 3.0.0) ([#166](https://github.com/lightingbeetle/lighter/pull/166))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.1.0`
+- `lighter-styleguide@3.1.1`
+
 ## 3.0.2 (Jan 5, 2020)
 
 #### :boom: Breaking Change
