@@ -32,6 +32,7 @@ verifyTypeScriptSetup();
 // @remove-on-eject-end
 
 const chalk = require('chalk');
+const path = require('path');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const configFactory = require('../config/webpack.config');
@@ -80,7 +81,8 @@ const spaHtmlPaths = Object.entries(spaPaths).reduce((acc, [key, value]) => {
 const config = [
   configFactory('production', {
     entries: {
-      ...getEntries('', paths.appSrc, '/index.js'),
+      app: path.join(paths.appSrc, 'index.js'),
+      static: path.join(paths.appSrc, 'scripts', 'index.js'),
       ...getEntries('lib', paths.libDir, '/*.{js,scss,css}'),
       ...spaEntries,
     },
