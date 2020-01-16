@@ -57,10 +57,15 @@ const ColorPalette = ({ children, name, color, ...other }) => {
       style={{ backgroundColor: getBackroundColor() }}
     >
       <StyledColorInfo>
-        {name}{' '}
-        {swatches.length > 0
-          ? `${currentShade} ${color.value[currentShade].value.hex}`
-          : color.value.hex}
+        {name}&nbsp;
+        {swatches.length > 0 ? (
+          <>
+            <div>{currentShade}</div>&nbsp;
+            <div>{color.value[currentShade].value.hex}</div>
+          </>
+        ) : (
+          <div>{color.value.hex}</div>
+        )}
       </StyledColorInfo>
 
       {swatches.length > 0 && (
@@ -135,6 +140,7 @@ const StyledColorInfo = styled.div`
   position: absolute;
   top: ${props => props.theme.spaces.medium};
   left: ${props => props.theme.spaces.medium};
+  display: inline-flex;
   background: white;
   padding: ${props => props.theme.spaces.tiny};
 `;
