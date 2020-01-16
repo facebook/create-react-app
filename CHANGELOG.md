@@ -1,3 +1,13 @@
+## 3.1.4 (Jan 16, 2020)
+
+#### :bug: Bug Fix
+
+- [lighter-react-scripts] fix css entry names ([#176](https://github.com/lightingbeetle/lighter/pull/176))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.1.4`
+
 ## 3.1.3 (Jan 16, 2020)
 
 #### :bug: Bug Fix
