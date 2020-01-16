@@ -1,3 +1,14 @@
+## 3.1.3 (Jan 16, 2020)
+
+#### :bug: Bug Fix
+
+- [lighter-react-scripts] include css entries in lib in ssr too ([#173](https://github.com/lightingbeetle/lighter/pull/173))
+- [lighter-react-scripts] include lib files in production ssr ([#174](https://github.com/lightingbeetle/lighter/pull/174))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.1.3`
+
 ## 3.1.2 (Jan 16, 2020)
 
 #### :bug: Bug Fix
