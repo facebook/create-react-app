@@ -656,7 +656,7 @@ module.exports = function(webpackEnv, options = {}) {
       !spaHtmlPaths['index'] &&
         !isEnvLib &&
         new StaticSiteGeneratorPlugin({
-          entry: 'index',
+          entry: 'app',
           globals: Object.assign(
             {},
             new JSDOM(``, { url: 'http://localhost' }).window,
