@@ -270,8 +270,8 @@ module.exports = function(webpackEnv) {
               : false,
           },
           cssProcessorPluginOptions: {
-              preset: ['default', { minifyFontValues: { removeQuotes: false } }]
-          }
+            preset: ['default', { minifyFontValues: { removeQuotes: false } }],
+          },
         }),
       ],
       // Automatically split vendor and commons
@@ -557,6 +557,13 @@ module.exports = function(webpackEnv) {
                 'sass-loader'
               ),
             },
+            // Adds support for dynamic loading of .wasm files like so:
+            // const { fn } = import('./module.wasm')
+            {
+              test: /\.wasm$/,
+              include: paths.appSrc,
+              use: [{ loader: require.resolve('wasm-loader'), options: {} }],
+            },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
@@ -568,7 +575,12 @@ module.exports = function(webpackEnv) {
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              exclude: [
+                /\.(js|mjs|jsx|ts|tsx)$/,
+                /\.html$/,
+                /\.json$/,
+                /\.wasm$/,
+              ],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
