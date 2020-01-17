@@ -29,8 +29,8 @@ const normalizeTargets = targets => {
 module.exports = function getRequiredPlugins(targets) {
   const requiredPlugins = {};
   const currentTargets = getTargets(normalizeTargets(targets));
-  for (const [pluginName, pluginTargets] of Object.entries(data)) {
-    requiredPlugins[pluginName] = isRequired(currentTargets, pluginTargets);
+  for (const name of Object.keys(data)) {
+    requiredPlugins[name] = isRequired(name, currentTargets);
   }
   return requiredPlugins;
 };
