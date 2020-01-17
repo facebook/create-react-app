@@ -77,12 +77,14 @@ const spaHtmlPaths = Object.entries(spaPaths).reduce((acc, [key, value]) => {
   return acc;
 }, {});
 
+const staticPath = path.join(paths.appSrc, 'scripts', 'index.js');
+
 // Generate configuration
 const config = [
   configFactory('production', {
     entries: {
       app: path.join(paths.appSrc, 'index.js'),
-      static: path.join(paths.appSrc, 'scripts', 'index.js'),
+      ...(fs.existsSync(staticPath) && { static: staticPath }),
       ...getEntries('lib', paths.libDir, '/*.{js,scss,css}'),
       ...spaEntries,
     },

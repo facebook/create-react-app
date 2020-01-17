@@ -103,11 +103,13 @@ choosePort(HOST, DEFAULT_PORT)
       {}
     );
 
+    const staticPath = path.join(paths.appSrc, 'scripts', 'index.js');
+
     const configs = [
       configFactory('development', {
         entries: {
           app: path.join(paths.appSrc, 'index.js'),
-          static: path.join(paths.appSrc, 'scripts', 'index.js'),
+          ...(fs.existsSync(staticPath) && { static: staticPath }),
           ...getEntries('lib', paths.libDir, '/*.{js,scss,css}'),
           ...spaEntries,
         },
