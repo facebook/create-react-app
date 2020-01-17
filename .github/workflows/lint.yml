@@ -10,4 +10,4 @@ jobs:
       - name: Install
         run: yarn --no-progress --non-interactive --no-lockfile
       - name: Alex
-        run: yarn alex
+        run: yarn alex --diff

@@ -4,7 +4,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "cd packages/react-scripts && node scripts/build.js",
+    "build": "cd packages/styleguide && npm run build",
     "changelog": "lerna-changelog",
     "create-react-app": "node tasks/cra.js",
     "e2e": "tasks/e2e-simple.sh",
@@ -19,6 +19,7 @@
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
     "compile:lockfile": "node tasks/compile-lockfile.js",
     "styleguide:install": "cd packages/styleguide && npm install",
+    "styleguide:install:ci": "cd packages/styleguide && npm ci",
     "styleguide": "cd packages/styleguide && npm start"
   },
   "devDependencies": {
@@ -54,6 +55,9 @@
     "*.{js,md,css,html}": [
       "prettier --trailing-comma es5 --single-quote --write",
       "git add"
+    ],
+    "*.md": [
+      "npm run alex"
     ],
     "yarn.lock": [
       "git rm --cached"

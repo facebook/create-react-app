@@ -8,6 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Install
-        run: yarn --no-progress --non-interactive --no-lockfile
+        run: yarn styleguide:install:ci
       - name: Build
         run: yarn build
