@@ -16,20 +16,26 @@ process.on('unhandledRejection', err => {
 });
 
 const spawn = require('react-dev-utils/crossSpawn');
-const args = process.argv.slice(2);
+const commander = require('commander');
+const packageJson = require('../package.json');
 
-const scriptIndex = args.findIndex(
-  x => x === 'build' || x === 'eject' || x === 'start' || x === 'test'
-);
-const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
-const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
+function popNodeArgs() {
+  const args = process.argv.slice(2);
 
-if (['build', 'eject', 'start', 'test'].includes(script)) {
+  // These commands will pass node arguments to the script
+  const nodeArgsCmds = ['eject', 'start', 'test'];
+  const cmdIndex = args.findIndex(x => nodeArgsCmds.includes(x));
+  const nodeArgs = cmdIndex >= 0 ? args.splice(0, cmdIndex) : [];
+  const argvWithoutNodeArgs = process.argv.slice(0, 2).concat(args);
+  return [nodeArgs, argvWithoutNodeArgs];
+}
+
+const [nodeArgs, argvWithoutNodeArgs] = popNodeArgs();
+
+function execScript(script, scriptArgs) {
   const result = spawn.sync(
     'node',
-    nodeArgs
-      .concat(require.resolve('../scripts/' + script))
-      .concat(args.slice(scriptIndex + 1)),
+    nodeArgs.concat(require.resolve('../scripts/' + script)).concat(scriptArgs),
     { stdio: 'inherit' }
   );
   if (result.signal) {
@@ -49,10 +55,49 @@ if (['build', 'eject', 'start', 'test'].includes(script)) {
     process.exit(1);
   }
   process.exit(result.status);
-} else {
-  console.log('Unknown script "' + script + '".');
-  console.log('Perhaps you need to update react-scripts?');
-  console.log(
-    'See: https://facebook.github.io/create-react-app/docs/updating-to-new-releases'
-  );
 }
+
+const program = new commander.Command(packageJson.name).version(
+  packageJson.version
+);
+
+program
+  .command('start')
+  .description('Runs the app in the development mode.')
+  .option('--port <port>', 'Specify port', 3000)
+  .option('--host <host>', 'Specify host', '0.0.0.0')
+  .option('--https', 'Use https')
+  .action(function(cmd) {
+    const opts = cmd.opts();
+    if (opts.port) {
+      process.env.PORT = opts.port;
+    }
+    if (opts.host) {
+      process.env.HOST = opts.host;
+    }
+    if (opts.https) {
+      process.env.HTTPS = 'true';
+    }
+    execScript('start', []);
+  });
+program
+  .command('build')
+  .description('Builds the app for production to the `build` folder.')
+  .action(function() {
+    execScript('build', []);
+  });
+program
+  .command('test')
+  .description('Launches the test runner in the interactive watch mode.')
+  .action(function() {
+    execScript('build', []);
+  });
+
+program
+  .command('eject')
+  .description('Eject config.')
+  .action(function() {
+    execScript('eject', []);
+  });
+
+program.parse(argvWithoutNodeArgs);
