@@ -67,18 +67,15 @@ program
   .option('--port <port>', 'Specify port', 3000)
   .option('--host <host>', 'Specify host', '0.0.0.0')
   .option('--https', 'Use https')
+  .option('--smoke-test')
   .action(function(cmd) {
     const opts = cmd.opts();
-    if (opts.port) {
-      process.env.PORT = opts.port;
-    }
-    if (opts.host) {
-      process.env.HOST = opts.host;
-    }
-    if (opts.https) {
-      process.env.HTTPS = 'true';
-    }
-    execScript('start', []);
+    const args = [];
+    if (opts.port) process.env.PORT = opts.port;
+    if (opts.host) process.env.HOST = opts.host;
+    if (opts.https) process.env.HTTPS = 'true';
+    if (opts.smokeTest) args.push('--smoke-test');
+    execScript('start', args);
   });
 program
   .command('build')
@@ -89,7 +86,10 @@ program
 program
   .command('test')
   .description('Launches the test runner in the interactive watch mode.')
-  .action(function() {
+  .option('--smoke-test')
+  .action(function(cmd) {
+    const opts = cmd.opts();
+    console.log(opts);
     execScript('test', []);
   });
 program
