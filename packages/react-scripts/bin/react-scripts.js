@@ -94,7 +94,7 @@ program
   });
 program
   .command('eject')
-  .description('Eject config.')
+  .description('Eject Create React App configuration.')
   .action(function() {
     execScript('eject', []);
   });
