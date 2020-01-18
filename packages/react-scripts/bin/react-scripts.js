@@ -71,10 +71,18 @@ program
   .action(function(cmd) {
     const opts = cmd.opts();
     const args = [];
-    if (opts.port) process.env.PORT = opts.port;
-    if (opts.host) process.env.HOST = opts.host;
-    if (opts.https) process.env.HTTPS = 'true';
-    if (opts.smokeTest) args.push('--smoke-test');
+    if (opts.port) {
+      process.env.PORT = opts.port;
+    }
+    if (opts.host) {
+      process.env.HOST = opts.host;
+    }
+    if (opts.https) {
+      process.env.HTTPS = 'true';
+    }
+    if (opts.smokeTest) {
+      args.push('--smoke-test');
+    }
     execScript('start', args);
   });
 program
