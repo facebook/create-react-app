@@ -57,7 +57,7 @@ function execScript(script, scriptArgs) {
   process.exit(result.status);
 }
 
-const program = new commander.Command(packageJson.name).version(
+const program = new commander.Command('react-scripts').version(
   packageJson.version
 );
 
