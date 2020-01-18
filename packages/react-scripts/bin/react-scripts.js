@@ -92,7 +92,6 @@ program
   .action(function() {
     execScript('test', []);
   });
-
 program
   .command('eject')
   .description('Eject config.')
