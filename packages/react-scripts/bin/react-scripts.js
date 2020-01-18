@@ -90,7 +90,7 @@ program
   .command('test')
   .description('Launches the test runner in the interactive watch mode.')
   .action(function() {
-    execScript('build', []);
+    execScript('test', []);
   });
 
 program
