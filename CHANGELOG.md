@@ -1,8 +1,29 @@
-## 3.1.6 (Jan 16, 2020)
+## 3.2.0 (Jan 19, 2020)
+
+#### :rocket: New Feature
+
+- [lighter-react-scripts] enable js/json import to scss from `lib/tokens.js`
+  ([#181](https://github.com/lightingbeetle/lighter/pull/181))
 
 #### :bug: Bug Fix
 
-- [lighter-react-scripts] fix static-site-generator-webpack-plugin entry name ([#179](https://github.com/lightingbeetle/lighter/pull/179))
+- [lighter-react-scripts] update eslint plugins to fix sort-prop-types autofix
+  ([#182](https://github.com/lightingbeetle/lighter/pull/182))
+- [lighter-react-scripts] scripts entry is optional
+  ([#183](https://github.com/lightingbeetle/lighter/pull/183))
+
+#### :house: Internal
+
+- [lighter-react-scripts] fix github actions for Lighter
+  ([#184](https://github.com/lightingbeetle/lighter/pull/184))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.2.0`
+
+## 3.1.6 (Jan 16, 2020)
+
+#### :bug: Bug Fix
 
 #### :tada: version updates
 
