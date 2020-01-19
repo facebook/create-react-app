@@ -214,6 +214,16 @@ module.exports = function(webpackEnv, options = {}) {
           },
         }
       );
+
+      if (preProcessor === 'sass-loader') {
+        loaders.push({
+          loader: require.resolve('@epegzz/sass-vars-loader'),
+          options: {
+            syntax: 'scss',
+            files: paths.tokens,
+          },
+        });
+      }
     }
     return loaders;
   };
