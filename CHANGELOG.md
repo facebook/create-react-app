@@ -1,3 +1,14 @@
+## 3.2.1 (Jan 20, 2020)
+
+#### :bug: Bug Fix
+
+- [lighter-react-scripts] fix sass-vars-loader files not being array
+  ([#187](https://github.com/lightingbeetle/lighter/pull/187))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.2.0`
+
 ## 3.2.0 (Jan 19, 2020)
 
 #### :rocket: New Feature
