@@ -220,7 +220,7 @@ module.exports = function(webpackEnv, options = {}) {
           loader: require.resolve('@epegzz/sass-vars-loader'),
           options: {
             syntax: 'scss',
-            files: paths.tokens,
+            files: [paths.tokens],
           },
         });
       }
