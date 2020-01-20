@@ -49,7 +49,7 @@
     "precommit": "lint-staged",
     "start": "lighter-react-scripts start",
     "build": "lighter-react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "lighter-react-scripts test",
     "eject": "react-scripts eject"
   },
   "lint-staged": {
@@ -59,7 +59,9 @@
     ]
   },
   "devDependencies": {
-    "@lighting-beetle/lighter-react-scripts": "~3.1.2",
+    "@lighting-beetle/lighter-react-scripts": "~3.2.0",
+    "@testing-library/jest-dom": "~5.0.0",
+    "@testing-library/react": "~9.4.0",
     "babel-plugin-react-docgen": "~2.0.0",
     "babel-preset-env": "~1.7.0",
     "husky": "~1.3.1",

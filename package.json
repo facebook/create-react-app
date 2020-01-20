@@ -20,6 +20,7 @@
     "compile:lockfile": "node tasks/compile-lockfile.js",
     "styleguide:install": "cd packages/styleguide && npm install",
     "styleguide:install:ci": "cd packages/styleguide && npm ci",
+    "styleguide:test:ci": "cd packages/styleguide && CI=true npm test",
     "styleguide": "cd packages/styleguide && npm start"
   },
   "devDependencies": {

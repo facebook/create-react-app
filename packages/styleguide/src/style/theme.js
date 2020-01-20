@@ -1,7 +1,5 @@
 /* eslint-disable import/prefer-default-export */
 
-import { rem } from './utils';
-
 export const sizes = {
   headerHeight: '60px',
   sidebarWidth: '230px',
@@ -46,7 +44,7 @@ export const lineHeights = {
 };
 
 export const nav = {
-  listTopBottomIndent: rem(5), // TODO refactor/remove
+  listTopBottomIndent: 5 * 16, // TODO refactor/remove
 };
 
 export const zIndex = {
