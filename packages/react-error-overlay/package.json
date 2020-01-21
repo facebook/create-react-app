@@ -47,10 +47,10 @@
     "eslint": "^6.1.0",
     "eslint-config-react-app": "^5.1.0",
     "eslint-plugin-flowtype": "4.5.2",
-    "eslint-plugin-import": "2.19.1",
+    "eslint-plugin-import": "2.20.0",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.17.0",
-    "flow-bin": "^0.113.0",
+    "flow-bin": "^0.116.0",
     "html-entities": "1.2.1",
     "jest": "24.9.0",
     "jest-fetch-mock": "2.1.2",
@@ -63,7 +63,7 @@
     "rimraf": "^3.0.0",
     "settle-promise": "1.0.0",
     "source-map": "0.5.6",
-    "terser-webpack-plugin": "2.3.0",
+    "terser-webpack-plugin": "2.3.2",
     "webpack": "^4.35.0"
   },
   "jest": {

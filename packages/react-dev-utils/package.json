@@ -50,9 +50,9 @@
     "webpackHotDevClient.js"
   ],
   "dependencies": {
-    "@babel/code-frame": "7.5.5",
+    "@babel/code-frame": "7.8.3",
     "address": "1.1.2",
-    "browserslist": "4.8.2",
+    "browserslist": "4.8.3",
     "chalk": "3.0.0",
     "cross-spawn": "7.0.1",
     "detect-port-alt": "1.1.6",
@@ -64,7 +64,7 @@
     "globby": "8.0.2",
     "gzip-size": "5.1.1",
     "immer": "1.10.0",
-    "inquirer": "7.0.0",
+    "inquirer": "7.0.3",
     "is-root": "2.1.0",
     "loader-utils": "1.2.3",
     "open": "^7.0.0",
