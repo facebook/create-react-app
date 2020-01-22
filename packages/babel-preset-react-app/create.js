@@ -185,9 +185,6 @@ module.exports = function(api, opts, env) {
           removeImport: true,
         },
       ],
-      isEnvTest &&
-        // Transform dynamic import to require
-        require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),
     overrides: [
       isFlowEnabled && {

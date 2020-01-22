@@ -33,7 +33,6 @@
     "@babel/preset-react": "7.8.3",
     "@babel/preset-typescript": "7.8.3",
     "@babel/runtime": "7.8.3",
-    "babel-plugin-dynamic-import-node": "2.3.0",
     "babel-plugin-macros": "2.8.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24"
   }

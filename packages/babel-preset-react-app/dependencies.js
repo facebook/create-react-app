@@ -138,9 +138,6 @@ module.exports = function(api, opts) {
           absoluteRuntime: absoluteRuntimePath,
         },
       ],
-      isEnvTest &&
-        // Transform dynamic import to require
-        require('babel-plugin-dynamic-import-node'),
     ].filter(Boolean),
   };
 };
