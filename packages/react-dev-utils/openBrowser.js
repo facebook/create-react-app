@@ -69,7 +69,7 @@ function startBrowserProcess(browser, url, args) {
   // requested a different browser, we can try opening
   // Chrome with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
-  const shouldTryOpenChromeWithAppleScript =
+  const shouldTryOpenChromiumWithAppleScript =
     process.platform === 'darwin' &&
     (typeof browser !== 'string' || browser === OSX_CHROME);
 
