@@ -33,6 +33,7 @@ verifyTypeScriptSetup();
 // @remove-on-eject-end
 
 const jest = require('jest');
+const isCI = require('is-ci')
 const execSync = require('child_process').execSync;
 let argv = process.argv.slice(2);
 
@@ -56,7 +57,7 @@ function isInMercurialRepository() {
 
 // Watch unless on CI or explicitly running all tests
 if (
-  !process.env.CI &&
+  !isCI &&
   argv.indexOf('--watchAll') === -1 &&
   argv.indexOf('--watchAll=false') === -1
 ) {
