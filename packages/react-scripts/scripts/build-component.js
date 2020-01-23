@@ -62,6 +62,14 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // Generate configuration
 const config = configFactory('production');
 
+config.optimization.runtimeChunk = false;
+config.optimization.splitChunks = {
+  cacheGroups: {
+    default: false,
+  },
+};
+config.output.filename = 'main.js';
+
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
