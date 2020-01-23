@@ -82,7 +82,6 @@ function startBrowserProcess(browser, url, args) {
       'Brave Browser',
       'Vivaldi',
       'Chromium',
-      'Safari',
     ];
 
     for (let chromiumBrowser of supportedChromiumBrowsers) {
