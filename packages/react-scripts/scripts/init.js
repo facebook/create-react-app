@@ -127,6 +127,7 @@ module.exports = function(
     {
       start: 'react-scripts start',
       build: 'react-scripts build',
+      'build-component': 'react-scripts build-component',
       test: 'react-scripts test',
       eject: 'react-scripts eject',
     },
