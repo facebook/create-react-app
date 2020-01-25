@@ -121,6 +121,7 @@ const StyledNav = styled.nav`
   font-family: ${props => props.theme.fontFamily};
   font-size: ${props => rem(props.theme.fontSizes.base)};
   line-height: ${props => props.theme.lineHeights.base};
+  margin-top: ${props => rem(props.theme.spaces.default)};
 `;
 
 const StyledNavList = styled.ul`
@@ -133,6 +134,7 @@ const StyledNavList = styled.ul`
   font-weight: 700;
   transition: max-height 0.1s cubic-bezier(0, 1, 0.01, 0.98) 0s,
     padding 0.25s cubic-bezier(0, 1, 0.01, 0.98) 0s;
+  margin: 0;
 `;
 
 const ListItem = styled.li`
