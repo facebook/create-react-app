@@ -44,6 +44,8 @@ const appPackageJson = require(paths.appPackageJson);
 const { JSDOM } = require('jsdom');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
+const remarkEmoji = require('remark-emoji');
+
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
@@ -599,6 +601,9 @@ module.exports = function(webpackEnv, options = {}) {
                 },
                 {
                   loader: require.resolve('@mdx-js/loader'),
+                  options: {
+                    remarkPlugins: [ remarkEmoji ],
+                  },
                 },
               ],
             },

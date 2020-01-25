@@ -70,6 +70,7 @@
     "postcss-safe-parser": "4.0.1",
     "react-app-polyfill": "^1.0.5",
     "react-dev-utils": "^10.0.0",
+    "remark-emoji": "^2.0.2",
     "resolve": "1.12.2",
     "resolve-url-loader": "3.1.1",
     "sass-loader": "~8.0.0",
