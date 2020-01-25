@@ -217,7 +217,7 @@ module.exports = function(webpackEnv, options = {}) {
         }
       );
 
-      if (preProcessor === 'sass-loader') {
+      if (preProcessor === 'sass-loader' && fs.existsSync(paths.tokens)) {
         loaders.push({
           loader: require.resolve('@epegzz/sass-vars-loader'),
           options: {
