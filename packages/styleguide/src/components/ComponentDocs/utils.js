@@ -9,14 +9,11 @@ function printEnums(values) {
 function printShape(values) {
   const keyValues = Object.keys(values)
     .map(name => name + ': ' + getType(values[name]))
+    .map(value => `\t${value}`)
     .join(', \r\n');
 
   return codeBlock`
-    \`\`\`js
-    { 
-      ${keyValues.replace(/```js\n/g, '').replace(/\s+}\n```/g, '\n}')}
-    }
-    \`\`\`
+    {\r\n${keyValues}\r\n}
   `;
 }
 
@@ -30,9 +27,7 @@ function printTypeOf(value, of) {
 
 function printCustom(value) {
   return codeBlock`
-    \`\`\`js
     ${value}
-    \`\`\`
   `;
 }
 
