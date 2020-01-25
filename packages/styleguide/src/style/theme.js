@@ -44,7 +44,7 @@ export const lineHeights = {
 };
 
 export const nav = {
-  listTopBottomIndent: 5 * 16, // TODO refactor/remove
+  listTopBottomIndent: 5 / 16 + 'rem', // TODO refactor/remove
 };
 
 export const zIndex = {
