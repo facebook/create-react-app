@@ -26,11 +26,11 @@ yarn create react-app my-app --template typescript
 To add [TypeScript](https://www.typescriptlang.org/) to a Create React App project, first install it:
 
 ```sh
-npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+npm install --save typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser @types/node @types/react @types/react-dom @types/jest
 
 # or
 
-yarn add typescript @types/node @types/react @types/react-dom @types/jest
+yarn add typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser @types/node @types/react @types/react-dom @types/jest
 ```
 
 Next, rename any file to be a TypeScript file (e.g. `src/index.js` to `src/index.tsx`) and **restart your development server**!
