@@ -23,37 +23,12 @@
 // To use them, explicitly reference them, e.g. `window.name` or `window.status`.
 const restrictedGlobals = require('confusing-browser-globals');
 
-module.exports = {
-  root: true,
+const overrides = [];
 
-  parser: 'babel-eslint',
-
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'react-hooks'],
-
-  env: {
-    browser: true,
-    commonjs: true,
-    es6: true,
-    jest: true,
-    node: true,
-  },
-
-  parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
-
-  overrides: [
-    {
+// Lint tsx only if typescript is installed.
+try {
+  require.resolve('typescript');
+  overrides.push({
       files: ['**/*.ts?(x)'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
@@ -111,8 +86,39 @@ module.exports = {
         'no-useless-constructor': 'off',
         '@typescript-eslint/no-useless-constructor': 'warn',
       },
+    })
+} catch {}
+
+module.exports = {
+  root: true,
+
+  parser: 'babel-eslint',
+
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'react-hooks'],
+
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
+    jest: true,
+    node: true,
+  },
+
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
     },
-  ],
+  },
+
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+
+  overrides,
 
   // NOTE: When adding rules here, you need to make sure they are compatible with
   // `typescript-eslint`, as some rules such as `no-array-constructor` aren't compatible.
