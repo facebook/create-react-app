@@ -15,6 +15,8 @@
     "index.js"
   ],
   "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "2.x",
+    "@typescript-eslint/parser": "2.x",
     "babel-eslint": "10.x",
     "eslint": "6.x",
     "eslint-plugin-flowtype": "3.x",
@@ -22,6 +24,14 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "1.x"
+  },
+  "peerDependenciesMeta": {
+    "@typescript-eslint/eslint-plugin": {
+      "optional": true
+    },
+    "@typescript-eslint/parser": {
+      "optional": true
+    }
   },
   "dependencies": {
     "confusing-browser-globals": "^1.0.9"
