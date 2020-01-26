@@ -25,7 +25,16 @@
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "1.x || 2.x || 3.x || 4.x"
   },
+  "peerDependenciesMeta": {
+    "@typescript-eslint/eslint-plugin": {
+      "optional": true
+    },
+    "@typescript-eslint/parser": {
+      "optional": true
+    }
+  },
   "dependencies": {
-    "confusing-browser-globals": "^1.0.9"
+    "confusing-browser-globals": "^1.0.9",
+    "resolve": "^1.16.0"
   }
 }
