@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import Resource from '@guestyci/agni';
 import createHistory from '@guestyci/history/createHistory';
 import LocalizationProvider from '@guestyci/localize/LocalizationProvider';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import '@guestyci/foundation/style/styles.css';
 import App from './app/App';
 import configureStore from './store';
