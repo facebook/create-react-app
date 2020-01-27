@@ -1,1 +1,1 @@
-This file has moved [here](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/README.md)
+Learn about making a Progressive Web App [here](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
