@@ -1,3 +1,24 @@
+## 3.3.0 (Jan 28, 2020)
+
+#### :rocket: New Feature
+
+- [lighter-react-scripts] add support for emoji in MDX ([#191](https://github.com/lightingbeetle/lighter/pull/191))
+- [lighter-styleguide] allow to use styleguide components outside of styleguide ([#195](https://github.com/lightingbeetle/lighter/pull/195))
+
+#### :bug: Bug Fix
+
+- [lighter-react-scripts] disable hot updates in dev mode ([#189](https://github.com/lightingbeetle/lighter/pull/189))
+- [lighter-styleguide] fix ul styles without normalize ([#190](https://github.com/lightingbeetle/lighter/pull/190))
+- [lighter-styleguide] autocomplete has colors from theme ([#190](https://github.com/lightingbeetle/lighter/pull/190))
+- [lighter-styleguide] remove \`\`\`js \`\`\` from component docs output ([#192](https://github.com/lightingbeetle/lighter/pull/192))
+- [lighter-styleguide] only use sass-vars-loader when src/lib/tokens.js exists ([#193](https://github.com/lightingbeetle/lighter/pull/193))
+- [lighter-styleguide] fix indent of navigation items ([#194](https://github.com/lightingbeetle/lighter/pull/194))
+
+#### :tada: version updates
+
+- `lighter-react-scripts@3.3.0`
+- `lighter-styleguide@3.2.0`
+
 ## 3.2.1 (Jan 20, 2020)
 
 #### :bug: Bug Fix
