@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { bool, func } from 'prop-types';
 import cx from 'classnames';
 
+import * as theme from './../../style/theme';
+
 const propTypes = {
   isActive: bool,
   onButtonClick: func,
@@ -22,7 +24,7 @@ const NavigationBar = ({ className, isActive, onButtonClick, ...other }) => {
   );
 };
 
-const StyledMenuButtonWrapper = styled.a`
+const StyledMenuButtonWrapper = styled.button`
   display: inline-block;
   position: fixed;
   width: 100%;
@@ -67,6 +69,10 @@ const StyledMenuButtonWrapper = styled.a`
   }
 `;
 
+StyledMenuButtonWrapper.defaultProps = {
+  theme,
+};
+
 const StyledMenuButton = styled.span`
   width: 25px;
   height: 25px;
@@ -86,6 +92,10 @@ const StyledMenuButton = styled.span`
     }
   }
 `;
+
+StyledMenuButton.defaultProps = {
+  theme,
+};
 
 const StyledButtonLine = styled.span`
   display: block;
@@ -110,6 +120,10 @@ const StyledButtonLine = styled.span`
     transform: translateY(-6px);
   }
 `;
+
+StyledButtonLine.defaultProps = {
+  theme,
+};
 
 NavigationBar.displayName = 'NavigationBar';
 NavigationBar.propTypes = propTypes;

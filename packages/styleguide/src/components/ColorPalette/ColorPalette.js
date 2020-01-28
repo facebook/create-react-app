@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { string, object } from 'prop-types';
 import styled from 'styled-components';
 
+import * as theme from './../../style/theme';
+
 import Swatch from './Swatch';
 
 const defaultShade = '500';
@@ -136,6 +138,10 @@ const StyledColorPalette = styled.div`
   }
 `;
 
+StyledColorPalette.defaultProps = {
+  theme,
+};
+
 const StyledColorInfo = styled.div`
   position: absolute;
   top: ${props => props.theme.spaces.medium};
@@ -145,6 +151,10 @@ const StyledColorInfo = styled.div`
   padding: ${props => props.theme.spaces.tiny};
 `;
 
+StyledColorInfo.defaultProps = {
+  theme,
+};
+
 const StyledSwatches = styled.div`
   display: flex;
   padding: ${props => props.theme.spaces.large} 0 0 0;
@@ -152,7 +162,15 @@ const StyledSwatches = styled.div`
   overflow-y: visible;
 `;
 
+StyledSwatches.defaultProps = {
+  theme,
+};
+
 const StyledSwatchSpacer = styled.div`
   height: 1px;
   flex: 0 0 ${props => props.theme.spaces.medium};
 `;
+
+StyledSwatchSpacer.defaultProps = {
+  theme,
+};

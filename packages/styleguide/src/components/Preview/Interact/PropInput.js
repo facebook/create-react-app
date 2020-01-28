@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import * as theme from './../../../style/theme';
+
 import { is } from './helpers';
 
 import PropLabelWithTooltip from './PropLabelWithTooltip';
@@ -70,5 +72,9 @@ const Input = styled.input`
     cursor: not-allowed;
   }
 `;
+
+Input.defaultProps = {
+  theme,
+};
 
 export default PropInput;

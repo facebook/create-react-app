@@ -1,6 +1,8 @@
 import React from 'react';
 import { arrayOf, bool, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
+
+import * as theme from './../../style/theme';
 import { rem } from '../../style/utils';
 
 export const propTypes = {
@@ -74,6 +76,10 @@ const StyledResponsiveTable = styled.div`
   -ms-overflow-style: -ms-autohiding-scrollbar;
 `;
 
+StyledResponsiveTable.defaultProps = {
+  theme,
+};
+
 const StyledTable = styled.table`
   font-family: ${props => props.theme.fontFamily};
   color: ${props => props.theme.colors.black};
@@ -140,6 +146,10 @@ const StyledTable = styled.table`
       `};
   }
 `;
+
+StyledTable.defaultProps = {
+  theme,
+};
 
 Table.displayName = 'Table';
 Table.propTypes = propTypes;

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { match, surround } from 'fuzzyjs';
 import Autocomplete from 'accessible-autocomplete/react';
 
+import * as theme from './../../style/theme';
 import { rem } from './../../style/utils';
 
 const propTypes = {
@@ -181,6 +182,10 @@ const StyledAutocompleteWrapper = styled.div`
     }
   }
 `;
+
+StyledAutocompleteWrapper.defaultProps = {
+  theme,
+};
 
 Search.displayName = 'Search';
 Search.propTypes = propTypes;

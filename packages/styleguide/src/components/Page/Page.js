@@ -4,6 +4,8 @@ import cx from 'classnames';
 import styled from 'styled-components';
 import MDXWrapper from '../MDX/';
 
+import * as theme from './../../style/theme';
+
 const propTypes = {
   /** Page content */
   render: oneOfType([node, func]).isRequired,
@@ -31,5 +33,9 @@ Page.propTypes = propTypes;
 const StyledPage = styled.div`
   padding: 0 ${props => props.theme.spaces.medium};
 `;
+
+StyledPage.defaultProps = {
+  theme,
+};
 
 export default Page;

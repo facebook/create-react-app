@@ -1,7 +1,7 @@
 import React from 'react';
 import Table from './Table';
 
-import { Code } from './../';
+import Code from './../Code';
 
 export default Table;
 
@@ -44,4 +44,5 @@ const DocsTable = ({
 }) => (
   <Table columns={columns} hasOutsideBorder={hasOutsideBorder} {...other} />
 );
+
 export { DocsTable };

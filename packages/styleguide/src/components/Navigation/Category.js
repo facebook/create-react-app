@@ -3,6 +3,8 @@ import { bool } from 'prop-types';
 import cx from 'classnames';
 import styled from 'styled-components';
 
+import * as theme from './../../style/theme';
+
 import './../../assets/icons/plus.svg';
 import './../../assets/icons/minus.svg';
 
@@ -55,6 +57,10 @@ const StyledCategory = styled(Category)`
     }
   }
 `;
+
+StyledCategory.defaultProps = {
+  theme,
+};
 
 const StyledSVG = styled.svg`
   position: absolute;

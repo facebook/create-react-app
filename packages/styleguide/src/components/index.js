@@ -16,4 +16,5 @@ export {
 export { default as Page } from './Page';
 export { default as Preview } from './Preview';
 export { default as Table, DocsTable } from './Table';
+export { default as ThemeProvider } from './ThemeProvider';
 export { H1, H2, H3, H4, H5, P, Link } from './Typography';

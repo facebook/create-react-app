@@ -7,6 +7,7 @@ import Highlight, { defaultProps } from 'prism-react-renderer';
 import 'prism-theme-one-dark/prism-onedark.css';
 import 'firacode/distr/fira_code.css';
 
+import * as theme from './../../style/theme';
 import { rem } from '../../style/utils';
 
 const PreviewCode = ({ children, language, inline }) => {
@@ -110,8 +111,16 @@ const StyledHighlightWrapper = styled.span`
   }
 `;
 
+StyledHighlightWrapper.defaultProps = {
+  theme,
+};
+
 const StyledPre = styled.pre`
   pre[class*='language-']& {
     margin: 0 0 ${props => rem(props.theme.spaces.medium)};
   }
 `;
+
+StyledPre.defaultProps = {
+  theme,
+};

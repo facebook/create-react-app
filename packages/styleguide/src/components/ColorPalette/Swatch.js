@@ -3,6 +3,8 @@ import { bool, number, string, oneOfType } from 'prop-types';
 import cx from 'classnames';
 import styled from 'styled-components';
 
+import * as theme from './../../style/theme';
+
 const propTypes = {
   main: bool,
   shade: oneOfType([number, string]),
@@ -37,12 +39,20 @@ const StyledSwatch = styled.button`
   }
 `;
 
+StyledSwatch.defaultProps = {
+  theme,
+};
+
 const StyledSwatchInfo = styled.span`
   display: inline-block;
   padding: ${props => props.theme.spaces.mini};
   background: ${props => props.theme.colors.white};
   font-size: ${props => props.theme.fontSizes.small};
 `;
+
+StyledSwatchInfo.defaultProps = {
+  theme,
+};
 
 Swatch.displayName = 'Swatch';
 Swatch.propTypes = propTypes;

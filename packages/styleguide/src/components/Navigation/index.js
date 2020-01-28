@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { withRouter, useLocation } from 'react-router-dom';
 
+import * as theme from './../../style/theme';
 import { rem } from './../../style/utils';
 import Category from './Category';
 import NavLink from './NavLink';
@@ -124,6 +125,10 @@ const StyledNav = styled.nav`
   margin-top: ${props => rem(props.theme.spaces.default)};
 `;
 
+StyledNav.defaultProps = {
+  theme,
+};
+
 const StyledNavList = styled.ul`
   max-height: ${props => (props.isMain ? '100%' : '0')};
   overflow: ${props => (props.isMain ? 'visible' : 'hidden')};
@@ -137,9 +142,17 @@ const StyledNavList = styled.ul`
   margin: 0;
 `;
 
+StyledNavList.defaultProps = {
+  theme,
+};
+
 const ListItem = styled.li`
   margin: 0 0 0 ${props => rem(props.theme.spaces.small)};
 `;
+
+ListItem.defaultProps = {
+  theme,
+};
 
 export default withRouter(
   ({ location, match, history, staticContext, ...other }) => (

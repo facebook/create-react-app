@@ -4,6 +4,8 @@ import { arrayOf, string, bool, element, func, oneOfType } from 'prop-types';
 import styled from 'styled-components';
 import CodeExample from '../CodeExample';
 
+import * as theme from './../../../style/theme';
+
 import useId from '../../../utils/useId';
 
 import PropsGroup from './PropsGroup';
@@ -473,6 +475,10 @@ const StyledInteract = styled.div`
   font-family: ${props => props.theme.fontFamily};
 `;
 
+StyledInteract.defaultProps = {
+  theme,
+};
+
 const Grid = styled.div`
   display: flex;
 `;
@@ -487,6 +493,10 @@ const GridCol = styled.div`
     width: ${(props.size / 12) * 100 + '%'}
     `}
 `;
+
+GridCol.defaultProps = {
+  theme,
+};
 
 const StyledSticky = styled.div`
   position: sticky;

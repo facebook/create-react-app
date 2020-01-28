@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { bool, string } from 'prop-types';
+import * as theme from './../../style/theme';
 
 export const BarItem = styled.div`
   flex: 0 0 auto;
@@ -37,6 +38,7 @@ BarItem.propTypes = {
 
 BarItem.defaultProps = {
   space: 'small',
+  theme,
 };
 
 export const Bar = styled.div`
@@ -59,4 +61,5 @@ Bar.propTypes = {
 
 Bar.defaultProps = {
   space: 'medium',
+  theme,
 };

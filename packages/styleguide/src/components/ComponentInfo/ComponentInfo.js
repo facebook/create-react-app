@@ -2,6 +2,8 @@ import React from 'react';
 import { arrayOf, array, shape, string } from 'prop-types';
 import styled from 'styled-components';
 
+import * as theme from './../../style/theme';
+
 import { Bar, BarItem } from '../Bar';
 
 import Info from './Info';
@@ -56,6 +58,10 @@ const StyledComponentInfo = styled.div`
     margin-top: -${props => props.theme.spaces.small};
   }
 `;
+
+StyledComponentInfo.defaultProps = {
+  theme,
+};
 
 ComponentInfo.propTypes = propTypes;
 ComponentInfo.displayName = 'ComponentInfo';

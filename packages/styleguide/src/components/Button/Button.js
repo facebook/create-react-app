@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
+import * as theme from './../../style/theme';
 import { rem } from './../../style/utils';
 
 /* Styles have to be on the top because of Tag and TagTitle */
@@ -33,6 +34,7 @@ StyledButton.propTypes = {
 
 StyledButton.defaultProps = {
   fontSize: 'small',
+  theme,
 };
 
 const Button = ({ children, variant, ...other }) => {

@@ -1,18 +1,18 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
-import { string, node, object } from 'prop-types';
+import { node, object } from 'prop-types';
 import cx from 'classnames';
 import MediaQuery from 'react-responsive';
-import { NavLink as Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Bar, BarItem } from './../Bar';
 
+import * as theme from './../../style/theme';
 import { rem } from '../../style/utils';
 
 const CLASS_ROOT = 'sg-header';
 
 const propTypes = {
-  pageTitle: string,
   project: node,
   projectSmall: node,
   theme: object,
@@ -20,7 +20,6 @@ const propTypes = {
 
 const Header = ({
   className,
-  pageTitle,
   project,
   projectSmall,
   children,
@@ -60,9 +59,17 @@ const StyledLink = styled(Link)`
   }
 `;
 
+StyledLink.defaultProps = {
+  theme,
+};
+
 const StyledBar = styled(Bar)`
   font-family: ${props => props.theme.fontFamily};
 `;
+
+StyledBar.defaultProps = {
+  theme,
+};
 
 const StyledProjectText = styled('div')`
   font-size: ${rem(24)};
@@ -72,6 +79,10 @@ const StyledProjectText = styled('div')`
     font-size: ${rem(36)};
   }
 `;
+
+StyledProjectText.defaultProps = {
+  theme,
+};
 
 const StyledProjectLogo = styled('div')`
   img {
@@ -85,7 +96,14 @@ const StyledProjectLogo = styled('div')`
   }
 `;
 
+StyledProjectLogo.defaultProps = {
+  theme,
+};
+
 Header.displayName = 'Header';
 Header.propTypes = propTypes;
+Header.defaultProps = {
+  theme,
+};
 
 export default withTheme(Header);

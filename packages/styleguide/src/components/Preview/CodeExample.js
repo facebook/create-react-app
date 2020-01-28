@@ -249,6 +249,10 @@ const StyledCopyButton = styled(Button)`
   }
 `;
 
+StyledCopyButton.defaultProps = {
+  theme,
+};
+
 const StyledWrapper = styled.div`
   position: relative;
 `;
@@ -267,3 +271,7 @@ const StyledCodeTypeToggle = styled(Button)`
     color: ${props => props.theme.colors.white};
   }
 `;
+
+StyledCodeTypeToggle.defaultProps = {
+  theme,
+};

@@ -9,7 +9,7 @@ import './../../assets/icons/plus.svg';
 
 const propTypes = {
   alt: string,
-  name: string,
+  name: string.isRequired,
   size: oneOf(['default', 'large']),
   fill: string,
 };
@@ -27,6 +27,7 @@ const Icon = ({ className, name, alt, size, fill, ...other }) => {
       {...(alt ? { 'aria-label': alt } : { 'aria-hidden': 'true' })}
       {...other}
     >
+      <title>{name}</title>
       <use fill={fill} xlinkHref={`/sprite-sg.svg#${name}`} />
     </StyledIcon>
   );

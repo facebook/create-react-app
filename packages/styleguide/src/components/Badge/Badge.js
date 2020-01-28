@@ -2,6 +2,7 @@ import React from 'react';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import { rem } from './../../style/utils';
+import * as theme from './../../style/theme';
 
 const propTypes = {
   /** Color as a string from styleguide theme */
@@ -23,6 +24,10 @@ const StyledBadge = styled.span`
   font-size: ${props => rem(props.theme.fontSizes.small)};
   text-transform: capitalize;
 `;
+
+StyledBadge.defaultProps = {
+  theme,
+};
 
 Badge.displayName = 'Badge';
 Badge.propTypes = propTypes;

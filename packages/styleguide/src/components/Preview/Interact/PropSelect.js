@@ -7,6 +7,8 @@ import PropLabelWithTooltip from './PropLabelWithTooltip';
 
 import { cleanValue } from './helpers';
 
+import * as theme from './../../../style/theme';
+
 const PropSelect = ({ inputProps, componentInfo }) => {
   const { id, name } = componentInfo;
 
@@ -72,5 +74,9 @@ const StyledSelect = styled.select`
     font-weight: normal;
   }
 `;
+
+StyledSelect.defaultProps = {
+  theme,
+};
 
 export default PropSelect;

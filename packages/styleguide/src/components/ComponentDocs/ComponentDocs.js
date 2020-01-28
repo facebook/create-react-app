@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { string, array, element, func, oneOfType } from 'prop-types';
 import styled from 'styled-components';
 
+import * as theme from './../../style/theme';
+
 import { DocsTable } from './../Table';
 import Card from './../Card';
 import { H3 } from './../Typography';
@@ -90,6 +92,10 @@ const StyledHeader = styled.header`
   padding-right: ${props => props.theme.spaces.medium};
 `;
 
+StyledHeader.defaultProps = {
+  theme,
+};
+
 const StyledDocsTable = styled(DocsTable)`
   margin-bottom: 0;
   th,
@@ -103,6 +109,14 @@ const StyledDocsTable = styled(DocsTable)`
   }
 `;
 
+StyledDocsTable.defaultProps = {
+  theme,
+};
+
 const StyledTitle = H3.withComponent('div');
+
+StyledTitle.defaultProps = {
+  theme,
+};
 
 export default ComponentDocs;

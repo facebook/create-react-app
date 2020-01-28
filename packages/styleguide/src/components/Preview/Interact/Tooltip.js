@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import * as theme from './../../../style/theme';
+
 const Tooltip = ({ children, dialog, ...other }) => (
   <StyledTooltip {...other}>
     <div className="tooltip-trigger">{children}</div>
@@ -56,5 +58,9 @@ const StyledTooltip = styled.div`
     border-radius: 50%;
   }
 `;
+
+StyledTooltip.defaultProps = {
+  theme,
+};
 
 export default Tooltip;

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import * as theme from './../../style/theme';
+
 const propTypes = {};
 
 const Card = ({ bgColor, ...other }) => (
@@ -17,5 +19,8 @@ const StyledCard = styled.div`
 
 Card.displayName = 'Card';
 Card.propTypes = propTypes;
+Card.defaultProps = {
+  theme,
+};
 
 export default Card;

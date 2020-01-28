@@ -1,7 +1,9 @@
 import React from 'react';
 import cx from 'classnames';
 import styled from 'styled-components';
+
 import { rem } from './../../style/utils';
+import * as theme from './../../style/theme';
 
 const propTypes = {};
 
@@ -46,6 +48,10 @@ const StyledSidebar = styled.div`
     transform: translateX(0);
   }
 `;
+
+StyledSidebar.defaultProps = {
+  theme,
+};
 
 Sidebar.displayName = 'Sidebar';
 Sidebar.propTypes = propTypes;

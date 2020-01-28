@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import * as theme from './../../style/theme';
 import { rem, getColor } from './../../style/utils';
 
 const propTypes = {
@@ -38,7 +39,7 @@ const StyledNavLink = styled(NavLink)`
     display: block;
     position: relative;
     padding: ${props => props.theme.nav.listTopBottomIndent} 0;
-    outline: none !important; // TODO
+    outline: none !important;
     color: ${props => props.theme.colors.greyDark};
     font-weight: bold;
     z-index: 1;
@@ -59,5 +60,9 @@ const StyledNavLink = styled(NavLink)`
     }
   }
 `;
+
+StyledNavLink.defaultProps = {
+  theme,
+};
 
 export default StyledNavLink;

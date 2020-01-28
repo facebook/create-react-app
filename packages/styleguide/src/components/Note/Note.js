@@ -3,6 +3,8 @@ import { oneOf, string } from 'prop-types';
 import styled from 'styled-components';
 import cx from 'classnames';
 
+import * as theme from './../../style/theme';
+
 const propTypes = {
   /** Note title */
   title: string.isRequired,
@@ -27,6 +29,10 @@ const StyledNote = styled.div`
   border-left-color: ${props => props.theme.colors.greyDarker};
 `;
 
+StyledNote.defaultProps = {
+  theme,
+};
+
 const StyledTitle = styled.div`
   margin: 0 0 ${props => props.theme.spaces.small};
   color: ${props =>
@@ -38,6 +44,10 @@ const StyledTitle = styled.div`
   text-transform: uppercase;
   font-weight: 700;
 `;
+
+StyledTitle.defaultProps = {
+  theme,
+};
 
 const Note = ({ className, children, title, type, ...other }) => {
   const classes = cx(CLASS_ROOT, className);

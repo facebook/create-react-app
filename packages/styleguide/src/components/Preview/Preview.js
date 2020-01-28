@@ -14,6 +14,8 @@ import styled from 'styled-components';
 import chroma from 'chroma-js';
 import ReactGA from 'react-ga';
 
+import * as theme from './../../style/theme';
+
 import PreviewTitleBar from './PreviewTitleBar';
 import CodeExample from './CodeExample';
 import Frame from './Frame';
@@ -330,6 +332,10 @@ const StyledSelect = styled(Select)`
   }
 `;
 
+StyledSelect.defaultProps = {
+  theme,
+};
+
 const StyledPreview = styled.div`
   display: flex;
   flex-flow: column;
@@ -344,6 +350,10 @@ const StyledPreview = styled.div`
     z-index: ${props => props.theme.zIndex.fullScreenPreview};
   }
 `;
+
+StyledPreview.defaultProps = {
+  theme,
+};
 
 const StyledCard = styled(Card)`
   .is-fullscreen & {

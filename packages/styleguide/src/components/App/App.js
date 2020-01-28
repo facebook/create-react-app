@@ -2,10 +2,10 @@ import React, { Component, Fragment, Suspense } from 'react';
 import { array, arrayOf, shape, string, node, object } from 'prop-types';
 import { BrowserRouter } from 'react-router-dom';
 
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
-import * as theme from './../../style/theme';
 import { rem } from './../../style/utils';
+import { ThemeProvider } from '..';
 
 import { init, RouteTracker } from './../GoogleAnalytics';
 
@@ -78,39 +78,19 @@ class App extends Component {
       logo,
       logoSmall,
       name,
-      theme: projectTheme = {},
+      theme,
       styleguideBasePath = '/styleguide/',
       gaId,
     } = config;
 
     const activeClass = this.state.isNavActive ? 'is-active' : '';
 
-    // merge styleguide theme and project theme
-    const localTheme = Object.keys(projectTheme).reduce((acc, prop) => {
-      if (prop === 'previewBackgrounds') {
-        acc[prop] = projectTheme[prop];
-
-        return acc;
-      }
-
-      if (typeof theme[prop] === 'object') {
-        acc[prop] = {
-          ...(theme[prop] || {}),
-          ...projectTheme[prop],
-        };
-      } else {
-        acc[prop] = projectTheme[prop];
-      }
-
-      return acc;
-    }, Object.assign({}, theme));
-
     return (
       <Fragment>
         <GlobalStyle />
         <BrowserRouter basename={styleguideBasePath}>
           {gaId && init({ gaId }) && <RouteTracker />}
-          <ThemeProvider theme={localTheme}>
+          <ThemeProvider theme={theme}>
             <PageBody className={activeClass}>
               <PageContent>
                 <Suspense fallback={<div />}>
