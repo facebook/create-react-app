@@ -46,7 +46,7 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 // Some apps do not need to compile their dependencies, and not doing so speeds up builds.
-const shouldCompileDependencies = process.env.COMPILE_DEPENDENCIES === 'true';
+const shouldCompileDependencies = process.env.COMPILE_DEPENDENCIES !== 'false';
 
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
