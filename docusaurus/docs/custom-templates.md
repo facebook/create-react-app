@@ -9,16 +9,8 @@ Custom Templates enable you to select a template to create your project from, wh
 
 You'll notice that Custom Templates are always named in the format `cra-template-[template-name]`, however you only need to provide the `[template-name]` to the creation command.
 
-### npm
-
 ```sh
-npm init react-app my-app --template [template-name]
-```
-
-### Yarn
-
-```sh
-yarn create react-app my-app --template [template-name]
+npx create-react-app my-app --template [template-name]
 ```
 
 ## Finding custom templates
@@ -55,7 +47,7 @@ my-app/
 To test a template locally, pass the file path to the directory of your template source using the `file:` prefix.
 
 ```sh
-yarn create react-app my-app --template file:../path/to/your/template/cra-template-[template-name]
+npx create-react-app my-app --template file:../path/to/your/template/cra-template-[template-name]
 ```
 
 ### The `template` folder
