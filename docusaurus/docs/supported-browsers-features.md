@@ -50,6 +50,6 @@ Here is an example `browserslist` that is specified in `package.json`:
 }
 ```
 
-> Note that this does not include polyfills automatically for you. You will still need to polyfill language features (see above) as needed based on the browsers your are supporting.
+> Note that this does not include polyfills automatically for you. You will still need to polyfill language features (see above) as needed based on the browsers you are supporting.
 
 > When editing the `browserslist` config, you may notice that your changes don't get picked up right away. This is due to an [issue in babel-loader](https://github.com/babel/babel-loader/issues/690) not detecting the change in your `package.json`. A quick solution is to delete the `node_modules/.cache` folder and try again.
