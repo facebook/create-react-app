@@ -64,6 +64,7 @@ var connection = new WebSocket(
     port: window.location.port,
     // Hardcoded in WebpackDevServer
     pathname: '/sockjs-node',
+    slashes: true,
   })
 );
 
