@@ -29,8 +29,8 @@ If you're using TypeScript and Visual Studio Code, the [ESLint Visual Studio Cod
   "eslint.validate": [
     "javascript",
     "javascriptreact",
-    { "language": "typescript", "autoFix": true },
-    { "language": "typescriptreact", "autoFix": true }
+    "typescript",
+    "typescriptreact"
   ]
 }
 ```
