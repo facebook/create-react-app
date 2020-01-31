@@ -250,7 +250,7 @@ global.localStorage = localStorageMock;
 > ```js
 > "jest": {
 >   // ...
->   "setupFilesAfterEnv": "<rootDir>/src/setupTests.js"
+>   "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
 >  }
 > ```
 
