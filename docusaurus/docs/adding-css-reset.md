@@ -73,6 +73,5 @@ Browser support is dictated by what normalize.css [supports]. As of this writing
 [browserslist]: http://browserl.ist/
 [css reset]: https://cssreset.com/what-is-a-css-reset/
 [normalize.css]: https://github.com/csstools/normalize.css
-[sanitize.css]: https://github.com/csstools/sanitize.css
 [supports]: https://github.com/csstools/normalize.css#browser-support
 [postcss normalize]: https://github.com/csstools/postcss-normalize
