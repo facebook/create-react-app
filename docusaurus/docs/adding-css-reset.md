@@ -22,7 +22,7 @@ To start using it, add `@import-normalize;` anywhere in your CSS file(s). You on
 /* rest of app styles */
 ```
 
-You can control which parts of [normalize.css] or [sanitize.css] to use via your project's [browserslist].
+You can control which parts of [normalize.css] to use via your project's [browserslist].
 
 Results when [browserslist] is `last 3 versions`:
 
