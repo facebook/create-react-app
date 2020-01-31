@@ -22,7 +22,7 @@ If none of these solutions help please leave a comment [in this thread](https://
 
 ## `npm start` fail due to watch error
 
-If you are using Linux system and see error similar to this: `ENOSPC: System limit for number of file watchers reached`.
+If you are using a Linux operating system and see an error similar to: `ENOSPC: System limit for number of file watchers reached`, you can fix the issue by increasing the `fs.inotify.max_user_watches` setting of your operating system.
 
 If you are running Debian, RedHat, or another similar Linux distribution, run the following in a terminal:
 
