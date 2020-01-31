@@ -17,6 +17,9 @@ const fs = require('fs');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
+const sockHost = process.env.WDS_SOCKET_HOST;
+const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
+const sockPort = process.env.WDS_SOCKET_PORT;
 
 module.exports = function(proxy, allowedHost) {
   return {
@@ -60,7 +63,7 @@ module.exports = function(proxy, allowedHost) {
     contentBase: paths.appPublic,
     // By default files from `contentBase` will not trigger a page reload.
     watchContentBase: true,
-    // Enable hot reloading server. It will provide /sockjs-node/ endpoint
+    // Enable hot reloading server. It will provide WDS_SOCKET_PATH endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
     // in the Webpack development configuration. Note that only changes
@@ -72,6 +75,12 @@ module.exports = function(proxy, allowedHost) {
     // Prevent a WS client from getting injected as we're already including
     // `webpackHotDevClient`.
     injectClient: false,
+    // Enable custom sockjs pathname for websocket connection to hot reloading server.
+    // Enable custom sockjs hostname, pathname and port for websocket connection
+    // to hot reloading server.
+    sockHost,
+    sockPath,
+    sockPort,
     // It is important to tell WebpackDevServer to use the same "root" path
     // as we specified in the config. In development, we always serve from /.
     publicPath: '/',
