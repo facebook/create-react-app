@@ -151,8 +151,7 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
   },
 + "lint-staged": {
 +   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-+     "prettier --write",
-+     "git add"
++     "prettier --write"
 +   ]
 + },
   "scripts": {
