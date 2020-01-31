@@ -8,14 +8,14 @@
 // @remove-on-eject-end
 'use strict';
 
+const fs = require('fs');
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const paths = require('./paths');
-const fs = require('fs');
+const getHttpsConfig = require('./getHttpsConfig');
 
-const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
 const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
@@ -94,8 +94,7 @@ module.exports = function(proxy, allowedHost) {
     watchOptions: {
       ignored: ignoredFiles(paths.appSrc),
     },
-    // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === 'https',
+    https: getHttpsConfig(),
     host,
     overlay: false,
     historyApiFallback: {
