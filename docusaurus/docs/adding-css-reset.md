@@ -15,10 +15,6 @@ To start using it, add `@import-normalize;` anywhere in your CSS file(s). You on
 ```css
 @import-normalize; /* bring in normalize.css styles */
 
-/* or */
-
-@import-sanitize; /* bring in sanitize.css styles */
-
 /* rest of app styles */
 ```
 
