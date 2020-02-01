@@ -50,9 +50,6 @@ const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
 );
 
-// Check if TypeScript is setup
-const useTypeScript = fs.existsSync(paths.appTsConfig);
-
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -295,8 +292,7 @@ module.exports = function(webpackEnv) {
       // `web` extension prefixes have been added for better support
       // for React Native Web.
       extensions: paths.moduleFileExtensions
-        .map(ext => `.${ext}`)
-        .filter(ext => useTypeScript || !ext.includes('ts')),
+        .map(ext => `.${ext}`),
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -392,9 +388,9 @@ module.exports = function(webpackEnv) {
               },
             },
             // Process application JS with Babel.
-            // The preset includes JSX, Flow, TypeScript, and some ESnext features.
+            // The preset includes JSX, Flow and some ESnext features.
             {
-              test: /\.(js|mjs|jsx|ts|tsx)$/,
+              test: /\.(js|jsx|mjs)$/,
               include: paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {
@@ -443,6 +439,20 @@ module.exports = function(webpackEnv) {
                 cacheCompression: false,
                 compact: isEnvProduction,
               },
+            },
+            // Compile .tsx?
+            {
+                test: /\.(ts|tsx)$/,
+                include: paths.appSrc,
+                use: [
+                {
+                    loader: require.resolve('ts-loader'),
+                    options: {
+                    // disable type checker - we will use it in fork plugin
+                    transpileOnly: true,
+                    },
+                },
+                ],
             },
             // Process any JS outside of the app with Babel.
             // Unlike the application JS, we only compile the standard ES features.
@@ -687,8 +697,7 @@ module.exports = function(webpackEnv) {
           ],
         }),
       // TypeScript type checking
-      useTypeScript &&
-        new ForkTsCheckerWebpackPlugin({
+      new ForkTsCheckerWebpackPlugin({
           typescript: resolve.sync('typescript', {
             basedir: paths.appNodeModules,
           }),
