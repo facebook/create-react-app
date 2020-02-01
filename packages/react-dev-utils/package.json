@@ -66,7 +66,6 @@
     "immer": "1.10.0",
     "inquirer": "6.5.0",
     "is-root": "2.1.0",
-    "is-wsl": "^2.1.1",
     "loader-utils": "1.2.3",
     "open": "^7.0.0",
     "pkg-up": "2.0.0",
