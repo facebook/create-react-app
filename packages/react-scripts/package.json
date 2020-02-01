@@ -1,18 +1,15 @@
 {
-  "name": "react-scripts",
+  "name": "react-scripts-inversify",
   "version": "3.3.1",
-  "description": "Configuration and scripts for Create React App.",
+  "description": "Inversify configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/Roaders/inversify-create-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
   "engines": {
     "node": ">=8.10"
-  },
-  "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
     "bin",

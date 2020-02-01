@@ -1,5 +1,5 @@
 {
-  "name": "create-react-app",
+  "name": "create-react-app-inversify",
   "version": "3.3.1",
   "keywords": [
     "react"
@@ -7,15 +7,12 @@
   "description": "Create React apps with no build configuration.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/Roaders/inversify-create-react-app.git",
     "directory": "packages/create-react-app"
   },
   "license": "MIT",
   "engines": {
     "node": ">=8"
-  },
-  "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
   },
   "files": [
     "index.js",
