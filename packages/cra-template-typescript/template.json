@@ -8,6 +8,9 @@
       "@types/react": "^16.9.0",
       "@types/react-dom": "^16.9.0",
       "@types/jest": "^24.0.0",
+      "typescript": "~3.7.2",
+      "inversify": "~5.0.1",
+      "reflect-metadata": "~0.1.13",
       "ts-loader": "~6.2.1"
     }
   }

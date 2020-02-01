@@ -129,6 +129,8 @@ function verifyTypeScriptSetup() {
       suggested: 'react',
     },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
+    experimentalDecorators: { value: true, reason: 'to allow injectable decorators' },
+    emitDecoratorMetadata: { value: true, reason: 'to emit metadata used to construct injected classes' },
   };
 
   const formatDiagnosticHost = {
