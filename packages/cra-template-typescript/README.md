@@ -1,17 +1,19 @@
-# cra-template-typescript
+# cra-template-inversify
 
-This is the official TypeScript template for [Create React App](https://github.com/facebook/create-react-app).
+This is a fork of `cra-template-typescript`. The template app uses `inversify` and `inversify-constructor-injection` to allow dependency injection into class constructors and into function based components.
 
-To use this template, add `--template typescript` when creating a new app.
+To use this template, add `--template inversify` and `--scripts-version react-scripts-inversify` when creating a new app.
 
 For example:
 
 ```sh
-npx create-react-app my-app --template typescript
+npx create-react-app my-app --scripts-version react-scripts-inversify --template inversify
+```
 
-# or
+alternatively
 
-yarn create react-app my-app --template typescript
+```sh
+npx create-react-app-inversify my-app
 ```
 
 For more information, please refer to:
