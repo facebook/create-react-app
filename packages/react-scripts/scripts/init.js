@@ -302,6 +302,10 @@ module.exports = function(
     args = args.concat(['react', 'react-dom']);
 }
 
+  if (!isTypescriptInstalled(appPackage)) {
+    args = args.concat(['typescript']);
+}
+
 args = args.concat(['ts-loader@~6.2.1']);
 
   // Install template dependencies, and react and react-dom if missing.
@@ -401,3 +405,9 @@ function isReactInstalled(appPackage) {
     typeof dependencies['react-dom'] !== 'undefined'
   );
 }
+
+function isTypescriptInstalled(appPackage) {
+    const dependencies = appPackage.dependencies || {};
+  
+    return typeof dependencies.typescript !== 'undefined';
+  }
