@@ -300,7 +300,9 @@ module.exports = function(
   // which doesn't install react and react-dom along with react-scripts
   if (!isReactInstalled(appPackage)) {
     args = args.concat(['react', 'react-dom']);
-  }
+}
+
+args = args.concat(['ts-loader@~6.2.1']);
 
   // Install template dependencies, and react and react-dom if missing.
   if ((!isReactInstalled(appPackage) || templateName) && args.length > 1) {
