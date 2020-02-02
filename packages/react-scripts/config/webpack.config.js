@@ -392,9 +392,9 @@ module.exports = function(webpackEnv) {
               },
             },
             // Process application JS with Babel.
-            // The preset includes JSX, Flow, TypeScript, and some ESnext features.
+            // The preset includes JSX, Flow and some ESnext features.
             {
-              test: /\.(js|mjs|jsx|ts|tsx)$/,
+              test: useTypeScript ? /\.(js|jsx|mjs)$/ : /\.(js|mjs|jsx|ts|tsx)$/,
               include: paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {
@@ -443,6 +443,20 @@ module.exports = function(webpackEnv) {
                 cacheCompression: false,
                 compact: isEnvProduction,
               },
+            },
+            // Compile .tsx?
+            useTypeScript && {
+                test: /\.(ts|tsx)$/,
+                include: paths.appSrc,
+                use: [
+                {
+                    loader: require.resolve('ts-loader'),
+                    options: {
+                    // disable type checker - we will use it in fork plugin
+                    transpileOnly: true,
+                    },
+                },
+                ],
             },
             // Process any JS outside of the app with Babel.
             // Unlike the application JS, we only compile the standard ES features.
