@@ -291,10 +291,10 @@ On macOS, tries to find a known running editor process and opens the file in it.
 
 Returns Express middleware that serves a `${servedPath}/service-worker.js` that resets any previously set service worker configuration. Useful for development.
 
-#### `redirectServedPathMiddleware(servedPath: string): ExpressMiddleware`
+#### `redirectServedPathMiddleware(servedPath: string, appPublic: string): ExpressMiddleware`
 
 Returns Express middleware that redirects to `${servedPath}/${req.path}`, if `req.url`
-does not start with `servedPath`. Useful for development.
+does not start with `servedPath` or is not a proxy like request. Useful for development.
 
 #### `openBrowser(url: string): boolean`
 
@@ -345,9 +345,13 @@ The `args` object accepts a number of properties:
 - **tscCompileOnError** `boolean`: If `true`, errors in TypeScript type checking will not prevent start script from running app, and will not cause build script to exit unsuccessfully. Also downgrades all TypeScript type checking error messages to warning messages.
 - **webpack** `function`: A reference to the webpack constructor.
 
-##### `prepareProxy(proxySetting: string, appPublicFolder: string): Object`
+##### `prepareProxy(proxySetting: string, appPublicFolder: string, servedPathname: string): Object`
 
 Creates a WebpackDevServer `proxy` configuration object from the `proxy` setting in `package.json`.
+
+##### `mayProxy(requestMethod: string, acceptHeader: string | undefined, pathname: string, appPublicFolder: string, servedPathname: string): boolean`
+
+Will return false if is not a development resource like, a static file, or WDS socket
 
 ##### `prepareUrls(protocol: string, host: string, port: number, pathname: string = '/'): Object`
 

@@ -356,7 +356,39 @@ function onProxyError(proxy) {
   };
 }
 
-function prepareProxy(proxy, appPublicFolder) {
+function mayProxy(
+  requestMethod,
+  acceptHeader,
+  pathname,
+  appPublicFolder,
+  servedPathname
+) {
+  // If proxy is specified, let it handle any request except for
+  // files in the public folder and requests to the WebpackDevServer socket endpoint.
+  // https://github.com/facebook/create-react-app/issues/6720
+  const sockPath = process.env.WDS_SOCKET_PATH || '/sockjs-node';
+  const isDefaultSockHost = !process.env.WDS_SOCKET_HOST;
+  function isProxy(pathname) {
+    const maybePublicPath = path.resolve(
+      appPublicFolder,
+      pathname.replace(new RegExp('^' + servedPathname), '')
+    );
+    const isPublicFileRequest = fs.existsSync(maybePublicPath);
+    // used by webpackHotDevClient
+    const isWdsEndpointRequest =
+      isDefaultSockHost && pathname.startsWith(sockPath);
+    return !(isPublicFileRequest || isWdsEndpointRequest);
+  }
+
+  return (
+    requestMethod !== 'GET' ||
+    (isProxy(pathname) &&
+      acceptHeader &&
+      acceptHeader.indexOf('text/html') === -1)
+  );
+}
+
+function prepareProxy(proxy, appPublicFolder, servedPathname) {
   // `proxy` lets you specify alternate servers for specific requests.
   if (!proxy) {
     return undefined;
@@ -372,20 +404,6 @@ function prepareProxy(proxy, appPublicFolder) {
       chalk.red('Either remove "proxy" from package.json, or make it a string.')
     );
     process.exit(1);
-  }
-
-  // If proxy is specified, let it handle any request except for
-  // files in the public folder and requests to the WebpackDevServer socket endpoint.
-  // https://github.com/facebook/create-react-app/issues/6720
-  const sockPath = process.env.WDS_SOCKET_PATH || '/sockjs-node';
-  const isDefaultSockHost = !process.env.WDS_SOCKET_HOST;
-  function mayProxy(pathname) {
-    const maybePublicPath = path.resolve(appPublicFolder, pathname.slice(1));
-    const isPublicFileRequest = fs.existsSync(maybePublicPath);
-    // used by webpackHotDevClient
-    const isWdsEndpointRequest =
-      isDefaultSockHost && pathname.startsWith(sockPath);
-    return !(isPublicFileRequest || isWdsEndpointRequest);
   }
 
   if (!/^http(s)?:\/\//.test(proxy)) {
@@ -418,11 +436,15 @@ function prepareProxy(proxy, appPublicFolder) {
       // However API calls like `fetch()` won’t generally accept text/html.
       // If this heuristic doesn’t work well for you, use `src/setupProxy.js`.
       context: function(pathname, req) {
-        return (
-          req.method !== 'GET' ||
-          (mayProxy(pathname) &&
-            req.headers.accept &&
-            req.headers.accept.indexOf('text/html') === -1)
+        // If proxy is specified, let it handle any request except for
+        // files in the public folder and requests to the WebpackDevServer socket endpoint.
+        // https://github.com/facebook/create-react-app/issues/6720
+        return mayProxy(
+          req.method,
+          req.headers.accept,
+          pathname,
+          appPublicFolder,
+          servedPathname
         );
       },
       onProxyReq: proxyReq => {
@@ -492,6 +514,7 @@ function choosePort(host, defaultPort) {
 module.exports = {
   choosePort,
   createCompiler,
+  mayProxy,
   prepareProxy,
   prepareUrls,
 };
