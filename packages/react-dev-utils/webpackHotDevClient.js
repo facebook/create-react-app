@@ -7,7 +7,7 @@
 
 'use strict';
 
-// This alternative WebpackDevServer combines the functionality of:
+// This alternative webpackDevServer combines the functionality of:
 // https://github.com/webpack/webpack-dev-server/blob/webpack-1/client/index.js
 // https://github.com/webpack/webpack/blob/webpack-1/hot/dev-server.js
 
@@ -56,19 +56,19 @@ if (module.hot && typeof module.hot.dispose === 'function') {
   });
 }
 
-// Connect to WebpackDevServer via a socket.
+// Connect to webpackDevServer via a socket.
 var connection = new WebSocket(
   url.format({
     protocol: window.location.protocol === 'https:' ? 'wss' : 'ws',
     hostname: process.env.WDS_SOCKET_HOST || window.location.hostname,
     port: process.env.WDS_SOCKET_PORT || window.location.port,
-    // Hardcoded in WebpackDevServer
+    // Hardcoded in webpackDevServer
     pathname: process.env.WDS_SOCKET_PATH || '/sockjs-node',
     slashes: true,
   })
 );
 
-// Unlike WebpackDevServer client, we won't try to reconnect
+// Unlike webpackDevServer client, we won't try to reconnect
 // to avoid spamming the console. Disconnect usually happens
 // when developer stops the server.
 connection.onclose = function() {
@@ -221,11 +221,11 @@ connection.onmessage = function(e) {
 function isUpdateAvailable() {
   /* globals __webpack_hash__ */
   // __webpack_hash__ is the hash of the current compilation.
-  // It's a global variable injected by Webpack.
+  // It's a global variable injected by webpack.
   return mostRecentCompilationHash !== __webpack_hash__;
 }
 
-// Webpack disallows updates in other states.
+// webpack disallows updates in other states.
 function canApplyUpdates() {
   return module.hot.status() === 'idle';
 }
@@ -233,7 +233,7 @@ function canApplyUpdates() {
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates(onHotUpdateSuccess) {
   if (!module.hot) {
-    // HotModuleReplacementPlugin is not in Webpack configuration.
+    // HotModuleReplacementPlugin is not in webpack configuration.
     window.location.reload();
     return;
   }
@@ -262,7 +262,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   // https://webpack.github.io/docs/hot-module-replacement.html#check
   var result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
 
-  // // Webpack 2 returns a Promise instead of invoking a callback
+  // // webpack 2 returns a Promise instead of invoking a callback
   if (result && result.then) {
     result.then(
       function(updatedModules) {
