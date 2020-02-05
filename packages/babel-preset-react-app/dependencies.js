@@ -29,7 +29,7 @@ module.exports = function(api, opts) {
   // https://babeljs.io/docs/usage/babelrc/#env-option
   // We are not using `env` because it’s ignored in versions > babel-core@6.10.4:
   // https://github.com/babel/babel/issues/4539
-  // https://github.com/facebook/create-react-app/issues/720
+  // https://github.com/facebook/create-js-app/issues/720
   // It’s also nice that we can enforce `NODE_ENV` being specified.
   var env = process.env.BABEL_ENV || process.env.NODE_ENV;
   var isEnvDevelopment = env === 'development';
@@ -99,12 +99,12 @@ module.exports = function(api, opts) {
     plugins: [
       // Disabled as it's handled automatically by preset-env, and `selectiveLoose` isn't
       // yet merged into babel: https://github.com/babel/babel/pull/9486
-      // Related: https://github.com/facebook/create-react-app/pull/8215
+      // Related: https://github.com/facebook/create-js-app/pull/8215
       // [
       //   require('@babel/plugin-transform-destructuring').default,
       //   {
       //     // Use loose mode for performance:
-      //     // https://github.com/facebook/create-react-app/issues/5602
+      //     // https://github.com/facebook/create-js-app/issues/5602
       //     loose: false,
       //     selectiveLoose: [
       //       'useState',

@@ -27,7 +27,7 @@ function getAdditionalModulePaths(options = {}) {
   if (baseUrl == null) {
     // If there's no baseUrl set we respect NODE_PATH
     // Note that NODE_PATH is deprecated and will be removed
-    // in the next major release of create-react-app.
+    // in the next major release of create-js-app.
 
     const nodePath = process.env.NODE_PATH || '';
     return nodePath.split(path.delimiter).filter(Boolean);

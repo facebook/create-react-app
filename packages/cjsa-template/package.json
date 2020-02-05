@@ -10,7 +10,7 @@
   "main": "template.json",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/facebook/create-js-app.git",
     "directory": "packages/cjsa-template"
   },
   "license": "MIT",
@@ -18,7 +18,7 @@
     "node": ">=8.10"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/facebook/create-js-app/issues"
   },
   "files": [
     "template",

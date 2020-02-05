@@ -1,5 +1,5 @@
 #
-# Azure Pipelines job for building and testing create-react-app on Linux, Windows, and macOS.
+# Azure Pipelines job for building and testing create-js-app on Linux, Windows, and macOS.
 #
 
 parameters:
@@ -26,7 +26,7 @@ jobs:
         displayName: 'Initialize Git config'
 
       - checkout: self
-        path: create-react-app
+        path: create-js-app
 
       - task: NodeTool@0
         inputs:

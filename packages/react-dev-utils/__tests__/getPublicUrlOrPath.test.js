@@ -18,10 +18,10 @@ const tests = [
   { dev: true, homepage: '../', expect: '/' },
   { dev: true, homepage: '../test', expect: '/' },
   { dev: true, homepage: './test/path', expect: '/' },
-  { dev: true, homepage: 'https://create-react-app.dev/', expect: '/' },
+  { dev: true, homepage: 'https://create-js-app.dev/', expect: '/' },
   {
     dev: true,
-    homepage: 'https://create-react-app.dev/test',
+    homepage: 'https://create-js-app.dev/test',
     expect: '/test/',
   },
   // DEVELOPMENT with publicURL
@@ -32,10 +32,10 @@ const tests = [
   { dev: true, publicUrl: '../', expect: '/' },
   { dev: true, publicUrl: '../test', expect: '/' },
   { dev: true, publicUrl: './test/path', expect: '/' },
-  { dev: true, publicUrl: 'https://create-react-app.dev/', expect: '/' },
+  { dev: true, publicUrl: 'https://create-js-app.dev/', expect: '/' },
   {
     dev: true,
-    publicUrl: 'https://create-react-app.dev/test',
+    publicUrl: 'https://create-js-app.dev/test',
     expect: '/test/',
   },
   // DEVELOPMENT with publicURL and homepage
@@ -48,13 +48,13 @@ const tests = [
   { dev: true, publicUrl: './test/path', homepage: '/test', expect: '/' },
   {
     dev: true,
-    publicUrl: 'https://create-react-app.dev/',
+    publicUrl: 'https://create-js-app.dev/',
     homepage: '/test',
     expect: '/',
   },
   {
     dev: true,
-    publicUrl: 'https://create-react-app.dev/test',
+    publicUrl: 'https://create-js-app.dev/test',
     homepage: '/path',
     expect: '/test/',
   },
@@ -67,10 +67,10 @@ const tests = [
   { dev: false, homepage: '../', expect: '../' },
   { dev: false, homepage: '../test', expect: '../test/' },
   { dev: false, homepage: './test/path', expect: './test/path/' },
-  { dev: false, homepage: 'https://create-react-app.dev/', expect: '/' },
+  { dev: false, homepage: 'https://create-js-app.dev/', expect: '/' },
   {
     dev: false,
-    homepage: 'https://create-react-app.dev/test',
+    homepage: 'https://create-js-app.dev/test',
     expect: '/test/',
   },
   // PRODUCTION with publicUrl
@@ -83,13 +83,13 @@ const tests = [
   { dev: false, publicUrl: './test/path', expect: './test/path/' },
   {
     dev: false,
-    publicUrl: 'https://create-react-app.dev/',
-    expect: 'https://create-react-app.dev/',
+    publicUrl: 'https://create-js-app.dev/',
+    expect: 'https://create-js-app.dev/',
   },
   {
     dev: false,
-    publicUrl: 'https://create-react-app.dev/test',
-    expect: 'https://create-react-app.dev/test/',
+    publicUrl: 'https://create-js-app.dev/test',
+    expect: 'https://create-js-app.dev/test/',
   },
   // PRODUCTION with publicUrl and homepage
   { dev: false, publicUrl: '/', homepage: '/test', expect: '/' },
@@ -106,15 +106,15 @@ const tests = [
   },
   {
     dev: false,
-    publicUrl: 'https://create-react-app.dev/',
+    publicUrl: 'https://create-js-app.dev/',
     homepage: '/test',
-    expect: 'https://create-react-app.dev/',
+    expect: 'https://create-js-app.dev/',
   },
   {
     dev: false,
-    publicUrl: 'https://create-react-app.dev/test',
+    publicUrl: 'https://create-js-app.dev/test',
     homepage: '/path',
-    expect: 'https://create-react-app.dev/test/',
+    expect: 'https://create-js-app.dev/test/',
   },
 ];
 

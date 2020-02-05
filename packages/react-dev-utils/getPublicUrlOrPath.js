@@ -23,7 +23,7 @@ module.exports = getPublicUrlOrPath;
  * @returns {string}
  */
 function getPublicUrlOrPath(isEnvDevelopment, homepage, envPublicUrl) {
-  const stubDomain = 'https://create-react-app.dev';
+  const stubDomain = 'https://create-js-app.dev';
 
   if (envPublicUrl) {
     // ensure last slash exists

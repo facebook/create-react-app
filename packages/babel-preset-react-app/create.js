@@ -114,10 +114,10 @@ module.exports = function(api, opts, env) {
     plugins: [
       // Strip flow types before any other transform, emulating the behavior
       // order as-if the browser supported all of the succeeding features
-      // https://github.com/facebook/create-react-app/pull/5182
+      // https://github.com/facebook/create-js-app/pull/5182
       // We will conditionally enable this plugin below in overrides as it clashes with
       // @babel/plugin-proposal-decorators when using TypeScript.
-      // https://github.com/facebook/create-react-app/issues/5741
+      // https://github.com/facebook/create-js-app/issues/5741
       isFlowEnabled && [
         require('@babel/plugin-transform-flow-strip-types').default,
         false,
@@ -127,12 +127,12 @@ module.exports = function(api, opts, env) {
       require('babel-plugin-macros'),
       // Disabled as it's handled automatically by preset-env, and `selectiveLoose` isn't
       // yet merged into babel: https://github.com/babel/babel/pull/9486
-      // Related: https://github.com/facebook/create-react-app/pull/8215
+      // Related: https://github.com/facebook/create-js-app/pull/8215
       // [
       //   require('@babel/plugin-transform-destructuring').default,
       //   {
       //     // Use loose mode for performance:
-      //     // https://github.com/facebook/create-react-app/issues/5602
+      //     // https://github.com/facebook/create-js-app/issues/5602
       //     loose: false,
       //     selectiveLoose: [
       //       'useState',
@@ -155,7 +155,7 @@ module.exports = function(api, opts, env) {
       ],
       // class { handleClick = () => { } }
       // Enable loose mode to use assignment instead of defineProperty
-      // See discussion in https://github.com/facebook/create-react-app/issues/4263
+      // See discussion in https://github.com/facebook/create-js-app/issues/4263
       [
         require('@babel/plugin-proposal-class-properties').default,
         {

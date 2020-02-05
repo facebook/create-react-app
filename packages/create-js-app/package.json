@@ -1,5 +1,5 @@
 {
-  "name": "create-react-app",
+  "name": "create-js-app",
   "version": "3.3.1",
   "keywords": [
     "react"
@@ -7,15 +7,15 @@
   "description": "Create React apps with no build configuration.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
-    "directory": "packages/create-react-app"
+    "url": "https://github.com/facebook/create-js-app.git",
+    "directory": "packages/create-js-app"
   },
   "license": "MIT",
   "engines": {
     "node": ">=8"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/facebook/create-js-app/issues"
   },
   "files": [
     "index.js",

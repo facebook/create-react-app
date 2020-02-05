@@ -90,7 +90,7 @@ startLocalRegistry "$root_path"/tasks/verdaccio.yaml
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/confusing-browser-globals/
-./node_modules/.bin/eslint --max-warnings 0 packages/create-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/create-js-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
 ./node_modules/.bin/eslint --max-warnings 0 packages/react-error-overlay/src/
@@ -117,7 +117,7 @@ yarn test
 cd ../..
 
 # ******************************************************************************
-# First, test the create-react-app development environment.
+# First, test the create-js-app development environment.
 # This does not affect our users but makes sure we can develop it.
 # ******************************************************************************
 
@@ -142,17 +142,17 @@ yarn start --smoke-test
 publishToLocalRegistry
 
 # ******************************************************************************
-# Install react-scripts prerelease via create-react-app prerelease.
+# Install react-scripts prerelease via create-js-app prerelease.
 # ******************************************************************************
 
 # Install the app in a temporary location
 cd $temp_app_path
-npx create-react-app test-app
+npx create-js-app test-app
 
 # TODO: verify we installed prerelease
 
 # ******************************************************************************
-# Now that we used create-react-app to create an app depending on react-scripts,
+# Now that we used create-js-app to create an app depending on react-scripts,
 # let's make sure all npm scripts are in the working state.
 # ******************************************************************************
 

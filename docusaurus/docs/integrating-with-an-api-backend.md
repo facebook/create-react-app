@@ -9,12 +9,12 @@ using `fetch()` to access it.
 
 ## Node
 
-Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
+Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-js-app-with-a-server/).
 You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo).
 
 ## Ruby on Rails
 
-Check out [this tutorial](https://www.fullstackreact.com/articles/how-to-get-create-react-app-to-work-with-your-rails-api/).
+Check out [this tutorial](https://www.fullstackreact.com/articles/how-to-get-create-js-app-to-work-with-your-rails-api/).
 You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo-rails).
 
 ## API Platform (PHP and Symfony)
@@ -23,7 +23,6 @@ You can find the companion GitHub repository [here](https://github.com/fullstack
 It allows creating hypermedia and GraphQL APIs in minutes.
 It is shipped with an official Progressive Web App generator as well as a dynamic administration interface, both built for Create React App.
 Check out [this tutorial](https://api-platform.com/docs/distribution).
-
 
 ## C# (ASP.NET Core)
 

@@ -32,17 +32,11 @@ try {
   // Run "yarn add" with all the dependencies of react-scripts
   cprocess.execFileSync('yarn', ['add', ...descriptors], { cwd: temp });
 
-  // Store the generated lockfile in create-react-app
+  // Store the generated lockfile in create-js-app
   // We can't store it inside react-scripts, because we need it even before react-scripts is installed
   fse.copySync(
     path.join(temp, 'yarn.lock'),
-    path.join(
-      __dirname,
-      '..',
-      'packages',
-      'create-react-app',
-      'yarn.lock.cached'
-    )
+    path.join(__dirname, '..', 'packages', 'create-js-app', 'yarn.lock.cached')
   );
 } finally {
   fse.removeSync(temp);

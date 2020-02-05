@@ -8,9 +8,9 @@
 const siteConfig = {
   title: 'Create React App',
   tagline: 'Set up a modern web app by running one command.',
-  url: 'https://create-react-app.dev',
+  url: 'https://create-js-app.dev',
   baseUrl: '/',
-  projectName: 'create-react-app',
+  projectName: 'create-js-app',
   organizationName: 'facebook',
   favicon: 'img/favicon/favicon.ico',
   presets: [
@@ -21,7 +21,7 @@ const siteConfig = {
           path: '../docs',
           sidebarPath: require.resolve('./sidebars.json'),
           editUrl:
-            'https://github.com/facebook/create-react-app/edit/master/docusaurus/website',
+            'https://github.com/facebook/create-js-app/edit/master/docusaurus/website',
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
@@ -35,7 +35,7 @@ const siteConfig = {
     image: 'img/logo-og.png',
     algolia: {
       apiKey: '3be60f4f8ffc24c75da84857d6323791',
-      indexName: 'create-react-app',
+      indexName: 'create-js-app',
     },
     navbar: {
       title: 'Create React App',
@@ -51,7 +51,7 @@ const siteConfig = {
           position: 'right',
         },
         {
-          href: 'https://www.github.com/facebook/create-react-app',
+          href: 'https://www.github.com/facebook/create-js-app',
           label: 'GitHub',
           position: 'right',
         },
@@ -78,12 +78,11 @@ const siteConfig = {
           items: [
             {
               label: 'Stack Overflow',
-              href:
-                'https://stackoverflow.com/questions/tagged/create-react-app',
+              href: 'https://stackoverflow.com/questions/tagged/create-js-app',
             },
             {
               label: 'Spectrum',
-              href: 'https://spectrum.chat/create-react-app',
+              href: 'https://spectrum.chat/create-js-app',
             },
             {
               label: 'Twitter',
@@ -101,7 +100,7 @@ const siteConfig = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://www.github.com/facebook/create-react-app',
+              href: 'https://www.github.com/facebook/create-js-app',
             },
           ],
         },

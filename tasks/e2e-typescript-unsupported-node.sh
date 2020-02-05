@@ -47,14 +47,14 @@ set -x
 cd ..
 root_path=$PWD
 
-# We need to install create-react-app deps to test it
-cd "$root_path"/packages/create-react-app
+# We need to install create-js-app deps to test it
+cd "$root_path"/packages/create-js-app
 npm install
 cd "$root_path"
 
 # If the node version is < 8.10 but greater then 8.0, the script with the typescript flag should just give an error.
 cd $temp_app_path
-err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version --typescript 2>&1 > /dev/null || echo ''`
+err_output=`node "$root_path"/packages/create-js-app/index.js test-node-version --typescript 2>&1 > /dev/null || echo ''`
 [[ $err_output =~ You\ are\ using\ Node ]] && exit 0 || exit 1
 
 # Cleanup

@@ -4,12 +4,12 @@
   "description": "Polyfills for various browsers including commonly used language features",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/create-react-app.git",
+    "url": "https://github.com/facebook/create-js-app.git",
     "directory": "packages/react-app-polyfill"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/facebook/create-js-app/issues"
   },
   "engines": {
     "node": ">=6"

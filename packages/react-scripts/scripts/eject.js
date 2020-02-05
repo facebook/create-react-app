@@ -57,7 +57,7 @@ function tryGitAdd(appPath) {
 console.log(
   chalk.cyan.bold(
     'NOTE: Create React App 2+ supports TypeScript, Sass, CSS Modules and more without ejecting: ' +
-      'https://reactjs.org/blog/2018/10/01/create-react-app-v2.html'
+      'https://reactjs.org/blog/2018/10/01/create-js-app-v2.html'
   )
 );
 console.log();
@@ -301,7 +301,7 @@ inquirer
       );
       let windowsCmdFileContent;
       if (process.platform === 'win32') {
-        // https://github.com/facebook/create-react-app/pull/3806#issuecomment-357781035
+        // https://github.com/facebook/create-js-app/pull/3806#issuecomment-357781035
         // Yarn is diligent about cleaning up after itself, but this causes the react-scripts.cmd file
         // to be deleted while it is running. This trips Windows up after the eject completes.
         // We'll read the batch file and later "write it back" to match npm behavior.

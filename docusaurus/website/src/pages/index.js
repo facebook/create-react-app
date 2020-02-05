@@ -92,7 +92,7 @@ function Home() {
                 To create a project called <i>my-app</i>, run this command:
               </p>
               <CodeBlock className="language-sh">
-                npx create-react-app my-app
+                npx create-js-app my-app
               </CodeBlock>
               <br />
             </div>

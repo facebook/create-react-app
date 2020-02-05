@@ -60,7 +60,7 @@ if (
   argv.indexOf('--watchAll') === -1 &&
   argv.indexOf('--watchAll=false') === -1
 ) {
-  // https://github.com/facebook/create-react-app/issues/5210
+  // https://github.com/facebook/create-js-app/issues/5210
   const hasSourceControl = isInGitRepository() || isInMercurialRepository();
   argv.push(hasSourceControl ? '--watch' : '--watchAll');
 }

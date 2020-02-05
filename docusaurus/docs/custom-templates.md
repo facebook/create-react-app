@@ -12,21 +12,21 @@ You'll notice that Custom Templates are always named in the format `cra-template
 Scoped templates are also supported, under the name `@[scope-name]/cra-template` or `@[scope-name]/cra-template-[template-name]`, which can be installed via `@[scope]` and `@[scope]/[template-name]` respectively.
 
 ```sh
-npx create-react-app my-app --template [template-name]
+npx create-js-app my-app --template [template-name]
 ```
 
 ## Finding custom templates
 
 We ship two templates by default:
 
-- [`cra-template`](https://github.com/facebook/create-react-app/tree/master/packages/cra-template)
-- [`cra-template-typescript`](https://github.com/facebook/create-react-app/tree/master/packages/cra-template-typescript)
+- [`cra-template`](https://github.com/facebook/create-js-app/tree/master/packages/cra-template)
+- [`cra-template-typescript`](https://github.com/facebook/create-js-app/tree/master/packages/cra-template-typescript)
 
 However, you can find many great community templates by searching for ["cra-template-\*"](https://www.npmjs.com/search?q=cra-template-*) on npm.
 
 ## Building a template
 
-If you're interested in building a custom template, first take a look at how we've built [`cra-template`](https://github.com/facebook/create-react-app/tree/master/packages/cra-template).
+If you're interested in building a custom template, first take a look at how we've built [`cra-template`](https://github.com/facebook/create-js-app/tree/master/packages/cra-template).
 
 A template must have the following structure:
 
@@ -49,7 +49,7 @@ my-app/
 To test a template locally, pass the file path to the directory of your template source using the `file:` prefix.
 
 ```sh
-npx create-react-app my-app --template file:../path/to/your/template/cra-template-[template-name]
+npx create-js-app my-app --template file:../path/to/your/template/cra-template-[template-name]
 ```
 
 ### The `template` folder

@@ -173,7 +173,7 @@ function createCompiler({
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     // We only construct the warnings and errors for speed:
-    // https://github.com/facebook/create-react-app/issues/4492#issuecomment-421959548
+    // https://github.com/facebook/create-js-app/issues/4492#issuecomment-421959548
     const statsData = stats.toJson({
       all: false,
       warnings: true,
@@ -376,7 +376,7 @@ function prepareProxy(proxy, appPublicFolder) {
 
   // If proxy is specified, let it handle any request except for
   // files in the public folder and requests to the WebpackDevServer socket endpoint.
-  // https://github.com/facebook/create-react-app/issues/6720
+  // https://github.com/facebook/create-js-app/issues/6720
   const sockPath = process.env.WDS_SOCKET_PATH || '/sockjs-node';
   const isDefaultSockHost = !process.env.WDS_SOCKET_HOST;
   function mayProxy(pathname) {

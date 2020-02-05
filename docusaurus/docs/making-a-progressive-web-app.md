@@ -10,7 +10,7 @@ the build process will generate a service worker file, but it will not be
 registered, so it will not take control of your production web app.
 
 In order to opt-in to the offline-first behavior, developers should look for the
-following in their [`src/index.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/index.js) file:
+following in their [`src/index.js`](https://github.com/facebook/create-js-app/blob/master/packages/cra-template/template/src/index.js) file:
 
 ```js
 // If you want your app to work offline and load faster, you can change
@@ -30,7 +30,7 @@ Offline-first Progressive Web Apps are faster and more reliable than traditional
 - Your app will work regardless of network state, even if offline. This means your users will be able to use your app at 10,000 feet and on the subway.
 - On mobile devices, your app can be added directly to the user's home screen, app icon and all. This eliminates the need for the app store.
 
-However, they [can make debugging deployments more challenging](https://github.com/facebook/create-react-app/issues/2398) so, starting with Create React App 2, service workers are opt-in.
+However, they [can make debugging deployments more challenging](https://github.com/facebook/create-js-app/issues/2398) so, starting with Create React App 2, service workers are opt-in.
 
 The [`workbox-webpack-plugin`](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)
 is integrated into production configuration,
@@ -49,7 +49,7 @@ following into account:
 
 1. After the initial caching is done, the [service worker lifecycle](https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle)
    controls when updated content ends up being shown to users. In order to guard against
-   [race conditions with lazy-loaded content](https://github.com/facebook/create-react-app/issues/3613#issuecomment-353467430),
+   [race conditions with lazy-loaded content](https://github.com/facebook/create-js-app/issues/3613#issuecomment-353467430),
    the default behavior is to conservatively keep the updated service worker in the "[waiting](https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#waiting)"
    state. This means that users will end up seeing older content until they close (reloading is not
    enough) their existing, open tabs. See [this blog post](https://jeffy.info/2018/10/10/sw-in-c-r-a.html)
@@ -62,7 +62,7 @@ following into account:
    fetched the latest updates that will be available the next time they load the
    page (showing a "New content is available once existing tabs are closed." message). Showing
    these messages is currently left as an exercise to the developer, but as a
-   starting point, you can make use of the logic included in [`src/serviceWorker.js`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/src/serviceWorker.js), which
+   starting point, you can make use of the logic included in [`src/serviceWorker.js`](https://github.com/facebook/create-js-app/blob/master/packages/cra-template/template/src/serviceWorker.js), which
    demonstrates which service worker lifecycle events to listen for to detect each
    scenario, and which as a default, only logs appropriate messages to the
    JavaScript console.
@@ -81,7 +81,7 @@ following into account:
 
 1. If you _need_ to test your offline-first service worker locally, build
    the application (using `npm run build`) and run a standard http server from your
-   build directory. After running the build script, `create-react-app` will give
+   build directory. After running the build script, `create-js-app` will give
    instructions for one way to test your production build locally and the [deployment instructions](deployment.md) have
    instructions for using other methods. _Be sure to always use an
    incognito window to avoid complications with your browser cache._
@@ -93,11 +93,11 @@ following into account:
 ## Progressive Web App Metadata
 
 The default configuration includes a web app manifest located at
-[`public/manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/public/manifest.json), that you can customize with
+[`public/manifest.json`](https://github.com/facebook/create-js-app/blob/master/packages/cra-template/template/public/manifest.json), that you can customize with
 details specific to your web application.
 
 When a user adds a web app to their homescreen using Chrome or Firefox on
-Android, the metadata in [`manifest.json`](https://github.com/facebook/create-react-app/blob/master/packages/cra-template/template/public/manifest.json) determines what
+Android, the metadata in [`manifest.json`](https://github.com/facebook/create-js-app/blob/master/packages/cra-template/template/public/manifest.json) determines what
 icons, names, and branding colors to use when the web app is displayed.
 [The Web App Manifest guide](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/)
 provides more context about what each field means, and how your customizations

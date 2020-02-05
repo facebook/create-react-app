@@ -47,14 +47,14 @@ set -x
 cd ..
 root_path=$PWD
 
-# We need to install create-react-app deps to test it
-cd "$root_path"/packages/create-react-app
+# We need to install create-js-app deps to test it
+cd "$root_path"/packages/create-js-app
 npm install
 cd "$root_path"
 
 # If the node version is < 6, the script should just give an error.
 cd $temp_app_path
-err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
+err_output=`node "$root_path"/packages/create-js-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
 [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 
 # Cleanup

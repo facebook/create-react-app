@@ -443,7 +443,7 @@
     "_scriptCode": [
       {
         "lineNumber": 41219,
-        "content": "module.exports = __webpack_require__(/*! /Users/joe/Documents/Development/OSS/create-react-app/packages/react-scripts/template/src/index.js */130);",
+        "content": "module.exports = __webpack_require__(/*! /Users/joe/Documents/Development/OSS/create-js-app/packages/react-scripts/template/src/index.js */130);",
         "highlight": true
       }
     ],

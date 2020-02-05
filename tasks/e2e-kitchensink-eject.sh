@@ -93,14 +93,14 @@ publishToLocalRegistry
 
 # Install the app in a temporary location
 cd $temp_app_path
-npx create-react-app test-kitchensink --template=file:"$root_path"/packages/react-scripts/fixtures/kitchensink
+npx create-js-app test-kitchensink --template=file:"$root_path"/packages/react-scripts/fixtures/kitchensink
 
 # Install the test module
 cd "$temp_module_path"
 yarn add test-integrity@^2.0.1
 
 # ******************************************************************************
-# Now that we used create-react-app to create an app depending on react-scripts,
+# Now that we used create-js-app to create an app depending on react-scripts,
 # let's make sure all npm scripts are in the working state.
 # ******************************************************************************
 
@@ -120,7 +120,7 @@ npm link "$temp_module_path/node_modules/test-integrity"
 # Eject...
 echo yes | npm run eject
 
-# Temporary workaround for https://github.com/facebook/create-react-app/issues/6099
+# Temporary workaround for https://github.com/facebook/create-js-app/issues/6099
 rm yarn.lock
 yarn add @babel/plugin-transform-react-jsx-source @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx @babel/plugin-transform-react-jsx-self
 
