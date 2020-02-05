@@ -61,6 +61,7 @@
     "jsdom": "13.0.0",
     "mini-css-extract-plugin": "0.8.0",
     "node-sass": "^4.12.0",
+    "node-sass-glob-importer": "^5.3.2",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.5.0",
     "postcss-flexbugs-fixes": "4.1.0",
