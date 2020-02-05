@@ -99,9 +99,17 @@ module.exports = function(api, opts, env) {
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
           useBuiltIns: true,
+          pragma: 'tpl', // default pragma is React.createElement
+          pragmaFrag: 'Fragment', // default is React.Fragment
+          throwIfNamespace: false, // defaults to true
         },
       ],
-      isTypeScriptEnabled && [require('@babel/preset-typescript').default],
+      isTypeScriptEnabled && [
+        require('@babel/preset-typescript').default,
+        {
+          jsxPragma: 'tpl',
+        },
+      ],
     ].filter(Boolean),
     plugins: [
       // Strip flow types before any other transform, emulating the behavior
