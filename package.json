@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cd packages/react-scripts && node bin/react-scripts.js build",
     "changelog": "lerna-changelog",
-    "create-react-app": "node tasks/cra.js",
+    "create-js-app": "node tasks/cjsa.js",
     "e2e": "tasks/e2e-simple.sh",
     "e2e:docker": "tasks/local-test.sh",
     "postinstall": "cd packages/react-error-overlay/ && yarn build:prod",
@@ -24,6 +24,7 @@
     "@testing-library/react": "^9.3.0",
     "@testing-library/user-event": "^7.1.2",
     "alex": "^8.0.0",
+    "cross-env": "^7.0.0",
     "eslint": "^6.1.0",
     "execa": "1.0.0",
     "fs-extra": "^7.0.1",
@@ -41,7 +42,9 @@
     "strip-ansi": "^5.1.0",
     "svg-term-cli": "^2.1.1",
     "tempy": "^0.2.1",
-    "wait-for-localhost": "^3.1.0"
+    "wait-for-localhost": "^3.1.0",
+    "webpack": "^4.41.5",
+    "yarn": "^1.22.0"
   },
   "resolutions": {
     "mkdirp": "0.5.1"
